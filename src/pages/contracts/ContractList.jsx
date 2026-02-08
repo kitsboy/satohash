@@ -1,20 +1,26 @@
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Plus, FileText, Calendar, Users, ArrowRight, Sparkles } from 'lucide-react';
-import Button from '../../components/Button';
-import StatusPill from '../../components/StatusPill';
-import Footer from '../../components/Footer';
-import BlockchainPulse from '../../components/BlockchainPulse';
-import { useState, useEffect } from 'react';
 import {
     Plus,
+    FileText,
+    Calendar,
+    Users,
+    ArrowRight,
+    Sparkles,
     Zap,
     AlertCircle,
     Lightbulb,
     ChevronLeft,
     ChevronRight,
+    ShieldCheck,
+    Globe,
     Activity as ActivityIcon
 } from 'lucide-react';
+import Button from '../../components/Button';
+import StatusPill from '../../components/StatusPill';
+import Footer from '../../components/Footer';
+import BlockchainPulse from '../../components/BlockchainPulse';
+import { useState, useEffect } from 'react';
 
 const protocolTips = [
     {
