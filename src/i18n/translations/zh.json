@@ -1,0 +1,185 @@
+{
+    "welcome": {
+        "title": "欢迎使用 Satohash",
+        "subtitle": "将您的重要协议转化为加密证明,证明它们在特定时间存在过——锚定到比特币区块链,易于验证。",
+        "getStarted": "开始使用",
+        "howThisWorks": "工作原理",
+        "language": "语言",
+        "change": "更改",
+        "pricingNote": "Satohash 在早期访问期间目前免费。当您为文档添加时间戳时,您只需支付比特币网络费用。"
+    },
+    "howItWorks": {
+        "card1": {
+            "title": "锁定日期",
+            "description": "Satohash 为您的文档提供唯一的数字指纹,并将其日期锁定在比特币网络中。之后,任何人都可以验证这份准确的文档在那时存在过。"
+        },
+        "card2": {
+            "title": "您的内容保持私密",
+            "description": "我们不需要查看您的完整文档。我们只使用加密指纹,而不是文本本身。"
+        },
+        "card3": {
+            "title": "之后易于证明",
+            "description": "您会获得一个 PDF 和一个小的证明文件。即使没有 Satohash,您或您的律师也可以使用开放工具进行验证。"
+        },
+        "continue": "继续"
+    },
+    "chooseTemplate": {
+        "title": "今天您想保护什么?",
+        "prenup": "婚前协议",
+        "property": "房产/不动产文件",
+        "powerOfAttorney": "授权委托书",
+        "custom": "其他内容(上传您自己的PDF)",
+        "disclaimer": "您可以编辑每个模板。Satohash 不提供法律建议;我们帮助您锁定证据。"
+    },
+    "account": {
+        "title": "创建您的账户",
+        "email": "电子邮件",
+        "name": "姓名",
+        "organization": "组织(可选)",
+        "securityNote": "您的文档和证明在传输和静态时都经过加密。您也可以在本地下载所有内容以保留自己的副本。",
+        "createAccount": "创建账户",
+        "signInInstead": "改为登录",
+        "emailPlaceholder": "your@email.com",
+        "namePlaceholder": "您的姓名",
+        "organizationPlaceholder": "公司或事务所名称"
+    },
+    "valueConfirmation": {
+        "title": "您几乎准备好了",
+        "step1": "创建或上传协议",
+        "step2": "邀请他人审查和签署",
+        "step3": "添加时间戳并下载您的证明包(PDF + 证明文件)",
+        "start": "开始我的第一份协议"
+    },
+    "contracts": {
+        "title": "我的合约",
+        "new": "新合约",
+        "empty": "还没有合约",
+        "emptyDescription": "创建您的第一份合约以开始使用。",
+        "status": {
+            "draft": "草稿",
+            "waiting": "等待签名",
+            "signed": "完全签署",
+            "timestamped": "已添加时间戳",
+            "pending": "等待确认",
+            "error": "错误"
+        }
+    },
+    "contractEditor": {
+        "title": "编辑合约",
+        "newTitle": "新合约",
+        "contractName": "合约名称",
+        "content": "合约内容",
+        "save": "保存",
+        "cancel": "取消",
+        "namePlaceholder": "输入此合约的名称..."
+    },
+    "signatures": {
+        "title": "收集签名",
+        "you": "您",
+        "signNow": "立即签署",
+        "sendInvite": "发送邀请链接",
+        "addSigner": "添加签署人",
+        "otherParty": "其他方",
+        "allSigned": "所有必需方已签署。现在是时候锁定此文档的时间了。",
+        "drawSignature": "绘制您的签名",
+        "typeSignature": "输入您的签名",
+        "agreeCheckbox": "我同意本文档的条款",
+        "clear": "清除",
+        "submit": "提交签名"
+    },
+    "timestamp": {
+        "review": {
+            "title": "最终审查",
+            "confirmTitle": "准备好添加时间戳了吗?",
+            "confirmMessage": "所有需要签署的人是否已审查此文档?一旦我们添加时间戳,任何更改都会破坏证明。",
+            "yes": "是的,继续",
+            "goBack": "返回并编辑",
+            "readyToSign": "准备签署",
+            "timestampThisAgreement": "为此协议添加时间戳"
+        },
+        "explain": {
+            "title": "时间戳有什么作用?",
+            "description": "Satohash 将为此文档创建加密指纹,并使用名为 OpenTimestamps 的开放标准将其发送到比特币网络。这证明了这份准确的文档在某个时间之前存在过,而不会透露其内容。",
+            "point1": "我们不会将您的文档上传到区块链,只上传指纹。",
+            "point2": "之后,任何人都可以使用开放工具验证证明,而不仅仅是 Satohash。",
+            "point3": "如果文档发生更改,指纹和证明将不再匹配。",
+            "feeTitle": "预计比特币网络费用",
+            "feeDescription": "此费用支付给比特币矿工,而不是 Satohash。它随网络活动而变化。",
+            "details": "详细信息",
+            "timestampNow": "立即添加时间戳",
+            "cancel": "取消",
+            "loading": "正在加载费用估算..."
+        },
+        "progress": {
+            "title": "正在创建您的时间戳…",
+            "step1": "正在创建指纹…",
+            "step2": "正在提交到时间戳服务器…",
+            "step3": "正在锚定到比特币…",
+            "info": "通常需要几秒钟来提交,最多几个小时才能被比特币网络完全确认。您已经可以下载收据,一旦网络确认,Satohash 将把它升级为完整证明。",
+            "done": "完成 – 查看收据"
+        },
+        "result": {
+            "title": "您的时间戳已创建",
+            "statusPending": "证明状态:等待区块链确认(早期收据)",
+            "statusComplete": "证明状态:已在比特币区块链上确认",
+            "fingerprint": "文档指纹(哈希)",
+            "timestampedAt": "时间戳创建于",
+            "blockchain": "区块链:比特币(通过 OpenTimestamps)",
+            "downloadProof": "下载证明包(PDF + 证明文件)",
+            "emailCopy": "通过电子邮件向我发送安全副本",
+            "keepSafe": "将此证明包保存在安全的地方。即使 Satohash 消失了,您仍然可以使用开源工具验证这份准确的文档在此时间之前存在过。"
+        },
+        "verificationHelp": {
+            "title": "之后如何验证",
+            "withSatohash": "使用 Satohash",
+            "withSatohashDesc": "在此处上传您的 PDF 和证明文件。我们将对照比特币网络检查它,并告诉您是否一切匹配。",
+            "withoutSatohash": "不使用 Satohash",
+            "withoutSatohashDesc": "您可以使用任何兼容 OpenTimestamps 的工具来验证您的证明。上传您的原始文档和 .ots 证明文件。该工具将告诉您指纹是否匹配以及何时被锚定到比特币。",
+            "noMatch": "如果有不匹配的地方",
+            "noMatchDesc": "如果证明无法验证,通常意味着文档已更改或使用了错误的文件。",
+            "backToContracts": "返回我的合约"
+        }
+    },
+    "trust": {
+        "title": "信任中心",
+        "howItWorks": "Satohash 工作原理",
+        "howItWorksDetail": "Satohash 使用 SHA-256（安全散列算法 256 位）为您的文档创建唯一的数字指纹。这一切都在您的浏览器本地完成；您的文档文本永远不会离开您的设备。此哈希随后通过 Merkle 树与成千上万个其他哈希捆绑在一起，其根哈希通过 OpenTimestamps 协议锚定到比特币区块链中。这创建了一个永久且不可更改的存在记录。",
+        "whatBlockchain": "能力与局限",
+        "whatBlockchainDetail": "区块链时间戳提供了数学证明，证明特定的数据集在特定时间存在且未被篡改。它本身并不证明签署者的身份（需要额外验证），不保证合同内容的法律正确性，且一旦锚定就无法修改或删除。它是一个'存在证明'工具，不能替代法律审查。",
+        "zkPrivacy": "隐私与零知识",
+        "zkPrivacyDetail": "我们的'隐私盾'（Privacy Shield）技术的灵感源自零知识证明（ZK Proofs）。由于我们只存储文档的加密哈希，因此我们对其内容一无所知。利用 Merkle 包含证明，我们允许您选择性地脱敏文档的敏感部分，同时仍能证明剩余部分与原始锚定版本匹配——兼具绝对隐私和绝对可验证性。",
+        "legallyBinding": "法律效力",
+        "legallyBindingDetail": "在许多司法管辖区，根据 ESIGN 法案（美国）和 eIDAS（欧盟）等法律，加密证据已获得认可。这些框架通常规定，不应仅因其为电子形式而否认电子记录的法律效力。区块链时间戳提供了极高等级的'电子时间戳'和'电子证据'，可用于法庭驳回有关文档伪造或倒填日期的指控。",
+        "legalDisclaimer": "Satohash 提供证据和工具，而不是法律建议。用户必须咨询当地法律和律师。"
+    },
+    "legal": {
+        "terms": "服务条款",
+        "privacy": "隐私政策",
+        "cryptoNotice": "数字签名和加密证据声明"
+    },
+    "donation": {
+        "title": "支持我们的开发者",
+        "description": "Satohash 由一个关心开放、可验证协议的小团队提供支持。如果您觉得这有用,可以用比特币或闪电网络给我们打赏。感谢您支持持续开发。",
+        "onchain": "将 BTC 发送到此地址:",
+        "lightning": "使用此二维码或发票发送闪电网络打赏。",
+        "transparency": "捐赠帮助我们支付基础设施、安全审计和开源贡献的费用。它们不购买法律建议或优先支持。",
+        "close": "关闭",
+        "copy": "复制",
+        "copied": "已复制!"
+    },
+    "footer": {
+        "supportDevelopers": "支持我们的开发者"
+    },
+    "common": {
+        "back": "返回",
+        "next": "下一步",
+        "save": "保存",
+        "cancel": "取消",
+        "delete": "删除",
+        "edit": "编辑",
+        "view": "查看",
+        "loading": "加载中...",
+        "error": "错误",
+        "success": "成功"
+    }
+}

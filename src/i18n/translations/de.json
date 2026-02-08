@@ -1,0 +1,185 @@
+{
+    "welcome": {
+        "title": "Willkommen bei Satohash",
+        "subtitle": "Verwandeln Sie Ihre wichtigen Vereinbarungen in kryptografische Beweise, dass sie zu einem bestimmten Zeitpunkt existierten—in Bitcoin verankert und einfach zu überprüfen.",
+        "getStarted": "Loslegen",
+        "howThisWorks": "Wie es funktioniert",
+        "language": "Sprache",
+        "change": "Ändern",
+        "pricingNote": "Satohash ist derzeit kostenlos während unseres Early-Access-Zeitraums. Sie zahlen nur die Bitcoin-Netzwerkgebühr, wenn Sie ein Dokument mit einem Zeitstempel versehen."
+    },
+    "howItWorks": {
+        "card1": {
+            "title": "Datum festlegen",
+            "description": "Satohash gibt Ihrem Dokument einen eindeutigen Fingerabdruck und verankert sein Datum im Bitcoin-Netzwerk. Später kann jeder überprüfen, dass genau dieses Dokument zu diesem Zeitpunkt existierte."
+        },
+        "card2": {
+            "title": "Ihr Inhalt bleibt privat",
+            "description": "Wir müssen Ihr vollständiges Dokument nicht sehen. Wir verwenden nur einen kryptografischen Fingerabdruck, nicht den Text selbst."
+        },
+        "card3": {
+            "title": "Später einfach zu beweisen",
+            "description": "Sie erhalten ein PDF und eine kleine Beweisdatei. Selbst ohne Satohash können Sie oder Ihr Anwalt es mit offenen Tools überprüfen."
+        },
+        "continue": "Weiter"
+    },
+    "chooseTemplate": {
+        "title": "Was möchten Sie heute schützen?",
+        "prenup": "Ehevertrag",
+        "property": "Immobilien- / Grundstücksdokument",
+        "powerOfAttorney": "Vollmacht",
+        "custom": "Etwas anderes (eigenes PDF hochladen)",
+        "disclaimer": "Sie können jede Vorlage bearbeiten. Satohash gibt keine Rechtsberatung; wir helfen Ihnen, die Beweise zu sichern."
+    },
+    "account": {
+        "title": "Erstellen Sie Ihr Konto",
+        "email": "E-Mail",
+        "name": "Name",
+        "organization": "Organisation (optional)",
+        "securityNote": "Ihre Dokumente und Beweise sind während der Übertragung und im Ruhezustand verschlüsselt. Sie können auch alles lokal herunterladen, um Ihre eigenen Kopien zu behalten.",
+        "createAccount": "Konto erstellen",
+        "signInInstead": "Stattdessen anmelden",
+        "emailPlaceholder": "ihre@email.de",
+        "namePlaceholder": "Ihr Name",
+        "organizationPlaceholder": "Firmen- oder Kanzleiname"
+    },
+    "valueConfirmation": {
+        "title": "Sie sind fast bereit",
+        "step1": "Eine Vereinbarung erstellen oder hochladen",
+        "step2": "Andere zum Überprüfen und Unterschreiben einladen",
+        "step3": "Zeitstempel erstellen und Ihr Beweispaket herunterladen (PDF + Beweisdatei)",
+        "start": "Meine erste Vereinbarung starten"
+    },
+    "contracts": {
+        "title": "Meine Verträge",
+        "new": "Neuer Vertrag",
+        "empty": "Noch keine Verträge",
+        "emptyDescription": "Erstellen Sie Ihren ersten Vertrag, um loszulegen.",
+        "status": {
+            "draft": "Entwurf",
+            "waiting": "Warten auf Unterschriften",
+            "signed": "Vollständig unterschrieben",
+            "timestamped": "Mit Zeitstempel",
+            "pending": "Bestätigung ausstehend",
+            "error": "Fehler"
+        }
+    },
+    "contractEditor": {
+        "title": "Vertrag bearbeiten",
+        "newTitle": "Neuer Vertrag",
+        "contractName": "Vertragsname",
+        "content": "Vertragsinhalt",
+        "save": "Speichern",
+        "cancel": "Abbrechen",
+        "namePlaceholder": "Geben Sie einen Namen für diesen Vertrag ein..."
+    },
+    "signatures": {
+        "title": "Unterschriften sammeln",
+        "you": "Sie",
+        "signNow": "Jetzt unterschreiben",
+        "sendInvite": "Einladungslink senden",
+        "addSigner": "Unterzeichner hinzufügen",
+        "otherParty": "Andere Partei",
+        "allSigned": "Alle erforderlichen Parteien haben unterschrieben. Zeit, dieses Dokument zeitlich festzulegen.",
+        "drawSignature": "Zeichnen Sie Ihre Unterschrift",
+        "typeSignature": "Tippen Sie Ihre Unterschrift",
+        "agreeCheckbox": "Ich stimme den Bedingungen dieses Dokuments zu",
+        "clear": "Löschen",
+        "submit": "Unterschrift einreichen"
+    },
+    "timestamp": {
+        "review": {
+            "title": "Abschließende Überprüfung",
+            "confirmTitle": "Bereit für Zeitstempel?",
+            "confirmMessage": "Haben alle, die unterschreiben müssen, dieses Dokument überprüft? Sobald wir es mit einem Zeitstempel versehen, wird jede Änderung den Beweis ungültig machen.",
+            "yes": "Ja, fortfahren",
+            "goBack": "Zurück und bearbeiten",
+            "readyToSign": "Bereit zum Unterschreiben",
+            "timestampThisAgreement": "Diese Vereinbarung mit Zeitstempel versehen"
+        },
+        "explain": {
+            "title": "Was macht der Zeitstempel?",
+            "description": "Satohash erstellt einen kryptografischen Fingerabdruck dieses Dokuments und sendet ihn an das Bitcoin-Netzwerk unter Verwendung eines offenen Standards namens OpenTimestamps. Dies beweist, dass genau dieses Dokument vor einem bestimmten Zeitpunkt existierte, ohne seinen Inhalt preiszugeben.",
+            "point1": "Wir laden Ihr Dokument nicht in die Blockchain hoch, nur den Fingerabdruck.",
+            "point2": "Später kann jeder den Beweis mit offenen Tools überprüfen, nicht nur Satohash.",
+            "point3": "Wenn sich das Dokument ändert, stimmen Fingerabdruck und Beweis nicht mehr überein.",
+            "feeTitle": "Geschätzte Bitcoin-Netzwerkgebühr",
+            "feeDescription": "Diese Gebühr geht an Bitcoin-Miner, nicht an Satohash. Sie ändert sich mit der Netzwerkaktivität.",
+            "details": "Details",
+            "timestampNow": "Jetzt mit Zeitstempel versehen",
+            "cancel": "Abbrechen",
+            "loading": "Gebührenschätzung wird geladen..."
+        },
+        "progress": {
+            "title": "Ihr Zeitstempel wird erstellt…",
+            "step1": "Fingerabdruck wird erstellt…",
+            "step2": "An Zeitstempelserver senden…",
+            "step3": "In Bitcoin verankern…",
+            "info": "Dies dauert normalerweise ein paar Sekunden zum Einreichen und bis zu ein paar Stunden, um vollständig vom Bitcoin-Netzwerk bestätigt zu werden. Sie können bereits eine Quittung herunterladen, und Satohash wird sie zu einem vollständigen Beweis aktualisieren, sobald das Netzwerk bestätigt.",
+            "done": "Fertig – Quittung ansehen"
+        },
+        "result": {
+            "title": "Ihr Zeitstempel wurde erstellt",
+            "statusPending": "Beweisstatus: Blockchain-Bestätigung ausstehend (frühe Quittung)",
+            "statusComplete": "Beweisstatus: Auf Bitcoin-Blockchain bestätigt",
+            "fingerprint": "Dokument-Fingerabdruck (Hash)",
+            "timestampedAt": "Zeitstempel erstellt am",
+            "blockchain": "Blockchain: Bitcoin (über OpenTimestamps)",
+            "downloadProof": "Beweispaket herunterladen (PDF + Beweisdatei)",
+            "emailCopy": "Mir eine sichere Kopie per E-Mail senden",
+            "keepSafe": "Bewahren Sie dieses Beweispaket an einem sicheren Ort auf. Selbst wenn Satohash verschwinden würde, könnten Sie immer noch mit Open-Source-Tools überprüfen, dass genau dieses Dokument vor diesem Zeitpunkt existierte."
+        },
+        "verificationHelp": {
+            "title": "So überprüfen Sie dies später",
+            "withSatohash": "Mit Satohash",
+            "withSatohashDesc": "Laden Sie Ihr PDF und Ihre Beweisdatei hier hoch. Wir überprüfen es gegen das Bitcoin-Netzwerk und sagen Ihnen, ob alles übereinstimmt.",
+            "withoutSatohash": "Ohne Satohash",
+            "withoutSatohashDesc": "Sie können jedes OpenTimestamps-kompatible Tool verwenden, um Ihren Beweis zu überprüfen. Laden Sie Ihr Originaldokument und die .ots-Beweisdatei hoch. Das Tool sagt Ihnen, ob der Fingerabdruck übereinstimmt und wann er in Bitcoin verankert wurde.",
+            "noMatch": "Wenn etwas nicht übereinstimmt",
+            "noMatchDesc": "Wenn der Beweis nicht überprüft wird, bedeutet dies normalerweise, dass das Dokument geändert wurde oder die falsche Datei verwendet wurde.",
+            "backToContracts": "Zurück zu meinen Verträgen"
+        }
+    },
+    "trust": {
+        "title": "Vertrauenszentrum",
+        "howItWorks": "Wie Satohash funktioniert",
+        "howItWorksDetail": "Satohash verwendet den SHA-256 (Secure Hash Algorithm 256-Bit), um einen einzigartigen digitalen Fingerabdruck Ihres Dokuments zu erstellen. Dies geschieht lokal in Ihrem Browser; Ihr Dokumententext verlässt niemals Ihr Gerät. Dieser Hash wird dann mit Tausenden anderen in einem Merkle-Baum gebündelt und dessen Wurzel über das OpenTimestamps-Protokoll in der Bitcoin-Blockchain verankert. Dies schafft einen dauerhaften, unveränderlichen Existenznachweis.",
+        "whatBlockchain": "Fähigkeiten und Grenzen",
+        "whatBlockchainDetail": "Blockchain-Zeitstempel bieten einen mathematischen Nachweis, dass ein bestimmter Datensatz zu einem bestimmten Zeitpunkt existierte und nicht verändert wurde. Sie beweisen NICHT von selbst die Identität des Unterzeichners, garantieren NICHT die rechtliche Korrektheit des Vertragsinhalts und können nach der Verankerung NICHT geändert oder gelöscht werden. Es ist ein Instrument für den 'Existenznachweis', kein Ersatz für eine rechtliche Prüfung.",
+        "zkPrivacy": "Datenschutz & Zero-Knowledge",
+        "zkPrivacyDetail": "Unsere 'Privacy Shield'-Technologie ist von Zero-Knowledge-Proofs (ZKP) inspiriert. Da wir nur den kryptografischen Hash Ihres Dokuments speichern, haben wir keinerlei Kenntnis von dessen Inhalt. Durch Merkle-Inklusionsnachweise ermöglichen wir es Ihnen, sensible Teile eines Dokuments selektiv zu schwärzen und dennoch zu beweisen, dass die restlichen Teile mit der ursprünglich verankerten Version übereinstimmen.",
+        "legallyBinding": "Rechtliche Durchsetzbarkeit",
+        "legallyBindingDetail": "In vielen Rechtsordnungen wird kryptografischer Beweis durch Gesetze wie den ESIGN Act (USA) und eIDAS (EU) anerkannt. Diese Rahmenwerke besagen im Allgemeinen, dass einem elektronischen Datensatz die Rechtswirkung nicht allein deshalb verweigert werden darf, weil er in elektronischer Form vorliegt. Blockchain-Zeitstempel bieten ein extrem hohes Beweisniveau, das vor Gericht verwendet werden kann, um Behauptungen über Dokumentenfälschung oder Rückdatierung zu widerlegen.",
+        "legalDisclaimer": "Satohash bietet Beweise und Werkzeuge, keine Rechtsberatung. Benutzer müssen lokale Gesetze und einen Anwalt konsultieren."
+    },
+    "legal": {
+        "terms": "Nutzungsbedingungen",
+        "privacy": "Datenschutzrichtlinie",
+        "cryptoNotice": "Hinweis zu digitaler Signatur und kryptografischem Beweis"
+    },
+    "donation": {
+        "title": "Unterstützen Sie unsere Entwickler",
+        "description": "Satohash wird von einem kleinen Team betrieben, dem offene, überprüfbare Vereinbarungen am Herzen liegen. Wenn Sie dies nützlich finden, können Sie uns in Bitcoin oder Lightning ein Trinkgeld geben. Vielen Dank für die Unterstützung der kontinuierlichen Entwicklung.",
+        "onchain": "BTC an diese Adresse senden:",
+        "lightning": "Ein Lightning-Trinkgeld über diesen QR-Code oder diese Rechnung senden.",
+        "transparency": "Spenden helfen uns, Infrastruktur, Sicherheitsaudits und Open-Source-Beiträge zu decken. Sie kaufen keine Rechtsberatung oder vorrangigen Support.",
+        "close": "Schließen",
+        "copy": "Kopieren",
+        "copied": "Kopiert!"
+    },
+    "footer": {
+        "supportDevelopers": "Unterstützen Sie unsere Entwickler"
+    },
+    "common": {
+        "back": "Zurück",
+        "next": "Weiter",
+        "save": "Speichern",
+        "cancel": "Abbrechen",
+        "delete": "Löschen",
+        "edit": "Bearbeiten",
+        "view": "Ansehen",
+        "loading": "Wird geladen...",
+        "error": "Fehler",
+        "success": "Erfolg"
+    }
+}

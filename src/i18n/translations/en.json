@@ -1,0 +1,196 @@
+{
+    "welcome": {
+        "title": "Welcome to Satohash",
+        "subtitle": "Turn your important agreements into cryptographic proof that they existed at a specific time—anchored to Bitcoin and easy to verify.",
+        "getStarted": "Get started",
+        "howThisWorks": "How this works",
+        "language": "Language",
+        "change": "Change",
+        "pricingNote": "Satohash is currently free while we're in early access. You only pay the Bitcoin network fee when you timestamp a document.",
+        "features": {
+            "cryptoProof": "Cryptographic Proof",
+            "cryptoProofDesc": "Create an unforgeable fingerprint of your document using SHA-256 cryptography.",
+            "cryptoProofDetail": "Hashing converts any file into a unique 64-character string. Even a single changed comma results in a completely different hash. Satohash handles this locally on your device.",
+            "timestamp": "Bitcoin Timestamping",
+            "timestampDesc": "Anchor your proof to the Bitcoin blockchain using the OpenTimestamps protocol.",
+            "timestampDetail": "Your document's hash is bundled with thousands of others into a Merkle tree. A single 'root' hash is then committed to the Bitcoin network, providing permanent, immutable proof of existence.",
+            "verify": "Easy Verification",
+            "verifyDesc": "Anyone can verify your proof independently using open-source tools.",
+            "verifyDetail": "A .ots file contains the 'path' from your document to the Bitcoin block. You don't need Satohash to prove it; you can use the official OpenTimestamps client or third-party block explorers."
+        }
+    },
+    "howItWorks": {
+        "card1": {
+            "title": "Lock in the date",
+            "description": "Satohash gives your document a unique fingerprint and locks its date into the Bitcoin network. Later, anyone can check that this exact document existed at that time."
+        },
+        "card2": {
+            "title": "Your content stays private",
+            "description": "We don't need to see your full document. We only use a cryptographic fingerprint, not the text itself."
+        },
+        "card3": {
+            "title": "Easy to prove later",
+            "description": "You get a PDF and a small proof file. Even without Satohash, you or your lawyer can verify it using open tools."
+        },
+        "continue": "Continue"
+    },
+    "chooseTemplate": {
+        "title": "What do you want to protect today?",
+        "prenup": "Prenuptial agreement",
+        "property": "Property / real estate document",
+        "powerOfAttorney": "Power of attorney",
+        "custom": "Something else (upload your own PDF)",
+        "disclaimer": "You can edit every template. Satohash does not give legal advice; we help you lock in the evidence."
+    },
+    "account": {
+        "title": "Create your account",
+        "email": "Email",
+        "name": "Name",
+        "organization": "Organization (optional)",
+        "securityNote": "Your documents and proofs are encrypted in transit and at rest. You can also download everything locally to keep your own copies.",
+        "createAccount": "Create account",
+        "signInInstead": "Sign in instead",
+        "emailPlaceholder": "your@email.com",
+        "namePlaceholder": "Your name",
+        "organizationPlaceholder": "Company or firm name"
+    },
+    "valueConfirmation": {
+        "title": "You're almost ready",
+        "step1": "Create or upload an agreement",
+        "step2": "Invite others to review and sign",
+        "step3": "Timestamp and download your proof package (PDF + proof file)",
+        "start": "Start my first agreement"
+    },
+    "contracts": {
+        "title": "My Contracts",
+        "new": "New Contract",
+        "empty": "No contracts yet",
+        "emptyDescription": "Create your first contract to get started.",
+        "status": {
+            "draft": "Draft",
+            "waiting": "Waiting for signatures",
+            "signed": "Fully signed",
+            "timestamped": "Timestamped",
+            "pending": "Pending confirmation",
+            "error": "Error"
+        }
+    },
+    "contractEditor": {
+        "title": "Edit Contract",
+        "newTitle": "New Contract",
+        "contractName": "Contract Name",
+        "content": "Contract Content",
+        "save": "Save",
+        "cancel": "Cancel",
+        "namePlaceholder": "Enter a name for this contract..."
+    },
+    "signatures": {
+        "title": "Collect Signatures",
+        "you": "You",
+        "signNow": "Sign now",
+        "sendInvite": "Send invite link",
+        "addSigner": "Add signer",
+        "otherParty": "Other party",
+        "allSigned": "All required parties have signed. Time to lock this document in time.",
+        "drawSignature": "Draw your signature",
+        "typeSignature": "Type your signature",
+        "agreeCheckbox": "I agree to the terms of this document",
+        "clear": "Clear",
+        "submit": "Submit signature"
+    },
+    "timestamp": {
+        "review": {
+            "title": "Final Review",
+            "confirmTitle": "Ready to timestamp?",
+            "confirmMessage": "Has everyone who needs to sign reviewed this document? Once we timestamp it, any change will break the proof.",
+            "yes": "Yes, continue",
+            "goBack": "Go back and edit",
+            "readyToSign": "Ready to sign",
+            "timestampThisAgreement": "Timestamp this agreement"
+        },
+        "explain": {
+            "title": "What does timestamping do?",
+            "description": "Satohash will create a cryptographic fingerprint of this document and send it to the Bitcoin network using an open standard called OpenTimestamps. This proves that this exact document existed before a certain time, without revealing its contents.",
+            "point1": "We do not upload your document to the blockchain, only the fingerprint.",
+            "point2": "Later, anyone can verify the proof using open tools, not just Satohash.",
+            "point3": "If the document changes, the fingerprint and proof no longer match.",
+            "feeTitle": "Estimated Bitcoin network fee",
+            "feeDescription": "This fee goes to Bitcoin miners, not Satohash. It changes with network activity.",
+            "details": "Details",
+            "timestampNow": "Timestamp now",
+            "cancel": "Cancel",
+            "loading": "Loading fee estimate..."
+        },
+        "progress": {
+            "title": "Creating your timestamp…",
+            "step1": "Creating fingerprint…",
+            "step2": "Submitting to timestamp servers…",
+            "step3": "Anchoring into Bitcoin…",
+            "info": "This usually takes a few seconds to submit, and up to a few hours to be fully confirmed by the Bitcoin network. You can already download a receipt, and Satohash will upgrade it to a full proof once the network confirms.",
+            "done": "Done – view receipt"
+        },
+        "result": {
+            "title": "Your timestamp is created",
+            "statusPending": "Proof status: Pending blockchain confirmation (early receipt)",
+            "statusComplete": "Proof status: Confirmed on Bitcoin blockchain",
+            "fingerprint": "Document fingerprint (hash)",
+            "timestampedAt": "Timestamp created at",
+            "blockchain": "Blockchain: Bitcoin (via OpenTimestamps)",
+            "downloadProof": "Download proof package (PDF + proof file)",
+            "emailCopy": "Email me a secure copy",
+            "keepSafe": "Keep this proof package somewhere safe. Even if Satohash disappeared, you could still verify that this exact document existed before this time using open-source tools."
+        },
+        "verificationHelp": {
+            "title": "How to verify this later",
+            "withSatohash": "With Satohash",
+            "withSatohashDesc": "Upload your PDF and proof file here. We'll check it against the Bitcoin network and tell you if everything matches.",
+            "withoutSatohash": "Without Satohash",
+            "withoutSatohashDesc": "You can use any OpenTimestamps-compatible tool to verify your proof. Upload your original document and the .ots proof file. The tool will tell you whether the fingerprint matches and when it was anchored into Bitcoin.",
+            "noMatch": "If something doesn't match",
+            "noMatchDesc": "If the proof doesn't verify, it usually means the document was changed or the wrong file was used.",
+            "backToContracts": "Back to my contracts"
+        }
+    },
+    "trust": {
+        "title": "Trust Center",
+        "howItWorks": "How Satohash works",
+        "howItWorksDetail": "Satohash uses the SHA-256 (Secure Hash Algorithm 256-bit) to create a unique digital fingerprint of your document. This happens locally in your browser; your document's text never needs to leave your device. This hash is then bundled with thousands of others into a Merkle Tree and its root is anchored to the Bitcoin blockchain using the OpenTimestamps protocol. This creates a permanent, immutable record of existence.",
+        "whatBlockchain": "Capabilities and Limitations",
+        "whatBlockchainDetail": "Blockchain timestamping provides mathematical proof that a specific dataset existed at a specific time and has not been altered. It does NOT prove the identity of the signer by itself (requires additional verification), it does NOT guarantee the legal correctness of the contract contents, and it CANNOT be modified or deleted once anchored. It is a 'proof of existence' tool, not a substitute for legal review.",
+        "zkPrivacy": "Privacy & Zero-Knowledge",
+        "zkPrivacyDetail": "Our 'Privacy Shield' technology is inspired by Zero-Knowledge (ZK) proofs. Because we only store the cryptographic hash of your document, we have zero knowledge of its contents. Using Merkle inclusion proofs, we can even allow you to selectively redact sensitive parts of a document while still proving the remaining parts match the original anchored version—providing both absolute privacy and absolute verifiability.",
+        "legallyBinding": "Legal Enforceability",
+        "legallyBindingDetail": "In many jurisdictions, cryptographic evidence is recognized under laws like the ESIGN Act (US), UETA (US), and eIDAS (EU). These frameworks generally state that an electronic record should not be denied legal effect solely because it is in electronic form. Blockchain timestamps provide an extremely high tier of 'Electronic Time-Stamps' and 'Electronic Evidence' that can be used in court to rebut claims of document forgery or backdating.",
+        "legalDisclaimer": "Satohash provides evidence and tooling, not legal advice. Users must consult local law and counsel."
+    },
+    "legal": {
+        "terms": "Terms of Service",
+        "privacy": "Privacy Policy",
+        "cryptoNotice": "Digital Signature & Cryptographic Evidence Notice"
+    },
+    "donation": {
+        "title": "Support our developers",
+        "description": "Satohash is powered by a small team that cares about open, verifiable agreements. If you find this useful, you can tip us in Bitcoin or Lightning. Thank you for supporting continued development.",
+        "onchain": "Send BTC to this address:",
+        "lightning": "Send a Lightning tip using this QR code or invoice.",
+        "transparency": "Donations help us cover infrastructure, security audits, and open-source contributions. They do not buy legal advice or priority support.",
+        "close": "Close",
+        "copy": "Copy",
+        "copied": "Copied!"
+    },
+    "footer": {
+        "supportDevelopers": "Support our developers"
+    },
+    "common": {
+        "back": "Back",
+        "next": "Next",
+        "save": "Save",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "edit": "Edit",
+        "view": "View",
+        "loading": "Loading...",
+        "error": "Error",
+        "success": "Success"
+    }
+}
