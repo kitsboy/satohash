@@ -14,9 +14,11 @@ import {
     ChevronRight,
     ShieldCheck,
     Globe,
-    Activity as ActivityIcon
+    Activity as ActivityIcon,
+    Check
 } from 'lucide-react';
 import Button from '../../components/Button';
+import Card from '../../components/Card';
 import StatusPill from '../../components/StatusPill';
 import Footer from '../../components/Footer';
 import BlockchainPulse from '../../components/BlockchainPulse';
@@ -310,7 +312,7 @@ export default function ContractList() {
                                     { event: 'Block #831,492 confirmed', time: '1h ago', icon: Globe, color: '#3b82f6' }
                                 ].map((item, i) => (
                                     <div key={i} style={{ display: 'flex', gap: '12px', opacity: 1 - i * 0.2 }}>
-                                        <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: `${item.color}10`, display: 'flex', alignItems: 'center', justifyCenter: 'center', color: item.color, flexShrink: 0, margin: 'auto' }}>
+                                        <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: `${item.color}10`, display: 'flex', alignItems: 'center', justifyContent: 'center', color: item.color, flexShrink: 0, margin: 'auto' }}>
                                             <item.icon size={18} style={{ margin: 'auto' }} />
                                         </div>
                                         <div>
