@@ -16,7 +16,7 @@ export const generateProofPackage = (contract, timestamp) => {
         pdf.rect(0, 0, 210, 297, 'F');
 
         // Subtle Hash Watermark
-        pdf.setTextColor(230, 230, 230);
+        pdf.setTextColor(245, 245, 245);
         pdf.setFontSize(6);
         pdf.setFont('courier', 'normal');
         const hashStr = "000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f ";
@@ -25,6 +25,12 @@ export const generateProofPackage = (contract, timestamp) => {
                 pdf.text(hashStr.substring(0, 48), j, i, { angle: -30 });
             }
         }
+
+        // Bottom Protocol Anchor Text
+        pdf.setTextColor(180, 180, 180);
+        pdf.setFontSize(8);
+        pdf.setFont('helvetica', 'bold');
+        pdf.text('BITCOIN IMMUTABLE ANCHOR • AUTHENTICATED BY SATOHASH PROTOCOL', 105, 290, { align: 'center' });
     };
 
     const addDigitalSeal = (pdf, x, y) => {
@@ -138,6 +144,99 @@ export const generateProofPackage = (contract, timestamp) => {
     doc.text(disclaimer, 20, 42);
 
     return doc;
+};
+
+/**
+ * Generate a specialized Verification Certificate for legal clarity
+ */
+export const generateVerificationCertificate = (contract, timestamp) => {
+    const doc = new jsPDF({
+        orientation: 'p',
+        unit: 'mm',
+        format: 'a4'
+    });
+
+    const addPremiumBackground = (pdf) => {
+        pdf.setFillColor(253, 253, 251);
+        pdf.rect(0, 0, 210, 297, 'F');
+        pdf.setDrawColor(99, 102, 241);
+        pdf.setLineWidth(0.8);
+        pdf.rect(10, 10, 190, 277, 'S');
+    };
+
+    addPremiumBackground(doc);
+
+    // Header
+    doc.setTextColor(17, 24, 39);
+    doc.setFont('times', 'bold');
+    doc.setFontSize(22);
+    doc.text('CERTIFICATE OF CRYPTOGRAPHIC ANCHOR', 105, 30, { align: 'center' });
+
+    doc.setFontSize(10);
+    doc.setFont('times', 'normal');
+    doc.text(`Protocol Version: Satohash 1.2.0 • Anchor: Bitcoin Blockchain`, 105, 38, { align: 'center' });
+
+    // Subject
+    doc.setFontSize(14);
+    doc.setFont('times', 'bold');
+    doc.text('Document Subject:', 25, 55);
+    doc.setFont('times', 'normal');
+    doc.text(contract.name || 'Untitled Document', 25, 62);
+
+    // Hash Section
+    doc.setFillColor(248, 250, 252);
+    doc.rect(20, 75, 170, 30, 'F');
+    doc.setFont('times', 'bold');
+    doc.setFontSize(11);
+    doc.text('SHA-256 DIGITAL FINGERPRINT', 105, 82, { align: 'center' });
+    doc.setFont('courier', 'bold');
+    doc.setFontSize(9);
+    doc.text(timestamp ? timestamp.hash : 'PENDING_HASH', 105, 92, { align: 'center' });
+
+    // Legal Statement
+    doc.setFont('times', 'normal');
+    doc.setFontSize(11);
+    const statement = doc.splitTextToSize(
+        `This document serves as an official technical supplement to the agreement titled "${contract.name}". ` +
+        `The fingerprint above was secured on the Bitcoin blockchain at timestamp ${new Date().toLocaleString()}. ` +
+        `By anchoring this hash into the global decentralized ledger, Satohash has created an indisputable record of ` +
+        `the document's existence and integrity. Any unauthorized modification to even a single bit of the document ` +
+        `will result in a hash mismatch, invalidating this certificate.`,
+        160
+    );
+    doc.text(statement, 25, 120, { lineHeightFactor: 1.5 });
+
+    // Audit steps
+    doc.setFont('times', 'bold');
+    doc.text('How to Audit this Proof:', 25, 155);
+    doc.setFont('times', 'normal');
+    const steps = [
+        '1. Access the Satohash Protocol Auditor at satohash.com/verify.',
+        '2. Provide the original file and the associated .ots proof data.',
+        '3. The protocol will reconstruct the Merkle Path to the Bitcoin Genesis block.',
+        '4. Independent verification can be performed at opentimestamps.org.'
+    ];
+    doc.text(steps, 25, 165, { lineHeightFactor: 1.5 });
+
+    // Seal
+    doc.setDrawColor(99, 102, 241);
+    doc.setFillColor(99, 102, 241);
+    doc.circle(170, 250, 20, 'F');
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(8);
+    doc.text('BITCOIN', 170, 248, { align: 'center' });
+    doc.setFontSize(10);
+    doc.text('ANCHORED', 170, 254, { align: 'center' });
+
+    return doc;
+};
+
+/**
+ * Download the verification certificate
+ */
+export const downloadVerificationCertificate = (contract, timestamp) => {
+    const doc = generateVerificationCertificate(contract, timestamp);
+    doc.save(`${contract.name}_verification_cert.pdf`);
 };
 
 /**

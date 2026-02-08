@@ -44,49 +44,51 @@ function App() {
 
     return (
         <Router>
-            <Navbar />
-            <Routes>
-                {/* Onboarding flow */}
-                <Route path="/welcome" element={<Welcome />} />
-                <Route path="/how-it-works" element={<HowItWorks />} />
-                <Route path="/choose-template" element={<TemplateLibrary />} />
-                <Route path="/account-creation" element={<AccountCreation />} />
-                <Route path="/value-confirmation" element={<ValueConfirmation />} />
+            <GlobalDropzone>
+                <Navbar />
+                <Routes>
+                    {/* Onboarding flow */}
+                    <Route path="/welcome" element={<Welcome />} />
+                    <Route path="/how-it-works" element={<HowItWorks />} />
+                    <Route path="/choose-template" element={<TemplateLibrary />} />
+                    <Route path="/account-creation" element={<AccountCreation />} />
+                    <Route path="/value-confirmation" element={<ValueConfirmation />} />
 
-                {/* Main app */}
-                <Route path="/contracts" element={<ContractList />} />
-                <Route path="/contracts/new/:templateType" element={<ContractEditor />} />
-                <Route path="/contracts/:contractId" element={<ContractView />} />
-                <Route path="/contracts/:contractId/edit" element={<ContractEditor />} />
-                <Route path="/contracts/:contractId/sign" element={<SignatureFlow />} />
-                <Route path="/batch-proof" element={<BatchProof />} />
+                    {/* Main app */}
+                    <Route path="/contracts" element={<ContractList />} />
+                    <Route path="/contracts/new/:templateType" element={<ContractEditor />} />
+                    <Route path="/contracts/:contractId" element={<ContractView />} />
+                    <Route path="/contracts/:contractId/edit" element={<ContractEditor />} />
+                    <Route path="/contracts/:contractId/sign" element={<SignatureFlow />} />
+                    <Route path="/batch-proof" element={<BatchProof />} />
 
-                {/* Timestamping flow */}
-                <Route path="/contracts/:contractId/timestamp/review" element={<FinalReview />} />
-                <Route path="/contracts/:contractId/timestamp/explain" element={<TimestampExplanation />} />
-                <Route path="/contracts/:contractId/timestamp/progress" element={<TimestampProgress />} />
-                <Route path="/contracts/:contractId/timestamp/result" element={<TimestampResult />} />
-                <Route path="/timestamp/verify-help" element={<VerificationHelp />} />
+                    {/* Timestamping flow */}
+                    <Route path="/contracts/:contractId/timestamp/review" element={<FinalReview />} />
+                    <Route path="/contracts/:contractId/timestamp/explain" element={<TimestampExplanation />} />
+                    <Route path="/contracts/:contractId/timestamp/progress" element={<TimestampProgress />} />
+                    <Route path="/contracts/:contractId/timestamp/result" element={<TimestampResult />} />
+                    <Route path="/timestamp/verify-help" element={<VerificationHelp />} />
 
-                {/* Trust & Legal */}
-                <Route path="/trust" element={<TrustCenter />} />
-                <Route path="/legal/terms" element={<TermsOfService />} />
-                <Route path="/legal/privacy" element={<PrivacyPolicy />} />
-                <Route path="/legal/crypto-notice" element={<CryptoNotice />} />
+                    {/* Trust & Legal */}
+                    <Route path="/trust" element={<TrustCenter />} />
+                    <Route path="/legal/terms" element={<TermsOfService />} />
+                    <Route path="/legal/privacy" element={<PrivacyPolicy />} />
+                    <Route path="/legal/crypto-notice" element={<CryptoNotice />} />
 
-                {/* Verification */}
-                <Route path="/verify" element={<VerificationTool />} />
+                    {/* Verification */}
+                    <Route path="/verify" element={<VerificationTool />} />
 
-                {/* Default redirect */}
-                <Route
-                    path="/"
-                    element={
-                        hasCompletedOnboarding ?
-                            <Navigate to="/contracts" replace /> :
-                            <Navigate to="/welcome" replace />
-                    }
-                />
-            </Routes>
+                    {/* Default redirect */}
+                    <Route
+                        path="/"
+                        element={
+                            hasCompletedOnboarding ?
+                                <Navigate to="/contracts" replace /> :
+                                <Navigate to="/welcome" replace />
+                        }
+                    />
+                </Routes>
+            </GlobalDropzone>
         </Router>
     );
 }
