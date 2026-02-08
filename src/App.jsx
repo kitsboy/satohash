@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Navbar from './components/Navbar';
+import GlobalDropzone from './components/GlobalDropzone';
 
 // Onboarding
 import Welcome from './pages/onboarding/Welcome';
