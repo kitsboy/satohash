@@ -92,12 +92,33 @@ export default function VerificationTool() {
                         fontSize: 'clamp(32px, 8vw, 64px)',
                         fontWeight: '950',
                         letterSpacing: '-0.06em',
-                        marginBottom: '20px',
+                        marginBottom: '24px',
                         color: 'var(--color-text-primary)',
                         lineHeight: '1.1'
                     }}>
                         {status === 'success' ? 'Verification Success' : 'Verify'}
                     </h1>
+                    <div style={{
+                        maxWidth: '780px',
+                        margin: '0 auto',
+                        padding: '32px',
+                        background: 'rgba(255, 255, 255, 0.5)',
+                        backdropFilter: 'blur(10px)',
+                        borderRadius: '24px',
+                        border: '1px solid var(--color-border)',
+                        textAlign: 'left',
+                        boxShadow: '0 4px 30px rgba(0,0,0,0.02)'
+                    }}>
+                        <p style={{
+                            color: 'var(--color-text-primary)',
+                            fontSize: '18px',
+                            lineHeight: '1.7',
+                            fontWeight: '850',
+                            margin: 0
+                        }}>
+                            <span style={{ color: 'var(--color-primary)' }}>Protocol Intelligence:</span> Satohash verification leverages the immutable nature of the Bitcoin blockchain to provide an absolute mathematical audit of your agreements. By providing the <strong style={{ color: '#000' }}>Original PDF</strong> and its corresponding <strong style={{ color: '#000' }}>.ots proof file</strong>, our engine re-calculates the SHA-256 hash and reconstructs the Merkle path to verify its presence in a specific Bitcoin block. A successful result confirms that the document is identical—to the last bit—to the one anchored at that block height, providing indisputable proof of existence and integrity.
+                        </p>
+                    </div>
                 </div>
 
                 {status === 'success' ? (

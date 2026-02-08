@@ -15,6 +15,15 @@ import {
 } from 'lucide-react';
 import Card from '../../components/Card';
 import Button from '../../components/Button';
+import Footer from '../../components/Footer';
+import {
+    FileText,
+    Handshake,
+    UserCheck,
+    Plane,
+    FileSignature,
+    PenTool
+} from 'lucide-react';
 
 const categories = [
     { id: 'all', name: 'All Templates', icon: Library },
@@ -68,6 +77,50 @@ const templates = [
         icon: ShieldCheck,
         color: '#10b981',
         tag: 'Secure'
+    },
+    {
+        id: 'will',
+        title: 'Last Will & Testament',
+        category: 'personal',
+        description: 'Define asset distribution and guardianship of minors with timestamped proof.',
+        jurisdiction: 'Common Law / Global',
+        difficulty: 'Critical',
+        icon: FileText,
+        color: '#8b5cf6',
+        tag: 'Essential'
+    },
+    {
+        id: 'affidavit',
+        title: 'Affidavit of Truth',
+        category: 'legal',
+        description: 'A sworn statement of fact anchored to the block height for legal standing.',
+        jurisdiction: 'Universal / Judiciary',
+        difficulty: 'Advanced',
+        icon: UserCheck,
+        color: '#2563eb',
+        tag: 'Notary Alt'
+    },
+    {
+        id: 'lease',
+        title: 'Commercial Lease',
+        category: 'property',
+        description: 'Binding agreement for business premises with immutable commencement proof.',
+        jurisdiction: 'Real Estate / Global',
+        difficulty: 'Standard',
+        icon: Building,
+        color: '#475569',
+        tag: 'Business'
+    },
+    {
+        id: 'travel',
+        title: 'Child Travel Consent',
+        category: 'personal',
+        description: 'Documented permission for minors traveling without both guardians.',
+        jurisdiction: 'International/Border',
+        difficulty: 'Standard',
+        icon: Plane,
+        color: '#06b6d4',
+        tag: 'Travel'
     }
 ];
 
@@ -230,6 +283,7 @@ export default function TemplateLibrary() {
                     ))}
                 </div>
             </div>
+            <Footer />
         </div>
     );
 }
