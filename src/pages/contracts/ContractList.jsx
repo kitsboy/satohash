@@ -4,6 +4,7 @@ import { Plus, FileText, Calendar, Users, ArrowRight, Sparkles } from 'lucide-re
 import Button from '../../components/Button';
 import StatusPill from '../../components/StatusPill';
 import Footer from '../../components/Footer';
+import BlockchainPulse from '../../components/BlockchainPulse';
 import { useState, useEffect } from 'react';
 
 const getContractIcon = (templateType) => {
@@ -54,7 +55,9 @@ export default function ContractList() {
                     marginTop: 'var(--spacing-2xl)',
                     marginBottom: 'var(--spacing-xl)'
                 }}>
-                    <div>
+                    <BlockchainPulse />
+
+                    <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                         <h1 style={{
                             fontSize: 'var(--text-3xl)',
                             fontWeight: '950', /* Increased from 800 */
@@ -63,8 +66,8 @@ export default function ContractList() {
                         }}>
                             {t('contracts.title')}
                         </h1>
-                        <p className="text-secondary" style={{ margin: 0 }}>
-                            Manage your timestamped contracts and agreements
+                        <p className="text-secondary" style={{ margin: 0, fontWeight: '700' }}>
+                            Manage your cryptographic agreements and Bitcoin-anchored proofs.
                         </p>
                     </div>
 
@@ -128,40 +131,59 @@ export default function ContractList() {
 
                         <h2 style={{
                             fontSize: 'var(--text-2xl)',
-                            fontWeight: '900', /* Increased from 700 */
+                            fontWeight: '950',
                             marginBottom: 'var(--spacing-sm)',
                             color: 'var(--color-text-primary)'
                         }}>
-                            {t('contracts.empty')}
+                            Your Digital Safe is Ready
                         </h2>
 
                         <p className="text-tertiary" style={{
                             fontSize: 'var(--text-lg)',
                             maxWidth: '480px',
-                            margin: '0 auto var(--spacing-2xl)'
+                            margin: '0 auto var(--spacing-2xl)',
+                            fontWeight: '800'
                         }}>
-                            {t('contracts.emptyDescription')}
+                            You haven't timestamped any documents yet. Launch your first cryptographic agreement from a template below:
                         </p>
 
-                        <Button
-                            variant="primary"
-                            onClick={handleNewContract}
-                            style={{
-                                display: 'inline-flex',
-                                alignItems: 'center',
-                                gap: 'var(--spacing-sm)',
-                                background: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)',
-                                border: 'none',
-                                fontSize: 'var(--text-lg)',
-                                height: '56px',
-                                paddingLeft: 'var(--spacing-2xl)',
-                                paddingRight: 'var(--spacing-2xl)',
-                                boxShadow: '0 4px 20px rgba(99, 102, 241, 0.3)'
-                            }}
-                        >
-                            <Plus size={24} />
-                            {t('contracts.new')}
-                        </Button>
+                        <div style={{
+                            display: 'grid',
+                            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+                            gap: '20px',
+                            maxWidth: '700px',
+                            margin: '0 auto'
+                        }}>
+                            {[
+                                { id: 'nda', name: 'NDA', color: '#10b981' },
+                                { id: 'prenup', name: 'Prenuptial', color: '#ec4899' },
+                                { id: 'property', name: 'Property', color: '#3b82f6' }
+                            ].map(quick => (
+                                <div
+                                    key={quick.id}
+                                    onClick={() => navigate(`/contracts/new/${quick.id}`)}
+                                    style={{
+                                        background: 'white',
+                                        padding: '24px',
+                                        borderRadius: '20px',
+                                        border: '1px solid var(--color-border)',
+                                        cursor: 'pointer',
+                                        transition: 'all 0.3s ease'
+                                    }}
+                                    onMouseEnter={(e) => {
+                                        e.currentTarget.style.borderColor = quick.color;
+                                        e.currentTarget.style.transform = 'translateY(-4px)';
+                                    }}
+                                    onMouseLeave={(e) => {
+                                        e.currentTarget.style.borderColor = 'var(--color-border)';
+                                        e.currentTarget.style.transform = 'translateY(0)';
+                                    }}
+                                >
+                                    <div style={{ color: quick.color, marginBottom: '12px' }}><Plus size={24} /></div>
+                                    <div style={{ fontWeight: '950', color: 'var(--color-text-primary)' }}>{quick.name}</div>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 ) : (
                     /* Contract Grid */

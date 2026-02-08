@@ -33,7 +33,8 @@ const templates = [
         jurisdiction: 'Global / Multi-state',
         difficulty: 'Advanced',
         icon: Heart,
-        color: '#ec4899'
+        color: '#ec4899',
+        tag: 'Popular'
     },
     {
         id: 'property',
@@ -43,7 +44,8 @@ const templates = [
         jurisdiction: 'US / EU Compliant',
         difficulty: 'Legal',
         icon: Building,
-        color: '#3b82f6'
+        color: '#3b82f6',
+        tag: 'Standard'
     },
     {
         id: 'poa',
@@ -53,7 +55,8 @@ const templates = [
         jurisdiction: 'ESIGN Compliant',
         difficulty: 'Standard',
         icon: Scale,
-        color: '#f59e0b'
+        color: '#f59e0b',
+        tag: 'Essential'
     },
     {
         id: 'nda',
@@ -63,7 +66,8 @@ const templates = [
         jurisdiction: 'Global Standard',
         difficulty: 'Universal',
         icon: ShieldCheck,
-        color: '#10b981'
+        color: '#10b981',
+        tag: 'Secure'
     }
 ];
 
@@ -176,16 +180,31 @@ export default function TemplateLibrary() {
                                 }}>
                                     <template.icon size={32} />
                                 </div>
-                                <div style={{
-                                    padding: '6px 14px',
-                                    background: '#f1f5f9',
-                                    borderRadius: '100px',
-                                    fontSize: '11px',
-                                    fontWeight: '800',
-                                    color: '#475569',
-                                    textTransform: 'uppercase'
-                                }}>
-                                    {template.difficulty}
+                                <div style={{ display: 'flex', gap: '8px' }}>
+                                    {template.tag && (
+                                        <div style={{
+                                            padding: '6px 14px',
+                                            background: template.color + '15',
+                                            borderRadius: '100px',
+                                            fontSize: '11px',
+                                            fontWeight: '950',
+                                            color: template.color,
+                                            textTransform: 'uppercase'
+                                        }}>
+                                            {template.tag}
+                                        </div>
+                                    )}
+                                    <div style={{
+                                        padding: '6px 14px',
+                                        background: '#f1f5f9',
+                                        borderRadius: '100px',
+                                        fontSize: '11px',
+                                        fontWeight: '800',
+                                        color: '#475569',
+                                        textTransform: 'uppercase'
+                                    }}>
+                                        {template.difficulty}
+                                    </div>
                                 </div>
                             </div>
 
