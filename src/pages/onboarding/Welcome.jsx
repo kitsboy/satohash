@@ -118,10 +118,10 @@ export default function Welcome() {
     // Educational video content
     const educationalVideos = [
         {
-            id: 'CX_hBsa8Y9A',
+            id: 'N3tMb-yKqFc',
             title: 'What is Bitcoin Timestamping?',
             description: 'Learn how OpenTimestamps anchors data to Bitcoin',
-            duration: '8:42',
+            duration: '11:45',
             category: 'Fundamentals'
         },
         {
@@ -248,7 +248,7 @@ export default function Welcome() {
             </nav>
 
             {/* Cinematic Hero Section */}
-            <div style={{ position: 'relative', minHeight: '100vh', display: 'flex', alignItems: 'center', zIndex: 1, padding: '120px 0 60px', background: '#ffffff' }}>
+            <div style={{ position: 'relative', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1, padding: 'clamp(100px, 10vw, 120px) clamp(16px, 5vw, 60px) clamp(40px, 8vw, 60px)', background: '#ffffff' }}>
                 {/* Background Image */}
                 <div style={{
                     position: 'absolute',
@@ -268,7 +268,7 @@ export default function Welcome() {
                     zIndex: 1
                 }} />
 
-                <div className="container" style={{ position: 'relative', zIndex: 2 }}>
+                <div style={{ position: 'relative', zIndex: 2, width: '100%', maxWidth: '1200px', margin: '0 auto', padding: '0 clamp(16px, 5vw, 60px)' }}>
                     <div className="text-center" style={{ maxWidth: '850px', margin: '0 auto' }}>
                         {/* Live Network Badge */}
                         <div className="animate-slide-down" style={{
@@ -414,15 +414,15 @@ export default function Welcome() {
             <div ref={statsRef} style={{ 
                 background: 'linear-gradient(135deg, #fff8f0 0%, #f0f3ff 100%)',
                 borderTop: '3px solid #f7931a',
-                padding: '60px 0',
+                padding: 'clamp(40px, 8vw, 60px) clamp(16px, 5vw, 60px)',
                 position: 'relative',
                 zIndex: 1
             }}>
-                <div className="container">
+                <div style={{ width: '100%', maxWidth: '1200px', margin: '0 auto' }}>
                     <div style={{
                         display: 'grid',
                         gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-                        gap: '40px',
+                        gap: 'clamp(24px, 4vw, 40px)',
                         maxWidth: '900px',
                         margin: '0 auto'
                     }}>
@@ -456,8 +456,8 @@ export default function Welcome() {
             </div>
 
             {/* Features Section */}
-            <div id="features" style={{ background: '#ffffff', borderTop: '1px solid #e2e8f0', padding: '80px 0', position: 'relative', zIndex: 1 }}>
-                <div className="container" style={{ maxWidth: '1300px' }}>
+            <div id="features" style={{ background: '#ffffff', borderTop: '1px solid #e2e8f0', padding: 'clamp(60px, 10vw, 80px) clamp(16px, 5vw, 60px)', position: 'relative', zIndex: 1 }}>
+                <div style={{ width: '100%', maxWidth: '1300px', margin: '0 auto' }}>
                     <div style={{ textAlign: 'center', marginBottom: '60px', maxWidth: '700px', margin: '0 auto 60px' }}>
                         <h2 style={{ fontSize: '14px', fontWeight: '900', color: '#6366f1', textTransform: 'uppercase', letterSpacing: '4px', marginBottom: '16px' }}>Core Capabilities</h2>
                         <h2 style={{ fontSize: 'clamp(32px, 5vw, 48px)', fontWeight: '900', color: '#0f172a', letterSpacing: '-1px' }}>The Anatomy of Immutable Trust</h2>
@@ -524,8 +524,8 @@ export default function Welcome() {
             </div>
 
             {/* Use Cases Section */}
-            <div style={{ padding: '80px 0', position: 'relative', zIndex: 1, background: 'linear-gradient(135deg, #f0fdf4 0%, #f0f3ff 100%)', borderTop: '3px solid #06a77d' }}>
-                <div className="container" style={{ maxWidth: '1200px' }}>
+            <div style={{ padding: 'clamp(60px, 10vw, 80px) clamp(16px, 5vw, 60px)', position: 'relative', zIndex: 1, background: 'linear-gradient(135deg, #f0fdf4 0%, #f0f3ff 100%)', borderTop: '3px solid #06a77d' }}>
+                <div style={{ width: '100%', maxWidth: '1200px', margin: '0 auto' }}>
                     <div style={{ textAlign: 'center', marginBottom: '50px', maxWidth: '700px', margin: '0 auto 50px' }}>
                         <h2 style={{ fontSize: '14px', fontWeight: '900', color: '#6366f1', textTransform: 'uppercase', letterSpacing: '4px', marginBottom: '16px' }}>Use Cases</h2>
                         <h2 style={{ fontSize: 'clamp(28px, 5vw, 42px)', fontWeight: '900', color: '#0f172a', letterSpacing: '-1px' }}>Trusted Across Industries</h2>
@@ -582,12 +582,12 @@ export default function Welcome() {
             {/* Educational Videos Section */}
             <div id="education" style={{ 
                 background: 'linear-gradient(135deg, #fff8f0 0%, #fffaf0 100%)',
-                padding: '80px 0',
+                padding: 'clamp(60px, 10vw, 80px) clamp(16px, 5vw, 60px)',
                 position: 'relative',
                 zIndex: 1,
                 borderTop: '3px solid #f7931a'
             }}>
-                <div className="container" style={{ maxWidth: '1300px' }}>
+                <div style={{ width: '100%', maxWidth: '1300px', margin: '0 auto' }}>
                     <div style={{ textAlign: 'center', marginBottom: '50px', maxWidth: '700px', margin: '0 auto 50px' }}>
                         <div style={{
                             display: 'inline-flex',
@@ -722,8 +722,8 @@ export default function Welcome() {
             </div>
 
             {/* Process Section */}
-            <div style={{ padding: '80px 0', position: 'relative', zIndex: 1, background: '#ffffff' }}>
-                <div className="container" style={{ maxWidth: '1100px' }}>
+            <div style={{ padding: 'clamp(60px, 10vw, 80px) clamp(16px, 5vw, 60px)', position: 'relative', zIndex: 1, background: '#ffffff' }}>
+                <div style={{ width: '100%', maxWidth: '1100px', margin: '0 auto' }}>
                     <div style={{
                         background: 'linear-gradient(135deg, #f0f3ff 0%, #ede9fe 100%)',
                         padding: 'clamp(48px, 8vw, 80px)',
@@ -778,12 +778,12 @@ export default function Welcome() {
             {/* CTA Section */}
             <div style={{ 
                 background: 'linear-gradient(135deg, #f7931a 0%, #ff6b35 100%)',
-                padding: '80px 0',
+                padding: 'clamp(60px, 10vw, 80px) clamp(16px, 5vw, 60px)',
                 position: 'relative',
                 zIndex: 1,
                 overflow: 'hidden'
             }}>
-                <div className="container" style={{ position: 'relative' }}>
+                <div style={{ width: '100%', maxWidth: '1200px', margin: '0 auto', position: 'relative' }}>
                     <div style={{ textAlign: 'center', maxWidth: '700px', margin: '0 auto' }}>
                         <div style={{
                             display: 'inline-flex',
@@ -840,7 +840,7 @@ export default function Welcome() {
 
             {/* Trust Standards Bar */}
             <div className="animate-fade-in" style={{
-                padding: '50px 0',
+                padding: 'clamp(40px, 6vw, 50px) clamp(16px, 5vw, 60px)',
                 textAlign: 'center',
                 background: 'linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)',
                 borderTop: '1px solid #e2e8f0'

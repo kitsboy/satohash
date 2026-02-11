@@ -393,11 +393,14 @@ a:hover {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 var(--spacing-md);
+  padding: 0 clamp(16px, 5vw, 60px);
 }
 
 .container-narrow {
   max-width: 640px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 clamp(16px, 5vw, 60px);
 }
 
 /* Page layout */
@@ -405,8 +408,8 @@ a:hover {
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: var(--spacing-lg) var(--spacing-md);
-  padding-bottom: var(--spacing-3xl);
+  padding: clamp(20px, 5vw, 40px) clamp(16px, 5vw, 60px);
+  padding-bottom: clamp(40px, 8vw, 80px);
   background: #ffffff !important;
 }
 
@@ -993,7 +996,11 @@ a:hover {
   }
   
   .container {
-    padding: 0 16px;
+    padding: 0 clamp(16px, 4vw, 24px);
+  }
+  
+  .container-narrow {
+    padding: 0 clamp(16px, 4vw, 24px);
   }
   
   .flip-card {
