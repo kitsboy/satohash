@@ -38,7 +38,7 @@ export default function TrustCenter() {
     ];
 
     return (
-        <div className="page" style={{ background: 'var(--color-surface)', paddingTop: '100px' }}>
+         <div className="page" style={{ background: '#ffffff', paddingTop: '100px' }}>
             <div className="container" style={{ maxWidth: '900px' }}>
                 <div className="text-center" style={{ marginBottom: '60px' }}>
                     <img

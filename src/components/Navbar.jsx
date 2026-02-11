@@ -53,11 +53,11 @@ export default function Navbar() {
                 alignItems: 'center',
                 justifyContent: 'space-between',
                  padding: '0 clamp(16px, 5vw, 40px)',
-                background: '#ffffff',
-                backdropFilter: 'blur(20px) saturate(180%)',
-                borderBottom: '2px solid #d8dfe8',
+                 background: '#ffffff',
+                backdropFilter: 'blur(20px) saturate(200%)',
+                borderBottom: '2px solid #e8ecf4',
                 transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-                boxShadow: isScrolled ? '0 4px 20px rgba(255, 127, 0, 0.08)' : 'none'
+                boxShadow: isScrolled ? '0 8px 32px rgba(255, 127, 0, 0.12)' : 'none'
             }}>
                 {/* Logo & Brand */}
                 <div
@@ -69,11 +69,15 @@ export default function Navbar() {
                         alt="Satohash Logo"
                         style={{ height: '32px', width: 'auto' }}
                     />
-                    <span style={{
-                        fontWeight: '900',
-                        fontSize: '1.5rem',
-                        color: '#0f172a',
-                        letterSpacing: '-1px'
+                     <span style={{
+                        fontWeight: '950',
+                        fontSize: '1.6rem',
+                        color: '#0d1117',
+                        letterSpacing: '-1px',
+                        background: 'linear-gradient(135deg, #ff7f00 0%, #ff5722 100%)',
+                        WebkitBackgroundClip: 'text',
+                        WebkitTextFillColor: 'transparent',
+                        backgroundClip: 'text'
                     }}>
                         Satohash
                     </span>
@@ -87,20 +91,20 @@ export default function Navbar() {
                             <button
                                 key={link.path}
                                 onClick={() => navigate(link.path)}
-                                style={{
+                                 style={{
                                     display: 'flex',
                                     alignItems: 'center',
                                     gap: '10px',
-                                    padding: '10px 20px',
-                                    borderRadius: '16px',
-                                    border: isActive ? '2px solid #6366f1' : '2px solid transparent',
-                                    background: isActive ? '#f1f5f9' : 'transparent',
-                                    color: isActive ? '#6366f1' : '#0f172a',
-                                    fontWeight: isActive ? '700' : '600',
-                                    fontSize: '15px',
+                                    padding: '12px 24px',
+                                    borderRadius: '18px',
+                                    border: isActive ? '2px solid #ff7f00' : '2px solid transparent',
+                                    background: isActive ? 'linear-gradient(135deg, rgba(255, 127, 0, 0.1) 0%, rgba(255, 127, 0, 0.05) 100%)' : 'transparent',
+                                    color: isActive ? '#ff7f00' : '#0d1117',
+                                    fontWeight: isActive ? '800' : '700',
+                                    fontSize: '16px',
                                     cursor: 'pointer',
                                     transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                                    boxShadow: isActive ? '0 4px 12px rgba(99, 102, 241, 0.15)' : 'none'
+                                    boxShadow: isActive ? '0 8px 24px rgba(255, 127, 0, 0.2)' : 'none'
                                 }}
                                 onMouseEnter={(e) => {
                                     if (!isActive) {
@@ -147,16 +151,17 @@ export default function Navbar() {
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
-                            width: '40px',
-                            height: '40px',
+                            width: '48px',
+                            height: '48px',
                             background: '#ffffff',
-                            border: '2px solid #e2e8f0',
-                            borderRadius: '12px',
+                            border: '2px solid #d8dfe8',
+                            borderRadius: '16px',
                             cursor: 'pointer',
-                            color: '#0f172a',
-                            fontWeight: '700',
-                            fontSize: '13px',
-                            transition: 'all 0.2s ease'
+                            color: '#0052ff',
+                            fontWeight: '800',
+                            fontSize: '14px',
+                            transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                            boxShadow: '0 6px 20px rgba(0, 82, 255, 0.2)'
                         }}
                     >
                         {currentLanguageName}

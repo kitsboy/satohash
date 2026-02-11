@@ -107,7 +107,7 @@ export default function VerificationTool() {
 
     return (
         <div className="page" style={{
-            background: 'var(--color-surface)',
+            background: '#ffffff',
             minHeight: '100vh',
             display: 'flex',
             flexDirection: 'column'
