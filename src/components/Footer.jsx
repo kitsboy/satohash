@@ -49,8 +49,8 @@ export default function Footer() {
     return (
         <>
             <footer style={{
-                background: 'var(--color-surface)',
-                borderTop: '1px solid var(--color-border)',
+                background: '#fafbfc',
+                borderTop: '1px solid #e2e8f0',
                 padding: '100px 0 40px',
                 position: 'relative',
                 zIndex: 1,
@@ -71,12 +71,12 @@ export default function Footer() {
                                     alt="Logo"
                                     style={{ height: '32px', width: 'auto' }}
                                 />
-                                <span style={{ fontWeight: '950', fontSize: '1.6rem', color: 'var(--color-text-primary)', letterSpacing: '-1.5px' }}>
+                                <span style={{ fontWeight: '900', fontSize: '1.6rem', color: '#0f172a', letterSpacing: '-1px' }}>
                                     Satohash
                                 </span>
                             </div>
                             <p style={{
-                                color: 'var(--color-text-secondary)',
+                                color: '#475569',
                                 lineHeight: '1.7',
                                 marginBottom: '32px',
                                 fontSize: '15px',
@@ -94,24 +94,24 @@ export default function Footer() {
                                             width: '44px',
                                             height: '44px',
                                             borderRadius: '14px',
-                                            background: 'var(--color-surface-elevated)',
-                                            border: '1px solid var(--color-border)',
+                                            background: '#ffffff',
+                                            border: '1px solid #e2e8f0',
                                             display: 'flex',
                                             alignItems: 'center',
                                             justifyContent: 'center',
-                                            color: 'var(--color-text-secondary)',
+                                            color: '#475569',
                                             transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
                                         }}
                                         onMouseEnter={(e) => {
-                                            e.currentTarget.style.color = 'var(--color-primary)';
+                                            e.currentTarget.style.color = '#6366f1';
                                             e.currentTarget.style.transform = 'translateY(-5px)';
-                                            e.currentTarget.style.borderColor = 'var(--color-primary)';
+                                            e.currentTarget.style.borderColor = '#6366f1';
                                             e.currentTarget.style.boxShadow = '0 8px 20px rgba(99, 102, 241, 0.15)';
                                         }}
                                         onMouseLeave={(e) => {
-                                            e.currentTarget.style.color = 'var(--color-text-secondary)';
+                                            e.currentTarget.style.color = '#475569';
                                             e.currentTarget.style.transform = 'translateY(0)';
-                                            e.currentTarget.style.borderColor = 'var(--color-border)';
+                                            e.currentTarget.style.borderColor = '#e2e8f0';
                                             e.currentTarget.style.boxShadow = 'none';
                                         }}
                                     >
@@ -125,8 +125,8 @@ export default function Footer() {
                         {footerSections.map((section, idx) => (
                             <div key={idx}>
                                 <h4 style={{
-                                    fontWeight: '950',
-                                    color: 'var(--color-text-primary)',
+                                    fontWeight: '800',
+                                    color: '#0f172a',
                                     marginBottom: '28px',
                                     fontSize: '13px',
                                     textTransform: 'uppercase',
@@ -147,21 +147,21 @@ export default function Footer() {
                                                     }
                                                 }}
                                                 style={{
-                                                    color: 'var(--color-text-secondary)',
+                                                    color: '#475569',
                                                     textDecoration: 'none',
                                                     fontSize: '15px',
-                                                    fontWeight: '700',
+                                                    fontWeight: '600',
                                                     transition: 'all 0.2s ease',
                                                     display: 'flex',
                                                     alignItems: 'center',
                                                     gap: '8px'
                                                 }}
                                                 onMouseEnter={(e) => {
-                                                    e.currentTarget.style.color = 'var(--color-primary)';
+                                                    e.currentTarget.style.color = '#6366f1';
                                                     e.currentTarget.style.paddingLeft = '4px';
                                                 }}
                                                 onMouseLeave={(e) => {
-                                                    e.currentTarget.style.color = 'var(--color-text-secondary)';
+                                                    e.currentTarget.style.color = '#475569';
                                                     e.currentTarget.style.paddingLeft = '0';
                                                 }}
                                                 target={link.external ? '_blank' : '_self'}
@@ -179,8 +179,8 @@ export default function Footer() {
 
                     {/* Integrated Action Card (Repositioned for better fit) */}
                     <div style={{
-                        background: 'var(--color-surface-elevated)',
-                        border: '1px solid var(--color-border)',
+                        background: '#ffffff',
+                        border: '1px solid #e2e8f0',
                         padding: '40px',
                         borderRadius: '32px',
                         marginBottom: '60px',
@@ -205,19 +205,19 @@ export default function Footer() {
                                 <Heart size={32} fill="white" />
                             </div>
                             <div>
-                                <h3 style={{ fontSize: '20px', fontWeight: '950', color: 'var(--color-text-primary)', marginBottom: '4px' }}>Support the Protocol</h3>
-                                <p style={{ margin: 0, fontSize: '15px', color: 'var(--color-text-secondary)', fontWeight: '600' }}>Maintain our open-source, local-first signature ecosystem.</p>
+                                <h3 style={{ fontSize: '20px', fontWeight: '800', color: '#0f172a', marginBottom: '4px' }}>Support the Protocol</h3>
+                                <p style={{ margin: 0, fontSize: '15px', color: '#475569', fontWeight: '500' }}>Maintain our open-source, local-first signature ecosystem.</p>
                             </div>
                         </div>
                         <button
                             onClick={() => setIsDonationModalOpen(true)}
                             style={{
-                                background: 'var(--color-text-primary)',
-                                color: 'var(--color-background)',
+                                background: '#0f172a',
+                                color: '#ffffff',
                                 border: 'none',
                                 padding: '16px 32px',
                                 borderRadius: '16px',
-                                fontWeight: '950',
+                                fontWeight: '700',
                                 fontSize: '15px',
                                 cursor: 'pointer',
                                 transition: 'all 0.3s ease',
@@ -228,21 +228,21 @@ export default function Footer() {
                             onMouseEnter={(e) => {
                                 e.currentTarget.style.transform = 'translateY(-2px)';
                                 e.currentTarget.style.boxShadow = '0 10px 20px rgba(0,0,0,0.1)';
-                                e.currentTarget.style.background = 'var(--color-primary)';
-                                e.currentTarget.style.color = 'white';
+                                e.currentTarget.style.background = '#6366f1';
+                                e.currentTarget.style.color = '#ffffff';
                                 const icon = e.currentTarget.querySelector('svg');
-                                if (icon) icon.style.fill = 'white';
+                                if (icon) icon.style.fill = '#ffffff';
                             }}
                             onMouseLeave={(e) => {
                                 e.currentTarget.style.transform = 'translateY(0)';
                                 e.currentTarget.style.boxShadow = 'none';
-                                e.currentTarget.style.background = 'var(--color-text-primary)';
-                                e.currentTarget.style.color = 'var(--color-background)';
+                                e.currentTarget.style.background = '#0f172a';
+                                e.currentTarget.style.color = '#ffffff';
                                 const icon = e.currentTarget.querySelector('svg');
-                                if (icon) icon.style.fill = 'var(--color-background)';
+                                if (icon) icon.style.fill = '#ffffff';
                             }}
                         >
-                            <Zap size={18} fill="var(--color-background)" style={{ transition: 'fill 0.3s ease' }} />
+                            <Zap size={18} fill="#ffffff" style={{ transition: 'fill 0.3s ease' }} />
                             Donate Satoshi
                         </button>
                     </div>
@@ -250,7 +250,7 @@ export default function Footer() {
                     {/* Bottom Bar with Logo as requested */}
                     <div style={{
                         paddingTop: '32px',
-                        borderTop: '1px solid var(--color-border)',
+                        borderTop: '1px solid #e2e8f0',
                         display: 'flex',
                         justifyContent: 'space-between',
                         alignItems: 'center',
@@ -264,9 +264,9 @@ export default function Footer() {
                                     alt="Mini Logo"
                                     style={{ height: '20px', width: 'auto' }}
                                 />
-                                <span style={{ fontWeight: '900', fontSize: '14px', color: 'var(--color-text-primary)', letterSpacing: '-0.5px' }}>Satohash™</span>
+                                <span style={{ fontWeight: '800', fontSize: '14px', color: '#0f172a', letterSpacing: '-0.5px' }}>Satohash™</span>
                             </div>
-                            <div style={{ color: 'var(--color-text-tertiary)', fontSize: '13px', fontWeight: '800' }}>
+                            <div style={{ color: '#64748b', fontSize: '13px', fontWeight: '700' }}>
                                 © {new Date().getFullYear()} Open Protocol
                             </div>
                             <a 
@@ -277,20 +277,20 @@ export default function Footer() {
                                 style={{ marginLeft: '16px' }}
                             >
                                 <span>Vibed with</span>
-                                <span style={{ color: 'var(--color-primary)', fontWeight: '900' }}>Shakespeare</span>
+                                <span style={{ color: '#6366f1', fontWeight: '800' }}>Shakespeare</span>
                             </a>
                         </div>
 
                         <div style={{ display: 'flex', gap: '32px', alignItems: 'center' }}>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#22c55e', fontSize: '12px', fontWeight: '950' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#22c55e', fontSize: '12px', fontWeight: '700' }}>
                                 <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#22c55e', animation: 'pulse 2s infinite' }} />
                                 Core Sync: Active
                             </div>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--color-text-tertiary)', fontSize: '13px', fontWeight: '800' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#64748b', fontSize: '13px', fontWeight: '700' }}>
                                 <Shield size={14} />
                                 eIDAS / ESIGN
                             </div>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--color-text-tertiary)', fontSize: '13px', fontWeight: '800' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#64748b', fontSize: '13px', fontWeight: '700' }}>
                                 <Cpu size={14} />
                                 Local-First
                             </div>

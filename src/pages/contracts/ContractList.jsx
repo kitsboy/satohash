@@ -434,7 +434,7 @@ export default function ContractList() {
 
     return (
         <div className="page" style={{
-            background: 'var(--color-surface)',
+            background: '#ffffff',
             minHeight: '100vh'
         }}>
             <div className="container" style={{ maxWidth: '1400px' }}>
@@ -456,17 +456,17 @@ export default function ContractList() {
                         <div>
                             <h1 style={{
                                 fontSize: 'clamp(28px, 5vw, 40px)',
-                                fontWeight: '950',
-                                color: 'var(--color-text-primary)',
+                                fontWeight: '900',
+                                color: '#0f172a',
                                 margin: 0,
-                                letterSpacing: '-1.5px'
+                                letterSpacing: '-1px'
                             }}>
                                 {t('contracts.title')}
                             </h1>
                             <p style={{ 
                                 margin: '8px 0 0 0', 
-                                fontWeight: '600',
-                                color: 'var(--color-text-secondary)',
+                                fontWeight: '500',
+                                color: '#475569',
                                 fontSize: '16px'
                             }}>
                                 Manage your cryptographic agreements and Bitcoin-anchored proofs.
@@ -484,12 +484,12 @@ export default function ContractList() {
                                 height: '52px',
                                 paddingLeft: '28px',
                                 paddingRight: '28px',
-                                borderRadius: '14px',
+                                borderRadius: '20px',
                                 boxShadow: '0 8px 24px rgba(99, 102, 241, 0.35)',
-                                fontWeight: '900'
+                                fontWeight: '700'
                             }}
                         >
-                            <Plus size={20} strokeWidth={3} />
+                            <Plus size={20} strokeWidth={2.5} />
                             {t('contracts.new')}
                         </Button>
                     </div>
@@ -532,7 +532,7 @@ export default function ContractList() {
                             </div>
                         </div>
 
-                        <h2 style={{ fontSize: '28px', fontWeight: '950', marginBottom: '12px', color: 'var(--color-text-primary)', letterSpacing: '-1px' }}>
+                        <h2 style={{ fontSize: '28px', fontWeight: '800', marginBottom: '12px', color: '#0f172a', letterSpacing: '-1px' }}>
                             Your Digital Vault is Ready
                         </h2>
 
@@ -540,8 +540,8 @@ export default function ContractList() {
                             fontSize: '17px', 
                             maxWidth: '500px', 
                             margin: '0 auto 40px',
-                            fontWeight: '600',
-                            color: 'var(--color-text-secondary)',
+                            fontWeight: '500',
+                            color: '#475569',
                             lineHeight: '1.6'
                         }}>
                             Launch your first cryptographic agreement from a template below:
@@ -562,17 +562,18 @@ export default function ContractList() {
                             ].map(quick => (
                                 <div
                                     key={quick.id}
-                                    onClick={() => navigate(`/contracts/new/${quick.id}`)}
-                                    style={{
-                                        background: 'white',
-                                        padding: '28px 20px',
-                                        borderRadius: '18px',
-                                        border: '1px solid var(--color-border)',
-                                        cursor: 'pointer',
-                                        transition: 'all 0.3s ease',
-                                        textAlign: 'center'
-                                    }}
-                                    className="card-interactive"
+                                onClick={() => navigate(`/contracts/new/${quick.id}`)}
+                                style={{
+                                    background: '#ffffff',
+                                    padding: '28px 20px',
+                                    borderRadius: '20px',
+                                    border: '1px solid #e2e8f0',
+                                    cursor: 'pointer',
+                                    transition: 'all 0.3s ease',
+                                    textAlign: 'center',
+                                    boxShadow: '0 2px 8px rgba(0,0,0,0.02)'
+                                }}
+                                className="card-interactive"
                                 >
                                     <div style={{ 
                                         width: '48px',
@@ -587,8 +588,8 @@ export default function ContractList() {
                                     }}>
                                         <Plus size={24} strokeWidth={2.5} />
                                     </div>
-                                    <div style={{ fontWeight: '900', color: 'var(--color-text-primary)', fontSize: '15px' }}>{quick.name}</div>
-                                    <div style={{ fontSize: '12px', color: 'var(--color-text-tertiary)', fontWeight: '600', marginTop: '4px' }}>{quick.desc}</div>
+                                    <div style={{ fontWeight: '700', color: '#0f172a', fontSize: '15px' }}>{quick.name}</div>
+                                    <div style={{ fontSize: '12px', color: '#64748b', fontWeight: '600', marginTop: '4px' }}>{quick.desc}</div>
                                 </div>
                             ))}
                         </div>

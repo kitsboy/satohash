@@ -160,9 +160,9 @@ export default function Welcome() {
     ];
 
     return (
-        <div className="page" style={{ overflowX: 'hidden', position: 'relative', background: 'var(--color-background)' }}>
+        <div className="page" style={{ overflowX: 'hidden', position: 'relative', background: '#ffffff' }}>
             {/* Design Magic: Crypto Grid Overlay */}
-            <div className="crypto-grid" style={{ position: 'fixed', inset: 0, zIndex: 0, opacity: 0.4 }} />
+            <div className="crypto-grid" style={{ position: 'fixed', inset: 0, zIndex: 0, opacity: 0.2 }} />
 
             {/* Custom Premium Navbar */}
             <nav style={{
@@ -175,11 +175,12 @@ export default function Welcome() {
                 display: 'flex',
                 alignItems: 'center',
                 padding: '0 clamp(20px, 5vw, 60px)',
-                background: scrolled ? 'rgba(255,255,255,0.95)' : 'transparent',
-                backdropFilter: scrolled ? 'blur(24px) saturate(180%)' : 'none',
-                borderBottom: scrolled ? '1px solid var(--color-border)' : 'none',
+                background: '#ffffff',
+                backdropFilter: 'blur(24px) saturate(180%)',
+                borderBottom: '1px solid #e2e8f0',
                 transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
-                justifyContent: 'space-between'
+                justifyContent: 'space-between',
+                boxShadow: scrolled ? '0 2px 8px rgba(0,0,0,0.05)' : 'none'
             }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer' }} onClick={() => navigate('/')}>
                     <img
@@ -187,7 +188,7 @@ export default function Welcome() {
                         alt="Logo"
                         style={{ height: '36px', width: 'auto' }}
                     />
-                    <span style={{ fontWeight: '950', fontSize: '1.7rem', color: 'var(--color-text-primary)', letterSpacing: '-1.5px' }}>
+                    <span style={{ fontWeight: '900', fontSize: '1.7rem', color: '#0f172a', letterSpacing: '-1.5px' }}>
                         Satohash
                     </span>
                     <span style={{ 
@@ -203,10 +204,10 @@ export default function Welcome() {
 
                 <div style={{ display: 'flex', gap: '32px', alignItems: 'center' }}>
                     <div style={{ display: 'flex', gap: '28px' }} className="hide-mobile">
-                        <a href="#features" className="nav-link" style={{ color: 'var(--color-text-primary)', fontWeight: '700' }}>Features</a>
-                        <a href="#education" className="nav-link" style={{ color: 'var(--color-text-primary)', fontWeight: '700' }}>Learn</a>
-                        <a href="#" onClick={(e) => { e.preventDefault(); navigate('/trust'); }} className="nav-link" style={{ color: 'var(--color-text-primary)', fontWeight: '700' }}>Trust</a>
-                        <a href="#" onClick={(e) => { e.preventDefault(); navigate('/verify'); }} className="nav-link" style={{ color: 'var(--color-text-primary)', fontWeight: '700' }}>Verify</a>
+                        <a href="#features" className="nav-link" style={{ color: '#0f172a', fontWeight: '700' }}>Features</a>
+                        <a href="#education" className="nav-link" style={{ color: '#0f172a', fontWeight: '700' }}>Learn</a>
+                        <a href="#" onClick={(e) => { e.preventDefault(); navigate('/trust'); }} className="nav-link" style={{ color: '#0f172a', fontWeight: '700' }}>Trust</a>
+                        <a href="#" onClick={(e) => { e.preventDefault(); navigate('/verify'); }} className="nav-link" style={{ color: '#0f172a', fontWeight: '700' }}>Verify</a>
                     </div>
 
                     <button
@@ -215,27 +216,28 @@ export default function Welcome() {
                             display: 'flex',
                             alignItems: 'center',
                             gap: '8px',
-                            background: 'var(--color-surface-elevated)',
-                            border: '1px solid var(--color-border)',
+                            background: '#ffffff',
+                            border: '2px solid #e2e8f0',
                             padding: '10px 16px',
-                            borderRadius: '12px',
-                            color: 'var(--color-text-primary)',
-                            fontWeight: '800',
+                            borderRadius: '16px',
+                            color: '#0f172a',
+                            fontWeight: '700',
                             fontSize: '14px',
                             cursor: 'pointer',
                             transition: 'all 0.3s ease'
                         }}
                     >
-                        <Globe size={18} color="var(--color-primary)" />
+                        <Globe size={18} color="#6366f1" />
                         <span className="hide-mobile">{currentLanguageName}</span>
                     </button>
 
                     <Button variant="primary" size="large" onClick={() => navigate('/choose-template')} style={{ 
                         paddingLeft: '28px', 
                         paddingRight: '28px', 
-                        fontWeight: '900',
+                        fontWeight: '700',
                         background: 'linear-gradient(135deg, #6366f1, #4338ca)',
-                        boxShadow: '0 8px 24px rgba(99, 102, 241, 0.35)'
+                        boxShadow: '0 8px 24px rgba(99, 102, 241, 0.35)',
+                        borderRadius: '20px'
                     }}>
                         Get Started Free
                     </Button>
@@ -243,8 +245,8 @@ export default function Welcome() {
             </nav>
 
             {/* Cinematic Hero Section */}
-            <div style={{ position: 'relative', minHeight: '100vh', display: 'flex', alignItems: 'center', zIndex: 1, padding: '120px 0 80px' }}>
-                {/* Background Blobs */}
+            <div style={{ position: 'relative', minHeight: '100vh', display: 'flex', alignItems: 'center', zIndex: 1, padding: '120px 0 80px', background: '#ffffff' }}>
+                {/* Background Blobs - VERY SUBTLE */}
                 <div style={{
                     position: 'absolute',
                     top: '15%',
@@ -252,7 +254,7 @@ export default function Welcome() {
                     width: '600px',
                     height: '600px',
                     borderRadius: '50%',
-                    background: 'radial-gradient(circle, rgba(99, 102, 241, 0.12) 0%, transparent 70%)',
+                    background: 'radial-gradient(circle, rgba(99, 102, 241, 0.04) 0%, transparent 70%)',
                     animation: 'float 15s ease-in-out infinite',
                     filter: 'blur(80px)'
                 }} />
@@ -263,7 +265,7 @@ export default function Welcome() {
                     width: '700px',
                     height: '700px',
                     borderRadius: '50%',
-                    background: 'radial-gradient(circle, rgba(16, 185, 129, 0.08) 0%, transparent 70%)',
+                    background: 'radial-gradient(circle, rgba(16, 185, 129, 0.03) 0%, transparent 70%)',
                     animation: 'float 20s ease-in-out infinite reverse',
                     filter: 'blur(80px)'
                 }} />
@@ -301,28 +303,28 @@ export default function Welcome() {
                         {/* Main Headline */}
                         <h1 className="animate-slide-down" style={{
                             fontSize: 'clamp(2.8rem, 9vw, 5.5rem)',
-                            fontWeight: '950',
+                            fontWeight: '900',
                             marginBottom: '28px',
-                            lineHeight: '0.95',
-                            letterSpacing: '-0.05em',
+                            lineHeight: '1',
+                            letterSpacing: '-0.02em',
                             animationDelay: '100ms',
-                            color: 'var(--color-text-primary)'
+                            color: '#0f172a'
                         }}>
-                            <span className="text-shimmer">Absolute Proof</span>
+                            Absolute Proof
                             <br />for Every Agreement.
                         </h1>
 
                         {/* Subheadline */}
                         <p className="animate-slide-down" style={{
-                            fontSize: 'clamp(18px, 2.5vw, 24px)',
-                            color: 'var(--color-text-secondary)',
+                            fontSize: 'clamp(18px, 2.5vw, 22px)',
+                            color: '#475569',
                             maxWidth: '720px',
                             margin: '0 auto 52px',
                             lineHeight: '1.65',
                             animationDelay: '200ms',
-                            fontWeight: '600'
+                            fontWeight: '500'
                         }}>
-                            The world's most secure digital notary. Anchor your contracts to the Bitcoin blockchain with <strong style={{ color: 'var(--color-text-primary)' }}>cryptographic proof</strong> that outlasts corporations, governments, and time itself.
+                            The world's most secure digital notary. Anchor your contracts to the Bitcoin blockchain with <strong style={{ color: '#0f172a' }}>cryptographic proof</strong> that outlasts corporations, governments, and time itself.
                         </p>
 
                         {/* CTA Buttons */}
@@ -341,8 +343,8 @@ export default function Welcome() {
                                     height: '68px',
                                     padding: '0 44px',
                                     fontSize: '18px',
-                                    fontWeight: '900',
-                                    borderRadius: '18px',
+                                    fontWeight: '700',
+                                    borderRadius: '24px',
                                     background: 'linear-gradient(135deg, #6366f1, #4338ca)',
                                     boxShadow: '0 16px 48px rgba(67, 56, 202, 0.35)',
                                     display: 'flex',
@@ -362,11 +364,11 @@ export default function Welcome() {
                                     height: '68px',
                                     padding: '0 36px',
                                     fontSize: '17px',
-                                    fontWeight: '800',
-                                    borderRadius: '18px',
-                                    background: 'var(--color-surface-elevated)',
-                                    border: '2px solid var(--color-border)',
-                                    color: 'var(--color-text-primary)',
+                                    fontWeight: '700',
+                                    borderRadius: '24px',
+                                    background: '#ffffff',
+                                    border: '2px solid #e2e8f0',
+                                    color: '#0f172a',
                                     boxShadow: '0 4px 16px rgba(0,0,0,0.04)'
                                 }}
                             >
@@ -408,8 +410,8 @@ export default function Welcome() {
 
             {/* Live Stats Section */}
             <div ref={statsRef} style={{ 
-                background: 'linear-gradient(180deg, var(--color-surface) 0%, var(--color-background) 100%)',
-                borderTop: '1px solid var(--color-border)',
+                background: '#fafbfc',
+                borderTop: '1px solid #e2e8f0',
                 padding: '80px 0',
                 position: 'relative',
                 zIndex: 1
@@ -452,11 +454,11 @@ export default function Welcome() {
             </div>
 
             {/* Features Section */}
-            <div id="features" style={{ background: 'var(--color-surface)', borderTop: '1px solid var(--color-border)', padding: '120px 0', position: 'relative', zIndex: 1 }}>
+            <div id="features" style={{ background: '#ffffff', borderTop: '1px solid #e2e8f0', padding: '120px 0', position: 'relative', zIndex: 1 }}>
                 <div className="container">
                     <div style={{ textAlign: 'center', marginBottom: '80px' }}>
-                        <h2 style={{ fontSize: '14px', fontWeight: '900', color: 'var(--color-primary)', textTransform: 'uppercase', letterSpacing: '4px', marginBottom: '16px' }}>Core Capabilities</h2>
-                        <h2 style={{ fontSize: 'clamp(32px, 5vw, 48px)', fontWeight: '950', color: 'var(--color-text-primary)', letterSpacing: '-2px' }}>The Anatomy of Immutable Trust</h2>
+                        <h2 style={{ fontSize: '14px', fontWeight: '900', color: '#6366f1', textTransform: 'uppercase', letterSpacing: '4px', marginBottom: '16px' }}>Core Capabilities</h2>
+                        <h2 style={{ fontSize: 'clamp(32px, 5vw, 48px)', fontWeight: '900', color: '#0f172a', letterSpacing: '-1px' }}>The Anatomy of Immutable Trust</h2>
                     </div>
 
                     <div style={{
@@ -481,13 +483,13 @@ export default function Welcome() {
                                         }}>
                                             <feature.icon size={36} strokeWidth={2.5} />
                                         </div>
-                                        <h3 style={{ fontSize: '24px', fontWeight: '950', marginBottom: '14px', color: 'var(--color-text-primary)', letterSpacing: '-0.5px' }}>
+                                        <h3 style={{ fontSize: '24px', fontWeight: '800', marginBottom: '14px', color: '#0f172a', letterSpacing: '-0.5px' }}>
                                             {feature.title}
                                         </h3>
-                                        <p style={{ fontSize: '16px', color: 'var(--color-text-secondary)', lineHeight: '1.7', fontWeight: '600', flex: 1 }}>
+                                        <p style={{ fontSize: '16px', color: '#475569', lineHeight: '1.7', fontWeight: '500', flex: 1 }}>
                                             {feature.description}
                                         </p>
-                                        <div style={{ marginTop: '24px', color: 'var(--color-primary)', fontSize: '13px', fontWeight: '800', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                        <div style={{ marginTop: '24px', color: '#6366f1', fontSize: '13px', fontWeight: '700', display: 'flex', alignItems: 'center', gap: '8px' }}>
                                             <MousePointer2 size={16} /> Hover for Technical Depth
                                         </div>
                                     </div>
@@ -519,11 +521,11 @@ export default function Welcome() {
             </div>
 
             {/* Use Cases Section */}
-            <div style={{ padding: '120px 0', position: 'relative', zIndex: 1 }}>
+            <div style={{ padding: '120px 0', position: 'relative', zIndex: 1, background: '#fafbfc' }}>
                 <div className="container">
                     <div style={{ textAlign: 'center', marginBottom: '60px' }}>
-                        <h2 style={{ fontSize: '14px', fontWeight: '900', color: 'var(--color-primary)', textTransform: 'uppercase', letterSpacing: '4px', marginBottom: '16px' }}>Use Cases</h2>
-                        <h2 style={{ fontSize: 'clamp(28px, 5vw, 42px)', fontWeight: '950', color: 'var(--color-text-primary)', letterSpacing: '-1.5px' }}>Trusted Across Industries</h2>
+                        <h2 style={{ fontSize: '14px', fontWeight: '900', color: '#6366f1', textTransform: 'uppercase', letterSpacing: '4px', marginBottom: '16px' }}>Use Cases</h2>
+                        <h2 style={{ fontSize: 'clamp(28px, 5vw, 42px)', fontWeight: '900', color: '#0f172a', letterSpacing: '-1px' }}>Trusted Across Industries</h2>
                     </div>
 
                     <div style={{
@@ -535,17 +537,18 @@ export default function Welcome() {
                     }}>
                         {useCases.map((useCase, i) => (
                             <div key={i} style={{
-                                background: 'var(--color-surface-elevated)',
+                                background: '#ffffff',
                                 padding: '36px',
                                 borderRadius: '24px',
-                                border: '1px solid var(--color-border)',
-                                transition: 'all 0.3s ease'
+                                border: '1px solid #e2e8f0',
+                                transition: 'all 0.3s ease',
+                                boxShadow: '0 2px 8px rgba(0,0,0,0.04)'
                             }} className="card-interactive">
                                 <div style={{
                                     width: '56px',
                                     height: '56px',
                                     borderRadius: '16px',
-                                    background: 'var(--color-primary)',
+                                    background: '#6366f1',
                                     display: 'flex',
                                     alignItems: 'center',
                                     justifyContent: 'center',
@@ -554,11 +557,11 @@ export default function Welcome() {
                                 }}>
                                     <useCase.icon size={28} />
                                 </div>
-                                <h3 style={{ fontSize: '20px', fontWeight: '900', marginBottom: '10px', color: 'var(--color-text-primary)' }}>{useCase.title}</h3>
-                                <p style={{ fontSize: '15px', color: 'var(--color-text-secondary)', marginBottom: '16px', fontWeight: '600', lineHeight: '1.6' }}>{useCase.description}</p>
+                                <h3 style={{ fontSize: '20px', fontWeight: '800', marginBottom: '10px', color: '#0f172a' }}>{useCase.title}</h3>
+                                <p style={{ fontSize: '15px', color: '#475569', marginBottom: '16px', fontWeight: '500', lineHeight: '1.6' }}>{useCase.description}</p>
                                 <div style={{ 
                                     fontSize: '13px', 
-                                    fontWeight: '800', 
+                                    fontWeight: '700', 
                                     color: '#10b981',
                                     display: 'flex',
                                     alignItems: 'center',
@@ -575,10 +578,11 @@ export default function Welcome() {
 
             {/* Educational Videos Section */}
             <div id="education" style={{ 
-                background: 'linear-gradient(180deg, var(--color-surface) 0%, #1e1b4b 100%)',
+                background: '#ffffff',
                 padding: '120px 0',
                 position: 'relative',
-                zIndex: 1
+                zIndex: 1,
+                borderTop: '1px solid #e2e8f0'
             }}>
                 <div className="container">
                     <div style={{ textAlign: 'center', marginBottom: '60px' }}>
@@ -595,10 +599,10 @@ export default function Welcome() {
                             <Youtube size={16} color="#ef4444" />
                             <span style={{ fontSize: '12px', fontWeight: '900', color: '#ef4444', textTransform: 'uppercase', letterSpacing: '1px' }}>Video Education</span>
                         </div>
-                        <h2 style={{ fontSize: 'clamp(28px, 5vw, 42px)', fontWeight: '950', color: 'var(--color-text-primary)', letterSpacing: '-1.5px', marginBottom: '16px' }}>
+                        <h2 style={{ fontSize: 'clamp(28px, 5vw, 42px)', fontWeight: '900', color: '#0f172a', letterSpacing: '-1px', marginBottom: '16px' }}>
                             Learn the Technology
                         </h2>
-                        <p style={{ fontSize: '17px', color: 'var(--color-text-secondary)', maxWidth: '600px', margin: '0 auto', fontWeight: '600' }}>
+                        <p style={{ fontSize: '17px', color: '#475569', maxWidth: '600px', margin: '0 auto', fontWeight: '500' }}>
                             Understand the cryptographic foundations that power Satohash through curated educational content.
                         </p>
                     </div>
@@ -614,12 +618,13 @@ export default function Welcome() {
                             <div 
                                 key={i} 
                                 style={{
-                                    background: 'var(--color-surface-elevated)',
+                                    background: '#ffffff',
                                     borderRadius: '20px',
                                     overflow: 'hidden',
-                                    border: '1px solid var(--color-border)',
+                                    border: '1px solid #e2e8f0',
                                     transition: 'all 0.3s ease',
-                                    cursor: 'pointer'
+                                    cursor: 'pointer',
+                                    boxShadow: '0 2px 8px rgba(0,0,0,0.04)'
                                 }}
                                 className="card-interactive"
                                 onClick={() => setActiveVideo(video.id)}
@@ -681,9 +686,9 @@ export default function Welcome() {
                                         {video.category}
                                     </div>
                                 </div>
-                                <div style={{ padding: '20px' }}>
-                                    <h3 style={{ fontSize: '17px', fontWeight: '900', marginBottom: '8px', color: 'var(--color-text-primary)' }}>{video.title}</h3>
-                                    <p style={{ fontSize: '14px', color: 'var(--color-text-secondary)', margin: 0, fontWeight: '600' }}>{video.description}</p>
+                                <div style={{ padding: '20px', background: '#ffffff' }}>
+                                    <h3 style={{ fontSize: '17px', fontWeight: '700', marginBottom: '8px', color: '#0f172a' }}>{video.title}</h3>
+                                    <p style={{ fontSize: '14px', color: '#475569', margin: 0, fontWeight: '500' }}>{video.description}</p>
                                 </div>
                             </div>
                         ))}
@@ -714,18 +719,18 @@ export default function Welcome() {
             </div>
 
             {/* Process Section */}
-            <div style={{ padding: '120px 0', position: 'relative', zIndex: 1 }}>
+            <div style={{ padding: '120px 0', position: 'relative', zIndex: 1, background: '#fafbfc' }}>
                 <div className="container">
                     <div style={{
-                        background: 'var(--color-surface-elevated)',
+                        background: '#ffffff',
                         padding: 'clamp(48px, 8vw, 100px)',
-                        borderRadius: '48px',
-                        border: '1px solid var(--color-border)',
+                        borderRadius: '32px',
+                        border: '1px solid #e2e8f0',
                         textAlign: 'center',
                         boxShadow: '0 8px 60px rgba(0,0,0,0.04)'
                     }}>
-                        <h3 style={{ fontSize: '14px', fontWeight: '900', color: 'var(--color-primary)', textTransform: 'uppercase', letterSpacing: '4px', marginBottom: '24px' }}>The Process</h3>
-                        <h2 style={{ fontSize: 'clamp(28px, 6vw, 40px)', fontWeight: '950', color: 'var(--color-text-primary)', marginBottom: '72px', letterSpacing: '-1.5px' }}>From Idea to Immutability</h2>
+                        <h3 style={{ fontSize: '14px', fontWeight: '900', color: '#6366f1', textTransform: 'uppercase', letterSpacing: '4px', marginBottom: '24px' }}>The Process</h3>
+                        <h2 style={{ fontSize: 'clamp(28px, 6vw, 40px)', fontWeight: '900', color: '#0f172a', marginBottom: '72px', letterSpacing: '-1px' }}>From Idea to Immutability</h2>
 
                         <div style={{ display: 'flex', justifyContent: 'center', gap: 'clamp(24px, 4vw, 48px)', flexWrap: 'wrap', position: 'relative' }}>
                             {[
@@ -751,15 +756,15 @@ export default function Welcome() {
                                     <div style={{
                                         fontSize: '12px',
                                         fontWeight: '900',
-                                        color: 'var(--color-primary)',
+                                        color: '#6366f1',
                                         marginBottom: '8px',
                                         letterSpacing: '2px'
                                     }}>
                                         STEP {item.step}
                                     </div>
-                                    <h4 style={{ fontSize: '22px', fontWeight: '950', color: 'var(--color-text-primary)', marginBottom: '10px' }}>{item.title}</h4>
-                                    <p style={{ fontSize: '15px', color: 'var(--color-text-secondary)', fontWeight: '600' }}>{item.desc}</p>
-                                    {i < 2 && <ChevronRight size={24} color="var(--color-border)" style={{ position: 'absolute', top: '40px', right: '-20px' }} className="hide-mobile" />}
+                                    <h4 style={{ fontSize: '22px', fontWeight: '800', color: '#0f172a', marginBottom: '10px' }}>{item.title}</h4>
+                                    <p style={{ fontSize: '15px', color: '#475569', fontWeight: '500' }}>{item.desc}</p>
+                                    {i < 2 && <ChevronRight size={24} color="#e2e8f0" style={{ position: 'absolute', top: '40px', right: '-20px' }} className="hide-mobile" />}
                                 </div>
                             ))}
                         </div>
@@ -769,51 +774,41 @@ export default function Welcome() {
 
             {/* CTA Section */}
             <div style={{ 
-                background: 'linear-gradient(135deg, #312e81 0%, #1e1b4b 100%)',
+                background: 'linear-gradient(135deg, #6366f1 0%, #4338ca 100%)',
                 padding: '100px 0',
                 position: 'relative',
                 zIndex: 1,
                 overflow: 'hidden'
             }}>
-                <div style={{
-                    position: 'absolute',
-                    top: '-50%',
-                    left: '-20%',
-                    width: '600px',
-                    height: '600px',
-                    borderRadius: '50%',
-                    background: 'radial-gradient(circle, rgba(99, 102, 241, 0.3) 0%, transparent 70%)',
-                    filter: 'blur(60px)'
-                }} />
                 <div className="container" style={{ position: 'relative' }}>
                     <div style={{ textAlign: 'center', maxWidth: '700px', margin: '0 auto' }}>
                         <div style={{
                             display: 'inline-flex',
                             alignItems: 'center',
                             gap: '8px',
-                            background: 'rgba(255,255,255,0.1)',
+                            background: 'rgba(255,255,255,0.2)',
                             padding: '8px 16px',
                             borderRadius: '100px',
                             marginBottom: '28px'
                         }}>
-                            <Star size={16} color="#fbbf24" fill="#fbbf24" />
-                            <span style={{ color: 'rgba(255,255,255,0.9)', fontSize: '13px', fontWeight: '800' }}>Free during beta • No credit card required</span>
+                            <Star size={16} color="#ffffff" fill="#ffffff" />
+                            <span style={{ color: '#ffffff', fontSize: '13px', fontWeight: '700' }}>Free during beta • No credit card required</span>
                         </div>
                         <h2 style={{ 
                             fontSize: 'clamp(32px, 6vw, 52px)', 
-                            fontWeight: '950', 
-                            color: 'white', 
+                            fontWeight: '900', 
+                            color: '#ffffff', 
                             marginBottom: '24px',
-                            letterSpacing: '-2px',
+                            letterSpacing: '-1px',
                             lineHeight: '1.1'
                         }}>
                             Ready to Create<br />Immutable Proof?
                         </h2>
                         <p style={{ 
                             fontSize: '18px', 
-                            color: 'rgba(255,255,255,0.75)', 
+                            color: 'rgba(255,255,255,0.9)', 
                             marginBottom: '44px',
-                            fontWeight: '600',
+                            fontWeight: '500',
                             lineHeight: '1.7'
                         }}>
                             Join thousands of professionals who trust Satohash to protect their most important documents with Bitcoin-grade security.
@@ -825,10 +820,10 @@ export default function Welcome() {
                                 height: '72px',
                                 padding: '0 52px',
                                 fontSize: '19px',
-                                fontWeight: '950',
-                                borderRadius: '20px',
-                                background: 'white',
-                                color: '#312e81',
+                                fontWeight: '700',
+                                borderRadius: '24px',
+                                background: '#ffffff',
+                                color: '#4338ca',
                                 boxShadow: '0 20px 60px rgba(0,0,0,0.3)'
                             }}
                         >
@@ -843,8 +838,8 @@ export default function Welcome() {
             <div className="animate-fade-in" style={{
                 padding: '60px 0',
                 textAlign: 'center',
-                background: 'var(--color-surface)',
-                borderTop: '1px solid var(--color-border)'
+                background: '#ffffff',
+                borderTop: '1px solid #e2e8f0'
             }}>
                 <p style={{ color: 'var(--color-text-tertiary)', fontSize: '12px', fontWeight: '900', textTransform: 'uppercase', letterSpacing: '3px', marginBottom: '32px' }}>Global Compliance Standards</p>
                 <div style={{ display: 'flex', justifyContent: 'center', gap: 'clamp(28px, 8vw, 80px)', flexWrap: 'wrap', opacity: 0.7 }}>

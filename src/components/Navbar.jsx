@@ -53,11 +53,11 @@ export default function Navbar() {
                 alignItems: 'center',
                 justifyContent: 'space-between',
                 padding: '0 var(--spacing-xl)',
-                background: isScrolled ? 'var(--color-surface-elevated)' : 'var(--color-surface)',
+                background: '#ffffff',
                 backdropFilter: 'blur(16px)',
-                borderBottom: '1px solid var(--color-border)',
+                borderBottom: '1px solid #e2e8f0',
                 transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-                boxShadow: isScrolled ? '0 10px 40px rgba(0,0,0,0.1)' : 'none'
+                boxShadow: isScrolled ? '0 2px 8px rgba(0,0,0,0.05)' : 'none'
             }}>
                 {/* Logo & Brand */}
                 <div
@@ -70,10 +70,10 @@ export default function Navbar() {
                         style={{ height: '32px', width: 'auto' }}
                     />
                     <span style={{
-                        fontWeight: '950',
+                        fontWeight: '900',
                         fontSize: '1.5rem',
-                        color: 'var(--color-text-primary)',
-                        letterSpacing: '-1.2px'
+                        color: '#0f172a',
+                        letterSpacing: '-1px'
                     }}>
                         Satohash
                     </span>
@@ -92,11 +92,11 @@ export default function Navbar() {
                                     alignItems: 'center',
                                     gap: '10px',
                                     padding: '10px 20px',
-                                    borderRadius: '14px',
-                                    border: isActive ? '2px solid var(--color-primary)' : '2px solid transparent',
-                                    background: isActive ? 'var(--color-border-light)' : 'transparent',
-                                    color: isActive ? 'var(--color-primary)' : 'var(--color-text-primary)',
-                                    fontWeight: isActive ? '950' : '800',
+                                    borderRadius: '16px',
+                                    border: isActive ? '2px solid #6366f1' : '2px solid transparent',
+                                    background: isActive ? '#f1f5f9' : 'transparent',
+                                    color: isActive ? '#6366f1' : '#0f172a',
+                                    fontWeight: isActive ? '700' : '600',
                                     fontSize: '15px',
                                     cursor: 'pointer',
                                     transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
@@ -104,14 +104,14 @@ export default function Navbar() {
                                 }}
                                 onMouseEnter={(e) => {
                                     if (!isActive) {
-                                        e.currentTarget.style.background = 'var(--color-border-light)';
-                                        e.currentTarget.style.color = 'var(--color-primary)';
+                                        e.currentTarget.style.background = '#f1f5f9';
+                                        e.currentTarget.style.color = '#6366f1';
                                     }
                                 }}
                                 onMouseLeave={(e) => {
                                     if (!isActive) {
                                         e.currentTarget.style.background = 'transparent';
-                                        e.currentTarget.style.color = 'var(--color-text-primary)';
+                                        e.currentTarget.style.color = '#0f172a';
                                     }
                                 }}
                             >
@@ -149,12 +149,12 @@ export default function Navbar() {
                             justifyContent: 'center',
                             width: '40px',
                             height: '40px',
-                            background: 'var(--color-surface-elevated)',
-                            border: '2px solid var(--color-border)',
+                            background: '#ffffff',
+                            border: '2px solid #e2e8f0',
                             borderRadius: '12px',
                             cursor: 'pointer',
-                            color: 'var(--color-text-primary)',
-                            fontWeight: '900',
+                            color: '#0f172a',
+                            fontWeight: '700',
                             fontSize: '13px',
                             transition: 'all 0.2s ease'
                         }}
