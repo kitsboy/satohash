@@ -269,6 +269,16 @@ export default function Footer() {
                             <div style={{ color: 'var(--color-text-tertiary)', fontSize: '13px', fontWeight: '800' }}>
                                 © {new Date().getFullYear()} Open Protocol
                             </div>
+                            <a 
+                                href="https://shakespeare.diy" 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="vibed-link"
+                                style={{ marginLeft: '16px' }}
+                            >
+                                <span>Vibed with</span>
+                                <span style={{ color: 'var(--color-primary)', fontWeight: '900' }}>Shakespeare</span>
+                            </a>
                         </div>
 
                         <div style={{ display: 'flex', gap: '32px', alignItems: 'center' }}>

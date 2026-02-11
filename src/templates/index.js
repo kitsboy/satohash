@@ -152,11 +152,83 @@ Date: ______________
 DISCLAIMER: This template is for informational purposes only. Power of Attorney documents are governed by state law and requirements vary. Consult with a qualified attorney to ensure this document meets your jurisdiction's requirements and your specific needs.`
 };
 
+export const ndaTemplate = {
+    name: 'Non-Disclosure Agreement (NDA)',
+    description: 'A confidentiality agreement to protect sensitive information',
+    content: `NON-DISCLOSURE AGREEMENT
+
+This Non-Disclosure Agreement ("Agreement") is entered into on [DATE] by and between:
+
+DISCLOSING PARTY:
+Name: [DISCLOSING_PARTY_NAME]
+Address: [DISCLOSING_PARTY_ADDRESS]
+
+RECEIVING PARTY:
+Name: [RECEIVING_PARTY_NAME]
+Address: [RECEIVING_PARTY_ADDRESS]
+
+RECITALS
+
+WHEREAS, the Disclosing Party possesses certain confidential and proprietary information relating to [BUSINESS_PURPOSE]; and
+
+WHEREAS, the Receiving Party desires to receive disclosure of the Confidential Information for the purpose of [PURPOSE_OF_DISCLOSURE];
+
+NOW, THEREFORE, in consideration of the mutual covenants contained herein, the parties agree as follows:
+
+1. DEFINITION OF CONFIDENTIAL INFORMATION
+"Confidential Information" means any data or information that is proprietary to the Disclosing Party, including but not limited to:
+- Trade secrets
+- Business strategies and plans
+- Financial information
+- Customer lists and data
+- Technical data and know-how
+- Software and algorithms
+- [ADDITIONAL_CONFIDENTIAL_CATEGORIES]
+
+2. OBLIGATIONS OF RECEIVING PARTY
+The Receiving Party agrees to:
+a) Hold and maintain the Confidential Information in strict confidence;
+b) Not disclose the Confidential Information to any third parties without prior written consent;
+c) Use the Confidential Information solely for the Purpose stated above;
+d) Protect the Confidential Information using the same degree of care used to protect its own confidential information.
+
+3. EXCEPTIONS
+This Agreement does not apply to information that:
+a) Is or becomes publicly available through no fault of the Receiving Party;
+b) Was rightfully in the Receiving Party's possession prior to disclosure;
+c) Is independently developed by the Receiving Party;
+d) Is disclosed pursuant to court order or legal requirement.
+
+4. TERM
+This Agreement shall remain in effect for a period of [TERM_YEARS] years from the date first written above.
+
+5. RETURN OF MATERIALS
+Upon termination or request, the Receiving Party shall return or destroy all Confidential Information.
+
+6. REMEDIES
+The Receiving Party acknowledges that breach may cause irreparable harm and agrees that the Disclosing Party shall be entitled to seek equitable relief.
+
+7. GOVERNING LAW
+This Agreement shall be governed by the laws of [JURISDICTION].
+
+
+IN WITNESS WHEREOF, the parties have executed this Agreement as of the date first written above.
+
+
+___________________________          ___________________________
+[DISCLOSING_PARTY_NAME]             [RECEIVING_PARTY_NAME]
+Date: ______________                Date: ______________
+
+
+DISCLAIMER: This template is provided for informational purposes only and does not constitute legal advice. Consult with a qualified attorney to ensure this agreement meets your specific needs and complies with applicable laws.`
+};
+
 export const getTemplate = (type) => {
     const templates = {
         prenup: prenupTemplate,
         property: propertyTemplate,
-        powerOfAttorney: powerOfAttorneyTemplate
+        powerOfAttorney: powerOfAttorneyTemplate,
+        nda: ndaTemplate
     };
     return templates[type] || null;
 };

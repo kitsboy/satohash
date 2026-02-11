@@ -15,7 +15,18 @@ import {
     ShieldCheck,
     Globe,
     Activity as ActivityIcon,
-    Check
+    Check,
+    Clock,
+    Lock,
+    Eye,
+    Download,
+    MoreHorizontal,
+    Trash2,
+    Edit3,
+    Copy,
+    TrendingUp,
+    Shield,
+    Hash
 } from 'lucide-react';
 import Button from '../../components/Button';
 import Card from '../../components/Card';
@@ -24,73 +35,202 @@ import Footer from '../../components/Footer';
 import BlockchainPulse from '../../components/BlockchainPulse';
 import { useState, useEffect } from 'react';
 
-const protocolTips = [
+// Demo contracts for showcasing the platform
+const DEMO_CONTRACTS = [
     {
-        title: "The Power of SHA-256",
-        content: "Every document in Satohash is hashed using SHA-256. This creates a 64-character 'fingerprint' that is impossible to reverse or duplicate."
+        id: 'demo_prenup_001',
+        name: 'Anderson-Martinez Prenuptial Agreement',
+        status: 'timestamped',
+        templateType: 'prenup',
+        createdAt: '2026-01-15T10:30:00Z',
+        updatedAt: '2026-01-18T14:22:00Z',
+        hash: 'a7f3b2c1d4e5f6789012345678901234567890abcdef1234567890abcdef1234',
+        blockHeight: 881234,
+        parties: ['Sarah Anderson', 'Miguel Martinez'],
+        isDemo: true
     },
     {
-        title: "Why Bitcoin?",
-        content: "Bitcoin is the most secure computer network in history. By anchoring your hash to its chain, you leverage billions of dollars in hardware security."
+        id: 'demo_property_001',
+        name: 'Commercial Property Transfer - 123 Main St',
+        status: 'signed',
+        templateType: 'property',
+        createdAt: '2026-02-01T09:00:00Z',
+        updatedAt: '2026-02-08T16:45:00Z',
+        hash: 'b8c4d3e2f1a0987654321098765432109876543210fedcba0987654321fedcba',
+        parties: ['Apex Holdings LLC', 'Metropolitan Investments'],
+        isDemo: true
     },
     {
-        title: "Entropy & Identity",
-        content: "Your digital signature combined with a blockchain timestamp creates a 'Proof of Existence' that is valid across all 195 countries."
+        id: 'demo_nda_001',
+        name: 'TechCorp NDA - Project Phoenix',
+        status: 'waiting',
+        templateType: 'nda',
+        createdAt: '2026-02-05T11:15:00Z',
+        updatedAt: '2026-02-09T08:30:00Z',
+        parties: ['TechCorp Inc.', 'Pending: John Developer'],
+        isDemo: true
+    },
+    {
+        id: 'demo_poa_001',
+        name: 'Power of Attorney - Estate Management',
+        status: 'draft',
+        templateType: 'powerOfAttorney',
+        createdAt: '2026-02-09T14:00:00Z',
+        updatedAt: '2026-02-09T14:00:00Z',
+        parties: ['Eleanor Williams'],
+        isDemo: true
     }
 ];
 
-const getContractIcon = (templateType) => {
-    // You can expand this based on contract types
-    return FileText;
-};
+const protocolTips = [
+    {
+        title: "The Power of SHA-256",
+        content: "Every document in Satohash is hashed using SHA-256. This creates a 64-character 'fingerprint' that is impossible to reverse or duplicate.",
+        icon: Hash
+    },
+    {
+        title: "Why Bitcoin?",
+        content: "Bitcoin is the most secure computer network in history. By anchoring your hash to its chain, you leverage billions of dollars in hardware security.",
+        icon: Shield
+    },
+    {
+        title: "Entropy & Identity",
+        content: "Your digital signature combined with a blockchain timestamp creates a 'Proof of Existence' that is valid across all 195 countries.",
+        icon: Globe
+    },
+    {
+        title: "Merkle Trees",
+        content: "Your document hash joins thousands of others in a Merkle tree structure. Only the root hash is stored on Bitcoin, making it incredibly efficient.",
+        icon: TrendingUp
+    }
+];
 
 const getStatusColor = (status) => {
     const colors = {
         draft: '#94a3b8',
         waiting: '#f59e0b',
         signed: '#3b82f6',
-        timestamped: '#22c55e'
+        timestamped: '#22c55e',
+        pending: '#ec4899',
+        error: '#ef4444'
     };
     return colors[status] || colors.draft;
 };
 
+const getStatusIcon = (status) => {
+    const icons = {
+        draft: Edit3,
+        waiting: Clock,
+        signed: Check,
+        timestamped: Lock,
+        pending: Clock,
+        error: AlertCircle
+    };
+    return icons[status] || FileText;
+};
+
 const ProtocolTips = () => {
     const [index, setIndex] = useState(0);
+    const tip = protocolTips[index];
+    const TipIcon = tip.icon;
 
     return (
         <div style={{
             maxWidth: '600px',
-            margin: '40px auto 0',
-            padding: '24px',
-            background: 'rgba(99, 102, 241, 0.03)',
+            margin: '48px auto 0',
+            padding: '28px',
+            background: 'linear-gradient(135deg, rgba(99, 102, 241, 0.04) 0%, rgba(168, 85, 247, 0.04) 100%)',
             borderRadius: '24px',
             border: '1px solid rgba(99, 102, 241, 0.1)',
             textAlign: 'left',
             position: 'relative'
         }}>
-            <div style={{ display: 'flex', gap: '16px', alignItems: 'flex-start' }}>
-                <div style={{ color: 'var(--color-primary)', marginTop: '4px' }}>
-                    <Lightbulb size={24} />
+            <div style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
+                <div style={{ 
+                    width: '48px', 
+                    height: '48px', 
+                    borderRadius: '14px',
+                    background: 'var(--color-primary)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: 'white',
+                    flexShrink: 0
+                }}>
+                    <TipIcon size={24} />
                 </div>
-                <div>
-                    <h4 style={{ margin: '0 0 8px 0', fontSize: '15px', fontWeight: '950', color: 'var(--color-text-primary)' }}>
-                        {protocolTips[index].title}
+                <div style={{ flex: 1 }}>
+                    <div style={{ 
+                        fontSize: '11px', 
+                        fontWeight: '900', 
+                        color: 'var(--color-primary)', 
+                        textTransform: 'uppercase',
+                        letterSpacing: '1.5px',
+                        marginBottom: '8px'
+                    }}>
+                        Protocol Insight
+                    </div>
+                    <h4 style={{ margin: '0 0 10px 0', fontSize: '17px', fontWeight: '950', color: 'var(--color-text-primary)' }}>
+                        {tip.title}
                     </h4>
-                    <p style={{ margin: 0, fontSize: '14px', color: 'var(--color-text-secondary)', lineHeight: '1.6', fontWeight: '700' }}>
-                        {protocolTips[index].content}
+                    <p style={{ margin: 0, fontSize: '14px', color: 'var(--color-text-secondary)', lineHeight: '1.65', fontWeight: '600' }}>
+                        {tip.content}
                     </p>
                 </div>
             </div>
-            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '8px', marginTop: '16px' }}>
+            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '8px', marginTop: '20px' }}>
                 <button
                     onClick={() => setIndex((i) => (i === 0 ? protocolTips.length - 1 : i - 1))}
-                    style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-primary)' }}
+                    style={{ 
+                        background: 'var(--color-surface-elevated)', 
+                        border: '1px solid var(--color-border)', 
+                        cursor: 'pointer', 
+                        color: 'var(--color-primary)',
+                        width: '36px',
+                        height: '36px',
+                        borderRadius: '10px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        transition: 'all 0.2s ease'
+                    }}
                 >
                     <ChevronLeft size={18} />
                 </button>
+                <div style={{ 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    gap: '6px',
+                    padding: '0 12px'
+                }}>
+                    {protocolTips.map((_, i) => (
+                        <div 
+                            key={i}
+                            style={{
+                                width: i === index ? '20px' : '6px',
+                                height: '6px',
+                                borderRadius: '3px',
+                                background: i === index ? 'var(--color-primary)' : 'var(--color-border)',
+                                transition: 'all 0.3s ease'
+                            }}
+                        />
+                    ))}
+                </div>
                 <button
                     onClick={() => setIndex((i) => (i === protocolTips.length - 1 ? 0 : i + 1))}
-                    style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-primary)' }}
+                    style={{ 
+                        background: 'var(--color-surface-elevated)', 
+                        border: '1px solid var(--color-border)', 
+                        cursor: 'pointer', 
+                        color: 'var(--color-primary)',
+                        width: '36px',
+                        height: '36px',
+                        borderRadius: '10px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        transition: 'all 0.2s ease'
+                    }}
                 >
                     <ChevronRight size={18} />
                 </button>
@@ -99,10 +239,169 @@ const ProtocolTips = () => {
     );
 };
 
+const ContractCard = ({ contract, onClick }) => {
+    const statusColor = getStatusColor(contract.status);
+    const StatusIcon = getStatusIcon(contract.status);
+    const [showMenu, setShowMenu] = useState(false);
+
+    return (
+        <Card
+            style={{
+                cursor: 'pointer',
+                padding: 0,
+                display: 'flex',
+                flexDirection: 'column',
+                minHeight: '240px',
+                background: 'white',
+                position: 'relative',
+                overflow: 'hidden',
+                borderRadius: '20px',
+                border: '1px solid var(--color-border)',
+                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
+            }}
+            className="card-interactive"
+            onClick={onClick}
+        >
+            {/* Status Bar */}
+            <div style={{ 
+                height: '5px', 
+                background: `linear-gradient(90deg, ${statusColor}, ${statusColor}88)` 
+            }} />
+
+            {/* Demo Badge */}
+            {contract.isDemo && (
+                <div style={{
+                    position: 'absolute',
+                    top: '16px',
+                    right: '16px',
+                    background: 'linear-gradient(135deg, #f59e0b, #ef4444)',
+                    color: 'white',
+                    fontSize: '9px',
+                    fontWeight: '900',
+                    padding: '4px 8px',
+                    borderRadius: '6px',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.5px'
+                }}>
+                    Demo
+                </div>
+            )}
+
+            <div style={{ padding: '24px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+                {/* Header */}
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: '16px' }}>
+                    <div style={{ 
+                        padding: '12px', 
+                        borderRadius: '14px', 
+                        background: `${statusColor}12`, 
+                        color: statusColor 
+                    }}>
+                        <StatusIcon size={22} />
+                    </div>
+                    <StatusPill status={contract.status} />
+                </div>
+
+                {/* Title */}
+                <h3 style={{ 
+                    fontSize: '17px', 
+                    fontWeight: '900', 
+                    color: 'var(--color-text-primary)', 
+                    marginBottom: '12px',
+                    lineHeight: '1.3',
+                    display: '-webkit-box',
+                    WebkitLineClamp: 2,
+                    WebkitBoxOrient: 'vertical',
+                    overflow: 'hidden'
+                }}>
+                    {contract.name}
+                </h3>
+
+                {/* Parties */}
+                {contract.parties && (
+                    <div style={{ 
+                        display: 'flex', 
+                        alignItems: 'center', 
+                        gap: '8px', 
+                        marginBottom: '12px' 
+                    }}>
+                        <Users size={14} color="var(--color-text-tertiary)" />
+                        <span style={{ 
+                            fontSize: '13px', 
+                            fontWeight: '600', 
+                            color: 'var(--color-text-secondary)',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            whiteSpace: 'nowrap'
+                        }}>
+                            {contract.parties.join(', ')}
+                        </span>
+                    </div>
+                )}
+
+                {/* Hash Preview */}
+                {contract.hash && (
+                    <div style={{
+                        background: 'var(--color-surface)',
+                        padding: '10px 12px',
+                        borderRadius: '10px',
+                        marginBottom: '12px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px'
+                    }}>
+                        <Hash size={12} color="var(--color-primary)" />
+                        <code style={{ 
+                            fontSize: '11px', 
+                            fontWeight: '700', 
+                            color: 'var(--color-text-tertiary)',
+                            fontFamily: 'var(--font-mono)',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis'
+                        }}>
+                            {contract.hash.slice(0, 16)}...{contract.hash.slice(-8)}
+                        </code>
+                    </div>
+                )}
+
+                {/* Date */}
+                <div style={{ 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    gap: '8px', 
+                    fontSize: '12px', 
+                    fontWeight: '700', 
+                    color: 'var(--color-text-tertiary)',
+                    marginTop: 'auto'
+                }}>
+                    <Calendar size={14} />
+                    <span>Updated {new Date(contract.updatedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+                </div>
+            </div>
+
+            {/* Footer Action */}
+            <div style={{ 
+                padding: '16px 24px', 
+                borderTop: '1px solid var(--color-border)',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                background: 'var(--color-surface)'
+            }}>
+                <span style={{ fontSize: '13px', fontWeight: '800', color: 'var(--color-primary)' }}>
+                    View Details
+                </span>
+                <ArrowRight size={16} color="var(--color-primary)" />
+            </div>
+        </Card>
+    );
+};
+
 export default function ContractList() {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const [contracts, setContracts] = useState([]);
+    const [showDemoData, setShowDemoData] = useState(true);
+    const [filter, setFilter] = useState('all');
 
     useEffect(() => {
         // Load contracts from localStorage
@@ -112,8 +411,25 @@ export default function ContractList() {
         }
     }, []);
 
+    // Combine real and demo contracts
+    const displayContracts = showDemoData 
+        ? [...contracts, ...DEMO_CONTRACTS]
+        : contracts;
+
+    // Filter contracts
+    const filteredContracts = filter === 'all' 
+        ? displayContracts 
+        : displayContracts.filter(c => c.status === filter);
+
     const handleNewContract = () => {
         navigate('/choose-template');
+    };
+
+    const stats = {
+        total: displayContracts.length,
+        timestamped: displayContracts.filter(c => c.status === 'timestamped').length,
+        pending: displayContracts.filter(c => c.status === 'waiting' || c.status === 'signed').length,
+        draft: displayContracts.filter(c => c.status === 'draft').length
     };
 
     return (
@@ -121,7 +437,7 @@ export default function ContractList() {
             background: 'var(--color-surface)',
             minHeight: '100vh'
         }}>
-            <div className="container">
+            <div className="container" style={{ maxWidth: '1400px' }}>
                 {/* Header */}
                 <div className="animate-slide-down" style={{
                     marginTop: 'var(--spacing-2xl)',
@@ -129,17 +445,30 @@ export default function ContractList() {
                 }}>
                     <BlockchainPulse />
 
-                    <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '20px' }}>
+                    <div style={{ 
+                        display: 'flex', 
+                        justifyContent: 'space-between', 
+                        alignItems: 'flex-start', 
+                        marginTop: '24px',
+                        flexWrap: 'wrap',
+                        gap: '20px'
+                    }}>
                         <div>
                             <h1 style={{
-                                fontSize: 'var(--text-3xl)',
+                                fontSize: 'clamp(28px, 5vw, 40px)',
                                 fontWeight: '950',
                                 color: 'var(--color-text-primary)',
-                                margin: 0
+                                margin: 0,
+                                letterSpacing: '-1.5px'
                             }}>
                                 {t('contracts.title')}
                             </h1>
-                            <p className="text-secondary" style={{ margin: '8px 0 0 0', fontWeight: '700' }}>
+                            <p style={{ 
+                                margin: '8px 0 0 0', 
+                                fontWeight: '600',
+                                color: 'var(--color-text-secondary)',
+                                fontSize: '16px'
+                            }}>
                                 Manage your cryptographic agreements and Bitcoin-anchored proofs.
                             </p>
                         </div>
@@ -149,195 +478,258 @@ export default function ContractList() {
                             style={{
                                 display: 'flex',
                                 alignItems: 'center',
-                                gap: 'var(--spacing-sm)',
-                                background: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)',
+                                gap: '10px',
+                                background: 'linear-gradient(135deg, #6366f1 0%, #4338ca 100%)',
                                 border: 'none',
-                                height: '48px',
-                                paddingLeft: '24px',
-                                paddingRight: '24px',
-                                boxShadow: '0 4px 16px rgba(99, 102, 241, 0.3)'
+                                height: '52px',
+                                paddingLeft: '28px',
+                                paddingRight: '28px',
+                                borderRadius: '14px',
+                                boxShadow: '0 8px 24px rgba(99, 102, 241, 0.35)',
+                                fontWeight: '900'
                             }}
                         >
-                            <Plus size={20} />
+                            <Plus size={20} strokeWidth={3} />
                             {t('contracts.new')}
                         </Button>
                     </div>
                 </div>
 
-                {contracts.length === 0 ? (
+                {displayContracts.length === 0 ? (
                     /* Empty State Launchpad */
                     <div className="text-center animate-fade-in" style={{
-                        marginTop: 'calc(var(--spacing-3xl) * 2)',
-                        paddingBottom: 'calc(var(--spacing-3xl) * 2)'
+                        marginTop: '80px',
+                        paddingBottom: '80px'
                     }}>
                         <div style={{
-                            width: '120px',
-                            height: '120px',
-                            margin: '0 auto var(--spacing-xl)',
+                            width: '140px',
+                            height: '140px',
+                            margin: '0 auto 32px',
                             borderRadius: '50%',
                             background: 'linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%)',
-                            border: '2px dashed rgba(99, 102, 241, 0.3)',
+                            border: '3px dashed rgba(99, 102, 241, 0.25)',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
                             position: 'relative',
                             animation: 'pulse 3s ease-in-out infinite'
                         }}>
-                            <FileText size={56} color="var(--color-primary)" strokeWidth={1.5} />
+                            <FileText size={64} color="var(--color-primary)" strokeWidth={1.5} />
                             <div style={{
                                 position: 'absolute',
                                 top: '-8px',
                                 right: '-8px',
-                                width: '40px',
-                                height: '40px',
+                                width: '44px',
+                                height: '44px',
                                 borderRadius: '50%',
                                 background: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)',
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'center',
-                                boxShadow: '0 4px 12px rgba(251, 191, 36, 0.4)'
+                                boxShadow: '0 6px 16px rgba(251, 191, 36, 0.4)'
                             }}>
-                                <Sparkles size={20} color="white" />
+                                <Sparkles size={22} color="white" />
                             </div>
                         </div>
 
-                        <h2 style={{ fontSize: 'var(--text-2xl)', fontWeight: '950', marginBottom: 'var(--spacing-sm)', color: 'var(--color-text-primary)' }}>
-                            Your Digital Safe is Ready
+                        <h2 style={{ fontSize: '28px', fontWeight: '950', marginBottom: '12px', color: 'var(--color-text-primary)', letterSpacing: '-1px' }}>
+                            Your Digital Vault is Ready
                         </h2>
 
-                        <p className="text-tertiary" style={{ fontSize: 'var(--text-lg)', maxWidth: '480px', margin: '0 auto var(--spacing-2xl)', fontWeight: '800' }}>
+                        <p style={{ 
+                            fontSize: '17px', 
+                            maxWidth: '500px', 
+                            margin: '0 auto 40px',
+                            fontWeight: '600',
+                            color: 'var(--color-text-secondary)',
+                            lineHeight: '1.6'
+                        }}>
                             Launch your first cryptographic agreement from a template below:
                         </p>
 
-                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px', maxWidth: '700px', margin: '0 auto 40px' }}>
+                        <div style={{ 
+                            display: 'grid', 
+                            gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', 
+                            gap: '16px', 
+                            maxWidth: '700px', 
+                            margin: '0 auto 48px' 
+                        }}>
                             {[
-                                { id: 'nda', name: 'NDA', color: '#10b981' },
-                                { id: 'prenup', name: 'Prenuptial', color: '#ec4899' },
-                                { id: 'property', name: 'Property', color: '#3b82f6' }
+                                { id: 'nda', name: 'NDA', color: '#10b981', desc: 'Confidentiality' },
+                                { id: 'prenup', name: 'Prenuptial', color: '#ec4899', desc: 'Marriage' },
+                                { id: 'property', name: 'Property', color: '#3b82f6', desc: 'Real Estate' },
+                                { id: 'powerOfAttorney', name: 'Power of Attorney', color: '#f59e0b', desc: 'Legal Rep.' }
                             ].map(quick => (
                                 <div
                                     key={quick.id}
                                     onClick={() => navigate(`/contracts/new/${quick.id}`)}
                                     style={{
                                         background: 'white',
-                                        padding: '24px',
-                                        borderRadius: '20px',
+                                        padding: '28px 20px',
+                                        borderRadius: '18px',
                                         border: '1px solid var(--color-border)',
                                         cursor: 'pointer',
-                                        transition: 'all 0.3s ease'
+                                        transition: 'all 0.3s ease',
+                                        textAlign: 'center'
                                     }}
                                     className="card-interactive"
                                 >
-                                    <div style={{ color: quick.color, marginBottom: '12px' }}><Plus size={24} /></div>
-                                    <div style={{ fontWeight: '950', color: 'var(--color-text-primary)' }}>{quick.name}</div>
+                                    <div style={{ 
+                                        width: '48px',
+                                        height: '48px',
+                                        borderRadius: '14px',
+                                        background: `${quick.color}15`,
+                                        color: quick.color, 
+                                        margin: '0 auto 14px',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center'
+                                    }}>
+                                        <Plus size={24} strokeWidth={2.5} />
+                                    </div>
+                                    <div style={{ fontWeight: '900', color: 'var(--color-text-primary)', fontSize: '15px' }}>{quick.name}</div>
+                                    <div style={{ fontSize: '12px', color: 'var(--color-text-tertiary)', fontWeight: '600', marginTop: '4px' }}>{quick.desc}</div>
                                 </div>
                             ))}
                         </div>
                         <ProtocolTips />
                     </div>
                 ) : (
-                    /* Dashboard with Activity Feed */
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 320px', gap: '40px', alignItems: 'start' }}>
-                        <div>
-                            {/* Stats */}
-                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '20px', marginBottom: '40px' }}>
-                                <Card style={{ padding: '24px', background: 'white' }}>
-                                    <div style={{ color: 'var(--color-primary)', marginBottom: '12px' }}><Zap size={24} /></div>
-                                    <div style={{ fontSize: '24px', fontWeight: '950', color: 'var(--color-text-primary)' }}>{contracts.length}</div>
-                                    <div style={{ fontSize: '14px', fontWeight: '700', color: 'var(--color-text-secondary)' }}>Total Anchors</div>
+                    /* Dashboard with Contracts */
+                    <div>
+                        {/* Stats Row */}
+                        <div style={{ 
+                            display: 'grid', 
+                            gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', 
+                            gap: '16px', 
+                            marginBottom: '32px' 
+                        }}>
+                            {[
+                                { label: 'Total Anchors', value: stats.total, icon: FileText, color: 'var(--color-primary)' },
+                                { label: 'Timestamped', value: stats.timestamped, icon: Lock, color: '#22c55e' },
+                                { label: 'In Progress', value: stats.pending, icon: Clock, color: '#f59e0b' },
+                                { label: 'Drafts', value: stats.draft, icon: Edit3, color: '#94a3b8' }
+                            ].map((stat, i) => (
+                                <Card key={i} style={{ 
+                                    padding: '24px', 
+                                    background: 'white',
+                                    borderRadius: '18px',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '16px'
+                                }}>
+                                    <div style={{
+                                        width: '48px',
+                                        height: '48px',
+                                        borderRadius: '14px',
+                                        background: `${stat.color}12`,
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        color: stat.color
+                                    }}>
+                                        <stat.icon size={22} />
+                                    </div>
+                                    <div>
+                                        <div style={{ fontSize: '28px', fontWeight: '950', color: 'var(--color-text-primary)', lineHeight: 1 }}>{stat.value}</div>
+                                        <div style={{ fontSize: '13px', fontWeight: '700', color: 'var(--color-text-secondary)', marginTop: '4px' }}>{stat.label}</div>
+                                    </div>
                                 </Card>
-                                <Card style={{ padding: '24px', background: 'white' }}>
-                                    <div style={{ color: '#10b981', marginBottom: '12px' }}><Check size={24} /></div>
-                                    <div style={{ fontSize: '24px', fontWeight: '950', color: 'var(--color-text-primary)' }}>{contracts.filter(c => c.status === 'signed' || c.status === 'timestamped').length}</div>
-                                    <div style={{ fontSize: '14px', fontWeight: '700', color: 'var(--color-text-secondary)' }}>Secured Proofs</div>
-                                </Card>
-                            </div>
-
-                            {/* Contract Grid */}
-                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '24px' }}>
-                                {contracts.map((contract) => {
-                                    const statusColor = getStatusColor(contract.status);
-                                    return (
-                                        <Card
-                                            key={contract.id}
-                                            style={{
-                                                cursor: 'pointer',
-                                                padding: '24px',
-                                                display: 'flex',
-                                                flexDirection: 'column',
-                                                justifyContent: 'space-between',
-                                                minHeight: '200px',
-                                                background: 'white',
-                                                position: 'relative',
-                                                overflow: 'hidden'
-                                            }}
-                                            className="card-interactive"
-                                            onClick={() => navigate(`/contracts/${contract.id}`)}
-                                        >
-                                            <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '4px', background: statusColor }} />
-                                            <div>
-                                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: '16px' }}>
-                                                    <div style={{ padding: '10px', borderRadius: '10px', background: `${statusColor}15`, color: statusColor }}>
-                                                        <FileText size={20} />
-                                                    </div>
-                                                    <StatusPill status={contract.status} />
-                                                </div>
-                                                <h3 style={{ fontSize: '18px', fontWeight: '950', color: 'var(--color-text-primary)', marginBottom: '8px' }}>
-                                                    {contract.name}
-                                                </h3>
-                                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12px', fontWeight: '700', color: 'var(--color-text-tertiary)' }}>
-                                                    <Calendar size={14} /> {new Date(contract.updatedAt).toLocaleDateString()}
-                                                </div>
-                                            </div>
-                                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '20px', paddingTop: '16px', borderTop: '1px solid var(--color-border)' }}>
-                                                <span style={{ fontSize: '13px', fontWeight: '850', color: 'var(--color-primary)' }}>View Details</span>
-                                                <ArrowRight size={16} className="text-primary" />
-                                            </div>
-                                        </Card>
-                                    );
-                                })}
-                            </div>
+                            ))}
                         </div>
 
-                        {/* Activity Sidebar */}
-                        <aside style={{ background: 'white', borderRadius: '24px', border: '1px solid var(--color-border)', padding: '24px', position: 'sticky', top: '24px' }}>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '24px' }}>
-                                <ActivityIcon size={20} className="text-primary" />
-                                <h4 style={{ margin: 0, fontWeight: '950', fontSize: '16px' }}>Protocol Activity Feed</h4>
-                            </div>
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                        {/* Filter & Controls */}
+                        <div style={{ 
+                            display: 'flex', 
+                            justifyContent: 'space-between', 
+                            alignItems: 'center',
+                            marginBottom: '24px',
+                            flexWrap: 'wrap',
+                            gap: '16px'
+                        }}>
+                            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
                                 {[
-                                    { event: 'Merkle Root anchored', time: '2m ago', icon: Zap, color: '#6366f1' },
-                                    { event: 'SHA-256 Hash generated', time: '15m ago', icon: ShieldCheck, color: '#10b981' },
-                                    { event: 'Block #831,492 confirmed', time: '1h ago', icon: Globe, color: '#3b82f6' }
-                                ].map((item, i) => (
-                                    <div key={i} style={{ display: 'flex', gap: '12px', opacity: 1 - i * 0.2 }}>
-                                        <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: `${item.color}10`, display: 'flex', alignItems: 'center', justifyContent: 'center', color: item.color, flexShrink: 0, margin: 'auto' }}>
-                                            <item.icon size={18} style={{ margin: 'auto' }} />
-                                        </div>
-                                        <div>
-                                            <div style={{ fontSize: '13px', fontWeight: '850', color: 'var(--color-text-primary)', lineHeight: '1.2' }}>{item.event}</div>
-                                            <div style={{ fontSize: '11px', fontWeight: '700', color: 'var(--color-text-tertiary)', marginTop: '4px' }}>{item.time}</div>
-                                        </div>
-                                    </div>
+                                    { key: 'all', label: 'All' },
+                                    { key: 'timestamped', label: 'Timestamped' },
+                                    { key: 'signed', label: 'Signed' },
+                                    { key: 'waiting', label: 'Pending' },
+                                    { key: 'draft', label: 'Drafts' }
+                                ].map(f => (
+                                    <button
+                                        key={f.key}
+                                        onClick={() => setFilter(f.key)}
+                                        style={{
+                                            padding: '10px 18px',
+                                            borderRadius: '10px',
+                                            border: filter === f.key ? '2px solid var(--color-primary)' : '1px solid var(--color-border)',
+                                            background: filter === f.key ? 'var(--color-primary)' : 'white',
+                                            color: filter === f.key ? 'white' : 'var(--color-text-primary)',
+                                            fontWeight: '800',
+                                            fontSize: '13px',
+                                            cursor: 'pointer',
+                                            transition: 'all 0.2s ease'
+                                        }}
+                                    >
+                                        {f.label}
+                                    </button>
                                 ))}
                             </div>
 
-                            <div style={{ marginTop: '32px', paddingTop: '24px', borderTop: '1px solid var(--color-border)' }}>
-                                <div style={{ background: '#f8fafc', padding: '16px', borderRadius: '16px', border: '1px solid #eef2f6' }}>
-                                    <div style={{ fontSize: '12px', fontWeight: '850', color: 'var(--color-text-secondary)', marginBottom: '4px' }}>Node Reliability</div>
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                        <div style={{ height: '6px', flex: 1, background: '#eef2f6', borderRadius: '3px', overflow: 'hidden' }}>
-                                            <div style={{ width: '99.9%', height: '100%', background: '#10b981' }} />
-                                        </div>
-                                        <span style={{ fontSize: '11px', fontWeight: '900', color: '#10b981' }}>99.9%</span>
-                                    </div>
-                                </div>
-                                <Button variant="secondary" size="small" style={{ width: '100%', marginTop: '16px', fontSize: '12px', fontWeight: '950' }}>
-                                    Export Activity Report
-                                </Button>
+                            <label style={{ 
+                                display: 'flex', 
+                                alignItems: 'center', 
+                                gap: '10px',
+                                cursor: 'pointer',
+                                fontSize: '13px',
+                                fontWeight: '700',
+                                color: 'var(--color-text-secondary)'
+                            }}>
+                                <input
+                                    type="checkbox"
+                                    checked={showDemoData}
+                                    onChange={(e) => setShowDemoData(e.target.checked)}
+                                    style={{ 
+                                        width: '18px', 
+                                        height: '18px',
+                                        accentColor: 'var(--color-primary)'
+                                    }}
+                                />
+                                Show demo contracts
+                            </label>
+                        </div>
+
+                        {/* Contract Grid */}
+                        <div style={{ 
+                            display: 'grid', 
+                            gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', 
+                            gap: '24px',
+                            marginBottom: '48px'
+                        }}>
+                            {filteredContracts.map((contract) => (
+                                <ContractCard 
+                                    key={contract.id} 
+                                    contract={contract}
+                                    onClick={() => {
+                                        if (contract.isDemo) {
+                                            // For demo, just show an alert or navigate to a sample view
+                                            alert('This is a demo contract. Create your own to access full features!');
+                                        } else {
+                                            navigate(`/contracts/${contract.id}`);
+                                        }
+                                    }}
+                                />
+                            ))}
+                        </div>
+
+                        {filteredContracts.length === 0 && (
+                            <div style={{ textAlign: 'center', padding: '60px 20px' }}>
+                                <AlertCircle size={48} color="var(--color-text-tertiary)" style={{ marginBottom: '16px' }} />
+                                <h3 style={{ fontWeight: '900', color: 'var(--color-text-primary)', marginBottom: '8px' }}>No contracts found</h3>
+                                <p style={{ color: 'var(--color-text-secondary)', fontWeight: '600' }}>Try adjusting your filter or create a new contract.</p>
                             </div>
-                        </aside>
+                        )}
+
+                        <ProtocolTips />
                     </div>
                 )}
             </div>
