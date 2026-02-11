@@ -48,20 +48,22 @@ export default function Footer() {
 
     return (
         <>
-            <footer style={{
-                background: '#fafbfc',
-                borderTop: '1px solid #e2e8f0',
-                padding: '100px 0 40px',
+             <footer style={{
+                background: 'linear-gradient(180deg, #fafbfc 0%, #f5f7fa 100%)',
+                borderTop: '2px solid #d8dfe8',
+                padding: 'clamp(60px, 10vw, 100px) clamp(16px, 5vw, 60px) clamp(40px, 6vw, 60px)',
                 position: 'relative',
                 zIndex: 1,
                 overflow: 'hidden'
             }}>
-                <div className="container">
+                <div style={{ width: '100%', maxWidth: '1300px', margin: '0 auto', padding: '0 clamp(16px, 5vw, 60px)' }}>
                     <div style={{
                         display: 'grid',
                         gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-                        gap: '60px',
-                        marginBottom: '80px'
+                        gap: 'clamp(40px, 6vw, 80px)',
+                        marginBottom: '60px',
+                        paddingBottom: '60px',
+                        borderBottom: '2px solid #e8ecf4'
                     }}>
                         {/* Brand Column */}
                         <div style={{ gridColumn: 'span 2', minWidth: '280px' }}>
@@ -179,17 +181,17 @@ export default function Footer() {
 
                     {/* Integrated Action Card (Repositioned for better fit) */}
                     <div style={{
-                        background: '#ffffff',
-                        border: '1px solid #e2e8f0',
-                        padding: '40px',
-                        borderRadius: '32px',
+                        background: 'linear-gradient(135deg, #ffffff 0%, #f5f7fa 100%)',
+                        border: '2px solid #d8dfe8',
+                        padding: 'clamp(32px, 4vw, 48px)',
+                        borderRadius: '28px',
                         marginBottom: '60px',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'space-between',
                         gap: '32px',
                         flexWrap: 'wrap',
-                        boxShadow: '0 4px 30px rgba(0,0,0,0.02)'
+                        boxShadow: '0 8px 32px rgba(255, 127, 0, 0.08)'
                     }}>
                         <div style={{ display: 'flex', gap: '24px', alignItems: 'center' }}>
                             <div style={{
@@ -249,13 +251,13 @@ export default function Footer() {
 
                     {/* Bottom Bar with Logo as requested */}
                     <div style={{
-                        paddingTop: '32px',
-                        borderTop: '1px solid #e2e8f0',
+                        paddingTop: 'clamp(24px, 3vw, 40px)',
+                        borderTop: '2px solid #e8ecf4',
                         display: 'flex',
                         justifyContent: 'space-between',
                         alignItems: 'center',
                         flexWrap: 'wrap',
-                        gap: '24px'
+                        gap: 'clamp(16px, 3vw, 32px)'
                     }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '32px' }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>

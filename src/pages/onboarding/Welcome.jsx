@@ -92,8 +92,10 @@ export default function Welcome() {
             title: t('welcome.features.cryptoProof'),
             description: t('welcome.features.cryptoProofDesc'),
             detail: t('welcome.features.cryptoProofDetail'),
-            color: '#f7931a',
-            gradient: 'linear-gradient(135deg, #f7931a 0%, #ffa821 100%)'
+            color: '#ff7f00',
+            gradient: 'linear-gradient(135deg, #ff7f00 0%, #ffaa33 100%)',
+            hoverDetail: 'SHA-256 produces a 256-bit cryptographic hash. Even a single bit change in your document results in a completely different hash—this is the one-way function that makes tampering immediately detectable.',
+            techName: 'Cryptographic Hashing'
         },
         {
             icon: Clock,
@@ -101,8 +103,10 @@ export default function Welcome() {
             title: t('welcome.features.timestamp'),
             description: t('welcome.features.timestampDesc'),
             detail: t('welcome.features.timestampDetail'),
-            color: '#0066cc',
-            gradient: 'linear-gradient(135deg, #0066cc 0%, #00a8ff 100%)'
+            color: '#0052ff',
+            gradient: 'linear-gradient(135deg, #0052ff 0%, #0080ff 100%)',
+            hoverDetail: 'Your document hash is bundled with thousands of others into a Merkle tree. The root hash is committed to Bitcoin, creating an immutable timestamp that proves your document existed at that exact moment in time.',
+            techName: 'Bitcoin Timestamping'
         },
         {
             icon: CheckCircle,
@@ -110,8 +114,10 @@ export default function Welcome() {
             title: t('welcome.features.verify'),
             description: t('welcome.features.verifyDesc'),
             detail: t('welcome.features.verifyDetail'),
-            color: '#06a77d',
-            gradient: 'linear-gradient(135deg, #06a77d 0%, #00d9ff 100%)'
+            color: '#00d97a',
+            gradient: 'linear-gradient(135deg, #00d97a 0%, #00e5ff 100%)',
+            hoverDetail: 'A .ots file contains the cryptographic "path" from your document to the Bitcoin block. You can verify it with OpenTimestamps client or any Bitcoin block explorer—no Satohash required.',
+            techName: 'Independent Verification'
         }
     ];
 
@@ -459,61 +465,64 @@ export default function Welcome() {
             <div id="features" style={{ background: '#ffffff', borderTop: '1px solid #e2e8f0', padding: 'clamp(60px, 10vw, 80px) clamp(16px, 5vw, 60px)', position: 'relative', zIndex: 1 }}>
                 <div style={{ width: '100%', maxWidth: '1300px', margin: '0 auto' }}>
                     <div style={{ textAlign: 'center', marginBottom: '60px', maxWidth: '700px', margin: '0 auto 60px' }}>
-                        <h2 style={{ fontSize: '14px', fontWeight: '900', color: '#6366f1', textTransform: 'uppercase', letterSpacing: '4px', marginBottom: '16px' }}>Core Capabilities</h2>
-                        <h2 style={{ fontSize: 'clamp(32px, 5vw, 48px)', fontWeight: '900', color: '#0f172a', letterSpacing: '-1px' }}>The Anatomy of Immutable Trust</h2>
+                        <h2 style={{ fontSize: '14px', fontWeight: '900', color: '#ff7f00', textTransform: 'uppercase', letterSpacing: '4px', marginBottom: '16px' }}>Core Capabilities</h2>
+                        <h2 style={{ fontSize: 'clamp(32px, 5vw, 48px)', fontWeight: '900', color: '#0d1117', letterSpacing: '-1px' }}>The Anatomy of Immutable Trust</h2>
                     </div>
 
                     <div style={{
                         display: 'grid',
-                        gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
-                        gap: '32px',
+                        gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+                        gap: 'clamp(24px, 4vw, 36px)',
+                        maxWidth: '1200px',
+                        margin: '0 auto'
                     }}>
                         {features.map((feature, index) => (
                             <div key={index} className="flip-card animate-slide-up" style={{ animationDelay: `${200 + index * 100}ms` }}>
                                 <div className="flip-card-inner">
-                                    <div className="flip-card-front card-premium" style={{ display: 'flex', flexDirection: 'column', height: '100%', padding: '44px' }}>
+                                    <div className="flip-card-front card-premium" style={{ display: 'flex', flexDirection: 'column', height: '100%', padding: 'clamp(32px, 5vw, 44px)' }}>
                                         <div style={{
                                             width: '72px',
                                             height: '72px',
                                             borderRadius: '20px',
-                                            background: `${feature.color}12`,
+                                            background: `${feature.color}15`,
                                             display: 'flex',
                                             alignItems: 'center',
                                             justifyContent: 'center',
                                             marginBottom: '28px',
-                                            color: feature.color
+                                            color: feature.color,
+                                            transition: 'all 0.3s ease'
                                         }}>
                                             <feature.icon size={36} strokeWidth={2.5} />
                                         </div>
-                                        <h3 style={{ fontSize: '24px', fontWeight: '800', marginBottom: '14px', color: '#0f172a', letterSpacing: '-0.5px' }}>
+                                        <h3 style={{ fontSize: 'clamp(20px, 4vw, 24px)', fontWeight: '800', marginBottom: '14px', color: '#0d1117', letterSpacing: '-0.5px' }}>
                                             {feature.title}
                                         </h3>
-                                        <p style={{ fontSize: '16px', color: '#475569', lineHeight: '1.7', fontWeight: '500', flex: 1 }}>
+                                        <p style={{ fontSize: '16px', color: '#3d4450', lineHeight: '1.7', fontWeight: '500', flex: 1 }}>
                                             {feature.description}
                                         </p>
-                                        <div style={{ marginTop: '24px', color: '#6366f1', fontSize: '13px', fontWeight: '700', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                        <div style={{ marginTop: '24px', color: feature.color, fontSize: '13px', fontWeight: '700', display: 'flex', alignItems: 'center', gap: '8px' }}>
                                             <MousePointer2 size={16} /> Hover for Technical Depth
                                         </div>
                                     </div>
 
-                                    <div className="flip-card-back" style={{ padding: '44px', textAlign: 'center', background: feature.gradient }}>
+                                    <div className="flip-card-back" style={{ padding: 'clamp(32px, 5vw, 44px)', textAlign: 'center', background: feature.gradient }}>
                                         <div style={{
-                                            background: 'rgba(255,255,255,0.2)',
+                                            background: 'rgba(255,255,255,0.25)',
                                             padding: '10px 20px',
                                             borderRadius: '100px',
                                             fontSize: '11px',
                                             fontWeight: '900',
                                             textTransform: 'uppercase',
                                             letterSpacing: '2px',
-                                            marginBottom: '28px',
+                                            marginBottom: '20px',
                                             display: 'inline-block',
                                             backdropFilter: 'blur(10px)'
                                         }}>
-                                            Under the Hood
+                                            {feature.techName}
                                         </div>
                                         <feature.techIcon size={56} strokeWidth={1.5} style={{ marginBottom: '20px', color: '#ffffff' }} />
                                         <p style={{ fontSize: '15px', lineHeight: '1.75', fontWeight: '600', color: '#ffffff' }}>
-                                            {feature.detail}
+                                            {feature.hoverDetail}
                                         </p>
                                     </div>
                                 </div>
@@ -527,45 +536,46 @@ export default function Welcome() {
             <div style={{ padding: 'clamp(60px, 10vw, 80px) clamp(16px, 5vw, 60px)', position: 'relative', zIndex: 1, background: 'linear-gradient(135deg, #f0fdf4 0%, #f0f3ff 100%)', borderTop: '3px solid #06a77d' }}>
                 <div style={{ width: '100%', maxWidth: '1200px', margin: '0 auto' }}>
                     <div style={{ textAlign: 'center', marginBottom: '50px', maxWidth: '700px', margin: '0 auto 50px' }}>
-                        <h2 style={{ fontSize: '14px', fontWeight: '900', color: '#6366f1', textTransform: 'uppercase', letterSpacing: '4px', marginBottom: '16px' }}>Use Cases</h2>
-                        <h2 style={{ fontSize: 'clamp(28px, 5vw, 42px)', fontWeight: '900', color: '#0f172a', letterSpacing: '-1px' }}>Trusted Across Industries</h2>
+                        <h2 style={{ fontSize: '14px', fontWeight: '900', color: '#00d97a', textTransform: 'uppercase', letterSpacing: '4px', marginBottom: '16px' }}>Use Cases</h2>
+                        <h2 style={{ fontSize: 'clamp(28px, 5vw, 42px)', fontWeight: '900', color: '#0d1117', letterSpacing: '-1px' }}>Trusted Across Industries</h2>
                     </div>
 
                     <div style={{
                         display: 'grid',
                         gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-                        gap: '24px',
-                        maxWidth: '1000px',
+                        gap: 'clamp(20px, 3vw, 28px)',
+                        maxWidth: '1100px',
                         margin: '0 auto'
                     }}>
                         {useCases.map((useCase, i) => (
                             <div key={i} style={{
                                 background: '#ffffff',
-                                padding: '36px',
+                                padding: 'clamp(28px, 4vw, 40px)',
                                 borderRadius: '24px',
-                                border: '2px solid #e2e8f0',
+                                border: '2px solid #d8dfe8',
                                 transition: 'all 0.3s ease',
-                                boxShadow: '0 8px 24px rgba(0,0,0,0.08)'
+                                boxShadow: '0 8px 28px rgba(255, 127, 0, 0.06)'
                             }} className="card-interactive">
                                 <div style={{
-                                    width: '56px',
-                                    height: '56px',
+                                    width: '60px',
+                                    height: '60px',
                                     borderRadius: '16px',
-                                    background: '#6366f1',
+                                    background: 'linear-gradient(135deg, #0052ff 0%, #0080ff 100%)',
                                     display: 'flex',
                                     alignItems: 'center',
                                     justifyContent: 'center',
                                     color: 'white',
-                                    marginBottom: '20px'
+                                    marginBottom: '20px',
+                                    transition: 'all 0.3s ease'
                                 }}>
                                     <useCase.icon size={28} />
                                 </div>
-                                <h3 style={{ fontSize: '20px', fontWeight: '800', marginBottom: '10px', color: '#0f172a' }}>{useCase.title}</h3>
-                                <p style={{ fontSize: '15px', color: '#475569', marginBottom: '16px', fontWeight: '500', lineHeight: '1.6' }}>{useCase.description}</p>
+                                <h3 style={{ fontSize: '20px', fontWeight: '800', marginBottom: '10px', color: '#0d1117' }}>{useCase.title}</h3>
+                                <p style={{ fontSize: '15px', color: '#3d4450', marginBottom: '16px', fontWeight: '500', lineHeight: '1.6' }}>{useCase.description}</p>
                                 <div style={{ 
                                     fontSize: '13px', 
                                     fontWeight: '700', 
-                                    color: '#10b981',
+                                    color: '#00d97a',
                                     display: 'flex',
                                     alignItems: 'center',
                                     gap: '6px'
@@ -594,18 +604,18 @@ export default function Welcome() {
                             alignItems: 'center',
                             gap: '8px',
                             padding: '8px 16px',
-                            background: 'rgba(239, 68, 68, 0.1)',
-                            border: '1px solid rgba(239, 68, 68, 0.2)',
+                            background: 'rgba(255, 127, 0, 0.1)',
+                            border: '2px solid rgba(255, 127, 0, 0.25)',
                             borderRadius: '100px',
                             marginBottom: '20px'
                         }}>
-                            <Youtube size={16} color="#ef4444" />
-                            <span style={{ fontSize: '12px', fontWeight: '900', color: '#ef4444', textTransform: 'uppercase', letterSpacing: '1px' }}>Video Education</span>
+                            <Youtube size={16} color="#ff7f00" />
+                            <span style={{ fontSize: '12px', fontWeight: '900', color: '#ff7f00', textTransform: 'uppercase', letterSpacing: '1px' }}>Video Education</span>
                         </div>
-                        <h2 style={{ fontSize: 'clamp(28px, 5vw, 42px)', fontWeight: '900', color: '#0f172a', letterSpacing: '-1px', marginBottom: '16px' }}>
+                        <h2 style={{ fontSize: 'clamp(28px, 5vw, 42px)', fontWeight: '900', color: '#0d1117', letterSpacing: '-1px', marginBottom: '16px' }}>
                             Learn the Technology
                         </h2>
-                        <p style={{ fontSize: '17px', color: '#475569', maxWidth: '600px', margin: '0 auto', fontWeight: '500' }}>
+                        <p style={{ fontSize: '17px', color: '#3d4450', maxWidth: '600px', margin: '0 auto', fontWeight: '500' }}>
                             Understand the cryptographic foundations that power Satohash through curated educational content.
                         </p>
                     </div>
@@ -613,7 +623,7 @@ export default function Welcome() {
                     <div style={{
                         display: 'grid',
                         gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-                        gap: '28px',
+                        gap: 'clamp(20px, 3vw, 32px)',
                         maxWidth: '1100px',
                         margin: '0 auto'
                     }}>
@@ -624,10 +634,10 @@ export default function Welcome() {
                                     background: '#ffffff',
                                     borderRadius: '20px',
                                     overflow: 'hidden',
-                                    border: '2px solid #e2e8f0',
+                                    border: '2px solid #d8dfe8',
                                     transition: 'all 0.3s ease',
                                     cursor: 'pointer',
-                                    boxShadow: '0 8px 20px rgba(0,0,0,0.08)'
+                                    boxShadow: '0 8px 24px rgba(255, 127, 0, 0.08)'
                                 }}
                                 className="card-interactive"
                                 onClick={() => setActiveVideo(video.id)}
@@ -725,15 +735,15 @@ export default function Welcome() {
             <div style={{ padding: 'clamp(60px, 10vw, 80px) clamp(16px, 5vw, 60px)', position: 'relative', zIndex: 1, background: '#ffffff' }}>
                 <div style={{ width: '100%', maxWidth: '1100px', margin: '0 auto' }}>
                     <div style={{
-                        background: 'linear-gradient(135deg, #f0f3ff 0%, #ede9fe 100%)',
+                        background: 'linear-gradient(135deg, #f0f5ff 0%, #f5f0ff 100%)',
                         padding: 'clamp(48px, 8vw, 80px)',
-                        borderRadius: '32px',
-                        border: '3px solid #0066cc',
+                        borderRadius: '28px',
+                        border: '3px solid #0052ff',
                         textAlign: 'center',
-                        boxShadow: '0 12px 40px rgba(0,102,204,0.15)'
+                        boxShadow: '0 16px 48px rgba(0, 82, 255, 0.15)'
                     }}>
-                        <h3 style={{ fontSize: '14px', fontWeight: '900', color: '#6366f1', textTransform: 'uppercase', letterSpacing: '4px', marginBottom: '24px' }}>The Process</h3>
-                        <h2 style={{ fontSize: 'clamp(28px, 6vw, 40px)', fontWeight: '900', color: '#0f172a', marginBottom: '72px', letterSpacing: '-1px' }}>From Idea to Immutability</h2>
+                        <h3 style={{ fontSize: '14px', fontWeight: '900', color: '#0052ff', textTransform: 'uppercase', letterSpacing: '4px', marginBottom: '24px' }}>The Process</h3>
+                        <h2 style={{ fontSize: 'clamp(28px, 6vw, 40px)', fontWeight: '900', color: '#0d1117', marginBottom: '72px', letterSpacing: '-1px' }}>From Idea to Immutability</h2>
 
                         <div style={{ display: 'flex', justifyContent: 'center', gap: 'clamp(24px, 4vw, 48px)', flexWrap: 'wrap', position: 'relative' }}>
                             {[
@@ -747,27 +757,28 @@ export default function Welcome() {
                                         width: '88px',
                                         height: '88px',
                                         borderRadius: '28px',
-                                        background: 'linear-gradient(135deg, var(--color-primary), #4338ca)',
+                                        background: 'linear-gradient(135deg, #0052ff, #0080ff)',
                                         display: 'flex',
                                         alignItems: 'center',
                                         justifyContent: 'center',
                                         color: 'white',
-                                        boxShadow: '0 12px 40px rgba(99, 102, 241, 0.3)'
+                                        boxShadow: '0 16px 48px rgba(0, 82, 255, 0.3)',
+                                        transition: 'all 0.3s ease'
                                     }}>
                                         <item.icon size={36} />
                                     </div>
                                     <div style={{
                                         fontSize: '12px',
                                         fontWeight: '900',
-                                        color: '#6366f1',
+                                        color: '#0052ff',
                                         marginBottom: '8px',
                                         letterSpacing: '2px'
                                     }}>
                                         STEP {item.step}
                                     </div>
-                                    <h4 style={{ fontSize: '22px', fontWeight: '800', color: '#0f172a', marginBottom: '10px' }}>{item.title}</h4>
-                                    <p style={{ fontSize: '15px', color: '#475569', fontWeight: '500' }}>{item.desc}</p>
-                                    {i < 2 && <ChevronRight size={24} color="#e2e8f0" style={{ position: 'absolute', top: '40px', right: '-20px' }} className="hide-mobile" />}
+                                    <h4 style={{ fontSize: '22px', fontWeight: '800', color: '#0d1117', marginBottom: '10px' }}>{item.title}</h4>
+                                    <p style={{ fontSize: '15px', color: '#3d4450', fontWeight: '500' }}>{item.desc}</p>
+                                    {i < 2 && <ChevronRight size={24} color="#d8dfe8" style={{ position: 'absolute', top: '40px', right: '-20px' }} className="hide-mobile" />}
                                 </div>
                             ))}
                         </div>
@@ -777,7 +788,7 @@ export default function Welcome() {
 
             {/* CTA Section */}
             <div style={{ 
-                background: 'linear-gradient(135deg, #f7931a 0%, #ff6b35 100%)',
+                background: 'linear-gradient(135deg, #ff7f00 0%, #ff5722 100%)',
                 padding: 'clamp(60px, 10vw, 80px) clamp(16px, 5vw, 60px)',
                 position: 'relative',
                 zIndex: 1,
@@ -789,10 +800,11 @@ export default function Welcome() {
                             display: 'inline-flex',
                             alignItems: 'center',
                             gap: '8px',
-                            background: 'rgba(255,255,255,0.2)',
+                            background: 'rgba(255,255,255,0.25)',
                             padding: '8px 16px',
                             borderRadius: '100px',
-                            marginBottom: '28px'
+                            marginBottom: '28px',
+                            border: '1px solid rgba(255,255,255,0.3)'
                         }}>
                             <Star size={16} color="#ffffff" fill="#ffffff" />
                             <span style={{ color: '#ffffff', fontSize: '13px', fontWeight: '700' }}>Free during beta • No credit card required</span>
@@ -803,13 +815,14 @@ export default function Welcome() {
                             color: '#ffffff', 
                             marginBottom: '24px',
                             letterSpacing: '-1px',
-                            lineHeight: '1.1'
+                            lineHeight: '1.1',
+                            textShadow: '0 2px 8px rgba(0,0,0,0.1)'
                         }}>
                             Ready to Create<br />Immutable Proof?
                         </h2>
                         <p style={{ 
                             fontSize: '18px', 
-                            color: 'rgba(255,255,255,0.9)', 
+                            color: 'rgba(255,255,255,0.95)', 
                             marginBottom: '44px',
                             fontWeight: '500',
                             lineHeight: '1.7'
@@ -842,13 +855,13 @@ export default function Welcome() {
             <div className="animate-fade-in" style={{
                 padding: 'clamp(40px, 6vw, 50px) clamp(16px, 5vw, 60px)',
                 textAlign: 'center',
-                background: 'linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)',
-                borderTop: '1px solid #e2e8f0'
+                background: 'linear-gradient(135deg, #f5f7fa 0%, #f8f5fb 100%)',
+                borderTop: '2px solid #d8dfe8'
             }}>
-                <p style={{ color: 'var(--color-text-tertiary)', fontSize: '12px', fontWeight: '900', textTransform: 'uppercase', letterSpacing: '3px', marginBottom: '32px' }}>Global Compliance Standards</p>
-                <div style={{ display: 'flex', justifyContent: 'center', gap: 'clamp(28px, 8vw, 80px)', flexWrap: 'wrap', opacity: 0.7 }}>
+                <p style={{ color: '#5a6470', fontSize: '12px', fontWeight: '900', textTransform: 'uppercase', letterSpacing: '3px', marginBottom: '32px' }}>Global Compliance Standards</p>
+                <div style={{ display: 'flex', justifyContent: 'center', gap: 'clamp(28px, 8vw, 80px)', flexWrap: 'wrap', opacity: 0.85 }}>
                     {['eIDAS (EU)', 'ESIGN Act (US)', 'UETA (US)', 'Bitcoin Anchored'].map((standard, i) => (
-                        <div key={i} style={{ fontSize: '14px', fontWeight: '900', color: 'var(--color-text-primary)', letterSpacing: '0.5px' }}>{standard}</div>
+                        <div key={i} style={{ fontSize: '14px', fontWeight: '900', color: '#0d1117', letterSpacing: '0.5px' }}>{standard}</div>
                     ))}
                 </div>
             </div>

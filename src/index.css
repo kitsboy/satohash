@@ -1,31 +1,31 @@
 :root {
-  /* PREMIUM BOLD COLORS - Bitcoin/Crypto Inspired */
-  --color-primary: #f7931a;
-  --color-primary-dark: #e68800;
-  --color-primary-light: #ffa821;
-  --color-secondary: #0066cc;
-  --color-accent: #00d9ff;
-  --color-warning: #ff6b35;
-  --color-error: #e63946;
-  --color-success: #06a77d;
+  /* PREMIUM BOLD COLORS - Bitcoin/Crypto Inspired - VIBRANT */
+  --color-primary: #ff7f00;
+  --color-primary-dark: #e67e00;
+  --color-primary-light: #ffaa33;
+  --color-secondary: #0052ff;
+  --color-accent: #00e5ff;
+  --color-warning: #ff5722;
+  --color-error: #ff3366;
+  --color-success: #00d97a;
 
   /* BRIGHT BACKGROUNDS */
   --color-background: #ffffff;
-  --color-surface: #f8f9fa;
+  --color-surface: #f5f7fa;
   --color-surface-elevated: #ffffff;
-  --color-border: #e0e0e0;
-  --color-border-light: #f0f0f0;
+  --color-border: #d8dfe8;
+  --color-border-light: #eff2f7;
 
-  /* DARK TEXT FOR VISIBILITY */
-  --color-text-primary: #0a1118;
-  --color-text-secondary: #424a52;
-  --color-text-tertiary: #636c7a;
+  /* DARK TEXT FOR VISIBILITY - HIGHER CONTRAST */
+  --color-text-primary: #0d1117;
+  --color-text-secondary: #3d4450;
+  --color-text-tertiary: #5a6470;
   --color-text-inverse: #ffffff;
 
-  /* Premium Gradients - Bold & Striking */
-  --gradient-primary: linear-gradient(135deg, #f7931a 0%, #ffa821 100%);
-  --gradient-accent: linear-gradient(135deg, #0066cc 0%, #00a8ff 100%);
-  --gradient-success: linear-gradient(135deg, #06a77d 0%, #00d9ff 100%);
+  /* Premium Gradients - Bold & Striking - MORE VIBRANT */
+  --gradient-primary: linear-gradient(135deg, #ff7f00 0%, #ffaa33 100%);
+  --gradient-accent: linear-gradient(135deg, #0052ff 0%, #0080ff 100%);
+  --gradient-success: linear-gradient(135deg, #00d97a 0%, #00e5ff 100%);
 
   /* Spacing */
   --spacing-xs: 0.25rem;
@@ -238,9 +238,9 @@ a:hover {
 }
 
 .btn-primary:hover:not(:disabled) {
-  box-shadow: 0 12px 32px rgba(247, 147, 26, 0.5), 0 0 0 1px rgba(247, 147, 26, 0.2);
-  transform: translateY(-3px);
-  background: linear-gradient(135deg, #ff9f1a 0%, #ffb821 100%) !important;
+  box-shadow: 0 16px 40px rgba(255, 127, 0, 0.6), 0 0 0 1px rgba(255, 127, 0, 0.3);
+  transform: translateY(-4px);
+  background: linear-gradient(135deg, #ffaa33 0%, #ffbb55 100%) !important;
 }
 
 .btn-primary:active:not(:disabled) {
@@ -343,8 +343,9 @@ a:hover {
 }
 
 .card:hover {
-  box-shadow: 0 12px 32px rgba(247, 147, 26, 0.12), 0 0 1px rgba(247, 147, 26, 0.2);
-  border-color: #f7931a;
+  box-shadow: 0 16px 40px rgba(255, 127, 0, 0.2), 0 0 1px rgba(255, 127, 0, 0.3);
+  border-color: #ff7f00;
+  transform: translateY(-4px);
 }
 
 .card-interactive {
@@ -365,9 +366,9 @@ a:hover {
 }
 
 .card-interactive:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 16px 40px rgba(247, 147, 26, 0.2), 0 0 1px rgba(247, 147, 26, 0.3);
-  border-color: #f7931a;
+  transform: translateY(-8px);
+  box-shadow: 0 20px 50px rgba(255, 127, 0, 0.25), 0 0 1px rgba(255, 127, 0, 0.4);
+  border-color: #ff7f00;
 }
 
 .card-interactive:hover::before {
@@ -383,9 +384,9 @@ a:hover {
 }
 
 .card-premium:hover {
-  transform: translateY(-8px) scale(1.01);
-  box-shadow: 0 20px 50px rgba(247, 147, 26, 0.25), 0 0 1px rgba(247, 147, 26, 0.3);
-  border-color: #f7931a;
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 24px 60px rgba(255, 127, 0, 0.3), 0 0 1px rgba(255, 127, 0, 0.4);
+  border-color: #ff7f00;
 }
 
 /* Containers */
@@ -761,8 +762,9 @@ a:hover {
 .footer {
   padding: var(--spacing-xl) var(--spacing-md);
   text-align: center;
-  border-top: 1px solid var(--color-border);
+  border-top: 2px solid var(--color-border);
   background-color: #fafbfc !important;
+  background: linear-gradient(180deg, #fafbfc 0%, #f5f7fa 100%) !important;
 }
 
 .footer-link {
