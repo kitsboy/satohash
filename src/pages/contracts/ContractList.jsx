@@ -434,7 +434,7 @@ export default function ContractList() {
 
     return (
         <div className="page" style={{
-            background: '#ffffff',
+            background: 'linear-gradient(135deg, #f8fafc 0%, #e0e7ff 100%)',
             minHeight: '100vh'
         }}>
             <div className="container" style={{ maxWidth: '1400px' }}>
@@ -562,16 +562,16 @@ export default function ContractList() {
                             ].map(quick => (
                                 <div
                                     key={quick.id}
-                                onClick={() => navigate(`/contracts/new/${quick.id}`)}
+                                    onClick={() => navigate(`/contracts/new/${quick.id}`)}
                                 style={{
                                     background: '#ffffff',
-                                    padding: '28px 20px',
+                                    padding: '32px 24px',
                                     borderRadius: '20px',
-                                    border: '1px solid #e2e8f0',
+                                    border: '2px solid #e2e8f0',
                                     cursor: 'pointer',
                                     transition: 'all 0.3s ease',
                                     textAlign: 'center',
-                                    boxShadow: '0 2px 8px rgba(0,0,0,0.02)'
+                                    boxShadow: '0 6px 16px rgba(0,0,0,0.06)'
                                 }}
                                 className="card-interactive"
                                 >
@@ -606,34 +606,37 @@ export default function ContractList() {
                             marginBottom: '32px' 
                         }}>
                             {[
-                                { label: 'Total Anchors', value: stats.total, icon: FileText, color: 'var(--color-primary)' },
-                                { label: 'Timestamped', value: stats.timestamped, icon: Lock, color: '#22c55e' },
-                                { label: 'In Progress', value: stats.pending, icon: Clock, color: '#f59e0b' },
-                                { label: 'Drafts', value: stats.draft, icon: Edit3, color: '#94a3b8' }
+                                { label: 'Total Anchors', value: stats.total, icon: FileText, color: '#6366f1', bg: 'linear-gradient(135deg, #ede9fe 0%, #ddd6fe 100%)' },
+                                { label: 'Timestamped', value: stats.timestamped, icon: Lock, color: '#22c55e', bg: 'linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%)' },
+                                { label: 'In Progress', value: stats.pending, icon: Clock, color: '#f59e0b', bg: 'linear-gradient(135deg, #fef3c7 0%, #fde68a 100%)' },
+                                { label: 'Drafts', value: stats.draft, icon: Edit3, color: '#64748b', bg: 'linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%)' }
                             ].map((stat, i) => (
                                 <Card key={i} style={{ 
                                     padding: '24px', 
-                                    background: 'white',
-                                    borderRadius: '18px',
+                                    background: stat.bg,
+                                    borderRadius: '20px',
                                     display: 'flex',
                                     alignItems: 'center',
-                                    gap: '16px'
+                                    gap: '16px',
+                                    border: 'none',
+                                    boxShadow: '0 4px 12px rgba(0,0,0,0.06)'
                                 }}>
                                     <div style={{
-                                        width: '48px',
-                                        height: '48px',
-                                        borderRadius: '14px',
-                                        background: `${stat.color}12`,
+                                        width: '52px',
+                                        height: '52px',
+                                        borderRadius: '16px',
+                                        background: '#ffffff',
                                         display: 'flex',
                                         alignItems: 'center',
                                         justifyContent: 'center',
-                                        color: stat.color
+                                        color: stat.color,
+                                        boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
                                     }}>
-                                        <stat.icon size={22} />
+                                        <stat.icon size={24} />
                                     </div>
                                     <div>
-                                        <div style={{ fontSize: '28px', fontWeight: '950', color: 'var(--color-text-primary)', lineHeight: 1 }}>{stat.value}</div>
-                                        <div style={{ fontSize: '13px', fontWeight: '700', color: 'var(--color-text-secondary)', marginTop: '4px' }}>{stat.label}</div>
+                                        <div style={{ fontSize: '32px', fontWeight: '900', color: '#0f172a', lineHeight: 1 }}>{stat.value}</div>
+                                        <div style={{ fontSize: '13px', fontWeight: '600', color: '#475569', marginTop: '6px' }}>{stat.label}</div>
                                     </div>
                                 </Card>
                             ))}

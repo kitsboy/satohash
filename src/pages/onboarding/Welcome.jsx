@@ -245,47 +245,42 @@ export default function Welcome() {
             </nav>
 
             {/* Cinematic Hero Section */}
-            <div style={{ position: 'relative', minHeight: '100vh', display: 'flex', alignItems: 'center', zIndex: 1, padding: '120px 0 80px', background: '#ffffff' }}>
-                {/* Background Blobs - VERY SUBTLE */}
+            <div style={{ position: 'relative', minHeight: '100vh', display: 'flex', alignItems: 'center', zIndex: 1, padding: '120px 0 60px', background: '#ffffff' }}>
+                {/* Background Image */}
                 <div style={{
                     position: 'absolute',
-                    top: '15%',
-                    left: '5%',
-                    width: '600px',
-                    height: '600px',
-                    borderRadius: '50%',
-                    background: 'radial-gradient(circle, rgba(99, 102, 241, 0.04) 0%, transparent 70%)',
-                    animation: 'float 15s ease-in-out infinite',
-                    filter: 'blur(80px)'
+                    inset: 0,
+                    backgroundImage: 'url(https://images.unsplash.com/photo-1639762681485-074b7f938ba0?q=80&w=2832&auto=format&fit=crop)',
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    opacity: 0.5,
+                    zIndex: 0
                 }} />
+                
+                {/* Overlay for better text contrast */}
                 <div style={{
                     position: 'absolute',
-                    bottom: '10%',
-                    right: '0%',
-                    width: '700px',
-                    height: '700px',
-                    borderRadius: '50%',
-                    background: 'radial-gradient(circle, rgba(16, 185, 129, 0.03) 0%, transparent 70%)',
-                    animation: 'float 20s ease-in-out infinite reverse',
-                    filter: 'blur(80px)'
+                    inset: 0,
+                    background: 'linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(248,250,252,0.98) 100%)',
+                    zIndex: 1
                 }} />
 
-                <div className="container">
-                    <div className="text-center">
+                <div className="container" style={{ position: 'relative', zIndex: 2 }}>
+                    <div className="text-center" style={{ maxWidth: '850px', margin: '0 auto' }}>
                         {/* Live Network Badge */}
                         <div className="animate-slide-down" style={{
                             display: 'inline-flex',
                             alignItems: 'center',
                             gap: '10px',
                             padding: '10px 20px',
-                            background: 'var(--color-surface-elevated)',
-                            border: '1px solid var(--color-border)',
+                            background: '#ffffff',
+                            border: '2px solid #e2e8f0',
                             borderRadius: '100px',
                             fontSize: '14px',
-                            fontWeight: '800',
-                            color: 'var(--color-text-primary)',
-                            marginBottom: '36px',
-                            boxShadow: '0 4px 20px rgba(0,0,0,0.06)'
+                            fontWeight: '700',
+                            color: '#0f172a',
+                            marginBottom: '32px',
+                            boxShadow: '0 6px 16px rgba(0,0,0,0.08)'
                         }}>
                             <div style={{ 
                                 width: '10px', 
@@ -302,13 +297,14 @@ export default function Welcome() {
 
                         {/* Main Headline */}
                         <h1 className="animate-slide-down" style={{
-                            fontSize: 'clamp(2.8rem, 9vw, 5.5rem)',
+                            fontSize: 'clamp(2.5rem, 8vw, 5rem)',
                             fontWeight: '900',
-                            marginBottom: '28px',
-                            lineHeight: '1',
+                            marginBottom: '24px',
+                            lineHeight: '1.1',
                             letterSpacing: '-0.02em',
                             animationDelay: '100ms',
-                            color: '#0f172a'
+                            color: '#0f172a',
+                            textAlign: 'center'
                         }}>
                             Absolute Proof
                             <br />for Every Agreement.
@@ -316,13 +312,14 @@ export default function Welcome() {
 
                         {/* Subheadline */}
                         <p className="animate-slide-down" style={{
-                            fontSize: 'clamp(18px, 2.5vw, 22px)',
+                            fontSize: 'clamp(17px, 2vw, 20px)',
                             color: '#475569',
-                            maxWidth: '720px',
-                            margin: '0 auto 52px',
-                            lineHeight: '1.65',
+                            maxWidth: '650px',
+                            margin: '0 auto 44px',
+                            lineHeight: '1.7',
                             animationDelay: '200ms',
-                            fontWeight: '500'
+                            fontWeight: '500',
+                            textAlign: 'center'
                         }}>
                             The world's most secure digital notary. Anchor your contracts to the Bitcoin blockchain with <strong style={{ color: '#0f172a' }}>cryptographic proof</strong> that outlasts corporations, governments, and time itself.
                         </p>
@@ -331,10 +328,10 @@ export default function Welcome() {
                         <div className="animate-fade-in" style={{
                             animationDelay: '300ms',
                             display: 'flex',
-                            gap: '20px',
+                            gap: '16px',
                             justifyContent: 'center',
                             flexWrap: 'wrap',
-                            marginBottom: '60px'
+                            marginBottom: '48px'
                         }}>
                             <Button
                                 variant="primary"
@@ -381,9 +378,11 @@ export default function Welcome() {
                             <div style={{ 
                                 display: 'flex', 
                                 justifyContent: 'center', 
-                                gap: 'clamp(24px, 5vw, 48px)', 
+                                gap: 'clamp(20px, 4vw, 40px)', 
                                 flexWrap: 'wrap',
-                                alignItems: 'center'
+                                alignItems: 'center',
+                                maxWidth: '700px',
+                                margin: '0 auto'
                             }}>
                                 {[
                                     { icon: CheckCircle2, text: 'No account required' },
@@ -410,9 +409,9 @@ export default function Welcome() {
 
             {/* Live Stats Section */}
             <div ref={statsRef} style={{ 
-                background: '#fafbfc',
+                background: 'linear-gradient(135deg, #f8fafc 0%, #e0e7ff 100%)',
                 borderTop: '1px solid #e2e8f0',
-                padding: '80px 0',
+                padding: '60px 0',
                 position: 'relative',
                 zIndex: 1
             }}>
@@ -454,9 +453,9 @@ export default function Welcome() {
             </div>
 
             {/* Features Section */}
-            <div id="features" style={{ background: '#ffffff', borderTop: '1px solid #e2e8f0', padding: '120px 0', position: 'relative', zIndex: 1 }}>
-                <div className="container">
-                    <div style={{ textAlign: 'center', marginBottom: '80px' }}>
+            <div id="features" style={{ background: '#ffffff', borderTop: '1px solid #e2e8f0', padding: '80px 0', position: 'relative', zIndex: 1 }}>
+                <div className="container" style={{ maxWidth: '1300px' }}>
+                    <div style={{ textAlign: 'center', marginBottom: '60px', maxWidth: '700px', margin: '0 auto 60px' }}>
                         <h2 style={{ fontSize: '14px', fontWeight: '900', color: '#6366f1', textTransform: 'uppercase', letterSpacing: '4px', marginBottom: '16px' }}>Core Capabilities</h2>
                         <h2 style={{ fontSize: 'clamp(32px, 5vw, 48px)', fontWeight: '900', color: '#0f172a', letterSpacing: '-1px' }}>The Anatomy of Immutable Trust</h2>
                     </div>
@@ -521,9 +520,9 @@ export default function Welcome() {
             </div>
 
             {/* Use Cases Section */}
-            <div style={{ padding: '120px 0', position: 'relative', zIndex: 1, background: '#fafbfc' }}>
-                <div className="container">
-                    <div style={{ textAlign: 'center', marginBottom: '60px' }}>
+            <div style={{ padding: '80px 0', position: 'relative', zIndex: 1, background: 'linear-gradient(135deg, #f0fdf4 0%, #f8fafc 100%)' }}>
+                <div className="container" style={{ maxWidth: '1200px' }}>
+                    <div style={{ textAlign: 'center', marginBottom: '50px', maxWidth: '700px', margin: '0 auto 50px' }}>
                         <h2 style={{ fontSize: '14px', fontWeight: '900', color: '#6366f1', textTransform: 'uppercase', letterSpacing: '4px', marginBottom: '16px' }}>Use Cases</h2>
                         <h2 style={{ fontSize: 'clamp(28px, 5vw, 42px)', fontWeight: '900', color: '#0f172a', letterSpacing: '-1px' }}>Trusted Across Industries</h2>
                     </div>
@@ -540,9 +539,9 @@ export default function Welcome() {
                                 background: '#ffffff',
                                 padding: '36px',
                                 borderRadius: '24px',
-                                border: '1px solid #e2e8f0',
+                                border: '2px solid #e2e8f0',
                                 transition: 'all 0.3s ease',
-                                boxShadow: '0 2px 8px rgba(0,0,0,0.04)'
+                                boxShadow: '0 8px 24px rgba(0,0,0,0.08)'
                             }} className="card-interactive">
                                 <div style={{
                                     width: '56px',
@@ -578,14 +577,14 @@ export default function Welcome() {
 
             {/* Educational Videos Section */}
             <div id="education" style={{ 
-                background: '#ffffff',
-                padding: '120px 0',
+                background: 'linear-gradient(135deg, #fef3c7 0%, #fef9c3 100%)',
+                padding: '80px 0',
                 position: 'relative',
                 zIndex: 1,
                 borderTop: '1px solid #e2e8f0'
             }}>
-                <div className="container">
-                    <div style={{ textAlign: 'center', marginBottom: '60px' }}>
+                <div className="container" style={{ maxWidth: '1300px' }}>
+                    <div style={{ textAlign: 'center', marginBottom: '50px', maxWidth: '700px', margin: '0 auto 50px' }}>
                         <div style={{
                             display: 'inline-flex',
                             alignItems: 'center',
@@ -621,10 +620,10 @@ export default function Welcome() {
                                     background: '#ffffff',
                                     borderRadius: '20px',
                                     overflow: 'hidden',
-                                    border: '1px solid #e2e8f0',
+                                    border: '2px solid #e2e8f0',
                                     transition: 'all 0.3s ease',
                                     cursor: 'pointer',
-                                    boxShadow: '0 2px 8px rgba(0,0,0,0.04)'
+                                    boxShadow: '0 8px 20px rgba(0,0,0,0.08)'
                                 }}
                                 className="card-interactive"
                                 onClick={() => setActiveVideo(video.id)}
@@ -719,15 +718,15 @@ export default function Welcome() {
             </div>
 
             {/* Process Section */}
-            <div style={{ padding: '120px 0', position: 'relative', zIndex: 1, background: '#fafbfc' }}>
-                <div className="container">
+            <div style={{ padding: '80px 0', position: 'relative', zIndex: 1, background: '#ffffff' }}>
+                <div className="container" style={{ maxWidth: '1100px' }}>
                     <div style={{
-                        background: '#ffffff',
-                        padding: 'clamp(48px, 8vw, 100px)',
+                        background: 'linear-gradient(135deg, #ede9fe 0%, #e0e7ff 100%)',
+                        padding: 'clamp(48px, 8vw, 80px)',
                         borderRadius: '32px',
-                        border: '1px solid #e2e8f0',
+                        border: '2px solid #c7d2fe',
                         textAlign: 'center',
-                        boxShadow: '0 8px 60px rgba(0,0,0,0.04)'
+                        boxShadow: '0 12px 40px rgba(99,102,241,0.1)'
                     }}>
                         <h3 style={{ fontSize: '14px', fontWeight: '900', color: '#6366f1', textTransform: 'uppercase', letterSpacing: '4px', marginBottom: '24px' }}>The Process</h3>
                         <h2 style={{ fontSize: 'clamp(28px, 6vw, 40px)', fontWeight: '900', color: '#0f172a', marginBottom: '72px', letterSpacing: '-1px' }}>From Idea to Immutability</h2>
@@ -775,7 +774,7 @@ export default function Welcome() {
             {/* CTA Section */}
             <div style={{ 
                 background: 'linear-gradient(135deg, #6366f1 0%, #4338ca 100%)',
-                padding: '100px 0',
+                padding: '80px 0',
                 position: 'relative',
                 zIndex: 1,
                 overflow: 'hidden'
@@ -836,9 +835,9 @@ export default function Welcome() {
 
             {/* Trust Standards Bar */}
             <div className="animate-fade-in" style={{
-                padding: '60px 0',
+                padding: '50px 0',
                 textAlign: 'center',
-                background: '#ffffff',
+                background: 'linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)',
                 borderTop: '1px solid #e2e8f0'
             }}>
                 <p style={{ color: 'var(--color-text-tertiary)', fontSize: '12px', fontWeight: '900', textTransform: 'uppercase', letterSpacing: '3px', marginBottom: '32px' }}>Global Compliance Standards</p>
