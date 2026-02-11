@@ -52,12 +52,12 @@ export default function Navbar() {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
-                padding: '0 var(--spacing-xl)',
+                 padding: '0 clamp(16px, 5vw, 40px)',
                 background: '#ffffff',
-                backdropFilter: 'blur(16px)',
-                borderBottom: '1px solid #e2e8f0',
+                backdropFilter: 'blur(20px) saturate(180%)',
+                borderBottom: '2px solid #d8dfe8',
                 transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-                boxShadow: isScrolled ? '0 2px 8px rgba(0,0,0,0.05)' : 'none'
+                boxShadow: isScrolled ? '0 4px 20px rgba(255, 127, 0, 0.08)' : 'none'
             }}>
                 {/* Logo & Brand */}
                 <div

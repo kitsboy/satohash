@@ -87,10 +87,19 @@
   --z-tooltip: 1070;
 }
 
-/* FORCE LIGHT MODE - NO DARK MODE ALLOWED */
+/* FORCE BRIGHT LIGHT MODE - NO DARK MODE ALLOWED */
 @media (prefers-color-scheme: dark) {
   :root {
     color-scheme: light !important;
+  }
+  
+  body {
+    background: #ffffff !important;
+    color: var(--color-text-primary) !important;
+  }
+  
+  #root {
+    background: #ffffff !important;
   }
 }
 
