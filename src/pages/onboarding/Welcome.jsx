@@ -92,7 +92,8 @@ export default function Welcome() {
             title: t('welcome.features.cryptoProof'),
             description: t('welcome.features.cryptoProofDesc'),
             detail: t('welcome.features.cryptoProofDetail'),
-            color: '#6366f1'
+            color: '#f7931a',
+            gradient: 'linear-gradient(135deg, #f7931a 0%, #ffa821 100%)'
         },
         {
             icon: Clock,
@@ -100,7 +101,8 @@ export default function Welcome() {
             title: t('welcome.features.timestamp'),
             description: t('welcome.features.timestampDesc'),
             detail: t('welcome.features.timestampDetail'),
-            color: '#10b981'
+            color: '#0066cc',
+            gradient: 'linear-gradient(135deg, #0066cc 0%, #00a8ff 100%)'
         },
         {
             icon: CheckCircle,
@@ -108,7 +110,8 @@ export default function Welcome() {
             title: t('welcome.features.verify'),
             description: t('welcome.features.verifyDesc'),
             detail: t('welcome.features.verifyDetail'),
-            color: '#f59e0b'
+            color: '#06a77d',
+            gradient: 'linear-gradient(135deg, #06a77d 0%, #00d9ff 100%)'
         }
     ];
 
@@ -409,8 +412,8 @@ export default function Welcome() {
 
             {/* Live Stats Section */}
             <div ref={statsRef} style={{ 
-                background: 'linear-gradient(135deg, #f8fafc 0%, #e0e7ff 100%)',
-                borderTop: '1px solid #e2e8f0',
+                background: 'linear-gradient(135deg, #fff8f0 0%, #f0f3ff 100%)',
+                borderTop: '3px solid #f7931a',
                 padding: '60px 0',
                 position: 'relative',
                 zIndex: 1
@@ -493,22 +496,23 @@ export default function Welcome() {
                                         </div>
                                     </div>
 
-                                    <div className="flip-card-back" style={{ padding: '44px', textAlign: 'center' }}>
+                                    <div className="flip-card-back" style={{ padding: '44px', textAlign: 'center', background: feature.gradient }}>
                                         <div style={{
-                                            background: 'rgba(255,255,255,0.1)',
+                                            background: 'rgba(255,255,255,0.2)',
                                             padding: '10px 20px',
                                             borderRadius: '100px',
                                             fontSize: '11px',
-                                            fontWeight: '950',
+                                            fontWeight: '900',
                                             textTransform: 'uppercase',
                                             letterSpacing: '2px',
                                             marginBottom: '28px',
-                                            display: 'inline-block'
+                                            display: 'inline-block',
+                                            backdropFilter: 'blur(10px)'
                                         }}>
                                             Under the Hood
                                         </div>
-                                        <feature.techIcon size={56} strokeWidth={1.5} style={{ marginBottom: '20px', color: '#a5b4fc' }} />
-                                        <p style={{ fontSize: '15px', lineHeight: '1.75', fontWeight: '600', color: 'rgba(255,255,255,0.9)' }}>
+                                        <feature.techIcon size={56} strokeWidth={1.5} style={{ marginBottom: '20px', color: '#ffffff' }} />
+                                        <p style={{ fontSize: '15px', lineHeight: '1.75', fontWeight: '600', color: '#ffffff' }}>
                                             {feature.detail}
                                         </p>
                                     </div>
@@ -520,7 +524,7 @@ export default function Welcome() {
             </div>
 
             {/* Use Cases Section */}
-            <div style={{ padding: '80px 0', position: 'relative', zIndex: 1, background: 'linear-gradient(135deg, #f0fdf4 0%, #f8fafc 100%)' }}>
+            <div style={{ padding: '80px 0', position: 'relative', zIndex: 1, background: 'linear-gradient(135deg, #f0fdf4 0%, #f0f3ff 100%)', borderTop: '3px solid #06a77d' }}>
                 <div className="container" style={{ maxWidth: '1200px' }}>
                     <div style={{ textAlign: 'center', marginBottom: '50px', maxWidth: '700px', margin: '0 auto 50px' }}>
                         <h2 style={{ fontSize: '14px', fontWeight: '900', color: '#6366f1', textTransform: 'uppercase', letterSpacing: '4px', marginBottom: '16px' }}>Use Cases</h2>
@@ -577,11 +581,11 @@ export default function Welcome() {
 
             {/* Educational Videos Section */}
             <div id="education" style={{ 
-                background: 'linear-gradient(135deg, #fef3c7 0%, #fef9c3 100%)',
+                background: 'linear-gradient(135deg, #fff8f0 0%, #fffaf0 100%)',
                 padding: '80px 0',
                 position: 'relative',
                 zIndex: 1,
-                borderTop: '1px solid #e2e8f0'
+                borderTop: '3px solid #f7931a'
             }}>
                 <div className="container" style={{ maxWidth: '1300px' }}>
                     <div style={{ textAlign: 'center', marginBottom: '50px', maxWidth: '700px', margin: '0 auto 50px' }}>
@@ -721,12 +725,12 @@ export default function Welcome() {
             <div style={{ padding: '80px 0', position: 'relative', zIndex: 1, background: '#ffffff' }}>
                 <div className="container" style={{ maxWidth: '1100px' }}>
                     <div style={{
-                        background: 'linear-gradient(135deg, #ede9fe 0%, #e0e7ff 100%)',
+                        background: 'linear-gradient(135deg, #f0f3ff 0%, #ede9fe 100%)',
                         padding: 'clamp(48px, 8vw, 80px)',
                         borderRadius: '32px',
-                        border: '2px solid #c7d2fe',
+                        border: '3px solid #0066cc',
                         textAlign: 'center',
-                        boxShadow: '0 12px 40px rgba(99,102,241,0.1)'
+                        boxShadow: '0 12px 40px rgba(0,102,204,0.15)'
                     }}>
                         <h3 style={{ fontSize: '14px', fontWeight: '900', color: '#6366f1', textTransform: 'uppercase', letterSpacing: '4px', marginBottom: '24px' }}>The Process</h3>
                         <h2 style={{ fontSize: 'clamp(28px, 6vw, 40px)', fontWeight: '900', color: '#0f172a', marginBottom: '72px', letterSpacing: '-1px' }}>From Idea to Immutability</h2>
@@ -773,7 +777,7 @@ export default function Welcome() {
 
             {/* CTA Section */}
             <div style={{ 
-                background: 'linear-gradient(135deg, #6366f1 0%, #4338ca 100%)',
+                background: 'linear-gradient(135deg, #f7931a 0%, #ff6b35 100%)',
                 padding: '80px 0',
                 position: 'relative',
                 zIndex: 1,
@@ -819,11 +823,12 @@ export default function Welcome() {
                                 height: '72px',
                                 padding: '0 52px',
                                 fontSize: '19px',
-                                fontWeight: '700',
+                                fontWeight: '800',
                                 borderRadius: '24px',
                                 background: '#ffffff',
-                                color: '#4338ca',
-                                boxShadow: '0 20px 60px rgba(0,0,0,0.3)'
+                                color: '#f7931a',
+                                boxShadow: '0 20px 60px rgba(0,0,0,0.3)',
+                                letterSpacing: '0.5px'
                             }}
                         >
                             Start Your First Agreement
