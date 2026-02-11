@@ -1,5 +1,5 @@
 :root {
-  /* FORCE LIGHT MODE - Colors */
+  /* BRIGHT LIGHT MODE COLORS */
   --color-primary: #6366f1;
   --color-primary-dark: #4f46e5;
   --color-primary-light: #818cf8;
@@ -9,15 +9,17 @@
   --color-error: #ef4444;
   --color-success: #22c55e;
 
+  /* BRIGHT BACKGROUNDS */
   --color-background: #ffffff;
-  --color-surface: #f8f9fa;
+  --color-surface: #fafbfc;
   --color-surface-elevated: #ffffff;
-  --color-border: #e5e7eb;
-  --color-border-light: #f3f4f6;
+  --color-border: #e2e8f0;
+  --color-border-light: #f1f5f9;
 
-  --color-text-primary: #111827;
-  --color-text-secondary: #4b5563;
-  --color-text-tertiary: #6b7280;
+  /* DARK TEXT FOR VISIBILITY */
+  --color-text-primary: #0f172a;
+  --color-text-secondary: #475569;
+  --color-text-tertiary: #64748b;
   --color-text-inverse: #ffffff;
 
   /* Gradients */
@@ -57,11 +59,12 @@
   --line-height-normal: 1.5;
   --line-height-relaxed: 1.75;
 
-  /* Border radius */
-  --radius-sm: 0.375rem;
-  --radius-md: 0.5rem;
-  --radius-lg: 0.75rem;
-  --radius-xl: 1rem;
+  /* ROUNDED BORDERS */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-2xl: 2rem;
   --radius-full: 9999px;
 
   /* Shadows */
@@ -84,24 +87,16 @@
   --z-tooltip: 1070;
 }
 
-/* DISABLE DARK MODE COMPLETELY */
+/* FORCE LIGHT MODE - NO DARK MODE ALLOWED */
 @media (prefers-color-scheme: dark) {
   :root {
-    color-scheme: light;
-    --color-background: #ffffff;
-    --color-surface: #f8f9fa;
-    --color-surface-elevated: #ffffff;
-    --color-border: #e5e7eb;
-    --color-border-light: #f3f4f6;
-    --color-text-primary: #111827;
-    --color-text-secondary: #4b5563;
-    --color-text-tertiary: #6b7280;
+    color-scheme: light !important;
   }
 }
 
-/* Force light theme */
 html {
-  color-scheme: light;
+  color-scheme: light !important;
+  background: #ffffff !important;
 }
 
 /* Reset and base styles */
@@ -124,7 +119,7 @@ body {
   font-size: var(--text-base);
   line-height: var(--line-height-normal);
   color: var(--color-text-primary);
-  background-color: var(--color-background);
+  background-color: #ffffff !important;
   min-height: 100vh;
   font-weight: 400;
 }
@@ -133,6 +128,7 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  background: #ffffff !important;
 }
 
 /* Typography */
@@ -195,7 +191,7 @@ a:hover {
   color: var(--color-primary-dark);
 }
 
-/* Buttons */
+/* ROUNDED BUTTONS */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -205,7 +201,7 @@ a:hover {
   font-size: var(--text-base);
   font-weight: 700;
   border: none;
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-xl) !important; /* ROUNDED! */
   cursor: pointer;
   transition: all var(--transition-fast);
   text-decoration: none;
@@ -219,10 +215,11 @@ a:hover {
 }
 
 .btn-primary {
-  background: var(--gradient-primary);
-  color: var(--color-text-inverse);
+  background: var(--gradient-primary) !important;
+  color: #ffffff !important;
   box-shadow: 0 4px 14px 0 rgba(99, 102, 241, 0.35);
   font-weight: 700;
+  border-radius: var(--radius-xl) !important;
 }
 
 .btn-primary:hover:not(:disabled) {
@@ -235,25 +232,27 @@ a:hover {
 }
 
 .btn-secondary {
-  background-color: var(--color-surface-elevated);
-  color: var(--color-text-primary);
-  border: 2px solid var(--color-border);
+  background-color: #ffffff !important;
+  color: var(--color-text-primary) !important;
+  border: 2px solid var(--color-border) !important;
   font-weight: 700;
+  border-radius: var(--radius-xl) !important;
 }
 
 .btn-secondary:hover:not(:disabled) {
-  background-color: var(--color-surface);
-  border-color: var(--color-primary);
+  background-color: var(--color-surface) !important;
+  border-color: var(--color-primary) !important;
 }
 
 .btn-ghost {
-  background-color: transparent;
-  color: var(--color-primary);
+  background-color: transparent !important;
+  color: var(--color-primary) !important;
   font-weight: 700;
+  border-radius: var(--radius-xl) !important;
 }
 
 .btn-ghost:hover:not(:disabled) {
-  background-color: var(--color-surface);
+  background-color: var(--color-surface) !important;
 }
 
 .btn-large {
@@ -261,12 +260,14 @@ a:hover {
   font-size: var(--text-lg);
   min-height: 56px;
   font-weight: 700;
+  border-radius: var(--radius-2xl) !important;
 }
 
 .btn-small {
   padding: var(--spacing-sm) var(--spacing-md);
   font-size: var(--text-sm);
   min-height: 36px;
+  border-radius: var(--radius-md) !important;
 }
 
 /* Status pills */
@@ -313,7 +314,7 @@ a:hover {
 
 /* Cards */
 .card {
-  background-color: var(--color-surface-elevated);
+  background-color: #ffffff !important;
   border-radius: var(--radius-xl);
   padding: var(--spacing-xl);
   box-shadow: var(--shadow-sm);
@@ -337,7 +338,7 @@ a:hover {
 }
 
 .card-premium {
-  background: var(--color-surface-elevated);
+  background: #ffffff !important;
   border: 1px solid var(--color-border);
   box-shadow: var(--shadow-md);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -368,6 +369,7 @@ a:hover {
   flex-direction: column;
   padding: var(--spacing-lg) var(--spacing-md);
   padding-bottom: var(--spacing-3xl);
+  background: #ffffff !important;
 }
 
 .page-header {
@@ -401,7 +403,7 @@ a:hover {
 }
 
 .modal {
-  background-color: var(--color-surface-elevated);
+  background-color: #ffffff !important;
   border-radius: var(--radius-xl);
   padding: var(--spacing-xl);
   max-width: 90vw;
@@ -449,7 +451,7 @@ a:hover {
   font-size: var(--text-base);
   border: 2px solid var(--color-border);
   border-radius: var(--radius-md);
-  background-color: var(--color-background);
+  background-color: #ffffff !important;
   color: var(--color-text-primary);
   transition: border-color var(--transition-fast);
   min-height: 48px;
@@ -719,7 +721,7 @@ a:hover {
   padding: var(--spacing-xl) var(--spacing-md);
   text-align: center;
   border-top: 1px solid var(--color-border);
-  background-color: var(--color-surface);
+  background-color: #fafbfc !important;
 }
 
 .footer-link {
@@ -740,7 +742,7 @@ a:hover {
     0 2px 2px rgba(0, 0, 0, 0.05),
     0 4px 4px rgba(0, 0, 0, 0.05),
     0 8px 8px rgba(0, 0, 0, 0.05);
-  border-radius: 4px;
+  border-radius: var(--radius-md);
   position: relative;
   overflow: hidden;
   padding: 60px 80px;
@@ -791,7 +793,7 @@ a:hover {
 
 /* Glass morphism */
 .glass-morphism {
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.95) !important;
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
   border: 1px solid rgba(0, 0, 0, 0.05);
@@ -806,7 +808,7 @@ a:hover {
 
 /* Nav link */
 .nav-link {
-  color: var(--color-text-primary);
+  color: var(--color-text-primary) !important;
   font-weight: 700;
   font-size: 15px;
   transition: all 0.2s ease;
@@ -815,7 +817,7 @@ a:hover {
 }
 
 .nav-link:hover {
-  color: var(--color-primary);
+  color: var(--color-primary) !important;
 }
 
 .nav-link::after {
@@ -868,7 +870,7 @@ a:hover {
 }
 
 .flip-card-front {
-  background-color: var(--color-surface-elevated);
+  background-color: #ffffff !important;
   color: var(--color-text-primary);
   border: 1px solid var(--color-border);
   box-shadow: var(--shadow-sm);
@@ -1059,7 +1061,7 @@ button:focus-visible {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--color-surface);
+  background: #fafbfc;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -1109,7 +1111,7 @@ button:focus-visible {
   padding: 4px 10px;
   font-size: 11px;
   font-weight: 800;
-  border-radius: 6px;
+  border-radius: var(--radius-md);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
