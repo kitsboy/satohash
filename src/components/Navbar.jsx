@@ -1,14 +1,24 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ShieldCheck, Menu, X, Globe } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { clsx } from 'clsx';
 import LanguagePicker from './LanguagePicker';
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
     const [isLangOpen, setIsLangOpen] = useState(false);
+    const [isScrolled, setIsScrolled] = useState(false);
     const location = useLocation();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setIsScrolled(window.scrollY > 20);
+        };
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     const navLinks = [
         { name: 'Dashboard', path: '/contracts' },
@@ -40,26 +50,39 @@ export default function Navbar() {
             }}>
                 {/* Logo & Brand */}
                 <div
-                    style={{ display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer' }}
+                    style={{ 
+                        display: 'flex', 
+                        alignItems: 'center', 
+                        gap: '12px', 
+                        cursor: 'pointer',
+                        padding: '6px 16px',
+                        background: 'rgba(99, 102, 241, 0.05)',
+                        borderRadius: '16px',
+                        border: '1px solid rgba(99, 102, 241, 0.1)'
+                    }}
                     onClick={() => navigate('/contracts')}
+                    className="group"
                 >
                     <img
-                        src="https://giveabit.io/wp-content/uploads/2022/04/sats_new.png"
+                        src="/logo.png"
                         alt="Satohash Logo"
-                        style={{ height: '32px', width: 'auto' }}
+                        style={{ height: '24px', width: 'auto' }}
+                        className="group-hover:rotate-12 transition-transform duration-300"
                     />
                     <span style={{
-                        fontWeight: '950',
-                        fontSize: '1.5rem',
-                        color: 'var(--color-text-primary)',
-                        letterSpacing: '-1.2px'
+                        fontWeight: '900',
+                        fontSize: '1.25rem',
+                        background: 'linear-gradient(to right, #000, #4f46e5)',
+                        WebkitBackgroundClip: 'text',
+                        WebkitTextFillColor: 'transparent',
+                        letterSpacing: '-0.05em'
                     }}>
                         Satohash
                     </span>
-                </Link>
+                </div>
 
                 {/* Main Links */}
-                <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
+                <div className="hidden md:flex gap-1 items-center">
                     {navLinks.map((link) => {
                         const isActive = location.pathname === link.path;
                         return (
@@ -101,73 +124,104 @@ export default function Navbar() {
                                         className="absolute -bottom-1.5 left-0 right-0 h-0.5 bg-indigo-600 rounded-full"
                                     />
                                 )}
-                            </Link>
-                        ))}
+                            </button>
+                        );
+                    })}
                 </div>
+                
+                <div className="flex items-center gap-4">
+                    <button
+                        onClick={() => setIsLangOpen(true)}
+                        style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            width: '40px',
+                            height: '40px',
+                            background: 'var(--color-surface-elevated)',
+                            border: '2px solid var(--color-border)',
+                            borderRadius: '12px',
+                            cursor: 'pointer',
+                            color: 'var(--color-text-primary)',
+                            fontWeight: '900',
+                            transition: 'all 0.2s ease'
+                        }}
+                    >
+                        <Globe size={20} />
+                    </button>
 
-                <button
-                    onClick={() => setIsLanguagePickerOpen(true)}
-                    style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        width: '40px',
-                        height: '40px',
-                        background: 'var(--color-surface-elevated)',
-                        border: '2px solid var(--color-border)',
-                        borderRadius: '12px',
-                        cursor: 'pointer',
-                        color: 'var(--color-text-primary)',
-                        fontWeight: '900',
-                        fontSize: '13px',
-                        transition: 'all 0.2s ease'
-                    }}
-                >
-                    {isOpen ? <X size={28} /> : <Menu size={28} />}
-                </button>
-            </div>
-        </div >
-
-            {/* Mobile Menu */ }
-            < AnimatePresence >
-            { isOpen && (
-                <motion.div
-                    initial={{ opacity: 0, height: 0, y: -10 }}
-                    animate={{ opacity: 1, height: 'auto', y: 0 }}
-                    exit={{ opacity: 0, height: 0, y: -10 }}
-                    className="md:hidden absolute top-full left-0 right-0 bg-white border-b border-slate-200 p-6 shadow-premium overflow-hidden"
-                >
-                    <div className="flex flex-col gap-6">
-                        {navLinks.map(link => (
-                            <Link
-                                key={link.name}
-                                to={link.path}
-                                className={clsx(
-                                    "text-lg font-bold transition-colors",
-                                    location.pathname === link.path ? "text-indigo-600" : "text-slate-900"
-                                )}
-                                onClick={() => setIsOpen(false)}
-                            >
-                                {link.name}
-                            </Link>
-                        ))}
-                        <Link
-                            to="/welcome"
-                            onClick={() => setIsOpen(false)}
-                            className="w-full text-center py-4 bg-indigo-600 text-white rounded-xl font-black shadow-lg shadow-indigo-100"
+                    <Link to="/welcome" className="hidden md:block">
+                        <motion.button
+                            whileHover={{ scale: 1.05, y: -2 }}
+                            whileTap={{ scale: 0.95 }}
+                            className="px-6 py-2.5 bg-indigo-600 text-white text-sm font-bold rounded-xl shadow-xl shadow-indigo-200 hover:bg-indigo-700 transition-colors"
                         >
                             Launch App
-                        </Link>
-                    </div>
-                </motion.div>
-            )
-}
-            </AnimatePresence >
-    {/* Language Picker Modal */ }
-    < LanguagePicker
-isOpen = { isLangOpen }
-onClose = {() => setIsLangOpen(false)}
+                        </motion.button>
+                    </Link>
+
+                    <button
+                        onClick={() => setIsOpen(!isOpen)}
+                        className="md:hidden"
+                        style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            width: '40px',
+                            height: '40px',
+                            background: 'var(--color-surface-elevated)',
+                            border: '2px solid var(--color-border)',
+                            borderRadius: '12px',
+                            cursor: 'pointer',
+                            color: 'var(--color-text-primary)',
+                            transition: 'all 0.2s ease'
+                        }}
+                    >
+                        {isOpen ? <X size={24} /> : <Menu size={24} />}
+                    </button>
+                </div>
+            </nav>
+
+            {/* Mobile Menu */}
+            <AnimatePresence>
+                {isOpen && (
+                    <motion.div
+                        initial={{ opacity: 0, height: 0, y: -10 }}
+                        animate={{ opacity: 1, height: 'auto', y: 0 }}
+                        exit={{ opacity: 0, height: 0, y: -10 }}
+                        className="md:hidden absolute top-[72px] left-0 right-0 bg-white border-b border-slate-200 p-6 shadow-premium overflow-hidden z-[1050]"
+                    >
+                        <div className="flex flex-col gap-6">
+                            {navLinks.map(link => (
+                                <Link
+                                    key={link.name}
+                                    to={link.path}
+                                    className={clsx(
+                                        "text-lg font-bold transition-colors",
+                                        location.pathname === link.path ? "text-indigo-600" : "text-slate-900"
+                                    )}
+                                    onClick={() => setIsOpen(false)}
+                                >
+                                    {link.name}
+                                </Link>
+                            ))}
+                            <Link
+                                to="/welcome"
+                                onClick={() => setIsOpen(false)}
+                                className="w-full text-center py-4 bg-indigo-600 text-white rounded-xl font-black shadow-lg shadow-indigo-100"
+                            >
+                                Launch App
+                            </Link>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            {/* Language Picker Modal */}
+            <LanguagePicker
+                isOpen={isLangOpen}
+                onClose={() => setIsLangOpen(false)}
             />
-        </nav >
+        </>
     );
 }

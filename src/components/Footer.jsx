@@ -11,10 +11,10 @@ export default function Footer() {
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-20">
                     <div className="col-span-1 md:col-span-1">
                         <div className="flex items-center gap-3 mb-6">
-                            <div className="p-2.5 bg-indigo-600 rounded-xl text-white shadow-lg shadow-indigo-100">
-                                <ShieldCheck size={24} strokeWidth={2.5} />
+                            <div className="w-12 h-12 bg-indigo-600 rounded-2xl flex items-center justify-center shadow-xl shadow-indigo-100 p-2">
+                                <img src="/logo.png" alt="Logo" className="w-full h-full object-contain brightness-0 invert" />
                             </div>
-                            <span className="text-2xl font-black text-slate-900 tracking-tighter">Satohash</span>
+                            <span className="text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-indigo-600 tracking-tighter">Satohash</span>
                         </div>
                         <p className="text-slate-500 leading-relaxed font-medium mb-8">
                             Immutable proof for a digital world. Anchoring trust to the Bitcoin blockchain without compromising privacy.

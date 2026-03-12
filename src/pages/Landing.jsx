@@ -27,20 +27,22 @@ export default function Landing() {
             {/* Hero Section */}
             <section className="relative px-6 pb-20 md:pb-32 max-w-7xl mx-auto flex flex-col items-center text-center">
 
-                {/* Background Gradients */}
+                {/* Background Gradients & Ornaments */}
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-gradient-to-tr from-indigo-200/30 via-purple-200/30 to-rose-200/30 rounded-full blur-3xl -z-10 animate-pulse-slow" />
+                <div className="absolute top-40 -left-20 w-64 h-64 bg-yellow-200/20 rounded-full blur-3xl -z-10 animate-float" />
+                <div className="absolute bottom-40 -right-20 w-80 h-80 bg-blue-200/20 rounded-full blur-3xl -z-10 animate-float" style={{ animationDelay: '2s' }} />
 
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8 }}
-                    className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/50 border border-indigo-100/50 backdrop-blur-sm text-indigo-600 font-medium text-sm mb-8 shadow-sm"
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-50/80 border border-indigo-100 text-indigo-700 font-bold text-xs mb-10 shadow-sm uppercase tracking-widest backdrop-blur-sm"
                 >
                     <span className="relative flex h-2 w-2">
                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
-                        <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
+                        <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-600"></span>
                     </span>
-                    v2.0 Now Live: Enhanced Privacy Protocol
+                    Protocol v2.4 Live
                 </motion.div>
 
                 <motion.h1
