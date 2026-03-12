@@ -1,263 +1,173 @@
 import jsPDF from 'jspdf';
+import QRCode from 'qrcode';
 
 /**
- * Generate a proof package PDF with contract content and timestamp details
+ * Generates a professional Certificate of Timestamp
  */
-export const generateProofPackage = (contract, timestamp) => {
-    const doc = new jsPDF({
-        orientation: 'p',
-        unit: 'mm',
-        format: 'a4'
-    });
+export const generatePDF = async (contract, timestamp) => {
+    const doc = new jsPDF();
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const pageHeight = doc.internal.pageSize.getHeight();
+    const hash = timestamp?.hash || 'Not Available';
+    const date = new Date(timestamp?.createdAt || Date.now()).toLocaleString();
 
-    const addPremiumBackground = (pdf) => {
-        // Premium paper color (#fdfdfb)
-        pdf.setFillColor(253, 253, 251);
-        pdf.rect(0, 0, 210, 297, 'F');
-
-        // Subtle Hash Watermark
-        pdf.setTextColor(245, 245, 245);
-        pdf.setFontSize(6);
-        pdf.setFont('courier', 'normal');
-        const hashStr = "000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f ";
-        for (let i = 0; i < 300; i += 30) {
-            for (let j = -20; j < 230; j += 60) {
-                pdf.text(hashStr.substring(0, 48), j, i, { angle: -30 });
-            }
+    // Generate QR Code URL for verification
+    // In production, this would be your live URL
+    const verifyUrl = `https://satohash.com/verify?hash=${hash}`;
+    const qrCodeDataUrl = await QRCode.toDataURL(verifyUrl, {
+        margin: 1,
+        width: 200,
+        color: {
+            dark: '#1e293b',
+            light: '#ffffff'
         }
-
-        // Bottom Protocol Anchor Text
-        pdf.setTextColor(180, 180, 180);
-        pdf.setFontSize(8);
-        pdf.setFont('helvetica', 'bold');
-        pdf.text('BITCOIN IMMUTABLE ANCHOR • AUTHENTICATED BY SATOHASH PROTOCOL', 105, 290, { align: 'center' });
-    };
-
-    const addDigitalSeal = (pdf, x, y) => {
-        // Draw a "Wax Seal" style element
-        pdf.setDrawColor(99, 102, 241);
-        pdf.setFillColor(99, 102, 241);
-        pdf.circle(x, y, 15, 'F');
-
-        pdf.setDrawColor(255, 255, 255);
-        pdf.setLineWidth(0.5);
-        pdf.circle(x, y, 13, 'S');
-
-        pdf.setTextColor(255, 255, 255);
-        pdf.setFontSize(6);
-        pdf.setFont('helvetica', 'bold');
-        pdf.text('BITCOIN', x, y - 2, { align: 'center' });
-        pdf.text('VERIFIED', x, y + 3, { align: 'center' });
-    };
-
-    // --- Page 1: Main Document ---
-    addPremiumBackground(doc);
-
-    // Official Logo Header
-    try {
-        doc.addImage('https://giveabit.io/wp-content/uploads/2022/04/sats_new.png', 'PNG', 95, 10, 20, 20);
-    } catch (e) {
-        console.error("Could not add logo to PDF:", e);
-    }
-
-    // Header
-    doc.setTextColor(17, 24, 39);
-    doc.setFont('times', 'bold');
-    doc.setFontSize(24);
-    doc.text((contract.name || 'Untitled Document').toUpperCase(), 105, 45, { align: 'center' });
-
-    doc.setDrawColor(99, 102, 241);
-    doc.setLineWidth(1.2);
-    doc.line(40, 50, 170, 50);
-
-    doc.setFontSize(9);
-    doc.setFont('times', 'bold');
-    doc.setTextColor(99, 102, 241);
-    doc.text('BITCOIN PROOF OF EXISTENCE • SECURED BY SATOHASH', 105, 57, { align: 'center' });
-
-    // Main Content
-    doc.setTextColor(55, 65, 81);
-    doc.setFont('times', 'normal');
-    doc.setFontSize(11);
-    const contentLines = doc.splitTextToSize(contract.content || '', 150);
-    doc.text(contentLines, 30, 75, { align: 'justify', lineHeightFactor: 1.5 });
-
-    // Add Seal if timestamped
-    if (timestamp && timestamp.status === 'timestamped') {
-        addDigitalSeal(doc, 170, 260);
-    }
-
-    // --- Page 2: Proof Details ---
-    doc.addPage();
-    addPremiumBackground(doc);
-
-    doc.setTextColor(31, 41, 55);
-    doc.setFont('times', 'bold');
-    doc.setFontSize(18);
-    doc.text('Cryptographic Proof of Existence', 20, 30);
-
-    doc.setFont('times', 'normal');
-    doc.setFontSize(10);
-    doc.text(`Document Hash (SHA-256):`, 20, 45);
-    doc.setFont('courier', 'bold');
-    doc.text(timestamp ? timestamp.hash : 'N/A', 20, 52);
-
-    doc.setFont('times', 'normal');
-    doc.text(`Timestamp ID: ${contract.id}`, 20, 65);
-    doc.text(`Anchored on: ${timestamp ? new Date(timestamp.createdAt).toLocaleString() : 'N/A'}`, 20, 72);
-    doc.text(`Network: Bitcoin Blockchain (via OpenTimestamps)`, 20, 79);
-
-    // Instructions
-    doc.setFont('times', 'bold');
-    doc.setFontSize(14);
-    doc.text('Verification Instructions', 20, 100);
-
-    doc.setFont('times', 'normal');
-    doc.setFontSize(10);
-    const instructions = [
-        '1. Drag & drop this PDF into satohash.com/verify',
-        '2. Or use independent tools at opentimestamps.org',
-        '3. This proof is immutable and globally verifiable forever.',
-        '',
-        'Note: The .ots file provided in the proof package is the primary',
-        'cryptographic evidence. This PDF is a human-readable summary.'
-    ];
-    doc.text(instructions, 20, 110);
-
-    // Page 3: Legal Disclaimer
-    doc.addPage();
-    addPremiumBackground(doc);
-    doc.setFont('times', 'bold');
-    doc.setFontSize(14);
-    doc.text('Legal Disclaimer', 20, 30);
-
-    doc.setFont('times', 'normal');
-    doc.setFontSize(10);
-    const disclaimer = doc.splitTextToSize(
-        'This cryptographic proof package is generated by Satohash using OpenTimestamps, an open standard for blockchain timestamping. ' +
-        'Satohash is a tool for creating cryptographic evidence that a document existed at a specific time. ' +
-        'Satohash does not provide legal advice and makes no guarantees about the legal enforceability of this proof. ' +
-        'The legal validity of timestamped documents varies by jurisdiction. Consult with a qualified attorney in your ' +
-        'jurisdiction for legal advice.',
-        170
-    );
-    doc.text(disclaimer, 20, 42);
-
-    return doc;
-};
-
-/**
- * Generate a specialized Verification Certificate for legal clarity
- */
-export const generateVerificationCertificate = (contract, timestamp) => {
-    const doc = new jsPDF({
-        orientation: 'p',
-        unit: 'mm',
-        format: 'a4'
     });
 
-    const addPremiumBackground = (pdf) => {
-        pdf.setFillColor(253, 253, 251);
-        pdf.rect(0, 0, 210, 297, 'F');
-        pdf.setDrawColor(99, 102, 241);
-        pdf.setLineWidth(0.8);
-        pdf.rect(10, 10, 190, 277, 'S');
-    };
+    // Background
+    doc.setFillColor(248, 250, 252); // Slate-50
+    doc.rect(0, 0, pageWidth, pageHeight, 'F');
 
-    addPremiumBackground(doc);
+    // Header Stripe
+    doc.setFillColor(99, 102, 241); // Indigo-500
+    doc.rect(0, 0, pageWidth, 40, 'F');
 
-    // Header
-    doc.setTextColor(17, 24, 39);
-    doc.setFont('times', 'bold');
-    doc.setFontSize(22);
-    doc.text('CERTIFICATE OF CRYPTOGRAPHIC ANCHOR', 105, 30, { align: 'center' });
+    // Logo placeholder / Brand Name
+    try {
+        const base64data = await new Promise((resolve) => {
+            const img = new Image();
+            img.crossOrigin = "Anonymous";
+            img.onload = () => {
+                const canvas = document.createElement("canvas");
+                canvas.width = img.width;
+                canvas.height = img.height;
+                const ctx = canvas.getContext("2d");
+                ctx.globalAlpha = 1;
+                ctx.drawImage(img, 0, 0);
+                resolve(canvas.toDataURL("image/png"));
+            };
+            img.onerror = () => resolve(null);
+            img.src = '/logo.png';
+        });
 
-    doc.setFontSize(10);
-    doc.setFont('times', 'normal');
-    doc.text(`Protocol Version: Satohash 1.2.0 • Anchor: Bitcoin Blockchain`, 105, 38, { align: 'center' });
+        if (base64data) {
+            doc.addImage(base64data, 'PNG', 20, 10, 20, 20); // Top-left position
+        }
+    } catch (e) {
+        console.error("Failed to load logo", e);
+    }
 
-    // Subject
-    doc.setFontSize(14);
-    doc.setFont('times', 'bold');
-    doc.text('Document Subject:', 25, 55);
-    doc.setFont('times', 'normal');
-    doc.text(contract.name || 'Untitled Document', 25, 62);
-
-    // Hash Section
-    doc.setFillColor(248, 250, 252);
-    doc.rect(20, 75, 170, 30, 'F');
-    doc.setFont('times', 'bold');
-    doc.setFontSize(11);
-    doc.text('SHA-256 DIGITAL FINGERPRINT', 105, 82, { align: 'center' });
-    doc.setFont('courier', 'bold');
-    doc.setFontSize(9);
-    doc.text(timestamp ? timestamp.hash : 'PENDING_HASH', 105, 92, { align: 'center' });
-
-    // Legal Statement
-    doc.setFont('times', 'normal');
-    doc.setFontSize(11);
-    const statement = doc.splitTextToSize(
-        `This document serves as an official technical supplement to the agreement titled "${contract.name}". ` +
-        `The fingerprint above was secured on the Bitcoin blockchain at timestamp ${new Date().toLocaleString()}. ` +
-        `By anchoring this hash into the global decentralized ledger, Satohash has created an indisputable record of ` +
-        `the document's existence and integrity. Any unauthorized modification to even a single bit of the document ` +
-        `will result in a hash mismatch, invalidating this certificate.`,
-        160
-    );
-    doc.text(statement, 25, 120, { lineHeightFactor: 1.5 });
-
-    // Audit steps
-    doc.setFont('times', 'bold');
-    doc.text('How to Audit this Proof:', 25, 155);
-    doc.setFont('times', 'normal');
-    const steps = [
-        '1. Access the Satohash Protocol Auditor at satohash.com/verify.',
-        '2. Provide the original file and the associated .ots proof data.',
-        '3. The protocol will reconstruct the Merkle Path to the Bitcoin Genesis block.',
-        '4. Independent verification can be performed at opentimestamps.org.'
-    ];
-    doc.text(steps, 25, 165, { lineHeightFactor: 1.5 });
-
-    // Seal
-    doc.setDrawColor(99, 102, 241);
-    doc.setFillColor(99, 102, 241);
-    doc.circle(170, 250, 20, 'F');
     doc.setTextColor(255, 255, 255);
-    doc.setFontSize(8);
-    doc.text('BITCOIN', 170, 248, { align: 'center' });
+    doc.setFontSize(22);
+    doc.setFont("helvetica", "bold");
+    doc.text("SATOHASH", 46, 23); // Shifted right
+
     doc.setFontSize(10);
-    doc.text('ANCHORED', 170, 254, { align: 'center' });
+    doc.setFont("helvetica", "normal");
+    doc.text("THE IMMUTABLE TRUST ENGINE", 46, 29); // Shifted right
 
-    return doc;
+    // Main Title
+    doc.setTextColor(30, 41, 59); // Slate-800
+    doc.setFontSize(26);
+    doc.setFont("helvetica", "bold");
+    doc.text("CERTIFICATE OF PROOF", pageWidth / 2, 60, { align: "center" });
+
+    // Dividers
+    doc.setDrawColor(226, 232, 240); // Slate-200
+    doc.line(20, 70, pageWidth - 20, 70);
+
+    // Metadata Section
+    doc.setTextColor(71, 85, 105); // Slate-600
+    doc.setFontSize(10);
+    doc.text("DOCUMENT DETAILS", 20, 85);
+
+    doc.setTextColor(15, 23, 42); // Slate-900
+    doc.setFontSize(14);
+    doc.setFont("helvetica", "bold");
+    doc.text(contract.name || "Untitled Document", 20, 95);
+
+    doc.setFontSize(10);
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor(100, 116, 139);
+    doc.text(`Recorded Date: ${date}`, 20, 102);
+    doc.text(`Storage: Local-First (Private)`, 20, 107);
+
+    // The Hash (Fingerprint)
+    doc.setFillColor(241, 245, 249); // Slate-100
+    doc.rect(20, 120, pageWidth - 40, 35, 'F');
+
+    doc.setTextColor(71, 85, 105);
+    doc.setFontSize(9);
+    doc.setFont("helvetica", "bold");
+    doc.text("SHA-256 CRYPTOGRAPHIC FINGERPRINT", 30, 130);
+
+    doc.setFont("courier", "bold");
+    doc.setTextColor(99, 102, 241);
+    doc.setFontSize(11);
+    doc.text(hash, 30, 142, { maxWidth: pageWidth - 60 });
+
+    // QR Code for Verification
+    doc.addImage(qrCodeDataUrl, 'PNG', pageWidth - 70, 165, 50, 50);
+
+    // Verification Logic
+    doc.setTextColor(30, 41, 59);
+    doc.setFontSize(14);
+    doc.setFont("helvetica", "bold");
+    doc.text("Verification Notice", 20, 175);
+
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(10);
+    doc.setTextColor(71, 85, 105);
+    const instructions = "This document index has been mathematically anchored to the Bitcoin network. " +
+        "You do not need Satohash to prove this. Using any OpenTimestamps-compatible verifier, " +
+        "you can prove that this exact document existed before the date shown above.";
+    doc.text(instructions, 20, 185, { maxWidth: pageWidth - 100 });
+
+    // Footer
+    doc.setDrawColor(99, 102, 241);
+    doc.setLineWidth(1.5);
+    doc.line(20, pageHeight - 45, pageWidth - 20, pageHeight - 45);
+
+    doc.setFontSize(8);
+    doc.setTextColor(148, 163, 184);
+
+    const disclaimer = "LEGAL NOTICE: Satohash provides cryptographic proof of existence via the Bitcoin blockchain. This certificate mathematically proves document integrity at a specific point in time. It is NOT legal advice. Consult a qualified professional for legal interpretations.";
+    const splitDisclaimer = doc.splitTextToSize(disclaimer, pageWidth - 40);
+    doc.text(splitDisclaimer, pageWidth / 2, pageHeight - 35, { align: "center" });
+
+    doc.setFont("helvetica", "bold");
+    doc.text("SECURED BY BITCOIN BLOCKCHAIN  |  OPENTIMESTAMPS PROTOCOL  |  SATOHASH v2.0", pageWidth / 2, pageHeight - 20, { align: "center" });
+    doc.setFont("helvetica", "normal");
+    doc.text("THIS CERTIFICATE IS AN EVIDENCE SUMMARY AND NOT THE ARCHIVE ITSELF.", pageWidth / 2, pageHeight - 15, { align: "center" });
+
+    doc.save(`${contract.name || 'document'}_proof.pdf`);
 };
 
-/**
- * Download the verification certificate
- */
-export const downloadVerificationCertificate = (contract, timestamp) => {
-    const doc = generateVerificationCertificate(contract, timestamp);
-    doc.save(`${contract.name}_verification_cert.pdf`);
-};
-
-/**
- * Download the PDF proof package
- */
-export const downloadProofPackage = (contract, timestamp) => {
-    const doc = generateProofPackage(contract, timestamp);
-    doc.save(`${contract.name}_proof_${Date.now()}.pdf`);
-};
-
-/**
- * Generate and download the .ots file
- */
 export const downloadOTSFile = (timestamp) => {
-    const blob = new Blob([timestamp.otsData], { type: 'application/octet-stream' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `proof_${Date.now()}.ots`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
+    const element = document.createElement("a");
+    let fileBlob;
+    
+    if (timestamp?.otsFileBase64) {
+        // Decode base64 to binary
+        const byteCharacters = atob(timestamp.otsFileBase64);
+        const byteNumbers = new Array(byteCharacters.length);
+        for (let i = 0; i < byteCharacters.length; i++) {
+            byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }
+        const byteArray = new Uint8Array(byteNumbers);
+        fileBlob = new Blob([byteArray], { type: "application/octet-stream" });
+    } else if (timestamp?.otsData instanceof Uint8Array) {
+        fileBlob = new Blob([timestamp.otsData], { type: "application/octet-stream" });
+    } else {
+        fileBlob = new Blob([timestamp?.otsData || "No data"], { type: "application/octet-stream" });
+    }
+
+    element.href = URL.createObjectURL(fileBlob);
+    element.download = `${timestamp?.hash?.substring(0, 8) || 'proof'}.ots`;
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+};
+
+export const downloadProofPackage = (contract, timestamp) => {
+    generatePDF(contract, timestamp);
 };

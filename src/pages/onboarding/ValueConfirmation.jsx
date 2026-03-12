@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { Check } from 'lucide-react';
 import Button from '../../components/Button';
 import Card from '../../components/Card';
-import Footer from '../../components/Footer';
 
 export default function ValueConfirmation() {
     const { t } = useTranslation();
@@ -76,7 +75,6 @@ export default function ValueConfirmation() {
                 </Button>
             </div>
 
-            <Footer />
         </div>
     );
 }

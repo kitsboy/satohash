@@ -15,6 +15,8 @@ import {
 import Button from '../../components/Button';
 import Card from '../../components/Card';
 import { calculateHash } from '../../utils/crypto';
+import MerkleExplorer from '../../components/MerkleExplorer';
+import { Binary } from 'lucide-react';
 
 export default function BatchProof() {
     const { t } = useTranslation();
@@ -43,17 +45,26 @@ export default function BatchProof() {
         setFiles(files.filter(f => f.id !== id));
     };
 
+    const [merkleTree, setMerkleTree] = useState(null);
+
     const handleBatchAnchor = async () => {
         setIsProcessing(true);
         // Simulate batch anchoring process
         await new Promise(resolve => setTimeout(resolve, 3000));
+
+        const mockRoot = Math.random().toString(16).substring(2, 66);
+        setMerkleTree({
+            root: mockRoot,
+            atoms: files.map(f => `${f.name} (SHA-256: ${f.hash.substring(0, 8)})`)
+        });
+
         setFiles(files.map(f => ({ ...f, status: 'anchored' })));
         setIsProcessing(false);
         setShowResults(true);
     };
 
     return (
-        <div className="page" style={{ background: 'var(--color-surface)', paddingTop: '40px' }}>
+        <div className="page" style={{ background: 'var(--color-surface)', paddingTop: '100px' }}>
             <div className="container">
                 <div className="page-header text-center" style={{ marginBottom: '40px' }}>
                     <div style={{ display: 'inline-flex', padding: '12px', background: '#e0e7ff', borderRadius: '16px', color: '#4338ca', marginBottom: '16px' }}>
@@ -162,6 +173,16 @@ export default function BatchProof() {
                                         </div>
                                     </Card>
                                 ))}
+                            </div>
+                        )}
+
+                        {showResults && merkleTree && (
+                            <div style={{ marginTop: '24px' }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px', color: '#1e293b' }}>
+                                    <Binary size={20} className="text-indigo-600" />
+                                    <h3 style={{ margin: 0, fontSize: '20px', fontWeight: '850' }}>Protocol Visualization</h3>
+                                </div>
+                                <MerkleExplorer tree={merkleTree} />
                             </div>
                         )}
                     </div>

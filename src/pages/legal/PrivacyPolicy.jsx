@@ -1,59 +1,62 @@
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
-import Footer from '../../components/Footer';
+import Button from '../../components/Button';
+import Card from '../../components/Card';
 
 export default function PrivacyPolicy() {
     const navigate = useNavigate();
 
     return (
-        <div className="page">
-            <div className="container container-narrow">
-                <button
+        <div className="page bg-slate-50 min-h-screen pt-[120px] pb-20">
+            <div className="container-narrow">
+                <Button
+                    variant="ghost"
+                    size="small"
                     onClick={() => navigate(-1)}
-                    style={{
-                        background: 'none',
-                        border: 'none',
-                        color: 'var(--color-primary)',
-                        cursor: 'pointer',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: 'var(--spacing-xs)',
-                        marginBottom: 'var(--spacing-lg)'
-                    }}
+                    className="mb-12"
                 >
-                    <ArrowLeft size={20} /> Back
-                </button>
+                    <ArrowLeft size={18} /> Back
+                </Button>
 
-                <h1 style={{ marginBottom: 'var(--spacing-lg)' }}>Privacy Policy</h1>
+                <Card variant="elevated" padding="large" className="prose prose-slate max-w-none">
+                    <h1 className="text-4xl font-black text-slate-900 mb-2">Privacy Policy</h1>
+                    <p className="text-slate-400 font-bold mb-12">Last updated: {new Date().toLocaleDateString()}</p>
 
-                <div style={{
-                    fontSize: '16px',
-                    color: 'var(--color-text-secondary)',
-                    lineHeight: '1.8',
-                    fontWeight: '600'
-                }}>
-                    <p><em>Last updated: {new Date().toLocaleDateString()}</em></p>
+                    <div className="space-y-12 text-slate-600 font-medium leading-relaxed">
+                        <section>
+                            <h2 className="text-xl font-black text-slate-900 border-b border-slate-100 pb-4 mb-6">1. Zero-Knowledge Principle</h2>
+                            <p>Satohash is designed with privacy as the core architecture. We operate on a direct-to-blockchain principle where your sensitive documents never leave your device. Only SHA-256 cryptographic hashes—which are mathematically impossible to reverse—are used for the timestamping process.</p>
+                        </section>
 
-                    <h2>1. Information We Collect</h2>
-                    <p>Satohash collects minimal information: email addresses for account creation and cryptographic hashes of documents for timestamping.</p>
+                        <section>
+                            <h2 className="text-xl font-black text-slate-900 border-b border-slate-100 pb-4 mb-6">2. Data We Process</h2>
+                            <p>The only data transmitted to our processing layer includes: (a) Cryptographic hashes of your documents; (b) Transaction metadata required for the Bitcoin network; and (c) Minimal authentication data if you choose to create a cloud-synced account. We do not collect names, addresses, or document content by default.</p>
+                        </section>
 
-                    <h2>2. Document Privacy</h2>
-                    <p>We do not store full document contents. Only SHA-256 hashes are transmitted to our servers and OpenTimestamps calendar servers.</p>
+                        <section>
+                            <h2 className="text-xl font-black text-slate-900 border-b border-slate-100 pb-4 mb-6">3. Local-First Storage</h2>
+                            <p>By default, Satohash stores your contract drafts and proof files in your browser's local storage or indexedDB. This data is not accessible to us. If you clear your browser data without downloading your .ots proof files, they may be permanently lost.</p>
+                        </section>
 
-                    <h2>3. Data Storage</h2>
-                    <p>In the current implementation, data is stored locally in your browser. User account data and contracts are stored in browser localStorage.</p>
+                        <section>
+                            <h2 className="text-xl font-black text-slate-900 border-b border-slate-100 pb-4 mb-6">4. Third-Party Integration</h2>
+                            <p>To provide blockchain anchoring, we interact with:
+                                <ul className="list-disc pl-6 mt-4 space-y-2">
+                                    <li><strong>OpenTimestamps:</strong> For Merkle tree aggregation and calendar services.</li>
+                                    <li><strong>Bitcoin Nodes:</strong> For permanent anchoring.</li>
+                                    <li><strong>Mempool.space:</strong> For live network fee data.</li>
+                                </ul>
+                                These decentralized protocols are essential for the immutable nature of your proofs.
+                            </p>
+                        </section>
 
-                    <h2>4. Third-Party Services</h2>
-                    <p>We use OpenTimestamps calendar servers and mempool.space API for Bitcoin network data. These services may have their own privacy policies.</p>
-
-                    <h2>5. Data Security</h2>
-                    <p>All data is encrypted in transit using HTTPS. Local data security depends on your device security.</p>
-
-                    <h2>6. Your Rights</h2>
-                    <p>You can delete your local data at any time by clearing your browser data. You control all document and proof files.</p>
-                </div>
+                        <section>
+                            <h2 className="text-xl font-black text-slate-900 border-b border-slate-100 pb-4 mb-6">5. Data Security</h2>
+                            <p>We use industry-standard HTTPS/TLS for all communication. Since we do not hold your private keys or document contents, we cannot "leak" your private data even in the event of a server compromise—a fundamental benefit of our cryptographic architecture.</p>
+                        </section>
+                    </div>
+                </Card>
             </div>
-            <Footer />
         </div>
     );
 }

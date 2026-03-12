@@ -8,736 +8,319 @@ import {
     ArrowRight,
     Sparkles,
     Zap,
-    AlertCircle,
-    Lightbulb,
-    ChevronLeft,
-    ChevronRight,
     ShieldCheck,
     Globe,
     Activity as ActivityIcon,
     Check,
+    Search,
+    Filter,
     Clock,
     Lock,
-    Eye,
-    Download,
-    MoreHorizontal,
-    Trash2,
-    Edit3,
-    Copy,
-    TrendingUp,
-    Shield,
-    Hash
+    Trash2
 } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import Button from '../../components/Button';
 import Card from '../../components/Card';
 import StatusPill from '../../components/StatusPill';
-import Footer from '../../components/Footer';
 import BlockchainPulse from '../../components/BlockchainPulse';
 import { useState, useEffect } from 'react';
-
-// Demo contracts for showcasing the platform
-const DEMO_CONTRACTS = [
-    {
-        id: 'demo_prenup_001',
-        name: 'Anderson-Martinez Prenuptial Agreement',
-        status: 'timestamped',
-        templateType: 'prenup',
-        createdAt: '2026-01-15T10:30:00Z',
-        updatedAt: '2026-01-18T14:22:00Z',
-        hash: 'a7f3b2c1d4e5f6789012345678901234567890abcdef1234567890abcdef1234',
-        blockHeight: 881234,
-        parties: ['Sarah Anderson', 'Miguel Martinez'],
-        isDemo: true
-    },
-    {
-        id: 'demo_property_001',
-        name: 'Commercial Property Transfer - 123 Main St',
-        status: 'signed',
-        templateType: 'property',
-        createdAt: '2026-02-01T09:00:00Z',
-        updatedAt: '2026-02-08T16:45:00Z',
-        hash: 'b8c4d3e2f1a0987654321098765432109876543210fedcba0987654321fedcba',
-        parties: ['Apex Holdings LLC', 'Metropolitan Investments'],
-        isDemo: true
-    },
-    {
-        id: 'demo_nda_001',
-        name: 'TechCorp NDA - Project Phoenix',
-        status: 'waiting',
-        templateType: 'nda',
-        createdAt: '2026-02-05T11:15:00Z',
-        updatedAt: '2026-02-09T08:30:00Z',
-        parties: ['TechCorp Inc.', 'Pending: John Developer'],
-        isDemo: true
-    },
-    {
-        id: 'demo_poa_001',
-        name: 'Power of Attorney - Estate Management',
-        status: 'draft',
-        templateType: 'powerOfAttorney',
-        createdAt: '2026-02-09T14:00:00Z',
-        updatedAt: '2026-02-09T14:00:00Z',
-        parties: ['Eleanor Williams'],
-        isDemo: true
-    }
-];
-
-const protocolTips = [
-    {
-        title: "The Power of SHA-256",
-        content: "Every document in Satohash is hashed using SHA-256. This creates a 64-character 'fingerprint' that is impossible to reverse or duplicate.",
-        icon: Hash
-    },
-    {
-        title: "Why Bitcoin?",
-        content: "Bitcoin is the most secure computer network in history. By anchoring your hash to its chain, you leverage billions of dollars in hardware security.",
-        icon: Shield
-    },
-    {
-        title: "Entropy & Identity",
-        content: "Your digital signature combined with a blockchain timestamp creates a 'Proof of Existence' that is valid across all 195 countries.",
-        icon: Globe
-    },
-    {
-        title: "Merkle Trees",
-        content: "Your document hash joins thousands of others in a Merkle tree structure. Only the root hash is stored on Bitcoin, making it incredibly efficient.",
-        icon: TrendingUp
-    }
-];
-
-const getStatusColor = (status) => {
-    const colors = {
-        draft: '#94a3b8',
-        waiting: '#f59e0b',
-        signed: '#3b82f6',
-        timestamped: '#22c55e',
-        pending: '#ec4899',
-        error: '#ef4444'
-    };
-    return colors[status] || colors.draft;
-};
-
-const getStatusIcon = (status) => {
-    const icons = {
-        draft: Edit3,
-        waiting: Clock,
-        signed: Check,
-        timestamped: Lock,
-        pending: Clock,
-        error: AlertCircle
-    };
-    return icons[status] || FileText;
-};
-
-const ProtocolTips = () => {
-    const [index, setIndex] = useState(0);
-    const tip = protocolTips[index];
-    const TipIcon = tip.icon;
-
-    return (
-        <div style={{
-            maxWidth: '600px',
-            margin: '48px auto 0',
-            padding: '28px',
-            background: 'linear-gradient(135deg, rgba(99, 102, 241, 0.04) 0%, rgba(168, 85, 247, 0.04) 100%)',
-            borderRadius: '24px',
-            border: '1px solid rgba(99, 102, 241, 0.1)',
-            textAlign: 'left',
-            position: 'relative'
-        }}>
-            <div style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
-                <div style={{ 
-                    width: '48px', 
-                    height: '48px', 
-                    borderRadius: '14px',
-                    background: 'var(--color-primary)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: 'white',
-                    flexShrink: 0
-                }}>
-                    <TipIcon size={24} />
-                </div>
-                <div style={{ flex: 1 }}>
-                    <div style={{ 
-                        fontSize: '11px', 
-                        fontWeight: '900', 
-                        color: 'var(--color-primary)', 
-                        textTransform: 'uppercase',
-                        letterSpacing: '1.5px',
-                        marginBottom: '8px'
-                    }}>
-                        Protocol Insight
-                    </div>
-                    <h4 style={{ margin: '0 0 10px 0', fontSize: '17px', fontWeight: '950', color: 'var(--color-text-primary)' }}>
-                        {tip.title}
-                    </h4>
-                    <p style={{ margin: 0, fontSize: '14px', color: 'var(--color-text-secondary)', lineHeight: '1.65', fontWeight: '600' }}>
-                        {tip.content}
-                    </p>
-                </div>
-            </div>
-            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '8px', marginTop: '20px' }}>
-                <button
-                    onClick={() => setIndex((i) => (i === 0 ? protocolTips.length - 1 : i - 1))}
-                    style={{ 
-                        background: 'var(--color-surface-elevated)', 
-                        border: '1px solid var(--color-border)', 
-                        cursor: 'pointer', 
-                        color: 'var(--color-primary)',
-                        width: '36px',
-                        height: '36px',
-                        borderRadius: '10px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        transition: 'all 0.2s ease'
-                    }}
-                >
-                    <ChevronLeft size={18} />
-                </button>
-                <div style={{ 
-                    display: 'flex', 
-                    alignItems: 'center', 
-                    gap: '6px',
-                    padding: '0 12px'
-                }}>
-                    {protocolTips.map((_, i) => (
-                        <div 
-                            key={i}
-                            style={{
-                                width: i === index ? '20px' : '6px',
-                                height: '6px',
-                                borderRadius: '3px',
-                                background: i === index ? 'var(--color-primary)' : 'var(--color-border)',
-                                transition: 'all 0.3s ease'
-                            }}
-                        />
-                    ))}
-                </div>
-                <button
-                    onClick={() => setIndex((i) => (i === protocolTips.length - 1 ? 0 : i + 1))}
-                    style={{ 
-                        background: 'var(--color-surface-elevated)', 
-                        border: '1px solid var(--color-border)', 
-                        cursor: 'pointer', 
-                        color: 'var(--color-primary)',
-                        width: '36px',
-                        height: '36px',
-                        borderRadius: '10px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        transition: 'all 0.2s ease'
-                    }}
-                >
-                    <ChevronRight size={18} />
-                </button>
-            </div>
-        </div>
-    );
-};
-
-const ContractCard = ({ contract, onClick }) => {
-    const statusColor = getStatusColor(contract.status);
-    const StatusIcon = getStatusIcon(contract.status);
-    const [showMenu, setShowMenu] = useState(false);
-
-    return (
-        <Card
-            style={{
-                cursor: 'pointer',
-                padding: 0,
-                display: 'flex',
-                flexDirection: 'column',
-                minHeight: '240px',
-                background: 'white',
-                position: 'relative',
-                overflow: 'hidden',
-                borderRadius: '20px',
-                border: '1px solid var(--color-border)',
-                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
-            }}
-            className="card-interactive"
-            onClick={onClick}
-        >
-            {/* Status Bar */}
-            <div style={{ 
-                height: '5px', 
-                background: `linear-gradient(90deg, ${statusColor}, ${statusColor}88)` 
-            }} />
-
-            {/* Demo Badge */}
-            {contract.isDemo && (
-                <div style={{
-                    position: 'absolute',
-                    top: '16px',
-                    right: '16px',
-                    background: 'linear-gradient(135deg, #f59e0b, #ef4444)',
-                    color: 'white',
-                    fontSize: '9px',
-                    fontWeight: '900',
-                    padding: '4px 8px',
-                    borderRadius: '6px',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.5px'
-                }}>
-                    Demo
-                </div>
-            )}
-
-            <div style={{ padding: '24px', flex: 1, display: 'flex', flexDirection: 'column' }}>
-                {/* Header */}
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: '16px' }}>
-                    <div style={{ 
-                        padding: '12px', 
-                        borderRadius: '14px', 
-                        background: `${statusColor}12`, 
-                        color: statusColor 
-                    }}>
-                        <StatusIcon size={22} />
-                    </div>
-                    <StatusPill status={contract.status} />
-                </div>
-
-                {/* Title */}
-                <h3 style={{ 
-                    fontSize: '17px', 
-                    fontWeight: '900', 
-                    color: 'var(--color-text-primary)', 
-                    marginBottom: '12px',
-                    lineHeight: '1.3',
-                    display: '-webkit-box',
-                    WebkitLineClamp: 2,
-                    WebkitBoxOrient: 'vertical',
-                    overflow: 'hidden'
-                }}>
-                    {contract.name}
-                </h3>
-
-                {/* Parties */}
-                {contract.parties && (
-                    <div style={{ 
-                        display: 'flex', 
-                        alignItems: 'center', 
-                        gap: '8px', 
-                        marginBottom: '12px' 
-                    }}>
-                        <Users size={14} color="var(--color-text-tertiary)" />
-                        <span style={{ 
-                            fontSize: '13px', 
-                            fontWeight: '600', 
-                            color: 'var(--color-text-secondary)',
-                            overflow: 'hidden',
-                            textOverflow: 'ellipsis',
-                            whiteSpace: 'nowrap'
-                        }}>
-                            {contract.parties.join(', ')}
-                        </span>
-                    </div>
-                )}
-
-                {/* Hash Preview */}
-                {contract.hash && (
-                    <div style={{
-                        background: 'var(--color-surface)',
-                        padding: '10px 12px',
-                        borderRadius: '10px',
-                        marginBottom: '12px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '8px'
-                    }}>
-                        <Hash size={12} color="var(--color-primary)" />
-                        <code style={{ 
-                            fontSize: '11px', 
-                            fontWeight: '700', 
-                            color: 'var(--color-text-tertiary)',
-                            fontFamily: 'var(--font-mono)',
-                            overflow: 'hidden',
-                            textOverflow: 'ellipsis'
-                        }}>
-                            {contract.hash.slice(0, 16)}...{contract.hash.slice(-8)}
-                        </code>
-                    </div>
-                )}
-
-                {/* Date */}
-                <div style={{ 
-                    display: 'flex', 
-                    alignItems: 'center', 
-                    gap: '8px', 
-                    fontSize: '12px', 
-                    fontWeight: '700', 
-                    color: 'var(--color-text-tertiary)',
-                    marginTop: 'auto'
-                }}>
-                    <Calendar size={14} />
-                    <span>Updated {new Date(contract.updatedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
-                </div>
-            </div>
-
-            {/* Footer Action */}
-            <div style={{ 
-                padding: '16px 24px', 
-                borderTop: '1px solid var(--color-border)',
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                background: 'var(--color-surface)'
-            }}>
-                <span style={{ fontSize: '13px', fontWeight: '800', color: 'var(--color-primary)' }}>
-                    View Details
-                </span>
-                <ArrowRight size={16} color="var(--color-primary)" />
-            </div>
-        </Card>
-    );
-};
+import { clsx } from 'clsx';
 
 export default function ContractList() {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const [contracts, setContracts] = useState([]);
-    const [showDemoData, setShowDemoData] = useState(true);
-    const [filter, setFilter] = useState('all');
+    const [searchQuery, setSearchQuery] = useState('');
+    const [filterStatus, setFilterStatus] = useState('all');
 
     useEffect(() => {
-        // Load contracts from localStorage
         const savedContracts = localStorage.getItem('satohash_contracts');
         if (savedContracts) {
             setContracts(JSON.parse(savedContracts));
         }
     }, []);
 
-    // Combine real and demo contracts
-    const displayContracts = showDemoData 
-        ? [...contracts, ...DEMO_CONTRACTS]
-        : contracts;
+    const filteredContracts = contracts.filter(c => {
+        const matchesSearch = c.name.toLowerCase().includes(searchQuery.toLowerCase());
+        const matchesFilter = filterStatus === 'all' || c.status === filterStatus;
+        return matchesSearch && matchesFilter;
+    });
 
-    // Filter contracts
-    const filteredContracts = filter === 'all' 
-        ? displayContracts 
-        : displayContracts.filter(c => c.status === filter);
+    const handleDelete = (e, id) => {
+        e.stopPropagation();
+        if (!confirm('Are you sure you want to delete this agreement? This action cannot be undone.')) return;
 
-    const handleNewContract = () => {
-        navigate('/choose-template');
+        const updatedContracts = contracts.filter(c => c.id !== id);
+        setContracts(updatedContracts);
+        localStorage.setItem('satohash_contracts', JSON.stringify(updatedContracts));
     };
 
     const stats = {
-        total: displayContracts.length,
-        timestamped: displayContracts.filter(c => c.status === 'timestamped').length,
-        pending: displayContracts.filter(c => c.status === 'waiting' || c.status === 'signed').length,
-        draft: displayContracts.filter(c => c.status === 'draft').length
+        total: contracts.length,
+        secured: contracts.filter(c => c.status === 'timestamped' || c.status === 'signed').length,
+        avgHealth: 99.9
     };
 
     return (
-        <div className="page" style={{
-            background: 'linear-gradient(135deg, #f8fafc 0%, #e0e7ff 100%)',
-            minHeight: '100vh'
-        }}>
-            <div className="container" style={{ maxWidth: '1400px' }}>
-                {/* Header */}
-                <div className="animate-slide-down" style={{
-                    marginTop: 'var(--spacing-2xl)',
-                    marginBottom: 'var(--spacing-xl)'
-                }}>
+        <div className="min-h-screen bg-[#f8fafc] flex flex-col">
+            <div className="container-wide pt-44 pb-12 flex-1">
+                {/* Dashboard Header */}
+                <header className="mb-12">
                     <BlockchainPulse />
-
-                    <div style={{ 
-                        display: 'flex', 
-                        justifyContent: 'space-between', 
-                        alignItems: 'flex-start', 
-                        marginTop: '24px',
-                        flexWrap: 'wrap',
-                        gap: '20px'
-                    }}>
-                        <div>
-                            <h1 style={{
-                                fontSize: 'clamp(28px, 5vw, 40px)',
-                                fontWeight: '900',
-                                color: '#0f172a',
-                                margin: 0,
-                                letterSpacing: '-1px'
-                            }}>
-                                {t('contracts.title')}
+                    <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mt-8">
+                        <div className="space-y-2">
+                            <h1 className="text-4xl font-black text-slate-900 tracking-tighter uppercase">
+                                Protocol Dashboard
                             </h1>
-                            <p style={{ 
-                                margin: '8px 0 0 0', 
-                                fontWeight: '500',
-                                color: '#475569',
-                                fontSize: '16px'
-                            }}>
-                                Manage your cryptographic agreements and Bitcoin-anchored proofs.
+                            <p className="text-sm font-bold text-slate-400 uppercase tracking-widest">
+                                Managing {contracts.length} Cryptographic Proofs
                             </p>
                         </div>
                         <Button
                             variant="primary"
-                            onClick={handleNewContract}
-                            style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: '10px',
-                                background: 'linear-gradient(135deg, #6366f1 0%, #4338ca 100%)',
-                                border: 'none',
-                                height: '52px',
-                                paddingLeft: '28px',
-                                paddingRight: '28px',
-                                borderRadius: '20px',
-                                boxShadow: '0 8px 24px rgba(99, 102, 241, 0.35)',
-                                fontWeight: '700'
-                            }}
+                            size="large"
+                            onClick={() => navigate('/choose-template')}
+                            className="bg-indigo-600 shadow-xl shadow-indigo-100/50"
                         >
-                            <Plus size={20} strokeWidth={2.5} />
-                            {t('contracts.new')}
+                            <Plus size={20} /> Create New Proof
                         </Button>
                     </div>
-                </div>
+                </header>
 
-                {displayContracts.length === 0 ? (
-                    /* Empty State Launchpad */
-                    <div className="text-center animate-fade-in" style={{
-                        marginTop: '80px',
-                        paddingBottom: '80px'
-                    }}>
-                        <div style={{
-                            width: '140px',
-                            height: '140px',
-                            margin: '0 auto 32px',
-                            borderRadius: '50%',
-                            background: 'linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%)',
-                            border: '3px dashed rgba(99, 102, 241, 0.25)',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            position: 'relative',
-                            animation: 'pulse 3s ease-in-out infinite'
-                        }}>
-                            <FileText size={64} color="var(--color-primary)" strokeWidth={1.5} />
-                            <div style={{
-                                position: 'absolute',
-                                top: '-8px',
-                                right: '-8px',
-                                width: '44px',
-                                height: '44px',
-                                borderRadius: '50%',
-                                background: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                boxShadow: '0 6px 16px rgba(251, 191, 36, 0.4)'
-                            }}>
-                                <Sparkles size={22} color="white" />
-                            </div>
-                        </div>
-
-                        <h2 style={{ fontSize: '28px', fontWeight: '800', marginBottom: '12px', color: '#0f172a', letterSpacing: '-1px' }}>
-                            Your Digital Vault is Ready
-                        </h2>
-
-                        <p style={{ 
-                            fontSize: '17px', 
-                            maxWidth: '500px', 
-                            margin: '0 auto 40px',
-                            fontWeight: '500',
-                            color: '#475569',
-                            lineHeight: '1.6'
-                        }}>
-                            Launch your first cryptographic agreement from a template below:
-                        </p>
-
-                        <div style={{ 
-                            display: 'grid', 
-                            gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', 
-                            gap: '16px', 
-                            maxWidth: '700px', 
-                            margin: '0 auto 48px' 
-                        }}>
-                            {[
-                                { id: 'nda', name: 'NDA', color: '#10b981', desc: 'Confidentiality' },
-                                { id: 'prenup', name: 'Prenuptial', color: '#ec4899', desc: 'Marriage' },
-                                { id: 'property', name: 'Property', color: '#3b82f6', desc: 'Real Estate' },
-                                { id: 'powerOfAttorney', name: 'Power of Attorney', color: '#f59e0b', desc: 'Legal Rep.' }
-                            ].map(quick => (
-                                <div
-                                    key={quick.id}
-                                    onClick={() => navigate(`/contracts/new/${quick.id}`)}
-                                style={{
-                                    background: '#ffffff',
-                                    padding: '32px 24px',
-                                    borderRadius: '20px',
-                                    border: '2px solid #e2e8f0',
-                                    cursor: 'pointer',
-                                    transition: 'all 0.3s ease',
-                                    textAlign: 'center',
-                                    boxShadow: '0 6px 16px rgba(0,0,0,0.06)'
-                                }}
-                                className="card-interactive"
-                                >
-                                    <div style={{ 
-                                        width: '48px',
-                                        height: '48px',
-                                        borderRadius: '14px',
-                                        background: `${quick.color}15`,
-                                        color: quick.color, 
-                                        margin: '0 auto 14px',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center'
-                                    }}>
-                                        <Plus size={24} strokeWidth={2.5} />
-                                    </div>
-                                    <div style={{ fontWeight: '700', color: '#0f172a', fontSize: '15px' }}>{quick.name}</div>
-                                    <div style={{ fontSize: '12px', color: '#64748b', fontWeight: '600', marginTop: '4px' }}>{quick.desc}</div>
-                                </div>
-                            ))}
-                        </div>
-                        <ProtocolTips />
-                    </div>
+                {contracts.length === 0 ? (
+                    <EmptyState onAction={() => navigate('/choose-template')} />
                 ) : (
-                    /* Dashboard with Contracts */
-                    <div>
-                        {/* Stats Row */}
-                        <div style={{ 
-                            display: 'grid', 
-                            gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', 
-                            gap: '16px', 
-                            marginBottom: '32px' 
-                        }}>
-                            {[
-                                { label: 'Total Anchors', value: stats.total, icon: FileText, color: '#6366f1', bg: 'linear-gradient(135deg, #ede9fe 0%, #ddd6fe 100%)' },
-                                { label: 'Timestamped', value: stats.timestamped, icon: Lock, color: '#22c55e', bg: 'linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%)' },
-                                { label: 'In Progress', value: stats.pending, icon: Clock, color: '#f59e0b', bg: 'linear-gradient(135deg, #fef3c7 0%, #fde68a 100%)' },
-                                { label: 'Drafts', value: stats.draft, icon: Edit3, color: '#64748b', bg: 'linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%)' }
-                            ].map((stat, i) => (
-                                <Card key={i} style={{ 
-                                    padding: '24px', 
-                                    background: stat.bg,
-                                    borderRadius: '20px',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: '16px',
-                                    border: 'none',
-                                    boxShadow: '0 4px 12px rgba(0,0,0,0.06)'
-                                }}>
-                                    <div style={{
-                                        width: '52px',
-                                        height: '52px',
-                                        borderRadius: '16px',
-                                        background: '#ffffff',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        color: stat.color,
-                                        boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
-                                    }}>
-                                        <stat.icon size={24} />
-                                    </div>
-                                    <div>
-                                        <div style={{ fontSize: '32px', fontWeight: '900', color: '#0f172a', lineHeight: 1 }}>{stat.value}</div>
-                                        <div style={{ fontSize: '13px', fontWeight: '600', color: '#475569', marginTop: '6px' }}>{stat.label}</div>
-                                    </div>
-                                </Card>
-                            ))}
-                        </div>
-
-                        {/* Filter & Controls */}
-                        <div style={{ 
-                            display: 'flex', 
-                            justifyContent: 'space-between', 
-                            alignItems: 'center',
-                            marginBottom: '24px',
-                            flexWrap: 'wrap',
-                            gap: '16px'
-                        }}>
-                            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-                                {[
-                                    { key: 'all', label: 'All' },
-                                    { key: 'timestamped', label: 'Timestamped' },
-                                    { key: 'signed', label: 'Signed' },
-                                    { key: 'waiting', label: 'Pending' },
-                                    { key: 'draft', label: 'Drafts' }
-                                ].map(f => (
-                                    <button
-                                        key={f.key}
-                                        onClick={() => setFilter(f.key)}
-                                        style={{
-                                            padding: '10px 18px',
-                                            borderRadius: '10px',
-                                            border: filter === f.key ? '2px solid var(--color-primary)' : '1px solid var(--color-border)',
-                                            background: filter === f.key ? 'var(--color-primary)' : 'white',
-                                            color: filter === f.key ? 'white' : 'var(--color-text-primary)',
-                                            fontWeight: '800',
-                                            fontSize: '13px',
-                                            cursor: 'pointer',
-                                            transition: 'all 0.2s ease'
-                                        }}
-                                    >
-                                        {f.label}
-                                    </button>
-                                ))}
+                    <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-12">
+                        {/* Main Feed */}
+                        <div className="space-y-10">
+                            {/* Stats Ribbon */}
+                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                                <StatCard icon={Zap} label="Total Anchors" value={stats.total} color="indigo" />
+                                <StatCard icon={ShieldCheck} label="Secured Proofs" value={stats.secured} color="emerald" />
+                                <StatCard icon={Globe} label="Node Integrity" value={`${stats.avgHealth}%`} color="blue" />
                             </div>
 
-                            <label style={{ 
-                                display: 'flex', 
-                                alignItems: 'center', 
-                                gap: '10px',
-                                cursor: 'pointer',
-                                fontSize: '13px',
-                                fontWeight: '700',
-                                color: 'var(--color-text-secondary)'
-                            }}>
-                                <input
-                                    type="checkbox"
-                                    checked={showDemoData}
-                                    onChange={(e) => setShowDemoData(e.target.checked)}
-                                    style={{ 
-                                        width: '18px', 
-                                        height: '18px',
-                                        accentColor: 'var(--color-primary)'
-                                    }}
-                                />
-                                Show demo contracts
-                            </label>
-                        </div>
-
-                        {/* Contract Grid */}
-                        <div style={{ 
-                            display: 'grid', 
-                            gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', 
-                            gap: '24px',
-                            marginBottom: '48px'
-                        }}>
-                            {filteredContracts.map((contract) => (
-                                <ContractCard 
-                                    key={contract.id} 
-                                    contract={contract}
-                                    onClick={() => {
-                                        if (contract.isDemo) {
-                                            // For demo, just show an alert or navigate to a sample view
-                                            alert('This is a demo contract. Create your own to access full features!');
-                                        } else {
-                                            navigate(`/contracts/${contract.id}`);
-                                        }
-                                    }}
-                                />
-                            ))}
-                        </div>
-
-                        {filteredContracts.length === 0 && (
-                            <div style={{ textAlign: 'center', padding: '60px 20px' }}>
-                                <AlertCircle size={48} color="var(--color-text-tertiary)" style={{ marginBottom: '16px' }} />
-                                <h3 style={{ fontWeight: '900', color: 'var(--color-text-primary)', marginBottom: '8px' }}>No contracts found</h3>
-                                <p style={{ color: 'var(--color-text-secondary)', fontWeight: '600' }}>Try adjusting your filter or create a new contract.</p>
+                            {/* Search & Filter */}
+                            <div className="flex flex-col sm:flex-row gap-4">
+                                <div className="relative flex-1">
+                                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300" size={18} />
+                                    <input
+                                        type="text"
+                                        placeholder="Search agreements..."
+                                        value={searchQuery}
+                                        onChange={(e) => setSearchQuery(e.target.value)}
+                                        className="w-full pl-12 pr-4 py-3 bg-white border border-slate-100 rounded-2xl text-sm font-bold focus:ring-4 focus:ring-indigo-50 transition-all outline-none"
+                                    />
+                                </div>
+                                <div className="flex gap-2">
+                                    {['all', 'draft', 'signed', 'timestamped'].map(status => (
+                                        <button
+                                            key={status}
+                                            onClick={() => setFilterStatus(status)}
+                                            className={clsx(
+                                                "px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest border transition-all",
+                                                filterStatus === status
+                                                    ? "bg-slate-900 border-slate-900 text-white shadow-lg"
+                                                    : "bg-white border-slate-100 text-slate-400 hover:border-slate-200"
+                                            )}
+                                        >
+                                            {status}
+                                        </button>
+                                    ))}
+                                </div>
                             </div>
-                        )}
 
-                        <ProtocolTips />
+                            {/* Grid */}
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <AnimatePresence mode="popLayout">
+                                    {filteredContracts.map((contract, idx) => (
+                                        <ContractCard
+                                            key={contract.id}
+                                            contract={contract}
+                                            onClick={() => navigate(`/contracts/${contract.id}`)}
+                                            onDelete={(e) => handleDelete(e, contract.id)}
+                                        />
+                                    ))}
+                                </AnimatePresence>
+                            </div>
+                        </div>
+
+                        {/* Right Sidebar - Activity & Protocol News */}
+                        <aside className="space-y-8">
+                            <div className="bg-slate-100 rounded-[32px] border border-slate-200 p-8 shadow-premium sticky top-24">
+                                <div className="flex items-center gap-3 mb-8">
+                                    <div className="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600">
+                                        <ActivityIcon size={20} />
+                                    </div>
+                                    <h3 className="text-sm font-black text-slate-900 uppercase tracking-tight">Active Protocol Feed</h3>
+                                </div>
+
+                                <div className="space-y-8 relative">
+                                    <div className="absolute left-4 top-0 bottom-0 w-px bg-slate-100" />
+                                    <ActivityItem
+                                        icon={Lock}
+                                        title="Merkle Root Anchored"
+                                        time="2m ago"
+                                        status="confirmed"
+                                    />
+                                    <ActivityItem
+                                        icon={Zap}
+                                        title="SHA-256 Hash Generated"
+                                        time="15m ago"
+                                        status="processed"
+                                    />
+                                    <ActivityItem
+                                        icon={Globe}
+                                        title="Block #831,492 Confirmed"
+                                        time="1h ago"
+                                        status="immutable"
+                                    />
+                                </div>
+
+                                <div className="mt-12 pt-8 border-t border-slate-50">
+                                    <div className="bg-slate-50 rounded-2xl p-4 flex items-center justify-between">
+                                        <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Global Ops</span>
+                                        <div className="flex items-center gap-2">
+                                            <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                                            <span className="text-[10px] font-bold text-emerald-600 uppercase">All Systems Nominal</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <Card variant="glass" className="bg-gradient-to-br from-slate-900 to-slate-800 border-none p-8 overflow-hidden relative">
+                                <Sparkles className="absolute -right-4 -top-4 text-white/10 w-32 h-32 rotate-12" />
+                                <h4 className="text-white text-sm font-black uppercase mb-3 relative z-10">Premium Security Tip</h4>
+                                <p className="text-slate-300 text-[11px] font-medium leading-relaxed mb-4 relative z-10">
+                                    For high-value agreements, we recommend waiting for at least 6 Bitcoin confirmations (approx. 1 hour) before generating the final proof package.
+                                </p>
+                                <Button variant="ghost" size="small" className="text-white hover:bg-white/10 p-0 font-bold text-[10px] uppercase tracking-widest">
+                                    Learn More <ArrowRight size={14} className="ml-2" />
+                                </Button>
+                            </Card>
+                        </aside>
                     </div>
                 )}
             </div>
-            <Footer />
+        </div>
+    );
+}
+
+function StatCard({ icon: Icon, label, value, color }) {
+    const colors = {
+        indigo: "text-indigo-600 bg-indigo-50 border-indigo-100",
+        emerald: "text-emerald-600 bg-emerald-50 border-emerald-100",
+        blue: "text-blue-600 bg-blue-50 border-blue-100"
+    };
+
+    return (
+        <div className="bg-slate-100 p-6 rounded-[24px] border border-slate-200 shadow-sm flex items-center gap-5">
+            <div className={clsx("w-12 h-12 rounded-2xl flex items-center justify-center", colors[color])}>
+                <Icon size={24} />
+            </div>
+            <div>
+                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">{label}</p>
+                <p className="text-xl font-black text-slate-900 tracking-tighter">{value}</p>
+            </div>
+        </div>
+    );
+}
+
+function ContractCard({ contract, onClick, onDelete }) {
+    const isTimestamped = contract.status === 'timestamped';
+
+    return (
+        <motion.div
+            layout
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            onClick={onClick}
+            className="group bg-slate-100 rounded-[28px] border border-slate-200 p-7 shadow-sm hover:shadow-premium hover:border-indigo-100 transition-all cursor-pointer relative overflow-hidden"
+        >
+            <div className="absolute top-0 right-0 p-4 flex gap-2">
+                {!isTimestamped && (
+                    <button
+                        onClick={onDelete}
+                        className="p-2 text-slate-300 hover:text-rose-500 hover:bg-rose-50 rounded-xl transition-all opacity-0 group-hover:opacity-100"
+                    >
+                        <Trash2 size={18} />
+                    </button>
+                )}
+                {isTimestamped && (
+                    <ShieldCheck size={20} className="text-emerald-500 opacity-20 group-hover:opacity-100 transition-opacity" />
+                )}
+            </div>
+
+            <div className="flex justify-between items-start mb-6">
+                <div className="w-12 h-12 bg-slate-50 rounded-2xl flex items-center justify-center text-slate-400 group-hover:bg-indigo-50 group-hover:text-indigo-600 transition-all">
+                    <FileText size={24} />
+                </div>
+                <StatusPill status={contract.status} />
+            </div>
+
+            <h3 className="text-lg font-black text-slate-900 tracking-tight mb-2 group-hover:text-indigo-600 transition-colors uppercase">
+                {contract.name}
+            </h3>
+
+            <div className="flex items-center gap-4 mt-6 pt-6 border-t border-slate-50">
+                <div className="flex items-center gap-1.5 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                    <Calendar size={12} /> {new Date(contract.updatedAt).toLocaleDateString()}
+                </div>
+                <div className="flex items-center gap-1.5 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                    <Clock size={12} /> {isTimestamped ? 'Verified' : 'Pending'}
+                </div>
+            </div>
+
+            <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-indigo-500 to-purple-500 scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
+        </motion.div>
+    );
+}
+
+function ActivityItem({ icon: Icon, title, time, status }) {
+    return (
+        <div className="flex gap-6 relative z-10">
+            <div className="w-8 h-8 rounded-full bg-white border-2 border-slate-100 flex items-center justify-center text-slate-400 shadow-sm">
+                <Icon size={14} />
+            </div>
+            <div className="flex-1">
+                <div className="flex justify-between items-start mb-1">
+                    <h5 className="text-[11px] font-black text-slate-900 uppercase tracking-tight">{title}</h5>
+                    <span className="text-[9px] font-bold text-slate-300 uppercase">{time}</span>
+                </div>
+                <span className="text-[9px] font-black text-emerald-500 uppercase tracking-widest flex items-center gap-1">
+                    <div className="w-1 h-1 rounded-full bg-emerald-500" /> {status}
+                </span>
+            </div>
+        </div>
+    );
+}
+
+function EmptyState({ onAction }) {
+    return (
+        <div className="text-center py-32 px-12 bg-slate-100 rounded-[40px] border border-slate-300 shadow-sm border-dashed">
+            <div className="w-24 h-24 bg-indigo-50 rounded-[32px] flex items-center justify-center mx-auto mb-8 relative">
+                <FileText size={40} className="text-indigo-600" />
+                <motion.div
+                    animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
+                    transition={{ duration: 3, repeat: Infinity }}
+                    className="absolute -right-2 -top-2 w-10 h-10 bg-white shadow-lg rounded-2xl flex items-center justify-center text-yellow-500"
+                >
+                    <Sparkles size={20} />
+                </motion.div>
+            </div>
+            <h2 className="text-2xl font-black text-slate-900 uppercase tracking-tighter mb-4">Your Control Center is Ready</h2>
+            <p className="text-slate-400 text-sm font-bold uppercase tracking-widest max-w-sm mx-auto mb-12">
+                Launch your first cryptographic agreement anchored to the Bitcoin network.
+            </p>
+            <div className="flex flex-col sm:flex-row justify-center gap-4">
+                <Button variant="primary" size="large" onClick={onAction}>
+                    Launch Agreement
+                </Button>
+                <Button variant="outline" size="large">
+                    View Network Stats
+                </Button>
+            </div>
         </div>
     );
 }

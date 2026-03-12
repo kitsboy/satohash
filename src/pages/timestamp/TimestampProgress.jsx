@@ -4,10 +4,10 @@ import { useTranslation } from 'react-i18next';
 import { Check, Loader } from 'lucide-react';
 import Button from '../../components/Button';
 import ProgressSteps from '../../components/ProgressSteps';
-import Footer from '../../components/Footer';
-import { createHash, createTimestamp } from '../../utils/opentimestamps';
+import { createTimestamp } from '../../utils/opentimestamps';
+import { buildMerkleTree } from '../../utils/merkle';
 
-const STEPS = ['Creating fingerprint…', 'Submitting to timestamp servers…', 'Anchoring into Bitcoin…'];
+const STEPS = ['Splitting document into atoms…', 'Calculating Merkle Root…', 'Submitting to Bitcoin…'];
 
 export default function TimestampProgress() {
     const { t } = useTranslation();
@@ -29,26 +29,39 @@ export default function TimestampProgress() {
         if (!contract) return;
 
         const processTimestamp = async () => {
-            // Step 1: Create hash
+            // Step 1: Create Merkle Tree
             await new Promise(resolve => setTimeout(resolve, 1000));
-            const hash = await createHash(contract.content);
+
+            // Split by newline and filter empty lines to create "atoms"
+            const atoms = contract.content.split('\n').filter(a => a.trim() !== '');
+            const merkleTree = await buildMerkleTree(atoms);
             setCurrentStep(1);
 
-            // Step 2: Create timestamp
+            // Step 2: Create timestamp from Merkle Root
             await new Promise(resolve => setTimeout(resolve, 1500));
-            const ts = await createTimestamp(hash);
+            const ts = await createTimestamp(merkleTree.root);
             setCurrentStep(2);
 
-            // Step 3: Save
+            // Step 3: Save results
             await new Promise(resolve => setTimeout(resolve, 1000));
 
-            // Update contract with timestamp
+            // Convert Blob to base64 for safe localStorage storage
+            let otsFileBase64 = null;
+            if (ts.otsFile) {
+                const arrayBuffer = await ts.otsFile.arrayBuffer();
+                const bytes = new Uint8Array(arrayBuffer);
+                otsFileBase64 = btoa(String.fromCharCode(...bytes));
+                delete ts.otsFile; // We don't want to JSON stringify a Blob
+            }
+            ts.otsFileBase64 = otsFileBase64;
+
             const savedContracts = localStorage.getItem('satohash_contracts');
             const contracts = JSON.parse(savedContracts);
             const index = contracts.findIndex(c => c.id === contractId);
             contracts[index] = {
                 ...contracts[index],
                 status: 'timestamped',
+                merkleTree: merkleTree, // Save for selective redaction
                 timestamp: ts
             };
             localStorage.setItem('satohash_contracts', JSON.stringify(contracts));
@@ -115,7 +128,6 @@ export default function TimestampProgress() {
                     </Button>
                 )}
             </div>
-            <Footer />
         </div>
     );
 }

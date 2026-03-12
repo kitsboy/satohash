@@ -6,9 +6,22 @@
         "howThisWorks": "Comment ça marche",
         "language": "Langue",
         "change": "Changer",
-        "pricingNote": "Satohash est actuellement gratuit pendant notre période d'accès anticipé. Vous ne payez que les frais de réseau Bitcoin lorsque vous horodatez un document."
+        "pricingNote": "Satohash est actuellement gratuit pendant notre période d'accès anticipé. Vous ne payez que les frais de réseau Bitcoin lorsque vous horodatez un document.",
+        "features": {
+            "cryptoProof": "Preuve Cryptographique",
+            "cryptoProofDesc": "Créez une empreinte infalsifiable de votre document grâce à la cryptographie SHA-256.",
+            "cryptoProofDetail": "Le hachage convertit n'importe quel fichier en une chaîne unique de 64 caractères. Même une virgule modifiée produit un hachage complètement différent. Satohash gère cela localement sur votre appareil.",
+            "timestamp": "Horodatage Bitcoin",
+            "timestampDesc": "Ancrez votre preuve sur la blockchain Bitcoin via le protocole OpenTimestamps.",
+            "timestampDetail": "Le hachage de votre document est regroupé avec des milliers d'autres dans un arbre de Merkle. Un hachage racine unique est ensuite inscrit sur le réseau Bitcoin, offrant une preuve d'existence permanente et immuable.",
+            "verify": "Vérification Facile",
+            "verifyDesc": "N'importe qui peut vérifier votre preuve de manière indépendante avec des outils open-source.",
+            "verifyDetail": "Un fichier .ots contient le 'chemin' de votre document vers le bloc Bitcoin. Vous n'avez pas besoin de Satohash pour le prouver ; utilisez le client officiel OpenTimestamps ou des explorateurs de blocs tiers."
+        }
     },
     "howItWorks": {
+        "title": "Comment ça marche",
+        "subtitle": "Trois étapes simples pour protéger vos documents",
         "card1": {
             "title": "Verrouiller la date",
             "description": "Satohash donne à votre document une empreinte unique et verrouille sa date sur le réseau Bitcoin. Plus tard, n'importe qui peut vérifier que ce document exact existait à ce moment-là."

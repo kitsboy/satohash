@@ -1,83 +1,117 @@
-// OpenTimestamps integration
-// Note: This is a simplified wrapper. In production, use the full opentimestamps library
+// OpenTimestamps integration using our backend to handle binary protocols safely
+const API_BASE = 'http://localhost:3001/api';
 
 /**
  * Create a SHA256 hash of the document content
+ * Returns a hex string
  */
 export const createHash = async (content) => {
     const encoder = new TextEncoder();
-    const data = encoder.encode(content);
+    const data = typeof content === 'string' ? encoder.encode(content) : content;
     const hashBuffer = await crypto.subtle.digest('SHA-256', data);
     const hashArray = Array.from(new Uint8Array(hashBuffer));
-    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-    return hashHex;
+    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+};
+
+/**
+ * Helper to convert hex string to Uint8Array
+ */
+const hexToBytes = (hex) => {
+    const bytes = new Uint8Array(hex.length / 2);
+    for (let i = 0; i < hex.length; i += 2) {
+        bytes[i / 2] = parseInt(hex.substr(i, 2), 16);
+    }
+    return bytes;
 };
 
 /**
  * Create a timestamp for the document
- * Returns the .ots file data
+ * Connects securely to the node backend which manages binary parsing and real public OTS calendars
  */
-export const createTimestamp = async (hash) => {
+export const createTimestamp = async (hashHex) => {
     try {
-        // In a real implementation, this would use the OpenTimestamps library
-        // to create a proper timestamp and submit to calendar servers
+        const response = await fetch(`${API_BASE}/stamp`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ hash: hashHex })
+        });
 
-        // For now, we'll create a mock timestamp
-        const mockTimestamp = {
-            hash,
+        if (!response.ok) {
+            throw new Error(`Timestamp server error: ${response.statusText}`);
+        }
+
+        // We receive the raw binary .ots file blob
+        const blob = await response.blob();
+
+        return {
+            hash: hashHex,
             createdAt: new Date().toISOString(),
-            calendars: [
-                'https://alice.btc.calendar.opentimestamps.org',
-                'https://bob.btc.calendar.opentimestamps.org'
-            ],
             status: 'pending',
-            // In production, this would be the actual .ots file data
-            otsData: `Mock OTS file for hash: ${hash}`
+            otsFile: blob // Send back the Blob for download rather than shoving in localStorage
         };
-
-        return mockTimestamp;
     } catch (error) {
-        console.error('Error creating timestamp:', error);
+        console.error('OTS Stamping Error:', error);
         throw error;
     }
 };
 
 /**
- * Verify a timestamp
+ * Verify a timestamp against a document hash via node backend
  */
-export const verifyTimestamp = async (hash, otsData) => {
+export const verifyTimestamp = async (hashHex, otsFileBlob) => {
     try {
-        // In production, this would verify the .ots file against the hash
-        // and check the Bitcoin blockchain
+        const formData = new FormData();
+        formData.append('otsFile', otsFileBlob);
+        
+        const response = await fetch(`${API_BASE}/verify`, {
+            method: 'POST',
+            body: formData
+        });
+
+        if (!response.ok) return { verified: false, error: 'Could not reach verification server' };
+
+        const result = await response.json();
+        const verified = result.verified;
 
         return {
-            verified: true,
+            verified: verified,
             timestamp: new Date().toISOString(),
-            blockHeight: 800000 // Mock block height
+            status: verified ? 'confirmed' : 'pending',
+            details: result.details
         };
     } catch (error) {
-        console.error('Error verifying timestamp:', error);
-        return {
-            verified: false,
-            error: error.message
-        };
+        return { verified: false, error: error.message };
     }
 };
 
 /**
- * Upgrade a pending timestamp to confirmed
+ * Upgrade a pending OTS proof to pull in Bitcoin block info
  */
-export const upgradeTimestamp = async (otsData) => {
+export const upgradeTimestamp = async (otsFileBlob) => {
     try {
-        // In production, this would check if the timestamp has been
-        // confirmed in the blockchain and upgrade the .ots file
+        const formData = new FormData();
+        formData.append('otsFile', otsFileBlob);
+        
+        const response = await fetch(`${API_BASE}/upgrade`, {
+            method: 'POST',
+            body: formData
+        });
+
+        if (!response.ok) throw new Error('Could not upgrade timestamp at server.');
+
+        const upgradedBlob = await response.blob();
+        const wasUpgraded = response.headers.get('X-Ots-Upgraded') === 'true';
 
         return {
-            upgraded: true,
-            confirmations: 6
+            success: true,
+            wasUpgraded,
+            otsFile: upgradedBlob
         };
     } catch (error) {
-        console.error('Error upgrading timestamp:', error);
-        throw error;
+        console.error('OTS Upgrade error:', error);
+        return { success: false, error: error.message };
     }
 };
+

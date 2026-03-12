@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { motion, AnimatePresence } from 'framer-motion';
+import { clsx } from 'clsx';
 import {
     Library,
     Search,
@@ -11,12 +13,8 @@ import {
     Briefcase,
     ShieldCheck,
     Globe,
-    ChevronRight
-} from 'lucide-react';
-import Card from '../../components/Card';
-import Button from '../../components/Button';
-import Footer from '../../components/Footer';
-import {
+    ChevronRight,
+    Users,
     FileText,
     Handshake,
     UserCheck,
@@ -24,6 +22,8 @@ import {
     FileSignature,
     PenTool
 } from 'lucide-react';
+import Card from '../../components/Card';
+import Button from '../../components/Button';
 
 const categories = [
     { id: 'all', name: 'All Templates', icon: Library },
@@ -121,6 +121,50 @@ const templates = [
         icon: Plane,
         color: '#06b6d4',
         tag: 'Travel'
+    },
+    {
+        id: 'consulting',
+        title: 'Consulting Agreement',
+        category: 'business',
+        description: 'Professional engagement terms for consulting services.',
+        jurisdiction: 'Global / B2B',
+        difficulty: 'Professional',
+        icon: Users,
+        color: '#8b5cf6',
+        tag: 'New'
+    },
+    {
+        id: 'ip-assignment',
+        title: 'IP Assignment',
+        category: 'business',
+        description: 'Transfer ownership of intellectual property rights effectively.',
+        jurisdiction: 'US / Global Compliant',
+        difficulty: 'Advanced',
+        icon: ShieldCheck,
+        color: '#0f172a',
+        tag: 'New'
+    },
+    {
+        id: 'domain-notary',
+        title: 'Domain Ownership Notary',
+        category: 'business',
+        description: 'Immutable proof of domain name control and ownership history.',
+        jurisdiction: 'ICANN / Global',
+        difficulty: 'Batch Support',
+        icon: Globe,
+        color: '#2563eb',
+        tag: 'New'
+    },
+    {
+        id: 'web-archive',
+        title: 'Snap & Stamp Archive',
+        category: 'business',
+        description: 'Digital evidence collector for websites and online content.',
+        jurisdiction: 'Judiciary Ready',
+        difficulty: 'High Depth',
+        icon: PenTool,
+        color: '#f43f5e',
+        tag: 'New'
     }
 ];
 
@@ -138,43 +182,38 @@ export default function TemplateLibrary() {
     });
 
     return (
-        <div className="page" style={{ background: 'var(--color-surface)', paddingTop: '40px' }}>
-            <div className="container">
-                <div className="page-header" style={{ marginBottom: '60px', textAlign: 'center' }}>
-                    <h1 style={{ fontWeight: '950', fontSize: 'clamp(32px, 8vw, 56px)', letterSpacing: '-0.05em', marginBottom: '16px', color: 'var(--color-text-primary)' }}>
+        <div className="page pb-24" style={{ background: '#f8fafc', paddingTop: '80px' }}>
+            <div className="container-wide">
+                <div className="text-center mb-20">
+                    <motion.h1
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        className="text-shimmer leading-tight tracking-tighter mb-6"
+                        style={{ fontSize: 'clamp(2.5rem, 8vw, 4.5rem)', fontWeight: '950' }}
+                    >
                         Legal Template Library
-                    </h1>
-                    <p style={{ color: 'var(--color-text-secondary)', fontSize: '20px', maxWidth: '700px', margin: '0 auto', fontWeight: '600' }}>
-                        Professionally drafted cryptographic agreements for every jurisdiction.
+                    </motion.h1>
+                    <p className="max-w-2xl mx-auto text-xl text-slate-500 font-bold leading-relaxed">
+                        Professionally drafted cryptographic agreements. Anchored to Bitcoin for absolute immutability.
                     </p>
                 </div>
 
                 {/* Search & Categories */}
-                <div style={{ marginBottom: '48px' }}>
-                    <div style={{ position: 'relative', maxWidth: '600px', margin: '0 auto 32px' }}>
-                        <Search style={{ position: 'absolute', left: '20px', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} size={20} />
+                <div className="mb-16">
+                    <div className="relative max-w-2xl mx-auto mb-12">
+                        <div className="absolute inset-y-0 left-6 flex items-center pointer-events-none text-slate-400">
+                            <Search size={24} />
+                        </div>
                         <input
                             type="text"
                             placeholder="Search legal templates (e.g. NDA, Property)..."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            style={{
-                                width: '100%',
-                                padding: '18px 24px 18px 56px',
-                                borderRadius: '100px',
-                                border: '2px solid #e2e8f0',
-                                fontSize: '16px',
-                                fontWeight: '600',
-                                outline: 'none',
-                                transition: 'border-color 0.2s ease',
-                                boxShadow: '0 4px 20px rgba(0,0,0,0.03)'
-                            }}
-                            onFocus={(e) => e.target.style.borderColor = 'var(--color-primary)'}
-                            onBlur={(e) => e.target.style.borderColor = '#e2e8f0'}
+                            className="w-full pl-16 pr-8 py-6 bg-white border-2 border-slate-200 rounded-2xl text-lg font-bold text-slate-900 focus:border-indigo-600 focus:ring-4 focus:ring-indigo-50 outline-none shadow-premium transition-all"
                         />
                     </div>
 
-                    <div style={{ display: 'flex', justifyContent: 'center', gap: '12px', flexWrap: 'wrap' }}>
+                    <div className="flex flex-wrap justify-center gap-3">
                         {categories.map(cat => {
                             const Icon = cat.icon;
                             const isActive = activeCategory === cat.id;
@@ -182,25 +221,15 @@ export default function TemplateLibrary() {
                                 <button
                                     key={cat.id}
                                     onClick={() => setActiveCategory(cat.id)}
-                                    style={{
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        gap: '10px',
-                                        padding: '12px 24px',
-                                        borderRadius: '100px',
-                                        border: '2px solid',
-                                        borderColor: isActive ? 'var(--color-primary)' : 'transparent',
-                                        background: isActive ? 'var(--color-primary)' : 'white',
-                                        color: isActive ? 'white' : '#475569',
-                                        fontWeight: '700',
-                                        fontSize: '14px',
-                                        cursor: 'pointer',
-                                        transition: 'all 0.3s ease',
-                                        boxShadow: isActive ? '0 8px 20px rgba(99, 102, 241, 0.2)' : '0 2px 10px rgba(0,0,0,0.02)'
-                                    }}
+                                    className={clsx(
+                                        "flex items-center gap-2.5 px-6 py-3.5 rounded-xl font-black text-sm transition-all duration-300",
+                                        isActive
+                                            ? "bg-indigo-600 text-white shadow-lg shadow-indigo-100 scale-105"
+                                            : "bg-white text-slate-600 border border-slate-200 hover:border-indigo-600 hover:text-indigo-600"
+                                    )}
                                 >
                                     <Icon size={18} />
-                                    {cat.name}
+                                    {cat.name.toUpperCase()}
                                 </button>
                             );
                         })}
@@ -208,82 +237,62 @@ export default function TemplateLibrary() {
                 </div>
 
                 {/* Template Grid */}
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))', gap: '32px', marginBottom: '100px' }}>
-                    {filteredTemplates.map((template) => (
-                        <Card key={template.id} style={{
-                            padding: '32px',
-                            background: 'white',
-                            border: '1px solid #e5e7eb',
-                            borderRadius: '24px',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            gap: '24px',
-                            transition: 'all 0.3s ease'
-                        }} className="card-interactive">
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                                <div style={{
-                                    width: '56px',
-                                    height: '56px',
-                                    borderRadius: '16px',
-                                    background: template.color + '15',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    color: template.color
-                                }}>
-                                    <template.icon size={32} />
-                                </div>
-                                <div style={{ display: 'flex', gap: '8px' }}>
-                                    {template.tag && (
-                                        <div style={{
-                                            padding: '6px 14px',
-                                            background: template.color + '15',
-                                            borderRadius: '100px',
-                                            fontSize: '11px',
-                                            fontWeight: '950',
-                                            color: template.color,
-                                            textTransform: 'uppercase'
-                                        }}>
-                                            {template.tag}
-                                        </div>
-                                    )}
-                                    <div style={{
-                                        padding: '6px 14px',
-                                        background: '#f1f5f9',
-                                        borderRadius: '100px',
-                                        fontSize: '11px',
-                                        fontWeight: '800',
-                                        color: '#475569',
-                                        textTransform: 'uppercase'
-                                    }}>
-                                        {template.difficulty}
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div>
-                                <h3 style={{ fontSize: '22px', fontWeight: '950', color: '#000000', marginBottom: '8px' }}>{template.title}</h3>
-                                <p style={{ fontSize: '15px', color: '#000000', lineHeight: '1.6', margin: 0, fontWeight: '850' }}>{template.description}</p>
-                            </div>
-
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '12px 16px', background: '#f8fafc', borderRadius: '12px', border: '1px solid #eef2f6' }}>
-                                <Globe size={16} color="#64748b" />
-                                <span style={{ fontSize: '12px', fontWeight: '700', color: '#64748b' }}>Jurisdiction: {template.jurisdiction}</span>
-                            </div>
-
-                            <Button
-                                variant="primary"
-                                fullWidth
-                                onClick={() => navigate(`/contracts/new/${template.id}`)}
-                                style={{ height: '52px' }}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                    <AnimatePresence mode="popLayout">
+                        {filteredTemplates.map((template) => (
+                            <motion.div
+                                layout
+                                key={template.id}
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, scale: 0.9 }}
+                                transition={{ duration: 0.3 }}
                             >
-                                Use Template <ChevronRight size={18} />
-                            </Button>
-                        </Card>
-                    ))}
+                                <Card variant="elevated" padding="large" interactive className="h-full flex flex-col group">
+                                    <div className="flex justify-between items-start mb-8">
+                                        <div className="p-4 rounded-2xl bg-indigo-50 text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-colors duration-500">
+                                            <template.icon size={32} strokeWidth={2.5} />
+                                        </div>
+                                        <div className="flex flex-col items-end gap-2">
+                                            {template.tag && (
+                                                <span className="px-3 py-1 bg-indigo-50 text-indigo-600 text-[10px] font-black uppercase tracking-widest rounded-full">
+                                                    {template.tag}
+                                                </span>
+                                            )}
+                                            <span className="px-3 py-1 bg-slate-100 text-slate-500 text-[10px] font-black uppercase tracking-widest rounded-full">
+                                                {template.difficulty}
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <h3 className="text-2xl font-black text-slate-900 mb-4 group-hover:text-indigo-600 transition-colors">
+                                        {template.title}
+                                    </h3>
+                                    <p className="text-slate-500 font-bold leading-relaxed mb-8 flex-grow">
+                                        {template.description}
+                                    </p>
+
+                                    <div className="flex items-center gap-3 px-4 py-3 bg-slate-50 border border-slate-100 rounded-xl mb-8">
+                                        <Globe size={16} className="text-slate-400" />
+                                        <span className="text-xs font-black text-slate-400 tracking-wide uppercase">
+                                            {template.jurisdiction}
+                                        </span>
+                                    </div>
+
+                                    <Button
+                                        variant="primary"
+                                        fullWidth
+                                        onClick={() => navigate(`/contracts/new/${template.id}`)}
+                                        className="h-14 font-black"
+                                    >
+                                        CHOOSE TEMPLATE <ChevronRight size={18} />
+                                    </Button>
+                                </Card>
+                            </motion.div>
+                        ))}
+                    </AnimatePresence>
                 </div>
             </div>
-            <Footer />
         </div>
     );
 }

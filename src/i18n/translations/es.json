@@ -6,9 +6,22 @@
         "howThisWorks": "Cómo funciona",
         "language": "Idioma",
         "change": "Cambiar",
-        "pricingNote": "Satohash es actualmente gratuito durante nuestro período de acceso anticipado. Solo pagas la tarifa de red de Bitcoin cuando creas una marca de tiempo para un documento."
+        "pricingNote": "Satohash es actualmente gratuito durante nuestro período de acceso anticipado. Solo pagas la tarifa de red de Bitcoin cuando creas una marca de tiempo para un documento.",
+        "features": {
+            "cryptoProof": "Prueba Criptográfica",
+            "cryptoProofDesc": "Crea una huella digital infalsificable de tu documento mediante criptografía SHA-256.",
+            "cryptoProofDetail": "El hashing convierte cualquier archivo en una cadena única de 64 caracteres. Incluso una coma cambiada da como resultado un hash completamente diferente. Satohash maneja esto localmente en tu dispositivo.",
+            "timestamp": "Sellado de Tiempo en Bitcoin",
+            "timestampDesc": "Ancla tu prueba a la cadena de bloques de Bitcoin mediante el protocolo OpenTimestamps.",
+            "timestampDetail": "El hash de tu documento se agrupa con miles de otros en un árbol de Merkle. Luego, un único hash 'raíz' se envía a la red Bitcoin, proporcionando una prueba de existencia permanente e inmutable.",
+            "verify": "Verificación Fácil",
+            "verifyDesc": "Cualquiera puede verificar tu prueba de forma independiente mediante herramientas de código abierto.",
+            "verifyDetail": "Un archivo .ots contiene la 'ruta' desde tu documento hasta el bloque de Bitcoin. No necesitas Satohash para probarlo; puedes usar el cliente oficial de OpenTimestamps o exploradores de bloques de terceros."
+        }
     },
     "howItWorks": {
+        "title": "Cómo funciona",
+        "subtitle": "Tres simples pasos para proteger tus documentos",
         "card1": {
             "title": "Fijar la fecha",
             "description": "Satohash le da a tu documento una huella digital única y fija su fecha en la red Bitcoin. Más tarde, cualquiera puede verificar que este documento exacto existió en ese momento."

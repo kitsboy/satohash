@@ -20,6 +20,8 @@
         }
     },
     "howItWorks": {
+        "title": "How It Works",
+        "subtitle": "Three simple steps to protect your documents",
         "card1": {
             "title": "Lock in the date",
             "description": "Satohash gives your document a unique fingerprint and locks its date into the Bitcoin network. Later, anyone can check that this exact document existed at that time."
@@ -38,8 +40,20 @@
         "title": "What do you want to protect today?",
         "prenup": "Prenuptial agreement",
         "property": "Property / real estate document",
-        "powerOfAttorney": "Power of attorney",
-        "custom": "Something else (upload your own PDF)",
+        "powerOfAttorney": "Power of Attorney",
+        "commercialLease": "Commercial Lease",
+        "childTravel": "Child Travel Consent",
+        "billOfSale": "Bill of Sale",
+        "employment": "Employment Contract",
+        "promissory": "Promissory Note",
+        "consulting": "Consulting Agreement",
+        "ip-assignment": "IP Assignment",
+        "domain-notary": "Domain Ownership Notary",
+        "web-archive": "Snap & Stamp Archive",
+        "nda": "Non-Disclosure Agreement (NDA)",
+        "will": "Last Will & Testament",
+        "affidavit": "Affidavit of Truth",
+        "custom": "Custom Document",
         "disclaimer": "You can edit every template. Satohash does not give legal advice; we help you lock in the evidence."
     },
     "account": {
@@ -160,6 +174,7 @@
         "zkPrivacy": "Privacy & Zero-Knowledge",
         "zkPrivacyDetail": "Our 'Privacy Shield' technology is inspired by Zero-Knowledge (ZK) proofs. Because we only store the cryptographic hash of your document, we have zero knowledge of its contents. Using Merkle inclusion proofs, we can even allow you to selectively redact sensitive parts of a document while still proving the remaining parts match the original anchored version—providing both absolute privacy and absolute verifiability.",
         "legallyBinding": "Legal Enforceability",
+        "zkPrivacyPoint": "Zero-Knowledge (ZK) inspired selective redaction",
         "legallyBindingDetail": "In many jurisdictions, cryptographic evidence is recognized under laws like the ESIGN Act (US), UETA (US), and eIDAS (EU). These frameworks generally state that an electronic record should not be denied legal effect solely because it is in electronic form. Blockchain timestamps provide an extremely high tier of 'Electronic Time-Stamps' and 'Electronic Evidence' that can be used in court to rebut claims of document forgery or backdating.",
         "legalDisclaimer": "Satohash provides evidence and tooling, not legal advice. Users must consult local law and counsel."
     },

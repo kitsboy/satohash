@@ -1,16 +1,31 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, useParams, useLocation } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { ArrowLeft, Save, Sparkles, AlertCircle } from 'lucide-react';
+import {
+    ArrowLeft,
+    Save,
+    Sparkles,
+    AlertCircle,
+    FileText,
+    Layout,
+    Settings,
+    ChevronRight,
+    Search,
+    Globe,
+    Layers,
+    PlusCircle
+} from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import Button from '../../components/Button';
-import Footer from '../../components/Footer';
+import Card from '../../components/Card';
 import { getTemplate } from '../../templates';
+import { clsx } from 'clsx';
 
 export default function ContractEditor() {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const { contractId, templateType } = useParams();
-    const location = useLocation();
+
     const [contract, setContract] = useState({
         id: '',
         name: '',
@@ -21,10 +36,10 @@ export default function ContractEditor() {
     });
     const [isSaving, setIsSaving] = useState(false);
     const [placeholders, setPlaceholders] = useState([]);
+    const [activeTab, setActiveTab] = useState('editor'); // editor, fields, settings
 
     useEffect(() => {
         if (contractId) {
-            // Load existing contract
             const savedContracts = localStorage.getItem('satohash_contracts');
             if (savedContracts) {
                 const contracts = JSON.parse(savedContracts);
@@ -34,7 +49,6 @@ export default function ContractEditor() {
                 }
             }
         } else if (templateType) {
-            // Load template for new contract
             const template = getTemplate(templateType);
             if (template) {
                 setContract({
@@ -49,7 +63,6 @@ export default function ContractEditor() {
     }, [contractId, templateType]);
 
     useEffect(() => {
-        // Detect placeholders like [DATE], [PARTY_A], etc.
         const regex = /\[(.*?)\]/g;
         const matches = [...contract.content.matchAll(regex)];
         const uniquePlaceholders = [...new Set(matches.map(m => m[1]))];
@@ -57,20 +70,19 @@ export default function ContractEditor() {
     }, [contract.content]);
 
     const handlePlaceholderChange = (placeholder, value) => {
+        // We only replace if the value isn't empty to keep the tag visible for editing
+        if (!value) return;
         const newContent = contract.content.replaceAll(`[${placeholder}]`, value);
         setContract({ ...contract, content: newContent });
     };
 
     const handleSave = () => {
         setIsSaving(true);
-
-        // Update timestamp
         const updatedContract = {
             ...contract,
             updatedAt: new Date().toISOString()
         };
 
-        // Save to localStorage
         const savedContracts = localStorage.getItem('satohash_contracts');
         let contracts = savedContracts ? JSON.parse(savedContracts) : [];
 
@@ -86,186 +98,227 @@ export default function ContractEditor() {
         setTimeout(() => {
             setIsSaving(false);
             navigate(`/contracts/${updatedContract.id}`);
-        }, 500);
+        }, 800);
     };
 
     return (
-        <div className="page" style={{ background: '#f9fafb' }}>
-            <div className="container" style={{ paddingTop: '20px' }}>
-                <div style={{ marginBottom: 'var(--spacing-lg)' }}>
-                    <button
-                        onClick={() => navigate('/contracts')}
-                        style={{
-                            background: 'white',
-                            border: '1px solid #e5e7eb',
-                            color: '#4b5563',
-                            cursor: 'pointer',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '8px',
-                            padding: '8px 16px',
-                            borderRadius: '10px',
-                            fontWeight: '600',
-                            fontSize: '14px',
-                            boxShadow: '0 1px 2px rgba(0,0,0,0.05)'
-                        }}
-                    >
-                        <ArrowLeft size={16} />
-                        {t('common.back')}
-                    </button>
-                </div>
-
-                <div className="page-header" style={{ marginBottom: '32px' }}>
-                    <h1 className="page-title" style={{ fontSize: '32px', fontWeight: '900', letterSpacing: '-1px' }}>
-                        {contractId ? t('contractEditor.title') : t('contractEditor.newTitle')}
+        <div className="min-h-screen bg-[#f8fafc] flex flex-col">
+            {/* Top Navigation Bar */}
+            <nav className="h-16 border-b border-slate-200 bg-white flex items-center justify-between px-6 sticky top-0 z-50">
+                <div className="flex items-center gap-4">
+                    <Button variant="ghost" size="small" onClick={() => navigate('/contracts')}>
+                        <ArrowLeft size={18} />
+                    </Button>
+                    <div className="h-6 w-px bg-slate-200" />
+                    <h1 className="text-sm font-black text-slate-900 tracking-tight uppercase">
+                        {contract.name || 'Untitled Document'}
                     </h1>
                 </div>
 
-                <div style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '24px',
-                    maxWidth: '1000px',
-                    margin: '0 auto'
-                }}>
-                    <div className="form-group" style={{ background: 'white', padding: '24px', borderRadius: '16px', border: '1px solid #e5e7eb' }}>
-                        <label className="form-label" htmlFor="contractName" style={{ fontWeight: '700', color: '#374151' }}>
-                            {t('contractEditor.contractName')}
-                        </label>
-                        <input
-                            type="text"
-                            id="contractName"
-                            className="form-input"
-                            value={contract.name}
-                            onChange={(e) => setContract({ ...contract, name: e.target.value })}
-                            placeholder={t('contractEditor.namePlaceholder')}
-                            style={{
-                                borderRadius: '10px',
-                                border: '1px solid #d1d5db',
-                                padding: '12px 16px',
-                                fontSize: '16px'
-                            }}
-                        />
-                    </div>
+                <div className="flex items-center gap-3">
+                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest mr-4">
+                        Status: <span className="text-indigo-600">{contract.status}</span>
+                    </span>
+                    <Button
+                        variant="primary"
+                        size="small"
+                        onClick={handleSave}
+                        loading={isSaving}
+                        className="shadow-lg shadow-indigo-100"
+                    >
+                        <Save size={16} /> Save Changes
+                    </Button>
+                </div>
+            </nav>
 
-                    <div className="form-group">
-                        <label className="form-label" htmlFor="contractContent" style={{ fontWeight: '700', paddingLeft: '4px', marginBottom: '8px', display: 'block' }}>
-                            {t('contractEditor.content')}
-                        </label>
-                        <div className="premium-document-container" style={{ minHeight: '600px', cursor: 'text' }}>
+            <div className="flex-1 flex overflow-hidden">
+                {/* Left Mini Sidebar */}
+                <div className="w-16 border-r border-slate-200 bg-white flex flex-col items-center py-6 gap-6">
+                    <SidebarIcon
+                        icon={Layout}
+                        active={activeTab === 'editor'}
+                        onClick={() => setActiveTab('editor')}
+                        label="Inspector"
+                    />
+                    <SidebarIcon
+                        icon={Settings}
+                        active={activeTab === 'settings'}
+                        onClick={() => setActiveTab('settings')}
+                        label="Settings"
+                    />
+                </div>
+
+                {/* Main Content Area */}
+                <main className="flex-1 overflow-y-auto bg-slate-50 relative">
+                    <div className="max-w-[850px] mx-auto py-12 px-8">
+                        {/* The "Paper" */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            className="document-paper"
+                        >
+                            {/* Cryptographic Watermark */}
+                            <img src="/logo.png" className="absolute top-12 left-10 w-10 z-10 select-none pointer-events-none" alt="" />
+                            <div className="document-watermark z-0">
+                                {Array(200).fill("SATOHASH PROTOCOL SECURED SHA-256 BITCOIN ANCHOR ").join("")}
+                            </div>
+
                             <textarea
-                                id="contractContent"
+                                className="w-full h-full min-h-[900px] border-none outline-none resize-none font-serif text-[18px] leading-[1.8] text-slate-800 placeholder:text-slate-200 relative z-10 bg-transparent"
                                 value={contract.content}
                                 onChange={(e) => setContract({ ...contract, content: e.target.value })}
-                                rows={25}
-                                style={{
-                                    width: '100%',
-                                    height: '100%',
-                                    border: 'none',
-                                    background: 'transparent',
-                                    resize: 'none',
-                                    outline: 'none',
-                                    padding: 0,
-                                    position: 'relative',
-                                    zIndex: 2
-                                }}
-                                className="legal-typography"
+                                placeholder="Start drafting your legal document..."
                             />
-                        </div>
+                        </motion.div>
                     </div>
+                </main>
 
-                    {/* Placeholder Quick Fill Sidebar - Only show if placeholders exist */}
-                    {placeholders.length > 0 && (
-                        <div style={{
-                            background: 'white',
-                            padding: '24px',
-                            borderRadius: '16px',
-                            border: '1px solid #e5e7eb',
-                            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            gap: '16px'
-                        }}>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--color-primary)' }}>
-                                <Sparkles size={18} />
-                                <h3 style={{ margin: 0, fontSize: '16px', fontWeight: '800' }}>Smart Quick Fill</h3>
-                            </div>
-                            <p style={{ fontSize: '12px', color: '#6b7280', margin: 0 }}>
-                                Detected {placeholders.length} placeholders in your document. Fill them here to update the text instantly.
-                            </p>
+                {/* Right Panel / Contextual Sidebar */}
+                <AnimatePresence mode="wait">
+                    <motion.aside
+                        key={activeTab}
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: 20 }}
+                        className="w-80 border-l border-slate-200 bg-white overflow-y-auto"
+                    >
+                        {activeTab === 'editor' && (
+                            <div className="p-6">
+                                <div className="flex items-center gap-2 mb-6 text-slate-900 border-b border-slate-100 pb-4">
+                                    <Layout size={18} className="text-indigo-600" />
+                                    <h3 className="text-sm font-black uppercase tracking-tight">Inspector</h3>
+                                </div>
 
-                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '12px' }}>
-                                {placeholders.map((p) => (
-                                    <div key={p} className="form-group" style={{ margin: 0 }}>
-                                        <label style={{ fontSize: '11px', fontWeight: '800', color: '#6b7280', textTransform: 'uppercase', display: 'block', marginBottom: '4px' }}>
-                                            {p.replace('_', ' ')}
+                                <div className="space-y-8">
+                                    {/* BASIC INFO */}
+                                    <section className="space-y-4">
+                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest block">
+                                            Document Name
                                         </label>
                                         <input
                                             type="text"
-                                            placeholder={`Enter ${p}...`}
-                                            onChange={(e) => handlePlaceholderChange(p, e.target.value)}
-                                            style={{
-                                                width: '100%',
-                                                borderRadius: '8px',
-                                                border: '1px solid #e5e7eb',
-                                                padding: '8px 12px',
-                                                fontSize: '13px',
-                                                background: '#f9fafb'
-                                            }}
+                                            value={contract.name}
+                                            onChange={(e) => setContract({ ...contract, name: e.target.value })}
+                                            className="w-full px-3 py-2 bg-slate-50 border border-slate-100 rounded-lg text-xs font-bold focus:ring-2 focus:ring-indigo-100 transition-all"
                                         />
+                                    </section>
+
+                                    {/* SMART FIELDS - Moved here from dedicated tab */}
+                                    {placeholders.length > 0 && (
+                                        <section className="space-y-4 pt-6 border-t border-slate-100">
+                                            <div className="flex items-center gap-2 text-indigo-600">
+                                                <Sparkles size={14} fill="currentColor" />
+                                                <h4 className="text-[10px] font-black uppercase tracking-widest">Document Variables</h4>
+                                            </div>
+                                            <div className="space-y-4">
+                                                {placeholders.map(p => (
+                                                    <div key={p}>
+                                                        <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1.5 block">
+                                                            {p.replace(/_/g, ' ')}
+                                                        </label>
+                                                        <input
+                                                            type="text"
+                                                            placeholder={`Value for [${p}]...`}
+                                                            className="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-xs font-bold focus:ring-2 focus:ring-indigo-100 focus:border-indigo-500 transition-all"
+                                                            onChange={(e) => handlePlaceholderChange(p, e.target.value)}
+                                                        />
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </section>
+                                    )}
+
+                                    {/* PROTOCOL ACCELERATORS */}
+                                    <section className="space-y-4 pt-6 border-t border-slate-100">
+                                        <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest block">
+                                            Protocol Extensions
+                                        </label>
+                                        <div className="space-y-2">
+                                            {templateType === 'domain-notary' && (
+                                                <Button variant="outline" size="small" fullWidth onClick={() => {
+                                                    const domains = prompt("Enter domains separated by commas:");
+                                                    if (domains) {
+                                                        const list = domains.split(',').map(d => d.trim()).filter(d => d).map(d => `- ${d}: VERIFIED`).join('\n');
+                                                        setContract({ ...contract, content: contract.content + '\n\n### VERIFIED BATCH\n' + list });
+                                                    }
+                                                }}>
+                                                    <Layers size={14} /> Add Domain Batch
+                                                </Button>
+                                            )}
+                                            {templateType === 'web-archive' && (
+                                                <Button variant="outline" size="small" fullWidth onClick={() => {
+                                                    const url = prompt("Enter URL to Snap:");
+                                                    if (url) {
+                                                        setContract({
+                                                            ...contract,
+                                                            name: `Snap: ${url}`,
+                                                            content: `URL: ${url}\nSnapshot Date: ${new Date().toLocaleString()}\nHash: ${Math.random().toString(16).substring(2, 10)}\n\n[CONTENT ARCHIVED]`
+                                                        });
+                                                    }
+                                                }}>
+                                                    <Globe size={14} /> Simulate Snapshot
+                                                </Button>
+                                            )}
+                                            <Button variant="ghost" size="small" fullWidth onClick={() => {
+                                                setContract({ ...contract, content: contract.content + '\n\n[CERTIFIED_ATTACHMENT_ID: ' + Math.random().toString(36).substring(7).toUpperCase() + ']' });
+                                            }}>
+                                                <PlusCircle size={14} /> Append Proof Seal
+                                            </Button>
+                                        </div>
+                                    </section>
+
+                                    {/* METADATA */}
+                                    <div className="p-4 bg-slate-50 border border-slate-100 rounded-xl space-y-3">
+                                        <div className="flex justify-between items-center text-[9px] font-bold">
+                                            <span className="text-slate-400 uppercase tracking-widest">Created</span>
+                                            <span className="text-slate-600">{new Date(contract.createdAt).toLocaleDateString()}</span>
+                                        </div>
+                                        <div className="flex justify-between items-center text-[9px] font-bold">
+                                            <span className="text-slate-400 uppercase tracking-widest">Protocol Type</span>
+                                            <span className="text-indigo-600 uppercase tracking-widest">{contract.templateType || 'Custom'}</span>
+                                        </div>
                                     </div>
-                                ))}
+                                </div>
                             </div>
+                        )}
 
-                            <div style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: '8px',
-                                padding: '12px',
-                                background: 'rgba(59, 130, 246, 0.05)',
-                                borderRadius: '12px',
-                                border: '1px solid rgba(59, 130, 246, 0.1)'
-                            }}>
-                                <AlertCircle size={14} color="#3b82f6" />
-                                <span style={{ fontSize: '11px', color: '#1e40af', fontWeight: '500' }}>
-                                    All occurrences of matching tags will be replaced.
-                                </span>
+                        {activeTab === 'settings' && (
+                            <div className="p-6">
+                                <div className="flex items-center gap-2 mb-6 text-slate-900">
+                                    <Settings size={18} />
+                                    <h3 className="text-sm font-black uppercase tracking-tight">Settings</h3>
+                                </div>
+                                <div className="space-y-4">
+                                    <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Coming Soon</p>
+                                    <div className="h-20 border-2 border-dashed border-slate-100 rounded-xl" />
+                                    <p className="text-[10px] text-slate-400 font-medium">
+                                        Advanced settings for multi-party signatures and custom anchoring priorities.
+                                    </p>
+                                </div>
                             </div>
-                        </div>
-                    )}
-
-                    <div style={{
-                        display: 'flex',
-                        gap: '16px',
-                        marginTop: '16px',
-                        padding: '24px 0'
-                    }}>
-                        <Button
-                            variant="primary"
-                            onClick={handleSave}
-                            loading={isSaving}
-                            style={{
-                                flex: 2,
-                                borderRadius: '14px',
-                                background: 'linear-gradient(135deg, var(--color-primary), var(--color-secondary))',
-                                boxShadow: '0 8px 20px rgba(99, 102, 241, 0.25)'
-                            }}
-                        >
-                            <Save size={20} />
-                            {t('contractEditor.save')}
-                        </Button>
-                        <Button
-                            variant="secondary"
-                            onClick={() => navigate('/contracts')}
-                            style={{ flex: 1, borderRadius: '14px' }}
-                        >
-                            {t('contractEditor.cancel')}
-                        </Button>
-                    </div>
-                </div>
+                        )}
+                    </motion.aside>
+                </AnimatePresence>
             </div>
+        </div>
+    );
+}
 
-            <Footer />
-        </div >
+function SidebarIcon({ icon: Icon, active, onClick, label }) {
+    return (
+        <button
+            onClick={onClick}
+            className={clsx(
+                "group relative w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300",
+                active
+                    ? "bg-indigo-600 text-white shadow-lg shadow-indigo-100"
+                    : "text-slate-400 hover:bg-slate-50 hover:text-indigo-600"
+            )}
+        >
+            <Icon size={20} strokeWidth={active ? 2.5 : 2} />
+            <div className="absolute left-full ml-4 px-2 py-1 bg-slate-900 text-white text-[10px] font-black rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-[100] uppercase tracking-widest">
+                {label}
+            </div>
+        </button>
     );
 }

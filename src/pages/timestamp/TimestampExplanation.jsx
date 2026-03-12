@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { ArrowLeft, Info, Bitcoin } from 'lucide-react';
 import Button from '../../components/Button';
 import Card from '../../components/Card';
-import Footer from '../../components/Footer';
 import { getFeeEstimates, convertSatsToFiat } from '../../utils/mempool';
 
 export default function TimestampExplanation() {
@@ -147,7 +146,6 @@ export default function TimestampExplanation() {
                 </div>
             </div>
 
-            <Footer />
         </div>
     );
 }

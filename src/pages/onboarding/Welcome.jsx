@@ -1,913 +1,476 @@
-import { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { 
-    Globe, Shield, Clock, CheckCircle, Zap, ChevronRight, Binary, Cpu, Network, 
-    ArrowRight, MousePointer2, Play, FileText, Users, Lock, Sparkles, ExternalLink,
-    Youtube, BookOpen, Award, TrendingUp, CheckCircle2, Star
+import { motion, AnimatePresence } from 'framer-motion';
+import {
+    Globe, Shield, Clock, CheckCircle, Zap, Info, ChevronRight,
+    Binary, Cpu, Network, ArrowRight, MousePointer2,
+    Lock, Share2, Layers, Database, Activity, Fingerprint
 } from 'lucide-react';
 import Button from '../../components/Button';
+import Card from '../../components/Card';
 import LanguagePicker from '../../components/LanguagePicker';
-import Footer from '../../components/Footer';
 
-// Demo statistics that animate
-const useCountUp = (end, duration = 2000, start = 0) => {
-    const [count, setCount] = useState(start);
-    const [hasStarted, setHasStarted] = useState(false);
-    
-    useEffect(() => {
-        if (!hasStarted) return;
-        let startTime;
-        const animate = (timestamp) => {
-            if (!startTime) startTime = timestamp;
-            const progress = Math.min((timestamp - startTime) / duration, 1);
-            setCount(Math.floor(progress * (end - start) + start));
-            if (progress < 1) requestAnimationFrame(animate);
-        };
-        requestAnimationFrame(animate);
-    }, [hasStarted, end, duration, start]);
-    
-    return [count, setHasStarted];
-};
+const FEATURE_DATA = [
+    {
+        id: 'proof',
+        icon: Fingerprint,
+        techIcon: Binary,
+        color: '#6366f1',
+        bgGradient: 'linear-gradient(135deg, #6366f108 0%, #6366f115 100%)',
+        accent: '#818cf8',
+        educationalInsight: "SHA-256 Hashing: Every document gets a unique 64-character 'fingerprint'. Even a one-pixel change creates a totally different ID.",
+        spec: "Hash Algorithm: SHA-256",
+        protocol: "Local-First Encryption"
+    },
+    {
+        id: 'timestamp',
+        icon: Clock,
+        techIcon: Cpu,
+        color: '#10b981',
+        bgGradient: 'linear-gradient(135deg, #10b98108 0%, #10b98115 100%)',
+        accent: '#34d399',
+        educationalInsight: "Merkle Anchoring: We bundle hashes into a Merkle Tree and anchor the 'root' to Bitcoin. One block confirms thousands of documents.",
+        spec: "Anchor: Bitcoin L1",
+        protocol: "OpenTimestamps"
+    },
+    {
+        id: 'verify',
+        icon: Shield,
+        techIcon: Network,
+        color: '#f59e0b',
+        bgGradient: 'linear-gradient(135deg, #f59e0b08 0%, #f59e0b15 100%)',
+        accent: '#fbbf24',
+        educationalInsight: "Mathematical Audit: Verification doesn't need Satohash. Anyone with the proof file and a Bitcoin node can verify the timestamp.",
+        spec: "Verification: Permissionless",
+        protocol: "ZK-Ready Evidence"
+    }
+];
 
 export default function Welcome() {
     const { t, i18n } = useTranslation();
     const navigate = useNavigate();
-    const [isLanguagePickerOpen, setIsLanguagePickerOpen] = useState(false);
-    const [blockHeight, setBlockHeight] = useState(882456);
-    const [scrolled, setScrolled] = useState(false);
-    const [activeVideo, setActiveVideo] = useState(null);
-    const statsRef = useRef(null);
-    const [statsVisible, setStatsVisible] = useState(false);
-
-    // Animated counters
-    const [documentsCount, startDocuments] = useCountUp(12847, 2500);
-    const [countriesCount, startCountries] = useCountUp(127, 1500);
-    const [blocksCount, startBlocks] = useCountUp(4521, 2000);
-
-    const currentLanguageName = {
-        en: 'English',
-        es: 'Español',
-        fr: 'Français',
-        de: 'Deutsch',
-        zh: '中文'
-    }[i18n.language] || 'English';
+    const location = useLocation();
+    const [blockHeight, setBlockHeight] = useState(830421);
+    const [isHovered, setIsHovered] = useState(null);
 
     useEffect(() => {
-        const handleScroll = () => {
-            setScrolled(window.scrollY > 50);
-        };
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
-
-    useEffect(() => {
+        // Mock live block updates
         const interval = setInterval(() => {
             setBlockHeight(prev => prev + 1);
         }, 600000);
+
+        // Handle hash scrolling
+        if (location.hash) {
+            const id = location.hash.replace('#', '');
+            const element = document.getElementById(id);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
         return () => clearInterval(interval);
-    }, []);
-
-    // Intersection observer for stats animation
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting && !statsVisible) {
-                    setStatsVisible(true);
-                    startDocuments(true);
-                    startCountries(true);
-                    startBlocks(true);
-                }
-            },
-            { threshold: 0.3 }
-        );
-        if (statsRef.current) observer.observe(statsRef.current);
-        return () => observer.disconnect();
-    }, [statsVisible]);
-
-    const features = [
-        {
-            icon: Shield,
-            techIcon: Binary,
-            title: t('welcome.features.cryptoProof'),
-            description: t('welcome.features.cryptoProofDesc'),
-            detail: t('welcome.features.cryptoProofDetail'),
-            color: '#ff7f00',
-            gradient: 'linear-gradient(135deg, #ff7f00 0%, #ffaa33 100%)',
-            hoverDetail: 'SHA-256 produces a 256-bit cryptographic hash. Even a single bit change in your document results in a completely different hash—this is the one-way function that makes tampering immediately detectable.',
-            techName: 'Cryptographic Hashing'
-        },
-        {
-            icon: Clock,
-            techIcon: Cpu,
-            title: t('welcome.features.timestamp'),
-            description: t('welcome.features.timestampDesc'),
-            detail: t('welcome.features.timestampDetail'),
-            color: '#0052ff',
-            gradient: 'linear-gradient(135deg, #0052ff 0%, #0080ff 100%)',
-            hoverDetail: 'Your document hash is bundled with thousands of others into a Merkle tree. The root hash is committed to Bitcoin, creating an immutable timestamp that proves your document existed at that exact moment in time.',
-            techName: 'Bitcoin Timestamping'
-        },
-        {
-            icon: CheckCircle,
-            techIcon: Network,
-            title: t('welcome.features.verify'),
-            description: t('welcome.features.verifyDesc'),
-            detail: t('welcome.features.verifyDetail'),
-            color: '#00d97a',
-            gradient: 'linear-gradient(135deg, #00d97a 0%, #00e5ff 100%)',
-            hoverDetail: 'A .ots file contains the cryptographic "path" from your document to the Bitcoin block. You can verify it with OpenTimestamps client or any Bitcoin block explorer—no Satohash required.',
-            techName: 'Independent Verification'
-        }
-    ];
-
-    // Educational video content
-    const educationalVideos = [
-        {
-            id: 'N3tMb-yKqFc',
-            title: 'What is Bitcoin Timestamping?',
-            description: 'Learn how OpenTimestamps anchors data to Bitcoin',
-            duration: '11:45',
-            category: 'Fundamentals'
-        },
-        {
-            id: 'bBC-nXj3Ng4',
-            title: 'How SHA-256 Hashing Works',
-            description: 'Understanding cryptographic fingerprints',
-            duration: '12:15',
-            category: 'Technical'
-        },
-        {
-            id: 'SSo_EIwHSd4',
-            title: 'Digital Signatures Explained',
-            description: 'The mathematics behind digital contracts',
-            duration: '10:30',
-            category: 'Security'
-        }
-    ];
-
-    // Testimonials/Use cases
-    const useCases = [
-        {
-            icon: FileText,
-            title: 'Legal Agreements',
-            description: 'NDAs, prenups, and contracts with immutable timestamps',
-            users: '4,200+ lawyers'
-        },
-        {
-            icon: Award,
-            title: 'IP Protection',
-            description: 'Prove invention dates for patents and copyrights',
-            users: '1,800+ creators'
-        },
-        {
-            icon: TrendingUp,
-            title: 'Financial Records',
-            description: 'Audit trails with blockchain-level integrity',
-            users: '890+ firms'
-        }
-    ];
+    }, [location]);
 
     return (
-        <div className="page" style={{ overflowX: 'hidden', position: 'relative', background: '#ffffff' }}>
-            {/* Design Magic: Crypto Grid Overlay */}
-            <div className="crypto-grid" style={{ position: 'fixed', inset: 0, zIndex: 0, opacity: 0.2 }} />
-
-            {/* Custom Premium Navbar */}
-            <nav style={{
+        <div className="page" style={{
+            overflowX: 'hidden',
+            background: '#fcfcfd',
+            minHeight: '100vh',
+            display: 'flex',
+            flexDirection: 'column'
+        }}>
+            {/* Dynamic Background Elements */}
+            <div style={{
                 position: 'fixed',
-                top: 0,
-                left: 0,
-                right: 0,
-                height: '80px',
-                zIndex: 1100,
-                display: 'flex',
-                alignItems: 'center',
-                padding: '0 clamp(20px, 5vw, 60px)',
-                background: '#ffffff',
-                backdropFilter: 'blur(24px) saturate(180%)',
-                borderBottom: '1px solid #e2e8f0',
-                transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
-                justifyContent: 'space-between',
-                boxShadow: scrolled ? '0 2px 8px rgba(0,0,0,0.05)' : 'none'
+                inset: 0,
+                zIndex: 0,
+                pointerEvents: 'none',
+                opacity: 0.4
             }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer' }} onClick={() => navigate('/')}>
-                    <img
-                        src="https://giveabit.io/wp-content/uploads/2022/04/sats_new.png"
-                        alt="Logo"
-                        style={{ height: '36px', width: 'auto' }}
-                    />
-                    <span style={{ fontWeight: '900', fontSize: '1.7rem', color: '#0f172a', letterSpacing: '-1.5px' }}>
-                        Satohash
-                    </span>
-                    <span style={{ 
-                        fontSize: '10px', 
-                        fontWeight: '900', 
-                        background: 'linear-gradient(135deg, #f59e0b, #ef4444)',
-                        color: 'white',
-                        padding: '3px 8px',
-                        borderRadius: '6px',
-                        marginLeft: '4px'
-                    }}>BETA</span>
-                </div>
-
-                <div style={{ display: 'flex', gap: '32px', alignItems: 'center' }}>
-                    <div style={{ display: 'flex', gap: '28px' }} className="hide-mobile">
-                        <a href="#features" className="nav-link" style={{ color: '#0f172a', fontWeight: '700' }}>Features</a>
-                        <a href="#education" className="nav-link" style={{ color: '#0f172a', fontWeight: '700' }}>Learn</a>
-                        <a href="#" onClick={(e) => { e.preventDefault(); navigate('/trust'); }} className="nav-link" style={{ color: '#0f172a', fontWeight: '700' }}>Trust</a>
-                        <a href="#" onClick={(e) => { e.preventDefault(); navigate('/verify'); }} className="nav-link" style={{ color: '#0f172a', fontWeight: '700' }}>Verify</a>
-                    </div>
-
-                    <button
-                        onClick={() => setIsLanguagePickerOpen(true)}
-                        style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '8px',
-                            background: '#ffffff',
-                            border: '2px solid #e2e8f0',
-                            padding: '10px 16px',
-                            borderRadius: '16px',
-                            color: '#0f172a',
-                            fontWeight: '700',
-                            fontSize: '14px',
-                            cursor: 'pointer',
-                            transition: 'all 0.3s ease'
-                        }}
-                    >
-                        <Globe size={18} color="#6366f1" />
-                        <span className="hide-mobile">{currentLanguageName}</span>
-                    </button>
-
-                    <Button variant="primary" size="large" onClick={() => navigate('/choose-template')} style={{ 
-                        paddingLeft: '28px', 
-                        paddingRight: '28px', 
-                        fontWeight: '700',
-                        background: 'linear-gradient(135deg, #6366f1, #4338ca)',
-                        boxShadow: '0 8px 24px rgba(99, 102, 241, 0.35)',
-                        borderRadius: '20px'
-                    }}>
-                        Get Started Free
-                    </Button>
-                </div>
-            </nav>
-
-            {/* Cinematic Hero Section */}
-            <div style={{ position: 'relative', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1, padding: 'clamp(100px, 10vw, 120px) clamp(16px, 5vw, 60px) clamp(40px, 8vw, 60px)', background: '#ffffff' }}>
-                {/* Background Image */}
                 <div style={{
                     position: 'absolute',
-                    inset: 0,
-                    backgroundImage: 'url(https://images.unsplash.com/photo-1639762681485-074b7f938ba0?q=80&w=2832&auto=format&fit=crop)',
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    opacity: 0.5,
-                    zIndex: 0
+                    top: '-10%',
+                    right: '-5%',
+                    width: '800px',
+                    height: '800px',
+                    borderRadius: '50%',
+                    background: 'radial-gradient(circle, rgba(99, 102, 241, 0.05) 0%, transparent 70%)',
+                    filter: 'blur(120px)'
                 }} />
-                
-                {/* Overlay for better text contrast */}
                 <div style={{
                     position: 'absolute',
-                    inset: 0,
-                    background: 'linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(248,250,252,0.98) 100%)',
-                    zIndex: 1
+                    bottom: '-10%',
+                    left: '-5%',
+                    width: '600px',
+                    height: '600px',
+                    borderRadius: '50%',
+                    background: 'radial-gradient(circle, rgba(16, 185, 129, 0.03) 0%, transparent 70%)',
+                    filter: 'blur(100px)'
                 }} />
+            </div>
 
-                <div style={{ position: 'relative', zIndex: 2, width: '100%', maxWidth: '1200px', margin: '0 auto', padding: '0 clamp(16px, 5vw, 60px)' }}>
-                    <div className="text-center" style={{ maxWidth: '850px', margin: '0 auto' }}>
-                        {/* Live Network Badge */}
-                        <div className="animate-slide-down" style={{
-                            display: 'inline-flex',
-                            alignItems: 'center',
-                            gap: '10px',
-                            padding: '10px 20px',
-                            background: '#ffffff',
-                            border: '2px solid #e2e8f0',
-                            borderRadius: '100px',
-                            fontSize: '14px',
-                            fontWeight: '700',
-                            color: '#0f172a',
-                            marginBottom: '32px',
-                            boxShadow: '0 6px 16px rgba(0,0,0,0.08)'
-                        }}>
-                            <div style={{ 
-                                width: '10px', 
-                                height: '10px', 
-                                borderRadius: '50%', 
-                                background: '#22c55e', 
-                                boxShadow: '0 0 12px #22c55e', 
-                                animation: 'pulse 2s infinite' 
-                            }} />
-                            <span>Live on Bitcoin Mainnet</span>
-                            <span style={{ opacity: 0.4, margin: '0 2px' }}>•</span>
-                            <span style={{ color: 'var(--color-primary)', fontWeight: '900' }}>Block #{blockHeight.toLocaleString()}</span>
-                        </div>
+            <div style={{ position: 'relative', zIndex: 1, flex: 1 }}>
+                {/* HERO SECTION */}
+                <div className="container-wide" style={{ paddingTop: '140px', paddingBottom: '100px' }}>
+                    <div className="text-center">
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            className="inline-flex items-center gap-3 px-6 py-2 bg-indigo-50/50 border border-indigo-100 rounded-full text-xs font-black text-indigo-600 mb-12 uppercase tracking-widest shadow-sm"
+                        >
+                            <span className="relative flex h-2 w-2">
+                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+                                <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
+                            </span>
+                            Secured by Bitcoin Network • Block #{blockHeight.toLocaleString()}
+                        </motion.div>
 
-                        {/* Main Headline */}
-                        <h1 className="animate-slide-down" style={{
-                            fontSize: 'clamp(2.5rem, 8vw, 5rem)',
-                            fontWeight: '900',
-                            marginBottom: '24px',
-                            lineHeight: '1.1',
-                            letterSpacing: '-0.02em',
-                            animationDelay: '100ms',
-                            color: '#0f172a',
-                            textAlign: 'center'
-                        }}>
-                            Absolute Proof
-                            <br />for Every Agreement.
-                        </h1>
+                        <motion.h1
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.8 }}
+                            style={{
+                                fontSize: 'clamp(44px, 8vw, 100px)',
+                                fontWeight: '950',
+                                letterSpacing: '-0.05em',
+                                lineHeight: '0.9',
+                                color: '#0f172a',
+                                marginBottom: '32px'
+                            }}
+                        >
+                            The Digital Notary<br />
+                            <span className="text-gradient">for a Verified World.</span>
+                        </motion.h1>
 
-                        {/* Subheadline */}
-                        <p className="animate-slide-down" style={{
-                            fontSize: 'clamp(17px, 2vw, 20px)',
-                            color: '#475569',
-                            maxWidth: '650px',
-                            margin: '0 auto 44px',
-                            lineHeight: '1.7',
-                            animationDelay: '200ms',
-                            fontWeight: '500',
-                            textAlign: 'center'
-                        }}>
-                            The world's most secure digital notary. Anchor your contracts to the Bitcoin blockchain with <strong style={{ color: '#0f172a' }}>cryptographic proof</strong> that outlasts corporations, governments, and time itself.
-                        </p>
+                        <motion.p
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.8, delay: 0.1 }}
+                            style={{
+                                maxWidth: '800px',
+                                margin: '0 auto 48px',
+                                fontSize: 'clamp(18px, 3vw, 24px)',
+                                color: '#475569',
+                                fontWeight: '800',
+                                lineHeight: '1.5'
+                            }}
+                        >
+                            SatoHash provides mathematically indisputable proof of existence for your most critical documents. Local privacy, global immutability.
+                        </motion.p>
 
-                        {/* CTA Buttons */}
-                        <div className="animate-fade-in" style={{
-                            animationDelay: '300ms',
-                            display: 'flex',
-                            gap: '16px',
-                            justifyContent: 'center',
-                            flexWrap: 'wrap',
-                            marginBottom: '48px'
-                        }}>
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.8, delay: 0.2 }}
+                            className="flex flex-col md:flex-row gap-6 justify-center"
+                        >
                             <Button
                                 variant="primary"
                                 onClick={() => navigate('/choose-template')}
                                 style={{
-                                    height: '68px',
-                                    padding: '0 44px',
-                                    fontSize: '18px',
-                                    fontWeight: '700',
-                                    borderRadius: '24px',
-                                    background: 'linear-gradient(135deg, #6366f1, #4338ca)',
-                                    boxShadow: '0 16px 48px rgba(67, 56, 202, 0.35)',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: '12px'
-                                }}
-                            >
-                                <Sparkles size={22} />
-                                Create Agreement
-                                <ArrowRight size={22} />
-                            </Button>
-
-                            <Button
-                                variant="secondary"
-                                onClick={() => navigate('/contracts')}
-                                style={{
-                                    height: '68px',
-                                    padding: '0 36px',
-                                    fontSize: '17px',
-                                    fontWeight: '700',
-                                    borderRadius: '24px',
-                                    background: '#ffffff',
-                                    border: '2px solid #e2e8f0',
-                                    color: '#0f172a',
-                                    boxShadow: '0 4px 16px rgba(0,0,0,0.04)'
-                                }}
-                            >
-                                View Demo Dashboard
-                            </Button>
-                        </div>
-
-                        {/* Trust Indicators */}
-                        <div className="animate-fade-in" style={{ animationDelay: '400ms' }}>
-                            <div style={{ 
-                                display: 'flex', 
-                                justifyContent: 'center', 
-                                gap: 'clamp(20px, 4vw, 40px)', 
-                                flexWrap: 'wrap',
-                                alignItems: 'center',
-                                maxWidth: '700px',
-                                margin: '0 auto'
-                            }}>
-                                {[
-                                    { icon: CheckCircle2, text: 'No account required' },
-                                    { icon: Lock, text: 'Zero-knowledge privacy' },
-                                    { icon: Zap, text: 'Free during beta' }
-                                ].map((item, i) => (
-                                    <div key={i} style={{ 
-                                        display: 'flex', 
-                                        alignItems: 'center', 
-                                        gap: '8px',
-                                        color: 'var(--color-text-secondary)',
-                                        fontSize: '14px',
-                                        fontWeight: '700'
-                                    }}>
-                                        <item.icon size={18} color="#10b981" />
-                                        <span>{item.text}</span>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {/* Live Stats Section */}
-            <div ref={statsRef} style={{ 
-                background: 'linear-gradient(135deg, #fff8f0 0%, #f0f3ff 100%)',
-                borderTop: '3px solid #f7931a',
-                padding: 'clamp(40px, 8vw, 60px) clamp(16px, 5vw, 60px)',
-                position: 'relative',
-                zIndex: 1
-            }}>
-                <div style={{ width: '100%', maxWidth: '1200px', margin: '0 auto' }}>
-                    <div style={{
-                        display: 'grid',
-                        gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-                        gap: 'clamp(24px, 4vw, 40px)',
-                        maxWidth: '900px',
-                        margin: '0 auto'
-                    }}>
-                        {[
-                            { value: documentsCount.toLocaleString(), label: 'Documents Anchored', suffix: '+' },
-                            { value: countriesCount, label: 'Countries Served', suffix: '+' },
-                            { value: blocksCount.toLocaleString(), label: 'Bitcoin Blocks Used', suffix: '' }
-                        ].map((stat, i) => (
-                            <div key={i} style={{ textAlign: 'center' }}>
-                                <div style={{ 
-                                    fontSize: 'clamp(36px, 6vw, 56px)', 
-                                    fontWeight: '950', 
-                                    color: 'var(--color-primary)',
-                                    letterSpacing: '-2px',
-                                    lineHeight: 1
-                                }}>
-                                    {stat.value}{stat.suffix}
-                                </div>
-                                <div style={{ 
-                                    fontSize: '15px', 
-                                    fontWeight: '700', 
-                                    color: 'var(--color-text-secondary)',
-                                    marginTop: '8px'
-                                }}>
-                                    {stat.label}
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </div>
-
-            {/* Features Section */}
-            <div id="features" style={{ background: '#ffffff', borderTop: '1px solid #e2e8f0', padding: 'clamp(60px, 10vw, 80px) clamp(16px, 5vw, 60px)', position: 'relative', zIndex: 1 }}>
-                <div style={{ width: '100%', maxWidth: '1300px', margin: '0 auto' }}>
-                    <div style={{ textAlign: 'center', marginBottom: '60px', maxWidth: '700px', margin: '0 auto 60px' }}>
-                        <h2 style={{ fontSize: '14px', fontWeight: '900', color: '#ff7f00', textTransform: 'uppercase', letterSpacing: '4px', marginBottom: '16px' }}>Core Capabilities</h2>
-                        <h2 style={{ fontSize: 'clamp(32px, 5vw, 48px)', fontWeight: '900', color: '#0d1117', letterSpacing: '-1px' }}>The Anatomy of Immutable Trust</h2>
-                    </div>
-
-                    <div style={{
-                        display: 'grid',
-                        gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-                        gap: 'clamp(24px, 4vw, 36px)',
-                        maxWidth: '1200px',
-                        margin: '0 auto'
-                    }}>
-                        {features.map((feature, index) => (
-                            <div key={index} className="flip-card animate-slide-up" style={{ animationDelay: `${200 + index * 100}ms` }}>
-                                <div className="flip-card-inner">
-                                    <div className="flip-card-front card-premium" style={{ display: 'flex', flexDirection: 'column', height: '100%', padding: 'clamp(32px, 5vw, 44px)' }}>
-                                        <div style={{
-                                            width: '72px',
-                                            height: '72px',
-                                            borderRadius: '20px',
-                                            background: `${feature.color}15`,
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                            marginBottom: '28px',
-                                            color: feature.color,
-                                            transition: 'all 0.3s ease'
-                                        }}>
-                                            <feature.icon size={36} strokeWidth={2.5} />
-                                        </div>
-                                        <h3 style={{ fontSize: 'clamp(20px, 4vw, 24px)', fontWeight: '800', marginBottom: '14px', color: '#0d1117', letterSpacing: '-0.5px' }}>
-                                            {feature.title}
-                                        </h3>
-                                        <p style={{ fontSize: '16px', color: '#3d4450', lineHeight: '1.7', fontWeight: '500', flex: 1 }}>
-                                            {feature.description}
-                                        </p>
-                                        <div style={{ marginTop: '24px', color: feature.color, fontSize: '13px', fontWeight: '700', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                            <MousePointer2 size={16} /> Hover for Technical Depth
-                                        </div>
-                                    </div>
-
-                                    <div className="flip-card-back" style={{ padding: 'clamp(32px, 5vw, 44px)', textAlign: 'center', background: feature.gradient }}>
-                                        <div style={{
-                                            background: 'rgba(255,255,255,0.25)',
-                                            padding: '10px 20px',
-                                            borderRadius: '100px',
-                                            fontSize: '11px',
-                                            fontWeight: '900',
-                                            textTransform: 'uppercase',
-                                            letterSpacing: '2px',
-                                            marginBottom: '20px',
-                                            display: 'inline-block',
-                                            backdropFilter: 'blur(10px)'
-                                        }}>
-                                            {feature.techName}
-                                        </div>
-                                        <feature.techIcon size={56} strokeWidth={1.5} style={{ marginBottom: '20px', color: '#ffffff' }} />
-                                        <p style={{ fontSize: '15px', lineHeight: '1.75', fontWeight: '600', color: '#ffffff' }}>
-                                            {feature.hoverDetail}
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </div>
-
-            {/* Use Cases Section */}
-            <div style={{ padding: 'clamp(60px, 10vw, 80px) clamp(16px, 5vw, 60px)', position: 'relative', zIndex: 1, background: 'linear-gradient(135deg, #f0fdf4 0%, #f0f3ff 100%)', borderTop: '3px solid #06a77d' }}>
-                <div style={{ width: '100%', maxWidth: '1200px', margin: '0 auto' }}>
-                    <div style={{ textAlign: 'center', marginBottom: '50px', maxWidth: '700px', margin: '0 auto 50px' }}>
-                        <h2 style={{ fontSize: '14px', fontWeight: '900', color: '#00d97a', textTransform: 'uppercase', letterSpacing: '4px', marginBottom: '16px' }}>Use Cases</h2>
-                        <h2 style={{ fontSize: 'clamp(28px, 5vw, 42px)', fontWeight: '900', color: '#0d1117', letterSpacing: '-1px' }}>Trusted Across Industries</h2>
-                    </div>
-
-                    <div style={{
-                        display: 'grid',
-                        gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-                        gap: 'clamp(20px, 3vw, 28px)',
-                        maxWidth: '1100px',
-                        margin: '0 auto'
-                    }}>
-                        {useCases.map((useCase, i) => (
-                            <div key={i} style={{
-                                background: '#ffffff',
-                                padding: 'clamp(28px, 4vw, 40px)',
-                                borderRadius: '24px',
-                                border: '2px solid #d8dfe8',
-                                transition: 'all 0.3s ease',
-                                boxShadow: '0 8px 28px rgba(255, 127, 0, 0.06)'
-                            }} className="card-interactive">
-                                <div style={{
-                                    width: '60px',
-                                    height: '60px',
-                                    borderRadius: '16px',
-                                    background: 'linear-gradient(135deg, #0052ff 0%, #0080ff 100%)',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    color: 'white',
-                                    marginBottom: '20px',
-                                    transition: 'all 0.3s ease'
-                                }}>
-                                    <useCase.icon size={28} />
-                                </div>
-                                <h3 style={{ fontSize: '20px', fontWeight: '800', marginBottom: '10px', color: '#0d1117' }}>{useCase.title}</h3>
-                                <p style={{ fontSize: '15px', color: '#3d4450', marginBottom: '16px', fontWeight: '500', lineHeight: '1.6' }}>{useCase.description}</p>
-                                <div style={{ 
-                                    fontSize: '13px', 
-                                    fontWeight: '700', 
-                                    color: '#00d97a',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: '6px'
-                                }}>
-                                    <Users size={14} />
-                                    {useCase.users}
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </div>
-
-            {/* Educational Videos Section */}
-            <div id="education" style={{ 
-                background: 'linear-gradient(135deg, #fff8f0 0%, #fffaf0 100%)',
-                padding: 'clamp(60px, 10vw, 80px) clamp(16px, 5vw, 60px)',
-                position: 'relative',
-                zIndex: 1,
-                borderTop: '3px solid #f7931a'
-            }}>
-                <div style={{ width: '100%', maxWidth: '1300px', margin: '0 auto' }}>
-                    <div style={{ textAlign: 'center', marginBottom: '50px', maxWidth: '700px', margin: '0 auto 50px' }}>
-                        <div style={{
-                            display: 'inline-flex',
-                            alignItems: 'center',
-                            gap: '8px',
-                            padding: '8px 16px',
-                            background: 'rgba(255, 127, 0, 0.1)',
-                            border: '2px solid rgba(255, 127, 0, 0.25)',
-                            borderRadius: '100px',
-                            marginBottom: '20px'
-                        }}>
-                            <Youtube size={16} color="#ff7f00" />
-                            <span style={{ fontSize: '12px', fontWeight: '900', color: '#ff7f00', textTransform: 'uppercase', letterSpacing: '1px' }}>Video Education</span>
-                        </div>
-                        <h2 style={{ fontSize: 'clamp(28px, 5vw, 42px)', fontWeight: '900', color: '#0d1117', letterSpacing: '-1px', marginBottom: '16px' }}>
-                            Learn the Technology
-                        </h2>
-                        <p style={{ fontSize: '17px', color: '#3d4450', maxWidth: '600px', margin: '0 auto', fontWeight: '500' }}>
-                            Understand the cryptographic foundations that power Satohash through curated educational content.
-                        </p>
-                    </div>
-
-                    <div style={{
-                        display: 'grid',
-                        gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-                        gap: 'clamp(20px, 3vw, 32px)',
-                        maxWidth: '1100px',
-                        margin: '0 auto'
-                    }}>
-                        {educationalVideos.map((video, i) => (
-                            <div 
-                                key={i} 
-                                style={{
-                                    background: '#ffffff',
+                                    height: '72px',
+                                    paddingLeft: '40px',
+                                    paddingRight: '40px',
                                     borderRadius: '20px',
-                                    overflow: 'hidden',
-                                    border: '2px solid #d8dfe8',
-                                    transition: 'all 0.3s ease',
-                                    cursor: 'pointer',
-                                    boxShadow: '0 8px 24px rgba(255, 127, 0, 0.08)'
+                                    fontSize: '18px',
+                                    fontWeight: '950',
+                                    background: 'linear-gradient(135deg, #6366f1 0%, #4f46e5 100%)',
+                                    boxShadow: '0 20px 40px rgba(99, 102, 241, 0.25)'
                                 }}
-                                className="card-interactive"
-                                onClick={() => setActiveVideo(video.id)}
                             >
-                                {/* Video Thumbnail */}
-                                <div style={{
-                                    position: 'relative',
-                                    paddingTop: '56.25%',
-                                    background: `url(https://img.youtube.com/vi/${video.id}/maxresdefault.jpg) center/cover`,
-                                    backgroundColor: '#1f2937'
-                                }}>
+                                Start New Agreement
+                                <ArrowRight size={20} strokeWidth={3} />
+                            </Button>
+                            <Button
+                                variant="outline"
+                                onClick={() => document.getElementById('protocol-deep-dive').scrollIntoView({ behavior: 'smooth' })}
+                                style={{
+                                    height: '72px',
+                                    paddingLeft: '32px',
+                                    paddingRight: '32px',
+                                    borderRadius: '20px',
+                                    fontSize: '18px',
+                                    fontWeight: '950',
+                                    border: '2px solid #e2e8f0',
+                                    background: 'white'
+                                }}
+                            >
+                                Exploring Protocol
+                            </Button>
+                        </motion.div>
+                    </div>
+                </div>
+
+                {/* FEATURE CARDS (THE EDUCATIONAL GRID) */}
+                <div className="container-wide" style={{ paddingBottom: '120px' }}>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        {/* ... existing features ... */}
+                        {FEATURE_DATA.map((feature, idx) => {
+                            const Icon = feature.icon;
+                            const TechIcon = feature.techIcon;
+                            const isActive = isHovered === feature.id;
+
+                            return (
+                                <motion.div
+                                    key={feature.id}
+                                    onMouseEnter={() => setIsHovered(feature.id)}
+                                    onMouseLeave={() => setIsHovered(null)}
+                                    initial={{ opacity: 0, scale: 0.95 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    transition={{ delay: idx * 0.1 }}
+                                    style={{ position: 'relative', cursor: 'pointer' }}
+                                >
                                     <div style={{
-                                        position: 'absolute',
-                                        inset: 0,
-                                        background: 'rgba(0,0,0,0.3)',
+                                        background: 'white',
+                                        borderRadius: '32px',
+                                        padding: '48px 40px',
+                                        height: '100%',
                                         display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center'
+                                        flexDirection: 'column',
+                                        border: `2px solid ${isActive ? feature.color : '#f1f5f9'}`,
+                                        boxShadow: isActive ? `0 30px 60px ${feature.color}15` : '0 10px 30px rgba(0,0,0,0.02)',
+                                        transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                                        overflow: 'hidden',
+                                        position: 'relative'
                                     }}>
+                                        {/* Background Subtle Gradient */}
                                         <div style={{
-                                            width: '64px',
-                                            height: '64px',
-                                            borderRadius: '50%',
-                                            background: 'rgba(255,255,255,0.95)',
+                                            position: 'absolute',
+                                            top: 0,
+                                            left: 0,
+                                            right: 0,
+                                            height: '100%',
+                                            background: feature.bgGradient,
+                                            opacity: isActive ? 1 : 0,
+                                            transition: 'opacity 0.4s ease',
+                                            zIndex: 0
+                                        }} />
+
+                                        {/* Content Wrapper */}
+                                        <div style={{ position: 'relative', zIndex: 1, flex: 1 }}>
+                                            <div style={{
+                                                width: '64px',
+                                                height: '64px',
+                                                borderRadius: '16px',
+                                                background: isActive ? feature.color : '#f8fafc',
+                                                color: isActive ? 'white' : feature.color,
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                                marginBottom: '32px',
+                                                transition: 'all 0.3s ease'
+                                            }}>
+                                                <Icon size={32} />
+                                            </div>
+
+                                            <h3 style={{
+                                                fontSize: '24px',
+                                                fontWeight: '950',
+                                                marginBottom: '16px',
+                                                color: '#0f172a'
+                                            }}>
+                                                {t(`welcome.features.${feature.id === 'proof' ? 'cryptoProof' : feature.id === 'timestamp' ? 'timestamp' : 'verify'}`)}
+                                            </h3>
+
+                                            <p style={{
+                                                fontSize: '16px',
+                                                color: '#64748b',
+                                                fontWeight: '700',
+                                                lineHeight: '1.6',
+                                                marginBottom: '24px'
+                                            }}>
+                                                {t(`welcome.features.${feature.id === 'proof' ? 'cryptoProofDesc' : feature.id === 'timestamp' ? 'timestampDesc' : 'verifyDesc'}`)}
+                                            </p>
+
+                                            {/* Live Education Layer - Visible on Hover */}
+                                            <AnimatePresence>
+                                                {isActive && (
+                                                    <motion.div
+                                                        initial={{ opacity: 0, height: 0 }}
+                                                        animate={{ opacity: 1, height: 'auto' }}
+                                                        exit={{ opacity: 0, height: 0 }}
+                                                        style={{ overflow: 'hidden' }}
+                                                    >
+                                                        <div style={{
+                                                            padding: '20px',
+                                                            background: 'rgba(255,255,255,0.8)',
+                                                            borderRadius: '20px',
+                                                            border: `1px solid ${feature.color}20`,
+                                                            marginTop: '8px'
+                                                        }}>
+                                                            <div style={{
+                                                                display: 'flex',
+                                                                alignItems: 'center',
+                                                                gap: '10px',
+                                                                marginBottom: '10px',
+                                                                color: feature.color,
+                                                                fontSize: '12px',
+                                                                fontWeight: '950',
+                                                                textTransform: 'uppercase',
+                                                                letterSpacing: '1px'
+                                                            }}>
+                                                                <TechIcon size={16} />
+                                                                Educational Insight
+                                                            </div>
+                                                            <p style={{ fontSize: '14px', color: '#1e293b', fontWeight: '800', margin: 0 }}>
+                                                                {feature.educationalInsight}
+                                                            </p>
+                                                        </div>
+                                                    </motion.div>
+                                                )}
+                                            </AnimatePresence>
+                                        </div>
+
+                                        {/* Sub-footer stats */}
+                                        <div style={{
+                                            marginTop: '32px',
+                                            paddingTop: '32px',
+                                            borderTop: '1px solid #f1f5f9',
                                             display: 'flex',
+                                            justifyContent: 'space-between',
                                             alignItems: 'center',
-                                            justifyContent: 'center',
-                                            boxShadow: '0 8px 32px rgba(0,0,0,0.3)'
+                                            position: 'relative',
+                                            zIndex: 1
                                         }}>
-                                            <Play size={28} color="#ef4444" fill="#ef4444" style={{ marginLeft: '4px' }} />
+                                            <div style={{ fontSize: '11px', fontWeight: '950', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '1.5px' }}>
+                                                {feature.protocol}
+                                            </div>
+                                            <Activity size={14} color={feature.color} className={isActive ? 'animate-pulse' : ''} />
                                         </div>
                                     </div>
-                                    <div style={{
-                                        position: 'absolute',
-                                        bottom: '12px',
-                                        right: '12px',
-                                        background: 'rgba(0,0,0,0.8)',
-                                        padding: '4px 8px',
-                                        borderRadius: '6px',
-                                        fontSize: '12px',
-                                        fontWeight: '700',
-                                        color: 'white'
-                                    }}>
-                                        {video.duration}
-                                    </div>
-                                    <div style={{
-                                        position: 'absolute',
-                                        top: '12px',
-                                        left: '12px',
-                                        background: 'var(--color-primary)',
-                                        padding: '4px 10px',
-                                        borderRadius: '6px',
-                                        fontSize: '10px',
-                                        fontWeight: '900',
-                                        color: 'white',
-                                        textTransform: 'uppercase',
-                                        letterSpacing: '0.5px'
-                                    }}>
-                                        {video.category}
-                                    </div>
-                                </div>
-                                <div style={{ padding: '20px', background: '#ffffff' }}>
-                                    <h3 style={{ fontSize: '17px', fontWeight: '700', marginBottom: '8px', color: '#0f172a' }}>{video.title}</h3>
-                                    <p style={{ fontSize: '14px', color: '#475569', margin: 0, fontWeight: '500' }}>{video.description}</p>
+                                </motion.div>
+                            );
+                        })}
+                    </div>
+                </div>
+
+                {/* PROTOCOL DEEP DIVE - Moved from HowItWorks */}
+                <div id="protocol-deep-dive" style={{ paddingBottom: '120px', background: '#fff', position: 'relative' }}>
+                    <div className="container-wide">
+                        <div className="max-w-4xl mx-auto">
+                            <h2 style={{ fontSize: ' clamp(32px, 5vw, 42px)', fontWeight: '950', textAlign: 'center', marginBottom: '60px', color: '#0f172a' }}>
+                                Protocol Mechanical Depth
+                            </h2>
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                                <ProtocolStep
+                                    title="01 / Local Hashing"
+                                    text="Your document is processed into a 64-character SHA-256 fingerprint locally. No one, including Satohash, ever sees your content."
+                                />
+                                <ProtocolStep
+                                    title="02 / Merkle Bundling"
+                                    text="Multiple fingerprints are combined into a Merkle Tree. This allows for massive scaling and ensures absolute privacy in the proof."
+                                />
+                                <ProtocolStep
+                                    title="03 / Bitcoin Anchoring"
+                                    text="The Merkle Root is embedded into the Bitcoin blockchain. The transaction block height becomes your permanent, unforgeable timestamp."
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* TRUST CENTER CTA */}
+                <div style={{ background: '#0f172a', padding: '100px 0', color: 'white', position: 'relative', overflow: 'hidden' }}>
+                    <div style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        background: 'radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.1) 0%, transparent 80%)',
+                        pointerEvents: 'none'
+                    }} />
+
+                    <div className="container-wide" style={{ position: 'relative' }}>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+                            <div>
+                                <h3 style={{ fontSize: '14px', fontWeight: '950', color: '#6366f1', textTransform: 'uppercase', letterSpacing: '3px', marginBottom: '16px' }}>
+                                    The Protocol Abyss
+                                </h3>
+                                <h2 style={{ fontSize: 'clamp(32px, 5vw, 48px)', fontWeight: '950', marginBottom: '24px', letterSpacing: '-0.03em' }}>
+                                    Decentralized Trust.<br />No Exceptions.
+                                </h2>
+                                <p style={{ fontSize: '18px', color: '#94a3b8', fontWeight: '700', lineHeight: '1.6', marginBottom: '40px' }}>
+                                    Satohash isn't just a signing tool. It's a bridge between your legal intent and the mathematical certainty of the blockchain.
+                                </p>
+                                <div className="flex flex-wrap gap-4">
+                                    {['SHA-256', 'Bitcoin L1', 'Merkle Trees', 'OTS Standard'].map(tag => (
+                                        <div key={tag} style={{
+                                            padding: '8px 16px',
+                                            background: 'rgba(255,255,255,0.05)',
+                                            borderRadius: '100px',
+                                            fontSize: '12px',
+                                            fontWeight: '950',
+                                            color: '#6366f1',
+                                            border: '1px solid rgba(99, 102, 241, 0.2)'
+                                        }}>
+                                            {tag}
+                                        </div>
+                                    ))}
                                 </div>
                             </div>
-                        ))}
-                    </div>
-
-                    {/* More Resources Link */}
-                    <div style={{ textAlign: 'center', marginTop: '48px' }}>
-                        <a 
-                            href="https://opentimestamps.org" 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            style={{
-                                display: 'inline-flex',
-                                alignItems: 'center',
-                                gap: '8px',
-                                color: 'var(--color-primary)',
-                                fontSize: '15px',
-                                fontWeight: '800',
-                                textDecoration: 'none'
-                            }}
-                        >
-                            <BookOpen size={18} />
-                            Explore OpenTimestamps Documentation
-                            <ExternalLink size={14} />
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            {/* Process Section */}
-            <div style={{ padding: 'clamp(60px, 10vw, 80px) clamp(16px, 5vw, 60px)', position: 'relative', zIndex: 1, background: '#ffffff' }}>
-                <div style={{ width: '100%', maxWidth: '1100px', margin: '0 auto' }}>
-                    <div style={{
-                        background: 'linear-gradient(135deg, #f0f5ff 0%, #f5f0ff 100%)',
-                        padding: 'clamp(48px, 8vw, 80px)',
-                        borderRadius: '28px',
-                        border: '3px solid #0052ff',
-                        textAlign: 'center',
-                        boxShadow: '0 16px 48px rgba(0, 82, 255, 0.15)'
-                    }}>
-                        <h3 style={{ fontSize: '14px', fontWeight: '900', color: '#0052ff', textTransform: 'uppercase', letterSpacing: '4px', marginBottom: '24px' }}>The Process</h3>
-                        <h2 style={{ fontSize: 'clamp(28px, 6vw, 40px)', fontWeight: '900', color: '#0d1117', marginBottom: '72px', letterSpacing: '-1px' }}>From Idea to Immutability</h2>
-
-                        <div style={{ display: 'flex', justifyContent: 'center', gap: 'clamp(24px, 4vw, 48px)', flexWrap: 'wrap', position: 'relative' }}>
-                            {[
-                                { step: '01', title: 'Prepare', desc: 'Draft manually or upload your documents', icon: FileText },
-                                { step: '02', title: 'Sign', desc: 'Collect digital signatures from all parties', icon: Users },
-                                { step: '03', title: 'Anchor', desc: 'Timestamp permanently on Bitcoin blockchain', icon: Lock }
-                            ].map((item, i) => (
-                                <div key={i} style={{ flex: '1', minWidth: '220px', maxWidth: '300px', position: 'relative' }}>
-                                    <div style={{
-                                        margin: '0 auto 24px',
-                                        width: '88px',
-                                        height: '88px',
-                                        borderRadius: '28px',
-                                        background: 'linear-gradient(135deg, #0052ff, #0080ff)',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        color: 'white',
-                                        boxShadow: '0 16px 48px rgba(0, 82, 255, 0.3)',
-                                        transition: 'all 0.3s ease'
-                                    }}>
-                                        <item.icon size={36} />
+                            <div style={{ position: 'relative' }}>
+                                <div style={{
+                                    background: 'linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%)',
+                                    borderRadius: '40px',
+                                    border: '1px solid rgba(255,255,255,0.1)',
+                                    padding: '40px',
+                                    backdropFilter: 'blur(10px)'
+                                }}>
+                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+                                        {[
+                                            { title: 'Local Privacy', desc: 'Content never leaves your browser.', icon: Lock },
+                                            { title: 'Eternal Proof', desc: 'Outlives companies and servers.', icon: Database },
+                                            { title: 'Standardized', desc: 'Uses open standard .ots proofs.', icon: Share2 }
+                                        ].map((item, i) => {
+                                            const ItemIcon = item.icon;
+                                            return (
+                                                <div key={i} style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
+                                                    <div style={{
+                                                        width: '40px',
+                                                        height: '40px',
+                                                        borderRadius: '12px',
+                                                        background: 'rgba(99, 102, 241, 0.2)',
+                                                        color: '#6366f1',
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        justifyContent: 'center',
+                                                        flexShrink: 0
+                                                    }}>
+                                                        <ItemIcon size={20} />
+                                                    </div>
+                                                    <div>
+                                                        <h4 style={{ fontSize: '18px', fontWeight: '950', marginBottom: '4px' }}>{item.title}</h4>
+                                                        <p style={{ fontSize: '14px', color: '#94a3b8', fontWeight: '700', margin: 0 }}>{item.desc}</p>
+                                                    </div>
+                                                </div>
+                                            );
+                                        })}
                                     </div>
-                                    <div style={{
-                                        fontSize: '12px',
-                                        fontWeight: '900',
-                                        color: '#0052ff',
-                                        marginBottom: '8px',
-                                        letterSpacing: '2px'
-                                    }}>
-                                        STEP {item.step}
-                                    </div>
-                                    <h4 style={{ fontSize: '22px', fontWeight: '800', color: '#0d1117', marginBottom: '10px' }}>{item.title}</h4>
-                                    <p style={{ fontSize: '15px', color: '#3d4450', fontWeight: '500' }}>{item.desc}</p>
-                                    {i < 2 && <ChevronRight size={24} color="#d8dfe8" style={{ position: 'absolute', top: '40px', right: '-20px' }} className="hide-mobile" />}
+                                    <Button
+                                        variant="primary"
+                                        onClick={() => navigate('/trust')}
+                                        style={{ width: '100%', marginTop: '32px', height: '60px', borderRadius: '14px' }}
+                                    >
+                                        Enter Trust Center
+                                    </Button>
                                 </div>
-                            ))}
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            {/* CTA Section */}
-            <div style={{ 
-                background: 'linear-gradient(135deg, #ff7f00 0%, #ff5722 100%)',
-                padding: 'clamp(60px, 10vw, 80px) clamp(16px, 5vw, 60px)',
-                position: 'relative',
-                zIndex: 1,
-                overflow: 'hidden'
-            }}>
-                <div style={{ width: '100%', maxWidth: '1200px', margin: '0 auto', position: 'relative' }}>
-                    <div style={{ textAlign: 'center', maxWidth: '700px', margin: '0 auto' }}>
-                        <div style={{
-                            display: 'inline-flex',
-                            alignItems: 'center',
-                            gap: '8px',
-                            background: 'rgba(255,255,255,0.25)',
-                            padding: '8px 16px',
-                            borderRadius: '100px',
-                            marginBottom: '28px',
-                            border: '1px solid rgba(255,255,255,0.3)'
-                        }}>
-                            <Star size={16} color="#ffffff" fill="#ffffff" />
-                            <span style={{ color: '#ffffff', fontSize: '13px', fontWeight: '700' }}>Free during beta • No credit card required</span>
-                        </div>
-                        <h2 style={{ 
-                            fontSize: 'clamp(32px, 6vw, 52px)', 
-                            fontWeight: '900', 
-                            color: '#ffffff', 
-                            marginBottom: '24px',
-                            letterSpacing: '-1px',
-                            lineHeight: '1.1',
-                            textShadow: '0 2px 8px rgba(0,0,0,0.1)'
-                        }}>
-                            Ready to Create<br />Immutable Proof?
-                        </h2>
-                        <p style={{ 
-                            fontSize: '18px', 
-                            color: 'rgba(255,255,255,0.95)', 
-                            marginBottom: '44px',
-                            fontWeight: '500',
-                            lineHeight: '1.7'
-                        }}>
-                            Join thousands of professionals who trust Satohash to protect their most important documents with Bitcoin-grade security.
-                        </p>
-                        <Button
-                            variant="primary"
-                            onClick={() => navigate('/choose-template')}
-                            style={{
-                                height: '72px',
-                                padding: '0 52px',
-                                fontSize: '19px',
-                                fontWeight: '800',
-                                borderRadius: '24px',
-                                background: '#ffffff',
-                                color: '#f7931a',
-                                boxShadow: '0 20px 60px rgba(0,0,0,0.3)',
-                                letterSpacing: '0.5px'
-                            }}
-                        >
-                            Start Your First Agreement
-                            <ArrowRight size={24} style={{ marginLeft: '12px' }} />
-                        </Button>
-                    </div>
-                </div>
-            </div>
+        </div>
+    );
+}
 
-            {/* Trust Standards Bar */}
-            <div className="animate-fade-in" style={{
-                padding: 'clamp(40px, 6vw, 50px) clamp(16px, 5vw, 60px)',
-                textAlign: 'center',
-                background: 'linear-gradient(135deg, #f5f7fa 0%, #f8f5fb 100%)',
-                borderTop: '2px solid #d8dfe8'
-            }}>
-                <p style={{ color: '#5a6470', fontSize: '12px', fontWeight: '900', textTransform: 'uppercase', letterSpacing: '3px', marginBottom: '32px' }}>Global Compliance Standards</p>
-                <div style={{ display: 'flex', justifyContent: 'center', gap: 'clamp(28px, 8vw, 80px)', flexWrap: 'wrap', opacity: 0.85 }}>
-                    {['eIDAS (EU)', 'ESIGN Act (US)', 'UETA (US)', 'Bitcoin Anchored'].map((standard, i) => (
-                        <div key={i} style={{ fontSize: '14px', fontWeight: '900', color: '#0d1117', letterSpacing: '0.5px' }}>{standard}</div>
-                    ))}
-                </div>
-            </div>
-
-            {/* Video Modal */}
-            {activeVideo && (
-                <div 
-                    style={{
-                        position: 'fixed',
-                        inset: 0,
-                        background: 'rgba(0,0,0,0.9)',
-                        zIndex: 2000,
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        padding: '20px',
-                        cursor: 'pointer'
-                    }}
-                    onClick={() => setActiveVideo(null)}
-                >
-                    <div style={{
-                        width: '100%',
-                        maxWidth: '900px',
-                        aspectRatio: '16/9',
-                        background: '#000',
-                        borderRadius: '16px',
-                        overflow: 'hidden'
-                    }} onClick={(e) => e.stopPropagation()}>
-                        <iframe
-                            width="100%"
-                            height="100%"
-                            src={`https://www.youtube.com/embed/${activeVideo}?autoplay=1`}
-                            title="YouTube video"
-                            frameBorder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowFullScreen
-                        />
-                    </div>
-                </div>
-            )}
-
-            <Footer />
-            <LanguagePicker
-                isOpen={isLanguagePickerOpen}
-                onClose={() => setIsLanguagePickerOpen(false)}
-            />
+function ProtocolStep({ title, text }) {
+    return (
+        <div style={{ padding: '40px', background: '#f8fafc', borderRadius: '32px', border: '1px solid #e2e8f0' }}>
+            <h4 style={{ margin: '0 0 12px 0', fontSize: '12px', fontWeight: '950', color: '#6366f1', textTransform: 'uppercase', letterSpacing: '2px' }}>{title}</h4>
+            <p style={{ margin: 0, fontSize: '16px', color: '#475569', lineHeight: '1.6', fontWeight: '700' }}>{text}</p>
         </div>
     );
 }

@@ -6,9 +6,22 @@
         "howThisWorks": "工作原理",
         "language": "语言",
         "change": "更改",
-        "pricingNote": "Satohash 在早期访问期间目前免费。当您为文档添加时间戳时,您只需支付比特币网络费用。"
+        "pricingNote": "Satohash 在早期访问期间目前免费。当您为文档添加时间戳时,您只需支付比特币网络费用。",
+        "features": {
+            "cryptoProof": "加密证明",
+            "cryptoProofDesc": "使用 SHA-256 加密技术为您的文档创建不可伪造的数字指纹。",
+            "cryptoProofDetail": "哈希将任何文件转换为唯一的 64 字符字符串。即使改动一个逗号,也会产生完全不同的哈希。Satohash 在您的设备本地处理此操作。",
+            "timestamp": "比特币时间戳",
+            "timestampDesc": "使用 OpenTimestamps 协议将您的证明锚定到比特币区块链。",
+            "timestampDetail": "您的文档哈希与成千上万个其他哈希捆绑进一个默克尔树中。随后,一个唯一的“根”哈希被提交到比特币网络,提供永久、不可磨灭的存在证明。",
+            "verify": "简单验证",
+            "verifyDesc": "任何人都可以使用开源工具独立验证您的证明。",
+            "verifyDetail": ".ots 文件包含从您的文档到比特币区块的“路径”。您不需要通过 Satohash 来证明它;您可以使用官方的 OpenTimestamps 客户端或第三方区块浏览器。"
+        }
     },
     "howItWorks": {
+        "title": "工作原理",
+        "subtitle": "保护您的文档只需简单的三个步骤",
         "card1": {
             "title": "锁定日期",
             "description": "Satohash 为您的文档提供唯一的数字指纹,并将其日期锁定在比特币网络中。之后,任何人都可以验证这份准确的文档在那时存在过。"

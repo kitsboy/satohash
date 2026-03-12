@@ -13,7 +13,6 @@ import {
 } from 'lucide-react';
 import Button from '../../components/Button';
 import Card from '../../components/Card';
-import Footer from '../../components/Footer';
 
 const FeeAdvisor = () => {
     const [fees, setFees] = useState(null);
@@ -313,8 +312,6 @@ export default function SignatureFlow() {
                     </>
                 )}
             </div>
-
-            <Footer />
         </div >
     );
 }

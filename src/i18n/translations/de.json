@@ -6,9 +6,22 @@
         "howThisWorks": "Wie es funktioniert",
         "language": "Sprache",
         "change": "Ändern",
-        "pricingNote": "Satohash ist derzeit kostenlos während unseres Early-Access-Zeitraums. Sie zahlen nur die Bitcoin-Netzwerkgebühr, wenn Sie ein Dokument mit einem Zeitstempel versehen."
+        "pricingNote": "Satohash ist derzeit kostenlos während unseres Early-Access-Zeitraums. Sie zahlen nur die Bitcoin-Netzwerkgebühr, wenn Sie ein Dokument mit einem Zeitstempel versehen.",
+        "features": {
+            "cryptoProof": "Kryptografischer Nachweis",
+            "cryptoProofDesc": "Erstellen Sie mit SHA-256-Kryptografie einen unfälschbaren Fingerabdruck Ihres Dokuments.",
+            "cryptoProofDetail": "Hashing verwandelt jede Datei in eine eindeutige 64-Zeichen-Folge. Schon ein geändertes Komma führt zu einem völlig anderen Hash. Satohash verarbeitet dies lokal auf Ihrem Gerät.",
+            "timestamp": "Bitcoin-Zeitstempel",
+            "timestampDesc": "Verankern Sie Ihren Nachweis über das OpenTimestamps-Protokoll in der Bitcoin-Blockchain.",
+            "timestampDetail": "Der Hash Ihres Dokuments wird mit Tausenden anderen in einem Merkle-Baum gebündelt. Ein einziger 'Root'-Hash wird dann im Bitcoin-Netzwerk festgeschrieben, was einen dauerhaften, unveränderlichen Existenznachweis liefert.",
+            "verify": "Einfache Verifizierung",
+            "verifyDesc": "Jeder kann Ihren Nachweis unabhängig mit Open-Source-Tools überprüfen.",
+            "verifyDetail": "Eine .ots-Datei enthält den 'Pfad' von Ihrem Dokument zum Bitcoin-Block. Sie benötigen Satohash nicht, um es zu beweisen; Sie können den offiziellen OpenTimestamps-Client oder Block-Explorer von Drittanbietern verwenden."
+        }
     },
     "howItWorks": {
+        "title": "Wie es funktioniert",
+        "subtitle": "Drei einfache Schritte zum Schutz Ihrer Dokumente",
         "card1": {
             "title": "Datum festlegen",
             "description": "Satohash gibt Ihrem Dokument einen eindeutigen Fingerabdruck und verankert sein Datum im Bitcoin-Netzwerk. Später kann jeder überprüfen, dass genau dieses Dokument zu diesem Zeitpunkt existierte."

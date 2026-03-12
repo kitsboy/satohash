@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Heart, Home, FileText, Upload, ArrowRight } from 'lucide-react';
-import Footer from '../../components/Footer';
+import { Heart, Home, FileText, Upload, ArrowRight, Users, Zap } from 'lucide-react';
 
 const TEMPLATES = [
     {
@@ -26,10 +25,80 @@ const TEMPLATES = [
         description: 'Grant legal authority to a trusted party'
     },
     {
+        type: 'commercial-lease',
+        icon: Home,
+        titleKey: 'chooseTemplate.commercialLease',
+        gradient: 'linear-gradient(135deg, #1e293b 0%, #334155 100%)',
+        description: 'Lease agreement for commercial spaces'
+    },
+    {
+        type: 'child-travel',
+        icon: Users,
+        titleKey: 'chooseTemplate.childTravel',
+        gradient: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)',
+        description: 'Authorization for minors to travel'
+    },
+    {
+        type: 'bill-of-sale',
+        icon: Zap,
+        titleKey: 'chooseTemplate.billOfSale',
+        gradient: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+        description: 'Transfer of personal property ownership'
+    },
+    {
+        type: 'employment',
+        icon: Users,
+        titleKey: 'chooseTemplate.employment',
+        gradient: 'linear-gradient(135deg, #6366f1 0%, #4f46e5 100%)',
+        description: 'Standard employment agreement terms'
+    },
+    {
+        type: 'promissory',
+        icon: FileText,
+        titleKey: 'chooseTemplate.promissory',
+        gradient: 'linear-gradient(135deg, #f43f5e 0%, #e11d48 100%)',
+        description: 'Formal promise to pay back a debt'
+    },
+    {
+        type: 'consulting',
+        icon: Users,
+        titleKey: 'chooseTemplate.consulting',
+        gradient: 'linear-gradient(135deg, #8b5cf6 0%, #d946ef 100%)',
+        description: 'Agreement for professional consulting services'
+    },
+    {
+        type: 'ip-assignment',
+        icon: ShieldCheck,
+        titleKey: 'chooseTemplate.ip-assignment',
+        gradient: 'linear-gradient(135deg, #0f172a 0%, #334155 100%)',
+        description: 'Transfer intellectual property rights'
+    },
+    {
+        type: 'nda',
+        icon: Lock,
+        titleKey: 'chooseTemplate.nda',
+        gradient: 'linear-gradient(135deg, #475569 0%, #1e293b 100%)',
+        description: 'Confidentiality and non-disclosure agreement'
+    },
+    {
+        type: 'will',
+        icon: FileText,
+        titleKey: 'chooseTemplate.will',
+        gradient: 'linear-gradient(135deg, #6b7280 0%, #374151 100%)',
+        description: 'Last Will & Testament'
+    },
+    {
+        type: 'affidavit',
+        icon: ShieldCheck,
+        titleKey: 'chooseTemplate.affidavit',
+        gradient: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+        description: 'Sworn statement of fact'
+    },
+    {
         type: 'custom',
         icon: Upload,
         titleKey: 'chooseTemplate.custom',
-        gradient: 'linear-gradient(135deg, #10b981 0%, #14b8a6 100%)',
+        gradient: 'linear-gradient(135deg, #94a3b8 0%, #64748b 100%)',
         description: 'Upload and timestamp your own document'
     }
 ];
@@ -170,7 +239,6 @@ export default function ChooseTemplate() {
                 </div>
             </div>
 
-            <Footer />
         </div>
     );
 }

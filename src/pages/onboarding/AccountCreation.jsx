@@ -3,7 +3,6 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Shield, Mail, User, Building2, Sparkles } from 'lucide-react';
 import Button from '../../components/Button';
-import Footer from '../../components/Footer';
 
 export default function AccountCreation() {
     const { t } = useTranslation();
@@ -21,11 +20,15 @@ export default function AccountCreation() {
 
         // Save user data to localStorage (simulated account creation)
         localStorage.setItem('satohash_user', JSON.stringify(formData));
+        localStorage.setItem('satohash_onboarded', 'true');
 
         // Pass template type to next screen
-        navigate('/value-confirmation', {
-            state: { templateType: location.state?.templateType }
-        });
+        const templateType = location.state?.templateType;
+        if (templateType && templateType !== 'custom') {
+            navigate(`/contracts/new/${templateType}`);
+        } else {
+            navigate('/contracts');
+        }
     };
 
     const handleChange = (e) => {
@@ -245,7 +248,6 @@ export default function AccountCreation() {
                 </form>
             </div>
 
-            <Footer />
         </div>
     );
 }

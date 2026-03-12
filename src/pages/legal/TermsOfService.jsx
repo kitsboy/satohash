@@ -1,59 +1,60 @@
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
-import Footer from '../../components/Footer';
+import Button from '../../components/Button';
+import Card from '../../components/Card';
 
 export default function TermsOfService() {
     const navigate = useNavigate();
 
     return (
-        <div className="page">
-            <div className="container container-narrow">
-                <button
+        <div className="page bg-slate-50 min-h-screen pt-[120px] pb-20">
+            <div className="container-narrow">
+                <Button
+                    variant="ghost"
+                    size="small"
                     onClick={() => navigate(-1)}
-                    style={{
-                        background: 'none',
-                        border: 'none',
-                        color: 'var(--color-primary)',
-                        cursor: 'pointer',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: 'var(--spacing-xs)',
-                        marginBottom: 'var(--spacing-lg)'
-                    }}
+                    className="mb-12"
                 >
-                    <ArrowLeft size={20} /> Back
-                </button>
+                    <ArrowLeft size={18} /> Back
+                </Button>
 
-                <h1 style={{ marginBottom: 'var(--spacing-lg)' }}>Terms of Service</h1>
+                <Card variant="elevated" padding="large" className="prose prose-slate max-w-none">
+                    <h1 className="text-4xl font-black text-slate-900 mb-2">Terms of Service</h1>
+                    <p className="text-slate-400 font-bold mb-12">Last updated: {new Date().toLocaleDateString()}</p>
 
-                <div style={{
-                    fontSize: '16px',
-                    color: 'var(--color-text-secondary)',
-                    lineHeight: '1.8',
-                    fontWeight: '600'
-                }}>
-                    <p><em>Last updated: {new Date().toLocaleDateString()}</em></p>
+                    <div className="space-y-12 text-slate-600 font-medium leading-relaxed">
+                        <section>
+                            <h2 className="text-xl font-black text-slate-900 border-b border-slate-100 pb-4 mb-6">1. Acceptance of Terms</h2>
+                            <p>By accessing or using Satohash, you agree to be bound by these Terms of Service. If you do not agree, you may not use the platform. Satohash provides a cryptographic timestamping protocol interface anchored to the Bitcoin blockchain.</p>
+                        </section>
 
-                    <h2>1. Service Description</h2>
-                    <p>Satohash provides cryptographic timestamping services using Bitcoin and OpenTimestamps. We create cryptographic proofs that documents existed at specific times.</p>
+                        <section>
+                            <h2 className="text-xl font-black text-slate-900 border-b border-slate-100 pb-4 mb-6">2. Description of Service</h2>
+                            <p>Satohash facilitates the creation of mathematical proofs of existence for digital assets using OpenTimestamps (OTS). Our service allows users to generate SHA-256 hashes of their documents locally and anchor these hashes to the Bitcoin blockchain. We do not store, upload, or process the original content of your documents.</p>
+                        </section>
 
-                    <h2>2. No Legal Advice</h2>
-                    <p>Satohash does not provide legal advice. Our service is a tool for creating cryptographic evidence. Consult a qualified attorney for legal guidance.</p>
+                        <section>
+                            <h2 className="text-xl font-black text-slate-900 border-b border-slate-100 pb-4 mb-6">3. No Legal Advice</h2>
+                            <p>Satohash is a technical tool, not a legal service. The availability of legal templates and cryptographic proofs does not constitute legal advice. The legal admissibility and enforceability of blockchain-based timestamps vary significantly by jurisdiction. Users are strongly encouraged to consult with qualified legal counsel.</p>
+                        </section>
 
-                    <h2>3. User Responsibilities</h2>
-                    <p>Users are responsible for the accuracy and legality of documents they timestamp. Satohash does not review or validate document contents.</p>
+                        <section>
+                            <h2 className="text-xl font-black text-slate-900 border-b border-slate-100 pb-4 mb-6">4. User Responsibilities</h2>
+                            <p>You are solely responsible for: (a) the content of the documents you timestamp; (b) maintaining the original document file (as the proof is useless without the bit-for-bit identical original); and (c) ensuring compliance with local laws regarding electronic signatures and digital evidence.</p>
+                        </section>
 
-                    <h2>4. Fees</h2>
-                    <p>Satohash is currently free during early access. Users pay only Bitcoin network fees for timestamping operations.</p>
+                        <section>
+                            <h2 className="text-xl font-black text-slate-900 border-b border-slate-100 pb-4 mb-6">5. Disclaimers and Limitation of Liability</h2>
+                            <p>The service is provided "AS IS" and "AS AVAILABLE." We do not guarantee that the Bitcoin network will remain operational indefinitely or that the OpenTimestamps calendar servers will always be accessible. Satohash shall not be liable for any loss of data, loss of profits, or legal disputes arising from the use of our protocol.</p>
+                        </section>
 
-                    <h2>5. Data Privacy</h2>
-                    <p>We do not store full document contents. Only cryptographic hashes are used for timestamping. See our Privacy Policy for details.</p>
-
-                    <h2>6. No Warranties</h2>
-                    <p>The service is provided "as is" without warranties. We do not guarantee legal enforceability of timestamped documents.</p>
-                </div>
+                        <section>
+                            <h2 className="text-xl font-black text-slate-900 border-b border-slate-100 pb-4 mb-6">6. Changes to Terms</h2>
+                            <p>We reserve the right to modify these terms at any time. Continued use of the platform after changes constitutes acceptance of the new terms.</p>
+                        </section>
+                    </div>
+                </Card>
             </div>
-            <Footer />
         </div>
     );
 }

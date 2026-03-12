@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { CheckCircle, Globe, AlertCircle } from 'lucide-react';
 import Button from '../../components/Button';
 import Card from '../../components/Card';
-import Footer from '../../components/Footer';
 
 export default function VerificationHelp() {
     const { t } = useTranslation();
@@ -70,7 +69,6 @@ export default function VerificationHelp() {
                     {t('timestamp.verificationHelp.backToContracts')}
                 </Button>
             </div>
-            <Footer />
         </div>
     );
 }

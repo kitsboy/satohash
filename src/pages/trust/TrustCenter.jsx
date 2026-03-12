@@ -2,7 +2,6 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Shield, Info, Lock, Scale } from 'lucide-react';
 import Card from '../../components/Card';
-import Footer from '../../components/Footer';
 import ProofAnalytics from '../../components/ProofAnalytics';
 import LegalValidator from '../../components/LegalValidator';
 
@@ -38,8 +37,8 @@ export default function TrustCenter() {
     ];
 
     return (
-         <div className="page" style={{ background: '#ffffff', paddingTop: '100px' }}>
-            <div className="container" style={{ maxWidth: '900px' }}>
+        <div className="page" style={{ background: 'var(--color-surface)', paddingTop: '120px' }}>
+            <div className="container mx-auto" style={{ maxWidth: '900px' }}>
                 <div className="text-center" style={{ marginBottom: '60px' }}>
                     <img
                         src="https://giveabit.io/wp-content/uploads/2022/04/sats_new.png"
@@ -135,7 +134,6 @@ export default function TrustCenter() {
                     {t('trust.legalDisclaimer')}
                 </div>
             </div>
-            <Footer />
         </div>
     );
 }
