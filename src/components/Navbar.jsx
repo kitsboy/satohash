@@ -126,7 +126,10 @@ export default function Navbar() {
         </div>
 
         <div className="flex items-center gap-4">
-          <button
+          <motion.button
+            aria-label="Change Language"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             onClick={() => setIsLangOpen(true)}
             style={{
               display: 'flex',
@@ -144,7 +147,7 @@ export default function Navbar() {
             }}
           >
             <Globe size={20} />
-          </button>
+          </motion.button>
 
           <Link to="/welcome" className="hidden md:block">
             <motion.button
@@ -156,7 +159,10 @@ export default function Navbar() {
             </motion.button>
           </Link>
 
-          <button
+          <motion.button
+            aria-label={isOpen ? 'Close Menu' : 'Open Menu'}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             onClick={() => setIsOpen(!isOpen)}
             className="md:hidden"
             style={{
@@ -174,7 +180,7 @@ export default function Navbar() {
             }}
           >
             {isOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+          </motion.button>
         </div>
       </nav>
 

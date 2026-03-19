@@ -1,9 +1,10 @@
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom'
 import React, { Suspense } from 'react'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import GlobalDropzone from './components/GlobalDropzone'
 import LoadingScreen from './components/LoadingScreen'
+import { Toaster } from 'sonner'
 
 // Route-based Code Splitting (Lazy Loading)
 const Welcome = React.lazy(() => import('./pages/onboarding/Welcome'))
@@ -74,10 +75,16 @@ function AppContent() {
           <Route path="/protocol-stats" element={<ProtocolStats />} />
           <Route path="/snap-and-stamp" element={<WebCapture />} />
 
-          {/* Default redirect */}
+          {/* Default redirect & 404 Fallback */}
           <Route path="/" element={<Landing />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Suspense>
+      <Toaster
+        position="bottom-right"
+        richColors
+        toastOptions={{ style: { borderRadius: '12px' } }}
+      />
       {!shouldHideNavbar && <Footer />}
     </GlobalDropzone>
   )

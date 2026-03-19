@@ -6,6 +6,7 @@ import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import compression from 'compression';
 import dotenv from 'dotenv';
+import { z } from 'zod';
 
 dotenv.config();
 
@@ -14,7 +15,13 @@ const port = process.env.PORT || 3001;
 
 // Middlewares
 app.use(helmet());
-app.use(cors());
+const corsOptions = {
+    origin: process.env.CORS_ORIGIN || '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Ots-Upgraded'],
+    exposedHeaders: ['Content-Disposition', 'X-Ots-Upgraded']
+};
+app.use(cors(corsOptions));
 app.use(compression());
 app.use(express.static('dist'));
 app.use(express.json());
@@ -46,11 +53,16 @@ const loadOtsFile = (buffer) => {
  */
 app.post('/api/stamp', async (req, res) => {
     try {
-        const { hash } = req.body;
-        if (!hash || typeof hash !== 'string' || hash.length !== 64) {
-            return res.status(400).json({ error: 'Invalid or missing SHA-256 hex hash.' });
+        const hashSchema = z.object({
+            hash: z.string().length(64).regex(/^[a-f0-9]+$/i, 'Must be a valid hex string.')
+        });
+
+        const validation = hashSchema.safeParse(req.body);
+        if (!validation.success) {
+            return res.status(400).json({ error: 'Invalid or missing SHA-256 hex hash.', details: validation.error.errors });
         }
 
+        const { hash } = validation.data;
         const hashBuffer = Buffer.from(hash, 'hex');
         const opSHA256 = new OpenTimestamps.Ops.OpSHA256();
         const detached = OpenTimestamps.DetachedTimestampFile.fromHash(opSHA256, hashBuffer);
