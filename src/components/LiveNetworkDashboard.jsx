@@ -57,9 +57,9 @@ export default function LiveNetworkDashboard() {
   }, [])
 
   return (
-    <div className="relative w-full h-full min-h-[400px] flex items-center justify-center p-8 bg-[#0f172a] rounded-3xl overflow-hidden shadow-2xl">
+    <div className="relative flex h-full min-h-[400px] w-full items-center justify-center overflow-hidden rounded-3xl bg-[#0f172a] p-8 shadow-2xl">
       {/* Animated Background Bubbles */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div style={{ top: '20%', left: '10%' }}>
           <Bubble color="rgba(99, 102, 241, 0.4)" size={100} delay={0} />
         </div>
@@ -76,7 +76,7 @@ export default function LiveNetworkDashboard() {
 
       {/* Grid Overlay */}
       <div
-        className="absolute inset-0 opacity-10 pointer-events-none"
+        className="pointer-events-none absolute inset-0 opacity-10"
         style={{
           backgroundImage:
             'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)',
@@ -84,35 +84,35 @@ export default function LiveNetworkDashboard() {
         }}
       />
 
-      <div className="relative z-10 w-full grid md:grid-cols-2 gap-8 items-center">
+      <div className="relative z-10 grid w-full items-center gap-8 md:grid-cols-2">
         {/* Left Side: Fee Intensity */}
         <div className="space-y-6">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/10 backdrop-blur-md rounded-full border border-white/10 text-xs font-bold text-indigo-400 uppercase tracking-widest">
+          <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 py-1 text-xs font-bold tracking-widest text-indigo-400 uppercase backdrop-blur-md">
             <Activity size={12} className="animate-pulse" /> Live Protocol Pulse
           </div>
 
           <div>
-            <h2 className="text-white text-5xl font-black mb-2 flex items-baseline gap-2 leading-none">
+            <h2 className="mb-2 flex items-baseline gap-2 text-5xl leading-none font-black text-white">
               {fees?.fastestFee || '24'}
-              <span className="text-slate-500 text-lg font-bold uppercase tracking-widest">
+              <span className="text-lg font-bold tracking-widest text-slate-500 uppercase">
                 sat/vB
               </span>
             </h2>
-            <p className="text-slate-400 font-medium">Current Priority Transaction Fee</p>
+            <p className="font-medium text-slate-400">Current Priority Transaction Fee</p>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
-            <div className="p-4 bg-white/5 rounded-2xl border border-white/5">
-              <Zap size={20} className="text-amber-400 mb-2" />
-              <div className="text-white font-bold text-xl">{fees?.halfHourFee || '18'}</div>
-              <div className="text-slate-500 text-xs font-bold uppercase tracking-tight">
+            <div className="rounded-2xl border border-white/5 bg-white/5 p-4">
+              <Zap size={20} className="mb-2 text-amber-400" />
+              <div className="text-xl font-bold text-white">{fees?.halfHourFee || '18'}</div>
+              <div className="text-xs font-bold tracking-tight text-slate-500 uppercase">
                 Standard
               </div>
             </div>
-            <div className="p-4 bg-white/5 rounded-2xl border border-white/5">
-              <Database size={20} className="text-emerald-400 mb-2" />
-              <div className="text-white font-bold text-xl">#{blockHeight || '831,442'}</div>
-              <div className="text-slate-500 text-xs font-bold uppercase tracking-tight">
+            <div className="rounded-2xl border border-white/5 bg-white/5 p-4">
+              <Database size={20} className="mb-2 text-emerald-400" />
+              <div className="text-xl font-bold text-white">#{blockHeight || '831,442'}</div>
+              <div className="text-xs font-bold tracking-tight text-slate-500 uppercase">
                 Block Tip Height
               </div>
             </div>
@@ -120,21 +120,21 @@ export default function LiveNetworkDashboard() {
         </div>
 
         {/* Right Side: Network Health Visualization */}
-        <div className="relative aspect-square md:aspect-auto h-full flex items-center justify-center">
-          <div className="relative w-48 h-48 sm:w-64 sm:h-64 h-full">
+        <div className="relative flex aspect-square h-full items-center justify-center md:aspect-auto">
+          <div className="relative h-48 h-full w-48 sm:h-64 sm:w-64">
             {/* Central Hub */}
             <motion.div
               animate={{ rotate: 360 }}
               transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-              className="absolute inset-0 border-2 border-dashed border-indigo-500/20 rounded-full"
+              className="absolute inset-0 rounded-full border-2 border-dashed border-indigo-500/20"
             />
-            <div className="absolute inset-4 border border-indigo-500/10 rounded-full" />
+            <div className="absolute inset-4 rounded-full border border-indigo-500/10" />
 
             <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-3xl flex items-center justify-center shadow-2xl shadow-indigo-500/40 transform rotate-45 group-hover:rotate-0 transition-transform duration-500">
+              <div className="flex h-16 w-16 rotate-45 transform items-center justify-center rounded-3xl bg-gradient-to-br from-indigo-500 to-purple-600 shadow-2xl shadow-indigo-500/40 transition-transform duration-500 group-hover:rotate-0">
                 <Database
                   size={32}
-                  className="text-white -rotate-45 group-hover:rotate-0 transition-transform duration-500"
+                  className="-rotate-45 text-white transition-transform duration-500 group-hover:rotate-0"
                 />
               </div>
             </div>
@@ -154,25 +154,25 @@ export default function LiveNetworkDashboard() {
                   transformOrigin: '0 0'
                 }}
               >
-                <div className="w-4 h-4 rounded-full bg-white shadow-[0_0_15px_rgba(255,255,255,0.5)] border-2 border-indigo-500" />
+                <div className="h-4 w-4 rounded-full border-2 border-indigo-500 bg-white shadow-[0_0_15px_rgba(255,255,255,0.5)]" />
               </motion.div>
             ))}
           </div>
 
-          <div className="absolute bottom-0 right-0 p-6 text-right">
-            <div className="text-slate-500 text-xs font-black uppercase tracking-[0.2em] mb-1">
+          <div className="absolute right-0 bottom-0 p-6 text-right">
+            <div className="mb-1 text-xs font-black tracking-[0.2em] text-slate-500 uppercase">
               Mempool Backlog
             </div>
-            <div className="text-white font-black text-2xl">
+            <div className="text-2xl font-black text-white">
               {stats?.count ? (stats.count / 1000).toFixed(1) : '85.4'}k
-              <span className="text-indigo-400 ml-2">TX</span>
+              <span className="ml-2 text-indigo-400">TX</span>
             </div>
           </div>
         </div>
       </div>
 
       {/* Bottom Accent */}
-      <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-indigo-500 to-transparent opacity-50" />
+      <div className="absolute right-0 bottom-0 left-0 h-1 bg-gradient-to-r from-transparent via-indigo-500 to-transparent opacity-50" />
     </div>
   )
 }

@@ -26,7 +26,7 @@ export default function ValueConfirmation() {
 
   return (
     <div className="page">
-      <div className="container container-narrow">
+      <div className="container-narrow container">
         <div className="page-header text-center">
           <h1 className="page-title">{t('valueConfirmation.title')}</h1>
         </div>

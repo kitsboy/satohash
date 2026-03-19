@@ -41,80 +41,80 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen pt-24 px-6 max-w-7xl mx-auto flex flex-col gap-12">
+    <div className="mx-auto flex min-h-screen max-w-7xl flex-col gap-12 px-6 pt-24">
       <GlobalDropzone onFileProcessed={handleFileProcessed} />
 
       {/* Main Content Area */}
-      <div className="grid lg:grid-cols-3 gap-8">
+      <div className="grid gap-8 lg:grid-cols-3">
         {/* Left Column: New Notarization (Interactive) */}
-        <div className="lg:col-span-2 space-y-8">
+        <div className="space-y-8 lg:col-span-2">
           <motion.h1
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-3xl font-bold font-display"
+            className="font-display text-3xl font-bold"
           >
             Secure Workbench
           </motion.h1>
 
           {/* The "Stage" */}
           <motion.div
-            className="glass-card p-1 min-h-[400px] relative overflow-hidden flex flex-col"
+            className="glass-card relative flex min-h-[400px] flex-col overflow-hidden p-1"
             initial={{ opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5 }}
           >
             {!file ? (
               // Empty State
-              <div className="flex-1 flex flex-col items-center justify-center text-center p-12 bg-gradient-to-br from-slate-50 to-white rounded-xl border border-slate-100/50">
-                <div className="w-20 h-20 bg-indigo-50 rounded-full flex items-center justify-center mb-6 animate-pulse-slow">
+              <div className="flex flex-1 flex-col items-center justify-center rounded-xl border border-slate-100/50 bg-gradient-to-br from-slate-50 to-white p-12 text-center">
+                <div className="animate-pulse-slow mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-indigo-50">
                   <FileCheck size={32} className="text-indigo-400" />
                 </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-2">Waiting for Evidence</h3>
-                <p className="text-slate-500 max-w-sm">
+                <h3 className="mb-2 text-xl font-bold text-slate-900">Waiting for Evidence</h3>
+                <p className="max-w-sm text-slate-500">
                   Drag any document here to begin the cryptographic anchoring process.
                 </p>
               </div>
             ) : (
               // Success State
-              <div className="flex-1 flex flex-col bg-white rounded-xl p-8 relative">
+              <div className="relative flex flex-1 flex-col rounded-xl bg-white p-8">
                 <div className="absolute top-0 right-0 p-4">
-                  <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider flex items-center gap-1">
+                  <span className="flex items-center gap-1 rounded-full bg-green-100 px-3 py-1 text-xs font-bold tracking-wider text-green-700 uppercase">
                     <Check size={12} /> Anchored
                   </span>
                 </div>
 
-                <div className="flex items-start gap-4 mb-8">
-                  <div className="p-4 bg-indigo-50 rounded-lg">
+                <div className="mb-8 flex items-start gap-4">
+                  <div className="rounded-lg bg-indigo-50 p-4">
                     <FileCheck size={32} className="text-indigo-600" />
                   </div>
                   <div>
                     <h2 className="text-2xl font-bold text-slate-900">{file.name}</h2>
-                    <p className="text-sm font-mono text-slate-400 mt-1">
+                    <p className="mt-1 font-mono text-sm text-slate-400">
                       SHA-256: 8f434346648f6b96df89dda901c5176b10a6...
                     </p>
                   </div>
                 </div>
 
-                <div className="grid sm:grid-cols-3 gap-4 mt-auto">
+                <div className="mt-auto grid gap-4 sm:grid-cols-3">
                   <button
                     onClick={downloadOTS}
-                    className="flex flex-col items-center justify-center p-4 border border-slate-200 rounded-xl hover:bg-slate-50 transition-colors group"
+                    className="group flex flex-col items-center justify-center rounded-xl border border-slate-200 p-4 transition-colors hover:bg-slate-50"
                   >
-                    <Download className="mb-2 text-slate-400 group-hover:text-indigo-600 transition-colors" />
+                    <Download className="mb-2 text-slate-400 transition-colors group-hover:text-indigo-600" />
                     <span className="text-sm font-semibold text-slate-700">Download .ots</span>
                   </button>
                   <button
                     onClick={() => generatePDF(file)}
-                    className="flex flex-col items-center justify-center p-4 border border-slate-200 rounded-xl hover:bg-slate-50 transition-colors group"
+                    className="group flex flex-col items-center justify-center rounded-xl border border-slate-200 p-4 transition-colors hover:bg-slate-50"
                   >
-                    <FileCheck className="mb-2 text-slate-400 group-hover:text-indigo-600 transition-colors" />
+                    <FileCheck className="mb-2 text-slate-400 transition-colors group-hover:text-indigo-600" />
                     <span className="text-sm font-semibold text-slate-700">PDF Certificate</span>
                   </button>
                   <button
                     onClick={handleEmail}
-                    className="flex flex-col items-center justify-center p-4 border border-slate-200 rounded-xl hover:bg-slate-50 transition-colors group"
+                    className="group flex flex-col items-center justify-center rounded-xl border border-slate-200 p-4 transition-colors hover:bg-slate-50"
                   >
-                    <Mail className="mb-2 text-slate-400 group-hover:text-indigo-600 transition-colors" />
+                    <Mail className="mb-2 text-slate-400 transition-colors group-hover:text-indigo-600" />
                     <span className="text-sm font-semibold text-slate-700">Email Proof</span>
                   </button>
                 </div>
@@ -127,17 +127,17 @@ export default function Dashboard() {
         <div className="space-y-8">
           {/* Recent Activity */}
           <div className="glass-card p-6">
-            <h3 className="font-bold text-slate-900 mb-4 flex items-center gap-2">
+            <h3 className="mb-4 flex items-center gap-2 font-bold text-slate-900">
               <Clock size={16} className="text-indigo-500" /> Recent Proofs
             </h3>
             <div className="space-y-4">
               {recentFiles.map((item, i) => (
                 <div
                   key={i}
-                  className="flex items-center justify-between p-3 hover:bg-slate-50 rounded-lg transition-colors cursor-pointer group"
+                  className="group flex cursor-pointer items-center justify-between rounded-lg p-3 transition-colors hover:bg-slate-50"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-indigo-100 flex items-center justify-center text-indigo-600 text-xs font-bold">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-100 text-xs font-bold text-indigo-600">
                       PDF
                     </div>
                     <div>
@@ -148,7 +148,7 @@ export default function Dashboard() {
                     </div>
                   </div>
                   <span
-                    className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${item.status === 'Confirmed' ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}`}
+                    className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${item.status === 'Confirmed' ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}`}
                   >
                     {item.status}
                   </span>
@@ -158,12 +158,12 @@ export default function Dashboard() {
           </div>
 
           {/* Donation Card */}
-          <div className="glass-card p-6 bg-gradient-to-br from-indigo-600 to-purple-700 text-white">
-            <h3 className="font-bold mb-2">Support the Protocol</h3>
-            <p className="text-sm text-indigo-100 mb-4">
+          <div className="glass-card bg-gradient-to-br from-indigo-600 to-purple-700 p-6 text-white">
+            <h3 className="mb-2 font-bold">Support the Protocol</h3>
+            <p className="mb-4 text-sm text-indigo-100">
               Satohash is 100% free and open source. Help us keep the lights on.
             </p>
-            <button className="w-full py-2 bg-white/20 backdrop-blur-sm hover:bg-white/30 rounded-lg text-sm font-semibold transition-colors">
+            <button className="w-full rounded-lg bg-white/20 py-2 text-sm font-semibold backdrop-blur-sm transition-colors hover:bg-white/30">
               Donate via Lightning ⚡
             </button>
           </div>

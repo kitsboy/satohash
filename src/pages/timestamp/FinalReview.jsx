@@ -44,17 +44,17 @@ export default function FinalReview() {
         <div style={{ marginBottom: '32px' }}>
           <button
             onClick={() => navigate(`/contracts/${contractId}`)}
-            className="flex items-center gap-2 text-slate-400 hover:text-indigo-600 font-bold text-xs uppercase tracking-widest transition-colors"
+            className="flex items-center gap-2 text-xs font-bold tracking-widest text-slate-400 uppercase transition-colors hover:text-indigo-600"
           >
             <ArrowLeft size={16} />
             Back to Document
           </button>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+        <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-2">
           {/* LEFT: Document Preview */}
           <div>
-            <div className="flex items-center gap-2 mb-6 text-slate-900">
+            <div className="mb-6 flex items-center gap-2 text-slate-900">
               <ShieldCheck className="text-indigo-600" size={24} />
               <h1 className="text-3xl font-black tracking-tight uppercase">Final Review</h1>
             </div>
@@ -100,46 +100,46 @@ export default function FinalReview() {
                 border: '1px solid var(--color-border)'
               }}
             >
-              <div className="flex items-center gap-3 mb-6">
-                <div className="p-2 bg-indigo-50 rounded-xl text-indigo-600">
+              <div className="mb-6 flex items-center gap-3">
+                <div className="rounded-xl bg-indigo-50 p-2 text-indigo-600">
                   <Zap size={20} fill="currentColor" />
                 </div>
-                <h3 className="text-sm font-black uppercase tracking-tight">Protocol Mechanics</h3>
+                <h3 className="text-sm font-black tracking-tight uppercase">Protocol Mechanics</h3>
               </div>
 
-              <p className="text-xs text-slate-500 font-medium leading-relaxed mb-6">
+              <p className="mb-6 text-xs leading-relaxed font-medium text-slate-500">
                 {t('timestamp.explain.point1')}
               </p>
 
               <div className="space-y-4">
-                <div className="flex gap-3 items-start">
-                  <div className="w-1.5 h-1.5 rounded-full bg-indigo-500 mt-1.5" />
-                  <p className="text-[11px] font-bold text-slate-700 leading-normal">
+                <div className="flex items-start gap-3">
+                  <div className="mt-1.5 h-1.5 w-1.5 rounded-full bg-indigo-500" />
+                  <p className="text-[11px] leading-normal font-bold text-slate-700">
                     {t('timestamp.explain.point2')}
                   </p>
                 </div>
-                <div className="flex gap-3 items-start">
-                  <div className="w-1.5 h-1.5 rounded-full bg-indigo-500 mt-1.5" />
-                  <p className="text-[11px] font-bold text-slate-700 leading-normal">
+                <div className="flex items-start gap-3">
+                  <div className="mt-1.5 h-1.5 w-1.5 rounded-full bg-indigo-500" />
+                  <p className="text-[11px] leading-normal font-bold text-slate-700">
                     {t('timestamp.explain.point3')}
                   </p>
                 </div>
               </div>
 
               {/* FEES */}
-              <div className="mt-8 pt-8 border-t border-slate-100">
-                <div className="flex items-center gap-2 mb-4">
+              <div className="mt-8 border-t border-slate-100 pt-8">
+                <div className="mb-4 flex items-center gap-2">
                   <Bitcoin size={18} className="text-orange-500" />
-                  <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">
+                  <span className="text-[10px] font-black tracking-widest text-slate-400 uppercase">
                     Network Priority Fee
                   </span>
                 </div>
 
                 {loadingFees ? (
-                  <div className="h-12 bg-slate-50 animate-pulse rounded-xl" />
+                  <div className="h-12 animate-pulse rounded-xl bg-slate-50" />
                 ) : (
-                  <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100">
-                    <div className="flex justify-between items-center mb-1">
+                  <div className="rounded-2xl border border-slate-100 bg-slate-50 p-4">
+                    <div className="mb-1 flex items-center justify-between">
                       <span className="text-sm font-black text-slate-900">
                         ~{feeEstimates?.fastestFee || 20} sats/vByte
                       </span>
@@ -166,14 +166,14 @@ export default function FinalReview() {
               </Button>
             </Card>
 
-            <div className="p-6 bg-slate-900 rounded-3xl text-white">
-              <div className="flex items-center gap-2 mb-2">
-                <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/50">
+            <div className="rounded-3xl bg-slate-900 p-6 text-white">
+              <div className="mb-2 flex items-center gap-2">
+                <div className="h-2 w-2 animate-pulse rounded-full bg-green-500" />
+                <span className="text-[10px] font-black tracking-[0.2em] text-white/50 uppercase">
                   Zero-Knowledge Guarantee
                 </span>
               </div>
-              <p className="text-[11px] font-medium text-white/80 leading-relaxed">
+              <p className="text-[11px] leading-relaxed font-medium text-white/80">
                 Satohash only broadcasts the SHA-256 fingerprint of your document. Your private data
                 never leaves this machine.
               </p>

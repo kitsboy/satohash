@@ -10,7 +10,7 @@ export default function VerificationHelp() {
 
   return (
     <div className="page">
-      <div className="container container-narrow">
+      <div className="container-narrow container">
         <div className="page-header text-center">
           <h1 className="page-title">{t('timestamp.verificationHelp.title')}</h1>
         </div>

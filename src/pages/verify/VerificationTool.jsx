@@ -155,7 +155,7 @@ export default function VerificationTool() {
       }}
     >
       <div className="container" style={{ flex: 1, maxWidth: '1100px', margin: '0 auto' }}>
-        <div className="text-center animate-slide-down" style={{ marginBottom: '60px' }}>
+        <div className="animate-slide-down text-center" style={{ marginBottom: '60px' }}>
           <div
             style={{
               display: 'inline-flex',

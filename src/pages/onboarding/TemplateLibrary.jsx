@@ -185,16 +185,16 @@ export default function TemplateLibrary() {
   return (
     <div className="page pb-24" style={{ background: '#f8fafc', paddingTop: '80px' }}>
       <div className="container-wide">
-        <div className="text-center mb-20">
+        <div className="mb-20 text-center">
           <motion.h1
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="text-shimmer leading-tight tracking-tighter mb-6"
+            className="text-shimmer mb-6 leading-tight tracking-tighter"
             style={{ fontSize: 'clamp(2.5rem, 8vw, 4.5rem)', fontWeight: '950' }}
           >
             Legal Template Library
           </motion.h1>
-          <p className="max-w-2xl mx-auto text-xl text-slate-500 font-bold leading-relaxed">
+          <p className="mx-auto max-w-2xl text-xl leading-relaxed font-bold text-slate-500">
             Professionally drafted cryptographic agreements. Anchored to Bitcoin for absolute
             immutability.
           </p>
@@ -202,8 +202,8 @@ export default function TemplateLibrary() {
 
         {/* Search & Categories */}
         <div className="mb-16">
-          <div className="relative max-w-2xl mx-auto mb-12">
-            <div className="absolute inset-y-0 left-6 flex items-center pointer-events-none text-slate-400">
+          <div className="relative mx-auto mb-12 max-w-2xl">
+            <div className="pointer-events-none absolute inset-y-0 left-6 flex items-center text-slate-400">
               <Search size={24} />
             </div>
             <input
@@ -211,7 +211,7 @@ export default function TemplateLibrary() {
               placeholder="Search legal templates (e.g. NDA, Property)..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-16 pr-8 py-6 bg-white border-2 border-slate-200 rounded-2xl text-lg font-bold text-slate-900 focus:border-indigo-600 focus:ring-4 focus:ring-indigo-50 outline-none shadow-premium transition-all"
+              className="shadow-premium w-full rounded-2xl border-2 border-slate-200 bg-white py-6 pr-8 pl-16 text-lg font-bold text-slate-900 transition-all outline-none focus:border-indigo-600 focus:ring-4 focus:ring-indigo-50"
             />
           </div>
 
@@ -224,10 +224,10 @@ export default function TemplateLibrary() {
                   key={cat.id}
                   onClick={() => setActiveCategory(cat.id)}
                   className={clsx(
-                    'flex items-center gap-2.5 px-6 py-3.5 rounded-xl font-black text-sm transition-all duration-300',
+                    'flex items-center gap-2.5 rounded-xl px-6 py-3.5 text-sm font-black transition-all duration-300',
                     isActive
-                      ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-100 scale-105'
-                      : 'bg-white text-slate-600 border border-slate-200 hover:border-indigo-600 hover:text-indigo-600'
+                      ? 'scale-105 bg-indigo-600 text-white shadow-lg shadow-indigo-100'
+                      : 'border border-slate-200 bg-white text-slate-600 hover:border-indigo-600 hover:text-indigo-600'
                   )}
                 >
                   <Icon size={18} />
@@ -239,7 +239,7 @@ export default function TemplateLibrary() {
         </div>
 
         {/* Template Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3">
           <AnimatePresence mode="popLayout">
             {filteredTemplates.map((template) => (
               <motion.div
@@ -254,34 +254,34 @@ export default function TemplateLibrary() {
                   variant="elevated"
                   padding="large"
                   interactive
-                  className="h-full flex flex-col group"
+                  className="group flex h-full flex-col"
                 >
-                  <div className="flex justify-between items-start mb-8">
-                    <div className="p-4 rounded-2xl bg-indigo-50 text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-colors duration-500">
+                  <div className="mb-8 flex items-start justify-between">
+                    <div className="rounded-2xl bg-indigo-50 p-4 text-indigo-600 transition-colors duration-500 group-hover:bg-indigo-600 group-hover:text-white">
                       <template.icon size={32} strokeWidth={2.5} />
                     </div>
                     <div className="flex flex-col items-end gap-2">
                       {template.tag && (
-                        <span className="px-3 py-1 bg-indigo-50 text-indigo-600 text-[10px] font-black uppercase tracking-widest rounded-full">
+                        <span className="rounded-full bg-indigo-50 px-3 py-1 text-[10px] font-black tracking-widest text-indigo-600 uppercase">
                           {template.tag}
                         </span>
                       )}
-                      <span className="px-3 py-1 bg-slate-100 text-slate-500 text-[10px] font-black uppercase tracking-widest rounded-full">
+                      <span className="rounded-full bg-slate-100 px-3 py-1 text-[10px] font-black tracking-widest text-slate-500 uppercase">
                         {template.difficulty}
                       </span>
                     </div>
                   </div>
 
-                  <h3 className="text-2xl font-black text-slate-900 mb-4 group-hover:text-indigo-600 transition-colors">
+                  <h3 className="mb-4 text-2xl font-black text-slate-900 transition-colors group-hover:text-indigo-600">
                     {template.title}
                   </h3>
-                  <p className="text-slate-500 font-bold leading-relaxed mb-8 flex-grow">
+                  <p className="mb-8 flex-grow leading-relaxed font-bold text-slate-500">
                     {template.description}
                   </p>
 
-                  <div className="flex items-center gap-3 px-4 py-3 bg-slate-50 border border-slate-100 rounded-xl mb-8">
+                  <div className="mb-8 flex items-center gap-3 rounded-xl border border-slate-100 bg-slate-50 px-4 py-3">
                     <Globe size={16} className="text-slate-400" />
-                    <span className="text-xs font-black text-slate-400 tracking-wide uppercase">
+                    <span className="text-xs font-black tracking-wide text-slate-400 uppercase">
                       {template.jurisdiction}
                     </span>
                   </div>

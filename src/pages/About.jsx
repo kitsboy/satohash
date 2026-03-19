@@ -2,18 +2,18 @@ import { motion } from 'framer-motion'
 
 export default function About() {
   return (
-    <div className="min-h-screen pt-32 px-6 max-w-4xl mx-auto">
+    <div className="mx-auto min-h-screen max-w-4xl px-6 pt-32">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        <h1 className="text-4xl md:text-5xl font-bold font-display text-slate-900 mb-8 leading-tight">
+        <h1 className="font-display mb-8 text-4xl leading-tight font-bold text-slate-900 md:text-5xl">
           We built Satohash because <br />
           <span className="text-indigo-600">trust shouldn't require trust.</span>
         </h1>
 
-        <div className="prose prose-lg prose-slate mt-12 mb-20 text-slate-600 leading-relaxed">
+        <div className="prose prose-lg prose-slate mt-12 mb-20 leading-relaxed text-slate-600">
           <p>
             In a digital world overflowing with deepfakes and manipulated data, knowing{' '}
             <em>when</em> something existed and that it hasn't been altered is the bedrock of truth.
@@ -44,11 +44,11 @@ export default function About() {
           </ul>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-12 border-t border-slate-200 pt-16">
+        <div className="grid gap-12 border-t border-slate-200 pt-16 md:grid-cols-2">
           <div>
-            <h3 className="text-2xl font-bold font-display mb-4">The Team</h3>
-            <div className="flex items-center gap-4 mb-6">
-              <div className="w-12 h-12 bg-slate-200 rounded-full overflow-hidden">
+            <h3 className="font-display mb-4 text-2xl font-bold">The Team</h3>
+            <div className="mb-6 flex items-center gap-4">
+              <div className="h-12 w-12 overflow-hidden rounded-full bg-slate-200">
                 <img src="https://ui-avatars.com/api/?name=Cam&background=random" alt="Cam" />
               </div>
               <div>
@@ -57,7 +57,7 @@ export default function About() {
               </div>
             </div>
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-slate-200 rounded-full overflow-hidden">
+              <div className="h-12 w-12 overflow-hidden rounded-full bg-slate-200">
                 <img
                   src="https://ui-avatars.com/api/?name=Satoshi&background=random"
                   alt="Satoshi"
@@ -70,13 +70,13 @@ export default function About() {
             </div>
           </div>
           <div>
-            <h3 className="text-2xl font-bold font-display mb-4">Join Us</h3>
-            <p className="text-slate-600 mb-6">
+            <h3 className="font-display mb-4 text-2xl font-bold">Join Us</h3>
+            <p className="mb-6 text-slate-600">
               We are open source. Inspect our code, contribute features, or fork us.
             </p>
             <a
               href="#"
-              className="text-indigo-600 font-medium hover:text-indigo-700 hover:underline"
+              className="font-medium text-indigo-600 hover:text-indigo-700 hover:underline"
             >
               View on GitHub &rarr;
             </a>

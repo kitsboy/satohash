@@ -60,8 +60,12 @@ export default function Navbar() {
           <img
             src={APP_CONFIG.LOGO}
             alt={`${APP_CONFIG.NAME} Logo`}
-            style={{ height: '24px', width: 'auto' }}
-            className="group-hover:rotate-12 transition-transform duration-300"
+            width="24"
+            height="24"
+            loading="eager"
+            decoding="async"
+            style={{ height: '24px', width: '24px' }}
+            className="transition-transform duration-300 group-hover:rotate-12"
           />
           <span
             style={{
@@ -78,7 +82,7 @@ export default function Navbar() {
         </div>
 
         {/* Main Links */}
-        <div className="hidden md:flex gap-1 items-center">
+        <div className="hidden items-center gap-1 md:flex">
           {NAV_LINKS.map((link) => {
             const isActive = location.pathname === link.path
             return (
@@ -117,7 +121,7 @@ export default function Navbar() {
                 {location.pathname === link.path && (
                   <motion.div
                     layoutId="navbar-underline"
-                    className="absolute -bottom-1.5 left-0 right-0 h-0.5 bg-indigo-600 rounded-full"
+                    className="absolute right-0 -bottom-1.5 left-0 h-0.5 rounded-full bg-indigo-600"
                   />
                 )}
               </button>
@@ -153,7 +157,7 @@ export default function Navbar() {
             <motion.button
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
-              className="px-6 py-2.5 bg-indigo-600 text-white text-sm font-bold rounded-xl shadow-xl shadow-indigo-200 hover:bg-indigo-700 transition-colors"
+              className="rounded-xl bg-indigo-600 px-6 py-2.5 text-sm font-bold text-white shadow-xl shadow-indigo-200 transition-colors hover:bg-indigo-700"
             >
               Launch App
             </motion.button>
@@ -191,7 +195,7 @@ export default function Navbar() {
             initial={{ opacity: 0, height: 0, y: -10 }}
             animate={{ opacity: 1, height: 'auto', y: 0 }}
             exit={{ opacity: 0, height: 0, y: -10 }}
-            className="md:hidden absolute top-[72px] left-0 right-0 bg-white border-b border-slate-200 p-6 shadow-premium overflow-hidden z-[1050]"
+            className="shadow-premium absolute top-[72px] right-0 left-0 z-[1050] overflow-hidden border-b border-slate-200 bg-white p-6 md:hidden"
           >
             <div className="flex flex-col gap-6">
               {NAV_LINKS.map((link) => (
@@ -210,7 +214,7 @@ export default function Navbar() {
               <Link
                 to="/welcome"
                 onClick={() => setIsOpen(false)}
-                className="w-full text-center py-4 bg-indigo-600 text-white rounded-xl font-black shadow-lg shadow-indigo-100"
+                className="w-full rounded-xl bg-indigo-600 py-4 text-center font-black text-white shadow-lg shadow-indigo-100"
               >
                 Launch App
               </Link>

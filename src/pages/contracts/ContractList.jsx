@@ -63,17 +63,17 @@ export default function ContractList() {
   }
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] flex flex-col">
-      <div className="container-wide pt-44 pb-12 flex-1">
+    <div className="flex min-h-screen flex-col bg-[#f8fafc]">
+      <div className="container-wide flex-1 pt-44 pb-12">
         {/* Dashboard Header */}
         <header className="mb-12">
           <BlockchainPulse />
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mt-8">
+          <div className="mt-8 flex flex-col justify-between gap-6 md:flex-row md:items-end">
             <div className="space-y-2">
-              <h1 className="text-4xl font-black text-slate-900 tracking-tighter uppercase">
+              <h1 className="text-4xl font-black tracking-tighter text-slate-900 uppercase">
                 Protocol Dashboard
               </h1>
-              <p className="text-sm font-bold text-slate-400 uppercase tracking-widest">
+              <p className="text-sm font-bold tracking-widest text-slate-400 uppercase">
                 Managing {contracts.length} Cryptographic Proofs
               </p>
             </div>
@@ -91,11 +91,11 @@ export default function ContractList() {
         {contracts.length === 0 ? (
           <EmptyState onAction={() => navigate('/choose-template')} />
         ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-12">
+          <div className="grid grid-cols-1 gap-12 lg:grid-cols-[1fr_380px]">
             {/* Main Feed */}
             <div className="space-y-10">
               {/* Stats Ribbon */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
                 <StatCard icon={Zap} label="Total Anchors" value={stats.total} color="indigo" />
                 <StatCard
                   icon={ShieldCheck}
@@ -112,10 +112,10 @@ export default function ContractList() {
               </div>
 
               {/* Search & Filter */}
-              <div className="flex flex-col sm:flex-row gap-4">
+              <div className="flex flex-col gap-4 sm:flex-row">
                 <div className="relative flex-1">
                   <Search
-                    className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300"
+                    className="absolute top-1/2 left-4 -translate-y-1/2 text-slate-300"
                     size={18}
                   />
                   <input
@@ -123,7 +123,7 @@ export default function ContractList() {
                     placeholder="Search agreements..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full pl-12 pr-4 py-3 bg-white border border-slate-100 rounded-2xl text-sm font-bold focus:ring-4 focus:ring-indigo-50 transition-all outline-none"
+                    className="w-full rounded-2xl border border-slate-100 bg-white py-3 pr-4 pl-12 text-sm font-bold transition-all outline-none focus:ring-4 focus:ring-indigo-50"
                   />
                 </div>
                 <div className="flex gap-2">
@@ -132,10 +132,10 @@ export default function ContractList() {
                       key={status}
                       onClick={() => setFilterStatus(status)}
                       className={clsx(
-                        'px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest border transition-all',
+                        'rounded-xl border px-4 py-2 text-[10px] font-black tracking-widest uppercase transition-all',
                         filterStatus === status
-                          ? 'bg-slate-900 border-slate-900 text-white shadow-lg'
-                          : 'bg-white border-slate-100 text-slate-400 hover:border-slate-200'
+                          ? 'border-slate-900 bg-slate-900 text-white shadow-lg'
+                          : 'border-slate-100 bg-white text-slate-400 hover:border-slate-200'
                       )}
                     >
                       {status}
@@ -145,7 +145,7 @@ export default function ContractList() {
               </div>
 
               {/* Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                 <AnimatePresence mode="popLayout">
                   {filteredContracts.map((contract, idx) => (
                     <ContractCard
@@ -161,18 +161,18 @@ export default function ContractList() {
 
             {/* Right Sidebar - Activity & Protocol News */}
             <aside className="space-y-8">
-              <div className="bg-slate-100 rounded-[32px] border border-slate-200 p-8 shadow-premium sticky top-24">
-                <div className="flex items-center gap-3 mb-8">
-                  <div className="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600">
+              <div className="shadow-premium sticky top-24 rounded-[32px] border border-slate-200 bg-slate-100 p-8">
+                <div className="mb-8 flex items-center gap-3">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-50 text-indigo-600">
                     <ActivityIcon size={20} />
                   </div>
-                  <h3 className="text-sm font-black text-slate-900 uppercase tracking-tight">
+                  <h3 className="text-sm font-black tracking-tight text-slate-900 uppercase">
                     Active Protocol Feed
                   </h3>
                 </div>
 
-                <div className="space-y-8 relative">
-                  <div className="absolute left-4 top-0 bottom-0 w-px bg-slate-100" />
+                <div className="relative space-y-8">
+                  <div className="absolute top-0 bottom-0 left-4 w-px bg-slate-100" />
                   <ActivityItem
                     icon={Lock}
                     title="Merkle Root Anchored"
@@ -193,13 +193,13 @@ export default function ContractList() {
                   />
                 </div>
 
-                <div className="mt-12 pt-8 border-t border-slate-50">
-                  <div className="bg-slate-50 rounded-2xl p-4 flex items-center justify-between">
-                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                <div className="mt-12 border-t border-slate-50 pt-8">
+                  <div className="flex items-center justify-between rounded-2xl bg-slate-50 p-4">
+                    <span className="text-[10px] font-black tracking-widest text-slate-400 uppercase">
                       Global Ops
                     </span>
                     <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                      <div className="h-2 w-2 animate-pulse rounded-full bg-emerald-500" />
                       <span className="text-[10px] font-bold text-emerald-600 uppercase">
                         All Systems Nominal
                       </span>
@@ -210,20 +210,20 @@ export default function ContractList() {
 
               <Card
                 variant="glass"
-                className="bg-gradient-to-br from-slate-900 to-slate-800 border-none p-8 overflow-hidden relative"
+                className="relative overflow-hidden border-none bg-gradient-to-br from-slate-900 to-slate-800 p-8"
               >
-                <Sparkles className="absolute -right-4 -top-4 text-white/10 w-32 h-32 rotate-12" />
-                <h4 className="text-white text-sm font-black uppercase mb-3 relative z-10">
+                <Sparkles className="absolute -top-4 -right-4 h-32 w-32 rotate-12 text-white/10" />
+                <h4 className="relative z-10 mb-3 text-sm font-black text-white uppercase">
                   Premium Security Tip
                 </h4>
-                <p className="text-slate-300 text-[11px] font-medium leading-relaxed mb-4 relative z-10">
+                <p className="relative z-10 mb-4 text-[11px] leading-relaxed font-medium text-slate-300">
                   For high-value agreements, we recommend waiting for at least 6 Bitcoin
                   confirmations (approx. 1 hour) before generating the final proof package.
                 </p>
                 <Button
                   variant="ghost"
                   size="small"
-                  className="text-white hover:bg-white/10 p-0 font-bold text-[10px] uppercase tracking-widest"
+                  className="p-0 text-[10px] font-bold tracking-widest text-white uppercase hover:bg-white/10"
                 >
                   Learn More <ArrowRight size={14} className="ml-2" />
                 </Button>
@@ -244,17 +244,17 @@ function StatCard({ icon: Icon, label, value, color }) {
   }
 
   return (
-    <div className="bg-slate-100 p-6 rounded-[24px] border border-slate-200 shadow-sm flex items-center gap-5">
+    <div className="flex items-center gap-5 rounded-[24px] border border-slate-200 bg-slate-100 p-6 shadow-sm">
       <div
-        className={clsx('w-12 h-12 rounded-2xl flex items-center justify-center', colors[color])}
+        className={clsx('flex h-12 w-12 items-center justify-center rounded-2xl', colors[color])}
       >
         <Icon size={24} />
       </div>
       <div>
-        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">
+        <p className="mb-1 text-[10px] font-black tracking-widest text-slate-400 uppercase">
           {label}
         </p>
-        <p className="text-xl font-black text-slate-900 tracking-tighter">{value}</p>
+        <p className="text-xl font-black tracking-tighter text-slate-900">{value}</p>
       </div>
     </div>
   )
@@ -270,13 +270,13 @@ function ContractCard({ contract, onClick, onDelete }) {
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.95 }}
       onClick={onClick}
-      className="group bg-slate-100 rounded-[28px] border border-slate-200 p-7 shadow-sm hover:shadow-premium hover:border-indigo-100 transition-all cursor-pointer relative overflow-hidden"
+      className="group hover:shadow-premium relative cursor-pointer overflow-hidden rounded-[28px] border border-slate-200 bg-slate-100 p-7 shadow-sm transition-all hover:border-indigo-100"
     >
-      <div className="absolute top-0 right-0 p-4 flex gap-2">
+      <div className="absolute top-0 right-0 flex gap-2 p-4">
         {!isTimestamped && (
           <button
             onClick={onDelete}
-            className="p-2 text-slate-300 hover:text-rose-500 hover:bg-rose-50 rounded-xl transition-all opacity-0 group-hover:opacity-100"
+            className="rounded-xl p-2 text-slate-300 opacity-0 transition-all group-hover:opacity-100 hover:bg-rose-50 hover:text-rose-500"
           >
             <Trash2 size={18} />
           </button>
@@ -284,51 +284,51 @@ function ContractCard({ contract, onClick, onDelete }) {
         {isTimestamped && (
           <ShieldCheck
             size={20}
-            className="text-emerald-500 opacity-20 group-hover:opacity-100 transition-opacity"
+            className="text-emerald-500 opacity-20 transition-opacity group-hover:opacity-100"
           />
         )}
       </div>
 
-      <div className="flex justify-between items-start mb-6">
-        <div className="w-12 h-12 bg-slate-50 rounded-2xl flex items-center justify-center text-slate-400 group-hover:bg-indigo-50 group-hover:text-indigo-600 transition-all">
+      <div className="mb-6 flex items-start justify-between">
+        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-50 text-slate-400 transition-all group-hover:bg-indigo-50 group-hover:text-indigo-600">
           <FileText size={24} />
         </div>
         <StatusPill status={contract.status} />
       </div>
 
-      <h3 className="text-lg font-black text-slate-900 tracking-tight mb-2 group-hover:text-indigo-600 transition-colors uppercase">
+      <h3 className="mb-2 text-lg font-black tracking-tight text-slate-900 uppercase transition-colors group-hover:text-indigo-600">
         {contract.name}
       </h3>
 
-      <div className="flex items-center gap-4 mt-6 pt-6 border-t border-slate-50">
-        <div className="flex items-center gap-1.5 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+      <div className="mt-6 flex items-center gap-4 border-t border-slate-50 pt-6">
+        <div className="flex items-center gap-1.5 text-[10px] font-bold tracking-wider text-slate-400 uppercase">
           <Calendar size={12} /> {new Date(contract.updatedAt).toLocaleDateString()}
         </div>
-        <div className="flex items-center gap-1.5 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+        <div className="flex items-center gap-1.5 text-[10px] font-bold tracking-wider text-slate-400 uppercase">
           <Clock size={12} /> {isTimestamped ? 'Verified' : 'Pending'}
         </div>
       </div>
 
-      <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-indigo-500 to-purple-500 scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
+      <div className="absolute right-0 bottom-0 left-0 h-1 origin-left scale-x-0 bg-gradient-to-r from-indigo-500 to-purple-500 transition-transform group-hover:scale-x-100" />
     </motion.div>
   )
 }
 
 function ActivityItem({ icon: Icon, title, time, status }) {
   return (
-    <div className="flex gap-6 relative z-10">
-      <div className="w-8 h-8 rounded-full bg-white border-2 border-slate-100 flex items-center justify-center text-slate-400 shadow-sm">
+    <div className="relative z-10 flex gap-6">
+      <div className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-slate-100 bg-white text-slate-400 shadow-sm">
         <Icon size={14} />
       </div>
       <div className="flex-1">
-        <div className="flex justify-between items-start mb-1">
-          <h5 className="text-[11px] font-black text-slate-900 uppercase tracking-tight">
+        <div className="mb-1 flex items-start justify-between">
+          <h5 className="text-[11px] font-black tracking-tight text-slate-900 uppercase">
             {title}
           </h5>
           <span className="text-[9px] font-bold text-slate-300 uppercase">{time}</span>
         </div>
-        <span className="text-[9px] font-black text-emerald-500 uppercase tracking-widest flex items-center gap-1">
-          <div className="w-1 h-1 rounded-full bg-emerald-500" /> {status}
+        <span className="flex items-center gap-1 text-[9px] font-black tracking-widest text-emerald-500 uppercase">
+          <div className="h-1 w-1 rounded-full bg-emerald-500" /> {status}
         </span>
       </div>
     </div>
@@ -337,24 +337,24 @@ function ActivityItem({ icon: Icon, title, time, status }) {
 
 function EmptyState({ onAction }) {
   return (
-    <div className="text-center py-32 px-12 bg-slate-100 rounded-[40px] border border-slate-300 shadow-sm border-dashed">
-      <div className="w-24 h-24 bg-indigo-50 rounded-[32px] flex items-center justify-center mx-auto mb-8 relative">
+    <div className="rounded-[40px] border border-dashed border-slate-300 bg-slate-100 px-12 py-32 text-center shadow-sm">
+      <div className="relative mx-auto mb-8 flex h-24 w-24 items-center justify-center rounded-[32px] bg-indigo-50">
         <FileText size={40} className="text-indigo-600" />
         <motion.div
           animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
           transition={{ duration: 3, repeat: Infinity }}
-          className="absolute -right-2 -top-2 w-10 h-10 bg-white shadow-lg rounded-2xl flex items-center justify-center text-yellow-500"
+          className="absolute -top-2 -right-2 flex h-10 w-10 items-center justify-center rounded-2xl bg-white text-yellow-500 shadow-lg"
         >
           <Sparkles size={20} />
         </motion.div>
       </div>
-      <h2 className="text-2xl font-black text-slate-900 uppercase tracking-tighter mb-4">
+      <h2 className="mb-4 text-2xl font-black tracking-tighter text-slate-900 uppercase">
         Your Control Center is Ready
       </h2>
-      <p className="text-slate-400 text-sm font-bold uppercase tracking-widest max-w-sm mx-auto mb-12">
+      <p className="mx-auto mb-12 max-w-sm text-sm font-bold tracking-widest text-slate-400 uppercase">
         Launch your first cryptographic agreement anchored to the Bitcoin network.
       </p>
-      <div className="flex flex-col sm:flex-row justify-center gap-4">
+      <div className="flex flex-col justify-center gap-4 sm:flex-row">
         <Button variant="primary" size="large" onClick={onAction}>
           Launch Agreement
         </Button>

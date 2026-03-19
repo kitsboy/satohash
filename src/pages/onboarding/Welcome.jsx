@@ -144,11 +144,11 @@ export default function Welcome() {
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="inline-flex items-center gap-3 px-6 py-2 bg-indigo-50/50 border border-indigo-100 rounded-full text-xs font-black text-indigo-600 mb-12 uppercase tracking-widest shadow-sm"
+              className="mb-12 inline-flex items-center gap-3 rounded-full border border-indigo-100 bg-indigo-50/50 px-6 py-2 text-xs font-black tracking-widest text-indigo-600 uppercase shadow-sm"
             >
               <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-indigo-400 opacity-75"></span>
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-indigo-500"></span>
               </span>
               Secured by Bitcoin Network • Block #{blockHeight.toLocaleString()}
             </motion.div>
@@ -192,7 +192,7 @@ export default function Welcome() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="flex flex-col md:flex-row gap-6 justify-center"
+              className="flex flex-col justify-center gap-6 md:flex-row"
             >
               <Button
                 variant="primary"
@@ -237,7 +237,7 @@ export default function Welcome() {
 
         {/* FEATURE CARDS (THE EDUCATIONAL GRID) */}
         <div className="container-wide" style={{ paddingBottom: '120px' }}>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
             {/* ... existing features ... */}
             {FEATURE_DATA.map((feature, idx) => {
               const Icon = feature.icon
@@ -425,7 +425,7 @@ export default function Welcome() {
           style={{ paddingBottom: '120px', background: '#fff', position: 'relative' }}
         >
           <div className="container-wide">
-            <div className="max-w-4xl mx-auto">
+            <div className="mx-auto max-w-4xl">
               <h2
                 style={{
                   fontSize: ' clamp(32px, 5vw, 42px)',
@@ -437,7 +437,7 @@ export default function Welcome() {
               >
                 Protocol Mechanical Depth
               </h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
                 <ProtocolStep
                   title="01 / Local Hashing"
                   text="Your document is processed into a 64-character SHA-256 fingerprint locally. No one, including Satohash, ever sees your content."
@@ -479,7 +479,7 @@ export default function Welcome() {
           />
 
           <div className="container-wide" style={{ position: 'relative' }}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+            <div className="grid grid-cols-1 items-center gap-16 md:grid-cols-2">
               <div>
                 <h3
                   style={{

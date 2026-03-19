@@ -79,7 +79,7 @@ export default function TimestampProgress() {
 
   return (
     <div className="page">
-      <div className="container container-narrow text-center">
+      <div className="container-narrow container text-center">
         <div className="page-header">
           <h1 className="page-title">{t('timestamp.progress.title')}</h1>
         </div>

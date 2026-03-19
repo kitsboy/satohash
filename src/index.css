@@ -39,7 +39,7 @@
 
 @layer base {
   body {
-    @apply bg-slate-50 text-slate-900 font-sans antialiased;
+    @apply bg-slate-50 font-sans text-slate-900 antialiased;
     background-image:
       radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.1) 0px, transparent 50%),
       radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.1) 0px, transparent 50%);
@@ -65,11 +65,11 @@
 
 @layer utilities {
   .glass {
-    @apply bg-white/70 backdrop-blur-md border border-white/50 shadow-lg shadow-indigo-100/20;
+    @apply border border-white/50 bg-white/70 shadow-lg shadow-indigo-100/20 backdrop-blur-md;
   }
 
   .glass-card {
-    @apply bg-white/80 backdrop-blur-xl border border-white/60 shadow-premium rounded-2xl;
+    @apply shadow-premium rounded-2xl border border-white/60 bg-white/80 backdrop-blur-xl;
     position: relative;
     overflow: hidden;
     transition:
@@ -101,48 +101,48 @@
   }
 
   .status-pill {
-    @apply px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest flex items-center gap-1.5 border transition-all;
+    @apply flex items-center gap-1.5 rounded-full border px-3 py-1 text-[10px] font-black tracking-widest uppercase transition-all;
   }
 
   .status-pill-draft {
-    @apply bg-amber-50 text-amber-600 border-amber-100;
+    @apply border-amber-100 bg-amber-50 text-amber-600;
   }
 
   .status-pill-waiting {
-    @apply bg-indigo-50 text-indigo-600 border-indigo-100;
+    @apply border-indigo-100 bg-indigo-50 text-indigo-600;
   }
 
   .status-pill-signed {
-    @apply bg-blue-50 text-blue-600 border-blue-100;
+    @apply border-blue-100 bg-blue-50 text-blue-600;
   }
 
   .status-pill-timestamped {
-    @apply bg-emerald-50 text-emerald-600 border-emerald-100 shadow-sm shadow-emerald-100/50;
+    @apply border-emerald-100 bg-emerald-50 text-emerald-600 shadow-sm shadow-emerald-100/50;
   }
 
   .status-pill-pending {
-    @apply bg-slate-50 text-slate-500 border-slate-100;
+    @apply border-slate-100 bg-slate-50 text-slate-500;
   }
 
   .status-pill-error {
-    @apply bg-rose-50 text-rose-600 border-rose-100;
+    @apply border-rose-100 bg-rose-50 text-rose-600;
   }
 
   /* Document Paper View */
   .document-paper {
-    @apply bg-white shadow-premium rounded-xl p-12 md:p-24 relative ring-1 ring-slate-200 overflow-hidden font-serif leading-[1.8] text-slate-800;
+    @apply shadow-premium relative overflow-hidden rounded-xl bg-white p-12 font-serif leading-[1.8] text-slate-800 ring-1 ring-slate-200 md:p-24;
   }
 
   .document-watermark {
-    @apply absolute inset-0 pointer-events-none opacity-[0.015] overflow-hidden select-none font-mono text-[7px] leading-tight rotate-[-5deg] scale-150 uppercase;
+    @apply pointer-events-none absolute inset-0 scale-150 rotate-[-5deg] overflow-hidden font-mono text-[7px] leading-tight uppercase opacity-[0.015] select-none;
   }
 
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600;
+    @apply bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent;
   }
 
   .section-divider {
-    @apply h-px w-full bg-gradient-to-r from-transparent via-slate-200 to-transparent my-16 opacity-50;
+    @apply my-16 h-px w-full bg-gradient-to-r from-transparent via-slate-200 to-transparent opacity-50;
     border-top: 1px solid var(--color-slate-200);
   }
 
@@ -151,11 +151,11 @@
   }
 
   .container-narrow {
-    @apply max-w-3xl mx-auto px-4;
+    @apply mx-auto max-w-3xl px-4;
   }
 
   .container-wide {
-    @apply max-w-7xl mx-auto px-4;
+    @apply mx-auto max-w-7xl px-4;
   }
 
   .animate-float {
@@ -187,5 +187,5 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-slate-300 rounded-full hover:bg-slate-400;
+  @apply rounded-full bg-slate-300 hover:bg-slate-400;
 }

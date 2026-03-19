@@ -56,11 +56,11 @@ export default function ContractView() {
 
   if (!contract) {
     return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+      <div className="flex min-h-screen items-center justify-center bg-slate-50">
         <motion.div
           animate={{ rotate: 360 }}
           transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-          className="w-12 h-12 border-4 border-indigo-600 border-t-transparent rounded-full"
+          className="h-12 w-12 rounded-full border-4 border-indigo-600 border-t-transparent"
         />
       </div>
     )
@@ -197,19 +197,19 @@ export default function ContractView() {
   }
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] flex flex-col">
+    <div className="flex min-h-screen flex-col bg-[#f8fafc]">
       {/* Top Navigation Bar */}
-      <nav className="h-16 border-b border-slate-200 bg-white/70 backdrop-blur-xl flex items-center justify-between px-6 sticky top-0 z-50">
+      <nav className="sticky top-0 z-50 flex h-16 items-center justify-between border-b border-slate-200 bg-white/70 px-6 backdrop-blur-xl">
         <div className="flex items-center gap-4">
           <Button variant="ghost" size="small" onClick={() => navigate('/contracts')}>
             <ArrowLeft size={18} />
           </Button>
           <div className="h-6 w-px bg-slate-200" />
           <div className="flex flex-col">
-            <h1 className="text-sm font-black text-slate-900 tracking-tight uppercase">
+            <h1 className="text-sm font-black tracking-tight text-slate-900 uppercase">
               {contract.name}
             </h1>
-            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+            <span className="text-[10px] font-bold tracking-widest text-slate-400 uppercase">
               Ref: {contract.id.substring(0, 8)}
             </span>
           </div>
@@ -226,10 +226,10 @@ export default function ContractView() {
               <Edit size={16} /> Edit Draft
             </Button>
           )}
-          <div className="flex bg-slate-50 border border-slate-100 rounded-lg p-1">
+          <div className="flex rounded-lg border border-slate-100 bg-slate-50 p-1">
             <a
               href={`mailto:?subject=Satohash Proof&body=Check out this cryptographic proof: https://satohash.com/verify/${contractId}`}
-              className="p-1.5 text-indigo-600 hover:bg-indigo-100 hover:text-indigo-800 rounded-md transition-colors"
+              className="rounded-md p-1.5 text-indigo-600 transition-colors hover:bg-indigo-100 hover:text-indigo-800"
               title="Share via Email"
             >
               <Mail size={16} />
@@ -238,7 +238,7 @@ export default function ContractView() {
               href={`https://twitter.com/intent/tweet?text=Cryptographic Proof on Satohash&url=https://satohash.com/verify/${contractId}`}
               target="_blank"
               rel="noreferrer"
-              className="p-1.5 text-blue-500 hover:bg-blue-50 hover:text-blue-700 rounded-md transition-colors"
+              className="rounded-md p-1.5 text-blue-500 transition-colors hover:bg-blue-50 hover:text-blue-700"
               title="Share on Twitter/X"
             >
               <Twitter size={16} />
@@ -247,7 +247,7 @@ export default function ContractView() {
               href={`https://www.linkedin.com/sharing/share-offsite/?url=https://satohash.com/verify/${contractId}`}
               target="_blank"
               rel="noreferrer"
-              className="p-1.5 text-blue-700 hover:bg-blue-50 hover:text-blue-900 rounded-md transition-colors"
+              className="rounded-md p-1.5 text-blue-700 transition-colors hover:bg-blue-50 hover:text-blue-900"
               title="Share on LinkedIn"
             >
               <Linkedin size={16} />
@@ -256,10 +256,10 @@ export default function ContractView() {
         </div>
       </nav>
 
-      <div className="flex-1 flex overflow-hidden">
+      <div className="flex flex-1 overflow-hidden">
         {/* Main Content Area */}
-        <main className="flex-1 overflow-y-auto bg-slate-50/50 relative py-12 px-8">
-          <div className="max-w-[850px] mx-auto">
+        <main className="relative flex-1 overflow-y-auto bg-slate-50/50 px-8 py-12">
+          <div className="mx-auto max-w-[850px]">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -268,7 +268,7 @@ export default function ContractView() {
               {/* Cryptographic Watermark */}
               <img
                 src="/logo.png"
-                className="absolute top-12 left-10 w-10 z-10 select-none pointer-events-none"
+                className="pointer-events-none absolute top-12 left-10 z-10 w-10 select-none"
                 alt=""
               />
               <div className="document-watermark z-0">
@@ -276,7 +276,7 @@ export default function ContractView() {
               </div>
 
               <div className="relative z-10 font-serif text-[18px] leading-[1.8] text-slate-800 antialiased">
-                <h2 className="text-3xl font-black text-slate-900 font-sans mb-12 border-b-2 border-slate-900 pb-4 uppercase tracking-tighter">
+                <h2 className="mb-12 border-b-2 border-slate-900 pb-4 font-sans text-3xl font-black tracking-tighter text-slate-900 uppercase">
                   {contract.name}
                 </h2>
                 <div className="whitespace-pre-wrap">{contract.content}</div>
@@ -288,16 +288,16 @@ export default function ContractView() {
                     animate={{ opacity: 1, scale: 1 }}
                     className="mt-24 flex justify-end"
                   >
-                    <div className="relative group">
-                      <div className="absolute inset-0 bg-indigo-600 blur-2xl opacity-10 group-hover:opacity-20 transition-opacity" />
-                      <div className="relative flex flex-col items-center p-6 bg-white border-2 border-indigo-600 rounded-2xl">
-                        <div className="w-16 h-16 bg-indigo-600 rounded-full flex items-center justify-center text-white mb-3 shadow-lg shadow-indigo-100">
+                    <div className="group relative">
+                      <div className="absolute inset-0 bg-indigo-600 opacity-10 blur-2xl transition-opacity group-hover:opacity-20" />
+                      <div className="relative flex flex-col items-center rounded-2xl border-2 border-indigo-600 bg-white p-6">
+                        <div className="mb-3 flex h-16 w-16 items-center justify-center rounded-full bg-indigo-600 text-white shadow-lg shadow-indigo-100">
                           <ShieldCheck size={32} />
                         </div>
-                        <span className="text-[11px] font-black text-slate-900 uppercase tracking-widest">
+                        <span className="text-[11px] font-black tracking-widest text-slate-900 uppercase">
                           {isTimestamped ? 'Verified Anchor' : 'Signed Agreement'}
                         </span>
-                        <span className="text-[9px] font-bold text-slate-400 mt-1 uppercase tracking-tighter">
+                        <span className="mt-1 text-[9px] font-bold tracking-tighter text-slate-400 uppercase">
                           {contract.id.substring(0, 16)}
                         </span>
                       </div>
@@ -310,9 +310,9 @@ export default function ContractView() {
         </main>
 
         {/* Right Metadata Panel */}
-        <aside className="w-96 border-l border-slate-200 bg-white flex flex-col">
+        <aside className="flex w-96 flex-col border-l border-slate-200 bg-white">
           {/* Panel Tabs */}
-          <div className="flex border-b border-slate-100 h-14">
+          <div className="flex h-14 border-b border-slate-100">
             <PanelTab
               active={activePanel === 'summary'}
               onClick={() => setActivePanel('summary')}
@@ -345,11 +345,11 @@ export default function ContractView() {
                 >
                   {/* Action Banner */}
                   {isSigned && (
-                    <Card variant="glass" className="bg-indigo-50/50 border-indigo-100">
-                      <h4 className="text-xs font-black text-indigo-900 uppercase mb-2">
+                    <Card variant="glass" className="border-indigo-100 bg-indigo-50/50">
+                      <h4 className="mb-2 text-xs font-black text-indigo-900 uppercase">
                         Ready to Anchor
                       </h4>
-                      <p className="text-[11px] text-indigo-700 font-medium mb-4 leading-relaxed">
+                      <p className="mb-4 text-[11px] leading-relaxed font-medium text-indigo-700">
                         This document is fully signed. Anchor it to the Bitcoin blockchain to create
                         mathematical proof of existence.
                       </p>
@@ -367,7 +367,7 @@ export default function ContractView() {
 
                   {isTimestamped && (
                     <div className="space-y-4">
-                      <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">
+                      <h4 className="text-[10px] font-black tracking-[0.2em] text-slate-400 uppercase">
                         Verified Proofs
                       </h4>
                       <div className="grid grid-cols-1 gap-3">
@@ -386,9 +386,9 @@ export default function ContractView() {
                         />
                       </div>
 
-                      <div className="h-px bg-slate-100 my-4" />
+                      <div className="my-4 h-px bg-slate-100" />
 
-                      <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">
+                      <h4 className="text-[10px] font-black tracking-[0.2em] text-slate-400 uppercase">
                         Advanced Tools
                       </h4>
                       <div className="grid grid-cols-2 gap-3">
@@ -407,10 +407,10 @@ export default function ContractView() {
                   )}
 
                   <div>
-                    <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-4">
+                    <h4 className="mb-4 text-[10px] font-black tracking-[0.2em] text-slate-400 uppercase">
                       Metadata
                     </h4>
-                    <div className="bg-slate-50 rounded-2xl p-5 border border-slate-100 space-y-4">
+                    <div className="space-y-4 rounded-2xl border border-slate-100 bg-slate-50 p-5">
                       <MetaItem
                         label="Created"
                         value={new Date(contract.createdAt).toLocaleString()}
@@ -434,40 +434,40 @@ export default function ContractView() {
                   exit={{ opacity: 0, x: -10 }}
                   className="space-y-6"
                 >
-                  <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">
+                  <h4 className="text-[10px] font-black tracking-[0.2em] text-slate-400 uppercase">
                     Live Activity
                   </h4>
                   <div className="space-y-4">
                     {activeSigners.map((signer) => (
                       <div
                         key={signer.id}
-                        className="flex items-center gap-3 p-3 bg-slate-50 rounded-xl border border-slate-100"
+                        className="flex items-center gap-3 rounded-xl border border-slate-100 bg-slate-50 p-3"
                       >
-                        <div className="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-slate-500 text-[10px] font-bold">
+                        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-200 text-[10px] font-bold text-slate-500">
                           {signer.name
                             .split(' ')
                             .map((n) => n[0])
                             .join('')}
                         </div>
                         <div className="flex-1">
-                          <p className="text-[11px] font-black text-slate-900 uppercase tracking-tighter">
+                          <p className="text-[11px] font-black tracking-tighter text-slate-900 uppercase">
                             {signer.name}
                           </p>
-                          <div className="flex items-center gap-1.5 mt-1">
+                          <div className="mt-1 flex items-center gap-1.5">
                             <div
                               className={clsx(
-                                'w-1.5 h-1.5 rounded-full animate-pulse',
+                                'h-1.5 w-1.5 animate-pulse rounded-full',
                                 signer.status === 'viewing' ? 'bg-green-500' : 'bg-slate-300'
                               )}
                             />
-                            <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">
+                            <span className="text-[9px] font-bold tracking-widest text-slate-400 uppercase">
                               {signer.status}
                             </span>
                           </div>
                         </div>
                       </div>
                     ))}
-                    <div className="mt-6 pt-6 border-t border-slate-100">
+                    <div className="mt-6 border-t border-slate-100 pt-6">
                       <Button
                         variant="outline"
                         fullWidth
@@ -508,8 +508,8 @@ function PanelTab({ active, onClick, icon: Icon, label }) {
     <button
       onClick={onClick}
       className={clsx(
-        'flex-1 flex items-center justify-center gap-2 text-[10px] font-black uppercase tracking-[0.15em] transition-all relative overflow-hidden',
-        active ? 'text-indigo-600' : 'text-slate-400 hover:text-slate-600 hover:bg-slate-50'
+        'relative flex flex-1 items-center justify-center gap-2 overflow-hidden text-[10px] font-black tracking-[0.15em] uppercase transition-all',
+        active ? 'text-indigo-600' : 'text-slate-400 hover:bg-slate-50 hover:text-slate-600'
       )}
     >
       <Icon size={14} strokeWidth={2.5} />
@@ -517,7 +517,7 @@ function PanelTab({ active, onClick, icon: Icon, label }) {
       {active && (
         <motion.div
           layoutId="active-tab"
-          className="absolute bottom-0 left-0 right-0 h-0.5 bg-indigo-600"
+          className="absolute right-0 bottom-0 left-0 h-0.5 bg-indigo-600"
         />
       )}
     </button>
@@ -526,13 +526,13 @@ function PanelTab({ active, onClick, icon: Icon, label }) {
 
 function MetaItem({ label, value, mono }) {
   return (
-    <div className="flex justify-between items-start">
-      <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
+    <div className="flex items-start justify-between">
+      <span className="text-[10px] font-black tracking-widest text-slate-400 uppercase">
         {label}
       </span>
       <span
         className={clsx(
-          'text-[11px] font-bold text-slate-900 text-right max-w-[180px]',
+          'max-w-[180px] text-right text-[11px] font-bold text-slate-900',
           mono && 'font-mono text-[9px] break-all'
         )}
       >
@@ -547,15 +547,15 @@ function QuickAction({ icon: Icon, label, subLabel, highlight, onClick }) {
     <button
       onClick={onClick}
       className={clsx(
-        'flex items-center gap-4 p-4 rounded-2xl border transition-all text-left group',
+        'group flex items-center gap-4 rounded-2xl border p-4 text-left transition-all',
         highlight
-          ? 'bg-indigo-600 border-indigo-500 text-white shadow-lg shadow-indigo-100'
-          : 'bg-white border-slate-100 text-slate-900 hover:border-slate-200'
+          ? 'border-indigo-500 bg-indigo-600 text-white shadow-lg shadow-indigo-100'
+          : 'border-slate-100 bg-white text-slate-900 hover:border-slate-200'
       )}
     >
       <div
         className={clsx(
-          'w-10 h-10 rounded-xl flex items-center justify-center',
+          'flex h-10 w-10 items-center justify-center rounded-xl',
           highlight ? 'bg-white/10' : 'bg-slate-50 group-hover:bg-indigo-50'
         )}
       >
@@ -565,10 +565,10 @@ function QuickAction({ icon: Icon, label, subLabel, highlight, onClick }) {
         />
       </div>
       <div>
-        <p className="text-xs font-black uppercase tracking-tight leading-none mb-1">{label}</p>
+        <p className="mb-1 text-xs leading-none font-black tracking-tight uppercase">{label}</p>
         <p
           className={clsx(
-            'text-[9px] font-bold opacity-60 uppercase tracking-tighter',
+            'text-[9px] font-bold tracking-tighter uppercase opacity-60',
             highlight ? 'text-indigo-100' : 'text-slate-400'
           )}
         >
@@ -583,12 +583,12 @@ function ToolCard({ icon: Icon, label, onClick }) {
   return (
     <button
       onClick={onClick}
-      className="flex flex-col items-center gap-3 p-4 bg-slate-50 rounded-2xl border border-slate-100 hover:border-indigo-200 hover:bg-indigo-50 group transition-all"
+      className="group flex flex-col items-center gap-3 rounded-2xl border border-slate-100 bg-slate-50 p-4 transition-all hover:border-indigo-200 hover:bg-indigo-50"
     >
-      <div className="w-10 h-10 bg-white rounded-xl shadow-sm flex items-center justify-center text-slate-400 group-hover:text-indigo-600 transition-colors">
+      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-slate-400 shadow-sm transition-colors group-hover:text-indigo-600">
         <Icon size={20} />
       </div>
-      <span className="text-[9px] font-black text-slate-600 uppercase tracking-widest text-center">
+      <span className="text-center text-[9px] font-black tracking-widest text-slate-600 uppercase">
         {label}
       </span>
     </button>

@@ -5,6 +5,10 @@ import Footer from './components/Footer'
 import GlobalDropzone from './components/GlobalDropzone'
 import LoadingScreen from './components/LoadingScreen'
 import { Toaster } from 'sonner'
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
+
+NProgress.configure({ showSpinner: false, speed: 400 })
 
 // Route-based Code Splitting (Lazy Loading)
 const Welcome = React.lazy(() => import('./pages/onboarding/Welcome'))
@@ -35,6 +39,14 @@ const WebCapture = React.lazy(() => import('./pages/WebCapture'))
 
 function AppContent() {
   const location = useLocation()
+
+  React.useEffect(() => {
+    NProgress.start()
+    // Simulate loading delay for page transitions to ensure progress bar renders smoothly
+    const timer = setTimeout(() => NProgress.done(), 200)
+    return () => clearTimeout(timer)
+  }, [location.pathname])
+
   const hideNavbarPaths = ['/contracts/new/', '/contracts/', '/sign', '/timestamp/']
   const shouldHideNavbar =
     hideNavbarPaths.some((path) => location.pathname.includes(path)) &&

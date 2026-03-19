@@ -37,23 +37,23 @@ export default function MerkleExplorer({ tree, highlightedIndex = null }) {
   }
 
   return (
-    <div className="merkle-explorer p-8 bg-slate-900 rounded-[32px] overflow-hidden relative border border-slate-800 shadow-2xl">
+    <div className="merkle-explorer relative overflow-hidden rounded-[32px] border border-slate-800 bg-slate-900 p-8 shadow-2xl">
       {/* Visual Header */}
-      <div className="flex items-center justify-between mb-12">
+      <div className="mb-12 flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <div className="w-12 h-12 rounded-2xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center border border-indigo-500/30">
+          <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-indigo-500/30 bg-indigo-500/20 text-indigo-400">
             <Layers size={24} />
           </div>
           <div>
-            <h3 className="text-xl font-black text-white tracking-tight uppercase">
+            <h3 className="text-xl font-black tracking-tight text-white uppercase">
               Protocol Layer: Merkle Tree
             </h3>
-            <p className="text-xs text-slate-400 font-bold uppercase tracking-widest mt-1">
+            <p className="mt-1 text-xs font-bold tracking-widest text-slate-400 uppercase">
               Hierarchical Cryptographic Proof
             </p>
           </div>
         </div>
-        <div className="px-4 py-2 bg-emerald-500/10 border border-emerald-500/20 rounded-full text-[10px] font-black text-emerald-400 uppercase tracking-widest">
+        <div className="rounded-full border border-emerald-500/20 bg-emerald-500/10 px-4 py-2 text-[10px] font-black tracking-widest text-emerald-400 uppercase">
           Live Computation
         </div>
       </div>
@@ -64,38 +64,38 @@ export default function MerkleExplorer({ tree, highlightedIndex = null }) {
         <motion.div
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          className="relative group cursor-help"
+          className="group relative cursor-help"
           onClick={() => setSelectedLevel('root')}
         >
-          <div className="w-64 p-6 bg-indigo-600 rounded-2xl border-4 border-indigo-400/30 shadow-2xl shadow-indigo-500/20 text-center relative z-10 transition-transform active:scale-95">
-            <div className="flex items-center justify-center gap-2 mb-2 text-indigo-100">
+          <div className="relative z-10 w-64 rounded-2xl border-4 border-indigo-400/30 bg-indigo-600 p-6 text-center shadow-2xl shadow-indigo-500/20 transition-transform active:scale-95">
+            <div className="mb-2 flex items-center justify-center gap-2 text-indigo-100">
               <Shield size={16} />
-              <span className="text-[10px] font-black uppercase tracking-widest">
+              <span className="text-[10px] font-black tracking-widest uppercase">
                 Merkle Root (Anchor)
               </span>
             </div>
-            <div className="font-mono text-[11px] text-white truncate px-2 bg-indigo-700/50 py-2 rounded-lg border border-indigo-400/20">
+            <div className="truncate rounded-lg border border-indigo-400/20 bg-indigo-700/50 px-2 py-2 font-mono text-[11px] text-white">
               {tree.root}
             </div>
           </div>
           {/* Animated Lines coming down (pseudo-code visualization) */}
-          <div className="absolute top-full left-1/2 w-0.5 h-16 bg-gradient-to-b from-indigo-500 to-transparent" />
+          <div className="absolute top-full left-1/2 h-16 w-0.5 bg-gradient-to-b from-indigo-500 to-transparent" />
         </motion.div>
 
         {/* INTERMEDIATE BRANCHES (Simplified for UI depth) */}
-        <div className="flex justify-around w-full max-w-4xl relative">
-          <div className="absolute top-0 left-1/4 right-1/4 h-px bg-slate-800" />
+        <div className="relative flex w-full max-w-4xl justify-around">
+          <div className="absolute top-0 right-1/4 left-1/4 h-px bg-slate-800" />
 
           {[1, 2].map((i) => (
             <div key={i} className="flex flex-col items-center gap-8">
               <div
-                className="w-48 p-4 bg-slate-800 border border-slate-700 rounded-xl text-center active:scale-95 cursor-pointer transition-all"
+                className="w-48 cursor-pointer rounded-xl border border-slate-700 bg-slate-800 p-4 text-center transition-all active:scale-95"
                 onClick={() => setSelectedLevel('branch')}
               >
-                <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest block mb-2">
+                <span className="mb-2 block text-[9px] font-black tracking-widest text-slate-500 uppercase">
                   Branch Node
                 </span>
-                <div className="h-2 bg-slate-700 rounded w-full border border-slate-600/50" />
+                <div className="h-2 w-full rounded border border-slate-600/50 bg-slate-700" />
               </div>
 
               {/* LEAVES (The actual files/atoms) */}
@@ -105,13 +105,13 @@ export default function MerkleExplorer({ tree, highlightedIndex = null }) {
                     key={idx}
                     whileHover={{ y: -5, scale: 1.05 }}
                     onClick={() => setSelectedAtom(atom)}
-                    className={`w-32 p-4 rounded-xl border-2 transition-all cursor-pointer ${
+                    className={`w-32 cursor-pointer rounded-xl border-2 p-4 transition-all ${
                       highlightedIndex === (i - 1) * 2 + idx
-                        ? 'bg-indigo-500/20 border-indigo-500 shadow-lg shadow-indigo-500/10'
-                        : 'bg-slate-800/50 border-slate-700 hover:border-slate-500'
+                        ? 'border-indigo-500 bg-indigo-500/20 shadow-lg shadow-indigo-500/10'
+                        : 'border-slate-700 bg-slate-800/50 hover:border-slate-500'
                     }`}
                   >
-                    <div className="flex items-center gap-2 mb-3">
+                    <div className="mb-3 flex items-center gap-2">
                       <FileText
                         size={14}
                         className={
@@ -124,10 +124,10 @@ export default function MerkleExplorer({ tree, highlightedIndex = null }) {
                         Document Atom
                       </span>
                     </div>
-                    <div className="text-[10px] text-slate-300 font-medium line-clamp-2 italic mb-2">
+                    <div className="mb-2 line-clamp-2 text-[10px] font-medium text-slate-300 italic">
                       "{atom.substring(0, 40)}..."
                     </div>
-                    <div className="h-1 bg-slate-700 rounded-full overflow-hidden">
+                    <div className="h-1 overflow-hidden rounded-full bg-slate-700">
                       <motion.div
                         initial={{ width: 0 }}
                         animate={{ width: '100%' }}
@@ -148,7 +148,7 @@ export default function MerkleExplorer({ tree, highlightedIndex = null }) {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 10 }}
-            className="mt-12 p-6 bg-slate-800 border border-slate-700 rounded-2xl relative"
+            className="relative mt-12 rounded-2xl border border-slate-700 bg-slate-800 p-6"
           >
             <button
               onClick={() => setSelectedAtom(null)}
@@ -156,15 +156,15 @@ export default function MerkleExplorer({ tree, highlightedIndex = null }) {
             >
               ✕
             </button>
-            <h4 className="text-xs font-black text-indigo-400 uppercase tracking-widest mb-4">
+            <h4 className="mb-4 text-xs font-black tracking-widest text-indigo-400 uppercase">
               Leaf Specification
             </h4>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="text-[9px] font-black text-slate-500 uppercase block mb-1">
+                <label className="mb-1 block text-[9px] font-black text-slate-500 uppercase">
                   Raw Identifier
                 </label>
-                <p className="text-[11px] text-white font-mono break-all">{selectedAtom}</p>
+                <p className="font-mono text-[11px] break-all text-white">{selectedAtom}</p>
               </div>
               <div className="flex flex-col justify-end">
                 <Button variant="primary" size="small" onClick={() => downloadProof(selectedAtom)}>
@@ -177,12 +177,12 @@ export default function MerkleExplorer({ tree, highlightedIndex = null }) {
       </AnimatePresence>
 
       {/* PROOF OF HISTORY TIMELINE */}
-      <div className="mt-20 pt-12 border-t border-slate-800">
-        <h4 className="text-[10px] font-black text-indigo-400 uppercase tracking-[0.2em] mb-8 text-center">
+      <div className="mt-20 border-t border-slate-800 pt-12">
+        <h4 className="mb-8 text-center text-[10px] font-black tracking-[0.2em] text-indigo-400 uppercase">
           Protocol Journey: Proof of History
         </h4>
-        <div className="flex justify-between items-start max-w-2xl mx-auto relative">
-          <div className="absolute top-4 left-0 right-0 h-0.5 bg-slate-800 z-0" />
+        <div className="relative mx-auto flex max-w-2xl items-start justify-between">
+          <div className="absolute top-4 right-0 left-0 z-0 h-0.5 bg-slate-800" />
 
           <HistoryStep icon={Zap} label="Hashing" status="Complete" active />
           <HistoryStep icon={Layers} label="Bundling" status="Complete" active />
@@ -191,17 +191,17 @@ export default function MerkleExplorer({ tree, highlightedIndex = null }) {
         </div>
       </div>
 
-      <div className="mt-16 pt-8 border-t border-slate-800 flex justify-center gap-8 text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">
+      <div className="mt-16 flex justify-center gap-8 border-t border-slate-800 pt-8 text-[10px] font-black tracking-[0.2em] text-slate-500 uppercase">
         <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-indigo-500" />
+          <div className="h-2 w-2 rounded-full bg-indigo-500" />
           Secure Anchor
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-slate-700" />
+          <div className="h-2 w-2 rounded-full bg-slate-700" />
           Cryptographic Branch
         </div>
         <div className="flex items-center gap-2 text-indigo-400">
-          <div className="w-2 h-2 rounded-full bg-indigo-400 animate-ping" />
+          <div className="h-2 w-2 animate-ping rounded-full bg-indigo-400" />
           Verified Leaf
         </div>
       </div>
@@ -211,9 +211,9 @@ export default function MerkleExplorer({ tree, highlightedIndex = null }) {
 
 function HistoryStep({ icon: Icon, label, status, active }) {
   return (
-    <div className="flex flex-col items-center gap-3 relative z-10 w-24">
+    <div className="relative z-10 flex w-24 flex-col items-center gap-3">
       <div
-        className={`w-8 h-8 rounded-full flex items-center justify-center border-2 ${active ? 'bg-indigo-500 border-indigo-400 text-white' : 'bg-slate-900 border-slate-800 text-slate-600'}`}
+        className={`flex h-8 w-8 items-center justify-center rounded-full border-2 ${active ? 'border-indigo-400 bg-indigo-500 text-white' : 'border-slate-800 bg-slate-900 text-slate-600'}`}
       >
         <Icon size={14} />
       </div>
@@ -223,7 +223,7 @@ function HistoryStep({ icon: Icon, label, status, active }) {
         >
           {label}
         </p>
-        <p className="text-[8px] font-bold text-slate-500 uppercase mt-1">{status}</p>
+        <p className="mt-1 text-[8px] font-bold text-slate-500 uppercase">{status}</p>
       </div>
     </div>
   )

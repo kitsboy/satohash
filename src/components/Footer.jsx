@@ -12,21 +12,29 @@ export default function Footer() {
   const bitcoinAddress = 'bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh'
 
   return (
-    <footer className="w-full bg-slate-900 border-t border-slate-800 pt-24 pb-12 px-6 relative overflow-hidden mt-auto">
+    <footer className="relative mt-auto w-full overflow-hidden border-t border-slate-800 bg-slate-900 px-6 pt-24 pb-12">
       {/* Background Glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-px bg-gradient-to-r from-transparent via-indigo-500/50 to-transparent" />
+      <div className="absolute top-0 left-1/2 h-px w-full max-w-4xl -translate-x-1/2 bg-gradient-to-r from-transparent via-indigo-500/50 to-transparent" />
 
-      <div className="max-w-7xl mx-auto relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-20">
+      <div className="relative z-10 mx-auto max-w-7xl">
+        <div className="mb-20 grid grid-cols-1 gap-12 md:grid-cols-4">
           {/* Brand & Socials Section */}
           <div className="col-span-1 md:col-span-1">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center p-2 shadow-lg shadow-indigo-900/50">
-                <img src="/logo.png" alt="Logo" className="w-full h-full object-contain" />
+            <div className="mb-6 flex items-center gap-3">
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white p-2 shadow-lg shadow-indigo-900/50">
+                <img
+                  src="/logo.png"
+                  alt="Satohash Logo"
+                  width="32"
+                  height="32"
+                  loading="lazy"
+                  decoding="async"
+                  className="h-full w-full object-contain"
+                />
               </div>
-              <span className="text-2xl font-black text-white tracking-tighter">Satohash</span>
+              <span className="text-2xl font-black tracking-tighter text-white">Satohash</span>
             </div>
-            <p className="text-slate-400 text-sm leading-relaxed font-medium mb-8">
+            <p className="mb-8 text-sm leading-relaxed font-medium text-slate-400">
               Immutable cryptographic proof for a digital world. Anchoring global trust to the
               Bitcoin blockchain safely.
             </p>
@@ -42,10 +50,10 @@ export default function Footer() {
                   href="https://twitter.com/give_bit"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-3 text-slate-300 hover:text-sky-400 transition-colors bg-slate-800/80 p-3 rounded-xl border border-slate-700/50 hover:border-sky-400/30 group shadow-md shadow-slate-900/50"
+                  className="group flex items-center gap-3 rounded-xl border border-slate-700/50 bg-slate-800/80 p-3 text-slate-300 shadow-md shadow-slate-900/50 transition-colors hover:border-sky-400/30 hover:text-sky-400"
                 >
-                  <div className="bg-slate-900 p-2 rounded-lg group-hover:bg-sky-400/20 transition-colors">
-                    <Twitter size={16} className="group-hover:text-sky-400 text-slate-400" />
+                  <div className="rounded-lg bg-slate-900 p-2 transition-colors group-hover:bg-sky-400/20">
+                    <Twitter size={16} className="text-slate-400 group-hover:text-sky-400" />
                   </div>
                   <div className="flex flex-col">
                     <span className="text-[10px] font-black tracking-widest text-slate-500 uppercase">
@@ -58,10 +66,10 @@ export default function Footer() {
                 {/* NOSTR */}
                 <a
                   href="nostr:kimi@giveabit.io"
-                  className="flex items-center gap-3 text-slate-300 hover:text-purple-400 transition-colors bg-slate-800/80 p-3 rounded-xl border border-slate-700/50 hover:border-purple-400/30 group shadow-md shadow-slate-900/50"
+                  className="group flex items-center gap-3 rounded-xl border border-slate-700/50 bg-slate-800/80 p-3 text-slate-300 shadow-md shadow-slate-900/50 transition-colors hover:border-purple-400/30 hover:text-purple-400"
                 >
-                  <div className="bg-slate-900 p-2 rounded-lg group-hover:bg-purple-400/20 transition-colors">
-                    <AtSign size={16} className="group-hover:text-purple-400 text-slate-400" />
+                  <div className="rounded-lg bg-slate-900 p-2 transition-colors group-hover:bg-purple-400/20">
+                    <AtSign size={16} className="text-slate-400 group-hover:text-purple-400" />
                   </div>
                   <div className="flex flex-col">
                     <span className="text-[10px] font-black tracking-widest text-slate-500 uppercase">
@@ -75,19 +83,19 @@ export default function Footer() {
           </div>
 
           {/* Core Navigation & Legal */}
-          <div className="grid grid-cols-2 md:grid-cols-3 col-span-1 md:col-span-3 gap-12 md:pl-12">
+          <div className="col-span-1 grid grid-cols-2 gap-12 md:col-span-3 md:grid-cols-3 md:pl-12">
             <div>
-              <h4 className="font-black text-white uppercase tracking-widest text-xs mb-6">
+              <h4 className="mb-6 text-xs font-black tracking-widest text-white uppercase">
                 Protocol
               </h4>
               <ul className="space-y-4 text-sm font-bold text-slate-400">
                 <li>
-                  <a href="/#protocol-deep-dive" className="hover:text-white transition-colors">
+                  <a href="/#protocol-deep-dive" className="transition-colors hover:text-white">
                     How it Works
                   </a>
                 </li>
                 <li>
-                  <Link to="/verify" className="hover:text-white transition-colors">
+                  <Link to="/verify" className="transition-colors hover:text-white">
                     Verifier Tool
                   </Link>
                 </li>
@@ -96,7 +104,7 @@ export default function Footer() {
                     href="https://opentimestamps.org/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="hover:text-white transition-colors flex items-center gap-1.5"
+                    className="flex items-center gap-1.5 transition-colors hover:text-white"
                   >
                     Developer API <ExternalLink size={12} />
                   </a>
@@ -105,46 +113,46 @@ export default function Footer() {
             </div>
 
             <div>
-              <h4 className="font-black text-white uppercase tracking-widest text-xs mb-6">
+              <h4 className="mb-6 text-xs font-black tracking-widest text-white uppercase">
                 Organization
               </h4>
               <ul className="space-y-4 text-sm font-bold text-slate-400">
                 <li>
-                  <Link to="/trust" className="hover:text-white transition-colors">
+                  <Link to="/trust" className="transition-colors hover:text-white">
                     Trust Center
                   </Link>
                 </li>
                 <li>
-                  <Link to="/" className="hover:text-white transition-colors">
+                  <Link to="/" className="transition-colors hover:text-white">
                     Manifesto
                   </Link>
                 </li>
                 <li>
-                  <Link to="/protocol-stats" className="hover:text-white transition-colors">
+                  <Link to="/protocol-stats" className="transition-colors hover:text-white">
                     Network Status
                   </Link>
                 </li>
               </ul>
             </div>
 
-            <div className="flex flex-col justify-between h-full">
+            <div className="flex h-full flex-col justify-between">
               <div className="mb-8 md:mb-0">
-                <h4 className="font-black text-white uppercase tracking-widest text-xs mb-6">
+                <h4 className="mb-6 text-xs font-black tracking-widest text-white uppercase">
                   Legal
                 </h4>
                 <ul className="space-y-4 text-sm font-bold text-slate-400">
                   <li>
-                    <Link to="/legal/privacy" className="hover:text-white transition-colors">
+                    <Link to="/legal/privacy" className="transition-colors hover:text-white">
                       Privacy Policy
                     </Link>
                   </li>
                   <li>
-                    <Link to="/legal/terms" className="hover:text-white transition-colors">
+                    <Link to="/legal/terms" className="transition-colors hover:text-white">
                       Terms of Service
                     </Link>
                   </li>
                   <li>
-                    <Link to="/legal/crypto-notice" className="hover:text-white transition-colors">
+                    <Link to="/legal/crypto-notice" className="transition-colors hover:text-white">
                       Compliance Rules
                     </Link>
                   </li>
@@ -152,16 +160,16 @@ export default function Footer() {
               </div>
 
               {/* Expandable Interactive Bitcoin Donation Widget */}
-              <div className="mt-auto bg-slate-800/80 border border-slate-700/50 rounded-2xl overflow-hidden transition-all shadow-xl shadow-slate-900/50 z-20">
+              <div className="z-20 mt-auto overflow-hidden rounded-2xl border border-slate-700/50 bg-slate-800/80 shadow-xl shadow-slate-900/50 transition-all">
                 <button
                   onClick={() => setShowQR(!showQR)}
-                  className="w-full flex items-center justify-between p-4 hover:bg-slate-700/80 transition-colors group cursor-pointer"
+                  className="group flex w-full cursor-pointer items-center justify-between p-4 transition-colors hover:bg-slate-700/80"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="bg-[#F7931A]/10 p-2 rounded-lg group-hover:bg-[#F7931A]/20 transition-colors">
+                    <div className="rounded-lg bg-[#F7931A]/10 p-2 transition-colors group-hover:bg-[#F7931A]/20">
                       <Bitcoin size={20} className="text-[#F7931A]" />
                     </div>
-                    <span className="text-sm font-bold text-slate-200 group-hover:text-white transition-colors">
+                    <span className="text-sm font-bold text-slate-200 transition-colors group-hover:text-white">
                       Donate Bitcoin
                     </span>
                   </div>
@@ -178,19 +186,19 @@ export default function Footer() {
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: 'auto', opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
-                      className="border-t border-slate-700/50 p-5 flex flex-col items-center bg-slate-900/80 backdrop-blur-sm"
+                      className="flex flex-col items-center border-t border-slate-700/50 bg-slate-900/80 p-5 backdrop-blur-sm"
                     >
-                      <div className="bg-white p-3 rounded-2xl mb-4 shadow-2xl ring-4 ring-white/10">
+                      <div className="mb-4 rounded-2xl bg-white p-3 shadow-2xl ring-4 ring-white/10">
                         <QRCodeSVG
                           value={`bitcoin:${bitcoinAddress}`}
                           size={160}
                           fgColor="#0f172a"
                         />
                       </div>
-                      <p className="text-[10px] text-slate-400 font-mono tracking-wider break-all text-center select-all cursor-text py-2 px-3 bg-slate-950 rounded-lg border border-slate-800">
+                      <p className="cursor-text rounded-lg border border-slate-800 bg-slate-950 px-3 py-2 text-center font-mono text-[10px] tracking-wider break-all text-slate-400 select-all">
                         {bitcoinAddress}
                       </p>
-                      <p className="text-[10px] font-bold text-slate-500 mt-3 text-center uppercase tracking-widest">
+                      <p className="mt-3 text-center text-[10px] font-bold tracking-widest text-slate-500 uppercase">
                         Thank you for keeping Satohash free!
                       </p>
                     </motion.div>
@@ -201,13 +209,13 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="pt-8 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center gap-6 text-slate-500 text-sm font-bold">
+        <div className="flex flex-col items-center justify-between gap-6 border-t border-slate-800 pt-8 text-sm font-bold text-slate-500 md:flex-row">
           <p>© {currentYear} Satohash. Decentrally Validated.</p>
-          <div className="flex items-center gap-2 group">
+          <div className="group flex items-center gap-2">
             Constructed with{' '}
             <Heart
               size={16}
-              className="text-rose-500 fill-rose-500 group-hover:scale-125 transition-transform cursor-pointer"
+              className="cursor-pointer fill-rose-500 text-rose-500 transition-transform group-hover:scale-125"
             />{' '}
             for <span className="text-slate-300">The Decentralized Web</span>
           </div>

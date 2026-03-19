@@ -29,7 +29,7 @@ export default function TimestampExplanation() {
 
   return (
     <div className="page">
-      <div className="container container-narrow">
+      <div className="container-narrow container">
         <div style={{ marginBottom: 'var(--spacing-lg)' }}>
           <button
             onClick={() => navigate(`/contracts/${contractId}/timestamp/review`)}

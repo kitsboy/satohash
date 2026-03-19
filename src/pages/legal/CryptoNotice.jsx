@@ -6,26 +6,26 @@ export default function CryptoNotice() {
   const navigate = useNavigate()
 
   return (
-    <div className="page bg-slate-50 min-h-screen pt-24 pb-20">
+    <div className="page min-h-screen bg-slate-50 pt-24 pb-20">
       <div className="container-narrow">
         <Button variant="ghost" size="small" onClick={() => navigate(-1)} className="mb-12">
           <ArrowLeft size={18} /> Back
         </Button>
 
         <div className="document-paper mx-auto">
-          <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-indigo-500 via-purple-500 to-rose-500" />
-          <h1 className="text-4xl md:text-5xl font-black text-slate-900 mb-4 tracking-tighter">
+          <div className="absolute top-0 right-0 left-0 h-2 bg-gradient-to-r from-indigo-500 via-purple-500 to-rose-500" />
+          <h1 className="mb-4 text-4xl font-black tracking-tighter text-slate-900 md:text-5xl">
             Crypto Compliance Notice
           </h1>
-          <p className="text-slate-400 font-bold mb-16 uppercase tracking-widest text-xs">
+          <p className="mb-16 text-xs font-bold tracking-widest text-slate-400 uppercase">
             Last updated: {new Date().toLocaleDateString()}
           </p>
-          <div className="space-y-12 text-slate-600 font-medium leading-relaxed">
-            <section className="bg-indigo-50 p-8 rounded-2xl border border-indigo-100">
-              <h2 className="text-xl font-black text-indigo-900 mb-4 flex items-center gap-2">
+          <div className="space-y-12 leading-relaxed font-medium text-slate-600">
+            <section className="rounded-2xl border border-indigo-100 bg-indigo-50 p-8">
+              <h2 className="mb-4 flex items-center gap-2 text-xl font-black text-indigo-900">
                 <ShieldCheck size={24} /> What This Proves
               </h2>
-              <ul className="list-disc pl-6 space-y-3 font-bold text-indigo-950/70">
+              <ul className="list-disc space-y-3 pl-6 font-bold text-indigo-950/70">
                 <li>
                   <strong>Integrity:</strong> Mathematical proof that the document has not changed
                   by even a single bit since the timestamp was created.
@@ -42,7 +42,7 @@ export default function CryptoNotice() {
             </section>
 
             <section>
-              <h2 className="text-xl font-black text-slate-900 border-b border-slate-100 pb-4 mb-6">
+              <h2 className="mb-6 border-b border-slate-100 pb-4 text-xl font-black text-slate-900">
                 The Technology: OpenTimestamps
               </h2>
               <p>
@@ -54,7 +54,7 @@ export default function CryptoNotice() {
             </section>
 
             <section>
-              <h2 className="text-xl font-black text-slate-900 border-b border-slate-100 pb-4 mb-6">
+              <h2 className="mb-6 border-b border-slate-100 pb-4 text-xl font-black text-slate-900">
                 Legal Admissibility
               </h2>
               <p>
@@ -65,9 +65,9 @@ export default function CryptoNotice() {
               </p>
             </section>
 
-            <section className="bg-slate-900 p-8 rounded-2xl text-white">
-              <h2 className="text-xl font-black mb-4">Crucial Reminder</h2>
-              <p className="text-slate-300 font-bold leading-relaxed">
+            <section className="rounded-2xl bg-slate-900 p-8 text-white">
+              <h2 className="mb-4 text-xl font-black">Crucial Reminder</h2>
+              <p className="leading-relaxed font-bold text-slate-300">
                 The .ots proof file is useless without the original document. You must keep the
                 original file exactly as it was when timestamped. Changing anything—even a single
                 space or metadata property—will result in a verification failure.

@@ -51,7 +51,7 @@ export default function GlobalDropzone({ children, onFileProcessed }) {
   }
 
   return (
-    <div {...getRootProps()} className="min-h-screen relative">
+    <div {...getRootProps()} className="relative min-h-screen">
       <input {...getInputProps()} />
 
       {/* Render Children */}
@@ -64,18 +64,18 @@ export default function GlobalDropzone({ children, onFileProcessed }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] bg-slate-900/80 backdrop-blur-sm flex items-center justify-center pointer-events-none"
+            className="pointer-events-none fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/80 backdrop-blur-sm"
           >
             <div className="text-center">
               <motion.div
                 animate={{ scale: [1, 1.1, 1] }}
                 transition={{ duration: 1.5, repeat: Infinity }}
-                className="w-32 h-32 rounded-full border-4 border-dashed border-indigo-500 mx-auto flex items-center justify-center bg-indigo-500/10 mb-8 shadow-[0_0_50px_rgba(99,102,241,0.5)]"
+                className="mx-auto mb-8 flex h-32 w-32 items-center justify-center rounded-full border-4 border-dashed border-indigo-500 bg-indigo-500/10 shadow-[0_0_50px_rgba(99,102,241,0.5)]"
               >
                 <UploadCloud size={48} className="text-indigo-400" />
               </motion.div>
-              <h2 className="text-4xl font-bold text-white font-display mb-4">Release to Anchor</h2>
-              <p className="text-indigo-200 text-lg">
+              <h2 className="font-display mb-4 text-4xl font-bold text-white">Release to Anchor</h2>
+              <p className="text-lg text-indigo-200">
                 Your file will be hashed locally. 100% Private.
               </p>
             </div>
@@ -90,16 +90,16 @@ export default function GlobalDropzone({ children, onFileProcessed }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] bg-white/90 backdrop-blur-xl flex items-center justify-center p-8"
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-white/90 p-8 backdrop-blur-xl"
           >
-            <div className="max-w-md w-full">
-              <h3 className="text-2xl font-bold text-slate-800 mb-6 text-center font-display">
+            <div className="w-full max-w-md">
+              <h3 className="font-display mb-6 text-center text-2xl font-bold text-slate-800">
                 Calculating Fingerprint...
               </h3>
 
-              <div className="h-64 relative bg-slate-100 rounded-xl overflow-hidden mb-8 border border-slate-200 shadow-inner">
+              <div className="relative mb-8 h-64 overflow-hidden rounded-xl border border-slate-200 bg-slate-100 shadow-inner">
                 {/* Simulated Binary Rain */}
-                <div className="absolute inset-0 p-4 font-mono text-xs text-indigo-400 opacity-50 overflow-hidden leading-tight break-all">
+                <div className="absolute inset-0 overflow-hidden p-4 font-mono text-xs leading-tight break-all text-indigo-400 opacity-50">
                   {Array(1000)
                     .fill(0)
                     .map(() => (Math.random() > 0.5 ? '1' : '0'))
@@ -115,13 +115,13 @@ export default function GlobalDropzone({ children, onFileProcessed }) {
                 />
               </div>
 
-              <div className="bg-blue-50 border border-blue-100 p-4 rounded-lg flex items-start gap-3">
-                <div className="p-2 bg-blue-100 rounded-full text-blue-600">
+              <div className="flex items-start gap-3 rounded-lg border border-blue-100 bg-blue-50 p-4">
+                <div className="rounded-full bg-blue-100 p-2 text-blue-600">
                   <FileText size={16} />
                 </div>
                 <div>
-                  <h4 className="font-semibold text-blue-900 text-sm">Privacy Guarantee</h4>
-                  <p className="text-blue-700 text-xs mt-1">
+                  <h4 className="text-sm font-semibold text-blue-900">Privacy Guarantee</h4>
+                  <p className="mt-1 text-xs text-blue-700">
                     Your document never leaves this browser window. Only the mathematical SHA-256
                     hash is sent to the Bitcoin blockchain.
                   </p>

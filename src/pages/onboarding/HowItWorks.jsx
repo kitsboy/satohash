@@ -87,7 +87,7 @@ export default function HowItWorks() {
       />
 
       <div
-        className="container container-narrow mx-auto"
+        className="container-narrow container mx-auto"
         style={{
           position: 'relative',
           zIndex: 1,

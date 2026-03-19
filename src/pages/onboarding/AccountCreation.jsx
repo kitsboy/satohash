@@ -72,7 +72,7 @@ export default function AccountCreation() {
         background: 'linear-gradient(180deg, rgba(99, 102, 241, 0.03) 0%, white 40%)'
       }}
     >
-      <div className="container container-narrow">
+      <div className="container-narrow container">
         {/* Header */}
         <div
           className="text-center"

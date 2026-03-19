@@ -210,7 +210,7 @@ export default function WebCapture() {
                             textAlign: 'center'
                           }}
                         >
-                          <Loader2 className="animate-spin text-indigo-600 mb-2" size={40} />
+                          <Loader2 className="mb-2 animate-spin text-indigo-600" size={40} />
                           <p style={{ fontWeight: '800', color: '#0f172a' }}>
                             Calculating Merkle Root...
                           </p>

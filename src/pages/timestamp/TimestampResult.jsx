@@ -81,7 +81,7 @@ export default function TimestampResult() {
 
   return (
     <div className="page">
-      <div className="container container-narrow">
+      <div className="container-narrow container">
         <div className="page-header text-center">
           <h1 className="page-title">{t('timestamp.result.title')}</h1>
           <StatusPill status={contract.timestamp.status} />
@@ -258,7 +258,7 @@ export default function TimestampResult() {
 
         {contract.merkleTree && (
           <div style={{ marginBottom: 'var(--spacing-xl)' }}>
-            <div className="flex items-center gap-2 mb-4 text-slate-800">
+            <div className="mb-4 flex items-center gap-2 text-slate-800">
               <Binary size={18} className="text-indigo-600" />
               <h4 style={{ margin: 0, fontSize: 'var(--text-md)', fontWeight: 'bold' }}>
                 Protocol Visualization

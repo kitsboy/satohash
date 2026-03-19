@@ -118,7 +118,7 @@ export default function ChooseTemplate() {
 
   return (
     <div className="page">
-      <div className="container container-narrow">
+      <div className="container-narrow container">
         {/* Header */}
         <div
           className="text-center"

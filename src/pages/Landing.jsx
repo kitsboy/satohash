@@ -10,26 +10,26 @@ const FeatureCard = ({ icon: Icon, title, description, delay }) => (
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
     transition={{ duration: 0.5, delay }}
-    className="p-8 rounded-3xl glass-card hover:shadow-2xl hover:shadow-indigo-500/10 transition-all duration-300 group"
+    className="glass-card group rounded-3xl p-8 transition-all duration-300 hover:shadow-2xl hover:shadow-indigo-500/10"
   >
-    <div className="w-12 h-12 bg-indigo-50 rounded-2xl flex items-center justify-center text-indigo-600 mb-6 group-hover:scale-110 transition-transform">
+    <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-2xl bg-indigo-50 text-indigo-600 transition-transform group-hover:scale-110">
       <Icon size={24} />
     </div>
-    <h3 className="text-xl font-bold mb-3 text-slate-900">{title}</h3>
-    <p className="text-slate-500 leading-relaxed">{description}</p>
+    <h3 className="mb-3 text-xl font-bold text-slate-900">{title}</h3>
+    <p className="leading-relaxed text-slate-500">{description}</p>
   </motion.div>
 )
 
 export default function Landing() {
   return (
-    <div className="min-h-screen pt-24 overflow-hidden">
+    <div className="min-h-screen overflow-hidden pt-24">
       {/* Hero Section */}
-      <section className="relative px-6 pb-20 md:pb-32 max-w-7xl mx-auto flex flex-col items-center text-center">
+      <section className="relative mx-auto flex max-w-7xl flex-col items-center px-6 pb-20 text-center md:pb-32">
         {/* Background Gradients & Ornaments */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-gradient-to-tr from-indigo-200/30 via-purple-200/30 to-rose-200/30 rounded-full blur-3xl -z-10 animate-pulse-slow" />
-        <div className="absolute top-40 -left-20 w-64 h-64 bg-yellow-200/20 rounded-full blur-3xl -z-10 animate-float" />
+        <div className="animate-pulse-slow absolute top-0 left-1/2 -z-10 h-[600px] w-[1000px] -translate-x-1/2 rounded-full bg-gradient-to-tr from-indigo-200/30 via-purple-200/30 to-rose-200/30 blur-3xl" />
+        <div className="animate-float absolute top-40 -left-20 -z-10 h-64 w-64 rounded-full bg-yellow-200/20 blur-3xl" />
         <div
-          className="absolute bottom-40 -right-20 w-80 h-80 bg-blue-200/20 rounded-full blur-3xl -z-10 animate-float"
+          className="animate-float absolute -right-20 bottom-40 -z-10 h-80 w-80 rounded-full bg-blue-200/20 blur-3xl"
           style={{ animationDelay: '2s' }}
         />
 
@@ -37,17 +37,17 @@ export default function Landing() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-50/80 border border-indigo-100 text-indigo-700 font-bold text-xs mb-10 shadow-sm uppercase tracking-widest backdrop-blur-sm"
+          className="mb-10 inline-flex items-center gap-2 rounded-full border border-indigo-100 bg-indigo-50/80 px-4 py-2 text-xs font-bold tracking-widest text-indigo-700 uppercase shadow-sm backdrop-blur-sm"
         >
           <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-600"></span>
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-indigo-400 opacity-75"></span>
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-indigo-600"></span>
           </span>
           Protocol v2.4 Live
         </motion.div>
 
         <motion.h1
-          className="text-5xl md:text-7xl font-bold font-display tracking-tight mb-8 leading-tight max-w-4xl"
+          className="font-display mb-8 max-w-4xl text-5xl leading-tight font-bold tracking-tight md:text-7xl"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.1 }}
@@ -57,7 +57,7 @@ export default function Landing() {
         </motion.h1>
 
         <motion.p
-          className="text-xl text-slate-500 max-w-2xl mb-10 leading-relaxed"
+          className="mb-10 max-w-2xl text-xl leading-relaxed text-slate-500"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
@@ -67,19 +67,19 @@ export default function Landing() {
         </motion.p>
 
         <motion.div
-          className="flex flex-col sm:flex-row gap-4"
+          className="flex flex-col gap-4 sm:flex-row"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
         >
           <Link to="/welcome">
-            <button className="px-8 py-4 bg-slate-900 text-white rounded-full font-semibold text-lg hover:bg-slate-800 transition-colors shadow-xl shadow-slate-900/20 flex items-center gap-2 group">
+            <button className="group flex items-center gap-2 rounded-full bg-slate-900 px-8 py-4 text-lg font-semibold text-white shadow-xl shadow-slate-900/20 transition-colors hover:bg-slate-800">
               Start Notarizing{' '}
-              <ChevronRight className="group-hover:translate-x-1 transition-transform" />
+              <ChevronRight className="transition-transform group-hover:translate-x-1" />
             </button>
           </Link>
           <Link to="/verify">
-            <button className="px-8 py-4 bg-white text-slate-900 border border-slate-200 rounded-full font-semibold text-lg hover:border-indigo-200 hover:bg-indigo-50/50 transition-colors shadow-sm flex items-center gap-2">
+            <button className="flex items-center gap-2 rounded-full border border-slate-200 bg-white px-8 py-4 text-lg font-semibold text-slate-900 shadow-sm transition-colors hover:border-indigo-200 hover:bg-indigo-50/50">
               <ShieldCheck size={20} /> Verify Proof
             </button>
           </Link>
@@ -90,38 +90,38 @@ export default function Landing() {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, delay: 0.5 }}
-          className="mt-20 w-full max-w-5xl rounded-[32px] overflow-hidden shadow-2xl relative group cursor-pointer"
+          className="group relative mt-20 w-full max-w-5xl cursor-pointer overflow-hidden rounded-[32px] shadow-2xl"
         >
           <LiveNetworkDashboard />
 
           {/* Hover Overlay Title */}
-          <div className="absolute top-8 left-8 text-left z-20">
-            <span className="text-white/60 font-mono text-[10px] uppercase tracking-[0.4em] mb-2 block">
+          <div className="absolute top-8 left-8 z-20 text-left">
+            <span className="mb-2 block font-mono text-[10px] tracking-[0.4em] text-white/60 uppercase">
               Network Status
             </span>
-            <h3 className="text-white text-xl font-black uppercase tracking-tighter">
+            <h3 className="text-xl font-black tracking-tighter text-white uppercase">
               Live Protocol Nodes
             </h3>
           </div>
 
-          <div className="absolute inset-0 bg-indigo-600/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+          <div className="pointer-events-none absolute inset-0 bg-indigo-600/5 opacity-0 transition-opacity group-hover:opacity-100" />
         </motion.div>
       </section>
 
       {/* Activity Feed Section */}
-      <section className="py-24 px-6 max-w-7xl mx-auto">
-        <div className="grid md:grid-cols-2 gap-16 items-center">
+      <section className="mx-auto max-w-7xl px-6 py-24">
+        <div className="grid items-center gap-16 md:grid-cols-2">
           <div>
-            <h2 className="text-4xl font-black font-display tracking-tight text-slate-900 mb-6 uppercase">
+            <h2 className="font-display mb-6 text-4xl font-black tracking-tight text-slate-900 uppercase">
               Real-time Protocol Activity
             </h2>
-            <p className="text-lg text-slate-500 mb-8 leading-relaxed">
+            <p className="mb-8 text-lg leading-relaxed text-slate-500">
               Watch as documents are cryptographically anchored to the blockchain across the globe.
               The Satohash network is processing decentralized trust every second.
             </p>
             <div className="space-y-6">
-              <div className="flex items-start gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-100">
-                <div className="w-10 h-10 rounded-xl bg-green-100 flex items-center justify-center text-green-600">
+              <div className="flex items-start gap-4 rounded-2xl border border-slate-100 bg-slate-50 p-4">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-green-100 text-green-600">
                   <CheckCircle2 size={20} />
                 </div>
                 <div>
@@ -131,8 +131,8 @@ export default function Landing() {
                   </p>
                 </div>
               </div>
-              <div className="flex items-start gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-100">
-                <div className="w-10 h-10 rounded-xl bg-indigo-100 flex items-center justify-center text-indigo-600">
+              <div className="flex items-start gap-4 rounded-2xl border border-slate-100 bg-slate-50 p-4">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-100 text-indigo-600">
                   <Clock size={20} />
                 </div>
                 <div>
@@ -149,25 +149,25 @@ export default function Landing() {
       </section>
 
       {/* Social Proof */}
-      <section className="py-12 border-y border-slate-200 bg-white/50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-6 text-center">
-          <p className="text-slate-400 font-medium mb-8 text-sm uppercase tracking-widest">
+      <section className="border-y border-slate-200 bg-white/50 py-12 backdrop-blur-sm">
+        <div className="mx-auto max-w-7xl px-6 text-center">
+          <p className="mb-8 text-sm font-medium tracking-widest text-slate-400 uppercase">
             Trusted by builders at
           </p>
-          <div className="flex flex-wrap justify-center gap-12 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
+          <div className="flex flex-wrap justify-center gap-12 opacity-50 grayscale transition-all duration-500 hover:grayscale-0">
             {/* Simulated Logos */}
-            <span className="text-xl font-bold font-display">Stripe</span>
-            <span className="text-xl font-bold font-display">Vercel</span>
-            <span className="text-xl font-bold font-display">Opentimestamps</span>
-            <span className="text-xl font-bold font-display">Blockstream</span>
-            <span className="text-xl font-bold font-display">Paradigm</span>
+            <span className="font-display text-xl font-bold">Stripe</span>
+            <span className="font-display text-xl font-bold">Vercel</span>
+            <span className="font-display text-xl font-bold">Opentimestamps</span>
+            <span className="font-display text-xl font-bold">Blockstream</span>
+            <span className="font-display text-xl font-bold">Paradigm</span>
           </div>
         </div>
       </section>
 
       {/* Features Grid */}
-      <section className="py-32 px-6 max-w-7xl mx-auto">
-        <div className="grid md:grid-cols-3 gap-8">
+      <section className="mx-auto max-w-7xl px-6 py-32">
+        <div className="grid gap-8 md:grid-cols-3">
           <FeatureCard
             icon={FileLock}
             title="Cryptographic Hash"
