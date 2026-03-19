@@ -1,8 +1,8 @@
 // --- 1. NON-DISCLOSURE AGREEMENT (NDA) ---
 export const ndaTemplate = {
-    name: 'Mutual Non-Disclosure Agreement',
-    description: 'Protect confidential information and trade secrets between two parties.',
-    content: `MUTUAL NON-DISCLOSURE AGREEMENT
+  name: 'Mutual Non-Disclosure Agreement',
+  description: 'Protect confidential information and trade secrets between two parties.',
+  content: `MUTUAL NON-DISCLOSURE AGREEMENT
 
 This Mutual Non-Disclosure Agreement ("Agreement") is made effective as of [DATE], by and between:
 
@@ -32,13 +32,13 @@ ___________________________          ___________________________
 Date: ______________                Date: ______________
 
 DISCLAIMER: This document is a template. Legal requirements for NDAs vary. Satohash is not a law firm.`
-};
+}
 
 // --- 2. LAST WILL & TESTAMENT ---
 export const willTemplate = {
-    name: 'Last Will & Testament',
-    description: 'Declare your final wishes and designate an executor for your estate.',
-    content: `LAST WILL AND TESTAMENT OF [TESTATOR_NAME]
+  name: 'Last Will & Testament',
+  description: 'Declare your final wishes and designate an executor for your estate.',
+  content: `LAST WILL AND TESTAMENT OF [TESTATOR_NAME]
 
 I, [TESTATOR_NAME], a resident of [JURISDICTION], being of sound mind and memory, do hereby make, publish, and declare this to be my Last Will and Testament, hereby revoking all former wills and codicils.
 
@@ -70,13 +70,13 @@ Witness 1: ___________________________ Address: ___________________________
 Witness 2: ___________________________ Address: ___________________________
 
 DISCLAIMER: Wills have strict execution requirements (witnesses/notarization). Failure to follow local law may invalidate this document.`
-};
+}
 
 // --- 3. AFFIDAVIT OF TRUTH ---
 export const affidavitTemplate = {
-    name: 'Affidavit of Truth',
-    description: 'A formal sworn statement of fact signed under oath.',
-    content: `AFFIDAVIT OF TRUTH
+  name: 'Affidavit of Truth',
+  description: 'A formal sworn statement of fact signed under oath.',
+  content: `AFFIDAVIT OF TRUTH
 
 RE: [SUBJECT_MATTER]
 JURISDICTION: [STATE/PROVINCE/COUNTRY]
@@ -105,13 +105,13 @@ NOTARY PUBLIC / OFFICIAL
 My Commission Expires: [EXPIRY_DATE]
 
 DISCLAIMER: An affidavit typically requires a notary public or authorized official to witness the signature.`
-};
+}
 
 // --- 4. COMMERCIAL LEASE AGREEMENT ---
 export const commercialLeaseTemplate = {
-    name: 'Commercial Lease Agreement',
-    description: 'Standard lease agreement for business properties and office spaces.',
-    content: `COMMERCIAL LEASE AGREEMENT
+  name: 'Commercial Lease Agreement',
+  description: 'Standard lease agreement for business properties and office spaces.',
+  content: `COMMERCIAL LEASE AGREEMENT
 
 This Commercial Lease Agreement ("Lease") is entered into on [DATE] by and between:
 
@@ -144,12 +144,12 @@ LANDLORD                            TENANT
 Date: ______________                Date: ______________
 
 DISCLAIMER: Commercial leases involve significant financial obligations. Legal and tax advice is highly recommended.`
-};
+}
 
 export const prenupTemplate = {
-    name: 'Prenuptial Agreement',
-    description: 'Define property and financial rights before marriage.',
-    content: `PRENUPTIAL AGREEMENT
+  name: 'Prenuptial Agreement',
+  description: 'Define property and financial rights before marriage.',
+  content: `PRENUPTIAL AGREEMENT
 
 This Prenuptial Agreement ("Agreement") is entered into on [DATE] by and between:
 
@@ -176,12 +176,12 @@ ___________________________          ___________________________
 Date: ______________                Date: ______________
 
 DISCLAIMER: Prenuptial agreements often require independent legal counsel for both parties to be enforceable.`
-};
+}
 
 export const propertyTemplate = {
-    name: 'Property Transfer Document',
-    description: 'Standard agreement for the transfer of real or personal property.',
-    content: `PROPERTY TRANSFER AGREEMENT
+  name: 'Property Transfer Document',
+  description: 'Standard agreement for the transfer of real or personal property.',
+  content: `PROPERTY TRANSFER AGREEMENT
 
 Transferor: [TRANSFEROR_NAME]
 Transferee: [TRANSFEREE_NAME]
@@ -201,13 +201,13 @@ The effective date of transfer is [DATE].
 ___________________________          ___________________________
 TRANSFEROR                          TRANSFEREE
 Date: ______________                Date: ______________`
-};
+}
 
 // --- 8. CHILD TRAVEL CONSENT ---
 export const childTravelConsentTemplate = {
-    name: 'Child Travel Consent',
-    description: 'Provide written authorization for a minor to travel with one parent or a guardian.',
-    content: `CHILD TRAVEL CONSENT FORM
+  name: 'Child Travel Consent',
+  description: 'Provide written authorization for a minor to travel with one parent or a guardian.',
+  content: `CHILD TRAVEL CONSENT FORM
 
 1. THE MINOR
 Name: [MINOR_NAME]
@@ -237,13 +237,13 @@ ___________________________
 WITNESS SIGNATURE (Optional but Recommended)
 
 DISCLAIMER: Many jurisdictions require travel consent forms to be notarized for international travel.`
-};
+}
 
 // --- 9. BILL OF SALE ---
 export const billOfSaleTemplate = {
-    name: 'Bill of Sale',
-    description: 'Record the sale and transfer of ownership for personal property/vehicles.',
-    content: `BILL OF SALE
+  name: 'Bill of Sale',
+  description: 'Record the sale and transfer of ownership for personal property/vehicles.',
+  content: `BILL OF SALE
 
 FOR AND IN CONSIDERATION OF [PURCHASE_PRICE], the receipt and sufficiency of which is hereby acknowledged, the Seller does hereby sell, transfer, and convey to the Buyer the following property:
 
@@ -266,13 +266,13 @@ DATE OF SALE: [DATE]
 
 ___________________________          ___________________________
 SELLER SIGNATURE                    BUYER SIGNATURE`
-};
+}
 
 // --- 10. EMPLOYMENT CONTRACT ---
 export const employmentTemplate = {
-    name: 'Employment Contract',
-    description: 'Define the terms, responsibilities, and compensation for a new hire.',
-    content: `EMPLOYMENT AGREEMENT
+  name: 'Employment Contract',
+  description: 'Define the terms, responsibilities, and compensation for a new hire.',
+  content: `EMPLOYMENT AGREEMENT
 
 This Agreement is made as of [DATE], by and between:
 
@@ -296,13 +296,13 @@ This Agreement shall be governed by the laws of [JURISDICTION].
 
 ___________________________          ___________________________
 FOR THE EMPLOYER                    EMPLOYEE SIGNATURE`
-};
+}
 
 // --- 11. PROMISSORY NOTE ---
 export const promissoryNoteTemplate = {
-    name: 'Promissory Note',
-    description: 'A written promise to repay a loan or debt under specific terms.',
-    content: `PROMISSORY NOTE
+  name: 'Promissory Note',
+  description: 'A written promise to repay a loan or debt under specific terms.',
+  content: `PROMISSORY NOTE
 
 Principal Amount: [PRINCIPAL_AMOUNT]
 Date: [DATE]
@@ -321,14 +321,14 @@ This Note shall be governed by the laws of [JURISDICTION].
 
 ___________________________
 BORROWER SIGNATURE`
-};
+}
 
 // --- 12. POWER OF ATTORNEY ---
 // --- 13. CONSULTING AGREEMENT ---
 export const consultingTemplate = {
-    name: 'Consulting Agreement',
-    description: 'Define the terms of a professional consulting engagement.',
-    content: `CONSULTING AGREEMENT
+  name: 'Consulting Agreement',
+  description: 'Define the terms of a professional consulting engagement.',
+  content: `CONSULTING AGREEMENT
 
 This Consulting Agreement ("Agreement") is made as of [DATE], by and between:
 
@@ -352,13 +352,13 @@ This Agreement shall be governed by the laws of [JURISDICTION].
 
 ___________________________          ___________________________
 CLIENT SIGNATURE                    CONSULTANT SIGNATURE`
-};
+}
 
 // --- 14. IP ASSIGNMENT ---
 export const ipAssignmentTemplate = {
-    name: 'IP Assignment Agreement',
-    description: 'Formally transfer ownership of intellectual property from one party to another.',
-    content: `INTELLECTUAL PROPERTY ASSIGNMENT AGREEMENT
+  name: 'IP Assignment Agreement',
+  description: 'Formally transfer ownership of intellectual property from one party to another.',
+  content: `INTELLECTUAL PROPERTY ASSIGNMENT AGREEMENT
 
 1. THE PARTIES
 Assignor: [ASSIGNOR_NAME]
@@ -380,12 +380,12 @@ DATE: [DATE]
 
 ___________________________          ___________________________
 ASSIGNOR SIGNATURE                  ASSIGNEE SIGNATURE`
-};
+}
 
 export const powerOfAttorneyTemplate = {
-    name: 'Power of Attorney',
-    description: 'Grant legal authority to a trusted party to act on your behalf.',
-    content: `DURABLE POWER OF ATTORNEY
+  name: 'Power of Attorney',
+  description: 'Grant legal authority to a trusted party to act on your behalf.',
+  content: `DURABLE POWER OF ATTORNEY
     
 I, [PRINCIPAL_NAME], of [PRINCIPAL_ADDRESS], hereby appoint [AGENT_NAME], of [AGENT_ADDRESS], as my Agent (attorney-in-fact) to act for me in any lawful way with respect to the following powers:
 
@@ -415,12 +415,12 @@ On this [DATE], before me personally appeared [PRINCIPAL_NAME], known to me to b
 ___________________________
 NOTARY PUBLIC
 My Commission Expires: [EXPIRY_DATE]`
-};
+}
 
 export const domainNotaryTemplate = {
-    name: 'Domain Ownership Notary',
-    description: 'Cryptographic proof of domain name ownership and control.',
-    content: `DOMAIN OWNERSHIP NOTARY
+  name: 'Domain Ownership Notary',
+  description: 'Cryptographic proof of domain name ownership and control.',
+  content: `DOMAIN OWNERSHIP NOTARY
     
 This document serves as formal evidence of domain ownership and control as of [DATE].
 
@@ -443,12 +443,13 @@ ___________________________
 Date: [DATE]
 
 BITCOIN PROTOCOL ANCHOR: [PENDING_BLOCK_HASH]
-`};
+`
+}
 
 export const webArchiveTemplate = {
-    name: 'Snap & Stamp Web Archive',
-    description: 'Immutable record of web content for legal and evidence purposes.',
-    content: `WEB CONTENT ARCHIVE CERTIFICATE
+  name: 'Snap & Stamp Web Archive',
+  description: 'Immutable record of web content for legal and evidence purposes.',
+  content: `WEB CONTENT ARCHIVE CERTIFICATE
     
 This certificate provides immutable proof of web content as it appeared on the date of anchoring.
 
@@ -468,25 +469,26 @@ This document and its associated Bitcoin anchor provide mathematical evidence of
 
 ___________________________
 [COLLECTOR_NAME]
-`};
+`
+}
 
 export const getTemplate = (id) => {
-    const templates = {
-        'nda': ndaTemplate,
-        'will': willTemplate,
-        'affidavit': affidavitTemplate,
-        'commercial-lease': commercialLeaseTemplate,
-        'prenup': prenupTemplate,
-        'property': propertyTemplate,
-        'powerOfAttorney': powerOfAttorneyTemplate,
-        'child-travel': childTravelConsentTemplate,
-        'bill-of-sale': billOfSaleTemplate,
-        'employment': employmentTemplate,
-        'promissory': promissoryNoteTemplate,
-        'consulting': consultingTemplate,
-        'ip-assignment': ipAssignmentTemplate,
-        'domain-notary': domainNotaryTemplate,
-        'web-archive': webArchiveTemplate
-    };
-    return templates[id] || null;
-};
+  const templates = {
+    nda: ndaTemplate,
+    will: willTemplate,
+    affidavit: affidavitTemplate,
+    'commercial-lease': commercialLeaseTemplate,
+    prenup: prenupTemplate,
+    property: propertyTemplate,
+    powerOfAttorney: powerOfAttorneyTemplate,
+    'child-travel': childTravelConsentTemplate,
+    'bill-of-sale': billOfSaleTemplate,
+    employment: employmentTemplate,
+    promissory: promissoryNoteTemplate,
+    consulting: consultingTemplate,
+    'ip-assignment': ipAssignmentTemplate,
+    'domain-notary': domainNotaryTemplate,
+    'web-archive': webArchiveTemplate
+  }
+  return templates[id] || null
+}
