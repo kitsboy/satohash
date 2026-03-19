@@ -10,13 +10,27 @@ import { z } from 'zod';
 
 dotenv.config();
 
+const envSchema = z.object({
+  PORT: z.string().optional().default('3001'),
+  NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
+  CORS_ORIGIN: z.string().optional().default('*')
+});
+
+const envValidation = envSchema.safeParse(process.env);
+if (!envValidation.success) {
+  console.error('❌ FATAL: Invalid environment variables:', envValidation.error.format());
+  process.exit(1);
+}
+
+const config = envValidation.data;
+
 const app = express();
-const port = process.env.PORT || 3001;
+const port = config.PORT;
 
 // Middlewares
 app.use(helmet());
 const corsOptions = {
-    origin: process.env.CORS_ORIGIN || '*',
+    origin: config.CORS_ORIGIN,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Ots-Upgraded'],
     exposedHeaders: ['Content-Disposition', 'X-Ots-Upgraded']
