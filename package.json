@@ -17,6 +17,7 @@
     "autoprefixer": "^10.4.24",
     "canvas-confetti": "^1.9.4",
     "clsx": "^2.1.1",
+    "compression": "^1.8.1",
     "concurrently": "^9.2.1",
     "cors": "^2.8.6",
     "dotenv": "^17.3.1",

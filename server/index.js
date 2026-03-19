@@ -4,6 +4,7 @@ import multer from 'multer';
 import OpenTimestamps from 'opentimestamps';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
+import compression from 'compression';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -14,6 +15,8 @@ const port = process.env.PORT || 3001;
 // Middlewares
 app.use(helmet());
 app.use(cors());
+app.use(compression());
+app.use(express.static('dist'));
 app.use(express.json());
 
 // Strict Rate Limiting (100 req per 15 mins)
