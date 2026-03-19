@@ -2,16 +2,29 @@ import express from 'express';
 import cors from 'cors';
 import multer from 'multer';
 import OpenTimestamps from 'opentimestamps';
+import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const app = express();
-const port = 3001;
+const port = process.env.PORT || 3001;
 
 // Middlewares
+app.use(helmet());
 app.use(cors());
 app.use(express.json());
 
-// Set up raw file receiving for OTS files
-const upload = multer({ storage: multer.memoryStorage() });
+// Strict Rate Limiting (100 req per 15 mins)
+const limiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 100 });
+app.use(limiter);
+
+// Set up raw file receiving for OTS files with strict 5MB limit
+const upload = multer({ 
+    storage: multer.memoryStorage(),
+    limits: { fileSize: 5 * 1024 * 1024 } 
+});
 
 // Helper to deserialize OTS file safely
 const loadOtsFile = (buffer) => {
@@ -136,6 +149,23 @@ app.post('/api/verify', upload.single('otsFile'), async (req, res) => {
     }
 });
 
-app.listen(port, () => {
+// Global Centralized Error Handler
+app.use((err, req, res, next) => {
+    console.error("Critical Server Error:", err.stack);
+    res.status(500).json({ error: "An unexpected server error occurred." });
+});
+
+const server = app.listen(port, () => {
     console.log(`Satohash OTS backend running at http://localhost:${port}`);
 });
+
+// Graceful Shutdown
+const shutdown = () => {
+    console.log('Received kill signal, shutting down gracefully');
+    server.close(() => {
+        console.log('Closed out remaining connections');
+        process.exit(0);
+    });
+};
+process.on('SIGTERM', shutdown);
+process.on('SIGINT', shutdown);
