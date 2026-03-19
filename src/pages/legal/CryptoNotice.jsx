@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { ArrowLeft, ShieldCheck } from 'lucide-react'
 import Button from '../../components/Button'
-import Card from '../../components/Card'
 
 export default function CryptoNotice() {
   const navigate = useNavigate()
@@ -13,10 +12,14 @@ export default function CryptoNotice() {
           <ArrowLeft size={18} /> Back
         </Button>
 
-        <Card variant="elevated" padding="large" className="prose prose-slate max-w-none">
-          <h1 className="text-4xl font-black text-slate-900 mb-2">Digital Evidence Notice</h1>
-          <p className="text-slate-400 font-bold mb-12">Understanding Cryptographic Anchoring</p>
-
+        <div className="document-paper mx-auto">
+          <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-indigo-500 via-purple-500 to-rose-500" />
+          <h1 className="text-4xl md:text-5xl font-black text-slate-900 mb-4 tracking-tighter">
+            Crypto Compliance Notice
+          </h1>
+          <p className="text-slate-400 font-bold mb-16 uppercase tracking-widest text-xs">
+            Last updated: {new Date().toLocaleDateString()}
+          </p>
           <div className="space-y-12 text-slate-600 font-medium leading-relaxed">
             <section className="bg-indigo-50 p-8 rounded-2xl border border-indigo-100">
               <h2 className="text-xl font-black text-indigo-900 mb-4 flex items-center gap-2">
@@ -71,7 +74,7 @@ export default function CryptoNotice() {
               </p>
             </section>
           </div>
-        </Card>
+        </div>
       </div>
     </div>
   )

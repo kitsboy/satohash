@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { ArrowLeft } from 'lucide-react'
 import Button from '../../components/Button'
-import Card from '../../components/Card'
 
 export default function TermsOfService() {
   const navigate = useNavigate()
@@ -13,9 +12,12 @@ export default function TermsOfService() {
           <ArrowLeft size={18} /> Back
         </Button>
 
-        <Card variant="elevated" padding="large" className="prose prose-slate max-w-none">
-          <h1 className="text-4xl font-black text-slate-900 mb-2">Terms of Service</h1>
-          <p className="text-slate-400 font-bold mb-12">
+        <div className="document-paper mx-auto">
+          <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-indigo-500 via-purple-500 to-rose-500" />
+          <h1 className="text-4xl md:text-5xl font-black text-slate-900 mb-4 tracking-tighter">
+            Terms of Service
+          </h1>
+          <p className="text-slate-400 font-bold mb-16 uppercase tracking-widest text-xs">
             Last updated: {new Date().toLocaleDateString()}
           </p>
 
@@ -91,7 +93,7 @@ export default function TermsOfService() {
               </p>
             </section>
           </div>
-        </Card>
+        </div>
       </div>
     </div>
   )
