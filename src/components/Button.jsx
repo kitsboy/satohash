@@ -37,6 +37,8 @@ export default function Button({
       type={type}
       className={classes}
       disabled={disabled || loading}
+      aria-disabled={disabled || loading}
+      aria-busy={loading}
       onClick={onClick}
       {...props}
     >

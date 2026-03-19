@@ -54,6 +54,13 @@
   h6 {
     @apply font-display tracking-tight text-slate-900;
   }
+
+  /* Strict Web AIM Accessibility Guidelines */
+  *:focus-visible {
+    outline: 3px solid var(--color-primary-500);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
 }
 
 @layer utilities {
