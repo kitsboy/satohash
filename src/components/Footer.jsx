@@ -19,8 +19,8 @@ export default function Footer() {
   const currentYear = new Date().getFullYear()
   const [showQR, setShowQR] = useState(false)
 
-  // Demo standard bitcoin address generated for display purposes
-  const bitcoinAddress = 'bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh'
+  // treasury address
+  const bitcoinAddress = 'bc1qhm5ndfjhqxdk3cx0pngyps4f5nnwdckulmge6c8keyf2pk0neqtshjn8ad'
 
   return (
     <footer className="relative mt-auto w-full overflow-hidden border-t border-slate-100 bg-slate-50 px-6 pt-24 pb-12">
@@ -220,11 +220,11 @@ export default function Footer() {
                       exit={{ height: 0, opacity: 0 }}
                       className="flex flex-col items-center border-t border-slate-100 bg-slate-50/50 p-5 backdrop-blur-sm"
                     >
-                      <div className="mb-4 rounded-2xl bg-white p-3 shadow-2xl ring-4 ring-slate-100">
-                        <QRCodeSVG
-                          value={`bitcoin:${bitcoinAddress}`}
-                          size={160}
-                          fgColor="#0f172a"
+                      <div className="group/qr relative mb-4 flex items-center justify-center overflow-hidden rounded-2xl bg-white p-3 shadow-2xl ring-4 ring-slate-100">
+                        <img
+                          src="/btc-qr.png"
+                          alt="Bitcoin QR Code"
+                          className="h-[160px] w-[160px] object-contain"
                         />
                       </div>
                       <p className="cursor-text rounded-lg border border-slate-200 bg-white px-3 py-2 text-center font-mono text-[10px] tracking-wider break-all text-slate-600 select-all">
