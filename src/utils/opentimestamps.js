@@ -14,17 +14,6 @@ export const createHash = async (content) => {
 }
 
 /**
- * Helper to convert hex string to Uint8Array
- */
-const hexToBytes = (hex) => {
-  const bytes = new Uint8Array(hex.length / 2)
-  for (let i = 0; i < hex.length; i += 2) {
-    bytes[i / 2] = parseInt(hex.substr(i, 2), 16)
-  }
-  return bytes
-}
-
-/**
  * Create a timestamp for the document
  * Connects securely to the node backend which manages binary parsing and real public OTS calendars
  */

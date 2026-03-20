@@ -1,6 +1,6 @@
-import React from 'react'
 import { ErrorBoundary as ReactErrorBoundary } from 'react-error-boundary'
 import { AlertTriangle, RefreshCcw } from 'lucide-react'
+import { motion } from 'framer-motion'
 
 function ErrorFallback({ error, resetErrorBoundary }) {
   return (
@@ -21,13 +21,15 @@ function ErrorFallback({ error, resetErrorBoundary }) {
           </code>
         </div>
 
-        <button
+        <motion.button
           onClick={resetErrorBoundary}
-          className="flex w-full items-center justify-center gap-2 rounded-xl bg-slate-900 px-6 py-4 font-bold text-white transition-colors hover:bg-slate-800"
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-slate-900 to-indigo-900 px-6 py-4 font-bold text-white shadow-xl transition-all hover:shadow-2xl"
         >
           <RefreshCcw size={18} />
           Reload Application
-        </button>
+        </motion.button>
       </div>
     </div>
   )

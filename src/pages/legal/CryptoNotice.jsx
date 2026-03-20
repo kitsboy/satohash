@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { ArrowLeft, ShieldCheck } from 'lucide-react'
+import { motion } from 'framer-motion'
 import Button from '../../components/Button'
 
 export default function CryptoNotice() {
@@ -12,7 +13,12 @@ export default function CryptoNotice() {
           <ArrowLeft size={18} /> Back
         </Button>
 
-        <div className="document-paper mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="document-paper relative mx-auto overflow-hidden rounded-3xl bg-white p-12 shadow-2xl"
+        >
           <div className="absolute top-0 right-0 left-0 h-2 bg-gradient-to-r from-indigo-500 via-purple-500 to-rose-500" />
           <h1 className="mb-4 text-4xl font-black tracking-tighter text-slate-900 md:text-5xl">
             Crypto Compliance Notice
@@ -36,7 +42,7 @@ export default function CryptoNotice() {
                 </li>
                 <li>
                   <strong>Immutable Record:</strong> The proof is stored on the Bitcoin blockchain,
-                  the world's most secure and decentralized public ledger.
+                  the world&apos;s most secure and decentralized public ledger.
                 </li>
               </ul>
             </section>
@@ -74,7 +80,7 @@ export default function CryptoNotice() {
               </p>
             </section>
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   )

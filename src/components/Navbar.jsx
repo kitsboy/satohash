@@ -1,6 +1,6 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ShieldCheck, Menu, X, Globe } from 'lucide-react'
+import { Menu, X, Globe } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { clsx } from 'clsx'
 import LanguagePicker from './LanguagePicker'
@@ -43,7 +43,8 @@ export default function Navbar() {
         }}
       >
         {/* Logo & Brand */}
-        <div
+        <motion.div
+          whileHover={{ y: -2 }}
           style={{
             display: 'flex',
             alignItems: 'center',
@@ -79,7 +80,7 @@ export default function Navbar() {
           >
             {APP_CONFIG.NAME}
           </span>
-        </div>
+        </motion.div>
 
         {/* Main Links */}
         <div className="hidden items-center gap-1 md:flex">
