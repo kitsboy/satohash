@@ -3,10 +3,8 @@ import { motion } from 'framer-motion';
 import { 
   Webhook, 
   Shield, 
-  Clock, 
-  AlertTriangle,
+  Clock,
   CheckCircle,
-  XCircle,
   RefreshCw,
   Lock,
   Copy,
@@ -180,7 +178,7 @@ export default function WebhookDocs() {
             </li>
             <li className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
-              <span>We'll send a POST request with JSON payload</span>
+              <span>We&apos;ll send a POST request with JSON payload</span>
             </li>
             <li className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { 
   Code, 
@@ -95,9 +95,8 @@ const ENDPOINTS = [
 
 export default function DeveloperPortal() {
   const [activeTab, setActiveTab] = useState('overview');
-  const [expandedEndpoint, setExpandedEndpoint] = useState(null);
   const [copied, setCopied] = useState(false);
-  const [rateLimit, setRateLimit] = useState({ used: 0, limit: 100 });
+  const [rateLimit] = useState({ used: 0, limit: 100 });
   const { showToast } = useToast();
 
   const copyApiKey = () => {
@@ -146,7 +145,7 @@ export default function DeveloperPortal() {
             </h1>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto mb-8">
               Bitcoin-native timestamping for developers. Create immutable proof of existence 
-              secured by the world's most powerful blockchain.
+              secured by the world&apos;s most powerful blockchain.
             </p>
             
             {/* Quick Start API Key */}
@@ -334,12 +333,12 @@ function OverviewTab() {
                     <div className="text-green-400">curl -X {endpoint.method} \\\</div>
                     <div className="text-gray-300 ml-4">https://api.satohash.io{endpoint.path} \\\</div>
                     {endpoint.auth && (
-                      <div className="text-gray-300 ml-4">-H "X-API-Key: your_api_key" \\\</div>
+                      <div className="text-gray-300 ml-4">-H &quot;X-API-Key: your_api_key&quot; \\\</div>
                     )}
                     {endpoint.method === 'POST' && endpoint.path.includes('timestamp') && (
                       <>
-                        <div className="text-white ml-4">-H "Content-Type: application/json" \\\</div>
-                        <div className="text-gray-300 ml-4">-d &apos;{"{"}"hash":"{""}abc123...{""}"{"}"}&apos;</div>
+                        <div className="text-white ml-4">-H &quot;Content-Type: application/json&quot; \\\</div>
+                        <div className="text-gray-300 ml-4">{`-d '&apos;{"hash":"abc123..."}&apos;`}</div>
                       </>
                     )}
                   </div>

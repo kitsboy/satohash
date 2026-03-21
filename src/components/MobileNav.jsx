@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Code, Key, Zap, Webhook, Play, Globe, Bitcoin } from 'lucide-react';
+import { Menu, X, Code, Webhook, Play, Globe, Bitcoin } from 'lucide-react';
 
 const TABS = [
   { id: 'overview', label: 'Overview', icon: Globe },

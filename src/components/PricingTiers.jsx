@@ -90,7 +90,7 @@ const PAYMENT_INFO = [
 ];
 
 export default function PricingTiers() {
-  const getColorClasses = (color, isPopular) => {
+  const getColorClasses = (color) => {
     const colors = {
       blue: {
         bg: 'bg-blue-500/10',
@@ -122,9 +122,9 @@ export default function PricingTiers() {
     >
       {/* Pricing Cards */}
       <div className="grid md:grid-cols-3 gap-6">
-        {TIERS.map((tier, idx) => {
+        {TIERS.map((tier) => {
           const Icon = tier.icon;
-          const colors = getColorClasses(tier.color, tier.popular);
+          const colors = getColorClasses(tier.color);
           
           return (
             <div

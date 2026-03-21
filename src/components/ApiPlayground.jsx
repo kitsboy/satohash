@@ -1,14 +1,12 @@
 import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { 
-  Play, 
   Send, 
   FileText, 
   CheckCircle, 
   XCircle, 
   Clock,
   Hash,
-  Download,
   Loader2,
   AlertTriangle,
   Bitcoin
