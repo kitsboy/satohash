@@ -1,0 +1,854 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Satohash API",
+    "description": "Bitcoin-native timestamping API. Create immutable proof of document existence secured by the Bitcoin blockchain.\n\n## Authentication\nAll API requests require an API key passed in the `X-API-Key` header.\n\n## Bitcoin-First Payments\n- Free tier: 100 requests/day\n- Pro tier: Pay per request in sats via Lightning Network\n- Enterprise: Contact us for custom pricing",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Satohash Support",
+      "email": "api@satohash.io"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.satohash.io",
+      "description": "Production server"
+    },
+    {
+      "url": "http://localhost:3005",
+      "description": "Local development"
+    }
+  ],
+  "security": [
+    {
+      "ApiKeyAuth": []
+    }
+  ],
+  "paths": {
+    "/api/v1/timestamp": {
+      "post": {
+        "summary": "Create timestamp",
+        "description": "Creates a cryptographic timestamp proof for a SHA-256 hash using OpenTimestamps. Returns a binary .ots file that proves the hash existed at the time of timestamping.",
+        "tags": ["Timestamping"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TimestampRequest"
+              },
+              "examples": {
+                "basic": {
+                  "summary": "Basic timestamp request",
+                  "value": {
+                    "hash": "a591a6d40bf420404a011733cfb7b190d62c65bf0bcda32b57b277d9ad9f146e",
+                    "webhook_url": "https://your-app.com/webhooks/timestamp"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Timestamp created successfully",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimestampResponse"
+                }
+              }
+            },
+            "headers": {
+              "X-Request-Cost": {
+                "description": "Cost of this request in sats (Pro tier)",
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-RateLimit-Remaining": {
+                "description": "Remaining requests in current window",
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid or missing API key"
+          },
+          "402": {
+            "description": "Payment required - Lightning invoice provided in response"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          }
+        }
+      }
+    },
+    "/api/v1/verify": {
+      "get": {
+        "summary": "Verify timestamp",
+        "description": "Verifies a .ots timestamp file against the Bitcoin blockchain.",
+        "tags": ["Verification"],
+        "parameters": [
+          {
+            "name": "ots_file",
+            "in": "query",
+            "description": "Base64-encoded .ots file (optional - can use POST for binary upload)",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Verification result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VerifyResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Verify timestamp (binary upload)",
+        "description": "Upload a binary .ots file for verification.",
+        "tags": ["Verification"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "otsFile": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "The .ots timestamp file"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Verification result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VerifyResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/price": {
+      "get": {
+        "summary": "Get current pricing",
+        "description": "Returns current API pricing in satoshis per request.",
+        "tags": ["Pricing"],
+        "responses": {
+          "200": {
+            "description": "Current pricing",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PriceResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/block-height": {
+      "get": {
+        "summary": "Get latest block height",
+        "description": "Returns the current Bitcoin block height from multiple sources.",
+        "tags": ["Blockchain"],
+        "responses": {
+          "200": {
+            "description": "Block height information",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BlockHeightResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/upgrade": {
+      "post": {
+        "summary": "Upgrade timestamp",
+        "description": "Upgrades a pending timestamp proof to include Bitcoin block confirmation.",
+        "tags": ["Timestamping"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "otsFile": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Upgraded .ots file",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            },
+            "headers": {
+              "X-Ots-Upgraded": {
+                "description": "Whether the file was actually upgraded",
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/timestamp/batch": {
+      "post": {
+        "summary": "Create batch timestamps",
+        "description": "Timestamp up to 1,000 hashes in a single request. Perfect for archives, legal teams, and auditors. Processes asynchronously with webhook notification when complete.",
+        "tags": ["Batch Timestamping"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BatchTimestampRequest"
+              },
+              "examples": {
+                "basic": {
+                  "summary": "Batch of 3 hashes",
+                  "value": {
+                    "hashes": [
+                      "a591a6d40bf420404a011733cfb7b190d62c65bf0bcda32b57b277d9ad9f146e",
+                      "b7e2c5f8a1d4e7b0c3f6a9d2e5b8c1f4a7d0e3b6c9f2a5d8e1b4c7f0a3d6e9b2",
+                      "c8f3d6e9b2c5f8a1d4e7b0c3f6a9d2e5b8c1f4a7d0e3b6c9f2a5d8e1b4c7f0a3"
+                    ],
+                    "metadata": {"batch_name": "Q1-2024-Contracts"}
+                  }
+                },
+                "with_webhook": {
+                  "summary": "Batch with webhook notification",
+                  "value": {
+                    "hashes": ["a591a6d40bf420404a011733cfb7b190d62c65bf0bcda32b57b277d9ad9f146e"],
+                    "webhook_url": "https://your-app.com/webhooks/batch-complete",
+                    "metadata": {"client_id": "acme-corp", "job_ref": "batch-001"}
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Batch accepted for processing",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BatchTimestampResponse"
+                }
+              }
+            },
+            "headers": {
+              "X-Request-Cost": {
+                "description": "Cost of this request in sats (flat rate per batch)",
+                "schema": {
+                  "type": "integer"
+                }
+              },
+              "X-Batch-Id": {
+                "description": "Unique batch identifier",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request - too many hashes or invalid format",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit exceeded or batch size exceeds tier limit"
+          }
+        }
+      }
+    },
+    "/api/v1/batches": {
+      "get": {
+        "summary": "List recent batches",
+        "description": "Returns a list of recent batch timestamping jobs.",
+        "tags": ["Batch Timestamping"],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Maximum number of batches to return (max 100)",
+            "schema": {
+              "type": "integer",
+              "default": 10,
+              "maximum": 100
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of batches",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BatchListResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/batches/{batchId}": {
+      "get": {
+        "summary": "Get batch status",
+        "description": "Check the status and results of a batch timestamping job.",
+        "tags": ["Batch Timestamping"],
+        "parameters": [
+          {
+            "name": "batchId",
+            "in": "path",
+            "required": true,
+            "description": "The batch ID returned when creating the batch",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Batch status and results",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BatchStatusResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Batch not found"
+          }
+        }
+      }
+    },
+    "/api/v1/batches/{batchId}/download": {
+      "get": {
+        "summary": "Download batch results",
+        "description": "Download a ZIP file containing all .ots proof files and a manifest.json for a completed batch.",
+        "tags": ["Batch Timestamping"],
+        "parameters": [
+          {
+            "name": "batchId",
+            "in": "path",
+            "required": true,
+            "description": "The batch ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ZIP file containing all timestamp proofs",
+            "content": {
+              "application/zip": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Batch not yet complete"
+          },
+          "404": {
+            "description": "Batch not found"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-API-Key"
+      }
+    },
+    "schemas": {
+      "TimestampRequest": {
+        "type": "object",
+        "required": ["hash"],
+        "properties": {
+          "hash": {
+            "type": "string",
+            "pattern": "^[a-fA-F0-9]{64}$",
+            "description": "SHA-256 hash of the document (64 hex characters)"
+          },
+          "webhook_url": {
+            "type": "string",
+            "format": "uri",
+            "description": "Optional webhook URL to receive completion notification"
+          },
+          "metadata": {
+            "type": "object",
+            "description": "Optional metadata to associate with this timestamp",
+            "additionalProperties": true
+          }
+        }
+      },
+      "TimestampResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "timestamp_id": {
+            "type": "string",
+            "description": "Unique identifier for this timestamp"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["pending", "confirmed"]
+          },
+          "bitcoin_block": {
+            "type": "integer",
+            "description": "Bitcoin block height (if confirmed)"
+          },
+          "ots_download_url": {
+            "type": "string",
+            "description": "URL to download the .ots proof file"
+          }
+        }
+      },
+      "VerifyResponse": {
+        "type": "object",
+        "properties": {
+          "verified": {
+            "type": "boolean",
+            "description": "Whether the timestamp is cryptographically verified"
+          },
+          "bitcoin_block": {
+            "type": "integer",
+            "description": "Bitcoin block height where attestation exists"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "ISO 8601 timestamp of Bitcoin block"
+          },
+          "details": {
+            "type": "string",
+            "description": "Detailed verification info"
+          },
+          "calendar_attestations": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "url": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "PriceResponse": {
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "object",
+            "properties": {
+              "sats": {
+                "type": "integer",
+                "description": "Cost per timestamp in satoshis"
+              },
+              "usd_estimate": {
+                "type": "number",
+                "description": "Estimated USD equivalent"
+              }
+            }
+          },
+          "verify": {
+            "type": "object",
+            "properties": {
+              "sats": {
+                "type": "integer"
+              },
+              "free": {
+                "type": "boolean",
+                "description": "Verification is always free"
+              }
+            }
+          },
+          "upgrade": {
+            "type": "object",
+            "properties": {
+              "sats": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      },
+      "BlockHeightResponse": {
+        "type": "object",
+        "properties": {
+          "block_height": {
+            "type": "integer",
+            "description": "Current Bitcoin block height"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "sources": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "height": {
+                  "type": "integer"
+                },
+                "status": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          },
+          "details": {
+            "type": "string"
+          }
+        }
+      },
+      "BatchTimestampRequest": {
+        "type": "object",
+        "required": ["hashes"],
+        "properties": {
+          "hashes": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[a-fA-F0-9]{64}$"
+            },
+            "description": "Array of SHA-256 hashes to timestamp (max 1,000 for Pro, 100 for Free)",
+            "minItems": 1,
+            "maxItems": 1000
+          },
+          "webhook_url": {
+            "type": "string",
+            "format": "uri",
+            "description": "Optional webhook URL to receive batch completion notification"
+          },
+          "metadata": {
+            "type": "object",
+            "description": "Optional metadata to associate with this batch",
+            "additionalProperties": true
+          }
+        }
+      },
+      "BatchTimestampResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "batch_id": {
+            "type": "string",
+            "description": "Unique identifier for this batch"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["queued", "processing", "complete"]
+          },
+          "total": {
+            "type": "integer",
+            "description": "Total number of hashes in batch"
+          },
+          "estimated_seconds": {
+            "type": "integer",
+            "description": "Estimated processing time in seconds"
+          },
+          "webhook_registered": {
+            "type": "boolean"
+          },
+          "status_url": {
+            "type": "string",
+            "description": "URL to check batch status"
+          },
+          "download_url": {
+            "type": "string",
+            "description": "URL to download results when complete"
+          }
+        }
+      },
+      "BatchStatusResponse": {
+        "type": "object",
+        "properties": {
+          "batch_id": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["queued", "processing", "complete"]
+          },
+          "total": {
+            "type": "integer"
+          },
+          "completed": {
+            "type": "integer"
+          },
+          "failed": {
+            "type": "integer"
+          },
+          "progress_percent": {
+            "type": "integer",
+            "description": "Processing progress (0-100)"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "started_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "completed_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "metadata": {
+            "type": "object"
+          },
+          "results": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "index": {
+                  "type": "integer"
+                },
+                "hash": {
+                  "type": "string"
+                },
+                "timestamp_id": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string",
+                  "enum": ["success", "failed"]
+                }
+              }
+            }
+          },
+          "webhook_delivered": {
+            "type": "boolean"
+          },
+          "download_url": {
+            "type": "string"
+          }
+        }
+      },
+      "BatchListResponse": {
+        "type": "object",
+        "properties": {
+          "batches": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "batch_id": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "total": {
+                  "type": "integer"
+                },
+                "completed": {
+                  "type": "integer"
+                },
+                "failed": {
+                  "type": "integer"
+                },
+                "created_at": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "status_url": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "total_available": {
+            "type": "integer"
+          }
+        }
+      }
+    }
+  },
+  "webhooks": {
+    "timestampComplete": {
+      "post": {
+        "summary": "Timestamp completed webhook",
+        "description": "Sent when a pending timestamp is confirmed on Bitcoin",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "event": {
+                    "type": "string",
+                    "enum": ["timestamp.confirmed"]
+                  },
+                  "timestamp_id": {
+                    "type": "string"
+                  },
+                  "hash": {
+                    "type": "string"
+                  },
+                  "bitcoin_block": {
+                    "type": "integer"
+                  },
+                  "block_time": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "ots_proof": {
+                    "type": "string",
+                    "description": "Base64-encoded .ots proof"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "batchComplete": {
+      "post": {
+        "summary": "Batch completed webhook",
+        "description": "Sent when a batch timestamping job is complete",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "event": {
+                    "type": "string",
+                    "enum": ["batch.complete"]
+                  },
+                  "batch_id": {
+                    "type": "string"
+                  },
+                  "total": {
+                    "type": "integer"
+                  },
+                  "completed": {
+                    "type": "integer"
+                  },
+                  "failed": {
+                    "type": "integer"
+                  },
+                  "metadata": {
+                    "type": "object"
+                  },
+                  "download_url": {
+                    "type": "string",
+                    "description": "URL to download ZIP of all proofs"
+                  },
+                  "expires_at": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "When the download URL expires"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

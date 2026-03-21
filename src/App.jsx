@@ -37,6 +37,10 @@ const Landing = React.lazy(() => import('./pages/Landing'))
 const ProtocolStats = React.lazy(() => import('./pages/ProtocolStats'))
 const WebCapture = React.lazy(() => import('./pages/WebCapture'))
 
+// Developer Portal
+const DeveloperPortal = React.lazy(() => import('./pages/DeveloperPortal'))
+const BatchTimestamp = React.lazy(() => import('./pages/BatchTimestamp'))
+
 function AppContent() {
   const location = useLocation()
 
@@ -86,6 +90,10 @@ function AppContent() {
           <Route path="/verify" element={<VerificationTool />} />
           <Route path="/protocol-stats" element={<ProtocolStats />} />
           <Route path="/snap-and-stamp" element={<WebCapture />} />
+
+          {/* Developer Portal */}
+          <Route path="/developers" element={<DeveloperPortal />} />
+          <Route path="/batch-timestamp" element={<BatchTimestamp />} />
 
           {/* Default redirect & 404 Fallback */}
           <Route path="/" element={<Landing />} />
