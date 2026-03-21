@@ -5,6 +5,7 @@ import Footer from './components/Footer'
 import GlobalDropzone from './components/GlobalDropzone'
 import LoadingScreen from './components/LoadingScreen'
 import { Toaster } from 'sonner'
+import { ToastProvider } from './components/Toast'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 
@@ -112,9 +113,11 @@ function AppContent() {
 
 function App() {
   return (
-    <Router>
-      <AppContent />
-    </Router>
+    <ToastProvider>
+      <Router>
+        <AppContent />
+      </Router>
+    </ToastProvider>
   )
 }
 
