@@ -5,10 +5,10 @@ export const APP_CONFIG = {
 }
 
 export const NAV_LINKS = [
-  { name: 'Dashboard', path: '/contracts' },
-  { name: 'Protocol', path: '/welcome' },
-  { name: 'Pulse', path: '/protocol-stats' },
-  { name: 'Snap', path: '/snap-and-stamp' },
+  { name: 'Workbench', path: '/dashboard' },
+  { name: 'Contracts', path: '/contracts' },
+  { name: 'Batch Proof', path: '/batch-proof' },
   { name: 'Verifier', path: '/verify' },
+  { name: 'Pulse', path: '/protocol-stats' },
   { name: 'Trust', path: '/trust' }
 ]

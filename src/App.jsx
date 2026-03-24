@@ -37,6 +37,7 @@ const VerificationTool = React.lazy(() => import('./pages/verify/VerificationToo
 const Landing = React.lazy(() => import('./pages/Landing'))
 const ProtocolStats = React.lazy(() => import('./pages/ProtocolStats'))
 const WebCapture = React.lazy(() => import('./pages/WebCapture'))
+const Dashboard = React.lazy(() => import('./pages/Dashboard'))
 
 // Developer Portal
 const DeveloperPortal = React.lazy(() => import('./pages/DeveloperPortal'))
@@ -66,6 +67,7 @@ function AppContent() {
           <Route path="/welcome" element={<Welcome />} />
           <Route path="/choose-template" element={<TemplateLibrary />} />
           <Route path="/account-creation" element={<AccountCreation />} />
+          <Route path="/dashboard" element={<Dashboard />} />
 
           {/* Main app */}
           <Route path="/contracts" element={<ContractList />} />

@@ -1,7 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /contracts/
-Disallow: /timestamp/
-Disallow: /api/
 
 Sitemap: https://satohash.com/sitemap.xml

@@ -154,13 +154,13 @@ export default function Navbar() {
             <Globe size={20} />
           </motion.button>
 
-          <Link to="/welcome" className="hidden md:block">
+          <Link to="/dashboard" className="hidden md:block">
             <motion.button
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
               className="rounded-xl bg-indigo-600 px-6 py-2.5 text-sm font-bold text-white shadow-xl shadow-indigo-200 transition-colors hover:bg-indigo-700"
             >
-              Launch App
+              Launch Workbench
             </motion.button>
           </Link>
 
@@ -213,11 +213,11 @@ export default function Navbar() {
                 </Link>
               ))}
               <Link
-                to="/welcome"
+                to="/dashboard"
                 onClick={() => setIsOpen(false)}
                 className="w-full rounded-xl bg-indigo-600 py-4 text-center font-black text-white shadow-lg shadow-indigo-100"
               >
-                Launch App
+                Launch Workbench
               </Link>
             </div>
           </motion.div>

@@ -72,9 +72,9 @@ export default function Landing() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
         >
-          <Link to="/welcome">
+          <Link to="/dashboard">
             <button className="group flex items-center gap-2 rounded-full bg-slate-900 px-8 py-4 text-lg font-semibold text-white shadow-xl shadow-slate-900/20 transition-colors hover:bg-slate-800">
-              Start Notarizing{' '}
+              Launch Dashboard{' '}
               <ChevronRight className="transition-transform group-hover:translate-x-1" />
             </button>
           </Link>

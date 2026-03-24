@@ -1,171 +1,174 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import GlobalDropzone from '../components/GlobalDropzone'
-import { Download, Mail, FileCheck, Check, Clock } from 'lucide-react'
-import { generatePDF } from '../utils/pdfGenerator' // We will create this
-const MOCK_RECENT = [
-  { name: 'Contract_Final_v2.pdf', hash: '8f43...9a12', date: '2 mins ago', status: 'Pending' },
-  { name: 'IP_Assignment.docx', hash: 'e2b1...3c4d', date: '1 hour ago', status: 'Confirmed' }
-]
+import HistoryList from '../components/HistoryList'
+import { Download, Mail, FileCheck, Check, Clock, ExternalLink } from 'lucide-react'
+import { generatePDF } from '../utils/pdfGenerator'
+import { useSocket } from '../hooks/useSocket'
+import { toast } from 'sonner'
+
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
 
 export default function Dashboard() {
   const [file, setFile] = useState(null)
-  const [recentFiles, setRecentFiles] = useState(MOCK_RECENT)
-  const [showConfetti, setShowConfetti] = useState(false)
+  const [isStamping, setIsStamping] = useState(false)
+  const { lastEvent } = useSocket()
 
-  const handleFileProcessed = (processedFile) => {
-    setFile(processedFile)
-    // Add to recent files
-    const newFile = {
-      name: processedFile.name,
-      hash: 'a1b2...c3d4', // Mock hash
-      date: 'Just now',
-      status: 'Pending' // Simulated OTS state
+  const handleFileProcessed = async (processedFile) => {
+    setIsStamping(true)
+    try {
+      const response = await fetch(`${API_URL}/api/stamp`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          hash:
+            processedFile.hash ||
+            'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
+          filename: processedFile.name
+        })
+      })
+
+      if (!response.ok) throw new Error('Stamping failed')
+
+      const result = await response.json()
+      setFile({ ...processedFile, ...result })
+      toast.success('Successfully anchored to Bitcoin!')
+    } catch (error) {
+      toast.error('Failed to anchor file. Please try again.')
+      console.error(error)
+    } finally {
+      setIsStamping(false)
     }
-    setRecentFiles([newFile, ...recentFiles])
   }
 
   const downloadOTS = () => {
-    // Mock download
-    const element = document.createElement('a')
-    const fileContent = 'Simulated OTS file content'
-    const fileBlob = new Blob([fileContent], { type: 'application/octet-stream' })
-    element.href = URL.createObjectURL(fileBlob)
-    element.download = `${file.name}.ots`
-    document.body.appendChild(element)
-    element.click()
-  }
-
-  const handleEmail = () => {
-    alert('Proof sent to your email!')
+    if (!file?.id) return
+    window.location.href = `${API_URL}/api/stamps/${file.id}?download=true`
   }
 
   return (
-    <div className="mx-auto flex min-h-screen max-w-7xl flex-col gap-12 px-6 pt-24">
+    <div className="mx-auto flex min-h-screen max-w-7xl flex-col gap-12 px-6 pt-24 pb-20">
       <GlobalDropzone onFileProcessed={handleFileProcessed} />
 
-      {/* Main Content Area */}
       <div className="grid gap-8 lg:grid-cols-3">
-        {/* Left Column: New Notarization (Interactive) */}
         <div className="space-y-8 lg:col-span-2">
           <motion.h1
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="font-display text-3xl font-bold"
+            className="font-display flex items-center gap-3 text-3xl font-bold"
           >
-            Secure Workbench
+            Proof Workbench
+            {isStamping && <Clock className="h-6 w-6 animate-spin text-indigo-500" />}
           </motion.h1>
 
-          {/* The "Stage" */}
           <motion.div
             className="glass-card relative flex min-h-[400px] flex-col overflow-hidden p-1"
             initial={{ opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5 }}
           >
             {!file ? (
-              // Empty State
-              <div className="flex flex-1 flex-col items-center justify-center rounded-xl border border-slate-100/50 bg-gradient-to-br from-slate-50 to-white p-12 text-center">
-                <div className="animate-pulse-slow mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-indigo-50">
+              <div className="flex flex-1 flex-col items-center justify-center rounded-xl border border-white/5 bg-gradient-to-br from-white/5 to-transparent p-12 text-center">
+                <div className="animate-pulse-slow mb-6 flex h-20 w-20 items-center justify-center rounded-full border border-indigo-500/20 bg-indigo-500/10">
                   <FileCheck size={32} className="text-indigo-400" />
                 </div>
-                <h3 className="mb-2 text-xl font-bold text-slate-900">Waiting for Evidence</h3>
-                <p className="max-w-sm text-slate-500">
-                  Drag any document here to begin the cryptographic anchoring process.
+                <h3 className="mb-2 text-xl font-bold text-white">Secure Stamping Engine</h3>
+                <p className="max-w-sm text-white/40">
+                  Drag any document here to begin the cryptographic anchoring process on the Bitcoin
+                  blockchain.
                 </p>
               </div>
             ) : (
-              // Success State
-              <div className="relative flex flex-1 flex-col rounded-xl bg-white p-8">
+              <div className="relative flex flex-1 flex-col rounded-xl border border-white/5 bg-[#0f111a] p-8">
                 <div className="absolute top-0 right-0 p-4">
-                  <span className="flex items-center gap-1 rounded-full bg-green-100 px-3 py-1 text-xs font-bold tracking-wider text-green-700 uppercase">
-                    <Check size={12} /> Anchored
+                  <span
+                    className={`flex items-center gap-1 rounded-full px-3 py-1 text-xs font-bold tracking-wider uppercase ${file.status === 'confirmed' ? 'border border-emerald-500/20 bg-emerald-500/10 text-emerald-400' : 'border border-amber-500/20 bg-amber-500/10 text-amber-400'}`}
+                  >
+                    {file.status === 'confirmed' ? (
+                      <Check size={12} />
+                    ) : (
+                      <Clock size={12} className="animate-pulse" />
+                    )}
+                    {file.status}
                   </span>
                 </div>
 
                 <div className="mb-8 flex items-start gap-4">
-                  <div className="rounded-lg bg-indigo-50 p-4">
-                    <FileCheck size={32} className="text-indigo-600" />
+                  <div className="rounded-lg border border-indigo-500/20 bg-indigo-500/10 p-4 text-indigo-400">
+                    <FileCheck size={32} />
                   </div>
-                  <div>
-                    <h2 className="text-2xl font-bold text-slate-900">{file.name}</h2>
-                    <p className="mt-1 font-mono text-sm text-slate-400">
-                      SHA-256: 8f434346648f6b96df89dda901c5176b10a6...
-                    </p>
+                  <div className="flex-1 overflow-hidden">
+                    <h2 className="truncate text-2xl font-bold text-white">{file.name}</h2>
+                    <p className="mt-1 truncate font-mono text-xs text-white/30">{file.hash}</p>
                   </div>
                 </div>
 
                 <div className="mt-auto grid gap-4 sm:grid-cols-3">
                   <button
                     onClick={downloadOTS}
-                    className="group flex flex-col items-center justify-center rounded-xl border border-slate-200 p-4 transition-colors hover:bg-slate-50"
+                    className="group flex flex-col items-center justify-center rounded-xl border border-white/5 p-4 transition-all hover:border-indigo-500/30 hover:bg-white/5"
                   >
-                    <Download className="mb-2 text-slate-400 transition-colors group-hover:text-indigo-600" />
-                    <span className="text-sm font-semibold text-slate-700">Download .ots</span>
+                    <Download className="mb-2 text-white/40 transition-colors group-hover:text-indigo-400" />
+                    <span className="text-sm font-semibold text-white group-hover:text-indigo-400">
+                      Download Proof
+                    </span>
                   </button>
                   <button
                     onClick={() => generatePDF(file)}
-                    className="group flex flex-col items-center justify-center rounded-xl border border-slate-200 p-4 transition-colors hover:bg-slate-50"
+                    className="group flex flex-col items-center justify-center rounded-xl border border-white/5 p-4 transition-all hover:border-indigo-500/30 hover:bg-white/5"
                   >
-                    <FileCheck className="mb-2 text-slate-400 transition-colors group-hover:text-indigo-600" />
-                    <span className="text-sm font-semibold text-slate-700">PDF Certificate</span>
+                    <FileCheck className="mb-2 text-white/40 transition-colors group-hover:text-indigo-400" />
+                    <span className="text-sm font-semibold text-white group-hover:text-indigo-400">
+                      Certificate
+                    </span>
                   </button>
-                  <button
-                    onClick={handleEmail}
-                    className="group flex flex-col items-center justify-center rounded-xl border border-slate-200 p-4 transition-colors hover:bg-slate-50"
+                  <a
+                    href={`https://mempool.space/address/1SatohashProtocolAnchorAddress`}
+                    target="_blank"
+                    className="group flex flex-col items-center justify-center rounded-xl border border-white/5 p-4 transition-all hover:border-indigo-500/30 hover:bg-white/5"
                   >
-                    <Mail className="mb-2 text-slate-400 transition-colors group-hover:text-indigo-600" />
-                    <span className="text-sm font-semibold text-slate-700">Email Proof</span>
-                  </button>
+                    <ExternalLink className="mb-2 text-white/40 transition-colors group-hover:text-amber-400" />
+                    <span className="text-sm font-semibold text-white group-hover:text-amber-400">
+                      Block Explorer
+                    </span>
+                  </a>
                 </div>
               </div>
             )}
           </motion.div>
+
+          <HistoryList />
         </div>
 
-        {/* Right Column: Recent Activity & Donate */}
         <div className="space-y-8">
-          {/* Recent Activity */}
-          <div className="glass-card p-6">
-            <h3 className="mb-4 flex items-center gap-2 font-bold text-slate-900">
-              <Clock size={16} className="text-indigo-500" /> Recent Proofs
-            </h3>
-            <div className="space-y-4">
-              {recentFiles.map((item, i) => (
-                <div
-                  key={i}
-                  className="group flex cursor-pointer items-center justify-between rounded-lg p-3 transition-colors hover:bg-slate-50"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-100 text-xs font-bold text-indigo-600">
-                      PDF
-                    </div>
-                    <div>
-                      <p className="text-sm font-medium text-slate-700 group-hover:text-indigo-600">
-                        {item.name}
-                      </p>
-                      <p className="text-xs text-slate-400">{item.date}</p>
-                    </div>
-                  </div>
-                  <span
-                    className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${item.status === 'Confirmed' ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}`}
-                  >
-                    {item.status}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Donation Card */}
-          <div className="glass-card bg-gradient-to-br from-indigo-600 to-purple-700 p-6 text-white">
-            <h3 className="mb-2 font-bold">Support the Protocol</h3>
-            <p className="mb-4 text-sm text-indigo-100">
-              Satohash is 100% free and open source. Help us keep the lights on.
+          <div className="glass-card group relative overflow-hidden rounded-3xl border-none bg-gradient-to-br from-indigo-600 to-purple-800 p-8 text-white">
+            <div className="absolute -right-10 -bottom-10 h-40 w-40 rounded-full bg-white/10 blur-3xl transition-all duration-500 group-hover:bg-white/20" />
+            <h3 className="relative z-10 mb-3 text-xl font-bold">Support Open Notary</h3>
+            <p className="relative z-10 mb-6 text-sm leading-relaxed text-indigo-100/70">
+              Satohash is a non-profit protocol providing permanent cryptographic existence for all.
+              Help us scale global proof.
             </p>
-            <button className="w-full rounded-lg bg-white/20 py-2 text-sm font-semibold backdrop-blur-sm transition-colors hover:bg-white/30">
+            <button className="relative z-10 w-full rounded-xl bg-white py-3 text-sm font-bold text-indigo-700 shadow-xl transition-all hover:scale-[1.02] hover:shadow-2xl">
               Donate via Lightning ⚡
             </button>
+          </div>
+
+          <div className="glass-card rounded-3xl border-white/5 bg-white/5 p-6">
+            <h3 className="mb-4 text-sm font-bold tracking-widest text-white/40 uppercase">
+              Protocol Health
+            </h3>
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-white/60">BTC Blocks Confirmed</span>
+                <span className="font-mono text-sm text-emerald-400">835,420+</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-white/60">OTS Calendar Status</span>
+                <span className="flex items-center gap-1 text-sm text-emerald-400">
+                  <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" />
+                  Operational
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       </div>

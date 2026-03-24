@@ -28,3 +28,21 @@ export const generateId = () => {
     .map((b) => b.toString(16).padStart(2, '0'))
     .join('')
 }
+/**
+ * Calculate Merkle Root from an array of hashes
+ */
+export const calculateMerkleRoot = async (hashes) => {
+  if (hashes.length === 0) return null
+  if (hashes.length === 1) return hashes[0]
+
+  const nextLevel = []
+  for (let i = 0; i < hashes.length; i += 2) {
+    const left = hashes[i]
+    const right = hashes[i + 1] || left // If odd, duplicate the last hash
+    const combined = left + right
+    const hash = await calculateHash(combined)
+    nextLevel.push(hash)
+  }
+
+  return calculateMerkleRoot(nextLevel)
+}

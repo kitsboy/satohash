@@ -1,0 +1,32 @@
+import { useEffect, useState } from 'react'
+import { io } from 'socket.io-client'
+import { toast } from 'sonner'
+
+const SOCKET_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+
+export const useSocket = () => {
+  const [socket, setSocket] = useState(null)
+  const [lastEvent, setLastEvent] = useState(null)
+
+  useEffect(() => {
+    const newSocket = io(SOCKET_URL)
+    setSocket(newSocket)
+
+    newSocket.on('ots:stamped', (data) => {
+      setLastEvent({ type: 'stamped', data })
+      toast.info(`New hash stamped: ${data.filename}`)
+    })
+
+    newSocket.on('ots:confirmed', (data) => {
+      setLastEvent({ type: 'confirmed', data })
+      toast.success(`Proof confirmed in Bitcoin block ${data.blockHeight}!`, {
+        description: `Hash: ${data.hash.substring(0, 16)}...`,
+        duration: 10000
+      })
+    })
+
+    return () => newSocket.close()
+  }, [])
+
+  return { socket, lastEvent }
+}
