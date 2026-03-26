@@ -33,6 +33,19 @@ db.exec(`
 
   CREATE INDEX IF NOT EXISTS idx_hash ON timestamps(hash);
   CREATE INDEX IF NOT EXISTS idx_status ON timestamps(status);
+
+  CREATE TABLE IF NOT EXISTS git_stamps (
+    id TEXT PRIMARY KEY,
+    timestamp_id TEXT NOT NULL,
+    repo_name TEXT,
+    repo_path TEXT,
+    branch TEXT,
+    commit_hash TEXT NOT NULL,
+    tree_hash TEXT,
+    author TEXT,
+    message TEXT,
+    FOREIGN KEY(timestamp_id) REFERENCES timestamps(id)
+  );
 `);
 
 logger.info(`🗄️ Database initialized at ${dbPath}`);

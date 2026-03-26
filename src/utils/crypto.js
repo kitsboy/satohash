@@ -46,3 +46,41 @@ export const calculateMerkleRoot = async (hashes) => {
 
   return calculateMerkleRoot(nextLevel)
 }
+
+/**
+ * Client-side Zero-Knowledge Encryption for the Satohash "Dark Vault".
+ * Uses AES-GCM 256-bit encryption.
+ */
+export const encryptFile = async (dataBuffer, password) => {
+  const enc = new TextEncoder()
+  const keyMaterial = await window.crypto.subtle.importKey(
+    'raw',
+    enc.encode(password),
+    { name: 'PBKDF2' },
+    false,
+    ['deriveKey']
+  )
+
+  const salt = window.crypto.getRandomValues(new Uint8Array(16))
+  const key = await window.crypto.subtle.deriveKey(
+    {
+      name: 'PBKDF2',
+      salt,
+      iterations: 100000,
+      hash: 'SHA-256'
+    },
+    keyMaterial,
+    { name: 'AES-GCM', length: 256 },
+    false,
+    ['encrypt']
+  )
+
+  const iv = window.crypto.getRandomValues(new Uint8Array(12))
+  const encryptedContent = await window.crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, dataBuffer)
+
+  return {
+    encryptedContent,
+    iv: btoa(String.fromCharCode(...iv)),
+    salt: btoa(String.fromCharCode(...salt))
+  }
+}

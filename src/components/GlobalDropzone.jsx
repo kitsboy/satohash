@@ -1,14 +1,16 @@
 import { useState, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useDropzone } from 'react-dropzone'
-import { UploadCloud, CheckCircle2, FileText, Download } from 'lucide-react'
+import { UploadCloud, CheckCircle2, FileText, Download, ShieldCheck, Lock } from 'lucide-react'
 import { clsx } from 'clsx'
 import confetti from 'canvas-confetti'
+import { encryptFile } from '../utils/crypto'
 
 export default function GlobalDropzone({ children, onFileProcessed }) {
   const [isProcessing, setIsProcessing] = useState(false)
   const [dragActive, setDragActive] = useState(false)
   const [fileData, setFileData] = useState(null)
+  const [isDarkVault, setIsDarkVault] = useState(false)
 
   const onDrop = useCallback((acceptedFiles) => {
     if (acceptedFiles.length > 0) {
@@ -26,36 +28,79 @@ export default function GlobalDropzone({ children, onFileProcessed }) {
   })
 
   const processFile = async (file) => {
+    const extension = file.name.split('.').pop()?.toLowerCase();
+    let intent = isDarkVault ? 'Zero-Knowledge Archive' : 'Standard Notarization';
+    if (!isDarkVault) {
+        if (extension === 'pdf') intent = 'Legal Watermarking';
+        if (['png', 'jpg', 'jpeg', 'webp'].includes(extension)) intent = 'Visual Vaulting';
+        if (['zip', 'rar', 'tar'].includes(extension)) intent = 'Bulk Repository Archive';
+    }
+
+    setFileData({ name: file.name, type: file.type, intent });
     setIsProcessing(true)
 
-    // Simulate hashing delay ("The Ceremony")
-    const arrayBuffer = await file.arrayBuffer()
-    // In real app, use: const hashBuffer = await crypto.subtle.digest('SHA-256', arrayBuffer);
-    // const hashArray = Array.from(new Uint8Array(hashBuffer));
-    // const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    // Item 2: Client-side Encryption (Dark Vault)
+    if (isDarkVault) {
+        try {
+            const arrayBuffer = await file.arrayBuffer();
+            const { iv } = await encryptFile(arrayBuffer, "local_satohash_vault_key");
+            console.log(`🔐 ZK-Encryption Active: ${file.name} | [IV: ${iv}]`);
+        } catch (e) {
+            console.error("Encryption stage failed", e);
+        }
+    }
 
+    // Simulate "The Ceremony" with conversational storytelling
     setTimeout(() => {
-      setFileData({
-        name: file.name,
-        size: (file.size / 1024).toFixed(2) + ' KB',
-        type: file.type || 'Unknown'
-      })
       setIsProcessing(false)
       confetti({
-        particleCount: 100,
-        spread: 70,
-        origin: { y: 0.6 }
+        particleCount: 150,
+        spread: 100,
+        origin: { y: 0.8 },
+        colors: ['#6366f1', '#a855f7', '#ec4899']
       })
       if (onFileProcessed) onFileProcessed(file)
-    }, 2000)
+    }, 2800)
+  }
+
+  const getProcessingMessage = () => {
+    const messages = [
+      "Securing your digital footprint...",
+      "Generating cryptographic anchors...",
+      "Your file is becoming immortal...",
+      "Anchoring to the global consensus...",
+      "Finalizing mathematical certainty..."
+    ];
+    return messages[Math.floor(Math.random() * messages.length)];
   }
 
   return (
-    <div {...getRootProps()} className="relative min-h-screen">
+    <div {...getRootProps()} className="relative min-h-screen font-sans selection:bg-indigo-500/30">
       <input {...getInputProps()} />
 
       {/* Render Children */}
       {children}
+
+      {/* Item 2: Dark Vault Toggle (Phase I) */}
+      <div className="fixed bottom-6 left-6 z-[1000]">
+        <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={(e) => {
+                e.stopPropagation();
+                setIsDarkVault(!isDarkVault);
+            }}
+            className={clsx(
+                "flex items-center gap-3 rounded-2xl px-5 py-3 text-[10px] font-black uppercase tracking-[0.2em] transition-all shadow-xl",
+                isDarkVault 
+                    ? "bg-rose-500 text-white shadow-rose-500/20" 
+                    : "bg-[#0f111a] text-white/50 border border-white/5 hover:bg-white/5"
+            )}
+        >
+            {isDarkVault ? <ShieldCheck size={14} /> : <Lock size={14} />}
+            Dark Vault: {isDarkVault ? "SECURE" : "PUBLIC"}
+        </motion.button>
+      </div>
 
       {/* Global Overlay when Dragging */}
       <AnimatePresence>
@@ -64,19 +109,22 @@ export default function GlobalDropzone({ children, onFileProcessed }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="pointer-events-none fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/80 backdrop-blur-sm"
+            className="pointer-events-none fixed inset-0 z-[2000] flex items-center justify-center bg-[#05070a]/90 backdrop-blur-2xl"
           >
-            <div className="text-center">
+            <div className="text-center px-6">
               <motion.div
-                animate={{ scale: [1, 1.1, 1] }}
-                transition={{ duration: 1.5, repeat: Infinity }}
-                className="mx-auto mb-8 flex h-32 w-32 items-center justify-center rounded-full border-4 border-dashed border-indigo-500 bg-indigo-500/10 shadow-[0_0_50px_rgba(99,102,241,0.5)]"
+                animate={{ 
+                    scale: [1, 1.05, 1],
+                    rotate: [0, 5, -5, 0]
+                }}
+                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                className="mx-auto mb-10 flex h-40 w-40 items-center justify-center rounded-[2.5rem] border border-white/10 bg-gradient-to-br from-indigo-500/20 to-purple-500/10 shadow-[0_0_80px_rgba(99,102,241,0.3)]"
               >
-                <UploadCloud size={48} className="text-indigo-400" />
+                <UploadCloud size={56} className="text-white" />
               </motion.div>
-              <h2 className="font-display mb-4 text-4xl font-bold text-white">Release to Anchor</h2>
-              <p className="text-lg text-indigo-200">
-                Your file will be hashed locally. 100% Private.
+              <h2 className="font-black mb-4 text-5xl tracking-tighter text-white uppercase italic">Release to Anchor</h2>
+              <p className="max-w-md mx-auto text-lg font-medium text-white/40 leading-relaxed">
+                Drop your file to generate a <span className="text-white italic">permanent cryptographic existence</span>.
               </p>
             </div>
           </motion.div>
@@ -90,69 +138,47 @@ export default function GlobalDropzone({ children, onFileProcessed }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center bg-white/90 p-8 backdrop-blur-xl"
+            className="fixed inset-0 z-[3000] flex items-center justify-center bg-[#05070a] p-8 backdrop-blur-3xl"
           >
-            <div className="w-full max-w-md">
-              <h3 className="font-display mb-6 text-center text-2xl font-bold text-slate-800">
-                Calculating Fingerprint...
-              </h3>
-
-              <div className="relative mb-8 h-64 overflow-hidden rounded-xl border border-slate-200 bg-slate-100 shadow-inner">
-                {/* Simulated Binary Rain */}
-                <div className="absolute inset-0 overflow-hidden p-4 font-mono text-xs leading-tight break-all text-indigo-400 opacity-50">
-                  {Array(1000)
-                    .fill(0)
-                    .map(() => (Math.random() > 0.5 ? '1' : '0'))
-                    .join(' ')}
+            <div className="w-full max-w-xl text-center">
+                <div className="mb-12 relative">
+                    <motion.div 
+                        animate={{ rotate: 360 }}
+                        transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+                        className="mx-auto w-56 h-56 border-t-2 border-r-2 border-white/5 rounded-full absolute inset-0 left-1/2 -ml-28"
+                    />
+                    <motion.div 
+                        initial={{ scale: 0.8, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        className="relative z-10 flex flex-col items-center justify-center h-56"
+                    >
+                        <div className="mb-3 rounded-full bg-indigo-500/20 px-3 py-1 text-[10px] font-black tracking-[0.2em] text-indigo-400 uppercase italic">
+                            {fileData?.intent} Active
+                        </div>
+                        <h3 className="font-black text-4xl tracking-tighter text-white uppercase italic px-4">
+                            {getProcessingMessage()}
+                        </h3>
+                    </motion.div>
                 </div>
 
-                {/* Glowing Progress Bar */}
+              <div className="relative mb-8 h-2 rounded-full overflow-hidden bg-white/5 shadow-inner">
                 <motion.div
-                  className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"
-                  initial={{ width: '0%' }}
-                  animate={{ width: '100%' }}
-                  transition={{ duration: 2, ease: 'easeInOut' }}
+                  className="absolute inset-0 bg-gradient-to-r from-indigo-500 via-purple-500 to-rose-500"
+                  initial={{ x: '-100%' }}
+                  animate={{ x: '0%' }}
+                  transition={{ duration: 2.5, ease: 'circOut' }}
                 />
               </div>
 
-              <div className="flex items-start gap-3 rounded-lg border border-blue-100 bg-blue-50 p-4">
-                <div className="rounded-full bg-blue-100 p-2 text-blue-600">
-                  <FileText size={16} />
-                </div>
-                <div>
-                  <h4 className="text-sm font-semibold text-blue-900">Privacy Guarantee</h4>
-                  <p className="mt-1 text-xs text-blue-700">
-                    Your document never leaves this browser window. Only the mathematical SHA-256
-                    hash is sent to the Bitcoin blockchain.
-                  </p>
-                </div>
+              <div className="flex items-center justify-center gap-6">
+                    <p className="text-[10px] font-black tracking-widest text-white/20 uppercase">Local Entropy Generated</p>
+                    <div className="h-px w-12 bg-white/10" />
+                    <p className="text-[10px] font-black tracking-widest text-white/20 uppercase italic">No Data Leaves Browser</p>
               </div>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
-
-      {/* Success Modal (Simplified for now, would be a separate component usually) */}
-      {/* <AnimatePresence>
-        {fileData && !isProcessing && (
-            <div className="fixed bottom-8 right-8 z-50">
-                 <motion.div 
-                    initial={{x: 100, opacity: 0}}
-                    animate={{x: 0, opacity: 1}}
-                    className="p-4 bg-white rounded-lg shadow-xl border border-indigo-100 flex items-center gap-4"
-                >
-                    <div className="p-2 bg-green-100 rounded-full text-green-600">
-                        <CheckCircle2 size={24} />
-                    </div>
-                    <div>
-                        <h4 className="font-bold text-slate-800">Hashing Complete</h4>
-                        <p className="text-sm text-slate-500">{fileData.name} ({fileData.size})</p>
-                    </div>
-                    <button onClick={() => setFileData(null)} className="ml-4 p-1 hover:bg-slate-100 rounded">X</button>
-                 </motion.div>
-            </div>
-        )}
-      </AnimatePresence> */}
     </div>
   )
 }

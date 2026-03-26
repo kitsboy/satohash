@@ -8,6 +8,7 @@ export const NAV_LINKS = [
   { name: 'Workbench', path: '/dashboard' },
   { name: 'Contracts', path: '/contracts' },
   { name: 'Batch Proof', path: '/batch-proof' },
+  { name: 'Image Vault', path: '/image-vault' },
   { name: 'Verifier', path: '/verify' },
   { name: 'Pulse', path: '/protocol-stats' },
   { name: 'Trust', path: '/trust' }

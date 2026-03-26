@@ -1,6 +1,6 @@
-import { motion } from 'framer-motion'
+import { motion, useScroll, useTransform } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import { ShieldCheck, Clock, FileLock, CheckCircle2, ChevronRight, Zap } from 'lucide-react'
+import { ShieldCheck, Clock, FileLock, CheckCircle2, ChevronRight, Zap, Globe, Lock } from 'lucide-react'
 import LiveNetworkDashboard from '../components/LiveNetworkDashboard'
 import GlobalActivity from '../components/GlobalActivity'
 
@@ -9,183 +9,180 @@ const FeatureCard = ({ icon: Icon, title, description, delay }) => (
     initial={{ opacity: 0, y: 20 }}
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
-    transition={{ duration: 0.5, delay }}
-    className="glass-card group rounded-3xl p-8 transition-all duration-300 hover:shadow-2xl hover:shadow-indigo-500/10"
+    transition={{ type: 'spring', stiffness: 100, delay }}
+    className="glass-card group p-10 hover:bg-white/[0.05]"
   >
-    <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-2xl bg-indigo-50 text-indigo-600 transition-transform group-hover:scale-110">
+    <div className="mb-8 flex h-14 w-14 items-center justify-center rounded-2xl bg-white/5 text-indigo-400 ring-1 ring-white/10 transition-transform group-hover:scale-110 group-hover:bg-indigo-500 group-hover:text-white group-hover:shadow-[0_0_30px_#6366f1]">
       <Icon size={24} />
     </div>
-    <h3 className="mb-3 text-xl font-bold text-slate-900">{title}</h3>
-    <p className="leading-relaxed text-slate-500">{description}</p>
+    <h3 className="mb-4 text-2xl font-black text-white uppercase italic tracking-tighter italic">{title}</h3>
+    <p className="text-sm font-medium leading-relaxed text-white/40 italic">{description}</p>
   </motion.div>
 )
 
 export default function Landing() {
+  const { scrollYProgress } = useScroll();
+  const yRange = useTransform(scrollYProgress, [0, 1], [0, -100]);
+  const opacityRange = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
+
   return (
-    <div className="min-h-screen overflow-hidden pt-24">
+    <div className="min-h-screen pt-32 pb-24">
       {/* Hero Section */}
-      <section className="relative mx-auto flex max-w-7xl flex-col items-center px-6 pb-20 text-center md:pb-32">
-        {/* Background Gradients & Ornaments */}
-        <div className="animate-pulse-slow absolute top-0 left-1/2 -z-10 h-[600px] w-[1000px] -translate-x-1/2 rounded-full bg-gradient-to-tr from-indigo-200/30 via-purple-200/30 to-rose-200/30 blur-3xl" />
-        <div className="animate-float absolute top-40 -left-20 -z-10 h-64 w-64 rounded-full bg-yellow-200/20 blur-3xl" />
-        <div
-          className="animate-float absolute -right-20 bottom-40 -z-10 h-80 w-80 rounded-full bg-blue-200/20 blur-3xl"
-          style={{ animationDelay: '2s' }}
-        />
+      <section className="relative mx-auto flex max-w-7xl flex-col items-center px-6 pb-20 text-center md:pb-40">
+        <motion.div style={{ opacity: opacityRange, y: yRange }} className="relative z-10">
+            <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8 }}
+            className="mb-12 inline-flex items-center gap-3 rounded-full bg-white/5 px-6 py-2.5 text-[10px] font-black tracking-[0.3em] text-white/60 uppercase italic ring-1 ring-white/10 backdrop-blur-3xl"
+            >
+            <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-indigo-500 opacity-75"></span>
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-indigo-400"></span>
+            </span>
+            Satohash Protocol v2.5.0 Deployment Live
+            </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="mb-10 inline-flex items-center gap-2 rounded-full border border-indigo-100 bg-indigo-50/80 px-4 py-2 text-xs font-bold tracking-widest text-indigo-700 uppercase shadow-sm backdrop-blur-sm"
-        >
-          <span className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-indigo-400 opacity-75"></span>
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-indigo-600"></span>
-          </span>
-          Protocol v2.4 Live
+            <motion.h1
+            className="font-display mb-10 max-w-5xl text-6xl leading-[0.95] font-black tracking-tighter text-white uppercase italic md:text-9xl"
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1, ease: "easeOut" }}
+            >
+            Immutable <br />
+            <span className="text-gradient">Digital Truth.</span>
+            </motion.h1>
+
+            <motion.p
+            className="mb-14 max-w-3xl text-xl font-medium leading-[1.6] text-white/40 italic"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            >
+            The global standard for cryptographic attestation. Anchor your documents, source code, and assets to the Bitcoin blockchain with zero-knowledge privacy.
+            </motion.p>
+
+            <motion.div
+            className="flex flex-col gap-6 sm:flex-row sm:justify-center"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            >
+            <Link to="/dashboard">
+                <button className="btn-holographic min-w-[200px] flex items-center justify-center gap-3 group">
+                Enter Protocol Center
+                <ChevronRight className="transition-transform group-hover:translate-x-1" size={16} />
+                </button>
+            </Link>
+            <Link to="/verify">
+                <button className="min-w-[200px] flex items-center justify-center gap-3 rounded-2xl border border-white/5 bg-white/5 px-8 py-4 text-[10px] font-black uppercase tracking-[0.2em] italic text-white/60 transition-all hover:bg-white/10 hover:text-white">
+                <ShieldCheck size={16} /> Verify Evidence
+                </button>
+            </Link>
+            </motion.div>
         </motion.div>
 
-        <motion.h1
-          className="font-display mb-8 max-w-4xl text-5xl leading-tight font-bold tracking-tight md:text-7xl"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.1 }}
-        >
-          Immutable Truth for the <br />
-          <span className="text-gradient">Digital Age.</span>
-        </motion.h1>
-
-        <motion.p
-          className="mb-10 max-w-2xl text-xl leading-relaxed text-slate-500"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-        >
-          Secure your documents, ideas, and contracts on the Bitcoin blockchain forever.
-          Zero-knowledge proof means your data never leaves your device.
-        </motion.p>
-
+        {/* Cinematic Dashboard Preview */}
         <motion.div
-          className="flex flex-col gap-4 sm:flex-row"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
+          initial={{ opacity: 0, y: 100 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1.2, ease: "circOut" }}
+          className="group relative mt-32 w-full max-w-6xl cursor-crosshair overflow-hidden rounded-[4rem] border border-white/5 bg-[#0a0c14] shadow-[0_0_100px_rgba(0,0,0,0.8)]"
         >
-          <Link to="/dashboard">
-            <button className="group flex items-center gap-2 rounded-full bg-slate-900 px-8 py-4 text-lg font-semibold text-white shadow-xl shadow-slate-900/20 transition-colors hover:bg-slate-800">
-              Launch Dashboard{' '}
-              <ChevronRight className="transition-transform group-hover:translate-x-1" />
-            </button>
-          </Link>
-          <Link to="/verify">
-            <button className="flex items-center gap-2 rounded-full border border-slate-200 bg-white px-8 py-4 text-lg font-semibold text-slate-900 shadow-sm transition-colors hover:border-indigo-200 hover:bg-indigo-50/50">
-              <ShieldCheck size={20} /> Verify Proof
-            </button>
-          </Link>
-        </motion.div>
-
-        {/* Demo Live Dashboard Preview */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, delay: 0.5 }}
-          className="group relative mt-20 w-full max-w-5xl cursor-pointer overflow-hidden rounded-[32px] shadow-2xl"
-        >
+          <div className="absolute inset-0 bg-gradient-to-t from-[#05060f] via-transparent to-transparent z-10" />
           <LiveNetworkDashboard />
 
-          {/* Hover Overlay Title */}
-          <div className="absolute top-8 left-8 z-20 text-left">
-            <span className="mb-2 block font-mono text-[10px] tracking-[0.4em] text-white/60 uppercase">
-              Network Status
+          <div className="absolute top-12 left-12 z-20 text-left">
+            <span className="mb-2 block font-mono text-[9px] font-black tracking-[0.4em] text-white/30 uppercase">
+              Consensus Layer
             </span>
-            <h3 className="text-xl font-black tracking-tighter text-white uppercase">
-              Live Protocol Nodes
+            <h3 className="text-3xl font-black tracking-tighter text-white uppercase italic">
+              Global Witness Node Mesh
             </h3>
           </div>
-
-          <div className="pointer-events-none absolute inset-0 bg-indigo-600/5 opacity-0 transition-opacity group-hover:opacity-100" />
         </motion.div>
       </section>
 
-      {/* Activity Feed Section */}
-      <section className="mx-auto max-w-7xl px-6 py-24">
-        <div className="grid items-center gap-16 md:grid-cols-2">
-          <div>
-            <h2 className="font-display mb-6 text-4xl font-black tracking-tight text-slate-900 uppercase">
-              Real-time Protocol Activity
-            </h2>
-            <p className="mb-8 text-lg leading-relaxed text-slate-500">
-              Watch as documents are cryptographically anchored to the blockchain across the globe.
-              The Satohash network is processing decentralized trust every second.
-            </p>
-            <div className="space-y-6">
-              <div className="flex items-start gap-4 rounded-2xl border border-slate-100 bg-slate-50 p-4">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-green-100 text-green-600">
-                  <CheckCircle2 size={20} />
-                </div>
-                <div>
-                  <h4 className="font-bold text-slate-900">99.99% Uptime Guarantee</h4>
-                  <p className="text-sm text-slate-500">
-                    Decentralized calendar nodes ensure your proofs are always processed.
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-start gap-4 rounded-2xl border border-slate-100 bg-slate-50 p-4">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-100 text-indigo-600">
-                  <Clock size={20} />
-                </div>
-                <div>
-                  <h4 className="font-bold text-slate-900">Live Bitcoin Connection</h4>
-                  <p className="text-sm text-slate-500">
-                    Real-time monitoring of mempool and block confirmations.
-                  </p>
-                </div>
-              </div>
+      {/* Stats Divider */}
+      <section className="bg-white/[0.02] border-y border-white/5 py-16">
+        <div className="mx-auto max-w-7xl px-6">
+            <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
+                {[
+                    { l: "Uptime", v: "99.99%", s: "Decentralized" },
+                    { l: "Consensus", v: "Bitcoin", s: "Proof-of-Work" },
+                    { l: "Audit", v: "SEC-Ready", s: "Institutional" },
+                    { l: "Privacy", v: "ZK-SHA256", s: "Zero Leak" }
+                ].map((s, i) => (
+                    <div key={i} className="text-center md:text-left">
+                        <p className="text-[10px] font-black text-indigo-400 uppercase tracking-widest mb-1 italic">{s.l}</p>
+                        <p className="text-4xl font-black text-white italic tracking-tighter mb-1">{s.v}</p>
+                        <p className="text-[9px] font-bold text-white/20 uppercase tracking-[0.2em]">{s.s}</p>
+                    </div>
+                ))}
             </div>
-          </div>
-          <GlobalActivity />
         </div>
       </section>
 
-      {/* Social Proof */}
-      <section className="border-y border-slate-200 bg-white/50 py-12 backdrop-blur-sm">
-        <div className="mx-auto max-w-7xl px-6 text-center">
-          <p className="mb-8 text-sm font-medium tracking-widest text-slate-400 uppercase">
-            Trusted by builders at
-          </p>
-          <div className="flex flex-wrap justify-center gap-12 opacity-50 grayscale transition-all duration-500 hover:grayscale-0">
-            {/* Simulated Logos */}
-            <span className="font-display text-xl font-bold">Stripe</span>
-            <span className="font-display text-xl font-bold">Vercel</span>
-            <span className="font-display text-xl font-bold">Opentimestamps</span>
-            <span className="font-display text-xl font-bold">Blockstream</span>
-            <span className="font-display text-xl font-bold">Paradigm</span>
-          </div>
+      {/* Institutional Features */}
+      <section className="mx-auto max-w-7xl px-6 py-40">
+        <div className="mb-24 text-center">
+            <h2 className="mb-6 text-5xl font-black italic tracking-tighter text-white uppercase italic md:text-7xl">
+                Built for <br /> <span className="text-indigo-400">Sovereign Trust.</span>
+            </h2>
+            <p className="mx-auto max-w-2xl text-lg font-medium text-white/30 italic">
+                A mission-critical protocol for securing corporate assets and intellectual property on the world's most secure network.
+            </p>
         </div>
-      </section>
-
-      {/* Features Grid */}
-      <section className="mx-auto max-w-7xl px-6 py-32">
         <div className="grid gap-8 md:grid-cols-3">
           <FeatureCard
-            icon={FileLock}
-            title="Cryptographic Hash"
-            description="We generate a SHA-256 fingerprint of your file locally. Your actual data never leaves your browser, ensuring total privacy."
+            icon={Lock}
+            title="ZK-Privacy"
+            description="Your documents never leave your browser. We generate a SHA-256 fingerprint locally, ensuring total data sovereignty."
             delay={0.1}
           />
           <FeatureCard
             icon={Clock}
-            title="Bitcoin Timestamp"
-            description="Your file's fingerprint is anchored into the Bitcoin blockchain using the OpenTimestamps protocol, proving existence at a specific time."
+            title="Immutability"
+            description="Anchored into the Bitcoin blockchain via OpenTimestamps, providing permanent proof of existence at a specific block height."
             delay={0.2}
           />
           <FeatureCard
-            icon={CheckCircle2}
-            title="Independent Verification"
-            description="Anyone can verify your proof using the standalone .ots file, without relying on our servers or third-party validators."
+            icon={Globe}
+            title="Nostr Mesh"
+            description="Proofs are broadcast across the Nostr relay network, ensuring global accessibility and censorship resistance."
             delay={0.3}
           />
+        </div>
+      </section>
+
+      {/* Interactive Global Feed */}
+      <section className="mx-auto max-w-7xl px-6 pb-40">
+        <div className="glass-card overflow-hidden bg-white/[0.01] p-12 md:p-24 border-white/5">
+            <div className="grid items-center gap-24 lg:grid-cols-2">
+                <GlobalActivity />
+                <div className="text-left">
+                    <h2 className="mb-10 text-6xl font-black italic tracking-tighter text-white uppercase italic leading-[0.9]">
+                        Decentralized <br /> <span className="text-emerald-400">Witness Log.</span>
+                    </h2>
+                    <div className="space-y-10">
+                        <div className="flex gap-6">
+                            <div className="h-px w-12 bg-emerald-500 mt-4 h-1 shadow-[0_0_10px_#10b981]" />
+                            <div>
+                                <h4 className="text-xl font-black text-white uppercase italic tracking-tight mb-2">Real-time Attribution</h4>
+                                <p className="text-sm font-medium text-white/30 italic">Every stamp is verifiable by the global community in under 60 seconds.</p>
+                            </div>
+                        </div>
+                        <div className="flex gap-6">
+                            <div className="h-px w-12 bg-indigo-500 mt-4 h-1 shadow-[0_0_10px_#6366f1]" />
+                            <div>
+                                <h4 className="text-xl font-black text-white uppercase italic tracking-tight mb-2">Audit Transparency</h4>
+                                <p className="text-sm font-medium text-white/30 italic">Instant verification via public block explorers and OTS tools.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
       </section>
     </div>

@@ -38,6 +38,7 @@ const Landing = React.lazy(() => import('./pages/Landing'))
 const ProtocolStats = React.lazy(() => import('./pages/ProtocolStats'))
 const WebCapture = React.lazy(() => import('./pages/WebCapture'))
 const Dashboard = React.lazy(() => import('./pages/Dashboard'))
+const ImageVault = React.lazy(() => import('./pages/ImageVault'))
 
 // Developer Portal
 const DeveloperPortal = React.lazy(() => import('./pages/DeveloperPortal'))
@@ -93,6 +94,7 @@ function AppContent() {
           <Route path="/verify" element={<VerificationTool />} />
           <Route path="/protocol-stats" element={<ProtocolStats />} />
           <Route path="/snap-and-stamp" element={<WebCapture />} />
+          <Route path="/image-vault" element={<ImageVault />} />
 
           {/* Developer Portal */}
           <Route path="/developers" element={<DeveloperPortal />} />

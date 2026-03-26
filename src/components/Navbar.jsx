@@ -1,6 +1,6 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X, Globe } from 'lucide-react'
+import { Menu, X, Globe, Zap } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { clsx } from 'clsx'
 import LanguagePicker from './LanguagePicker'
@@ -14,115 +14,64 @@ export default function Navbar() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20)
-    }
+    const handleScroll = () => setIsScrolled(window.scrollY > 20)
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  const navSpring = { type: 'spring', stiffness: 400, damping: 30 };
+
   return (
     <>
       <nav
-        style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          height: '72px',
-          zIndex: 1100,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          padding: '0 var(--spacing-xl)',
-          background: isScrolled ? 'var(--color-surface-elevated)' : 'var(--color-surface)',
-          backdropFilter: 'blur(16px)',
-          borderBottom: '1px solid var(--color-border)',
-          transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-          boxShadow: isScrolled ? '0 10px 40px rgba(0,0,0,0.1)' : 'none'
-        }}
+        className={clsx(
+            "fixed inset-x-0 top-0 z-[2000] flex h-20 items-center justify-between px-6 transition-all duration-500",
+            isScrolled ? "bg-black/60 backdrop-blur-2xl border-b border-white/5 py-4" : "bg-transparent py-6"
+        )}
       >
         {/* Logo & Brand */}
         <motion.div
-          whileHover={{ y: -2 }}
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '12px',
-            cursor: 'pointer',
-            padding: '6px 16px',
-            background: 'rgba(99, 102, 241, 0.05)',
-            borderRadius: '16px',
-            border: '1px solid rgba(99, 102, 241, 0.1)'
-          }}
-          onClick={() => navigate('/contracts')}
-          className="group"
+          whileHover={{ scale: 1.02 }}
+          transition={navSpring}
+          onClick={() => navigate('/')}
+          className="group flex cursor-pointer items-center gap-4 rounded-2xl bg-white/[0.03] px-4 py-2.5 ring-1 ring-white/10 transition-all hover:bg-white/[0.08]"
         >
-          <img
-            src={APP_CONFIG.LOGO}
-            alt={`${APP_CONFIG.NAME} Logo`}
-            width="24"
-            height="24"
-            loading="eager"
-            decoding="async"
-            style={{ height: '24px', width: '24px' }}
-            className="transition-transform duration-300 group-hover:rotate-12"
-          />
-          <span
-            style={{
-              fontWeight: '900',
-              fontSize: '1.25rem',
-              background: 'linear-gradient(to right, #000, #4f46e5)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              letterSpacing: '-0.05em'
-            }}
-          >
+          <div className="relative">
+             <motion.div 
+                animate={{ rotate: 360 }}
+                transition={{ duration: 15, repeat: Infinity, ease: 'linear' }}
+                className="absolute inset-0 rounded-lg border border-indigo-500/30" 
+             />
+             <img
+                src={APP_CONFIG.LOGO}
+                alt="Logo"
+                className="relative z-10 h-6 w-6 grayscale transition-all group-hover:grayscale-0"
+              />
+          </div>
+          <span className="text-xl font-black italic tracking-tighter text-white uppercase italic">
             {APP_CONFIG.NAME}
           </span>
         </motion.div>
 
         {/* Main Links */}
-        <div className="hidden items-center gap-1 md:flex">
+        <div className="hidden items-center gap-2 md:flex">
           {NAV_LINKS.map((link) => {
             const isActive = location.pathname === link.path
             return (
               <button
                 key={link.path}
                 onClick={() => navigate(link.path)}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '10px',
-                  padding: '10px 20px',
-                  borderRadius: '14px',
-                  border: isActive ? '2px solid var(--color-primary)' : '2px solid transparent',
-                  background: isActive ? 'var(--color-border-light)' : 'transparent',
-                  color: isActive ? 'var(--color-primary)' : 'var(--color-text-primary)',
-                  fontWeight: isActive ? '950' : '800',
-                  fontSize: '15px',
-                  cursor: 'pointer',
-                  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                  boxShadow: isActive ? '0 4px 12px rgba(99, 102, 241, 0.15)' : 'none'
-                }}
-                onMouseEnter={(e) => {
-                  if (!isActive) {
-                    e.currentTarget.style.background = 'var(--color-border-light)'
-                    e.currentTarget.style.color = 'var(--color-primary)'
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  if (!isActive) {
-                    e.currentTarget.style.background = 'transparent'
-                    e.currentTarget.style.color = 'var(--color-text-primary)'
-                  }
-                }}
+                className={clsx(
+                    "relative px-4 py-2 text-[10px] font-black uppercase tracking-[0.2em] transition-all",
+                    isActive ? "text-white" : "text-white/40 hover:text-white"
+                )}
               >
                 {link.name}
-                {location.pathname === link.path && (
+                {isActive && (
                   <motion.div
-                    layoutId="navbar-underline"
-                    className="absolute right-0 -bottom-1.5 left-0 h-0.5 rounded-full bg-indigo-600"
+                    layoutId="nav-underline"
+                    className="absolute inset-0 -z-10 rounded-xl bg-white/5 ring-1 ring-white/10"
+                    transition={navSpring}
                   />
                 )}
               </button>
@@ -132,59 +81,32 @@ export default function Navbar() {
 
         <div className="flex items-center gap-4">
           <motion.button
-            aria-label="Change Language"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            whileHover={{ scale: 1.1, rotate: 5 }}
+            whileTap={{ scale: 0.9 }}
             onClick={() => setIsLangOpen(true)}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              width: '40px',
-              height: '40px',
-              background: 'var(--color-surface-elevated)',
-              border: '2px solid var(--color-border)',
-              borderRadius: '12px',
-              cursor: 'pointer',
-              color: 'var(--color-text-primary)',
-              fontWeight: '900',
-              transition: 'all 0.2s ease'
-            }}
+            className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/5 text-white shadow-xl ring-1 ring-white/10 transition-all hover:bg-white/10"
           >
-            <Globe size={20} />
+            <Globe size={18} />
           </motion.button>
 
           <Link to="/dashboard" className="hidden md:block">
             <motion.button
-              whileHover={{ scale: 1.05, y: -2 }}
+              whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="rounded-xl bg-indigo-600 px-6 py-2.5 text-sm font-bold text-white shadow-xl shadow-indigo-200 transition-colors hover:bg-indigo-700"
+              transition={navSpring}
+              className="btn-holographic flex items-center gap-2"
             >
-              Launch Workbench
+              <Zap size={14} className="fill-white" />
+              Workbench
             </motion.button>
           </Link>
 
           <motion.button
-            aria-label={isOpen ? 'Close Menu' : 'Open Menu'}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            whileTap={{ scale: 0.9 }}
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              width: '40px',
-              height: '40px',
-              background: 'var(--color-surface-elevated)',
-              border: '2px solid var(--color-border)',
-              borderRadius: '12px',
-              cursor: 'pointer',
-              color: 'var(--color-text-primary)',
-              transition: 'all 0.2s ease'
-            }}
+            className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/5 text-white ring-1 ring-white/10 md:hidden"
           >
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
+            {isOpen ? <X size={20} /> : <Menu size={20} />}
           </motion.button>
         </div>
       </nav>
@@ -193,38 +115,40 @@ export default function Navbar() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0, y: -10 }}
-            animate={{ opacity: 1, height: 'auto', y: 0 }}
-            exit={{ opacity: 0, height: 0, y: -10 }}
-            className="shadow-premium absolute top-[72px] right-0 left-0 z-[1050] overflow-hidden border-b border-slate-200 bg-white p-6 md:hidden"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={navSpring}
+            className="fixed inset-x-0 top-24 z-[1900] mx-4 overflow-hidden rounded-[2rem] border border-white/10 bg-black/80 p-8 backdrop-blur-3xl md:hidden"
           >
-            <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-8">
               {NAV_LINKS.map((link) => (
-                <Link
+                <button
                   key={link.name}
-                  to={link.path}
+                  onClick={() => {
+                    navigate(link.path)
+                    setIsOpen(false)
+                  }}
                   className={clsx(
-                    'text-lg font-bold transition-colors',
-                    location.pathname === link.path ? 'text-indigo-600' : 'text-slate-900'
+                    "text-3xl font-black uppercase italic tracking-tighter",
+                    location.pathname === link.path ? "text-indigo-400" : "text-white"
                   )}
-                  onClick={() => setIsOpen(false)}
                 >
                   {link.name}
-                </Link>
+                </button>
               ))}
-              <Link
-                to="/dashboard"
-                onClick={() => setIsOpen(false)}
-                className="w-full rounded-xl bg-indigo-600 py-4 text-center font-black text-white shadow-lg shadow-indigo-100"
+              <div className="h-px w-full bg-white/10" />
+              <button
+                onClick={() => navigate('/dashboard')}
+                className="btn-holographic w-full py-6 text-center text-lg"
               >
                 Launch Workbench
-              </Link>
+              </button>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Language Picker Modal */}
       <LanguagePicker isOpen={isLangOpen} onClose={() => setIsLangOpen(false)} />
     </>
   )

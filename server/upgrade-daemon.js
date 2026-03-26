@@ -2,6 +2,7 @@ import cron from 'node-cron';
 import logger from './logger.js';
 import db from './db.js';
 import OpenTimestamps from 'opentimestamps';
+import { dispatchWebhook } from './webhooks.js';
 
 /**
  * 
@@ -45,6 +46,9 @@ const startUpgradeDaemon = (io) => {
 
           logger.info(`🎊 Timestamp ${stamp.id} CONFIRMED! Block: ${blockHeight}`);
           
+          // Item 16: Dispatch Webhooks
+          dispatchWebhook('confirmed', { id: stamp.id, blockHeight });
+
           // Emit event to Socket.io for immediate UI feedback.
           if (io) {
             io.emit('ots:confirmed', { 

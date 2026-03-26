@@ -45,4 +45,46 @@ program.command('stamp')
     }
   });
 
+program.command('stamp-dir')
+  .description('Stamp an entire directory of files (Bulk Tool)')
+  .argument('<directory>', 'directory to scan')
+  .option('-s, --server <url>', 'Satohash server URL', 'http://localhost:3001')
+  .action(async (directory, options) => {
+    try {
+        const absoluteDir = path.resolve(directory);
+        if (!fs.statSync(absoluteDir).isDirectory()) {
+            console.error('Path is not a directory:', absoluteDir);
+            process.exit(1);
+        }
+
+        console.log(`📂 Scanning directory: ${absoluteDir}`);
+        const files = fs.readdirSync(absoluteDir)
+            .filter(f => !fs.statSync(path.join(absoluteDir, f)).isDirectory())
+            .filter(f => !f.startsWith('.'));
+
+        console.log(`🔎 Found ${files.length} files. Starting bulk anchor...`);
+
+        for (const file of files) {
+            const filePath = path.join(absoluteDir, file);
+            const fileBuffer = fs.readFileSync(filePath);
+            const hash = crypto.createHash('sha256').update(fileBuffer).digest('hex');
+
+            process.stdout.write(`⚡ Anchoring ${file.substring(0, 15)}... `);
+
+            try {
+                const response = await axios.post(`${options.server}/api/stamp`, {
+                    hash,
+                    filename: file
+                });
+                console.log(`✅ [${response.data.id.substring(0, 8)}]`);
+            } catch (err) {
+                console.log(`❌ Failed: ${err.message}`);
+            }
+        }
+        console.log('💯 Bulk operation complete.');
+    } catch (error) {
+        console.error('❌ Bulk operation failed:', error.message);
+    }
+  });
+
 program.parse();

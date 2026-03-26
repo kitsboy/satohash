@@ -5,7 +5,7 @@ import QRCode from 'qrcode'
  *
  * Generates a high-end, cryptographic Proof of Existence certificate for a stamped file.
  */
-export const generatePDF = async (stampInfo) => {
+export const generatePDF = async (stampInfo, watermarkType = 'STANDARD') => {
   const doc = new jsPDF({
     orientation: 'portrait',
     unit: 'mm',
@@ -15,6 +15,14 @@ export const generatePDF = async (stampInfo) => {
   // --- Hardcore Branding (Dark/Tactical Theme) ---
   doc.setFillColor(15, 17, 26) // Background color (#0f111a)
   doc.rect(0, 0, 210, 297, 'F')
+  
+  // --- Item 3: Watermark Templates ---
+  if (watermarkType !== 'STANDARD') {
+      doc.setTextColor(255, 255, 255, 0.03);
+      doc.setFontSize(80);
+      doc.setFont('helvetica', 'bold');
+      doc.text(watermarkType, 105, 150, { align: 'center', angle: 45 });
+  }
 
   // --- Accent Border ---
   doc.setDrawColor(99, 102, 241) // Indigo-500
