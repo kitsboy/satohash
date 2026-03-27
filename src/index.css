@@ -1,101 +1,253 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,700;1,800;1,900&display=swap');
 
 @import 'tailwindcss';
 
 @layer base {
   :root {
-    --bg-deep: #05060f;
-    --primary: #6366f1;
-    --accent: #ec4899;
+    --bg-base:   #f4f6fb;
+    --bg-card:   #ffffff;
+    --bg-subtle: #eef0f8;
+    --border:    #e2e5f0;
+    --primary:   #4f46e5;       /* rich indigo */
+    --primary-glow: rgba(79, 70, 229, 0.15);
+    --accent:    #7c3aed;       /* violet */
+    --success:   #059669;
+    --warning:   #d97706;
+    --text-base: #1a1d2e;
+    --text-muted:#64748b;
+    --text-faint:#94a3b8;
   }
 
   body {
-    @apply bg-[#05060f] text-white antialiased selection:bg-indigo-500/30;
+    @apply antialiased;
+    background-color: var(--bg-base);
+    color: var(--text-base);
     font-family: 'Inter', sans-serif;
     background-image:
-      radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.05) 0px, transparent 50%),
-      radial-gradient(at 100% 0%, rgba(236, 72, 153, 0.05) 0px, transparent 50%);
+      radial-gradient(at 0% 0%, rgba(79, 70, 229, 0.06) 0px, transparent 55%),
+      radial-gradient(at 100% 100%, rgba(124, 58, 237, 0.05) 0px, transparent 50%);
     background-attachment: fixed;
   }
 
-  h1,
-  h2,
-  h3,
-  .font-display {
+  h1, h2, h3, .font-display {
     font-family: 'Space Grotesk', sans-serif;
     @apply tracking-tighter;
+    color: var(--text-base);
+  }
+
+  ::selection {
+    background: rgba(79, 70, 229, 0.2);
+    color: var(--primary);
   }
 }
 
 @layer components {
-  /* Hyper-Polish Glassmorphism */
+  /* ─── Primary Card ──────────────────────────────────── */
   .glass-card {
-    @apply relative overflow-hidden rounded-[2rem] backdrop-blur-3xl;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.01), rgba(255, 255, 255, 0.03));
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    @apply relative overflow-hidden rounded-[1.75rem];
+    background: var(--bg-card);
+    border: 1px solid var(--border);
     box-shadow:
-      0 20px 40px -15px rgba(0, 0, 0, 0.5),
-      0 1px 1px 0 rgba(255, 255, 255, 0.03) inset;
-    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      0 1px 3px rgba(0,0,0,0.04),
+      0 8px 24px -8px rgba(79,70,229,0.08),
+      0 0 0 1px rgba(255,255,255,0.7) inset;
+    transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.2);
   }
 
   .glass-card:hover {
-    @apply scale-[1.01] border-white/10 bg-white/[0.04];
     box-shadow:
-      0 30px 60px -15px rgba(0, 0, 0, 0.6),
-      0 0 20px rgba(99, 102, 241, 0.1);
+      0 2px 6px rgba(0,0,0,0.06),
+      0 16px 40px -12px rgba(79,70,229,0.14),
+      0 0 0 1px rgba(255,255,255,0.8) inset;
+    border-color: rgba(79, 70, 229, 0.2);
+    transform: translateY(-2px);
   }
 
-  /* Item 3: Glass-Noise Utility */
+  /* Subtle grain overlay for texture */
   .glass-card::before {
     content: '';
-    @apply pointer-events-none absolute inset-0 opacity-[0.03];
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    @apply pointer-events-none absolute inset-0 opacity-[0.025];
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
   }
 
+  /* ─── Holographic CTA ───────────────────────────────── */
   .btn-holographic {
-    @apply relative overflow-hidden rounded-2xl px-8 py-4 text-[10px] font-black tracking-[0.2em] text-white uppercase italic transition-all;
-    background: linear-gradient(135deg, #6366f1, #a855f7, #ec4899);
-    box-shadow: 0 10px 40px -10px rgba(99, 102, 241, 0.5);
+    @apply relative overflow-hidden rounded-xl px-7 py-3.5 text-[11px] font-black tracking-[0.15em] text-white uppercase transition-all;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    box-shadow:
+      0 4px 16px -4px rgba(79, 70, 229, 0.45),
+      0 1px 1px rgba(255,255,255,0.15) inset;
+  }
+
+  .btn-holographic::after {
+    content: '';
+    @apply absolute inset-0 opacity-0 transition-opacity;
+    background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 60%);
   }
 
   .btn-holographic:hover {
-    @apply scale-[1.02] shadow-indigo-500/40 brightness-110;
+    transform: translateY(-1px) scale(1.02);
+    box-shadow:
+      0 8px 28px -4px rgba(79, 70, 229, 0.55),
+      0 1px 1px rgba(255,255,255,0.15) inset;
   }
 
+  .btn-holographic:hover::after {
+    @apply opacity-100;
+  }
+
+  .btn-holographic:active {
+    transform: scale(0.98);
+  }
+
+  /* ─── Secondary Button ──────────────────────────────── */
+  .btn-secondary {
+    @apply relative rounded-xl px-7 py-3.5 text-[11px] font-black tracking-[0.15em] uppercase transition-all;
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    color: var(--text-base);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+
+  .btn-secondary:hover {
+    background: var(--bg-card);
+    border-color: rgba(79, 70, 229, 0.3);
+    color: var(--primary);
+    box-shadow: 0 4px 12px -4px rgba(79, 70, 229, 0.15);
+    transform: translateY(-1px);
+  }
+
+  /* ─── Stat Card ─────────────────────────────────────── */
   .stat-card {
-    @apply flex flex-col items-center justify-center rounded-3xl bg-white/[0.01] p-8 text-center ring-1 ring-white/5 transition-all;
+    @apply flex flex-col items-center justify-center rounded-2xl p-8 text-center transition-all;
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+  }
+
+  /* ─── Terminal / Code Block ─────────────────────────── */
+  .terminal-card {
+    @apply rounded-2xl overflow-hidden;
+    background: #1a1d2e;
+    border: 1px solid rgba(255,255,255,0.06);
+    box-shadow: 0 8px 32px -8px rgba(0,0,0,0.3);
+  }
+
+  /* ─── Tag / Pill ────────────────────────────────────── */
+  .pill {
+    @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-widest transition-all;
+  }
+
+  .pill-indigo {
+    @apply pill;
+    background: rgba(79, 70, 229, 0.08);
+    border: 1px solid rgba(79, 70, 229, 0.2);
+    color: var(--primary);
+  }
+
+  .pill-emerald {
+    @apply pill;
+    background: rgba(5, 150, 105, 0.07);
+    border: 1px solid rgba(5, 150, 105, 0.2);
+    color: var(--success);
+  }
+
+  .pill-amber {
+    @apply pill;
+    background: rgba(217, 119, 6, 0.07);
+    border: 1px solid rgba(217, 119, 6, 0.2);
+    color: var(--warning);
+  }
+
+  /* ─── Input ─────────────────────────────────────────── */
+  .input-field {
+    @apply w-full rounded-xl px-5 py-4 text-sm font-medium outline-none transition-all;
+    background: var(--bg-subtle);
+    border: 1.5px solid var(--border);
+    color: var(--text-base);
+  }
+
+  .input-field:focus {
+    background: var(--bg-card);
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+  }
+
+  .input-field::placeholder {
+    color: var(--text-faint);
+  }
+
+  /* ─── Section Divider ───────────────────────────────── */
+  .section-divider {
+    @apply my-24 h-px w-full;
+    background: linear-gradient(to right, transparent, var(--border), transparent);
   }
 }
 
-/* Institutional Scrollbar */
-::-webkit-scrollbar {
-  width: 4px;
-}
-::-webkit-scrollbar-track {
-  @apply bg-transparent;
-}
+/* ─── Scrollbar ─────────────────────────────────────────── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {
-  @apply rounded-full bg-white/10 transition-colors hover:bg-white/20;
+  background: rgba(79, 70, 229, 0.2);
+  border-radius: 99px;
 }
+::-webkit-scrollbar-thumb:hover { background: rgba(79, 70, 229, 0.4); }
 
-/* Animations */
+/* ─── Animations ─────────────────────────────────────────── */
 @keyframes breathing {
-  0%,
-  100% {
-    transform: scale(1);
-    opacity: 0.4;
-  }
-  50% {
-    transform: scale(1.1);
-    opacity: 0.8;
-  }
+  0%, 100% { transform: scale(1);   opacity: 0.5; }
+  50%       { transform: scale(1.1); opacity: 1;   }
 }
 
-.animate-breathing {
-  animation: breathing 4s infinite ease-in-out;
+@keyframes shimmer {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(100%);  }
 }
 
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-8px); }
+}
+
+.animate-breathing { animation: breathing 4s infinite ease-in-out; }
+.animate-float     { animation: float 6s infinite ease-in-out; }
+
+/* ─── Text Gradient ──────────────────────────────────────── */
 .text-gradient {
-  @apply bg-gradient-to-br from-white via-white to-white/30 bg-clip-text text-transparent;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-warm {
+  background: linear-gradient(135deg, #d97706 0%, #dc2626 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─── Shimmer Skeleton ───────────────────────────────────── */
+.shimmer {
+  @apply relative overflow-hidden;
+  background: var(--bg-subtle);
+}
+
+.shimmer::after {
+  content: '';
+  @apply absolute inset-0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+  animation: shimmer 1.5s infinite;
+}
+
+/* ─── Holographic glow ring on active elements ───────────── */
+.ring-glow {
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15), 0 0 16px rgba(79, 70, 229, 0.1);
+}
+
+/* ─── Dark Terminal Inset (for code/logs areas) ──────────── */
+.terminal-inset {
+  background: #12141f;
+  border: 1px solid rgba(255,255,255,0.05);
+  color: #a5b4fc;
+  font-family: 'SF Mono', 'Fira Code', monospace;
 }

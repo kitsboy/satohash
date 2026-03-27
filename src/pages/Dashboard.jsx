@@ -84,7 +84,7 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="mx-auto flex min-h-screen max-w-7xl flex-col gap-12 px-6 pt-24 pb-20">
+    <div className="mx-auto flex min-h-screen max-w-7xl flex-col gap-12 px-6 pt-24 pb-20" style={{ background: 'var(--bg-base)' }}>
       <GlobalDropzone onFileProcessed={handleFileProcessed} />
 
       <div className="grid gap-8 lg:grid-cols-3">
@@ -93,9 +93,10 @@ export default function Dashboard() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             className="font-display flex items-center gap-3 text-4xl font-extrabold"
+            style={{ color: 'var(--text-base)' }}
           >
             Proof Workbench
-            {isStamping && <Clock className="h-6 w-6 animate-spin text-indigo-500" />}
+            {isStamping && <Clock className="h-6 w-6 animate-spin" style={{ color: 'var(--primary)' }} />}
           </motion.h1>
 
           <BlockchainPulse />
@@ -106,77 +107,66 @@ export default function Dashboard() {
             animate={{ opacity: 1, scale: 1 }}
           >
             {!file ? (
-              <div className="flex flex-1 flex-col items-center justify-center rounded-xl border border-white/5 bg-gradient-to-br from-white/5 to-transparent p-12 text-center">
-                <div className="animate-pulse-slow mb-6 flex h-20 w-20 items-center justify-center rounded-full border border-indigo-500/20 bg-indigo-500/10">
-                  <FileCheck size={32} className="text-indigo-400" />
+              <div className="flex flex-1 flex-col items-center justify-center rounded-[1.5rem] p-12 text-center" style={{ background: 'var(--bg-subtle)' }}>
+                <div className="animate-breathing mb-6 flex h-20 w-20 items-center justify-center rounded-full" style={{ background: 'rgba(79,70,229,0.08)', border: '1.5px solid rgba(79,70,229,0.2)' }}>
+                  <FileCheck size={32} style={{ color: 'var(--primary)' }} />
                 </div>
-                <h3 className="mb-2 text-xl font-bold text-white">Secure Stamping Engine</h3>
-                <p className="max-w-sm text-white/40">
-                  Drag any document here to begin the cryptographic anchoring process on the Bitcoin
-                  blockchain.
+                <h3 className="mb-2 text-xl font-bold" style={{ color: 'var(--text-base)' }}>Secure Stamping Engine</h3>
+                <p className="max-w-sm" style={{ color: 'var(--text-muted)' }}>
+                  Drag any document here to begin the cryptographic anchoring process on the Bitcoin blockchain.
                 </p>
               </div>
             ) : (
-              <div className="relative flex flex-1 flex-col rounded-xl border border-white/5 bg-[#0f111a] p-8">
-                <div className="absolute top-0 right-0 p-4">
-                  <span
-                    className={`flex items-center gap-1 rounded-full px-3 py-1 text-xs font-bold tracking-wider uppercase ${file.status === 'confirmed' ? 'border border-emerald-500/20 bg-emerald-500/10 text-emerald-400' : 'border border-amber-500/20 bg-amber-500/10 text-amber-400'}`}
-                  >
-                    {file.status === 'confirmed' ? (
-                      <Check size={12} />
-                    ) : (
-                      <Clock size={12} className="animate-pulse" />
-                    )}
+              <div className="relative flex flex-1 flex-col rounded-[1.5rem] p-8" style={{ background: 'var(--bg-card)', border: '1px solid var(--border)' }}>
+                <div className="absolute top-4 right-4">
+                  <span className={file.status === 'confirmed' ? 'pill-emerald' : 'pill-amber'}>
+                    {file.status === 'confirmed' ? <Check size={10} /> : <Clock size={10} className="animate-pulse" />}
                     {file.status}
                   </span>
                 </div>
 
                 <div className="mb-8 flex items-start gap-4">
-                  <div className="rounded-lg border border-indigo-500/20 bg-indigo-500/10 p-4 text-indigo-400">
-                    <FileCheck size={32} />
+                  <div className="rounded-xl p-4" style={{ background: 'rgba(79,70,229,0.08)', border: '1.5px solid rgba(79,70,229,0.15)' }}>
+                    <FileCheck size={28} style={{ color: 'var(--primary)' }} />
                   </div>
                   <div className="flex-1 overflow-hidden">
-                    <h2 className="truncate text-2xl font-bold text-white">{file.name}</h2>
-                    <p className="mt-1 truncate font-mono text-xs text-white/30">{file.hash}</p>
+                    <h2 className="truncate text-2xl font-bold" style={{ color: 'var(--text-base)' }}>{file.name}</h2>
+                    <p className="mt-1 truncate font-mono text-xs" style={{ color: 'var(--text-faint)' }}>{file.hash}</p>
                   </div>
                 </div>
 
-                <div className="mt-auto grid gap-4 sm:grid-cols-3">
+                <div className="mt-auto grid gap-3 sm:grid-cols-3">
                   <button
                     onClick={downloadOTS}
-                    className="group flex flex-col items-center justify-center rounded-xl border border-white/5 p-4 transition-all hover:border-indigo-500/30 hover:bg-white/5"
+                    className="group flex flex-col items-center justify-center rounded-xl p-4 transition-all"
+                    style={{ background: 'var(--bg-subtle)', border: '1px solid var(--border)' }}
                   >
-                    <Download className="mb-2 text-white/40 transition-colors group-hover:text-indigo-400" />
-                    <span className="text-sm font-semibold text-white group-hover:text-indigo-400">
-                      Download Proof
-                    </span>
+                    <Download className="mb-2 transition-colors" style={{ color: 'var(--text-faint)' }} />
+                    <span className="text-sm font-semibold" style={{ color: 'var(--text-base)' }}>Download Proof</span>
                   </button>
                   <button
                     onClick={() => generatePDF(file)}
-                    className="group flex flex-col items-center justify-center rounded-xl border border-white/5 p-4 transition-all hover:border-indigo-500/30 hover:bg-white/5"
+                    className="group flex flex-col items-center justify-center rounded-xl p-4 transition-all"
+                    style={{ background: 'var(--bg-subtle)', border: '1px solid var(--border)' }}
                   >
-                    <FileCheck className="mb-2 text-white/40 transition-colors group-hover:text-indigo-400" />
-                    <span className="text-sm font-semibold text-white group-hover:text-indigo-400">
-                      Certificate
-                    </span>
+                    <FileCheck className="mb-2" style={{ color: 'var(--text-faint)' }} />
+                    <span className="text-sm font-semibold" style={{ color: 'var(--text-base)' }}>Certificate</span>
                   </button>
                   <a
-                    href={`https://mempool.space/address/1SatohashProtocolAnchorAddress`}
+                    href="https://mempool.space"
                     target="_blank"
-                    className="group flex flex-col items-center justify-center rounded-xl border border-white/5 p-4 transition-all hover:border-indigo-500/30 hover:bg-white/5"
+                    rel="noreferrer"
+                    className="group flex flex-col items-center justify-center rounded-xl p-4 transition-all"
+                    style={{ background: 'var(--bg-subtle)', border: '1px solid var(--border)' }}
                   >
-                    <ExternalLink className="mb-2 text-white/40 transition-colors group-hover:text-amber-400" />
-                    <span className="text-sm font-semibold text-white group-hover:text-amber-400">
-                      Block Explorer
-                    </span>
+                    <ExternalLink className="mb-2" style={{ color: 'var(--warning)' }} />
+                    <span className="text-sm font-semibold" style={{ color: 'var(--text-base)' }}>Block Explorer</span>
                   </a>
                 </div>
               </div>
             )}
           </motion.div>
 
-          <HistoryList />
-          
           <HistoryList />
           
           {/* Item 139: Vision 3.0 Stable Release Banner */}
