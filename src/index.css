@@ -1,8 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
 @layer base {
   :root {
@@ -12,15 +10,18 @@
   }
 
   body {
-    @apply bg-[#05060f] text-white selection:bg-indigo-500/30 antialiased;
+    @apply bg-[#05060f] text-white antialiased selection:bg-indigo-500/30;
     font-family: 'Inter', sans-serif;
-    background-image: 
-        radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.05) 0px, transparent 50%),
-        radial-gradient(at 100% 0%, rgba(236, 72, 153, 0.05) 0px, transparent 50%);
+    background-image:
+      radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.05) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, rgba(236, 72, 153, 0.05) 0px, transparent 50%);
     background-attachment: fixed;
   }
 
-  h1, h2, h3, .font-display {
+  h1,
+  h2,
+  h3,
+  .font-display {
     font-family: 'Space Grotesk', sans-serif;
     @apply tracking-tighter;
   }
@@ -29,41 +30,41 @@
 @layer components {
   /* Hyper-Polish Glassmorphism */
   .glass-card {
-    @apply relative overflow-hidden backdrop-blur-3xl rounded-[2rem];
+    @apply relative overflow-hidden rounded-[2rem] backdrop-blur-3xl;
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.01), rgba(255, 255, 255, 0.03));
     border: 1px solid rgba(255, 255, 255, 0.05);
-    box-shadow: 
-        0 20px 40px -15px rgba(0, 0, 0, 0.5),
-        0 1px 1px 0 rgba(255, 255, 255, 0.03) inset;
+    box-shadow:
+      0 20px 40px -15px rgba(0, 0, 0, 0.5),
+      0 1px 1px 0 rgba(255, 255, 255, 0.03) inset;
     transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   }
 
   .glass-card:hover {
-    @apply border-white/10 bg-white/[0.04] scale-[1.01];
-    box-shadow: 
-        0 30px 60px -15px rgba(0, 0, 0, 0.6),
-        0 0 20px rgba(99, 102, 241, 0.1);
+    @apply scale-[1.01] border-white/10 bg-white/[0.04];
+    box-shadow:
+      0 30px 60px -15px rgba(0, 0, 0, 0.6),
+      0 0 20px rgba(99, 102, 241, 0.1);
   }
 
   /* Item 3: Glass-Noise Utility */
   .glass-card::before {
-    content: "";
-    @apply absolute inset-0 opacity-[0.03] pointer-events-none rounded-inherit;
+    content: '';
+    @apply pointer-events-none absolute inset-0 opacity-[0.03];
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
   }
 
   .btn-holographic {
-    @apply relative overflow-hidden rounded-2xl px-8 py-4 text-[10px] font-black uppercase tracking-[0.2em] italic text-white transition-all;
+    @apply relative overflow-hidden rounded-2xl px-8 py-4 text-[10px] font-black tracking-[0.2em] text-white uppercase italic transition-all;
     background: linear-gradient(135deg, #6366f1, #a855f7, #ec4899);
     box-shadow: 0 10px 40px -10px rgba(99, 102, 241, 0.5);
   }
 
   .btn-holographic:hover {
-    @apply scale-[1.02] brightness-110 shadow-indigo-500/40;
+    @apply scale-[1.02] shadow-indigo-500/40 brightness-110;
   }
 
   .stat-card {
-    @apply flex flex-col items-center justify-center p-8 text-center ring-1 ring-white/5 bg-white/[0.01] rounded-3xl transition-all;
+    @apply flex flex-col items-center justify-center rounded-3xl bg-white/[0.01] p-8 text-center ring-1 ring-white/5 transition-all;
   }
 }
 
@@ -75,13 +76,20 @@
   @apply bg-transparent;
 }
 ::-webkit-scrollbar-thumb {
-  @apply bg-white/10 rounded-full hover:bg-white/20 transition-colors;
+  @apply rounded-full bg-white/10 transition-colors hover:bg-white/20;
 }
 
 /* Animations */
 @keyframes breathing {
-  0%, 100% { transform: scale(1); opacity: 0.4; }
-  50% { transform: scale(1.1); opacity: 0.8; }
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.4;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
 }
 
 .animate-breathing {
