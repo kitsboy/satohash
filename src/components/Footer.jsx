@@ -287,10 +287,13 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="flex flex-col items-center justify-between gap-6 border-t border-slate-200 pt-8 text-sm font-bold text-slate-400 md:flex-row">
-          <p>
-            © {currentYear} {APP_CONFIG.NAME}. Luminous Protocol Edition.
-          </p>
+        <div className="flex flex-col items-center justify-between gap-4 border-t border-slate-200 pt-8 text-sm font-bold text-slate-400 md:flex-row">
+          <div className="flex flex-col gap-1">
+            <p>© {currentYear} {APP_CONFIG.NAME}. Hyper-Polish v4.1 · Oracle Mesh.</p>
+            <p className="text-[10px] font-mono text-slate-300 tracking-wider">
+              Build: v4.1.0 · Deployed: {new Date('2026-03-26T20:51:00-07:00').toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
+            </p>
+          </div>
           <div className="group flex items-center gap-2">
             Proof of Work with{' '}
             <Heart
