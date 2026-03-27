@@ -13,14 +13,20 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import { QRCodeSVG } from 'qrcode.react'
-import { APP_CONFIG } from '@/config/constants'
+import { APP_CONFIG, FOOTER_EXTRA_LINKS } from '@/config/constants'
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
   const [showQR, setShowQR] = useState(false)
+  const [copied, setCopied] = useState(false)
 
-  // treasury address
   const bitcoinAddress = 'bc1qhm5ndfjhqxdk3cx0pngyps4f5nnwdckulmge6c8keyf2pk0neqtshjn8ad'
+
+  const copyAddress = () => {
+    navigator.clipboard.writeText(bitcoinAddress)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
 
   return (
     <footer className="relative mt-auto w-full overflow-hidden border-t border-slate-100 bg-slate-50 px-6 pt-24 pb-12">
@@ -108,8 +114,8 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Core Navigation & Legal */}
-          <div className="col-span-1 grid grid-cols-2 gap-12 md:col-span-3 md:grid-cols-3 md:pl-12">
+          {/* Core Navigation & Legal — now spans 2 cols */}
+          <div className="col-span-1 grid grid-cols-2 gap-12 md:col-span-2 md:pl-8">
             <div>
               <h4 className="mb-6 text-xs font-black tracking-widest text-slate-900 uppercase">
                 Protocol
@@ -236,8 +242,12 @@ export default function Footer() {
                           }}
                         />
                       </div>
-                      <p className="cursor-text rounded-lg border border-slate-200 bg-white px-3 py-2 text-center font-mono text-[10px] tracking-wider break-all text-slate-600 select-all">
-                        {bitcoinAddress}
+                      <p
+                        onClick={copyAddress}
+                        title="Click to copy"
+                        className="cursor-pointer rounded-lg border border-slate-200 bg-white px-3 py-2 text-center font-mono text-[10px] tracking-wider break-all text-slate-600 select-all transition-colors hover:border-indigo-300 hover:text-indigo-600"
+                      >
+                        {copied ? '✓ Copied!' : bitcoinAddress}
                       </p>
                       <p className="mt-3 text-center text-[10px] font-black tracking-widest text-slate-400 uppercase">
                         Sovereign Sustainability
@@ -247,6 +257,33 @@ export default function Footer() {
                 </AnimatePresence>
               </div>
             </div>
+          </div>
+
+          {/* 4th column: More Pages */}
+          <div className="col-span-1">
+            <h4 className="mb-6 text-xs font-black tracking-widest text-slate-900 uppercase">More</h4>
+            <ul className="space-y-4 text-sm font-bold text-slate-500">
+              {FOOTER_EXTRA_LINKS.map((link) =>
+                link.internal ? (
+                  <li key={link.path}>
+                    <Link to={link.path} className="transition-colors hover:text-indigo-600">
+                      {link.name}
+                    </Link>
+                  </li>
+                ) : (
+                  <li key={link.path}>
+                    <a
+                      href={link.path}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-1.5 transition-colors hover:text-indigo-600"
+                    >
+                      {link.name} <ExternalLink size={11} />
+                    </a>
+                  </li>
+                )
+              )}
+            </ul>
           </div>
         </div>
 
