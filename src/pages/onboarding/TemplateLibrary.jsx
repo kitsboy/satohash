@@ -57,7 +57,7 @@ const templates = [
     tag: 'Standard'
   },
   {
-    id: 'poa',
+    id: 'powerOfAttorney',
     title: 'Power of Attorney',
     category: 'legal',
     description: 'Grant legal authority to a trusted individual for decision making.',
@@ -101,7 +101,7 @@ const templates = [
     tag: 'Notary Alt'
   },
   {
-    id: 'lease',
+    id: 'commercial-lease',
     title: 'Commercial Lease',
     category: 'property',
     description: 'Binding agreement for business premises with immutable commencement proof.',
@@ -112,7 +112,7 @@ const templates = [
     tag: 'Business'
   },
   {
-    id: 'travel',
+    id: 'child-travel',
     title: 'Child Travel Consent',
     category: 'personal',
     description: 'Documented permission for minors traveling without both guardians.',
@@ -184,7 +184,7 @@ export default function TemplateLibrary() {
 
   return (
     <div className="page pb-24" style={{ background: '#f8fafc', paddingTop: '80px' }}>
-      <div className="container-wide">
+      <div className="layout-container">
         <div className="mb-20 text-center">
           <motion.h1
             initial={{ opacity: 0, scale: 0.9 }}

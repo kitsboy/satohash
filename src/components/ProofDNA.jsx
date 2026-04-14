@@ -1,23 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { motion, useMotionValue, useTransform } from 'framer-motion';
 
-/**
- * Item 1: Holographic Proof DNA (Phase IV Upgrade)
- * Now features dynamic lighting and glassmorphism.
- */
-export default function ProofDNA({ hash, size = "md" }) {
+export default function ProofDNA({ hash = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855', size = "md" }) {
   const [isHovered, setIsHovered] = useState(false);
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
 
-  const rotateX = useTransform(y, [-50, 50], [10, -10]);
-  const rotateY = useTransform(x, [-50, 50], [-10, 10]);
+  const rotateX = useTransform(mouseY, [-50, 50], [15, -15]);
+  const rotateY = useTransform(mouseX, [-50, 50], [-15, 15]);
 
   const handleMouseMove = (e) => {
     const rect = e.currentTarget.getBoundingClientRect();
-    x.set(e.clientX - rect.left - rect.width / 2);
-    y.set(e.clientY - rect.top - rect.height / 2);
+    mouseX.set(e.clientX - rect.left - rect.width / 2);
+    mouseY.set(e.clientY - rect.top - rect.height / 2);
   };
+
+  // Generate visual tokens from hash
+  const tokens = useMemo(() => {
+    const parts = hash.match(/.{1,8}/g) || [];
+    return parts.map(p => parseInt(p, 16));
+  }, [hash]);
 
   const colors = [
     `#${hash.substring(0, 6)}`,
@@ -25,8 +27,8 @@ export default function ProofDNA({ hash, size = "md" }) {
     `#${hash.substring(12, 18)}`
   ];
   
-  const dims = size === "sm" ? "h-12 w-12" : "h-24 w-24";
-  const borderRadius = (parseInt(hash.substring(2, 4), 16) % 30) + 12;
+  const dims = size === "sm" ? "h-16 w-16" : "h-32 w-32";
+  const innerSize = size === "sm" ? 32 : 64;
 
   return (
     <motion.div
@@ -34,41 +36,87 @@ export default function ProofDNA({ hash, size = "md" }) {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => {
         setIsHovered(false);
-        x.set(0);
-        y.set(0);
+        mouseX.set(0);
+        mouseY.set(0);
       }}
       style={{ rotateX, rotateY, perspective: 1000 }}
-      className={`relative flex items-center justify-center overflow-hidden rounded-[${borderRadius}px] ${dims} border border-white/10 glass-card p-4 shadow-2xl transition-shadow hover:shadow-[0_0_40px_${colors[0]}44]`}
+      className={`relative flex items-center justify-center overflow-hidden rounded-3xl ${dims} border border-white/5 bg-[#05060b]/40 shadow-2xl transition-all duration-500 hover:border-white/20`}
     >
         {/* Holographic Diffuse Layer */}
         <div 
-            className="absolute inset-0 opacity-90 transition-opacity"
+            className="absolute inset-0 opacity-40 transition-opacity duration-700"
             style={{ 
-                background: `linear-gradient(135deg, ${colors[0]}88, ${colors[1]}66, ${colors[2]}44)`,
-                filter: 'blur(4px)',
-                mixBlendMode: 'overlay'
+                background: `linear-gradient(${tokens[0] % 360}deg, ${colors[0]}, ${colors[1]}, ${colors[2]})`,
+                filter: 'blur(20px)',
             }}
         />
 
+        {/* Generative SVG "DNA" Pattern */}
+        <svg 
+            width={innerSize} 
+            height={innerSize} 
+            viewBox="0 0 100 100" 
+            className="relative z-10 opacity-80 mix-blend-screen"
+        >
+            <defs>
+                <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="white" stopOpacity="0.8" />
+                    <stop offset="100%" stopColor="white" stopOpacity="0.1" />
+                </linearGradient>
+            </defs>
+            {/* Generative rings based on hash fragments */}
+            {tokens.slice(0, 4).map((t, i) => (
+                <motion.circle
+                    key={i}
+                    cx="50"
+                    cy="50"
+                    r={20 + (t % 25)}
+                    stroke="url(#grad)"
+                    strokeWidth="0.5"
+                    fill="none"
+                    initial={{ scale: 0.8, opacity: 0 }}
+                    animate={{ 
+                        scale: 1, 
+                        opacity: 1,
+                        rotate: isHovered ? (t % 360) : 0 
+                    }}
+                    transition={{ 
+                        duration: 3, 
+                        delay: i * 0.2,
+                        rotate: { duration: 20, repeat: Infinity, ease: "linear" }
+                    }}
+                />
+            ))}
+            {/* Central Geometric Hub */}
+            <rect 
+                x="45" y="45" width="10" height="10" 
+                fill="white" 
+                className="opacity-20 translate-x-1/2 translate-y-1/2" 
+                style={{ transform: `rotate(${tokens[4] % 90}deg)` }}
+            />
+        </svg>
+
         {/* Dynamic Light Source (Mouse Tracking) */}
         <motion.div 
-            className="absolute h-[150%] w-[150%] rounded-full opacity-30 blur-2xl pointer-events-none"
+            className="absolute h-[250%] w-[250%] rounded-full opacity-20 blur-[60px] pointer-events-none"
             style={{ 
-                background: `radial-gradient(circle, white 0%, transparent 60%)`,
-                left: x,
-                top: y,
+                background: `radial-gradient(circle, white 0%, transparent 70%)`,
+                left: mouseX,
+                top: mouseY,
                 x: '-50%',
                 y: '-50%'
             }}
         />
 
-        {/* Binary Seed Label */}
-        <span className="relative z-10 font-mono text-[8px] font-black text-white mix-blend-difference uppercase tracking-widest italic opacity-40">
-            {hash.substring(0, 4)}
-        </span>
+        {/* Seed Label */}
+        <div className="absolute bottom-2 left-0 right-0 text-center">
+            <span className="font-mono text-[7px] font-black text-white/20 uppercase tracking-[0.4em] italic leading-none">
+                {hash.substring(0, 6)}
+            </span>
+        </div>
 
-        {/* Glass Noise Overlay */}
-        <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+        {/* Glass Grain */}
+        <div className="absolute inset-0 opacity-[0.05] pointer-events-none mix-blend-overlay bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
     </motion.div>
   );
 }

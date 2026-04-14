@@ -179,65 +179,70 @@ export default function BatchTimestamp() {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-[#1a1a1a] via-[#242424] to-[#1a1a1a] text-white py-20 px-4">
+        <div className="min-h-screen bg-[var(--bg-base)] text-indigo-900 py-24 px-4">
             <div className="max-w-4xl mx-auto">
                 {/* Header */}
-                <div className="text-center mb-12">
-                    <div className="inline-flex items-center gap-3 mb-4">
-                        <Package className="w-10 h-10 text-[#FF8C00]" />
-                        <h1 className="text-4xl font-bold bg-gradient-to-r from-[#FF8C00] to-[#ff6b00] bg-clip-text text-transparent">
-                            Batch Timestamping
-                        </h1>
+                <div className="text-center mb-16">
+                    <div className="inline-flex items-center justify-center gap-4 mb-6">
+                        <div className="p-4 rounded-3xl bg-indigo-50 border border-indigo-100 shadow-sm">
+                            <Package className="w-10 h-10 text-indigo-600" />
+                        </div>
+                        <div className="text-left">
+                            <h1 className="text-5xl font-black italic tracking-tighter text-indigo-900 uppercase">
+                                BATCH <span className="text-indigo-600">STAMP.</span>
+                            </h1>
+                            <p className="text-[10px] font-black text-indigo-500/60 uppercase tracking-[0.4em] italic mt-1">Institutional Attestation Registry</p>
+                        </div>
                     </div>
-                    <p className="text-gray-400 text-lg">
-                        Timestamp up to 100 files at once. Perfect for archives, legal teams, and auditors.
+                    <p className="text-slate-500 text-lg max-w-2xl mx-auto font-medium italic">
+                        Timestamp up to 100 files in a single atomic transaction. 
+                        Streamlined for high-throughput corporate audits and legal archives.
                     </p>
                 </div>
 
                 {/* Dropzone */}
-                {!batchResult && (
                     <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="mb-8"
+                        initial={{ opacity: 0, scale: 0.98 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        className="mb-12"
                     >
                         <div
                             {...getRootProps()}
-                            className={`border-2 border-dashed rounded-2xl p-12 text-center cursor-pointer transition-all duration-300 ${
+                            className={`glass-card border-2 border-dashed rounded-[2.5rem] p-20 text-center cursor-pointer transition-all duration-300 ${
                                 isDragActive
-                                    ? 'border-[#FF8C00] bg-[#FF8C00]/10'
-                                    : 'border-gray-600 hover:border-gray-500 hover:bg-white/5'
+                                    ? 'border-indigo-600 bg-indigo-50'
+                                    : 'border-indigo-100 bg-white hover:border-indigo-300 hover:bg-indigo-50/30'
                             }`}
                         >
                             <input {...getInputProps()} />
-                            <Upload className="w-16 h-16 text-gray-500 mx-auto mb-4" />
-                            <p className="text-xl font-medium mb-2">
-                                {isDragActive ? 'Drop files here...' : 'Drag & drop files here'}
+                            <div className="mx-auto mb-6 h-20 w-20 flex items-center justify-center rounded-3xl bg-indigo-50 text-indigo-300">
+                                <Upload size={40} />
+                            </div>
+                            <p className="text-2xl font-black text-indigo-900 uppercase italic tracking-tighter mb-2">
+                                {isDragActive ? 'Drop assets now' : 'Initialize Batch ingestion'}
                             </p>
-                            <p className="text-gray-500">
-                                or click to browse (max 100 files, 50MB each)
+                            <p className="text-sm font-bold text-slate-400 uppercase tracking-widest italic">
+                                or click to browse (max 100 entries · 50MB per unit)
                             </p>
                         </div>
                     </motion.div>
-                )}
 
                 {/* File List */}
                 {files.length > 0 && !batchResult && (
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
-                        className="bg-white/5 rounded-2xl p-6 mb-8"
+                        className="glass-card bg-indigo-50/30 border-indigo-100 p-8 mb-12"
                     >
-                        <div className="flex items-center justify-between mb-4">
-                            <h3 className="text-lg font-semibold flex items-center gap-2">
-                                <FileText className="w-5 h-5 text-[#5BC0BE]" />
-                                Files ({files.length})
+                        <div className="flex items-center justify-between mb-6">
+                            <h3 className="text-sm font-black uppercase italic tracking-widest text-indigo-900/60">
+                                Ingestion Queue ({files.length})
                             </h3>
                             <button
                                 onClick={() => setFiles([])}
-                                className="text-sm text-red-400 hover:text-red-300 transition-colors"
+                                className="text-[10px] font-black uppercase italic text-rose-500 hover:text-rose-600 transition-colors"
                             >
-                                Clear all
+                                Purge All
                             </button>
                         </div>
                         
@@ -245,33 +250,35 @@ export default function BatchTimestamp() {
                             {files.map((fileData) => (
                                 <div
                                     key={fileData.id}
-                                    className="flex items-center justify-between bg-white/5 rounded-lg p-3"
+                                    className="flex items-center justify-between bg-white border border-indigo-100 rounded-2xl p-4 shadow-sm"
                                 >
-                                    <div className="flex items-center gap-3 flex-1 min-w-0">
-                                        <FileText className="w-5 h-5 text-gray-400 flex-shrink-0" />
+                                    <div className="flex items-center gap-4 flex-1 min-w-0">
+                                        <div className="h-10 w-10 flex items-center justify-center rounded-xl bg-slate-50 text-slate-400">
+                                            <FileText size={18} />
+                                        </div>
                                         <div className="flex-1 min-w-0">
-                                            <p className="truncate font-medium">{fileData.file.name}</p>
-                                            <p className="text-sm text-gray-500">
-                                                {formatFileSize(fileData.file.size)}
+                                            <p className="truncate font-black text-xs text-indigo-900 uppercase italic leading-none">{fileData.file.name}</p>
+                                            <div className="flex items-center gap-2 mt-1">
+                                                <p className="text-[10px] font-bold text-slate-400 uppercase">{formatFileSize(fileData.file.size)}</p>
                                                 {fileData.hash && (
-                                                    <span className="ml-2 text-[#5BC0BE]">
-                                                        • Hash: {fileData.hash.substring(0, 16)}...
+                                                    <span className="text-[10px] font-mono text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">
+                                                        {fileData.hash.substring(0, 12)}...
                                                     </span>
                                                 )}
-                                            </p>
+                                            </div>
                                         </div>
                                     </div>
                                     <div className="flex items-center gap-3">
                                         {fileData.status === 'hashed' && (
-                                            <CheckCircle className="w-5 h-5 text-green-500" />
+                                            <CheckCircle className="w-5 h-5 text-emerald-500" />
                                         )}
                                         {fileData.status === 'error' && (
-                                            <AlertCircle className="w-5 h-5 text-red-500" />
+                                            <AlertCircle className="w-5 h-5 text-rose-500" />
                                         )}
                                         <button
                                             onClick={() => removeFile(fileData.id)}
                                             disabled={isProcessing}
-                                            className="text-gray-500 hover:text-red-400 transition-colors"
+                                            className="text-slate-300 hover:text-rose-500 transition-colors"
                                         >
                                             ×
                                         </button>
@@ -287,15 +294,15 @@ export default function BatchTimestamp() {
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
-                        className="mb-8"
+                        className="mb-12 glass-card p-10 border-indigo-100 bg-white"
                     >
-                        <div className="flex items-center justify-between mb-2">
-                            <span className="text-sm font-medium">Processing...</span>
-                            <span className="text-sm text-gray-400">{progress}%</span>
+                        <div className="flex items-center justify-between mb-4">
+                            <span className="text-[10px] font-black uppercase tracking-widest text-indigo-900/60">Processing Attestation Layer...</span>
+                            <span className="text-sm font-black text-indigo-600 italic">{progress}%</span>
                         </div>
-                        <div className="h-2 bg-white/10 rounded-full overflow-hidden">
+                        <div className="h-2 bg-indigo-50 rounded-full overflow-hidden">
                             <motion.div
-                                className="h-full bg-gradient-to-r from-[#FF8C00] to-[#ff6b00]"
+                                className="h-full bg-gradient-to-r from-indigo-500 to-violet-500"
                                 initial={{ width: 0 }}
                                 animate={{ width: `${progress}%` }}
                                 transition={{ duration: 0.3 }}
@@ -319,22 +326,21 @@ export default function BatchTimestamp() {
                         <button
                             onClick={submitBatch}
                             disabled={isProcessing}
-                            className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-[#FF8C00] to-[#ff6b00] rounded-xl font-semibold text-lg hover:shadow-lg hover:shadow-[#FF8C00]/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="btn-holographic min-w-[300px] py-6 text-sm"
                         >
                             {isProcessing ? (
                                 <>
-                                    <Loader2 className="w-5 h-5 animate-spin" />
-                                    Processing...
+                                    <Loader2 className="w-5 h-5 animate-spin inline mr-3" />
+                                    PROCESSING_BATCH...
                                 </>
                             ) : (
                                 <>
-                                    <Zap className="w-5 h-5" />
-                                    Timestamp {files.length} File{files.length > 1 ? 's' : ''}
+                                    INGEST {files.length} UNIT{files.length > 1 ? 'S' : ''}
                                 </>
                             )}
                         </button>
-                        <p className="text-sm text-gray-500 mt-3">
-                            Flat rate: 1 API call ({files.length} hashes for 50 sats)
+                        <p className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] italic mt-4">
+                            Flat rate: 1 Consenus Anchor ({files.length} units · ≈50 sats)
                         </p>
                     </motion.div>
                 )}
@@ -346,29 +352,29 @@ export default function BatchTimestamp() {
                             initial={{ opacity: 0, scale: 0.95 }}
                             animate={{ opacity: 1, scale: 1 }}
                             exit={{ opacity: 0, scale: 0.95 }}
-                            className="bg-white/5 rounded-2xl p-8 text-center"
+                            className="glass-card bg-white border-emerald-100 p-12 text-center"
                         >
                             {batchResult.status === 'complete' ? (
                                 <>
-                                    <div className="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
-                                        <CheckCircle className="w-10 h-10 text-green-500" />
+                                    <div className="w-24 h-24 bg-emerald-50 rounded-[2.5rem] border border-emerald-100 flex items-center justify-center mx-auto mb-8 shadow-sm">
+                                        <CheckCircle size={40} className="text-emerald-500" />
                                     </div>
-                                    <h2 className="text-2xl font-bold mb-2">Batch Complete!</h2>
-                                    <p className="text-gray-400 mb-6">
-                                        {batchResult.completed} of {batchResult.total} files timestamped successfully
+                                    <h2 className="text-4xl font-black italic tracking-tighter text-emerald-900 uppercase italic mb-2">Batch Witnessed</h2>
+                                    <p className="text-sm font-bold text-emerald-600/60 uppercase tracking-widest italic mb-10">
+                                        {batchResult.completed} of {batchResult.total} units anchored successfully
                                     </p>
                                     
-                                    <div className="bg-white/5 rounded-xl p-4 mb-6 max-w-md mx-auto">
-                                        <p className="text-sm text-gray-500 mb-1">Batch ID</p>
-                                        <p className="font-mono text-[#5BC0BE]">{batchResult.batch_id}</p>
+                                    <div className="bg-slate-50 border border-slate-100 rounded-2xl p-6 mb-10 max-w-md mx-auto">
+                                        <p className="text-[9px] font-black text-indigo-900/30 uppercase tracking-[0.3em] mb-2">Protocol Reference ID</p>
+                                        <p className="font-mono text-xs text-indigo-600 font-bold break-all">{batchResult.batch_id}</p>
                                     </div>
 
                                     <button
                                         onClick={downloadBatch}
-                                        className="inline-flex items-center gap-2 px-6 py-3 bg-[#5BC0BE] rounded-xl font-semibold hover:bg-[#4ab0ae] transition-colors"
+                                        className="btn-holographic min-w-[280px] bg-indigo-600 text-white shadow-xl py-5 text-xs"
                                     >
-                                        <Download className="w-5 h-5" />
-                                        Download ZIP ({batchResult.total} proofs)
+                                        <Download className="w-4 h-4 inline mr-3" />
+                                        Ingest All Proofs (.zip)
                                     </button>
                                 </>
                             ) : (
@@ -414,21 +420,27 @@ export default function BatchTimestamp() {
 
                 {/* Info Cards */}
                 {!batchResult && (
-                    <div className="grid md:grid-cols-3 gap-6 mt-12">
-                        <div className="bg-white/5 rounded-xl p-6">
-                            <Hash className="w-8 h-8 text-[#5BC0BE] mb-3" />
-                            <h4 className="font-semibold mb-1">SHA-256 Hashed</h4>
-                            <p className="text-sm text-gray-400">Each file hashed locally in your browser before sending</p>
+                    <div className="grid md:grid-cols-3 gap-8 mt-16">
+                        <div className="glass-card p-8 border-slate-200 bg-white">
+                            <div className="h-12 w-12 rounded-2xl bg-indigo-50 flex items-center justify-center text-indigo-600 mb-6">
+                                <Hash size={24} />
+                            </div>
+                            <h4 className="text-[11px] font-black text-indigo-900 uppercase tracking-widest mb-2 italic">Linear Hashing</h4>
+                            <p className="text-[10px] font-medium text-slate-400 leading-relaxed italic">Atomic local processing ensuring zero-knowledge asset registration.</p>
                         </div>
-                        <div className="bg-white/5 rounded-xl p-6">
-                            <Zap className="w-8 h-8 text-[#FF8C00] mb-3" />
-                            <h4 className="font-semibold mb-1">Flat Rate Pricing</h4>
-                            <p className="text-sm text-gray-400">1 batch = 1 API call, regardless of file count</p>
+                        <div className="glass-card p-8 border-slate-200 bg-white">
+                            <div className="h-12 w-12 rounded-2xl bg-amber-50 flex items-center justify-center text-amber-600 mb-6">
+                                <Zap size={24} />
+                            </div>
+                            <h4 className="text-[11px] font-black text-indigo-900 uppercase tracking-widest mb-2 italic">Flat Efficiency</h4>
+                            <p className="text-[10px] font-medium text-slate-400 leading-relaxed italic">Infinite file scalability under a single protocol anchor point.</p>
                         </div>
-                        <div className="bg-white/5 rounded-xl p-6">
-                            <Package className="w-8 h-8 text-[#5BC0BE] mb-3" />
-                            <h4 className="font-semibold mb-1">ZIP Download</h4>
-                            <p className="text-sm text-gray-400">All timestamp proofs in one convenient ZIP file</p>
+                        <div className="glass-card p-8 border-slate-200 bg-white">
+                            <div className="h-12 w-12 rounded-2xl bg-indigo-50 flex items-center justify-center text-indigo-600 mb-6">
+                                <Package size={24} />
+                            </div>
+                            <h4 className="text-[11px] font-black text-indigo-900 uppercase tracking-widest mb-2 italic">Unified Zip</h4>
+                            <p className="text-[10px] font-medium text-slate-400 leading-relaxed italic">Seamless attestation delivery in standard corporate archive formats.</p>
                         </div>
                     </div>
                 )}

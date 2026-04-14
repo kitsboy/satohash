@@ -147,14 +147,14 @@ export default function VerificationTool() {
     <div
       className="page"
       style={{
-        background: 'var(--color-surface)',
+        background: 'var(--bg-base)',
         minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
         paddingTop: '120px' // Increased padding to clear navbar and breathe
       }}
     >
-      <div className="container" style={{ flex: 1, maxWidth: '1100px', margin: '0 auto' }}>
+      <div className="layout-container" style={{ flex: 1 }}>
         <div className="animate-slide-down text-center" style={{ marginBottom: '60px' }}>
           <div
             style={{
@@ -180,7 +180,7 @@ export default function VerificationTool() {
               fontWeight: '950',
               letterSpacing: '-0.06em',
               marginBottom: '24px',
-              color: 'var(--color-text-primary)',
+              color: 'var(--text-base)',
               lineHeight: '1.1'
             }}
           >
@@ -201,10 +201,10 @@ export default function VerificationTool() {
           >
             <p
               style={{
-                color: 'var(--color-text-primary)',
+                color: 'var(--text-base)',
                 fontSize: '19px',
                 lineHeight: '1.8',
-                fontWeight: '850',
+                fontWeight: '800',
                 margin: 0
               }}
             >

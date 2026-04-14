@@ -47,220 +47,115 @@ export default function WebCapture() {
   }
 
   return (
-    <div className="page" style={{ background: '#f8fafc', paddingTop: '100px' }}>
-      <div className="container" style={{ maxWidth: '1000px' }}>
-        <div className="page-header text-center" style={{ marginBottom: '40px' }}>
-          <div
-            style={{
-              display: 'inline-flex',
-              padding: '12px',
-              background: '#fee2e2',
-              borderRadius: '16px',
-              color: '#ef4444',
-              marginBottom: '16px'
-            }}
+    <div className="min-h-screen bg-[var(--bg-base)] pt-32 pb-32">
+      <div className="container mx-auto max-w-5xl px-6">
+        <div className="text-center mb-16">
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            className="inline-flex h-20 w-20 items-center justify-center rounded-[2.5rem] bg-indigo-50 border border-indigo-100 text-indigo-600 mb-8"
           >
-            <Camera size={32} strokeWidth={2.5} />
-          </div>
-          <h1
-            style={{
-              fontWeight: '950',
-              fontSize: '48px',
-              letterSpacing: '-0.04em',
-              marginBottom: '12px',
-              color: '#0f172a'
-            }}
-          >
-            Snap & Stamp
+            <Camera size={32} />
+          </motion.div>
+          <h1 className="text-6xl md:text-8xl font-black italic tracking-tighter text-indigo-900 uppercase italic mb-6">
+            Snap <span className="text-indigo-600">&</span> Stamp.
           </h1>
-          <p
-            style={{
-              color: '#64748b',
-              fontSize: '20px',
-              maxWidth: '600px',
-              margin: '0 auto',
-              fontWeight: '600'
-            }}
-          >
-            Capture immutable evidence of any website. Secure digital history before it changes or
-            disappears.
+          <p className="max-w-2xl mx-auto text-xl font-medium text-slate-500 italic leading-relaxed">
+            Capture immutable evidence of any website. Secure digital history before it disappears 
+            using the Bitcoin attestation layer.
           </p>
         </div>
 
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: status === 'idle' || status === 'fetching' ? '1fr' : '1fr 350px',
-            gap: '32px'
-          }}
-        >
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+        <div className="grid lg:grid-cols-3 gap-12">
+          <div className="lg:col-span-2 space-y-8">
             {/* URL INPUT AREA */}
-            <Card style={{ padding: '32px', background: 'white' }}>
-              <div style={{ display: 'flex', gap: '16px' }}>
-                <div style={{ flex: 1, position: 'relative' }}>
-                  <Globe
-                    style={{
-                      position: 'absolute',
-                      left: '16px',
-                      top: '50%',
-                      transform: 'translateY(-50%)',
-                      color: '#94a3b8'
-                    }}
-                    size={20}
-                  />
+            <div className="glass-card p-10 bg-white border-indigo-100 shadow-xl">
+              <div className="flex flex-col md:flex-row gap-4">
+                <div className="flex-1 relative">
+                  <div className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-300">
+                    <Globe size={20} />
+                  </div>
                   <input
                     type="text"
-                    placeholder="https://example.com/article-url"
+                    placeholder="https://institutional-archive.org/entry"
                     value={url}
                     onChange={(e) => setUrl(e.target.value)}
-                    style={{
-                      width: '100%',
-                      padding: '16px 16px 16px 52px',
-                      borderRadius: '16px',
-                      border: '2px solid #e2e8f0',
-                      fontSize: '16px',
-                      fontWeight: '600',
-                      outline: 'none',
-                      transition: 'border-color 0.2s'
-                    }}
+                    className="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl py-5 px-14 font-medium text-indigo-900 outline-none focus:border-indigo-500 focus:bg-white transition-all shadow-inner"
                     disabled={status !== 'idle'}
                   />
                 </div>
-                <Button
-                  variant="primary"
-                  size="large"
+                <button
                   onClick={handleCapture}
                   disabled={!url || status !== 'idle'}
+                  className="btn-holographic min-w-[200px] py-4"
                 >
                   {status === 'fetching' ? (
-                    <Loader2 className="animate-spin" size={20} />
+                    <Loader2 className="animate-spin inline mr-2" size={18} />
                   ) : (
-                    'Snapshot Now'
+                    'SNAPSHOT_DOMAIN'
                   )}
-                </Button>
+                </button>
               </div>
-            </Card>
+            </div>
 
             <AnimatePresence>
               {(status === 'captured' || status === 'anchoring' || status === 'anchored') && (
                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-                  <Card style={{ padding: '32px', minHeight: '400px' }}>
-                    <div
-                      style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        marginBottom: '24px'
-                      }}
-                    >
-                      <h3 style={{ margin: 0, fontWeight: '850', fontSize: '20px' }}>
-                        Archival Capture
-                      </h3>
-                      <div style={{ display: 'flex', gap: '8px' }}>
+                  <div className="glass-card p-10 bg-white border-indigo-50 shadow-2xl">
+                    <div className="flex items-center justify-between mb-8">
+                      <div className="flex items-center gap-4">
+                        <div className="h-2 w-2 rounded-full bg-indigo-600 animate-pulse" />
+                        <h3 className="text-sm font-black uppercase tracking-widest text-indigo-900">Archival Evidence</h3>
+                      </div>
+                      <div className="flex items-center gap-4">
                         {status === 'anchored' && (
-                          <div
-                            style={{
-                              display: 'flex',
-                              alignItems: 'center',
-                              gap: '4px',
-                              background: '#dcfce7',
-                              color: '#166534',
-                              padding: '4px 12px',
-                              borderRadius: '20px',
-                              fontSize: '12px',
-                              fontWeight: '800'
-                            }}
-                          >
-                            <ShieldCheck size={14} /> BITCOIN ANCHORED
-                          </div>
+                          <span className="pill-emerald text-[9px] font-black">BITCOIN_ANCHORED_OK</span>
                         )}
-                        <Button variant="ghost" size="small">
-                          <ExternalLink size={16} /> Visit URL
-                        </Button>
+                        <button className="text-[10px] font-black text-indigo-600 uppercase border-b border-indigo-600/20 pb-0.5 flex items-center gap-2">
+                           <ExternalLink size={12} /> VISIT_SOURCE
+                        </button>
                       </div>
                     </div>
 
-                    <div
-                      style={{
-                        background: '#f1f5f9',
-                        borderRadius: '16px',
-                        overflow: 'hidden',
-                        border: '1px solid #e2e8f0',
-                        marginBottom: '24px'
-                      }}
-                    >
+                    <div className="relative rounded-3xl overflow-hidden border border-slate-100 mb-10 shadow-inner group">
                       <img
                         src={captureData.screenshot}
                         alt="Web Capture"
-                        style={{
-                          width: '100%',
-                          height: '300px',
-                          objectFit: 'cover',
-                          opacity: status === 'anchoring' ? 0.5 : 1
-                        }}
+                        className={`w-full h-[400px] object-cover transition-all duration-700 ${status === 'anchoring' ? 'brightness-50 blur-sm scale-110' : ''}`}
                       />
                       {status === 'anchoring' && (
-                        <div
-                          style={{
-                            position: 'absolute',
-                            top: '200px',
-                            left: '50%',
-                            transform: 'translateX(-50%)',
-                            textAlign: 'center'
-                          }}
-                        >
-                          <Loader2 className="mb-2 animate-spin text-indigo-600" size={40} />
-                          <p style={{ fontWeight: '800', color: '#0f172a' }}>
-                            Calculating Merkle Root...
-                          </p>
+                        <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
+                          <Loader2 className="mb-4 animate-spin text-indigo-400" size={48} />
+                          <p className="text-[10px] font-black uppercase tracking-[0.5em] italic">Constructing Merkle Branch...</p>
                         </div>
                       )}
                     </div>
 
-                    <div
-                      style={{
-                        display: 'grid',
-                        gridTemplateColumns: 'repeat(3, 1fr)',
-                        gap: '16px'
-                      }}
-                    >
+                    <div className="grid grid-cols-3 gap-6">
                       <CaptureMeta
-                        label="Domain"
+                        label="Source Entry"
                         value={url.replace(/^https?:\/\//, '').split('/')[0]}
                       />
                       <CaptureMeta
-                        label="Capture Time"
+                        label="Ingest Time"
                         value={new Date(captureData.timestamp).toLocaleTimeString()}
                       />
                       <CaptureMeta
-                        label="SHA-256 Hash"
+                        label="Identity Hash"
                         value={captureData.hash.substring(0, 16) + '...'}
                         mono
                       />
                     </div>
 
                     {status === 'anchored' && (
-                      <div
-                        style={{
-                          marginTop: '32px',
-                          paddingTop: '32px',
-                          borderTop: '1px solid #e2e8f0'
-                        }}
+                      <motion.div 
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        className="mt-12 pt-12 border-t border-slate-100"
                       >
-                        <div
-                          style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '2px',
-                            marginBottom: '16px',
-                            color: '#1e293b'
-                          }}
-                        >
+                        <div className="flex items-center gap-3 mb-8">
                           <Binary size={20} className="text-indigo-600" />
-                          <h3 style={{ margin: 0, fontSize: '20px', fontWeight: '850' }}>
-                            Protocol Visualization
-                          </h3>
+                          <h3 className="text-sm font-black text-indigo-900 uppercase italic">Protocol Consensus Trace</h3>
                         </div>
                         <MerkleExplorer
                           tree={{
@@ -273,9 +168,9 @@ export default function WebCapture() {
                             ]
                           }}
                         />
-                      </div>
+                      </motion.div>
                     )}
-                  </Card>
+                  </div>
                 </motion.div>
               )}
             </AnimatePresence>
@@ -283,83 +178,46 @@ export default function WebCapture() {
 
           {/* ACTIONS SIDEBAR */}
           {(status === 'captured' || status === 'anchoring' || status === 'anchored') && (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-              <Card
-                style={{ padding: '24px', background: '#0f172a', color: 'white', border: 'none' }}
-              >
-                <h4
-                  style={{
-                    margin: '0 0 20px 0',
-                    fontSize: '16px',
-                    fontWeight: '850',
-                    color: 'white'
-                  }}
-                >
-                  Evidence Summary
-                </h4>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                  <SummaryItem label="Format" value="Z-Evidence (JSON)" />
-                  <SummaryItem label="Integrity" value="SHIELD-256" />
-                  <SummaryItem label="Method" value="Direct Crawler" />
+            <div className="space-y-8 flex flex-col">
+              <div className="glass-card p-8 bg-slate-900 border-none shadow-2xl flex flex-col">
+                <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-8">EVIDENCE_PROFILE</h4>
+                <div className="space-y-6">
+                  <SummaryItem label="Profile" value="Institutional Archive" />
+                  <SummaryItem label="Protection" value="SHA-256 / SHA-3" />
+                  <SummaryItem label="Mechanism" value="Web_Oracle_Crawler" />
                 </div>
 
                 {status === 'captured' && (
-                  <Button
-                    variant="primary"
-                    fullWidth
+                  <button
                     onClick={handleAnchor}
-                    style={{ marginTop: '32px', background: '#ef4444', height: '56px' }}
+                    className="btn-holographic mt-10 py-5 w-full bg-indigo-600 text-white shadow-lg shadow-indigo-600/20 flex items-center justify-center gap-3"
                   >
-                    Anchor Evidence <ChevronRight size={18} />
-                  </Button>
+                    SUBMIT TO MESH <ChevronRight size={18} />
+                  </button>
                 )}
 
                 {status === 'anchored' && (
-                  <div
-                    style={{
-                      marginTop: '32px',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      gap: '12px'
-                    }}
-                  >
-                    <Button
-                      variant="outline"
-                      fullWidth
-                      style={{ borderColor: 'rgba(255,255,255,0.2)', color: 'white' }}
+                  <div className="mt-10 space-y-4 flex flex-col">
+                    <button className="flex items-center justify-center gap-3 w-full py-5 bg-white/10 hover:bg-white/20 rounded-2xl text-[10px] font-black text-white uppercase transition-all">
+                      <Download size={16} /> DOWNLOAD_AFFIDAVIT_ZIP
+                    </button>
+                    <button 
+                      onClick={() => setStatus('idle')}
+                      className="text-[10px] font-black text-slate-500 hover:text-white uppercase tracking-widest mt-4 text-center transition-colors"
                     >
-                      <Download size={16} /> Download Proof (.zip)
-                    </Button>
-                    <Button variant="secondary" fullWidth onClick={() => setStatus('idle')}>
-                      Snap New URL
-                    </Button>
+                      NEW_CAPTURE_SESSION
+                    </button>
                   </div>
                 )}
-              </Card>
+              </div>
 
-              <div
-                style={{
-                  padding: '24px',
-                  background: 'rgba(99, 102, 241, 0.05)',
-                  borderRadius: '24px',
-                  border: '1px solid rgba(99, 102, 241, 0.1)'
-                }}
-              >
-                <div
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '10px',
-                    color: '#4f46e5',
-                    marginBottom: '10px'
-                  }}
-                >
-                  <Zap size={18} />
-                  <span style={{ fontWeight: '850', fontSize: '13px' }}>Judiciary Ready</span>
+              <div className="glass-card p-10 bg-indigo-50 border-indigo-100">
+                <div className="flex items-center gap-4 text-indigo-600 mb-4">
+                  <Zap size={20} />
+                  <span className="text-[10px] font-black uppercase tracking-[0.3em]">Judiciary Grade</span>
                 </div>
-                <p style={{ fontSize: '12px', color: '#64748b', lineHeight: '1.6', margin: 0 }}>
-                  Web snapshots anchored to Bitcoin satisfy the "Best Evidence Rule" by providing
-                  absolute proof of content at a specific point in time.
+                <p className="text-[11px] font-medium text-indigo-900/60 leading-relaxed italic">
+                  Protocal snapshots satisfy global compliance standards for digital preservation and legal verification.
                 </p>
               </div>
             </div>
@@ -372,34 +230,9 @@ export default function WebCapture() {
 
 function CaptureMeta({ label, value, mono }) {
   return (
-    <div
-      style={{
-        padding: '16px',
-        background: '#f8fafc',
-        borderRadius: '12px',
-        border: '1px solid #e2e8f0'
-      }}
-    >
-      <div
-        style={{
-          fontSize: '10px',
-          fontWeight: '850',
-          color: '#94a3b8',
-          textTransform: 'uppercase',
-          marginBottom: '6px'
-        }}
-      >
-        {label}
-      </div>
-      <div
-        style={{
-          fontSize: '13px',
-          fontWeight: '700',
-          color: '#0f172a',
-          fontFamily: mono ? 'var(--font-mono)' : 'inherit',
-          wordBreak: 'break-all'
-        }}
-      >
+    <div className="p-6 bg-slate-50 border border-slate-100 rounded-2xl flex flex-col gap-2">
+      <div className="text-[9px] font-black text-indigo-900/30 uppercase tracking-[0.3em] font-sans">{label}</div>
+      <div className={`text-xs font-bold text-indigo-900 break-all leading-tight ${mono ? 'font-mono' : 'font-sans italic'}`}>
         {value}
       </div>
     </div>
@@ -408,9 +241,9 @@ function CaptureMeta({ label, value, mono }) {
 
 function SummaryItem({ label, value }) {
   return (
-    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-      <span style={{ fontSize: '12px', color: '#94a3b8', fontWeight: '600' }}>{label}</span>
-      <span style={{ fontSize: '12px', color: 'white', fontWeight: '700' }}>{value}</span>
+    <div className="flex justify-between items-center text-[10px] font-bold">
+      <span className="text-slate-500 uppercase tracking-widest">{label}</span>
+      <span className="text-white uppercase italic">{value}</span>
     </div>
   )
 }

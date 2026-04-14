@@ -1,6 +1,6 @@
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import { ShieldCheck, ChevronRight, Globe, Lock, Clock, ArrowRight, Sparkles, Cpu, FileCheck } from 'lucide-react'
+import { ShieldCheck, ChevronRight, Globe, Lock, Clock, ArrowRight, Sparkles, Cpu, FileCheck, Library } from 'lucide-react'
 import LiveNetworkDashboard from '../components/LiveNetworkDashboard'
 import GlobalActivity from '../components/GlobalActivity'
 
@@ -64,7 +64,7 @@ export default function Landing() {
 
           {/* Headline */}
           <motion.h1
-            className="font-display mx-auto mb-8 max-w-5xl text-6xl font-black leading-[0.95] tracking-tighter md:text-[7.5rem]"
+            className="font-display mx-auto mb-8 max-w-5xl text-4xl font-black leading-[0.95] tracking-tighter md:text-[7.5rem]"
             style={{ color: 'var(--text-base)' }}
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -205,6 +205,13 @@ export default function Landing() {
             title="Oracle Mesh"
             description="A distributed network of Witness Nodes that cross-validate proofs. If one server goes down, your evidence lives on."
             delay={0.35}
+          />
+          <FeatureCard
+            icon={Library}
+            accent="indigo"
+            title="Notary Library"
+            description="Access 12+ pre-built legal templates including Wills, NDAs, and Affidavits, ready for bit-for-bit Bitcoin anchoring."
+            delay={0.4}
           />
         </div>
       </section>

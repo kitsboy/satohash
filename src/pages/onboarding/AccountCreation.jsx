@@ -66,13 +66,8 @@ export default function AccountCreation() {
   ]
 
   return (
-    <div
-      className="page"
-      style={{
-        background: 'linear-gradient(180deg, rgba(99, 102, 241, 0.03) 0%, white 40%)'
-      }}
-    >
-      <div className="container-narrow container">
+    <div className="page" style={{ background: 'linear-gradient(180deg, rgba(99, 102, 241, 0.03) 0%, white 40%)' }}>
+      <div className="layout-container">
         {/* Header */}
         <div
           className="text-center"

@@ -84,8 +84,7 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="mx-auto flex min-h-screen max-w-7xl flex-col gap-12 px-6 pt-24 pb-20" style={{ background: 'var(--bg-base)' }}>
-      <GlobalDropzone onFileProcessed={handleFileProcessed} />
+    <div className="layout-container min-h-screen pt-24 pb-20">
 
       <div className="grid gap-8 lg:grid-cols-3">
         <div className="space-y-8 lg:col-span-2">
@@ -167,68 +166,63 @@ export default function Dashboard() {
             )}
           </motion.div>
 
-          <HistoryList />
-          
-          {/* Item 139: Vision 3.0 Stable Release Banner */}
-          <div className="mb-12 flex items-center justify-between border-b border-white/5 pb-8">
-              <div>
-                  <h1 className="text-8xl font-black italic tracking-tighter text-white uppercase italic md:text-9xl">ORACLE <br /> <span className="text-emerald-400">MESH.</span></h1>
-                  <motion.div 
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1, scale: [1, 1.05, 1] }}
-                    transition={{ duration: 3, repeat: Infinity }}
-                    className="mt-6 inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/5 px-4 py-1.5 text-[9px] font-black tracking-widest text-emerald-400 uppercase italic"
-                  >
-                    V3.0.0-PRO STABLE_ORACLE_RELEASE
-                  </motion.div>
-              </div>
-              <div className="hidden lg:block">
-                  <div className="flex flex-col items-end">
-                      <p className="text-[10px] font-black text-white/20 uppercase tracking-[0.4em] mb-4">Mempool Pressure Monitor</p>
-                      <div className="flex gap-2">
-                          <div className="flex flex-col gap-1">
-                             <div className="h-10 w-2 bg-indigo-500/10 rounded-full relative overflow-hidden">
-                                <motion.div animate={{ height: '70%', top: '30%' }} className="absolute inset-x-0 bottom-0 bg-indigo-500" />
-                             </div>
-                             <span className="text-[7px] font-black text-white/20 uppercase">HI</span>
-                          </div>
-                          <div className="flex flex-col gap-1">
-                             <div className="h-10 w-2 bg-amber-500/10 rounded-full relative overflow-hidden">
-                                <motion.div animate={{ height: '40%', top: '60%' }} className="absolute inset-x-0 bottom-0 bg-amber-500" />
-                             </div>
-                             <span className="text-[7px] font-black text-white/20 uppercase">MD</span>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
+          <div className="space-y-8 lg:col-span-2">
+            {/* Item 139: Vision 3.0 Stable Release Banner */}
+            <div className="mb-12 flex items-center justify-between border-b border-indigo-500/10 pb-8">
+                <div>
+                    <h1 className="text-8xl font-black italic tracking-tighter text-indigo-900 uppercase md:text-9xl">ORACLE <br /> <span className="text-indigo-600">MESH.</span></h1>
+                    <motion.div 
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1, scale: [1, 1.05, 1] }}
+                      transition={{ duration: 3, repeat: Infinity }}
+                      className="mt-6 inline-flex items-center gap-2 rounded-full border border-indigo-500/20 bg-indigo-500/5 px-4 py-1.5 text-[9px] font-black tracking-widest text-indigo-600 uppercase italic"
+                    >
+                      V3.0.0-PRO STABLE_ORACLE_RELEASE
+                    </motion.div>
+                </div>
+                <div className="hidden lg:block">
+                    <div className="flex flex-col items-end">
+                        <p className="text-[10px] font-black text-indigo-900/40 uppercase tracking-[0.4em] mb-4">Mempool Pressure Monitor</p>
+                        <div className="flex gap-2">
+                            <div className="flex flex-col gap-1">
+                               <div className="h-10 w-2 bg-indigo-100 rounded-full relative overflow-hidden">
+                                  <motion.div animate={{ height: '70%', top: '30%' }} className="absolute inset-x-0 bottom-0 bg-indigo-500" />
+                               </div>
+                               <span className="text-[7px] font-black text-indigo-900/40 uppercase">HI</span>
+                            </div>
+                            <div className="flex flex-col gap-1">
+                               <div className="h-10 w-2 bg-amber-100 rounded-full relative overflow-hidden">
+                                  <motion.div animate={{ height: '40%', top: '60%' }} className="absolute inset-x-0 bottom-0 bg-amber-500" />
+                               </div>
+                               <span className="text-[7px] font-black text-indigo-900/40 uppercase">MD</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-          <div className="grid gap-12 lg:grid-cols-3">
-              <div className="lg:col-span-2 space-y-12">
-                  <GlobalDropzone />
-                  
-                  {/* Item 101: 3D Merkle Tree Explorer */}
-                  <div className="relative group">
-                    <div className="absolute inset-0 bg-indigo-500/5 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
-                    <Merkle3D hash="f5f3ff6d14..." />
-                  </div>
-
-                  <HistoryList />
-              </div>
+            <div className="grid gap-12 lg:grid-cols-3">
+                <div className="lg:col-span-2 space-y-12">
+                    {/* Item 101: 3D Merkle Tree Explorer */}
+                    <div className="relative group">
+                      <div className="absolute inset-0 bg-indigo-500/5 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                      <Merkle3D hash="f5f3ff6d14..." />
+                    </div>
+                </div>
 
               <div className="flex flex-col gap-8">
                  {/* Item 113: Institutional Multi-Sig Hub */}
-                 <div className="glass-card p-10 bg-indigo-600/[0.03] border-indigo-500/20">
-                     <Users className="text-indigo-400 mb-6" size={24} />
-                     <h3 className="text-xs font-black text-white uppercase italic mb-4">Multi-Sig Quorum</h3>
+                 <div className="glass-card p-10 bg-indigo-50 border-indigo-100">
+                     <Users className="text-indigo-600 mb-6" size={24} />
+                     <h3 className="text-xs font-black text-indigo-900 uppercase italic mb-4">Multi-Sig Quorum</h3>
                      <div className="space-y-3 mb-8">
-                         <div className="flex items-center gap-3 p-3 bg-emerald-500/5 rounded-xl border border-emerald-500/10">
+                         <div className="flex items-center gap-3 p-3 bg-emerald-50 rounded-xl border border-emerald-100">
                             <div className="h-2 w-2 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]" />
-                            <span className="text-[9px] font-bold text-white/40 uppercase">KIMI (GOVERNOR): APPROVED</span>
+                            <span className="text-[9px] font-bold text-emerald-800 uppercase">KIMI (GOVERNOR): APPROVED</span>
                          </div>
-                         <div className="flex items-center gap-3 p-3 bg-white/5 rounded-xl border border-white/5">
-                            <div className="h-2 w-2 rounded-full bg-white/10" />
-                            <span className="text-[9px] font-bold text-white/20 uppercase italic">PEER_ADMIN: WAITING...</span>
+                         <div className="flex items-center gap-3 p-3 bg-slate-50 rounded-xl border border-slate-200">
+                            <div className="h-2 w-2 rounded-full bg-slate-300" />
+                            <span className="text-[9px] font-bold text-slate-500 uppercase italic">PEER_ADMIN: WAITING...</span>
                          </div>
                      </div>
                      <button className="w-full btn-holographic py-4 uppercase text-[9px] leading-none">
@@ -237,49 +231,79 @@ export default function Dashboard() {
                  </div>
 
                  {/* Item 12: System Hardening stats */}
-                 <div className="glass-card p-8 bg-black/40 border-white/5">
-                     <h3 className="text-xs font-black text-white uppercase italic mb-8">Protocol Observability</h3>
+                 <div className="glass-card p-8 bg-slate-50 border-slate-200">
+                     <h3 className="text-xs font-black text-indigo-900 uppercase italic mb-8">Protocol Observability</h3>
                      <div className="grid grid-cols-2 gap-4">
-                        <div className="p-4 bg-white/[0.02] border border-white/5 rounded-2xl">
-                             <p className="text-[8px] font-black text-white/20 uppercase mb-2">Witness Mesh</p>
-                             <p className="text-lg font-black text-white italic lowercase tracking-tighter">stable+</p>
-                        </div>
-                        <div className="p-4 bg-white/[0.02] border border-white/5 rounded-2xl">
-                             <p className="text-[8px] font-black text-white/20 uppercase mb-2">Relay Rank</p>
-                             <p className="text-lg font-black text-indigo-400 italic lowercase tracking-tighter">Tier-1</p>
-                        </div>
+                         <div className="p-4 bg-white border border-slate-200 rounded-2xl">
+                              <p className="text-[8px] font-black text-indigo-900/50 uppercase mb-2">Witness Mesh</p>
+                              <p className="text-lg font-black text-indigo-900 italic lowercase tracking-tighter">stable+</p>
+                         </div>
+                         <div className="p-4 bg-white border border-slate-200 rounded-2xl">
+                              <p className="text-[8px] font-black text-indigo-900/50 uppercase mb-2">Relay Rank</p>
+                              <p className="text-lg font-black text-indigo-600 italic lowercase tracking-tighter">Tier-1</p>
+                         </div>
                      </div>
                  </div>
 
-                 {/* Item 11: SITE Badge Export Refinement */}
-                 <div className="p-8 border border-white/10 rounded-3xl bg-emerald-500/5 flex items-center justify-between group cursor-pointer hover:bg-emerald-500/10 transition-all">
-                    <div>
-                        <h4 className="text-[10px] font-black text-white uppercase italic mb-1">Genesis Block Stamp</h4>
-                        <p className="text-[8px] font-bold text-emerald-400/60 uppercase tracking-widest">Confirmed in Block #845,922</p>
-                    </div>
-                    <ChevronRight size={14} className="text-white/20 group-hover:text-emerald-400 transition-colors" />
-                 </div>
+                   {/* Item 11: SITE Badge Export Refinement */}
+                   <a 
+                     href="https://mempool.space" 
+                     target="_blank" 
+                     rel="noreferrer"
+                     className="p-8 border border-emerald-100 rounded-3xl bg-emerald-50 flex items-center justify-between group cursor-pointer hover:bg-emerald-100 transition-all shadow-sm"
+                   >
+                     <div>
+                         <h4 className="text-[10px] font-black text-indigo-900 uppercase italic mb-1">Genesis Block Stamp</h4>
+                         <p className="text-[8px] font-black text-emerald-600 uppercase tracking-widest">Discover Live Bitcoin Blocks</p>
+                     </div>
+                     <ExternalLink size={14} className="text-emerald-400 group-hover:text-emerald-600 transition-all" />
+                   </a>
               </div>
           </div>
         </div>
-
+        </div>
+ 
         <div className="space-y-8">
-          <div className="glass-card group relative overflow-hidden rounded-3xl border-none bg-gradient-to-br from-indigo-600 to-purple-800 p-8 text-white">
+          {/* Template Library Restoration Callout */}
+          <div className="glass-card group relative overflow-hidden rounded-3xl border border-indigo-100 bg-white p-8 transition-all hover:bg-indigo-50/50">
+            <div className="flex items-center gap-4 mb-6">
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-indigo-600 text-white shadow-lg shadow-indigo-100">
+                    <FileText size={24} />
+                </div>
+                <div>
+                    <h3 className="text-sm font-black text-indigo-900 uppercase tracking-tighter">Notary Template Library</h3>
+                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">12 Pre-built Templates</p>
+                </div>
+            </div>
+            <p className="mb-8 text-sm leading-relaxed font-bold text-indigo-900/70 italic">
+              Launch notarized legal documents including Wills, NDAs, and Affidavits anchored to Bitcoin.
+            </p>
+            <Link to="/choose-template">
+                <button className="w-full btn-holographic flex items-center justify-center gap-2 py-4">
+                   EXPLORE NOTARY VAULT <ChevronRight size={16} />
+                </button>
+            </Link>
+          </div>
+
+          <div className="glass-card group relative overflow-hidden rounded-3xl border-none bg-indigo-600 p-8 text-white shadow-xl shadow-indigo-200/50">
             <div className="absolute -right-10 -bottom-10 h-40 w-40 rounded-full bg-white/10 blur-3xl transition-all duration-500 group-hover:bg-white/20" />
             <InfoTooltip content="Your contributions fund the global Bitcoin anchors for nonprofit/educational uses across the Satohash network.">
                 <h3 className="relative z-10 mb-3 text-xl font-bold font-display">Support Open Notary</h3>
             </InfoTooltip>
-            <p className="relative z-10 mb-6 text-sm leading-relaxed text-indigo-100/70 font-medium">
-              Satohash is a non-profit protocol providing permanent cryptographic existence for all.
-              Help us scale global proof.
-            </p>
-            <button className="relative z-10 w-full rounded-xl bg-white py-3 text-sm font-black text-indigo-700 shadow-xl transition-all hover:scale-[1.02] hover:shadow-2xl">
-              Donate via Lightning ⚡
-            </button>
+             <p className="relative z-10 mb-6 text-sm leading-relaxed text-indigo-50/90 font-medium">
+               Satohash is a non-profit protocol providing permanent cryptographic existence for all.
+               Help us scale global proof.
+             </p>
+             <button 
+                onClick={() => toast.info('Launching Satohash Donation Layer... Connecting to Lightning Node.')}
+                className="relative z-10 w-full rounded-xl bg-white py-3.5 text-[11px] font-black tracking-widest text-indigo-700 shadow-xl transition-all hover:scale-[1.02] hover:shadow-2xl uppercase"
+             >
+               Donate via Lightning ⚡
+             </button>
           </div>
-
-          <div className="glass-card rounded-3xl border-white/5 bg-white/5 p-6">
-            <h3 className="mb-6 text-sm font-black tracking-widest text-white/40 uppercase">
+ 
+          <div className="glass-card rounded-3xl border-slate-200 bg-slate-50 p-6 shadow-sm">
+            <h3 className="mb-6 text-sm font-black tracking-widest text-indigo-900/40 uppercase">
               Compliance & Safety
             </h3>
             <div className="space-y-4">
@@ -313,16 +337,16 @@ function CompliancePill({ icon, label, status, info }) {
   return (
     <div className="group relative flex items-center justify-between gap-3">
         <div className="flex items-center gap-3">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/5 text-white/30 transition-colors group-hover:text-indigo-400">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-100 text-indigo-600 transition-colors group-hover:bg-indigo-600 group-hover:text-white">
                 {icon}
             </div>
             <div>
                 <InfoTooltip content={info}>
-                    <p className="text-xs font-bold text-white/80">{label}</p>
+                    <p className="text-xs font-bold text-slate-700">{label}</p>
                 </InfoTooltip>
             </div>
         </div>
-        <span className="font-mono text-[10px] text-white/20 uppercase tracking-wider">{status}</span>
+        <span className="font-mono text-[10px] text-slate-400 uppercase tracking-wider">{status}</span>
     </div>
   )
 }

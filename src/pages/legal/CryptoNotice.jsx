@@ -7,8 +7,8 @@ export default function CryptoNotice() {
   const navigate = useNavigate()
 
   return (
-    <div className="page min-h-screen bg-slate-50 pt-24 pb-20">
-      <div className="container-narrow">
+    <div className="page min-h-screen bg-[var(--bg-base)] pt-[140px] pb-20">
+      <div className="layout-container">
         <Button variant="ghost" size="small" onClick={() => navigate(-1)} className="mb-12">
           <ArrowLeft size={18} /> Back
         </Button>

@@ -56,7 +56,9 @@ export const getMempoolStats = async () => {
 
 export const getBlockHeight = async () => {
   try {
-    const response = await fetch(`${MEMPOOL_API_URL}/blocks/tip/height`)
+    const response = await fetch(
+      `${CORS_PROXY_URL}${encodeURIComponent(`${MEMPOOL_API_URL}/blocks/tip/height`)}`
+    )
     if (!response.ok) {
       throw new Error('Failed to fetch block height')
     }

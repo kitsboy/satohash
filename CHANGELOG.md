@@ -22,5 +22,24 @@ All notable changes to the Satahash project will be documented in this file.
 - **Network Fees**: Integration with mempool.space for real-time Bitcoin transaction fee estimates.
 - **PDF Generation**: Automated creation of high-fidelity agreement receipts.
 
+## [3.0.0-PRO] - 2026-04-14 (The Institutional Hyper-Polish)
+
+### 🚀 Major Institutional Migration
+- **Light Theme Transition**: Full migration from "Space Noir" dark theme to a premium, institutional light-themed interface.
+- **Visual Hygiene**: Total refactor of all protocol pages for maximum readability, contrast, and alignment.
+- **Design System v4**: Implementation of a cohesive indigo-based design language with high-fidelity glassmorphism and motion.
+
+### 🍱 New & Refactored Pages
+- **About Protocol**: Brand new premium overview of the Satahash mission and cryptographic infrastructure.
+- **Developer Portal**: Fully refactored API documentation and sandbox environment for institutional integration.
+- **Web Capture (Snap & Stamp)**: Harmonized web evidence tool with Judiciary-ready aesthetics.
+- **Institutional Suite**: Refactored the Identity, Mobile Signer, Verification Shield, and Batch Timestamping modules.
+- **Image Vault**: Premium provenance gallery for visual assets with high-contrast proof cards.
+
+### 🔧 Performance & Polish
+- **Layout Consistency**: Standardized grid systems and vertical rhythm across the entire platform.
+- **Navigation Update**: Refined Navbar with `v3.0.0-PRO` versioning and simplified institutional routing.
+- **Enhanced Contrast**: Resolved "ghost text" and visibility issues reported in v1.0, ensuring 100% readability.
+
 ---
-© 2026 Satahash Project Baseline
+© 2026 Satahash Institutional Division

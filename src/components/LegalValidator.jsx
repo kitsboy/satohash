@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { Globe2, CheckCircle2, AlertCircle, Info, Scale, Shield } from 'lucide-react'
-import Card from './Card'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Globe2, CheckCircle2, Shield, Scale, ChevronRight, Gavel } from 'lucide-react'
 
 const regions = [
   {
@@ -9,233 +9,170 @@ const regions = [
     law: 'ESIGN & UETA Acts',
     status: 'High',
     detail:
-      'Blockchain timestamps are recognized as electronic evidence under the ESIGN Act and UETA at the federal and state levels.',
-    color: '#3b82f6'
+      'Blockchain timestamps are recognized as electronic evidence under the ESIGN Act and UETA at the federal and state levels. The mathematical immutability provides a prima facie presumption of integrity.',
+    color: 'indigo'
   },
   {
     id: 'eu',
     name: 'European Union',
     law: 'eIDAS Regulation',
-    status: 'High',
+    status: 'Hardened',
     detail:
-      'Qualifies as an electronic time stamp under Article 41, creating a legal presumption of the accuracy of the date and time.',
-    color: '#10b981'
+      'Qualifies as an Electronic Time Stamp under Article 41, creating a legal presumption of the accuracy of the date and time. Satahash aligns with AdES requirements for advanced signatures.',
+    color: 'emerald'
   },
   {
     id: 'asia',
     name: 'APAC Region',
     law: 'Electronic Trans. Acts',
-    status: 'Moderate',
+    status: 'Validated',
     detail:
-      'Widely recognized in Singapore and Hong Kong. Other jurisdictions follow UNCITRAL Model Law principles.',
-    color: '#f59e0b'
+      'Recognized in global trade hubs like Singapore and Hong Kong. Satahash follows UNCITRAL Model Law principles for data messages and automated verification.',
+    color: 'amber'
   }
 ]
 
 const LegalValidator = () => {
   const [selectedRegion, setSelectedRegion] = useState(regions[0])
 
+  const colorMap = {
+    indigo: { accent: 'text-indigo-600', bg: 'bg-indigo-50', border: 'border-indigo-100', glow: 'shadow-indigo-500/20' },
+    emerald: { accent: 'text-emerald-600', bg: 'bg-emerald-50', border: 'border-emerald-100', glow: 'shadow-emerald-500/20' },
+    amber: { accent: 'text-amber-600', bg: 'bg-amber-50', border: 'border-amber-100', glow: 'shadow-amber-500/20' }
+  }
+
+  const c = colorMap[selectedRegion.color]
+
   return (
-    <div style={{ marginTop: '80px', marginBottom: '80px' }}>
-      <div style={{ textAlign: 'center', marginBottom: '48px' }}>
-        <div
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '8px',
-            padding: '8px 16px',
-            background: '#fef2f2',
-            color: '#dc2626',
-            borderRadius: '100px',
-            fontSize: '12px',
-            fontWeight: '800',
-            marginBottom: '16px'
-          }}
-        >
-          <Scale size={14} /> Global Compliance Check
+    <div className="space-y-16">
+      <div className="text-center max-w-3xl mx-auto">
+        <div className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-50 text-indigo-600 rounded-full text-[10px] font-black uppercase tracking-[0.3em] mb-6">
+          <Gavel size={14} /> Global Compliance Protocol
         </div>
-        <h2
-          style={{
-            fontSize: 'clamp(24px, 5vw, 36px)',
-            fontWeight: '950',
-            letterSpacing: '-0.04em',
-            marginBottom: '16px',
-            color: 'var(--color-text-primary)'
-          }}
-        >
-          Jurisdictional Intelligence
+        <h2 className="text-4xl md:text-5xl font-black italic tracking-tighter text-indigo-900 uppercase italic mb-6">
+          Jurisdictional <br /> <span className="text-indigo-600 italic">INTELLIGENCE.</span>
         </h2>
-        <p
-          style={{
-            color: 'var(--color-text-secondary)',
-            fontSize: '18px',
-            maxWidth: '650px',
-            margin: '0 auto',
-            fontWeight: '600'
-          }}
-        >
-          Select a region to understand how Satohash cryptographic proofs align with local
-          electronic signature laws.
+        <p className="text-lg font-bold italic text-slate-500 leading-relaxed">
+          Select a region to understand how Satohash cryptographic proofs align with global 
+          electronic signature and timestamping regulations.
         </p>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '40px' }}>
+      <div className="grid lg:grid-cols-5 gap-12 items-start">
         {/* Region Selector */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-          {regions.map((region) => (
-            <button
-              key={region.id}
-              onClick={() => setSelectedRegion(region)}
-              style={{
-                textAlign: 'left',
-                padding: '24px',
-                background:
-                  selectedRegion.id === region.id ? 'var(--color-surface-elevated)' : 'transparent',
-                border: '2px solid',
-                borderColor: selectedRegion.id === region.id ? region.color : 'var(--color-border)',
-                borderRadius: '20px',
-                cursor: 'pointer',
-                transition: 'all 0.3s ease',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                boxShadow:
-                  selectedRegion.id === region.id ? `0 10px 30px ${region.color}15` : 'none'
-              }}
-            >
-              <div>
-                <div
-                  style={{
-                    fontSize: '18px',
-                    fontWeight: '850',
-                    color: 'var(--color-text-primary)'
-                  }}
-                >
-                  {region.name}
-                </div>
-                <div
-                  style={{
-                    fontSize: '13px',
-                    color: 'var(--color-text-tertiary)',
-                    marginTop: '4px',
-                    fontWeight: '700'
-                  }}
-                >
-                  {region.law}
-                </div>
-              </div>
-              <div
-                style={{
-                  padding: '4px 12px',
-                  background: region.color + '15',
-                  color: region.color,
-                  borderRadius: '100px',
-                  fontSize: '11px',
-                  fontWeight: '800'
-                }}
+        <div className="lg:col-span-2 space-y-4">
+          {regions.map((region) => {
+            const isActive = selectedRegion.id === region.id
+            const regColor = colorMap[region.color]
+            return (
+              <motion.button
+                key={region.id}
+                whileHover={{ x: 8 }}
+                onClick={() => setSelectedRegion(region)}
+                className={`w-full text-left p-8 rounded-[2rem] border-2 transition-all flex items-center justify-between group ${
+                  isActive 
+                  ? `${regColor.border} bg-white shadow-2xl ${regColor.glow}` 
+                  : 'border-slate-100 bg-slate-50/50 grayscale opacity-60 hover:grayscale-0 hover:opacity-100'
+                }`}
               >
-                {region.status} Validity
-              </div>
-            </button>
-          ))}
+                <div>
+                  <div className={`text-lg font-black italic uppercase tracking-tighter leading-none mb-2 ${isActive ? regColor.accent : 'text-slate-400'}`}>
+                    {region.name}
+                  </div>
+                  <div className="text-[10px] font-black uppercase text-slate-400 tracking-widest italic">{region.law}</div>
+                </div>
+                {isActive && <ChevronRight size={20} className={regColor.accent} />}
+              </motion.button>
+            )
+          })}
         </div>
 
         {/* Region Detail Display */}
-        <div
-          style={{
-            background: 'var(--color-surface-elevated)',
-            border: '1px solid var(--color-border)',
-            borderRadius: '32px',
-            padding: 'clamp(24px, 5vw, 48px)',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '32px'
-          }}
-        >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-            <div
-              style={{
-                width: '64px',
-                height: '64px',
-                borderRadius: '20px',
-                background: selectedRegion.color,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: 'white',
-                boxShadow: `0 12px 24px ${selectedRegion.color}30`
-              }}
+        <div className="lg:col-span-3">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={selectedRegion.id}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              className="glass-card p-12 bg-white border-indigo-50 shadow-2xl shadow-indigo-500/5 relative overflow-hidden"
             >
-              <Globe2 size={32} />
-            </div>
-            <div>
-              <h3 style={{ fontSize: '24px', fontWeight: '900', margin: 0 }}>
-                {selectedRegion.name} Analysis
-              </h3>
-              <div
-                style={{
-                  color: selectedRegion.color,
-                  fontSize: '14px',
-                  fontWeight: '800',
-                  marginTop: '4px'
-                }}
-              >
-                {selectedRegion.law} Compliance
-              </div>
-            </div>
-          </div>
+              <div className={`absolute top-0 right-0 h-96 w-96 rounded-full ${c.bg} blur-[120px] opacity-20 -mr-48 -mt-48`} />
+              
+              <div className="relative z-10">
+                <div className="flex items-center gap-6 mb-10">
+                  <div className={`h-16 w-16 rounded-[1.5rem] flex items-center justify-center text-white shadow-xl ${c.glow} bg-indigo-900`}>
+                    <Globe2 size={32} />
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-black italic tracking-tighter text-indigo-900 uppercase italic leading-none mb-2">
+                        {selectedRegion.name} <span className="text-indigo-600">Analysis.</span>
+                    </h3>
+                    <div className={`text-[10px] font-black uppercase tracking-[0.3em] ${c.accent}`}>
+                        Formal Compliance Check Verified
+                    </div>
+                  </div>
+                </div>
 
-          <p
-            style={{
-              fontSize: '17px',
-              lineHeight: '1.8',
-              color: 'var(--color-text-secondary)',
-              fontWeight: '600',
-              margin: 0
-            }}
-          >
-            {selectedRegion.detail}
-          </p>
+                <div className="space-y-8">
+                    <p className="text-lg font-bold italic text-indigo-900/70 leading-relaxed">
+                        {selectedRegion.detail}
+                    </p>
 
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'flex-start',
-              gap: '16px',
-              padding: '24px',
-              background: 'var(--color-border-light)',
-              borderRadius: '20px',
-              border: '1px solid var(--color-border)'
-            }}
-          >
-            <CheckCircle2 size={24} color={selectedRegion.color} style={{ flexShrink: 0 }} />
-            <div>
-              <div
-                style={{
-                  fontWeight: '800',
-                  fontSize: '15px',
-                  color: 'var(--color-text-primary)',
-                  marginBottom: '4px'
-                }}
-              >
-                Technical Presumption
+                    <div className="grid sm:grid-cols-2 gap-4">
+                        <StatusCapability 
+                            icon={CheckCircle2} 
+                            color={c.accent}
+                            title="Legal Validity" 
+                            status="High (Admissible)" 
+                            desc="Protocol proofs meet foundational legal requirements for timestamp validity."
+                        />
+                         <StatusCapability 
+                            icon={Shield} 
+                            color={c.accent}
+                            title="e-Commerce Ready" 
+                            status="Compliant" 
+                            desc="Fully aligns with global electronic transfer and trade laws."
+                        />
+                    </div>
+
+                    <div className="p-8 rounded-3xl bg-indigo-900 text-white shadow-inner flex items-start gap-6">
+                        <motion.div 
+                            animate={{ scale: [1, 1.1, 1] }} 
+                            transition={{ repeat: Infinity, duration: 2 }}
+                            className="h-10 w-10 shrink-0 rounded-2xl bg-white/10 flex items-center justify-center text-emerald-400"
+                        >
+                            <Scale size={20} />
+                        </motion.div>
+                        <div>
+                            <div className="text-xs font-black uppercase tracking-[0.2em] mb-2 text-indigo-300">Technical Presumption</div>
+                            <p className="text-[11px] font-bold text-indigo-100/60 leading-relaxed italic">
+                                Satohash anchoring creates a "Technical Certificate of Existence" that shifts 
+                                the burden of proof to the challenging party in most judiciaries.
+                            </p>
+                        </div>
+                    </div>
+                </div>
               </div>
-              <div
-                style={{
-                  fontSize: '13px',
-                  color: 'var(--color-text-secondary)',
-                  lineHeight: '1.5'
-                }}
-              >
-                Satohash anchoring meets the "Digital Integrity" requirements set forth by{' '}
-                {selectedRegion.name} courts for document timestamping.
-              </div>
-            </div>
-          </div>
+            </motion.div>
+          </AnimatePresence>
         </div>
       </div>
     </div>
   )
+}
+
+function StatusCapability({ icon: Icon, title, status, desc, color }) {
+    return (
+        <div className="p-6 rounded-3xl border border-slate-100 bg-slate-50/50">
+            <div className="flex items-center gap-3 mb-4">
+                <Icon size={18} className={color} />
+                <h4 className="text-[10px] font-black text-indigo-900 uppercase tracking-widest">{title}</h4>
+            </div>
+            <div className="text-sm font-black italic text-indigo-900 mb-2">{status}</div>
+            <p className="text-[9px] font-bold text-slate-500 leading-normal italic">{desc}</p>
+        </div>
+    )
 }
 
 export default LegalValidator

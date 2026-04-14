@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Code, 
   Key, 
@@ -16,29 +16,53 @@ import {
   AlertCircle,
   ChevronDown,
   ChevronRight,
-  Globe
+  Globe,
+  Layers,
+  Users,
+  Vote,
+  Phone,
+  Server,
+  Network,
+  Cpu,
+  BookOpen
 } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import CodeExamples from '../components/CodeExamples';
 import ApiPlayground from '../components/ApiPlayground';
-import PricingTiers from '../components/PricingTiers';
-import WebhookDocs from '../components/WebhookDocs';
+import PartnershipForm from '../components/PartnershipForm';
 import MobileNav from '../components/MobileNav';
 import ApiSearch from '../components/ApiSearch';
 import { useToast } from '../components/Toast';
 
 const TABS = [
-  { id: 'overview', label: 'Overview', icon: Globe },
-  { id: 'playground', label: 'Playground', icon: Play },
-  { id: 'examples', label: 'Code Examples', icon: Code },
-  { id: 'pricing', label: 'Pricing', icon: Bitcoin },
-  { id: 'webhooks', label: 'Webhooks', icon: Webhook },
+  { id: 'overview',   label: 'Sovereign Hub', icon: Globe },
+  { id: 'batch',      label: 'Batch & Democracy', icon: Vote },
+  { id: 'payment',    label: 'Payment Ecosystem', icon: Bitcoin },
+  { id: 'endpoints',  label: 'API Mesh Docs', icon: Code },
+  { id: 'partnership',label: 'Institutional Request', icon: Users },
 ];
 
 const ENDPOINTS = [
   {
     method: 'POST',
+    path: '/api/v1/batch/anchor',
+    name: 'High-Volume Batch',
+    description: 'Anchor up to 100,000 hashes in a single Bitcoin transaction via Merkle-tree aggregation.',
+    auth: true,
+    cost: 'Institutional'
+  },
+  {
+    method: 'POST',
+    path: '/api/v1/democracy/vote',
+    name: 'Anchor Ballot',
+    description: 'Immutable attestation for encrypted voting ballots with protocol-level audit trail.',
+    auth: true,
+    cost: 'Institutional'
+  },
+  {
+    method: 'POST',
     path: '/api/v1/timestamp',
-    name: 'Create Timestamp',
+    name: 'Standard Timestamp',
     description: 'Create a cryptographic timestamp proof for a SHA-256 hash',
     auth: true,
     cost: '50 sats'
@@ -46,61 +70,20 @@ const ENDPOINTS = [
   {
     method: 'GET',
     path: '/api/v1/verify',
-    name: 'Verify Timestamp',
+    name: 'Verify Proof',
     description: 'Verify a timestamp against the Bitcoin blockchain',
-    auth: true,
-    cost: 'Free'
-  },
-  {
-    method: 'POST',
-    path: '/api/v1/verify',
-    name: 'Verify (Upload)',
-    description: 'Upload binary .ots file for verification',
-    auth: true,
-    cost: 'Free'
-  },
-  {
-    method: 'GET',
-    path: '/api/v1/price',
-    name: 'Get Pricing',
-    description: 'Current API pricing in satoshis',
     auth: false,
     cost: 'Free'
-  },
-  {
-    method: 'GET',
-    path: '/api/v1/block-height',
-    name: 'Block Height',
-    description: 'Latest Bitcoin block height',
-    auth: false,
-    cost: 'Free'
-  },
-  {
-    method: 'POST',
-    path: '/api/v1/upgrade',
-    name: 'Upgrade Timestamp',
-    description: 'Upgrade pending timestamp to Bitcoin confirmation',
-    auth: true,
-    cost: '25 sats'
-  },
-  {
-    method: 'POST',
-    path: '/api/v1/timestamp/batch',
-    name: 'Batch Timestamp',
-    description: 'Timestamp multiple hashes at once (up to 1,000)',
-    auth: true,
-    cost: '50 sats'
   }
 ];
 
 export default function DeveloperPortal() {
   const [activeTab, setActiveTab] = useState('overview');
   const [copied, setCopied] = useState(false);
-  const [rateLimit] = useState({ used: 0, limit: 100 });
   const { showToast } = useToast();
 
   const copyApiKey = () => {
-    navigator.clipboard.writeText('sk_satohash_demo_' + Math.random().toString(36).slice(2));
+    navigator.clipboard.writeText('sk_satohash_pro_mesh_' + Math.random().toString(36).slice(2));
     setCopied(true);
     showToast('API key copied to clipboard!', 'success');
     setTimeout(() => setCopied(false), 2000);
@@ -108,96 +91,65 @@ export default function DeveloperPortal() {
 
   const renderTabContent = () => {
     switch (activeTab) {
-      case 'overview':
-        return <OverviewTab />;
-      case 'playground':
-        return <ApiPlayground />;
-      case 'examples':
-        return <CodeExamples />;
-      case 'pricing':
-        return <PricingTiers />;
-      case 'webhooks':
-        return <WebhookDocs />;
-      default:
-        return <OverviewTab />;
+      case 'overview':    return <OverviewTab />;
+      case 'batch':       return <BatchTab />;
+      case 'payment':     return <PaymentTab />;
+      case 'endpoints':   return <EndpointsTab />;
+      case 'partnership': return <PartnershipForm />;
+      default:            return <OverviewTab />;
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white">
+    <div className="min-h-screen bg-[var(--bg-base)] text-indigo-900 pb-24">
       {/* Hero Section */}
-      <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-orange-500/20 via-transparent to-transparent" />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16">
+      <div className="relative overflow-hidden pt-12">
+        <div className="absolute inset-0 bg-indigo-500/[0.02]" />
+        <div className="layout-container pt-20 pb-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             className="text-center"
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-500/10 border border-orange-500/30 text-orange-400 text-sm mb-6">
-              <Terminal className="w-4 h-4" />
-              <span>API Version 1.0.0</span>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-indigo-100 text-indigo-600 text-[10px] font-black tracking-widest uppercase italic mb-6 shadow-sm">
+              <Network size={14} />
+              <span>SATOHASH_ORACLE_MESH_V3.0.0_PRO</span>
             </div>
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              <span className="bg-gradient-to-r from-orange-400 via-amber-300 to-yellow-400 bg-clip-text text-transparent">
-                Satohash API
-              </span>
+            <h1 className="text-6xl md:text-8xl font-black italic tracking-tighter text-indigo-900 uppercase mb-6 leading-[0.9]">
+              Sovereign API <br /> <span className="text-indigo-600">& BATCH MESH.</span>
             </h1>
-            <p className="text-xl text-gray-400 max-w-2xl mx-auto mb-8">
-              Bitcoin-native timestamping for developers. Create immutable proof of existence 
-              secured by the world&apos;s most powerful blockchain.
+            <p className="text-xl text-slate-500 max-w-3xl mx-auto mb-10 font-medium italic">
+              Institutional-grade attestation infrastructure. Offer API connections for 
+              high-volume orders, voting systems, and decentralized identity.
             </p>
             
-            {/* Quick Start API Key */}
-            <div className="max-w-md mx-auto bg-gray-800/50 backdrop-blur rounded-xl p-4 border border-gray-700">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-sm text-gray-400">Your API Key</span>
-                <span className="text-xs text-orange-400 bg-orange-500/10 px-2 py-1 rounded">Demo Mode</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <code className="flex-1 bg-black/50 rounded-lg px-4 py-3 text-sm font-mono text-gray-300 truncate">
-                  sk_satohash_demo_xxxxxxxx
-                </code>
-                <button
-                  onClick={copyApiKey}
-                  className="p-3 rounded-lg bg-orange-500 hover:bg-orange-600 transition-colors"
-                >
-                  {copied ? <Check className="w-5 h-5" /> : <Copy className="w-5 h-5" />}
-                </button>
-              </div>
-              
-              {/* Rate Limit Display */}
-              <div className="mt-4 pt-4 border-t border-gray-700">
-                <div className="flex items-center justify-between text-sm mb-2">
-                  <span className="text-gray-400">API Usage Today</span>
-                  <span className={rateLimit.used > rateLimit.limit * 0.8 ? 'text-red-400' : 'text-green-400'}>
-                    {rateLimit.used}/{rateLimit.limit}
-                  </span>
-                </div>
-                <div className="h-2 bg-gray-700 rounded-full overflow-hidden">
-                  <div 
-                    className={`h-full transition-all duration-300 ${
-                      rateLimit.used > rateLimit.limit * 0.8 ? 'bg-red-500' : 
-                      rateLimit.used > rateLimit.limit * 0.5 ? 'bg-yellow-500' : 'bg-green-500'
-                    }`}
-                    style={{ width: `${Math.min((rateLimit.used / rateLimit.limit) * 100, 100)}%` }}
-                  />
-                </div>
-                {rateLimit.used > rateLimit.limit * 0.8 && (
-                  <p className="text-xs text-red-400 mt-2 flex items-center gap-1">
-                    <AlertCircle className="w-3 h-3" />
-                    Approaching rate limit!
-                  </p>
-                )}
-              </div>
+            <div className="flex flex-wrap items-center justify-center gap-4 mb-16">
+               <button onClick={() => setActiveTab('partnership')} className="btn-holographic px-8 py-4 text-xs">Establish_Node_Link</button>
+               <button onClick={() => setActiveTab('batch')} className="px-8 py-4 text-xs font-black uppercase tracking-widest text-indigo-900 border border-indigo-100 rounded-2xl hover:bg-white transition-all shadow-sm">View_Batch_Protocol</button>
+            </div>
+
+            {/* Mesh Status Dashboard */}
+            <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-4">
+               {[
+                 { label: 'Oracle Uptime', val: '99.99%', icon: Cpu },
+                 { label: 'Witness Nodes', val: '128 Active', icon: Server },
+                 { label: 'Global Hashrate', val: '640 EH/s', icon: Bitcoin },
+                 { label: 'Mesh Protocol', val: 'V3-PRO', icon: Layers }
+               ].map((stat, i) => (
+                 <div key={i} className="bg-white border border-indigo-50 p-6 rounded-3xl shadow-sm">
+                    <stat.icon size={16} className="text-indigo-600 mb-3 mx-auto" />
+                    <div className="text-[9px] font-black uppercase text-indigo-900/40 tracking-widest mb-1">{stat.label}</div>
+                    <div className="text-sm font-black text-indigo-900 italic">{stat.val}</div>
+                 </div>
+               ))}
             </div>
           </motion.div>
         </div>
       </div>
 
       {/* Navigation Tabs */}
-      <div className="sticky top-0 z-40 bg-gray-900/80 backdrop-blur-xl border-b border-gray-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="sticky top-0 z-40 bg-white/90 backdrop-blur-xl border-b border-indigo-100">
+        <div className="layout-container">
           <div className="flex items-center justify-between">
             <div className="flex overflow-x-auto no-scrollbar">
               {TABS.map((tab) => {
@@ -206,10 +158,10 @@ export default function DeveloperPortal() {
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
-                    className={`flex items-center gap-2 px-6 py-4 text-sm font-medium whitespace-nowrap border-b-2 transition-colors ${
+                    className={`flex items-center gap-2 px-6 py-6 text-[10px] font-black uppercase tracking-widest border-b-2 transition-all whitespace-nowrap ${
                       activeTab === tab.id
-                        ? 'border-orange-500 text-orange-400'
-                        : 'border-transparent text-gray-400 hover:text-white'
+                        ? 'border-indigo-600 text-indigo-600 bg-indigo-50/30'
+                        : 'border-transparent text-slate-400 hover:text-indigo-900'
                     }`}
                   >
                     <Icon className="w-4 h-4" />
@@ -218,174 +170,223 @@ export default function DeveloperPortal() {
                 );
               })}
             </div>
-            
-            {/* Search and Mobile Nav */}
-            <div className="flex items-center gap-3 pl-4 border-l border-gray-800">
-              <ApiSearch onSelect={(endpoint) => showToast(`Selected: ${endpoint.name}`, 'info')} />
-              <MobileNav activeTab={activeTab} setActiveTab={setActiveTab} />
+            <div className="hidden md:flex items-center gap-4 pl-6 border-l border-indigo-50">
+               <ApiSearch onSelect={(e) => setActiveTab('endpoints')} />
             </div>
           </div>
         </div>
       </div>
 
-      {/* Tab Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {renderTabContent()}
+      {/* Content Area */}
+      <div className="layout-container mt-16">
+         <AnimatePresence mode="wait">
+            <motion.div
+              key={activeTab}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.2 }}
+            >
+               {renderTabContent()}
+            </motion.div>
+         </AnimatePresence>
       </div>
     </div>
   );
 }
 
 function OverviewTab() {
-  const [expandedEndpoint, setExpandedEndpoint] = useState(null);
+  return (
+    <div className="space-y-16">
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {[
+          { title: 'Institutional Batching', desc: 'Aggregate thousands of proofs into a single Bitcoin anchor. Optimized for enterprise data lakes and legal archives.', icon: Layers },
+          { title: 'Sovereign Identity', desc: 'Secure attestation for phone calls, voice recognition, and real-world signatures anchored to the blockchain.', icon: Phone },
+          { title: 'Democracy Node', desc: 'The gold standard for immutable voting. Ensure every referendum ballot is cryptographically secured.', icon: Vote },
+          { title: 'Mesh Networking', desc: 'Run your own Satahash node and participate in the global witness network with real-time settlement.', icon: Network },
+          { title: 'Lightning Rails', desc: 'Sub-second API settlement via BOLT-12 and Lightning. Zero friction, non-custodial, and high-velocity.', icon: Zap },
+          { title: 'Liquid Integration', desc: 'Seamlessly anchor Liquid assets and confidential transactions to the Bitcoin mainnet via our Oracle.', icon: Globe }
+        ].map((feat, i) => (
+          <div key={i} className="glass-card hover:bg-white p-8 border-indigo-50 hover:shadow-2xl hover:shadow-indigo-500/10 transition-all">
+             <div className="w-12 h-12 bg-indigo-50 rounded-2xl flex items-center justify-center text-indigo-600 mb-6 group-hover:bg-indigo-600 group-hover:text-white transition-all">
+                <feat.icon size={24} />
+             </div>
+             <h3 className="text-sm font-black uppercase tracking-widest text-indigo-900 mb-2 italic">{feat.title}</h3>
+             <p className="text-slate-600 text-xs font-bold leading-relaxed italic">{feat.desc}</p>
+          </div>
+        ))}
+      </div>
 
-  const getMethodColor = (method) => {
-    switch (method) {
-      case 'GET': return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
-      case 'POST': return 'bg-green-500/20 text-green-400 border-green-500/30';
-      case 'PUT': return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
-      case 'DELETE': return 'bg-red-500/20 text-red-400 border-red-500/30';
-      default: return 'bg-gray-500/20 text-gray-400 border-gray-500/30';
-    }
-  };
+      <div className="glass-card bg-indigo-900 p-12 text-white overflow-hidden relative">
+         <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 blur-[100px] rounded-full -mr-32 -mt-32" />
+         <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-12">
+            <div className="max-w-xl text-center md:text-left">
+               <h2 className="text-4xl font-black italic tracking-tighter uppercase mb-4">The Institutional Anchor.</h2>
+               <p className="text-indigo-200 font-bold italic leading-relaxed mb-8">
+                 Satohash provides the finality layer for the decentralized web. Secure your 
+                 infrastructure with the immutable weight of the Bitcoin hashpower.
+               </p>
+               <Link to="/about" className="pill-amber px-10 py-4 text-[10px] inline-block text-center transition-all hover:scale-105 active:scale-95">Read_The_Whitepaper</Link>
+            </div>
+            <div className="flex-1 grid grid-cols-2 gap-4 w-full">
+               <div className="bg-white/10 p-6 rounded-3xl border border-white/10 backdrop-blur-sm">
+                  <div className="text-[9px] font-black text-indigo-300 uppercase mb-2">Network Capacity</div>
+                  <div className="text-2xl font-black italic">100k/tx</div>
+               </div>
+               <div className="bg-white/10 p-6 rounded-3xl border border-white/10 backdrop-blur-sm">
+                  <div className="text-[9px] font-black text-indigo-300 uppercase mb-2">Block Finality</div>
+                  <div className="text-2xl font-black italic">10 min</div>
+               </div>
+            </div>
+         </div>
+      </div>
+    </div>
+  );
+}
+
+function BatchTab() {
+  return (
+    <div className="space-y-12 max-w-5xl mx-auto">
+      <div className="text-center mb-16">
+         <h2 className="text-4xl font-black italic tracking-tighter text-indigo-900 uppercase">Democracy & <span className="text-indigo-600">Batch Protocols.</span></h2>
+         <p className="text-slate-500 font-bold italic mt-4">Automating trust for large-scale societal and enterprise operations.</p>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+         <div className="space-y-6">
+            <div className="flex items-center gap-4 mb-4">
+               <div className="h-0.5 w-12 bg-indigo-600" />
+               <span className="text-[10px] font-black uppercase tracking-widest text-indigo-600">Referendums & Voting</span>
+            </div>
+            <h3 className="text-2xl font-black italic text-indigo-900 uppercase">How to Anchor a Ballot</h3>
+            <p className="text-sm font-medium italic text-slate-500 leading-relaxed shadow-sm bg-indigo-50/30 p-6 rounded-3xl border border-indigo-100">
+              1. **Collection**: Individual votes are hashed and aggregated into a Merkle Tree.<br/><br/>
+              2. **Aggregation**: The Merkle Root is submitted to the Satahash Oracle via the `/democracy/vote` endpoint.<br/><br/>
+              3. **Anchoring**: Satahash anchors the root into the Bitcoin blockchain.<br/><br/>
+              4. **Verification**: Voters can use their leaf-hash and the provided Merkle path to verify their vote was included in the block without revealing identity.
+            </p>
+         </div>
+
+         <div className="space-y-6">
+            <div className="flex items-center gap-4 mb-4">
+               <div className="h-0.5 w-12 bg-emerald-500" />
+               <span className="text-[10px] font-black uppercase tracking-widest text-emerald-500">Mass Notarization</span>
+            </div>
+            <h3 className="text-2xl font-black italic text-indigo-900 uppercase">Enterprise Batching</h3>
+            <p className="text-sm font-medium italic text-slate-500 leading-relaxed shadow-sm bg-emerald-50/30 p-6 rounded-3xl border border-emerald-100">
+              Ideal for archiving legal records, real-estate deeds, or phone communication logs.<br/><br/>
+              Simply stream hashes to the `/batch/anchor` endpoint. We handle the tree creation and provide a single attestation file (.ots) containing all proofs for the entire batch.
+            </p>
+         </div>
+      </div>
+
+      <div className="bg-white border border-indigo-100 p-10 rounded-[2.5rem] shadow-xl">
+         <div className="flex items-center gap-4 mb-8">
+             <BookOpen className="text-indigo-600" size={24} />
+             <h4 className="text-lg font-black uppercase text-indigo-900 italic">Full Protocol Instructions</h4>
+         </div>
+         <div className="prose prose-indigo max-w-none text-slate-500 font-medium italic space-y-4">
+            <p>Satohash uses a **Tiered Witness Model**. Our API allows you to offload the expensive Bitcoin transaction costs while maintaining the same 100% security guarantee.</p>
+            <ul className="list-disc pl-6 space-y-2">
+              <li>Each batch generates a unique **Satahash Proof Identifier**.</li>
+              <li>Proofs are initially signed by our Oracle (Instant Proof).</li>
+              <li>Wait 10-60 minutes for the Bitcoin Anchor transaction (Final Proof).</li>
+              <li>Use our **Global Verifier** link to share proofs with third parties.</li>
+            </ul>
+         </div>
+      </div>
+    </div>
+  );
+}
+
+function PaymentTab() {
+  const protocols = [
+    { name: 'Bitcoin Lightning', status: 'ACTIVE', desc: 'Instant micro-settlement via BOLT-11/12 callbacks.', icon: Zap, color: 'text-amber-500' },
+    { name: 'Liquid Network', status: 'STABLE', desc: 'Anchoring LBTC and Confidential Assets.', icon: Globe, color: 'text-blue-500' },
+    { name: 'Fedimint', status: 'BETA', desc: 'Native ecash settlement for community mints.', icon: Shield, color: 'text-emerald-500' },
+    { name: 'Nostr Assets', status: 'TESTING', desc: 'Secure settlement via Nostr-native signature relays.', icon: Code, color: 'text-violet-500' }
+  ];
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      className="space-y-8"
-    >
-      {/* Features Grid */}
-      <div className="grid md:grid-cols-3 gap-6">
-        <div className="bg-gray-800/50 rounded-xl p-6 border border-gray-700">
-          <div className="w-12 h-12 rounded-lg bg-orange-500/20 flex items-center justify-center mb-4">
-            <Bitcoin className="w-6 h-6 text-orange-400" />
-          </div>
-          <h3 className="text-lg font-semibold mb-2">Bitcoin Native</h3>
-          <p className="text-gray-400 text-sm">
-            All timestamps are anchored to the Bitcoin blockchain using OpenTimestamps. 
-            Immutable proof that lasts forever.
-          </p>
-        </div>
-        <div className="bg-gray-800/50 rounded-xl p-6 border border-gray-700">
-          <div className="w-12 h-12 rounded-lg bg-blue-500/20 flex items-center justify-center mb-4">
-            <Zap className="w-6 h-6 text-blue-400" />
-          </div>
-          <h3 className="text-lg font-semibold mb-2 text-white">Lightning Fast</h3>
-          <p className="text-gray-400 text-sm">
-            Pay for API usage with Bitcoin Lightning. Sub-second payments, 
-            no credit cards, no KYC required.
-          </p>
-        </div>
-        <div className="bg-gray-800/50 rounded-xl p-6 border border-gray-700">
-          <div className="w-12 h-12 rounded-lg bg-purple-500/20 flex items-center justify-center mb-4">
-            <Shield className="w-6 h-6 text-purple-400" />
-          </div>
-          <h3 className="text-lg font-semibold mb-2">Zero Knowledge</h3>
-          <p className="text-gray-400 text-sm">
-            We only see SHA-256 hashes, never your actual content. 
-            Your data stays private, the proof stays public.
-          </p>
-        </div>
+    <div className="space-y-12">
+      <div className="text-center">
+         <h2 className="text-4xl font-black italic tracking-tighter text-indigo-900 uppercase">Payment <span className="text-indigo-600">Ecosystem.</span></h2>
+         <p className="text-slate-500 font-bold italic mt-4">Sovereign settlement across the Bitcoin protocol stack.</p>
       </div>
 
-      {/* API Endpoints */}
-      <div>
-        <h2 className="text-2xl font-bold mb-6 flex items-center gap-3">
-          <FileJson className="w-6 h-6 text-orange-400" />
-          API Endpoints
-        </h2>
-        <div className="space-y-3">
-          {ENDPOINTS.map((endpoint, idx) => (
-            <div
-              key={idx}
-              className="bg-gray-800/50 rounded-xl border border-gray-700 overflow-hidden"
-            >
-              <button
-                onClick={() => setExpandedEndpoint(expandedEndpoint === idx ? null : idx)}
-                className="w-full px-6 py-4 flex items-center gap-4 hover:bg-gray-700/50 transition-colors"
-              >
-                <span className={`px-3 py-1 rounded text-xs font-mono font-semibold border ${getMethodColor(endpoint.method)}`}>
-                  {endpoint.method}
-                </span>
-                <code className="text-sm font-mono text-gray-300">{endpoint.path}</code>
-                <span className="flex-1 text-left text-sm text-gray-400">{endpoint.name}</span>
-                {endpoint.auth && (
-                  <span className="px-2 py-1 rounded bg-yellow-500/10 text-yellow-400 text-xs">
-                    <Key className="w-3 h-3 inline mr-1" />
-                    Auth
-                  </span>
-                )}
-                <span className={`text-xs ${endpoint.cost === 'Free' ? 'text-green-400' : 'text-orange-400'}`}>
-                  {endpoint.cost}
-                </span>
-                {expandedEndpoint === idx ? (
-                  <ChevronDown className="w-5 h-5 text-gray-400" />
-                ) : (
-                  <ChevronRight className="w-5 h-5 text-gray-400" />
-                )}
-              </button>
-              {expandedEndpoint === idx && (
-                <div className="px-6 pb-4 border-t border-gray-700 pt-4">
-                  <p className="text-gray-400 mb-4">{endpoint.description}</p>
-                  <div className="bg-black/50 rounded-lg p-4 font-mono text-sm">
-                    <div className="text-gray-500 mb-2"># Example request</div>
-                    <div className="text-green-400">curl -X {endpoint.method} \\\</div>
-                    <div className="text-gray-300 ml-4">https://api.satohash.io{endpoint.path} \\\</div>
-                    {endpoint.auth && (
-                      <div className="text-gray-300 ml-4">-H &quot;X-API-Key: your_api_key&quot; \\\</div>
-                    )}
-                    {endpoint.method === 'POST' && endpoint.path.includes('timestamp') && (
-                      <>
-                        <div className="text-white ml-4">-H &quot;Content-Type: application/json&quot; \\\</div>
-                        <div className="text-gray-300 ml-4">{`-d '&apos;{"hash":"abc123..."}&apos;`}</div>
-                      </>
-                    )}
-                  </div>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
+      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+         {protocols.map((p, i) => (
+           <div key={i} className="bg-white border border-indigo-50 p-8 rounded-[2rem] shadow-sm hover:shadow-xl transition-all">
+              <div className={`mb-6 p-4 rounded-2xl bg-slate-50 w-fit ${p.color}`}>
+                 <p.icon size={24} />
+              </div>
+              <h3 className="text-sm font-black uppercase italic text-indigo-900 mb-2">{p.name}</h3>
+              <p className="text-[10px] font-bold text-slate-400 italic mb-6 leading-relaxed">{p.desc}</p>
+              <div className="flex items-center gap-2">
+                 <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                 <span className="text-[9px] font-black uppercase text-emerald-600">{p.status}</span>
+              </div>
+           </div>
+         ))}
       </div>
 
-      {/* Authentication Section */}
-      <div className="bg-gradient-to-r from-gray-800/50 to-gray-900/50 rounded-xl p-6 border border-gray-700">
-        <h2 className="text-xl font-bold mb-4 flex items-center gap-3">
-          <Key className="w-5 h-5 text-orange-400" />
-          Authentication
-        </h2>
-        <p className="text-gray-200 mb-4">
-          All API requests (except pricing and block height) require authentication.
-          Include your API key in the <code className="bg-black/50 px-2 py-1 rounded text-white">X-API-Key</code> header.
-        </p>
-        <div className="bg-black/50 rounded-lg p-4 font-mono text-sm">
-          <div className="text-gray-400 mb-2"># Header format</div>
-          <div className="text-white">X-API-Key: sk_satohash_your_key_here</div>
-        </div>
+      <div className="max-w-3xl mx-auto bg-slate-50 border border-slate-100 p-8 rounded-3xl text-center shadow-sm">
+         <p className="text-xs font-bold italic text-indigo-900/60 leading-relaxed max-w-lg mx-auto mb-6">
+           Need help integrating BOLT-12 or Liquid payments into your batch workflow? 
+           Establish a direct node connection for institutional support.
+         </p>
+         <button onClick={() => setActiveTab('partnership')} className="btn-holographic px-8 py-3 text-[10px]">Establish_Protocol_Support</button>
+      </div>
+    </div>
+  );
+}
+
+function EndpointsTab() {
+  const [expanded, setExpanded] = useState(null);
+
+  return (
+    <div className="space-y-8">
+      <div className="flex items-center justify-between mb-8">
+         <h2 className="text-3xl font-black italic tracking-tighter text-indigo-900 uppercase flex items-center gap-4">
+             <div className="h-1 w-12 bg-indigo-600" />
+             API Endpoints
+         </h2>
+         <div className="bg-white border border-indigo-100 rounded-xl px-4 py-2 flex items-center gap-3 shadow-sm">
+            <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Base URL:</span>
+            <code className="text-[10px] font-mono font-bold text-indigo-600">https://api.satohash.io/v1</code>
+         </div>
       </div>
 
-      {/* Rate Limits */}
-      <div className="bg-gradient-to-r from-gray-800/50 to-gray-900/50 rounded-xl p-6 border border-gray-700">
-        <h2 className="text-xl font-bold mb-4 flex items-center gap-3 text-white">
-          <Clock className="w-5 h-5 text-orange-400" />
-          Rate Limiting
-        </h2>
-        <div className="grid md:grid-cols-3 gap-4">
-          <div className="bg-black/30 rounded-lg p-4">
-            <div className="text-2xl font-bold text-green-400 mb-1">100</div>
-            <div className="text-sm text-gray-200">requests/day (Free)</div>
+      <div className="space-y-4">
+        {ENDPOINTS.map((ep, i) => (
+          <div key={i} className="bg-white border border-indigo-50 rounded-3xl overflow-hidden shadow-sm">
+             <button 
+                onClick={() => setExpanded(expanded === i ? null : i)}
+                className="w-full flex items-center gap-4 px-8 py-5 hover:bg-indigo-50/30 transition-all text-left"
+             >
+                <span className={`text-[10px] font-black px-2.5 py-1 rounded-lg border ${ep.method === 'POST' ? 'bg-emerald-50 text-emerald-600 border-emerald-100' : 'bg-blue-50 text-blue-600 border-blue-100'}`}>{ep.method}</span>
+                <code className="text-xs font-mono font-bold text-indigo-900">{ep.path}</code>
+                <span className="flex-1 text-[11px] font-bold text-slate-400 uppercase italic text-right mr-4">{ep.name}</span>
+                {expanded === i ? <ChevronDown size={18} /> : <ChevronRight size={18} />}
+             </button>
+             {expanded === i && (
+               <motion.div 
+                 initial={{ height: 0 }}
+                 animate={{ height: 'auto' }}
+                 className="px-8 pb-8 pt-4 border-t border-indigo-50"
+               >
+                 <p className="text-xs font-medium text-slate-500 italic mb-6">{ep.description}</p>
+                 <div className="bg-slate-900 rounded-2xl p-6 font-mono text-xs text-indigo-300">
+                    <div className="text-slate-500 mb-2"># Protocol Request</div>
+                    <div>curl -X {ep.method} https://api.satohash.io/v1{ep.path} \</div>
+                    <div className="ml-4">-H "X-API-Key: sk_mesh_xxxx" \</div>
+                    <div className="ml-4">-d '{"{"} "hashes": [...] {"}"}'</div>
+                 </div>
+               </motion.div>
+             )}
           </div>
-          <div className="bg-black/30 rounded-lg p-4">
-            <div className="text-2xl font-bold text-orange-400 mb-1">10,000</div>
-            <div className="text-sm text-gray-200">requests/day (Pro)</div>
-          </div>
-          <div className="bg-black/30 rounded-lg p-4">
-            <div className="text-2xl font-bold text-purple-400 mb-1">Unlimited</div>
-            <div className="text-sm text-gray-200">Enterprise</div>
-          </div>
-        </div>
+        ))}
       </div>
-    </motion.div>
+    </div>
   );
 }

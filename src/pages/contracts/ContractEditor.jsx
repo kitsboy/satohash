@@ -157,14 +157,9 @@ export default function ContractEditor() {
               animate={{ opacity: 1, y: 0 }}
               className="document-paper"
             >
-              {/* Cryptographic Watermark */}
-              <img
-                src="/logo.png"
-                className="pointer-events-none absolute top-12 left-10 z-10 w-10 select-none"
-                alt=""
-              />
-              <div className="document-watermark z-0">
-                {Array(200).fill('SATOHASH PROTOCOL SECURED SHA-256 BITCOIN ANCHOR ').join('')}
+              {/* Institutional Watermark */}
+              <div className="document-watermark">
+                SATOHASH PROTOCOL SECURED
               </div>
 
               <textarea

@@ -1,143 +1,91 @@
 import React from 'react'
-import { Activity, Zap, Shield, BarChart3, Clock, Database } from 'lucide-react'
-import Card from './Card'
+import { motion } from 'framer-motion'
+import { Activity, Zap, Shield, Clock, Database, ArrowUpRight } from 'lucide-react'
 
 const ProofAnalytics = () => {
   const stats = [
-    { label: 'Avg. Network Fee', value: '42.5 sats/vB', icon: Zap, color: '#f59e0b' },
-    { label: 'Verification Reliability', value: '99.99%', icon: Shield, color: '#10b981' },
-    { label: 'Avg. Anchor Time', value: '10.2 min', icon: Clock, color: '#6366f1' },
-    { label: 'Total Anchored Bytes', value: '8.4 GB', icon: Database, color: '#3b82f6' }
+    { label: 'Network Fee', value: '42.5 sats/vB', icon: Zap, color: 'amber', trend: '+12%' },
+    { label: 'Reliability', value: '99.99%', icon: Shield, color: 'emerald', trend: 'stable' },
+    { label: 'Anchor Time', value: '10.2 min', icon: Clock, color: 'indigo', trend: '-2.4s' },
+    { label: 'Total Volume', value: '8.4 GB', icon: Database, color: 'violet', trend: '+0.5GB' }
   ]
 
+  const colorMap = {
+    amber: { bg: 'bg-amber-50', text: 'text-amber-600', border: 'border-amber-100', bar: 'bg-amber-500' },
+    emerald: { bg: 'bg-emerald-50', text: 'text-emerald-600', border: 'border-emerald-100', bar: 'bg-emerald-500' },
+    indigo: { bg: 'bg-indigo-50', text: 'text-indigo-600', border: 'border-indigo-100', bar: 'bg-indigo-500' },
+    violet: { bg: 'bg-violet-50', text: 'text-violet-600', border: 'border-violet-100', bar: 'bg-violet-500' }
+  }
+
   return (
-    <div style={{ marginTop: '60px' }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '32px' }}>
-        <Activity size={24} color="var(--color-primary)" />
-        <h2 style={{ fontSize: '28px', fontWeight: '900', margin: 0, letterSpacing: '-1px' }}>
-          Network Performance Hub
-        </h2>
+    <div className="space-y-12">
+      <div className="flex items-center justify-between mb-8">
+        <div className="flex items-center gap-4">
+            <div className="h-12 w-12 rounded-2xl bg-indigo-600 flex items-center justify-center text-white shadow-lg shadow-indigo-100">
+                <Activity size={24} />
+            </div>
+            <div>
+                <h2 className="text-2xl font-black italic tracking-tighter text-indigo-900 uppercase italic">Network Performance.</h2>
+                <p className="text-[10px] font-black uppercase text-slate-400 tracking-widest">Global Node Observability</p>
+            </div>
+        </div>
+        <button className="text-[10px] font-black uppercase text-indigo-600 border-b-2 border-indigo-100 pb-1 hover:border-indigo-600 transition-all flex items-center gap-2">
+            View Protocol Dashboard <ArrowUpRight size={12} />
+        </button>
       </div>
 
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-          gap: '24px'
-        }}
-      >
-        {stats.map((stat, i) => (
-          <Card
-            key={i}
-            style={{
-              padding: '24px',
-              background: 'var(--color-surface-elevated)',
-              border: '1px solid var(--color-border)'
-            }}
-          >
-            <div
-              style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {stats.map((stat, i) => {
+          const c = colorMap[stat.color]
+          return (
+            <motion.div
+              key={i}
+              whileHover={{ y: -4 }}
+              className="glass-card p-8 bg-white border-indigo-50 hover:shadow-xl transition-all"
             >
-              <div
-                style={{
-                  padding: '8px',
-                  background: stat.color + '15',
-                  borderRadius: '10px',
-                  color: stat.color
-                }}
-              >
-                <stat.icon size={20} />
+              <div className="flex items-center justify-between mb-6">
+                <div className={`p-4 ${c.bg} ${c.text} rounded-2xl border ${c.border}`}>
+                  <stat.icon size={20} />
+                </div>
+                <span className="text-[9px] font-black text-slate-300 uppercase tracking-widest italic">{stat.trend}</span>
               </div>
-              <span
-                style={{
-                  fontSize: '13px',
-                  fontWeight: '800',
-                  color: 'var(--color-text-tertiary)',
-                  textTransform: 'uppercase',
-                  letterSpacing: '1px'
-                }}
-              >
-                {stat.label}
-              </span>
-            </div>
-            <div
-              style={{ fontSize: '24px', fontWeight: '950', color: 'var(--color-text-primary)' }}
-            >
-              {stat.value}
-            </div>
-            <div
-              style={{
-                marginTop: '12px',
-                height: '4px',
-                background: 'var(--color-border-light)',
-                borderRadius: '2px',
-                overflow: 'hidden'
-              }}
-            >
-              <div
-                style={{
-                  width: '70%',
-                  height: '100%',
-                  background: stat.color,
-                  borderRadius: '2px'
-                }}
-              />
-            </div>
-          </Card>
-        ))}
+              <div className="text-[10px] font-black text-indigo-900/40 uppercase mb-2 tracking-widest">{stat.label}</div>
+              <div className="text-2xl font-black italic text-indigo-900 mb-6">{stat.value}</div>
+              <div className="h-1.5 w-full bg-slate-50 rounded-full overflow-hidden">
+                <motion.div 
+                    initial={{ width: 0 }}
+                    animate={{ width: '70%' }}
+                    transition={{ delay: i * 0.1, duration: 1 }}
+                    className={`h-full ${c.bar}`} 
+                />
+              </div>
+            </motion.div>
+          )
+        })}
       </div>
 
-      <div
-        style={{
-          marginTop: '32px',
-          padding: '32px',
-          background: '#0f172a',
-          borderRadius: '24px',
-          color: 'white',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          flexWrap: 'wrap',
-          gap: '24px'
-        }}
-      >
-        <div style={{ flex: 1, minWidth: '300px' }}>
-          <h3 style={{ color: 'white', fontSize: '20px', fontWeight: '850', marginBottom: '12px' }}>
-            Operational Transparency
-          </h3>
-          <p style={{ color: '#94a3b8', fontSize: '15px', lineHeight: '1.6', margin: 0 }}>
+      <div className="relative overflow-hidden rounded-[3rem] bg-[#0c1220] p-12 text-white shadow-2xl flex flex-col lg:flex-row items-center justify-between gap-12">
+        <div className="absolute inset-0 opacity-20 pointer-events-none" 
+             style={{ background: 'radial-gradient(circle at 2px 2px, #4f46e5 1px, transparent 0)', backgroundSize: '32px 32px' }} />
+        
+        <div className="max-w-xl relative shrink-0">
+          <h3 className="text-2xl font-black italic tracking-tighter uppercase mb-6 italic">Operational <span className="text-indigo-400">Transparency.</span></h3>
+          <p className="text-sm font-medium leading-relaxed text-slate-400 italic">
             Satohash consumes real-time data from the Bitcoin mempool and global OpenTimestamps
             relays. Our verification engine maintains multiple redundant paths to ensure 24/7
-            document integrity checks.
+            document integrity checks across the sovereign mesh.
           </p>
         </div>
-        <div style={{ display: 'flex', gap: '40px' }}>
-          <div style={{ textAlign: 'center' }}>
-            <div style={{ fontSize: '32px', fontWeight: '950', color: '#6366f1' }}>782,456</div>
-            <div
-              style={{
-                fontSize: '11px',
-                color: '#94a3b8',
-                fontWeight: '800',
-                textTransform: 'uppercase'
-              }}
-            >
-              Curent Block
-            </div>
-          </div>
-          <div style={{ textAlign: 'center' }}>
-            <div style={{ fontSize: '32px', fontWeight: '950', color: '#10b981' }}>2.4ms</div>
-            <div
-              style={{
-                fontSize: '11px',
-                color: '#94a3b8',
-                fontWeight: '800',
-                textTransform: 'uppercase'
-              }}
-            >
-              Local Latency
-            </div>
-          </div>
+
+        <div className="grid grid-cols-2 gap-12 relative">
+           <div className="text-center">
+              <div className="text-5xl font-black italic tracking-tighter text-indigo-400">845,922</div>
+              <div className="text-[10px] font-black uppercase text-slate-500 tracking-widest mt-2">Current Bitcoin Block</div>
+           </div>
+           <div className="text-center">
+              <div className="text-5xl font-black italic tracking-tighter text-emerald-400">2.4ms</div>
+              <div className="text-[10px] font-black uppercase text-slate-500 tracking-widest mt-2">Protocol Latency</div>
+           </div>
         </div>
       </div>
     </div>

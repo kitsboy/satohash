@@ -33,27 +33,28 @@ export default function ImageVault() {
   )
 
   return (
-    <div className="mx-auto min-h-screen max-w-7xl px-6 pt-32 pb-20">
+    <div className="min-h-screen bg-[var(--bg-base)] px-6 pt-32 pb-32">
+      <div className="mx-auto max-w-7xl">
       <div className="mb-12 flex flex-col justify-between gap-6 md:flex-row md:items-end">
         <div>
           <motion.h1
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="font-display text-4xl font-bold text-white md:text-5xl"
+            className="text-6xl md:text-8xl font-black italic tracking-tighter text-indigo-900 uppercase italic"
           >
-            Image Vault
+            Image <span className="text-indigo-600">VAULT.</span>
           </motion.h1>
-          <p className="mt-3 text-lg text-white/40">
-            Secure cryptographic provenance for every image you've notarized.
+          <p className="mt-6 text-xl font-medium text-slate-500 italic max-w-2xl">
+            Secure cryptographic provenance for every visual asset notarized by the protocol.
           </p>
         </div>
 
-        <div className="flex w-full max-w-sm items-center gap-3 rounded-2xl border border-white/5 bg-white/5 px-5 py-3 focus-within:border-indigo-500/50 focus-within:bg-white/10 transition-all">
-          <Search size={20} className="text-white/20" />
+        <div className="flex w-full max-w-md items-center gap-4 rounded-2xl border-2 border-slate-100 bg-slate-50 px-6 py-4 focus-within:border-indigo-500/30 focus-within:bg-white transition-all shadow-inner">
+          <Search size={20} className="text-slate-300" />
           <input
             type="text"
-            placeholder="Search filenames or hashes..."
-            className="w-full bg-transparent text-sm font-medium text-white outline-none placeholder:text-white/20"
+            placeholder="FILTER_BY_HASH_OR_NAME..."
+            className="w-full bg-transparent text-sm font-bold text-indigo-900 outline-none placeholder:text-slate-300 uppercase italic tracking-widest"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
@@ -61,18 +62,18 @@ export default function ImageVault() {
       </div>
 
       {isLoading ? (
-        <div className="flex h-64 flex-col items-center justify-center gap-4">
-          <div className="h-12 w-12 animate-spin rounded-full border-4 border-indigo-500/20 border-t-indigo-500" />
-          <p className="text-sm font-medium text-white/40">Scanning the blockchain gallery...</p>
+        <div className="flex h-64 flex-col items-center justify-center gap-6">
+          <div className="h-14 w-14 animate-spin rounded-full border-4 border-indigo-100 border-t-indigo-600" />
+          <p className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">Scanning Protocol Mesh...</p>
         </div>
       ) : filteredImages.length === 0 ? (
-        <div className="flex h-96 flex-col items-center justify-center rounded-3xl border border-dashed border-white/10 bg-white/5 text-center p-12">
-          <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-white/5 text-white/20">
-            <ImageIcon size={40} />
+        <div className="flex h-96 flex-col items-center justify-center rounded-[2.5rem] border-2 border-dashed border-indigo-100 bg-white/50 text-center p-12 shadow-sm">
+          <div className="mb-8 flex h-24 w-24 items-center justify-center rounded-3xl bg-indigo-50 text-indigo-200">
+            <ImageIcon size={48} />
           </div>
-          <h3 className="text-xl font-bold text-white">No images found</h3>
-          <p className="mt-2 max-w-xs text-white/40">
-            Upload JPG, PNG, or WebP files to the dashboard to see them appear here with permanent proof.
+          <h3 className="text-2xl font-black italic tracking-tighter text-indigo-900 uppercase italic">Vault Empty.</h3>
+          <p className="mt-4 max-w-xs text-slate-500 font-medium italic leading-relaxed">
+            Notarize visual evidence via the dashboard to secure them in the institutional vault.
           </p>
         </div>
       ) : (
@@ -84,39 +85,37 @@ export default function ImageVault() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: idx * 0.05 }}
-                className="group relative overflow-hidden rounded-2xl border border-white/5 bg-[#0f111a] p-4 transition-all hover:border-indigo-500/40 hover:shadow-2xl hover:shadow-indigo-500/10"
+                className="group relative overflow-hidden rounded-3xl bg-white border border-slate-100 p-5 transition-all hover:shadow-2xl hover:shadow-indigo-500/10"
               >
-                <div className="mb-4 aspect-square overflow-hidden rounded-xl bg-gradient-to-br from-indigo-500/5 to-purple-500/5 transition-all group-hover:scale-[1.02]">
-                    <div className="flex h-full w-full items-center justify-center text-white/10">
-                        <ImageIcon size={48} strokeWidth={1} />
-                    </div>
+                <div className="mb-6 aspect-square overflow-hidden rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-200 transition-all group-hover:bg-indigo-50 group-hover:text-indigo-200">
+                    <ImageIcon size={56} strokeWidth={1.5} />
                 </div>
 
-                <div className="space-y-3">
-                  <h3 className="truncate font-bold text-white transition-colors group-hover:text-indigo-400">
+                <div className="space-y-4">
+                  <h3 className="truncate text-sm font-black italic uppercase tracking-tighter text-indigo-900 transition-colors group-hover:text-indigo-600">
                     {image.filename}
                   </h3>
                   
-                  <div className="flex items-center gap-2 text-xs font-medium text-white/30">
+                  <div className="flex items-center gap-2 text-[10px] font-bold text-slate-400 uppercase italic">
                     <Clock size={12} />
-                    {new Date(image.created_at).toLocaleDateString()}
+                    NOTARIZED_{new Date(image.created_at).toLocaleDateString()}
                   </div>
-
-                  <div className="flex items-center gap-2 rounded-lg bg-white/5 p-2 transition-all group-hover:bg-white/10">
-                    <Hash size={12} className="text-indigo-400" />
-                    <code className="truncate font-mono text-[10px] text-white/40">
+ 
+                  <div className="flex items-center gap-3 rounded-xl bg-slate-50 border border-slate-100 p-3 transition-all group-hover:bg-indigo-50 group-hover:border-indigo-100">
+                    <Hash size={12} className="text-indigo-600 shrink-0" />
+                    <code className="truncate font-mono text-[9px] font-bold text-indigo-900/40">
                         {image.hash}
                     </code>
                   </div>
 
-                  <div className="flex gap-2 pt-2">
+                  <div className="flex gap-3 pt-3">
                     <a
                       href={`${API_URL}/api/stamps/${image.id}?download=true`}
-                      className="flex flex-1 items-center justify-center gap-2 rounded-lg bg-white/5 py-2 text-xs font-bold text-white transition-all hover:bg-indigo-500 hover:text-white"
+                      className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-indigo-600 py-3 text-[10px] font-black text-white uppercase tracking-widest transition-all hover:bg-indigo-700 hover:shadow-lg hover:shadow-indigo-500/20"
                     >
-                      <Download size={14} /> Proof
+                      <Download size={14} /> PROOF
                     </a>
-                    <button className="flex items-center justify-center rounded-lg bg-white/5 px-3 py-2 text-white transition-all hover:bg-white/10">
+                    <button className="flex items-center justify-center rounded-xl bg-slate-50 border border-slate-100 px-4 py-3 text-slate-400 transition-all hover:bg-indigo-50 hover:text-indigo-600 hover:border-indigo-200">
                       <ExternalLink size={14} />
                     </button>
                   </div>
@@ -126,6 +125,7 @@ export default function ImageVault() {
           </AnimatePresence>
         </div>
       )}
+      </div>
     </div>
   )
 }

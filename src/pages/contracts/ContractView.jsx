@@ -265,14 +265,9 @@ export default function ContractView() {
               animate={{ opacity: 1, y: 0 }}
               className="document-paper"
             >
-              {/* Cryptographic Watermark */}
-              <img
-                src="/logo.png"
-                className="pointer-events-none absolute top-12 left-10 z-10 w-10 select-none"
-                alt=""
-              />
-              <div className="document-watermark z-0">
-                {Array(200).fill('SATOHASH PROTOCOL SECURED SHA-256 BITCOIN ANCHOR ').join('')}
+              {/* Institutional Watermark */}
+              <div className="document-watermark">
+                SATOHASH PROTOCOL SECURED
               </div>
 
               <div className="relative z-10 font-serif text-[18px] leading-[1.8] text-slate-800 antialiased">
@@ -286,19 +281,20 @@ export default function ContractView() {
                   <motion.div
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="mt-24 flex justify-end"
+                    className="mt-32 flex justify-end"
                   >
                     <div className="group relative">
-                      <div className="absolute inset-0 bg-indigo-600 opacity-10 blur-2xl transition-opacity group-hover:opacity-20" />
-                      <div className="relative flex flex-col items-center rounded-2xl border-2 border-indigo-600 bg-white p-6">
+                      <div className="absolute inset-0 bg-indigo-600 opacity-10 blur-3xl transition-opacity group-hover:opacity-20" />
+                      <div className="notary-seal relative">
                         <div className="mb-3 flex h-16 w-16 items-center justify-center rounded-full bg-indigo-600 text-white shadow-lg shadow-indigo-100">
                           <ShieldCheck size={32} />
                         </div>
-                        <span className="text-[11px] font-black tracking-widest text-slate-900 uppercase">
-                          {isTimestamped ? 'Verified Anchor' : 'Signed Agreement'}
+                        <span className="text-[10px] font-black tracking-widest text-indigo-900 uppercase italic">
+                           {isTimestamped ? 'BITCOIN ANCHOR' : 'SATOHASH SIGNED'}
                         </span>
-                        <span className="mt-1 text-[9px] font-bold tracking-tighter text-slate-400 uppercase">
-                          {contract.id.substring(0, 16)}
+                        <div className="mt-2 h-px w-12 bg-indigo-100" />
+                        <span className="mt-2 text-[9px] font-mono font-bold text-slate-400 uppercase">
+                          {contract.id.substring(0, 12).toUpperCase()}
                         </span>
                       </div>
                     </div>

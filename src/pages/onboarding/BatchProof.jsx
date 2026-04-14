@@ -66,8 +66,8 @@ export default function BatchProof() {
   }
 
   return (
-    <div className="page" style={{ background: 'var(--color-surface)', paddingTop: '100px' }}>
-      <div className="container">
+    <div className="page pb-24" style={{ background: 'var(--bg-base)', paddingTop: '100px' }}>
+      <div className="layout-container">
         <div className="page-header text-center" style={{ marginBottom: '40px' }}>
           <div
             style={{

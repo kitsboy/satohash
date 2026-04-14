@@ -45,8 +45,8 @@ export default function ProtocolStats() {
   }, [])
 
   return (
-    <div className="page" style={{ background: '#f8fafc', paddingTop: '100px' }}>
-      <div className="container">
+    <div className="page pb-24" style={{ background: '#f8fafc', paddingTop: '100px' }}>
+      <div className="layout-container">
         <div style={{ marginBottom: '40px' }}>
           <div
             style={{

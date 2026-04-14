@@ -139,7 +139,7 @@ export default function Welcome() {
 
       <div style={{ position: 'relative', zIndex: 1, flex: 1 }}>
         {/* HERO SECTION */}
-        <div className="container-wide" style={{ paddingTop: '140px', paddingBottom: '100px' }}>
+        <div className="layout-container" style={{ paddingTop: '140px', paddingBottom: '100px' }}>
           <div className="text-center">
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
@@ -236,7 +236,7 @@ export default function Welcome() {
         </div>
 
         {/* FEATURE CARDS (THE EDUCATIONAL GRID) */}
-        <div className="container-wide" style={{ paddingBottom: '120px' }}>
+        <div className="layout-container" style={{ paddingBottom: '120px' }}>
           <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
             {/* ... existing features ... */}
             {FEATURE_DATA.map((feature, idx) => {
@@ -420,11 +420,8 @@ export default function Welcome() {
         </div>
 
         {/* PROTOCOL DEEP DIVE - Moved from HowItWorks */}
-        <div
-          id="protocol-deep-dive"
-          style={{ paddingBottom: '120px', background: '#fff', position: 'relative' }}
-        >
-          <div className="container-wide">
+        <div id="protocol-deep-dive" style={{ paddingBottom: '120px', background: '#fff', position: 'relative' }}>
+          <div className="layout-container">
             <div className="mx-auto max-w-4xl">
               <h2
                 style={{
@@ -478,7 +475,7 @@ export default function Welcome() {
             }}
           />
 
-          <div className="container-wide" style={{ position: 'relative' }}>
+          <div className="layout-container" style={{ position: 'relative' }}>
             <div className="grid grid-cols-1 items-center gap-16 md:grid-cols-2">
               <div>
                 <h3

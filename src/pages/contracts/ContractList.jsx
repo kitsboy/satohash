@@ -63,8 +63,8 @@ export default function ContractList() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-[#f8fafc]">
-      <div className="container-wide flex-1 pt-44 pb-12">
+    <div className="flex min-h-screen flex-col bg-[var(--bg-base)]">
+      <div className="layout-container flex-1 pt-44 pb-12">
         {/* Dashboard Header */}
         <header className="mb-12">
           <BlockchainPulse />
@@ -161,7 +161,7 @@ export default function ContractList() {
 
             {/* Right Sidebar - Activity & Protocol News */}
             <aside className="space-y-8">
-              <div className="shadow-premium sticky top-24 rounded-[32px] border border-slate-200 bg-slate-100 p-8">
+              <div className="shadow-premium sticky top-32 rounded-[32px] border border-slate-200 bg-white p-8">
                 <div className="mb-8 flex items-center gap-3">
                   <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-50 text-indigo-600">
                     <ActivityIcon size={20} />
@@ -244,7 +244,7 @@ function StatCard({ icon: Icon, label, value, color }) {
   }
 
   return (
-    <div className="flex items-center gap-5 rounded-[24px] border border-slate-200 bg-slate-100 p-6 shadow-sm">
+    <div className="flex items-center gap-5 rounded-[24px] border border-slate-200 bg-white p-6 shadow-sm shadow-indigo-100/20">
       <div
         className={clsx('flex h-12 w-12 items-center justify-center rounded-2xl', colors[color])}
       >
@@ -270,7 +270,7 @@ function ContractCard({ contract, onClick, onDelete }) {
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.95 }}
       onClick={onClick}
-      className="group hover:shadow-premium relative cursor-pointer overflow-hidden rounded-[28px] border border-slate-200 bg-slate-100 p-7 shadow-sm transition-all hover:border-indigo-100"
+      className="group hover:shadow-premium relative cursor-pointer overflow-hidden rounded-[28px] border border-slate-200 bg-white p-7 shadow-sm transition-all hover:border-indigo-100"
     >
       <div className="absolute top-0 right-0 flex gap-2 p-4">
         {!isTimestamped && (

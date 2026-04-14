@@ -82,7 +82,7 @@ export default function GlobalDropzone({ children, onFileProcessed }) {
       {children}
 
       {/* Item 2: Dark Vault Toggle (Phase I) */}
-      <div className="fixed bottom-6 left-6 z-[1000]">
+      <div className="fixed top-28 right-6 z-[1000]">
         <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}

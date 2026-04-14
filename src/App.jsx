@@ -43,6 +43,11 @@ const ImageVault = React.lazy(() => import('./pages/ImageVault'))
 // Developer Portal
 const DeveloperPortal = React.lazy(() => import('./pages/DeveloperPortal'))
 const BatchTimestamp = React.lazy(() => import('./pages/BatchTimestamp'))
+const Offers = React.lazy(() => import('./pages/Offers'))
+const Identity = React.lazy(() => import('./pages/Identity'))
+const MobileSigner = React.lazy(() => import('./pages/MobileSigner'))
+const VerificationShield = React.lazy(() => import('./pages/VerificationShield'))
+const About = React.lazy(() => import('./pages/About'))
 
 function AppContent() {
   const location = useLocation()
@@ -99,6 +104,11 @@ function AppContent() {
           {/* Developer Portal */}
           <Route path="/developers" element={<DeveloperPortal />} />
           <Route path="/batch-timestamp" element={<BatchTimestamp />} />
+          <Route path="/offers" element={<Offers />} />
+          <Route path="/identity" element={<Identity />} />
+          <Route path="/mobile-signer" element={<MobileSigner />} />
+          <Route path="/verify/:proofId" element={<VerificationShield />} />
+          <Route path="/about" element={<About />} />
 
           {/* Default redirect & 404 Fallback */}
           <Route path="/" element={<Landing />} />
