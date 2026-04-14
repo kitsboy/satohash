@@ -3,3 +3,5 @@ dist
 .DS_Store
 *.local
 mcp.json
+data/*.db-shm
+data/*.db-wal

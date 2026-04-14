@@ -438,7 +438,7 @@ app.post('/api/collaboration/sign', async (req, res, next) => {
  * @swagger
  * /api/revoke/{id}:
  *   post:
- *     summary: Revoke or supersede a proof (Item 19: Revocation).
+ *     summary: "Revoke or supersede a proof (Item 19: Revocation)."
  */
 app.post('/api/revoke/:id', async (req, res, next) => {
     try {
