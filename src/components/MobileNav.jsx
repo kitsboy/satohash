@@ -17,10 +17,10 @@ export default function MobileNav({ activeTab, setActiveTab }) {
     <div className="md:hidden">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="p-2 rounded-lg bg-gray-800/50 border border-gray-700"
+        className="p-2.5 rounded-xl bg-white border border-slate-200 text-slate-600 shadow-sm transition-all hover:border-indigo-200"
         aria-label="Toggle menu"
       >
-        {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+        {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
       </button>
 
       <AnimatePresence>
@@ -30,7 +30,7 @@ export default function MobileNav({ activeTab, setActiveTab }) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40"
+              className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40"
               onClick={() => setIsOpen(false)}
             />
             <motion.div
@@ -38,16 +38,19 @@ export default function MobileNav({ activeTab, setActiveTab }) {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="fixed top-0 right-0 bottom-0 w-64 bg-gray-900 border-l border-gray-800 z-50 p-6"
+              className="fixed top-0 right-0 bottom-0 w-72 bg-white border-l border-slate-200 z-50 p-6 shadow-2xl"
             >
               <div className="flex items-center justify-between mb-8">
-                <span className="font-bold text-lg">Menu</span>
-                <button onClick={() => setIsOpen(false)}>
-                  <X className="w-6 h-6" />
+                <span className="font-extrabold text-lg text-slate-900 tracking-tight">Menu</span>
+                <button
+                  onClick={() => setIsOpen(false)}
+                  className="p-2 rounded-xl hover:bg-slate-100 text-slate-400 transition-colors"
+                >
+                  <X className="w-5 h-5" />
                 </button>
               </div>
 
-              <nav className="space-y-2">
+              <nav className="space-y-1.5">
                 {TABS.map((tab) => {
                   const Icon = tab.icon;
                   return (
@@ -57,13 +60,13 @@ export default function MobileNav({ activeTab, setActiveTab }) {
                         setActiveTab(tab.id);
                         setIsOpen(false);
                       }}
-                      className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-colors ${
+                      className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-xl transition-all text-sm font-bold ${
                         activeTab === tab.id
-                          ? 'bg-orange-500/20 text-orange-400'
-                          : 'text-gray-400 hover:bg-gray-800'
+                          ? 'bg-indigo-50 text-indigo-600 border border-indigo-100'
+                          : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900 border border-transparent'
                       }`}
                     >
-                      <Icon className="w-5 h-5" />
+                      <Icon className="w-4 h-4" />
                       {tab.label}
                     </button>
                   );

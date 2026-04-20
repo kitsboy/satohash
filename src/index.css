@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
 @import 'tailwindcss';
 
@@ -16,6 +16,10 @@
     --text-base: #1a1d2e;
     --text-muted:#334155;       /* Darkened for better readability */
     --text-faint:#475569;       /* Darkened for better readability */
+    --radius-pill: 9999px;
+    --radius-card: 1.5rem;
+    --shadow-glass: 0 8px 32px -8px rgba(79, 70, 229, 0.12), 0 0 0 1px rgba(255,255,255,0.7) inset;
+    --shadow-elevated: 0 20px 60px -15px rgba(79, 70, 229, 0.18);
   }
 
   html, body {
@@ -26,15 +30,17 @@
     @apply antialiased;
     background-color: #f7f8fc;
     color: var(--text-base);
-    font-family: 'Inter', sans-serif;
+    font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
     background-image:
       radial-gradient(at 10% 5%, rgba(79, 70, 229, 0.06) 0px, transparent 55%),
       radial-gradient(at 90% 95%, rgba(124, 58, 237, 0.04) 0px, transparent 50%);
     background-attachment: fixed;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   h1, h2, h3, .font-display {
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: 'Space Grotesk', 'Plus Jakarta Sans', sans-serif;
     @apply tracking-tighter;
     color: var(--text-base);
   }
@@ -43,54 +49,62 @@
     background: rgba(79, 70, 229, 0.2);
     color: var(--primary);
   }
+
+  /* Modern mono for code */
+  code, pre, .font-mono {
+    font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
+  }
 }
 
 @layer components {
   /* ─── Primary Card ──────────────────────────────────── */
   .glass-card {
-    @apply relative overflow-hidden rounded-[1.75rem];
+    @apply relative overflow-hidden;
+    border-radius: var(--radius-card);
     background: var(--bg-card);
     border: 1px solid var(--border);
     box-shadow:
       0 1px 3px rgba(0,0,0,0.04),
       0 8px 24px -8px rgba(79,70,229,0.08),
       0 0 0 1px rgba(255,255,255,0.7) inset;
-    transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.2);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .glass-card:hover {
     box-shadow:
       0 2px 6px rgba(0,0,0,0.06),
-      0 16px 40px -12px rgba(79,70,229,0.14),
+      0 20px 50px -12px rgba(79,70,229,0.16),
       0 0 0 1px rgba(255,255,255,0.8) inset;
     border-color: rgba(79, 70, 229, 0.2);
-    transform: translateY(-2px);
+    transform: translateY(-3px);
   }
 
   /* Subtle grain overlay for texture */
   .glass-card::before {
     content: '';
-    @apply pointer-events-none absolute inset-0 opacity-[0.025];
+    @apply pointer-events-none absolute inset-0 opacity-[0.02];
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
   }
 
   /* ─── Holographic CTA ───────────────────────────────── */
   .btn-holographic {
-    @apply relative overflow-hidden rounded-xl px-7 py-3.5 text-[11px] font-black tracking-[0.15em] text-white uppercase transition-all;
+    @apply relative overflow-hidden px-7 py-3.5 text-[11px] font-extrabold tracking-[0.12em] text-white uppercase transition-all;
+    border-radius: 14px;
     background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
     box-shadow:
       0 4px 16px -4px rgba(79, 70, 229, 0.45),
       0 1px 1px rgba(255,255,255,0.15) inset;
+    letter-spacing: 0.08em;
   }
 
   .btn-holographic::after {
     content: '';
     @apply absolute inset-0 opacity-0 transition-opacity;
-    background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 60%);
+    background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 60%);
   }
 
   .btn-holographic:hover {
-    transform: translateY(-1px) scale(1.02);
+    transform: translateY(-2px) scale(1.02);
     box-shadow:
       0 8px 28px -4px rgba(79, 70, 229, 0.55),
       0 1px 1px rgba(255,255,255,0.15) inset;
@@ -106,7 +120,8 @@
 
   /* ─── Secondary Button ──────────────────────────────── */
   .btn-secondary {
-    @apply relative rounded-xl px-7 py-3.5 text-[11px] font-black tracking-[0.15em] uppercase transition-all;
+    @apply relative px-7 py-3.5 text-[11px] font-extrabold tracking-[0.1em] uppercase transition-all;
+    border-radius: 14px;
     background: var(--bg-subtle);
     border: 1px solid var(--border);
     color: var(--text-base);
@@ -118,19 +133,21 @@
     border-color: rgba(79, 70, 229, 0.3);
     color: var(--primary);
     box-shadow: 0 4px 12px -4px rgba(79, 70, 229, 0.15);
-    transform: translateY(-1px);
+    transform: translateY(-2px);
   }
 
   /* ─── Stat Card ─────────────────────────────────────── */
   .stat-card {
-    @apply flex flex-col items-center justify-center rounded-2xl p-8 text-center transition-all;
+    @apply flex flex-col items-center justify-center p-8 text-center transition-all;
+    border-radius: var(--radius-card);
     background: var(--bg-subtle);
     border: 1px solid var(--border);
   }
 
   /* ─── Terminal / Code Block ─────────────────────────── */
   .terminal-card {
-    @apply rounded-2xl overflow-hidden;
+    @apply overflow-hidden;
+    border-radius: var(--radius-card);
     background: #1a1d2e;
     border: 1px solid rgba(255,255,255,0.06);
     box-shadow: 0 8px 32px -8px rgba(0,0,0,0.3);
@@ -143,12 +160,12 @@
     align-items: center;
     gap: 0.375rem;
     border-radius: 9999px;
-    padding: 0.25rem 0.75rem;
+    padding: 0.3rem 0.85rem;
     font-size: 10px;
-    font-weight: 900;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
-    transition: all 0.2s;
+    letter-spacing: 0.08em;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     background: rgba(79, 70, 229, 0.08);
     border: 1px solid rgba(79, 70, 229, 0.2);
     color: var(--primary);
@@ -159,12 +176,12 @@
     align-items: center;
     gap: 0.375rem;
     border-radius: 9999px;
-    padding: 0.25rem 0.75rem;
+    padding: 0.3rem 0.85rem;
     font-size: 10px;
-    font-weight: 900;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
-    transition: all 0.2s;
+    letter-spacing: 0.08em;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     background: rgba(5, 150, 105, 0.07);
     border: 1px solid rgba(5, 150, 105, 0.2);
     color: var(--success);
@@ -175,12 +192,12 @@
     align-items: center;
     gap: 0.375rem;
     border-radius: 9999px;
-    padding: 0.25rem 0.75rem;
+    padding: 0.3rem 0.85rem;
     font-size: 10px;
-    font-weight: 900;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
-    transition: all 0.2s;
+    letter-spacing: 0.08em;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     background: rgba(217, 119, 6, 0.07);
     border: 1px solid rgba(217, 119, 6, 0.2);
     color: var(--warning);
@@ -188,7 +205,8 @@
 
   /* ─── Input ─────────────────────────────────────────── */
   .input-field {
-    @apply w-full rounded-xl px-5 py-4 text-sm font-medium outline-none transition-all;
+    @apply w-full px-5 py-4 text-sm font-medium outline-none transition-all;
+    border-radius: 14px;
     background: var(--bg-subtle);
     border: 1.5px solid var(--border);
     color: var(--text-base);
@@ -197,7 +215,7 @@
   .input-field:focus {
     background: var(--bg-card);
     border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.08);
   }
 
   .input-field::placeholder {
@@ -217,7 +235,8 @@
 
   /* ─── Status Pills ──────────────────────────────────── */
   .status-pill {
-    @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[10px] font-black uppercase tracking-widest;
+    @apply inline-flex items-center gap-1.5 px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest;
+    border-radius: var(--radius-pill);
     background: var(--bg-subtle);
     border: 1px solid var(--border);
     color: var(--text-muted);
@@ -248,6 +267,112 @@
   .status-pill-error {
     @apply border-rose-200 bg-rose-50 text-rose-600;
   }
+
+  /* ─── Modal ─────────────────────────────────────────── */
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(15, 23, 42, 0.5);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    animation: fadeIn 0.2s ease-out;
+    padding: 1rem;
+  }
+
+  .modal {
+    position: relative;
+    width: 100%;
+    max-width: 460px;
+    background: white;
+    border-radius: 1.5rem;
+    border: 1px solid var(--border);
+    box-shadow:
+      0 25px 80px -12px rgba(79, 70, 229, 0.25),
+      0 0 0 1px rgba(255,255,255,0.8) inset;
+    animation: slideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    overflow: hidden;
+  }
+
+  .modal-header {
+    padding: 1.5rem 2rem 0;
+  }
+
+  .modal-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--text-base);
+    letter-spacing: -0.02em;
+  }
+
+  .modal-content {
+    padding: 1.25rem 2rem 2rem;
+  }
+
+  .modal-actions {
+    padding: 0 2rem 1.5rem;
+    display: flex;
+    gap: 0.75rem;
+    justify-content: flex-end;
+  }
+
+  /* ─── Educational Callout ───────────────────────────── */
+  .edu-callout {
+    position: relative;
+    padding: 1.25rem 1.5rem;
+    border-radius: 1rem;
+    background: linear-gradient(135deg, rgba(79, 70, 229, 0.04) 0%, rgba(124, 58, 237, 0.02) 100%);
+    border: 1px solid rgba(79, 70, 229, 0.1);
+    font-size: 0.8125rem;
+    line-height: 1.7;
+    color: var(--text-muted);
+  }
+
+  .edu-callout::before {
+    content: '💡';
+    position: absolute;
+    top: -0.5rem;
+    left: 1rem;
+    background: white;
+    padding: 0 0.25rem;
+    font-size: 1rem;
+  }
+
+  .edu-callout-title {
+    font-weight: 700;
+    color: var(--primary);
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  /* ─── How It Works Steps ────────────────────────────── */
+  .step-card {
+    @apply relative p-8 text-center;
+    border-radius: var(--radius-card);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .step-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-elevated);
+    border-color: rgba(79, 70, 229, 0.2);
+  }
+
+  .step-number {
+    @apply mx-auto mb-6 flex h-14 w-14 items-center justify-center text-lg font-extrabold text-white;
+    border-radius: 1rem;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    box-shadow: 0 4px 16px -4px rgba(79, 70, 229, 0.4);
+  }
 }
 
 /* ─── Scrollbar ─────────────────────────────────────────── */
@@ -275,8 +400,30 @@
   50%       { transform: translateY(-8px); }
 }
 
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(16px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 8px rgba(79, 70, 229, 0.2); }
+  50%       { box-shadow: 0 0 20px rgba(79, 70, 229, 0.4); }
+}
+
 .animate-breathing { animation: breathing 4s infinite ease-in-out; }
 .animate-float     { animation: float 6s infinite ease-in-out; }
+.animate-fade-up   { animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-glow      { animation: glowPulse 3s infinite ease-in-out; }
 
 /* ─── Text Gradient ──────────────────────────────────────── */
 .text-gradient {
@@ -316,18 +463,28 @@
   background: #12141f;
   border: 1px solid rgba(255,255,255,0.05);
   color: #a5b4fc;
-  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
 }
+
 /* ─── Institutional Legal Paper ────────────────────────── */
 .document-paper {
-  @apply relative mx-auto overflow-hidden bg-white p-12 md:p-24 shadow-[0_0_50px_rgba(0,0,0,0.05)];
+  @apply relative mx-auto overflow-hidden bg-white shadow-[0_0_50px_rgba(0,0,0,0.05)];
+  padding: 3rem;
   min-height: 297mm; /* A4 aspect ratio */
   width: 100%;
   max-width: 850px;
   border: 1px solid var(--border);
-  font-family: 'Times New Roman', Times, serif;
+  border-radius: 0.5rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   color: #1a1a1a;
   line-height: 1.8;
+}
+
+/* Responsive paper padding */
+@media (min-width: 768px) {
+  .document-paper {
+    padding: 4rem 6rem;
+  }
 }
 
 .document-paper::before {
@@ -350,15 +507,29 @@
 
 .document-content {
   @apply relative z-10;
-  font-size: 1.15rem;
+  font-size: 1.05rem;
 }
 
 .document-header {
-  @apply mb-12 border-b-2 border-slate-900 pb-8 flex justify-between items-end;
+  @apply mb-12 border-b-2 border-slate-900 pb-8 flex flex-col sm:flex-row justify-between items-end gap-4;
 }
 
 .notary-seal {
-  @apply flex flex-col items-center justify-center p-6 border-2 border-indigo-600 rounded-2xl bg-white shadow-xl;
+  @apply flex flex-col items-center justify-center p-6 border-2 border-indigo-600 bg-white shadow-xl;
+  border-radius: var(--radius-card);
   width: 160px;
   height: 160px;
+}
+
+/* ─── Mobile-first utilities ─────────────────────────────── */
+@media (max-width: 767px) {
+  .layout-container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  /* Touch-friendly tap targets */
+  button, a, [role="button"] {
+    min-height: 44px;
+  }
 }

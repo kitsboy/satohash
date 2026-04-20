@@ -1,22 +1,20 @@
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import {
   Plus,
   FileText,
   Calendar,
-  Users,
   ArrowRight,
   Sparkles,
   Zap,
   ShieldCheck,
   Globe,
   Activity as ActivityIcon,
-  Check,
   Search,
-  Filter,
   Clock,
   Lock,
-  Trash2
+  Trash2,
+  BookOpen,
+  CheckCircle2
 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Button from '../../components/Button'
@@ -27,7 +25,6 @@ import { useState, useEffect } from 'react'
 import { clsx } from 'clsx'
 
 export default function ContractList() {
-  const { t } = useTranslation()
   const navigate = useNavigate()
   const [contracts, setContracts] = useState([])
   const [searchQuery, setSearchQuery] = useState('')
@@ -64,26 +61,25 @@ export default function ContractList() {
 
   return (
     <div className="flex min-h-screen flex-col bg-[var(--bg-base)]">
-      <div className="layout-container flex-1 pt-44 pb-12">
-        {/* Dashboard Header */}
-        <header className="mb-12">
+      <div className="layout-container flex-1 pt-36 md:pt-44 pb-12">
+        {/* Header */}
+        <header className="mb-10">
           <BlockchainPulse />
-          <div className="mt-8 flex flex-col justify-between gap-6 md:flex-row md:items-end">
+          <div className="mt-6 flex flex-col justify-between gap-5 md:flex-row md:items-end">
             <div className="space-y-2">
-              <h1 className="text-4xl font-black tracking-tighter text-slate-900 uppercase">
+              <h1 className="text-3xl md:text-4xl font-extrabold tracking-tighter text-slate-900">
                 Protocol Dashboard
               </h1>
-              <p className="text-sm font-bold tracking-widest text-slate-400 uppercase">
-                Managing {contracts.length} Cryptographic Proofs
+              <p className="text-sm font-medium tracking-wide text-slate-400">
+                Managing {contracts.length} cryptographic proofs
               </p>
             </div>
             <Button
               variant="primary"
               size="large"
               onClick={() => navigate('/choose-template')}
-              className="bg-indigo-600 shadow-xl shadow-indigo-100/50"
             >
-              <Plus size={20} /> Create New Proof
+              <Plus size={18} /> Create New Proof
             </Button>
           </div>
         </header>
@@ -91,50 +87,37 @@ export default function ContractList() {
         {contracts.length === 0 ? (
           <EmptyState onAction={() => navigate('/choose-template')} />
         ) : (
-          <div className="grid grid-cols-1 gap-12 lg:grid-cols-[1fr_380px]">
+          <div className="grid grid-cols-1 gap-10 lg:grid-cols-[1fr_360px]">
             {/* Main Feed */}
-            <div className="space-y-10">
-              {/* Stats Ribbon */}
-              <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
+            <div className="space-y-8">
+              {/* Stats */}
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
                 <StatCard icon={Zap} label="Total Anchors" value={stats.total} color="indigo" />
-                <StatCard
-                  icon={ShieldCheck}
-                  label="Secured Proofs"
-                  value={stats.secured}
-                  color="emerald"
-                />
-                <StatCard
-                  icon={Globe}
-                  label="Node Integrity"
-                  value={`${stats.avgHealth}%`}
-                  color="blue"
-                />
+                <StatCard icon={ShieldCheck} label="Secured Proofs" value={stats.secured} color="emerald" />
+                <StatCard icon={Globe} label="Node Integrity" value={`${stats.avgHealth}%`} color="blue" />
               </div>
 
               {/* Search & Filter */}
-              <div className="flex flex-col gap-4 sm:flex-row">
+              <div className="flex flex-col gap-3 sm:flex-row">
                 <div className="relative flex-1">
-                  <Search
-                    className="absolute top-1/2 left-4 -translate-y-1/2 text-slate-300"
-                    size={18}
-                  />
+                  <Search className="absolute top-1/2 left-4 -translate-y-1/2 text-slate-300" size={16} />
                   <input
                     type="text"
                     placeholder="Search agreements..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full rounded-2xl border border-slate-100 bg-white py-3 pr-4 pl-12 text-sm font-bold transition-all outline-none focus:ring-4 focus:ring-indigo-50"
+                    className="w-full rounded-2xl border border-slate-100 bg-white py-3 pr-4 pl-11 text-sm font-medium transition-all outline-none focus:ring-4 focus:ring-indigo-50 focus:border-indigo-200"
                   />
                 </div>
-                <div className="flex gap-2">
+                <div className="flex gap-1.5 overflow-x-auto">
                   {['all', 'draft', 'signed', 'timestamped'].map((status) => (
                     <button
                       key={status}
                       onClick={() => setFilterStatus(status)}
                       className={clsx(
-                        'rounded-xl border px-4 py-2 text-[10px] font-black tracking-widest uppercase transition-all',
+                        'rounded-xl border px-4 py-2.5 text-[10px] font-bold tracking-widest uppercase transition-all whitespace-nowrap',
                         filterStatus === status
-                          ? 'border-slate-900 bg-slate-900 text-white shadow-lg'
+                          ? 'border-indigo-600 bg-indigo-600 text-white shadow-md shadow-indigo-200'
                           : 'border-slate-100 bg-white text-slate-400 hover:border-slate-200'
                       )}
                     >
@@ -145,9 +128,9 @@ export default function ContractList() {
               </div>
 
               {/* Grid */}
-              <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <AnimatePresence mode="popLayout">
-                  {filteredContracts.map((contract, idx) => (
+                  {filteredContracts.map((contract) => (
                     <ContractCard
                       key={contract.id}
                       contract={contract}
@@ -159,48 +142,33 @@ export default function ContractList() {
               </div>
             </div>
 
-            {/* Right Sidebar - Activity & Protocol News */}
-            <aside className="space-y-8">
-              <div className="shadow-premium sticky top-32 rounded-[32px] border border-slate-200 bg-white p-8">
-                <div className="mb-8 flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-50 text-indigo-600">
-                    <ActivityIcon size={20} />
+            {/* Right Sidebar */}
+            <aside className="space-y-6">
+              <div className="sticky top-32 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+                <div className="mb-6 flex items-center gap-3">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-indigo-50 text-indigo-600">
+                    <ActivityIcon size={18} />
                   </div>
-                  <h3 className="text-sm font-black tracking-tight text-slate-900 uppercase">
-                    Active Protocol Feed
+                  <h3 className="text-sm font-extrabold tracking-tight text-slate-900">
+                    Protocol Feed
                   </h3>
                 </div>
 
-                <div className="relative space-y-8">
-                  <div className="absolute top-0 bottom-0 left-4 w-px bg-slate-100" />
-                  <ActivityItem
-                    icon={Lock}
-                    title="Merkle Root Anchored"
-                    time="2m ago"
-                    status="confirmed"
-                  />
-                  <ActivityItem
-                    icon={Zap}
-                    title="SHA-256 Hash Generated"
-                    time="15m ago"
-                    status="processed"
-                  />
-                  <ActivityItem
-                    icon={Globe}
-                    title="Block #831,492 Confirmed"
-                    time="1h ago"
-                    status="immutable"
-                  />
+                <div className="relative space-y-6">
+                  <div className="absolute top-0 bottom-0 left-3.5 w-px bg-slate-100" />
+                  <ActivityItem icon={Lock} title="Merkle Root Anchored" time="2m ago" status="confirmed" />
+                  <ActivityItem icon={Zap} title="SHA-256 Hash Generated" time="15m ago" status="processed" />
+                  <ActivityItem icon={Globe} title="Block #831,492 Confirmed" time="1h ago" status="immutable" />
                 </div>
 
-                <div className="mt-12 border-t border-slate-50 pt-8">
-                  <div className="flex items-center justify-between rounded-2xl bg-slate-50 p-4">
-                    <span className="text-[10px] font-black tracking-widest text-slate-400 uppercase">
+                <div className="mt-8 border-t border-slate-50 pt-6">
+                  <div className="flex items-center justify-between rounded-xl bg-slate-50 p-3">
+                    <span className="text-[10px] font-bold tracking-widest text-slate-400 uppercase">
                       Global Ops
                     </span>
                     <div className="flex items-center gap-2">
                       <div className="h-2 w-2 animate-pulse rounded-full bg-emerald-500" />
-                      <span className="text-[10px] font-bold text-emerald-600 uppercase">
+                      <span className="text-[10px] font-medium text-emerald-600">
                         All Systems Nominal
                       </span>
                     </div>
@@ -210,22 +178,22 @@ export default function ContractList() {
 
               <Card
                 variant="glass"
-                className="relative overflow-hidden border-none bg-gradient-to-br from-slate-900 to-slate-800 p-8"
+                className="relative overflow-hidden border-none bg-gradient-to-br from-indigo-900 to-slate-900 p-6"
               >
-                <Sparkles className="absolute -top-4 -right-4 h-32 w-32 rotate-12 text-white/10" />
-                <h4 className="relative z-10 mb-3 text-sm font-black text-white uppercase">
-                  Premium Security Tip
+                <Sparkles className="absolute -top-4 -right-4 h-24 w-24 rotate-12 text-white/10" />
+                <h4 className="relative z-10 mb-2 text-sm font-extrabold text-white">
+                  Security Tip
                 </h4>
-                <p className="relative z-10 mb-4 text-[11px] leading-relaxed font-medium text-slate-300">
-                  For high-value agreements, we recommend waiting for at least 6 Bitcoin
-                  confirmations (approx. 1 hour) before generating the final proof package.
+                <p className="relative z-10 mb-4 text-[12px] leading-relaxed font-medium text-slate-300">
+                  For high-value agreements, wait for at least 6 Bitcoin
+                  confirmations (~1 hour) before generating the final proof package.
                 </p>
                 <Button
                   variant="ghost"
                   size="small"
                   className="p-0 text-[10px] font-bold tracking-widest text-white uppercase hover:bg-white/10"
                 >
-                  Learn More <ArrowRight size={14} className="ml-2" />
+                  Learn More <ArrowRight size={12} className="ml-2" />
                 </Button>
               </Card>
             </aside>
@@ -244,17 +212,15 @@ function StatCard({ icon: Icon, label, value, color }) {
   }
 
   return (
-    <div className="flex items-center gap-5 rounded-[24px] border border-slate-200 bg-white p-6 shadow-sm shadow-indigo-100/20">
-      <div
-        className={clsx('flex h-12 w-12 items-center justify-center rounded-2xl', colors[color])}
-      >
-        <Icon size={24} />
+    <div className="flex items-center gap-4 rounded-2xl border border-slate-100 bg-white p-5 shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5">
+      <div className={clsx('flex h-11 w-11 items-center justify-center rounded-xl', colors[color])}>
+        <Icon size={20} />
       </div>
       <div>
-        <p className="mb-1 text-[10px] font-black tracking-widest text-slate-400 uppercase">
+        <p className="mb-0.5 text-[10px] font-bold tracking-widest text-slate-400 uppercase">
           {label}
         </p>
-        <p className="text-xl font-black tracking-tighter text-slate-900">{value}</p>
+        <p className="text-xl font-extrabold tracking-tighter text-slate-900">{value}</p>
       </div>
     </div>
   )
@@ -270,64 +236,64 @@ function ContractCard({ contract, onClick, onDelete }) {
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.95 }}
       onClick={onClick}
-      className="group hover:shadow-premium relative cursor-pointer overflow-hidden rounded-[28px] border border-slate-200 bg-white p-7 shadow-sm transition-all hover:border-indigo-100"
+      className="group relative cursor-pointer overflow-hidden rounded-2xl border border-slate-100 bg-white p-6 shadow-sm transition-all hover:shadow-lg hover:border-indigo-100 hover:-translate-y-1"
     >
-      <div className="absolute top-0 right-0 flex gap-2 p-4">
+      <div className="absolute top-0 right-0 flex gap-2 p-3">
         {!isTimestamped && (
           <button
             onClick={onDelete}
-            className="rounded-xl p-2 text-slate-300 opacity-0 transition-all group-hover:opacity-100 hover:bg-rose-50 hover:text-rose-500"
+            className="rounded-lg p-1.5 text-slate-300 opacity-0 transition-all group-hover:opacity-100 hover:bg-rose-50 hover:text-rose-500"
           >
-            <Trash2 size={18} />
+            <Trash2 size={16} />
           </button>
         )}
         {isTimestamped && (
           <ShieldCheck
-            size={20}
+            size={18}
             className="text-emerald-500 opacity-20 transition-opacity group-hover:opacity-100"
           />
         )}
       </div>
 
-      <div className="mb-6 flex items-start justify-between">
-        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-50 text-slate-400 transition-all group-hover:bg-indigo-50 group-hover:text-indigo-600">
-          <FileText size={24} />
+      <div className="mb-5 flex items-start justify-between">
+        <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-slate-50 text-slate-400 transition-all group-hover:bg-indigo-50 group-hover:text-indigo-600">
+          <FileText size={20} />
         </div>
         <StatusPill status={contract.status} />
       </div>
 
-      <h3 className="mb-2 text-lg font-black tracking-tight text-slate-900 uppercase transition-colors group-hover:text-indigo-600">
+      <h3 className="mb-2 text-base font-extrabold tracking-tight text-slate-900 transition-colors group-hover:text-indigo-600">
         {contract.name}
       </h3>
 
-      <div className="mt-6 flex items-center gap-4 border-t border-slate-50 pt-6">
-        <div className="flex items-center gap-1.5 text-[10px] font-bold tracking-wider text-slate-400 uppercase">
-          <Calendar size={12} /> {new Date(contract.updatedAt).toLocaleDateString()}
+      <div className="mt-5 flex items-center gap-4 border-t border-slate-50 pt-4">
+        <div className="flex items-center gap-1.5 text-[10px] font-medium tracking-wider text-slate-400">
+          <Calendar size={11} /> {new Date(contract.updatedAt).toLocaleDateString()}
         </div>
-        <div className="flex items-center gap-1.5 text-[10px] font-bold tracking-wider text-slate-400 uppercase">
-          <Clock size={12} /> {isTimestamped ? 'Verified' : 'Pending'}
+        <div className="flex items-center gap-1.5 text-[10px] font-medium tracking-wider text-slate-400">
+          <Clock size={11} /> {isTimestamped ? 'Verified' : 'Pending'}
         </div>
       </div>
 
-      <div className="absolute right-0 bottom-0 left-0 h-1 origin-left scale-x-0 bg-gradient-to-r from-indigo-500 to-purple-500 transition-transform group-hover:scale-x-100" />
+      <div className="absolute right-0 bottom-0 left-0 h-0.5 origin-left scale-x-0 bg-gradient-to-r from-indigo-500 to-violet-500 transition-transform group-hover:scale-x-100" />
     </motion.div>
   )
 }
 
 function ActivityItem({ icon: Icon, title, time, status }) {
   return (
-    <div className="relative z-10 flex gap-6">
-      <div className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-slate-100 bg-white text-slate-400 shadow-sm">
-        <Icon size={14} />
+    <div className="relative z-10 flex gap-4">
+      <div className="flex h-7 w-7 items-center justify-center rounded-full border-2 border-slate-100 bg-white text-slate-400 shadow-sm">
+        <Icon size={12} />
       </div>
       <div className="flex-1">
-        <div className="mb-1 flex items-start justify-between">
-          <h5 className="text-[11px] font-black tracking-tight text-slate-900 uppercase">
+        <div className="mb-0.5 flex items-start justify-between">
+          <h5 className="text-[11px] font-bold tracking-tight text-slate-900">
             {title}
           </h5>
-          <span className="text-[9px] font-bold text-slate-300 uppercase">{time}</span>
+          <span className="text-[9px] font-medium text-slate-300">{time}</span>
         </div>
-        <span className="flex items-center gap-1 text-[9px] font-black tracking-widest text-emerald-500 uppercase">
+        <span className="flex items-center gap-1 text-[9px] font-bold tracking-widest text-emerald-500 uppercase">
           <div className="h-1 w-1 rounded-full bg-emerald-500" /> {status}
         </span>
       </div>
@@ -337,29 +303,65 @@ function ActivityItem({ icon: Icon, title, time, status }) {
 
 function EmptyState({ onAction }) {
   return (
-    <div className="rounded-[40px] border border-dashed border-slate-300 bg-slate-100 px-12 py-32 text-center shadow-sm">
-      <div className="relative mx-auto mb-8 flex h-24 w-24 items-center justify-center rounded-[32px] bg-indigo-50">
-        <FileText size={40} className="text-indigo-600" />
-        <motion.div
-          animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
-          transition={{ duration: 3, repeat: Infinity }}
-          className="absolute -top-2 -right-2 flex h-10 w-10 items-center justify-center rounded-2xl bg-white text-yellow-500 shadow-lg"
-        >
-          <Sparkles size={20} />
-        </motion.div>
+    <div className="space-y-10">
+      {/* Empty state card */}
+      <div className="rounded-3xl border border-dashed border-slate-200 bg-white px-8 md:px-12 py-20 md:py-28 text-center">
+        <div className="relative mx-auto mb-8 flex h-20 w-20 items-center justify-center rounded-2xl bg-indigo-50">
+          <FileText size={36} className="text-indigo-600" />
+          <motion.div
+            animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
+            transition={{ duration: 3, repeat: Infinity }}
+            className="absolute -top-2 -right-2 flex h-8 w-8 items-center justify-center rounded-xl bg-white text-amber-500 shadow-lg"
+          >
+            <Sparkles size={16} />
+          </motion.div>
+        </div>
+        <h2 className="mb-3 text-2xl font-extrabold tracking-tighter text-slate-900">
+          Your Control Center is Ready
+        </h2>
+        <p className="mx-auto mb-10 max-w-sm text-sm font-medium text-slate-400 leading-relaxed">
+          Launch your first cryptographic agreement anchored to the Bitcoin network.
+        </p>
+        <div className="flex flex-col justify-center gap-3 sm:flex-row">
+          <Button variant="primary" size="large" onClick={onAction}>
+            Launch Agreement
+          </Button>
+          <Button variant="outline" size="large">
+            View Network Stats
+          </Button>
+        </div>
       </div>
-      <h2 className="mb-4 text-2xl font-black tracking-tighter text-slate-900 uppercase">
-        Your Control Center is Ready
-      </h2>
-      <p className="mx-auto mb-12 max-w-sm text-sm font-bold tracking-widest text-slate-400 uppercase">
-        Launch your first cryptographic agreement anchored to the Bitcoin network.
-      </p>
-      <div className="flex flex-col justify-center gap-4 sm:flex-row">
-        <Button variant="primary" size="large" onClick={onAction}>
-          Launch Agreement
-        </Button>
-        <Button variant="outline" size="large">
-          View Network Stats
+
+      {/* Educational section */}
+      <div className="rounded-3xl bg-gradient-to-br from-indigo-50 to-violet-50/30 border border-indigo-100 p-8 md:p-12">
+        <div className="flex items-center gap-3 mb-6">
+          <BookOpen size={18} className="text-indigo-600" />
+          <span className="text-[11px] font-bold uppercase tracking-[0.12em] text-indigo-600">Learn</span>
+        </div>
+        <h3 className="text-2xl font-extrabold tracking-tight text-indigo-900 mb-4">
+          What is Cryptographic Timestamping?
+        </h3>
+        <p className="text-sm font-medium text-slate-500 leading-relaxed mb-6 max-w-2xl">
+          Cryptographic timestamping creates permanent, tamper-proof evidence that a document existed at a specific moment in time. 
+          By anchoring a mathematical fingerprint (hash) of your document to the Bitcoin blockchain, you create proof that is:
+        </p>
+        <div className="grid sm:grid-cols-3 gap-4 mb-8">
+          {[
+            { icon: Lock, title: 'Tamper-Proof', desc: 'Impossible to alter without detection' },
+            { icon: Globe, title: 'Decentralized', desc: 'No single point of failure or trust' },
+            { icon: CheckCircle2, title: 'Verifiable', desc: 'Anyone can verify independently' },
+          ].map((item, i) => (
+            <div key={i} className="flex items-start gap-3 p-4 rounded-2xl bg-white border border-indigo-50">
+              <item.icon size={18} className="text-indigo-600 mt-0.5 shrink-0" />
+              <div>
+                <h4 className="text-sm font-extrabold text-indigo-900 mb-1">{item.title}</h4>
+                <p className="text-[12px] font-medium text-slate-500">{item.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+        <Button variant="primary" size="default" onClick={onAction}>
+          <Plus size={16} /> Create Your First Proof
         </Button>
       </div>
     </div>

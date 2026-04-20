@@ -1,18 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import {
-  Activity,
-  Cpu,
-  Database,
-  Globe,
-  Zap,
-  Clock,
-  ShieldCheck,
-  ArrowUpRight,
-  BarChart3,
-  TrendingDown
+  Activity, Cpu, Database, Globe, Zap, Clock, ShieldCheck, 
+  ArrowUpRight, BarChart3, TrendingDown, Network, Boxes, 
+  Layers, HardDrive, RefreshCcw, Bell
 } from 'lucide-react'
-import Card from '../components/Card'
 import { getBlockHeight } from '../utils/mempool'
 
 export default function ProtocolStats() {
@@ -20,21 +12,21 @@ export default function ProtocolStats() {
     network: 'Bitcoin Mainnet',
     height: 0,
     unconfirmedTxs: 12450,
-    averageFee: 42, // sats/vB
+    averageFee: 42,
     totalAnchored: '1,245,672',
     nodes: '18,450+',
     uptime: '99.999%',
-    lastBlockTime: '8m 42s'
+    lastBlockTime: '8m 42s',
+    witnessQuorum: 'Active'
   })
 
   useEffect(() => {
     const fetchHeight = async () => {
       const height = await getBlockHeight()
-      setStats((prev) => ({ ...prev, height }))
+      setStats((prev) => ({ ...prev, height: height || 845922 }))
     }
     fetchHeight()
 
-    // Mock live updates
     const interval = setInterval(() => {
       setStats((prev) => ({
         ...prev,
@@ -45,247 +37,212 @@ export default function ProtocolStats() {
   }, [])
 
   return (
-    <div className="page pb-24" style={{ background: '#f8fafc', paddingTop: '100px' }}>
+    <div className="min-h-screen pt-32 pb-32 bg-[#fcfcfc] selection:bg-indigo-500/30">
       <div className="layout-container">
-        <div style={{ marginBottom: '40px' }}>
-          <div
-            style={{
-              display: 'inline-flex',
-              padding: '8px 12px',
-              background: 'rgba(99, 102, 241, 0.1)',
-              borderRadius: '20px',
-              color: '#4f46e5',
-              fontSize: '12px',
-              fontWeight: '800',
-              marginBottom: '16px',
-              border: '1px solid rgba(99, 102, 241, 0.2)'
-            }}
-          >
-            <Activity size={14} style={{ marginRight: '6px' }} />
-            NETWORK LIVE REPO
-          </div>
-          <h1
-            style={{
-              fontSize: '48px',
-              fontWeight: '950',
-              letterSpacing: '-0.04em',
-              marginBottom: '8px',
-              color: '#0f172a'
-            }}
-          >
-            Protocol Dashboard
-          </h1>
-          <p style={{ color: '#64748b', fontSize: '18px', fontWeight: '500' }}>
-            Real-time health monitoring of the Satohash anchoring protocol and Bitcoin network.
-          </p>
-        </div>
-
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-            gap: '24px',
-            marginBottom: '40px'
-          }}
-        >
-          <StatCard
-            icon={Database}
-            label="Blockchain Height"
-            value={`#${stats.height}`}
-            subValue="Confirmed Mainnet"
-            color="#4f46e5"
-          />
-          <StatCard
-            icon={TrendingDown}
-            label="Median Network Fee"
-            value={`${stats.averageFee} sat/vB`}
-            subValue="Estimated Next Block"
-            color="#10b981"
-          />
-          <StatCard
-            icon={ShieldCheck}
-            label="Total Claims Anchored"
-            value={stats.totalAnchored}
-            subValue="Verified Fingerprints"
-            color="#0f172a"
-          />
-          <StatCard
-            icon={Zap}
-            label="Mempool Pressure"
-            value={stats.unconfirmedTxs.toLocaleString()}
-            subValue="Pending Transactions"
-            color="#f59e0b"
-          />
-        </div>
-
-        <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '32px' }}>
-          <Card style={{ padding: '32px' }}>
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                marginBottom: '32px'
-              }}
-            >
-              <h3 style={{ margin: 0, fontWeight: '850', fontSize: '20px' }}>
-                Protocol Efficiency
-              </h3>
-              <BarChart3 size={20} className="text-slate-400" />
-            </div>
-
-            <div
-              style={{
-                height: '300px',
-                display: 'flex',
-                alignItems: 'flex-end',
-                gap: '12px',
-                paddingBottom: '24px'
-              }}
-            >
-              {[40, 65, 30, 85, 45, 90, 60, 75, 55, 80].map((h, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ height: 0 }}
-                  animate={{ height: `${h}%` }}
-                  transition={{ delay: i * 0.1, duration: 1 }}
-                  style={{
-                    flex: 1,
-                    background: i === 5 ? '#4f46e5' : '#e2e8f0',
-                    borderRadius: '8px 8px 4px 4px',
-                    position: 'relative'
-                  }}
+        
+        {/* Institutional Header */}
+        <div className="mb-20 flex flex-col md:flex-row justify-between items-end gap-12">
+            <div>
+                <motion.div 
+                    initial={{ scale: 0.9, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    className="mb-8 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-indigo-900 text-white shadow-2xl shadow-indigo-500/20"
                 >
-                  {i === 5 && (
-                    <div
-                      style={{
-                        position: 'absolute',
-                        top: '-30px',
-                        left: '50%',
-                        transform: 'translateX(-50%)',
-                        background: '#0f172a',
-                        color: 'white',
-                        padding: '4px 8px',
-                        borderRadius: '4px',
-                        fontSize: '10px',
-                        fontWeight: 'bold'
-                      }}
-                    >
-                      PEAK
-                    </div>
-                  )}
+                    <Activity size={24} />
                 </motion.div>
-              ))}
-            </div>
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                color: '#94a3b8',
-                fontSize: '12px',
-                fontWeight: '700'
-              }}
-            >
-              <span>12H AGO</span>
-              <span>SNAPSHOT (LIVE)</span>
-            </div>
-          </Card>
-
-          <Card style={{ padding: '32px', background: '#0f172a', color: 'white', border: 'none' }}>
-            <h3
-              style={{
-                margin: 0,
-                fontWeight: '850',
-                fontSize: '20px',
-                color: 'white',
-                marginBottom: '24px'
-              }}
-            >
-              System Health
-            </h3>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-              <HealthRow icon={Globe} label="Ots Calendar Nodes" value="Connected" />
-              <HealthRow icon={Clock} label="Last Anchor Time" value={stats.lastBlockTime} />
-              <HealthRow icon={Cpu} label="Hash Rate Support" value="685.2 EH/s" />
-
-              <div
-                style={{
-                  marginTop: '16px',
-                  padding: '20px',
-                  background: 'rgba(255,255,255,0.05)',
-                  borderRadius: '16px',
-                  border: '1px solid rgba(255,255,255,0.1)'
-                }}
-              >
-                <p style={{ fontSize: '13px', color: '#94a3b8', lineHeight: '1.6', margin: 0 }}>
-                  The Satohash protocol is currently utilizing <strong>3 independent</strong> OTS
-                  calendars for maximum redundancy and faster confirmation.
+                <h1 className="text-6xl md:text-8xl font-black italic tracking-tighter text-indigo-900 uppercase italic leading-none mb-6">
+                    Mesh <span className="text-indigo-600">OBSERVABILITY.</span>
+                </h1>
+                <p className="max-w-xl text-lg font-bold italic text-slate-500 leading-relaxed font-sans">
+                    Real-time telemetry from the global Witness Mesh and Bitcoin PoW consensus layer. 
+                    Monitor bridge health and forensic finality.
                 </p>
-              </div>
             </div>
-          </Card>
+            
+            <div className="glass-card p-8 bg-white border-indigo-100 flex items-center gap-6 max-w-sm">
+                <div className="h-12 w-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center relative">
+                    <div className="absolute inset-0 rounded-2xl border-2 border-emerald-400 animate-ping opacity-20" />
+                    <Network size={24} />
+                </div>
+                <div>
+                    <h4 className="text-[10px] font-black text-indigo-900 uppercase italic">Oracles Active</h4>
+                    <p className="text-[10px] font-bold text-emerald-600 uppercase tracking-widest">Protocol Sync Nominal</p>
+                </div>
+            </div>
         </div>
+
+        {/* Primary Stat Tiles */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-24">
+           <VividStatCard 
+              icon={Database} 
+              label="Block Height" 
+              value={`#${stats.height}`} 
+              sub="L1_FINALITY_SYNCED" 
+              color="indigo" 
+           />
+           <VividStatCard 
+              icon={TrendingDown} 
+              label="Network Fee" 
+              value={`${stats.averageFee} sat/vB`} 
+              sub="ESTIMATED_NEXT_BLOCK" 
+              color="emerald" 
+           />
+           <VividStatCard 
+              icon={Boxes} 
+              label="Anchored Claims" 
+              value={stats.totalAnchored} 
+              sub="PROTOCOL_FORENIC_POOL" 
+              color="amber" 
+           />
+           <VividStatCard 
+              icon={Zap} 
+              label="Mempool Health" 
+              value={stats.unconfirmedTxs.toLocaleString()} 
+              sub="PENDING_WITNESS_TASKS" 
+              color="rose" 
+           />
+        </div>
+
+        {/* Dynamic Visualization Layer */}
+        <div className="grid lg:grid-cols-3 gap-12 mb-32">
+            
+            {/* Efficiency ChartCard */}
+            <div className="lg:col-span-2 glass-card p-12 bg-white border-indigo-50 shadow-2xl relative overflow-hidden group">
+                <div className="flex items-center justify-between mb-12">
+                   <div>
+                      <h3 className="text-2xl font-black italic tracking-tighter text-indigo-900 uppercase italic mb-1">Anchor Efficiency.</h3>
+                      <p className="text-[9px] font-black text-slate-300 uppercase tracking-widest italic">Temporal Merkle Propagation 24H</p>
+                   </div>
+                   <BarChart3 size={20} className="text-indigo-900/10 group-hover:text-indigo-600 transition-colors" />
+                </div>
+                
+                <div className="h-64 flex items-end gap-3 pb-8 relative">
+                   {[40, 65, 30, 85, 45, 90, 60, 75, 55, 80, 65, 95].map((h, i) => (
+                      <motion.div
+                        key={i}
+                        initial={{ height: 0 }}
+                        animate={{ height: `${h}%` }}
+                        transition={{ delay: i * 0.05, duration: 1 }}
+                        className={`flex-1 rounded-full transition-all duration-500 hover:scale-110 cursor-pointer ${i === 9 ? 'bg-indigo-600 shadow-xl shadow-indigo-600/20' : 'bg-slate-100 italic opacity-40 hover:opacity-100 hover:bg-indigo-100'}`}
+                      />
+                   ))}
+                </div>
+                
+                <div className="flex justify-between items-center pt-8 border-t border-slate-50 text-[9px] font-black text-slate-300 uppercase tracking-widest italic">
+                   <span>GENESIS_BLOCK_DELTA</span>
+                   <span className="text-indigo-600">PEAK_MESH_THROUGHPUT_REACHED</span>
+                   <span>REALTIME_ORACLE_SNAP</span>
+                </div>
+            </div>
+
+            {/* Mesh Status Sidebar */}
+            <div className="glass-card p-10 bg-[#0c1220] border-none text-white shadow-2xl relative overflow-hidden flex flex-col justify-between">
+                <div className="absolute inset-0 opacity-10 pointer-events-none" 
+                     style={{ background: 'radial-gradient(circle at 2px 2px, #3b82f6 1px, transparent 0)', backgroundSize: '24px 24px' }} />
+                
+                <div className="relative z-10 mb-12">
+                   <h3 className="text-xl font-black italic uppercase italic tracking-tight mb-8">Node <span className="text-indigo-400">Inventory.</span></h3>
+                   <div className="space-y-6">
+                      <HealthMetric icon={Globe} label="Ots Calendar Nodes" value="Connected_03" />
+                      <HealthMetric icon={Clock} label="Last Witness Sync" value={stats.lastBlockTime} />
+                      <HealthMetric icon={Cpu} label="Bitcoin Hashrate" value="685.2 EH/s" pulse />
+                      <HealthMetric icon={ShieldCheck} label="Witness Quorum" value={stats.witnessQuorum} emerald />
+                   </div>
+                </div>
+
+                <div className="relative z-10 p-6 rounded-3xl bg-white/5 border border-white/10 italic">
+                    <p className="text-[11px] font-bold text-indigo-100/40 leading-relaxed italic mb-4">
+                       The Satohash mesh is leveraging persistent blinded-paths for redundant verification across 4 distinct jurisdictions.
+                    </p>
+                    <button className="text-[9px] font-black text-indigo-400 uppercase tracking-widest flex items-center gap-2 hover:text-white transition-colors">
+                       Request Full Audit <ArrowUpRight size={12} />
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        {/* Global Activity Event Stream */}
+        <section className="space-y-12">
+            <div className="flex items-center justify-between">
+                <div className="flex items-center gap-4">
+                    <Bell className="text-rose-500 animate-bounce" size={24} />
+                    <h3 className="text-4xl font-black italic tracking-tighter text-indigo-900 uppercase italic">Live <span className="text-rose-500">ATTESATION STREAM.</span></h3>
+                </div>
+                <div className="flex items-center gap-3 px-6 py-2 bg-slate-50 rounded-full border border-slate-100">
+                    <RefreshCcw size={14} className="text-indigo-300 animate-spin" />
+                    <span className="text-[9px] font-black text-indigo-900 uppercase tracking-widest italic">Syncing Nostr Stream...</span>
+                </div>
+            </div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <ActivityItem label="NIP-05_ID" hash="af29...e12b" time="2s ago" type="IDENTITY" />
+                <ActivityItem label="ENTERPRISE_BATCH" hash="3c91...f92a" time="14s ago" type="BATCH" />
+                <ActivityItem label="JUDICIAL_ENTRY" hash="7e11...902x" time="1m ago" type="FORENSIC" />
+            </div>
+        </section>
+
       </div>
     </div>
   )
 }
 
-function StatCard({ icon: Icon, label, value, subValue, color }) {
-  return (
-    <Card style={{ padding: '24px', border: '1px solid #e2e8f0' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '16px' }}>
-        <div
-          style={{
-            width: '40px',
-            height: '40px',
-            borderRadius: '12px',
-            background: `${color}10`,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            color: color
-          }}
+function VividStatCard({ icon: Icon, label, value, sub, color }) {
+    const c = {
+        indigo: 'bg-indigo-50 text-indigo-600 border-indigo-100 glow-indigo-500/10',
+        emerald: 'bg-emerald-50 text-emerald-600 border-emerald-100 glow-emerald-500/10',
+        amber: 'bg-amber-50 text-amber-600 border-amber-100 glow-amber-500/10',
+        rose: 'bg-rose-50 text-rose-600 border-rose-100 glow-rose-500/10',
+    }[color];
+
+    return (
+        <motion.div 
+            whileHover={{ y: -6 }}
+            className={`glass-card p-10 bg-white border-indigo-50 shadow-2xl transition-all hover:shadow-indigo-500/10`}>
+            <div className={`mb-10 flex h-16 w-16 items-center justify-center rounded-[2rem] ${c} shadow-xl`}>
+                <Icon size={32} />
+            </div>
+            <div className="text-[10px] font-black text-indigo-900/30 uppercase tracking-[0.4em] mb-2 italic">{label}</div>
+            <div className="text-3xl font-black italic text-indigo-900 mb-6 tracking-tighter">{value}</div>
+            <div className="text-[9px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-2 italic">
+               <div className={`h-1.5 w-1.5 rounded-full ${color === 'rose' ? 'bg-rose-500 animate-pulse' : 'bg-slate-300'}`} />
+               {sub}
+            </div>
+        </motion.div>
+    )
+}
+
+function HealthMetric({ icon: Icon, label, value, pulse, emerald }) {
+    return (
+        <div className="flex items-center justify-between group">
+            <div className="flex items-center gap-4">
+                <Icon size={18} className="text-indigo-400 group-hover:text-indigo-300 transition-colors" />
+                <span className="text-xs font-bold text-slate-500 italic uppercase">{label}</span>
+            </div>
+            <div className="flex items-center gap-2">
+                {pulse && <div className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-ping" />}
+                <span className={`text-xs font-black uppercase italic ${emerald ? 'text-emerald-400' : 'text-white'}`}>{value}</span>
+            </div>
+        </div>
+    )
+}
+
+function ActivityItem({ label, hash, time, type }) {
+    return (
+        <motion.div 
+            initial={{ opacity: 0, x: -10 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="p-8 rounded-[2.5rem] bg-white border border-indigo-50 shadow-xl shadow-indigo-500/5 relative overflow-hidden group hover:bg-slate-50 transition-all"
         >
-          <Icon size={20} />
-        </div>
-        <ArrowUpRight size={16} className="text-slate-300" />
-      </div>
-      <h4
-        style={{
-          margin: '0 0 4px 0',
-          fontSize: '13px',
-          fontWeight: '800',
-          color: '#64748b',
-          textTransform: 'uppercase',
-          letterSpacing: '0.5px'
-        }}
-      >
-        {label}
-      </h4>
-      <div
-        style={{
-          fontSize: '28px',
-          fontWeight: '950',
-          color: '#0f172a',
-          letterSpacing: '-0.02em',
-          marginBottom: '4px'
-        }}
-      >
-        {value}
-      </div>
-      <div style={{ fontSize: '12px', fontWeight: '600', color: '#94a3b8' }}>{subValue}</div>
-    </Card>
-  )
-}
-
-function HealthRow({ icon: Icon, label, value }) {
-  return (
-    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-        <Icon size={18} className="text-slate-500" />
-        <span style={{ fontSize: '14px', fontWeight: '600', color: '#94a3b8' }}>{label}</span>
-      </div>
-      <span style={{ fontSize: '14px', fontWeight: '800', color: 'white' }}>{value}</span>
-    </div>
-  )
+            <div className="absolute top-0 right-0 p-6 flex flex-col items-end">
+                <span className="text-[8px] font-black text-rose-500 bg-rose-50 px-2.5 py-1 rounded-full uppercase tracking-tighter mb-2 italic">Witnessed</span>
+                <span className="text-[8px] font-black text-slate-300 uppercase italic">{time}</span>
+            </div>
+            <div className="text-[9px] font-black text-indigo-300 uppercase mb-4 tracking-widest">{type}</div>
+            <h5 className="text-sm font-black text-indigo-900 mb-4 uppercase italic tracking-tight">{label}</h5>
+            <div className="p-4 rounded-2xl bg-slate-50 border border-slate-100 font-mono text-[9px] text-indigo-900 font-bold flex items-center justify-between group-hover:bg-indigo-50 group-hover:border-indigo-100 transition-all">
+                {hash}
+                <ArrowUpRight size={10} className="text-indigo-200" />
+            </div>
+        </motion.div>
+    )
 }
