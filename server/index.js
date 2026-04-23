@@ -26,6 +26,7 @@ import { publishTimestampToNostr } from './nostr.js';
 import { injectMetadata } from './pdf-injector.js';
 import { getGitMetadata } from './git.js';
 import crypto from 'crypto';
+import lightningRoutes from './routes/lightning.js';
 
 // New Productions Items 1-7
 import { runMigrations } from './migrations.js';
@@ -129,6 +130,7 @@ const upload = multer({
 });
 
 app.use('/api/', tieredRateLimiter('public'));
+app.use('/api/lightning', lightningRoutes);
 app.use('/admin/', tieredRateLimiter('admin'));
 
 // API Docs

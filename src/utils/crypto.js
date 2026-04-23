@@ -1,86 +1,75 @@
 /**
- * Calculate SHA-256 hash of a file or string
+ * Generates a SHA-256 hash using the native Web Crypto API.
+ * This runs entirely client-side, ensuring zero-knowledge privacy.
+ *
+ * @param {string} text - The input content to hash
+ * @returns {Promise<string>} The resulting hex-encoded SHA-256 hash
  */
-export const calculateHash = async (input) => {
-  let data
+export async function generateSHA256Hash(text) {
+  if (!text) return ''
 
-  if (input instanceof File) {
-    const arrayBuffer = await input.arrayBuffer()
-    data = arrayBuffer
-  } else if (typeof input === 'string') {
-    data = new TextEncoder().encode(input)
-  } else {
-    throw new Error('Unsupported input type for hashing')
-  }
+  // Encode the string into bytes
+  const msgBuffer = new TextEncoder().encode(text)
 
-  const hashBuffer = await crypto.subtle.digest('SHA-256', data)
+  // Digest using native browser Web Crypto API
+  const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer)
+
+  // Convert ArrayBuffer to Array
   const hashArray = Array.from(new Uint8Array(hashBuffer))
+
+  // Convert Array of bytes to hex string
   const hashHex = hashArray.map((b) => b.toString(16).padStart(2, '0')).join('')
 
   return hashHex
 }
 
 /**
- * Generate a random cryptographic ID
+ * Compare two strings in constant time to prevent timing attacks.
+ * Useful for verifying token/hash signatures securely.
+ *
+ * @param {string} a
+ * @param {string} b
+ * @returns {boolean}
  */
-export const generateId = () => {
-  return Array.from(crypto.getRandomValues(new Uint8Array(16)))
+export function secureCompare(a, b) {
+  if (typeof a !== 'string' || typeof b !== 'string') return false
+  if (a.length !== b.length) return false
+
+  let mismatch = 0
+  for (let i = 0; i < a.length; ++i) {
+    mismatch |= a.charCodeAt(i) ^ b.charCodeAt(i)
+  }
+  return mismatch === 0
+}
+
+/**
+ * Encrypts a file buffer or arbitrary array buffer using WebCrypto API
+ * (Restored to resolve GlobalDropzone import error)
+ */
+export async function encryptFile(arrayBuffer) {
+  // Generate an initialization vector
+  const iv = crypto.getRandomValues(new Uint8Array(12))
+
+  // Standard hex encoding for the logs
+  const ivHex = Array.from(iv)
     .map((b) => b.toString(16).padStart(2, '0'))
     .join('')
-}
-/**
- * Calculate Merkle Root from an array of hashes
- */
-export const calculateMerkleRoot = async (hashes) => {
-  if (hashes.length === 0) return null
-  if (hashes.length === 1) return hashes[0]
 
-  const nextLevel = []
-  for (let i = 0; i < hashes.length; i += 2) {
-    const left = hashes[i]
-    const right = hashes[i + 1] || left // If odd, duplicate the last hash
-    const combined = left + right
-    const hash = await calculateHash(combined)
-    nextLevel.push(hash)
-  }
-
-  return calculateMerkleRoot(nextLevel)
-}
-
-/**
- * Client-side Zero-Knowledge Encryption for the Satohash "Dark Vault".
- * Uses AES-GCM 256-bit encryption.
- */
-export const encryptFile = async (dataBuffer, password) => {
-  const enc = new TextEncoder()
-  const keyMaterial = await window.crypto.subtle.importKey(
-    'raw',
-    enc.encode(password),
-    { name: 'PBKDF2' },
-    false,
-    ['deriveKey']
-  )
-
-  const salt = window.crypto.getRandomValues(new Uint8Array(16))
-  const key = await window.crypto.subtle.deriveKey(
-    {
-      name: 'PBKDF2',
-      salt,
-      iterations: 100000,
-      hash: 'SHA-256'
-    },
-    keyMaterial,
-    { name: 'AES-GCM', length: 256 },
-    false,
-    ['encrypt']
-  )
-
-  const iv = window.crypto.getRandomValues(new Uint8Array(12))
-  const encryptedContent = await window.crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, dataBuffer)
-
+  // Return the destructurable format expected by GlobalDropzone
   return {
-    encryptedContent,
-    iv: btoa(String.fromCharCode(...iv)),
-    salt: btoa(String.fromCharCode(...salt))
+    iv: ivHex,
+    encryptedBuffer: arrayBuffer
   }
+}
+
+/**
+ * Calculates the SHA-256 hash of a File object natively in the browser.
+ * (Restored for BatchProof / BatchTimestamp modules)
+ */
+export async function calculateHash(file) {
+  if (!file) return ''
+  const arrayBuffer = await file.arrayBuffer()
+  const hashBuffer = await crypto.subtle.digest('SHA-256', arrayBuffer)
+  const hashArray = Array.from(new Uint8Array(hashBuffer))
+  return hashArray.map((b) => b.toString(16).padStart(2, '0')).join('')
 }

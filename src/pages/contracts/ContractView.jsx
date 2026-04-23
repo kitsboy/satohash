@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
 import {
   ArrowLeft,
   Edit,
@@ -10,16 +9,11 @@ import {
   Download,
   ExternalLink,
   EyeOff,
-  FileText,
   History,
-  Activity,
   Info,
-  Share2,
-  CheckCircle2,
   Mail,
   Twitter,
-  Linkedin,
-  BookOpen
+  Linkedin
 } from 'lucide-react'
 import { jsPDF } from 'jspdf'
 import QRCode from 'qrcode'
@@ -32,7 +26,6 @@ import Card from '../../components/Card'
 import { clsx } from 'clsx'
 
 export default function ContractView() {
-  const { t } = useTranslation()
   const navigate = useNavigate()
   const { contractId } = useParams()
   const [contract, setContract] = useState(null)
@@ -93,7 +86,12 @@ export default function ContractView() {
       })
 
       if (base64data) {
-        doc.addImage(base64data, 'PNG', 20, 18, 14, 14)
+        // Subtle top-left watermark logo (40% opacity)
+        doc.setGState(new doc.GState({ opacity: 0.4 }))
+        doc.addImage(base64data, 'PNG', 20, 18, 16, 16)
+
+        // Reset opacity for the rest of the document
+        doc.setGState(new doc.GState({ opacity: 1 }))
       }
     } catch (e) {
       console.error('Failed to load logo', e)
@@ -102,22 +100,26 @@ export default function ContractView() {
     // Page 1: The Contract
     doc.setFont('helvetica', 'bold')
     doc.setFontSize(18)
-    doc.text(contract.name.toUpperCase(), 38, 28)
+    doc.text(contract.name.toUpperCase(), 38, 42)
 
     doc.setFontSize(9)
     doc.setFont('helvetica', 'normal')
     doc.setTextColor(120, 120, 120)
-    doc.text(`Document ID: ${contract.id} | Created: ${new Date(contract.createdAt).toLocaleDateString()}`, 38, 34)
+    doc.text(
+      `Document ID: ${contract.id} | Created: ${new Date(contract.createdAt).toLocaleDateString()}`,
+      38,
+      48
+    )
     doc.setTextColor(0, 0, 0)
 
     doc.setLineWidth(0.3)
     doc.setDrawColor(200, 200, 200)
-    doc.line(20, 38, pageWidth - 20, 38)
+    doc.line(20, 52, pageWidth - 20, 52)
 
     doc.setFont('helvetica', 'normal')
     doc.setFontSize(11)
     const splitContent = doc.splitTextToSize(contract.content, pageWidth - 40)
-    doc.text(splitContent, 20, 48)
+    doc.text(splitContent, 20, 62)
 
     // Signed indicator
     if (isSigned || isTimestamped) {
@@ -157,7 +159,9 @@ export default function ContractView() {
         if (base64data) {
           doc.addImage(base64data, 'PNG', 15, 10, 12, 12)
         }
-      } catch {}
+      } catch (e) {
+        console.error('Failed to load logo for certificate:', e)
+      }
 
       doc.setTextColor(255, 255, 255)
       doc.setFont('helvetica', 'bold')
@@ -219,14 +223,16 @@ export default function ContractView() {
 
       // QR Code
       try {
-        const qrDataUrl = await QRCode.toDataURL(`https://satohash.io/verify/${contract.id}`, { 
+        const qrDataUrl = await QRCode.toDataURL(`https://satohash.io/verify/${contract.id}`, {
           width: 200,
           color: { dark: '#4f46e5' }
         })
         doc.addImage(qrDataUrl, 'PNG', pageWidth - margin - 60, currentY, 60, 60)
         doc.setTextColor(100, 100, 100)
         doc.setFontSize(7)
-        doc.text('SCAN TO VERIFY ON-CHAIN', pageWidth - margin - 30, currentY + 65, { align: 'center' })
+        doc.text('SCAN TO VERIFY ON-CHAIN', pageWidth - margin - 30, currentY + 65, {
+          align: 'center'
+        })
       } catch (err) {
         console.error('QR generation failed', err)
       }
@@ -248,17 +254,17 @@ export default function ContractView() {
   return (
     <div className="flex min-h-screen flex-col bg-[#f8fafc]">
       {/* Top Navigation Bar */}
-      <nav className="sticky top-0 z-50 flex h-14 md:h-16 items-center justify-between border-b border-slate-200 bg-white/80 px-4 md:px-6 backdrop-blur-xl">
+      <nav className="sticky top-0 z-50 flex h-14 items-center justify-between border-b border-slate-200 bg-white/80 px-4 backdrop-blur-xl md:h-16 md:px-6">
         <div className="flex items-center gap-3">
           <Button variant="ghost" size="small" onClick={() => navigate('/contracts')}>
             <ArrowLeft size={16} />
           </Button>
-          <div className="h-5 w-px bg-slate-200 hidden sm:block" />
+          <div className="hidden h-5 w-px bg-slate-200 sm:block" />
           <div className="flex flex-col">
-            <h1 className="text-sm font-extrabold tracking-tight text-slate-900 truncate max-w-[160px] sm:max-w-none">
+            <h1 className="max-w-[160px] truncate text-sm font-extrabold tracking-tight text-slate-900 sm:max-w-none">
               {contract.name}
             </h1>
-            <span className="text-[10px] font-medium tracking-wide text-slate-400 hidden sm:block">
+            <span className="hidden text-[10px] font-medium tracking-wide text-slate-400 sm:block">
               Ref: {contract.id.substring(0, 8)}
             </span>
           </div>
@@ -275,7 +281,7 @@ export default function ContractView() {
               <Edit size={14} /> <span className="hidden sm:inline">Edit</span>
             </Button>
           )}
-          <div className="hidden sm:flex rounded-xl border border-slate-100 bg-slate-50 p-1 gap-0.5">
+          <div className="hidden gap-0.5 rounded-xl border border-slate-100 bg-slate-50 p-1 sm:flex">
             <a
               href={`mailto:?subject=Satohash Proof&body=Check out this cryptographic proof: https://satohash.com/verify/${contractId}`}
               className="rounded-lg p-2 text-slate-400 transition-colors hover:bg-white hover:text-indigo-600"
@@ -305,9 +311,9 @@ export default function ContractView() {
         </div>
       </nav>
 
-      <div className="flex flex-1 flex-col md:flex-row overflow-hidden">
+      <div className="flex flex-1 flex-col overflow-hidden md:flex-row">
         {/* Main Content */}
-        <main className="relative flex-1 overflow-y-auto bg-slate-50/50 px-4 md:px-8 py-8 md:py-12">
+        <main className="relative flex-1 overflow-y-auto bg-slate-50/50 px-4 py-8 md:px-8 md:py-12">
           <div className="mx-auto max-w-[850px]">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -316,11 +322,14 @@ export default function ContractView() {
             >
               {/* Watermark */}
               <div className="document-watermark">
-                SATOHASH PROTOCOL SECURED
+                <img src="/logo.png" alt="Satohash Watermark" />
               </div>
 
-              <div className="relative z-10 text-[16px] md:text-[18px] leading-[1.8] text-slate-800 antialiased" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-                <h2 className="mb-8 md:mb-12 border-b-2 border-slate-900 pb-4 text-2xl md:text-3xl font-extrabold tracking-tight text-slate-900">
+              <div
+                className="relative z-10 pt-16 text-[16px] leading-[1.8] text-slate-800 antialiased md:pt-20 md:text-[18px]"
+                style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+              >
+                <h2 className="mb-8 border-b-2 border-slate-900 pb-4 text-2xl font-extrabold tracking-tight text-slate-900 md:mb-12 md:text-3xl">
                   {contract.name}
                 </h2>
                 <div className="whitespace-pre-wrap">{contract.content}</div>
@@ -339,10 +348,10 @@ export default function ContractView() {
                           <ShieldCheck size={28} />
                         </div>
                         <span className="text-[10px] font-bold tracking-widest text-indigo-900 uppercase">
-                           {isTimestamped ? 'Bitcoin Anchor' : 'Satohash Signed'}
+                          {isTimestamped ? 'Bitcoin Anchor' : 'Satohash Signed'}
                         </span>
                         <div className="mt-2 h-px w-12 bg-indigo-100" />
-                        <span className="mt-2 text-[9px] font-mono font-medium text-slate-400">
+                        <span className="mt-2 font-mono text-[9px] font-medium text-slate-400">
                           {contract.id.substring(0, 12).toUpperCase()}
                         </span>
                       </div>
@@ -355,9 +364,9 @@ export default function ContractView() {
         </main>
 
         {/* Right Metadata Panel — Stacked on mobile */}
-        <aside className="flex w-full md:w-80 lg:w-96 flex-col border-t md:border-t-0 md:border-l border-slate-200 bg-white">
+        <aside className="flex w-full flex-col border-t border-slate-200 bg-white md:w-80 md:border-t-0 md:border-l lg:w-96">
           {/* Panel Tabs */}
-          <div className="flex h-12 md:h-14 border-b border-slate-100 shrink-0">
+          <div className="flex h-12 shrink-0 border-b border-slate-100 md:h-14">
             <PanelTab
               active={activePanel === 'summary'}
               onClick={() => setActivePanel('summary')}
@@ -391,7 +400,9 @@ export default function ContractView() {
                   {/* Educational Callout */}
                   <div className="edu-callout">
                     <span className="edu-callout-title">Understanding Your Proof</span>
-                    This document is secured using SHA-256 hashing and Bitcoin blockchain timestamps. Once anchored, it becomes mathematically impossible to alter without detection.
+                    This document is secured using SHA-256 hashing and Bitcoin blockchain
+                    timestamps. Once anchored, it becomes mathematically impossible to alter without
+                    detection.
                   </div>
 
                   {/* Action Banner */}

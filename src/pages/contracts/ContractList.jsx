@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
+import {
   Plus,
   FileText,
   Calendar,
@@ -26,6 +26,13 @@ import { clsx } from 'clsx'
 
 export default function ContractList() {
   const navigate = useNavigate()
+
+  // --- ZUSTAND MIGRATION PREP ---
+  // Once npm install zustand is run, remove the local state and useEffect,
+  // and uncomment the line below:
+  // const { contracts, deleteContract } = useContractStore()
+  // ------------------------------
+
   const [contracts, setContracts] = useState([])
   const [searchQuery, setSearchQuery] = useState('')
   const [filterStatus, setFilterStatus] = useState('all')
@@ -61,24 +68,20 @@ export default function ContractList() {
 
   return (
     <div className="flex min-h-screen flex-col bg-[var(--bg-base)]">
-      <div className="layout-container flex-1 pt-36 md:pt-44 pb-12">
+      <div className="layout-container flex-1 pt-36 pb-12 md:pt-44">
         {/* Header */}
         <header className="mb-10">
           <BlockchainPulse />
           <div className="mt-6 flex flex-col justify-between gap-5 md:flex-row md:items-end">
             <div className="space-y-2">
-              <h1 className="text-3xl md:text-4xl font-extrabold tracking-tighter text-slate-900">
+              <h1 className="text-3xl font-extrabold tracking-tighter text-slate-900 md:text-4xl">
                 Protocol Dashboard
               </h1>
               <p className="text-sm font-medium tracking-wide text-slate-400">
                 Managing {contracts.length} cryptographic proofs
               </p>
             </div>
-            <Button
-              variant="primary"
-              size="large"
-              onClick={() => navigate('/choose-template')}
-            >
+            <Button variant="primary" size="large" onClick={() => navigate('/choose-template')}>
               <Plus size={18} /> Create New Proof
             </Button>
           </div>
@@ -93,20 +96,33 @@ export default function ContractList() {
               {/* Stats */}
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
                 <StatCard icon={Zap} label="Total Anchors" value={stats.total} color="indigo" />
-                <StatCard icon={ShieldCheck} label="Secured Proofs" value={stats.secured} color="emerald" />
-                <StatCard icon={Globe} label="Node Integrity" value={`${stats.avgHealth}%`} color="blue" />
+                <StatCard
+                  icon={ShieldCheck}
+                  label="Secured Proofs"
+                  value={stats.secured}
+                  color="emerald"
+                />
+                <StatCard
+                  icon={Globe}
+                  label="Node Integrity"
+                  value={`${stats.avgHealth}%`}
+                  color="blue"
+                />
               </div>
 
               {/* Search & Filter */}
               <div className="flex flex-col gap-3 sm:flex-row">
                 <div className="relative flex-1">
-                  <Search className="absolute top-1/2 left-4 -translate-y-1/2 text-slate-300" size={16} />
+                  <Search
+                    className="absolute top-1/2 left-4 -translate-y-1/2 text-slate-300"
+                    size={16}
+                  />
                   <input
                     type="text"
                     placeholder="Search agreements..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full rounded-2xl border border-slate-100 bg-white py-3 pr-4 pl-11 text-sm font-medium transition-all outline-none focus:ring-4 focus:ring-indigo-50 focus:border-indigo-200"
+                    className="w-full rounded-2xl border border-slate-100 bg-white py-3 pr-4 pl-11 text-sm font-medium transition-all outline-none focus:border-indigo-200 focus:ring-4 focus:ring-indigo-50"
                   />
                 </div>
                 <div className="flex gap-1.5 overflow-x-auto">
@@ -115,7 +131,7 @@ export default function ContractList() {
                       key={status}
                       onClick={() => setFilterStatus(status)}
                       className={clsx(
-                        'rounded-xl border px-4 py-2.5 text-[10px] font-bold tracking-widest uppercase transition-all whitespace-nowrap',
+                        'rounded-xl border px-4 py-2.5 text-[10px] font-bold tracking-widest whitespace-nowrap uppercase transition-all',
                         filterStatus === status
                           ? 'border-indigo-600 bg-indigo-600 text-white shadow-md shadow-indigo-200'
                           : 'border-slate-100 bg-white text-slate-400 hover:border-slate-200'
@@ -156,9 +172,24 @@ export default function ContractList() {
 
                 <div className="relative space-y-6">
                   <div className="absolute top-0 bottom-0 left-3.5 w-px bg-slate-100" />
-                  <ActivityItem icon={Lock} title="Merkle Root Anchored" time="2m ago" status="confirmed" />
-                  <ActivityItem icon={Zap} title="SHA-256 Hash Generated" time="15m ago" status="processed" />
-                  <ActivityItem icon={Globe} title="Block #831,492 Confirmed" time="1h ago" status="immutable" />
+                  <ActivityItem
+                    icon={Lock}
+                    title="Merkle Root Anchored"
+                    time="2m ago"
+                    status="confirmed"
+                  />
+                  <ActivityItem
+                    icon={Zap}
+                    title="SHA-256 Hash Generated"
+                    time="15m ago"
+                    status="processed"
+                  />
+                  <ActivityItem
+                    icon={Globe}
+                    title="Block #831,492 Confirmed"
+                    time="1h ago"
+                    status="immutable"
+                  />
                 </div>
 
                 <div className="mt-8 border-t border-slate-50 pt-6">
@@ -185,8 +216,8 @@ export default function ContractList() {
                   Security Tip
                 </h4>
                 <p className="relative z-10 mb-4 text-[12px] leading-relaxed font-medium text-slate-300">
-                  For high-value agreements, wait for at least 6 Bitcoin
-                  confirmations (~1 hour) before generating the final proof package.
+                  For high-value agreements, wait for at least 6 Bitcoin confirmations (~1 hour)
+                  before generating the final proof package.
                 </p>
                 <Button
                   variant="ghost"
@@ -212,7 +243,7 @@ function StatCard({ icon: Icon, label, value, color }) {
   }
 
   return (
-    <div className="flex items-center gap-4 rounded-2xl border border-slate-100 bg-white p-5 shadow-sm transition-all hover:shadow-md hover:-translate-y-0.5">
+    <div className="flex items-center gap-4 rounded-2xl border border-slate-100 bg-white p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md">
       <div className={clsx('flex h-11 w-11 items-center justify-center rounded-xl', colors[color])}>
         <Icon size={20} />
       </div>
@@ -236,7 +267,7 @@ function ContractCard({ contract, onClick, onDelete }) {
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.95 }}
       onClick={onClick}
-      className="group relative cursor-pointer overflow-hidden rounded-2xl border border-slate-100 bg-white p-6 shadow-sm transition-all hover:shadow-lg hover:border-indigo-100 hover:-translate-y-1"
+      className="group relative cursor-pointer overflow-hidden rounded-2xl border border-slate-100 bg-white p-6 shadow-sm transition-all hover:-translate-y-1 hover:border-indigo-100 hover:shadow-lg"
     >
       <div className="absolute top-0 right-0 flex gap-2 p-3">
         {!isTimestamped && (
@@ -288,9 +319,7 @@ function ActivityItem({ icon: Icon, title, time, status }) {
       </div>
       <div className="flex-1">
         <div className="mb-0.5 flex items-start justify-between">
-          <h5 className="text-[11px] font-bold tracking-tight text-slate-900">
-            {title}
-          </h5>
+          <h5 className="text-[11px] font-bold tracking-tight text-slate-900">{title}</h5>
           <span className="text-[9px] font-medium text-slate-300">{time}</span>
         </div>
         <span className="flex items-center gap-1 text-[9px] font-bold tracking-widest text-emerald-500 uppercase">
@@ -305,7 +334,7 @@ function EmptyState({ onAction }) {
   return (
     <div className="space-y-10">
       {/* Empty state card */}
-      <div className="rounded-3xl border border-dashed border-slate-200 bg-white px-8 md:px-12 py-20 md:py-28 text-center">
+      <div className="rounded-3xl border border-dashed border-slate-200 bg-white px-8 py-20 text-center md:px-12 md:py-28">
         <div className="relative mx-auto mb-8 flex h-20 w-20 items-center justify-center rounded-2xl bg-indigo-50">
           <FileText size={36} className="text-indigo-600" />
           <motion.div
@@ -319,7 +348,7 @@ function EmptyState({ onAction }) {
         <h2 className="mb-3 text-2xl font-extrabold tracking-tighter text-slate-900">
           Your Control Center is Ready
         </h2>
-        <p className="mx-auto mb-10 max-w-sm text-sm font-medium text-slate-400 leading-relaxed">
+        <p className="mx-auto mb-10 max-w-sm text-sm leading-relaxed font-medium text-slate-400">
           Launch your first cryptographic agreement anchored to the Bitcoin network.
         </p>
         <div className="flex flex-col justify-center gap-3 sm:flex-row">
@@ -333,28 +362,34 @@ function EmptyState({ onAction }) {
       </div>
 
       {/* Educational section */}
-      <div className="rounded-3xl bg-gradient-to-br from-indigo-50 to-violet-50/30 border border-indigo-100 p-8 md:p-12">
-        <div className="flex items-center gap-3 mb-6">
+      <div className="rounded-3xl border border-indigo-100 bg-gradient-to-br from-indigo-50 to-violet-50/30 p-8 md:p-12">
+        <div className="mb-6 flex items-center gap-3">
           <BookOpen size={18} className="text-indigo-600" />
-          <span className="text-[11px] font-bold uppercase tracking-[0.12em] text-indigo-600">Learn</span>
+          <span className="text-[11px] font-bold tracking-[0.12em] text-indigo-600 uppercase">
+            Learn
+          </span>
         </div>
-        <h3 className="text-2xl font-extrabold tracking-tight text-indigo-900 mb-4">
+        <h3 className="mb-4 text-2xl font-extrabold tracking-tight text-indigo-900">
           What is Cryptographic Timestamping?
         </h3>
-        <p className="text-sm font-medium text-slate-500 leading-relaxed mb-6 max-w-2xl">
-          Cryptographic timestamping creates permanent, tamper-proof evidence that a document existed at a specific moment in time. 
-          By anchoring a mathematical fingerprint (hash) of your document to the Bitcoin blockchain, you create proof that is:
+        <p className="mb-6 max-w-2xl text-sm leading-relaxed font-medium text-slate-500">
+          Cryptographic timestamping creates permanent, tamper-proof evidence that a document
+          existed at a specific moment in time. By anchoring a mathematical fingerprint (hash) of
+          your document to the Bitcoin blockchain, you create proof that is:
         </p>
-        <div className="grid sm:grid-cols-3 gap-4 mb-8">
+        <div className="mb-8 grid gap-4 sm:grid-cols-3">
           {[
             { icon: Lock, title: 'Tamper-Proof', desc: 'Impossible to alter without detection' },
             { icon: Globe, title: 'Decentralized', desc: 'No single point of failure or trust' },
-            { icon: CheckCircle2, title: 'Verifiable', desc: 'Anyone can verify independently' },
+            { icon: CheckCircle2, title: 'Verifiable', desc: 'Anyone can verify independently' }
           ].map((item, i) => (
-            <div key={i} className="flex items-start gap-3 p-4 rounded-2xl bg-white border border-indigo-50">
-              <item.icon size={18} className="text-indigo-600 mt-0.5 shrink-0" />
+            <div
+              key={i}
+              className="flex items-start gap-3 rounded-2xl border border-indigo-50 bg-white p-4"
+            >
+              <item.icon size={18} className="mt-0.5 shrink-0 text-indigo-600" />
               <div>
-                <h4 className="text-sm font-extrabold text-indigo-900 mb-1">{item.title}</h4>
+                <h4 className="mb-1 text-sm font-extrabold text-indigo-900">{item.title}</h4>
                 <p className="text-[12px] font-medium text-slate-500">{item.desc}</p>
               </div>
             </div>
