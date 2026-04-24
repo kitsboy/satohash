@@ -308,9 +308,11 @@ function ContractCard({ contract, onClick, onDelete }) {
       exit={{ opacity: 0, scale: 0.95 }}
       whileHover={{ scale: 1.01 }}
       onClick={onClick}
-      className="group relative cursor-pointer overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-sm ring-1 ring-slate-100/50 transition-all hover:border-indigo-100 hover:shadow-lg hover:ring-indigo-50/50"
+      className="group relative cursor-pointer rounded-2xl border border-slate-200 bg-white p-6 shadow-sm ring-1 ring-slate-100/50 transition-all hover:border-indigo-100 hover:shadow-lg hover:ring-indigo-50/50"
     >
-      <div className="bg-grid-slate-100 absolute inset-0 opacity-0 transition-opacity group-hover:opacity-[0.03]" />
+      <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-[1rem]">
+        <div className="bg-grid-slate-100 absolute inset-0 opacity-0 transition-opacity group-hover:opacity-[0.03]" />
+      </div>
       <div className="absolute top-0 right-0 z-20 flex gap-2 p-3">
         {!isTimestamped && (
           <button

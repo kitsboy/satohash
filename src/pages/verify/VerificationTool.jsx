@@ -17,6 +17,10 @@ import {
 import { createHash, verifyTimestamp } from '../../utils/opentimestamps'
 import { verifyMerkleProof } from '../../utils/merkle'
 
+const HEX_GRID = Array.from({ length: 60 }).map(() =>
+  Math.random().toString(16).slice(2, 8).toUpperCase()
+)
+
 export default function VerificationTool() {
   const [pdfFile, setPdfFile] = useState(null)
   const [otsFile, setOtsFile] = useState(null)
@@ -447,24 +451,50 @@ function EliteDropzone({
   return (
     <div
       {...getRootProps()}
-      className={`group relative cursor-pointer overflow-hidden rounded-[2.5rem] border-2 p-12 transition-all ${file ? 'border-indigo-600 bg-white shadow-2xl ring-4 ring-indigo-50/50' : 'border-slate-200 bg-white shadow-sm hover:border-indigo-400 hover:ring-8 hover:ring-indigo-50/50'}`}
+      className={`group relative cursor-pointer rounded-[2.5rem] border-2 p-12 transition-all ${file ? 'border-indigo-600 bg-white shadow-2xl ring-4 ring-indigo-50/50' : 'border-slate-200 bg-white shadow-sm hover:border-indigo-400 hover:ring-8 hover:ring-indigo-50/50'}`}
     >
-      <div className="bg-grid-slate-100 absolute inset-0 opacity-0 transition-opacity group-hover:opacity-[0.03]" />
+      {/* Clip-safe internal elements */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-[2.4rem]">
+        <div className="bg-grid-slate-100 absolute inset-0 opacity-0 transition-opacity group-hover:opacity-[0.03]" />
+
+        {/* Technical Data Mesh (Hover) */}
+        <div className="absolute inset-0 opacity-0 transition-all duration-700 group-hover:opacity-100">
+          <div className="absolute inset-0 bg-linear-to-b from-indigo-500/5 to-transparent" />
+          <div className="pointer-events-none absolute inset-0 flex flex-wrap gap-2 overflow-hidden p-4 opacity-[0.15]">
+            {HEX_GRID.map((hex, i) => (
+              <span key={i} className="font-mono text-[7px] font-black text-indigo-900">
+                {hex}
+              </span>
+            ))}
+          </div>
+
+          {/* Crosshair Scanner */}
+          <div className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-20">
+            <div className="absolute h-px w-full bg-indigo-500" />
+            <div className="absolute h-full w-px bg-indigo-500" />
+            <div className="h-32 w-32 animate-pulse rounded-full border border-indigo-500" />
+          </div>
+        </div>
+
+        {active && (
+          <motion.div
+            initial={{ top: '0%' }}
+            animate={{ top: '100%' }}
+            transition={{ duration: 1.5, repeat: Infinity, ease: 'linear' }}
+            className="absolute inset-x-0 z-20 h-px bg-indigo-500 shadow-[0_0_12px_#4f46e5]"
+          />
+        )}
+
+        {/* Shimmer */}
+        <div className="absolute inset-0 z-0 -translate-x-full bg-linear-to-r from-transparent via-indigo-500/5 to-transparent transition-transform duration-1000 group-hover:translate-x-full" />
+      </div>
+
       <input {...getInputProps()} />
 
       {/* Tooltip Icon */}
       <div className="absolute top-8 right-8 z-30 transition-transform group-hover:scale-110">
         <Tooltip text={tooltipText} />
       </div>
-
-      {active && (
-        <motion.div
-          initial={{ top: '0%' }}
-          animate={{ top: '100%' }}
-          transition={{ duration: 1.5, repeat: Infinity, ease: 'linear' }}
-          className="absolute inset-x-0 z-20 h-px bg-indigo-500 shadow-[0_0_12px_#4f46e5]"
-        />
-      )}
 
       <div className="pointer-events-none absolute top-4 left-4 text-[40px] font-black text-indigo-900 italic opacity-[0.03]">
         {step}
@@ -479,6 +509,44 @@ function EliteDropzone({
       <h4 className="text-noir-primary mb-2 text-xl leading-none font-black tracking-tighter uppercase italic">
         {file ? file.name : label}
       </h4>
+
+      {!file && (
+        <div className="mt-12 flex flex-col items-center">
+          <div className="mb-4 flex gap-1">
+            {Array.from({ length: 8 }).map((_, i) => (
+              <motion.div
+                key={i}
+                animate={{ opacity: [0.1, 0.4, 0.1] }}
+                transition={{ duration: 2, delay: i * 0.2, repeat: Infinity }}
+                className="h-1 w-4 rounded-full bg-indigo-600"
+              />
+            ))}
+          </div>
+          <p className="text-[9px] font-black tracking-[0.3em] text-indigo-400 uppercase italic">
+            Ready_for_Ingest_Protocol_v4.0
+          </p>
+
+          <div className="mt-12 grid grid-cols-2 gap-x-12 gap-y-6 text-left">
+            <div className="space-y-1">
+              <p className="text-[8px] font-black text-slate-300 uppercase italic">Encryption</p>
+              <p className="text-[9px] font-black text-slate-500 uppercase">AES-256-GCM</p>
+            </div>
+            <div className="space-y-1">
+              <p className="text-[8px] font-black text-slate-300 uppercase italic">Consensus</p>
+              <p className="text-[9px] font-black text-slate-500 uppercase">Bitcoin_PoW</p>
+            </div>
+            <div className="space-y-1">
+              <p className="text-[8px] font-black text-slate-300 uppercase italic">Network</p>
+              <p className="text-[9px] font-black text-slate-500 uppercase">Sovereign_Mesh</p>
+            </div>
+            <div className="space-y-1">
+              <p className="text-[8px] font-black text-slate-300 uppercase italic">Latency</p>
+              <p className="text-[9px] font-black text-emerald-500 uppercase">12ms_Nominal</p>
+            </div>
+          </div>
+        </div>
+      )}
+
       {hash ? (
         <div className="mt-4 font-mono text-[9px] font-black tracking-wider text-indigo-600/70">
           DNA: 0x{hash.substring(0, 24)}...
@@ -489,8 +557,7 @@ function EliteDropzone({
         </p>
       )}
 
-      {/* Shimmer */}
-      <div className="absolute inset-0 z-0 -translate-x-full bg-linear-to-r from-transparent via-indigo-500/5 to-transparent transition-transform duration-1000 group-hover:translate-x-full" />
+      {/* Shimmer Removed from here, moved to wrapper */}
     </div>
   )
 }

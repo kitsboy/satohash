@@ -1,49 +1,35 @@
-import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { useState } from 'react'
+import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import GlobalDropzone from '../components/GlobalDropzone'
 import HistoryList from '../components/HistoryList'
 import Merkle3D from '../components/Merkle3D'
 import {
   Download,
-  Mail,
   FileCheck,
-  Check,
-  Clock,
   ExternalLink,
-  Github,
   ShieldCheck,
   Zap,
-  Bot,
   UserCheck,
-  AlertTriangle,
-  Users,
   FileText,
   ChevronRight,
   Terminal,
   Network,
-  Search,
-  Activity,
   Box,
   Lock,
   Cpu,
   Globe
 } from 'lucide-react'
 import { generatePDF } from '../utils/pdfGenerator'
-import { useSocket } from '../hooks/useSocket'
 import { toast } from 'sonner'
 import BlockchainPulse from '../components/BlockchainPulse'
-import InfoTooltip from '../components/InfoTooltip'
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
 
 export default function Dashboard() {
   const [file, setFile] = useState(null)
-  const [isStamping, setIsStamping] = useState(false)
-  const { lastEvent } = useSocket()
 
   const handleFileProcessed = async (processedFile) => {
-    setIsStamping(true)
     try {
       const response = await fetch(`${API_URL}/api/stamp`, {
         method: 'POST',
@@ -64,7 +50,7 @@ export default function Dashboard() {
     } catch (error) {
       toast.error('Failed to anchor file. Please try again.')
     } finally {
-      setIsStamping(false)
+      // Cleanup
     }
   }
 
@@ -109,7 +95,7 @@ export default function Dashboard() {
             {/* STAMPING TERMINAL */}
             <div className="glass-card border-noir group relative overflow-hidden rounded-[3.5rem] bg-white p-1 shadow-2xl">
               <div className="grid-pattern-slate pointer-events-none absolute inset-0 opacity-[0.02]" />
-              <div className="relative z-10 flex min-h-[500px] flex-col justify-between rounded-[3.2rem] border border-slate-50 bg-white p-12">
+              <div className="relative z-10 flex min-h-[320px] flex-col justify-between rounded-[3.2rem] border border-slate-50 bg-white p-10">
                 {!file ? (
                   <>
                     <div className="flex flex-1 flex-col items-center justify-center text-center font-sans">
@@ -133,6 +119,62 @@ export default function Dashboard() {
                         Drag any document, image, or forensic evidence to begin the cryptographic
                         anchoring process on the Bitcoin network.
                       </p>
+
+                      {/* Technical Infill HUD */}
+                      <div className="mt-4 grid grid-cols-2 gap-8 text-left opacity-0 transition-all delay-100 duration-700 group-hover:opacity-100">
+                        <div className="space-y-1">
+                          <p className="text-[8px] font-black text-indigo-300 uppercase italic">
+                            Protocol_v4
+                          </p>
+                          <p className="text-[10px] font-black text-indigo-900 uppercase">
+                            SATOHASH_CORE
+                          </p>
+                        </div>
+                        <div className="space-y-1">
+                          <p className="text-[8px] font-black text-indigo-300 uppercase italic">
+                            Cipher_Suite
+                          </p>
+                          <p className="text-[10px] font-black text-indigo-900 uppercase">
+                            AES_256_GCM
+                          </p>
+                        </div>
+                        <div className="space-y-1">
+                          <p className="text-[8px] font-black text-indigo-300 uppercase italic">
+                            Mesh_Latency
+                          </p>
+                          <p className="text-[10px] font-black text-emerald-500 uppercase">
+                            12ms_STABLE
+                          </p>
+                        </div>
+                        <div className="space-y-1">
+                          <p className="text-[8px] font-black text-indigo-300 uppercase italic">
+                            Audit_Trail
+                          </p>
+                          <p className="text-[10px] font-black text-indigo-900 uppercase">
+                            FULL_FORENSIC
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Protocol Sync Animation */}
+                      <div className="mt-12 flex items-center gap-2">
+                        {Array.from({ length: 12 }).map((_, i) => (
+                          <motion.div
+                            key={i}
+                            animate={{
+                              height: [4, 12, 4],
+                              opacity: [0.1, 0.5, 0.1]
+                            }}
+                            transition={{
+                              duration: 1.5,
+                              delay: i * 0.1,
+                              repeat: Infinity,
+                              ease: 'easeInOut'
+                            }}
+                            className="w-1 rounded-full bg-indigo-600"
+                          />
+                        ))}
+                      </div>
                     </div>
                     <GlobalDropzone onFileProcessed={handleFileProcessed} />
                   </>

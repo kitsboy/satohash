@@ -134,9 +134,12 @@ function TemplateCard({ template, onClick, index }) {
       transition={{ delay: index * 0.1 }}
       whileHover={{ y: -5 }}
       onClick={onClick}
-      className="group relative cursor-pointer overflow-hidden rounded-[2.5rem] border border-slate-200 bg-white p-8 shadow-sm ring-1 ring-slate-100/50 transition-all hover:border-indigo-100 hover:shadow-xl hover:ring-indigo-50/50"
+      className="group relative cursor-pointer rounded-[2.5rem] border border-slate-200 bg-white p-8 shadow-sm ring-1 ring-slate-100/50 transition-all hover:border-indigo-100 hover:shadow-xl hover:ring-indigo-50/50"
     >
-      <div className="bg-grid-slate-100 absolute inset-0 opacity-0 transition-opacity group-hover:opacity-[0.03]" />
+      {/* Decorative Layer (Clip Safe) */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-[2.4rem]">
+        <div className="bg-grid-slate-100 absolute inset-0 opacity-0 transition-opacity group-hover:opacity-[0.03]" />
+      </div>
 
       <div className="relative z-10 mb-8 flex items-center justify-between">
         <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-slate-50 text-slate-400 transition-all group-hover:bg-indigo-600 group-hover:text-white group-hover:shadow-lg group-hover:shadow-indigo-500/20">
@@ -160,12 +163,6 @@ function TemplateCard({ template, onClick, index }) {
           {template.description}
         </p>
       </div>
-
-      {/* Shimmer Effect */}
-      <div className="absolute inset-0 z-0 -translate-x-full bg-linear-to-r from-transparent via-indigo-500/5 to-transparent transition-transform duration-1000 group-hover:translate-x-full" />
-
-      {/* Bottom Glow */}
-      <div className="absolute -right-10 -bottom-10 h-32 w-32 rounded-full bg-indigo-500/5 blur-2xl transition-opacity group-hover:opacity-100" />
     </motion.div>
   )
 }
