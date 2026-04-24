@@ -51,15 +51,20 @@ const FeatureCard = ({ icon: Icon, title, description, delay, accent = 'indigo' 
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ type: 'spring', stiffness: 100, delay }}
-      className="glass-card group relative cursor-default overflow-hidden border-slate-100 bg-white p-10 transition-all hover:border-indigo-200 hover:bg-slate-50/50 hover:shadow-[0_20px_50px_-15px_rgba(79,70,229,0.12)]"
+      className="glass-card group relative cursor-default overflow-hidden border border-slate-200 bg-white p-10 ring-1 ring-slate-100/50 transition-all hover:border-indigo-200 hover:bg-slate-50/50 hover:shadow-xl hover:shadow-indigo-500/5 hover:ring-indigo-100/50"
     >
       <div className="bg-grid-slate-100 absolute inset-0 [mask-image:linear-gradient(0deg,white,rgba(255,255,255,0.5))] opacity-0 transition-opacity group-hover:opacity-10" />
+      <div className="absolute top-0 right-0 p-4 opacity-0 transition-opacity group-hover:opacity-100">
+        <div className="text-[8px] font-black tracking-widest text-indigo-400 uppercase">
+          Verifiable_Component
+        </div>
+      </div>
       <div
         className={`mb-8 flex h-14 w-14 items-center justify-center rounded-2xl ${c.bg} ${c.text} ${c.glow}`}
       >
         <Icon size={24} />
       </div>
-      <h3 className="mb-3 text-xl font-extrabold tracking-tight text-indigo-900">{title}</h3>
+      <h3 className="text-noir-primary mb-3 text-xl font-extrabold tracking-tight">{title}</h3>
       <p className="text-sm leading-relaxed font-medium text-slate-500">{description}</p>
     </motion.div>
   )
@@ -81,7 +86,7 @@ export default function Landing() {
   const opacityRange = useTransform(scrollYProgress, [0, 0.2], [1, 0])
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-[#fcfcfc] selection:bg-indigo-500/30">
+    <div className="relative min-h-screen overflow-hidden bg-[#f7f8fc] selection:bg-indigo-500/30">
       <div className="grid-pattern-slate pointer-events-none absolute inset-0 opacity-[0.03]" />
 
       {/* ── Background Mesh ──────────────── */}
@@ -145,17 +150,20 @@ export default function Landing() {
             transition={{ duration: 0.8, delay: 0.6 }}
           >
             <Link to="/dashboard" className="w-full sm:w-auto">
-              <button className="group relative h-16 w-full min-w-[260px] overflow-hidden rounded-2xl bg-indigo-900 px-10 text-[12px] font-extrabold tracking-[0.2em] text-white uppercase shadow-2xl shadow-indigo-500/30 transition-all hover:scale-[1.03] active:scale-[0.97] sm:w-auto md:h-18">
+              <button className="group relative h-16 w-full min-w-[260px] overflow-hidden rounded-2xl bg-indigo-900 px-10 text-[12px] font-extrabold tracking-[0.2em] text-white uppercase shadow-2xl shadow-indigo-500/30 transition-all hover:scale-[1.03] hover:ring-4 hover:ring-indigo-500/20 active:scale-[0.97] sm:w-auto md:h-18">
                 <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 to-indigo-400 opacity-0 transition-opacity group-hover:opacity-100" />
-                <span className="relative flex items-center justify-center gap-3">
+                <div className="absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-white/10 to-transparent transition-transform duration-1000 group-hover:translate-x-full" />
+                <span className="relative z-10 flex items-center justify-center gap-3">
                   Open Workbench <ChevronRight size={16} />
                 </span>
               </button>
             </Link>
             <Link to="/developers" className="w-full sm:w-auto">
-              <button className="h-16 w-full min-w-[260px] rounded-2xl border-2 border-indigo-100 bg-white px-10 text-[12px] font-extrabold tracking-[0.2em] text-indigo-900 uppercase transition-all hover:border-indigo-200 hover:bg-indigo-50 sm:w-auto md:h-18">
-                <span className="flex items-center justify-center gap-3">
-                  <Cpu size={16} /> API Documentation
+              <button className="group text-noir-primary relative h-16 w-full min-w-[260px] overflow-hidden rounded-2xl border border-slate-200 bg-white px-10 text-[12px] font-extrabold tracking-[0.2em] shadow-sm ring-1 ring-slate-100/50 transition-all hover:border-indigo-200 hover:bg-slate-50 hover:ring-indigo-100/50 sm:w-auto md:h-18">
+                <div className="absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-indigo-500/5 to-transparent transition-transform duration-1000 group-hover:translate-x-full" />
+                <span className="relative z-10 flex items-center justify-center gap-3">
+                  <Cpu size={16} className="transition-colors group-hover:text-indigo-600" /> API
+                  Documentation
                 </span>
               </button>
             </Link>
@@ -271,12 +279,13 @@ export default function Landing() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: idx * 0.15, type: 'spring', stiffness: 100 }}
-              className="step-card group text-left"
+              className="step-card group relative overflow-hidden rounded-[2.5rem] border border-slate-200 bg-white p-10 text-left ring-1 ring-slate-100/50 transition-all hover:border-indigo-200 hover:shadow-xl hover:shadow-indigo-500/5 hover:ring-indigo-100/50"
             >
-              <div className="mb-6 flex items-start gap-5">
+              <div className="bg-grid-slate-100 absolute inset-0 [mask-image:linear-gradient(0deg,white,rgba(255,255,255,0.5))] opacity-0 transition-opacity group-hover:opacity-10" />
+              <div className="relative z-10 mb-6 flex items-start gap-5">
                 <div className="step-number shrink-0">{item.step}</div>
                 <div className="flex-1">
-                  <h3 className="mb-3 text-xl font-extrabold tracking-tight text-indigo-900">
+                  <h3 className="text-noir-primary mb-3 text-xl font-extrabold tracking-tight">
                     {item.title}
                   </h3>
                   <p className="mb-4 text-sm leading-relaxed font-medium text-slate-500">
