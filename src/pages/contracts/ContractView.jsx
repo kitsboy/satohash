@@ -252,16 +252,17 @@ export default function ContractView() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-[#f8fafc]">
+    <div className="relative flex min-h-screen flex-col overflow-hidden bg-[#f7f8fc]">
+      <div className="grid-pattern-slate pointer-events-none absolute inset-0 opacity-[0.03]" />
       {/* Top Navigation Bar */}
-      <nav className="sticky top-0 z-50 flex h-14 items-center justify-between border-b border-slate-200 bg-white/80 px-4 backdrop-blur-xl md:h-16 md:px-6">
+      <nav className="mesh-bg-light sticky top-0 z-50 flex h-14 items-center justify-between border-b border-indigo-100 bg-white/80 px-4 backdrop-blur-xl md:h-16 md:px-6">
         <div className="flex items-center gap-3">
           <Button variant="ghost" size="small" onClick={() => navigate('/contracts')}>
             <ArrowLeft size={16} />
           </Button>
           <div className="hidden h-5 w-px bg-slate-200 sm:block" />
           <div className="flex flex-col">
-            <h1 className="max-w-[160px] truncate text-sm font-extrabold tracking-tight text-slate-900 sm:max-w-none">
+            <h1 className="text-noir-primary max-w-[160px] truncate text-sm font-black tracking-tight uppercase italic sm:max-w-none">
               {contract.name}
             </h1>
             <span className="hidden text-[10px] font-medium tracking-wide text-slate-400 sm:block">
@@ -318,8 +319,9 @@ export default function ContractView() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="document-paper"
+              className="document-paper border-noir relative overflow-hidden shadow-2xl"
             >
+              <div className="grid-pattern-slate pointer-events-none absolute inset-0 opacity-[0.02]" />
               {/* Watermark */}
               <div className="document-watermark">
                 <img src="/logo.png" alt="Satohash Watermark" />
@@ -329,7 +331,7 @@ export default function ContractView() {
                 className="relative z-10 pt-16 text-[16px] leading-[1.8] text-slate-800 antialiased md:pt-20 md:text-[18px]"
                 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
               >
-                <h2 className="mb-8 border-b-2 border-slate-900 pb-4 text-2xl font-extrabold tracking-tight text-slate-900 md:mb-12 md:text-3xl">
+                <h2 className="border-noir-primary text-noir-primary relative z-10 mb-8 border-b-2 pb-4 text-2xl font-black tracking-tight uppercase italic md:mb-12 md:text-3xl">
                   {contract.name}
                 </h2>
                 <div className="whitespace-pre-wrap">{contract.content}</div>
@@ -342,16 +344,21 @@ export default function ContractView() {
                     className="mt-24 flex justify-end"
                   >
                     <div className="group relative">
-                      <div className="absolute inset-0 bg-indigo-600 opacity-10 blur-3xl transition-opacity group-hover:opacity-20" />
-                      <div className="notary-seal relative">
-                        <div className="mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-indigo-600 text-white shadow-lg shadow-indigo-200">
+                      <motion.div
+                        animate={{ opacity: [0.1, 0.2, 0.1], scale: [1, 1.1, 1] }}
+                        transition={{ duration: 4, repeat: Infinity }}
+                        className="absolute inset-0 bg-indigo-600 opacity-10 blur-3xl"
+                      />
+                      <div className="notary-seal border-noir relative rounded-full bg-white/50 p-6 shadow-xl backdrop-blur-sm">
+                        <div className="relative mb-3 flex h-14 w-14 items-center justify-center overflow-hidden rounded-full bg-indigo-600 text-white shadow-lg shadow-indigo-500/40">
+                          <div className="absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-white/20 to-transparent transition-transform duration-1000 group-hover:translate-x-full" />
                           <ShieldCheck size={28} />
                         </div>
-                        <span className="text-[10px] font-bold tracking-widest text-indigo-900 uppercase">
+                        <span className="text-noir-primary text-[10px] font-black tracking-widest uppercase italic">
                           {isTimestamped ? 'Bitcoin Anchor' : 'Satohash Signed'}
                         </span>
-                        <div className="mt-2 h-px w-12 bg-indigo-100" />
-                        <span className="mt-2 font-mono text-[9px] font-medium text-slate-400">
+                        <div className="mx-auto mt-2 h-px w-12 bg-indigo-100" />
+                        <span className="mt-2 block font-mono text-[9px] font-bold text-slate-400">
                           {contract.id.substring(0, 12).toUpperCase()}
                         </span>
                       </div>

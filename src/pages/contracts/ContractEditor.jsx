@@ -107,15 +107,16 @@ export default function ContractEditor() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-[#f8fafc]">
+    <div className="relative flex min-h-screen flex-col overflow-hidden bg-[#f7f8fc]">
+      <div className="grid-pattern-slate pointer-events-none absolute inset-0 opacity-[0.03]" />
       {/* Top Navigation Bar */}
-      <nav className="sticky top-0 z-50 flex h-14 items-center justify-between border-b border-slate-200 bg-white px-4 md:h-16 md:px-6">
+      <nav className="mesh-bg-light sticky top-0 z-50 flex h-14 items-center justify-between border-b border-indigo-100 bg-white/80 px-4 backdrop-blur-xl md:h-16 md:px-6">
         <div className="flex items-center gap-3">
           <Button variant="ghost" size="small" onClick={() => navigate('/contracts')}>
             <ArrowLeft size={16} />
           </Button>
           <div className="hidden h-5 w-px bg-slate-200 sm:block" />
-          <h1 className="max-w-[180px] truncate text-sm font-extrabold tracking-tight text-slate-900 sm:max-w-none">
+          <h1 className="text-noir-primary max-w-[180px] truncate text-sm font-black tracking-tight uppercase italic sm:max-w-none">
             {contract.name || 'Untitled Document'}
           </h1>
         </div>
@@ -163,8 +164,9 @@ export default function ContractEditor() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="document-paper"
+              className="document-paper border-noir relative overflow-hidden shadow-2xl"
             >
+              <div className="grid-pattern-slate pointer-events-none absolute inset-0 opacity-[0.02]" />
               {/* Watermark */}
               <div className="document-watermark">
                 <img src="/logo.png" alt="Satohash Watermark" />
@@ -327,7 +329,7 @@ function SidebarContent({
                 type="text"
                 value={contract.name}
                 onChange={(e) => setContract({ ...contract, name: e.target.value })}
-                className="w-full rounded-xl border border-slate-100 bg-slate-50 px-4 py-3 text-sm font-bold transition-all outline-none focus:border-indigo-200 focus:ring-2 focus:ring-indigo-100"
+                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-bold ring-1 ring-slate-100/50 transition-all outline-none focus:border-indigo-400 focus:ring-4 focus:ring-indigo-100/50"
               />
             </section>
 
@@ -354,7 +356,7 @@ function SidebarContent({
                       <input
                         type="text"
                         placeholder={`Value for [${p}]...`}
-                        className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-medium transition-all outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"
+                        className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-medium ring-1 ring-slate-100/50 transition-all outline-none focus:border-indigo-400 focus:ring-4 focus:ring-indigo-100/50"
                         onChange={(e) => handlePlaceholderChange(p, e.target.value)}
                       />
                     </div>

@@ -1,105 +1,65 @@
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { Heart, Home, FileText, Upload, ArrowRight, Users, Zap } from 'lucide-react'
+import {
+  Heart,
+  Home,
+  FileText,
+  Upload,
+  ArrowRight,
+  Users,
+  Zap,
+  ShieldCheck,
+  Lock,
+  Music,
+  Image as ImageIcon,
+  GraduationCap,
+  Scale
+} from 'lucide-react'
+import { motion } from 'framer-motion'
+import Button from '../../components/Button'
 
 const TEMPLATES = [
   {
     type: 'prenup',
     icon: Heart,
-    titleKey: 'chooseTemplate.prenup',
-    gradient: 'linear-gradient(135deg, #ec4899 0%, #f97316 100%)',
-    description: 'Protect your assets with a prenuptial agreement'
+    title: 'Prenuptial Agreement',
+    category: 'Legal',
+    description: 'Mathematically bind pre-marital asset declarations to the blockchain.'
   },
   {
-    type: 'property',
-    icon: Home,
-    titleKey: 'chooseTemplate.property',
-    gradient: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)',
-    description: 'Record property ownership and transfers'
+    type: 'photo-archive',
+    icon: ImageIcon,
+    title: 'iPhone Photo Vault',
+    category: 'Personal',
+    description: 'Timestamp your private digital memories to prove original capture dates.'
   },
   {
-    type: 'powerOfAttorney',
-    icon: FileText,
-    titleKey: 'chooseTemplate.powerOfAttorney',
-    gradient: 'linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%)',
-    description: 'Grant legal authority to a trusted party'
+    type: 'creative-ip',
+    icon: Music,
+    title: 'Music & Creative IP',
+    category: 'Intellectual Property',
+    description: 'Secure your songs, lyrics, and art before sharing with the world.'
   },
   {
-    type: 'commercial-lease',
-    icon: Home,
-    titleKey: 'chooseTemplate.commercialLease',
-    gradient: 'linear-gradient(135deg, #1e293b 0%, #334155 100%)',
-    description: 'Lease agreement for commercial spaces'
+    type: 'academic-credential',
+    icon: GraduationCap,
+    title: 'PhD & Academic Proof',
+    category: 'Credentials',
+    description: 'Immutable verification of diplomas, thesis, and research papers.'
   },
   {
-    type: 'child-travel',
-    icon: Users,
-    titleKey: 'chooseTemplate.childTravel',
-    gradient: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)',
-    description: 'Authorization for minors to travel'
-  },
-  {
-    type: 'bill-of-sale',
-    icon: Zap,
-    titleKey: 'chooseTemplate.billOfSale',
-    gradient: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
-    description: 'Transfer of personal property ownership'
-  },
-  {
-    type: 'employment',
-    icon: Users,
-    titleKey: 'chooseTemplate.employment',
-    gradient: 'linear-gradient(135deg, #6366f1 0%, #4f46e5 100%)',
-    description: 'Standard employment agreement terms'
-  },
-  {
-    type: 'promissory',
-    icon: FileText,
-    titleKey: 'chooseTemplate.promissory',
-    gradient: 'linear-gradient(135deg, #f43f5e 0%, #e11d48 100%)',
-    description: 'Formal promise to pay back a debt'
-  },
-  {
-    type: 'consulting',
-    icon: Users,
-    titleKey: 'chooseTemplate.consulting',
-    gradient: 'linear-gradient(135deg, #8b5cf6 0%, #d946ef 100%)',
-    description: 'Agreement for professional consulting services'
-  },
-  {
-    type: 'ip-assignment',
-    icon: ShieldCheck,
-    titleKey: 'chooseTemplate.ip-assignment',
-    gradient: 'linear-gradient(135deg, #0f172a 0%, #334155 100%)',
-    description: 'Transfer intellectual property rights'
-  },
-  {
-    type: 'nda',
-    icon: Lock,
-    titleKey: 'chooseTemplate.nda',
-    gradient: 'linear-gradient(135deg, #475569 0%, #1e293b 100%)',
-    description: 'Confidentiality and non-disclosure agreement'
-  },
-  {
-    type: 'will',
-    icon: FileText,
-    titleKey: 'chooseTemplate.will',
-    gradient: 'linear-gradient(135deg, #6b7280 0%, #374151 100%)',
-    description: 'Last Will & Testament'
-  },
-  {
-    type: 'affidavit',
-    icon: ShieldCheck,
-    titleKey: 'chooseTemplate.affidavit',
-    gradient: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
-    description: 'Sworn statement of fact'
+    type: 'power-of-attorney',
+    icon: Scale,
+    title: 'Power of Attorney',
+    category: 'Legal',
+    description: 'Grant authoritative legal rights with cryptographic finality.'
   },
   {
     type: 'custom',
     icon: Upload,
-    titleKey: 'chooseTemplate.custom',
-    gradient: 'linear-gradient(135deg, #94a3b8 0%, #64748b 100%)',
-    description: 'Upload and timestamp your own document'
+    title: 'Custom Artifact',
+    category: 'General',
+    description: 'Upload any file to anchor it directly to the Bitcoin settlement layer.'
   }
 ]
 
@@ -109,7 +69,6 @@ export default function ChooseTemplate() {
 
   const handleTemplateSelect = (templateType) => {
     if (templateType === 'custom') {
-      // For custom, go directly to account creation (will implement upload later)
       navigate('/account-creation')
     } else {
       navigate('/account-creation', { state: { templateType } })
@@ -117,146 +76,99 @@ export default function ChooseTemplate() {
   }
 
   return (
-    <div className="page">
-      <div className="container-narrow container">
-        {/* Header */}
-        <div
-          className="text-center"
-          style={{ marginTop: 'var(--spacing-2xl)', marginBottom: 'var(--spacing-2xl)' }}
-        >
-          <h1
-            className="animate-slide-down"
-            style={{
-              fontSize: 'var(--text-3xl)',
-              fontWeight: '800',
-              marginBottom: 'var(--spacing-md)'
-            }}
-          >
-            {t('chooseTemplate.title')}
+    <div className="relative min-h-screen overflow-hidden bg-[#f7f8fc]">
+      <div className="grid-pattern-slate pointer-events-none absolute inset-0 opacity-[0.03]" />
+
+      <div className="layout-container relative z-10 pt-32 pb-24 md:pt-40">
+        {/* Header Section */}
+        <header className="mb-16 text-center">
+          <div className="mb-6 inline-flex items-center gap-2">
+            <span className="text-[10px] font-black tracking-[0.4em] text-indigo-600 uppercase italic">
+              Protocol_Onboarding
+            </span>
+            <div className="h-px w-8 bg-indigo-100" />
+          </div>
+          <h1 className="text-noir-primary mb-6 text-4xl font-black tracking-tighter uppercase italic md:text-6xl">
+            Choose Your <br /> <span className="text-gradient text-indigo-600">Artifact Type.</span>
           </h1>
-          <p
-            className="text-secondary animate-fade-in"
-            style={{
-              animationDelay: '100ms',
-              fontSize: 'var(--text-lg)'
-            }}
-          >
-            Select a contract template to get started
+          <p className="mx-auto max-w-2xl text-lg leading-relaxed font-medium text-slate-400">
+            Select a specialized template or upload a custom document to begin the cryptographic
+            anchoring process.
           </p>
+        </header>
+
+        {/* Template Grid */}
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {TEMPLATES.map((template, index) => (
+            <TemplateCard
+              key={template.type}
+              template={template}
+              onClick={() => handleTemplateSelect(template.type)}
+              index={index}
+            />
+          ))}
         </div>
 
-        {/* Template Cards */}
-        <div
-          style={{
-            display: 'grid',
-            gap: 'var(--spacing-lg)',
-            marginBottom: 'var(--spacing-2xl)'
-          }}
-        >
-          {TEMPLATES.map((template, index) => {
-            const Icon = template.icon
-            return (
-              <div
-                key={template.type}
-                onClick={() => handleTemplateSelect(template.type)}
-                className="animate-slide-up"
-                style={{
-                  background: 'white',
-                  borderRadius: 'var(--radius-lg)',
-                  padding: 'var(--spacing-xl)',
-                  boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)',
-                  border: '2px solid transparent',
-                  cursor: 'pointer',
-                  transition: 'all 0.3s ease',
-                  animation: `slide-up 0.5s ease-out ${0.1 + index * 0.1}s backwards`,
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 'var(--spacing-lg)',
-                  position: 'relative',
-                  overflow: 'hidden'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-4px)'
-                  e.currentTarget.style.boxShadow = '0 12px 40px rgba(0, 0, 0, 0.15)'
-                  e.currentTarget.style.borderColor = 'var(--color-primary)'
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)'
-                  e.currentTarget.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.08)'
-                  e.currentTarget.style.borderColor = 'transparent'
-                }}
-              >
-                {/* Gradient Icon */}
-                <div
-                  style={{
-                    width: '64px',
-                    height: '64px',
-                    borderRadius: 'var(--radius-md)',
-                    background: template.gradient,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    flexShrink: 0,
-                    boxShadow: '0 8px 20px rgba(0, 0, 0, 0.15)'
-                  }}
-                >
-                  <Icon size={32} color="white" strokeWidth={2} />
-                </div>
-
-                {/* Content */}
-                <div style={{ flex: 1 }}>
-                  <h3
-                    style={{
-                      fontSize: 'var(--text-xl)',
-                      fontWeight: '700',
-                      marginBottom: 'var(--spacing-xs)',
-                      color: 'var(--color-text)'
-                    }}
-                  >
-                    {t(template.titleKey)}
-                  </h3>
-                  <p
-                    style={{
-                      fontSize: 'var(--text-sm)',
-                      color: 'var(--color-text-secondary)',
-                      margin: 0
-                    }}
-                  >
-                    {template.description}
-                  </p>
-                </div>
-
-                {/* Arrow indicator */}
-                <ArrowRight
-                  size={24}
-                  color="var(--color-text-tertiary)"
-                  style={{ flexShrink: 0 }}
-                />
-              </div>
-            )
-          })}
-        </div>
-
-        {/* Disclaimer */}
-        <div
-          className="animate-fade-in"
-          style={{
-            animationDelay: '500ms',
-            padding: 'var(--spacing-xl)',
-            background:
-              'linear-gradient(135deg, rgba(99, 102, 241, 0.05) 0%, rgba(168, 85, 247, 0.05) 100%)',
-            borderRadius: 'var(--radius-lg)',
-            border: '1px solid rgba(99, 102, 241, 0.1)',
-            fontSize: 'var(--text-sm)',
-            color: 'var(--color-text-secondary)',
-            textAlign: 'center',
-            lineHeight: 'var(--line-height-relaxed)'
-          }}
-        >
-          <div style={{ fontSize: 'var(--text-2xl)', marginBottom: 'var(--spacing-xs)' }}>⚖️</div>
-          {t('chooseTemplate.disclaimer')}
+        {/* Educational Disclaimer */}
+        <div className="mesh-bg-light mt-20 rounded-[2.5rem] border border-slate-200 bg-white p-8 shadow-sm ring-1 ring-slate-100/50">
+          <div className="flex flex-col items-center gap-6 text-center md:flex-row md:text-left">
+            <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-indigo-900 text-white shadow-xl shadow-indigo-500/20">
+              <ShieldCheck size={28} />
+            </div>
+            <div>
+              <h4 className="text-noir-primary mb-2 text-xs font-black tracking-widest uppercase italic">
+                Protocol Disclaimer
+              </h4>
+              <p className="max-w-3xl text-sm leading-relaxed font-medium text-slate-500">
+                Satohash is a cryptographic notary service. We provide mathematical proof of
+                existence via the Bitcoin blockchain. We are not a law firm and do not provide legal
+                advice. All proofs generated are verifiable globally via OpenTimestamps.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+  )
+}
+
+function TemplateCard({ template, onClick, index }) {
+  const Icon = template.icon
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: index * 0.1 }}
+      whileHover={{ y: -5 }}
+      onClick={onClick}
+      className="group relative cursor-pointer overflow-hidden rounded-[2.5rem] border border-slate-200 bg-white p-8 shadow-sm ring-1 ring-slate-100/50 transition-all hover:border-indigo-100 hover:shadow-xl hover:ring-indigo-50/50"
+    >
+      <div className="bg-grid-slate-100 absolute inset-0 opacity-0 transition-opacity group-hover:opacity-[0.03]" />
+
+      <div className="relative z-10 mb-8 flex items-center justify-between">
+        <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-slate-50 text-slate-400 transition-all group-hover:bg-indigo-600 group-hover:text-white group-hover:shadow-lg group-hover:shadow-indigo-500/20">
+          <Icon size={28} />
+        </div>
+        <span className="text-[10px] font-black tracking-widest text-slate-300 uppercase transition-colors group-hover:text-indigo-600">
+          {template.category}
+        </span>
+      </div>
+
+      <div className="relative z-10">
+        <h3 className="text-noir-primary mb-3 text-xl font-black tracking-tight uppercase italic transition-colors group-hover:text-indigo-600">
+          {template.title}
+        </h3>
+        <p className="text-sm leading-relaxed font-medium text-slate-400 transition-colors group-hover:text-slate-500">
+          {template.description}
+        </p>
+      </div>
+
+      {/* Shimmer Effect */}
+      <div className="absolute inset-0 z-0 -translate-x-full bg-linear-to-r from-transparent via-indigo-500/5 to-transparent transition-transform duration-1000 group-hover:translate-x-full" />
+
+      {/* Bottom Glow */}
+      <div className="absolute right-0 bottom-0 left-0 h-1 bg-gradient-to-r from-indigo-500 to-violet-500 opacity-0 transition-opacity group-hover:opacity-100" />
+    </motion.div>
   )
 }

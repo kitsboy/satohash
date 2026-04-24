@@ -67,23 +67,49 @@ export default function ContractList() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-[var(--bg-base)]">
-      <div className="layout-container flex-1 pt-36 pb-12 md:pt-44">
-        {/* Header */}
-        <header className="mb-10">
-          <BlockchainPulse />
-          <div className="mt-6 flex flex-col justify-between gap-5 md:flex-row md:items-end">
-            <div className="space-y-2">
-              <h1 className="text-3xl font-extrabold tracking-tighter text-slate-900 md:text-4xl">
-                Protocol Dashboard
-              </h1>
-              <p className="text-sm font-medium tracking-wide text-slate-400">
-                Managing {contracts.length} cryptographic proofs
-              </p>
+    <div className="relative flex min-h-screen flex-col overflow-hidden bg-[#f7f8fc]">
+      <div className="grid-pattern-slate pointer-events-none absolute inset-0 opacity-[0.03]" />
+      <div className="layout-container flex-1 pt-24 pb-12">
+        {/* Header Hero */}
+        <header className="mesh-bg-light relative mb-12 overflow-hidden rounded-[3.5rem] border border-slate-200 bg-white p-8 shadow-sm ring-1 ring-slate-100/50 md:p-12">
+          <div className="bg-grid-slate-100 pointer-events-none absolute inset-0 opacity-[0.03]" />
+          <div className="relative z-10">
+            <BlockchainPulse />
+            <div className="mt-12 flex flex-col justify-between gap-8 md:flex-row md:items-end">
+              <div className="space-y-3">
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] font-black tracking-[0.4em] text-indigo-600 uppercase italic">
+                    Sovereign_Records
+                  </span>
+                  <div className="h-px w-8 bg-indigo-100" />
+                </div>
+                <h1 className="text-noir-primary text-4xl font-black tracking-tighter uppercase italic md:text-6xl">
+                  Protocol <br /> <span className="text-indigo-600">Dashboard.</span>
+                </h1>
+                <p className="max-w-md text-sm leading-relaxed font-medium text-slate-400">
+                  Managing {contracts.length} active cryptographic proofs anchored to the Bitcoin
+                  settlement layer.
+                </p>
+              </div>
+              <div className="flex flex-col items-start gap-4 md:items-end">
+                <div className="hidden text-right lg:block">
+                  <p className="text-[8px] font-black tracking-widest text-slate-300 uppercase">
+                    Archive_Status
+                  </p>
+                  <p className="text-[10px] font-bold text-emerald-500 uppercase">
+                    Verifiable_Nominal
+                  </p>
+                </div>
+                <Button
+                  variant="primary"
+                  size="large"
+                  onClick={() => navigate('/choose-template')}
+                  className="h-16 px-10 shadow-xl shadow-indigo-500/20"
+                >
+                  <Plus size={18} /> Create New Proof
+                </Button>
+              </div>
             </div>
-            <Button variant="primary" size="large" onClick={() => navigate('/choose-template')}>
-              <Plus size={18} /> Create New Proof
-            </Button>
           </div>
         </header>
 
@@ -243,7 +269,10 @@ function StatCard({ icon: Icon, label, value, color }) {
   }
 
   return (
-    <div className="flex items-center gap-4 rounded-2xl border border-slate-100 bg-white p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md">
+    <motion.div
+      whileHover={{ scale: 1.02, y: -2 }}
+      className="flex items-center gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm ring-1 ring-slate-100/50 transition-all hover:border-indigo-100 hover:shadow-md hover:ring-indigo-50/50"
+    >
       <div className={clsx('flex h-11 w-11 items-center justify-center rounded-xl', colors[color])}>
         <Icon size={20} />
       </div>
@@ -251,9 +280,9 @@ function StatCard({ icon: Icon, label, value, color }) {
         <p className="mb-0.5 text-[10px] font-bold tracking-widest text-slate-400 uppercase">
           {label}
         </p>
-        <p className="text-xl font-extrabold tracking-tighter text-slate-900">{value}</p>
+        <p className="text-noir-primary text-xl font-extrabold tracking-tighter">{value}</p>
       </div>
-    </div>
+    </motion.div>
   )
 }
 
@@ -266,10 +295,12 @@ function ContractCard({ contract, onClick, onDelete }) {
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.95 }}
+      whileHover={{ scale: 1.01 }}
       onClick={onClick}
-      className="group relative cursor-pointer overflow-hidden rounded-2xl border border-slate-100 bg-white p-6 shadow-sm transition-all hover:-translate-y-1 hover:border-indigo-100 hover:shadow-lg"
+      className="group relative cursor-pointer overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-sm ring-1 ring-slate-100/50 transition-all hover:border-indigo-100 hover:shadow-lg hover:ring-indigo-50/50"
     >
-      <div className="absolute top-0 right-0 flex gap-2 p-3">
+      <div className="bg-grid-slate-100 absolute inset-0 opacity-0 transition-opacity group-hover:opacity-[0.03]" />
+      <div className="absolute top-0 right-0 z-20 flex gap-2 p-3">
         {!isTimestamped && (
           <button
             onClick={onDelete}
@@ -286,18 +317,18 @@ function ContractCard({ contract, onClick, onDelete }) {
         )}
       </div>
 
-      <div className="mb-5 flex items-start justify-between">
+      <div className="relative z-10 mb-5 flex items-start justify-between">
         <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-slate-50 text-slate-400 transition-all group-hover:bg-indigo-50 group-hover:text-indigo-600">
           <FileText size={20} />
         </div>
         <StatusPill status={contract.status} />
       </div>
 
-      <h3 className="mb-2 text-base font-extrabold tracking-tight text-slate-900 transition-colors group-hover:text-indigo-600">
+      <h3 className="text-noir-primary relative z-10 mb-2 text-base font-extrabold tracking-tight transition-colors group-hover:text-indigo-600">
         {contract.name}
       </h3>
 
-      <div className="mt-5 flex items-center gap-4 border-t border-slate-50 pt-4">
+      <div className="relative z-10 mt-5 flex items-center gap-4 border-t border-slate-50 pt-4">
         <div className="flex items-center gap-1.5 text-[10px] font-medium tracking-wider text-slate-400">
           <Calendar size={11} /> {new Date(contract.updatedAt).toLocaleDateString()}
         </div>
@@ -306,7 +337,8 @@ function ContractCard({ contract, onClick, onDelete }) {
         </div>
       </div>
 
-      <div className="absolute right-0 bottom-0 left-0 h-0.5 origin-left scale-x-0 bg-gradient-to-r from-indigo-500 to-violet-500 transition-transform group-hover:scale-x-100" />
+      <div className="absolute right-0 bottom-0 left-0 z-20 h-0.5 origin-left scale-x-0 bg-gradient-to-r from-indigo-500 to-violet-500 transition-transform group-hover:scale-x-100" />
+      <div className="absolute inset-0 z-0 -translate-x-full bg-linear-to-r from-transparent via-indigo-500/5 to-transparent transition-transform duration-1000 group-hover:translate-x-full" />
     </motion.div>
   )
 }

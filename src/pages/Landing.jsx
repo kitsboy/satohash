@@ -21,7 +21,12 @@ import {
   MousePointer2,
   BookOpen,
   Hash,
-  CheckCircle2
+  CheckCircle2,
+  Music,
+  Image as ImageIcon,
+  GraduationCap,
+  Heart,
+  FileText
 } from 'lucide-react'
 import LiveNetworkDashboard from '../components/LiveNetworkDashboard'
 import GlobalActivity from '../components/GlobalActivity'
@@ -91,6 +96,15 @@ export default function Landing() {
 
       {/* ── Background Mesh ──────────────── */}
       <div className="pointer-events-none absolute inset-0 z-0">
+        <div
+          className="absolute inset-0 opacity-50"
+          style={{
+            background:
+              'linear-gradient(135deg, rgba(79, 70, 229, 0.08) 0%, rgba(124, 58, 237, 0.03) 50%, transparent 100%)',
+            maskImage: 'linear-gradient(to bottom, black 0%, transparent 90%)',
+            WebkitMaskImage: 'linear-gradient(to bottom, black 0%, transparent 90%)'
+          }}
+        />
         <div className="absolute inset-0 bg-[radial-gradient(#4f46e5_1.5px,transparent_1.5px)] [background-size:48px_48px] opacity-[0.03]" />
         <div className="absolute top-0 left-1/2 h-[800px] w-full max-w-7xl -translate-x-1/2 bg-gradient-to-b from-indigo-50/50 to-transparent" />
         <motion.div
@@ -167,6 +181,31 @@ export default function Landing() {
                 </span>
               </button>
             </Link>
+          </motion.div>
+
+          {/* Institutional Resources Links */}
+          <motion.div
+            className="mt-12 flex flex-wrap justify-center gap-8 border-t border-slate-100 pt-8"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 1 }}
+          >
+            <a
+              href="/Satohash_Executive_Pitch.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 text-[11px] font-bold tracking-widest text-slate-400 uppercase transition-colors hover:text-indigo-600"
+            >
+              <FileText size={14} /> Executive Pitch
+            </a>
+            <a
+              href="/Satohash_Layman_Tutorial.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 text-[11px] font-bold tracking-widest text-slate-400 uppercase transition-colors hover:text-indigo-600"
+            >
+              <FileText size={14} /> Layman Tutorial
+            </a>
           </motion.div>
         </motion.div>
 
@@ -429,6 +468,52 @@ export default function Landing() {
           </div>
         </div>
       </section>
+      {/* ── Universal Use Cases ─────────────────────── */}
+      <section className="mx-auto max-w-[90rem] px-6 pb-32">
+        <div className="mb-16 text-center">
+          <div className="mb-6 inline-flex items-center gap-2">
+            <span className="text-[10px] font-black tracking-[0.4em] text-indigo-600 uppercase italic">
+              Universal_Utility
+            </span>
+            <div className="h-px w-8 bg-indigo-100" />
+          </div>
+          <h2 className="text-noir-primary mb-6 text-4xl font-black tracking-tighter uppercase italic md:text-6xl">
+            Universal Proof <br /> For Every{' '}
+            <span className="text-gradient text-indigo-600">Artifact.</span>
+          </h2>
+          <p className="mx-auto max-w-2xl text-lg leading-relaxed font-medium text-slate-400">
+            From institutional settlement to personal legacy, Satohash anchors the truth of any
+            digital asset.
+          </p>
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+          <UseCaseCard
+            icon={Heart}
+            title="Pre-Nuptial Proof"
+            desc="Legally superior, mathematically bound asset declarations."
+            category="Legal"
+          />
+          <UseCaseCard
+            icon={ImageIcon}
+            title="iPhone Photo Archive"
+            desc="Verify original capture dates for your most private memories."
+            category="Personal"
+          />
+          <UseCaseCard
+            icon={Music}
+            title="Creative IP"
+            desc="Protect songs, lyrics, and art with immutable timestamps."
+            category="Creative"
+          />
+          <UseCaseCard
+            icon={GraduationCap}
+            title="PhD & Credentials"
+            desc="Prevent diploma fraud with blockchain-verified credentials."
+            category="Academic"
+          />
+        </div>
+      </section>
 
       {/* ── What is Bitcoin Timestamping? (Educational) ──────── */}
       <section className="mx-auto max-w-4xl px-6 pb-32">
@@ -535,5 +620,31 @@ function EvidenceItem({ icon: Icon, label, desc }) {
         <p className="text-sm leading-relaxed font-medium text-slate-500">{desc}</p>
       </div>
     </div>
+  )
+}
+
+function UseCaseCard({ icon: Icon, title, desc, category }) {
+  return (
+    <motion.div
+      whileHover={{ y: -5 }}
+      className="group relative overflow-hidden rounded-[2.5rem] border border-slate-200 bg-white p-8 shadow-sm ring-1 ring-slate-100/50 transition-all hover:border-indigo-100 hover:ring-indigo-50/50"
+    >
+      <div className="bg-grid-slate-100 absolute inset-0 opacity-0 transition-opacity group-hover:opacity-[0.03]" />
+      <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-50 text-slate-400 transition-colors group-hover:bg-indigo-600 group-hover:text-white group-hover:shadow-lg group-hover:shadow-indigo-500/20">
+        <Icon size={24} />
+      </div>
+      <span className="mb-2 block text-[9px] font-black tracking-widest text-slate-300 uppercase italic transition-colors group-hover:text-indigo-600">
+        {category}
+      </span>
+      <h3 className="text-noir-primary mb-3 text-lg font-black tracking-tight uppercase italic transition-colors group-hover:text-indigo-600">
+        {title}
+      </h3>
+      <p className="text-sm leading-relaxed font-medium text-slate-400 transition-colors group-hover:text-slate-500">
+        {desc}
+      </p>
+
+      {/* Bottom Shimmer */}
+      <div className="absolute right-0 bottom-0 left-0 h-1 bg-gradient-to-r from-indigo-500 to-violet-500 opacity-0 transition-opacity group-hover:opacity-100" />
+    </motion.div>
   )
 }
