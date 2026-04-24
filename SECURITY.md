@@ -6,7 +6,9 @@ Satohash strictly maintains automated security patching on the absolute latest r
 
 | Version | Supported          |
 | ------- | ------------------ |
-| v1.x    | :white_check_mark: |
+| v4.x    | :white_check_mark: |
+| v3.x    | :white_check_mark: |
+| v1.x    | :x:                |
 | < 1.0   | :x:                |
 
 ## Reporting a Vulnerability

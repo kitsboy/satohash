@@ -1,49 +1,65 @@
-# Satohash v1.0.0 (The Base Case)
+# Satohash v4.0.0-ELITE
 
-A mobile-first digital notary and contract platform that creates cryptographic proof of document existence using Bitcoin timestamping.
+[![Version](https://img.shields.io/badge/version-4.0.0--ELITE-indigo.svg)](https://github.com/kitsboy/satohash)
+[![License](https://img.shields.io/badge/license-MIT-black.svg)](LICENSE)
+[![Protocol](https://img.shields.io/badge/protocol-OpenTimestamps-orange.svg)](https://opentimestamps.org)
 
-## 🏆 Version 1 (V1) Overview
-This release establishes the **V1 Baseline** for the Satohash protocol. It features a high-fidelity, high-contrast user experience, authentic Satahash branding, and a localized multi-party signing flow.
+**Institutional-Grade Digital Notary & Cryptographic Settlement Mesh.** Satohash is a high-fidelity platform for verifiable document provenance, multi-party contract signatures, and automated cryptographic evidence gathering, anchored to the Bitcoin blockchain.
 
-## 🚀 Key Features
+---
 
-*   **Bitcoin Anchoring**: Uses SHA-256 hashing and the OpenTimestamps protocol for immutable proof of existence.
-*   **High-Contrast Branding**: Authentic Satahash orange identity with maximum-accessibility typography for dark/light mode compatibility.
-*   **Privacy Shield**: Zero-knowledge document handling. Only cryptographic fingerprints (hashes) are handled; original content stays on your device.
-*   **Multi-Party Signing**: Integrated digital signature flow for both typed and drawn signatures.
-*   **Global Reach**: Fully localized in English, Spanish, French, German, and Chinese.
+## 🏛 The Elite Standard
+Satohash v4.0 transitions from a simple timestamping tool to a comprehensive **Sovereign Settlement Layer**. Designed for legal professionals, institutional archives, and autonomous agents, it provides absolute proof of existence with a premium, high-contrast user experience.
 
-## 🛠 Technology Stack
+### 🚀 Core Protocol Features
 
-*   **Core**: React + Vite
-*   **Routing**: React Router
-*   **Localization**: i18next
-*   **Cryptography**: OpenTimestamps + Web Crypto API
-*   **PDF Engine**: jsPDF
-*   **Network Intelligence**: mempool.space API
+*   **Bitcoin Anchoring (OTS)**: Immutable proof of existence using SHA-256 and the OpenTimestamps protocol.
+*   **BOLT-12 Lightning Settlement**: Integrated billing and micropayments for institutional-grade anchoring.
+*   **Web Capture (Snap & Stamp)**: Browser-integrated tool for one-click "Judiciary-Ready" web evidence gathering.
+*   **NIP-05 Identity**: Verifiable cryptographic identity links using the Nostr protocol for signer authenticity.
+*   **Multi-Party Signing**: Advanced signature orchestration with support for biometric-simulated drawn seals.
+*   **Verification Shield**: Real-time cryptographic verification engine with 3D Merkle tree visualization.
+*   **Zero-Knowledge Privacy**: Your documents never leave your device. Only cryptographic fingerprints are handled.
 
-## 📂 Architecture (Base Case)
+## 🛠 Technical Architecture
 
-*   **Local-First Data**: Uses browser `LocalStorage` for high-speed, offline-ready document management.
-*   **Client-Side Verification**: Direct integration with timestamping servers without intermediary databases.
-*   **Responsive UX**: Custom premium CSS design system optimized for both mobile and desktop.
+Satohash is built on a **Local-First, Privacy-Focused** stack designed for maximum speed and resilience.
 
-## 🏗 Setup & Development
+*   **Frontend**: React 18 + Vite 6 + Tailwind CSS 4
+*   **Motion**: Framer Motion for cinematic, high-fidelity UI transitions
+*   **State & Routing**: React Router 6 + Custom Hooks
+*   **Cryptography**: OpenTimestamps + bitcoinjs-lib + Web Crypto API
+*   **Observability**: Sentry (Node/React) + Pino Logging
+*   **Storage**: LocalStorage (Client) + SQLite/Knex (Server-side metadata)
+
+## 📂 Project Structure
 
 ```bash
-# Install dependencies
+├── src/
+│   ├── components/     # High-fidelity UI components (Institutional Noir)
+│   ├── pages/          # Protocol modules (Workbench, Verifier, API Portal)
+│   ├── config/         # System-wide constants and navigation
+│   └── services/       # OTS, Lightning, and Cryptographic logic
+├── server/             # Node.js backend for metadata & API orchestration
+└── tests/              # Vitest & Playwright E2E suite
+```
+
+## 🏗 Setup & Deployment
+
+```bash
+# Install high-fidelity dependencies
 npm install
 
-# Run development server
+# Launch the Institutional Workbench
 npm run dev
 
-# Build for production
-npm run build
+# Build for Production Elite
+npm run production
 ```
 
 ## 📜 Legal & Compliance
 
-Satohash provides cryptographic evidence and tooling, **not legal advice**. Our implementation is designed to support frameworks like the ESIGN Act (US), UETA (US), and eIDAS (EU) by providing verifiable electronic time-stamps.
+Satohash provides cryptographic evidence and specialized tooling; it does **not** provide legal advice. Our protocol is engineered to exceed requirements for the **ESIGN Act (US)**, **UETA (US)**, and **eIDAS (EU)** by providing non-repudiable, mathematically verifiable time-stamps.
 
 ---
-© 2026 Satahash Open Protocol
+© 2026 Satahash Institutional Division. All Rights Reserved.

@@ -1,22 +1,28 @@
-# Satohash Vision 2.0: The Global Notary Mesh
+# Satohash Protocol Roadmap
 
-This roadmap outlines the transition from a standalone notarization tool to a **Decentralized, Agent-Managed Notary Protocol**.
+This roadmap tracks the evolution of Satohash from a standalone notary tool to a **Global Sovereign Settlement Mesh**.
 
-## PHASE I: INTELLIGENT CAPTURE (Q2 2026)
-1.  **[ ] The Satohash Snapper**: Browser extension for one-click "Stamp + Save" of any web content.
-2.  **[ ] The Dark Vault**: Client-side AES-GCM encryption. The server stores zero-knowledge proofs.
-3.  **[ ] Lightning Micropayments (NWC)**: Pay-per-anchor using Nostr Wallet Connect.
+## ✅ PHASE I: THE BASE CASE (COMPLETED)
+1.  **[x] Bitcoin Anchoring**: Core OpenTimestamps integration.
+2.  **[x] Multi-Party Signing**: Distributed signature flow for digital contracts.
+3.  **[x] Localization**: Support for EN, ES, FR, DE, ZH.
 
-## PHASE II: LEGAL & GLOBAL (Q3 2026)
-4.  **[ ] Expert Witness Exports**: Court-ready PDF documentation for legal standing.
-5.  **[ ] Silent Guardian Mode**: Local background watcher for folder/repo auto-sync.
-6.  **[ ] Distributed Notary Mesh**: Gossip-protocol for cross-server proof verification.
+## ✅ PHASE II: INSTITUTIONAL HARDENING (COMPLETED)
+4.  **[x] The Satohash Snapper**: "Snap & Stamp" web evidence capture tool.
+5.  **[x] Institutional UI**: Migration to premium Light-Mode/Indigo design system.
+6.  **[x] Developer Portal**: Public API sandbox and institutional documentation.
 
-## PHASE III: IDENTITY & GOVERNANCE (Q4 2026)
-7.  **[ ] Proof-of-Personhood**: NIP-05 verifiable identity links (Twitter/GitHub).
-8.  **[ ] Proof DNA Widgets**: Embeddable proof badges for portfolios.
-9.  **[ ] Satohash Mobile Signer**: Native iOS/Android app for contract signatures.
-10. **[ ] Kimi Admin Console**: Agent-only API for autonomous resource governance.
+## 🚧 PHASE III: IDENTITY & ORCHESTRATION (Q3-Q4 2026)
+7.  **[/] NIP-05 Identity**: Verifiable identity links for contract signers (In Progress).
+8.  **[ ] Proof DNA Widgets**: Embeddable, verifiable badges for digital assets.
+9.  **[ ] Mobile Signer Pro**: Dedicated iOS/Android secure enclave signing app.
+10. **[x] BOLT-12 Offers**: Native Lightning Network billing for automated anchoring.
+
+## 🔭 PHASE IV: VISION 2027 (The Sovereign Settlement Mesh)
+11. **[ ] Fedimint Privacy Shields**: Using blinded tokens for zero-knowledge notarization.
+12. **[ ] Cross-Chain Escrow**: Cryptographically locked document release across multiple chains.
+13. **[ ] AI Notary Oracles**: Autonomous agents for real-time legal/logical validation of proofs.
+14. **[ ] Decentralized Governance**: Transitioning protocol parameters to community-led governance.
 
 ---
-*Status: Vision 2.0 Initiated. Phase I in Progress.*
+*Status: Vision 2027 Initiated. Phase III Finalizing.*
