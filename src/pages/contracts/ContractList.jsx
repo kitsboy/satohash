@@ -86,7 +86,7 @@ export default function ContractList() {
                 <h1 className="text-noir-primary text-4xl font-black tracking-tighter uppercase italic md:text-6xl">
                   Protocol <br /> <span className="text-indigo-600">Dashboard.</span>
                 </h1>
-                <p className="max-w-md text-sm leading-relaxed font-medium text-slate-400">
+                <p className="max-w-md text-sm leading-relaxed font-bold text-slate-600 italic">
                   Managing {contracts.length} active cryptographic proofs anchored to the Bitcoin
                   settlement layer.
                 </p>
@@ -277,7 +277,7 @@ function StatCard({ icon: Icon, label, value, color }) {
         <Icon size={20} />
       </div>
       <div>
-        <p className="mb-0.5 text-[10px] font-bold tracking-widest text-slate-400 uppercase">
+        <p className="mb-0.5 text-[10px] font-black tracking-widest text-slate-500 uppercase">
           {label}
         </p>
         <p className="text-noir-primary text-xl font-extrabold tracking-tighter">{value}</p>
@@ -318,7 +318,7 @@ function ContractCard({ contract, onClick, onDelete }) {
       </div>
 
       <div className="relative z-10 mb-5 flex items-start justify-between">
-        <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-slate-50 text-slate-400 transition-all group-hover:bg-indigo-50 group-hover:text-indigo-600">
+        <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-slate-100 text-slate-600 transition-all group-hover:bg-indigo-600 group-hover:text-white">
           <FileText size={20} />
         </div>
         <StatusPill status={contract.status} />
@@ -329,11 +329,12 @@ function ContractCard({ contract, onClick, onDelete }) {
       </h3>
 
       <div className="relative z-10 mt-5 flex items-center gap-4 border-t border-slate-50 pt-4">
-        <div className="flex items-center gap-1.5 text-[10px] font-medium tracking-wider text-slate-400">
-          <Calendar size={11} /> {new Date(contract.updatedAt).toLocaleDateString()}
+        <div className="flex items-center gap-1.5 text-[10px] font-black tracking-wider text-slate-600">
+          <Calendar size={11} className="text-indigo-600" />{' '}
+          {new Date(contract.updatedAt).toLocaleDateString()}
         </div>
-        <div className="flex items-center gap-1.5 text-[10px] font-medium tracking-wider text-slate-400">
-          <Clock size={11} /> {isTimestamped ? 'Verified' : 'Pending'}
+        <div className="flex items-center gap-1.5 text-[10px] font-black tracking-wider text-slate-600">
+          <Clock size={11} className="text-indigo-600" /> {isTimestamped ? 'Verified' : 'Pending'}
         </div>
       </div>
 
@@ -346,7 +347,7 @@ function ContractCard({ contract, onClick, onDelete }) {
 function ActivityItem({ icon: Icon, title, time, status }) {
   return (
     <div className="relative z-10 flex gap-4">
-      <div className="flex h-7 w-7 items-center justify-center rounded-full border-2 border-slate-100 bg-white text-slate-400 shadow-sm">
+      <div className="flex h-7 w-7 items-center justify-center rounded-full border-2 border-slate-200 bg-white text-slate-600 shadow-sm">
         <Icon size={12} />
       </div>
       <div className="flex-1">

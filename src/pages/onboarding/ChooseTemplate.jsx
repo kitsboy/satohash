@@ -91,7 +91,7 @@ export default function ChooseTemplate() {
           <h1 className="text-noir-primary mb-6 text-4xl font-black tracking-tighter uppercase italic md:text-6xl">
             Choose Your <br /> <span className="text-gradient text-indigo-600">Artifact Type.</span>
           </h1>
-          <p className="mx-auto max-w-2xl text-lg leading-relaxed font-medium text-slate-400">
+          <p className="mx-auto max-w-2xl text-lg leading-relaxed font-bold text-slate-600 italic">
             Select a specialized template or upload a custom document to begin the cryptographic
             anchoring process.
           </p>
@@ -119,7 +119,7 @@ export default function ChooseTemplate() {
               <h4 className="text-noir-primary mb-2 text-xs font-black tracking-widest uppercase italic">
                 Protocol Disclaimer
               </h4>
-              <p className="max-w-3xl text-sm leading-relaxed font-medium text-slate-500">
+              <p className="max-w-3xl text-sm leading-relaxed font-bold text-slate-700">
                 Satohash is a cryptographic notary service. We provide mathematical proof of
                 existence via the Bitcoin blockchain. We are not a law firm and do not provide legal
                 advice. All proofs generated are verifiable globally via OpenTimestamps.
@@ -150,7 +150,7 @@ function TemplateCard({ template, onClick, index }) {
         <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-slate-50 text-slate-400 transition-all group-hover:bg-indigo-600 group-hover:text-white group-hover:shadow-lg group-hover:shadow-indigo-500/20">
           <Icon size={28} />
         </div>
-        <span className="text-[10px] font-black tracking-widest text-slate-300 uppercase transition-colors group-hover:text-indigo-600">
+        <span className="text-[10px] font-black tracking-widest text-slate-500 uppercase transition-colors group-hover:text-indigo-600">
           {template.category}
         </span>
       </div>
@@ -159,7 +159,7 @@ function TemplateCard({ template, onClick, index }) {
         <h3 className="text-noir-primary mb-3 text-xl font-black tracking-tight uppercase italic transition-colors group-hover:text-indigo-600">
           {template.title}
         </h3>
-        <p className="text-sm leading-relaxed font-medium text-slate-400 transition-colors group-hover:text-slate-500">
+        <p className="text-sm leading-relaxed font-bold text-slate-700 transition-colors group-hover:text-slate-800">
           {template.description}
         </p>
       </div>

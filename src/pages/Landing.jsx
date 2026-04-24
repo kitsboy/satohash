@@ -70,7 +70,7 @@ const FeatureCard = ({ icon: Icon, title, description, delay, accent = 'indigo' 
         <Icon size={24} />
       </div>
       <h3 className="text-noir-primary mb-3 text-xl font-extrabold tracking-tight">{title}</h3>
-      <p className="text-sm leading-relaxed font-medium text-slate-500">{description}</p>
+      <p className="text-sm leading-relaxed font-bold text-slate-700">{description}</p>
     </motion.div>
   )
 }
@@ -146,7 +146,7 @@ export default function Landing() {
           </motion.h1>
 
           <motion.p
-            className="mx-auto mb-12 max-w-2xl text-lg leading-relaxed font-medium text-slate-500 md:text-xl"
+            className="mx-auto mb-12 max-w-2xl text-lg leading-relaxed font-bold text-slate-700 italic md:text-xl"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.4 }}
@@ -194,7 +194,7 @@ export default function Landing() {
               href="/Satohash_Executive_Pitch.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 text-[11px] font-bold tracking-widest text-slate-400 uppercase transition-colors hover:text-indigo-600"
+              className="flex items-center gap-2 text-[11px] font-black tracking-widest text-slate-600 uppercase transition-colors hover:text-indigo-600"
             >
               <FileText size={14} /> Executive Pitch
             </a>
@@ -202,7 +202,7 @@ export default function Landing() {
               href="/Satohash_Layman_Tutorial.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 text-[11px] font-bold tracking-widest text-slate-400 uppercase transition-colors hover:text-indigo-600"
+              className="flex items-center gap-2 text-[11px] font-black tracking-widest text-slate-600 uppercase transition-colors hover:text-indigo-600"
             >
               <FileText size={14} /> Layman Tutorial
             </a>
@@ -633,13 +633,13 @@ function UseCaseCard({ icon: Icon, title, desc, category }) {
       <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-50 text-slate-400 transition-colors group-hover:bg-indigo-600 group-hover:text-white group-hover:shadow-lg group-hover:shadow-indigo-500/20">
         <Icon size={24} />
       </div>
-      <span className="mb-2 block text-[9px] font-black tracking-widest text-slate-300 uppercase italic transition-colors group-hover:text-indigo-600">
+      <span className="mb-2 block text-[9px] font-black tracking-widest text-slate-500 uppercase italic transition-colors group-hover:text-indigo-600">
         {category}
       </span>
       <h3 className="text-noir-primary mb-3 text-lg font-black tracking-tight uppercase italic transition-colors group-hover:text-indigo-600">
         {title}
       </h3>
-      <p className="text-sm leading-relaxed font-medium text-slate-400 transition-colors group-hover:text-slate-500">
+      <p className="text-sm leading-relaxed font-bold text-slate-700 transition-colors group-hover:text-slate-800">
         {desc}
       </p>
 
