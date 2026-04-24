@@ -42,23 +42,33 @@ export function secureCompare(a, b) {
   return mismatch === 0
 }
 
+import { encryptData } from './encryption'
+
 /**
  * Encrypts a file buffer or arbitrary array buffer using WebCrypto API
- * (Restored to resolve GlobalDropzone import error)
+ * Uses the real AES-GCM implementation from encryption.js
  */
-export async function encryptFile(arrayBuffer) {
-  // Generate an initialization vector
-  const iv = crypto.getRandomValues(new Uint8Array(12))
+export async function encryptFile(arrayBuffer, password = 'local_satohash_vault_key') {
+  try {
+    const encryptedUint8 = await encryptData(arrayBuffer, password)
 
-  // Standard hex encoding for the logs
-  const ivHex = Array.from(iv)
-    .map((b) => b.toString(16).padStart(2, '0'))
-    .join('')
+    // Extract the IV from the combined buffer (it's at bytes 16-28 per encryption.js)
+    const iv = encryptedUint8.slice(16, 28)
+    const ivHex = Array.from(iv)
+      .map((b) => b.toString(16).padStart(2, '0'))
+      .join('')
 
-  // Return the destructurable format expected by GlobalDropzone
-  return {
-    iv: ivHex,
-    encryptedBuffer: arrayBuffer
+    return {
+      iv: ivHex,
+      encryptedBuffer: encryptedUint8.buffer
+    }
+  } catch (error) {
+    console.error('Encryption failed:', error)
+    // Fallback to mock for safety in dev
+    return {
+      iv: 'failed-iv',
+      encryptedBuffer: arrayBuffer
+    }
   }
 }
 

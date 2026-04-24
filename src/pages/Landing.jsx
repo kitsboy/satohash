@@ -7,10 +7,7 @@ import {
   Lock,
   Clock,
   ArrowRight,
-  Sparkles,
   Cpu,
-  FileCheck,
-  Library,
   Network,
   Zap,
   Boxes,
@@ -18,7 +15,6 @@ import {
   Shield,
   Activity,
   Fingerprint,
-  MousePointer2,
   BookOpen,
   Hash,
   CheckCircle2,
@@ -481,7 +477,7 @@ export default function Landing() {
             Universal Proof <br /> For Every{' '}
             <span className="text-gradient text-indigo-600">Artifact.</span>
           </h2>
-          <p className="mx-auto max-w-2xl text-lg leading-relaxed font-medium text-slate-400">
+          <p className="mx-auto max-w-2xl text-lg leading-relaxed font-medium text-slate-500">
             From institutional settlement to personal legacy, Satohash anchors the truth of any
             digital asset.
           </p>
@@ -585,7 +581,7 @@ export default function Landing() {
           <h2 className="relative z-10 mb-6 text-5xl font-extrabold tracking-tighter text-white md:text-7xl">
             Ready to Anchor?
           </h2>
-          <p className="relative z-10 mx-auto mb-12 max-w-xl text-lg leading-relaxed font-medium text-indigo-200/60">
+          <p className="relative z-10 mx-auto mb-12 max-w-xl text-lg leading-relaxed font-medium text-indigo-100">
             Join the Oracle Mesh and make your digital artifacts permanently, mathematically
             provable.
           </p>

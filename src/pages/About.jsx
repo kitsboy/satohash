@@ -106,7 +106,10 @@ export default function About() {
               <h2 className="text-noir-primary text-5xl font-black tracking-tighter uppercase italic">
                 The Epistemic Crisis.
               </h2>
-              <div className="document-paper border-noir relative space-y-6 overflow-hidden p-10 text-lg leading-relaxed font-medium text-slate-700 italic shadow-2xl md:p-16">
+              <div className="document-paper border-noir relative space-y-6 overflow-hidden p-8 text-lg leading-relaxed font-medium text-slate-700 italic shadow-2xl md:p-12">
+                <div className="pointer-events-none absolute top-4 right-6 text-[8px] font-black tracking-[0.3em] text-indigo-900/10 uppercase italic">
+                  Forensic_Integrity_Mesh // v4.0
+                </div>
                 <div className="grid-pattern-slate pointer-events-none absolute inset-0 opacity-[0.01]" />
                 <p>
                   Current notarization and attestation methods are bottlenecked by centralized
@@ -146,7 +149,10 @@ export default function About() {
               <h2 className="text-noir-primary text-5xl font-black tracking-tighter uppercase italic">
                 Architecture.
               </h2>
-              <div className="document-paper border-noir relative space-y-12 overflow-hidden p-10 shadow-2xl md:p-16">
+              <div className="document-paper border-noir relative space-y-12 overflow-hidden p-8 shadow-2xl md:p-12">
+                <div className="pointer-events-none absolute top-4 right-6 text-[8px] font-black tracking-[0.3em] text-indigo-900/10 uppercase italic">
+                  Protocol_Architecture // Level_02
+                </div>
                 <div className="grid-pattern-slate pointer-events-none absolute inset-0 opacity-[0.01]" />
                 <div className="space-y-6 leading-relaxed font-medium text-slate-600 italic">
                   <p>
@@ -199,7 +205,10 @@ export default function About() {
               <h2 className="text-noir-primary text-5xl font-black tracking-tighter uppercase italic">
                 Mission: Give A Bit.
               </h2>
-              <div className="document-paper border-noir relative overflow-hidden bg-gradient-to-br from-white to-rose-50/10 p-10 shadow-2xl md:p-16">
+              <div className="document-paper border-noir relative overflow-hidden bg-gradient-to-br from-white to-rose-50/10 p-8 shadow-2xl md:p-12">
+                <div className="pointer-events-none absolute top-4 right-6 text-[8px] font-black tracking-[0.3em] text-rose-500/10 uppercase italic">
+                  Philanthropic_Engine // Verified_Heart
+                </div>
                 <div className="grid-pattern-slate pointer-events-none absolute inset-0 opacity-[0.01]" />
                 <div className="mb-16 text-center">
                   <div className="mb-8 inline-block rounded-[2.5rem] border border-rose-100 bg-rose-50 p-8 text-rose-500 shadow-xl shadow-rose-500/5">
@@ -247,7 +256,10 @@ export default function About() {
               <h2 className="text-noir-primary text-5xl font-black tracking-tighter uppercase italic">
                 Judicial Proof.
               </h2>
-              <div className="document-paper border-noir relative space-y-12 overflow-hidden p-10 shadow-2xl md:p-16">
+              <div className="document-paper border-noir relative space-y-12 overflow-hidden p-8 shadow-2xl md:p-12">
+                <div className="pointer-events-none absolute top-4 right-6 text-[8px] font-black tracking-[0.3em] text-indigo-900/10 uppercase italic">
+                  Judicial_Standard // Level_04
+                </div>
                 <div className="grid-pattern-slate pointer-events-none absolute inset-0 opacity-[0.01]" />
                 <p className="text-lg leading-relaxed font-bold text-slate-600 italic">
                   In a court of law, truth is a matter of verification. Satahash transitions digital
@@ -300,7 +312,10 @@ export default function About() {
                   Machine.
                 </span>
               </h2>
-              <div className="document-paper border-noir relative space-y-12 overflow-hidden p-10 shadow-2xl md:p-16">
+              <div className="document-paper border-noir relative space-y-12 overflow-hidden p-8 shadow-2xl md:p-12">
+                <div className="pointer-events-none absolute top-4 right-6 text-[8px] font-black tracking-[0.3em] text-indigo-900/10 uppercase italic">
+                  Sovereign_Giving // Level_05
+                </div>
                 <div className="grid-pattern-slate pointer-events-none absolute inset-0 opacity-[0.01]" />
                 <p className="text-lg leading-relaxed font-bold text-slate-600 italic">
                   The Philanthropic Protocol Engine: Satohash is not merely a utility; it is a
@@ -351,10 +366,10 @@ export default function About() {
                   <div className="mb-8 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-indigo-600 text-white shadow-lg shadow-indigo-500/40">
                     <Network size={24} />
                   </div>
-                  <h3 className="mb-6 text-4xl leading-tight font-black tracking-tighter uppercase italic">
+                  <h3 className="mb-6 text-4xl leading-tight font-black tracking-tighter text-white uppercase italic">
                     Global Oracle <br /> <span className="text-indigo-400">Mesh Topology.</span>
                   </h3>
-                  <p className="mb-10 max-w-md text-sm leading-relaxed font-medium text-indigo-200/50 italic">
+                  <p className="mb-10 max-w-md text-sm leading-relaxed font-medium text-slate-300 italic">
                     Our network is a distributed lattice of Witness Nodes that cross-verify every
                     anchor. If the consensus falls, the proofs remain sovereign and verifiable via
                     any public block explorer globally.
@@ -408,10 +423,10 @@ export default function About() {
               <div className="relative overflow-hidden rounded-[3rem] bg-indigo-900 p-12 text-center text-white shadow-2xl md:p-24">
                 <div className="relative z-10 mx-auto max-w-2xl">
                   <Shield className="mx-auto mb-10 animate-pulse text-emerald-400" size={64} />
-                  <h2 className="mb-8 text-5xl leading-tight font-black tracking-tighter italic">
+                  <h2 className="mb-8 text-5xl leading-tight font-black tracking-tighter text-white italic">
                     Join the <br /> <span className="text-indigo-400">Final Record.</span>
                   </h2>
-                  <p className="mb-12 text-lg leading-relaxed font-bold text-indigo-200/60 italic">
+                  <p className="mb-12 text-lg leading-relaxed font-bold text-indigo-100 italic">
                     Whether you are an institution securing a referendum or a citizen securing a
                     deed, the Satohash Mesh is your final point of truth.
                   </p>
