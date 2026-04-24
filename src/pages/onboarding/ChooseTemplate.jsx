@@ -1,22 +1,15 @@
 import { useNavigate } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
 import {
   Heart,
-  Home,
-  FileText,
   Upload,
-  ArrowRight,
-  Users,
-  Zap,
   ShieldCheck,
-  Lock,
   Music,
   Image as ImageIcon,
   GraduationCap,
-  Scale
+  Scale,
+  Info
 } from 'lucide-react'
 import { motion } from 'framer-motion'
-import Button from '../../components/Button'
 
 const TEMPLATES = [
   {
@@ -64,7 +57,6 @@ const TEMPLATES = [
 ]
 
 export default function ChooseTemplate() {
-  const { t } = useTranslation()
   const navigate = useNavigate()
 
   const handleTemplateSelect = (templateType) => {
@@ -150,9 +142,14 @@ function TemplateCard({ template, onClick, index }) {
         <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-slate-50 text-slate-400 transition-all group-hover:bg-indigo-600 group-hover:text-white group-hover:shadow-lg group-hover:shadow-indigo-500/20">
           <Icon size={28} />
         </div>
-        <span className="text-[10px] font-black tracking-widest text-slate-500 uppercase transition-colors group-hover:text-indigo-600">
-          {template.category}
-        </span>
+        <div className="flex items-center gap-4">
+          <span className="text-[10px] font-black tracking-widest text-slate-500 uppercase transition-colors group-hover:text-indigo-600">
+            {template.category}
+          </span>
+          <Tooltip
+            text={`This template is optimized for ${template.title}. It includes custom metadata fields and cryptographic anchoring specific to ${template.category.toLowerCase()} artifacts.`}
+          />
+        </div>
       </div>
 
       <div className="relative z-10">
@@ -168,7 +165,23 @@ function TemplateCard({ template, onClick, index }) {
       <div className="absolute inset-0 z-0 -translate-x-full bg-linear-to-r from-transparent via-indigo-500/5 to-transparent transition-transform duration-1000 group-hover:translate-x-full" />
 
       {/* Bottom Glow */}
-      <div className="absolute right-0 bottom-0 left-0 h-1 bg-gradient-to-r from-indigo-500 to-violet-500 opacity-0 transition-opacity group-hover:opacity-100" />
+      <div className="absolute -right-10 -bottom-10 h-32 w-32 rounded-full bg-indigo-500/5 blur-2xl transition-opacity group-hover:opacity-100" />
     </motion.div>
+  )
+}
+
+function Tooltip({ text }) {
+  return (
+    <div className="group/tooltip relative">
+      <div className="flex h-6 w-6 cursor-help items-center justify-center rounded-full border border-slate-200 bg-slate-100 text-slate-400 transition-all hover:bg-indigo-600 hover:text-white">
+        <Info size={12} />
+      </div>
+      <div className="pointer-events-none absolute bottom-full left-1/2 mb-3 w-48 -translate-x-1/2 opacity-0 transition-all group-hover/tooltip:opacity-100">
+        <div className="rounded-xl bg-slate-900 p-4 text-[10px] leading-relaxed font-bold text-white italic shadow-2xl ring-1 ring-white/10">
+          {text}
+          <div className="absolute top-full left-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rotate-45 bg-slate-900" />
+        </div>
+      </div>
+    </div>
   )
 }

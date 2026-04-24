@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import {
   Plus,
   FileText,
@@ -14,7 +14,8 @@ import {
   Lock,
   Trash2,
   BookOpen,
-  CheckCircle2
+  CheckCircle2,
+  Info
 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Button from '../../components/Button'
@@ -100,14 +101,19 @@ export default function ContractList() {
                     Verifiable_Nominal
                   </p>
                 </div>
-                <Button
-                  variant="primary"
-                  size="large"
-                  onClick={() => navigate('/choose-template')}
-                  className="h-16 px-10 shadow-xl shadow-indigo-500/20"
-                >
-                  <Plus size={18} /> Create New Proof
-                </Button>
+                <div className="flex gap-4">
+                  <Link to="/choose-template">
+                    <button className="group relative h-14 overflow-hidden rounded-2xl bg-indigo-900 px-8 text-[11px] font-black tracking-widest text-white uppercase shadow-2xl shadow-indigo-500/20 transition-all hover:scale-[1.02] active:scale-[0.98]">
+                      <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 to-indigo-400 opacity-0 transition-opacity group-hover:opacity-100" />
+                      <span className="relative z-10 flex items-center gap-3">
+                        Create New Artifact <Plus size={16} />
+                      </span>
+                    </button>
+                  </Link>
+                  <div className="flex items-center">
+                    <Tooltip text="Begin the process of anchoring a new document or asset to the Bitcoin blockchain. Choose from specialized templates or upload a custom artifact." />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -277,9 +283,14 @@ function StatCard({ icon: Icon, label, value, color }) {
         <Icon size={20} />
       </div>
       <div>
-        <p className="mb-0.5 text-[10px] font-black tracking-widest text-slate-500 uppercase">
-          {label}
-        </p>
+        <div className="flex items-center gap-2">
+          <p className="mb-0.5 text-[10px] font-black tracking-widest text-slate-500 uppercase">
+            {label}
+          </p>
+          <Tooltip
+            text={`This metric tracks the ${label.toLowerCase()} across the sovereign mesh network.`}
+          />
+        </div>
         <p className="text-noir-primary text-xl font-extrabold tracking-tighter">{value}</p>
       </div>
     </motion.div>
@@ -309,19 +320,22 @@ function ContractCard({ contract, onClick, onDelete }) {
             <Trash2 size={16} />
           </button>
         )}
-        {isTimestamped && (
-          <ShieldCheck
-            size={18}
-            className="text-emerald-500 opacity-20 transition-opacity group-hover:opacity-100"
-          />
-        )}
       </div>
 
       <div className="relative z-10 mb-5 flex items-start justify-between">
         <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-slate-100 text-slate-600 transition-all group-hover:bg-indigo-600 group-hover:text-white">
           <FileText size={20} />
         </div>
-        <StatusPill status={contract.status} />
+        <div className="flex items-center gap-2">
+          <StatusPill status={contract.status} />
+          <Tooltip
+            text={
+              contract.status === 'timestamped'
+                ? 'This artifact is fully verified and anchored to the Bitcoin blockchain. It is mathematically immutable.'
+                : 'This artifact is in draft state. It has not yet been submitted to the Bitcoin network for anchoring.'
+            }
+          />
+        </div>
       </div>
 
       <h3 className="text-noir-primary relative z-10 mb-2 text-base font-extrabold tracking-tight transition-colors group-hover:text-indigo-600">
@@ -351,13 +365,29 @@ function ActivityItem({ icon: Icon, title, time, status }) {
         <Icon size={12} />
       </div>
       <div className="flex-1">
-        <div className="mb-0.5 flex items-start justify-between">
-          <h5 className="text-[11px] font-bold tracking-tight text-slate-900">{title}</h5>
-          <span className="text-[9px] font-medium text-slate-300">{time}</span>
+        <div className="flex items-center justify-between">
+          <h4 className="text-noir-primary text-[11px] font-black tracking-tight uppercase italic">
+            {title}
+          </h4>
+          <span className="text-[9px] font-bold text-slate-400">{time}</span>
         </div>
-        <span className="flex items-center gap-1 text-[9px] font-bold tracking-widest text-emerald-500 uppercase">
-          <div className="h-1 w-1 rounded-full bg-emerald-500" /> {status}
-        </span>
+        <p className="text-[9px] font-bold text-slate-500">{status}</p>
+      </div>
+    </div>
+  )
+}
+
+function Tooltip({ text }) {
+  return (
+    <div className="group/tooltip relative">
+      <div className="flex h-6 w-6 cursor-help items-center justify-center rounded-full border border-slate-200 bg-slate-100 text-slate-400 transition-all hover:bg-indigo-600 hover:text-white">
+        <Info size={12} />
+      </div>
+      <div className="pointer-events-none absolute bottom-full left-1/2 mb-3 w-48 -translate-x-1/2 opacity-0 transition-all group-hover/tooltip:opacity-100">
+        <div className="rounded-xl bg-slate-900 p-4 text-[10px] leading-relaxed font-bold text-white italic shadow-2xl ring-1 ring-white/10">
+          {text}
+          <div className="absolute top-full left-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rotate-45 bg-slate-900" />
+        </div>
       </div>
     </div>
   )
