@@ -4,9 +4,10 @@ import { Link } from 'react-router-dom'
 
 export default function About() {
   return (
-    <div className="min-h-screen bg-[#fcfcfc] pb-32">
+    <div className="relative min-h-screen overflow-hidden bg-[#f7f8fc] pb-32">
+      <div className="grid-pattern-slate pointer-events-none absolute inset-0 opacity-[0.03]" />
       {/* Institutional Header */}
-      <header className="relative border-b border-indigo-100 bg-white pt-24 pb-16">
+      <header className="mesh-bg-light relative border-b border-indigo-100 bg-white pt-24 pb-16">
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-indigo-50/20 to-transparent" />
         <div className="layout-container relative z-10 text-center">
           <motion.div
@@ -19,7 +20,7 @@ export default function About() {
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mb-4 text-5xl font-black tracking-tighter text-indigo-900 uppercase italic md:text-8xl"
+            className="text-noir-primary mb-4 text-5xl font-black tracking-tighter uppercase italic md:text-8xl"
           >
             The Satahash <br /> <span className="text-indigo-600">PROTOCOL.</span>
           </motion.h1>
@@ -49,7 +50,7 @@ export default function About() {
             <motion.p
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
-              className="relative z-10 mb-12 text-2xl leading-[1.1] font-black text-indigo-900 italic md:text-4xl"
+              className="text-noir-primary relative z-10 mb-12 text-2xl leading-[1.1] font-black italic md:text-4xl"
             >
               &quot;In an era of hyper-ephemeral digital artifacts, truth has become a variable of
               centralized authority. Satahash returns finality to the people by anchoring digital
@@ -82,9 +83,9 @@ export default function About() {
               ].map((chapter, i) => (
                 <motion.a
                   key={i}
-                  whileHover={{ x: 6 }}
+                  whileHover={{ x: 6, color: '#4f46e5' }}
                   href={`#chapter-${i + 1}`}
-                  className="block text-xs font-black tracking-tighter text-slate-400 uppercase italic transition-all hover:text-indigo-600"
+                  className="block text-xs font-black tracking-tighter text-slate-400 uppercase italic transition-all"
                 >
                   {chapter}
                 </motion.a>
@@ -102,10 +103,11 @@ export default function About() {
                   CHAPTER_ONE
                 </span>
               </div>
-              <h2 className="text-5xl font-black tracking-tighter text-indigo-900 uppercase italic">
+              <h2 className="text-noir-primary text-5xl font-black tracking-tighter uppercase italic">
                 The Epistemic Crisis.
               </h2>
-              <div className="document-paper space-y-6 p-10 text-lg leading-relaxed font-medium text-slate-700 italic shadow-xl md:p-16">
+              <div className="document-paper border-noir relative space-y-6 overflow-hidden p-10 text-lg leading-relaxed font-medium text-slate-700 italic shadow-2xl md:p-16">
+                <div className="grid-pattern-slate pointer-events-none absolute inset-0 opacity-[0.01]" />
                 <p>
                   Current notarization and attestation methods are bottlenecked by centralized
                   fragility. Whether it is a government land title, a corporate vote, or a digital
@@ -141,10 +143,11 @@ export default function About() {
                   CHAPTER_TWO
                 </span>
               </div>
-              <h2 className="text-5xl font-black tracking-tighter text-indigo-900 uppercase italic">
+              <h2 className="text-noir-primary text-5xl font-black tracking-tighter uppercase italic">
                 Architecture.
               </h2>
-              <div className="document-paper space-y-12 p-10 shadow-xl md:p-16">
+              <div className="document-paper border-noir relative space-y-12 overflow-hidden p-10 shadow-2xl md:p-16">
+                <div className="grid-pattern-slate pointer-events-none absolute inset-0 opacity-[0.01]" />
                 <div className="space-y-6 leading-relaxed font-medium text-slate-600 italic">
                   <p>
                     Satohash implements a **Tiered Witness Model** powered by Merkle-Tree
@@ -155,7 +158,10 @@ export default function About() {
                 </div>
 
                 <div className="grid gap-8 py-8 md:grid-cols-2">
-                  <div className="rounded-[2.5rem] border border-indigo-100 bg-indigo-50 p-10 italic">
+                  <motion.div
+                    whileHover={{ scale: 1.02 }}
+                    className="rounded-[2.5rem] border border-indigo-100 bg-indigo-50/50 p-10 italic shadow-sm transition-all hover:shadow-md"
+                  >
                     <Binary className="mb-6 text-indigo-600" size={32} />
                     <h4 className="mb-3 text-sm font-black text-indigo-900 uppercase">
                       Merkle Roots
@@ -164,8 +170,11 @@ export default function About() {
                       Each batch anchor creates a technical certificate (.ots) which serves as a
                       forensic roadmap back to a specific Bitcoin block.
                     </p>
-                  </div>
-                  <div className="rounded-[2.5rem] border border-indigo-100 bg-indigo-50 p-10 italic">
+                  </motion.div>
+                  <motion.div
+                    whileHover={{ scale: 1.02 }}
+                    className="rounded-[2.5rem] border border-indigo-100 bg-indigo-50/50 p-10 italic shadow-sm transition-all hover:shadow-md"
+                  >
                     <Globe className="mb-6 text-indigo-600" size={32} />
                     <h4 className="mb-3 text-sm font-black text-indigo-900 uppercase">
                       Relay Mesh
@@ -174,7 +183,7 @@ export default function About() {
                       Nostr-native relay propagation ensures that your attestation is visible to the
                       entire world before the first confirmation.
                     </p>
-                  </div>
+                  </motion.div>
                 </div>
               </div>
             </section>
@@ -187,10 +196,11 @@ export default function About() {
                   CHAPTER_THREE
                 </span>
               </div>
-              <h2 className="text-5xl font-black tracking-tighter text-indigo-900 uppercase italic">
+              <h2 className="text-noir-primary text-5xl font-black tracking-tighter uppercase italic">
                 Mission: Give A Bit.
               </h2>
-              <div className="document-paper bg-gradient-to-br from-white to-rose-50/10 p-10 shadow-xl md:p-16">
+              <div className="document-paper border-noir relative overflow-hidden bg-gradient-to-br from-white to-rose-50/10 p-10 shadow-2xl md:p-16">
+                <div className="grid-pattern-slate pointer-events-none absolute inset-0 opacity-[0.01]" />
                 <div className="mb-16 text-center">
                   <div className="mb-8 inline-block rounded-[2.5rem] border border-rose-100 bg-rose-50 p-8 text-rose-500 shadow-xl shadow-rose-500/5">
                     <Heart size={48} className="animate-pulse" />
@@ -234,10 +244,11 @@ export default function About() {
                   CHAPTER_FOUR
                 </span>
               </div>
-              <h2 className="text-5xl font-black tracking-tighter text-indigo-900 uppercase italic">
+              <h2 className="text-noir-primary text-5xl font-black tracking-tighter uppercase italic">
                 Judicial Proof.
               </h2>
-              <div className="document-paper space-y-12 p-10 shadow-xl md:p-16">
+              <div className="document-paper border-noir relative space-y-12 overflow-hidden p-10 shadow-2xl md:p-16">
+                <div className="grid-pattern-slate pointer-events-none absolute inset-0 opacity-[0.01]" />
                 <p className="text-lg leading-relaxed font-bold text-slate-600 italic">
                   In a court of law, truth is a matter of verification. Satahash transitions digital
                   evidence from &quot;trusted hearsay&quot; to &quot;mathematical fact.&quot;
@@ -245,14 +256,15 @@ export default function About() {
 
                 <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
                   {['ANONYMOUS', 'IMMUTABLE', 'VERIFIABLE', 'FINAL'].map((val) => (
-                    <div
+                    <motion.div
                       key={val}
-                      className="rounded-2xl border border-indigo-100 bg-white p-6 text-center shadow-sm"
+                      whileHover={{ y: -4, borderColor: '#4f46e5' }}
+                      className="rounded-2xl border border-indigo-100 bg-white p-6 text-center shadow-sm transition-all"
                     >
                       <span className="text-[10px] font-black tracking-widest text-indigo-600 italic">
                         {val}
                       </span>
-                    </div>
+                    </motion.div>
                   ))}
                 </div>
 
@@ -282,20 +294,24 @@ export default function About() {
                   CHAPTER_FIVE
                 </span>
               </div>
-              <h2 className="text-5xl leading-none font-black tracking-tighter text-indigo-900 uppercase italic">
+              <h2 className="text-noir-primary text-5xl leading-none font-black tracking-tighter uppercase italic">
                 The Giving <br />{' '}
                 <span className="text-indigo-600 italic underline decoration-indigo-200 decoration-4 underline-offset-8">
                   Machine.
                 </span>
               </h2>
-              <div className="document-paper space-y-12 p-10 shadow-xl md:p-16">
+              <div className="document-paper border-noir relative space-y-12 overflow-hidden p-10 shadow-2xl md:p-16">
+                <div className="grid-pattern-slate pointer-events-none absolute inset-0 opacity-[0.01]" />
                 <p className="text-lg leading-relaxed font-bold text-slate-600 italic">
                   The Philanthropic Protocol Engine: Satohash is not merely a utility; it is a
                   sustainable engine for social preservation. The &quot;Give A Bit&quot; mission is
                   integrated into the source code.
                 </p>
                 <div className="grid gap-8 md:grid-cols-2">
-                  <div className="rounded-[3rem] border border-indigo-100 bg-indigo-50 p-10 italic">
+                  <motion.div
+                    whileHover={{ scale: 1.02 }}
+                    className="rounded-[3rem] border border-indigo-100 bg-indigo-50/50 p-10 italic shadow-sm transition-all hover:shadow-md"
+                  >
                     <h4 className="mb-4 text-sm font-black text-indigo-900 uppercase italic">
                       Social Subsidization
                     </h4>
@@ -303,8 +319,11 @@ export default function About() {
                       Fee-harvesting from institutional batching directly funds the archival
                       infrastructure for journalists and global activist meshes.
                     </p>
-                  </div>
-                  <div className="rounded-[3rem] border border-slate-200 bg-slate-50 p-10 italic">
+                  </motion.div>
+                  <motion.div
+                    whileHover={{ scale: 1.02 }}
+                    className="rounded-[3rem] border border-slate-200 bg-slate-50/50 p-10 italic shadow-sm transition-all hover:shadow-md"
+                  >
                     <h4 className="mb-4 text-sm font-black text-indigo-900 uppercase italic">
                       Permanent Record
                     </h4>
@@ -312,7 +331,7 @@ export default function About() {
                       By anchoring history for the decentralized world, we ensure a donated human
                       memory that survives any political era.
                     </p>
-                  </div>
+                  </motion.div>
                 </div>
               </div>
             </section>
