@@ -19,128 +19,183 @@ import { toast } from 'sonner'
 const TEMPLATE_DEFINITIONS = [
   {
     id: 'prenup',
-    title: 'Prenuptial Agreement',
-    category: 'Family Law',
-    description: 'Establish asset ownership and division protocols prior to legal union.',
+    title: 'Executive Prenuptial Framework',
+    category: 'Private Law',
+    description:
+      'A comprehensive pre-marital agreement designed for high-net-worth individuals to define separate property and future division protocols.',
     icon: 'ShieldCheck',
     fields: [
-      { id: 'partyA', label: 'Party A Name', placeholder: 'Legal Name', type: 'text' },
-      { id: 'partyB', label: 'Party B Name', placeholder: 'Legal Name', type: 'text' },
-      { id: 'effectiveDate', label: 'Effective Date', type: 'date' },
       {
-        id: 'assets',
-        label: 'Primary Asset List',
-        placeholder: 'List significant assets...',
+        id: 'partyA',
+        label: 'First Party (Principal)',
+        placeholder: 'Full Legal Name',
+        type: 'text'
+      },
+      {
+        id: 'partyB',
+        label: 'Second Party (Principal)',
+        placeholder: 'Full Legal Name',
+        type: 'text'
+      },
+      {
+        id: 'jurisdiction',
+        label: 'Governing Jurisdiction',
+        placeholder: 'e.g., State of New York',
+        type: 'text'
+      },
+      {
+        id: 'separateProperty',
+        label: 'Schedule A: Separate Property',
+        placeholder: 'Detailed list of pre-marital assets...',
         type: 'textarea'
       },
       {
-        id: 'clauses',
-        label: 'Special Clauses',
-        placeholder: 'Additional legal stipulations...',
+        id: 'alimonyWaiver',
+        label: 'Spousal Support Waiver',
+        placeholder: 'Conditions for support or waiver...',
         type: 'textarea'
+      },
+      {
+        id: 'legalCounsel',
+        label: 'Independent Legal Counsel',
+        placeholder: 'Names of representing firms...',
+        type: 'text'
       }
     ],
     demoData: {
-      partyA: 'Johnathan Archer',
-      partyB: 'Elizabeth T. T’Pol',
-      effectiveDate: '2026-06-15',
-      assets:
-        '1. Primary Residence (San Francisco)\n2. Bitcoins (Legacy Address: bc1...)\n3. Starfleet Retirement Pension',
-      clauses: 'Mutual waiver of alimony. Sole ownership of pre-marital assets maintained.'
+      partyA: 'Alexander J. Sterling',
+      partyB: 'Isabella M. Vance',
+      jurisdiction: 'State of Delaware',
+      separateProperty:
+        '1. Equity in Sterling Global Corp (Est. $45M)\n2. Bitcoin Cold Storage (bc1q... / 1,200 BTC)\n3. Primary Residence: 742 Evergreen Terrace, NYC.\n4. Intellectual Property: Patent Portfolio #8,421,004.',
+      alimonyWaiver:
+        'Both parties hereby waive any and all rights to spousal support, maintenance, or alimony, regardless of the duration of the marriage or the financial disparity at the time of dissolution.',
+      legalCounsel: 'Dewey, Cheatum & Howe LLP / Sterling House Counsel'
     }
   },
   {
     id: 'house-transfer',
-    title: 'Real Estate Transfer Deed',
-    category: 'Property',
-    description: 'Formal conveyance of real property ownership between legal entities.',
+    title: 'Sovereign Real Estate Conveyance',
+    category: 'Commercial',
+    description:
+      'A legally sound real estate transfer deed for the conveyance of fee simple title between institutional entities.',
     icon: 'Layout',
     fields: [
-      { id: 'grantor', label: 'Grantor (Seller)', placeholder: 'Full Name/Entity', type: 'text' },
-      { id: 'grantee', label: 'Grantee (Buyer)', placeholder: 'Full Name/Entity', type: 'text' },
       {
-        id: 'address',
-        label: 'Property Address',
-        placeholder: 'Street, City, State, ZIP',
+        id: 'grantor',
+        label: 'Grantor (The Seller)',
+        placeholder: 'Full Entity Name',
         type: 'text'
       },
       {
-        id: 'legalDesc',
-        label: 'Legal Description',
-        placeholder: 'Lot/Block/Survey Info',
+        id: 'grantee',
+        label: 'Grantee (The Buyer)',
+        placeholder: 'Full Entity Name',
+        type: 'text'
+      },
+      {
+        id: 'legalDescription',
+        label: 'Legal Description of Property',
+        placeholder: 'Lot, Block, Subdivision, County...',
+        type: 'textarea'
+      },
+      {
+        id: 'encumbrances',
+        label: 'Exceptions & Encumbrances',
+        placeholder: 'Existing liens or easements...',
         type: 'textarea'
       },
       {
         id: 'consideration',
-        label: 'Sale Consideration',
-        placeholder: 'Amount in USD/BTC',
+        label: 'Total Consideration',
+        placeholder: 'Settlement Amount (USD/BTC)',
         type: 'text'
       }
     ],
     demoData: {
-      grantor: 'Satoshi Holdings LLC',
-      grantee: 'Digital Truth Trust',
-      address: '21 Block St, Austin, TX 78701',
-      legalDesc: 'Lot 42, Block 12, Hal Finney Addition, Travis County.',
-      consideration: '1.2 BTC'
+      grantor: 'Genesis Block Holdings Ltd.',
+      grantee: 'Sovereign Land Trust LLC',
+      legalDescription:
+        'ALL THAT CERTAIN piece or parcel of land situate in the County of Travis, State of Texas, being Lot 12, Block A of the FINNEY HEIGHTS ADDITION, according to the map or plat thereof recorded in Volume 84, Page 21 of the Plat Records.',
+      encumbrances:
+        'Subject to all existing easements, rights-of-way, and restrictions of record. Property is transferred free and clear of all voluntary liens.',
+      consideration: '4.20 BTC (Settled via On-Chain Finality)'
     }
   },
   {
     id: 'medical-poa',
-    title: 'Medical Power of Attorney',
-    category: 'Healthcare',
-    description: 'Designate a health care agent to make decisions on your behalf.',
+    title: 'Durable Medical Power of Attorney',
+    category: 'Directives',
+    description:
+      'A robust health care directive granting legal authority to an agent to make healthcare decisions under specified conditions.',
     icon: 'FileText',
     fields: [
-      { id: 'patient', label: 'Principal (Patient)', placeholder: 'Full Name', type: 'text' },
-      { id: 'agent', label: 'Health Care Agent', placeholder: 'Full Name', type: 'text' },
-      { id: 'backup', label: 'Alternate Agent', placeholder: 'Full Name', type: 'text' },
+      { id: 'principal', label: 'The Principal', placeholder: 'Your Legal Name', type: 'text' },
       {
-        id: 'instructions',
-        label: 'Directives',
-        placeholder: 'Life support, organ donation, etc.',
+        id: 'agent',
+        label: 'Designated Health Care Agent',
+        placeholder: 'Full Name & Relationship',
+        type: 'text'
+      },
+      {
+        id: 'limitations',
+        label: 'Specific Limitations',
+        placeholder: 'Decisions the agent cannot make...',
+        type: 'textarea'
+      },
+      {
+        id: 'endOfLife',
+        label: 'End-of-Life Instructions',
+        placeholder: 'Ventilation, nutrition, hydration...',
         type: 'textarea'
       }
     ],
     demoData: {
-      patient: 'Alice V. Nakamoto',
-      agent: 'Bob F. Finney',
-      backup: 'Charlie S. Wright',
-      instructions: 'No mechanical ventilation if brain death is confirmed. Full DNR in effect.'
+      principal: 'Julianna H. Nakamoto',
+      agent: 'Marcus V. Finney (Brother)',
+      limitations:
+        'Agent shall not have the power to authorize experimental neuro-link surgeries or long-term psychiatric institutionalization without a second opinion from a board-certified neurologist.',
+      endOfLife:
+        'In the event of a terminal condition or persistent vegetative state, I direct my agent to withhold life-sustaining treatment, including artificial nutrition and hydration. Full DNR order is to be strictly enforced.'
     }
   },
   {
-    id: 'nda',
-    title: 'Non-Disclosure Agreement',
+    id: 'mnda',
+    title: 'Mutual Non-Disclosure Agreement',
     category: 'Corporate',
-    description: 'Protect confidential information shared during discovery or partnership.',
+    description:
+      'An elite corporate MNDA with strict definitions of confidential information, survival periods, and injunctive relief clauses.',
     icon: 'Zap',
     fields: [
-      { id: 'disclosing', label: 'Disclosing Party', placeholder: 'Company Name', type: 'text' },
+      { id: 'partyA', label: 'Company A (Discloser)', placeholder: 'Entity Name', type: 'text' },
+      { id: 'partyB', label: 'Company B (Recipient)', placeholder: 'Entity Name', type: 'text' },
       {
-        id: 'receiving',
-        label: 'Receiving Party',
-        placeholder: 'Recipient Name/Entity',
+        id: 'term',
+        label: 'Confidentiality Period',
+        placeholder: 'e.g., 5 years post-termination',
         type: 'text'
       },
       {
         id: 'purpose',
-        label: 'Purpose of Disclosure',
-        placeholder: 'Partnership talks, employment, etc.',
+        label: 'Authorized Purpose',
+        placeholder: 'Evaluation of partnership...',
         type: 'text'
       },
       {
-        id: 'definition',
-        label: 'Confidential Info',
-        placeholder: 'Specify what is protected...',
+        id: 'confidentialInfo',
+        label: 'Scope of Information',
+        placeholder: 'What is protected...',
         type: 'textarea'
       }
     ],
     demoData: {
-      disclosing: 'Satohash Technologies',
-      receiving: 'Venture Capital X',
-      purpose: 'Series A Due Diligence',
-      definition: 'All source code, node topology, L402 middleware architecture, and client lists.'
+      partyA: 'Satohash Technologies Inc.',
+      partyB: 'Horizon Capital Ventures',
+      term: '3 Years from the Effective Date of Disclosure',
+      purpose:
+        'Technical due diligence regarding the integration of L402 middleware and Bitcoin Core RPC services.',
+      confidentialInfo:
+        'Confidential Information includes, without limitation, all source code, cryptographic primitives, node topology data, client identifiers, and financial projections shared during the Authorized Purpose.'
     }
   }
 ]
@@ -273,11 +328,11 @@ export default function NotaryTemplates() {
 
             <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-3">
               {/* Template Editor Sheet */}
-              <div className="relative overflow-hidden rounded-[2.5rem] bg-white p-12 text-gray-900 shadow-2xl lg:col-span-2">
-                {/* Subtle Watermark Logo */}
+              <div className="relative overflow-hidden rounded-[2.5rem] border border-gray-100 bg-white p-12 text-gray-900 shadow-2xl lg:col-span-2">
+                {/* Canonical Watermark Logo */}
                 <div className="absolute top-10 right-10 flex cursor-default items-center gap-3 opacity-50 grayscale transition-all hover:grayscale-0">
-                  <div className="h-8 w-8 rotate-45 rounded-sm bg-indigo-600 shadow-lg" />
-                  <span className="text-lg font-black tracking-tighter text-black uppercase">
+                  <img src="/logo.png" alt="Satohash Logo" className="h-10 w-10 object-contain" />
+                  <span className="text-xl font-black tracking-tighter text-black uppercase">
                     Satohash
                   </span>
                 </div>
