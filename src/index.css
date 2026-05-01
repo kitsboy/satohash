@@ -4,46 +4,48 @@
 
 @layer base {
   :root {
-    /* Institutional Noir Palette */
-    --bg-primary: #000000; /* Vantablack */
-    --bg-secondary: #0a0a0a; /* Deep Charcoal */
-    --surface-raised: #1a1a1a; /* Soft Graphite */
+    /* V5.0 Modern Institutional Palette */
+    --bg-primary: #050505; /* Deepest Obsidian */
+    --bg-secondary: #0f1014; /* Midnight Slate */
+    --surface-raised: #1a1c23; /* Carbon */
 
-    --text-primary: #f0f0f0; /* Titanium White */
-    --text-secondary: #888888; /* Ash Gray */
+    --text-primary: #f8fafc; /* Crisp White */
+    --text-secondary: #94a3b8; /* Slate Gray */
 
-    --accent-active: #4f46e5; /* Indigo Electric */
-    --accent-pending: #d97706; /* Merkle Amber */
-    --accent-success: #059669; /* Verdict Green */
-    --accent-warning: #b45309; /* Rust */
-    --accent-danger: #dc2626; /* Cold Red */
+    /* Vibrant Accents */
+    --accent-active: #3b82f6; /* Cyber Blue */
+    --accent-active-glow: rgba(59, 130, 246, 0.5);
+    --accent-pending: #f59e0b; /* Amber */
+    --accent-success: #10b981; /* Emerald */
+    --accent-danger: #ef4444; /* Ruby Red */
+    --accent-purple: #8b5cf6; /* Neon Purple */
 
     --border: rgba(255, 255, 255, 0.08);
     --border-bright: rgba(255, 255, 255, 0.15);
 
     --radius-pill: 9999px;
-    --radius-card: 1rem;
-    --radius-button: 0.75rem;
+    --radius-card: 1.5rem;
+    --radius-button: 1rem;
 
-    --shadow-noir: 0 8px 32px -8px rgba(0, 0, 0, 0.8);
-    --shadow-glow: 0 0 20px rgba(79, 70, 229, 0.15);
+    --shadow-noir: 0 10px 40px -10px rgba(0, 0, 0, 0.9);
+    --shadow-glow: 0 0 30px var(--accent-active-glow);
   }
 
   html,
   body {
     background-color: var(--bg-primary) !important;
     color: var(--text-primary);
+    scroll-behavior: smooth;
   }
 
   body {
-    background-color: var(--bg-primary);
-    color: var(--text-primary);
     font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
     background-image:
-      radial-gradient(at 0% 0%, rgba(79, 70, 229, 0.05) 0px, transparent 50%),
-      radial-gradient(at 100% 100%, rgba(124, 58, 237, 0.05) 0px, transparent 50%);
+      radial-gradient(circle at 15% 50%, rgba(59, 130, 246, 0.08), transparent 40%),
+      radial-gradient(circle at 85% 30%, rgba(139, 92, 246, 0.08), transparent 40%);
     background-attachment: fixed;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   body::after {

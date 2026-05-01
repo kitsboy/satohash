@@ -29,7 +29,7 @@ export default function MobileBottomNav() {
                 {isActive && (
                   <motion.div
                     layoutId="mobile-nav-indicator"
-                    className="absolute inset-x-4 -top-3 h-1 rounded-full bg-[var(--accent-active)]"
+                    className="absolute inset-x-4 -top-3 h-1 rounded-full bg-[var(--accent-active)] shadow-[0_0_10px_var(--accent-active-glow)]"
                     transition={{ type: 'spring', stiffness: 500, damping: 30 }}
                   />
                 )}

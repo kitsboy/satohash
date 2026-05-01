@@ -6,7 +6,6 @@ import {
   ChevronRight,
   ArrowUpRight,
   Zap,
-  Cpu,
   Briefcase,
   Lock,
   Scale,
@@ -23,7 +22,7 @@ const JobCard = ({ title, description }) => {
     <motion.a
       href={emailLink}
       whileHover={{ x: 5 }}
-      className="group block rounded-2xl border border-[var(--border)] bg-[var(--bg-primary)] p-6 transition-all hover:border-[var(--accent-active)]"
+      className="group block rounded-2xl border border-[var(--border)] bg-[var(--bg-primary)] p-6 transition-all hover:border-[var(--accent-active)] hover:shadow-[0_0_20px_var(--accent-active-glow)]"
     >
       <div className="mb-3 flex items-start justify-between">
         <h4 className="text-lg font-bold tracking-tight text-white transition-colors group-hover:text-[var(--accent-active)]">
@@ -38,7 +37,8 @@ const JobCard = ({ title, description }) => {
         {description}
       </p>
       <div className="flex items-center gap-2 text-[10px] font-bold tracking-widest text-[var(--accent-active)] uppercase">
-        Apply Now <ChevronRight size={12} />
+        Apply Now{' '}
+        <ChevronRight size={12} className="transition-transform group-hover:translate-x-1" />
       </div>
     </motion.a>
   )
@@ -64,7 +64,7 @@ export default function Footer() {
     {
       title: 'Institutional UX Designer',
       description:
-        'Evolve the "Institutional Noir" design system. Craft high-density, low-latency interfaces for sovereign intelligence consoles.'
+        'Evolve the "Modern Institutional" design system. Craft high-density, low-latency interfaces for sovereign intelligence consoles.'
     },
     {
       title: 'Nostr Identity Specialist',
@@ -92,40 +92,47 @@ export default function Footer() {
       <AnimatePresence>
         {showDonation && (
           <motion.div
-            initial={{ opacity: 0, y: 20, scale: 0.9 }}
+            initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 20, scale: 0.9 }}
-            className="fixed right-8 bottom-32 z-[60] w-80 space-y-6 rounded-[2.5rem] bg-white p-8 text-black shadow-[0_0_50px_rgba(255,255,255,0.1)]"
+            exit={{ opacity: 0, y: 20, scale: 0.95 }}
+            className="fixed right-8 bottom-32 z-[60] w-96 space-y-8 rounded-[2.5rem] border border-[var(--border-bright)] bg-[var(--bg-secondary)] p-10 shadow-[0_40px_100px_rgba(0,0,0,0.9)] backdrop-blur-xl"
           >
-            <div className="flex items-center justify-between">
-              <h3 className="text-[10px] font-bold tracking-widest text-gray-500 uppercase">
-                Support the Mission
-              </h3>
+            <div className="flex items-center justify-between border-b border-[var(--border)] pb-4">
+              <div className="flex items-center gap-3">
+                <Heart size={16} className="text-[var(--accent-active)]" />
+                <h3 className="text-[12px] font-bold tracking-widest text-[var(--text-primary)] uppercase">
+                  Support Protocol
+                </h3>
+              </div>
               <button
                 onClick={() => setShowDonation(false)}
-                className="text-gray-400 transition-colors hover:text-black"
+                className="text-[var(--text-secondary)] transition-colors hover:text-white"
               >
-                <X size={16} />
+                <X size={20} />
               </button>
             </div>
-            <div className="flex aspect-square items-center justify-center rounded-2xl border-2 border-gray-100 bg-white p-4">
+
+            <div className="flex aspect-square items-center justify-center rounded-[2rem] bg-white p-6 shadow-[0_0_40px_var(--accent-active-glow)]">
               <QRCodeSVG
                 value={`bitcoin:${btcAddress}`}
-                size={200}
+                size={220}
                 level="H"
                 includeMargin={false}
               />
             </div>
-            <div className="space-y-2">
-              <p className="text-[9px] font-bold tracking-widest text-gray-400 uppercase">
+
+            <div className="space-y-3">
+              <p className="text-[10px] font-bold tracking-widest text-[var(--accent-active)] uppercase">
                 Bitcoin Address
               </p>
-              <div className="rounded-xl border border-gray-100 bg-gray-50 p-3 font-mono text-[10px] font-bold break-all">
+              <div className="rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] p-4 font-mono text-[11px] font-bold break-all text-white select-all">
                 {btcAddress}
               </div>
             </div>
-            <p className="text-[10px] leading-relaxed font-medium text-gray-500 italic">
-              Your contribution keeps the truth mesh sovereign and censorship-resistant.
+
+            <p className="text-[11px] leading-relaxed font-medium text-[var(--text-secondary)] italic">
+              Your contribution fuels the sovereign mesh, ensuring censorship resistance and global
+              accessibility for the Truth OS.
             </p>
           </motion.div>
         )}
@@ -133,58 +140,64 @@ export default function Footer() {
 
       <div className="relative z-10 mx-auto max-w-7xl px-8">
         <div className="mb-24 grid grid-cols-1 gap-16 lg:grid-cols-12">
-          {/* ... existing columns ... */}
           {/* Logo & Legal Column */}
           <div className="space-y-12 lg:col-span-4">
             <div className="space-y-6">
               <Link to="/" className="group flex items-center gap-4">
-                <div className="h-10 w-10 rotate-45 rounded-sm bg-[var(--accent-active)] shadow-[0_0_20px_var(--accent-active)] transition-transform group-hover:rotate-90" />
-                <span className="text-3xl font-black tracking-tighter uppercase">Satohash</span>
+                <img
+                  src="/logo.png"
+                  alt="Satohash"
+                  className="h-10 w-10 object-contain transition-transform group-hover:scale-110 group-hover:rotate-12"
+                />
+                <span className="text-3xl font-black tracking-tighter text-white uppercase">
+                  Satohash
+                </span>
               </Link>
-              <p className="text-sm leading-relaxed font-medium text-[var(--text-secondary)]">
-                Satohash is the sovereign operating system for digital truth. Anchored to the
-                Bitcoin network, we provide the ultimate cryptographic ledger for institutional
-                provenance and forensic verification.
+              <p className="text-[14px] leading-relaxed font-medium text-[var(--text-secondary)]">
+                The sovereign operating system for digital truth. Anchored to the Bitcoin network,
+                we provide the ultimate cryptographic ledger for institutional provenance and
+                forensic verification.
               </p>
             </div>
 
             <div className="space-y-6">
               <div className="flex items-center gap-3 text-white">
-                <Scale size={20} className="text-[var(--accent-active)]" />
-                <h3 className="text-[10px] font-bold tracking-[0.2em] uppercase">
+                <Scale size={18} className="text-[var(--accent-active)]" />
+                <h3 className="text-[11px] font-bold tracking-[0.2em] uppercase">
                   Legal Framework
                 </h3>
               </div>
               <div className="space-y-4 text-[10px] leading-loose font-medium tracking-widest text-[var(--text-secondary)] uppercase">
                 <p>
-                  SATOHASH V4.0.0-ELITE+ IS A DECENTRALIZED PROTOCOL. ALL CRYPTOGRAPHIC OPERATIONS
-                  ARE PERFORMED LOCALLY. WE DO NOT MAINTAIN CUSTODY OF PRIVATE MATERIAL OR ORIGINAL
+                  SATOHASH V5.0.0 IS A DECENTRALIZED PROTOCOL. ALL CRYPTOGRAPHIC OPERATIONS ARE
+                  PERFORMED LOCALLY. WE DO NOT MAINTAIN CUSTODY OF PRIVATE MATERIAL OR ORIGINAL
                   DATA.
                 </p>
                 <p>
-                  PROOFS GENERATED BY SATOHASH ARE DESIGNED TO EXCEED eIDAS AND ESIGN STANDARDS BY
-                  LEVERAGING IMMUTABLE BITCOIN ATTESTATIONS. HOWEVER, LEGAL ADMISSIBILITY MAY VARY
-                  BY JURISDICTION. CONSULT WITH INDEPENDENT COUNSEL FOR SPECIFIC USE CASES.
+                  PROOFS GENERATED EXCEED eIDAS AND ESIGN STANDARDS BY LEVERAGING IMMUTABLE BITCOIN
+                  ATTESTATIONS. LEGAL ADMISSIBILITY MAY VARY. CONSULT INDEPENDENT COUNSEL.
                 </p>
-                <p>© 2026 GIVEABIT LTD. REGISTERED IN THE SEYCHELLES. ALL RIGHTS RESERVED.</p>
+                <p className="text-[var(--accent-active)]">
+                  © 2026 GIVEABIT LTD. REGISTERED IN THE SEYCHELLES. ALL RIGHTS RESERVED.
+                </p>
               </div>
             </div>
           </div>
 
           {/* Jobs Board Column */}
           <div className="space-y-10 lg:col-span-5">
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between border-b border-[var(--border)] pb-4">
               <div className="flex items-center gap-3 text-white">
-                <Briefcase size={20} className="text-[var(--accent-active)]" />
-                <h3 className="text-[10px] font-bold tracking-[0.2em] uppercase">
+                <Briefcase size={18} className="text-[var(--accent-active)]" />
+                <h3 className="text-[11px] font-bold tracking-[0.2em] uppercase">
                   Sovereign Careers
                 </h3>
               </div>
-              <span className="animate-pulse rounded-full border border-[var(--accent-active)]/20 bg-[var(--accent-active)]/10 px-3 py-1 text-[8px] font-black tracking-widest text-[var(--accent-active)] uppercase">
+              <span className="animate-pulse rounded-full border border-[var(--accent-active)]/30 bg-[var(--accent-active)]/10 px-4 py-1 text-[9px] font-black tracking-widest text-[var(--accent-active)] uppercase shadow-[0_0_15px_var(--accent-active-glow)]">
                 Hiring Now
               </span>
             </div>
-            <div className="custom-scrollbar grid max-h-[600px] grid-cols-1 gap-4 overflow-y-auto pr-4">
+            <div className="custom-scrollbar grid max-h-[600px] grid-cols-1 gap-5 overflow-y-auto pr-4">
               {jobs.map((job, i) => (
                 <JobCard key={i} title={job.title} description={job.description} />
               ))}
@@ -194,30 +207,30 @@ export default function Footer() {
           {/* Contact & Navigation Column */}
           <div className="space-y-12 lg:col-span-3">
             <div className="space-y-8">
-              <div className="flex items-center gap-3 text-white">
-                <Mail size={20} className="text-[var(--accent-active)]" />
-                <h3 className="text-[10px] font-bold tracking-[0.2em] uppercase">Communications</h3>
+              <div className="flex items-center gap-3 border-b border-[var(--border)] pb-4 text-white">
+                <Mail size={18} className="text-[var(--accent-purple)]" />
+                <h3 className="text-[11px] font-bold tracking-[0.2em] uppercase">Communications</h3>
               </div>
               <div className="space-y-4">
                 <a
                   href="mailto:hello@giveabit.io"
-                  className="group block rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] p-4 transition-all hover:border-[var(--accent-active)]"
+                  className="group block rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] p-5 transition-all hover:border-[var(--accent-purple)] hover:shadow-[0_0_20px_rgba(139,92,246,0.15)]"
                 >
-                  <p className="mb-1 text-[10px] font-bold tracking-widest text-[var(--text-secondary)] uppercase">
+                  <p className="mb-2 text-[10px] font-bold tracking-widest text-[var(--text-secondary)] uppercase">
                     Email Terminal
                   </p>
-                  <p className="text-sm font-bold text-white transition-colors group-hover:text-[var(--accent-active)]">
+                  <p className="text-[13px] font-bold text-white transition-colors group-hover:text-[var(--accent-purple)]">
                     hello@giveabit.io
                   </p>
                 </a>
                 <a
                   href="nostr:kimi@giveabit.io"
-                  className="group block rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] p-4 transition-all hover:border-[var(--accent-active)]"
+                  className="group block rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] p-5 transition-all hover:border-[var(--accent-purple)] hover:shadow-[0_0_20px_rgba(139,92,246,0.15)]"
                 >
-                  <p className="mb-1 text-[10px] font-bold tracking-widest text-[var(--text-secondary)] uppercase">
+                  <p className="mb-2 text-[10px] font-bold tracking-widest text-[var(--text-secondary)] uppercase">
                     Nostr NIP-05
                   </p>
-                  <p className="text-sm font-bold text-white transition-colors group-hover:text-[var(--accent-active)]">
+                  <p className="text-[13px] font-bold text-white transition-colors group-hover:text-[var(--accent-purple)]">
                     kimi@giveabit.io
                   </p>
                 </a>
@@ -225,11 +238,11 @@ export default function Footer() {
             </div>
 
             <div className="space-y-8">
-              <div className="flex items-center gap-3 text-white">
-                <Globe size={20} className="text-[var(--accent-active)]" />
-                <h3 className="text-[10px] font-bold tracking-[0.2em] uppercase">Atlas Links</h3>
+              <div className="flex items-center gap-3 border-b border-[var(--border)] pb-4 text-white">
+                <Globe size={18} className="text-[var(--accent-success)]" />
+                <h3 className="text-[11px] font-bold tracking-[0.2em] uppercase">Atlas Links</h3>
               </div>
-              <div className="grid grid-cols-2 gap-x-8 gap-y-4">
+              <div className="grid grid-cols-2 gap-x-8 gap-y-5">
                 {[
                   { name: 'About', path: '/about' },
                   { name: 'Trust Center', path: '/trust' },
@@ -244,7 +257,7 @@ export default function Footer() {
                       href={link.path}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-xs font-bold tracking-widest text-[var(--text-secondary)] uppercase transition-colors hover:text-[var(--accent-active)]"
+                      className="inline-block text-[11px] font-bold tracking-widest text-[var(--text-secondary)] uppercase transition-colors hover:translate-x-1 hover:text-[var(--accent-success)]"
                     >
                       {link.name}
                     </a>
@@ -252,7 +265,7 @@ export default function Footer() {
                     <Link
                       key={link.name}
                       to={link.path}
-                      className="text-xs font-bold tracking-widest text-[var(--text-secondary)] uppercase transition-colors hover:text-[var(--accent-active)]"
+                      className="inline-block text-[11px] font-bold tracking-widest text-[var(--text-secondary)] uppercase transition-colors hover:translate-x-1 hover:text-[var(--accent-success)]"
                     >
                       {link.name}
                     </Link>
@@ -262,10 +275,10 @@ export default function Footer() {
             </div>
 
             <div className="border-t border-[var(--border)] pt-8">
-              <div className="flex items-center gap-4 text-[var(--text-secondary)]">
-                <Lock size={16} />
-                <span className="text-[10px] font-bold tracking-widest uppercase">
-                  v4.0.0-ELITE+ Verified
+              <div className="flex items-center gap-4 rounded-xl border border-[var(--border)] bg-[var(--surface-raised)] p-4 text-[var(--text-secondary)]">
+                <Lock size={16} className="text-[var(--accent-success)]" />
+                <span className="text-[11px] font-bold tracking-widest uppercase">
+                  v5.0.0 Verified
                 </span>
               </div>
             </div>
@@ -274,27 +287,29 @@ export default function Footer() {
 
         {/* Bottom Bar */}
         <div className="flex flex-col items-center justify-between gap-8 border-t border-[var(--border)] pt-12 md:flex-row">
-          <div className="flex items-center gap-8 text-[var(--text-secondary)]">
-            <span className="text-[9px] font-bold tracking-widest uppercase">
-              Secure Handshake: 1.2s
+          <div className="flex flex-wrap items-center justify-center gap-6 text-[var(--text-secondary)] md:justify-start">
+            <span className="flex items-center gap-2 text-[10px] font-bold tracking-widest uppercase">
+              <div className="h-1.5 w-1.5 rounded-full bg-[var(--text-secondary)]" /> Handshake:
+              1.2s
             </span>
-            <span className="text-[9px] font-bold tracking-widest text-[var(--accent-success)] uppercase">
+            <span className="flex items-center gap-2 text-[10px] font-bold tracking-widest text-[var(--accent-success)] uppercase">
+              <div className="h-1.5 w-1.5 rounded-full bg-[var(--accent-success)] shadow-[0_0_8px_var(--accent-success)]" />{' '}
               Protocol Active
             </span>
             <button
               onClick={() => setShowDonation(!showDonation)}
-              className="group flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[9px] font-bold tracking-widest text-white uppercase transition-all hover:bg-white/10"
+              className="group flex items-center gap-3 rounded-full border border-[var(--border)] bg-[var(--bg-primary)] px-4 py-2 text-[10px] font-bold tracking-widest text-white uppercase transition-all hover:border-[var(--accent-active)] hover:bg-[var(--surface-raised)]"
             >
               <Heart
-                size={10}
+                size={12}
                 className="text-[var(--accent-active)] transition-transform group-hover:scale-125"
               />
               Support the Mission
             </button>
           </div>
-          <div className="flex items-center gap-6">
-            <div className="h-2 w-2 animate-pulse rounded-full bg-[var(--accent-active)] shadow-[0_0_10px_var(--accent-active)]" />
-            <span className="font-mono text-[10px] font-bold tracking-[0.3em] text-[var(--text-secondary)] uppercase">
+          <div className="flex items-center gap-4">
+            <div className="h-2 w-2 animate-pulse rounded-full bg-[var(--accent-active)] shadow-[0_0_12px_var(--accent-active)]" />
+            <span className="font-mono text-[11px] font-bold tracking-[0.3em] text-[var(--text-secondary)] uppercase">
               Powered by OpenTimestamps & Bitcoin
             </span>
           </div>

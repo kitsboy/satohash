@@ -68,11 +68,11 @@ export default function Landing() {
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="mb-12 inline-flex items-center gap-3 rounded-full border border-[var(--border)] bg-[var(--surface-raised)]/50 px-4 py-2 backdrop-blur-md"
+            className="mb-12 inline-flex items-center gap-3 rounded-full border border-[var(--border-bright)] bg-[var(--surface-raised)]/60 px-5 py-2.5 shadow-[0_0_30px_rgba(59,130,246,0.1)] backdrop-blur-xl transition-all hover:border-[var(--accent-active)]/50"
           >
-            <div className="h-2 w-2 animate-pulse rounded-full bg-[var(--accent-active)] shadow-[0_0_8px_var(--accent-active)]" />
-            <span className="font-mono text-[10px] font-bold tracking-[0.2em] text-[var(--text-secondary)] uppercase">
-              Satohash v4.0.0-ELITE+ · Sovereign Operating System
+            <div className="h-2 w-2 animate-pulse rounded-full bg-[var(--accent-active)] shadow-[0_0_12px_var(--accent-active)]" />
+            <span className="font-mono text-[11px] font-bold tracking-[0.25em] text-[var(--text-secondary)] uppercase">
+              Satohash <span className="text-white">v5.0.0</span> · Modern Institutional
             </span>
           </motion.div>
 
@@ -84,7 +84,9 @@ export default function Landing() {
             transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
           >
             Sovereign <br />
-            <span className="text-[var(--accent-active)]">Evidence.</span>
+            <span className="bg-gradient-to-r from-[var(--accent-active)] via-[var(--accent-purple)] to-[var(--accent-success)] bg-clip-text text-transparent">
+              Evidence.
+            </span>
           </motion.h1>
 
           <motion.p
@@ -94,7 +96,7 @@ export default function Landing() {
             transition={{ duration: 1, delay: 0.5 }}
           >
             The Bitcoin-native operating system for zero-knowledge proof-of-existence, institutional
-            verification, and forensic web capture.
+            verification, and forensic web capture. Redesigned for absolute clarity.
           </motion.p>
 
           {/* CTA Buttons */}
@@ -105,12 +107,12 @@ export default function Landing() {
             transition={{ duration: 0.8, delay: 0.8 }}
           >
             <Link to="/vault" className="w-full sm:w-auto">
-              <button className="flex h-16 w-full min-w-[280px] items-center justify-center gap-3 rounded-xl bg-[var(--text-primary)] text-[12px] font-extrabold tracking-[0.2em] text-[var(--bg-primary)] uppercase shadow-2xl transition-all hover:scale-[1.02] active:scale-[0.98]">
+              <button className="flex h-16 w-full min-w-[280px] items-center justify-center gap-3 rounded-2xl bg-white text-[12px] font-extrabold tracking-[0.2em] text-black uppercase shadow-[0_0_40px_rgba(255,255,255,0.15)] transition-all hover:scale-[1.02] hover:bg-gray-100 hover:shadow-[0_0_60px_rgba(255,255,255,0.25)] active:scale-[0.98]">
                 Access Workbench <ChevronRight size={18} />
               </button>
             </Link>
             <Link to="/access" className="w-full sm:w-auto">
-              <button className="h-16 w-full min-w-[280px] rounded-xl border border-[var(--border)] bg-[var(--bg-secondary)] text-[12px] font-extrabold tracking-[0.2em] text-[var(--text-primary)] uppercase transition-all hover:bg-[var(--surface-raised)] active:scale-[0.98]">
+              <button className="h-16 w-full min-w-[280px] rounded-2xl border border-[var(--border-bright)] bg-white/5 text-[12px] font-extrabold tracking-[0.2em] text-white uppercase backdrop-blur-lg transition-all hover:border-white/30 hover:bg-white/10 active:scale-[0.98]">
                 Cryptographic Sign-In
               </button>
             </Link>

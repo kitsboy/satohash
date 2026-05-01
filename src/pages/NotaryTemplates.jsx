@@ -328,29 +328,32 @@ export default function NotaryTemplates() {
 
             <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-3">
               {/* Template Editor Sheet */}
-              <div className="relative overflow-hidden rounded-[2.5rem] border border-gray-100 bg-white p-12 text-gray-900 shadow-2xl lg:col-span-2">
+              <div className="relative overflow-hidden rounded-[2.5rem] border border-gray-200 bg-[#fdfbf7] p-12 text-gray-900 shadow-[0_30px_100px_rgba(0,0,0,0.5)] lg:col-span-2">
                 {/* Canonical Watermark Logo */}
-                <div className="absolute top-10 right-10 flex cursor-default items-center gap-3 opacity-50 grayscale transition-all hover:grayscale-0">
+                <div className="absolute top-10 right-10 flex cursor-default items-center gap-3 opacity-40 grayscale transition-all hover:opacity-100 hover:grayscale-0">
                   <img src="/logo.png" alt="Satohash Logo" className="h-10 w-10 object-contain" />
-                  <span className="text-xl font-black tracking-tighter text-black uppercase">
+                  <span className="font-sans text-xl font-black tracking-tighter text-black uppercase">
                     Satohash
                   </span>
                 </div>
 
-                <div className="mx-auto max-w-2xl space-y-12">
-                  <header className="space-y-4 border-b border-gray-100 pb-8">
-                    <h2 className="font-serif text-4xl font-bold tracking-tight text-black">
+                <div
+                  className="mx-auto max-w-2xl space-y-12"
+                  style={{ fontFamily: "'Playfair Display', serif" }}
+                >
+                  <header className="space-y-4 border-b border-gray-300 pb-8">
+                    <h2 className="text-4xl leading-tight font-bold tracking-tight text-black md:text-5xl">
                       {selectedTemplate.title}
                     </h2>
-                    <p className="text-sm text-gray-500 italic">
-                      Forensic Framework v4.0.0-ELITE / Anchored to Bitcoin
+                    <p className="font-sans text-sm font-medium tracking-widest text-gray-500 uppercase">
+                      Forensic Framework v5.0.0 / Bitcoin Anchored
                     </p>
                   </header>
 
                   <div className="space-y-10">
                     {selectedTemplate.fields.map((field) => (
                       <div key={field.id} className="space-y-3">
-                        <label className="text-[10px] font-bold tracking-widest text-gray-400 uppercase">
+                        <label className="font-sans text-[11px] font-bold tracking-widest text-gray-400 uppercase">
                           {field.label}
                         </label>
                         {field.type === 'textarea' ? (
@@ -359,7 +362,7 @@ export default function NotaryTemplates() {
                             onChange={(e) => handleInputChange(field.id, e.target.value)}
                             placeholder={field.placeholder}
                             rows={4}
-                            className="w-full rounded-2xl border border-gray-100 bg-gray-50 p-4 text-sm font-medium text-black transition-all outline-none focus:ring-2 focus:ring-indigo-500/20"
+                            className="w-full rounded-xl border border-gray-300 bg-transparent p-4 text-lg text-black transition-all outline-none focus:border-indigo-500 focus:bg-white"
                           />
                         ) : (
                           <input
@@ -367,14 +370,14 @@ export default function NotaryTemplates() {
                             value={formData[field.id] || ''}
                             onChange={(e) => handleInputChange(field.id, e.target.value)}
                             placeholder={field.placeholder}
-                            className="h-14 w-full rounded-2xl border border-gray-100 bg-gray-50 px-6 text-sm font-medium text-black transition-all outline-none focus:ring-2 focus:ring-indigo-500/20"
+                            className="h-14 w-full rounded-xl border border-gray-300 bg-transparent px-4 text-lg text-black transition-all outline-none focus:border-indigo-500 focus:bg-white"
                           />
                         )}
                       </div>
                     ))}
                   </div>
 
-                  <footer className="flex items-center justify-between border-t border-gray-100 pt-12 text-[10px] font-bold tracking-widest text-gray-300 uppercase">
+                  <footer className="flex items-center justify-between border-t border-gray-300 pt-12 font-sans text-[10px] font-bold tracking-widest text-gray-400 uppercase">
                     <span>Generated via Sovereign Notary Suite</span>
                     <span>© 2026 Digital Truth Infrastructure</span>
                   </footer>
