@@ -31,6 +31,7 @@
     "node": ">=20.0.0"
   },
   "dependencies": {
+    "@radix-ui/react-tooltip": "^1.2.8",
     "@sentry/node": "^10.45.0",
     "@sentry/react": "^10.45.0",
     "@sentry/tracing": "^7.120.4",

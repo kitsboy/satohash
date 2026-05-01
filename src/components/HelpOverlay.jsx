@@ -1,107 +1,144 @@
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, Shield, Zap, Database, Search, Fingerprint, ChevronRight } from 'lucide-react'
+import { X, ChevronRight, Shield, Zap, Globe, Layers } from 'lucide-react'
+import React, { useState } from 'react'
+
+const steps = [
+  {
+    title: 'Sovereign Proof-of-Existence',
+    description:
+      'Satohash anchors any digital asset to the Bitcoin blockchain, creating an immutable timestamp that is globally verifiable without intermediaries.',
+    icon: Shield,
+    color: 'var(--accent-active)'
+  },
+  {
+    title: 'The Temporal Search (Atlas)',
+    description:
+      'Navigate the history of truth. Use the Atlas plane to search for proofs by block height, transaction ID, or date. Visualize the provenance of every anchor.',
+    icon: Globe,
+    color: 'var(--accent-purple)'
+  },
+  {
+    title: 'Mesh Infrastructure',
+    description:
+      'Our decentralized witness network ensures that every proof is validated by multiple independent nodes before finality. Monitor the global topology in real-time.',
+    icon: Layers,
+    color: 'var(--accent-success)'
+  },
+  {
+    title: 'L402 & WebLN Settlement',
+    description:
+      'Experience the future of the value-web. All interactions are settled natively via the Lightning Network. No accounts, just absolute cryptographic sovereignty.',
+    icon: Zap,
+    color: 'var(--accent-pending)'
+  }
+]
 
 export default function HelpOverlay({ isOpen, onClose }) {
+  const [currentStep, setCurrentStep] = useState(0)
+
   return (
     <AnimatePresence>
       {isOpen && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 p-6 backdrop-blur-xl"
-        >
+        <div className="fixed inset-0 z-[300] flex items-center justify-center p-6">
           <motion.div
-            initial={{ scale: 0.95, y: 20, opacity: 0 }}
-            animate={{ scale: 1, y: 0, opacity: 1 }}
-            exit={{ scale: 0.95, y: 20, opacity: 0 }}
-            className="relative w-full max-w-3xl overflow-hidden rounded-[2.5rem] border border-[var(--border-bright)] bg-[var(--bg-secondary)] p-12 text-[var(--text-primary)] shadow-[0_40px_120px_rgba(0,0,0,0.8)]"
-          >
-            {/* Background Accent */}
-            <div className="pointer-events-none absolute top-0 right-0 -mt-32 -mr-32 h-64 w-64 rounded-full bg-[var(--accent-active)] opacity-20 blur-[100px]" />
-            <div className="pointer-events-none absolute bottom-0 left-0 -mb-32 -ml-32 h-64 w-64 rounded-full bg-[var(--accent-purple)] opacity-10 blur-[100px]" />
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
+            className="absolute inset-0 bg-black/60 backdrop-blur-2xl"
+          />
 
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0, y: 20 }}
+            animate={{ scale: 1, opacity: 1, y: 0 }}
+            exit={{ scale: 0.9, opacity: 0, y: 20 }}
+            className="relative w-full max-w-2xl overflow-hidden rounded-[3rem] border border-[var(--border-bright)] bg-[var(--bg-secondary)] shadow-[0_50px_100px_rgba(0,0,0,0.8)]"
+          >
             <button
               onClick={onClose}
-              className="group absolute top-8 right-8 flex h-12 w-12 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--surface-raised)] transition-all hover:border-[var(--accent-active)] hover:shadow-[0_0_20px_var(--accent-active-glow)]"
+              className="absolute top-8 right-8 text-[var(--text-secondary)] transition-colors hover:text-white"
             >
-              <X
-                size={20}
-                className="text-[var(--text-secondary)] transition-transform group-hover:rotate-90 group-hover:text-white"
-              />
+              <X size={24} />
             </button>
 
-            <div className="relative z-10 space-y-10">
-              <header className="space-y-4">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-[var(--accent-active)]/30 bg-[var(--accent-active)]/10 text-[var(--accent-active)] shadow-[0_0_30px_var(--accent-active-glow)]">
-                  <Shield size={24} />
+            <div className="space-y-12 p-12 md:p-16">
+              <div className="space-y-4">
+                <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5">
+                  <span className="text-[10px] font-black tracking-widest text-white/40 uppercase">
+                    Protocol Guide
+                  </span>
+                  <span className="text-[10px] font-black tracking-widest text-white uppercase">
+                    STEP 0{currentStep + 1} / 04
+                  </span>
                 </div>
-                <h2 className="bg-gradient-to-r from-white to-gray-500 bg-clip-text text-4xl font-bold tracking-tighter text-transparent uppercase md:text-5xl">
-                  Sovereign Protocol Guide
+                <h2 className="text-4xl leading-none font-black tracking-tighter uppercase md:text-5xl">
+                  The Protocol <br />
+                  <span className="text-[var(--text-secondary)]">Workbench.</span>
                 </h2>
-              </header>
-
-              <div className="space-y-8 text-base leading-relaxed text-[var(--text-secondary)] md:text-lg">
-                <p>
-                  Satohash v5.0.0 is your institutional command center for digital forensic proof.
-                  By anchoring file hashes directly to the Bitcoin blockchain, we provide
-                  mathematically irrefutable evidence of existence—without ever exposing your raw
-                  data.
-                </p>
-
-                <div className="grid grid-cols-1 gap-6 pt-6 md:grid-cols-2">
-                  <div className="space-y-4 rounded-2xl border border-[var(--border)] bg-[var(--bg-primary)] p-6 transition-all hover:border-[var(--accent-active)]/50 hover:bg-[var(--surface-raised)]/50">
-                    <div className="flex items-center gap-3 text-[11px] font-bold tracking-widest text-[var(--accent-active)] uppercase">
-                      <Zap size={16} /> 1. Cryptographic Stamp
-                    </div>
-                    <p className="text-[13px] leading-relaxed text-gray-400">
-                      Files are hashed locally using SHA-256. Zero-knowledge architecture ensures
-                      raw data never leaves your machine.
-                    </p>
-                  </div>
-                  <div className="space-y-4 rounded-2xl border border-[var(--border)] bg-[var(--bg-primary)] p-6 transition-all hover:border-[var(--accent-purple)]/50 hover:bg-[var(--surface-raised)]/50">
-                    <div className="flex items-center gap-3 text-[11px] font-bold tracking-widest text-[var(--accent-purple)] uppercase">
-                      <Database size={16} /> 2. Bitcoin Anchor
-                    </div>
-                    <p className="text-[13px] leading-relaxed text-gray-400">
-                      Hashes are bundled into Merkle trees and irrevocably anchored into a Bitcoin
-                      block header.
-                    </p>
-                  </div>
-                  <div className="space-y-4 rounded-2xl border border-[var(--border)] bg-[var(--bg-primary)] p-6 transition-all hover:border-[var(--accent-success)]/50 hover:bg-[var(--surface-raised)]/50">
-                    <div className="flex items-center gap-3 text-[11px] font-bold tracking-widest text-[var(--accent-success)] uppercase">
-                      <Search size={16} /> 3. Institutional Verify
-                    </div>
-                    <p className="text-[13px] leading-relaxed text-gray-400">
-                      Traverse the Merkle path. Mathematical certainty is established upon network
-                      confirmation.
-                    </p>
-                  </div>
-                  <div className="space-y-4 rounded-2xl border border-[var(--border)] bg-[var(--bg-primary)] p-6 transition-all hover:border-[var(--accent-pending)]/50 hover:bg-[var(--surface-raised)]/50">
-                    <div className="flex items-center gap-3 text-[11px] font-bold tracking-widest text-[var(--accent-pending)] uppercase">
-                      <Fingerprint size={16} /> 4. Forensic Management
-                    </div>
-                    <p className="text-[13px] leading-relaxed text-gray-400">
-                      Evidence is secured in your Vault, cataloged, and primed for legal reporting.
-                    </p>
-                  </div>
-                </div>
               </div>
 
-              <footer className="flex flex-col items-center justify-between gap-6 border-t border-[var(--border)] pt-8 sm:flex-row">
-                <p className="text-[11px] font-bold tracking-[0.2em] text-[var(--text-secondary)] uppercase">
-                  Vires in Numeris
-                </p>
-                <button
-                  onClick={onClose}
-                  className="flex h-14 w-full items-center justify-center gap-3 rounded-xl bg-white px-8 text-[12px] font-extrabold tracking-[0.2em] text-black uppercase transition-all hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(255,255,255,0.2)] sm:w-auto"
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentStep}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  className="min-h-[200px] space-y-8"
                 >
-                  Acknowledge <ChevronRight size={16} />
-                </button>
-              </footer>
+                  <div
+                    className="flex h-16 w-16 items-center justify-center rounded-2xl border border-white/10 bg-white/5"
+                    style={{ color: steps[currentStep].color }}
+                  >
+                    {/* Dynamic Icon */}
+                    {React.createElement(steps[currentStep].icon, { size: 32 })}
+                  </div>
+                  <div className="space-y-4">
+                    <h3 className="text-2xl font-bold tracking-tight text-white">
+                      {steps[currentStep].title}
+                    </h3>
+                    <p className="text-lg leading-relaxed font-medium text-[var(--text-secondary)]">
+                      {steps[currentStep].description}
+                    </p>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+
+              <div className="flex items-center justify-between border-t border-[var(--border)] pt-8">
+                <div className="flex gap-2">
+                  {steps.map((_, i) => (
+                    <div
+                      key={i}
+                      className={`h-1.5 rounded-full transition-all duration-300 ${i === currentStep ? 'w-8 bg-[var(--accent-active)]' : 'w-2 bg-white/10'}`}
+                    />
+                  ))}
+                </div>
+                <div className="flex gap-4">
+                  {currentStep > 0 && (
+                    <button
+                      onClick={() => setCurrentStep((prev) => prev - 1)}
+                      className="h-14 rounded-2xl border border-[var(--border)] px-8 text-[11px] font-black tracking-widest uppercase transition-all hover:bg-white/5"
+                    >
+                      Back
+                    </button>
+                  )}
+                  <button
+                    onClick={() => {
+                      if (currentStep === steps.length - 1) {
+                        onClose()
+                      } else {
+                        setCurrentStep((prev) => prev + 1)
+                      }
+                    }}
+                    className="flex h-14 items-center gap-3 rounded-2xl bg-white px-10 text-[11px] font-black tracking-widest text-black uppercase transition-all hover:scale-105 active:scale-95"
+                  >
+                    {currentStep === steps.length - 1 ? 'Initialize Workbench' : 'Continue'}
+                    <ChevronRight size={16} />
+                  </button>
+                </div>
+              </div>
             </div>
           </motion.div>
-        </motion.div>
+        </div>
       )}
     </AnimatePresence>
   )

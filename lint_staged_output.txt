@@ -1,0 +1,56 @@
+[STARTED] Backing up original state...
+[COMPLETED] Backed up original state in git stash (13c2098)
+[STARTED] Running tasks for staged files...
+[STARTED] package.json — 10 files
+[STARTED] src/**/*.{js,jsx} — 7 files
+[STARTED] src/**/*.{css,json} — 1 file
+[STARTED] eslint --fix
+[STARTED] prettier --write
+[COMPLETED] prettier --write
+[COMPLETED] src/**/*.{css,json} — 1 file
+[FAILED] eslint --fix [FAILED]
+[FAILED] eslint --fix [FAILED]
+[COMPLETED] Running tasks for staged files...
+[STARTED] Applying modifications from tasks...
+[SKIPPED] Skipped because of errors from tasks.
+[STARTED] Reverting to original state because of errors...
+[COMPLETED] Reverting to original state because of errors...
+[STARTED] Cleaning up temporary files...
+[COMPLETED] Cleaning up temporary files...
+
+✖ eslint --fix:
+
+/Users/cam/Documents/Satahash/src/components/AppShellNoir.jsx
+    1:8   warning  'React' is defined but never used    no-unused-vars
+    3:18  warning  'Command' is defined but never used  no-unused-vars
+    3:27  warning  'X' is defined but never used        no-unused-vars
+    3:30  warning  'Shield' is defined but never used   no-unused-vars
+  121:8   error    'ChevronRight' is not defined        react/jsx-no-undef
+
+/Users/cam/Documents/Satahash/src/components/HelpOverlay.jsx
+   7:3  warning  'Database' is defined but never used  no-unused-vars
+   9:3  warning  'Terminal' is defined but never used  no-unused-vars
+  10:3  warning  'Search' is defined but never used    no-unused-vars
+  11:3  warning  'Key' is defined but never used       no-unused-vars
+
+/Users/cam/Documents/Satahash/src/components/InfoTooltip.jsx
+  2:10  warning  'motion' is defined but never used           no-unused-vars
+  2:18  warning  'AnimatePresence' is defined but never used  no-unused-vars
+
+/Users/cam/Documents/Satahash/src/pages/Access.jsx
+   1:18  warning  'AnimatePresence' is defined but never used  no-unused-vars
+   4:3   warning  'Key' is defined but never used              no-unused-vars
+   8:3   warning  'Globe' is defined but never used            no-unused-vars
+  11:3   warning  'UserCheck' is defined but never used        no-unused-vars
+
+/Users/cam/Documents/Satahash/src/pages/Landing.jsx
+   4:3   warning  'ShieldCheck' is defined but never used  no-unused-vars
+   8:3   warning  'Clock' is defined but never used        no-unused-vars
+  12:3   warning  'Zap' is defined but never used          no-unused-vars
+  13:3   warning  'Layers' is defined but never used       no-unused-vars
+  16:3   warning  'Database' is defined but never used     no-unused-vars
+  19:3   warning  'Search' is defined but never used       no-unused-vars
+  20:3   warning  'Key' is defined but never used          no-unused-vars
+  26:21  warning  'useState' is defined but never used     no-unused-vars
+
+✖ 23 problems (1 error, 22 warnings)

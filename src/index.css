@@ -31,6 +31,23 @@
     --shadow-glow: 0 0 30px var(--accent-active-glow);
   }
 
+  [data-theme='elite'] {
+    --bg-primary: #fcfcfc;
+    --bg-secondary: #f3f4f6;
+    --surface-raised: #ffffff;
+
+    --text-primary: #050505;
+    --text-secondary: #4b5563;
+
+    --border: rgba(0, 0, 0, 0.08);
+    --border-bright: rgba(0, 0, 0, 0.15);
+
+    --accent-active: #2563eb;
+    --accent-active-glow: rgba(37, 99, 235, 0.2);
+
+    background-color: var(--bg-primary) !important;
+  }
+
   html,
   body {
     background-color: var(--bg-primary) !important;

@@ -1,29 +1,22 @@
 import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import {
-  ShieldCheck,
   ChevronRight,
   Globe,
   Lock,
-  Clock,
   ArrowRight,
   Cpu,
   Network,
-  Zap,
-  Layers,
   Fingerprint,
   FileText,
-  Database,
   Activity,
   Shield,
-  Search,
-  Key,
-  Stamp,
   Code2,
   Building2,
-  Smartphone
+  Smartphone,
+  Stamp
 } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import LiveNetworkDashboard from '../components/LiveNetworkDashboard'
 import MerkleHeart from '../components/MerkleHeart'
 import Footer from '../components/Footer'
@@ -196,25 +189,102 @@ export default function Landing() {
                 </button>
               </Link>
             </motion.div>
+
+            <div className="relative mx-auto mt-20 max-w-lg">
+              <div className="absolute -inset-10 rounded-full bg-[var(--accent-active)]/20 opacity-50 blur-[100px]" />
+              <div className="group relative overflow-hidden rounded-[3rem] border border-[var(--border-bright)] bg-[var(--bg-secondary)]/80 p-8 shadow-[0_50px_100px_rgba(0,0,0,0.8)] backdrop-blur-3xl">
+                <div className="mb-8 flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="h-3 w-3 animate-pulse rounded-full bg-[var(--accent-success)] shadow-[0_0_10px_var(--accent-success)]" />
+                    <span className="text-[10px] font-black tracking-widest text-white/60 uppercase">
+                      ANCHOR_IN_PROGRESS
+                    </span>
+                  </div>
+                  <span className="font-mono text-[9px] font-bold text-[var(--accent-active)]">
+                    TX_842142_S
+                  </span>
+                </div>
+
+                <div className="space-y-6">
+                  <div className="flex items-center gap-6 rounded-2xl border border-white/10 bg-white/5 p-4">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[var(--accent-active)]/20 text-[var(--accent-active)]">
+                      <FileText size={24} />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="truncate font-bold text-white">clinical_v2.pdf</p>
+                      <p className="font-mono text-[9px] text-[var(--text-secondary)]">
+                        e3b0c442...8b1a
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-end justify-between">
+                    <div className="space-y-1">
+                      <p className="text-[9px] font-black tracking-widest text-[var(--text-secondary)] uppercase">
+                        Witness Quorum
+                      </p>
+                      <div className="flex gap-1.5">
+                        {[1, 2, 3, 4, 5].map((i) => (
+                          <div
+                            key={i}
+                            className="h-1.5 w-6 rounded-full bg-[var(--accent-success)] shadow-[0_0_8px_var(--accent-success)]"
+                          />
+                        ))}
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-[9px] font-black tracking-widest text-[var(--text-secondary)] uppercase">
+                        Epoch
+                      </p>
+                      <p className="font-mono text-xs font-bold text-white">841,202</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </motion.div>
         </section>
 
-        <div className="mb-32 w-full overflow-hidden border-y border-white/5 bg-black/50 py-4 backdrop-blur-sm">
-          <div className="animate-marquee flex items-center gap-12 whitespace-nowrap">
-            {[1, 2, 3, 4, 5].map((i) => (
-              <div
-                key={i}
-                className="flex items-center gap-4 text-[10px] font-black tracking-widest text-[var(--text-secondary)] uppercase"
-              >
-                <div className="h-1.5 w-1.5 rounded-full bg-[var(--accent-success)] shadow-[0_0_8px_var(--accent-success)]" />
-                Live Anchoring: <span className="text-white">Block 842,{120 + i}</span>
-                <span className="opacity-40">/</span>
-                Hash: <span className="text-[var(--accent-active)]">e3b0c442...{i}f</span>
-                <span className="opacity-40">/</span>
-                Status: <span className="text-[var(--accent-success)]">Witness Verified</span>
+        <div className="relative mb-32 overflow-hidden border-y border-white/5 bg-black/40 py-6 backdrop-blur-xl">
+          <motion.div
+            animate={{ x: [0, -2000] }}
+            transition={{ duration: 40, repeat: Infinity, ease: 'linear' }}
+            className="flex items-center gap-24 px-12 whitespace-nowrap"
+          >
+            {[
+              { id: '1', block: '842,421', hash: 'E3B0C442', sats: '1.2M' },
+              { id: '2', block: '842,425', hash: '8F92C3A2', sats: '4.2M' },
+              { id: '3', block: '842,429', hash: 'C2E8A1F3', sats: '840K' },
+              { id: '4', block: '842,432', hash: 'D4F1E9A2', sats: '12.4M' },
+              { id: '5', block: '842,438', hash: '7A1B2C3D', sats: '2.1M' },
+              { id: '6', block: '842,442', hash: 'B9A8C7D6', sats: '500K' },
+              { id: '7', block: '842,448', hash: '1E2F3G4H', sats: '8.8M' },
+              { id: '8', block: '842,455', hash: '5I6J7K8L', sats: '1.5M' }
+            ].map((item) => (
+              <div key={item.id} className="flex items-center gap-12">
+                <div className="group flex cursor-default items-center gap-4">
+                  <div className="h-2 w-2 animate-pulse rounded-full bg-[var(--accent-success)] shadow-[0_0_12px_var(--accent-success)]" />
+                  <div className="flex flex-col">
+                    <span className="text-[10px] font-black tracking-[0.2em] text-white/40 uppercase">
+                      PROTOCOL_ANCHOR
+                    </span>
+                    <span className="font-mono text-sm font-bold text-[var(--accent-active)]">{`BLOCK_${item.block} // ${item.hash}`}</span>
+                  </div>
+                </div>
+                <div className="h-8 w-px bg-white/10" />
+                <div className="group flex cursor-default items-center gap-4">
+                  <div className="h-2 w-2 rounded-full bg-[var(--accent-purple)] shadow-[0_0_12px_var(--accent-purple)]" />
+                  <div className="flex flex-col">
+                    <span className="text-[10px] font-black tracking-[0.2em] text-white/40 uppercase">
+                      INSTITUTIONAL_BATCH
+                    </span>
+                    <span className="font-mono text-sm font-bold text-[var(--accent-purple)]">{`${item.sats} ASSETS // SIG_VAL_ELITE`}</span>
+                  </div>
+                </div>
+                <div className="h-8 w-px bg-white/10" />
               </div>
             ))}
-          </div>
+          </motion.div>
         </div>
 
         <div className="relative mx-auto mb-12 h-24 max-w-7xl px-8">
