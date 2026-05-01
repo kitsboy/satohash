@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import {
   ShieldCheck,
@@ -15,8 +15,12 @@ import {
   FileText,
   Database,
   Activity,
-  Shield
+  Shield,
+  Search,
+  Key,
+  Stamp
 } from 'lucide-react'
+import { useEffect, useState } from 'react'
 import LiveNetworkDashboard from '../components/LiveNetworkDashboard'
 import MerkleHeart from '../components/MerkleHeart'
 import Footer from '../components/Footer'
@@ -26,7 +30,8 @@ const PlaneCard = ({ icon: Icon, title, description, delay, accent = 'indigo' })
     indigo: 'text-[var(--accent-active)]',
     amber: 'text-[var(--accent-pending)]',
     green: 'text-[var(--accent-success)]',
-    red: 'text-[var(--accent-danger)]'
+    red: 'text-[var(--accent-danger)]',
+    purple: 'text-[var(--accent-purple)]'
   }
 
   return (
@@ -35,10 +40,12 @@ const PlaneCard = ({ icon: Icon, title, description, delay, accent = 'indigo' })
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ type: 'spring', stiffness: 100, delay }}
-      className="group rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] p-10 transition-all hover:border-[var(--border-bright)] hover:bg-[var(--surface-raised)]/20"
+      className="group relative overflow-hidden rounded-[2.5rem] border border-[var(--border)] bg-[var(--bg-secondary)] p-10 transition-all hover:border-[var(--border-bright)] hover:bg-[var(--surface-raised)]/20 hover:shadow-[0_20px_60px_rgba(0,0,0,0.5)]"
     >
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white to-transparent opacity-0 transition-opacity group-hover:opacity-5" />
+
       <div
-        className={`mb-8 flex h-14 w-14 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] transition-all group-hover:border-[var(--accent-active)]/50 ${accentColors[accent]}`}
+        className={`mb-8 flex h-14 w-14 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] transition-all group-hover:scale-110 group-hover:border-[var(--accent-active)]/50 ${accentColors[accent]}`}
       >
         <Icon size={24} />
       </div>
@@ -53,191 +60,283 @@ export default function Landing() {
   const yRange = useTransform(scrollYProgress, [0, 1], [0, -100])
   const opacityRange = useTransform(scrollYProgress, [0, 0.2], [1, 0])
 
+  const mouseX = useMotionValue(0)
+  const mouseY = useMotionValue(0)
+  const springConfig = { damping: 25, stiffness: 150 }
+  const mouseXSpring = useSpring(mouseX, springConfig)
+  const mouseYSpring = useSpring(mouseY, springConfig)
+
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      mouseX.set(e.clientX)
+      mouseY.set(e.clientY)
+    }
+    window.addEventListener('mousemove', handleMouseMove)
+    return () => window.removeEventListener('mousemove', handleMouseMove)
+  }, [mouseX, mouseY])
+
   return (
-    <div className="relative min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] selection:bg-[var(--accent-active)]/30">
-      {/* ── Background Merkle Heart ──────────────── */}
+    <div className="relative min-h-screen overflow-x-hidden bg-[var(--bg-primary)] text-[var(--text-primary)] selection:bg-[var(--accent-active)]/30">
+      <motion.div
+        className="pointer-events-none fixed inset-0 z-50 opacity-40 mix-blend-screen"
+        style={{
+          background: `radial-gradient(600px circle at ${mouseXSpring}px ${mouseYSpring}px, rgba(59, 130, 246, 0.15), transparent 80%)`
+        }}
+      />
+
+      <div
+        className="pointer-events-none absolute inset-0 z-0 opacity-[0.03]"
+        style={{
+          backgroundImage:
+            "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='svg'%3E%3Cpath d='M30 0l25.98 15v30L30 60 4.02 45V15z' fill-rule='evenodd' stroke='%23fff' stroke-width='1' fill='none'/%3E%3C/svg%3E\")",
+          backgroundSize: '80px 80px'
+        }}
+      />
+
+      <nav className="fixed top-0 right-0 left-0 z-[100] flex items-center justify-between border-b border-white/5 px-8 py-6 backdrop-blur-xl">
+        <Link to="/" className="group flex items-center gap-3">
+          <div className="relative">
+            <div className="absolute inset-0 rounded-full bg-[var(--accent-active)] opacity-20 blur-lg transition-opacity group-hover:opacity-40" />
+            <img
+              src="/logo.png"
+              alt="Satohash"
+              className="relative h-10 w-10 object-contain transition-transform group-hover:scale-110"
+            />
+          </div>
+          <span className="text-2xl font-black tracking-tighter text-white uppercase">
+            Satohash
+          </span>
+        </Link>
+        <div className="hidden items-center gap-8 md:flex">
+          {['Vault', 'Trust', 'Templates', 'Atlas'].map((link) => (
+            <Link
+              key={link}
+              to={`/${link.toLowerCase()}`}
+              className="text-[10px] font-black tracking-[0.3em] text-[var(--text-secondary)] uppercase transition-colors hover:text-white"
+            >
+              {link}
+            </Link>
+          ))}
+          <Link to="/access">
+            <button className="rounded-full border border-white/10 bg-white/5 px-6 py-2 text-[10px] font-black tracking-widest text-white uppercase transition-all hover:bg-white/10">
+              Sign In
+            </button>
+          </Link>
+        </div>
+      </nav>
+
       <div className="pointer-events-none absolute inset-0 z-0 h-[100vh] overflow-hidden">
         <MerkleHeart />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[var(--bg-primary)]/80 to-[var(--bg-primary)]" />
       </div>
 
-      {/* ── Hero Section ─────────────────────────── */}
-      <section className="relative z-10 mx-auto flex max-w-[90rem] flex-col items-center px-6 pt-56 pb-32 text-center">
-        <motion.div style={{ opacity: opacityRange, y: yRange }} className="w-full">
-          {/* Version Badge */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="mb-12 inline-flex items-center gap-3 rounded-full border border-[var(--border-bright)] bg-[var(--surface-raised)]/60 px-5 py-2.5 shadow-[0_0_30px_rgba(59,130,246,0.1)] backdrop-blur-xl transition-all hover:border-[var(--accent-active)]/50"
-          >
-            <div className="h-2 w-2 animate-pulse rounded-full bg-[var(--accent-active)] shadow-[0_0_12px_var(--accent-active)]" />
-            <span className="font-mono text-[11px] font-bold tracking-[0.25em] text-[var(--text-secondary)] uppercase">
-              Satohash <span className="text-white">v5.0.0</span> · Modern Institutional
-            </span>
+      <main className="relative">
+        <section className="relative z-10 mx-auto flex max-w-[90rem] flex-col items-center px-6 pt-64 pb-32 text-center">
+          <motion.div style={{ opacity: opacityRange, y: yRange }} className="w-full">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="mb-12 inline-flex items-center gap-3 rounded-full border border-[var(--border-bright)] bg-[var(--surface-raised)]/60 px-5 py-2.5 shadow-[0_0_30px_rgba(59,130,246,0.1)] backdrop-blur-xl transition-all hover:border-[var(--accent-active)]/50"
+            >
+              <div className="h-2 w-2 animate-pulse rounded-full bg-[var(--accent-active)] shadow-[0_0_12px_var(--accent-active)]" />
+              <span className="font-mono text-[11px] font-bold tracking-[0.25em] text-[var(--text-secondary)] uppercase">
+                Satohash <span className="text-white">v5.0.0</span> · Modern Institutional
+              </span>
+            </motion.div>
+
+            <motion.h1
+              className="mx-auto mb-8 max-w-6xl text-6xl leading-[0.9] font-extrabold tracking-tighter md:text-[9rem]"
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+            >
+              Sovereign <br />
+              <span className="bg-gradient-to-r from-[var(--accent-active)] via-[var(--accent-purple)] to-[var(--accent-success)] bg-clip-text text-transparent">
+                Evidence.
+              </span>
+            </motion.h1>
+
+            <motion.p
+              className="mx-auto mb-12 max-w-3xl text-lg leading-relaxed font-medium text-[var(--text-secondary)] md:text-2xl"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1, delay: 0.5 }}
+            >
+              The Bitcoin-native operating system for zero-knowledge proof-of-existence,
+              institutional verification, and forensic web capture. Redesigned for absolute clarity.
+            </motion.p>
+
+            <motion.div
+              className="flex flex-col items-center gap-6 sm:flex-row sm:justify-center"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.8 }}
+            >
+              <Link to="/vault" className="w-full sm:w-auto">
+                <button className="group relative flex h-16 w-full min-w-[280px] items-center justify-center gap-3 overflow-hidden rounded-2xl bg-white text-[12px] font-extrabold tracking-[0.2em] text-black uppercase shadow-[0_0_40px_rgba(255,255,255,0.15)] transition-all hover:scale-[1.05] hover:shadow-[0_0_60px_rgba(255,255,255,0.25)] active:scale-[0.98]">
+                  <span className="relative z-10 flex items-center gap-3">
+                    Access Workbench{' '}
+                    <ChevronRight
+                      size={18}
+                      className="transition-transform group-hover:translate-x-1"
+                    />
+                  </span>
+                  <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-black/5 to-transparent transition-transform duration-1000 group-hover:translate-x-full" />
+                </button>
+              </Link>
+              <Link to="/access" className="w-full sm:w-auto">
+                <button className="group flex h-16 w-full min-w-[280px] items-center justify-center gap-3 rounded-2xl border border-[var(--border-bright)] bg-white/5 text-[12px] font-extrabold tracking-[0.2em] text-white uppercase backdrop-blur-lg transition-all hover:border-white/30 hover:bg-white/10 active:scale-[0.98]">
+                  <Fingerprint
+                    size={18}
+                    className="text-[var(--accent-active)] transition-transform group-hover:scale-125"
+                  />
+                  Cryptographic Sign-In
+                </button>
+              </Link>
+            </motion.div>
           </motion.div>
+        </section>
 
-          {/* Headline */}
-          <motion.h1
-            className="mx-auto mb-8 max-w-6xl text-6xl leading-[0.9] font-extrabold tracking-tighter md:text-[9rem]"
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-          >
-            Sovereign <br />
-            <span className="bg-gradient-to-r from-[var(--accent-active)] via-[var(--accent-purple)] to-[var(--accent-success)] bg-clip-text text-transparent">
-              Evidence.
-            </span>
-          </motion.h1>
-
-          <motion.p
-            className="mx-auto mb-12 max-w-3xl text-lg leading-relaxed font-medium text-[var(--text-secondary)] md:text-2xl"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 0.5 }}
-          >
-            The Bitcoin-native operating system for zero-knowledge proof-of-existence, institutional
-            verification, and forensic web capture. Redesigned for absolute clarity.
-          </motion.p>
-
-          {/* CTA Buttons */}
-          <motion.div
-            className="flex flex-col items-center gap-6 sm:flex-row sm:justify-center"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
-          >
-            <Link to="/vault" className="w-full sm:w-auto">
-              <button className="flex h-16 w-full min-w-[280px] items-center justify-center gap-3 rounded-2xl bg-white text-[12px] font-extrabold tracking-[0.2em] text-black uppercase shadow-[0_0_40px_rgba(255,255,255,0.15)] transition-all hover:scale-[1.02] hover:bg-gray-100 hover:shadow-[0_0_60px_rgba(255,255,255,0.25)] active:scale-[0.98]">
-                Access Workbench <ChevronRight size={18} />
-              </button>
-            </Link>
-            <Link to="/access" className="w-full sm:w-auto">
-              <button className="h-16 w-full min-w-[280px] rounded-2xl border border-[var(--border-bright)] bg-white/5 text-[12px] font-extrabold tracking-[0.2em] text-white uppercase backdrop-blur-lg transition-all hover:border-white/30 hover:bg-white/10 active:scale-[0.98]">
-                Cryptographic Sign-In
-              </button>
-            </Link>
-          </motion.div>
-        </motion.div>
-      </section>
-
-      {/* ── Four Planes Architecture ──────────────── */}
-      <section className="relative z-10 mx-auto max-w-7xl space-y-24 px-6 py-32">
-        <div className="space-y-6 text-center">
-          <h2 className="text-4xl font-bold tracking-tight md:text-6xl">
-            The Four <span className="text-[var(--accent-active)]">Operating Planes</span>
-          </h2>
-          <p className="mx-auto max-w-2xl text-lg font-medium text-[var(--text-secondary)]">
-            A high-assurance architecture designed for the sovereign class.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-          <PlaneCard
-            icon={ShieldCheck}
-            title="Proof Plane"
-            accent="indigo"
-            description="Stamp, verify, and vault digital assets with OpenTimestamps. Mathematical finality without accounts or intermediaries."
-            delay={0.1}
-          />
-          <PlaneCard
-            icon={Fingerprint}
-            title="Identity Plane"
-            accent="green"
-            description="NIP-05 identity mapping for human-readable cryptographic authority. Public keys bound to sovereign reputation."
-            delay={0.2}
-          />
-          <PlaneCard
-            icon={Zap}
-            title="Settlement Plane"
-            accent="amber"
-            description="Lightning-native L402 payment gating. Instant, metered access to high-assurance services with BOLT-12."
-            delay={0.3}
-          />
-          <PlaneCard
-            icon={Globe}
-            title="Atlas Plane"
-            accent="indigo"
-            description="Live chain intelligence and proof telemetry. Bitcoin Core node context enriched with mempool and network state."
-            delay={0.4}
-          />
-        </div>
-      </section>
-
-      {/* ── Protocol Telemetry ────────────────────── */}
-      <section className="relative z-10 mx-auto max-w-[90rem] px-6 py-32">
-        <div className="relative overflow-hidden rounded-[3rem] border border-[var(--border)] bg-[var(--bg-secondary)] p-8 md:p-16">
-          <div className="pointer-events-none absolute top-0 right-0 p-16 opacity-5">
-            <Database size={240} />
+        <div className="mb-32 w-full overflow-hidden border-y border-white/5 bg-black/50 py-4 backdrop-blur-sm">
+          <div className="animate-marquee flex items-center gap-12 whitespace-nowrap">
+            {[1, 2, 3, 4, 5].map((i) => (
+              <div
+                key={i}
+                className="flex items-center gap-4 text-[10px] font-black tracking-widest text-[var(--text-secondary)] uppercase"
+              >
+                <div className="h-1.5 w-1.5 rounded-full bg-[var(--accent-success)] shadow-[0_0_8px_var(--accent-success)]" />
+                Live Anchoring: <span className="text-white">Block 842,{120 + i}</span>
+                <span className="opacity-40">/</span>
+                Hash: <span className="text-[var(--accent-active)]">e3b0c442...{i}f</span>
+                <span className="opacity-40">/</span>
+                Status: <span className="text-[var(--accent-success)]">Witness Verified</span>
+              </div>
+            ))}
           </div>
-          <div className="relative z-10 grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
-            <div className="space-y-8">
-              <div className="inline-flex items-center gap-2 rounded-full border border-[var(--accent-success)]/20 bg-[var(--accent-success)]/10 px-3 py-1">
-                <Activity size={14} className="text-[var(--accent-success)]" />
-                <span className="font-mono text-[10px] font-bold tracking-widest text-[var(--accent-success)] uppercase">
-                  Live Network Feed
+        </div>
+
+        <div className="relative mx-auto mb-12 h-24 max-w-7xl px-8">
+          <motion.div
+            initial={{ width: 0 }}
+            whileInView={{ width: '100%' }}
+            viewport={{ once: true }}
+            className="absolute top-1/2 left-0 h-px bg-gradient-to-r from-transparent via-[var(--accent-active)] to-transparent opacity-20"
+          />
+          <motion.div
+            initial={{ scale: 0 }}
+            whileInView={{ scale: 1 }}
+            viewport={{ once: true }}
+            className="absolute top-1/2 left-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rotate-45 border border-[var(--accent-active)] bg-[var(--bg-primary)] shadow-[0_0_15px_var(--accent-active-glow)]"
+          />
+        </div>
+
+        <section className="mb-32">
+          <div className="flex justify-center gap-12 opacity-30 grayscale md:gap-24">
+            {['eIDAS', 'ESIGN', 'UETA', 'ETSI', 'NIST'].map((seal) => (
+              <div key={seal} className="flex flex-col items-center gap-2">
+                <Shield size={32} />
+                <span className="text-[9px] font-black tracking-widest uppercase">
+                  {seal} Ready
                 </span>
               </div>
-              <h2 className="text-4xl leading-none font-bold tracking-tight md:text-6xl">
-                Sovereign <br /> <span className="text-[var(--accent-active)]">Truth Log.</span>
-              </h2>
-              <p className="text-lg leading-relaxed text-[var(--text-secondary)]">
-                Every attestation is monitored in real-time. Witness nodes propagate proof data
-                across the global mesh ensuring absolute censorship resistance.
-              </p>
-              <div className="flex flex-col gap-8 pt-4 sm:flex-row">
-                <div>
-                  <p className="font-mono text-3xl font-bold">841,204</p>
-                  <p className="font-mono text-[10px] tracking-widest text-[var(--text-secondary)] uppercase">
-                    Current Height
-                  </p>
+            ))}
+          </div>
+        </section>
+
+        <section className="mx-auto max-w-[90rem] px-8 py-32">
+          <div className="mb-20 space-y-6 text-center">
+            <h2 className="text-4xl font-extrabold tracking-tighter uppercase md:text-7xl">
+              Four Planes of <br />
+              <span className="text-[var(--text-secondary)]">Forensic Verification.</span>
+            </h2>
+            <p className="mx-auto max-w-2xl text-lg font-medium text-[var(--text-secondary)]">
+              Satohash operates across four distinct technical planes to ensure absolute data
+              integrity and judicial admissibility.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
+            <PlaneCard
+              icon={Stamp}
+              accent="indigo"
+              title="Plane Alpha: Proof"
+              description="Local-first ZK-hashing. Your data remains on-prem while the cryptographic fingerprints are prepared for anchoring."
+              delay={0.1}
+            />
+            <PlaneCard
+              icon={Globe}
+              accent="amber"
+              title="Plane Beta: Atlas"
+              description="A temporal search engine mapping file hashes to historical blockchain states. Trace provenance across decades."
+              delay={0.2}
+            />
+            <PlaneCard
+              icon={Network}
+              accent="green"
+              title="Plane Gamma: Mesh"
+              description="A decentralized network of witness nodes providing redundant attestation for every sovereign proof."
+              delay={0.3}
+            />
+            <PlaneCard
+              icon={Lock}
+              accent="red"
+              title="Plane Delta: Noir"
+              description="The hardened security layer. Cold-storage proof management and encrypted vault orchestration."
+              delay={0.4}
+            />
+          </div>
+        </section>
+
+        <section className="mx-auto max-w-[90rem] px-8 py-32">
+          <div className="relative overflow-hidden rounded-[4rem] border border-[var(--border)] bg-[var(--bg-secondary)] p-12 lg:p-24">
+            <div className="absolute top-0 right-0 p-12 opacity-5">
+              <Cpu size={400} />
+            </div>
+            <div className="relative z-10 grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
+              <div className="space-y-8">
+                <div className="inline-flex items-center gap-3 rounded-full bg-[var(--accent-active)]/10 px-4 py-2 text-[10px] font-bold tracking-widest text-[var(--accent-active)] uppercase">
+                  <Activity size={14} /> Real-time Telemetry
                 </div>
-                <div>
-                  <p className="font-mono text-3xl font-bold text-[var(--accent-success)]">
-                    99.99%
-                  </p>
-                  <p className="font-mono text-[10px] tracking-widest text-[var(--text-secondary)] uppercase">
-                    Mesh Uptime
-                  </p>
-                </div>
-                <div>
-                  <p className="font-mono text-3xl font-bold text-[var(--accent-pending)]">
-                    42s/vB
-                  </p>
-                  <p className="font-mono text-[10px] tracking-widest text-[var(--text-secondary)] uppercase">
-                    Fee Density
-                  </p>
+                <h2 className="text-5xl font-extrabold tracking-tighter uppercase md:text-7xl">
+                  Protocol <br />
+                  <span className="text-[var(--text-secondary)]">Activity.</span>
+                </h2>
+                <p className="text-xl leading-relaxed font-medium text-[var(--text-secondary)]">
+                  Monitor the global Satohash mesh. Watch as hashes are bundled, witnesses attest,
+                  and anchors are irrevocably committed to the Bitcoin blockchain.
+                </p>
+                <div className="flex flex-wrap gap-4">
+                  <Link to="/atlas">
+                    <button className="active:scale-0.95 flex h-14 items-center justify-center gap-3 rounded-xl bg-[var(--text-primary)] px-8 text-[10px] font-bold tracking-widest text-[var(--bg-primary)] uppercase transition-all hover:scale-105">
+                      Launch Atlas Explorer <ArrowRight size={16} />
+                    </button>
+                  </Link>
                 </div>
               </div>
-            </div>
-            <div className="rounded-2xl border border-[var(--border)] bg-[var(--bg-primary)] p-6 shadow-2xl">
-              <LiveNetworkDashboard />
+              <div className="rounded-3xl border border-white/5 bg-[var(--bg-primary)] p-2 shadow-2xl">
+                <LiveNetworkDashboard />
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* ── Final CTA ─────────────────────── */}
-      <section className="relative z-10 mx-auto max-w-5xl space-y-12 px-6 py-32 text-center">
-        <h2 className="text-5xl font-bold tracking-tighter md:text-7xl">Ready to Anchor?</h2>
-        <p className="mx-auto max-w-2xl text-xl text-[var(--text-secondary)]">
-          Join the institutional operating system for the next century of digital evidence.
-        </p>
-        <div className="flex flex-col justify-center gap-6 sm:flex-row">
-          <Link to="/vault">
-            <button className="h-16 rounded-xl bg-[var(--text-primary)] px-12 font-extrabold tracking-widest text-[var(--bg-primary)] uppercase transition-all hover:scale-[1.05]">
-              Enter Workbench
-            </button>
-          </Link>
-          <Link to="/trust">
-            <button className="h-16 rounded-xl border border-[var(--border)] bg-transparent px-12 font-extrabold tracking-widest text-[var(--text-primary)] uppercase transition-all hover:bg-[var(--surface-raised)]">
-              Trust Center
-            </button>
-          </Link>
-        </div>
-      </section>
+        <Footer />
+      </main>
 
-      {/* ── Global Footer ────────────────────────── */}
-      <Footer />
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+        @keyframes marquee {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+          display: flex;
+          width: 200%;
+          animation: marquee 30s linear infinite;
+        }
+      `
+        }}
+      />
     </div>
   )
 }

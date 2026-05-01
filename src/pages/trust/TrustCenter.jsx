@@ -1,17 +1,5 @@
 import { motion } from 'framer-motion'
-import {
-  Shield,
-  Lock,
-  Scale,
-  Globe,
-  Binary,
-  CheckCircle,
-  ChevronRight,
-  Activity,
-  Zap,
-  ShieldAlert,
-  Cpu
-} from 'lucide-react'
+import { Shield, Lock, Scale, ChevronRight, CheckCircle, ShieldAlert, Cpu } from 'lucide-react'
 import GlobalJurisdictionMap from '../../components/GlobalJurisdictionMap'
 import ProofAnalytics from '../../components/ProofAnalytics'
 
@@ -27,6 +15,23 @@ export default function TrustCenter() {
       <div className="relative z-10 mx-auto max-w-7xl px-8">
         {/* Hero Section */}
         <section className="mb-32 space-y-8 text-center">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="mb-16 flex items-center justify-center gap-8 text-[10px] font-black tracking-[0.4em] text-[var(--text-secondary)] uppercase"
+          >
+            <div className="flex items-center gap-2">
+              <div className="h-2 w-2 rounded-full bg-[var(--accent-success)] shadow-[0_0_10px_var(--accent-success)]" />
+              Network: <span className="text-white">Active</span>
+            </div>
+            <div className="flex items-center gap-2">
+              Total Proofs: <span className="text-[var(--accent-active)]">1,284,092</span>
+            </div>
+            <div className="flex items-center gap-2">
+              Uptime: <span className="text-white">99.999%</span>
+            </div>
+          </motion.div>
+
           <motion.div
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
@@ -139,7 +144,7 @@ export default function TrustCenter() {
 
           <div className="relative z-10 space-y-12">
             <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-3xl bg-[var(--accent-success)]/10 text-[var(--accent-success)] shadow-[0_0_50px_rgba(16,185,129,0.2)]">
-              <Shield Check size={48} />
+              <CheckCircle size={48} />
             </div>
 
             <h2 className="text-4xl leading-none font-black tracking-tighter uppercase md:text-6xl">

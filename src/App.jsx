@@ -27,7 +27,7 @@ const Settings = React.lazy(() =>
 )
 const Access = React.lazy(() => import('./pages/Access'))
 const Landing = React.lazy(() => import('./pages/Landing'))
-const Trust = React.lazy(() => import('./pages/Placeholders').then((m) => ({ default: m.Trust })))
+const Trust = React.lazy(() => import('./pages/trust/TrustCenter'))
 const About = React.lazy(() => import('./pages/Placeholders').then((m) => ({ default: m.About })))
 
 const NotaryTemplates = React.lazy(() => import('./pages/NotaryTemplates'))
