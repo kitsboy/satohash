@@ -136,8 +136,9 @@ export default function Vault() {
               className="h-11 w-64 rounded-xl border border-[var(--border)] bg-[var(--bg-secondary)] pr-4 pl-10 text-xs font-medium outline-none focus:border-[var(--accent-active)]"
             />
           </div>
-          <button className="flex h-11 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--surface-raised)] px-4 text-[var(--text-primary)] transition-all hover:border-[var(--border-bright)]">
-            <Filter size={18} />
+          <button className="flex h-11 items-center justify-center gap-2 rounded-xl border border-[var(--border-bright)] bg-white/5 px-6 text-[10px] font-black tracking-widest text-white uppercase shadow-[0_0_20px_rgba(255,255,255,0.05)] transition-all hover:bg-white/10">
+            <FileText size={16} className="text-[var(--accent-active)]" />
+            Export Forensic Audit
           </button>
         </div>
       </header>
