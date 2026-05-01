@@ -1,12 +1,20 @@
 import { NavLink, useLocation } from 'react-router-dom'
 import { NAV_LINKS } from '../config/constants'
 import * as Icons from 'lucide-react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import HelpOverlay from './HelpOverlay'
 
 export default function LeftRailNav() {
   const location = useLocation()
   const [showHelp, setShowHelp] = useState(false)
+
+  useEffect(() => {
+    const hasSeenIntro = localStorage.getItem('satohash_intro_seen')
+    if (!hasSeenIntro) {
+      setShowHelp(true)
+      localStorage.setItem('satohash_intro_seen', 'true')
+    }
+  }, [])
 
   const groups = NAV_LINKS.reduce((acc, link) => {
     if (!acc[link.group]) acc[link.group] = []

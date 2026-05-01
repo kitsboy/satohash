@@ -39,9 +39,15 @@ export default function HelpOverlay({ isOpen, onClose }) {
 
               <div className="space-y-6 text-sm leading-relaxed font-medium">
                 <p>
-                  Satohash is the sovereign operating system for digital truth. We allow you to
-                  anchor any digital asset to the Bitcoin blockchain using OpenTimestamps, creating
-                  an immutable proof of existence without intermediaries.
+                  Satohash v4.0.0-ELITE+ is your sovereign command center for digital forensic
+                  proof. By anchoring file hashes to the Bitcoin blockchain via OpenTimestamps, we
+                  provide irrefutable evidence of existence and integrity—without ever touching your
+                  raw data.
+                </p>
+                <p>
+                  Navigate through the four operating planes—Proof, Atlas, Mesh, and Noir—to manage
+                  your forensic vault, monitor global node telemetry, and settle technical SLAs via
+                  Lightning. Your truth is now anchored to the most secure network in human history.
                 </p>
 
                 <div className="grid grid-cols-1 gap-8 pt-4 md:grid-cols-2">
