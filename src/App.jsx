@@ -20,11 +20,9 @@ const Certificates = React.lazy(() =>
 )
 const Developer = React.lazy(() => import('./pages/Developer'))
 const Atlas = React.lazy(() => import('./pages/Atlas'))
-const Nodes = React.lazy(() => import('./pages/Atlas')) // Shared component logic
+const Nodes = React.lazy(() => import('./pages/Mesh'))
 const Explorer = React.lazy(() => import('./pages/Explorer'))
-const Settings = React.lazy(() =>
-  import('./pages/Placeholders').then((m) => ({ default: m.Settings }))
-)
+const Settings = React.lazy(() => import('./pages/Settings'))
 const Access = React.lazy(() => import('./pages/Access'))
 const Landing = React.lazy(() => import('./pages/Landing'))
 const Trust = React.lazy(() => import('./pages/trust/TrustCenter'))
