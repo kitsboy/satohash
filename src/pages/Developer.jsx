@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import {
   Terminal,
   Key,
@@ -12,29 +12,77 @@ import {
   ShieldAlert,
   ShieldCheck,
   BarChart3,
-  Cpu
+  Cpu,
+  Globe,
+  Database,
+  Smartphone,
+  Building2,
+  FileText,
+  Copy,
+  CheckCircle2,
+  ArrowRight
 } from 'lucide-react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+
+const CODE_EXAMPLES = {
+  curl: `curl -X POST https://api.satohash.io/v1/anchor \\
+  -H "Authorization: Bearer $SATOHASH_KEY" \\
+  -d '{
+    "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "metadata": {
+      "origin": "financial_ledger_q1",
+      "batch_id": "corporate_772"
+    }
+  }'`,
+  javascript: `import { Satohash } from '@satohash/sdk'
+
+const client = new Satohash('YOUR_API_KEY')
+
+// Anchor a financial document
+const proof = await client.anchor('e3b0c442...', {
+  category: 'audit_log',
+  vault: 'secure_finance'
+})
+
+console.log(\`Anchored in block: \${proof.blockHeight}\`)`,
+  python: `from satohash import Client
+
+api = Client(api_key='YOUR_API_KEY')
+
+# Automate iPhone photo timestamping
+result = api.timestamp_media(
+    hash='e3b0c442...',
+    source='ios_sync',
+    metadata={'device': 'iPhone 15 Pro'}
+)
+
+print(f"Sovereign proof generated: {result.proof_id}")`
+}
 
 const ApiKeyRow = ({ name, keySnippet, status }) => (
-  <div className="group flex items-center justify-between rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] p-4 transition-all hover:border-[var(--border-bright)]">
+  <div className="group flex items-center justify-between rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] p-5 transition-all hover:border-[var(--border-bright)] hover:bg-[var(--surface-raised)]/10">
     <div className="flex items-center gap-4">
-      <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[var(--bg-secondary)] text-[var(--text-secondary)]">
-        <Key size={18} />
+      <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--bg-secondary)] text-[var(--accent-active)]">
+        <Key size={20} />
       </div>
       <div>
-        <p className="text-sm font-bold tracking-tight">{name}</p>
-        <p className="font-mono text-[10px] tracking-widest text-[var(--text-secondary)] uppercase">
+        <p className="text-sm font-bold tracking-tight text-white">{name}</p>
+        <p className="font-mono text-[10px] tracking-[0.2em] text-[var(--text-secondary)] uppercase">
           {keySnippet}
         </p>
       </div>
     </div>
     <div className="flex items-center gap-6">
-      <span className="text-[10px] font-bold tracking-widest text-[var(--accent-success)] uppercase">
-        {status}
-      </span>
-      <button className="text-[var(--text-secondary)] opacity-0 transition-colors group-hover:opacity-100 hover:text-[var(--text-primary)]">
-        <Layers size={16} />
+      <div className="flex items-center gap-2">
+        <div
+          className={`h-1.5 w-1.5 rounded-full ${status === 'Active' ? 'bg-[var(--accent-success)] shadow-[0_0_8px_var(--accent-success)]' : 'bg-red-500'}`}
+        />
+        <span className="text-[10px] font-black tracking-widest text-[var(--text-secondary)] uppercase">
+          {status}
+        </span>
+      </div>
+      <button className="text-[var(--text-secondary)] opacity-0 transition-colors group-hover:opacity-100 hover:text-white">
+        <Copy size={16} />
       </button>
     </div>
   </div>
@@ -42,291 +90,493 @@ const ApiKeyRow = ({ name, keySnippet, status }) => (
 
 export default function Developer() {
   const [activeTab, setActiveTab] = useState('overview')
+  const [codeLang, setCodeLang] = useState('curl')
+  const [terminalOutput, setTerminalOutput] = useState([
+    '> INITIALIZING API MESH...',
+    '> AUTHENTICATED: SAT_LIVE_8F2...'
+  ])
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const logs = [
+        `> ANCHORED HASH: ${Math.random().toString(16).substring(2, 10)}... SUCCESS`,
+        `> L402 SETTLEMENT: 42 SATS RECEIVED`,
+        `> WITNESS ATTESTATION: QUORUM REACHED`,
+        `> BATCH MERKLE ROOT: 0x${Math.random().toString(16).substring(2, 8)}... COMMITTED`
+      ]
+      setTerminalOutput((prev) => [
+        ...prev.slice(-10),
+        logs[Math.floor(Math.random() * logs.length)]
+      ])
+    }, 3000)
+    return () => clearInterval(interval)
+  }, [])
 
   return (
-    <div className="mx-auto max-w-6xl space-y-12 p-8">
-      <header className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
-        <div className="space-y-2">
-          <div className="flex items-center gap-3">
-            <Terminal className="text-[var(--accent-active)]" size={24} />
-            <h1 className="text-4xl font-bold tracking-tighter uppercase">Developer Plane</h1>
+    <div className="min-h-screen bg-[var(--bg-primary)] pt-32 pb-20 text-[var(--text-primary)]">
+      <div className="mx-auto max-w-[90rem] space-y-16 px-8">
+        {/* Terminal Header */}
+        <header className="flex flex-col justify-between gap-8 border-b border-[var(--border)] pb-12 lg:flex-row lg:items-end">
+          <div className="space-y-6">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[var(--accent-active)]/30 bg-[var(--accent-active)]/10 px-4 py-1.5">
+              <Terminal size={14} className="text-[var(--accent-active)]" />
+              <span className="font-mono text-[10px] font-bold tracking-[0.2em] text-[var(--accent-active)] uppercase">
+                Developer Plane v5.0.0 // SAT_API_ACTIVE
+              </span>
+            </div>
+            <h1 className="text-5xl leading-[0.85] font-black tracking-tighter uppercase md:text-7xl">
+              Programmable <br />
+              <span className="text-[var(--text-secondary)]">Truth.</span>
+            </h1>
+            <p className="max-w-xl text-lg leading-relaxed font-medium text-[var(--text-secondary)]">
+              Build sovereign proof-of-existence directly into your financial apps, personal
+              workflows, and institutional pipelines.
+            </p>
           </div>
-          <p className="font-medium text-[var(--text-secondary)]">
-            Programmable truth. Settle authenticity at scale via API.
-          </p>
-        </div>
-        <div className="flex rounded-xl border border-[var(--border)] bg-[var(--bg-secondary)] p-1">
-          {['overview', 'keys', 'billing', 'docs'].map((tab) => (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={`rounded-lg px-4 py-2 text-[10px] font-bold tracking-widest uppercase transition-all ${activeTab === tab ? 'bg-[var(--bg-primary)] text-[var(--text-primary)] shadow-lg' : 'text-[var(--text-secondary)]'}`}
-            >
-              {tab}
-            </button>
-          ))}
-        </div>
-      </header>
 
-      <div className="grid grid-cols-1 gap-12 lg:grid-cols-3">
-        {/* Main Content */}
-        <div className="space-y-12 lg:col-span-2">
-          {activeTab === 'overview' && (
-            <div className="space-y-8">
-              <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                <div className="space-y-4 rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] p-6">
-                  <div className="flex items-center justify-between">
-                    <h3 className="text-[10px] font-bold tracking-widest text-[var(--text-secondary)] uppercase">
-                      API Requests
-                    </h3>
-                    <Activity size={14} className="text-[var(--accent-active)]" />
+          <div className="flex rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] p-1.5 shadow-2xl">
+            {['overview', 'keys', 'docs', 'strategy'].map((tab) => (
+              <button
+                key={tab}
+                onClick={() => setActiveTab(tab)}
+                className={`rounded-xl px-6 py-3 text-[10px] font-black tracking-widest uppercase transition-all ${activeTab === tab ? 'border border-[var(--border-bright)] bg-[var(--bg-primary)] text-white shadow-lg' : 'text-[var(--text-secondary)] hover:text-white'}`}
+              >
+                {tab}
+              </button>
+            ))}
+          </div>
+        </header>
+
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
+          {/* Main Workspace */}
+          <div className="space-y-12 lg:col-span-8">
+            <AnimatePresence mode="wait">
+              {activeTab === 'overview' && (
+                <motion.div
+                  key="overview"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  className="space-y-12"
+                >
+                  {/* Real-time Stats Grid */}
+                  <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+                    <StatCard
+                      icon={Activity}
+                      label="API Traffic"
+                      value="1.2M"
+                      sub="Requests / Mo"
+                      color="var(--accent-active)"
+                    />
+                    <StatCard
+                      icon={ShieldCheck}
+                      label="Success Rate"
+                      value="99.99%"
+                      sub="Uptime Nominal"
+                      color="var(--accent-success)"
+                    />
+                    <StatCard
+                      icon={Zap}
+                      label="Avg. Latency"
+                      value="42ms"
+                      sub="Global Mesh"
+                      color="var(--accent-pending)"
+                    />
                   </div>
-                  <div className="flex h-24 items-end gap-1">
-                    {[4, 7, 5, 8, 4, 9, 6, 8, 5, 7, 6, 9].map((h, i) => (
-                      <motion.div
-                        key={i}
-                        initial={{ height: 0 }}
-                        animate={{ height: `${h * 10}%` }}
-                        className="flex-1 rounded-t-sm bg-[var(--accent-active)]/20"
-                      />
-                    ))}
-                  </div>
-                  <p className="font-mono text-2xl font-bold">
-                    12,402{' '}
-                    <span className="text-[10px] text-[var(--text-secondary)] uppercase">
-                      / Month
-                    </span>
-                  </p>
-                </div>
-                <div className="space-y-4 rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] p-6">
-                  <div className="flex items-center justify-between">
-                    <h3 className="text-[10px] font-bold tracking-widest text-[var(--text-secondary)] uppercase">
-                      Success Rate
-                    </h3>
-                    <ShieldCheck size={14} className="text-[var(--accent-success)]" />
-                  </div>
-                  <div className="flex h-24 items-center justify-center">
-                    <div className="relative h-20 w-20">
-                      <svg className="h-full w-full" viewBox="0 0 36 36">
-                        <path
-                          className="fill-none stroke-black/20"
-                          strokeWidth="3"
-                          d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                        />
-                        <path
-                          className="fill-none stroke-[var(--accent-success)]"
-                          strokeWidth="3"
-                          strokeDasharray="99.9, 100"
-                          d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                        />
-                      </svg>
-                      <div className="absolute inset-0 flex items-center justify-center font-mono text-lg font-bold">
-                        99.9%
+
+                  {/* Use Case Strategies */}
+                  <div className="space-y-8">
+                    <h2 className="text-2xl font-bold tracking-tight uppercase">
+                      Implementation Strategies
+                    </h2>
+                    <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+                      {/* Corporate Use Case */}
+                      <div className="group relative overflow-hidden rounded-[2.5rem] border border-[var(--border)] bg-[var(--bg-secondary)] p-10 transition-all hover:border-[var(--border-bright)]">
+                        <div className="absolute top-0 right-0 p-8 opacity-5 transition-opacity group-hover:opacity-10">
+                          <Building2 size={120} />
+                        </div>
+                        <div className="relative z-10 space-y-6">
+                          <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-[var(--accent-purple)]/20 bg-[var(--accent-purple)]/10 text-[var(--accent-purple)] shadow-[0_0_20px_rgba(139,92,246,0.1)]">
+                            <Building2 size={28} />
+                          </div>
+                          <div>
+                            <h3 className="mb-2 text-xl font-bold text-white">
+                              Institutional Batching
+                            </h3>
+                            <p className="text-sm leading-relaxed font-medium text-[var(--text-secondary)]">
+                              Designed for financial auditing and legal firms. Anchor 100k+
+                              documents per block using our Merkle-aggregator API.
+                            </p>
+                          </div>
+                          <ul className="space-y-3">
+                            <li className="flex items-center gap-3 text-[11px] font-bold text-white/70">
+                              <CheckCircle2 size={14} className="text-[var(--accent-success)]" />
+                              Volume-based Tiering
+                            </li>
+                            <li className="flex items-center gap-3 text-[11px] font-bold text-white/70">
+                              <CheckCircle2 size={14} className="text-[var(--accent-success)]" />
+                              Custom Retention Policies
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+
+                      {/* Personal Use Case */}
+                      <div className="group relative overflow-hidden rounded-[2.5rem] border border-[var(--border)] bg-[var(--bg-secondary)] p-10 transition-all hover:border-[var(--border-bright)]">
+                        <div className="absolute top-0 right-0 p-8 opacity-5 transition-opacity group-hover:opacity-10">
+                          <Smartphone size={120} />
+                        </div>
+                        <div className="relative z-10 space-y-6">
+                          <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-[var(--accent-active)]/20 bg-[var(--accent-active)]/10 text-[var(--accent-active)] shadow-[0_0_20px_rgba(59,130,246,0.1)]">
+                            <Smartphone size={28} />
+                          </div>
+                          <div>
+                            <h3 className="mb-2 text-xl font-bold text-white">
+                              Personal Media Sync
+                            </h3>
+                            <p className="text-sm leading-relaxed font-medium text-[var(--text-secondary)]">
+                              Automate truth for individuals. Every photo or file created on a
+                              mobile device receives an immutable timestamp anchor.
+                            </p>
+                          </div>
+                          <ul className="space-y-3">
+                            <li className="flex items-center gap-3 text-[11px] font-bold text-white/70">
+                              <CheckCircle2 size={14} className="text-[var(--accent-success)]" />
+                              Mobile-first SDK
+                            </li>
+                            <li className="flex items-center gap-3 text-[11px] font-bold text-white/70">
+                              <CheckCircle2 size={14} className="text-[var(--accent-success)]" />
+                              Pay-per-Anchor (L402)
+                            </li>
+                          </ul>
+                        </div>
                       </div>
                     </div>
                   </div>
-                  <p className="text-center text-[10px] font-bold tracking-widest text-[var(--text-secondary)] uppercase">
-                    Nominal Performance
+
+                  {/* Interactive API Terminal Section */}
+                  <div className="space-y-6">
+                    <div className="flex items-center justify-between">
+                      <h2 className="text-2xl font-bold tracking-tight uppercase">
+                        API Playground
+                      </h2>
+                      <div className="flex gap-2 rounded-xl border border-[var(--border)] bg-[var(--bg-secondary)] p-1">
+                        {Object.keys(CODE_EXAMPLES).map((lang) => (
+                          <button
+                            key={lang}
+                            onClick={() => setCodeLang(lang)}
+                            className={`rounded-lg px-4 py-1.5 text-[9px] font-black tracking-widest uppercase transition-all ${codeLang === lang ? 'bg-[var(--bg-primary)] text-white shadow-md' : 'text-[var(--text-secondary)] hover:text-white'}`}
+                          >
+                            {lang}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-1 gap-0 overflow-hidden rounded-[2.5rem] border border-[var(--border-bright)] bg-black shadow-2xl md:grid-cols-2">
+                      {/* Code Area */}
+                      <div className="border-b border-[var(--border)] bg-[#050505] p-8 md:border-r md:border-b-0">
+                        <div className="mb-6 flex items-center gap-2">
+                          <div className="h-2 w-2 rounded-full bg-red-500/50" />
+                          <div className="h-2 w-2 rounded-full bg-yellow-500/50" />
+                          <div className="h-2 w-2 rounded-full bg-green-500/50" />
+                        </div>
+                        <pre className="overflow-x-auto font-mono text-[12px] leading-relaxed text-indigo-300">
+                          {CODE_EXAMPLES[codeLang]}
+                        </pre>
+                      </div>
+                      {/* Terminal View */}
+                      <div className="space-y-2 bg-[#0a0a0a] p-8 font-mono text-[11px]">
+                        {terminalOutput.map((line, i) => (
+                          <div
+                            key={i}
+                            className={
+                              line.includes('SUCCESS') || line.includes('RECEIVED')
+                                ? 'text-emerald-400'
+                                : 'text-white/40'
+                            }
+                          >
+                            {line}
+                          </div>
+                        ))}
+                        <div className="flex items-center gap-2 text-white">
+                          <span className="animate-pulse">_</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+
+              {activeTab === 'keys' && (
+                <motion.div
+                  key="keys"
+                  initial={{ opacity: 0, scale: 0.98 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="space-y-8"
+                >
+                  <div className="flex items-center justify-between">
+                    <h2 className="text-3xl font-black tracking-tighter uppercase">
+                      API Authentication
+                    </h2>
+                    <button className="flex h-12 items-center gap-2 rounded-xl bg-white px-6 text-[10px] font-black tracking-widest text-black uppercase transition-all hover:scale-105">
+                      <Plus size={16} /> Generate New Key
+                    </button>
+                  </div>
+                  <div className="space-y-4">
+                    <ApiKeyRow
+                      name="Main Production Node"
+                      keySnippet="SAT_LIVE_8F2...A9B"
+                      status="Active"
+                    />
+                    <ApiKeyRow
+                      name="Financial Ledger Worker"
+                      keySnippet="SAT_LIVE_4K9...R2D"
+                      status="Active"
+                    />
+                    <ApiKeyRow
+                      name="iOS Personal Sync"
+                      keySnippet="SAT_TEST_3C1...D4E"
+                      status="Active"
+                    />
+                    <ApiKeyRow
+                      name="Legacy Archive"
+                      keySnippet="SAT_REVOKED_1A2...B3C"
+                      status="Revoked"
+                    />
+                  </div>
+                </motion.div>
+              )}
+
+              {activeTab === 'strategy' && (
+                <motion.div
+                  key="strategy"
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  className="space-y-12"
+                >
+                  <div className="max-w-3xl space-y-6">
+                    <h2 className="text-4xl font-black tracking-tighter uppercase">
+                      Sovereign <span className="text-[var(--accent-active)]">Offering.</span>
+                    </h2>
+                    <p className="text-lg font-medium text-[var(--text-secondary)]">
+                      We offer three distinct tiers of API access designed for different scales of
+                      truth. All settlement is performed via the Lightning Network (L402).
+                    </p>
+                  </div>
+                  <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+                    <PricingTier
+                      tier="Sovereign"
+                      price="42 SATS"
+                      unit="/ anchor"
+                      features={[
+                        'Up to 100 anchors/day',
+                        'Nostr Proof Propagation',
+                        'Community Support'
+                      ]}
+                      accent="var(--accent-active)"
+                    />
+                    <PricingTier
+                      tier="Institutional"
+                      price="0.01 BTC"
+                      unit="/ month"
+                      features={[
+                        'Unlimited Batching',
+                        'Priority Witness Chain',
+                        'SLA Guarantee',
+                        'Dedicated Node'
+                      ]}
+                      accent="var(--accent-purple)"
+                      recommended
+                    />
+                    <PricingTier
+                      tier="Custom"
+                      price="Contact"
+                      unit="Sales"
+                      features={[
+                        'White-label Portal',
+                        'On-Prem Node Sync',
+                        'Judicial Expert Support'
+                      ]}
+                      accent="var(--accent-success)"
+                    />
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
+          {/* Sidebar Area */}
+          <div className="space-y-8 lg:col-span-4">
+            {/* L402 Wallet Card */}
+            <div className="group relative overflow-hidden rounded-[2.5rem] border border-[var(--border-bright)] bg-[var(--bg-secondary)] p-8 shadow-2xl">
+              <div className="absolute inset-0 bg-gradient-to-br from-[var(--accent-active)]/10 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+              <div className="relative z-10 space-y-8">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3 text-[var(--accent-active)]">
+                    <Zap size={20} className="fill-[var(--accent-active)]" />
+                    <span className="text-[10px] font-black tracking-widest uppercase">
+                      L402 Credits
+                    </span>
+                  </div>
+                  <div className="flex h-1.5 w-1.5 animate-pulse rounded-full bg-[var(--accent-success)] shadow-[0_0_8px_var(--accent-success)]" />
+                </div>
+
+                <div className="space-y-1">
+                  <h3 className="font-mono text-5xl font-black tracking-tighter text-white">
+                    2,142,000 <span className="text-lg text-[var(--text-secondary)]">SATS</span>
+                  </h3>
+                  <p className="text-[10px] font-bold tracking-[0.2em] text-[var(--text-secondary)] uppercase">
+                    Balance Nominal
                   </p>
                 </div>
-              </div>
 
-              <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)]">
-                <div className="flex items-center justify-between border-b border-[var(--border)] p-6">
-                  <h3 className="text-[10px] font-bold tracking-widest uppercase">
-                    Active API Keys
-                  </h3>
-                  <button className="h-8 rounded-lg bg-[var(--text-primary)] px-4 text-[9px] font-bold tracking-widest text-[var(--bg-primary)] uppercase">
-                    + New Key
+                <div className="space-y-4">
+                  <div className="space-y-3 rounded-2xl border border-[var(--border)] bg-[var(--bg-primary)] p-4">
+                    <div className="flex justify-between text-[10px] font-black tracking-widest uppercase">
+                      <span className="text-[var(--text-secondary)]">Current Metering</span>
+                      <span className="text-white">42 SATS / Req</span>
+                    </div>
+                    <div className="h-1.5 w-full overflow-hidden rounded-full bg-white/5">
+                      <div className="h-full w-2/3 bg-[var(--accent-active)] shadow-[0_0_10px_var(--accent-active)]" />
+                    </div>
+                  </div>
+                  <button className="flex h-14 w-full items-center justify-center gap-3 rounded-2xl bg-white text-[11px] font-black tracking-widest text-black uppercase transition-all hover:scale-[1.02]">
+                    Top Up Credits <ChevronRight size={16} />
                   </button>
                 </div>
-                <div className="space-y-3 p-6">
-                  <ApiKeyRow
-                    name="Main Production Node"
-                    keySnippet="SAT_LIVE_8F2...A9B"
-                    status="Active"
-                  />
-                  <ApiKeyRow
-                    name="Verification Worker"
-                    keySnippet="SAT_TEST_3C1...D4E"
-                    status="Active"
-                  />
-                </div>
               </div>
             </div>
-          )}
 
-          {activeTab === 'keys' && (
-            <div className="space-y-8">
-              <div className="space-y-6 rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] p-8">
-                <h3 className="text-xl font-bold tracking-tight">Access Management</h3>
-                <div className="space-y-4">
-                  <ApiKeyRow
-                    name="Production Environment"
-                    keySnippet="SAT_LIVE_...A9B"
-                    status="Active"
-                  />
-                  <ApiKeyRow name="Staging Worker" keySnippet="SAT_STAGE_...X2Z" status="Active" />
-                  <ApiKeyRow name="Legacy Archive" keySnippet="SAT_LIVE_...F12" status="Revoked" />
-                </div>
+            {/* Resources List */}
+            <div className="space-y-6 rounded-[2.5rem] border border-[var(--border)] bg-[var(--bg-secondary)] p-8">
+              <h3 className="text-[10px] font-black tracking-widest text-[var(--text-secondary)] uppercase">
+                Technical Resources
+              </h3>
+              <div className="space-y-2">
+                <ResourceLink icon={Code2} label="Python SDK Docs" />
+                <ResourceLink icon={Globe} label="API Endpoints Reference" />
+                <ResourceLink icon={Database} label="Nostr NIP-05 Schema" />
+                <ResourceLink icon={Lock} label="Security Architecture" />
               </div>
             </div>
-          )}
 
-          {activeTab === 'billing' && (
-            <div className="space-y-8">
-              <div className="space-y-8 rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] p-8">
-                <h3 className="text-xl font-bold tracking-tight">Settlement History</h3>
-                <div className="space-y-4">
-                  {[
-                    {
-                      desc: 'API Invoicing - April 2026',
-                      amount: '420,000 SATS',
-                      date: '2026-04-30'
-                    },
-                    { desc: 'Witness Node Subsidy', amount: '12,000 SATS', date: '2026-04-28' },
-                    { desc: 'Credit Deposit (L402)', amount: '1,000,000 SATS', date: '2026-04-25' }
-                  ].map((row, i) => (
-                    <div
-                      key={i}
-                      className="flex items-center justify-between rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] p-4"
-                    >
-                      <div>
-                        <p className="text-sm font-bold">{row.desc}</p>
-                        <p className="font-mono text-[10px] text-[var(--text-secondary)]">
-                          {row.date}
-                        </p>
-                      </div>
-                      <span className="font-mono font-bold text-[var(--accent-active)]">
-                        {row.amount}
-                      </span>
-                    </div>
-                  ))}
-                </div>
+            {/* Mesh Status */}
+            <div className="space-y-4 rounded-[2.5rem] border border-[var(--border)] bg-[var(--surface-raised)]/20 p-8">
+              <div className="flex items-center gap-3">
+                <Cpu size={18} className="text-[var(--accent-success)]" />
+                <span className="text-[10px] font-black tracking-widest text-white uppercase">
+                  Mesh Topology
+                </span>
               </div>
-            </div>
-          )}
-
-          {activeTab === 'docs' && (
-            <div className="space-y-8">
-              <div className="space-y-4 rounded-2xl border border-[var(--border)] bg-black/40 p-8 font-mono text-sm">
-                <p className="text-[var(--accent-active)]"># Anchor a new SHA-256 hash</p>
-                <div className="flex gap-4 rounded-xl border border-white/5 bg-black/60 p-4">
-                  <span className="text-white/40">1</span>
-                  <p>
-                    <span className="text-purple-400">POST</span> /v4/stamp
-                  </p>
-                </div>
-                <div className="flex gap-4 rounded-xl border border-white/5 bg-black/60 p-4">
-                  <span className="text-white/40">2</span>
-                  <p className="text-blue-400">Authorization: Bearer L402 ...</p>
-                </div>
-                <div className="flex gap-4 rounded-xl border border-white/5 bg-black/60 p-4">
-                  <span className="text-white/40">3</span>
-                  <p className="text-emerald-400">
-                    {'{ "hash": "e3b0c442...", "label": "Evidence #42" }'}
-                  </p>
-                </div>
-              </div>
-              <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                <button className="group space-y-2 rounded-xl border border-[var(--border)] p-6 text-left transition-all hover:border-[var(--accent-active)]">
-                  <Code2
-                    className="text-[var(--accent-active)] transition-transform group-hover:scale-110"
-                    size={24}
-                  />
-                  <h4 className="font-bold">Python SDK</h4>
-                  <p className="text-xs text-[var(--text-secondary)]">pip install satohash-sdk</p>
-                </button>
-                <button className="group space-y-2 rounded-xl border border-[var(--border)] p-6 text-left transition-all hover:border-[var(--accent-active)]">
-                  <Terminal
-                    className="text-[var(--accent-active)] transition-transform group-hover:scale-110"
-                    size={24}
-                  />
-                  <h4 className="font-bold">Node.js SDK</h4>
-                  <p className="text-xs text-[var(--text-secondary)]">
-                    npm install @satohash/client
-                  </p>
-                </button>
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* Sidebar / L402 Billing */}
-        <div className="space-y-8">
-          <div className="group relative space-y-8 overflow-hidden rounded-[2.5rem] border border-[var(--border)] bg-[var(--bg-secondary)] p-8">
-            <div className="absolute inset-0 bg-gradient-to-br from-[var(--accent-active)]/5 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
-            <div className="relative z-10 space-y-2">
-              <div className="flex items-center gap-3 text-[var(--accent-active)]">
-                <Zap size={20} />
-                <h3 className="text-[10px] font-bold tracking-widest uppercase">
-                  L402 Settlement Plane
-                </h3>
-              </div>
-              <h2 className="font-mono text-4xl font-bold tracking-tighter">
-                2,142,000{' '}
-                <span className="text-sm font-medium text-[var(--text-secondary)]">SATS</span>
-              </h2>
-              <p className="text-[10px] font-bold tracking-widest text-[var(--text-secondary)] uppercase">
-                Available Credit
-              </p>
-            </div>
-
-            <div className="relative z-10 space-y-4">
-              <div className="space-y-3 rounded-2xl border border-[var(--border)] bg-[var(--bg-primary)] p-4">
-                <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-bold text-[var(--text-secondary)] uppercase">
-                    Status
+              <div className="space-y-3">
+                <div className="flex items-end justify-between">
+                  <span className="text-xs font-medium text-[var(--text-secondary)]">
+                    Active Witness Nodes
                   </span>
-                  <span className="text-[10px] font-bold text-[var(--accent-success)] uppercase">
-                    Authenticated
-                  </span>
+                  <span className="font-mono text-sm font-bold text-white">1,402</span>
                 </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-bold text-[var(--text-secondary)] uppercase">
-                    Metering
+                <div className="flex items-end justify-between">
+                  <span className="text-xs font-medium text-[var(--text-secondary)]">
+                    Network Health
                   </span>
-                  <span className="text-[10px] font-bold text-white uppercase">
-                    42 SATS / Anchor
+                  <span className="text-[10px] font-black text-[var(--accent-success)] uppercase">
+                    Optimal
                   </span>
                 </div>
               </div>
-              <button className="flex h-14 w-full items-center justify-center gap-3 rounded-xl bg-[var(--text-primary)] text-xs font-bold tracking-widest text-[var(--bg-primary)] uppercase transition-all hover:scale-[1.02]">
-                Deposit SATS <ChevronRight size={16} />
-              </button>
-            </div>
-          </div>
-
-          <div className="space-y-4 rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] p-6">
-            <div className="flex items-center gap-3 text-[var(--accent-pending)]">
-              <ShieldAlert size={18} />
-              <h3 className="text-[10px] font-bold tracking-widest uppercase">Webhooks</h3>
-            </div>
-            <p className="text-xs leading-relaxed font-medium text-[var(--text-secondary)]">
-              Receive instant updates when your proofs transition from &quot;Pending&quot; to
-              &quot;Anchored&quot;.
-            </p>
-            <button className="h-11 w-full rounded-xl border border-[var(--border)] text-[10px] font-bold tracking-widest uppercase transition-all hover:bg-[var(--surface-raised)]">
-              Manage Webhooks
-            </button>
-          </div>
-
-          <div className="space-y-3 rounded-2xl border border-[var(--border)] bg-[var(--surface-raised)]/20 p-6">
-            <div className="flex items-center gap-2 text-[var(--text-secondary)]">
-              <Cpu size={14} />
-              <span className="text-[10px] font-bold tracking-widest uppercase">
-                Infrastructure Sync
-              </span>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-[11px] font-medium">Node Mesh Latency</span>
-              <span className="font-mono text-[11px] font-bold text-[var(--accent-success)]">
-                42ms
-              </span>
             </div>
           </div>
         </div>
       </div>
+    </div>
+  )
+}
+
+function StatCard({ icon: Icon, label, value, sub, color }) {
+  return (
+    <div className="group space-y-4 rounded-[2.5rem] border border-[var(--border)] bg-[var(--bg-secondary)] p-8 transition-all hover:border-[var(--border-bright)]">
+      <div className="flex items-center justify-between">
+        <div
+          className="flex h-10 w-10 items-center justify-center rounded-xl border transition-all"
+          style={{ borderColor: `${color}30`, backgroundColor: `${color}05`, color }}
+        >
+          <Icon size={20} />
+        </div>
+        <BarChart3
+          size={16}
+          className="text-[var(--text-secondary)] opacity-30 transition-opacity group-hover:opacity-100"
+        />
+      </div>
+      <div>
+        <div className="mb-1 text-[9px] font-black tracking-widest text-[var(--text-secondary)] uppercase">
+          {label}
+        </div>
+        <div className="mb-1 text-3xl leading-none font-black tracking-tighter text-white">
+          {value}
+        </div>
+        <div className="text-[9px] font-bold text-[var(--text-secondary)] uppercase">{sub}</div>
+      </div>
+    </div>
+  )
+}
+
+function ResourceLink({ icon: Icon, label }) {
+  return (
+    <button className="group flex w-full items-center justify-between rounded-xl p-4 transition-colors hover:bg-white/5">
+      <div className="flex items-center gap-4">
+        <Icon
+          size={16}
+          className="text-[var(--text-secondary)] transition-colors group-hover:text-[var(--accent-active)]"
+        />
+        <span className="text-sm font-medium text-[var(--text-secondary)] transition-colors group-hover:text-white">
+          {label}
+        </span>
+      </div>
+      <ArrowRight
+        size={14}
+        className="-translate-x-2 text-[var(--text-secondary)] opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100"
+      />
+    </button>
+  )
+}
+
+function PricingTier({ tier, price, unit, features, accent, recommended }) {
+  return (
+    <div
+      className={`relative flex flex-col space-y-8 rounded-[2.5rem] border p-10 transition-all hover:shadow-2xl ${recommended ? 'scale-105 border-[var(--accent-purple)] bg-[var(--accent-purple)]/5 shadow-purple-500/10' : 'border-[var(--border)] bg-[var(--bg-secondary)]'}`}
+    >
+      {recommended && (
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[var(--accent-purple)] px-4 py-1.5 text-[9px] font-black tracking-widest text-white uppercase shadow-lg">
+          Most Popular
+        </div>
+      )}
+      <div className="space-y-2">
+        <h3 className="text-[10px] font-black tracking-widest uppercase" style={{ color: accent }}>
+          {tier} Tier
+        </h3>
+        <div className="flex items-baseline gap-2">
+          <span className="text-4xl font-black tracking-tighter text-white">{price}</span>
+          <span className="text-sm font-medium text-[var(--text-secondary)] uppercase">{unit}</span>
+        </div>
+      </div>
+      <ul className="flex-1 space-y-4">
+        {features.map((f, i) => (
+          <li key={i} className="flex items-center gap-3 text-sm font-medium text-white/70">
+            <CheckCircle2 size={16} style={{ color: accent }} />
+            {f}
+          </li>
+        ))}
+      </ul>
+      <button
+        className="h-14 w-full rounded-2xl border text-[11px] font-black tracking-widest uppercase transition-all"
+        style={{
+          borderColor: recommended ? 'var(--accent-purple)' : 'var(--border-bright)',
+          backgroundColor: recommended ? 'var(--accent-purple)' : 'transparent',
+          color: recommended ? 'white' : 'white'
+        }}
+      >
+        {tier === 'Custom' ? 'Contact Sales' : 'Activate Tier'}
+      </button>
     </div>
   )
 }
