@@ -1,385 +1,304 @@
-import {
-  Twitter,
-  Heart,
-  ExternalLink,
-  AtSign,
-  Bitcoin,
-  ChevronDown,
-  ChevronUp,
-  Github,
-  Disc,
-  Shield,
-  Activity,
-  FileText,
-  Lock,
-  Globe,
-  Zap,
-  Briefcase,
-  BookOpen,
-  Lightbulb,
-  Code
-} from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
+import {
+  Shield,
+  Mail,
+  Globe,
+  ChevronRight,
+  ArrowUpRight,
+  Zap,
+  Cpu,
+  Briefcase,
+  Lock,
+  Scale,
+  X,
+  Heart
+} from 'lucide-react'
 import { Link } from 'react-router-dom'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { QRCodeSVG } from 'qrcode.react'
-import { APP_CONFIG, FOOTER_EXTRA_LINKS } from '@/config/constants'
-import { getBlockHeight } from '../utils/mempool'
 
-const EDUCATION_FACTS = [
-  {
-    title: 'What is Timestamping?',
-    text: 'Bitcoin timestamping creates an immutable proof that a document existed at a specific point in time, using the Bitcoin blockchain as a global clock.',
-    icon: '⏰'
-  },
-  {
-    title: 'SHA-256 Explained',
-    text: 'SHA-256 is a one-way cryptographic function that turns any data into a unique 64-character fingerprint. Even changing one letter produces a completely different hash.',
-    icon: '🔐'
-  },
-  {
-    title: 'What is a Merkle Tree?',
-    text: 'A Merkle tree lets us bundle thousands of hashes into a single root hash, which means we can anchor millions of documents in one Bitcoin transaction.',
-    icon: '🌳'
-  },
-  {
-    title: 'Why Bitcoin?',
-    text: 'Bitcoin has the most secure and decentralized network. Once a hash is anchored in a Bitcoin block, it would cost billions to alter — making it the ultimate source of truth.',
-    icon: '₿'
-  },
-  {
-    title: 'Privacy by Design',
-    text: 'Your documents never leave your device. Only the SHA-256 hash (a mathematical fingerprint) is submitted. The original content remains 100% private.',
-    icon: '🛡️'
-  }
-]
+const JobCard = ({ title, description }) => {
+  const emailLink = `mailto:hello@giveabit.io?subject=Application for ${title}`
+  return (
+    <motion.a
+      href={emailLink}
+      whileHover={{ x: 5 }}
+      className="group block rounded-2xl border border-[var(--border)] bg-[var(--bg-primary)] p-6 transition-all hover:border-[var(--accent-active)]"
+    >
+      <div className="mb-3 flex items-start justify-between">
+        <h4 className="text-lg font-bold tracking-tight text-white transition-colors group-hover:text-[var(--accent-active)]">
+          {title}
+        </h4>
+        <ArrowUpRight
+          size={18}
+          className="text-[var(--text-secondary)] transition-colors group-hover:text-[var(--accent-active)]"
+        />
+      </div>
+      <p className="mb-4 text-xs leading-relaxed font-medium text-[var(--text-secondary)]">
+        {description}
+      </p>
+      <div className="flex items-center gap-2 text-[10px] font-bold tracking-widest text-[var(--accent-active)] uppercase">
+        Apply Now <ChevronRight size={12} />
+      </div>
+    </motion.a>
+  )
+}
 
 export default function Footer() {
-  const currentYear = new Date().getFullYear()
-  const [showQR, setShowQR] = useState(false)
-  const [copied, setCopied] = useState(false)
-  const [isJobsOpen, setIsJobsOpen] = useState(false)
-  const [blockHeight, setBlockHeight] = useState(830000)
-  const [factIndex, setFactIndex] = useState(0)
-  const bitcoinAddress = 'bc1qhm5ndfjhqxdk3cx0pngyps4f5nnwdckulmge6c8keyf2pk0neqtshjn8ad'
-
   const jobs = [
     {
-      title: 'Lead Protocol Engineer (Rust)',
-      dept: 'Engineering',
-      desc: 'Architecting the future of Bitcoin-anchored attestation. Deep knowledge of OTS and Merkle trees required.'
+      title: 'L402 Protocol Architect',
+      description:
+        'Design and implement the high-frequency Lightning settlement layer. Focus on BOLT-12 integration and metered API orchestration.'
     },
     {
-      title: 'Sovereign DevOps Lead',
-      dept: 'Infrastructure',
-      desc: 'Scaling the global Witness Mesh. Focus on trustless node orchestration and high-availability relays.'
+      title: 'Forensic Rust Engineer',
+      description:
+        'Optimize our low-level cryptographic primitives and OpenTimestamps witness engine. Performance and safety are absolute requirements.'
     },
     {
-      title: 'Institutional Marketing Manager',
-      dept: 'Growth',
-      desc: 'Bridging the gap between Bitcoin protocol and legal-grade institutional trust globally.'
+      title: 'Cryptography Systems Lead',
+      description:
+        'Lead the development of ZK-SHA256 implementations and advanced Merkle path traversal algorithms for courtroom-grade verification.'
     },
     {
-      title: 'Premium UX/UI Designer',
-      dept: 'Design',
-      desc: 'Crafting the Institutional Noir experience. Specialize in complex data visualization and sleek aesthetics.'
+      title: 'Institutional UX Designer',
+      description:
+        'Evolve the "Institutional Noir" design system. Craft high-density, low-latency interfaces for sovereign intelligence consoles.'
     },
     {
-      title: 'Senior Backend Architect (Node.js)',
-      dept: 'Engineering',
-      desc: 'Hardening the cryptographic pipeline and ensuring 99.99% uptime for the Satohash Oracle.'
+      title: 'Nostr Identity Specialist',
+      description:
+        'Build the bridge between sovereign keys and human-readable reputation. Master NIP-05 and decentralized signing workflows.'
     },
     {
-      title: 'Cryptography Specialist',
-      dept: 'Security',
-      desc: 'Mathematical verification of SHA-256 anchoring pipelines and zero-knowledge privacy layers.'
+      title: 'Sovereign Node DevOps',
+      description:
+        'Orchestrate our global mesh of witness nodes. Ensure 99.999% availability for the Truth OS under extreme network conditions.'
     },
     {
-      title: 'Global Growth Lead',
-      dept: 'Strategy',
-      desc: 'Expanding the Satohash mesh into international judiciaries and enterprise sectors.'
+      title: 'Blockchain Data Scientist',
+      description:
+        'Architect the Atlas Plane’s temporal search engine. Mine historical blockchain data to establish unprecedented forensic context.'
     }
   ]
 
-  useEffect(() => {
-    const fetchHeight = async () => {
-      const height = await getBlockHeight()
-      if (height) setBlockHeight(height)
-    }
-    fetchHeight()
-  }, [])
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setFactIndex((prev) => (prev + 1) % EDUCATION_FACTS.length)
-    }, 8000)
-    return () => clearInterval(timer)
-  }, [])
-
-  const copyAddress = () => {
-    navigator.clipboard.writeText(bitcoinAddress)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
-  }
-
-  const currentFact = EDUCATION_FACTS[factIndex]
+  const [showDonation, setShowDonation] = useState(false)
+  const btcAddress = 'bc1qhm5ndfjhqxdk3cx0pngyps4f5nnwdckulmge6c8keyf2pk0neqtshjn8ad'
 
   return (
-    <footer className="relative mt-auto w-full border-t border-indigo-100 bg-[#f8faff] pt-24 pb-12">
-      {/* Background Ornaments */}
-      <div className="absolute inset-0 z-0 opacity-40">
-        <div className="absolute inset-0 bg-[radial-gradient(#4f46e5_1px,transparent_1px)] [background-size:40px_40px] opacity-[0.03]" />
-        <div className="absolute top-0 left-1/2 h-px w-full max-w-6xl -translate-x-1/2 bg-gradient-to-r from-transparent via-indigo-200 to-transparent" />
-        <div className="absolute -bottom-48 -left-48 h-96 w-96 rounded-full bg-indigo-500/5 blur-[120px]" />
-        <div className="absolute top-0 right-1/4 h-64 w-64 rounded-full bg-violet-500/5 blur-[100px]" />
-      </div>
-
-      <div className="layout-container relative z-10">
-
-        {/* ── Educational "Did You Know?" Carousel ────────────── */}
-        <div className="mb-20">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={factIndex}
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -12 }}
-              transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-              className="rounded-3xl bg-white border border-indigo-50 p-8 md:p-10 flex flex-col md:flex-row items-start gap-6 shadow-sm"
-            >
-              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-indigo-50 text-2xl">
-                {currentFact.icon}
+    <footer className="relative overflow-hidden border-t border-[var(--border)] bg-[var(--bg-secondary)] pt-24 pb-12">
+      {/* Donation Popup */}
+      <AnimatePresence>
+        {showDonation && (
+          <motion.div
+            initial={{ opacity: 0, y: 20, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 20, scale: 0.9 }}
+            className="fixed right-8 bottom-32 z-[60] w-80 space-y-6 rounded-[2.5rem] bg-white p-8 text-black shadow-[0_0_50px_rgba(255,255,255,0.1)]"
+          >
+            <div className="flex items-center justify-between">
+              <h3 className="text-[10px] font-bold tracking-widest text-gray-500 uppercase">
+                Support the Mission
+              </h3>
+              <button
+                onClick={() => setShowDonation(false)}
+                className="text-gray-400 transition-colors hover:text-black"
+              >
+                <X size={16} />
+              </button>
+            </div>
+            <div className="flex aspect-square items-center justify-center rounded-2xl border-2 border-gray-100 bg-white p-4">
+              <QRCodeSVG
+                value={`bitcoin:${btcAddress}`}
+                size={200}
+                level="H"
+                includeMargin={false}
+              />
+            </div>
+            <div className="space-y-2">
+              <p className="text-[9px] font-bold tracking-widest text-gray-400 uppercase">
+                Bitcoin Address
+              </p>
+              <div className="rounded-xl border border-gray-100 bg-gray-50 p-3 font-mono text-[10px] font-bold break-all">
+                {btcAddress}
               </div>
-              <div className="flex-1">
-                <div className="flex items-center gap-3 mb-3">
-                  <Lightbulb size={14} className="text-amber-500" />
-                  <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-amber-600">
-                    Did You Know?
-                  </span>
-                </div>
-                <h4 className="text-lg font-extrabold tracking-tight text-indigo-900 mb-2">
-                  {currentFact.title}
-                </h4>
-                <p className="text-sm text-slate-500 leading-relaxed font-medium max-w-2xl">
-                  {currentFact.text}
-                </p>
-              </div>
-              <div className="hidden md:flex items-center gap-1 self-center">
-                {EDUCATION_FACTS.map((_, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setFactIndex(i)}
-                    className={`h-1.5 rounded-full transition-all ${i === factIndex ? 'w-6 bg-indigo-500' : 'w-1.5 bg-slate-200 hover:bg-slate-300'}`}
-                  />
-                ))}
-              </div>
-            </motion.div>
-          </AnimatePresence>
-        </div>
-
-        <div className="mb-20 grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-5">
-          {/* Brand & Mission */}
-          <div className="lg:col-span-1">
-            <motion.div 
-               whileHover={{ scale: 1.02 }}
-               className="mb-6 flex items-center gap-3"
-            >
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white p-2 shadow-lg shadow-indigo-500/10 ring-1 ring-indigo-50">
-                <img
-                  src={APP_CONFIG.LOGO}
-                  alt="Satohash Logo"
-                  className="h-full w-full object-contain"
-                />
-              </div>
-              <span className="text-2xl font-extrabold tracking-tighter text-indigo-900">
-                {APP_CONFIG.NAME}
-              </span>
-            </motion.div>
-            <p className="mb-8 text-sm font-medium leading-relaxed text-slate-500">
-              Anchoring digital history to the Bitcoin blockchain. Immutable, local-first, and institutional-grade attestation for the Sovereign Web.
+            </div>
+            <p className="text-[10px] leading-relaxed font-medium text-gray-500 italic">
+              Your contribution keeps the truth mesh sovereign and censorship-resistant.
             </p>
-            
-            <div className="flex flex-wrap gap-2.5">
-              {[
-                { icon: Twitter, href: 'https://twitter.com/give_bit', label: 'Twitter' },
-                { icon: Github, href: 'https://github.com/kitsboy/satohash', label: 'GitHub' },
-                { icon: AtSign, href: 'nostr:kimi@giveabit.io', label: 'Nostr' }
-              ].map((social, i) => (
-                <motion.a
-                  key={i}
-                  whileHover={{ scale: 1.08, y: -2 }}
-                  whileTap={{ scale: 0.92 }}
-                  href={social.href}
-                  target="_blank"
-                  aria-label={social.label}
-                  className="flex h-10 w-10 items-center justify-center rounded-xl bg-white border border-slate-100 text-slate-400 transition-all hover:bg-indigo-600 hover:text-white hover:shadow-lg hover:shadow-indigo-500/20 hover:border-indigo-600"
-                >
-                  <social.icon size={16} />
-                </motion.a>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <div className="relative z-10 mx-auto max-w-7xl px-8">
+        <div className="mb-24 grid grid-cols-1 gap-16 lg:grid-cols-12">
+          {/* ... existing columns ... */}
+          {/* Logo & Legal Column */}
+          <div className="space-y-12 lg:col-span-4">
+            <div className="space-y-6">
+              <Link to="/" className="group flex items-center gap-4">
+                <div className="h-10 w-10 rotate-45 rounded-sm bg-[var(--accent-active)] shadow-[0_0_20px_var(--accent-active)] transition-transform group-hover:rotate-90" />
+                <span className="text-3xl font-black tracking-tighter uppercase">Satohash</span>
+              </Link>
+              <p className="text-sm leading-relaxed font-medium text-[var(--text-secondary)]">
+                Satohash is the sovereign operating system for digital truth. Anchored to the
+                Bitcoin network, we provide the ultimate cryptographic ledger for institutional
+                provenance and forensic verification.
+              </p>
+            </div>
+
+            <div className="space-y-6">
+              <div className="flex items-center gap-3 text-white">
+                <Scale size={20} className="text-[var(--accent-active)]" />
+                <h3 className="text-[10px] font-bold tracking-[0.2em] uppercase">
+                  Legal Framework
+                </h3>
+              </div>
+              <div className="space-y-4 text-[10px] leading-loose font-medium tracking-widest text-[var(--text-secondary)] uppercase">
+                <p>
+                  SATOHASH V4.0.0-ELITE+ IS A DECENTRALIZED PROTOCOL. ALL CRYPTOGRAPHIC OPERATIONS
+                  ARE PERFORMED LOCALLY. WE DO NOT MAINTAIN CUSTODY OF PRIVATE MATERIAL OR ORIGINAL
+                  DATA.
+                </p>
+                <p>
+                  PROOFS GENERATED BY SATOHASH ARE DESIGNED TO EXCEED eIDAS AND ESIGN STANDARDS BY
+                  LEVERAGING IMMUTABLE BITCOIN ATTESTATIONS. HOWEVER, LEGAL ADMISSIBILITY MAY VARY
+                  BY JURISDICTION. CONSULT WITH INDEPENDENT COUNSEL FOR SPECIFIC USE CASES.
+                </p>
+                <p>© 2026 GIVEABIT LTD. REGISTERED IN THE SEYCHELLES. ALL RIGHTS RESERVED.</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Jobs Board Column */}
+          <div className="space-y-10 lg:col-span-5">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3 text-white">
+                <Briefcase size={20} className="text-[var(--accent-active)]" />
+                <h3 className="text-[10px] font-bold tracking-[0.2em] uppercase">
+                  Sovereign Careers
+                </h3>
+              </div>
+              <span className="animate-pulse rounded-full border border-[var(--accent-active)]/20 bg-[var(--accent-active)]/10 px-3 py-1 text-[8px] font-black tracking-widest text-[var(--accent-active)] uppercase">
+                Hiring Now
+              </span>
+            </div>
+            <div className="custom-scrollbar grid max-h-[600px] grid-cols-1 gap-4 overflow-y-auto pr-4">
+              {jobs.map((job, i) => (
+                <JobCard key={i} title={job.title} description={job.description} />
               ))}
             </div>
           </div>
 
-          {/* Protocol Col */}
-          <div>
-            <h4 className="mb-6 text-[10px] font-bold uppercase tracking-[0.15em] text-slate-400">
-               <span className="flex items-center gap-2"> <Shield size={12} /> Protocol</span>
-            </h4>
-            <ul className="space-y-3.5 text-sm font-medium text-slate-500">
-              <li><Link to="/dashboard" className="transition-colors hover:text-indigo-600">Workbench</Link></li>
-              <li><Link to="/verify" className="transition-colors hover:text-indigo-600">Global Verifier</Link></li>
-              <li><Link to="/about" className="transition-colors hover:text-indigo-600">Whitepaper</Link></li>
-              <li>
-                  <a href="https://opentimestamps.org/" target="_blank" className="flex items-center gap-2 hover:text-indigo-600">
-                    OTS Calendar <ExternalLink size={11} />
-                  </a>
-              </li>
-            </ul>
-          </div>
+          {/* Contact & Navigation Column */}
+          <div className="space-y-12 lg:col-span-3">
+            <div className="space-y-8">
+              <div className="flex items-center gap-3 text-white">
+                <Mail size={20} className="text-[var(--accent-active)]" />
+                <h3 className="text-[10px] font-bold tracking-[0.2em] uppercase">Communications</h3>
+              </div>
+              <div className="space-y-4">
+                <a
+                  href="mailto:hello@giveabit.io"
+                  className="group block rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] p-4 transition-all hover:border-[var(--accent-active)]"
+                >
+                  <p className="mb-1 text-[10px] font-bold tracking-widest text-[var(--text-secondary)] uppercase">
+                    Email Terminal
+                  </p>
+                  <p className="text-sm font-bold text-white transition-colors group-hover:text-[var(--accent-active)]">
+                    hello@giveabit.io
+                  </p>
+                </a>
+                <a
+                  href="nostr:kimi@giveabit.io"
+                  className="group block rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] p-4 transition-all hover:border-[var(--accent-active)]"
+                >
+                  <p className="mb-1 text-[10px] font-bold tracking-widest text-[var(--text-secondary)] uppercase">
+                    Nostr NIP-05
+                  </p>
+                  <p className="text-sm font-bold text-white transition-colors group-hover:text-[var(--accent-active)]">
+                    kimi@giveabit.io
+                  </p>
+                </a>
+              </div>
+            </div>
 
-          {/* Utility Col */}
-          <div>
-            <h4 className="mb-6 text-[10px] font-bold uppercase tracking-[0.15em] text-slate-400">
-               <span className="flex items-center gap-2"> <Zap size={12} /> Utilities</span>
-            </h4>
-            <ul className="space-y-3.5 text-sm font-medium text-slate-500">
-              <li><Link to="/identity" className="transition-colors hover:text-indigo-600">Identity Hub</Link></li>
-              <li><Link to="/snap-and-stamp" className="transition-colors hover:text-indigo-600">Web Capture</Link></li>
-              <li><Link to="/image-vault" className="transition-colors hover:text-indigo-600">Image Vault</Link></li>
-              <li><Link to="/offers" className="transition-colors hover:text-indigo-600">BOLT-12 Offers</Link></li>
-            </ul>
-          </div>
+            <div className="space-y-8">
+              <div className="flex items-center gap-3 text-white">
+                <Globe size={20} className="text-[var(--accent-active)]" />
+                <h3 className="text-[10px] font-bold tracking-[0.2em] uppercase">Atlas Links</h3>
+              </div>
+              <div className="grid grid-cols-2 gap-x-8 gap-y-4">
+                {[
+                  { name: 'About', path: '/about' },
+                  { name: 'Trust Center', path: '/trust' },
+                  { name: 'Documentation', path: '/documentation' },
+                  { name: 'Status', path: '/status' },
+                  { name: 'Twitter', path: 'https://twitter.com/giveabit', external: true },
+                  { name: 'GitHub', path: 'https://github.com/kitsboy', external: true }
+                ].map((link) =>
+                  link.external ? (
+                    <a
+                      key={link.name}
+                      href={link.path}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs font-bold tracking-widest text-[var(--text-secondary)] uppercase transition-colors hover:text-[var(--accent-active)]"
+                    >
+                      {link.name}
+                    </a>
+                  ) : (
+                    <Link
+                      key={link.name}
+                      to={link.path}
+                      className="text-xs font-bold tracking-widest text-[var(--text-secondary)] uppercase transition-colors hover:text-[var(--accent-active)]"
+                    >
+                      {link.name}
+                    </Link>
+                  )
+                )}
+              </div>
+            </div>
 
-          {/* Resources Col */}
-          <div>
-            <h4 className="mb-6 text-[10px] font-bold uppercase tracking-[0.15em] text-slate-400">
-               <span className="flex items-center gap-2"> <Globe size={12} /> Resources</span>
-            </h4>
-            <ul className="space-y-3.5 text-sm font-medium text-slate-500">
-              <li><Link to="/trust" className="transition-colors hover:text-indigo-600">Trust Center</Link></li>
-              <li><Link to="/developers" className="flex items-center gap-2 transition-colors hover:text-indigo-600"><Code size={12} /> API Documentation</Link></li>
-              <li><Link to="/legal/privacy" className="transition-colors hover:text-indigo-600">Privacy Policy</Link></li>
-              <li><Link to="/legal/terms" className="transition-colors hover:text-indigo-600">Terms of Service</Link></li>
-            </ul>
-          </div>
-
-          {/* Network Pulse Col */}
-          <div className="relative">
-            <h4 className="mb-6 text-[10px] font-bold uppercase tracking-[0.15em] text-slate-400">
-               <span className="flex items-center gap-2"> <Activity size={12} /> Network Pulse</span>
-            </h4>
-            <div className="space-y-4">
-                <div className="rounded-2xl bg-white border border-slate-100 p-5 shadow-sm">
-                    <div className="mb-2 text-[9px] font-bold text-slate-400 uppercase tracking-widest">Bitcoin Block Height</div>
-                    <div className="text-2xl font-extrabold text-indigo-900 tracking-tighter">#{blockHeight.toLocaleString()}</div>
-                    <div className="mt-3 flex items-center gap-2">
-                        <span className="relative flex h-2 w-2">
-                            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                            <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
-                        </span>
-                        <span className="text-[9px] font-bold text-emerald-600 uppercase">Mainnet Live</span>
-                    </div>
-                </div>
-                
-                {/* Donation Widget */}
-                <div className="rounded-2xl bg-indigo-900 p-5 shadow-xl shadow-indigo-900/20 text-white">
-                    <div className="mb-3 flex items-center justify-between">
-                         <Bitcoin size={18} className="text-amber-400" />
-                         <button 
-                            onClick={() => setShowQR(!showQR)}
-                            className="text-[9px] font-bold uppercase tracking-widest bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-lg transition-all"
-                         >
-                            {showQR ? 'Close' : 'Donate ₿'}
-                         </button>
-                    </div>
-                    <p className="text-[10px] font-medium text-indigo-200 uppercase">Support Open Source</p>
-                    <AnimatePresence>
-                        {showQR && (
-                            <motion.div
-                                initial={{ opacity: 0, height: 0 }}
-                                animate={{ opacity: 1, height: 'auto' }}
-                                exit={{ opacity: 0, height: 0 }}
-                                className="mt-4 pt-4 border-t border-white/10 flex flex-col items-center"
-                            >
-                                <div className="p-3 bg-white rounded-xl mb-3">
-                                    <QRCodeSVG value={`bitcoin:${bitcoinAddress}`} size={120} />
-                                </div>
-                                <button 
-                                    onClick={copyAddress}
-                                    className="text-[9px] font-mono text-white/50 hover:text-white transition-colors break-all text-center"
-                                >
-                                    {copied ? '✓ Copied' : bitcoinAddress}
-                                </button>
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
-                </div>
+            <div className="border-t border-[var(--border)] pt-8">
+              <div className="flex items-center gap-4 text-[var(--text-secondary)]">
+                <Lock size={16} />
+                <span className="text-[10px] font-bold tracking-widest uppercase">
+                  v4.0.0-ELITE+ Verified
+                </span>
+              </div>
             </div>
           </div>
         </div>
 
         {/* Bottom Bar */}
-        <div className="flex flex-col items-center justify-between gap-6 border-t border-indigo-50 pt-10 text-sm text-slate-400 md:flex-row">
-           <div className="flex flex-col gap-1.5">
-              <p className="text-slate-500 text-[11px] tracking-wide font-medium">
-                 © {currentYear} {APP_CONFIG.NAME} · Institutional Attestation Protocol
-              </p>
-              <div className="flex items-center gap-3 text-[9px] font-mono text-slate-300">
-                 <span>v4.0.0-ELITE</span>
-                 <div className="h-1 w-1 rounded-full bg-slate-200" />
-                 <span>Oracle Mesh Active</span>
-              </div>
-           </div>
-
-           <div className="flex items-center gap-4 flex-wrap">
-                <button 
-                  onClick={() => setIsJobsOpen(!isJobsOpen)}
-                  className="pill-indigo flex items-center gap-2 transition-all hover:scale-105 active:scale-95"
-                >
-                  <Briefcase size={12} /> {isJobsOpen ? 'Close' : 'We\'re Hiring'} {isJobsOpen ? <ChevronDown size={12} /> : <ChevronUp size={12} />}
-                </button>
-                <div className="h-4 w-px bg-slate-100" />
-                <Link to="/trust" className="hover:text-indigo-600 transition-colors text-[11px] font-bold">Trust Center</Link>
-                <div className="h-4 w-px bg-slate-100" />
-                <div className="group flex items-center gap-2 text-[11px] font-medium text-slate-300">
-                    Built for <span className="text-slate-400 group-hover:text-indigo-600 transition-colors">the decentralized web</span>
-                    <Heart size={14} className="fill-rose-500 text-rose-500 animate-pulse" />
-                </div>
-           </div>
+        <div className="flex flex-col items-center justify-between gap-8 border-t border-[var(--border)] pt-12 md:flex-row">
+          <div className="flex items-center gap-8 text-[var(--text-secondary)]">
+            <span className="text-[9px] font-bold tracking-widest uppercase">
+              Secure Handshake: 1.2s
+            </span>
+            <span className="text-[9px] font-bold tracking-widest text-[var(--accent-success)] uppercase">
+              Protocol Active
+            </span>
+            <button
+              onClick={() => setShowDonation(!showDonation)}
+              className="group flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[9px] font-bold tracking-widest text-white uppercase transition-all hover:bg-white/10"
+            >
+              <Heart
+                size={10}
+                className="text-[var(--accent-active)] transition-transform group-hover:scale-125"
+              />
+              Support the Mission
+            </button>
+          </div>
+          <div className="flex items-center gap-6">
+            <div className="h-2 w-2 animate-pulse rounded-full bg-[var(--accent-active)] shadow-[0_0_10px_var(--accent-active)]" />
+            <span className="font-mono text-[10px] font-bold tracking-[0.3em] text-[var(--text-secondary)] uppercase">
+              Powered by OpenTimestamps & Bitcoin
+            </span>
+          </div>
         </div>
-
-        {/* Careers Drawer */}
-        <AnimatePresence>
-            {isJobsOpen && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 20 }}
-                className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 p-6 bg-white border border-indigo-50 rounded-3xl shadow-xl"
-              >
-                {jobs.map((job, i) => (
-                  <motion.div 
-                    key={i}
-                    whileHover={{ y: -3 }}
-                    className="p-5 rounded-2xl border border-slate-50 bg-slate-50/50 hover:bg-white hover:border-indigo-100 hover:shadow-md transition-all flex flex-col"
-                  >
-                    <div className="mb-3 flex items-center justify-between">
-                       <span className="text-[9px] font-bold text-indigo-600 border border-indigo-100 bg-white px-2.5 py-1 rounded-full uppercase tracking-widest">{job.dept}</span>
-                       <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                    </div>
-                    <h5 className="text-sm font-extrabold text-indigo-900 mb-2 leading-tight">{job.title}</h5>
-                    <p className="text-[11px] font-medium text-slate-500 mb-5 flex-grow leading-relaxed">{job.desc}</p>
-                    <a 
-                      href={`mailto:hello@giveabit.io?subject=Satohash Job Application: ${job.title}&body=Job Offering Details:%0D%0A${job.title}%0D%0A%0D%0AMessage: Satohash%0D%0A%0D%0AI am applying for the above position documented on the Satohash protocol portal.`}
-                      className="w-full btn-holographic py-3 text-center text-[9px]"
-                    >
-                      Apply Now
-                    </a>
-                  </motion.div>
-                ))}
-              </motion.div>
-            )}
-        </AnimatePresence>
       </div>
     </footer>
   )

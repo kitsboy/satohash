@@ -4,51 +4,46 @@
 
 @layer base {
   :root {
-    --bg-base: #f7f8fc;
-    --bg-card: #ffffff;
-    --bg-subtle: #eef0f8;
-    --border: #e2e5f0;
-    --primary: #4f46e5; /* rich indigo */
-    --primary-glow: rgba(79, 70, 229, 0.15);
-    --accent: #7c3aed; /* violet */
-    --success: #059669;
-    --warning: #d97706;
-    --text-base: #1a1d2e;
-    --text-muted: #334155; /* Darkened for better readability */
-    --text-faint: #475569; /* Darkened for better readability */
-    --radius-pill: 9999px;
-    --radius-card: 1.5rem;
-    --shadow-glass:
-      0 8px 32px -8px rgba(79, 70, 229, 0.12), 0 0 0 1px rgba(255, 255, 255, 0.7) inset;
-    --shadow-elevated: 0 20px 60px -15px rgba(79, 70, 229, 0.18);
+    /* Institutional Noir Palette */
+    --bg-primary: #000000; /* Vantablack */
+    --bg-secondary: #0a0a0a; /* Deep Charcoal */
+    --surface-raised: #1a1a1a; /* Soft Graphite */
 
-    /* Institutional Noir Extended Tokens */
-    --noir-slate: #0f172a;
-    --noir-indigo: #312e81;
-    --noir-glass: rgba(255, 255, 255, 0.85);
+    --text-primary: #f0f0f0; /* Titanium White */
+    --text-secondary: #888888; /* Ash Gray */
+
+    --accent-active: #4f46e5; /* Indigo Electric */
+    --accent-pending: #d97706; /* Merkle Amber */
+    --accent-success: #059669; /* Verdict Green */
+    --accent-warning: #b45309; /* Rust */
+    --accent-danger: #dc2626; /* Cold Red */
+
+    --border: rgba(255, 255, 255, 0.08);
+    --border-bright: rgba(255, 255, 255, 0.15);
+
+    --radius-pill: 9999px;
+    --radius-card: 1rem;
+    --radius-button: 0.75rem;
+
+    --shadow-noir: 0 8px 32px -8px rgba(0, 0, 0, 0.8);
+    --shadow-glow: 0 0 20px rgba(79, 70, 229, 0.15);
   }
 
   html,
   body {
-    background-color: #f7f8fc !important;
+    background-color: var(--bg-primary) !important;
+    color: var(--text-primary);
   }
 
   body {
-    background-color: #f7f8fc;
-    color: var(--text-base);
-    font-family:
-      'Plus Jakarta Sans',
-      'Inter',
-      system-ui,
-      -apple-system,
-      sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
     background-image:
-      radial-gradient(at 10% 5%, rgba(79, 70, 229, 0.06) 0px, transparent 55%),
-      radial-gradient(at 90% 95%, rgba(124, 58, 237, 0.04) 0px, transparent 50%);
+      radial-gradient(at 0% 0%, rgba(79, 70, 229, 0.05) 0px, transparent 50%),
+      radial-gradient(at 100% 100%, rgba(124, 58, 237, 0.05) 0px, transparent 50%);
     background-attachment: fixed;
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    position: relative;
   }
 
   body::after {

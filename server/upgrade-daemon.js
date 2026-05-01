@@ -22,9 +22,21 @@ const startUpgradeDaemon = (io) => {
     }
 
     for (const stamp of pendingStamps) {
-      // Exponentially skip checks for older stamps to save resources
+      // Robust exponential backoff strategy for checking older stamps
       const ageHours = (new Date() - new Date(stamp.created_at)) / (1000 * 60 * 60);
-      if (ageHours > 1 && Math.random() > 0.5) continue; // 50% chance to skip if older than 1hr
+      let skipProbability = 0;
+      
+      if (ageHours > 72) {
+          skipProbability = 0.95; // Rarely check stamps older than 3 days
+      } else if (ageHours > 24) {
+          skipProbability = 0.8;  // Check stamps older than 24h about 20% of the time
+      } else if (ageHours > 4) {
+          skipProbability = 0.5;  // Check stamps older than 4h about 50% of the time
+      }
+
+      if (Math.random() < skipProbability) {
+          continue;
+      }
 
       try {
         const detached = OpenTimestamps.DetachedTimestampFile.deserialize(Buffer.from(stamp.ots_binary));
@@ -62,8 +74,18 @@ const startUpgradeDaemon = (io) => {
             });
           }
         }
+        
+        // Add a small delay to avoid hammering the public calendar servers
+        await new Promise(r => setTimeout(r, 1000));
+        
       } catch (error) {
         logger.error(`❌ [DAEMON] Upgrade failure for ${stamp.id}: ${error.message}`);
+        
+        // Graceful handling of calendar rate limits (HTTP 429)
+        if (error.message.toLowerCase().includes('rate limit') || error.message.includes('429')) {
+          logger.warn('⚠️ [DAEMON] OTS calendar rate limit hit. Pausing daemon until next cycle.');
+          break; // Exit the loop for this cycle
+        }
       }
     }
   });

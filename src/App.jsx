@@ -1,128 +1,81 @@
 import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom'
-import React, { Suspense } from 'react'
-import Navbar from './components/Navbar'
-import Footer from './components/Footer'
-import GlobalDropzone from './components/GlobalDropzone'
+import React, { Suspense, useEffect } from 'react'
+import AppShellNoir from './components/AppShellNoir'
 import LoadingScreen from './components/LoadingScreen'
 import { Toaster } from 'sonner'
 import { ToastProvider } from './components/Toast'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 
-NProgress.configure({ showSpinner: false, speed: 400 })
-
-// Route-based Code Splitting (Lazy Loading)
-const Welcome = React.lazy(() => import('./pages/onboarding/Welcome'))
-const TemplateLibrary = React.lazy(() => import('./pages/onboarding/TemplateLibrary'))
-const AccountCreation = React.lazy(() => import('./pages/onboarding/AccountCreation'))
-const BatchProof = React.lazy(() => import('./pages/onboarding/BatchProof'))
-
-const ContractList = React.lazy(() => import('./pages/contracts/ContractList'))
-const ContractEditor = React.lazy(() => import('./pages/contracts/ContractEditor'))
-const ContractView = React.lazy(() => import('./pages/contracts/ContractView'))
-
-const SignatureFlow = React.lazy(() => import('./pages/signatures/SignatureFlow'))
-
-const FinalReview = React.lazy(() => import('./pages/timestamp/FinalReview'))
-const TimestampProgress = React.lazy(() => import('./pages/timestamp/TimestampProgress'))
-const TimestampResult = React.lazy(() => import('./pages/timestamp/TimestampResult'))
-const VerificationHelp = React.lazy(() => import('./pages/timestamp/VerificationHelp'))
-
-const TrustCenter = React.lazy(() => import('./pages/trust/TrustCenter'))
-const TermsOfService = React.lazy(() => import('./pages/legal/TermsOfService'))
-const PrivacyPolicy = React.lazy(() => import('./pages/legal/PrivacyPolicy'))
-const CryptoNotice = React.lazy(() => import('./pages/legal/CryptoNotice'))
-
-const VerificationTool = React.lazy(() => import('./pages/verify/VerificationTool'))
+// Lazy loaded planes
+const Vault = React.lazy(() => import('./pages/Vault'))
+const Stamp = React.lazy(() => import('./pages/Stamp'))
+const Verify = React.lazy(() => import('./pages/VerificationTool'))
+const Contracts = React.lazy(() => import('./pages/ContractList'))
+const Snapper = React.lazy(() =>
+  import('./pages/Placeholders').then((m) => ({ default: m.Snapper }))
+)
+const Certificates = React.lazy(() =>
+  import('./pages/Placeholders').then((m) => ({ default: m.Certificates }))
+)
+const Developer = React.lazy(() => import('./pages/Developer'))
+const Atlas = React.lazy(() => import('./pages/Atlas'))
+const Nodes = React.lazy(() => import('./pages/Atlas')) // Shared component logic
+const Explorer = React.lazy(() => import('./pages/Explorer'))
+const Settings = React.lazy(() =>
+  import('./pages/Placeholders').then((m) => ({ default: m.Settings }))
+)
+const Access = React.lazy(() => import('./pages/Access'))
 const Landing = React.lazy(() => import('./pages/Landing'))
-const ProtocolStats = React.lazy(() => import('./pages/ProtocolStats'))
-const WebCapture = React.lazy(() => import('./pages/WebCapture'))
-const Dashboard = React.lazy(() => import('./pages/Dashboard'))
-const ImageVault = React.lazy(() => import('./pages/ImageVault'))
-
-// Developer Portal
-const DeveloperPortal = React.lazy(() => import('./pages/DeveloperPortal'))
-const BatchTimestamp = React.lazy(() => import('./pages/BatchTimestamp'))
-const Offers = React.lazy(() => import('./pages/Offers'))
-const Identity = React.lazy(() => import('./pages/Identity'))
-const MobileSigner = React.lazy(() => import('./pages/MobileSigner'))
-const VerificationShield = React.lazy(() => import('./pages/VerificationShield'))
-const About = React.lazy(() => import('./pages/About'))
+const Trust = React.lazy(() => import('./pages/Placeholders').then((m) => ({ default: m.Trust })))
+const About = React.lazy(() => import('./pages/Placeholders').then((m) => ({ default: m.About })))
 
 function AppContent() {
   const location = useLocation()
 
-  React.useEffect(() => {
+  useEffect(() => {
     NProgress.start()
-    // Simulate loading delay for page transitions to ensure progress bar renders smoothly
-    const timer = setTimeout(() => NProgress.done(), 200)
-    return () => clearTimeout(timer)
+    const timer = setTimeout(() => NProgress.done(), 500)
+    return () => {
+      clearTimeout(timer)
+      NProgress.done()
+    }
   }, [location.pathname])
 
-  const hideNavbarPaths = ['/contracts/new/', '/contracts/', '/sign', '/timestamp/']
-  const shouldHideNavbar =
-    hideNavbarPaths.some((path) => location.pathname.includes(path)) &&
-    location.pathname !== '/contracts'
+  const isPublic =
+    location.pathname === '/' ||
+    location.pathname === '/access' ||
+    location.pathname === '/about' ||
+    location.pathname === '/trust'
 
-  return (
-    <GlobalDropzone>
-      {!shouldHideNavbar && <Navbar />}
-      <Suspense fallback={<LoadingScreen />}>
-        <Routes>
-          {/* Onboarding flow */}
-          <Route path="/welcome" element={<Welcome />} />
-          <Route path="/choose-template" element={<TemplateLibrary />} />
-          <Route path="/account-creation" element={<AccountCreation />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-
-          {/* Main app */}
-          <Route path="/contracts" element={<ContractList />} />
-          <Route path="/contracts/new/:templateType" element={<ContractEditor />} />
-          <Route path="/contracts/:contractId" element={<ContractView />} />
-          <Route path="/contracts/:contractId/edit" element={<ContractEditor />} />
-          <Route path="/contracts/:contractId/sign" element={<SignatureFlow />} />
-          <Route path="/batch-proof" element={<BatchProof />} />
-
-          {/* Timestamping flow */}
-          <Route path="/contracts/:contractId/timestamp/review" element={<FinalReview />} />
-          <Route path="/contracts/:contractId/timestamp/progress" element={<TimestampProgress />} />
-          <Route path="/contracts/:contractId/timestamp/result" element={<TimestampResult />} />
-          <Route path="/timestamp/verify-help" element={<VerificationHelp />} />
-
-          {/* Trust & Legal */}
-          <Route path="/trust" element={<TrustCenter />} />
-          <Route path="/legal/terms" element={<TermsOfService />} />
-          <Route path="/legal/privacy" element={<PrivacyPolicy />} />
-          <Route path="/legal/crypto-notice" element={<CryptoNotice />} />
-
-          {/* Verification */}
-          <Route path="/verify" element={<VerificationTool />} />
-          <Route path="/protocol-stats" element={<ProtocolStats />} />
-          <Route path="/snap-and-stamp" element={<WebCapture />} />
-          <Route path="/image-vault" element={<ImageVault />} />
-
-          {/* Developer Portal */}
-          <Route path="/developers" element={<DeveloperPortal />} />
-          <Route path="/batch-timestamp" element={<BatchTimestamp />} />
-          <Route path="/offers" element={<Offers />} />
-          <Route path="/identity" element={<Identity />} />
-          <Route path="/mobile-signer" element={<MobileSigner />} />
-          <Route path="/verify/:proofId" element={<VerificationShield />} />
-          <Route path="/about" element={<About />} />
-
-          {/* Default redirect & 404 Fallback */}
-          <Route path="/" element={<Landing />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </Suspense>
-      <Toaster
-        position="bottom-right"
-        richColors
-        toastOptions={{ style: { borderRadius: '12px' } }}
-      />
-      {!shouldHideNavbar && <Footer />}
-    </GlobalDropzone>
+  const content = (
+    <Suspense fallback={<LoadingScreen />}>
+      <Routes>
+        <Route path="/" element={<Landing />} />
+        <Route path="/access" element={<Access />} />
+        <Route path="/vault" element={<Vault />} />
+        <Route path="/stamp" element={<Stamp />} />
+        <Route path="/verify" element={<Verify />} />
+        <Route path="/contracts" element={<Contracts />} />
+        <Route path="/snapper" element={<Snapper />} />
+        <Route path="/certificates" element={<Certificates />} />
+        <Route path="/developer" element={<Developer />} />
+        <Route path="/atlas" element={<Atlas />} />
+        <Route path="/nodes" element={<Nodes />} />
+        <Route path="/explorer" element={<Explorer />} />
+        <Route path="/audit-log" element={<Vault />} /> {/* Reusing Vault as audit log for now */}
+        <Route path="/documentation" element={<Developer />} /> {/* Reusing Developer for docs */}
+        <Route path="/status" element={<Atlas />} /> {/* Reusing Atlas for status */}
+        <Route path="/trust-center" element={<Trust />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/trust" element={<Trust />} />
+        <Route path="*" element={<Navigate to="/" />} />
+      </Routes>
+    </Suspense>
   )
+
+  if (isPublic) return content
+  return <AppShellNoir>{content}</AppShellNoir>
 }
 
 function App() {
@@ -130,6 +83,18 @@ function App() {
     <ToastProvider>
       <Router>
         <AppContent />
+        <Toaster
+          position="bottom-right"
+          richColors
+          toastOptions={{
+            style: {
+              borderRadius: '12px',
+              background: 'var(--bg-secondary)',
+              border: '1px solid var(--border)',
+              color: 'var(--text-primary)'
+            }
+          }}
+        />
       </Router>
     </ToastProvider>
   )

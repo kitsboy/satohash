@@ -31,7 +31,7 @@ import lightningRoutes from './routes/lightning.js';
 // New Productions Items 1-7
 import { runMigrations } from './migrations.js';
 import { validateSecrets } from './secrets-validator.js';
-import { correlationIdMiddleware, tieredRateLimiter } from './middleware.js';
+import { correlationIdMiddleware, tieredRateLimiter, paywallMiddleware } from './middleware.js';
 import redis from './cache.js';
 import { performBackup } from './backup.js';
 
@@ -229,7 +229,7 @@ const loadOtsFile = (buffer) => {
  *   post:
  *     summary: Create an OTS timestamp, save to database, and return JSON info.
  */
-app.post('/api/stamp', async (req, res, next) => {
+app.post('/api/stamp', paywallMiddleware, async (req, res, next) => {
     try {
         const hashSchema = z.object({
             hash: z.string().length(64).regex(/^[a-f0-9]+$/i, 'Must be a hex string.'),
@@ -278,7 +278,7 @@ app.post('/api/stamp', async (req, res, next) => {
  *   post:
  *     summary: Notarize the current git state of the project or a specified local directory.
  */
-app.post('/api/git/stamp', async (req, res, next) => {
+app.post('/api/git/stamp', paywallMiddleware, async (req, res, next) => {
     try {
         const repoPath = req.body.path ? path.resolve(req.body.path) : process.cwd();
         const metadata = getGitMetadata(repoPath);
@@ -353,7 +353,7 @@ app.get('/api/vault/images', (req, res) => {
  *   post:
  *     summary: Notarize a URL (Browser Extension support).
  */
-app.post('/api/capture/url', async (req, res, next) => {
+app.post('/api/capture/url', paywallMiddleware, async (req, res, next) => {
     try {
         const { url } = req.body;
         if (!url) return res.status(400).json({ error: 'URL is required.' });

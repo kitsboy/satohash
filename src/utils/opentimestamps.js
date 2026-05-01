@@ -3,14 +3,45 @@ const API_BASE = 'http://localhost:3001/api'
 
 /**
  * Create a SHA256 hash of the document content
+ * Offloads computation to a Web Worker to prevent UI blocking for large files
  * Returns a hex string
  */
 export const createHash = async (content) => {
-  const encoder = new TextEncoder()
-  const data = typeof content === 'string' ? encoder.encode(content) : content
-  const hashBuffer = await crypto.subtle.digest('SHA-256', data)
-  const hashArray = Array.from(new Uint8Array(hashBuffer))
-  return hashArray.map((b) => b.toString(16).padStart(2, '0')).join('')
+  return new Promise((resolve, reject) => {
+    if (window.Worker) {
+      // Spawn the dedicated hash worker
+      const worker = new Worker(new URL('./hashWorker.js', import.meta.url), { type: 'module' })
+
+      worker.onmessage = (e) => {
+        if (e.data.success) {
+          resolve(e.data.hash)
+        } else {
+          reject(new Error(e.data.error))
+        }
+        worker.terminate() // Clean up worker
+      }
+
+      worker.onerror = (error) => {
+        reject(error)
+        worker.terminate() // Clean up worker
+      }
+
+      worker.postMessage(content)
+    } else {
+      // Fallback for environments without Web Worker support
+      ;(async () => {
+        try {
+          const encoder = new TextEncoder()
+          const data = typeof content === 'string' ? encoder.encode(content) : content
+          const hashBuffer = await crypto.subtle.digest('SHA-256', data)
+          const hashArray = Array.from(new Uint8Array(hashBuffer))
+          resolve(hashArray.map((b) => b.toString(16).padStart(2, '0')).join(''))
+        } catch (err) {
+          reject(err)
+        }
+      })()
+    }
+  })
 }
 
 /**
