@@ -9,13 +9,13 @@ export default function HelpOverlay({ isOpen, onClose }) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-white/10 p-6 backdrop-blur-xl"
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-white/60 p-6 backdrop-blur-md"
         >
           <motion.div
             initial={{ scale: 0.9, y: 20, opacity: 0 }}
             animate={{ scale: 1, y: 0, opacity: 1 }}
             exit={{ scale: 0.9, y: 20, opacity: 0 }}
-            className="relative w-full max-w-2xl overflow-hidden rounded-[3rem] bg-white p-12 text-black shadow-[0_0_100px_rgba(255,255,255,0.1)]"
+            className="relative w-full max-w-2xl overflow-hidden rounded-[3rem] border border-white bg-white p-12 text-black shadow-[0_40px_120px_rgba(0,0,0,0.2)]"
           >
             {/* Background Accent */}
             <div className="pointer-events-none absolute top-0 right-0 -mt-32 -mr-32 h-64 w-64 rounded-full bg-indigo-50 blur-[100px]" />
