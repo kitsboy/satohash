@@ -55,17 +55,44 @@ const Toggle = ({ active, onToggle }) => (
 export default function Settings() {
   const [activeTab, setActiveTab] = useState('profile')
 
-  // Persisted State
+  // Persisted State with Error Boundaries
   const [profile, setProfile] = useState(() => {
-    const saved = localStorage.getItem('satohash_profile')
-    return saved
-      ? JSON.parse(saved)
-      : { name: 'Satoshi Nakamoto', nip05: 'satoshi@satohash.io', bio: 'Architect of Truth.' }
+    try {
+      const saved = localStorage.getItem('satohash_profile')
+      return saved
+        ? JSON.parse(saved)
+        : {
+            name: 'Satoshi Nakamoto',
+            nip05: 'satoshi@satohash.io',
+            bio: 'Architect of Truth.',
+            pubkey: 'npub1sato...hash'
+          }
+    } catch (e) {
+      return { name: 'Satoshi Nakamoto', nip05: 'satoshi@satohash.io', bio: 'Architect of Truth.' }
+    }
   })
 
   const [security, setSecurity] = useState(() => {
-    const saved = localStorage.getItem('satohash_security')
-    return saved ? JSON.parse(saved) : { twoFactor: true, biometric: true, alerts: true }
+    try {
+      const saved = localStorage.getItem('satohash_security')
+      return saved
+        ? JSON.parse(saved)
+        : {
+            twoFactor: true,
+            biometric: true,
+            alerts: true,
+            network: 'mainnet',
+            experimental: false
+          }
+    } catch (e) {
+      return {
+        twoFactor: true,
+        biometric: true,
+        alerts: true,
+        network: 'mainnet',
+        experimental: false
+      }
+    }
   })
 
   const [keys, setKeys] = useState([
@@ -108,6 +135,15 @@ export default function Settings() {
     }
     setKeys([...keys, newKey])
     toast.success('New API Key Generated')
+  }
+
+  const resetSettings = () => {
+    if (confirm('Are you sure you want to purge all sovereign preferences?')) {
+      localStorage.removeItem('satohash_profile')
+      localStorage.removeItem('satohash_security')
+      localStorage.removeItem('satohash_theme')
+      window.location.reload()
+    }
   }
 
   return (
@@ -258,6 +294,28 @@ export default function Settings() {
                       </div>
                       <div className="space-y-2">
                         <label className="text-[10px] font-black tracking-widest text-[var(--text-secondary)] uppercase">
+                          Sovereign Pubkey (NIP-19)
+                        </label>
+                        <div className="flex gap-4">
+                          <input
+                            type="text"
+                            readOnly
+                            value={profile.pubkey}
+                            className="h-14 flex-1 rounded-2xl border border-[var(--border)] bg-[var(--bg-primary)]/50 px-6 font-mono text-xs font-bold text-[var(--text-secondary)] outline-none"
+                          />
+                          <button
+                            onClick={() => {
+                              navigator.clipboard.writeText(profile.pubkey)
+                              toast.success('Identity Key Copied')
+                            }}
+                            className="flex h-14 w-14 items-center justify-center rounded-2xl border border-[var(--border)] bg-[var(--bg-primary)] text-[var(--text-secondary)] transition-all hover:border-[var(--accent-active)] hover:text-[var(--accent-active)]"
+                          >
+                            <Copy size={18} />
+                          </button>
+                        </div>
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-[10px] font-black tracking-widest text-[var(--text-secondary)] uppercase">
                           Bio / Mission
                         </label>
                         <textarea
@@ -280,19 +338,43 @@ export default function Settings() {
                   title="Sovereign Display"
                   description="Customize the visual signature of your terminal."
                 >
-                  <div className="group flex items-center justify-between rounded-3xl border border-[var(--border)] bg-[var(--bg-primary)] p-8 transition-all hover:border-[var(--accent-active)]/50">
-                    <div className="flex items-center gap-6">
-                      <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-[var(--accent-purple)]/20 bg-[var(--accent-purple)]/10 text-[var(--accent-purple)] transition-transform group-hover:scale-110">
-                        <Layers size={28} />
+                  <div className="space-y-4">
+                    <div className="group flex items-center justify-between rounded-3xl border border-[var(--border)] bg-[var(--bg-primary)] p-8 transition-all hover:border-[var(--accent-active)]/50">
+                      <div className="flex items-center gap-6">
+                        <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-[var(--accent-purple)]/20 bg-[var(--accent-purple)]/10 text-[var(--accent-purple)] transition-transform group-hover:scale-110">
+                          <Layers size={28} />
+                        </div>
+                        <div>
+                          <p className="text-lg font-bold text-white">Elite Signature Theme</p>
+                          <p className="text-[10px] font-bold tracking-widest text-[var(--text-secondary)] uppercase">
+                            Toggle Sovereign Light Mode
+                          </p>
+                        </div>
                       </div>
-                      <div>
-                        <p className="text-lg font-bold text-white">Elite Signature Theme</p>
-                        <p className="text-[10px] font-bold tracking-widest text-[var(--text-secondary)] uppercase">
-                          Toggle Sovereign Light Mode
-                        </p>
-                      </div>
+                      <Toggle active={eliteMode} onToggle={() => setEliteMode(!eliteMode)} />
                     </div>
-                    <Toggle active={eliteMode} onToggle={() => setEliteMode(!eliteMode)} />
+
+                    <div className="group flex items-center justify-between rounded-3xl border border-[var(--border)] bg-[var(--bg-primary)] p-8 transition-all hover:border-[var(--accent-active)]/50">
+                      <div className="flex items-center gap-6">
+                        <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-[var(--accent-pending)]/20 bg-[var(--accent-pending)]/10 text-[var(--accent-pending)]">
+                          <RefreshCw size={28} />
+                        </div>
+                        <div>
+                          <p className="text-lg font-bold text-white">Network Selection</p>
+                          <p className="text-[10px] font-bold tracking-widest text-[var(--text-secondary)] uppercase">
+                            Current: {security.network.toUpperCase()}
+                          </p>
+                        </div>
+                      </div>
+                      <select
+                        value={security.network}
+                        onChange={(e) => setSecurity({ ...security, network: e.target.value })}
+                        className="h-10 rounded-xl border border-[var(--border-bright)] bg-[var(--bg-primary)] px-4 text-[10px] font-black tracking-widest text-white uppercase outline-none"
+                      >
+                        <option value="mainnet">Mainnet</option>
+                        <option value="testnet">Testnet (Signet)</option>
+                      </select>
+                    </div>
                   </div>
                 </SettingSection>
 
@@ -309,10 +391,20 @@ export default function Settings() {
                     />
                     <AlertToggle
                       icon={Smartphone}
-                      label="Mobile Push"
-                      active={false}
-                      onToggle={() => toast.error('Mobile SDK integration pending')}
+                      label="Experimental Features"
+                      active={security.experimental}
+                      onToggle={() =>
+                        setSecurity({ ...security, experimental: !security.experimental })
+                      }
                     />
+                    <div className="border-t border-[var(--border)] pt-6">
+                      <button
+                        onClick={resetSettings}
+                        className="text-[10px] font-black tracking-widest text-red-500 uppercase transition-colors hover:text-red-400"
+                      >
+                        Purge All Sovereign Preferences
+                      </button>
+                    </div>
                   </div>
                 </SettingSection>
               </motion.div>
