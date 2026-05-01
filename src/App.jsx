@@ -70,6 +70,7 @@ function AppContent() {
         <Route path="/about" element={<About />} />
         <Route path="/trust" element={<Trust />} />
         <Route path="/templates" element={<NotaryTemplates />} />
+        <Route path="/settings" element={<Settings />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Suspense>
