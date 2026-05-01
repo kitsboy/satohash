@@ -3,6 +3,7 @@ import {
   User,
   Key,
   Zap,
+  Lock,
   Smartphone,
   CreditCard,
   LogOut,
@@ -30,7 +31,7 @@ const SettingSection = ({ icon: Icon, title, description, children }) => (
     <div className="flex items-start justify-between">
       <div className="space-y-1">
         <div className="flex items-center gap-3 text-white">
-          <Icon size={20} className="text-[var(--accent-active)]" />
+          {Icon && <Icon size={20} className="text-[var(--accent-active)]" />}
           <h3 className="text-xl font-bold tracking-tight uppercase">{title}</h3>
         </div>
         <p className="text-sm font-medium text-[var(--text-secondary)]">{description}</p>
@@ -255,6 +256,7 @@ export default function Settings() {
                 className="space-y-8"
               >
                 <SettingSection
+                  icon={User}
                   title="Sovereign Identity"
                   description="Update your public reputation across the Satohash mesh."
                 >
@@ -335,6 +337,7 @@ export default function Settings() {
                 </SettingSection>
 
                 <SettingSection
+                  icon={Layers}
                   title="Sovereign Display"
                   description="Customize the visual signature of your terminal."
                 >
@@ -379,6 +382,7 @@ export default function Settings() {
                 </SettingSection>
 
                 <SettingSection
+                  icon={Activity}
                   title="Alert Protocol"
                   description="Choose how the truth reaches you."
                 >
@@ -419,6 +423,7 @@ export default function Settings() {
                 className="space-y-8"
               >
                 <SettingSection
+                  icon={Lock}
                   title="Hardened Access"
                   description="Absolute security for your forensic data."
                 >
@@ -505,6 +510,7 @@ export default function Settings() {
                 className="space-y-8"
               >
                 <SettingSection
+                  icon={Zap}
                   title="Settlement Plane"
                   description="Automated L402 Lightning settlement."
                 >
