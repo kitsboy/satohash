@@ -8,6 +8,7 @@ export const NAV_LINKS = [
   { name: 'Vault', path: '/vault', icon: 'Database', group: 'Notary' },
   { name: 'Stamp', path: '/stamp', icon: 'ShieldCheck', group: 'Notary' },
   { name: 'Verify', path: '/verify', icon: 'Search', group: 'Notary' },
+  { name: 'Templates', path: '/templates', icon: 'Layout', group: 'Notary' },
   { name: 'Certificates', path: '/certificates', icon: 'FileText', group: 'Notary' },
 
   { name: 'Atlas', path: '/atlas', icon: 'Globe', group: 'Atlas' },

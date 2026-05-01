@@ -30,6 +30,8 @@ const Landing = React.lazy(() => import('./pages/Landing'))
 const Trust = React.lazy(() => import('./pages/Placeholders').then((m) => ({ default: m.Trust })))
 const About = React.lazy(() => import('./pages/Placeholders').then((m) => ({ default: m.About })))
 
+const NotaryTemplates = React.lazy(() => import('./pages/NotaryTemplates'))
+
 function AppContent() {
   const location = useLocation()
 
@@ -69,6 +71,7 @@ function AppContent() {
         <Route path="/trust-center" element={<Trust />} />
         <Route path="/about" element={<About />} />
         <Route path="/trust" element={<Trust />} />
+        <Route path="/templates" element={<NotaryTemplates />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Suspense>
