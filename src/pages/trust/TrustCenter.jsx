@@ -1,117 +1,189 @@
 import { motion } from 'framer-motion'
-import { Link } from 'react-router-dom'
-import { Shield, Info, Lock, Scale, Globe, Binary, CheckCircle, ChevronRight, Activity, Zap } from 'lucide-react'
+import {
+  Shield,
+  Lock,
+  Scale,
+  Globe,
+  Binary,
+  CheckCircle,
+  ChevronRight,
+  Activity,
+  Zap,
+  ShieldAlert,
+  Cpu
+} from 'lucide-react'
+import GlobalJurisdictionMap from '../../components/GlobalJurisdictionMap'
 import ProofAnalytics from '../../components/ProofAnalytics'
-import LegalValidator from '../../components/LegalValidator'
 
 export default function TrustCenter() {
   return (
-    <div className="min-h-screen pt-32 pb-32" style={{ background: 'var(--bg-base)' }}>
-      <div className="layout-container">
-        
+    <div className="min-h-screen bg-[var(--bg-primary)] pt-40 pb-32 text-[var(--text-primary)]">
+      {/* Background Decorative Elements */}
+      <div className="pointer-events-none fixed inset-0 z-0">
+        <div className="absolute top-0 left-1/4 h-[500px] w-[500px] rounded-full bg-[var(--accent-active)] opacity-10 blur-[150px]" />
+        <div className="absolute right-1/4 bottom-0 h-[500px] w-[500px] rounded-full bg-[var(--accent-purple)] opacity-5 blur-[150px]" />
+      </div>
+
+      <div className="relative z-10 mx-auto max-w-7xl px-8">
         {/* Hero Section */}
-        <section className="text-center mb-24">
+        <section className="mb-32 space-y-8 text-center">
           <motion.div
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            className="pill-indigo mx-auto mb-10 w-fit"
+            className="mx-auto mb-10 flex w-fit items-center gap-3 rounded-full border border-[var(--border-bright)] bg-[var(--surface-raised)]/60 px-5 py-2 shadow-[0_0_20px_rgba(59,130,246,0.1)] backdrop-blur-xl"
           >
-            Protocol Transparency Dashboard
+            <Shield size={14} className="text-[var(--accent-active)]" />
+            <span className="font-mono text-[10px] font-black tracking-[0.2em] text-[var(--text-secondary)] uppercase">
+              Sovereign Protocol Transparency Dashboard
+            </span>
           </motion.div>
+
           <motion.h1
-            initial={{ y: 20, opacity: 0 }}
+            initial={{ y: 30, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            className="text-6xl md:text-8xl font-black italic tracking-tighter text-indigo-900 uppercase italic mb-8"
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="text-6xl leading-[0.85] font-extrabold tracking-tighter uppercase md:text-9xl"
           >
-            Sovereign <span className="text-indigo-600">TRUST.</span>
+            Institutional <br />
+            <span className="bg-gradient-to-r from-[var(--accent-active)] via-[var(--accent-purple)] to-[var(--accent-success)] bg-clip-text text-transparent">
+              Trust.
+            </span>
           </motion.h1>
-          <p className="max-w-3xl mx-auto text-xl font-bold italic text-slate-500 leading-relaxed mb-12">
-            Mathematical proof of existence and integrity. We bridge the gap between 
-            decentralized protocol reality and institutional-grade legal requirements.
-          </p>
-          
-          <div className="flex justify-center gap-4">
-             <Link to="/developers">
-                <button className="btn-holographic px-10 py-5">View API Compliance</button>
-             </Link>
-             <Link to="/about">
-                <button className="btn-secondary px-10 py-5 border-indigo-100 text-indigo-900 uppercase font-black text-[11px] tracking-widest">Read Whitepaper</button>
-             </Link>
-          </div>
+
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4 }}
+            className="mx-auto max-w-3xl text-xl leading-relaxed font-medium text-[var(--text-secondary)] md:text-2xl"
+          >
+            Mathematical proof of existence and integrity. We bridge the gap between decentralized
+            protocol reality and institutional-grade legal requirements.
+          </motion.p>
+        </section>
+
+        {/* Global Jurisdiction Section (The "Cool Card Feature") */}
+        <section className="mb-40">
+          <GlobalJurisdictionMap />
         </section>
 
         {/* Core Trust Pillars */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-32">
-          {[
-            { icon: Shield, title: 'Network Security', desc: 'Anchored directly into the Bitcoin blockchain via the world\'s most secure Proof-of-Work network.', color: 'indigo' },
-            { icon: Lock, title: 'Zero Leak Privacy', desc: 'Secure local-first hashing ensures your source documents never leave your local environment.', color: 'emerald' },
-            { icon: Scale, title: 'Legal Standing', desc: 'Compliant with ESIGN, UETA, and eIDAS Article 41 for electronic timestamping integrity.', color: 'amber' },
-            { icon: Globe, title: 'Witness Mesh', desc: 'A decentralized network of nodes providing redundant validation for every proof generated.', color: 'violet' }
-          ].map((item, i) => (
-            <motion.div
-              key={i}
-              whileHover={{ y: -8 }}
-              className="glass-card p-10 bg-white border-indigo-50 hover:shadow-2xl hover:shadow-indigo-500/10 transition-all"
-            >
-              <div className={`h-14 w-14 rounded-2xl bg-${item.color}-500/10 text-${item.color}-600 flex items-center justify-center mb-8`}>
-                <item.icon size={28} />
-              </div>
-              <h3 className="text-lg font-black text-indigo-900 uppercase italic mb-4">{item.title}</h3>
-              <p className="text-[11px] font-bold text-slate-500 leading-relaxed italic">{item.desc}</p>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Dynamic Analytics Block */}
-        <div className="mb-32">
-           <ProofAnalytics />
-        </div>
-
-        {/* Intersectional Jurisdictions */}
-        <div className="mb-32">
-           <LegalValidator />
-        </div>
-
-        {/* Trust Seal / Compliance Banner */}
-        <section className="relative overflow-hidden rounded-[4rem] bg-indigo-900 p-20 text-center text-white shadow-2xl shadow-indigo-500/20">
-            <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
-                <div className="absolute inset-0 bg-[radial-gradient(#fff_1.5px,transparent_1.5px)] [background-size:40px_40px]" />
-            </div>
-            
-            <div className="relative z-10">
-                <Shield className="mx-auto mb-10 text-emerald-400" size={64} />
-                <h2 className="text-4xl md:text-5xl font-black tracking-tighter mb-8 italic">Institutional Ready. <br /> Judicial Hardened.</h2>
-                <div className="flex flex-wrap justify-center gap-12 mb-16">
-                    <ComplianceBadge label="eIDAS Ready" status="Certified" />
-                    <ComplianceBadge label="ESIGN Act" status="Compliant" />
-                    <ComplianceBadge label="UETA Laws" status="Active" />
-                    <ComplianceBadge label="ZK-SHA256" status="Hardened" />
+        <section className="mb-40">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+            {[
+              {
+                icon: Cpu,
+                title: 'Network Security',
+                desc: "Anchored directly into the Bitcoin blockchain via the world's most secure Proof-of-Work network.",
+                color: 'var(--accent-active)'
+              },
+              {
+                icon: Lock,
+                title: 'Zero Leak Privacy',
+                desc: 'Secure local-first hashing ensures your source documents never leave your local environment.',
+                color: 'var(--accent-purple)'
+              },
+              {
+                icon: Scale,
+                title: 'Legal Standing',
+                desc: 'Compliant with ESIGN, UETA, and eIDAS Article 41 for electronic timestamping integrity.',
+                color: 'var(--accent-success)'
+              },
+              {
+                icon: ShieldAlert,
+                title: 'Forensic Audit',
+                desc: 'Proofs are independently verifiable via open-source tools and public block explorers.',
+                color: 'var(--accent-danger)'
+              }
+            ].map((item, i) => (
+              <motion.div
+                key={i}
+                whileHover={{ y: -10 }}
+                className="group relative overflow-hidden rounded-[2.5rem] border border-[var(--border)] bg-[var(--bg-secondary)] p-10 transition-all hover:border-[var(--border-bright)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
+              >
+                <div
+                  className="mb-8 flex h-14 w-14 items-center justify-center rounded-2xl border transition-all group-hover:scale-110"
+                  style={{
+                    borderColor: `${item.color}30`,
+                    backgroundColor: `${item.color}05`,
+                    color: item.color
+                  }}
+                >
+                  <item.icon size={28} />
                 </div>
-                <p className="max-w-2xl mx-auto text-sm font-medium text-indigo-200/60 italic mb-12">
-                   Satohash is constructed to survive judicial scrutiny. Our proofs are mathematically self-evident, 
-                   requiring no central authority for verification after anchoring.
+                <h3 className="mb-4 text-lg font-bold tracking-tight text-white uppercase">
+                  {item.title}
+                </h3>
+                <p className="text-sm leading-relaxed font-medium text-[var(--text-secondary)]">
+                  {item.desc}
                 </p>
-                <Link to="/verify">
-                    <button className="bg-white text-indigo-900 px-12 py-5 rounded-2xl text-[12px] font-black uppercase tracking-widest hover:scale-105 transition-all shadow-xl">
-                        Verify a Global Proof
-                    </button>
-                </Link>
-            </div>
+              </motion.div>
+            ))}
+          </div>
         </section>
 
+        {/* Dynamic Analytics Block */}
+        <section className="mb-40">
+          <ProofAnalytics />
+        </section>
+
+        {/* Institutional Commitment Banner */}
+        <section className="relative overflow-hidden rounded-[4rem] border border-[var(--border-bright)] bg-[var(--bg-secondary)] p-16 text-center md:p-24">
+          {/* Grid Pattern Overlay */}
+          <div
+            className="pointer-events-none absolute inset-0 opacity-[0.03]"
+            style={{
+              backgroundImage: 'radial-gradient(var(--text-secondary) 1px, transparent 1px)',
+              backgroundSize: '30px 30px'
+            }}
+          />
+
+          <div className="relative z-10 space-y-12">
+            <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-3xl bg-[var(--accent-success)]/10 text-[var(--accent-success)] shadow-[0_0_50px_rgba(16,185,129,0.2)]">
+              <Shield Check size={48} />
+            </div>
+
+            <h2 className="text-4xl leading-none font-black tracking-tighter uppercase md:text-6xl">
+              Institutional Ready. <br />
+              <span className="text-[var(--text-secondary)]">Judicial Hardened.</span>
+            </h2>
+
+            <div className="flex flex-wrap justify-center gap-8 md:gap-16">
+              <ComplianceBadge label="eIDAS Ready" status="Certified" />
+              <ComplianceBadge label="ESIGN Act" status="Compliant" />
+              <ComplianceBadge label="UETA Laws" status="Active" />
+              <ComplianceBadge label="ZK-SHA256" status="Hardened" />
+            </div>
+
+            <p className="mx-auto max-w-2xl text-lg leading-relaxed font-medium text-[var(--text-secondary)]">
+              Satohash is constructed to survive judicial scrutiny. Our proofs are mathematically
+              self-evident, requiring no central authority for verification after anchoring.
+            </p>
+
+            <div className="flex flex-col items-center justify-center gap-6 sm:flex-row">
+              <button className="flex h-16 w-full min-w-[240px] items-center justify-center gap-3 rounded-2xl bg-white text-[12px] font-extrabold tracking-[0.2em] text-black uppercase transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.2)] sm:w-auto">
+                Verify a Global Proof <ChevronRight size={18} />
+              </button>
+              <button className="flex h-16 w-full min-w-[240px] items-center justify-center gap-3 rounded-2xl border border-[var(--border-bright)] bg-white/5 text-[12px] font-extrabold tracking-[0.2em] text-white uppercase backdrop-blur-md transition-all hover:bg-white/10 sm:w-auto">
+                Technical Specification
+              </button>
+            </div>
+          </div>
+        </section>
       </div>
     </div>
   )
 }
 
 function ComplianceBadge({ label, status }) {
-    return (
-        <div className="text-center">
-            <div className="text-[9px] font-black uppercase tracking-[0.3em] text-indigo-300 mb-1">{label}</div>
-            <div className="text-lg font-black italic text-white flex items-center justify-center gap-2">
-                <CheckCircle size={14} className="text-emerald-400" />
-                {status}
-            </div>
-        </div>
-    )
+  return (
+    <div className="space-y-2">
+      <div className="text-[10px] font-black tracking-[0.3em] text-[var(--text-secondary)] uppercase opacity-60">
+        {label}
+      </div>
+      <div className="flex items-center justify-center gap-2 text-xl font-bold text-white">
+        <CheckCircle size={16} className="text-[var(--accent-success)]" />
+        {status}
+      </div>
+    </div>
+  )
 }
