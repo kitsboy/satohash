@@ -18,7 +18,10 @@ import {
   Shield,
   Search,
   Key,
-  Stamp
+  Stamp,
+  Code2,
+  Building2,
+  Smartphone
 } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import LiveNetworkDashboard from '../components/LiveNetworkDashboard'
@@ -283,6 +286,70 @@ export default function Landing() {
               description="The hardened security layer. Cold-storage proof management and encrypted vault orchestration."
               delay={0.4}
             />
+          </div>
+        </section>
+
+        {/* Upgrade 11: API Strategy Section */}
+        <section className="mx-auto max-w-[90rem] px-8 py-32">
+          <div className="grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
+            <div className="space-y-8">
+              <div className="inline-flex items-center gap-3 rounded-full bg-[var(--accent-purple)]/10 px-4 py-2 text-[10px] font-bold tracking-widest text-[var(--accent-purple)] uppercase">
+                <Code2 size={14} /> Programmable Truth
+              </div>
+              <h2 className="text-5xl font-extrabold tracking-tighter uppercase md:text-7xl">
+                API <br />
+                <span className="text-[var(--text-secondary)]">Strategy.</span>
+              </h2>
+              <p className="text-xl leading-relaxed font-medium text-[var(--text-secondary)]">
+                Build on the universe&apos;s most secure computer network. Whether you are anchoring
+                millions of financial ledgers or automating the sovereign history of your personal
+                media stream, Satohash is your API for digital evidence.
+              </p>
+              <div className="flex flex-col gap-6 sm:flex-row">
+                <div className="flex-1 space-y-4 rounded-3xl border border-[var(--border)] bg-[var(--bg-secondary)] p-8">
+                  <Building2 className="text-[var(--accent-purple)]" size={32} />
+                  <h4 className="font-bold tracking-tight text-white uppercase">Corporate</h4>
+                  <p className="text-sm text-[var(--text-secondary)]">
+                    High-volume batching for auditing and legal workflows.
+                  </p>
+                </div>
+                <div className="flex-1 space-y-4 rounded-3xl border border-[var(--border)] bg-[var(--bg-secondary)] p-8">
+                  <Smartphone className="text-[var(--accent-active)]" size={32} />
+                  <h4 className="font-bold tracking-tight text-white uppercase">Personal</h4>
+                  <p className="text-sm text-[var(--text-secondary)]">
+                    Automated proof-of-existence for mobile media and files.
+                  </p>
+                </div>
+              </div>
+              <Link to="/developer">
+                <button className="flex h-14 items-center justify-center gap-3 rounded-xl border border-[var(--border-bright)] bg-white/5 px-8 text-[10px] font-bold tracking-widest text-white uppercase transition-all hover:bg-white/10">
+                  Explore API Offerings <ArrowRight size={16} />
+                </button>
+              </Link>
+            </div>
+            <div className="relative">
+              <div className="absolute -inset-4 bg-gradient-to-br from-[var(--accent-active)]/20 via-transparent to-[var(--accent-purple)]/20 opacity-50 blur-3xl" />
+              <div className="relative rounded-[3rem] border border-[var(--border-bright)] bg-black p-8 font-mono text-[11px] leading-relaxed shadow-2xl">
+                <div className="mb-6 flex items-center gap-2">
+                  <div className="h-2 w-2 rounded-full bg-red-500/50" />
+                  <div className="h-2 w-2 rounded-full bg-yellow-500/50" />
+                  <div className="h-2 w-2 rounded-full bg-green-500/50" />
+                  <span className="ml-4 text-[9px] tracking-widest uppercase opacity-30">
+                    satohash_api_v5.0.0
+                  </span>
+                </div>
+                <div className="space-y-4">
+                  <div className="text-[var(--accent-active)]"># Anchor Financial Batch #772</div>
+                  <div className="rounded-xl border border-white/5 bg-white/5 p-4">
+                    <span className="text-purple-400">POST</span> /v1/anchor <br />
+                    <span className="text-blue-400">Authorization:</span> Bearer L402_TOKEN <br />
+                    <span className="text-emerald-400">{`{ "hash": "e3b0c442...", "metadata": { "origin": "audit_ledger" } }`}</span>
+                  </div>
+                  <div className="text-white/40">{`> BATCH_MERKLE_ROOT: 0x8f2a... COMMITTED`}</div>
+                  <div className="text-[var(--accent-success)]">{`> ANCHOR_SUCCESS: Block 842,125 Witnessed`}</div>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 

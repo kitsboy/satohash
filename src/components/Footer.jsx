@@ -246,7 +246,7 @@ export default function Footer() {
                 {[
                   { name: 'About', path: '/about' },
                   { name: 'Trust Center', path: '/trust' },
-                  { name: 'Documentation', path: '/documentation' },
+                  { name: 'Documentation', path: '/developer' },
                   { name: 'Status', path: '/status' },
                   { name: 'Twitter', path: 'https://twitter.com/giveabit', external: true },
                   { name: 'GitHub', path: 'https://github.com/kitsboy', external: true }
