@@ -38,9 +38,13 @@ export default function TopSignalBar() {
             <p className="font-mono text-[10px] text-[var(--accent-active)]">2.1M SATS</p>
           </div>
           <Link to="/" className="group relative">
-            <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 shadow-lg shadow-indigo-500/20 transition-all group-hover:scale-110 group-hover:rotate-12" />
+            <img
+              src="/logo.png"
+              alt="Satohash Logo"
+              className="h-10 w-10 object-contain transition-all group-hover:scale-110 group-hover:rotate-12"
+            />
             <div className="absolute inset-0 flex items-center justify-center text-[8px] font-black text-white opacity-0 transition-opacity group-hover:opacity-100">
-              EXIT
+              HOME
             </div>
           </Link>
         </div>

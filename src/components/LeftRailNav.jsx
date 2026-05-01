@@ -1,4 +1,4 @@
-import { NavLink, useLocation } from 'react-router-dom'
+import { NavLink, useLocation, Link } from 'react-router-dom'
 import { NAV_LINKS } from '../config/constants'
 import * as Icons from 'lucide-react'
 import { useState, useEffect } from 'react'
@@ -25,10 +25,16 @@ export default function LeftRailNav() {
   return (
     <nav className="flex h-full w-64 flex-col border-r border-[var(--border)] bg-[var(--bg-primary)] pt-6">
       <div className="mb-10 flex flex-col gap-6 px-6">
-        <div className="flex items-center gap-3">
-          <div className="h-6 w-6 rotate-45 rounded-sm bg-[var(--accent-active)] shadow-[0_0_15px_var(--accent-active)]" />
-          <span className="text-xl font-bold tracking-tighter uppercase">Satohash</span>
-        </div>
+        <Link to="/" className="group flex items-center gap-3">
+          <img
+            src="/logo.png"
+            alt="Satohash Logo"
+            className="h-8 w-8 object-contain transition-transform group-hover:rotate-12"
+          />
+          <span className="text-xl font-bold tracking-tighter uppercase transition-colors group-hover:text-[var(--accent-active)]">
+            Satohash
+          </span>
+        </Link>
 
         <button
           onClick={() => setShowHelp(true)}
