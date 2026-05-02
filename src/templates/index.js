@@ -472,6 +472,33 @@ ___________________________
 `
 }
 
+// LocalStorage save/load for custom templates
+const STORAGE_KEY = 'satohash_custom_templates';
+
+export const saveCustomTemplate = (id, template) => {
+  if (!id || !template || typeof template !== 'object') return false;
+  const customs = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+  customs[id] = template;
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(customs));
+  return true;
+};
+
+export const loadCustomTemplate = (id) => {
+  const customs = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+  return customs[id] || null;
+};
+
+export const listCustomTemplates = () => {
+  return Object.keys(JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'));
+};
+
+export const deleteCustomTemplate = (id) => {
+  const customs = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+  delete customs[id];
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(customs));
+  return true;
+};
+
 export const getTemplate = (id) => {
   const templates = {
     nda: ndaTemplate,
@@ -490,5 +517,5 @@ export const getTemplate = (id) => {
     'domain-notary': domainNotaryTemplate,
     'web-archive': webArchiveTemplate
   }
-  return templates[id] || null
+  return templates[id] || loadCustomTemplate(id) || null;
 }

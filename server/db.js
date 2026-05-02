@@ -46,6 +46,26 @@ db.exec(`
     message TEXT,
     FOREIGN KEY(timestamp_id) REFERENCES timestamps(id)
   );
+
+  CREATE TABLE IF NOT EXISTS forum_threads (
+    id TEXT PRIMARY KEY,
+    title TEXT NOT NULL,
+    author TEXT NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  );
+
+  CREATE TABLE IF NOT EXISTS forum_posts (
+    id TEXT PRIMARY KEY,
+    thread_id TEXT NOT NULL,
+    author TEXT NOT NULL,
+    content TEXT NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY(thread_id) REFERENCES forum_threads(id)
+  );
+
+  CREATE INDEX IF NOT EXISTS idx_forum_threads_created ON forum_threads(created_at DESC);
+  CREATE INDEX IF NOT EXISTS idx_forum_posts_thread ON forum_posts(thread_id);
 `);
 
 logger.info(`🗄️ Database initialized at ${dbPath}`);

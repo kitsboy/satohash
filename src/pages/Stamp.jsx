@@ -10,9 +10,12 @@ import {
   Database,
   Plus,
   Lock,
-  CheckCircle
+  CheckCircle,
+  TrendingUp
 } from 'lucide-react'
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
+import { getTieredFeeEstimates } from '../utils/mempool.js'
+import { addErrorBreadcrumb } from '../utils/errors.js'
 
 export default function Stamp() {
   const [isCapsuleMode, setIsCapsuleMode] = useState(false)
@@ -23,6 +26,24 @@ export default function Stamp() {
   const [proofResult, setProofResult] = useState(null) // { id, hash, filename, status }
   const [hashValue, setHashValue] = useState('')
   const [error, setError] = useState('')
+  const [feeEstimates, setFeeEstimates] = useState(null)
+  const [feeTier, setFeeTier] = useState('medium')
+
+  useEffect(() => {
+    const fetchFees = async () => {
+      try {
+        const fees = await getTieredFeeEstimates()
+        setFeeEstimates(fees)
+        addErrorBreadcrumb('fees.fetch', 'Fee estimates loaded', 'info')
+      } catch (e) {
+        addErrorBreadcrumb('fees.fetch', e.message, 'error')
+        console.error('Failed to load fees')
+      }
+    }
+    fetchFees()
+    const interval = setInterval(fetchFees, 60000) // Refresh every minute
+    return () => clearInterval(interval)
+  }, [])
 
   const handleDrag = useCallback((e) => {
     e.preventDefault()
@@ -98,6 +119,8 @@ export default function Stamp() {
     stampingStatus === 'hashing' ? '30%' :
     stampingStatus === 'anchoring' ? '70%' :
     '100%'
+
+  const estimatedCost = feeEstimates ? (file?.size || 0) * feeEstimates[feeTier] / 1000 : 0 // Rough estimate
 
   return (
     <div className="mx-auto max-w-6xl space-y-12 p-8">

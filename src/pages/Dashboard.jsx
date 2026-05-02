@@ -1,9 +1,10 @@
-import { useState } from 'react'
-import { motion } from 'framer-motion'
+import { useState, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import GlobalDropzone from '../components/GlobalDropzone'
 import HistoryList from '../components/HistoryList'
 import Merkle3D from '../components/Merkle3D'
+import VoiceStamp from '../components/VoiceStamp'
 import {
   Download,
   FileCheck,
@@ -18,7 +19,12 @@ import {
   Box,
   Lock,
   Cpu,
-  Globe
+  Globe,
+  CreditCard,
+  AlertTriangle,
+  Crown,
+  Mic,
+  Award
 } from 'lucide-react'
 import { generatePDF } from '../utils/pdfGenerator'
 import { toast } from 'sonner'
@@ -26,10 +32,97 @@ import BlockchainPulse from '../components/BlockchainPulse'
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
 
+// Upsell Modal Component
+function UpsellModal({ isOpen, onClose, onSubscribe }) {
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50"
+          onClick={onClose}
+        >
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.9, opacity: 0 }}
+            className="w-full max-w-md rounded-2xl bg-white p-8 shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="mb-6 flex items-center justify-between">
+              <Crown className="h-8 w-8 text-amber-500" />
+              <button onClick={onClose} className="text-slate-400 hover:text-slate-600">
+                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <h3 className="mb-4 text-2xl font-bold text-indigo-900">Upgrade to Pro</h3>
+            <p className="mb-6 text-slate-600">Unlock unlimited stamps, priority support, and advanced analytics. Only $9/month.</p>
+            <div className="space-y-4">
+              <button
+                onClick={onSubscribe}
+                className="w-full rounded-xl bg-indigo-600 px-4 py-3 text-white hover:bg-indigo-700"
+              >
+                <CreditCard className="mr-2 inline h-5 w-5" />
+                Subscribe Now
+              </button>
+              <button onClick={onClose} className="w-full rounded-xl border border-slate-200 px-4 py-3 text-slate-600 hover:bg-slate-50">
+                Maybe Later
+              </button>
+            </div>
+            <p className="mt-6 text-center text-xs text-slate-500">
+              Test with card: 4242 4242 4242 4242 (mock success)
+            </p>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
+
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+
 export default function Dashboard() {
   const [file, setFile] = useState(null)
+  const [showUpsell, setShowUpsell] = useState(false)
+  const [userTier, setUserTier] = useState('free') // Mock: load from localStorage or API
+  const [achievements, setAchievements] = useState({})
+  const [showVoiceStamp, setShowVoiceStamp] = useState(false)
+  const [stampCount, setStampCount] = useState(0)
+
+  useEffect(() => {
+    // Mock tier load
+    const storedTier = localStorage.getItem('userTier') || 'free'
+    setUserTier(storedTier)
+
+    // Load achievements
+    const storedAchievements = JSON.parse(localStorage.getItem('satohash_achievements') || '{}')
+    const count = parseInt(localStorage.getItem('satohash_stamp_count') || '0')
+    setAchievements(storedAchievements)
+    setStampCount(count)
+
+    // Check URL for success/cancel
+    const urlParams = new URLSearchParams(window.location.search)
+    if (urlParams.get('success')) {
+      localStorage.setItem('userTier', 'pro')
+      setUserTier('pro')
+      toast.success('Subscription successful! Welcome to Pro tier.')
+    } else if (urlParams.get('cancel')) {
+      toast.info('Subscription cancelled.')
+    }
+  }, [])
 
   const handleFileProcessed = async (processedFile) => {
+    // Simulate free limit (e.g., 5 stamps/day)
+    if (userTier === 'free' && Math.random() < 0.8) { // 80% chance to trigger upsell for demo
+      setShowUpsell(true)
+      toast.warning('Free tier limit reached. Upgrade to continue unlimited stamping.')
+      return
+    }
+
     try {
       const response = await fetch(`${API_URL}/api/stamp`, {
         method: 'POST',
@@ -47,10 +140,59 @@ export default function Dashboard() {
       const result = await response.json()
       setFile({ ...processedFile, ...result })
       toast.success('Successfully anchored to Bitcoin!')
+
+      // Increment stamp count and check achievements
+      const newCount = stampCount + 1;
+      localStorage.setItem('satohash_stamp_count', newCount.toString());
+      setStampCount(newCount);
+
+      // Check for achievements
+      const newAchievements = { ...achievements };
+      if (newCount === 10 && !newAchievements.firstDecade) {
+        newAchievements.firstDecade = { unlocked: true, date: new Date().toISOString() };
+        localStorage.setItem('satohash_achievements', JSON.stringify(newAchievements));
+        setAchievements(newAchievements);
+        toast.success('Achievement Unlocked: First Decade! 🎉');
+      }
+
+      if (newCount % 50 === 0 && !newAchievements[`milestone${newCount}`]) {
+        newAchievements[`milestone${newCount}`] = { unlocked: true, date: new Date().toISOString() };
+        localStorage.setItem('satohash_achievements', JSON.stringify(newAchievements));
+        setAchievements(newAchievements);
+        toast.success(`Achievement Unlocked: ${newCount} Anchors! 🏆`);
+      }
     } catch (error) {
       toast.error('Failed to anchor file. Please try again.')
     } finally {
       // Cleanup
+    }
+  }
+
+  const handleVoiceStamp = (voiceFile) => {
+    // Reuse the same processing logic for voice stamps
+    handleFileProcessed(voiceFile);
+    setShowVoiceStamp(false); // Hide after stamping
+  }
+
+  const handleSubscribe = async () => {
+    try {
+      const response = await fetch(`${API_URL}/api/subscribe`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          priceId: 'price_1ABC123', // Mock price ID
+          successUrl: `${window.location.origin}/dashboard?success=true`,
+          cancelUrl: `${window.location.origin}/dashboard?cancel=true`,
+          email: 'user@example.com' // Mock
+        })
+      })
+
+      const { url } = await response.json()
+      if (url) {
+        window.location.href = url // Redirect to checkout
+      }
+    } catch (err) {
+      toast.error('Subscription failed')
     }
   }
 
@@ -60,43 +202,74 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-[#f7f8fc] pt-32 pb-32 selection:bg-indigo-500/30">
-      <div className="grid-pattern-slate pointer-events-none absolute inset-0 opacity-[0.03]" />
-      <div className="pointer-events-none absolute top-0 left-1/4 h-[600px] w-1/2 bg-indigo-50/30 blur-[120px]" />
-
-      <div className="layout-container relative z-10 max-w-7xl">
-        {/* Elite Hero Space */}
-        <div className="mb-20 flex flex-col items-end justify-between gap-12 md:flex-row">
-          <div>
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              className="mb-8 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-indigo-900 text-white shadow-2xl shadow-indigo-500/20"
-            >
-              <Network size={24} />
-            </motion.div>
-            <h1 className="text-noir-primary mb-6 text-6xl leading-none font-black tracking-tighter uppercase italic md:text-8xl">
-              Sovereign <br /> <span className="text-indigo-600">WORKSPACE.</span>
-            </h1>
-            <p className="max-w-xl font-sans text-lg leading-relaxed font-bold text-slate-500 italic">
-              Universal cryptographic truth layer. Anchor artifacts to Bitcoin, verify forensic
-              provenance, and manage your institutional witness mesh.
-            </p>
-          </div>
-
-          <div className="hidden lg:block">
-            <BlockchainPulse />
-          </div>
+    <>
+      <UpsellModal isOpen={showUpsell} onClose={() => setShowUpsell(false)} onSubscribe={handleSubscribe} />
+      {showVoiceStamp && (
+        <VoiceStamp
+          onStamp={handleVoiceStamp}
+          isActive={showVoiceStamp}
+        />
+      )}
+      <div className="relative min-h-screen overflow-hidden bg-[#f7f8fc] pt-32 pb-32 selection:bg-indigo-500/30">
+        {/* Tier Badge */}
+        <div className="absolute top-4 right-4 z-40">
+          <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-bold ${userTier === 'pro' ? 'bg-amber-100 text-amber-800' : 'bg-slate-100 text-slate-600'}`}>
+            <Crown className="w-3 h-3 mr-1" /> {userTier.toUpperCase()} Tier
+          </span>
         </div>
+        {/* Achievements Badge */}
+        {Object.keys(achievements).length > 0 && (
+          <div className="absolute top-4 left-4 z-40">
+            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800">
+              <Award className="w-3 h-3 mr-1" /> {Object.keys(achievements).length} Badges
+            </span>
+          </div>
+        )}
+        {/* Voice Stamp Toggle */}
+        <button
+          onClick={() => setShowVoiceStamp(!showVoiceStamp)}
+          className="absolute top-20 right-4 z-40 flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-600 text-white hover:bg-indigo-700 text-sm"
+        >
+          <Mic size={16} />
+          {showVoiceStamp ? 'Hide Voice' : 'Voice Stamp'}
+        </button>
 
-        <div className="grid gap-12 lg:grid-cols-12">
-          {/* Main Work-Area */}
-          <div className="space-y-12 lg:col-span-8">
-            {/* STAMPING TERMINAL */}
-            <div className="glass-card border-noir group relative overflow-hidden rounded-[3.5rem] bg-white p-1 shadow-2xl">
-              <div className="grid-pattern-slate pointer-events-none absolute inset-0 opacity-[0.02]" />
-              <div className="relative z-10 flex min-h-[320px] flex-col justify-between rounded-[3.2rem] border border-slate-50 bg-white p-10">
-                {!file ? (
+        <div className="grid-pattern-slate pointer-events-none absolute inset-0 opacity-[0.03]" />
+        <div className="pointer-events-none absolute top-0 left-1/4 h-[600px] w-1/2 bg-indigo-50/30 blur-[120px]" />
+
+        <div className="layout-container relative z-10 max-w-7xl">
+          {/* Elite Hero Space */}
+          <div className="mb-20 flex flex-col items-end justify-between gap-12 md:flex-row">
+            <div>
+              <motion.div
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                className="mb-8 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-indigo-900 text-white shadow-2xl shadow-indigo-500/20"
+              >
+                <Network size={24} />
+              </motion.div>
+              <h1 className="text-noir-primary mb-6 text-6xl leading-none font-black tracking-tighter uppercase italic md:text-8xl">
+                Sovereign <br /> <span className="text-indigo-600">WORKSPACE.</span>
+              </h1>
+              <p className="max-w-xl font-sans text-lg leading-relaxed font-bold text-slate-500 italic">
+                Universal cryptographic truth layer. Anchor artifacts to Bitcoin, verify forensic
+                provenance, and manage your institutional witness mesh.
+              </p>
+            </div>
+
+            <div className="hidden lg:block">
+              <BlockchainPulse />
+            </div>
+          </div>
+
+          <div className="grid gap-12 lg:grid-cols-12">
+            {/* Main Work-Area */}
+            <div className="space-y-12 lg:col-span-8">
+              {/* STAMPING TERMINAL */}
+              <div className="glass-card border-noir group relative overflow-hidden rounded-[3.5rem] bg-white p-1 shadow-2xl">
+                <div className="grid-pattern-slate pointer-events-none absolute inset-0 opacity-[0.02]" />
+                <div className="relative z-10 flex min-h-[320px] flex-col justify-between rounded-[3.2rem] border border-slate-50 bg-white p-10">
+                  {!file ? (
                   <>
                     <div className="flex flex-1 flex-col items-center justify-center text-center font-sans">
                       <motion.div

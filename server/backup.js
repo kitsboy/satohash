@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { execSync } from 'child_process';
 import logger from './logger.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -16,7 +17,22 @@ export const performBackup = () => {
     }
 
     const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-    const backupPath = path.join(backupDir, `satohash-v120-${timestamp}.db`);
+    const zipPath = path.join(backupDir, `satohash-v120-${timestamp}.zip`);
+
+// Simple zip using child_process (assumes 'zip' command available)
+const { execSync } = require('child_process');
+try {
+  execSync(`cd ${path.dirname(dbPath)} && zip -q "${zipPath}" "${path.basename(dbPath)}"`, { stdio: 'ignore' });
+  // Prune logic: Keep only the 10 most recent backups
+  const backups = fs.readdirSync(backupDir).filter(f => f.endsWith('.zip')).sort().reverse();
+  backups.slice(10).forEach(b => fs.unlinkSync(path.join(backupDir, b)));
+  logger.info(`💾 Database ZIP backup complete: ${zipPath}`);
+  return zipPath;
+} catch (e) {
+  logger.warn(`⚠️ ZIP backup failed, falling back to DB copy`);
+  fs.copyFileSync(dbPath, backupPath + '.db'); // Fallback to .db copy
+  return backupPath + '.db';
+}
 
     try {
         fs.copyFileSync(dbPath, backupPath);

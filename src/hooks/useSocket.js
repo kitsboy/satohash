@@ -23,6 +23,15 @@ export const useSocket = () => {
         description: `Hash: ${data.hash.substring(0, 16)}...`,
         duration: 10000
       })
+      // Mobile push via SW
+      if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+        navigator.serviceWorker.controller.postMessage({
+          type: 'PUSH_NOTIFICATION',
+          title: 'Stamp Confirmed!',
+          body: `Your proof is now anchored in Bitcoin block ${data.blockHeight}.`,
+          hash: data.hash
+        });
+      }
     })
 
     return () => newSocket.close()

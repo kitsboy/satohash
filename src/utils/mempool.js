@@ -3,7 +3,7 @@
 const CORS_PROXY_URL = 'https://proxy.shakespeare.diy/?url='
 const MEMPOOL_API_URL = import.meta.env.VITE_MEMPOOL_API_URL || 'https://mempool.space/api'
 
-export const getFeeEstimates = async () => {
+export const getTieredFeeEstimates = async () => {
   try {
     const response = await fetch(
       `${CORS_PROXY_URL}${encodeURIComponent(`${MEMPOOL_API_URL}/v1/fees/recommended`)}`
@@ -13,20 +13,33 @@ export const getFeeEstimates = async () => {
     }
     const data = await response.json()
 
-    // Returns: { fastestFee, halfHourFee, hourFee, economyFee, minimumFee }
-    return data
+    // Tiered estimates based on mempool data
+    return {
+      high: data.fastestFee || 25, // Fastest, ~10min
+      medium: data.halfHourFee || 18, // 30min
+      low: data.hourFee || 12, // 1hr
+      economy: data.economyFee || 6, // Variable
+      minimum: data.minimumFee || 2,
+      unit: 'sat/vB',
+      timestamp: Date.now()
+    };
   } catch (error) {
     console.error('Error fetching fee estimates:', error)
-    // Return user-friendly fallback estimates
+    // Fallback tiered estimates
     return {
-      fastestFee: 25,
-      halfHourFee: 18,
-      hourFee: 12,
-      economyFee: 6,
-      minimumFee: 2
-    }
+      high: 25,
+      medium: 18,
+      low: 12,
+      economy: 6,
+      minimum: 2,
+      unit: 'sat/vB',
+      timestamp: Date.now(),
+      source: 'fallback'
+    };
   }
-}
+};
+
+export const getFeeEstimates = getTieredFeeEstimates; // Backward compatibility
 
 export const convertSatsToFiat = (sats, fiatRate = 50000) => {
   // Simple conversion - in production, fetch live rates

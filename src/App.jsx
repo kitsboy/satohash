@@ -8,6 +8,7 @@ import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 
 // Lazy loaded planes
+import VerifyPublic from './pages/VerifyPublic';
 const Vault = React.lazy(() => import('./pages/Vault'))
 const Stamp = React.lazy(() => import('./pages/Stamp'))
 const Verify = React.lazy(() => import('./pages/VerificationTool'))
@@ -64,6 +65,7 @@ function AppContent() {
         <Route path="/vault" element={<ProtectedRoute><Vault /></ProtectedRoute>} />
         <Route path="/stamp" element={<ProtectedRoute><Stamp /></ProtectedRoute>} />
         <Route path="/verify" element={<ProtectedRoute><Verify /></ProtectedRoute>} />
+<Route path="/verify/:id" element={<VerifyPublic />} />
         <Route path="/contracts" element={<ProtectedRoute><Contracts /></ProtectedRoute>} />
         <Route path="/snapper" element={<ProtectedRoute><Snapper /></ProtectedRoute>} />
         <Route path="/certificates" element={<ProtectedRoute><Certificates /></ProtectedRoute>} />

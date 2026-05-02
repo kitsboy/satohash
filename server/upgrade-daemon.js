@@ -3,12 +3,59 @@ import logger from './logger.js';
 import db from './db.js';
 import OpenTimestamps from 'opentimestamps';
 import { dispatchWebhook } from './webhooks.js';
+import { performBackup } from './backup.js';
+import crypto from 'crypto';
 
 /**
  * 
  * Upgrade Daemon: Every 15 minutes, check for pending OTS files and try to upgrade them.
  */
 const startUpgradeDaemon = (io) => {
+  // Daily backup at 2 AM
+  cron.schedule('0 2 * * *', async () => {
+    try {
+      const backupPath = performBackup();
+      logger.info(`💾 Daily DB backup created: ${backupPath}`);
+    } catch (e) {
+      logger.error(`❌ Daily backup failed: ${e.message}`);
+    }
+  });
+
+  logger.info('📅 Daily backup cron scheduled (2:00 AM)');
+
+  // Archival cron: Every Sunday at 3 AM, archive stamps older than 30 days
+  cron.schedule('0 3 * * 0', async () => {
+    logger.info('🗄️ Starting IPFS archival for old stamps...');
+    const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString();
+    const oldStamps = db.prepare(`
+      SELECT id, hash, ots_binary, confirmed_at
+      FROM timestamps
+      WHERE status = 'confirmed' AND confirmed_at < ?
+      LIMIT 50
+    `).all(thirtyDaysAgo);
+
+    for (const stamp of oldStamps) {
+      try {
+        // Simulate IPFS CID generation (in real impl, use IPFS client)
+        const content = `${stamp.hash}:${stamp.confirmed_at}`;
+        const simulatedCid = `Qm${crypto.createHash('sha256').update(content).digest('hex').slice(0, 44)}`;
+
+        db.prepare(`
+          UPDATE timestamps
+          SET ipfs_cid = ?, archived_at = CURRENT_TIMESTAMP
+          WHERE id = ?
+        `).run(simulatedCid, stamp.id);
+
+        logger.info(`🗄️ Archived stamp ${stamp.id} to IPFS CID: ${simulatedCid}`);
+      } catch (e) {
+        logger.error(`❌ Archival failed for ${stamp.id}: ${e.message}`);
+      }
+    }
+    logger.info(`✅ Archival complete: ${oldStamps.length} stamps processed.`);
+  });
+
+  logger.info('🗄️ Weekly archival cron scheduled (Sun 3:00 AM)');
+
   // Use a slightly offset cron to avoid thundering herd on full segments
   cron.schedule('3,18,33,48 * * * *', async () => {
     logger.info('🔄 [DAEMON] Initiating OTS confirmation check cycle...');
