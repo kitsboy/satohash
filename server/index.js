@@ -30,6 +30,8 @@ import lightningRoutes from './routes/lightning.js';
 import { addSignerToProof } from './collaboration.js';
 import Stripe from 'stripe';
 import adminRouter from './admin.js';
+import nftRouter from './routes/nft.js';
+import { z } from 'zod';
 
 // New Productions Items 1-7
 import { runMigrations } from './migrations.js';
@@ -160,6 +162,8 @@ validateSecrets();
 try {
   runMigrations();
   if (config.NODE_ENV === 'production') performBackup();
+  // Start alert daemons
+  startAlertDaemon(io);
 } catch (migError) {
   logger.fatal(`❌ Startup Failure: ${migError.message}`);
   process.exit(1);
@@ -263,6 +267,8 @@ const upload = multer({
 app.use('/api/', tieredRateLimiter('public'));
 app.use('/api/lightning', lightningRoutes);
 app.use('/admin/', adminRouter); // Use dedicated admin router with throttling metrics
+app.use(authMiddleware);
+app.use('/api/nft', nftRouter);
 
 // API Docs
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
@@ -371,6 +377,66 @@ app.get('/api/nostr/profile/:npub', async (req, res) => {
 app.post('/api/templates/suggest', async (req, res) => {
   try {
     const { templateId, content, fields = {}, email } = req.body;
+
+// AI Compliance Checker (Item 11)
+app.post('/api/compliance-check', async (req, res) => {
+  try {
+    const complianceSchema = z.object({
+      document: z.string().min(1, 'Document text required'),
+      standard: z.enum(['GDPR', 'SOX']).optional().default('GDPR')
+    });
+
+    const validation = complianceSchema.safeParse(req.body);
+    if (!validation.success) {
+      return res.status(400).json({ error: validation.error.message });
+    }
+
+    const { document, standard } = validation.data;
+
+    if (!anthropicClient) {
+      return res.status(503).json({ error: 'AI service unavailable' });
+    }
+
+    const prompt = `Scan the following document for potential compliance issues related to ${standard}:
+
+Document: ${document.substring(0, 2000)}... (truncated for prompt)
+
+Identify and flag any sections that may violate or require attention under ${standard} standards. Focus on sensitive data (e.g., PII for GDPR, financial controls for SOX). Output as JSON: {"flags": [{"issue": "description", "location": "text snippet", "severity": "low/medium/high", "recommendation": "fix suggestion"}]} Keep it concise.`;
+
+    const response = await anthropicClient.messages.create({
+      model: 'claude-3-sonnet-20240229',
+      max_tokens: 1000,
+      messages: [{ role: 'user', content: prompt }]
+    });
+
+    const responseText = response.content[0].text;
+    let flags = [];
+    try {
+      const jsonMatch = responseText.match(/\{[\s\S]*\}/);
+      if (jsonMatch) {
+        flags = JSON.parse(jsonMatch[0]).flags || [];
+      }
+    } catch (parseErr) {
+      logger.warn('Failed to parse compliance JSON:', parseErr);
+      flags = [{ issue: 'Parsing error', severity: 'medium', recommendation: 'Manual review needed' }];
+    }
+
+    // Emit real-time alert if high severity
+    if (flags.some(f => f.severity === 'high')) {
+      io.emit('compliance:alert', { documentSnippet: document.substring(0, 100) + '...', flags });
+    }
+
+    res.json({ standard, flags, scannedAt: new Date().toISOString(), model: 'claude-3-sonnet' });
+
+  } catch (err) {
+    logger.error('Compliance check error:', err);
+    if (err.message.includes('rate limit')) {
+      res.status(429).json({ error: 'AI rate limited, try later' });
+    } else {
+      res.status(500).json({ error: 'Scan failed' });
+    }
+  }
+});
     // Validate inputs
     if (!templateId || typeof templateId !== 'string') {
       return res.status(400).json({ error: 'templateId (string) required' });

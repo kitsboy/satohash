@@ -89,6 +89,55 @@ export const tieredRateLimiter = (tier = 'public') => {
  * BOLT-12 Paywall / L402 Middleware
  * Intercepts requests, checking for a valid L402 token or deducts subscription credits.
  */
+import io from '../../index.js'; // Pass io or global, adjusted for mock
+
+// Intrusion detection: Redis blocklist
+const isBlocked = async (ip, redis) => {
+  try {
+    return await redis.get(`blocklist:${ip}`) !== null;
+  } catch (e) {
+    return false;
+  }
+};
+
+const blockIP = async (ip, redis, reason, io) => {
+  try {
+    await redis.set(`blocklist:${ip}`, reason, 'EX', 3600); // 1 hour block
+    if (ioInstance) ioInstance.emit('intrusion:blocked', { ip, reason, timestamp: new Date().toISOString() });
+    logger.warn(`🚫 IP Blocked: ${ip} - ${reason}`);
+  } catch (e) {
+    logger.warn('Failed to block IP:', e);
+  }
+};
+
+// Extend rateLimiter to block on excessive hits
+const extendedRateLimiter = (tier = 'public') => {
+  const limiter = tieredRateLimiter(tier);
+  return async (req, res, next) => {
+    const ip = req.ip;
+    if (await isBlocked(ip, redis)) {
+      return res.status(403).json({ error: 'Access blocked due to intrusion detection' });
+    }
+    await limiter(req, res, async (err) => {
+      if (err) {
+        // On rate limit exceed, block if too many in short time
+        const key = `rate:${ip}`;
+        const count = await redis.get(key) || 0;
+        if (parseInt(count) > 5) { // 5 exceeds -> block
+          await blockIP(ip, redis, 'Excessive rate limit violations', io);
+        }
+        await redis.incr(key);
+        await redis.expire(key, 300); // 5 min window
+      } else {
+        next();
+      }
+    });
+  };
+};
+
+export { extendedRateLimiter as tieredRateLimiter }; // Replace
+const ioInstance = io; // Assume global io
+
 export const paywallMiddleware = (req, res, next) => {
     // Allow bypassing paywall via env var for testing, but default to true in PROD
     if (process.env.REQUIRE_LIGHTNING === 'false') {

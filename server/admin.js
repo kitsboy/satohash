@@ -21,8 +21,26 @@ const adminAuth = (req, res, next) => {
 // Initialize admin router
 const adminRouter = express.Router();
 
-// Get overall stats (existing from index.js, but moved here)
+import { calculateCarbonFootprint } from '../../src/utils/carbon.js'; // Alias path?
+
+// Get overall stats with carbon
 adminRouter.get('/stats', adminAuth, (req, res) => {
+  const totalStamps = db.prepare("SELECT count(*) as count FROM timestamps").get().count; // Add tenant filter if auth
+  const confirmedStamps = db.prepare("SELECT count(*) as count FROM timestamps WHERE status = 'confirmed'").get().count;
+  const pendingStamps = db.prepare("SELECT count(*) as count FROM timestamps WHERE status = 'pending'").get().count;
+
+  const carbon = calculateCarbonFootprint(totalStamps);
+
+  res.json({
+    total: totalStamps,
+    confirmed: confirmedStamps,
+    pending: pendingStamps,
+    carbon: carbon,
+    uptime: process.uptime(),
+    memory: process.memoryUsage(),
+    db_size: require('fs').statSync(require('path').resolve('./data/satohash.db')).size
+  });
+};
   const totalStamps = db.prepare("SELECT count(*) as count FROM timestamps").get().count;
   const confirmedStamps = db.prepare("SELECT count(*) as count FROM timestamps WHERE status = 'confirmed'").get().count;
   const pendingStamps = db.prepare("SELECT count(*) as count FROM timestamps WHERE status = 'pending'").get().count;

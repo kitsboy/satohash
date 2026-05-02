@@ -55,6 +55,7 @@ export default {
         'fade-up': 'fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both',
         'glow-pulse': 'glowPulse 3s ease-in-out infinite',
         'scan-line': 'scanLine 3s linear infinite',
+        'spin-slow': 'spin-slow 8s linear infinite',
       },
       keyframes: {
         float: {
@@ -74,6 +75,10 @@ export default {
           '10%': { opacity: '1' },
           '90%': { opacity: '1' },
           '100%': { transform: 'translateY(100vh)', opacity: '0' },
+        },
+        spinSlow: {
+          '0%': { transform: 'rotate(0deg)' },
+          '100%': { transform: 'rotate(360deg)' },
         },
       }
     },

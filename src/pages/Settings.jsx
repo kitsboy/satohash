@@ -28,7 +28,7 @@ const SettingSection = ({ icon: Icon, title, description, children }) => (
   <motion.div
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
-    className="space-y-6 rounded-[2.5rem] border border-[var(--border)] bg-[var(--bg-secondary)] p-8 shadow-2xl lg:p-12"
+    className="space-y-6 rounded-[2.5rem] border border-[var(--border)] bg-[var(--bg-secondary)] p-4 sm:p-6 lg:p-12 shadow-2xl"
   >
     <div className="flex items-start justify-between">
       <div className="space-y-1">
@@ -151,7 +151,7 @@ export default function Settings() {
   }
 
   return (
-    <div className="mx-auto max-w-6xl space-y-12 p-8 pt-32 pb-24">
+    <div className="mx-auto max-w-6xl space-y-12 p-8 pt-20 md:pt-32 pb-24">
       {/* L402 Invoice Modal */}
       <AnimatePresence>
         {isInvoiceOpen && (
@@ -234,7 +234,7 @@ export default function Settings() {
           </h1>
         </div>
 
-        <div className="scrollbar-hide flex overflow-x-auto rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] p-1.5 shadow-2xl">
+        <div className="scrollbar-hide sticky top-0 z-10 flex overflow-x-auto rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] p-1.5 shadow-2xl">
           {['profile', 'security', 'billing', 'nodes'].map((tab) => (
             <button
               key={tab}
@@ -263,7 +263,7 @@ export default function Settings() {
                   title="Sovereign Identity"
                   description="Update your public reputation across the Satohash mesh."
                 >
-                  <div className="flex flex-col items-center gap-12 md:flex-row">
+                  <div className="flex flex-col items-center gap-6 md:gap-12 md:flex-row">
                     <div className="group relative">
                       <div className="flex h-40 w-40 items-center justify-center overflow-hidden rounded-[3rem] border-2 border-[var(--border-bright)] bg-[var(--bg-primary)] transition-all group-hover:scale-105 group-hover:shadow-[0_0_30px_var(--accent-active-glow)]">
                         <User size={64} className="text-[var(--text-secondary)]" />
@@ -306,7 +306,7 @@ export default function Settings() {
                             type="text"
                             readOnly
                             value={profile.pubkey}
-                            className="h-14 flex-1 rounded-2xl border border-[var(--border)] bg-[var(--bg-primary)]/50 px-6 font-mono text-xs font-bold text-[var(--text-secondary)] outline-none"
+                            className="h-14 flex-1 min-w-0 rounded-2xl border border-[var(--border)] bg-[var(--bg-primary)]/50 px-6 font-mono text-xs font-bold text-[var(--text-secondary)] outline-none truncate"
                           />
                           <button
                             onClick={() => {
@@ -334,7 +334,7 @@ export default function Settings() {
                           <label className="text-[10px] font-bold uppercase tracking-widest" style={{ color: 'var(--text-secondary)' }}>
                             Nostr Public Key
                           </label>
-                          <div className="flex items-center gap-3 h-11 rounded-xl border px-4" style={{ borderColor: 'var(--border)', background: 'var(--bg-primary)' }}>
+                          <div className="h-14 flex items-center gap-3 rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] px-4">
                             <span className="font-mono text-xs truncate" style={{ color: 'var(--accent-gold)' }}>
                               {localStorage.getItem('satohash_npub')}
                             </span>
@@ -488,7 +488,7 @@ export default function Settings() {
                                 {k.key}
                               </span>
                             </div>
-                            <div className="flex items-center gap-4 opacity-0 transition-opacity group-hover:opacity-100">
+                            <div className="flex items-center gap-4 opacity-100 md:opacity-0 transition-opacity group-hover:opacity-100">
                               <button
                                 onClick={() => {
                                   navigator.clipboard.writeText(k.key)
@@ -599,7 +599,7 @@ export default function Settings() {
                       <div key={node.name} className="flex items-center justify-between rounded-2xl border border-[var(--border)] bg-[var(--bg-primary)] px-5 py-4">
                         <div className="flex items-center gap-3">
                           <span className="h-2 w-2 rounded-full bg-[var(--accent-success)] shadow-[0_0_6px_var(--accent-success)]" />
-                          <span className="font-mono text-xs text-[var(--text-primary)]">{node.name}</span>
+                          <span className="font-mono text-xs text-[var(--text-primary)] min-w-0 truncate flex-1">{node.name}</span>
                         </div>
                         <div className="flex items-center gap-4">
                           <span className="font-mono text-[10px] text-[var(--text-secondary)]">{node.latency}</span>
@@ -684,20 +684,7 @@ export default function Settings() {
         </div>
       </div>
 
-      <style
-        dangerouslySetInnerHTML={{
-          __html: `
-        @keyframes spin-slow {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-        .animate-spin-slow {
-          animation: spin-slow 8s linear infinite;
-        }
-      `
-        }}
-      />
-    </div>
+          </div>
   )
 }
 
