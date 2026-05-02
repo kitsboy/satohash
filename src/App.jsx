@@ -31,6 +31,13 @@ const About = React.lazy(() => import('./pages/Placeholders').then((m) => ({ def
 const NotaryTemplates = React.lazy(() => import('./pages/NotaryTemplates'))
 const Dashboard = React.lazy(() => import('./pages/Dashboard'))
 
+function ProtectedRoute({ children }) {
+  const location = useLocation()
+  const authed = localStorage.getItem('satohash_authed') === 'true'
+  if (!authed) return <Navigate to="/access" state={{ from: location }} replace />
+  return children
+}
+
 function AppContent() {
   const location = useLocation()
 
@@ -54,25 +61,25 @@ function AppContent() {
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/access" element={<Access />} />
-        <Route path="/vault" element={<Vault />} />
-        <Route path="/stamp" element={<Stamp />} />
-        <Route path="/verify" element={<Verify />} />
-        <Route path="/contracts" element={<Contracts />} />
-        <Route path="/snapper" element={<Snapper />} />
-        <Route path="/certificates" element={<Certificates />} />
-        <Route path="/developer" element={<Developer />} />
-        <Route path="/atlas" element={<Atlas />} />
-        <Route path="/nodes" element={<Nodes />} />
-        <Route path="/explorer" element={<Explorer />} />
-        <Route path="/audit-log" element={<Vault />} /> {/* Reusing Vault as audit log for now */}
-        <Route path="/documentation" element={<Developer />} /> {/* Reusing Developer for docs */}
-        <Route path="/status" element={<Atlas />} /> {/* Reusing Atlas for status */}
-        <Route path="/trust-center" element={<Trust />} />
+        <Route path="/vault" element={<ProtectedRoute><Vault /></ProtectedRoute>} />
+        <Route path="/stamp" element={<ProtectedRoute><Stamp /></ProtectedRoute>} />
+        <Route path="/verify" element={<ProtectedRoute><Verify /></ProtectedRoute>} />
+        <Route path="/contracts" element={<ProtectedRoute><Contracts /></ProtectedRoute>} />
+        <Route path="/snapper" element={<ProtectedRoute><Snapper /></ProtectedRoute>} />
+        <Route path="/certificates" element={<ProtectedRoute><Certificates /></ProtectedRoute>} />
+        <Route path="/developer" element={<ProtectedRoute><Developer /></ProtectedRoute>} />
+        <Route path="/atlas" element={<ProtectedRoute><Atlas /></ProtectedRoute>} />
+        <Route path="/nodes" element={<ProtectedRoute><Nodes /></ProtectedRoute>} />
+        <Route path="/explorer" element={<ProtectedRoute><Explorer /></ProtectedRoute>} />
+        <Route path="/audit-log" element={<ProtectedRoute><Vault /></ProtectedRoute>} /> {/* Reusing Vault as audit log for now */}
+        <Route path="/documentation" element={<ProtectedRoute><Developer /></ProtectedRoute>} /> {/* Reusing Developer for docs */}
+        <Route path="/status" element={<ProtectedRoute><Atlas /></ProtectedRoute>} /> {/* Reusing Atlas for status */}
+        <Route path="/trust-center" element={<ProtectedRoute><Trust /></ProtectedRoute>} />
         <Route path="/about" element={<About />} />
         <Route path="/trust" element={<Trust />} />
-        <Route path="/templates" element={<NotaryTemplates />} />
-        <Route path="/settings" element={<Settings />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/templates" element={<ProtectedRoute><NotaryTemplates /></ProtectedRoute>} />
+        <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
+        <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Suspense>

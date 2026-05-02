@@ -9,8 +9,12 @@ import { useNavigate, Link } from 'react-router-dom'
 /**
  * AppShellNoir — flagship layout shell for Satohash v5.0.0-ELITE+.
  */
+const API = import.meta.env.VITE_API_URL ?? 'http://localhost:3001'
+
 export default function AppShellNoir({ children }) {
   const [isSearchOpen, setIsSearchOpen] = useState(false)
+  const [searchQuery, setSearchQuery] = useState('')
+  const [stampResults, setStampResults] = useState([])
   const navigate = useNavigate()
 
   const handleKeyDown = useCallback((e) => {
@@ -20,6 +24,7 @@ export default function AppShellNoir({ children }) {
     }
     if (e.key === 'Escape') {
       setIsSearchOpen(false)
+      setSearchQuery('')
     }
   }, [])
 
@@ -27,6 +32,32 @@ export default function AppShellNoir({ children }) {
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [handleKeyDown])
+
+  // Debounced stamp search — fires when query looks like a hash prefix (>= 8 chars)
+  useEffect(() => {
+    if (searchQuery.length < 8) {
+      setStampResults([])
+      return
+    }
+    const timer = setTimeout(async () => {
+      try {
+        const res = await fetch(`${API}/api/history`)
+        if (!res.ok) return
+        const data = await res.json()
+        const stamps = Array.isArray(data) ? data : (data.stamps ?? [])
+        const q = searchQuery.toLowerCase()
+        const matches = stamps.filter(
+          (s) =>
+            (s.hash ?? '').toLowerCase().includes(q) ||
+            (s.filename ?? '').toLowerCase().includes(q)
+        )
+        setStampResults(matches.slice(0, 5))
+      } catch {
+        // silently ignore fetch errors
+      }
+    }, 300)
+    return () => clearTimeout(timer)
+  }, [searchQuery])
 
   return (
     <div className="flex min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)]">
@@ -40,7 +71,7 @@ export default function AppShellNoir({ children }) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              onClick={() => setIsSearchOpen(false)}
+              onClick={() => { setIsSearchOpen(false); setSearchQuery('') }}
               className="absolute inset-0 bg-black/80 backdrop-blur-xl"
             />
 
@@ -62,6 +93,8 @@ export default function AppShellNoir({ children }) {
                   autoFocus
                   placeholder="Search vaults, stamps, blocks, or proofs..."
                   className="flex-1 bg-transparent text-xl font-medium outline-none placeholder:text-white/20"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
                 />
                 <div className="flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 py-1.5">
                   <span className="text-[10px] font-black tracking-widest text-white/40 uppercase">
@@ -73,35 +106,55 @@ export default function AppShellNoir({ children }) {
               {/* Results area */}
               <div className="scrollbar-hide max-h-[420px] overflow-y-auto p-4">
 
-                {/* Quick Navigation */}
-                <div className="px-4 py-3 text-[10px] font-black tracking-[0.3em] text-[var(--text-secondary)] uppercase">
-                  Quick Navigation
-                </div>
+                {/* Quick Navigation — filtered by searchQuery */}
+                {(() => {
+                  const navItems = [
+                    { icon: Database, label: 'Vault',          sub: 'Browse sovereign anchors',    path: '/vault' },
+                    { icon: Globe,    label: 'Atlas',          sub: 'Temporal provenance search',  path: '/atlas' },
+                    { icon: Terminal, label: 'Developer Plane',sub: 'API keys and strategies',     path: '/developer' },
+                    { icon: Zap,      label: 'Settlement',     sub: 'L402 Wallet & Billing',       path: '/settings' },
+                  ]
+                  const q = searchQuery.toLowerCase()
+                  const filtered = navItems.filter(
+                    ({ label, sub }) =>
+                      label.toLowerCase().includes(q) || sub.toLowerCase().includes(q)
+                  )
+                  if (filtered.length === 0) return null
+                  return (
+                    <>
+                      <div className="px-4 py-3 text-[10px] font-black tracking-[0.3em] text-[var(--text-secondary)] uppercase">
+                        Quick Navigation
+                      </div>
+                      {filtered.map(({ icon, label, sub, path }) => (
+                        <SearchItem
+                          key={path}
+                          icon={icon}
+                          label={label}
+                          sub={sub}
+                          onClick={() => { navigate(path); setIsSearchOpen(false); setSearchQuery('') }}
+                        />
+                      ))}
+                    </>
+                  )
+                })()}
 
-                <SearchItem
-                  icon={Database}
-                  label="Vault"
-                  sub="Browse sovereign anchors"
-                  onClick={() => { navigate('/vault'); setIsSearchOpen(false) }}
-                />
-                <SearchItem
-                  icon={Globe}
-                  label="Atlas"
-                  sub="Temporal provenance search"
-                  onClick={() => { navigate('/atlas'); setIsSearchOpen(false) }}
-                />
-                <SearchItem
-                  icon={Terminal}
-                  label="Developer Plane"
-                  sub="API keys and strategies"
-                  onClick={() => { navigate('/developer'); setIsSearchOpen(false) }}
-                />
-                <SearchItem
-                  icon={Zap}
-                  label="Settlement"
-                  sub="L402 Wallet & Billing"
-                  onClick={() => { navigate('/settings'); setIsSearchOpen(false) }}
-                />
+                {/* Stamp search results */}
+                {stampResults.length > 0 && (
+                  <>
+                    <div className="px-4 py-3 text-[10px] font-black tracking-[0.3em] text-[var(--text-secondary)] uppercase">
+                      Matching Stamps
+                    </div>
+                    {stampResults.map((s) => (
+                      <SearchItem
+                        key={s.id ?? s.hash}
+                        icon={Database}
+                        label={s.filename ?? 'Untitled'}
+                        sub={(s.hash ?? '').slice(0, 24) + '…'}
+                        onClick={() => { navigate('/vault'); setIsSearchOpen(false); setSearchQuery('') }}
+                      />
+                    ))}
+                  </>
+                )}
 
                 {/* Divider */}
                 <div
@@ -118,21 +171,21 @@ export default function AppShellNoir({ children }) {
                   icon={Scale}
                   label="View Trust Center"
                   sub="Compliance & legal information"
-                  onClick={() => { navigate('/trust'); setIsSearchOpen(false) }}
+                  onClick={() => { navigate('/trust'); setIsSearchOpen(false); setSearchQuery('') }}
                   gold
                 />
                 <SearchItem
                   icon={BookOpen}
                   label="Read Privacy Policy"
                   sub="How your data is protected"
-                  onClick={() => { navigate('/trust'); setIsSearchOpen(false) }}
+                  onClick={() => { navigate('/trust'); setIsSearchOpen(false); setSearchQuery('') }}
                   gold
                 />
                 <SearchItem
                   icon={Terminal}
                   label="API Documentation"
                   sub="Integrate the Satohash API"
-                  onClick={() => { navigate('/developer'); setIsSearchOpen(false) }}
+                  onClick={() => { navigate('/developer'); setIsSearchOpen(false); setSearchQuery('') }}
                   gold
                 />
               </div>

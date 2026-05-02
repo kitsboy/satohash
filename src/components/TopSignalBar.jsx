@@ -1,5 +1,7 @@
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { Settings, Zap, Boxes } from 'lucide-react'
+import { useState, useEffect } from 'react'
+import { getFeeEstimates, getBlockHeight } from '../utils/mempool'
 
 // ─── Route → human-readable breadcrumb ────────────────────────────────────
 const ROUTE_LABELS = {
@@ -57,7 +59,25 @@ function StatusPill({ children, dotColor }) {
 // ─── TopSignalBar ─────────────────────────────────────────────────────────
 export default function TopSignalBar() {
   const location = useLocation()
+  const navigate = useNavigate()
   const pageLabel = getPageLabel(location.pathname)
+
+  const [blockHeight, setBlockHeight] = useState(null)
+  const [feeRate, setFeeRate] = useState(null)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const [height, fees] = await Promise.all([getBlockHeight(), getFeeEstimates()])
+      setBlockHeight(height)
+      setFeeRate(fees.halfHourFee ?? fees.fastestFee ?? 18)
+    }
+    fetchData()
+    const interval = setInterval(fetchData, 60000)
+    return () => clearInterval(interval)
+  }, [])
+
+  const npub = localStorage.getItem('satohash_npub') || ''
+  const initials = npub ? npub.substring(4, 6).toUpperCase() : 'SH'
 
   return (
     <div className="flex h-full w-full items-center justify-between gap-4">
@@ -107,7 +127,7 @@ export default function TopSignalBar() {
             className="font-mono text-[10px] font-bold tracking-[0.15em] uppercase"
             style={{ color: 'var(--accent-gold)' }}
           >
-            Block #895,441
+            Block #{blockHeight ? blockHeight.toLocaleString() : '—'}
           </span>
         </div>
 
@@ -127,7 +147,7 @@ export default function TopSignalBar() {
             className="font-mono text-[10px] font-bold tracking-[0.15em] uppercase"
             style={{ color: 'var(--text-secondary)' }}
           >
-            ~18 sat/vB
+            ~{feeRate ?? '—'} sat/vB
           </span>
         </div>
       </div>
@@ -136,6 +156,7 @@ export default function TopSignalBar() {
       <div className="flex flex-shrink-0 items-center gap-3">
         {/* Settings icon */}
         <button
+          onClick={() => navigate('/settings')}
           className="flex h-8 w-8 items-center justify-center rounded-lg border transition-colors hover:border-[var(--border-gold)] hover:bg-[var(--accent-gold-subtle)]"
           style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
         >
@@ -151,7 +172,7 @@ export default function TopSignalBar() {
             color: 'var(--accent-gold)',
           }}
         >
-          SH
+          {initials}
         </div>
       </div>
     </div>

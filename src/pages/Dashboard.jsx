@@ -279,13 +279,13 @@ export default function Dashboard() {
                 Command <br /> <span className="text-indigo-400">CONSOLE.</span>
               </h3>
               <div className="relative z-10 space-y-4">
-                <Link to="/developers" className="block w-full">
+                <Link to="/developer" className="block w-full">
                   <SideBtn icon={Cpu} label="Developer Mesh" amber />
                 </Link>
-                <Link to="/identity" className="block w-full">
+                <Link to="/access" className="block w-full">
                   <SideBtn icon={UserCheck} label="Identity Node" />
                 </Link>
-                <Link to="/choose-template" className="block w-full">
+                <Link to="/templates" className="block w-full">
                   <SideBtn icon={FileText} label="Notary Vault" />
                 </Link>
               </div>

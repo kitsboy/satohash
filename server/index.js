@@ -27,6 +27,7 @@ import { injectMetadata } from './pdf-injector.js';
 import { getGitMetadata } from './git.js';
 import crypto from 'crypto';
 import lightningRoutes from './routes/lightning.js';
+import { addSignerToProof } from './collaboration.js';
 
 // New Productions Items 1-7
 import { runMigrations } from './migrations.js';
@@ -607,15 +608,25 @@ app.get('/api/system/backup', (req, res) => {
  *   get:
  *     summary: Live Bitcoin Fee estimates for notarization priority.
  */
-app.get('/api/system/fees', (req, res) => {
-    // Simulated from mempool.space or similar
-    res.json({
-        high: 25,
-        medium: 18,
-        low: 12,
-        instant_anchor: 45,
-        unit: 'sat/vB'
-    });
+app.get('/api/system/fees', async (req, res) => {
+    try {
+        const response = await fetch('https://mempool.space/api/v1/fees/recommended', {
+            headers: { 'Accept': 'application/json' },
+            signal: AbortSignal.timeout(4000)
+        })
+        if (!response.ok) throw new Error('mempool.space unavailable')
+        const fees = await response.json()
+        res.json({
+            high: fees.fastestFee ?? 25,
+            medium: fees.halfHourFee ?? 18,
+            low: fees.hourFee ?? 12,
+            instant_anchor: fees.fastestFee ?? 45,
+            unit: 'sat/vB',
+            source: 'mempool.space'
+        })
+    } catch (e) {
+        res.json({ high: 25, medium: 18, low: 12, instant_anchor: 45, unit: 'sat/vB', source: 'fallback' })
+    }
 });
 
 httpServer.listen(port, () => {

@@ -16,6 +16,7 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { toast } from 'sonner'
 import { jsPDF } from 'jspdf'
+import { useSocket } from '../hooks/useSocket'
 
 const StatusBadge = ({ status }) => {
   const styles = {
@@ -62,6 +63,34 @@ export default function Vault() {
   const [items, setItems] = useState([])
   const [loading, setLoading] = useState(true)
 
+  const { lastEvent } = useSocket()
+
+  const mapStamps = (data) =>
+    data.map(s => ({
+      id: s.id,
+      name: s.filename || s.original_filename || 'Unnamed document',
+      type: s.filename?.includes('SNAP') ? 'snapper' : 'file',
+      hash: s.hash ? s.hash.substring(0, 8) + '...' + s.hash.slice(-4) : '—',
+      fullHash: s.hash,
+      date: s.created_at ? new Date(s.created_at).toISOString().split('T')[0] : '—',
+      status: s.status || 'pending',
+      confirmations: s.bitcoin_block_height ? 999 : 0,
+      size: '—'
+    }))
+
+  const refreshStamps = async () => {
+    try {
+      const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+      const res = await fetch(`${API}/api/history`)
+      if (res.ok) {
+        const data = await res.json()
+        if (Array.isArray(data)) setItems(mapStamps(data))
+      }
+    } catch {
+      // Silent — already showing cached data
+    }
+  }
+
   useEffect(() => {
     const fetchStamps = async () => {
       try {
@@ -70,18 +99,7 @@ export default function Vault() {
         if (res.ok) {
           const data = await res.json()
           // Map API response to our display format
-          const mapped = data.map(s => ({
-            id: s.id,
-            name: s.filename || s.original_filename || 'Unnamed document',
-            type: s.filename?.includes('SNAP') ? 'snapper' : 'file',
-            hash: s.hash ? s.hash.substring(0, 8) + '...' + s.hash.slice(-4) : '—',
-            fullHash: s.hash,
-            date: s.created_at ? new Date(s.created_at).toISOString().split('T')[0] : '—',
-            status: s.status || 'pending',
-            confirmations: s.bitcoin_block_height ? 999 : 0,
-            size: '—'
-          }))
-          setItems(mapped)
+          setItems(mapStamps(data))
         }
       } catch (e) {
         // Fall back to localStorage stamps if server not running
@@ -104,6 +122,14 @@ export default function Vault() {
     }
     fetchStamps()
   }, [])
+
+  // Re-fetch the full list whenever a new stamp or confirmation arrives via Socket.io
+  useEffect(() => {
+    if (!lastEvent) return
+    if (lastEvent.type === 'stamped' || lastEvent.type === 'confirmed') {
+      refreshStamps()
+    }
+  }, [lastEvent])
 
   const handleExport = () => {
     setIsExporting(true)

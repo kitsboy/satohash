@@ -46,6 +46,7 @@ export default function ContractList() {
       title: 'Asset Purchase Agreement - Q2',
       client: 'Truth Capital',
       status: 'Pending Signatures',
+      tabStatus: 'active',
       signers: 3,
       signed: 1
     },
@@ -54,10 +55,18 @@ export default function ContractList() {
       title: 'Master Service Level Agreement',
       client: 'Sovereign Nodes',
       status: 'Anchored',
+      tabStatus: 'active',
       signers: 2,
       signed: 2
     }
   ]
+
+  const filteredContracts = contracts.filter((c) => {
+    if (activeTab === 'active') return c.tabStatus === 'active'
+    if (activeTab === 'completed') return c.tabStatus === 'completed'
+    if (activeTab === 'drafts') return c.tabStatus === 'draft'
+    return true
+  })
 
   return (
     <div className="mx-auto max-w-6xl space-y-12 p-8">
@@ -100,7 +109,7 @@ export default function ContractList() {
           </div>
 
           <div className="space-y-4">
-            {contracts.map((contract) => (
+            {filteredContracts.map((contract) => (
               <div
                 key={contract.id}
                 className="group space-y-6 rounded-3xl border border-[var(--border)] bg-[var(--bg-secondary)] p-8 transition-all hover:border-[var(--border-bright)]"

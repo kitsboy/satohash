@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Activity, Clock, Zap, Cpu, Globe } from 'lucide-react'
-
-// Mocking the utility if it doesn't exist for demo, assuming it does.
-const getFeeEstimates = async () => ({ fastestFee: 52, halfHourFee: 45, hourFee: 32 })
-const getMempoolStats = async () => ({ count: 124500, unv_mbytes: 240 })
+import { getFeeEstimates, getMempoolStats } from '../utils/mempool'
 
 export default function BlockchainPulse() {
   const [stats, setStats] = useState(null)

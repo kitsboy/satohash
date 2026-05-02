@@ -17,9 +17,11 @@ import {
   Trash2,
   Copy,
   X,
-  Layers
+  Layers,
+  Network
 } from 'lucide-react'
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 
 const SettingSection = ({ icon: Icon, title, description, children }) => (
@@ -54,6 +56,7 @@ const Toggle = ({ active, onToggle }) => (
 )
 
 export default function Settings() {
+  const navigate = useNavigate()
   const [activeTab, setActiveTab] = useState('profile')
 
   // Persisted State with Error Boundaries
@@ -326,6 +329,18 @@ export default function Settings() {
                           className="h-24 w-full resize-none rounded-2xl border border-[var(--border)] bg-[var(--bg-primary)] p-6 text-sm font-bold transition-all outline-none focus:border-[var(--accent-active)]"
                         />
                       </div>
+                      {localStorage.getItem('satohash_npub') && (
+                        <div className="space-y-2">
+                          <label className="text-[10px] font-bold uppercase tracking-widest" style={{ color: 'var(--text-secondary)' }}>
+                            Nostr Public Key
+                          </label>
+                          <div className="flex items-center gap-3 h-11 rounded-xl border px-4" style={{ borderColor: 'var(--border)', background: 'var(--bg-primary)' }}>
+                            <span className="font-mono text-xs truncate" style={{ color: 'var(--accent-gold)' }}>
+                              {localStorage.getItem('satohash_npub')}
+                            </span>
+                          </div>
+                        </div>
+                      )}
                       <button
                         onClick={handleSave}
                         className="h-14 rounded-2xl bg-white px-10 text-[11px] font-black tracking-widest text-black uppercase transition-all hover:scale-[1.02] active:scale-[0.98]"
@@ -562,6 +577,41 @@ export default function Settings() {
                 </SettingSection>
               </motion.div>
             )}
+
+            {activeTab === 'nodes' && (
+              <motion.div
+                key="nodes"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="space-y-8"
+              >
+                <SettingSection
+                  icon={Network}
+                  title="Peer Node Configuration"
+                  description="Configure witness nodes for redundant proof anchoring."
+                >
+                  <div className="space-y-4">
+                    {[
+                      { name: 'alice.btc.calendar.opentimestamps.org', status: 'Active', latency: '42ms' },
+                      { name: 'bob.btc.calendar.opentimestamps.org', status: 'Active', latency: '38ms' },
+                      { name: 'finney.calendar.eternitywall.com', status: 'Active', latency: '61ms' },
+                    ].map((node) => (
+                      <div key={node.name} className="flex items-center justify-between rounded-2xl border border-[var(--border)] bg-[var(--bg-primary)] px-5 py-4">
+                        <div className="flex items-center gap-3">
+                          <span className="h-2 w-2 rounded-full bg-[var(--accent-success)] shadow-[0_0_6px_var(--accent-success)]" />
+                          <span className="font-mono text-xs text-[var(--text-primary)]">{node.name}</span>
+                        </div>
+                        <div className="flex items-center gap-4">
+                          <span className="font-mono text-[10px] text-[var(--text-secondary)]">{node.latency}</span>
+                          <span className="rounded-md border border-[var(--accent-success)]/20 bg-[var(--accent-success)]/10 px-2 py-0.5 text-[9px] font-black uppercase text-[var(--accent-success)]">{node.status}</span>
+                        </div>
+                      </div>
+                    ))}
+                    <p className="text-xs text-[var(--text-secondary)] pt-2">These are the official OpenTimestamps calendar servers. Custom node support coming soon.</p>
+                  </div>
+                </SettingSection>
+              </motion.div>
+            )}
           </AnimatePresence>
         </div>
 
@@ -614,11 +664,19 @@ export default function Settings() {
           </div>
 
           <button
-            onClick={() =>
-              toast.error('Initiating Protocol Handover...', {
-                description: 'All session keys will be purged.'
-              })
-            }
+            onClick={() => {
+              if (confirm('Purge all session keys and return to access gateway?')) {
+                localStorage.removeItem('satohash_authed')
+                localStorage.removeItem('satohash_nsec')
+                localStorage.removeItem('satohash_npub')
+                localStorage.removeItem('satohash_pk')
+                localStorage.removeItem('satohash_profile')
+                localStorage.removeItem('satohash_security')
+                localStorage.removeItem('satohash_theme')
+                localStorage.removeItem('satohash_stamps')
+                navigate('/access')
+              }
+            }}
             className="flex h-16 w-full items-center justify-center gap-3 rounded-2xl border border-red-500/30 bg-red-500/5 text-[10px] font-black tracking-widest text-red-500 uppercase shadow-lg transition-all hover:bg-red-500 hover:text-white hover:shadow-red-500/20"
           >
             <LogOut size={18} /> Purge Sovereign Session

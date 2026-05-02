@@ -56,6 +56,13 @@ const NodeCard = ({ city, country, status, latency, uptime, load }) => (
   </div>
 )
 
+const nodes = [
+  { city: 'Frankfurt', country: 'Germany', status: 'Active', latency: '12', uptime: '99.99', region: 'Europe' },
+  { city: 'Singapore', country: 'Singapore', status: 'Active', latency: '45', uptime: '100.0', region: 'Asia' },
+  { city: 'New York', country: 'USA', status: 'Active', latency: '8', uptime: '99.98', region: 'North America' },
+  { city: 'Tokyo', country: 'Japan', status: 'Active', latency: '62', uptime: '99.95', region: 'Asia' }
+]
+
 export default function Mesh() {
   const [activeRegion, setActiveRegion] = useState('Global')
 
@@ -222,22 +229,18 @@ export default function Mesh() {
           </button>
         </div>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-          <NodeCard
-            city="Frankfurt"
-            country="Germany"
-            status="Active"
-            latency="12"
-            uptime="99.99"
-          />
-          <NodeCard
-            city="Singapore"
-            country="Singapore"
-            status="Active"
-            latency="45"
-            uptime="100.0"
-          />
-          <NodeCard city="New York" country="USA" status="Active" latency="8" uptime="99.98" />
-          <NodeCard city="Tokyo" country="Japan" status="Active" latency="62" uptime="99.95" />
+          {nodes
+            .filter((n) => activeRegion === 'Global' || n.region === activeRegion)
+            .map((n) => (
+              <NodeCard
+                key={n.city}
+                city={n.city}
+                country={n.country}
+                status={n.status}
+                latency={n.latency}
+                uptime={n.uptime}
+              />
+            ))}
         </div>
       </div>
     </div>

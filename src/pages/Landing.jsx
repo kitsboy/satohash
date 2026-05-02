@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { QRCodeSVG } from 'qrcode.react'
@@ -8,6 +8,7 @@ import {
   Menu, ChevronRight
 } from 'lucide-react'
 import Footer from '../components/Footer'
+import { getBlockHeight } from '../utils/mempool'
 
 const BTC_ADDRESS = 'bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh'
 
@@ -24,6 +25,19 @@ export default function Landing() {
   const [navOpen, setNavOpen] = useState(false)
   const [donationOpen, setDonationOpen] = useState(false)
   const [copied, setCopied] = useState(false)
+  const [proofCount, setProofCount] = useState(null)
+  const [blockHeight, setBlockHeight] = useState(null)
+
+  useEffect(() => {
+    const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+    Promise.all([
+      fetch(`${API}/api/history`).then(r => r.json()).catch(() => []),
+      getBlockHeight()
+    ]).then(([stamps, height]) => {
+      if (Array.isArray(stamps)) setProofCount(stamps.length)
+      if (height) setBlockHeight(height)
+    })
+  }, [])
 
   const copyAddress = () => {
     navigator.clipboard.writeText(BTC_ADDRESS)
@@ -250,7 +264,11 @@ export default function Landing() {
             variants={fadeUp} initial="hidden" animate="visible" custom={0.5}
             className="flex flex-wrap items-center justify-center gap-2"
           >
-            {['847,293 Documents Notarized', 'Bitcoin Block #895,441', 'Zero Data Stored — Ever'].map((s) => (
+            {[
+              `${proofCount !== null ? proofCount.toLocaleString() : '847,293'} Documents Notarized`,
+              `Bitcoin Block #${blockHeight ? blockHeight.toLocaleString() : '895,441'}`,
+              'Zero Data Stored — Ever'
+            ].map((s) => (
               <div key={s} className="rounded-full border px-4 py-1.5 text-xs font-bold"
                 style={{ borderColor: 'var(--border)', backgroundColor: 'var(--surface-raised)', color: 'var(--text-secondary)' }}>
                 {s}

@@ -14,7 +14,9 @@ import {
   Zap,
   Stamp
 } from 'lucide-react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { getBlockHeight } from '../utils/mempool'
 
 const TimelineStep = ({ step, label, time, description, status, icon: Icon }) => (
   <div className="relative pb-12 pl-12 last:pb-0">
@@ -53,6 +55,20 @@ const TimelineStep = ({ step, label, time, description, status, icon: Icon }) =>
 
 export default function Atlas() {
   const [searchQuery, setSearchQuery] = useState('')
+  const [proofCount, setProofCount] = useState(null)
+  const [blockHeight, setBlockHeight] = useState(null)
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+    Promise.all([
+      fetch(`${API}/api/history`).then(r => r.json()).catch(() => []),
+      getBlockHeight()
+    ]).then(([stamps, height]) => {
+      setProofCount(Array.isArray(stamps) ? stamps.length : null)
+      setBlockHeight(height)
+    })
+  }, [])
 
   return (
     <div className="mx-auto max-w-7xl space-y-16 p-8 pt-32">
@@ -83,6 +99,11 @@ export default function Atlas() {
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && searchQuery.trim().length === 64) {
+                navigate(`/verify?hash=${searchQuery.trim()}`)
+              }
+            }}
             placeholder="Search by Hash, Block, or Proof ID..."
             className="h-16 w-full rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] pr-6 pl-14 text-sm font-medium transition-all placeholder:text-[var(--text-secondary)] focus:border-[var(--accent-active)] focus:ring-1 focus:ring-[var(--accent-active)] focus:outline-none"
           />
@@ -144,14 +165,18 @@ export default function Atlas() {
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2 rounded-3xl border border-[var(--border)] bg-[var(--bg-secondary)] p-8">
                 <History className="text-[var(--accent-purple)]" size={24} />
-                <p className="text-3xl font-black tracking-tighter text-white">4.2M</p>
+                <p className="text-3xl font-black tracking-tighter text-white">
+                  {proofCount !== null ? proofCount.toLocaleString() : '—'}
+                </p>
                 <p className="text-[10px] font-bold text-[var(--text-secondary)] uppercase">
-                  Total Proofs
+                  Proofs
                 </p>
               </div>
               <div className="space-y-2 rounded-3xl border border-[var(--border)] bg-[var(--bg-secondary)] p-8">
                 <Database className="text-[var(--accent-success)]" size={24} />
-                <p className="text-3xl font-black tracking-tighter text-white">842k</p>
+                <p className="text-3xl font-black tracking-tighter text-white">
+                  {blockHeight ? blockHeight.toLocaleString() : '—'}
+                </p>
                 <p className="text-[10px] font-bold text-[var(--text-secondary)] uppercase">
                   Chain Height
                 </p>
