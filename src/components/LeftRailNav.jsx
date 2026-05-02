@@ -1,95 +1,257 @@
-import { NavLink, useLocation, Link } from 'react-router-dom'
-import { NAV_LINKS } from '../config/constants'
-import * as Icons from 'lucide-react'
+import { Link, useLocation } from 'react-router-dom'
+import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
+import {
+  Database,
+  Fingerprint,
+  ShieldCheck,
+  Award,
+  Globe,
+  Network,
+  Search,
+  Terminal,
+  FileText,
+  Camera,
+  LayoutTemplate,
+  Settings,
+  Scale,
+  Command,
+  Wifi,
+  Blocks,
+} from 'lucide-react'
 import HelpOverlay from './HelpOverlay'
 
-export default function LeftRailNav() {
+// ─── Nav groups ──────────────────────────────────────────────────────────────
+const NAV_GROUPS = [
+  {
+    label: 'NOTARY',
+    items: [
+      { name: 'Vault',         path: '/vault',         icon: Database },
+      { name: 'Stamp',         path: '/stamp',         icon: Fingerprint },
+      { name: 'Verify',        path: '/verify',        icon: ShieldCheck },
+      { name: 'Certificates',  path: '/certificates',  icon: Award },
+    ],
+  },
+  {
+    label: 'ATLAS',
+    items: [
+      { name: 'Chain Explorer', path: '/atlas',    icon: Globe },
+      { name: 'Node Mesh',      path: '/nodes',    icon: Network },
+      { name: 'Block Explorer', path: '/explorer', icon: Search },
+    ],
+  },
+  {
+    label: 'MESH',
+    items: [
+      { name: 'Developer API', path: '/developer', icon: Terminal },
+      { name: 'Contracts',     path: '/contracts', icon: FileText },
+      { name: 'Web Capture',   path: '/snapper',   icon: Camera },
+      { name: 'Templates',     path: '/templates', icon: LayoutTemplate },
+    ],
+  },
+  {
+    label: 'SYSTEM',
+    items: [
+      { name: 'Settings',     path: '/settings', icon: Settings },
+      { name: 'Trust Center', path: '/trust',    icon: Scale },
+    ],
+  },
+]
+
+// ─── Single nav item ─────────────────────────────────────────────────────────
+function NavItem({ item }) {
   const location = useLocation()
+  const isActive =
+    location.pathname === item.path ||
+    (item.path !== '/' && location.pathname.startsWith(item.path))
+  const Icon = item.icon
+
+  return (
+    <motion.div
+      whileHover={{ x: 4 }}
+      transition={{ type: 'spring', stiffness: 400, damping: 28 }}
+    >
+      <Link
+        to={item.path}
+        className={[
+          'group relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors duration-150',
+          isActive
+            ? 'text-[var(--accent-gold)]'
+            : 'text-[var(--text-secondary)] hover:text-[var(--accent-gold)]',
+        ].join(' ')}
+        style={
+          isActive
+            ? {
+                background:
+                  'linear-gradient(90deg, rgba(240,180,41,0.10) 0%, rgba(240,180,41,0.03) 100%)',
+                boxShadow: 'inset 2px 0 0 var(--accent-gold)',
+              }
+            : {}
+        }
+      >
+        {/* Gold left-border accent handled via boxShadow above for active */}
+        <Icon
+          size={16}
+          strokeWidth={isActive ? 2.5 : 2}
+          className={
+            isActive
+              ? 'text-[var(--accent-gold)]'
+              : 'text-[var(--text-secondary)] transition-colors duration-150 group-hover:text-[var(--accent-gold)]'
+          }
+        />
+        <span className="tracking-tight">{item.name}</span>
+
+        {/* Live dot on Stamp */}
+        {item.path === '/stamp' && (
+          <span className="ml-auto flex h-1.5 w-1.5 rounded-full bg-[var(--accent-gold)] shadow-[0_0_6px_var(--accent-gold)]" />
+        )}
+      </Link>
+    </motion.div>
+  )
+}
+
+// ─── LeftRailNav ─────────────────────────────────────────────────────────────
+export default function LeftRailNav() {
   const [showHelp, setShowHelp] = useState(false)
 
   useEffect(() => {
-    const hasSeenIntro = localStorage.getItem('satohash_intro_seen')
-    if (!hasSeenIntro) {
+    const seen = localStorage.getItem('satohash_intro_seen')
+    if (!seen) {
       setShowHelp(true)
       localStorage.setItem('satohash_intro_seen', 'true')
     }
   }, [])
 
-  const groups = NAV_LINKS.reduce((acc, link) => {
-    if (!acc[link.group]) acc[link.group] = []
-    acc[link.group].push(link)
-    return acc
-  }, {})
-
   return (
-    <nav className="flex h-full w-64 flex-col border-r border-[var(--border)] bg-[var(--bg-primary)] pt-6">
-      <div className="mb-10 flex flex-col gap-6 px-6">
+    <nav
+      className="flex h-full w-64 flex-col"
+      style={{ background: '#13171f' }}
+    >
+      {/* ── Logo area ──────────────────────────────────────────── */}
+      <div className="flex-shrink-0 px-5 pt-6 pb-5">
         <Link to="/" className="group flex items-center gap-3">
           <img
             src="/logo.png"
-            alt="Satohash Logo"
-            className="h-8 w-8 object-contain transition-transform group-hover:rotate-12"
+            alt="Satohash"
+            className="h-9 w-9 object-contain transition-transform duration-300 group-hover:rotate-6"
           />
-          <span className="text-xl font-bold tracking-tighter uppercase transition-colors group-hover:text-[var(--accent-active)]">
-            Satohash
-          </span>
+          <div className="flex flex-col">
+            <span
+              className="text-[15px] font-black tracking-[0.15em] uppercase leading-none"
+              style={{ color: 'var(--accent-gold)' }}
+            >
+              SATOHASH
+            </span>
+            <span
+              className="mt-[3px] text-[9px] font-semibold tracking-[0.2em] uppercase leading-none"
+              style={{ color: 'var(--text-secondary)', opacity: 0.6 }}
+            >
+              Sovereign Notary Protocol
+            </span>
+          </div>
         </Link>
-
-        <button
-          onClick={() => setShowHelp(true)}
-          className="group flex w-full items-center gap-3 rounded-xl border border-[var(--accent-active)]/20 bg-[var(--accent-active)]/10 p-3 text-[var(--accent-active)] transition-all hover:bg-[var(--accent-active)]/20"
-        >
-          <Icons.HelpCircle size={18} className="transition-transform group-hover:rotate-12" />
-          <span className="text-[10px] font-bold tracking-[0.2em] uppercase">Protocol Guide</span>
-        </button>
       </div>
 
-      <div className="scrollbar-hide flex-1 space-y-8 overflow-y-auto px-4">
-        {Object.entries(groups).map(([groupName, links]) => (
-          <div key={groupName} className="space-y-2">
-            <h4 className="mb-3 px-2 text-[10px] font-bold tracking-[0.3em] text-[var(--text-secondary)] uppercase">
-              {groupName}
-            </h4>
-            <div className="space-y-1">
-              {links.map((link) => {
-                const Icon = Icons[link.icon] || Icons.Circle
-                return (
-                  <NavLink
-                    key={link.path}
-                    to={link.path}
-                    className={({ isActive }) =>
-                      `group flex items-center gap-3 rounded-lg px-3 py-2 transition-all ${
-                        isActive
-                          ? 'border border-[var(--border-bright)] bg-[var(--surface-raised)] text-[var(--text-primary)] shadow-lg shadow-black/50'
-                          : 'text-[var(--text-secondary)] hover:bg-[var(--surface-raised)]/50 hover:text-[var(--text-primary)]'
-                      } `
-                    }
-                  >
-                    <Icon size={18} className="transition-transform group-hover:scale-110" />
-                    <span className="text-sm font-medium tracking-tight">{link.name}</span>
-                    {link.path === '/stamp' && (
-                      <div className="ml-auto h-1.5 w-1.5 rounded-full bg-[var(--accent-active)] shadow-[0_0_5px_var(--accent-active)]" />
-                    )}
-                  </NavLink>
-                )
-              })}
+      {/* ── Divider ────────────────────────────────────────────── */}
+      <div
+        className="mx-5 mb-4"
+        style={{ height: '1px', background: 'var(--border)' }}
+      />
+
+      {/* ── Scrollable nav groups ───────────────────────────────── */}
+      <div className="scrollbar-hide flex-1 space-y-5 overflow-y-auto px-3 pb-2">
+        {NAV_GROUPS.map((group) => (
+          <div key={group.label}>
+            <p
+              className="mb-2 px-3 text-[9px] font-black tracking-[0.35em] uppercase"
+              style={{ color: 'var(--text-secondary)', opacity: 0.55 }}
+            >
+              {group.label}
+            </p>
+            <div className="space-y-0.5">
+              {group.items.map((item) => (
+                <NavItem key={item.path} item={item} />
+              ))}
             </div>
           </div>
         ))}
       </div>
 
-      <div className="space-y-4 border-t border-[var(--border)] p-4">
-        <div className="space-y-3 rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] p-4">
-          <div className="flex items-center justify-between">
-            <span className="font-mono text-[10px] tracking-widest text-[var(--text-secondary)] uppercase">
-              Mesh Identity
-            </span>
-            <div className="h-2 w-2 rounded-full bg-[var(--accent-success)]" />
+      {/* ── Bottom widgets ─────────────────────────────────────── */}
+      <div className="flex-shrink-0 space-y-2 border-t border-[var(--border)] px-3 py-4">
+
+        {/* ⌘K hint */}
+        <button
+          onClick={() => {
+            window.dispatchEvent(
+              new KeyboardEvent('keydown', { key: 'k', metaKey: true, bubbles: true })
+            )
+          }}
+          className="group flex w-full items-center gap-2 rounded-lg px-3 py-2 transition-colors hover:bg-white/5"
+        >
+          <div
+            className="flex h-6 w-6 items-center justify-center rounded-md border"
+            style={{
+              borderColor: 'var(--border-bright)',
+              background: 'rgba(255,255,255,0.04)',
+            }}
+          >
+            <Command size={12} style={{ color: 'var(--text-secondary)' }} />
           </div>
-          <p className="truncate text-[11px] font-bold">counsel@satohash.nip05</p>
+          <span
+            className="text-[10px] font-bold tracking-[0.2em] uppercase"
+            style={{ color: 'var(--text-secondary)', opacity: 0.6 }}
+          >
+            ⌘K Search
+          </span>
+        </button>
+
+        {/* Bitcoin status widget */}
+        <div
+          className="flex items-center gap-3 rounded-xl border px-4 py-3"
+          style={{
+            borderColor: 'var(--border-gold)',
+            background: 'rgba(240,180,41,0.04)',
+          }}
+        >
+          {/* Live dot */}
+          <span className="relative flex h-2.5 w-2.5 flex-shrink-0">
+            <span
+              className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-60"
+              style={{ background: 'var(--accent-success)' }}
+            />
+            <span
+              className="relative inline-flex h-2.5 w-2.5 rounded-full"
+              style={{ background: 'var(--accent-success)' }}
+            />
+          </span>
+
+          <div className="min-w-0 flex-1">
+            <p
+              className="text-[10px] font-bold tracking-wide uppercase leading-none"
+              style={{ color: 'var(--text-primary)' }}
+            >
+              Bitcoin Mainnet
+            </p>
+            <div className="mt-1 flex items-center gap-1.5">
+              <Blocks size={9} style={{ color: 'var(--accent-gold)' }} />
+              <span
+                className="font-mono text-[9px] font-semibold tracking-wider"
+                style={{ color: 'var(--accent-gold)' }}
+              >
+                #895,441
+              </span>
+            </div>
+          </div>
+
+          <Wifi
+            size={13}
+            className="flex-shrink-0 opacity-50"
+            style={{ color: 'var(--accent-success)' }}
+          />
         </div>
       </div>
+
       <HelpOverlay isOpen={showHelp} onClose={() => setShowHelp(false)} />
     </nav>
   )

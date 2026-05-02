@@ -1,52 +1,157 @@
-import { Link } from 'react-router-dom'
-import { Activity, Zap, Cpu } from 'lucide-react'
+import { useLocation } from 'react-router-dom'
+import { Settings, Zap, Boxes } from 'lucide-react'
 
-export default function TopSignalBar() {
+// ─── Route → human-readable breadcrumb ────────────────────────────────────
+const ROUTE_LABELS = {
+  '/vault':        'Vault',
+  '/stamp':        'Stamp',
+  '/verify':       'Verify',
+  '/certificates': 'Certificates',
+  '/atlas':        'Chain Explorer',
+  '/nodes':        'Node Mesh',
+  '/explorer':     'Block Explorer',
+  '/developer':    'Developer API',
+  '/contracts':    'Contracts',
+  '/snapper':      'Web Capture',
+  '/templates':    'Templates',
+  '/settings':     'Settings',
+  '/trust':        'Trust Center',
+}
+
+function getPageLabel(pathname) {
+  // Exact match first
+  if (ROUTE_LABELS[pathname]) return ROUTE_LABELS[pathname]
+  // Prefix match (e.g. /vault/abc)
+  const prefix = Object.keys(ROUTE_LABELS).find(
+    (k) => k !== '/' && pathname.startsWith(k)
+  )
+  return prefix ? ROUTE_LABELS[prefix] : 'Dashboard'
+}
+
+// ─── Status pill ──────────────────────────────────────────────────────────
+function StatusPill({ children, dotColor }) {
   return (
-    <div className="z-20 flex h-14 w-full items-center justify-between border-b border-[var(--border)] bg-[var(--bg-primary)]/50 px-6 backdrop-blur-md">
-      <div className="flex items-center gap-8">
-        <div className="flex items-center gap-3">
-          <div className="h-2 w-2 animate-pulse rounded-full bg-[var(--accent-success)]" />
-          <span className="font-mono text-[10px] font-bold tracking-widest text-[var(--text-secondary)] uppercase">
-            Chain Sync Nominal
+    <div
+      className="flex items-center gap-2 rounded-full border px-3 py-1"
+      style={{
+        borderColor: 'var(--border)',
+        background: 'rgba(255,255,255,0.03)',
+      }}
+    >
+      {dotColor && (
+        <span
+          className="h-1.5 w-1.5 flex-shrink-0 rounded-full"
+          style={{ background: dotColor, boxShadow: `0 0 5px ${dotColor}` }}
+        />
+      )}
+      <span
+        className="font-mono text-[10px] font-bold tracking-[0.15em] uppercase"
+        style={{ color: 'var(--text-secondary)' }}
+      >
+        {children}
+      </span>
+    </div>
+  )
+}
+
+// ─── TopSignalBar ─────────────────────────────────────────────────────────
+export default function TopSignalBar() {
+  const location = useLocation()
+  const pageLabel = getPageLabel(location.pathname)
+
+  return (
+    <div className="flex h-full w-full items-center justify-between gap-4">
+
+      {/* Left: breadcrumb -------------------------------------------------- */}
+      <div className="flex min-w-0 items-center gap-2">
+        <span
+          className="text-[11px] font-semibold tracking-widest uppercase opacity-30"
+          style={{ color: 'var(--text-secondary)' }}
+        >
+          Satohash
+        </span>
+        <span
+          className="text-[11px] opacity-20"
+          style={{ color: 'var(--text-secondary)' }}
+        >
+          /
+        </span>
+        <span
+          className="truncate text-[12px] font-bold tracking-tight"
+          style={{ color: 'var(--text-primary)' }}
+        >
+          {pageLabel}
+        </span>
+      </div>
+
+      {/* Center: status pills ---------------------------------------------- */}
+      <div className="hidden items-center gap-2 lg:flex">
+        {/* Bitcoin Mainnet */}
+        <StatusPill dotColor="var(--accent-success)">
+          Bitcoin Mainnet
+        </StatusPill>
+
+        {/* Block height */}
+        <div
+          className="flex items-center gap-2 rounded-full border px-3 py-1"
+          style={{
+            borderColor: 'var(--border-gold)',
+            background: 'rgba(240,180,41,0.05)',
+          }}
+        >
+          <Boxes
+            size={10}
+            style={{ color: 'var(--accent-gold)', flexShrink: 0 }}
+          />
+          <span
+            className="font-mono text-[10px] font-bold tracking-[0.15em] uppercase"
+            style={{ color: 'var(--accent-gold)' }}
+          >
+            Block #895,441
           </span>
         </div>
-        <div className="flex items-center gap-2">
-          <Activity size={14} className="text-[var(--accent-active)]" />
-          <span className="font-mono text-[10px] font-bold tracking-widest text-[var(--text-secondary)] uppercase">
-            Height: 841,204
-          </span>
-        </div>
-        <div className="flex items-center gap-2">
-          <Zap size={14} className="text-[var(--accent-pending)]" />
-          <span className="font-mono text-[10px] font-bold tracking-widest text-[var(--text-secondary)] uppercase">
-            Fee: 42 vB/s
+
+        {/* Fee rate */}
+        <div
+          className="flex items-center gap-2 rounded-full border px-3 py-1"
+          style={{
+            borderColor: 'var(--border)',
+            background: 'rgba(255,255,255,0.03)',
+          }}
+        >
+          <Zap
+            size={10}
+            style={{ color: 'var(--accent-pending)', flexShrink: 0 }}
+          />
+          <span
+            className="font-mono text-[10px] font-bold tracking-[0.15em] uppercase"
+            style={{ color: 'var(--text-secondary)' }}
+          >
+            ~18 sat/vB
           </span>
         </div>
       </div>
 
-      <div className="flex items-center gap-6">
-        <div className="hidden items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--surface-raised)] px-3 py-1 lg:flex">
-          <Cpu size={12} className="text-[var(--text-secondary)]" />
-          <span className="text-[9px] font-bold tracking-tighter uppercase">
-            Sovereign Node v0.24.1
-          </span>
-        </div>
-        <div className="flex items-center gap-3 border-l border-[var(--border)] pl-6">
-          <div className="text-right">
-            <p className="text-[9px] font-bold tracking-tighter uppercase">L402 Metered</p>
-            <p className="font-mono text-[10px] text-[var(--accent-active)]">2.1M SATS</p>
-          </div>
-          <Link to="/" className="group relative">
-            <img
-              src="/logo.png"
-              alt="Satohash Logo"
-              className="h-10 w-10 object-contain transition-all group-hover:scale-110 group-hover:rotate-12"
-            />
-            <div className="absolute inset-0 flex items-center justify-center text-[8px] font-black text-white opacity-0 transition-opacity group-hover:opacity-100">
-              HOME
-            </div>
-          </Link>
+      {/* Right: avatar + settings ------------------------------------------ */}
+      <div className="flex flex-shrink-0 items-center gap-3">
+        {/* Settings icon */}
+        <button
+          className="flex h-8 w-8 items-center justify-center rounded-lg border transition-colors hover:border-[var(--border-gold)] hover:bg-[var(--accent-gold-subtle)]"
+          style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
+        >
+          <Settings size={14} />
+        </button>
+
+        {/* Avatar initials */}
+        <div
+          className="flex h-8 w-8 items-center justify-center rounded-full border-2 text-[10px] font-black tracking-wider"
+          style={{
+            borderColor: 'var(--border-gold)',
+            background: 'rgba(240,180,41,0.12)',
+            color: 'var(--accent-gold)',
+          }}
+        >
+          SH
         </div>
       </div>
     </div>
