@@ -7,7 +7,6 @@ import {
   Clock, Scale, Award, X, Fingerprint, CheckCircle,
   Menu, ChevronRight
 } from 'lucide-react'
-import MerkleHeart from '../components/MerkleHeart'
 import Footer from '../components/Footer'
 
 const BTC_ADDRESS = 'bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh'
@@ -36,7 +35,7 @@ export default function Landing() {
     <div className="min-h-screen" style={{ backgroundColor: 'var(--bg-primary)', color: 'var(--text-primary)' }}>
 
       {/* ── NAVBAR ───────────────────────────────────────────────── */}
-      <nav className="fixed inset-x-0 top-0 z-[100] border-b" style={{ borderColor: 'var(--border)', backgroundColor: 'rgba(13,17,23,0.85)', backdropFilter: 'blur(20px)' }}>
+      <nav className="fixed inset-x-0 top-0 z-[100] border-b" style={{ borderColor: 'var(--border)', backgroundColor: 'rgba(20,27,37,0.85)', backdropFilter: 'blur(20px)' }}>
         <div className="layout-container flex h-16 items-center justify-between">
           <Link to="/" className="flex items-center gap-2.5">
             <img src="/logo.png" alt="Satohash" className="h-8 w-8 object-contain" />
@@ -44,10 +43,16 @@ export default function Landing() {
           </Link>
 
           <div className="hidden items-center gap-8 md:flex">
-            {[['Features', '#features'], ['How It Works', '#how-it-works'], ['Legal', '/trust'], ['Pricing', '#pricing']].map(([label, href]) => (
-              <a key={label} href={href} className="text-sm font-semibold transition-colors hover:text-white" style={{ color: 'var(--text-secondary)' }}>
-                {label}
-              </a>
+            {[['Features', '#features'], ['How It Works', '#how-it-works'], ['Legal', '/trust']].map(([label, href]) => (
+              href.startsWith('/') ? (
+                <Link key={label} to={href} className="text-sm font-semibold transition-colors hover:text-white" style={{ color: 'var(--text-secondary)' }}>
+                  {label}
+                </Link>
+              ) : (
+                <a key={label} href={href} className="text-sm font-semibold transition-colors hover:text-white" style={{ color: 'var(--text-secondary)' }}>
+                  {label}
+                </a>
+              )
             ))}
           </div>
 
@@ -62,7 +67,7 @@ export default function Landing() {
             <Link
               to="/stamp"
               className="flex items-center gap-2 rounded-xl px-5 py-2 text-sm font-black transition-all hover:opacity-90 hover:scale-105"
-              style={{ backgroundColor: 'var(--accent-gold)', color: '#0d1117' }}
+              style={{ backgroundColor: 'var(--accent-gold)', color: '#141b25' }}
             >
               Start Free <ArrowRight size={14} />
             </Link>
@@ -87,15 +92,21 @@ export default function Landing() {
               style={{ borderColor: 'var(--border)', backgroundColor: 'var(--bg-secondary)' }}
             >
               <div className="layout-container flex flex-col gap-4 py-6">
-                {[['Features', '#features'], ['How It Works', '#how-it-works'], ['Legal', '/trust'], ['Pricing', '#pricing']].map(([label, href]) => (
-                  <a key={label} href={href} className="text-sm font-semibold" style={{ color: 'var(--text-secondary)' }} onClick={() => setNavOpen(false)}>
-                    {label}
-                  </a>
+                {[['Features', '#features'], ['How It Works', '#how-it-works'], ['Legal', '/trust']].map(([label, href]) => (
+                  href.startsWith('/') ? (
+                    <Link key={label} to={href} className="text-sm font-semibold" style={{ color: 'var(--text-secondary)' }} onClick={() => setNavOpen(false)}>
+                      {label}
+                    </Link>
+                  ) : (
+                    <a key={label} href={href} className="text-sm font-semibold" style={{ color: 'var(--text-secondary)' }} onClick={() => setNavOpen(false)}>
+                      {label}
+                    </a>
+                  )
                 ))}
                 <button onClick={() => { setDonationOpen(true); setNavOpen(false) }} className="rounded-xl border py-3 text-sm font-bold" style={{ borderColor: 'var(--border-gold)', color: 'var(--accent-gold)' }}>
                   ₿ Donate Bitcoin
                 </button>
-                <Link to="/stamp" className="rounded-xl py-3 text-center text-sm font-black" style={{ backgroundColor: 'var(--accent-gold)', color: '#0d1117' }}>
+                <Link to="/stamp" className="rounded-xl py-3 text-center text-sm font-black" style={{ backgroundColor: 'var(--accent-gold)', color: '#141b25' }}>
                   Start Notarizing Free →
                 </Link>
               </div>
@@ -106,9 +117,77 @@ export default function Landing() {
 
       {/* ── HERO ─────────────────────────────────────────────────── */}
       <section className="relative flex min-h-screen items-center overflow-hidden pt-16">
-        <div className="absolute inset-0 opacity-15 pointer-events-none">
-          <MerkleHeart />
+
+        {/* Hero Background SVG — Bitcoin Network Mesh */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden" style={{ opacity: 0.35 }}>
+          <svg
+            className="absolute inset-0 w-full h-full"
+            viewBox="0 0 1200 800"
+            xmlns="http://www.w3.org/2000/svg"
+            preserveAspectRatio="xMidYMid slice"
+          >
+            <defs>
+              <radialGradient id="nodeGlow" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stopColor="#F0B429" stopOpacity="0.8" />
+                <stop offset="100%" stopColor="#F0B429" stopOpacity="0" />
+              </radialGradient>
+              <radialGradient id="bgGrad" cx="50%" cy="30%" r="70%">
+                <stop offset="0%" stopColor="#F0B429" stopOpacity="0.06" />
+                <stop offset="100%" stopColor="#141b25" stopOpacity="0" />
+              </radialGradient>
+            </defs>
+
+            {/* Background glow */}
+            <rect width="1200" height="800" fill="url(#bgGrad)" />
+
+            {/* Grid lines - horizontal */}
+            {[100, 200, 300, 400, 500, 600, 700].map(y => (
+              <line key={`h${y}`} x1="0" y1={y} x2="1200" y2={y} stroke="#F0B429" strokeOpacity="0.04" strokeWidth="1" />
+            ))}
+            {/* Grid lines - vertical */}
+            {[120, 240, 360, 480, 600, 720, 840, 960, 1080].map(x => (
+              <line key={`v${x}`} x1={x} y1="0" x2={x} y2="800" stroke="#F0B429" strokeOpacity="0.04" strokeWidth="1" />
+            ))}
+
+            {/* Connection lines between nodes */}
+            {[
+              [150, 150, 300, 200], [300, 200, 500, 150], [500, 150, 700, 200], [700, 200, 900, 150], [900, 150, 1050, 200],
+              [300, 200, 300, 350], [500, 150, 500, 300], [700, 200, 700, 350], [900, 150, 900, 300],
+              [150, 150, 150, 300], [1050, 200, 1050, 350],
+              [150, 300, 300, 350], [300, 350, 500, 300], [500, 300, 700, 350], [700, 350, 900, 300], [900, 300, 1050, 350],
+              [300, 350, 300, 500], [700, 350, 700, 500],
+              [150, 450, 300, 500], [300, 500, 500, 450], [500, 450, 700, 500], [700, 500, 900, 450],
+              [200, 600, 400, 650], [400, 650, 600, 600], [600, 600, 800, 650], [800, 650, 1000, 600],
+            ].map(([x1, y1, x2, y2], i) => (
+              <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="#F0B429" strokeOpacity="0.12" strokeWidth="1" />
+            ))}
+
+            {/* Main nodes */}
+            {[
+              [150, 150, 6], [300, 200, 8], [500, 150, 5], [700, 200, 7], [900, 150, 6], [1050, 200, 5],
+              [150, 300, 5], [300, 350, 9], [500, 300, 6], [700, 350, 8], [900, 300, 5], [1050, 350, 6],
+              [300, 500, 7], [500, 450, 5], [700, 500, 8], [900, 450, 6],
+              [150, 450, 4], [400, 650, 5], [600, 600, 6], [800, 650, 5], [1000, 600, 4],
+              [200, 600, 3], [1050, 500, 4],
+            ].map(([cx, cy, r], i) => (
+              <g key={i}>
+                <circle cx={cx} cy={cy} r={r + 8} fill="#F0B429" fillOpacity="0.05" />
+                <circle cx={cx} cy={cy} r={r} fill="#F0B429" fillOpacity="0.5" />
+                <circle cx={cx} cy={cy} r={r - 2} fill="#F0B429" fillOpacity="0.9" />
+              </g>
+            ))}
+
+            {/* Large central Bitcoin symbol hint */}
+            <text x="580" y="430" fontSize="180" fontFamily="serif" fill="#F0B429" fillOpacity="0.03" textAnchor="middle">₿</text>
+
+            {/* Hash text decorations */}
+            <text x="50" y="50" fontSize="9" fontFamily="monospace" fill="#F0B429" fillOpacity="0.2">SHA-256: a3f8c2d1...</text>
+            <text x="800" y="750" fontSize="9" fontFamily="monospace" fill="#F0B429" fillOpacity="0.2">BLOCK: #895441</text>
+            <text x="50" y="750" fontSize="9" fontFamily="monospace" fill="#0EA5E9" fillOpacity="0.2">OTS: verified ✓</text>
+            <text x="900" y="50" fontSize="9" fontFamily="monospace" fill="#0EA5E9" fillOpacity="0.2">MERKLE ROOT: 7bc3...</text>
+          </svg>
         </div>
+
         <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse 80% 60% at 50% 40%, rgba(240,180,41,0.06), transparent 70%)' }} />
 
         <div className="layout-container relative z-10 py-24 text-center">
@@ -122,7 +201,7 @@ export default function Landing() {
 
           <motion.h1
             variants={fadeUp} initial="hidden" animate="visible" custom={0.1}
-            className="mb-6 font-display text-5xl font-black leading-[1.05] tracking-tighter md:text-7xl lg:text-8xl"
+            className="mb-6 font-display text-4xl font-black leading-[1.05] tracking-tighter sm:text-5xl md:text-7xl lg:text-8xl"
           >
             Bitcoin Does More<br />
             Than Move{' '}
@@ -153,14 +232,14 @@ export default function Landing() {
           >
             <Link
               to="/stamp"
-              className="flex items-center gap-2 rounded-2xl px-8 py-4 text-base font-black transition-all hover:scale-105 hover:opacity-90"
-              style={{ backgroundColor: 'var(--accent-gold)', color: '#0d1117' }}
+              className="flex w-full items-center justify-center gap-2 rounded-2xl px-8 py-4 text-base font-black transition-all hover:scale-105 hover:opacity-90 sm:w-auto"
+              style={{ backgroundColor: 'var(--accent-gold)', color: '#141b25' }}
             >
               Notarize a Document Free <ArrowRight size={16} />
             </Link>
             <a
               href="#how-it-works"
-              className="flex items-center gap-2 rounded-2xl border px-8 py-4 text-base font-bold transition-all hover:text-white"
+              className="flex w-full items-center justify-center gap-2 rounded-2xl border px-8 py-4 text-base font-bold transition-all hover:text-white sm:w-auto"
               style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
             >
               See How It Works <ChevronRight size={16} />
@@ -169,7 +248,7 @@ export default function Landing() {
 
           <motion.div
             variants={fadeUp} initial="hidden" animate="visible" custom={0.5}
-            className="flex flex-wrap items-center justify-center gap-3"
+            className="flex flex-wrap items-center justify-center gap-2"
           >
             {['847,293 Documents Notarized', 'Bitcoin Block #895,441', 'Zero Data Stored — Ever'].map((s) => (
               <div key={s} className="rounded-full border px-4 py-1.5 text-xs font-bold"
@@ -249,7 +328,7 @@ export default function Landing() {
 
           <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={0.3} className="mt-10 text-center">
             <Link to="/stamp" className="inline-flex items-center gap-2 rounded-2xl px-8 py-4 text-base font-black transition-all hover:scale-105"
-              style={{ backgroundColor: 'var(--accent-gold)', color: '#0d1117' }}>
+              style={{ backgroundColor: 'var(--accent-gold)', color: '#141b25' }}>
               Try It Now — Free <ArrowRight size={16} />
             </Link>
           </motion.div>
@@ -269,7 +348,7 @@ export default function Landing() {
           </motion.div>
 
           <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={0.1}
-            className="overflow-hidden rounded-3xl border" style={{ borderColor: 'var(--border-gold)', backgroundColor: 'var(--surface-raised)' }}>
+            className="overflow-x-auto rounded-3xl border" style={{ borderColor: 'var(--border-gold)', backgroundColor: 'var(--surface-raised)' }}>
             <table className="w-full">
               <tbody>
                 {[
@@ -283,8 +362,8 @@ export default function Landing() {
                   ['Data stored about your document', 'Zero bytes of content'],
                 ].map(([fact, value], i) => (
                   <tr key={fact} className="border-b last:border-0" style={{ borderColor: 'var(--border)', backgroundColor: i % 2 === 0 ? 'transparent' : 'rgba(255,255,255,0.02)' }}>
-                    <td className="px-8 py-5 text-sm font-semibold" style={{ color: 'var(--text-secondary)' }}>{fact}</td>
-                    <td className="px-8 py-5 text-right font-mono text-sm font-bold" style={{ color: 'var(--accent-gold)' }}>{value}</td>
+                    <td className="px-6 py-5 text-sm font-semibold md:px-8" style={{ color: 'var(--text-secondary)' }}>{fact}</td>
+                    <td className="px-6 py-5 text-right font-mono text-sm font-bold md:px-8" style={{ color: 'var(--accent-gold)' }}>{value}</td>
                   </tr>
                 ))}
               </tbody>
@@ -350,7 +429,7 @@ export default function Landing() {
             </motion.div>
 
             <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={0.2}>
-              <div className="terminal-card p-8">
+              <div className="terminal-card overflow-x-auto p-8">
                 <div className="mb-6 flex items-center gap-2">
                   <div className="h-3 w-3 rounded-full bg-red-500/70" />
                   <div className="h-3 w-3 rounded-full bg-yellow-500/70" />
@@ -392,79 +471,11 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* ── PRICING ──────────────────────────────────────────────── */}
-      <section id="pricing" className="py-28">
-        <div className="layout-container">
-          <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} className="mb-16 text-center">
-            <h2 className="font-display text-4xl font-black tracking-tighter md:text-5xl">
-              Start Free. <span className="gold-text">Scale As You Grow.</span>
-            </h2>
-          </motion.div>
-
-          <div className="grid gap-6 md:grid-cols-3">
-            {[
-              {
-                name: 'Free', price: '$0', period: '/month',
-                features: ['10 stamps/month', 'Basic certificates', 'Community support', 'Verify any proof'],
-                cta: 'Get Started Free', href: '/stamp', highlight: false, delay: 0
-              },
-              {
-                name: 'Pro', price: '$9', period: '/month',
-                features: ['Unlimited stamps', 'Premium certificates', 'API access', 'Priority anchoring', 'Email support'],
-                cta: 'Start Pro', href: '/access', highlight: true, delay: 0.1
-              },
-              {
-                name: 'Enterprise', price: 'Custom', period: '',
-                features: ['Custom volume', 'SLA guarantees', 'White-label options', 'Dedicated support', 'Custom contracts'],
-                cta: 'Contact Us', href: 'mailto:hello@satohash.com', highlight: false, delay: 0.2
-              }
-            ].map(({ name, price, period, features, cta, href, highlight, delay }) => (
-              <motion.div key={name} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={delay}
-                className="rounded-3xl p-8"
-                style={{
-                  backgroundColor: highlight ? 'var(--surface-raised)' : 'var(--bg-secondary)',
-                  border: `1px solid ${highlight ? 'var(--border-gold)' : 'var(--border)'}`,
-                  boxShadow: highlight ? 'var(--shadow-gold)' : 'none'
-                }}>
-                {highlight && (
-                  <div className="mb-4 inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-black uppercase tracking-widest"
-                    style={{ backgroundColor: 'var(--accent-gold)', color: '#0d1117' }}>
-                    ⭐ Most Popular
-                  </div>
-                )}
-                <p className="mb-2 font-display text-lg font-black" style={{ color: highlight ? 'var(--accent-gold)' : 'var(--text-secondary)' }}>{name}</p>
-                <div className="mb-6 flex items-baseline gap-1">
-                  <span className="font-display text-4xl font-black">{price}</span>
-                  <span className="text-sm" style={{ color: 'var(--text-muted)' }}>{period}</span>
-                </div>
-                <ul className="mb-8 space-y-3">
-                  {features.map((f) => (
-                    <li key={f} className="flex items-center gap-3 text-sm">
-                      <CheckCircle size={15} style={{ color: highlight ? 'var(--accent-gold)' : 'var(--accent-success)', flexShrink: 0 }} />
-                      <span style={{ color: 'var(--text-secondary)' }}>{f}</span>
-                    </li>
-                  ))}
-                </ul>
-                {href.startsWith('mailto') ? (
-                  <a href={href} className="block rounded-2xl py-3 text-center text-sm font-black transition-all hover:opacity-90"
-                    style={{ border: '1px solid var(--border)', color: 'var(--text-primary)' }}>{cta}</a>
-                ) : (
-                  <Link to={href} className="block rounded-2xl py-3 text-center text-sm font-black transition-all hover:opacity-90"
-                    style={highlight ? { backgroundColor: 'var(--accent-gold)', color: '#0d1117' } : { border: '1px solid var(--border)', color: 'var(--text-primary)' }}>
-                    {cta}
-                  </Link>
-                )}
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* ── FINAL CTA ────────────────────────────────────────────── */}
-      <section className="py-28" style={{ backgroundColor: 'var(--bg-secondary)' }}>
+      <section className="py-28">
         <div className="layout-container">
           <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}
-            className="rounded-3xl border p-16 text-center"
+            className="rounded-3xl border p-8 text-center md:p-16"
             style={{ borderColor: 'var(--border-gold)', background: 'linear-gradient(135deg, rgba(240,180,41,0.05) 0%, rgba(14,165,233,0.03) 100%)' }}>
             <h2 className="mb-4 font-display text-4xl font-black tracking-tighter md:text-5xl">
               Every Document Has a Story.<br />
@@ -474,8 +485,8 @@ export default function Landing() {
               No account required. No credit card. Your first proof is free. Anchored to Bitcoin in under an hour.
             </p>
             <Link to="/stamp"
-              className="inline-flex items-center gap-3 rounded-2xl px-10 py-5 text-lg font-black transition-all hover:scale-105 hover:opacity-90"
-              style={{ backgroundColor: 'var(--accent-gold)', color: '#0d1117' }}>
+              className="inline-flex w-full items-center justify-center gap-3 rounded-2xl px-10 py-5 text-lg font-black transition-all hover:scale-105 hover:opacity-90 sm:w-auto"
+              style={{ backgroundColor: 'var(--accent-gold)', color: '#141b25' }}>
               Notarize Your First Document — Free <ArrowRight size={20} />
             </Link>
           </motion.div>
@@ -520,7 +531,7 @@ export default function Landing() {
               </p>
               <button onClick={copyAddress}
                 className="flex w-full items-center justify-center gap-2 rounded-2xl py-3 text-sm font-black transition-all hover:opacity-90"
-                style={{ backgroundColor: 'var(--accent-gold)', color: '#0d1117' }}>
+                style={{ backgroundColor: 'var(--accent-gold)', color: '#141b25' }}>
                 {copied ? <Check size={15} /> : <Copy size={15} />}
                 {copied ? 'Address Copied!' : 'Copy Bitcoin Address'}
               </button>

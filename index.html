@@ -4,31 +4,129 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Favicons -->
+    <!-- ═══════════════════════════════════════════════════════════
+         PRIMARY META
+    ═══════════════════════════════════════════════════════════ -->
+    <title>Satohash — Prove Your Documents Exist. Forever. On Bitcoin.</title>
+    <meta name="description" content="Satohash anchors any document to the Bitcoin blockchain using OpenTimestamps. Get immutable, court-ready proof of existence in under 60 minutes. Free. No lawyers. No middlemen." />
+    <meta name="keywords" content="bitcoin notarization, document timestamping, OpenTimestamps, blockchain proof, document notary, cryptocurrency document proof, bitcoin blockchain notary, immutable proof, digital notarization, court-ready document proof" />
+    <meta name="author" content="Satohash" />
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <meta name="googlebot" content="index, follow" />
+    <link rel="canonical" href="https://satohash.com" />
+
+    <!-- ═══════════════════════════════════════════════════════════
+         PWA / MOBILE
+    ═══════════════════════════════════════════════════════════ -->
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Satohash" />
+    <meta name="application-name" content="Satohash" />
+    <meta name="theme-color" content="#141b25" />
+
+    <!-- ═══════════════════════════════════════════════════════════
+         FAVICONS & MANIFEST
+    ═══════════════════════════════════════════════════════════ -->
     <link rel="icon" type="image/png" href="/logo.png" />
     <link rel="apple-touch-icon" href="/logo.png" />
-
     <link rel="manifest" href="/site.webmanifest" />
 
-    <!-- Primary Meta -->
-    <title>Satohash — Bitcoin Document Notarization</title>
-    <meta name="description" content="Satohash anchors your documents to the Bitcoin blockchain using OpenTimestamps. Immutable, court-ready proof of existence — forever. No lawyers. No middlemen." />
-    <meta name="theme-color" content="#0d1117" />
-
-    <!-- Open Graph -->
-    <meta property="og:title" content="Satohash — Bitcoin Document Notarization" />
-    <meta property="og:description" content="Prove your documents existed. Permanently. On Bitcoin. No trust required." />
+    <!-- ═══════════════════════════════════════════════════════════
+         OPEN GRAPH — WhatsApp, Telegram, Facebook, LinkedIn
+    ═══════════════════════════════════════════════════════════ -->
+    <meta property="og:site_name" content="Satohash" />
+    <meta property="og:title" content="Satohash — Prove Your Documents Exist. Forever. On Bitcoin." />
+    <meta property="og:description" content="Most people think Bitcoin only moves money. Wrong. Satohash uses Bitcoin to permanently timestamp any document. Immutable proof in 60 minutes. Free." />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="/logo.png" />
     <meta property="og:url" content="https://satohash.com" />
+    <meta property="og:image" content="https://satohash.com/og-image.svg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Satohash — Bitcoin Document Notarization" />
+    <meta property="og:image:type" content="image/svg+xml" />
+    <meta property="og:locale" content="en_US" />
 
-    <!-- Twitter Card -->
+    <!-- ═══════════════════════════════════════════════════════════
+         TWITTER CARD — large image for maximum impact
+    ═══════════════════════════════════════════════════════════ -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Satohash — Bitcoin Notarization" />
-    <meta name="twitter:description" content="Immutable document proof anchored to Bitcoin. Court-ready. Free." />
-    <meta name="twitter:image" content="/logo.png" />
+    <meta name="twitter:site" content="@satohash" />
+    <meta name="twitter:creator" content="@satohash" />
+    <meta name="twitter:title" content="Satohash — Bitcoin Does More Than Move Money" />
+    <meta name="twitter:description" content="Anchor any document to Bitcoin. Permanent, immutable, court-ready proof of existence. Free. No lawyers needed." />
+    <meta name="twitter:image" content="https://satohash.com/og-image.svg" />
+    <meta name="twitter:image:alt" content="Satohash Bitcoin Document Notarization" />
 
-    <!-- Google Fonts -->
+    <!-- ═══════════════════════════════════════════════════════════
+         JSON-LD STRUCTURED DATA — Google rich results
+    ═══════════════════════════════════════════════════════════ -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://satohash.com/#website",
+          "url": "https://satohash.com",
+          "name": "Satohash",
+          "description": "Bitcoin-anchored document notarization using OpenTimestamps",
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://satohash.com/verify?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+          }
+        },
+        {
+          "@type": "Organization",
+          "@id": "https://satohash.com/#organization",
+          "name": "Satohash",
+          "url": "https://satohash.com",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://satohash.com/logo.png"
+          },
+          "sameAs": [
+            "https://twitter.com/satohash",
+            "https://github.com/satohash"
+          ],
+          "description": "Institutional-grade Bitcoin document notarization and cryptographic timestamping service"
+        },
+        {
+          "@type": "SoftwareApplication",
+          "@id": "https://satohash.com/#app",
+          "name": "Satohash",
+          "applicationCategory": "BusinessApplication",
+          "operatingSystem": "Web",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          },
+          "description": "Anchor any document to the Bitcoin blockchain using OpenTimestamps for permanent proof of existence",
+          "featureList": [
+            "Bitcoin blockchain anchoring",
+            "OpenTimestamps protocol",
+            "Zero-knowledge document hashing",
+            "Court-ready proof certificates",
+            "ESIGN Act compliant",
+            "eIDAS compatible"
+          ]
+        }
+      ]
+    }
+    </script>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         PERFORMANCE HINTS
+    ═══════════════════════════════════════════════════════════ -->
+    <link rel="preload" href="/logo.png" as="image" />
+    <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="//mempool.space" />
+
+    <!-- ═══════════════════════════════════════════════════════════
+         GOOGLE FONTS
+    ═══════════════════════════════════════════════════════════ -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />

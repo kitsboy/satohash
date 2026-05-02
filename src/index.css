@@ -5,10 +5,10 @@
 @layer base {
   :root {
     /* ── Backgrounds ──────────────────────────────────────── */
-    --bg-primary: #0d1117;       /* Deep GitHub dark */
-    --bg-secondary: #13171f;     /* Nav/surface */
-    --surface-raised: #1c2333;   /* Cards */
-    --surface-overlay: #1e2a3a;  /* Modals/tooltips */
+    --bg-primary: #141b25;       /* Deep navy — breathable dark */
+    --bg-secondary: #1a2233;     /* Nav/surface */
+    --surface-raised: #1e2a3a;   /* Cards */
+    --surface-overlay: #223044;  /* Modals/tooltips */
 
     /* ── Typography ───────────────────────────────────────── */
     --text-primary: #f1f5f9;
