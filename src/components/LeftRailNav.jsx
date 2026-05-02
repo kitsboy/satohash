@@ -221,8 +221,8 @@ export default function LeftRailNav() {
           </span>
         </button>
 
-        {/* Identity chip — shown only when an npub is stored */}
-        {npub && (
+        {/* Identity chip — shows npub when authed, "Not Connected" otherwise */}
+        {npub ? (
           <div className="flex items-center gap-3 rounded-xl border px-4 py-3" style={{ borderColor: 'var(--border)', background: 'rgba(255,255,255,0.02)' }}>
             <div className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full border-2 text-[9px] font-black" style={{ borderColor: 'var(--border-gold)', background: 'rgba(240,180,41,0.12)', color: 'var(--accent-gold)' }}>
               {initials}
@@ -230,6 +230,16 @@ export default function LeftRailNav() {
             <div className="min-w-0 flex-1">
               <p className="text-[9px] font-bold uppercase tracking-widest" style={{ color: 'var(--text-secondary)', opacity: 0.6 }}>Identity</p>
               <p className="truncate font-mono text-[9px] font-semibold" style={{ color: 'var(--text-primary)' }}>{npub.substring(0, 16)}...</p>
+            </div>
+          </div>
+        ) : (
+          <div className="flex items-center gap-3 rounded-xl border px-4 py-3" style={{ borderColor: 'var(--border)', background: 'rgba(255,255,255,0.02)' }}>
+            <div className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full border-2 text-[9px] font-black" style={{ borderColor: 'var(--border)', background: 'rgba(255,255,255,0.04)', color: 'var(--text-secondary)' }}>
+              SH
+            </div>
+            <div className="min-w-0 flex-1">
+              <p className="text-[9px] font-bold uppercase tracking-widest" style={{ color: 'var(--text-secondary)', opacity: 0.6 }}>Identity</p>
+              <p className="truncate text-[9px] font-semibold" style={{ color: 'var(--text-secondary)', opacity: 0.5 }}>Not Connected</p>
             </div>
           </div>
         )}

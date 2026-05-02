@@ -1,8 +1,7 @@
-import React from 'react'
+import { useState } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Database, Fingerprint, ShieldCheck, Globe, MoreHorizontal } from 'lucide-react'
-import { useState } from 'react'
 
 const PRIMARY_LINKS = [
   { name: 'Vault',  path: '/vault',  icon: Database },
@@ -15,6 +14,7 @@ const PRIMARY_LINKS = [
 export default function MobileBottomNav() {
   const location = useLocation()
   const [moreOpen, setMoreOpen] = useState(false)
+  const npub = localStorage.getItem('satohash_npub') || ''
 
   // "More" is active when we're on a route not in the primary list
   const primaryPaths = PRIMARY_LINKS.map((l) => l.path)
@@ -50,6 +50,23 @@ export default function MobileBottomNav() {
                 boxShadow: '0 20px 60px rgba(0,0,0,0.6)',
               }}
             >
+              {/* Auth state chip */}
+              <div className="flex items-center gap-2 border-b px-4 py-2.5" style={{ borderColor: 'var(--border)' }}>
+                <span className="relative flex h-1.5 w-1.5 flex-shrink-0">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-60" style={{ background: npub ? 'var(--accent-success)' : 'var(--text-secondary)' }} />
+                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full" style={{ background: npub ? 'var(--accent-success)' : 'var(--text-secondary)' }} />
+                </span>
+                {npub ? (
+                  <span className="truncate font-mono text-[8px] font-semibold" style={{ color: 'var(--text-primary)' }}>
+                    {npub.substring(0, 12)}...
+                  </span>
+                ) : (
+                  <span className="text-[9px] font-semibold tracking-wider" style={{ color: 'var(--text-secondary)', opacity: 0.6 }}>
+                    Not Connected
+                  </span>
+                )}
+              </div>
+
               {[
                 { name: 'Developer API', path: '/developer' },
                 { name: 'Contracts',     path: '/contracts'  },
