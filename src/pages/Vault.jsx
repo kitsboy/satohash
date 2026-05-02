@@ -12,8 +12,10 @@ import {
   Globe,
   Stamp
 } from 'lucide-react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { toast } from 'sonner'
+import { jsPDF } from 'jspdf'
 
 const StatusBadge = ({ status }) => {
   const styles = {
@@ -22,11 +24,11 @@ const StatusBadge = ({ status }) => {
     pending:
       'bg-[var(--accent-pending)]/10 text-[var(--accent-pending)] border-[var(--accent-pending)]/20',
     hashing:
-      'bg-[var(--accent-active)]/10 text-[var(--accent-active)] border-[var(--accent-active)]/20'
+      'bg-[var(--accent-gold)]/10 text-[var(--accent-gold)] border-[var(--accent-gold)]/20'
   }
   return (
     <span
-      className={`rounded-md border px-2 py-1 text-[9px] font-black tracking-widest uppercase ${styles[status]}`}
+      className={`rounded-md border px-2 py-1 text-[9px] font-black tracking-widest uppercase ${styles[status] || styles.pending}`}
     >
       {status}
     </span>
@@ -37,7 +39,7 @@ const SecurityAge = ({ confirmations }) => {
   const getLevel = (c) => {
     if (c < 6) return { label: 'In Motion', color: 'text-[var(--accent-pending)]' }
     if (c < 1000) return { label: 'Operational', color: 'text-[var(--accent-success)]' }
-    return { label: 'Archival', color: 'text-[var(--accent-active)]' }
+    return { label: 'Archival', color: 'text-[var(--accent-gold)]' }
   }
   const level = getLevel(confirmations)
   return (
@@ -57,49 +59,51 @@ export default function Vault() {
   const [activeTab, setActiveTab] = useState('all')
   const [isExporting, setIsExporting] = useState(false)
   const [exportProgress, setExportProgress] = useState(0)
+  const [items, setItems] = useState([])
+  const [loading, setLoading] = useState(true)
 
-  const items = [
-    {
-      id: '1',
-      name: 'Estate Archive 2026',
-      type: 'capsule',
-      hash: 'e3b0c442...8b1a',
-      date: '2026-04-30',
-      status: 'anchored',
-      confirmations: 1420,
-      size: '4.2 MB'
-    },
-    {
-      id: '2',
-      name: 'clinical_trial_v2.pdf',
-      type: 'file',
-      hash: '8f92c3a...d2e1',
-      date: '2026-05-01',
-      status: 'pending',
-      confirmations: 2,
-      size: '1.8 MB'
-    },
-    {
-      id: '3',
-      name: 'Patent Application #442',
-      type: 'file',
-      hash: 'c2e8a1...f3b9',
-      date: '2026-04-28',
-      status: 'anchored',
-      confirmations: 12402,
-      size: '840 KB'
-    },
-    {
-      id: '4',
-      name: 'Web Capture: news.com/article',
-      type: 'snapper',
-      hash: 'd4f1e9...a2c8',
-      date: '2026-05-01',
-      status: 'hashing',
-      confirmations: 0,
-      size: '12.4 MB'
+  useEffect(() => {
+    const fetchStamps = async () => {
+      try {
+        const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+        const res = await fetch(`${API}/api/history`)
+        if (res.ok) {
+          const data = await res.json()
+          // Map API response to our display format
+          const mapped = data.map(s => ({
+            id: s.id,
+            name: s.filename || s.original_filename || 'Unnamed document',
+            type: s.filename?.includes('SNAP') ? 'snapper' : 'file',
+            hash: s.hash ? s.hash.substring(0, 8) + '...' + s.hash.slice(-4) : '—',
+            fullHash: s.hash,
+            date: s.created_at ? new Date(s.created_at).toISOString().split('T')[0] : '—',
+            status: s.status || 'pending',
+            confirmations: s.bitcoin_block_height ? 999 : 0,
+            size: '—'
+          }))
+          setItems(mapped)
+        }
+      } catch (e) {
+        // Fall back to localStorage stamps if server not running
+        const local = JSON.parse(localStorage.getItem('satohash_stamps') || '[]')
+        const mapped = local.map(s => ({
+          id: s.id,
+          name: s.filename || 'Unnamed',
+          type: 'file',
+          hash: s.hash ? s.hash.substring(0, 8) + '...' + s.hash.slice(-4) : '—',
+          fullHash: s.hash,
+          date: s.created_at ? new Date(s.created_at).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
+          status: s.status || 'pending',
+          confirmations: 0,
+          size: '—'
+        }))
+        setItems(mapped)
+      } finally {
+        setLoading(false)
+      }
     }
-  ]
+    fetchStamps()
+  }, [])
 
   const handleExport = () => {
     setIsExporting(true)
@@ -122,6 +126,74 @@ export default function Vault() {
         icon: <FileDown className="text-[var(--accent-success)]" />
       })
     }, 4000)
+  }
+
+  const downloadCertificate = (item) => {
+    const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' })
+    const pageW = 210, margin = 20
+
+    // Background
+    doc.setFillColor(253, 251, 247)
+    doc.rect(0, 0, pageW, 297, 'F')
+
+    // Gold top bar
+    doc.setFillColor(240, 180, 41)
+    doc.rect(0, 0, pageW, 6, 'F')
+
+    // Watermark
+    doc.setTextColor(220, 220, 220)
+    doc.setFontSize(60)
+    doc.setFont('helvetica', 'bold')
+    doc.text('SATOHASH', 105, 160, { align: 'center', angle: 45 })
+
+    // Title
+    doc.setTextColor(15, 23, 42)
+    doc.setFontSize(28)
+    doc.setFont('helvetica', 'bold')
+    doc.text('CERTIFICATE OF', margin, 40)
+    doc.text('BLOCKCHAIN NOTARIZATION', margin, 52)
+
+    // Gold line
+    doc.setDrawColor(240, 180, 41)
+    doc.setLineWidth(1)
+    doc.line(margin, 58, pageW - margin, 58)
+
+    // Fields
+    const fields = [
+      ['Document', item.name],
+      ['SHA-256 Hash', item.fullHash || item.hash],
+      ['Proof ID', item.id],
+      ['Date Notarized', item.date],
+      ['Status', item.status.toUpperCase()],
+      ['Protocol', 'OpenTimestamps / Bitcoin Mainnet'],
+      ['Verification', `https://satohash.com/verify`],
+    ]
+
+    let y = 75
+    fields.forEach(([label, value]) => {
+      doc.setFontSize(8)
+      doc.setTextColor(120, 130, 150)
+      doc.setFont('helvetica', 'bold')
+      doc.text(label.toUpperCase(), margin, y)
+      doc.setFontSize(11)
+      doc.setTextColor(15, 23, 42)
+      doc.setFont('helvetica', 'normal')
+      const lines = doc.splitTextToSize(String(value), pageW - margin * 2)
+      doc.text(lines, margin, y + 6)
+      y += lines.length * 6 + 12
+    })
+
+    // Footer
+    doc.setDrawColor(240, 180, 41)
+    doc.setLineWidth(0.5)
+    doc.line(margin, 270, pageW - margin, 270)
+    doc.setFontSize(8)
+    doc.setTextColor(150, 163, 175)
+    doc.text('Generated by Satohash — Bitcoin-Anchored Document Notarization', margin, 278)
+    doc.text('satohash.com', pageW - margin, 278, { align: 'right' })
+
+    doc.save(`Satohash_Certificate_${item.id?.substring(0, 8) || 'proof'}.pdf`)
+    toast.success('Certificate Downloaded', { description: `${item.name} — PDF ready` })
   }
 
   const filteredItems = items.filter((item) => {
@@ -159,10 +231,10 @@ export default function Vault() {
               <div className="relative mx-auto h-24 w-24">
                 <Loader2
                   size={96}
-                  className="absolute inset-0 animate-spin text-[var(--accent-active)] opacity-20"
+                  className="absolute inset-0 animate-spin text-[var(--accent-gold)] opacity-20"
                 />
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <ShieldCheck size={40} className="text-[var(--accent-active)]" />
+                  <ShieldCheck size={40} className="text-[var(--accent-gold)]" />
                 </div>
               </div>
               <div className="space-y-2">
@@ -177,7 +249,7 @@ export default function Vault() {
                 <motion.div
                   initial={{ width: 0 }}
                   animate={{ width: `${exportProgress}%` }}
-                  className="h-full bg-[var(--accent-active)] shadow-[0_0_15px_var(--accent-active-glow)]"
+                  className="h-full bg-[var(--accent-gold)] shadow-[0_0_15px_var(--accent-gold-glow)]"
                 />
               </div>
               <div className="grid grid-cols-2 gap-4 text-left">
@@ -201,9 +273,9 @@ export default function Vault() {
 
       <header className="flex flex-col justify-between gap-12 border-b border-[var(--border)] pb-12 lg:flex-row lg:items-end">
         <div className="space-y-6">
-          <div className="inline-flex items-center gap-2 rounded-full border border-[var(--accent-active)]/30 bg-[var(--accent-active)]/10 px-4 py-1.5">
-            <Database size={14} className="text-[var(--accent-active)]" />
-            <span className="font-mono text-[10px] font-bold tracking-[0.2em] text-[var(--accent-active)] uppercase">
+          <div className="inline-flex items-center gap-2 rounded-full border border-[var(--accent-gold)]/30 bg-[var(--accent-gold)]/10 px-4 py-1.5">
+            <Database size={14} className="text-[var(--accent-gold)]" />
+            <span className="font-mono text-[10px] font-bold tracking-[0.2em] text-[var(--accent-gold)] uppercase">
               Sovereign Ledger // VAULT_SYNC_ACTIVE
             </span>
           </div>
@@ -221,14 +293,14 @@ export default function Vault() {
           <div className="group relative">
             <Search
               size={18}
-              className="absolute top-1/2 left-4 -translate-y-1/2 text-[var(--text-secondary)] transition-colors group-focus-within:text-[var(--accent-active)]"
+              className="absolute top-1/2 left-4 -translate-y-1/2 text-[var(--text-secondary)] transition-colors group-focus-within:text-[var(--accent-gold)]"
             />
             <input
               type="text"
               placeholder="Search by hash, label or asset..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="h-14 w-full rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] pr-6 pl-12 text-sm font-bold transition-all outline-none placeholder:text-[var(--text-secondary)] focus:border-[var(--accent-active)] focus:ring-1 focus:ring-[var(--accent-active)] md:w-80"
+              className="h-14 w-full rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] pr-6 pl-12 text-sm font-bold transition-all outline-none placeholder:text-[var(--text-secondary)] focus:border-[var(--accent-gold)] focus:ring-1 focus:ring-[var(--accent-gold)] md:w-80"
             />
           </div>
           <button
@@ -253,7 +325,7 @@ export default function Vault() {
             {activeTab === tab && (
               <motion.div
                 layoutId="tab-underline-vault"
-                className="absolute right-0 bottom-0 left-0 h-1 bg-[var(--accent-active)] shadow-[0_0_15px_var(--accent-active-glow)]"
+                className="absolute right-0 bottom-0 left-0 h-1 bg-[var(--accent-gold)] shadow-[0_0_15px_var(--accent-gold-glow)]"
               />
             )}
           </button>
@@ -281,16 +353,38 @@ export default function Vault() {
               </tr>
             </thead>
             <tbody className="divide-y divide-[var(--border)]">
-              {filteredItems.map((item) => (
+              {loading && (
+                <tr>
+                  <td colSpan={4} className="px-10 py-16 text-center">
+                    <div className="flex items-center justify-center gap-3" style={{ color: 'var(--text-secondary)' }}>
+                      <Loader2 size={18} className="animate-spin" />
+                      <span className="text-sm font-medium">Loading stamps from Bitcoin...</span>
+                    </div>
+                  </td>
+                </tr>
+              )}
+              {!loading && filteredItems.length === 0 && (
+                <tr>
+                  <td colSpan={4} className="px-10 py-16 text-center">
+                    <div className="space-y-3">
+                      <p className="text-lg font-bold">No stamps yet</p>
+                      <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+                        <a href="/stamp" className="underline" style={{ color: 'var(--accent-gold)' }}>Notarize your first document →</a>
+                      </p>
+                    </div>
+                  </td>
+                </tr>
+              )}
+              {!loading && filteredItems.map((item) => (
                 <tr key={item.id} className="group transition-all hover:bg-white/5">
                   <td className="px-10 py-8">
                     <div className="flex items-center gap-6">
                       <div
-                        className={`flex h-14 w-14 items-center justify-center rounded-2xl border border-[var(--border)] ${item.type === 'capsule' ? 'bg-[var(--accent-active)]/10 text-[var(--accent-active)]' : 'bg-[var(--bg-primary)] text-[var(--text-secondary)]'} transition-transform group-hover:scale-110`}
+                        className={`flex h-14 w-14 items-center justify-center rounded-2xl border border-[var(--border)] ${item.type === 'capsule' ? 'bg-[var(--accent-gold)]/10 text-[var(--accent-gold)]' : 'bg-[var(--bg-primary)] text-[var(--text-secondary)]'} transition-transform group-hover:scale-110`}
                       >
                         {item.type === 'capsule' ? (
                           <FileArchive size={24} />
-                        ) : item.type === 'snaps' ? (
+                        ) : item.type === 'snapper' ? (
                           <Layers size={24} />
                         ) : (
                           <FileText size={24} />
@@ -331,17 +425,22 @@ export default function Vault() {
                       <ActionBtn
                         icon={Stamp}
                         label="Badge"
-                        onClick={() => toast.success('Verification Badge Generated')}
+                        onClick={() => {
+                          navigator.clipboard.writeText('https://satohash.com/proof/' + item.id)
+                          toast.success('Proof URL Copied', { description: 'Share link is in your clipboard' })
+                        }}
                       />
                       <ActionBtn
                         icon={Download}
                         label="Raw"
-                        onClick={() => toast.success('Downloading Source Material')}
+                        onClick={() => downloadCertificate(item)}
                       />
                       <ActionBtn
                         icon={Globe}
                         label="Verify"
-                        onClick={() => toast.info('Initiating Public Witness Check')}
+                        onClick={() => {
+                          window.location.href = '/verify?hash=' + item.fullHash
+                        }}
                       />
                     </div>
                   </td>

@@ -9,7 +9,8 @@ import {
   FileArchive,
   Database,
   Plus,
-  Lock
+  Lock,
+  CheckCircle
 } from 'lucide-react'
 import { useState, useCallback } from 'react'
 
@@ -19,6 +20,9 @@ export default function Stamp() {
   const [files, setFiles] = useState([])
   const [stampingStatus, setStampingStatus] = useState('idle') // idle, hashing, anchoring, complete
   const [caseLabel, setCaseLabel] = useState('')
+  const [proofResult, setProofResult] = useState(null) // { id, hash, filename, status }
+  const [hashValue, setHashValue] = useState('')
+  const [error, setError] = useState('')
 
   const handleDrag = useCallback((e) => {
     e.preventDefault()
@@ -40,22 +44,67 @@ export default function Stamp() {
     [isCapsuleMode]
   )
 
-  const startStamping = () => {
-    setStampingStatus('hashing')
-    setTimeout(() => {
+  const startStamping = async () => {
+    if (!files.length) return
+    setError('')
+    setProofResult(null)
+
+    try {
+      setStampingStatus('hashing')
+
+      // Real SHA-256 hashing in browser - file NEVER leaves device
+      const file = files[0]
+      const arrayBuffer = await file.arrayBuffer()
+      const hashBuffer = await crypto.subtle.digest('SHA-256', arrayBuffer)
+      const hashArray = Array.from(new Uint8Array(hashBuffer))
+      const hash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('')
+      setHashValue(hash)
+
       setStampingStatus('anchoring')
-      setTimeout(() => {
-        setStampingStatus('complete')
-      }, 3000)
-    }, 2000)
+
+      // POST to real backend
+      const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+      const res = await fetch(`${API}/api/stamp`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          hash,
+          filename: caseLabel || file.name
+        })
+      })
+
+      if (!res.ok) {
+        const err = await res.json()
+        throw new Error(err.error || 'Stamping failed')
+      }
+
+      const data = await res.json()
+      setProofResult(data)
+      setStampingStatus('complete')
+
+      // Save to localStorage for vault
+      const existing = JSON.parse(localStorage.getItem('satohash_stamps') || '[]')
+      existing.unshift({ ...data, filename: caseLabel || file.name, size: file.size })
+      localStorage.setItem('satohash_stamps', JSON.stringify(existing.slice(0, 100)))
+
+    } catch (err) {
+      setError(err.message || 'Failed to stamp. Is the server running?')
+      setStampingStatus('idle')
+    }
   }
+
+  // Progress percentage per status
+  const progressPercent =
+    stampingStatus === 'hashing' ? '30%' :
+    stampingStatus === 'anchoring' ? '70%' :
+    '100%'
 
   return (
     <div className="mx-auto max-w-6xl space-y-12 p-8">
       <header className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
         <div className="space-y-2">
           <div className="flex items-center gap-3">
-            <ShieldCheck className="text-[var(--accent-active)]" size={24} />
+            <ShieldCheck className="text-[var(--accent-gold)]" size={24} />
             <h1 className="text-4xl font-bold tracking-tighter uppercase">Satohash Core</h1>
           </div>
           <p className="font-medium text-[var(--text-secondary)]">
@@ -95,22 +144,23 @@ export default function Stamp() {
             onDragOver={handleDrag}
             onDrop={handleDrop}
             animate={{
-              borderColor: isDragging ? 'var(--accent-active)' : 'var(--border)',
+              borderColor: isDragging ? 'var(--accent-gold)' : 'var(--border)',
               backgroundColor: isDragging ? 'rgba(79, 70, 229, 0.05)' : 'transparent'
             }}
             className="group relative flex h-[400px] flex-col items-center justify-center overflow-hidden rounded-[2.5rem] border-2 border-dashed p-12 text-center transition-colors"
           >
-            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,var(--accent-active),transparent)] opacity-0 transition-opacity group-hover:opacity-[0.03]" />
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,var(--accent-gold),transparent)] opacity-0 transition-opacity group-hover:opacity-[0.03]" />
 
             <AnimatePresence mode="wait">
               {stampingStatus === 'idle' ? (
                 <motion.div
+                  key="idle"
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
                   className="space-y-6"
                 >
-                  <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-3xl border border-[var(--border)] bg-[var(--surface-raised)] text-[var(--accent-active)] shadow-2xl">
+                  <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-3xl border border-[var(--border)] bg-[var(--surface-raised)] text-[var(--accent-gold)] shadow-2xl">
                     {isCapsuleMode ? <FileArchive size={32} /> : <Upload size={32} />}
                   </div>
                   <div className="space-y-2">
@@ -123,9 +173,69 @@ export default function Stamp() {
                         : 'Drop your document here. SHA-256 is calculated locally before any network request.'}
                     </p>
                   </div>
+
+                  {/* Mobile file input */}
+                  <input
+                    type="file"
+                    id="file-input"
+                    className="hidden"
+                    onChange={(e) => {
+                      if (e.target.files?.[0]) {
+                        setFiles(isCapsuleMode ? [...files, e.target.files[0]] : [e.target.files[0]])
+                      }
+                    }}
+                  />
+                  <label
+                    htmlFor="file-input"
+                    className="mt-4 flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-[var(--border)] px-6 py-3 text-xs font-bold uppercase transition-all hover:border-[var(--accent-gold)] hover:text-[var(--accent-gold)] md:hidden"
+                  >
+                    <Upload size={14} /> Choose File
+                  </label>
+                </motion.div>
+              ) : stampingStatus === 'complete' && proofResult ? (
+                <motion.div
+                  key="complete"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="w-full max-w-md space-y-5"
+                >
+                  <div
+                    className="flex items-center gap-3 rounded-2xl border p-4"
+                    style={{ borderColor: 'var(--accent-success)', backgroundColor: 'rgba(34,211,165,0.08)' }}
+                  >
+                    <CheckCircle size={24} style={{ color: 'var(--accent-success)' }} />
+                    <div>
+                      <p className="font-black text-sm" style={{ color: 'var(--accent-success)' }}>Anchored to Bitcoin</p>
+                      <p className="font-mono text-xs opacity-60">ID: {proofResult.id?.substring(0, 16)}...</p>
+                    </div>
+                  </div>
+                  <div
+                    className="rounded-2xl border p-4 space-y-2"
+                    style={{ borderColor: 'var(--border)', backgroundColor: 'var(--surface-raised)' }}
+                  >
+                    <p className="text-xs font-bold uppercase tracking-widest" style={{ color: 'var(--text-secondary)' }}>SHA-256 Hash</p>
+                    <p className="font-mono text-xs break-all" style={{ color: 'var(--accent-gold)' }}>{hashValue}</p>
+                  </div>
+                  <div className="flex gap-3">
+                    <button
+                      onClick={() => { setStampingStatus('idle'); setFiles([]); setProofResult(null); setHashValue('') }}
+                      className="flex-1 rounded-xl border py-3 text-xs font-black uppercase transition-all hover:text-white"
+                      style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
+                    >
+                      New Stamp
+                    </button>
+                    <button
+                      onClick={() => window.location.href = '/vault'}
+                      className="flex-1 rounded-xl py-3 text-xs font-black uppercase transition-all hover:opacity-90"
+                      style={{ backgroundColor: 'var(--accent-gold)', color: '#141b25' }}
+                    >
+                      View in Vault →
+                    </button>
+                  </div>
                 </motion.div>
               ) : (
                 <motion.div
+                  key="progress"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   className="w-full max-w-md space-y-8"
@@ -135,40 +245,42 @@ export default function Stamp() {
                       <span>
                         {stampingStatus === 'hashing' ? 'Local Hashing' : 'Anchoring to Bitcoin'}
                       </span>
-                      <span className="text-[var(--accent-active)]">
-                        {stampingStatus === 'hashing' ? '45%' : 'Pending'}
+                      <span className="text-[var(--accent-gold)]">
+                        {progressPercent}
                       </span>
                     </div>
                     <div className="h-2 w-full overflow-hidden rounded-full bg-[var(--border)]">
                       <motion.div
                         animate={{
-                          width:
-                            stampingStatus === 'hashing'
-                              ? '45%'
-                              : stampingStatus === 'anchoring'
-                                ? '85%'
-                                : '100%',
+                          width: progressPercent,
                           backgroundColor:
                             stampingStatus === 'complete'
                               ? 'var(--accent-success)'
-                              : 'var(--accent-active)'
+                              : 'var(--accent-gold)'
                         }}
                         className="h-full"
                       />
                     </div>
                   </div>
                   <div className="flex items-center gap-4 rounded-xl border border-[var(--border)] bg-[var(--bg-secondary)] p-4">
-                    <Activity className="animate-pulse text-[var(--accent-active)]" size={18} />
+                    <Activity className="animate-pulse text-[var(--accent-gold)]" size={18} />
                     <p className="truncate font-mono text-xs font-medium">
                       {stampingStatus === 'hashing'
-                        ? 'Calculating ZK-SHA256 Fingerprint...'
-                        : 'Communicating with Witness Mesh...'}
+                        ? 'Computing SHA-256 fingerprint locally...'
+                        : 'Submitting to Bitcoin via OpenTimestamps...'}
                     </p>
                   </div>
                 </motion.div>
               )}
             </AnimatePresence>
           </motion.div>
+
+          {/* Error display */}
+          {error && (
+            <div className="mt-4 rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-400">
+              ⚠️ {error}
+            </div>
+          )}
 
           {/* Files List */}
           {files.length > 0 && (
@@ -216,7 +328,7 @@ export default function Stamp() {
         <div className="space-y-8">
           <div className="space-y-6 rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] p-6">
             <div className="flex items-center gap-3">
-              <Layers size={18} className="text-[var(--accent-active)]" />
+              <Layers size={18} className="text-[var(--accent-gold)]" />
               <h3 className="text-[10px] font-bold tracking-widest uppercase">
                 Case Configuration
               </h3>
@@ -232,7 +344,7 @@ export default function Stamp() {
                   value={caseLabel}
                   onChange={(e) => setCaseLabel(e.target.value)}
                   placeholder="e.g. Estate Archive 2026"
-                  className="h-11 w-full rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] px-4 text-sm outline-none focus:border-[var(--accent-active)]"
+                  className="h-11 w-full rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] px-4 text-sm outline-none focus:border-[var(--accent-gold)]"
                 />
               </div>
 
@@ -241,13 +353,13 @@ export default function Stamp() {
                   <span className="text-[10px] font-bold text-[var(--text-secondary)] uppercase">
                     Multi-Party
                   </span>
-                  <input type="checkbox" className="accent-[var(--accent-active)]" />
+                  <input type="checkbox" className="accent-[var(--accent-gold)]" />
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-[10px] font-bold text-[var(--text-secondary)] uppercase">
                     L402 Gating
                   </span>
-                  <input type="checkbox" className="accent-[var(--accent-active)]" />
+                  <input type="checkbox" className="accent-[var(--accent-gold)]" />
                 </div>
               </div>
             </div>
@@ -255,7 +367,7 @@ export default function Stamp() {
 
           <div className="space-y-4 rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] p-6">
             <div className="flex items-center gap-3">
-              <Database size={18} className="text-[var(--accent-active)]" />
+              <Database size={18} className="text-[var(--accent-gold)]" />
               <h3 className="text-[10px] font-bold tracking-widest uppercase">
                 Proof-of-Existence Streams
               </h3>
@@ -269,8 +381,8 @@ export default function Stamp() {
             </button>
           </div>
 
-          <div className="space-y-3 rounded-2xl border border-[var(--accent-active)]/20 bg-[var(--accent-active)]/5 p-6">
-            <div className="flex items-center gap-2 text-[var(--accent-active)]">
+          <div className="space-y-3 rounded-2xl border border-[var(--accent-gold)]/20 bg-[var(--accent-gold)]/5 p-6">
+            <div className="flex items-center gap-2 text-[var(--accent-gold)]">
               <Lock size={14} />
               <span className="text-[10px] font-bold tracking-widest uppercase">
                 Privacy Guarantee

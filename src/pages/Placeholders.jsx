@@ -357,14 +357,82 @@ export function Trust() {
 
 export function About() {
   return (
-    <div className="mx-auto max-w-4xl space-y-12 p-8">
-      <header className="space-y-4 text-center">
-        <Info className="mx-auto text-[var(--accent-active)]" size={48} />
-        <h1 className="text-5xl font-bold tracking-tighter uppercase">The Vision</h1>
-        <p className="text-xl font-medium text-[var(--text-secondary)]">
-          Satohash is the sovereign operating system for digital truth.
-        </p>
-      </header>
+    <div className="min-h-screen" style={{ backgroundColor: 'var(--bg-primary)', color: 'var(--text-primary)' }}>
+      {/* Simple navbar back to home */}
+      <nav className="border-b px-6 py-4 flex items-center gap-3" style={{ borderColor: 'var(--border)' }}>
+        <a href="/" className="flex items-center gap-2">
+          <img src="/logo.png" className="h-7 w-7" alt="Satohash" />
+          <span className="font-black tracking-tighter uppercase" style={{ color: 'var(--accent-gold)' }}>Satohash</span>
+        </a>
+      </nav>
+
+      <div className="mx-auto max-w-4xl px-6 py-20">
+        {/* Hero */}
+        <div className="mb-16">
+          <div
+            className="mb-4 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-xs font-black uppercase tracking-widest"
+            style={{ borderColor: 'rgba(240,180,41,0.4)', backgroundColor: 'rgba(240,180,41,0.08)', color: 'var(--accent-gold)' }}
+          >
+            Our Mission
+          </div>
+          <h1 className="text-5xl font-black tracking-tighter mb-6">
+            We believe truth should be<br />
+            <span style={{ color: 'var(--accent-gold)' }}>mathematically provable.</span>
+          </h1>
+          <p className="text-xl leading-relaxed max-w-2xl" style={{ color: 'var(--text-secondary)' }}>
+            Satohash was built on a simple insight: Bitcoin&apos;s blockchain is not just a payment network.
+            It is the world&apos;s most reliable timestamp server — and almost nobody uses it that way.
+          </p>
+        </div>
+
+        {/* Story */}
+        <div className="space-y-8 mb-16 text-lg leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+          <p>
+            Every 10 minutes, Bitcoin miners race to solve a mathematical puzzle. The winner adds a new block
+            to the chain — a permanent, global record that includes a Merkle root of all recent transactions.
+            That root is a cryptographic commitment to a specific set of data at a specific moment in time.
+          </p>
+          <p>
+            OpenTimestamps, the open protocol we build on, figured out how to leverage this mechanism for
+            document notarization. By submitting the SHA-256 hash of any file to an OTS calendar server,
+            your document&apos;s fingerprint gets embedded into the next Bitcoin block. Forever.
+          </p>
+          <p style={{ color: 'var(--text-primary)' }} className="font-semibold">
+            Your document never leaves your device. We never see its contents. Only the fingerprint — 64 hex characters —
+            is submitted. This is zero-knowledge notarization.
+          </p>
+        </div>
+
+        {/* Values grid */}
+        <div className="grid md:grid-cols-3 gap-6 mb-16">
+          {[
+            { emoji: '🔐', title: 'Privacy First', body: 'Your documents are yours. We see only mathematical fingerprints. Always.' },
+            { emoji: '₿', title: 'Bitcoin Native', body: 'We anchor to Bitcoin because it is the most secure, decentralized timestamp server ever built.' },
+            { emoji: '⚖️', title: 'Legal Grade', body: 'Our proofs meet ESIGN Act, UETA, and eIDAS standards. Court-ready by design.' },
+          ].map(({ emoji, title, body }) => (
+            <div key={title} className="rounded-2xl border p-6" style={{ borderColor: 'var(--border)', backgroundColor: 'var(--bg-secondary)' }}>
+              <div className="text-3xl mb-3">{emoji}</div>
+              <h3 className="font-black text-lg mb-2">{title}</h3>
+              <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{body}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* CTA */}
+        <div
+          className="rounded-3xl border p-10 text-center"
+          style={{ borderColor: 'rgba(240,180,41,0.3)', background: 'linear-gradient(135deg, rgba(240,180,41,0.05), rgba(14,165,233,0.03))' }}
+        >
+          <h2 className="text-3xl font-black mb-4">Ready to anchor your first document?</h2>
+          <a
+            href="/stamp"
+            className="inline-flex items-center gap-2 rounded-2xl px-8 py-4 font-black text-base transition-all hover:opacity-90"
+            style={{ backgroundColor: 'var(--accent-gold)', color: '#141b25' }}
+          >
+            Start Free — No Account Needed →
+          </a>
+        </div>
+      </div>
     </div>
   )
 }

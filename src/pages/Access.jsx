@@ -6,90 +6,88 @@ import {
   ChevronRight,
   Fingerprint,
   Cpu,
-  CheckCircle2,
-  Loader2
+  Loader2,
+  KeyRound,
+  Eye,
+  EyeOff
 } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { toast } from 'sonner'
-
-const AccessCard = ({
-  icon: Icon,
-  title,
-  description,
-  buttonText,
-  onClick,
-  accent = 'indigo',
-  isLoading
-}) => {
-  const accentColors = {
-    indigo:
-      'text-[var(--accent-active)] border-[var(--accent-active)]/20 hover:border-[var(--accent-active)]/50',
-    amber:
-      'text-[var(--accent-pending)] border-[var(--accent-pending)]/20 hover:border-[var(--accent-pending)]/50'
-  }
-
-  return (
-    <motion.div
-      whileHover={{ y: -5 }}
-      className={`group flex flex-col items-center space-y-6 rounded-[2.5rem] border bg-[var(--bg-secondary)] p-10 text-center transition-all ${accentColors[accent]}`}
-    >
-      <div
-        className={`relative flex h-20 w-20 items-center justify-center overflow-hidden rounded-3xl border border-inherit bg-[var(--bg-primary)] shadow-2xl transition-all group-hover:scale-110`}
-      >
-        <Icon size={32} />
-        {isLoading && (
-          <motion.div
-            initial={{ y: -100 }}
-            animate={{ y: 100 }}
-            transition={{ duration: 1.5, repeat: Infinity, ease: 'linear' }}
-            className="absolute inset-x-0 h-1 bg-[var(--accent-active)] shadow-[0_0_15px_var(--accent-active-glow)]"
-          />
-        )}
-      </div>
-      <div className="space-y-3">
-        <h3 className="text-2xl font-bold tracking-tight text-[var(--text-primary)]">{title}</h3>
-        <p className="max-w-[240px] text-sm leading-relaxed font-medium text-[var(--text-secondary)]">
-          {description}
-        </p>
-      </div>
-      <button
-        onClick={onClick}
-        disabled={isLoading}
-        className="flex h-14 w-full items-center justify-center gap-3 rounded-xl bg-[var(--text-primary)] text-[10px] font-bold tracking-widest text-[var(--bg-primary)] uppercase transition-all hover:scale-[1.02] disabled:cursor-wait disabled:opacity-50"
-      >
-        {isLoading ? (
-          <>
-            Verifying Identity <Loader2 size={14} className="animate-spin" />
-          </>
-        ) : (
-          <>
-            {buttonText} <ChevronRight size={14} />
-          </>
-        )}
-      </button>
-    </motion.div>
-  )
-}
+import { generateSecretKey, getPublicKey, nip19 } from 'nostr-tools'
 
 export default function Access() {
   const [isVerifying, setIsVerifying] = useState(false)
+  const [nsec, setNsec] = useState('')
+  const [importMode, setImportMode] = useState(false)
+  const [keyVisible, setKeyVisible] = useState(false)
   const navigate = useNavigate()
 
-  const handleLogin = (type) => {
+  // Redirect immediately if already authenticated
+  useEffect(() => {
+    if (localStorage.getItem('satohash_authed') === 'true') {
+      navigate('/vault')
+    }
+  }, [])
+
+  // Generate a brand new Nostr keypair
+  const handleGenerateKey = () => {
     setIsVerifying(true)
-    toast.info(`Initializing ${type} Authentication...`, {
-      description: 'Establishing secure sovereign tunnel.'
-    })
+    toast.info('Generating cryptographic identity...')
 
     setTimeout(() => {
-      setIsVerifying(false)
-      toast.success('Identity Verified', {
-        description: 'Welcome to the Satohash Elite Workbench.',
-        icon: <CheckCircle2 className="text-[var(--accent-success)]" />
-      })
-      navigate('/vault')
-    }, 2500)
+      try {
+        const sk = generateSecretKey()
+        const pk = getPublicKey(sk)
+        const nsecEncoded = nip19.nsecEncode(sk)
+        const npubEncoded = nip19.npubEncode(pk)
+
+        localStorage.setItem('satohash_nsec', nsecEncoded)
+        localStorage.setItem('satohash_npub', npubEncoded)
+        localStorage.setItem('satohash_pk', pk)
+        localStorage.setItem('satohash_authed', 'true')
+
+        setIsVerifying(false)
+        toast.success('Sovereign Identity Created', {
+          description: `npub: ${npubEncoded.substring(0, 20)}...`
+        })
+        navigate('/vault')
+      } catch (e) {
+        setIsVerifying(false)
+        toast.error('Key generation failed: ' + e.message)
+      }
+    }, 800)
+  }
+
+  // Import an existing nsec key
+  const handleImportKey = () => {
+    if (!nsec.trim().startsWith('nsec')) {
+      toast.error('Invalid key — must start with nsec')
+      return
+    }
+    setIsVerifying(true)
+
+    setTimeout(() => {
+      try {
+        const { data: sk } = nip19.decode(nsec.trim())
+        const pk = getPublicKey(sk)
+        const npubEncoded = nip19.npubEncode(pk)
+
+        localStorage.setItem('satohash_nsec', nsec.trim())
+        localStorage.setItem('satohash_npub', npubEncoded)
+        localStorage.setItem('satohash_pk', pk)
+        localStorage.setItem('satohash_authed', 'true')
+
+        setIsVerifying(false)
+        toast.success('Identity Verified', {
+          description: `Welcome back. npub: ${npubEncoded.substring(0, 20)}...`
+        })
+        navigate('/vault')
+      } catch (e) {
+        setIsVerifying(false)
+        toast.error('Invalid nsec key')
+      }
+    }, 600)
   }
 
   return (
@@ -111,6 +109,7 @@ export default function Access() {
       </div>
 
       <div className="relative z-10 w-full max-w-5xl space-y-16">
+        {/* Header */}
         <header className="space-y-6 text-center">
           <Link to="/" className="group mb-8 inline-flex items-center gap-3">
             <div className="relative h-10 w-10">
@@ -134,27 +133,174 @@ export default function Access() {
           </p>
         </header>
 
+        {/* Auth Cards */}
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-          <AccessCard
-            icon={Fingerprint}
-            title="Nostr Identity"
-            description="Sign in with your public key. Resolve NIP-05 for institutional provenance and co-signing."
-            buttonText="Continue with Nostr"
-            accent="indigo"
-            isLoading={isVerifying}
-            onClick={() => handleLogin('Nostr')}
-          />
-          <AccessCard
-            icon={Zap}
-            title="Lightning Wallet"
-            description="Activate settlement, API credits, and L402 access via WebLN or BOLT-12 connection."
-            buttonText="Connect Wallet"
-            accent="amber"
-            isLoading={isVerifying}
-            onClick={() => handleLogin('Lightning')}
-          />
+
+          {/* Card 1 — Generate New Identity */}
+          <motion.div
+            whileHover={{ y: -5 }}
+            className="group flex flex-col items-center space-y-6 rounded-[2.5rem] border bg-[var(--bg-secondary)] p-10 text-center transition-all"
+            style={{ borderColor: 'color-mix(in srgb, var(--accent-gold) 20%, transparent)' }}
+            onMouseEnter={e =>
+              (e.currentTarget.style.borderColor =
+                'color-mix(in srgb, var(--accent-gold) 50%, transparent)')
+            }
+            onMouseLeave={e =>
+              (e.currentTarget.style.borderColor =
+                'color-mix(in srgb, var(--accent-gold) 20%, transparent)')
+            }
+          >
+            {/* Icon */}
+            <div
+              className="relative flex h-20 w-20 items-center justify-center overflow-hidden rounded-3xl border bg-[var(--bg-primary)] shadow-2xl transition-all group-hover:scale-110"
+              style={{
+                borderColor: 'color-mix(in srgb, var(--accent-gold) 30%, transparent)',
+                color: 'var(--accent-gold)'
+              }}
+            >
+              <Fingerprint size={32} />
+              {isVerifying && (
+                <motion.div
+                  initial={{ y: -100 }}
+                  animate={{ y: 100 }}
+                  transition={{ duration: 1.5, repeat: Infinity, ease: 'linear' }}
+                  className="absolute inset-x-0 h-1"
+                  style={{
+                    background: 'var(--accent-gold)',
+                    boxShadow: '0 0 15px var(--accent-gold)'
+                  }}
+                />
+              )}
+            </div>
+
+            {/* Copy */}
+            <div className="space-y-3">
+              <h3 className="text-2xl font-bold tracking-tight text-[var(--text-primary)]">
+                New Identity
+              </h3>
+              <p className="max-w-[240px] text-sm leading-relaxed font-medium text-[var(--text-secondary)]">
+                Generate a fresh Nostr keypair. Your private key stays on your device — we never
+                see it.
+              </p>
+            </div>
+
+            {/* CTA */}
+            <button
+              onClick={handleGenerateKey}
+              disabled={isVerifying}
+              className="flex h-14 w-full items-center justify-center gap-3 rounded-xl text-[10px] font-bold tracking-widest uppercase transition-all hover:opacity-90 disabled:cursor-wait disabled:opacity-50"
+              style={{ backgroundColor: 'var(--accent-gold)', color: '#141b25' }}
+            >
+              {isVerifying ? (
+                <>
+                  <Loader2 size={14} className="animate-spin" /> Generating...
+                </>
+              ) : (
+                <>
+                  Generate Keypair <ChevronRight size={14} />
+                </>
+              )}
+            </button>
+          </motion.div>
+
+          {/* Card 2 — Import Existing nsec */}
+          <motion.div
+            whileHover={{ y: -5 }}
+            className="group flex flex-col items-center space-y-6 rounded-[2.5rem] border bg-[var(--bg-secondary)] p-10 text-center transition-all border-[var(--border)] hover:border-[var(--accent-active)]/50"
+          >
+            {/* Icon */}
+            <div className="relative flex h-20 w-20 items-center justify-center overflow-hidden rounded-3xl border border-[var(--accent-active)]/20 bg-[var(--bg-primary)] text-[var(--accent-active)] shadow-2xl transition-all group-hover:scale-110">
+              <KeyRound size={32} />
+              {isVerifying && importMode && (
+                <motion.div
+                  initial={{ y: -100 }}
+                  animate={{ y: 100 }}
+                  transition={{ duration: 1.5, repeat: Infinity, ease: 'linear' }}
+                  className="absolute inset-x-0 h-1 bg-[var(--accent-active)] shadow-[0_0_15px_var(--accent-active-glow)]"
+                />
+              )}
+            </div>
+
+            {/* Copy */}
+            <div className="space-y-3">
+              <h3 className="text-2xl font-bold tracking-tight text-[var(--text-primary)]">
+                Import nsec
+              </h3>
+              <p className="max-w-[240px] text-sm leading-relaxed font-medium text-[var(--text-secondary)]">
+                Already have a Nostr key? Import your nsec to restore your vault and history.
+              </p>
+            </div>
+
+            {/* Toggle / Input area */}
+            {!importMode ? (
+              <button
+                onClick={() => setImportMode(true)}
+                className="flex h-14 w-full items-center justify-center gap-3 rounded-xl bg-[var(--text-primary)] text-[10px] font-bold tracking-widest text-[var(--bg-primary)] uppercase transition-all hover:scale-[1.02]"
+              >
+                Import Key <ChevronRight size={14} />
+              </button>
+            ) : (
+              <div className="w-full space-y-3">
+                <div className="relative">
+                  <input
+                    type={keyVisible ? 'text' : 'password'}
+                    value={nsec}
+                    onChange={e => setNsec(e.target.value)}
+                    placeholder="nsec1..."
+                    className="h-12 w-full rounded-xl border bg-transparent px-4 pr-12 font-mono text-xs outline-none focus:border-[var(--accent-active)]"
+                    style={{ borderColor: 'var(--border)', color: 'var(--text-primary)' }}
+                    onKeyDown={e => e.key === 'Enter' && handleImportKey()}
+                    autoFocus
+                  />
+                  <button
+                    onClick={() => setKeyVisible(!keyVisible)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 opacity-50 hover:opacity-100"
+                    style={{ color: 'var(--text-secondary)' }}
+                    tabIndex={-1}
+                  >
+                    {keyVisible ? <EyeOff size={14} /> : <Eye size={14} />}
+                  </button>
+                </div>
+                <button
+                  onClick={handleImportKey}
+                  disabled={isVerifying || !nsec}
+                  className="flex h-12 w-full items-center justify-center gap-2 rounded-xl font-black text-xs uppercase transition-all hover:opacity-90 disabled:opacity-40"
+                  style={{ backgroundColor: 'var(--accent-gold)', color: '#141b25' }}
+                >
+                  {isVerifying ? (
+                    <>
+                      <Loader2 size={14} className="animate-spin" /> Verifying...
+                    </>
+                  ) : (
+                    'Import & Enter →'
+                  )}
+                </button>
+                <button
+                  onClick={() => {
+                    setImportMode(false)
+                    setNsec('')
+                    setKeyVisible(false)
+                  }}
+                  className="w-full text-center text-[10px] font-medium uppercase tracking-widest opacity-40 hover:opacity-70 transition-opacity"
+                  style={{ color: 'var(--text-secondary)' }}
+                >
+                  ← Cancel
+                </button>
+              </div>
+            )}
+          </motion.div>
         </div>
 
+        {/* Privacy Disclaimer */}
+        <p className="text-center text-xs" style={{ color: 'var(--text-muted)' }}>
+          🔐 Your private key never leaves this device. Satohash uses client-side cryptography only.
+          <br />
+          <a href="/trust" className="underline" style={{ color: 'var(--accent-gold)' }}>
+            Read our privacy architecture →
+          </a>
+        </p>
+
+        {/* Footer Trust Strip */}
         <footer className="space-y-8 text-center">
           <div className="flex flex-wrap justify-center gap-12 text-[var(--text-secondary)]">
             <div className="flex items-center gap-2">
