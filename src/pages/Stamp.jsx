@@ -78,7 +78,7 @@ export default function Stamp() {
       const arrayBuffer = await file.arrayBuffer()
       const hashBuffer = await crypto.subtle.digest('SHA-256', arrayBuffer)
       const hashArray = Array.from(new Uint8Array(hashBuffer))
-      const hash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('')
+      const hash = hashArray.map((b) => b.toString(16).padStart(2, '0')).join('')
       setHashValue(hash)
 
       setStampingStatus('anchoring')
@@ -107,7 +107,6 @@ export default function Stamp() {
       const existing = JSON.parse(localStorage.getItem('satohash_stamps') || '[]')
       existing.unshift({ ...data, filename: caseLabel || file.name, size: file.size })
       localStorage.setItem('satohash_stamps', JSON.stringify(existing.slice(0, 100)))
-
     } catch (err) {
       setError(err.message || 'Failed to stamp. Is the server running?')
       setStampingStatus('idle')
@@ -116,11 +115,9 @@ export default function Stamp() {
 
   // Progress percentage per status
   const progressPercent =
-    stampingStatus === 'hashing' ? '30%' :
-    stampingStatus === 'anchoring' ? '70%' :
-    '100%'
+    stampingStatus === 'hashing' ? '30%' : stampingStatus === 'anchoring' ? '70%' : '100%'
 
-  const estimatedCost = feeEstimates ? (file?.size || 0) * feeEstimates[feeTier] / 1000 : 0 // Rough estimate
+  const estimatedCost = feeEstimates ? ((files[0]?.size || 0) * feeEstimates[feeTier]) / 1000 : 0 // Rough estimate
 
   return (
     <div className="mx-auto max-w-6xl space-y-12 p-8">
@@ -204,7 +201,9 @@ export default function Stamp() {
                     className="hidden"
                     onChange={(e) => {
                       if (e.target.files?.[0]) {
-                        setFiles(isCapsuleMode ? [...files, e.target.files[0]] : [e.target.files[0]])
+                        setFiles(
+                          isCapsuleMode ? [...files, e.target.files[0]] : [e.target.files[0]]
+                        )
                       }
                     }}
                   />
@@ -224,31 +223,56 @@ export default function Stamp() {
                 >
                   <div
                     className="flex items-center gap-3 rounded-2xl border p-4"
-                    style={{ borderColor: 'var(--accent-success)', backgroundColor: 'rgba(34,211,165,0.08)' }}
+                    style={{
+                      borderColor: 'var(--accent-success)',
+                      backgroundColor: 'rgba(34,211,165,0.08)'
+                    }}
                   >
                     <CheckCircle size={24} style={{ color: 'var(--accent-success)' }} />
                     <div>
-                      <p className="font-black text-sm" style={{ color: 'var(--accent-success)' }}>Anchored to Bitcoin</p>
-                      <p className="font-mono text-xs opacity-60">ID: {proofResult.id?.substring(0, 16)}...</p>
+                      <p className="text-sm font-black" style={{ color: 'var(--accent-success)' }}>
+                        Anchored to Bitcoin
+                      </p>
+                      <p className="font-mono text-xs opacity-60">
+                        ID: {proofResult.id?.substring(0, 16)}...
+                      </p>
                     </div>
                   </div>
                   <div
-                    className="rounded-2xl border p-4 space-y-2"
-                    style={{ borderColor: 'var(--border)', backgroundColor: 'var(--surface-raised)' }}
+                    className="space-y-2 rounded-2xl border p-4"
+                    style={{
+                      borderColor: 'var(--border)',
+                      backgroundColor: 'var(--surface-raised)'
+                    }}
                   >
-                    <p className="text-xs font-bold uppercase tracking-widest" style={{ color: 'var(--text-secondary)' }}>SHA-256 Hash</p>
-                    <p className="font-mono text-xs break-all" style={{ color: 'var(--accent-gold)' }}>{hashValue}</p>
+                    <p
+                      className="text-xs font-bold tracking-widest uppercase"
+                      style={{ color: 'var(--text-secondary)' }}
+                    >
+                      SHA-256 Hash
+                    </p>
+                    <p
+                      className="font-mono text-xs break-all"
+                      style={{ color: 'var(--accent-gold)' }}
+                    >
+                      {hashValue}
+                    </p>
                   </div>
                   <div className="flex gap-3">
                     <button
-                      onClick={() => { setStampingStatus('idle'); setFiles([]); setProofResult(null); setHashValue('') }}
+                      onClick={() => {
+                        setStampingStatus('idle')
+                        setFiles([])
+                        setProofResult(null)
+                        setHashValue('')
+                      }}
                       className="flex-1 rounded-xl border py-3 text-xs font-black uppercase transition-all hover:text-white"
                       style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
                     >
                       New Stamp
                     </button>
                     <button
-                      onClick={() => window.location.href = '/vault'}
+                      onClick={() => (window.location.href = '/vault')}
                       className="flex-1 rounded-xl py-3 text-xs font-black uppercase transition-all hover:opacity-90"
                       style={{ backgroundColor: 'var(--accent-gold)', color: '#141b25' }}
                     >
@@ -268,9 +292,7 @@ export default function Stamp() {
                       <span>
                         {stampingStatus === 'hashing' ? 'Local Hashing' : 'Anchoring to Bitcoin'}
                       </span>
-                      <span className="text-[var(--accent-gold)]">
-                        {progressPercent}
-                      </span>
+                      <span className="text-[var(--accent-gold)]">{progressPercent}</span>
                     </div>
                     <div className="h-2 w-full overflow-hidden rounded-full bg-[var(--border)]">
                       <motion.div
