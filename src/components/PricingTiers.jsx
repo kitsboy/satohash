@@ -1,15 +1,15 @@
-import { motion } from 'framer-motion';
-import { 
-  Check, 
-  Zap, 
-  Building2, 
+import { motion } from 'framer-motion'
+import {
+  Check,
+  Zap,
+  Building2,
   Bitcoin,
   Infinity,
   Shield,
   Clock,
   Globe,
   ArrowRight
-} from 'lucide-react';
+} from 'lucide-react'
 
 const TIERS = [
   {
@@ -26,7 +26,7 @@ const TIERS = [
       { text: 'Standard calendar servers', included: true },
       { text: 'Webhook notifications', included: false },
       { text: 'Priority confirmation', included: false },
-      { text: 'Custom calendar', included: false },
+      { text: 'Custom calendar', included: false }
     ],
     cta: 'Get Started Free',
     popular: false
@@ -45,7 +45,7 @@ const TIERS = [
       { text: 'Premium calendar servers', included: true },
       { text: 'Webhook notifications', included: true },
       { text: 'Priority confirmation', included: true },
-      { text: 'Custom calendar', included: false },
+      { text: 'Custom calendar', included: false }
     ],
     cta: 'Start Pro Trial',
     popular: true
@@ -64,12 +64,12 @@ const TIERS = [
       { text: 'Private calendar cluster', included: true },
       { text: 'Webhook + WebSocket', included: true },
       { text: 'Guaranteed confirmation', included: true },
-      { text: 'Custom integration', included: true },
+      { text: 'Custom integration', included: true }
     ],
     cta: 'Contact Sales',
     popular: false
   }
-];
+]
 
 const PAYMENT_INFO = [
   {
@@ -85,9 +85,9 @@ const PAYMENT_INFO = [
   {
     icon: Shield,
     title: 'Privacy First',
-    description: 'Lightning payments preserve your privacy. We don\'t store payment data.'
+    description: "Lightning payments preserve your privacy. We don't store payment data."
   }
-];
+]
 
 export default function PricingTiers() {
   const getColorClasses = (color) => {
@@ -110,62 +110,64 @@ export default function PricingTiers() {
         text: 'text-purple-400',
         button: 'bg-purple-500 hover:bg-purple-600'
       }
-    };
-    return colors[color];
-  };
+    }
+    return colors[color]
+  }
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      className="space-y-12"
-    >
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-12">
       {/* Pricing Cards */}
-      <div className="grid md:grid-cols-3 gap-6">
+      <div className="grid gap-6 md:grid-cols-3">
         {TIERS.map((tier) => {
-          const Icon = tier.icon;
-          const colors = getColorClasses(tier.color);
-          
+          const Icon = tier.icon
+          const colors = getColorClasses(tier.color)
+
           return (
             <div
               key={tier.name}
-              className={`relative rounded-2xl border ${tier.popular ? colors.border : 'border-gray-700'} 
-                ${tier.popular ? 'bg-gray-800/80' : 'bg-gray-800/50'} overflow-hidden
-                ${tier.popular ? 'scale-105 shadow-2xl shadow-orange-500/20' : ''}`}
+              className={`relative rounded-2xl border ${tier.popular ? colors.border : 'border-gray-700'} ${tier.popular ? 'bg-gray-800/80' : 'bg-gray-800/50'} overflow-hidden ${tier.popular ? 'scale-105 shadow-2xl shadow-orange-500/20' : ''}`}
             >
               {/* Popular Badge */}
               {tier.popular && (
-                <div className="absolute top-0 right-0 bg-orange-500 text-white text-xs font-bold px-4 py-1 rounded-bl-lg">
+                <div className="absolute top-0 right-0 rounded-bl-lg bg-orange-500 px-4 py-1 text-xs font-bold text-white">
                   POPULAR
                 </div>
               )}
 
               <div className="p-6">
                 {/* Header */}
-                <div className={`w-12 h-12 rounded-xl ${colors.bg} flex items-center justify-center mb-4`}>
-                  <Icon className={`w-6 h-6 ${colors.text}`} />
+                <div
+                  className={`h-12 w-12 rounded-xl ${colors.bg} mb-4 flex items-center justify-center`}
+                >
+                  <Icon className={`h-6 w-6 ${colors.text}`} />
                 </div>
-                
-                <h3 className="text-2xl font-bold mb-1">{tier.name}</h3>
-                <p className="text-sm text-gray-400 mb-4">{tier.description}</p>
+
+                <h3 className="mb-1 text-2xl font-bold">{tier.name}</h3>
+                <p className="mb-4 text-sm text-gray-400">{tier.description}</p>
 
                 {/* Price */}
                 <div className="mb-6">
                   <div className="flex items-baseline gap-2">
-                    <span className={`text-4xl font-bold ${tier.price.sats === 0 ? 'text-green-400' : colors.text}`}>
+                    <span
+                      className={`text-4xl font-bold ${tier.price.sats === 0 ? 'text-green-400' : colors.text}`}
+                    >
                       {tier.price.display}
                     </span>
                     {tier.price.per && (
-                      <span className="text-gray-500 text-sm">{tier.price.per}</span>
+                      <span className="text-sm text-gray-500">{tier.price.per}</span>
                     )}
                   </div>
                   {tier.price.sats > 0 && (
-                    <p className="text-xs text-gray-500 mt-1">~${(tier.price.sats * 0.0007).toFixed(3)} USD at current rates</p>
+                    <p className="mt-1 text-xs text-gray-500">
+                      ~${(tier.price.sats * 0.0007).toFixed(3)} USD at current rates
+                    </p>
                   )}
                 </div>
 
                 {/* CTA Button */}
-                <button className={`w-full py-3 rounded-lg font-semibold text-white transition-all ${colors.button} mb-6`}>
+                <button
+                  className={`w-full rounded-lg py-3 font-semibold text-white transition-all ${colors.button} mb-6`}
+                >
                   {tier.cta}
                 </button>
 
@@ -174,9 +176,9 @@ export default function PricingTiers() {
                   {tier.features.map((feature, fidx) => (
                     <li key={fidx} className="flex items-start gap-3">
                       {feature.included ? (
-                        <Check className={`w-5 h-5 ${colors.text} flex-shrink-0`} />
+                        <Check className={`h-5 w-5 ${colors.text} flex-shrink-0`} />
                       ) : (
-                        <span className="w-5 h-5 flex-shrink-0 text-gray-600">—</span>
+                        <span className="h-5 w-5 flex-shrink-0 text-gray-600">—</span>
                       )}
                       <span className={feature.included ? 'text-gray-300' : 'text-gray-500'}>
                         {feature.text}
@@ -186,36 +188,36 @@ export default function PricingTiers() {
                 </ul>
               </div>
             </div>
-          );
+          )
         })}
       </div>
 
       {/* Payment Info */}
-      <div className="grid md:grid-cols-3 gap-6">
+      <div className="grid gap-6 md:grid-cols-3">
         {PAYMENT_INFO.map((info, idx) => {
-          const Icon = info.icon;
+          const Icon = info.icon
           return (
-            <div key={idx} className="bg-gray-800/50 rounded-xl p-6 border border-gray-700">
-              <div className="w-10 h-10 rounded-lg bg-orange-500/20 flex items-center justify-center mb-4">
-                <Icon className="w-5 h-5 text-orange-400" />
+            <div key={idx} className="rounded-xl border border-gray-700 bg-gray-800/50 p-6">
+              <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-orange-500/20">
+                <Icon className="h-5 w-5 text-orange-400" />
               </div>
-              <h4 className="font-semibold mb-2">{info.title}</h4>
+              <h4 className="mb-2 font-semibold">{info.title}</h4>
               <p className="text-sm text-gray-400">{info.description}</p>
             </div>
-          );
+          )
         })}
       </div>
 
       {/* Rate Limits Detail */}
-      <div className="bg-gradient-to-r from-gray-800/50 to-gray-900/50 rounded-2xl p-6 border border-gray-700">
-        <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
-          <Globe className="w-5 h-5 text-orange-400" />
+      <div className="rounded-2xl border border-gray-700 bg-gradient-to-r from-gray-800/50 to-gray-900/50 p-6">
+        <h3 className="mb-6 flex items-center gap-2 text-xl font-bold">
+          <Globe className="h-5 w-5 text-orange-400" />
           Rate Limits & Fair Use
         </h3>
-        
-        <div className="grid md:grid-cols-2 gap-8">
+
+        <div className="grid gap-8 md:grid-cols-2">
           <div>
-            <h4 className="font-semibold mb-3 text-gray-300">Request Limits</h4>
+            <h4 className="mb-3 font-semibold text-gray-300">Request Limits</h4>
             <ul className="space-y-2 text-sm text-gray-400">
               <li className="flex justify-between">
                 <span>Free tier</span>
@@ -227,13 +229,15 @@ export default function PricingTiers() {
               </li>
               <li className="flex justify-between">
                 <span>Enterprise</span>
-                <span className="text-white"><Infinity className="w-4 h-4 inline" /> Unlimited</span>
+                <span className="text-white">
+                  <Infinity className="inline h-4 w-4" /> Unlimited
+                </span>
               </li>
             </ul>
           </div>
-          
+
           <div>
-            <h4 className="font-semibold mb-3 text-gray-300">Burst Limits</h4>
+            <h4 className="mb-3 font-semibold text-gray-300">Burst Limits</h4>
             <ul className="space-y-2 text-sm text-gray-400">
               <li className="flex justify-between">
                 <span>Free tier</span>
@@ -251,28 +255,35 @@ export default function PricingTiers() {
           </div>
         </div>
 
-        <div className="mt-6 pt-6 border-t border-gray-700">
+        <div className="mt-6 border-t border-gray-700 pt-6">
           <p className="text-sm text-gray-500">
-            Rate limits reset daily at 00:00 UTC. Need higher limits? 
-            <a href="#" className="text-orange-400 hover:text-orange-300 ml-1">
+            Rate limits reset daily at 00:00 UTC. Need higher limits?{' '}
+            <a
+              href="mailto:hello@giveabit.io?subject=Rate limit increase request"
+              className="ml-1 text-orange-400 hover:text-orange-300"
+            >
               Contact our team
-            </a>.
+            </a>
+            .
           </p>
         </div>
       </div>
 
       {/* Enterprise CTA */}
-      <div className="text-center py-8">
-        <h3 className="text-2xl font-bold mb-3">Building something big?</h3>
-        <p className="text-gray-400 mb-6">
+      <div className="py-8 text-center">
+        <h3 className="mb-3 text-2xl font-bold">Building something big?</h3>
+        <p className="mb-6 text-gray-400">
           Get dedicated infrastructure, custom integrations, and dedicated support.
         </p>
-        <button className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-gray-800 hover:bg-gray-700 border border-gray-600 transition-colors">
-          <Building2 className="w-5 h-5" />
+        <a
+          href="mailto:hello@giveabit.io?subject=Enterprise inquiry"
+          className="inline-flex items-center gap-2 rounded-lg border border-gray-600 bg-gray-800 px-6 py-3 transition-colors hover:bg-gray-700"
+        >
+          <Building2 className="h-5 w-5" />
           Talk to Sales
-          <ArrowRight className="w-4 h-4" />
-        </button>
+          <ArrowRight className="h-4 w-4" />
+        </a>
       </div>
     </motion.div>
-  );
+  )
 }

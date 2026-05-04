@@ -1,25 +1,21 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { QRCodeSVG } from 'qrcode.react'
-import { Copy, Check, Zap, Globe, Heart, ShieldCheck, ArrowRight } from 'lucide-react'
+import { Copy, Check, Heart, ShieldCheck } from 'lucide-react'
 import Modal from './Modal'
 import Button from './Button'
 
-const DUMMY_BTC_ADDRESS = 'bc1qexampleonchainaddress0000000000000000'
-const DUMMY_LIGHTNING_INVOICE = 'lnbc1exampleinvoice...'
+const BTC_ADDRESS = 'bc1qhm5ndfjhqxdk3cx0pngyps4f5nnwdckulmge6c8keyf2pk0neqtshjn8ad'
 
 export default function DonationModal({ isOpen, onClose }) {
   const { t } = useTranslation()
-  const [activeTab, setActiveTab] = useState('lightning') // Default to Lightning for the 'Bitcoin vibe'
   const [copied, setCopied] = useState(false)
 
-  const copyToClipboard = (text) => {
-    navigator.clipboard.writeText(text)
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(BTC_ADDRESS)
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
   }
-
-  const activeAddress = activeTab === 'btc' ? DUMMY_BTC_ADDRESS : DUMMY_LIGHTNING_INVOICE
 
   return (
     <Modal
@@ -54,74 +50,13 @@ export default function DonationModal({ isOpen, onClose }) {
           {t('donation.description')}
         </p>
 
-        {/* Network Switcher Tabs */}
-        <div
-          style={{
-            display: 'flex',
-            background: 'var(--color-surface)',
-            padding: '6px',
-            borderRadius: '16px',
-            marginBottom: '32px',
-            border: '1px solid var(--color-border)'
-          }}
-        >
-          <button
-            onClick={() => setActiveTab('lightning')}
-            style={{
-              flex: 1,
-              padding: '12px',
-              borderRadius: '12px',
-              border: 'none',
-              background: activeTab === 'lightning' ? 'white' : 'transparent',
-              boxShadow: activeTab === 'lightning' ? '0 4px 12px rgba(0,0,0,0.05)' : 'none',
-              color:
-                activeTab === 'lightning' ? 'var(--color-primary)' : 'var(--color-text-tertiary)',
-              fontWeight: '800',
-              fontSize: '14px',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '8px',
-              transition: 'all 0.3s ease'
-            }}
-          >
-            <Zap size={16} fill={activeTab === 'lightning' ? 'var(--color-primary)' : 'none'} />
-            Lightning
-          </button>
-          <button
-            onClick={() => setActiveTab('btc')}
-            style={{
-              flex: 1,
-              padding: '12px',
-              borderRadius: '12px',
-              border: 'none',
-              background: activeTab === 'btc' ? 'white' : 'transparent',
-              boxShadow: activeTab === 'btc' ? '0 4px 12px rgba(0,0,0,0.05)' : 'none',
-              color: activeTab === 'btc' ? 'var(--color-primary)' : 'var(--color-text-tertiary)',
-              fontWeight: '800',
-              fontSize: '14px',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '8px',
-              transition: 'all 0.3s ease'
-            }}
-          >
-            <Globe size={16} />
-            On-Chain
-          </button>
-        </div>
-
         {/* QR Code Frame */}
         <div
           style={{
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            marginBottom: '32px',
-            animation: 'fade-in 0.4s ease-out'
+            marginBottom: '32px'
           }}
         >
           <div
@@ -136,18 +71,10 @@ export default function DonationModal({ isOpen, onClose }) {
             }}
           >
             <QRCodeSVG
-              value={activeAddress}
+              value={`bitcoin:${BTC_ADDRESS}`}
               size={220}
               level="H"
               includeMargin={false}
-              imageSettings={{
-                src: 'https://giveabit.io/wp-content/uploads/2022/04/sats_new.png',
-                x: undefined,
-                y: undefined,
-                height: 40,
-                width: 40,
-                excavate: true
-              }}
             />
           </div>
 
@@ -164,7 +91,7 @@ export default function DonationModal({ isOpen, onClose }) {
               gap: '12px',
               cursor: 'pointer'
             }}
-            onClick={() => copyToClipboard(activeAddress)}
+            onClick={copyToClipboard}
           >
             <div style={{ overflow: 'hidden' }}>
               <div
@@ -177,7 +104,7 @@ export default function DonationModal({ isOpen, onClose }) {
                   marginBottom: '4px'
                 }}
               >
-                {activeTab === 'lightning' ? 'Lightning Invoice' : 'Bitcoin Address'}
+                Bitcoin Address
               </div>
               <div
                 style={{
@@ -190,7 +117,7 @@ export default function DonationModal({ isOpen, onClose }) {
                   fontWeight: '600'
                 }}
               >
-                {activeAddress}
+                {BTC_ADDRESS}
               </div>
             </div>
             <div

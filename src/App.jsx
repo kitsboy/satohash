@@ -8,7 +8,7 @@ import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 
 // Lazy loaded planes
-import VerifyPublic from './pages/VerifyPublic';
+import VerifyPublic from './pages/VerifyPublic'
 const Vault = React.lazy(() => import('./pages/Vault'))
 const Stamp = React.lazy(() => import('./pages/Stamp'))
 const Verify = React.lazy(() => import('./pages/VerificationTool'))
@@ -62,26 +62,156 @@ function AppContent() {
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/access" element={<Access />} />
-        <Route path="/vault" element={<ProtectedRoute><Vault /></ProtectedRoute>} />
-        <Route path="/stamp" element={<ProtectedRoute><Stamp /></ProtectedRoute>} />
-        <Route path="/verify" element={<ProtectedRoute><Verify /></ProtectedRoute>} />
-<Route path="/verify/:id" element={<VerifyPublic />} />
-        <Route path="/contracts" element={<ProtectedRoute><Contracts /></ProtectedRoute>} />
-        <Route path="/snapper" element={<ProtectedRoute><Snapper /></ProtectedRoute>} />
-        <Route path="/certificates" element={<ProtectedRoute><Certificates /></ProtectedRoute>} />
-        <Route path="/developer" element={<ProtectedRoute><Developer /></ProtectedRoute>} />
-        <Route path="/atlas" element={<ProtectedRoute><Atlas /></ProtectedRoute>} />
-        <Route path="/nodes" element={<ProtectedRoute><Nodes /></ProtectedRoute>} />
-        <Route path="/explorer" element={<ProtectedRoute><Explorer /></ProtectedRoute>} />
-        <Route path="/audit-log" element={<ProtectedRoute><Vault /></ProtectedRoute>} /> {/* Reusing Vault as audit log for now */}
-        <Route path="/documentation" element={<ProtectedRoute><Developer /></ProtectedRoute>} /> {/* Reusing Developer for docs */}
-        <Route path="/status" element={<ProtectedRoute><Atlas /></ProtectedRoute>} /> {/* Reusing Atlas for status */}
-        <Route path="/trust-center" element={<ProtectedRoute><Trust /></ProtectedRoute>} />
+        <Route
+          path="/vault"
+          element={
+            <ProtectedRoute>
+              <Vault />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/stamp"
+          element={
+            <ProtectedRoute>
+              <Stamp />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/verify"
+          element={
+            <ProtectedRoute>
+              <Verify />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/verify/:id" element={<VerifyPublic />} />
+        <Route
+          path="/contracts"
+          element={
+            <ProtectedRoute>
+              <Contracts />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/snapper"
+          element={
+            <ProtectedRoute>
+              <Snapper />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/certificates"
+          element={
+            <ProtectedRoute>
+              <Certificates />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/developer"
+          element={
+            <ProtectedRoute>
+              <Developer />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/developers"
+          element={
+            <ProtectedRoute>
+              <Developer />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/atlas"
+          element={
+            <ProtectedRoute>
+              <Atlas />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/nodes"
+          element={
+            <ProtectedRoute>
+              <Nodes />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/explorer"
+          element={
+            <ProtectedRoute>
+              <Explorer />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/audit-log"
+          element={
+            <ProtectedRoute>
+              <Vault />
+            </ProtectedRoute>
+          }
+        />{' '}
+        {/* Reusing Vault as audit log for now */}
+        <Route
+          path="/documentation"
+          element={
+            <ProtectedRoute>
+              <Developer />
+            </ProtectedRoute>
+          }
+        />{' '}
+        {/* Reusing Developer for docs */}
+        <Route
+          path="/status"
+          element={
+            <ProtectedRoute>
+              <Atlas />
+            </ProtectedRoute>
+          }
+        />{' '}
+        {/* Reusing Atlas for status */}
+        <Route
+          path="/trust-center"
+          element={
+            <ProtectedRoute>
+              <Trust />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/about" element={<About />} />
         <Route path="/trust" element={<Trust />} />
-        <Route path="/templates" element={<ProtectedRoute><NotaryTemplates /></ProtectedRoute>} />
-        <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
-        <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+        <Route
+          path="/templates"
+          element={
+            <ProtectedRoute>
+              <NotaryTemplates />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/settings"
+          element={
+            <ProtectedRoute>
+              <Settings />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Suspense>
