@@ -31,7 +31,6 @@ import { addSignerToProof } from './collaboration.js';
 import Stripe from 'stripe';
 import adminRouter from './admin.js';
 import nftRouter from './routes/nft.js';
-import { z } from 'zod';
 
 // New Productions Items 1-7
 import { runMigrations } from './migrations.js';
