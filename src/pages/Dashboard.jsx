@@ -41,7 +41,7 @@ function UpsellModal({ isOpen, onClose, onSubscribe }) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
           onClick={onClose}
         >
           <motion.div
@@ -55,12 +55,19 @@ function UpsellModal({ isOpen, onClose, onSubscribe }) {
               <Crown className="h-8 w-8 text-amber-500" />
               <button onClick={onClose} className="text-slate-400 hover:text-slate-600">
                 <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
                 </svg>
               </button>
             </div>
             <h3 className="mb-4 text-2xl font-bold text-indigo-900">Upgrade to Pro</h3>
-            <p className="mb-6 text-slate-600">Unlock unlimited stamps, priority support, and advanced analytics. Only $9/month.</p>
+            <p className="mb-6 text-slate-600">
+              Unlock unlimited stamps, priority support, and advanced analytics. Only $9/month.
+            </p>
             <div className="space-y-4">
               <button
                 onClick={onSubscribe}
@@ -69,7 +76,10 @@ function UpsellModal({ isOpen, onClose, onSubscribe }) {
                 <CreditCard className="mr-2 inline h-5 w-5" />
                 Subscribe Now
               </button>
-              <button onClick={onClose} className="w-full rounded-xl border border-slate-200 px-4 py-3 text-slate-600 hover:bg-slate-50">
+              <button
+                onClick={onClose}
+                className="w-full rounded-xl border border-slate-200 px-4 py-3 text-slate-600 hover:bg-slate-50"
+              >
                 Maybe Later
               </button>
             </div>
@@ -80,10 +90,8 @@ function UpsellModal({ isOpen, onClose, onSubscribe }) {
         </motion.div>
       )}
     </AnimatePresence>
-  );
+  )
 }
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
 
 export default function Dashboard() {
   const [file, setFile] = useState(null)
@@ -117,7 +125,8 @@ export default function Dashboard() {
 
   const handleFileProcessed = async (processedFile) => {
     // Simulate free limit (e.g., 5 stamps/day)
-    if (userTier === 'free' && Math.random() < 0.8) { // 80% chance to trigger upsell for demo
+    if (userTier === 'free' && Math.random() < 0.8) {
+      // 80% chance to trigger upsell for demo
       setShowUpsell(true)
       toast.warning('Free tier limit reached. Upgrade to continue unlimited stamping.')
       return
@@ -142,24 +151,24 @@ export default function Dashboard() {
       toast.success('Successfully anchored to Bitcoin!')
 
       // Increment stamp count and check achievements
-      const newCount = stampCount + 1;
-      localStorage.setItem('satohash_stamp_count', newCount.toString());
-      setStampCount(newCount);
+      const newCount = stampCount + 1
+      localStorage.setItem('satohash_stamp_count', newCount.toString())
+      setStampCount(newCount)
 
       // Check for achievements
-      const newAchievements = { ...achievements };
+      const newAchievements = { ...achievements }
       if (newCount === 10 && !newAchievements.firstDecade) {
-        newAchievements.firstDecade = { unlocked: true, date: new Date().toISOString() };
-        localStorage.setItem('satohash_achievements', JSON.stringify(newAchievements));
-        setAchievements(newAchievements);
-        toast.success('Achievement Unlocked: First Decade! 🎉');
+        newAchievements.firstDecade = { unlocked: true, date: new Date().toISOString() }
+        localStorage.setItem('satohash_achievements', JSON.stringify(newAchievements))
+        setAchievements(newAchievements)
+        toast.success('Achievement Unlocked: First Decade! 🎉')
       }
 
       if (newCount % 50 === 0 && !newAchievements[`milestone${newCount}`]) {
-        newAchievements[`milestone${newCount}`] = { unlocked: true, date: new Date().toISOString() };
-        localStorage.setItem('satohash_achievements', JSON.stringify(newAchievements));
-        setAchievements(newAchievements);
-        toast.success(`Achievement Unlocked: ${newCount} Anchors! 🏆`);
+        newAchievements[`milestone${newCount}`] = { unlocked: true, date: new Date().toISOString() }
+        localStorage.setItem('satohash_achievements', JSON.stringify(newAchievements))
+        setAchievements(newAchievements)
+        toast.success(`Achievement Unlocked: ${newCount} Anchors! 🏆`)
       }
     } catch (error) {
       toast.error('Failed to anchor file. Please try again.')
@@ -170,8 +179,8 @@ export default function Dashboard() {
 
   const handleVoiceStamp = (voiceFile) => {
     // Reuse the same processing logic for voice stamps
-    handleFileProcessed(voiceFile);
-    setShowVoiceStamp(false); // Hide after stamping
+    handleFileProcessed(voiceFile)
+    setShowVoiceStamp(false) // Hide after stamping
   }
 
   const handleSubscribe = async () => {
@@ -203,32 +212,33 @@ export default function Dashboard() {
 
   return (
     <>
-      <UpsellModal isOpen={showUpsell} onClose={() => setShowUpsell(false)} onSubscribe={handleSubscribe} />
-      {showVoiceStamp && (
-        <VoiceStamp
-          onStamp={handleVoiceStamp}
-          isActive={showVoiceStamp}
-        />
-      )}
+      <UpsellModal
+        isOpen={showUpsell}
+        onClose={() => setShowUpsell(false)}
+        onSubscribe={handleSubscribe}
+      />
+      {showVoiceStamp && <VoiceStamp onStamp={handleVoiceStamp} isActive={showVoiceStamp} />}
       <div className="relative min-h-screen overflow-hidden bg-[#f7f8fc] pt-32 pb-32 selection:bg-indigo-500/30">
         {/* Tier Badge */}
         <div className="absolute top-4 right-4 z-40">
-          <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-bold ${userTier === 'pro' ? 'bg-amber-100 text-amber-800' : 'bg-slate-100 text-slate-600'}`}>
-            <Crown className="w-3 h-3 mr-1" /> {userTier.toUpperCase()} Tier
+          <span
+            className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-bold ${userTier === 'pro' ? 'bg-amber-100 text-amber-800' : 'bg-slate-100 text-slate-600'}`}
+          >
+            <Crown className="mr-1 h-3 w-3" /> {userTier.toUpperCase()} Tier
           </span>
         </div>
         {/* Achievements Badge */}
         {Object.keys(achievements).length > 0 && (
           <div className="absolute top-4 left-4 z-40">
-            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800">
-              <Award className="w-3 h-3 mr-1" /> {Object.keys(achievements).length} Badges
+            <span className="inline-flex items-center rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-800">
+              <Award className="mr-1 h-3 w-3" /> {Object.keys(achievements).length} Badges
             </span>
           </div>
         )}
         {/* Voice Stamp Toggle */}
         <button
           onClick={() => setShowVoiceStamp(!showVoiceStamp)}
-          className="absolute top-20 right-4 z-40 flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-600 text-white hover:bg-indigo-700 text-sm"
+          className="absolute top-20 right-4 z-40 flex items-center gap-2 rounded-full bg-indigo-600 px-4 py-2 text-sm text-white hover:bg-indigo-700"
         >
           <Mic size={16} />
           {showVoiceStamp ? 'Hide Voice' : 'Voice Stamp'}
@@ -270,243 +280,244 @@ export default function Dashboard() {
                 <div className="grid-pattern-slate pointer-events-none absolute inset-0 opacity-[0.02]" />
                 <div className="relative z-10 flex min-h-[320px] flex-col justify-between rounded-[3.2rem] border border-slate-50 bg-white p-10">
                   {!file ? (
-                  <>
-                    <div className="flex flex-1 flex-col items-center justify-center text-center font-sans">
-                      <motion.div
-                        animate={{
-                          boxShadow: [
-                            '0 0 0px rgba(79,70,229,0)',
-                            '0 0 40px rgba(79,70,229,0.1)',
-                            '0 0 0px rgba(79,70,229,0)'
-                          ]
-                        }}
-                        transition={{ duration: 4, repeat: Infinity }}
-                        className="mb-10 flex h-24 w-24 items-center justify-center rounded-[2.5rem] border border-indigo-100 bg-indigo-50 text-indigo-600 shadow-xl"
-                      >
-                        <FileCheck size={40} />
-                      </motion.div>
-                      <h3 className="mb-4 font-sans text-3xl font-black tracking-tighter text-indigo-900 uppercase italic">
-                        Ingest Protocol.
-                      </h3>
-                      <p className="mb-10 max-w-sm leading-relaxed font-bold text-slate-500 italic">
-                        Drag any document, image, or forensic evidence to begin the cryptographic
-                        anchoring process on the Bitcoin network.
-                      </p>
+                    <>
+                      <div className="flex flex-1 flex-col items-center justify-center text-center font-sans">
+                        <motion.div
+                          animate={{
+                            boxShadow: [
+                              '0 0 0px rgba(79,70,229,0)',
+                              '0 0 40px rgba(79,70,229,0.1)',
+                              '0 0 0px rgba(79,70,229,0)'
+                            ]
+                          }}
+                          transition={{ duration: 4, repeat: Infinity }}
+                          className="mb-10 flex h-24 w-24 items-center justify-center rounded-[2.5rem] border border-indigo-100 bg-indigo-50 text-indigo-600 shadow-xl"
+                        >
+                          <FileCheck size={40} />
+                        </motion.div>
+                        <h3 className="mb-4 font-sans text-3xl font-black tracking-tighter text-indigo-900 uppercase italic">
+                          Ingest Protocol.
+                        </h3>
+                        <p className="mb-10 max-w-sm leading-relaxed font-bold text-slate-500 italic">
+                          Drag any document, image, or forensic evidence to begin the cryptographic
+                          anchoring process on the Bitcoin network.
+                        </p>
 
-                      {/* Technical Infill HUD */}
-                      <div className="mt-4 grid grid-cols-2 gap-8 text-left opacity-0 transition-all delay-100 duration-700 group-hover:opacity-100">
-                        <div className="space-y-1">
-                          <p className="text-[8px] font-black text-indigo-300 uppercase italic">
-                            Protocol_v4
-                          </p>
-                          <p className="text-[10px] font-black text-indigo-900 uppercase">
-                            SATOHASH_CORE
-                          </p>
+                        {/* Technical Infill HUD */}
+                        <div className="mt-4 grid grid-cols-2 gap-8 text-left opacity-0 transition-all delay-100 duration-700 group-hover:opacity-100">
+                          <div className="space-y-1">
+                            <p className="text-[8px] font-black text-indigo-300 uppercase italic">
+                              Protocol_v4
+                            </p>
+                            <p className="text-[10px] font-black text-indigo-900 uppercase">
+                              SATOHASH_CORE
+                            </p>
+                          </div>
+                          <div className="space-y-1">
+                            <p className="text-[8px] font-black text-indigo-300 uppercase italic">
+                              Cipher_Suite
+                            </p>
+                            <p className="text-[10px] font-black text-indigo-900 uppercase">
+                              AES_256_GCM
+                            </p>
+                          </div>
+                          <div className="space-y-1">
+                            <p className="text-[8px] font-black text-indigo-300 uppercase italic">
+                              Mesh_Latency
+                            </p>
+                            <p className="text-[10px] font-black text-emerald-500 uppercase">
+                              12ms_STABLE
+                            </p>
+                          </div>
+                          <div className="space-y-1">
+                            <p className="text-[8px] font-black text-indigo-300 uppercase italic">
+                              Audit_Trail
+                            </p>
+                            <p className="text-[10px] font-black text-indigo-900 uppercase">
+                              FULL_FORENSIC
+                            </p>
+                          </div>
                         </div>
-                        <div className="space-y-1">
-                          <p className="text-[8px] font-black text-indigo-300 uppercase italic">
-                            Cipher_Suite
-                          </p>
-                          <p className="text-[10px] font-black text-indigo-900 uppercase">
-                            AES_256_GCM
-                          </p>
+
+                        {/* Protocol Sync Animation */}
+                        <div className="mt-12 flex items-center gap-2">
+                          {Array.from({ length: 12 }).map((_, i) => (
+                            <motion.div
+                              key={i}
+                              animate={{
+                                height: [4, 12, 4],
+                                opacity: [0.1, 0.5, 0.1]
+                              }}
+                              transition={{
+                                duration: 1.5,
+                                delay: i * 0.1,
+                                repeat: Infinity,
+                                ease: 'easeInOut'
+                              }}
+                              className="w-1 rounded-full bg-indigo-600"
+                            />
+                          ))}
                         </div>
-                        <div className="space-y-1">
-                          <p className="text-[8px] font-black text-indigo-300 uppercase italic">
-                            Mesh_Latency
-                          </p>
-                          <p className="text-[10px] font-black text-emerald-500 uppercase">
-                            12ms_STABLE
-                          </p>
+                      </div>
+                      <GlobalDropzone onFileProcessed={handleFileProcessed} />
+                    </>
+                  ) : (
+                    <div className="flex flex-1 flex-col">
+                      <div className="mb-12 flex items-center justify-between">
+                        <span
+                          className={
+                            file.status === 'confirmed'
+                              ? 'rounded-xl border border-emerald-100 bg-emerald-50 px-4 py-2 text-[10px] font-black tracking-widest text-emerald-600 uppercase'
+                              : 'animate-pulse rounded-xl border border-amber-100 bg-amber-50 px-4 py-2 text-[10px] font-black tracking-widest text-amber-600 uppercase'
+                          }
+                        >
+                          {file.status === 'confirmed'
+                            ? 'BITCOIN_FINALITY_CONFIRMED'
+                            : 'MESH_PROPAGATION_PENDING'}
+                        </span>
+                        <button
+                          onClick={() => setFile(null)}
+                          className="text-[10px] font-black tracking-widest text-slate-300 uppercase italic underline decoration-2 underline-offset-4 transition-colors hover:text-indigo-900"
+                        >
+                          Reset Workbench
+                        </button>
+                      </div>
+
+                      <div className="mb-12 flex items-start gap-8">
+                        <div className="flex h-20 w-20 items-center justify-center rounded-[1.8rem] border border-indigo-100 bg-indigo-50 text-indigo-600 shadow-xl shadow-indigo-500/5">
+                          <FileCheck size={32} />
                         </div>
-                        <div className="space-y-1">
-                          <p className="text-[8px] font-black text-indigo-300 uppercase italic">
-                            Audit_Trail
-                          </p>
-                          <p className="text-[10px] font-black text-indigo-900 uppercase">
-                            FULL_FORENSIC
-                          </p>
+                        <div className="flex-1 overflow-hidden">
+                          <h2 className="mb-2 truncate text-3xl font-black tracking-tighter text-indigo-900 uppercase italic">
+                            {file.name}
+                          </h2>
+                          <div className="flex items-center gap-3">
+                            <Hash size={12} className="text-indigo-300" />
+                            <code className="truncate font-mono text-[10px] font-black text-indigo-900/30">
+                              {file.hash}
+                            </code>
+                          </div>
                         </div>
                       </div>
 
-                      {/* Protocol Sync Animation */}
-                      <div className="mt-12 flex items-center gap-2">
-                        {Array.from({ length: 12 }).map((_, i) => (
-                          <motion.div
-                            key={i}
-                            animate={{
-                              height: [4, 12, 4],
-                              opacity: [0.1, 0.5, 0.1]
-                            }}
-                            transition={{
-                              duration: 1.5,
-                              delay: i * 0.1,
-                              repeat: Infinity,
-                              ease: 'easeInOut'
-                            }}
-                            className="w-1 rounded-full bg-indigo-600"
-                          />
-                        ))}
+                      <div className="group relative mb-12 cursor-pointer overflow-hidden rounded-[2rem] border border-slate-100 bg-slate-50 p-8">
+                        <div className="absolute inset-0 bg-indigo-900 opacity-0 transition-opacity group-hover:opacity-5" />
+                        <Merkle3D hash={file.hash} />
+                      </div>
+
+                      <div className="mt-auto grid grid-cols-1 gap-4 sm:grid-cols-3">
+                        <ActionBtn
+                          icon={Download}
+                          label="Proof_OTS"
+                          onClick={downloadOTS}
+                          secondary
+                        />
+                        <ActionBtn
+                          icon={FileText}
+                          label="Certificate"
+                          onClick={() => generatePDF(file)}
+                          secondary
+                        />
+                        <ActionBtn
+                          icon={ExternalLink}
+                          label="Mempool.space"
+                          onClick={() => window.open('https://mempool.space', '_blank')}
+                          amber
+                        />
                       </div>
                     </div>
-                    <GlobalDropzone onFileProcessed={handleFileProcessed} />
-                  </>
-                ) : (
-                  <div className="flex flex-1 flex-col">
-                    <div className="mb-12 flex items-center justify-between">
-                      <span
-                        className={
-                          file.status === 'confirmed'
-                            ? 'rounded-xl border border-emerald-100 bg-emerald-50 px-4 py-2 text-[10px] font-black tracking-widest text-emerald-600 uppercase'
-                            : 'animate-pulse rounded-xl border border-amber-100 bg-amber-50 px-4 py-2 text-[10px] font-black tracking-widest text-amber-600 uppercase'
-                        }
-                      >
-                        {file.status === 'confirmed'
-                          ? 'BITCOIN_FINALITY_CONFIRMED'
-                          : 'MESH_PROPAGATION_PENDING'}
-                      </span>
-                      <button
-                        onClick={() => setFile(null)}
-                        className="text-[10px] font-black tracking-widest text-slate-300 uppercase italic underline decoration-2 underline-offset-4 transition-colors hover:text-indigo-900"
-                      >
-                        Reset Workbench
-                      </button>
-                    </div>
-
-                    <div className="mb-12 flex items-start gap-8">
-                      <div className="flex h-20 w-20 items-center justify-center rounded-[1.8rem] border border-indigo-100 bg-indigo-50 text-indigo-600 shadow-xl shadow-indigo-500/5">
-                        <FileCheck size={32} />
-                      </div>
-                      <div className="flex-1 overflow-hidden">
-                        <h2 className="mb-2 truncate text-3xl font-black tracking-tighter text-indigo-900 uppercase italic">
-                          {file.name}
-                        </h2>
-                        <div className="flex items-center gap-3">
-                          <Hash size={12} className="text-indigo-300" />
-                          <code className="truncate font-mono text-[10px] font-black text-indigo-900/30">
-                            {file.hash}
-                          </code>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="group relative mb-12 cursor-pointer overflow-hidden rounded-[2rem] border border-slate-100 bg-slate-50 p-8">
-                      <div className="absolute inset-0 bg-indigo-900 opacity-0 transition-opacity group-hover:opacity-5" />
-                      <Merkle3D hash={file.hash} />
-                    </div>
-
-                    <div className="mt-auto grid grid-cols-1 gap-4 sm:grid-cols-3">
-                      <ActionBtn
-                        icon={Download}
-                        label="Proof_OTS"
-                        onClick={downloadOTS}
-                        secondary
-                      />
-                      <ActionBtn
-                        icon={FileText}
-                        label="Certificate"
-                        onClick={() => generatePDF(file)}
-                        secondary
-                      />
-                      <ActionBtn
-                        icon={ExternalLink}
-                        label="Mempool.space"
-                        onClick={() => window.open('https://mempool.space', '_blank')}
-                        amber
-                      />
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* History Block */}
-            <div className="space-y-8">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <Terminal size={22} className="text-indigo-900" />
-                  <h3 className="text-2xl font-black tracking-tighter text-indigo-900 uppercase italic">
-                    Protocol <span className="text-indigo-600">HISTORY.</span>
-                  </h3>
+                  )}
                 </div>
+              </div>
+
+              {/* History Block */}
+              <div className="space-y-8">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-4">
+                    <Terminal size={22} className="text-indigo-900" />
+                    <h3 className="text-2xl font-black tracking-tighter text-indigo-900 uppercase italic">
+                      Protocol <span className="text-indigo-600">HISTORY.</span>
+                    </h3>
+                  </div>
+                  <Link
+                    to="/trust"
+                    className="text-[10px] font-black tracking-widest text-indigo-600 uppercase italic hover:underline"
+                  >
+                    Full System Audit
+                  </Link>
+                </div>
+                <HistoryList />
+              </div>
+            </div>
+
+            {/* Sidebar Command Panel */}
+            <div className="space-y-8 lg:col-span-4">
+              {/* Institutional Hub Card */}
+              <div className="glass-card group relative overflow-hidden bg-indigo-900 p-10 text-white shadow-2xl">
+                <div className="absolute inset-0 bg-linear-to-br from-indigo-950 to-indigo-900 opacity-100" />
+                <div className="pointer-events-none absolute top-0 right-0 p-12 opacity-10 transition-transform duration-1000 group-hover:scale-110">
+                  <ShieldCheck size={160} />
+                </div>
+                <h3 className="relative z-10 mb-8 text-2xl leading-none font-black tracking-tighter uppercase italic">
+                  Command <br /> <span className="text-indigo-400">CONSOLE.</span>
+                </h3>
+                <div className="relative z-10 space-y-4">
+                  <Link to="/developer" className="block w-full">
+                    <SideBtn icon={Cpu} label="Developer Mesh" amber />
+                  </Link>
+                  <Link to="/access" className="block w-full">
+                    <SideBtn icon={UserCheck} label="Identity Node" />
+                  </Link>
+                  <Link to="/templates" className="block w-full">
+                    <SideBtn icon={FileText} label="Notary Vault" />
+                  </Link>
+                </div>
+              </div>
+
+              {/* Live Mesh Status */}
+              <div className="glass-card border-none bg-white p-10 shadow-2xl shadow-indigo-500/5">
+                <h4 className="mb-8 text-[10px] font-black tracking-[0.4em] text-indigo-900/30 uppercase italic">
+                  Mesh_Telemetry
+                </h4>
+                <div className="space-y-6">
+                  <TeleItem icon={Globe} label="Global Mirroring" status="NOMINAL_014" emerald />
+                  <TeleItem icon={Zap} label="L2 Settlement" status="BOLT-12_ACTIVE" amber />
+                  <TeleItem icon={Box} label="Genesis Block" status="#845922" />
+                  <TeleItem icon={Lock} label="Privacy Shield" status="ZK_HARDENED" emerald />
+                </div>
+              </div>
+
+              {/* High-Fidelity Education Card */}
+              <div className="group relative overflow-hidden rounded-[2.5rem] border border-indigo-100 bg-indigo-50 p-10 italic transition-all hover:bg-white hover:shadow-2xl">
+                <div className="absolute top-0 right-0 p-8 text-indigo-900 opacity-5">
+                  <GraduationCap size={80} />
+                </div>
+                <h4 className="mb-4 text-sm font-black text-indigo-900 uppercase italic">
+                  The Giving Machine.
+                </h4>
+                <p className="mb-8 text-[11px] leading-relaxed font-bold text-slate-500 italic">
+                  Every anchor you generate funds global truth preservation. Learn about the
+                  Satohash non-profit mission.
+                </p>
                 <Link
-                  to="/trust"
-                  className="text-[10px] font-black tracking-widest text-indigo-600 uppercase italic hover:underline"
+                  to="/about"
+                  className="flex items-center gap-2 text-[10px] font-black tracking-widest text-indigo-600 uppercase italic transition-all group-hover:gap-4"
                 >
-                  Full System Audit
+                  Read Whitepaper <ChevronRight size={14} />
                 </Link>
               </div>
-              <HistoryList />
-            </div>
-          </div>
 
-          {/* Sidebar Command Panel */}
-          <div className="space-y-8 lg:col-span-4">
-            {/* Institutional Hub Card */}
-            <div className="glass-card group relative overflow-hidden bg-indigo-900 p-10 text-white shadow-2xl">
-              <div className="absolute inset-0 bg-linear-to-br from-indigo-950 to-indigo-900 opacity-100" />
-              <div className="pointer-events-none absolute top-0 right-0 p-12 opacity-10 transition-transform duration-1000 group-hover:scale-110">
-                <ShieldCheck size={160} />
+              {/* Compliance Badges */}
+              <div className="flex flex-wrap justify-center gap-6 rounded-3xl border border-emerald-100 bg-emerald-50/50 p-8">
+                <ComplianceBadge label="eIDAS Ready" />
+                <ComplianceBadge label="ESIGN Act" />
+                <ComplianceBadge label="UETA Laws" />
               </div>
-              <h3 className="relative z-10 mb-8 text-2xl leading-none font-black tracking-tighter uppercase italic">
-                Command <br /> <span className="text-indigo-400">CONSOLE.</span>
-              </h3>
-              <div className="relative z-10 space-y-4">
-                <Link to="/developer" className="block w-full">
-                  <SideBtn icon={Cpu} label="Developer Mesh" amber />
-                </Link>
-                <Link to="/access" className="block w-full">
-                  <SideBtn icon={UserCheck} label="Identity Node" />
-                </Link>
-                <Link to="/templates" className="block w-full">
-                  <SideBtn icon={FileText} label="Notary Vault" />
-                </Link>
-              </div>
-            </div>
-
-            {/* Live Mesh Status */}
-            <div className="glass-card border-none bg-white p-10 shadow-2xl shadow-indigo-500/5">
-              <h4 className="mb-8 text-[10px] font-black tracking-[0.4em] text-indigo-900/30 uppercase italic">
-                Mesh_Telemetry
-              </h4>
-              <div className="space-y-6">
-                <TeleItem icon={Globe} label="Global Mirroring" status="NOMINAL_014" emerald />
-                <TeleItem icon={Zap} label="L2 Settlement" status="BOLT-12_ACTIVE" amber />
-                <TeleItem icon={Box} label="Genesis Block" status="#845922" />
-                <TeleItem icon={Lock} label="Privacy Shield" status="ZK_HARDENED" emerald />
-              </div>
-            </div>
-
-            {/* High-Fidelity Education Card */}
-            <div className="group relative overflow-hidden rounded-[2.5rem] border border-indigo-100 bg-indigo-50 p-10 italic transition-all hover:bg-white hover:shadow-2xl">
-              <div className="absolute top-0 right-0 p-8 text-indigo-900 opacity-5">
-                <GraduationCap size={80} />
-              </div>
-              <h4 className="mb-4 text-sm font-black text-indigo-900 uppercase italic">
-                The Giving Machine.
-              </h4>
-              <p className="mb-8 text-[11px] leading-relaxed font-bold text-slate-500 italic">
-                Every anchor you generate funds global truth preservation. Learn about the Satohash
-                non-profit mission.
-              </p>
-              <Link
-                to="/about"
-                className="flex items-center gap-2 text-[10px] font-black tracking-widest text-indigo-600 uppercase italic transition-all group-hover:gap-4"
-              >
-                Read Whitepaper <ChevronRight size={14} />
-              </Link>
-            </div>
-
-            {/* Compliance Badges */}
-            <div className="flex flex-wrap justify-center gap-6 rounded-3xl border border-emerald-100 bg-emerald-50/50 p-8">
-              <ComplianceBadge label="eIDAS Ready" />
-              <ComplianceBadge label="ESIGN Act" />
-              <ComplianceBadge label="UETA Laws" />
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }
 
