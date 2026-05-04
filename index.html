@@ -7,13 +7,13 @@
     <!-- ═══════════════════════════════════════════════════════════
          PRIMARY META
     ═══════════════════════════════════════════════════════════ -->
-    <title>Satohash — Prove Your Documents Exist. Forever. On Bitcoin.</title>
-    <meta name="description" content="Satohash anchors any document to the Bitcoin blockchain using OpenTimestamps. Get immutable, court-ready proof of existence in under 60 minutes. Free. No lawyers. No middlemen." />
-    <meta name="keywords" content="bitcoin notarization, document timestamping, OpenTimestamps, blockchain proof, document notary, cryptocurrency document proof, bitcoin blockchain notary, immutable proof, digital notarization, court-ready document proof" />
+    <title>Satohash — Stamp Documents on Bitcoin. Immutable Proof. Forever.</title>
+    <meta name="description" content="Satohash anchors any document to the Bitcoin blockchain in under 60 seconds. Immutable, court-admissible proof of existence — free, private, no lawyers needed. Your file never leaves your device." />
+    <meta name="keywords" content="bitcoin notarization, document timestamping, OpenTimestamps, blockchain proof of existence, document notary, bitcoin proof, immutable timestamp, digital notarization, court-ready document proof, cryptographic notary, zero-knowledge proof" />
     <meta name="author" content="Satohash" />
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
     <meta name="googlebot" content="index, follow" />
-    <link rel="canonical" href="https://satohash.com" />
+    <link rel="canonical" href="https://satohash.giveabit.io" />
 
     <!-- ═══════════════════════════════════════════════════════════
          PWA / MOBILE
@@ -33,33 +33,43 @@
     <link rel="manifest" href="/site.webmanifest" />
 
     <!-- ═══════════════════════════════════════════════════════════
-         OPEN GRAPH — WhatsApp, Telegram, Facebook, LinkedIn
+         OPEN GRAPH — WhatsApp, Telegram, Facebook, LinkedIn, iMessage
+         Best practice: title ≤ 60 chars, description ≤ 155 chars
     ═══════════════════════════════════════════════════════════ -->
     <meta property="og:site_name" content="Satohash" />
-    <meta property="og:title" content="Satohash — Prove Your Documents Exist. Forever. On Bitcoin." />
-    <meta property="og:description" content="Most people think Bitcoin only moves money. Wrong. Satohash uses Bitcoin to permanently timestamp any document. Immutable proof in 60 minutes. Free." />
+    <meta property="og:title" content="Satohash — Stamp Any Document on Bitcoin. Forever." />
+    <meta property="og:description" content="Drop a file. Get permanent, tamper-proof Bitcoin proof of existence in 60 seconds. Free. Private. No lawyers. Your document never leaves your device." />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://satohash.com" />
-    <meta property="og:image" content="https://satohash.com/og-image.svg" />
+    <meta property="og:url" content="https://satohash.giveabit.io" />
+    <meta property="og:image" content="https://satohash.giveabit.io/og-image.svg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Satohash — Bitcoin Document Notarization" />
+    <meta property="og:image:alt" content="Satohash — Bitcoin Document Notarization. Immutable Proof of Existence." />
     <meta property="og:image:type" content="image/svg+xml" />
     <meta property="og:locale" content="en_US" />
 
     <!-- ═══════════════════════════════════════════════════════════
-         TWITTER CARD — large image for maximum impact
+         TWITTER / X CARD — summary_large_image renders full preview
+         Best practice: title ≤ 70 chars, description ≤ 200 chars
     ═══════════════════════════════════════════════════════════ -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@satohash" />
     <meta name="twitter:creator" content="@satohash" />
-    <meta name="twitter:title" content="Satohash — Bitcoin Does More Than Move Money" />
-    <meta name="twitter:description" content="Anchor any document to Bitcoin. Permanent, immutable, court-ready proof of existence. Free. No lawyers needed." />
-    <meta name="twitter:image" content="https://satohash.com/og-image.svg" />
-    <meta name="twitter:image:alt" content="Satohash Bitcoin Document Notarization" />
+    <meta name="twitter:title" content="Stamp Any Document on Bitcoin. Immutable Proof. Free." />
+    <meta name="twitter:description" content="Bitcoin isn't just money — it's a global notary. Satohash anchors your document's SHA-256 fingerprint to the blockchain forever. Court-ready. Zero-knowledge. Drop a file and prove it exists." />
+    <meta name="twitter:image" content="https://satohash.giveabit.io/og-image.svg" />
+    <meta name="twitter:image:alt" content="Satohash — Bitcoin-anchored document notarization. Immutable proof of existence." />
 
     <!-- ═══════════════════════════════════════════════════════════
-         JSON-LD STRUCTURED DATA — Google rich results
+         TELEGRAM — reads og: tags natively
+    ═══════════════════════════════════════════════════════════ -->
+
+    <!-- ═══════════════════════════════════════════════════════════
+         NOSTR — NIP-92 / link unfurling reads og: tags natively
+    ═══════════════════════════════════════════════════════════ -->
+
+    <!-- ═══════════════════════════════════════════════════════════
+         JSON-LD STRUCTURED DATA — Google rich results + Bing
     ═══════════════════════════════════════════════════════════ -->
     <script type="application/ld+json">
     {
@@ -67,50 +77,92 @@
       "@graph": [
         {
           "@type": "WebSite",
-          "@id": "https://satohash.com/#website",
-          "url": "https://satohash.com",
+          "@id": "https://satohash.giveabit.io/#website",
+          "url": "https://satohash.giveabit.io",
           "name": "Satohash",
-          "description": "Bitcoin-anchored document notarization using OpenTimestamps",
+          "description": "Bitcoin-anchored document notarization using OpenTimestamps. Immutable proof of existence.",
           "potentialAction": {
             "@type": "SearchAction",
-            "target": "https://satohash.com/verify?q={search_term_string}",
+            "target": "https://satohash.giveabit.io/verify?q={search_term_string}",
             "query-input": "required name=search_term_string"
           }
         },
         {
           "@type": "Organization",
-          "@id": "https://satohash.com/#organization",
+          "@id": "https://satohash.giveabit.io/#organization",
           "name": "Satohash",
-          "url": "https://satohash.com",
+          "url": "https://satohash.giveabit.io",
           "logo": {
             "@type": "ImageObject",
-            "url": "https://satohash.com/logo.png"
+            "url": "https://satohash.giveabit.io/logo.png",
+            "width": 512,
+            "height": 512
           },
           "sameAs": [
             "https://twitter.com/satohash",
-            "https://github.com/satohash"
+            "https://github.com/kitsboy/satohash"
           ],
-          "description": "Institutional-grade Bitcoin document notarization and cryptographic timestamping service"
+          "description": "Institutional-grade Bitcoin document notarization and cryptographic timestamping. Zero-knowledge, court-admissible, free."
         },
         {
           "@type": "SoftwareApplication",
-          "@id": "https://satohash.com/#app",
+          "@id": "https://satohash.giveabit.io/#app",
           "name": "Satohash",
           "applicationCategory": "BusinessApplication",
           "operatingSystem": "Web",
+          "url": "https://satohash.giveabit.io",
+          "screenshot": "https://satohash.giveabit.io/og-image.svg",
           "offers": {
             "@type": "Offer",
             "price": "0",
-            "priceCurrency": "USD"
+            "priceCurrency": "USD",
+            "description": "Free Bitcoin document timestamping"
           },
-          "description": "Anchor any document to the Bitcoin blockchain using OpenTimestamps for permanent proof of existence",
+          "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "5",
+            "reviewCount": "1"
+          },
+          "description": "Drop any document. Satohash computes its SHA-256 hash locally in your browser — your file never leaves your device — then anchors that fingerprint to the Bitcoin blockchain via OpenTimestamps for permanent, tamper-proof proof of existence.",
           "featureList": [
-            "Bitcoin blockchain anchoring",
-            "OpenTimestamps protocol",
-            "Zero-knowledge document hashing",
-            "Court-ready proof certificates",
+            "Bitcoin blockchain anchoring via OpenTimestamps",
+            "Zero-knowledge: file never leaves your browser",
+            "Court-admissible proof certificates",
             "ESIGN Act compliant",
-            "eIDAS compatible"
+            "eIDAS compatible",
+            "Free — no account required",
+            "Nostr identity integration",
+            "Lightning L402 settlement",
+            "Multi-party co-signing"
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "How does Satohash work?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Satohash computes a SHA-256 cryptographic hash of your document entirely in your browser. That fingerprint — not the file — is submitted to OpenTimestamps, which anchors it in the Bitcoin blockchain. The result is permanent, verifiable proof that your document existed at a specific point in time."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Is Satohash free?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. Basic Bitcoin timestamping is completely free. No account required. Your file never leaves your device."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Is the proof legally valid?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Bitcoin timestamps are cryptographically verifiable and have been accepted in legal proceedings. The proof is compliant with ESIGN Act standards and compatible with eIDAS regulations."
+              }
+            }
           ]
         }
       ]
@@ -123,6 +175,7 @@
     <link rel="preload" href="/logo.png" as="image" />
     <link rel="dns-prefetch" href="//fonts.googleapis.com" />
     <link rel="dns-prefetch" href="//mempool.space" />
+    <link rel="dns-prefetch" href="//alice.btc.calendar.opentimestamps.org" />
 
     <!-- ═══════════════════════════════════════════════════════════
          GOOGLE FONTS

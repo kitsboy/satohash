@@ -28,7 +28,7 @@ const SettingSection = ({ icon: Icon, title, description, children }) => (
   <motion.div
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
-    className="space-y-6 rounded-[2.5rem] border border-[var(--border)] bg-[var(--bg-secondary)] p-4 sm:p-6 lg:p-12 shadow-2xl"
+    className="w-full min-w-0 space-y-6 rounded-[2.5rem] border border-[var(--border)] bg-[var(--bg-secondary)] p-5 shadow-2xl sm:p-8 lg:p-10"
   >
     <div className="flex items-start justify-between">
       <div className="space-y-1">
@@ -151,7 +151,7 @@ export default function Settings() {
   }
 
   return (
-    <div className="mx-auto max-w-6xl space-y-12 p-8 pt-20 md:pt-32 pb-24">
+    <div className="mx-auto w-full max-w-6xl space-y-12 px-4 pt-16 pb-24 sm:px-6 md:pt-24 lg:px-8">
       {/* L402 Invoice Modal */}
       <AnimatePresence>
         {isInvoiceOpen && (
@@ -221,25 +221,25 @@ export default function Settings() {
       </AnimatePresence>
 
       <header className="flex flex-col justify-between gap-8 border-b border-[var(--border)] pb-12 lg:flex-row lg:items-end">
-        <div className="space-y-6">
+        <div className="min-w-0 space-y-6">
           <div className="inline-flex items-center gap-2 rounded-full border border-[var(--border-bright)] bg-white/5 px-4 py-1.5">
-            <User size={14} className="text-[var(--text-secondary)]" />
+            <User size={14} className="shrink-0 text-[var(--text-secondary)]" />
             <span className="font-mono text-[10px] font-bold tracking-[0.2em] text-[var(--text-secondary)] uppercase">
               {`Sovereign Console // CONFIGURATION_MODE`}
             </span>
           </div>
-          <h1 className="text-5xl leading-[0.85] font-black tracking-tighter uppercase md:text-7xl">
+          <h1 className="text-4xl leading-[0.85] font-black tracking-tighter uppercase sm:text-5xl md:text-7xl">
             Global <br />
             <span className="text-[var(--text-secondary)]">Preferences.</span>
           </h1>
         </div>
 
-        <div className="scrollbar-hide sticky top-0 z-10 flex overflow-x-auto rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] p-1.5 shadow-2xl">
+        <div className="scrollbar-hide flex shrink-0 overflow-x-auto rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] p-1.5 shadow-2xl">
           {['profile', 'security', 'billing', 'nodes'].map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`rounded-xl px-6 py-3 text-[10px] font-black tracking-widest whitespace-nowrap uppercase transition-all ${activeTab === tab ? 'border border-[var(--border-bright)] bg-[var(--bg-primary)] text-white shadow-lg' : 'text-[var(--text-secondary)] hover:text-white'}`}
+              className={`rounded-xl px-4 py-3 text-[10px] font-black tracking-widest whitespace-nowrap uppercase transition-all sm:px-6 ${activeTab === tab ? 'border border-[var(--border-bright)] bg-[var(--bg-primary)] text-white shadow-lg' : 'text-[var(--text-secondary)] hover:text-white'}`}
             >
               {tab}
             </button>
@@ -247,8 +247,8 @@ export default function Settings() {
         </div>
       </header>
 
-      <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
-        <div className="space-y-12 lg:col-span-8">
+      <div className="grid min-w-0 grid-cols-1 gap-12 lg:grid-cols-12">
+        <div className="min-w-0 space-y-12 lg:col-span-8">
           <AnimatePresence mode="wait">
             {activeTab === 'profile' && (
               <motion.div
@@ -263,16 +263,16 @@ export default function Settings() {
                   title="Sovereign Identity"
                   description="Update your public reputation across the Satohash mesh."
                 >
-                  <div className="flex flex-col items-center gap-6 md:gap-12 md:flex-row">
-                    <div className="group relative">
-                      <div className="flex h-40 w-40 items-center justify-center overflow-hidden rounded-[3rem] border-2 border-[var(--border-bright)] bg-[var(--bg-primary)] transition-all group-hover:scale-105 group-hover:shadow-[0_0_30px_var(--accent-active-glow)]">
-                        <User size={64} className="text-[var(--text-secondary)]" />
+                  <div className="flex flex-col items-center gap-6 md:flex-row md:items-start md:gap-12">
+                    <div className="group relative shrink-0">
+                      <div className="flex h-32 w-32 items-center justify-center overflow-hidden rounded-[3rem] border-2 border-[var(--border-bright)] bg-[var(--bg-primary)] transition-all group-hover:scale-105 group-hover:shadow-[0_0_30px_var(--accent-active-glow)] md:h-40 md:w-40">
+                        <User size={56} className="text-[var(--text-secondary)]" />
                       </div>
                       <button className="absolute -right-2 -bottom-2 flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-black shadow-2xl transition-transform hover:scale-110 active:scale-95">
                         <Camera size={20} />
                       </button>
                     </div>
-                    <div className="w-full flex-1 space-y-6">
+                    <div className="w-full min-w-0 flex-1 space-y-6">
                       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                         <div className="space-y-2">
                           <label className="text-[10px] font-black tracking-widest text-[var(--text-secondary)] uppercase">
@@ -301,19 +301,19 @@ export default function Settings() {
                         <label className="text-[10px] font-black tracking-widest text-[var(--text-secondary)] uppercase">
                           Sovereign Pubkey (NIP-19)
                         </label>
-                        <div className="flex gap-4">
+                        <div className="flex min-w-0 gap-3">
                           <input
                             type="text"
                             readOnly
                             value={profile.pubkey}
-                            className="h-14 flex-1 min-w-0 rounded-2xl border border-[var(--border)] bg-[var(--bg-primary)]/50 px-6 font-mono text-xs font-bold text-[var(--text-secondary)] outline-none truncate"
+                            className="h-14 min-w-0 flex-1 truncate rounded-2xl border border-[var(--border)] bg-[var(--bg-primary)]/50 px-4 font-mono text-xs font-bold text-[var(--text-secondary)] outline-none"
                           />
                           <button
                             onClick={() => {
                               navigator.clipboard.writeText(profile.pubkey)
                               toast.success('Identity Key Copied')
                             }}
-                            className="flex h-14 w-14 items-center justify-center rounded-2xl border border-[var(--border)] bg-[var(--bg-primary)] text-[var(--text-secondary)] transition-all hover:border-[var(--accent-active)] hover:text-[var(--accent-active)]"
+                            className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-[var(--border)] bg-[var(--bg-primary)] text-[var(--text-secondary)] transition-all hover:border-[var(--accent-active)] hover:text-[var(--accent-active)]"
                           >
                             <Copy size={18} />
                           </button>
@@ -331,11 +331,17 @@ export default function Settings() {
                       </div>
                       {localStorage.getItem('satohash_npub') && (
                         <div className="space-y-2">
-                          <label className="text-[10px] font-bold uppercase tracking-widest" style={{ color: 'var(--text-secondary)' }}>
+                          <label
+                            className="text-[10px] font-bold tracking-widest uppercase"
+                            style={{ color: 'var(--text-secondary)' }}
+                          >
                             Nostr Public Key
                           </label>
-                          <div className="h-14 flex items-center gap-3 rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] px-4">
-                            <span className="font-mono text-xs truncate" style={{ color: 'var(--accent-gold)' }}>
+                          <div className="flex h-14 items-center gap-3 rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] px-4">
+                            <span
+                              className="truncate font-mono text-xs"
+                              style={{ color: 'var(--accent-gold)' }}
+                            >
                               {localStorage.getItem('satohash_npub')}
                             </span>
                           </div>
@@ -488,7 +494,7 @@ export default function Settings() {
                                 {k.key}
                               </span>
                             </div>
-                            <div className="flex items-center gap-4 opacity-100 md:opacity-0 transition-opacity group-hover:opacity-100">
+                            <div className="flex items-center gap-4 opacity-100 transition-opacity group-hover:opacity-100 md:opacity-0">
                               <button
                                 onClick={() => {
                                   navigator.clipboard.writeText(k.key)
@@ -592,22 +598,46 @@ export default function Settings() {
                 >
                   <div className="space-y-4">
                     {[
-                      { name: 'alice.btc.calendar.opentimestamps.org', status: 'Active', latency: '42ms' },
-                      { name: 'bob.btc.calendar.opentimestamps.org', status: 'Active', latency: '38ms' },
-                      { name: 'finney.calendar.eternitywall.com', status: 'Active', latency: '61ms' },
+                      {
+                        name: 'alice.btc.calendar.opentimestamps.org',
+                        status: 'Active',
+                        latency: '42ms'
+                      },
+                      {
+                        name: 'bob.btc.calendar.opentimestamps.org',
+                        status: 'Active',
+                        latency: '38ms'
+                      },
+                      {
+                        name: 'finney.calendar.eternitywall.com',
+                        status: 'Active',
+                        latency: '61ms'
+                      }
                     ].map((node) => (
-                      <div key={node.name} className="flex items-center justify-between rounded-2xl border border-[var(--border)] bg-[var(--bg-primary)] px-5 py-4">
-                        <div className="flex items-center gap-3">
-                          <span className="h-2 w-2 rounded-full bg-[var(--accent-success)] shadow-[0_0_6px_var(--accent-success)]" />
-                          <span className="font-mono text-xs text-[var(--text-primary)] min-w-0 truncate flex-1">{node.name}</span>
+                      <div
+                        key={node.name}
+                        className="flex min-w-0 items-center justify-between gap-3 rounded-2xl border border-[var(--border)] bg-[var(--bg-primary)] px-4 py-4"
+                      >
+                        <div className="flex min-w-0 flex-1 items-center gap-3">
+                          <span className="h-2 w-2 shrink-0 rounded-full bg-[var(--accent-success)] shadow-[0_0_6px_var(--accent-success)]" />
+                          <span className="min-w-0 truncate font-mono text-xs text-[var(--text-primary)]">
+                            {node.name}
+                          </span>
                         </div>
-                        <div className="flex items-center gap-4">
-                          <span className="font-mono text-[10px] text-[var(--text-secondary)]">{node.latency}</span>
-                          <span className="rounded-md border border-[var(--accent-success)]/20 bg-[var(--accent-success)]/10 px-2 py-0.5 text-[9px] font-black uppercase text-[var(--accent-success)]">{node.status}</span>
+                        <div className="flex shrink-0 items-center gap-3">
+                          <span className="font-mono text-[10px] text-[var(--text-secondary)]">
+                            {node.latency}
+                          </span>
+                          <span className="rounded-md border border-[var(--accent-success)]/20 bg-[var(--accent-success)]/10 px-2 py-0.5 text-[9px] font-black text-[var(--accent-success)] uppercase">
+                            {node.status}
+                          </span>
                         </div>
                       </div>
                     ))}
-                    <p className="text-xs text-[var(--text-secondary)] pt-2">These are the official OpenTimestamps calendar servers. Custom node support coming soon.</p>
+                    <p className="pt-2 text-xs text-[var(--text-secondary)]">
+                      These are the official OpenTimestamps calendar servers. Custom node support
+                      coming soon.
+                    </p>
                   </div>
                 </SettingSection>
               </motion.div>
@@ -616,7 +646,7 @@ export default function Settings() {
         </div>
 
         {/* Sidebar */}
-        <div className="space-y-8 lg:col-span-4">
+        <div className="min-w-0 space-y-8 lg:col-span-4">
           <div className="space-y-10 rounded-[3rem] border border-[var(--border)] bg-[var(--bg-secondary)] p-10 shadow-2xl">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
@@ -683,8 +713,7 @@ export default function Settings() {
           </button>
         </div>
       </div>
-
-          </div>
+    </div>
   )
 }
 
