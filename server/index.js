@@ -38,7 +38,6 @@ import { validateSecrets } from './secrets-validator.js';
 import { correlationIdMiddleware, tieredRateLimiter, paywallMiddleware } from './middleware.js';
 import redis from './cache.js';
 import { performBackup } from './backup.js';
-import * as Sentry from '@sentry/node';
 import nodemailer from 'nodemailer';
 import { Anthropic } from '@anthropic-ai/sdk';
 import { nip19 } from 'nostr-tools';
