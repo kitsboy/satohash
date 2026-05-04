@@ -1,4 +1,5 @@
 import express from 'express';
+import { z } from 'zod';
 import { ethers } from 'ethers';
 import logger from '../logger.js';
 import db from '../db.js';

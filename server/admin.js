@@ -2,9 +2,17 @@
 
 // Import necessary modules
 import express from 'express';
-import redis from '../cache.js';
-import db from '../db.js';
-import logger from '../logger.js';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import redis from './cache.js';
+import db from './db.js';
+import logger from './logger.js';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+// Simple carbon footprint estimate (stub)
+const calculateCarbonFootprint = (stamps) => (stamps * 0.00012).toFixed(4) + ' kg CO2e';
 
 // Helper to get Redis key for throttling stats
 const getThrottleKey = (type = 'public') => `throttle:${type}:stats`;
@@ -21,8 +29,6 @@ const adminAuth = (req, res, next) => {
 // Initialize admin router
 const adminRouter = express.Router();
 
-import { calculateCarbonFootprint } from '../../src/utils/carbon.js'; // Alias path?
-
 // Get overall stats with carbon
 adminRouter.get('/stats', adminAuth, (req, res) => {
   const totalStamps = db.prepare("SELECT count(*) as count FROM timestamps").get().count; // Add tenant filter if auth
@@ -38,20 +44,7 @@ adminRouter.get('/stats', adminAuth, (req, res) => {
     carbon: carbon,
     uptime: process.uptime(),
     memory: process.memoryUsage(),
-    db_size: require('fs').statSync(require('path').resolve('./data/satohash.db')).size
-  });
-};
-  const totalStamps = db.prepare("SELECT count(*) as count FROM timestamps").get().count;
-  const confirmedStamps = db.prepare("SELECT count(*) as count FROM timestamps WHERE status = 'confirmed'").get().count;
-  const pendingStamps = db.prepare("SELECT count(*) as count FROM timestamps WHERE status = 'pending'").get().count;
-
-  res.json({
-    total: totalStamps,
-    confirmed: confirmedStamps,
-    pending: pendingStamps,
-    uptime: process.uptime(),
-    memory: process.memoryUsage(),
-    db_size: require('fs').statSync(require('path').resolve('./data/satohash.db')).size
+    db_size: fs.statSync(path.resolve(__dirname, '../data/satohash.db')).size
   });
 });
 

@@ -27,58 +27,13 @@ export const tieredRateLimiter = (tier = 'public') => {
 
     const targetLimit = limits[tier] || limits['public'];
 
-    // Custom Redis store for rate limiting
-    const redisStore = {
-        get: async (key) => {
-            try {
-                const data = await redis.get(`rate_limit:${key}`);
-                return data ? JSON.parse(data) : null;
-            } catch (e) {
-                logger.warn('Redis rate limit get failed, falling back to memory');
-                return undefined;
-            }
-        },
-        set: async (key, value, maxAge) => {
-            try {
-                await redis.set(`rate_limit:${key}`, JSON.stringify(value), 'EX', Math.floor(maxAge / 1000));
-            } catch (e) {
-                logger.warn('Redis rate limit set failed');
-            }
-        },
-        increment: async (key, callback) => {
-            let data;
-            try {
-                data = await redisStore.get(key);
-                if (!data) {
-                    data = { count: 0, resetTime: Date.now() + targetLimit.windowMs };
-                    await redisStore.set(key, data, targetLimit.windowMs);
-                }
-                data.count += 1;
-                await redisStore.set(key, data, targetLimit.windowMs);
-                return data.count;
-            } catch (e) {
-                // Fallback to in-memory if Redis fails
-                return callback ? callback() : 0;
-            }
-        }
-    };
-
     return rateLimit({
         windowMs: targetLimit.windowMs,
         max: targetLimit.max,
-        store: redisStore,
         standardHeaders: true,
         legacyHeaders: false,
         message: { error: 'Too many requests, slow down please.' },
         handler: (req, res, next, options) => {
-            if (config.SENTRY_DSN) {
-                Sentry.addBreadcrumb({
-                    category: 'rate_limit',
-                    message: `Rate limit exceeded for ${req.ip}`,
-                    level: 'warning',
-                    data: { uri: req.originalUrl, tier }
-                });
-            }
             logger.warn(`⚠️ Rate Limit Exceeded [${req.id}]: IP: ${req.ip} URI: ${req.originalUrl} Tier: ${tier}`);
             res.status(options.statusCode).json(options.message);
         }
@@ -89,7 +44,8 @@ export const tieredRateLimiter = (tier = 'public') => {
  * BOLT-12 Paywall / L402 Middleware
  * Intercepts requests, checking for a valid L402 token or deducts subscription credits.
  */
-import io from '../../index.js'; // Pass io or global, adjusted for mock
+let ioInstance = null;
+export const setSocketIO = (io) => { ioInstance = io; };
 
 // Intrusion detection: Redis blocklist
 const isBlocked = async (ip, redis) => {
@@ -100,7 +56,7 @@ const isBlocked = async (ip, redis) => {
   }
 };
 
-const blockIP = async (ip, redis, reason, io) => {
+const blockIP = async (ip, redis, reason) => {
   try {
     await redis.set(`blocklist:${ip}`, reason, 'EX', 3600); // 1 hour block
     if (ioInstance) ioInstance.emit('intrusion:blocked', { ip, reason, timestamp: new Date().toISOString() });
@@ -124,7 +80,7 @@ const extendedRateLimiter = (tier = 'public') => {
         const key = `rate:${ip}`;
         const count = await redis.get(key) || 0;
         if (parseInt(count) > 5) { // 5 exceeds -> block
-          await blockIP(ip, redis, 'Excessive rate limit violations', io);
+          await blockIP(ip, redis, 'Excessive rate limit violations');
         }
         await redis.incr(key);
         await redis.expire(key, 300); // 5 min window
@@ -135,8 +91,7 @@ const extendedRateLimiter = (tier = 'public') => {
   };
 };
 
-export { extendedRateLimiter as tieredRateLimiter }; // Replace
-const ioInstance = io; // Assume global io
+export { extendedRateLimiter };
 
 export const paywallMiddleware = (req, res, next) => {
     // Allow bypassing paywall via env var for testing, but default to true in PROD

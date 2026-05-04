@@ -1,4 +1,4 @@
-import { finalizeEvent, getPublicKey, generateSecretKey, verifySignature } from 'nostr-tools/pure';
+import { finalizeEvent, getPublicKey, generateSecretKey } from 'nostr-tools/pure';
 import { Relay, nip05 } from 'nostr-tools';
 import logger from './logger.js';
 

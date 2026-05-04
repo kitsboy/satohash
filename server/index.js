@@ -31,11 +31,13 @@ import { addSignerToProof } from './collaboration.js';
 import Stripe from 'stripe';
 import adminRouter from './admin.js';
 import nftRouter from './routes/nft.js';
+import { startAlertDaemon } from './daemons/index.js';
 
 // New Productions Items 1-7
 import { runMigrations } from './migrations.js';
 import { validateSecrets } from './secrets-validator.js';
 import { correlationIdMiddleware, tieredRateLimiter, paywallMiddleware } from './middleware.js';
+import authMiddleware from './authMiddleware.js';
 import redis from './cache.js';
 import { performBackup } from './backup.js';
 import nodemailer from 'nodemailer';
@@ -160,8 +162,6 @@ validateSecrets();
 try {
   runMigrations();
   if (config.NODE_ENV === 'production') performBackup();
-  // Start alert daemons
-  startAlertDaemon(io);
 } catch (migError) {
   logger.fatal(`❌ Startup Failure: ${migError.message}`);
   process.exit(1);
@@ -226,6 +226,9 @@ const io = new Server(httpServer, {
 });
 const port = config.PORT;
 
+// Start alert daemons now that io is available
+startAlertDaemon(io);
+
 // Middlewares
 app.use(pino({ logger }));
 app.use(helmet({
@@ -278,7 +281,7 @@ app.post('/api/subscribe', async (req, res) => {
   }
 
   try {
-    const { priceId = 'price_mock_pro_monthly', successUrl = `${window.location.origin}/dashboard?success=true`, cancelUrl = `${window.location.origin}/dashboard?cancel=true`, email, metadata = {} } = req.body;
+    const { priceId = 'price_mock_pro_monthly', successUrl = `${req.headers.origin || 'http://localhost:3001'}/dashboard?success=true`, cancelUrl = `${req.headers.origin || 'http://localhost:3001'}/dashboard?cancel=true`, email, metadata = {} } = req.body;
 
     // Validate priceId etc.
     if (!priceId) {

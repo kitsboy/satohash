@@ -1,6 +1,6 @@
 import logger from '../logger.js';
 import redis from '../cache.js';
-import io from 'socket.io'; // Assume io passed or global
+import db from '../db.js';
 
 // Background daemon for compliance and intrusion monitoring
 // Simulates periodic checks and emits real-time alerts

@@ -28,8 +28,14 @@ export const runMigrations = () => {
                 db.prepare("INSERT INTO applied_migrations (name) VALUES (?)").run(file);
                 logger.info(`✅ Migration applied: ${file}`);
             } catch (e) {
-                logger.error(`❌ Migration failed (${file}): ${e.message}`);
-                throw e;
+                // Non-fatal: skip migrations that try to add already-existing columns
+                if (e.message && e.message.includes('duplicate column name')) {
+                    logger.warn(`⚠️ Migration skipped (${file}): ${e.message} — column already exists, marking as applied.`);
+                    db.prepare("INSERT OR IGNORE INTO applied_migrations (name) VALUES (?)").run(file);
+                } else {
+                    logger.error(`❌ Migration failed (${file}): ${e.message}`);
+                    throw e;
+                }
             }
         }
     }
