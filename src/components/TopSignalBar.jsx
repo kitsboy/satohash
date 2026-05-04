@@ -1,7 +1,9 @@
 import { useLocation, useNavigate } from 'react-router-dom'
-import { Settings, Zap, Boxes } from 'lucide-react'
+import { Settings, Zap, Boxes, Heart } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { getFeeEstimates, getBlockHeight } from '../utils/mempool'
+import { QRCodeSVG } from 'qrcode.react'
+import { motion, AnimatePresence } from 'framer-motion'
 
 // ─── Route → human-readable breadcrumb ────────────────────────────────────
 const ROUTE_LABELS = {
@@ -57,6 +59,40 @@ function StatusPill({ children, dotColor }) {
 }
 
 // ─── TopSignalBar ─────────────────────────────────────────────────────────
+function TipPopup() {
+  return (
+    <AnimatePresence>
+      {showTip && (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95, y: 10 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.95, y: 10 }}
+          className="absolute right-0 top-full mt-2 w-72 rounded-2xl border border-[var(--border-bright)] bg-[var(--bg-secondary)] p-6 shadow-[0_25px_50px_rgba(0,0,0,0.5)] backdrop-blur-xl"
+        >
+          <div className="flex items-center justify-between border-b border-[var(--border)] pb-3">
+            <div className="flex items-center gap-2">
+              <Heart size={14} className="text-[var(--accent-active)]" />
+              <span className="text-[10px] font-bold tracking-widest text-white uppercase">Tip Satohash</span>
+            </div>
+            <button onClick={() => setShowTip(false)} className="text-[var(--text-secondary)] hover:text-white">
+              ×
+            </button>
+          </div>
+          <div className="my-4 flex aspect-square items-center justify-center rounded-xl bg-white p-2">
+            <QRCodeSVG value={`bitcoin:${btcAddress}`} size={140} level="H" includeMargin={false} />
+          </div>
+          <div className="space-y-2 text-center">
+            <p className="text-[10px] font-bold tracking-widest text-[var(--accent-active)] uppercase">Bitcoin Address</p>
+            <div className="rounded-lg border border-[var(--border)] bg-[var(--bg-primary)] p-2 font-mono text-[9px] break-all select-all">
+              {btcAddress}
+            </div>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  )
+}
+
 export default function TopSignalBar() {
   const location = useLocation()
   const navigate = useNavigate()
@@ -64,6 +100,9 @@ export default function TopSignalBar() {
 
   const [blockHeight, setBlockHeight] = useState(null)
   const [feeRate, setFeeRate] = useState(null)
+  const [showTip, setShowTip] = useState(false)
+
+  const btcAddress = 'bc1qhm5ndfjhqxdk3cx0pngyps4f5nnwdckulmge6c8keyf2pk0neqtshjn8ad'
 
   useEffect(() => {
     const fetchData = async () => {
@@ -153,7 +192,16 @@ export default function TopSignalBar() {
       </div>
 
       {/* Right: avatar + settings ------------------------------------------ */}
-      <div className="flex flex-shrink-0 items-center gap-3">
+      <div className="relative flex flex-shrink-0 items-center gap-3">
+        {/* Tip button */}
+        <button
+          onClick={() => setShowTip((prev) => !prev)}
+          className="flex h-8 w-8 items-center justify-center rounded-lg border transition-all hover:border-[var(--accent-active)] hover:bg-[var(--accent-active)/5]"
+          style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
+        >
+          <Heart size={14} className="transition-colors hover:text-[var(--accent-active)]" />
+        </button>
+
         {/* Settings icon */}
         <button
           onClick={() => navigate('/settings')}
@@ -174,6 +222,8 @@ export default function TopSignalBar() {
         >
           {initials}
         </div>
+
+        <TipPopup />
       </div>
     </div>
   )
