@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 import {
   Shield,
   Lock,
@@ -542,6 +543,39 @@ export default function TrustCenter() {
             />
           </div>
         </motion.section>
+
+        {/* ── Legal Documents Footer ─────────────────────── */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="mt-12 flex flex-wrap gap-4 justify-center"
+        >
+          <Link
+            to="/legal/terms"
+            className="text-sm font-semibold transition-opacity hover:opacity-70"
+            style={{ color: 'var(--accent-active)' }}
+          >
+            Terms of Service
+          </Link>
+          <span style={{ color: 'var(--border-bright)' }}>·</span>
+          <Link
+            to="/legal/privacy"
+            className="text-sm font-semibold transition-opacity hover:opacity-70"
+            style={{ color: 'var(--accent-active)' }}
+          >
+            Privacy Policy
+          </Link>
+          <span style={{ color: 'var(--border-bright)' }}>·</span>
+          <Link
+            to="/legal/crypto-notice"
+            className="text-sm font-semibold transition-opacity hover:opacity-70"
+            style={{ color: 'var(--accent-active)' }}
+          >
+            Cryptographic Notice
+          </Link>
+        </motion.div>
       </div>
     </div>
   )

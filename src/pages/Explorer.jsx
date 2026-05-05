@@ -7,7 +7,7 @@ export default function Explorer() {
   const [view, setView] = useState('chrono') // chrono, merkle, travel
 
   return (
-    <div className="flex h-full flex-col">
+    <div className="flex h-full flex-col pb-20">
       <header className="z-10 flex items-center justify-between border-b border-[var(--border)] bg-[var(--bg-primary)]/50 p-8 backdrop-blur-md">
         <div className="flex items-center gap-4">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-[var(--accent-active)]/30 bg-[var(--accent-active)]/10 text-[var(--accent-active)]">

@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { ArrowLeft, ShieldCheck } from 'lucide-react'
 import { motion } from 'framer-motion'
 import Button from '../../components/Button'
@@ -7,11 +8,19 @@ export default function CryptoNotice() {
   const navigate = useNavigate()
 
   return (
-    <div className="page min-h-screen bg-[var(--bg-base)] pt-[140px] pb-20">
+    <div className="page min-h-screen bg-[var(--bg-primary)] pt-[140px] pb-20">
       <div className="layout-container">
-        <Button variant="ghost" size="small" onClick={() => navigate(-1)} className="mb-12">
-          <ArrowLeft size={18} /> Back
-        </Button>
+        <div className="mb-6 flex items-center gap-4">
+          <Button variant="ghost" size="small" onClick={() => navigate(-1)} className="flex items-center gap-1.5">
+            <ArrowLeft size={18} /> Back
+          </Button>
+          <Link
+            to="/trust"
+            className="text-[11px] font-black tracking-[0.25em] text-[var(--text-secondary)] uppercase transition-colors hover:text-[var(--accent-active)]"
+          >
+            ← Back to Trust Center
+          </Link>
+        </div>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}

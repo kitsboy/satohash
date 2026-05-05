@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import {
   ArrowLeft,
@@ -296,15 +297,25 @@ export default function TermsOfService() {
 
       <div className="layout-container relative z-10 max-w-4xl">
         {/* Back */}
-        <motion.button
+        <motion.div
           initial={{ opacity: 0, x: -16 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.4 }}
-          onClick={() => navigate(-1)}
-          className="mb-10 flex items-center gap-2 text-[11px] font-black tracking-[0.25em] text-[var(--text-secondary)] uppercase transition-colors hover:text-[var(--text-primary)]"
+          className="mb-10 flex items-center gap-4"
         >
-          <ArrowLeft size={14} /> Back
-        </motion.button>
+          <button
+            onClick={() => navigate(-1)}
+            className="flex items-center gap-2 text-[11px] font-black tracking-[0.25em] text-[var(--text-secondary)] uppercase transition-colors hover:text-[var(--text-primary)]"
+          >
+            <ArrowLeft size={14} /> Back
+          </button>
+          <Link
+            to="/trust"
+            className="text-[11px] font-black tracking-[0.25em] text-[var(--text-secondary)] uppercase transition-colors hover:text-[var(--accent-active)]"
+          >
+            ← Back to Trust Center
+          </Link>
+        </motion.div>
 
         {/* Document paper */}
         <motion.div
