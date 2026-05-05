@@ -149,7 +149,7 @@ export default function Stamp() {
   const estimatedCost = feeEstimates ? ((files[0]?.size || 0) * feeEstimates[feeTier]) / 1000 : 0 // Rough estimate
 
   return (
-    <div className="mx-auto max-w-6xl space-y-12 p-8">
+    <div className="mx-auto max-w-6xl space-y-12 p-8 pb-20">
       <header className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
         <div className="space-y-2">
           <div className="flex items-center gap-3">
@@ -198,7 +198,7 @@ export default function Stamp() {
             }}
             animate={{
               borderColor: isDragging ? 'var(--accent-gold)' : 'var(--border)',
-              backgroundColor: isDragging ? 'rgba(79, 70, 229, 0.05)' : 'transparent'
+              backgroundColor: isDragging ? 'var(--surface-raised)' : 'transparent'
             }}
             className="group relative flex h-[400px] cursor-pointer flex-col items-center justify-center overflow-hidden rounded-[2.5rem] border-2 border-dashed p-12 text-center transition-colors"
           >
@@ -299,7 +299,7 @@ export default function Stamp() {
                         setProofResult(null)
                         setHashValue('')
                       }}
-                      className="flex-1 rounded-xl border py-3 text-xs font-black uppercase transition-all hover:text-white"
+                      className="flex-1 rounded-xl border py-3 text-xs font-black uppercase transition-all hover:text-[var(--text-primary)]"
                       style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
                     >
                       New Stamp
@@ -318,7 +318,7 @@ export default function Stamp() {
                         )
                         toast.success('Share link copied to clipboard')
                       }}
-                      className="rounded-xl border py-3 text-xs font-black uppercase transition-all hover:text-white"
+                      className="rounded-xl border py-3 text-xs font-black uppercase transition-all hover:text-[var(--text-primary)]"
                       style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
                     >
                       Share Proof
@@ -367,7 +367,14 @@ export default function Stamp() {
 
           {/* Error display */}
           {error && (
-            <div className="mt-4 rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-400">
+            <div
+              className="mt-4 rounded-xl border p-4 text-sm"
+              style={{
+                borderColor: 'var(--accent-danger)',
+                backgroundColor: 'rgba(239,68,68,0.08)',
+                color: 'var(--accent-danger)'
+              }}
+            >
               ⚠️ {error}
             </div>
           )}
