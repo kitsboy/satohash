@@ -23,6 +23,7 @@ import {
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
+import { useTheme } from '../components/ThemeProvider'
 
 const SettingSection = ({ icon: Icon, title, description, children }) => (
   <motion.div
@@ -32,7 +33,7 @@ const SettingSection = ({ icon: Icon, title, description, children }) => (
   >
     <div className="flex items-start justify-between">
       <div className="space-y-1">
-        <div className="flex items-center gap-3 text-white">
+        <div className="flex items-center gap-3 text-[var(--text-primary)]">
           {Icon && <Icon size={20} className="text-[var(--accent-active)]" />}
           <h3 className="text-xl font-bold tracking-tight uppercase">{title}</h3>
         </div>
@@ -57,6 +58,7 @@ const Toggle = ({ active, onToggle }) => (
 
 export default function Settings() {
   const navigate = useNavigate()
+  const { toggleTheme } = useTheme()
   const [activeTab, setActiveTab] = useState('profile')
 
   // Persisted State with Error Boundaries
@@ -115,6 +117,9 @@ export default function Settings() {
     const theme = eliteMode ? 'elite' : 'noir'
     document.documentElement.setAttribute('data-theme', theme)
     localStorage.setItem('satohash_theme', theme)
+    // Sync with ThemeProvider (toggles light-mode class alongside data-theme)
+    toggleTheme()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [eliteMode])
 
   useEffect(() => {
@@ -172,7 +177,7 @@ export default function Settings() {
   }
 
   return (
-    <div className="mx-auto w-full max-w-6xl space-y-12 px-4 pt-16 pb-24 sm:px-6 md:pt-24 lg:px-8">
+    <div className="mx-auto w-full max-w-6xl space-y-12 px-4 pt-16 pb-20 sm:px-6 md:pt-24 lg:px-8">
       {/* L402 Invoice Modal */}
       <AnimatePresence>
         {isInvoiceOpen && (
@@ -195,7 +200,7 @@ export default function Settings() {
                   size={20}
                   className="fill-[var(--accent-active)] text-[var(--accent-active)]"
                 />
-                <h3 className="text-[10px] font-black tracking-widest uppercase">
+                <h3 className="text-[10px] font-black tracking-widest text-[var(--text-primary)] uppercase">
                   L402 Settlement
                 </h3>
                 <button onClick={() => setIsInvoiceOpen(false)}>
@@ -216,7 +221,7 @@ export default function Settings() {
 
               <div className="space-y-4">
                 <div className="space-y-1">
-                  <p className="text-3xl font-black tracking-tighter text-white">500,000 SATS</p>
+                  <p className="text-3xl font-black tracking-tighter text-[var(--text-primary)]">500,000 SATS</p>
                   <p className="text-[9px] font-black tracking-[0.2em] text-[var(--text-secondary)] uppercase">
                     Institutional Credit Deposit
                   </p>
@@ -231,7 +236,7 @@ export default function Settings() {
                       description: 'Mesh credits updated (+500k SATS)'
                     })
                   }}
-                  className="h-14 w-full rounded-2xl bg-[var(--accent-active)] text-[11px] font-black tracking-widest text-white uppercase transition-all hover:scale-105"
+                  className="h-14 w-full rounded-2xl bg-[var(--accent-active)] text-[11px] font-black tracking-widest text-[var(--bg-primary)] uppercase transition-all hover:scale-105"
                 >
                   Paid with WebLN
                 </button>
@@ -260,7 +265,7 @@ export default function Settings() {
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`rounded-xl px-3 py-2 text-[10px] font-black tracking-widest whitespace-nowrap uppercase transition-all sm:px-6 lg:px-4 lg:py-3 ${activeTab === tab ? 'border border-[var(--border-bright)] bg-[var(--bg-primary)] text-white shadow-lg' : 'text-[var(--text-secondary)] hover:text-white'}`}
+              className={`rounded-xl px-3 py-2 text-[10px] font-black tracking-widest whitespace-nowrap uppercase transition-all sm:px-6 lg:px-4 lg:py-3 ${activeTab === tab ? 'border border-[var(--border-bright)] bg-[var(--bg-primary)] text-[var(--text-primary)] shadow-lg' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}
             >
               {tab}
             </button>
@@ -289,7 +294,7 @@ export default function Settings() {
                       <div className="flex h-32 w-32 items-center justify-center overflow-hidden rounded-[3rem] border-2 border-[var(--border-bright)] bg-[var(--bg-primary)] transition-all group-hover:scale-105 group-hover:shadow-[0_0_30px_var(--accent-active-glow)] md:h-40 md:w-40">
                         <User size={56} className="text-[var(--text-secondary)]" />
                       </div>
-                      <button className="absolute -right-2 -bottom-2 flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-black shadow-2xl transition-transform hover:scale-110 active:scale-95">
+                      <button className="absolute -right-2 -bottom-2 flex h-12 w-12 items-center justify-center rounded-2xl bg-[var(--text-primary)] text-[var(--bg-primary)] shadow-2xl transition-transform hover:scale-110 active:scale-95">
                         <Camera size={20} />
                       </button>
                     </div>
@@ -370,7 +375,7 @@ export default function Settings() {
                       )}
                       <button
                         onClick={handleSave}
-                        className="h-14 rounded-2xl bg-white px-10 text-[11px] font-black tracking-widest text-black uppercase transition-all hover:scale-[1.02] active:scale-[0.98]"
+                        className="h-14 rounded-2xl bg-[var(--text-primary)] px-10 text-[11px] font-black tracking-widest text-[var(--bg-primary)] uppercase transition-all hover:scale-[1.02] active:scale-[0.98]"
                       >
                         Sync Changes
                       </button>
@@ -390,7 +395,7 @@ export default function Settings() {
                           <Layers size={28} />
                         </div>
                         <div>
-                          <p className="text-lg font-bold text-white">Elite Signature Theme</p>
+                          <p className="text-lg font-bold text-[var(--text-primary)]">Elite Signature Theme</p>
                           <p className="text-[10px] font-bold tracking-widest text-[var(--text-secondary)] uppercase">
                             Toggle Sovereign Light Mode
                           </p>
@@ -405,7 +410,7 @@ export default function Settings() {
                           <RefreshCw size={28} />
                         </div>
                         <div>
-                          <p className="text-lg font-bold text-white">Network Selection</p>
+                          <p className="text-lg font-bold text-[var(--text-primary)]">Network Selection</p>
                           <p className="text-[10px] font-bold tracking-widest text-[var(--text-secondary)] uppercase">
                             Current: {security.network.toUpperCase()}
                           </p>
@@ -414,7 +419,7 @@ export default function Settings() {
                       <select
                         value={security.network}
                         onChange={(e) => setSecurity({ ...security, network: e.target.value })}
-                        className="h-10 rounded-xl border border-[var(--border-bright)] bg-[var(--bg-primary)] px-4 text-[10px] font-black tracking-widest text-white uppercase outline-none"
+                        className="h-10 rounded-xl border border-[var(--border-bright)] bg-[var(--bg-primary)] px-4 text-[10px] font-black tracking-widest text-[var(--text-primary)] uppercase outline-none"
                       >
                         <option value="mainnet">Mainnet</option>
                         <option value="testnet">Testnet (Signet)</option>
@@ -446,7 +451,7 @@ export default function Settings() {
                     <div className="border-t border-[var(--border)] pt-6">
                       <button
                         onClick={resetSettings}
-                        className="text-[10px] font-black tracking-widest text-red-500 uppercase transition-colors hover:text-red-400"
+                        className="text-[10px] font-black tracking-widest text-[var(--accent-danger)] uppercase transition-colors hover:opacity-80"
                       >
                         Purge All Sovereign Preferences
                       </button>
@@ -476,7 +481,7 @@ export default function Settings() {
                           <Fingerprint size={28} />
                         </div>
                         <div>
-                          <p className="text-lg font-bold text-white">Biometric Sign-In</p>
+                          <p className="text-lg font-bold text-[var(--text-primary)]">Biometric Sign-In</p>
                           <p className="text-[10px] font-bold tracking-widest text-[var(--text-secondary)] uppercase">
                             FIDO2 / PASSKEY ENABLED
                           </p>
@@ -494,11 +499,11 @@ export default function Settings() {
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-4 text-[var(--accent-purple)]">
                           <Key size={24} />
-                          <h4 className="text-xl font-bold text-white">API Mesh Keys</h4>
+                          <h4 className="text-xl font-bold text-[var(--text-primary)]">API Mesh Keys</h4>
                         </div>
                         <button
                           onClick={generateKey}
-                          className="h-10 rounded-xl border border-[var(--border-bright)] px-6 text-[10px] font-black tracking-widest uppercase transition-all hover:bg-white hover:text-black"
+                          className="h-10 rounded-xl border border-[var(--border-bright)] px-6 text-[10px] font-black tracking-widest uppercase transition-all hover:bg-[var(--text-primary)] hover:text-[var(--bg-primary)]"
                         >
                           + New Key
                         </button>
@@ -510,7 +515,7 @@ export default function Settings() {
                             className="group flex items-center justify-between rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] p-5"
                           >
                             <div className="space-y-1">
-                              <p className="text-sm font-bold text-white">{k.name}</p>
+                              <p className="text-sm font-bold text-[var(--text-primary)]">{k.name}</p>
                               <span className="font-mono text-[10px] tracking-widest text-[var(--text-secondary)]">
                                 {k.key}
                               </span>
@@ -521,7 +526,7 @@ export default function Settings() {
                                   navigator.clipboard.writeText(k.key)
                                   toast.success('Key copied to clipboard')
                                 }}
-                                className="text-[var(--text-secondary)] hover:text-white"
+                                className="text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
                               >
                                 <Copy size={16} />
                               </button>
@@ -530,7 +535,7 @@ export default function Settings() {
                                   setKeys(keys.filter((item) => item.id !== k.id))
                                   toast.error('Key Revoked')
                                 }}
-                                className="text-red-500/50 hover:text-red-500"
+                                className="text-[var(--accent-danger)]/50 hover:text-[var(--accent-danger)]"
                               >
                                 <Trash2 size={16} />
                               </button>
@@ -568,7 +573,7 @@ export default function Settings() {
                         />
                         <div className="flex items-center gap-2">
                           <div className={`h-1.5 w-1.5 rounded-full ${balance !== null ? 'animate-pulse bg-[var(--accent-success)] shadow-[0_0_10px_var(--accent-success)]' : 'bg-white/20'}`} />
-                          <span className="text-[10px] font-black tracking-widest text-white/60 uppercase">
+                          <span className="text-[10px] font-black tracking-widest text-[var(--text-secondary)] uppercase">
                             {balance !== null ? 'Node Connected' : 'Not Connected'}
                           </span>
                         </div>
@@ -580,7 +585,7 @@ export default function Settings() {
                         {balanceLoading ? (
                           <div className="h-12 w-48 animate-pulse rounded-xl bg-white/10" />
                         ) : balance !== null ? (
-                          <h4 className="text-5xl font-black tracking-tighter text-white">
+                          <h4 className="text-5xl font-black tracking-tighter text-[var(--text-primary)]">
                             {balance.toLocaleString()}{' '}
                             <span className="text-lg text-[var(--text-secondary)]">SATS</span>
                           </h4>
@@ -596,7 +601,7 @@ export default function Settings() {
                       </div>
                       <button
                         onClick={() => setIsInvoiceOpen(true)}
-                        className="relative z-10 h-14 w-full rounded-2xl bg-white text-[11px] font-black tracking-widest text-black uppercase transition-all hover:scale-[1.02] active:scale-[0.98]"
+                        className="relative z-10 h-14 w-full rounded-2xl bg-[var(--text-primary)] text-[11px] font-black tracking-widest text-[var(--bg-primary)] uppercase transition-all hover:scale-[1.02] active:scale-[0.98]"
                       >
                         Deposit SATS
                       </button>
@@ -606,7 +611,7 @@ export default function Settings() {
                         size={48}
                         className="mx-auto text-[var(--text-secondary)] opacity-20"
                       />
-                      <h4 className="text-xl font-bold text-white">Legacy Payments</h4>
+                      <h4 className="text-xl font-bold text-[var(--text-primary)]">Legacy Payments</h4>
                       <p className="mx-auto max-w-[200px] text-xs leading-relaxed text-[var(--text-secondary)]">
                         Satohash only accepts sovereign settlement via L402 Lightning. Legacy fiat
                         systems are unsupported.
@@ -630,6 +635,7 @@ export default function Settings() {
                   description="Configure witness nodes for redundant proof anchoring."
                 >
                   <div className="space-y-4">
+                    {/* TODO: fetch from /api/mesh/nodes */}
                     {[
                       {
                         name: 'alice.btc.calendar.opentimestamps.org',
@@ -684,7 +690,7 @@ export default function Settings() {
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <Activity size={20} className="text-[var(--accent-success)]" />
-                <h4 className="text-[10px] font-black tracking-widest text-white uppercase">
+                <h4 className="text-[10px] font-black tracking-widest text-[var(--text-primary)] uppercase">
                   Mesh Status
                 </h4>
               </div>
@@ -700,7 +706,7 @@ export default function Settings() {
           <div className="space-y-8 rounded-[3rem] border border-[var(--border)] bg-[var(--surface-raised)]/20 p-10">
             <div className="flex items-center gap-3">
               <History size={18} className="text-[var(--text-secondary)]" />
-              <h4 className="text-[10px] font-black tracking-widest text-white uppercase">
+              <h4 className="text-[10px] font-black tracking-widest text-[var(--text-primary)] uppercase">
                 Telemetry Log
               </h4>
             </div>
@@ -725,7 +731,7 @@ export default function Settings() {
                 navigate('/access')
               }
             }}
-            className="flex h-16 w-full items-center justify-center gap-3 rounded-2xl border border-red-500/30 bg-red-500/5 text-[10px] font-black tracking-widest text-red-500 uppercase shadow-lg transition-all hover:bg-red-500 hover:text-white hover:shadow-red-500/20"
+            className="flex h-16 w-full items-center justify-center gap-3 rounded-2xl border border-[var(--accent-danger)]/30 bg-[var(--accent-danger)]/5 text-[10px] font-black tracking-widest text-[var(--accent-danger)] uppercase shadow-lg transition-all hover:bg-[var(--accent-danger)] hover:text-white hover:shadow-[0_4px_20px_var(--accent-danger)]"
           >
             <LogOut size={18} /> Purge Sovereign Session
           </button>
@@ -742,7 +748,7 @@ function AlertToggle({ icon: Icon, label, active, onToggle }) {
         <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/5 transition-colors group-hover:bg-[var(--accent-active)]/10 group-hover:text-[var(--accent-active)]">
           <Icon size={18} />
         </div>
-        <span className="text-sm font-bold text-white/80 group-hover:text-white">{label}</span>
+        <span className="text-sm font-bold text-[var(--text-secondary)] group-hover:text-[var(--text-primary)]">{label}</span>
       </div>
       <Toggle active={active} onToggle={onToggle} />
     </div>
@@ -753,7 +759,7 @@ function StatusRow({ label, status, latency }) {
   return (
     <div className="flex items-center justify-between border-b border-[var(--border)] pb-4 last:border-0 last:pb-0">
       <div className="space-y-0.5">
-        <span className="text-xs font-bold text-white">{label}</span>
+        <span className="text-xs font-bold text-[var(--text-primary)]">{label}</span>
         <p className="text-[9px] font-black tracking-[0.2em] text-[var(--text-secondary)] uppercase">
           {latency}
         </p>

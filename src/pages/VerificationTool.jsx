@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import { Upload, ShieldCheck, Hash, Globe, Database, CheckCircle2, XCircle } from 'lucide-react'
 import { useState, useRef } from 'react'
 import { jsPDF } from 'jspdf'
+import { toast } from 'sonner'
 
 const MerklePathNode = ({ level, hash, active }) => (
   <div className={`flex items-center gap-4 ${active ? 'opacity-100' : 'opacity-40'}`}>
@@ -63,6 +64,7 @@ export default function VerificationTool() {
             throw new Error('Not found')
           }
         } catch {
+          toast.error('Hash not found on this node')
           setResult('error')
           setVerifyData({
             verified: false,
@@ -77,6 +79,7 @@ export default function VerificationTool() {
         })
       }
     } catch (e) {
+      toast.error('Verification service unavailable')
       setResult('error')
       setVerifyData({
         verified: false,
@@ -103,7 +106,7 @@ export default function VerificationTool() {
   }
 
   return (
-    <div className="mx-auto max-w-5xl space-y-12 p-8">
+    <div className="mx-auto max-w-5xl space-y-12 p-8 pb-20">
       <header className="space-y-2 text-center">
         <div className="mb-4 inline-flex items-center gap-3 rounded-full border border-[var(--accent-active)]/20 bg-[var(--accent-active)]/10 px-4 py-2">
           <ShieldCheck className="text-[var(--accent-active)]" size={16} />
@@ -111,7 +114,7 @@ export default function VerificationTool() {
             Courtroom-Grade Verification
           </span>
         </div>
-        <h1 className="text-5xl font-bold tracking-tighter uppercase">The Verification Shield</h1>
+        <h1 className="text-5xl font-bold tracking-tighter text-[var(--text-primary)] uppercase">The Verification Shield</h1>
         <p className="mx-auto max-w-2xl font-medium text-[var(--text-secondary)]">
           Independently verify the provenance of any digital artifact. Our engine parses .ots proofs
           and traverses the Merkle path directly to the Bitcoin blockchain.
