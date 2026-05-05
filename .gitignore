@@ -5,3 +5,5 @@ dist
 mcp.json
 data/*.db-shm
 data/*.db-wal
+.env
+data/*.db

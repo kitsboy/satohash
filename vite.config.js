@@ -21,11 +21,18 @@ export default defineConfig({
     },
     server: {
         port: 3000,
-        host: true
+        host: true,
+        proxy: {
+            '/api': 'http://localhost:3001',
+            '/socket.io': {
+                target: 'http://localhost:3001',
+                ws: true
+            }
+        }
     },
     build: {
         outDir: 'dist',
-        sourcemap: true,
+        sourcemap: false,
         chunkSizeWarningLimit: 800,
         rollupOptions: {
             output: {

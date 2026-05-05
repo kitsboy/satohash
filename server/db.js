@@ -28,7 +28,9 @@ db.exec(`
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     confirmed_at DATETIME,
     merkle_root TEXT,
-    bitcoin_block_height INTEGER
+    bitcoin_block_height INTEGER,
+    ipfs_cid TEXT,
+    archived_at DATETIME
   );
 
   CREATE INDEX IF NOT EXISTS idx_hash ON timestamps(hash);

@@ -44,7 +44,6 @@ import nodemailer from 'nodemailer';
 import { Anthropic } from '@anthropic-ai/sdk';
 import { nip19 } from 'nostr-tools';
 import { fetchNostrProfile } from './nostr.js';
-import { create } from 'ipfs-http-client';
 
 dotenv.config();
 
@@ -71,15 +70,8 @@ if (!envValidation.success) {
 
 const config = envValidation.data;
 
+// IPFS disabled — ipfs-http-client is not ESM-compatible; using mock CIDs
 let ipfs = null;
-if (config.IPFS_URL) {
-  try {
-    ipfs = create({ url: config.IPFS_URL });
-    logger.info(`🌐 IPFS client connected to ${config.IPFS_URL}`);
-  } catch (err) {
-    logger.warn(`⚠️ IPFS connection failed: ${err.message}. Falling back to mock CIDs.`);
-  }
-}
 
 // Mock Nodemailer transporter
 let emailTransporter;
@@ -144,13 +136,7 @@ if (config.SENTRY_DSN) {
     environment: config.NODE_ENV,
     tracesSampleRate: 0.3,
     beforeSend(event, hint) {
-      const [error] = hint;
-      Sentry.addBreadcrumb({
-        category: 'server.request',
-        message: `Request failed: ${error.message}`,
-        level: 'error',
-        data: { requestId: httpContext.get('req')?.id || 'unknown' }
-      });
+      // httpContext removed — use Sentry's own request context
       return event;
     }
   });
@@ -374,11 +360,6 @@ app.get('/api/nostr/profile/:npub', async (req, res) => {
   }
 });
 
-// AI Template Suggestions
-app.post('/api/templates/suggest', async (req, res) => {
-  try {
-    const { templateId, content, fields = {}, email } = req.body;
-
 // AI Compliance Checker (Item 11)
 app.post('/api/compliance-check', async (req, res) => {
   try {
@@ -405,7 +386,7 @@ Document: ${document.substring(0, 2000)}... (truncated for prompt)
 Identify and flag any sections that may violate or require attention under ${standard} standards. Focus on sensitive data (e.g., PII for GDPR, financial controls for SOX). Output as JSON: {"flags": [{"issue": "description", "location": "text snippet", "severity": "low/medium/high", "recommendation": "fix suggestion"}]} Keep it concise.`;
 
     const response = await anthropicClient.messages.create({
-      model: 'claude-3-sonnet-20240229',
+      model: 'claude-haiku-4-5',
       max_tokens: 1000,
       messages: [{ role: 'user', content: prompt }]
     });
@@ -427,7 +408,7 @@ Identify and flag any sections that may violate or require attention under ${sta
       io.emit('compliance:alert', { documentSnippet: document.substring(0, 100) + '...', flags });
     }
 
-    res.json({ standard, flags, scannedAt: new Date().toISOString(), model: 'claude-3-sonnet' });
+    res.json({ standard, flags, scannedAt: new Date().toISOString(), model: 'claude-haiku-4-5' });
 
   } catch (err) {
     logger.error('Compliance check error:', err);
@@ -438,6 +419,11 @@ Identify and flag any sections that may violate or require attention under ${sta
     }
   }
 });
+
+// AI Template Suggestions
+app.post('/api/templates/suggest', async (req, res) => {
+  try {
+    const { templateId, content, fields = {}, email } = req.body;
     // Validate inputs
     if (!templateId || typeof templateId !== 'string') {
       return res.status(400).json({ error: 'templateId (string) required' });
@@ -453,7 +439,7 @@ Identify and flag any sections that may violate or require attention under ${sta
     let responseText;
     if (anthropicClient) {
       const response = await anthropicClient.messages.create({
-        model: 'claude-3-sonnet-20240229',
+        model: 'claude-haiku-4-5',
         max_tokens: 500,
         messages: [{ role: 'user', content: prompt }]
       });
@@ -472,7 +458,7 @@ Identify and flag any sections that may violate or require attention under ${sta
         logger.warn('Failed to parse AI JSON response:', parseErr);
       }
     }
-    res.json({ templateId, suggestions, model: anthropicClient ? 'claude-3-sonnet' : 'mock' });
+    res.json({ templateId, suggestions, model: anthropicClient ? 'claude-haiku-4-5' : 'mock' });
   } catch (err) {
     logger.error('Template suggest error:', err);
     res.status(500).json({ error: 'Failed to generate suggestions' });
@@ -498,7 +484,11 @@ app.get('/health', async (req, res) => {
   // DB check
   try {
     db.prepare("SELECT 1").get();
-    details.db = { status: 'healthy', size: fs.statSync(dbPath).size };
+    const dbFilePath = path.resolve('data/satohash.db');
+    details.db = {
+        status: 'healthy',
+        size: fs.existsSync(dbFilePath) ? fs.statSync(dbFilePath).size : 0
+    };
   } catch (e) {
     details.db = { status: 'unhealthy' };
     status = 'degraded';
@@ -1031,6 +1021,10 @@ app.post('/api/mesh/verify', async (req, res, next) => {
  *     summary: Export full protocol database as encrypted JSON.
  */
 app.get('/api/system/backup', (req, res) => {
+    const key = req.headers['authorization']?.replace('Bearer ', '');
+    if (!key || key !== process.env.ADMIN_KEY) {
+        return res.status(401).json({ error: 'Unauthorized. Provide admin key as Bearer token.' });
+    }
     try {
         const rows = db.prepare("SELECT * FROM timestamps").all();
         const backup = {

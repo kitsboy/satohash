@@ -62,17 +62,17 @@ export const fetchNostrProfile = async (pubkey) => {
     let verifiedNip05 = null;
 
     // Fetch from relays
-    const sub = {
-      "#k": ["0"],
-      "authors": [pubkey],
-      "limit": 1,
-      "since": 0
-    };
-
     for (const relayUrl of RELAYS) {
       try {
         const relay = await Relay.connect(relayUrl);
-        const events = await relay.list(sub);
+        const events = await new Promise((resolve) => {
+          const collected = [];
+          const sub = relay.subscribe([{ kinds: [0], authors: [pubkey], limit: 1 }], {
+            onevent(event) { collected.push(event); },
+            oneose() { sub.close(); resolve(collected); }
+          });
+          setTimeout(() => { sub.close(); resolve(collected); }, 5000);
+        });
         relay.close();
 
         if (events.length > 0) {
