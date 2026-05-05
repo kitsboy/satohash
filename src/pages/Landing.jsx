@@ -20,6 +20,7 @@ import {
   ChevronRight
 } from 'lucide-react'
 import Footer from '../components/Footer'
+import LanguageSwitcher from '../components/LanguageSwitcher'
 import { getBlockHeight } from '../utils/mempool'
 import { BTC_ADDRESS } from '../config/constants'
 
@@ -112,6 +113,7 @@ export default function Landing() {
           </div>
 
           <div className="hidden items-center gap-3 md:flex">
+            <LanguageSwitcher />
             <button
               onClick={() => setDonationOpen(true)}
               className="flex items-center gap-2 rounded-xl border px-4 py-2 text-sm font-bold transition-all hover:text-yellow-400"
@@ -128,13 +130,16 @@ export default function Landing() {
             </Link>
           </div>
 
-          <button
-            className="rounded-lg border p-2 md:hidden"
-            style={{ borderColor: 'var(--border)' }}
-            onClick={() => setNavOpen(!navOpen)}
-          >
-            {navOpen ? <X size={20} /> : <Menu size={20} />}
-          </button>
+          <div className="flex items-center gap-2 md:hidden">
+            <LanguageSwitcher />
+            <button
+              className="rounded-lg border p-2"
+              style={{ borderColor: 'var(--border)' }}
+              onClick={() => setNavOpen(!navOpen)}
+            >
+              {navOpen ? <X size={20} /> : <Menu size={20} />}
+            </button>
+          </div>
         </div>
 
         <AnimatePresence>

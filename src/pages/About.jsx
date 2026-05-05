@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { Shield, Globe, Heart, Scale, BookOpen, Quote, Network, Binary, Cpu } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import LanguageSwitcher from '../components/LanguageSwitcher'
 
 export default function About() {
   return (
@@ -33,6 +34,9 @@ export default function About() {
         >
           About / Whitepaper
         </span>
+        <div className="ml-auto">
+          <LanguageSwitcher />
+        </div>
       </nav>
 
       {/* Institutional Header */}

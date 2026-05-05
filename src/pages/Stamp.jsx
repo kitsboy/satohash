@@ -17,6 +17,7 @@ import { useState, useCallback, useEffect } from 'react'
 import { getTieredFeeEstimates } from '../utils/mempool.js'
 import { addErrorBreadcrumb } from '../utils/errors.js'
 import { toast } from 'sonner'
+import Tooltip from '../components/Tooltip'
 
 export default function Stamp() {
   const [isCapsuleMode, setIsCapsuleMode] = useState(false)
@@ -447,8 +448,12 @@ export default function Stamp() {
 
               <div className="space-y-3 rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] p-4">
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-bold text-[var(--text-secondary)] uppercase">
+                  <span className="flex items-center text-[10px] font-bold text-[var(--text-secondary)] uppercase">
                     Multi-Party
+                    <Tooltip
+                      title="Multi-Party Execution"
+                      content="Contracts that require signatures from two or more independent parties before being considered valid and anchored to Bitcoin."
+                    />
                   </span>
                   <input
                     type="checkbox"
@@ -492,17 +497,27 @@ export default function Stamp() {
                         )}
                       </div>
                     ))}
-                    <button
-                      onClick={() => setCoSigners([...coSigners, ''])}
-                      className="text-[10px] font-bold text-[var(--accent-gold)] uppercase"
-                    >
-                      + Add Co-Signer
-                    </button>
+                    <span className="flex items-center">
+                      <button
+                        onClick={() => setCoSigners([...coSigners, ''])}
+                        className="text-[10px] font-bold text-[var(--accent-gold)] uppercase"
+                      >
+                        + Add Co-Signer
+                      </button>
+                      <Tooltip
+                        title="Co-Signers"
+                        content="Additional Nostr public keys (npub) that must cryptographically sign this document. Creates a multi-party proof requiring all parties to agree."
+                      />
+                    </span>
                   </div>
                 )}
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-bold text-[var(--text-secondary)] uppercase">
+                  <span className="flex items-center text-[10px] font-bold text-[var(--text-secondary)] uppercase">
                     L402 Gating
+                    <Tooltip
+                      title="L402 Gating"
+                      content="A Bitcoin Lightning micropayment paywall. Callers pay a tiny SATS fee per API request — no account needed, just a Lightning wallet."
+                    />
                   </span>
                   <input
                     type="checkbox"
@@ -518,8 +533,12 @@ export default function Stamp() {
           <div className="space-y-4 rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] p-6">
             <div className="flex items-center gap-3">
               <Database size={18} className="text-[var(--accent-gold)]" />
-              <h3 className="text-[10px] font-bold tracking-widest uppercase">
+              <h3 className="flex items-center text-[10px] font-bold tracking-widest uppercase">
                 Proof-of-Existence Streams
+                <Tooltip
+                  title="OpenTimestamps (OTS)"
+                  content="An open protocol that hashes your document and anchors it into a Bitcoin block. Proves your file existed at a specific point in time, immutably."
+                />
               </h3>
             </div>
             <p className="text-xs leading-relaxed text-[var(--text-secondary)]">

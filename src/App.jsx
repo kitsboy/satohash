@@ -5,6 +5,7 @@ import LoadingScreen from './components/LoadingScreen'
 import { Toaster } from 'sonner'
 import { ToastProvider } from './components/Toast'
 import { ThemeProvider } from './components/ThemeProvider'
+import { I18nProvider } from './i18n'
 import ErrorBoundary from './components/ErrorBoundary'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
@@ -295,25 +296,27 @@ function AppContent() {
 
 function App() {
   return (
-    <ThemeProvider>
-      <ToastProvider>
-        <Router>
-          <AppContent />
-          <Toaster
-            position="bottom-right"
-            richColors
-            toastOptions={{
-              style: {
-                borderRadius: '12px',
-                background: 'var(--bg-secondary)',
-                border: '1px solid var(--border)',
-                color: 'var(--text-primary)'
-              }
-            }}
-          />
-        </Router>
-      </ToastProvider>
-    </ThemeProvider>
+    <I18nProvider>
+      <ThemeProvider>
+        <ToastProvider>
+          <Router>
+            <AppContent />
+            <Toaster
+              position="bottom-right"
+              richColors
+              toastOptions={{
+                style: {
+                  borderRadius: '12px',
+                  background: 'var(--bg-secondary)',
+                  border: '1px solid var(--border)',
+                  color: 'var(--text-primary)'
+                }
+              }}
+            />
+          </Router>
+        </ToastProvider>
+      </ThemeProvider>
+    </I18nProvider>
   )
 }
 

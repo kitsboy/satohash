@@ -4,6 +4,7 @@ import { Search, Globe, Zap, Database, Terminal, ChevronRight, Scale, BookOpen }
 import LeftRailNav from './LeftRailNav'
 import TopSignalBar from './TopSignalBar'
 import MobileBottomNav from './MobileBottomNav'
+import LanguageSwitcher from './LanguageSwitcher'
 import { useNavigate, Link } from 'react-router-dom'
 
 /**
@@ -259,13 +260,16 @@ export default function AppShellNoir({ children }) {
             SATOHASH
           </span>
         </Link>
-        <button
-          onClick={() => setIsSearchOpen(true)}
-          aria-label="Open navigation menu"
-          className="flex h-10 w-10 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--surface-raised)]"
-        >
-          <Search size={17} style={{ color: 'var(--accent-gold)' }} />
-        </button>
+        <div className="flex items-center gap-2">
+          <LanguageSwitcher />
+          <button
+            onClick={() => setIsSearchOpen(true)}
+            aria-label="Open navigation menu"
+            className="flex h-10 w-10 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--surface-raised)]"
+          >
+            <Search size={17} style={{ color: 'var(--accent-gold)' }} />
+          </button>
+        </div>
       </div>
 
       {/* ── Main Content Area ───────────────────────────────────────────── */}
@@ -273,19 +277,22 @@ export default function AppShellNoir({ children }) {
         {/* Desktop Top Signal Bar */}
         <div className="sticky top-0 z-40 hidden h-14 items-center justify-between border-b border-[var(--border)] bg-[var(--bg-primary)]/80 px-6 backdrop-blur-md md:flex">
           <TopSignalBar />
-          <button
-            onClick={() => setIsSearchOpen(true)}
-            className="group ml-4 flex flex-shrink-0 items-center gap-3 rounded-xl border border-[var(--border)] bg-[var(--bg-secondary)] px-4 py-1.5 transition-all hover:border-[var(--border-gold)]"
-          >
-            <Search
-              size={13}
-              className="transition-colors group-hover:text-[var(--accent-gold)]"
-              style={{ color: 'var(--text-secondary)' }}
-            />
-            <span className="text-[10px] font-black tracking-widest text-white/40 uppercase group-hover:text-[var(--accent-gold)]/60">
-              ⌘K Search
-            </span>
-          </button>
+          <div className="ml-4 flex flex-shrink-0 items-center gap-3">
+            <LanguageSwitcher />
+            <button
+              onClick={() => setIsSearchOpen(true)}
+              className="group flex items-center gap-3 rounded-xl border border-[var(--border)] bg-[var(--bg-secondary)] px-4 py-1.5 transition-all hover:border-[var(--border-gold)]"
+            >
+              <Search
+                size={13}
+                className="transition-colors group-hover:text-[var(--accent-gold)]"
+                style={{ color: 'var(--text-secondary)' }}
+              />
+              <span className="text-[10px] font-black tracking-widest text-white/40 uppercase group-hover:text-[var(--accent-gold)]/60">
+                ⌘K Search
+              </span>
+            </button>
+          </div>
         </div>
 
         {/* Page content */}

@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
+import Tooltip from '../../components/Tooltip'
 import {
   Shield,
   Lock,
@@ -263,7 +264,13 @@ export default function TrustCenter() {
                   <span>Framework</span>
                   <span>Jurisdiction</span>
                   <span>Status</span>
-                  <span>Standard Met</span>
+                  <span className="flex items-center">
+                    Standard Met
+                    <Tooltip
+                      title="NIP-05 Identity"
+                      content="A Nostr protocol standard linking a human-readable handle (like user@domain.com) to a cryptographic public key. Used for tamper-proof signer identity."
+                    />
+                  </span>
                 </div>
 
                 {COMPLIANCE_ROWS.map((row, i) => (
@@ -271,8 +278,20 @@ export default function TrustCenter() {
                     key={i}
                     className="grid grid-cols-4 items-center border-b border-[var(--border)] px-6 py-5 transition-colors last:border-0 hover:bg-[var(--surface-raised)]"
                   >
-                    <span className="text-sm font-bold text-[var(--text-primary)]">
+                    <span className="inline-flex items-center text-sm font-bold text-[var(--text-primary)]">
                       {row.framework}
+                      {row.framework === 'UETA' && (
+                        <Tooltip
+                          title="UETA"
+                          content="Uniform Electronic Transactions Act — a US law giving electronic signatures the same legal weight as handwritten ones in most states."
+                        />
+                      )}
+                      {row.framework === 'eIDAS Regulation' && (
+                        <Tooltip
+                          title="eIDAS"
+                          content="EU regulation establishing a legal framework for electronic signatures across all EU member states. Qualified signatures are legally equivalent to handwritten."
+                        />
+                      )}
                     </span>
                     <span className="text-sm text-[var(--text-secondary)]">{row.jurisdiction}</span>
                     <span>
@@ -410,7 +429,15 @@ export default function TrustCenter() {
                 >
                   <fact.icon size={18} />
                 </div>
-                <p className="text-sm leading-relaxed text-[var(--text-secondary)]">{fact.text}</p>
+                <p className="flex items-start text-sm leading-relaxed text-[var(--text-secondary)]">
+                  <span>{fact.text}</span>
+                  {fact.icon === FileCheck && (
+                    <Tooltip
+                      title="OpenTimestamps (OTS)"
+                      content="An open protocol that hashes your document and anchors it into a Bitcoin block. Proves your file existed at a specific point in time, immutably."
+                    />
+                  )}
+                </p>
               </motion.div>
             ))}
           </div>

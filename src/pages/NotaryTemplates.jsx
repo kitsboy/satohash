@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import Tooltip from '../components/Tooltip'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 import { jsPDF } from 'jspdf'
@@ -717,10 +718,18 @@ function TemplateCard({ template, onOpen }) {
           >
             <Icon size={18} style={{ color: catColor.text }} />
           </div>
-          <span
-            className={`rounded-full px-2 py-0.5 text-[11px] font-semibold ${BADGE_STYLES[template.badge]}`}
-          >
-            {template.badge}
+          <span className="inline-flex items-center">
+            <span
+              className={`rounded-full px-2 py-0.5 text-[11px] font-semibold ${BADGE_STYLES[template.badge]}`}
+            >
+              {template.badge}
+            </span>
+            {template.badge === 'Legal-Grade' && (
+              <Tooltip
+                title="Multi-Party"
+                content="Contracts that require signatures from two or more independent parties before being considered valid and anchored to Bitcoin."
+              />
+            )}
           </span>
         </div>
 
@@ -795,10 +804,14 @@ function TemplateList({ onSelect }) {
             </span>
           </div>
           <h1
-            className="mb-3 text-3xl font-black md:text-4xl"
+            className="mb-3 flex items-center text-3xl font-black md:text-4xl"
             style={{ color: 'var(--text-primary)' }}
           >
             Notary Templates
+            <Tooltip
+              title="Notary Template"
+              content="A pre-built legal document structure. Fill in the variables and the system generates a Bitcoin-anchored, multi-party signable agreement."
+            />
           </h1>
           <p className="max-w-xl text-base" style={{ color: 'var(--text-muted)' }}>
             Professional legal documents anchored to the Bitcoin blockchain. Fill, sign, and
@@ -1068,10 +1081,14 @@ function TemplateEditor({ template, onBack }) {
                 </div>
                 <div className="text-right">
                   <p
-                    className="mb-1 text-[10px] tracking-widest uppercase"
+                    className="mb-1 flex items-center justify-end text-[10px] tracking-widest uppercase"
                     style={{ color: '#94a3b8' }}
                   >
                     Bitcoin-Anchored Document
+                    <Tooltip
+                      title="Bitcoin Anchored"
+                      content="This document's hash has been permanently written into the Bitcoin blockchain. It can never be altered or backdated."
+                    />
                   </p>
                   <div
                     className="flex h-8 w-24 items-center justify-center rounded-lg"
@@ -1105,6 +1122,11 @@ function TemplateEditor({ template, onBack }) {
             >
               <Zap size={16} />
               Anchor to Bitcoin
+              <Tooltip
+                title="Bitcoin Anchored"
+                content="This document's hash has been permanently written into the Bitcoin blockchain. It can never be altered or backdated."
+                className="ml-1"
+              />
             </button>
 
             {/* Progress card */}

@@ -13,6 +13,7 @@ import {
 } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { SkeletonContractCard } from '../components/Skeletons'
+import Tooltip from '../components/Tooltip'
 
 const SignerRow = ({ identity, status, role }) => (
   <div className="group flex items-center justify-between rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] p-4 transition-all hover:border-[var(--border-bright)]">
@@ -107,12 +108,21 @@ export default function ContractList() {
         <div className="space-y-2">
           <div className="flex items-center gap-3">
             <FileSignature className="text-[var(--accent-active)]" size={24} />
-            <h1 className="text-4xl font-bold tracking-tighter uppercase">
+            <h1 className="flex items-center text-4xl font-bold tracking-tighter uppercase">
               Contract Orchestration
+              <Tooltip
+                title="Multi-Party Execution"
+                content="Contracts that require signatures from two or more independent parties before being considered valid and anchored to Bitcoin."
+              />
             </h1>
           </div>
-          <p className="font-medium text-[var(--text-secondary)]">
-            Multi-party execution via NIP-05 and Bitcoin anchoring.
+          <p className="flex items-center font-medium text-[var(--text-secondary)]">
+            Multi-party execution via NIP-05
+            <Tooltip
+              title="NIP-05 Identity"
+              content="A Nostr protocol standard linking a human-readable handle (like user@domain.com) to a cryptographic public key. Used for tamper-proof signer identity."
+            />
+            &nbsp;and Bitcoin anchoring.
           </p>
         </div>
         <button className="flex h-11 items-center justify-center gap-3 rounded-xl bg-[var(--text-primary)] px-8 text-xs font-bold tracking-widest text-[var(--bg-primary)] uppercase transition-all hover:scale-[1.02]">
@@ -161,10 +171,18 @@ export default function ContractList() {
                       <h3 className="text-lg font-bold tracking-tight md:text-2xl">
                         {contract.title}
                       </h3>
-                      <span
-                        className={`rounded-md border px-2 py-0.5 text-[8px] font-black tracking-widest uppercase ${contract.status === 'Anchored' ? 'border-[var(--accent-success)]/20 bg-[var(--accent-success)]/10 text-[var(--accent-success)]' : 'border-[var(--accent-pending)]/20 bg-[var(--accent-pending)]/10 text-[var(--accent-pending)]'}`}
-                      >
-                        {contract.status}
+                      <span className="inline-flex items-center">
+                        <span
+                          className={`rounded-md border px-2 py-0.5 text-[8px] font-black tracking-widest uppercase ${contract.status === 'Anchored' ? 'border-[var(--accent-success)]/20 bg-[var(--accent-success)]/10 text-[var(--accent-success)]' : 'border-[var(--accent-pending)]/20 bg-[var(--accent-pending)]/10 text-[var(--accent-pending)]'}`}
+                        >
+                          {contract.status}
+                        </span>
+                        {contract.status === 'Anchored' && (
+                          <Tooltip
+                            title="Bitcoin Anchored"
+                            content="This document's hash has been permanently written into the Bitcoin blockchain. It can never be altered or backdated."
+                          />
+                        )}
                       </span>
                     </div>
                     <p className="text-sm font-medium text-[var(--text-secondary)]">
@@ -198,11 +216,23 @@ export default function ContractList() {
                     </h4>
                     <div className="space-y-3 rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] p-4">
                       <div className="flex items-center justify-between text-[10px] font-bold text-[var(--text-secondary)] uppercase">
-                        <span>L402 Cost</span>
+                        <span className="flex items-center">
+                          L402 Cost
+                          <Tooltip
+                            title="L402 Gating"
+                            content="A Bitcoin Lightning micropayment paywall. Callers pay a tiny SATS fee per API request — no account needed, just a Lightning wallet."
+                          />
+                        </span>
                         <span className="text-white">1,200 SATS</span>
                       </div>
                       <div className="flex items-center justify-between text-[10px] font-bold text-[var(--text-secondary)] uppercase">
-                        <span>Escrow</span>
+                        <span className="flex items-center">
+                          Escrow
+                          <Tooltip
+                            title="Escrow"
+                            content="Funds held in a neutral Lightning channel until all contract conditions are met. Released automatically when all parties sign."
+                          />
+                        </span>
                         <span className="text-[var(--accent-pending)]">Awaiting Fund</span>
                       </div>
                     </div>
@@ -232,6 +262,15 @@ export default function ContractList() {
                 type="text"
                 placeholder="Lookup NIP-05 Handle..."
                 className="h-11 w-full rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] pr-4 pl-10 text-xs outline-none focus:border-[var(--accent-active)]"
+              />
+            </div>
+            <div className="flex items-center gap-1">
+              <p className="text-[10px] font-bold tracking-widest text-[var(--accent-active)] uppercase">
+                NIP-05 Identity Lookup
+              </p>
+              <Tooltip
+                title="NIP-05 Identity"
+                content="A Nostr protocol standard linking a human-readable handle (like user@domain.com) to a cryptographic public key. Used for tamper-proof signer identity."
               />
             </div>
             <div className="space-y-2 rounded-2xl border border-[var(--accent-active)]/20 bg-[var(--accent-active)]/5 p-4">

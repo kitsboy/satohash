@@ -25,6 +25,7 @@ import {
 } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { toast } from 'sonner'
+import Tooltip from '../components/Tooltip'
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
 
@@ -302,7 +303,13 @@ export default function Developer() {
                             </li>
                             <li className="flex items-center gap-3 text-[11px] font-bold text-white/70">
                               <CheckCircle2 size={14} className="text-[var(--accent-success)]" />
-                              Pay-per-Anchor (L402)
+                              <span className="flex items-center">
+                                Pay-per-Anchor (L402)
+                                <Tooltip
+                                  title="L402 Gating"
+                                  content="A Bitcoin Lightning micropayment paywall. Callers pay a tiny SATS fee per API request — no account needed, just a Lightning wallet."
+                                />
+                              </span>
                             </li>
                           </ul>
                         </div>
@@ -372,8 +379,12 @@ export default function Developer() {
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-4">
-                      <h2 className="text-3xl font-black tracking-tighter uppercase">
+                      <h2 className="flex items-center text-3xl font-black tracking-tighter uppercase">
                         API Authentication
+                        <Tooltip
+                          title="Bearer Token"
+                          content="A secret API key included in request headers to authenticate your application. Keep it private — anyone with it can use your API quota."
+                        />
                       </h2>
                       {keysError && (
                         <span className="rounded-full border border-[var(--accent-pending)]/30 bg-[var(--accent-pending)]/10 px-3 py-1 text-[9px] font-black tracking-widest text-[var(--accent-pending)] uppercase">
@@ -428,13 +439,38 @@ export default function Developer() {
                   className="space-y-6"
                 >
                   <div className="space-y-4 rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] p-6">
-                    <h3 className="text-sm font-black tracking-widest text-[var(--text-primary)] uppercase">
+                    <h3 className="flex items-center text-sm font-black tracking-widest text-[var(--text-primary)] uppercase">
                       API Reference
                     </h3>
                     <p className="text-sm leading-relaxed text-[var(--text-secondary)]">
                       Full interactive documentation is available via Swagger UI. The API follows
                       REST conventions with JSON request/response bodies.
                     </p>
+                    <div className="flex flex-wrap gap-3 pt-1">
+                      <span className="flex items-center text-[10px] font-black tracking-widest text-[var(--text-secondary)] uppercase">
+                        Webhooks
+                        <Tooltip
+                          title="Webhook"
+                          content="A URL on your server that Satohash calls automatically when an event occurs (e.g. stamp confirmed). No polling needed."
+                        />
+                      </span>
+                      <span className="text-[var(--border-bright)]">·</span>
+                      <span className="flex items-center text-[10px] font-black tracking-widest text-[var(--text-secondary)] uppercase">
+                        Rate Limits
+                        <Tooltip
+                          title="Rate Limiting"
+                          content="A cap on how many API requests you can make per minute. Prevents abuse and ensures fair usage across all clients."
+                        />
+                      </span>
+                      <span className="text-[var(--border-bright)]">·</span>
+                      <span className="flex items-center text-[10px] font-black tracking-widest text-[var(--text-secondary)] uppercase">
+                        Bearer Token Auth
+                        <Tooltip
+                          title="Bearer Token"
+                          content="A secret API key included in request headers to authenticate your application. Keep it private — anyone with it can use your API quota."
+                        />
+                      </span>
+                    </div>
                     <a
                       href={`${import.meta.env.VITE_API_URL || 'http://localhost:3001'}/api-docs`}
                       target="_blank"
@@ -507,9 +543,13 @@ export default function Developer() {
                     <h2 className="text-4xl font-black tracking-tighter uppercase">
                       Sovereign <span className="text-[var(--accent-active)]">Offering.</span>
                     </h2>
-                    <p className="text-lg font-medium text-[var(--text-secondary)]">
+                    <p className="flex flex-wrap items-center gap-x-1 text-lg font-medium text-[var(--text-secondary)]">
                       We offer three distinct tiers of API access designed for different scales of
                       truth. All settlement is performed via the Lightning Network (L402).
+                      <Tooltip
+                        title="L402 Gating"
+                        content="A Bitcoin Lightning micropayment paywall. Callers pay a tiny SATS fee per API request — no account needed, just a Lightning wallet."
+                      />
                     </p>
                   </div>
                   <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
@@ -563,8 +603,12 @@ export default function Developer() {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3 text-[var(--accent-active)]">
                     <Zap size={20} className="fill-[var(--accent-active)]" />
-                    <span className="text-[10px] font-black tracking-widest uppercase">
+                    <span className="flex items-center text-[10px] font-black tracking-widest uppercase">
                       L402 Credits
+                      <Tooltip
+                        title="L402 Gating"
+                        content="A Bitcoin Lightning micropayment paywall. Callers pay a tiny SATS fee per API request — no account needed, just a Lightning wallet."
+                      />
                     </span>
                   </div>
                   <div className="flex h-1.5 w-1.5 animate-pulse rounded-full bg-[var(--accent-success)] shadow-[0_0_8px_var(--accent-success)]" />
@@ -604,7 +648,25 @@ export default function Developer() {
               <div className="space-y-2">
                 <ResourceLink icon={Code2} label="Python SDK Docs" />
                 <ResourceLink icon={Globe} label="API Endpoints Reference" />
-                <ResourceLink icon={Database} label="Nostr NIP-05 Schema" />
+                <div className="group flex w-full items-center justify-between rounded-xl p-4 transition-colors hover:bg-white/5">
+                  <div className="flex items-center gap-4">
+                    <Database
+                      size={16}
+                      className="text-[var(--text-secondary)] transition-colors group-hover:text-[var(--accent-active)]"
+                    />
+                    <span className="flex items-center text-sm font-medium text-[var(--text-secondary)] transition-colors group-hover:text-white">
+                      Nostr NIP-05 Schema
+                      <Tooltip
+                        title="NIP-05 Identity"
+                        content="A Nostr protocol standard linking a human-readable handle (like user@domain.com) to a cryptographic public key. Used for tamper-proof signer identity."
+                      />
+                    </span>
+                  </div>
+                  <ArrowRight
+                    size={14}
+                    className="-translate-x-2 text-[var(--text-secondary)] opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100"
+                  />
+                </div>
                 <ResourceLink icon={Lock} label="Security Architecture" />
               </div>
             </div>
