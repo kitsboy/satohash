@@ -7,7 +7,7 @@ export default function IdentityVerification() {
   const [isVerified, setIsVerified] = useState(false);
 
   return (
-    <div className="min-h-screen pb-20 selection:bg-indigo-500/30" style={{ background: 'var(--bg-primary)' }}>
+    <div className="min-h-screen pb-20 selection:bg-[var(--accent-active)]/30" style={{ background: 'var(--bg-primary)' }}>
       <div className="layout-container max-w-5xl">
 
         {/* Institutional Header */}

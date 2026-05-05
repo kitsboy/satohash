@@ -105,11 +105,11 @@ export default function Merkle3D({ hash }) {
                 <motion.div 
                     initial={{ scale: 0.9, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
-                    className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-indigo-600 text-white shadow-2xl shadow-indigo-500/30"
+                    className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-[var(--accent-active)] text-white shadow-2xl shadow-[var(--accent-active)]/30"
                 >
                     <Network size={28} />
                 </motion.div>
-                <h3 className="text-3xl font-black italic tracking-tighter text-white uppercase italic leading-none mb-2">Interactive <br /> <span className="text-indigo-400">DEPTH_EXPLORER.</span></h3>
+                <h3 className="text-3xl font-black italic tracking-tighter text-white uppercase italic leading-none mb-2">Interactive <br /> <span className="text-[var(--accent-active)]">DEPTH_EXPLORER.</span></h3>
                 <p className="text-[10px] font-black text-white/30 uppercase tracking-[0.4em] italic leading-none">Merkle_Traversal_L4 Active</p>
             </div>
             
@@ -130,7 +130,7 @@ export default function Merkle3D({ hash }) {
         {/* Bottom Interactive Controls */}
         <div className="absolute bottom-12 left-12 right-12 z-10 flex items-center justify-between">
             <div className="flex gap-4">
-                <button className="px-6 py-3 rounded-xl bg-white/5 border border-white/10 text-[9px] font-black text-indigo-400 uppercase tracking-widest hover:bg-white/10 transition-all flex items-center gap-2">
+                <button className="px-6 py-3 rounded-xl bg-white/5 border border-white/10 text-[9px] font-black text-[var(--accent-active)] uppercase tracking-widest hover:bg-white/10 transition-all flex items-center gap-2">
                     <Search size={14} /> SCRUB_HISTORY
                 </button>
                 <button className="px-6 py-3 rounded-xl bg-white/5 border border-white/10 text-[9px] font-black text-emerald-400 uppercase tracking-widest hover:bg-white/10 transition-all flex items-center gap-2">
@@ -148,14 +148,14 @@ export default function Merkle3D({ hash }) {
 function HudPill({ icon: Icon, label, active, pulse }) {
     return (
         <div className={`px-4 py-2 rounded-xl bg-white/5 border border-white/10 backdrop-blur-md flex items-center gap-3 transition-all ${active ? 'opacity-100' : 'opacity-20'}`}>
-            <Icon size={12} className={pulse ? 'text-indigo-400 animate-pulse' : 'text-indigo-400'} />
+            <Icon size={12} className={pulse ? 'animate-pulse' : ''} style={{ color: 'var(--accent-active)' }} />
             <span className="text-[8px] font-black text-white uppercase tracking-widest">{label}</span>
         </div>
     )
 }
 
 function TraceStatus({ label, value, color }) {
-    const colorClass = color === 'indigo' ? 'bg-indigo-500' : 'bg-emerald-500';
+    const colorClass = color === 'indigo' ? 'bg-[var(--accent-active)]' : 'bg-emerald-500';
     return (
         <div className="flex items-center gap-4 group">
             <div className={`h-1.5 w-1.5 rounded-full ${colorClass} group-hover:scale-150 transition-all`} />

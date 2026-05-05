@@ -21,7 +21,7 @@ class ErrorBoundary extends React.Component {
       return (
         <div className="flex min-h-screen items-center justify-center bg-[#05070a] px-6 text-white overflow-hidden relative">
           {/* Animated Background Orbs */}
-          <div className="absolute top-1/4 -left-20 w-96 h-96 bg-indigo-600/10 rounded-full blur-[120px] animate-pulse" />
+          <div className="absolute top-1/4 -left-20 w-96 h-96 bg-[var(--accent-active)]/10 rounded-full blur-[120px] animate-pulse" />
           <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-rose-600/10 rounded-full blur-[120px] animate-pulse" />
           
           <motion.div 
