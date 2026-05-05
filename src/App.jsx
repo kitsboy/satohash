@@ -1,7 +1,9 @@
 import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom'
-import React, { Suspense, useEffect } from 'react'
+import React, { Suspense, useEffect, useState } from 'react'
+import { AnimatePresence } from 'framer-motion'
 import AppShellNoir from './components/AppShellNoir'
 import LoadingScreen from './components/LoadingScreen'
+import OnboardingModal from './components/OnboardingModal'
 import { Toaster } from 'sonner'
 import { ToastProvider } from './components/Toast'
 import { ThemeProvider } from './components/ThemeProvider'
@@ -49,6 +51,7 @@ const Offers = React.lazy(() => import('./pages/Offers'))
 const Forum = React.lazy(() => import('./pages/Forum'))
 const Identity = React.lazy(() => import('./pages/Identity'))
 const MobileSigner = React.lazy(() => import('./pages/MobileSigner'))
+const BatchTimestamp = React.lazy(() => import('./pages/BatchTimestamp'))
 
 function ProtectedRoute({ children }) {
   const location = useLocation()
@@ -278,6 +281,14 @@ function AppContent() {
               </ProtectedRoute>
             }
           />
+          <Route
+            path="/batch"
+            element={
+              <ProtectedRoute>
+                <BatchTimestamp />
+              </ProtectedRoute>
+            }
+          />
           {/* Alias routes for renamed/consolidated paths */}
           <Route path="/developers" element={<Navigate to="/developer" replace />} />
           <Route path="/web-capture" element={<Navigate to="/snapper" replace />} />
@@ -295,12 +306,42 @@ function AppContent() {
 }
 
 function App() {
+  const [isOffline, setIsOffline] = useState(!navigator.onLine)
+  const [showOnboarding, setShowOnboarding] = useState(() => {
+    return (
+      localStorage.getItem('satohash_authed') === 'true' &&
+      !localStorage.getItem('satohash-onboarded')
+    )
+  })
+
+  useEffect(() => {
+    const goOffline = () => setIsOffline(true)
+    const goOnline = () => setIsOffline(false)
+    window.addEventListener('offline', goOffline)
+    window.addEventListener('online', goOnline)
+    return () => {
+      window.removeEventListener('offline', goOffline)
+      window.removeEventListener('online', goOnline)
+    }
+  }, [])
+
   return (
     <I18nProvider>
       <ThemeProvider>
         <ToastProvider>
           <Router>
+            {/* Offline banner */}
+            {isOffline && (
+              <div
+                className="fixed top-0 right-0 left-0 z-[200] flex items-center justify-center gap-2 py-2 text-xs font-black tracking-widest uppercase"
+                style={{ background: 'var(--accent-pending)', color: '#141b25' }}
+              >
+                ⚡ Offline — showing cached data
+              </div>
+            )}
+
             <AppContent />
+
             <Toaster
               position="bottom-right"
               richColors
@@ -313,6 +354,11 @@ function App() {
                 }
               }}
             />
+
+            {/* First-run onboarding modal */}
+            <AnimatePresence>
+              {showOnboarding && <OnboardingModal onDone={() => setShowOnboarding(false)} />}
+            </AnimatePresence>
           </Router>
         </ToastProvider>
       </ThemeProvider>

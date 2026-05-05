@@ -86,6 +86,7 @@ export default function MobileBottomNav() {
               {[
                 { name: 'Dashboard', path: '/dashboard' },
                 { name: 'Verify', path: '/verify' },
+                { name: 'Batch Stamp', path: '/batch' },
                 { name: 'Developer API', path: '/developer' },
                 { name: 'Contracts', path: '/contracts' },
                 { name: 'Web Capture', path: '/snapper' },

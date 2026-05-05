@@ -25,7 +25,70 @@ export default function Access() {
   const [adminPassword, setAdminPassword] = useState('')
   const [adminLoading, setAdminLoading] = useState(false)
   const [adminMode, setAdminMode] = useState(false)
+  const [showPinRestore, setShowPinRestore] = useState(false)
   const navigate = useNavigate()
+
+  // Encrypt nsec with AES-GCM using a PIN-derived key and persist to localStorage
+  const saveWithPin = async (nsecValue) => {
+    const pin = prompt(
+      'Set a 4-6 digit PIN to remember your key (optional — press Cancel to skip):'
+    )
+    if (!pin || pin.length < 4) return
+
+    const encoder = new TextEncoder()
+    const keyData = encoder.encode(pin.padEnd(32, pin))
+    const cryptoKey = await window.crypto.subtle.importKey(
+      'raw',
+      keyData.slice(0, 32),
+      { name: 'AES-GCM' },
+      false,
+      ['encrypt']
+    )
+    const iv = window.crypto.getRandomValues(new Uint8Array(12))
+    const encrypted = await window.crypto.subtle.encrypt(
+      { name: 'AES-GCM', iv },
+      cryptoKey,
+      encoder.encode(nsecValue)
+    )
+    const stored = {
+      iv: Array.from(iv),
+      data: Array.from(new Uint8Array(encrypted))
+    }
+    localStorage.setItem('satohash_encrypted_nsec', JSON.stringify(stored))
+    toast.success('Key saved! Enter your PIN next time to restore it.')
+  }
+
+  // Decrypt a previously saved nsec using the PIN and fill the import field
+  const handlePinRestore = async () => {
+    const raw = localStorage.getItem('satohash_encrypted_nsec')
+    if (!raw) return
+    const pin = prompt('Enter your PIN to restore your saved key:')
+    if (!pin) return
+    try {
+      const { iv, data } = JSON.parse(raw)
+      const encoder = new TextEncoder()
+      const keyData = encoder.encode(pin.padEnd(32, pin))
+      const cryptoKey = await window.crypto.subtle.importKey(
+        'raw',
+        keyData.slice(0, 32),
+        { name: 'AES-GCM' },
+        false,
+        ['decrypt']
+      )
+      const decrypted = await window.crypto.subtle.decrypt(
+        { name: 'AES-GCM', iv: new Uint8Array(iv) },
+        cryptoKey,
+        new Uint8Array(data)
+      )
+      const nsecValue = new TextDecoder().decode(decrypted)
+      setNsec(nsecValue)
+      setImportMode(true)
+      setShowPinRestore(false)
+      toast.success('Key restored — press Import & Enter to continue.')
+    } catch {
+      toast.error('Wrong PIN or corrupted key data.')
+    }
+  }
 
   // Redirect immediately if already authenticated
   useEffect(() => {
@@ -39,7 +102,7 @@ export default function Access() {
     setIsVerifying(true)
     toast.info('Generating cryptographic identity...')
 
-    setTimeout(() => {
+    setTimeout(async () => {
       try {
         const sk = generateSecretKey()
         const pk = getPublicKey(sk)
@@ -55,6 +118,7 @@ export default function Access() {
         toast.success('Sovereign Identity Created', {
           description: `npub: ${npubEncoded.substring(0, 20)}...`
         })
+        await saveWithPin(nsecEncoded)
         navigate('/vault')
       } catch (e) {
         setIsVerifying(false)
@@ -71,7 +135,7 @@ export default function Access() {
     }
     setIsVerifying(true)
 
-    setTimeout(() => {
+    setTimeout(async () => {
       try {
         const { data: sk } = nip19.decode(nsec.trim())
         const pk = getPublicKey(sk)
@@ -86,6 +150,7 @@ export default function Access() {
         toast.success('Identity Verified', {
           description: `Welcome back. npub: ${npubEncoded.substring(0, 20)}...`
         })
+        await saveWithPin(nsec.trim())
         navigate('/vault')
       } catch (e) {
         setIsVerifying(false)
@@ -274,6 +339,18 @@ export default function Access() {
               </button>
             ) : (
               <div className="w-full space-y-3">
+                {localStorage.getItem('satohash_encrypted_nsec') && !showPinRestore && (
+                  <button
+                    onClick={handlePinRestore}
+                    className="w-full rounded-xl py-2 text-center text-xs transition-all hover:opacity-80"
+                    style={{
+                      color: 'var(--accent-gold)',
+                      background: 'color-mix(in srgb, var(--accent-gold) 12%, transparent)'
+                    }}
+                  >
+                    🔑 Restore saved key with PIN
+                  </button>
+                )}
                 <div className="relative">
                   <input
                     type={keyVisible ? 'text' : 'password'}

@@ -39,6 +39,10 @@ export default function Landing() {
   const [copied, setCopied] = useState(false)
   const [proofCount, setProofCount] = useState(null)
   const [blockHeight, setBlockHeight] = useState(null)
+  const [pwaPrompt, setPwaPrompt] = useState(null)
+  const [pwaDismissed, setPwaDismissed] = useState(
+    () => localStorage.getItem('pwa-dismissed') === 'true'
+  )
 
   useEffect(() => {
     const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
@@ -52,6 +56,27 @@ export default function Landing() {
       if (height) setBlockHeight(height)
     })
   }, [])
+
+  useEffect(() => {
+    const handler = (e) => {
+      e.preventDefault()
+      setPwaPrompt(e)
+    }
+    window.addEventListener('beforeinstallprompt', handler)
+    return () => window.removeEventListener('beforeinstallprompt', handler)
+  }, [])
+
+  const installPWA = async () => {
+    if (!pwaPrompt) return
+    pwaPrompt.prompt()
+    const { outcome } = await pwaPrompt.userChoice
+    if (outcome === 'accepted') setPwaPrompt(null)
+  }
+
+  const dismissPWA = () => {
+    localStorage.setItem('pwa-dismissed', 'true')
+    setPwaDismissed(true)
+  }
 
   const copyAddress = () => {
     navigator.clipboard.writeText(BTC_ADDRESS)
@@ -989,11 +1014,57 @@ export default function Landing() {
         className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 py-4 text-xs"
         style={{ color: 'var(--text-muted)', borderTop: '1px solid var(--border)' }}
       >
-        <Link to="/legal/terms" className="transition-opacity hover:opacity-70">Terms of Service</Link>
-        <Link to="/legal/privacy" className="transition-opacity hover:opacity-70">Privacy Policy</Link>
-        <Link to="/legal/crypto-notice" className="transition-opacity hover:opacity-70">Cryptographic Notice</Link>
-        <Link to="/trust" className="transition-opacity hover:opacity-70">Trust Center</Link>
+        <Link to="/legal/terms" className="transition-opacity hover:opacity-70">
+          Terms of Service
+        </Link>
+        <Link to="/legal/privacy" className="transition-opacity hover:opacity-70">
+          Privacy Policy
+        </Link>
+        <Link to="/legal/crypto-notice" className="transition-opacity hover:opacity-70">
+          Cryptographic Notice
+        </Link>
+        <Link to="/trust" className="transition-opacity hover:opacity-70">
+          Trust Center
+        </Link>
       </div>
+
+      {/* PWA Install Banner — mobile only */}
+      <AnimatePresence>
+        {pwaPrompt && !pwaDismissed && (
+          <motion.div
+            initial={{ y: 100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 100, opacity: 0 }}
+            className="fixed right-4 bottom-20 left-4 z-50 flex items-center gap-3 rounded-2xl p-4 shadow-2xl sm:hidden"
+            style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-bright)' }}
+          >
+            <div
+              className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl"
+              style={{ background: 'var(--accent-gold-subtle)' }}
+            >
+              <span className="text-lg">⚡</span>
+            </div>
+            <div className="min-w-0 flex-1">
+              <p className="text-xs font-black" style={{ color: 'var(--text-primary)' }}>
+                Add Satohash to Home Screen
+              </p>
+              <p className="text-[10px]" style={{ color: 'var(--text-secondary)' }}>
+                Instant access, works offline
+              </p>
+            </div>
+            <button
+              onClick={installPWA}
+              className="flex-shrink-0 rounded-xl px-3 py-2 text-[10px] font-black tracking-wider uppercase"
+              style={{ background: 'var(--accent-gold)', color: '#141b25' }}
+            >
+              Install
+            </button>
+            <button onClick={dismissPWA} className="flex-shrink-0 p-1 opacity-40 hover:opacity-100">
+              <span style={{ color: 'var(--text-secondary)' }}>✕</span>
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* ── DONATION MODAL ───────────────────────────────────────── */}
       <AnimatePresence>

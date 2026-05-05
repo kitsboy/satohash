@@ -10,7 +10,8 @@ import {
   FileDown,
   Loader2,
   Globe,
-  Stamp
+  Stamp,
+  RefreshCw
 } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { toast } from 'sonner'
@@ -84,7 +85,9 @@ export default function Vault() {
       const res = await fetch(`${API}/api/history`)
       if (res.ok) {
         const data = await res.json()
-        if (Array.isArray(data)) setItems(mapStamps(data))
+        // API returns { stamps: [...], pagination: {...} }
+        const rows = Array.isArray(data) ? data : (data.stamps ?? [])
+        if (rows.length > 0 || Array.isArray(data)) setItems(mapStamps(rows))
       }
     } catch {
       // Silent — already showing cached data
@@ -98,8 +101,9 @@ export default function Vault() {
         const res = await fetch(`${API}/api/history`)
         if (res.ok) {
           const data = await res.json()
-          // Map API response to our display format
-          setItems(mapStamps(data))
+          // API returns { stamps: [...], pagination: {...} }
+          const rows = Array.isArray(data) ? data : (data.stamps ?? [])
+          setItems(mapStamps(rows))
         }
       } catch (e) {
         // Fall back to localStorage stamps if server not running
@@ -223,6 +227,52 @@ export default function Vault() {
 
     doc.save(`Satohash_Certificate_${item.id?.substring(0, 8) || 'proof'}.pdf`)
     toast.success('Certificate Downloaded', { description: `${item.name} — PDF ready` })
+  }
+
+  const downloadOtsFile = async (item) => {
+    try {
+      const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+      const res = await fetch(`${API}/api/stamps/${item.id}?download=true`)
+      if (!res.ok) {
+        toast.error('No OTS proof file available yet — proof is still pending')
+        return
+      }
+      const blob = await res.blob()
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = `satohash-${item.id.substring(0, 8)}.ots`
+      document.body.appendChild(a)
+      a.click()
+      document.body.removeChild(a)
+      URL.revokeObjectURL(url)
+      toast.success('OTS proof downloaded', {
+        description: 'Verify independently with opentimestamps.org'
+      })
+    } catch (e) {
+      toast.error('Download failed: ' + e.message)
+    }
+  }
+
+  const upgradeStamp = async (item) => {
+    try {
+      const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+      toast.info('Checking Bitcoin status...', { duration: 2000 })
+      const res = await fetch(`${API}/api/upgrade`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: item.id })
+      })
+      const data = await res.json()
+      if (data.status === 'confirmed') {
+        toast.success(`Confirmed in Bitcoin block ${data.bitcoin_block_height}!`)
+        refreshStamps()
+      } else {
+        toast.info("Still pending — Bitcoin calendars haven't confirmed yet", { duration: 4000 })
+      }
+    } catch (e) {
+      toast.error('Upgrade check failed: ' + e.message)
+    }
   }
 
   const filteredItems = items.filter((item) => {
@@ -496,6 +546,18 @@ export default function Vault() {
                           onClick={() => downloadCertificate(item)}
                         />
                         <ActionBtn
+                          icon={FileDown}
+                          label=".ots"
+                          onClick={() => downloadOtsFile(item)}
+                        />
+                        {item.status === 'pending' && (
+                          <ActionBtn
+                            icon={RefreshCw}
+                            label="Check"
+                            onClick={() => upgradeStamp(item)}
+                          />
+                        )}
+                        <ActionBtn
                           icon={Globe}
                           label="Verify"
                           onClick={() => {
@@ -532,60 +594,95 @@ export default function Vault() {
         )}
         {!loading &&
           filteredItems.map((item) => (
-            <div
+            <motion.div
               key={item.id}
-              className="rounded-3xl border border-[var(--border)] bg-[var(--bg-secondary)] p-6"
+              drag="x"
+              dragConstraints={{ left: -80, right: 0 }}
+              dragElastic={0.1}
+              onDragEnd={(e, info) => {
+                if (info.offset.x < -60) {
+                  navigator.clipboard.writeText(item.fullHash || item.hash)
+                  toast.success('Hash copied!', {
+                    description: (item.fullHash?.substring(0, 16) ?? item.hash) + '...'
+                  })
+                }
+              }}
+              className="relative"
             >
-              <div className="flex items-start gap-4">
-                <div
-                  className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-[var(--border)] ${item.type === 'capsule' ? 'bg-[var(--accent-gold)]/10 text-[var(--accent-gold)]' : 'bg-[var(--bg-primary)] text-[var(--text-secondary)]'}`}
+              {/* Swipe hint shown behind card */}
+              <div
+                className="absolute inset-y-0 right-0 flex w-20 items-center justify-center rounded-r-2xl"
+                style={{ background: 'var(--accent-success, rgba(16,185,129,0.15))' }}
+              >
+                <span
+                  className="text-xs font-black"
+                  style={{ color: 'var(--accent-success, #10b981)' }}
                 >
-                  {item.type === 'capsule' ? (
-                    <FileArchive size={20} />
-                  ) : item.type === 'snapper' ? (
-                    <Layers size={20} />
-                  ) : (
-                    <FileText size={20} />
-                  )}
-                </div>
-                <div className="min-w-0 flex-1">
-                  <p className="font-bold tracking-tight text-white">{item.name}</p>
-                  <p className="font-mono text-[10px] text-[var(--text-secondary)]">{item.hash}</p>
-                  <div className="mt-2 flex flex-wrap items-center gap-2">
-                    <StatusBadge status={item.status} />
-                    <span className="text-[10px] font-bold text-[var(--text-secondary)]">
-                      {item.date}
-                    </span>
-                    {item.status === 'confirmed' && item.bitcoin_block_height && (
-                      <span className="flex items-center gap-1 font-mono text-xs text-emerald-400">
-                        <span>₿</span>
-                        <span>Block {item.bitcoin_block_height.toLocaleString()}</span>
-                      </span>
+                  Copy
+                </span>
+              </div>
+              <div className="rounded-3xl border border-[var(--border)] bg-[var(--bg-secondary)] p-6">
+                <div className="flex items-start gap-4">
+                  <div
+                    className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-[var(--border)] ${item.type === 'capsule' ? 'bg-[var(--accent-gold)]/10 text-[var(--accent-gold)]' : 'bg-[var(--bg-primary)] text-[var(--text-secondary)]'}`}
+                  >
+                    {item.type === 'capsule' ? (
+                      <FileArchive size={20} />
+                    ) : item.type === 'snapper' ? (
+                      <Layers size={20} />
+                    ) : (
+                      <FileText size={20} />
                     )}
                   </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="font-bold tracking-tight text-white">{item.name}</p>
+                    <p className="font-mono text-[10px] text-[var(--text-secondary)]">
+                      {item.hash}
+                    </p>
+                    <div className="mt-2 flex flex-wrap items-center gap-2">
+                      <StatusBadge status={item.status} />
+                      <span className="text-[10px] font-bold text-[var(--text-secondary)]">
+                        {item.date}
+                      </span>
+                      {item.status === 'confirmed' && item.bitcoin_block_height && (
+                        <span className="flex items-center gap-1 font-mono text-xs text-emerald-400">
+                          <span>₿</span>
+                          <span>Block {item.bitcoin_block_height.toLocaleString()}</span>
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-4 flex justify-end gap-2">
+                  <ActionBtn
+                    icon={Stamp}
+                    label="Badge"
+                    onClick={() => {
+                      navigator.clipboard.writeText(window.location.origin + '/verify/' + item.id)
+                      toast.success('Proof URL Copied', {
+                        description: 'Share link is in your clipboard'
+                      })
+                    }}
+                  />
+                  <ActionBtn
+                    icon={Download}
+                    label="Raw"
+                    onClick={() => downloadCertificate(item)}
+                  />
+                  <ActionBtn icon={FileDown} label=".ots" onClick={() => downloadOtsFile(item)} />
+                  {item.status === 'pending' && (
+                    <ActionBtn icon={RefreshCw} label="Check" onClick={() => upgradeStamp(item)} />
+                  )}
+                  <ActionBtn
+                    icon={Globe}
+                    label="Verify"
+                    onClick={() => {
+                      window.location.href = '/verify?hash=' + item.fullHash
+                    }}
+                  />
                 </div>
               </div>
-              <div className="mt-4 flex justify-end gap-2">
-                <ActionBtn
-                  icon={Stamp}
-                  label="Badge"
-                  onClick={() => {
-                    navigator.clipboard.writeText(window.location.origin + '/verify/' + item.id)
-                    toast.success('Proof URL Copied', {
-                      description: 'Share link is in your clipboard'
-                    })
-                  }}
-                />
-                <ActionBtn icon={Download} label="Raw" onClick={() => downloadCertificate(item)} />
-                <ActionBtn
-                  icon={Globe}
-                  label="Verify"
-                  onClick={() => {
-                    window.location.href = '/verify?hash=' + item.fullHash
-                  }}
-                />
-              </div>
-            </div>
+            </motion.div>
           ))}
       </div>
     </div>

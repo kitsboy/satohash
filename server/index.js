@@ -942,10 +942,15 @@ app.get('/api/stamps/:id', (req, res) => {
 
     // If query ?download=true, return binary
     if (req.query.download === 'true') {
-        const binary = stamp.upgraded_binary || stamp.ots_binary;
+        const rawBinary = stamp.upgraded_binary || stamp.ots_binary;
+        // Reject placeholder bytes that were stored when OTS calendars were unreachable
+        if (!rawBinary || Buffer.from(rawBinary).toString('utf8', 0, 4) === 'ots:') {
+            return res.status(404).json({ error: 'No OTS proof binary available yet — proof is still pending' });
+        }
+        const filename = `satohash-${stamp.id.substring(0, 8)}.ots`;
         res.setHeader('Content-Type', 'application/octet-stream');
-        res.setHeader('Content-Disposition', `attachment; filename="${stamp.id}.ots"`);
-        return res.send(binary);
+        res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+        return res.send(Buffer.from(rawBinary));
     }
 
     res.json({
@@ -1046,6 +1051,59 @@ app.get('/api/history', async (req, res) => {
 
 app.post('/api/upgrade', upload.single('otsFile'), async (req, res, next) => {
     try {
+        // ID-based upgrade path: look up stamp from DB and try to upgrade it
+        if (req.body?.id && !req.file) {
+            const stamp = db.prepare('SELECT * FROM timestamps WHERE id = ?').get(req.body.id);
+            if (!stamp) return res.status(404).json({ error: 'Stamp not found' });
+
+            // Already confirmed — return early
+            if (stamp.status === 'confirmed') {
+                return res.json({ status: 'confirmed', bitcoin_block_height: stamp.bitcoin_block_height });
+            }
+
+            // Reject placeholder binaries that haven't been stamped by a calendar yet
+            const rawBinary = stamp.ots_binary;
+            if (!rawBinary || Buffer.from(rawBinary).toString('utf8', 0, 4) === 'ots:') {
+                return res.json({ status: 'pending', message: 'OTS calendar has not yet stamped this proof' });
+            }
+
+            let detached;
+            try {
+                detached = loadOtsFile(Buffer.from(rawBinary));
+            } catch (parseErr) {
+                return res.json({ status: 'pending', message: 'OTS binary not yet valid — calendar stamp still in progress' });
+            }
+
+            const upgraded = await OpenTimestamps.upgrade(detached);
+            const upgradedBinary = detached.serializeToBytes();
+
+            if (upgraded) {
+                // Check if the upgrade produced a Bitcoin block attestation
+                const info = OpenTimestamps.info(detached);
+                const blockMatch = info.match(/Bitcoin block (\d+)/i);
+                if (blockMatch) {
+                    const blockHeight = parseInt(blockMatch[1], 10);
+                    db.prepare(`
+                        UPDATE timestamps
+                        SET status = 'confirmed',
+                            bitcoin_block_height = ?,
+                            confirmed_at = CURRENT_TIMESTAMP,
+                            upgraded_binary = ?
+                        WHERE id = ?
+                    `).run(blockHeight, Buffer.from(upgradedBinary), stamp.id);
+                    confirmationCounter.inc();
+                    io.emit('ots:confirmed', { id: stamp.id, bitcoin_block_height: blockHeight });
+                    return res.json({ status: 'confirmed', bitcoin_block_height: blockHeight });
+                }
+                // Upgraded but no block yet — save the upgraded binary for next poll
+                db.prepare('UPDATE timestamps SET upgraded_binary = ? WHERE id = ?')
+                  .run(Buffer.from(upgradedBinary), stamp.id);
+            }
+
+            return res.json({ status: 'pending', message: 'Bitcoin calendars have not confirmed yet' });
+        }
+
+        // File-upload upgrade path (original behaviour)
         if (!req.file || !req.file.buffer) return res.status(400).json({ error: 'No .ots file' });
         const detached = loadOtsFile(req.file.buffer);
         const upgraded = await OpenTimestamps.upgrade(detached);

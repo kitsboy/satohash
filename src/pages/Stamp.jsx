@@ -18,6 +18,7 @@ import { getTieredFeeEstimates } from '../utils/mempool.js'
 import { addErrorBreadcrumb } from '../utils/errors.js'
 import { toast } from 'sonner'
 import Tooltip from '../components/Tooltip'
+import { useSocket } from '../hooks/useSocket'
 
 export default function Stamp() {
   const [isCapsuleMode, setIsCapsuleMode] = useState(false)
@@ -34,6 +35,19 @@ export default function Stamp() {
   const [l402Gating, setL402Gating] = useState(false)
   const [coSigners, setCoSigners] = useState([])
   const [coSignerErrors, setCoSignerErrors] = useState([])
+  const [isConfirmed, setIsConfirmed] = useState(false)
+  const [confirmedBlock, setConfirmedBlock] = useState(null)
+
+  const { lastEvent } = useSocket()
+
+  useEffect(() => {
+    if (lastEvent?.type === 'confirmed' && proofResult?.id) {
+      if (lastEvent.data?.id === proofResult.id || lastEvent.data?.hash === proofResult.hash) {
+        setIsConfirmed(true)
+        setConfirmedBlock(lastEvent.data?.blockHeight)
+      }
+    }
+  }, [lastEvent, proofResult])
 
   useEffect(() => {
     const fetchFees = async () => {
@@ -121,6 +135,23 @@ export default function Stamp() {
           filename: caseLabel || file.name
         })
       })
+
+      if (res.status === 429) {
+        // Show countdown so user knows when to retry
+        setStampingStatus('idle')
+        let countdown = 15
+        setError(`Too many requests — try again in ${countdown}s`)
+        const timer = setInterval(() => {
+          countdown--
+          if (countdown <= 0) {
+            clearInterval(timer)
+            setError('')
+          } else {
+            setError(`Too many requests — try again in ${countdown}s`)
+          }
+        }, 1000)
+        return
+      }
 
       if (!res.ok) {
         const err = await res.json()
@@ -241,11 +272,43 @@ export default function Stamp() {
                       }
                     }}
                   />
+                  {/* Mobile file/camera picker — shown on touch devices */}
                   <label
-                    htmlFor="file-input"
-                    className="mt-4 flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-[var(--border)] px-6 py-3 text-xs font-bold uppercase transition-all hover:border-[var(--accent-gold)] hover:text-[var(--accent-gold)] md:hidden"
+                    className="flex cursor-pointer flex-col items-center gap-3 rounded-2xl border-2 border-dashed p-6 transition-all active:scale-95 sm:hidden"
+                    style={{
+                      borderColor: 'var(--border-bright)',
+                      background: 'var(--bg-secondary)'
+                    }}
                   >
-                    <Upload size={14} /> Choose File
+                    <input
+                      type="file"
+                      className="hidden"
+                      accept="*/*"
+                      capture="environment"
+                      onChange={(e) => {
+                        if (e.target.files?.length) {
+                          const newFiles = Array.from(e.target.files)
+                          setFiles(isCapsuleMode ? [...files, ...newFiles] : [newFiles[0]])
+                        }
+                      }}
+                    />
+                    <div
+                      className="flex h-16 w-16 items-center justify-center rounded-2xl"
+                      style={{
+                        background: 'var(--accent-gold-subtle)',
+                        color: 'var(--accent-gold)'
+                      }}
+                    >
+                      <Upload size={28} />
+                    </div>
+                    <div className="text-center">
+                      <p className="text-sm font-black" style={{ color: 'var(--text-primary)' }}>
+                        Tap to select file
+                      </p>
+                      <p className="mt-1 text-xs" style={{ color: 'var(--text-secondary)' }}>
+                        Camera, photos, or any file
+                      </p>
+                    </div>
                   </label>
                 </motion.div>
               ) : stampingStatus === 'complete' && proofResult ? (
@@ -292,6 +355,27 @@ export default function Stamp() {
                       {hashValue}
                     </p>
                   </div>
+                  {isConfirmed && confirmedBlock && (
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      className="mt-4 flex items-center justify-center gap-2 rounded-2xl px-6 py-3"
+                      style={{ background: 'var(--accent-success)', color: '#fff' }}
+                    >
+                      <CheckCircle size={18} />
+                      <span className="text-sm font-black">
+                        Confirmed in Bitcoin Block {confirmedBlock.toLocaleString()}
+                      </span>
+                    </motion.div>
+                  )}
+                  {stampingStatus === 'complete' && !isConfirmed && (
+                    <p
+                      className="mt-3 animate-pulse text-center text-xs"
+                      style={{ color: 'var(--text-secondary)' }}
+                    >
+                      ⏳ Waiting for Bitcoin calendar confirmation...
+                    </p>
+                  )}
                   <div className="flex gap-3">
                     <button
                       onClick={() => {
@@ -299,6 +383,8 @@ export default function Stamp() {
                         setFiles([])
                         setProofResult(null)
                         setHashValue('')
+                        setIsConfirmed(false)
+                        setConfirmedBlock(null)
                       }}
                       className="flex-1 rounded-xl border py-3 text-xs font-black uppercase transition-all hover:text-[var(--text-primary)]"
                       style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}

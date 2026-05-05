@@ -114,7 +114,9 @@ export default function VerificationTool() {
             Courtroom-Grade Verification
           </span>
         </div>
-        <h1 className="text-5xl font-bold tracking-tighter text-[var(--text-primary)] uppercase">The Verification Shield</h1>
+        <h1 className="text-5xl font-bold tracking-tighter text-[var(--text-primary)] uppercase">
+          The Verification Shield
+        </h1>
         <p className="mx-auto max-w-2xl font-medium text-[var(--text-secondary)]">
           Independently verify the provenance of any digital artifact. Our engine parses .ots proofs
           and traverses the Merkle path directly to the Bitcoin blockchain.
@@ -137,12 +139,45 @@ export default function VerificationTool() {
                 if (e.target.files?.[0]) setOtsFile(e.target.files[0])
               }}
             />
+            {/* Desktop upload icon */}
             <div
-              className="mx-auto flex h-24 w-24 cursor-pointer items-center justify-center rounded-3xl border border-[var(--border)] bg-[var(--bg-primary)] text-[var(--text-secondary)] transition-all hover:border-[var(--accent-active)] hover:text-[var(--accent-active)]"
+              className="mx-auto hidden h-24 w-24 cursor-pointer items-center justify-center rounded-3xl border border-[var(--border)] bg-[var(--bg-primary)] text-[var(--text-secondary)] transition-all hover:border-[var(--accent-active)] hover:text-[var(--accent-active)] sm:flex"
               onClick={() => fileRef.current?.click()}
             >
               <Upload size={40} />
             </div>
+            {/* Mobile tap target — large button for easy finger tap */}
+            <label
+              className="mx-auto flex cursor-pointer flex-col items-center gap-3 rounded-2xl border-2 border-dashed p-6 transition-all active:scale-95 sm:hidden"
+              style={{
+                borderColor: 'var(--border-bright)',
+                background: 'var(--bg-secondary)',
+                maxWidth: '280px'
+              }}
+            >
+              <input
+                type="file"
+                accept=".ots"
+                className="hidden"
+                onChange={(e) => {
+                  if (e.target.files?.[0]) setOtsFile(e.target.files[0])
+                }}
+              />
+              <div
+                className="flex h-16 w-16 items-center justify-center rounded-2xl"
+                style={{ background: 'rgba(59,130,246,0.1)', color: 'var(--accent-active)' }}
+              >
+                <Upload size={28} />
+              </div>
+              <div className="text-center">
+                <p className="text-sm font-black" style={{ color: 'var(--text-primary)' }}>
+                  Tap to upload .ots proof
+                </p>
+                <p className="mt-1 text-xs" style={{ color: 'var(--text-secondary)' }}>
+                  OpenTimestamps file
+                </p>
+              </div>
+            </label>
             {otsFile && (
               <p className="text-sm font-medium" style={{ color: 'var(--accent-gold)' }}>
                 📎 {otsFile.name}
@@ -157,18 +192,43 @@ export default function VerificationTool() {
                 </span>
                 <div className="h-px w-12 bg-[var(--border)]" />
               </div>
-              <div className="relative mx-auto max-w-lg">
-                <Hash
-                  className="absolute top-1/2 left-4 -translate-y-1/2 text-[var(--text-secondary)]"
-                  size={18}
-                />
-                <input
-                  type="text"
-                  value={hashInput}
-                  onChange={(e) => setHashInput(e.target.value)}
-                  placeholder="e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-                  className="h-14 w-full rounded-2xl border border-[var(--border)] bg-[var(--bg-primary)] pr-4 pl-12 font-mono text-sm outline-none focus:border-[var(--accent-active)]"
-                />
+              <div className="relative mx-auto flex max-w-lg items-center gap-2">
+                <div className="relative flex-1">
+                  <Hash
+                    className="absolute top-1/2 left-4 -translate-y-1/2 text-[var(--text-secondary)]"
+                    size={18}
+                  />
+                  <input
+                    type="text"
+                    value={hashInput}
+                    onChange={(e) => setHashInput(e.target.value)}
+                    placeholder="e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                    className="h-14 w-full rounded-2xl border border-[var(--border)] bg-[var(--bg-primary)] pr-4 pl-12 font-mono text-sm outline-none focus:border-[var(--accent-active)]"
+                    inputMode="text"
+                    autoComplete="off"
+                    autoCorrect="off"
+                    autoCapitalize="none"
+                    spellCheck={false}
+                  />
+                </div>
+                <button
+                  onClick={async () => {
+                    try {
+                      const text = await navigator.clipboard.readText()
+                      setHashInput(text.trim())
+                    } catch {
+                      toast.error('Could not read clipboard — paste manually')
+                    }
+                  }}
+                  className="flex-shrink-0 rounded-xl px-3 py-2 text-xs font-bold transition-all active:scale-95"
+                  style={{
+                    background: 'var(--bg-secondary)',
+                    color: 'var(--text-secondary)',
+                    border: '1px solid var(--border)'
+                  }}
+                >
+                  Paste
+                </button>
               </div>
             </div>
             <button
@@ -253,13 +313,25 @@ export default function VerificationTool() {
                 )}
                 {verifyData?.stamp?.bitcoin_block_height && (
                   <div className="border-t border-[var(--accent-success)]/20 pt-4">
-                    <div className="flex items-baseline justify-between">
-                      <span className="text-[10px] font-bold text-[var(--text-secondary)] uppercase">
-                        Bitcoin Attestation
-                      </span>
-                      <span className="font-mono text-xl font-bold">
-                        Block #{verifyData.stamp.bitcoin_block_height.toLocaleString()}
-                      </span>
+                    <p
+                      className="mb-2 text-[10px] font-bold tracking-widest uppercase"
+                      style={{ color: 'var(--text-secondary)' }}
+                    >
+                      Bitcoin Attestation
+                    </p>
+                    <div
+                      className="flex items-center justify-center gap-3 rounded-2xl px-6 py-4"
+                      style={{ background: 'var(--accent-success)', color: '#fff' }}
+                    >
+                      <CheckCircle2 size={22} />
+                      <div className="text-center">
+                        <p className="text-[10px] font-bold tracking-widest uppercase opacity-80">
+                          Confirmed in Block
+                        </p>
+                        <p className="font-mono text-2xl font-black">
+                          #{verifyData.stamp.bitcoin_block_height.toLocaleString()}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 )}
