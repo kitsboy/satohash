@@ -1,49 +1,42 @@
 import logger from './logger.js';
-import dotenv from 'dotenv';
-dotenv.config();
 
-const REQUIRED_ENVS = [
-    'SENTRY_DSN',
-    'ADMIN_KEY',
-    'NODE_ENV',
-    'PORT'
-];
-
-/**
- * Validates existence and basic structure of required environment variables.
- */
 export const validateSecrets = () => {
-    let missing = [];
-    
-    // Inject defaults in development to make it "Just Work"
-    if (process.env.NODE_ENV !== 'production') {
-        if (!process.env.ADMIN_KEY) {
-            process.env.ADMIN_KEY = 'admin123';
-            logger.warn('🔑 No ADMIN_KEY found. Defaulting to "admin123" for development.');
-        }
-        if (!process.env.PORT) {
-            process.env.PORT = '3001';
-            logger.warn('🔌 No PORT found. Defaulting to 3001.');
-        }
-        if (!process.env.SENTRY_DSN) {
-            logger.info('🛰️ Sentry DSN not provided. Observability will be limited.');
-        }
+    const isProd = process.env.NODE_ENV === 'production';
+    const errors = [];
+    const warnings = [];
+
+    // Critical secrets that must be changed in production
+    const adminKey = process.env.ADMIN_KEY || '';
+    if (isProd && (adminKey === 'admin123' || adminKey.includes('change-me') || adminKey.length < 16)) {
+        errors.push('ADMIN_KEY must be set to a strong secret in production (min 16 chars, not default)');
     }
 
-    for (const envName of REQUIRED_ENVS) {
-        if (!process.env[envName]) {
-            missing.push(envName);
-        }
+    const jwtSecret = process.env.JWT_SECRET || '';
+    if (isProd && (jwtSecret.includes('change-me') || jwtSecret.includes('mock-secret') || jwtSecret.length < 32)) {
+        errors.push('JWT_SECRET must be at least 32 characters and not a default value in production');
     }
 
-    if (missing.length > 0) {
-        if (process.env.NODE_ENV === 'production') {
-            logger.error(`❌ FATAL: Missing critical configuration: ${missing.join(', ')}`);
-            process.exit(1);
-        } else {
-             logger.warn(`⚠️ Development mode: Missing non-critical configuration: ${missing.join(', ')}`);
-        }
-    } else {
-        logger.info(`🔐 Secrets validated for ${process.env.NODE_ENV} environment.`);
+    const snapperKey = process.env.SNAPPER_KEY || '';
+    if (isProd && snapperKey.length < 32) {
+        errors.push('SNAPPER_KEY must be set to a strong secret in production');
     }
+
+    // Warnings (non-fatal)
+    if (!process.env.SENTRY_DSN) {
+        warnings.push('SENTRY_DSN not set — error tracking disabled');
+    }
+    if (!process.env.NOSTR_SECRET_KEY) {
+        warnings.push('NOSTR_SECRET_KEY not set — using ephemeral Nostr identity (will change on restart)');
+    }
+
+    // Report
+    warnings.forEach(w => logger.warn(`⚠️  Config warning: ${w}`));
+
+    if (errors.length > 0) {
+        errors.forEach(e => logger.error(`❌ FATAL config error: ${e}`));
+        logger.error('🛑 Server refuses to start in production with insecure defaults. Fix the above and restart.');
+        process.exit(1);
+    }
+
+    logger.info(`✅ Secrets validation passed (${isProd ? 'production' : 'development'} mode)`);
 };

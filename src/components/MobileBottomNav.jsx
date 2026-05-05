@@ -1,13 +1,13 @@
 import { useState } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Database, Fingerprint, ShieldCheck, Globe, MoreHorizontal } from 'lucide-react'
+import { Database, Fingerprint, Globe, Search, MoreHorizontal } from 'lucide-react'
 
 const PRIMARY_LINKS = [
   { name: 'Vault', path: '/vault', icon: Database },
   { name: 'Stamp', path: '/stamp', icon: Fingerprint },
   { name: 'Atlas', path: '/atlas', icon: Globe },
-  { name: 'Dashboard', path: '/dashboard', icon: ShieldCheck }
+  { name: 'Explorer', path: '/explorer', icon: Search }
 ]
 
 // ─── MobileBottomNav ─────────────────────────────────────────────────────────
@@ -84,6 +84,7 @@ export default function MobileBottomNav() {
               </div>
 
               {[
+                { name: 'Dashboard', path: '/dashboard' },
                 { name: 'Verify', path: '/verify' },
                 { name: 'Developer API', path: '/developer' },
                 { name: 'Contracts', path: '/contracts' },
@@ -92,8 +93,7 @@ export default function MobileBottomNav() {
                 { name: 'Settings', path: '/settings' },
                 { name: 'Trust Center', path: '/trust' },
                 { name: 'Image Vault', path: '/image-vault' },
-                { name: 'Protocol Stats', path: '/protocol-stats' },
-                { name: 'Explorer', path: '/explorer' }
+                { name: 'Protocol Stats', path: '/protocol-stats' }
               ].map((link) => (
                 <NavLink
                   key={link.path}
@@ -117,7 +117,11 @@ export default function MobileBottomNav() {
       </AnimatePresence>
 
       {/* Nav bar */}
-      <nav role="navigation" aria-label="Mobile navigation" className="flex h-full items-center justify-around px-2">
+      <nav
+        role="navigation"
+        aria-label="Mobile navigation"
+        className="flex h-full items-center justify-around px-2"
+      >
         {PRIMARY_LINKS.map((link) => {
           const isActive =
             location.pathname === link.path || location.pathname.startsWith(link.path)

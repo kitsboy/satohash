@@ -5,6 +5,7 @@ import { getFeeEstimates, getBlockHeight } from '../utils/mempool'
 import { QRCodeSVG } from 'qrcode.react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { BTC_ADDRESS } from '../config/constants'
+import { ThemeToggle } from './ThemeProvider'
 
 // ─── Route → human-readable breadcrumb ────────────────────────────────────
 const ROUTE_LABELS = {
@@ -151,6 +152,9 @@ export default function TopSignalBar() {
 
       {/* Right: avatar + settings ------------------------------------------ */}
       <div className="relative flex flex-shrink-0 items-center gap-3">
+        {/* Theme toggle */}
+        <ThemeToggle />
+
         {/* Tip button */}
         <button
           onClick={() => setShowTip((prev) => !prev)}

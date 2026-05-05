@@ -9,7 +9,8 @@ import {
   Loader2,
   KeyRound,
   Eye,
-  EyeOff
+  EyeOff,
+  ShieldCheck
 } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
@@ -21,6 +22,9 @@ export default function Access() {
   const [nsec, setNsec] = useState('')
   const [importMode, setImportMode] = useState(false)
   const [keyVisible, setKeyVisible] = useState(false)
+  const [adminPassword, setAdminPassword] = useState('')
+  const [adminLoading, setAdminLoading] = useState(false)
+  const [adminMode, setAdminMode] = useState(false)
   const navigate = useNavigate()
 
   // Redirect immediately if already authenticated
@@ -90,6 +94,36 @@ export default function Access() {
     }, 600)
   }
 
+  // Admin password login — POSTs to /api/auth/login and stores JWT
+  const handleAdminLogin = async () => {
+    if (!adminPassword.trim()) {
+      toast.error('Password required')
+      return
+    }
+    setAdminLoading(true)
+    try {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: adminPassword })
+      })
+      const data = await res.json()
+      if (!res.ok) {
+        toast.error(data.error || 'Login failed')
+        setAdminLoading(false)
+        return
+      }
+      localStorage.setItem('satohash_token', data.token)
+      localStorage.setItem('satohash_authed', 'true')
+      toast.success('Admin access granted', { description: 'JWT stored — session lasts 24 h' })
+      navigate('/vault')
+    } catch (err) {
+      toast.error('Network error: ' + err.message)
+    } finally {
+      setAdminLoading(false)
+    }
+  }
+
   return (
     <div className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-[var(--bg-primary)] p-6">
       {/* Cinematic Background */}
@@ -134,18 +168,17 @@ export default function Access() {
         </header>
 
         {/* Auth Cards */}
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
           {/* Card 1 — Generate New Identity */}
           <motion.div
             whileHover={{ y: -5 }}
             className="group flex flex-col items-center space-y-6 rounded-[2.5rem] border bg-[var(--bg-secondary)] p-10 text-center transition-all"
             style={{ borderColor: 'color-mix(in srgb, var(--accent-gold) 20%, transparent)' }}
-            onMouseEnter={e =>
+            onMouseEnter={(e) =>
               (e.currentTarget.style.borderColor =
                 'color-mix(in srgb, var(--accent-gold) 50%, transparent)')
             }
-            onMouseLeave={e =>
+            onMouseLeave={(e) =>
               (e.currentTarget.style.borderColor =
                 'color-mix(in srgb, var(--accent-gold) 20%, transparent)')
             }
@@ -179,8 +212,8 @@ export default function Access() {
                 New Identity
               </h3>
               <p className="max-w-[240px] text-sm leading-relaxed font-medium text-[var(--text-secondary)]">
-                Generate a fresh Nostr keypair. Your private key stays on your device — we never
-                see it.
+                Generate a fresh Nostr keypair. Your private key stays on your device — we never see
+                it.
               </p>
             </div>
 
@@ -206,7 +239,7 @@ export default function Access() {
           {/* Card 2 — Import Existing nsec */}
           <motion.div
             whileHover={{ y: -5 }}
-            className="group flex flex-col items-center space-y-6 rounded-[2.5rem] border bg-[var(--bg-secondary)] p-10 text-center transition-all border-[var(--border)] hover:border-[var(--accent-active)]/50"
+            className="group flex flex-col items-center space-y-6 rounded-[2.5rem] border border-[var(--border)] bg-[var(--bg-secondary)] p-10 text-center transition-all hover:border-[var(--accent-active)]/50"
           >
             {/* Icon */}
             <div className="relative flex h-20 w-20 items-center justify-center overflow-hidden rounded-3xl border border-[var(--accent-active)]/20 bg-[var(--bg-primary)] text-[var(--accent-active)] shadow-2xl transition-all group-hover:scale-110">
@@ -245,16 +278,16 @@ export default function Access() {
                   <input
                     type={keyVisible ? 'text' : 'password'}
                     value={nsec}
-                    onChange={e => setNsec(e.target.value)}
+                    onChange={(e) => setNsec(e.target.value)}
                     placeholder="nsec1..."
                     className="h-12 w-full rounded-xl border bg-transparent px-4 pr-12 font-mono text-xs outline-none focus:border-[var(--accent-active)]"
                     style={{ borderColor: 'var(--border)', color: 'var(--text-primary)' }}
-                    onKeyDown={e => e.key === 'Enter' && handleImportKey()}
+                    onKeyDown={(e) => e.key === 'Enter' && handleImportKey()}
                     autoFocus
                   />
                   <button
                     onClick={() => setKeyVisible(!keyVisible)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 opacity-50 hover:opacity-100"
+                    className="absolute top-1/2 right-3 -translate-y-1/2 opacity-50 hover:opacity-100"
                     style={{ color: 'var(--text-secondary)' }}
                     tabIndex={-1}
                   >
@@ -264,7 +297,7 @@ export default function Access() {
                 <button
                   onClick={handleImportKey}
                   disabled={isVerifying || !nsec}
-                  className="flex h-12 w-full items-center justify-center gap-2 rounded-xl font-black text-xs uppercase transition-all hover:opacity-90 disabled:opacity-40"
+                  className="flex h-12 w-full items-center justify-center gap-2 rounded-xl text-xs font-black uppercase transition-all hover:opacity-90 disabled:opacity-40"
                   style={{ backgroundColor: 'var(--accent-gold)', color: '#141b25' }}
                 >
                   {isVerifying ? (
@@ -281,7 +314,91 @@ export default function Access() {
                     setNsec('')
                     setKeyVisible(false)
                   }}
-                  className="w-full text-center text-[10px] font-medium uppercase tracking-widest opacity-40 hover:opacity-70 transition-opacity"
+                  className="w-full text-center text-[10px] font-medium tracking-widest uppercase opacity-40 transition-opacity hover:opacity-70"
+                  style={{ color: 'var(--text-secondary)' }}
+                >
+                  ← Cancel
+                </button>
+              </div>
+            )}
+          </motion.div>
+
+          {/* Card 3 — Admin Password Login */}
+          <motion.div
+            whileHover={{ y: -5 }}
+            className="group flex flex-col items-center space-y-6 rounded-[2.5rem] border bg-[var(--bg-secondary)] p-10 text-center transition-all"
+            style={{ borderColor: 'color-mix(in srgb, var(--accent-danger) 20%, transparent)' }}
+            onMouseEnter={(e) =>
+              (e.currentTarget.style.borderColor =
+                'color-mix(in srgb, var(--accent-danger) 50%, transparent)')
+            }
+            onMouseLeave={(e) =>
+              (e.currentTarget.style.borderColor =
+                'color-mix(in srgb, var(--accent-danger) 20%, transparent)')
+            }
+          >
+            {/* Icon */}
+            <div
+              className="relative flex h-20 w-20 items-center justify-center overflow-hidden rounded-3xl border bg-[var(--bg-primary)] shadow-2xl transition-all group-hover:scale-110"
+              style={{
+                borderColor: 'color-mix(in srgb, var(--accent-danger) 30%, transparent)',
+                color: 'var(--accent-danger)'
+              }}
+            >
+              <ShieldCheck size={32} />
+            </div>
+
+            {/* Copy */}
+            <div className="space-y-3">
+              <h3 className="text-2xl font-bold tracking-tight text-[var(--text-primary)]">
+                Admin Access
+              </h3>
+              <p className="max-w-[240px] text-sm leading-relaxed font-medium text-[var(--text-secondary)]">
+                Operator login with admin key. Issues a 24-hour JWT for privileged endpoints.
+              </p>
+            </div>
+
+            {/* Toggle / Input area */}
+            {!adminMode ? (
+              <button
+                onClick={() => setAdminMode(true)}
+                className="flex h-14 w-full items-center justify-center gap-3 rounded-xl text-[10px] font-bold tracking-widest uppercase transition-all hover:scale-[1.02]"
+                style={{ backgroundColor: 'var(--accent-danger)', color: '#fff' }}
+              >
+                Enter Admin Key <ChevronRight size={14} />
+              </button>
+            ) : (
+              <div className="w-full space-y-3">
+                <input
+                  type="password"
+                  value={adminPassword}
+                  onChange={(e) => setAdminPassword(e.target.value)}
+                  placeholder="Admin password..."
+                  className="h-12 w-full rounded-xl border bg-transparent px-4 font-mono text-xs outline-none focus:border-[var(--accent-danger)]"
+                  style={{ borderColor: 'var(--border)', color: 'var(--text-primary)' }}
+                  onKeyDown={(e) => e.key === 'Enter' && handleAdminLogin()}
+                  autoFocus
+                />
+                <button
+                  onClick={handleAdminLogin}
+                  disabled={adminLoading || !adminPassword}
+                  className="flex h-12 w-full items-center justify-center gap-2 rounded-xl text-xs font-black uppercase transition-all hover:opacity-90 disabled:opacity-40"
+                  style={{ backgroundColor: 'var(--accent-danger)', color: '#fff' }}
+                >
+                  {adminLoading ? (
+                    <>
+                      <Loader2 size={14} className="animate-spin" /> Verifying...
+                    </>
+                  ) : (
+                    'Login & Enter →'
+                  )}
+                </button>
+                <button
+                  onClick={() => {
+                    setAdminMode(false)
+                    setAdminPassword('')
+                  }}
+                  className="w-full text-center text-[10px] font-medium tracking-widest uppercase opacity-40 transition-opacity hover:opacity-70"
                   style={{ color: 'var(--text-secondary)' }}
                 >
                   ← Cancel

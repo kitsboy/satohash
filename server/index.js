@@ -44,6 +44,7 @@ import nodemailer from 'nodemailer';
 import { Anthropic } from '@anthropic-ai/sdk';
 import { nip19 } from 'nostr-tools';
 import { fetchNostrProfile } from './nostr.js';
+import jwt from 'jsonwebtoken';
 
 dotenv.config();
 
@@ -235,9 +236,12 @@ app.use(helmet({
 app.use(hpp());
 
 const corsOptions = {
-    origin: config.CORS_ORIGIN,
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'X-Ots-Upgraded'],
+    origin: config.CORS_ORIGIN === '*'
+        ? true  // allow all origins in dev
+        : config.CORS_ORIGIN?.split(',').map(s => s.trim()),
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Request-Id', 'X-Snapper-Key', 'X-L402-Token', 'X-Ots-Upgraded'],
     exposedHeaders: ['Content-Disposition', 'X-Ots-Upgraded']
 };
 app.use(cors(corsOptions));
@@ -259,6 +263,20 @@ app.use('/api/nft', nftRouter);
 
 // API Docs
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
+
+// POST /api/auth/login — issues a signed JWT for admin access
+app.post('/api/auth/login', (req, res) => {
+    const { password } = req.body;
+    if (!password || password !== process.env.ADMIN_KEY) {
+        return res.status(401).json({ error: 'Invalid credentials' });
+    }
+    const token = jwt.sign(
+        { role: 'admin', iat: Math.floor(Date.now() / 1000) },
+        process.env.JWT_SECRET || 'satohash-jwt-32chars-change-in-prod',
+        { expiresIn: '24h' }
+    );
+    res.json({ token, expiresIn: '24h' });
+});
 
 // Subscribe endpoint for monetization (1)
 app.post('/api/subscribe', async (req, res) => {
@@ -630,33 +648,45 @@ const loadOtsFile = (buffer) => {
  */
 app.post('/api/stamp', paywallMiddleware, async (req, res, next) => {
     try {
-        const hashSchema = z.object({
-            hash: z.string().length(64).regex(/^[a-f0-9]+$/i, 'Must be a hex string.'),
-            filename: z.string().optional().default('unnamed-file'),
-            email: z.string().email('Valid email required').optional()
+        const stampSchema = z.object({
+            hash: z.string()
+                .length(64, 'Hash must be exactly 64 hex characters (SHA-256)')
+                .regex(/^[a-f0-9]{64}$/i, 'Hash must be a valid hex string'),
+            filename: z.string().min(1).max(255).optional().default('unknown'),
+            email: z.string().email().optional(),
+            nostr_pubkey: z.string().optional()
         });
-
-        const validation = hashSchema.safeParse(req.body);
+        const validation = stampSchema.safeParse(req.body);
         if (!validation.success) {
-            return res.status(400).json({ error: validation.error.message || 'Invalid or missing hash.' });
+            return res.status(400).json({
+                error: 'Invalid input',
+                details: validation.error.issues.map(i => i.message)
+            });
         }
 
-        const { hash, filename, email } = validation.data;
+        const { hash, filename, email, nostr_pubkey } = validation.data;
         const hashBuffer = Buffer.from(hash, 'hex');
         const opSHA256 = new OpenTimestamps.Ops.OpSHA256();
         const detached = OpenTimestamps.DetachedTimestampFile.fromHash(opSHA256, hashBuffer);
 
-        await OpenTimestamps.stamp(detached);
-        const otsBinary = detached.serializeToBytes();
-        
-        // Item 10: Binary Proof Validation
-        if (!otsBinary || otsBinary.length < 10) {
-            throw new Error('OTS Proof Generation Failure: Produced empty binary.');
+        let otsBinary;
+        try {
+            await OpenTimestamps.stamp(detached);
+            otsBinary = detached.serializeToBytes();
+            // Item 10: Binary Proof Validation
+            if (!otsBinary || otsBinary.length < 10) {
+                throw new Error('OTS stamp produced empty binary.');
+            }
+        } catch (stampErr) {
+            logger.warn(`⚠️  OTS calendar stamp failed for hash ${hash} — saving placeholder for daemon pickup: ${stampErr.message}`);
+            // Placeholder binary keeps the NOT NULL constraint satisfied; the
+            // upgrade daemon will overwrite this on its next cycle.
+            otsBinary = Buffer.from(`ots:pending:${hash}`);
         }
 
         const id = uuidv4();
         // Item 18: Deterministic IPFS Simulation (Hardened for PRO)
-        const ipfsCid = `Qm${crypto.createHash('sha256').update(hash + id).digest('hex').substring(0, 44)}`; 
+        const ipfsCid = `Qm${crypto.createHash('sha256').update(hash + id).digest('hex').substring(0, 44)}`;
 
         db.prepare("INSERT INTO timestamps (id, hash, original_filename, ots_binary, merkle_root) VALUES (?, ?, ?, ?, ?)").run(id, hash, filename, Buffer.from(otsBinary), ipfsCid);
 
@@ -925,7 +955,8 @@ app.get('/api/stamps/:id', (req, res) => {
         status: stamp.status,
         created_at: stamp.created_at,
         confirmed_at: stamp.confirmed_at,
-        block_height: stamp.bitcoin_block_height
+        bitcoin_block_height: stamp.bitcoin_block_height,
+        ipfs_cid: stamp.ipfs_cid
     });
 });
 
@@ -933,11 +964,84 @@ app.get('/api/stamps/:id', (req, res) => {
  * @swagger
  * /api/history:
  *   get:
- *     summary: Retrieve recent timestamps.
+ *     summary: Retrieve paginated timestamps with optional status filter.
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         schema: { type: integer, default: 1 }
+ *       - in: query
+ *         name: limit
+ *         schema: { type: integer, default: 20, maximum: 100 }
+ *       - in: query
+ *         name: status
+ *         schema: { type: string, enum: [pending, confirmed, failed] }
  */
-app.get('/api/history', (req, res) => {
-    const stamps = db.prepare("SELECT id, hash, original_filename as filename, status, created_at FROM timestamps ORDER BY created_at DESC LIMIT 50").all();
-    res.json(stamps);
+app.get('/api/history', async (req, res) => {
+    try {
+        const page = Math.max(1, parseInt(req.query.page) || 1);
+        const limit = Math.min(100, Math.max(1, parseInt(req.query.limit) || 20));
+        const offset = (page - 1) * limit;
+        const status = req.query.status; // optional filter: pending|confirmed|failed
+
+        // Build cache key from query params
+        const cacheKey = `history:${page}:${limit}:${status || 'all'}`;
+
+        // Try cache first
+        try {
+            const cached = await redis.get(cacheKey);
+            if (cached) {
+                res.setHeader('X-Cache', 'HIT');
+                return res.json(JSON.parse(cached));
+            }
+        } catch (cacheErr) {
+            // Redis unavailable — fall through to DB
+        }
+
+        let query = `SELECT id, hash, original_filename, status, created_at,
+                            confirmed_at, bitcoin_block_height, ipfs_cid, merkle_root
+                     FROM timestamps`;
+        const params = [];
+
+        if (status && ['pending', 'confirmed', 'failed'].includes(status)) {
+            query += ` WHERE status = ?`;
+            params.push(status);
+        }
+
+        query += ` ORDER BY created_at DESC LIMIT ? OFFSET ?`;
+        params.push(limit, offset);
+
+        const stamps = db.prepare(query).all(...params);
+
+        // Get total count for pagination metadata
+        let countQuery = `SELECT COUNT(*) as total FROM timestamps`;
+        const countParams = [];
+        if (status && ['pending', 'confirmed', 'failed'].includes(status)) {
+            countQuery += ` WHERE status = ?`;
+            countParams.push(status);
+        }
+        const { total } = db.prepare(countQuery).all(...countParams)[0];
+
+        const result = {
+            stamps,
+            pagination: {
+                page,
+                limit,
+                total,
+                pages: Math.ceil(total / limit),
+                hasNext: page * limit < total,
+                hasPrev: page > 1
+            }
+        };
+
+        // Cache for 30 seconds (fire and forget — don't block the response)
+        try { redis.setex(cacheKey, 30, JSON.stringify(result)); } catch {}
+
+        res.setHeader('X-Cache', 'MISS');
+        res.json(result);
+    } catch (e) {
+        logger.error('History error:', e);
+        res.status(500).json({ error: 'Failed to fetch history' });
+    }
 });
 
 app.post('/api/upgrade', upload.single('otsFile'), async (req, res, next) => {
@@ -957,7 +1061,43 @@ app.post('/api/upgrade', upload.single('otsFile'), async (req, res, next) => {
 
 app.post('/api/verify', upload.single('otsFile'), async (req, res, next) => {
     try {
-        if (!req.file || !req.file.buffer) return res.status(400).json({ error: 'No .ots file' });
+        // --- Hash-based DB lookup path ---
+        if (req.body.hash && !req.file) {
+            const { hash } = req.body;
+            if (!/^[a-f0-9]{64}$/i.test(hash)) {
+                return res.status(400).json({ error: 'Invalid hash: must be 64-character hex string.' });
+            }
+
+            const stamp = db.prepare("SELECT * FROM timestamps WHERE hash = ?").get(hash);
+            if (!stamp) {
+                return res.status(404).json({ verified: false, error: 'Hash not found in registry.' });
+            }
+
+            const response = {
+                id: stamp.id,
+                hash: stamp.hash,
+                filename: stamp.original_filename,
+                status: stamp.status,
+                created_at: stamp.created_at,
+                ots_available: !!(stamp.ots_binary),
+            };
+
+            if (stamp.status === 'confirmed') {
+                response.verified = true;
+                response.bitcoin_block_height = stamp.bitcoin_block_height;
+                response.confirmed_at = stamp.confirmed_at;
+            } else {
+                response.verified = false;
+            }
+
+            return res.json(response);
+        }
+
+        // --- .ots file upload verification path ---
+        if (!req.file || !req.file.buffer) {
+            return res.status(400).json({ error: 'Provide either a "hash" field or an .ots file upload.' });
+        }
+
         const detached = loadOtsFile(req.file.buffer);
         let verified = false;
         let details = '';
@@ -965,14 +1105,14 @@ app.post('/api/verify', upload.single('otsFile'), async (req, res, next) => {
             const info = OpenTimestamps.info(detached);
             details = info;
             try {
-               const verifyResult = await OpenTimestamps.verify(detached); 
-               if(verifyResult && Object.keys(verifyResult).length > 0) verified = true;
-            } catch(ve) {}
-            if (info.includes("Bitcoin block")) verified = true;
+                const verifyResult = await OpenTimestamps.verify(detached);
+                if (verifyResult && Object.keys(verifyResult).length > 0) verified = true;
+            } catch (ve) {}
+            if (info.includes('Bitcoin block')) verified = true;
             res.json({ verified, details });
-        } catch(e) {
-            logger.error("Verify check error: %o", e);
-            res.json({ verified: false, details: "Verification failed conceptually." });
+        } catch (e) {
+            logger.error('Verify check error: %o', e);
+            res.json({ verified: false, details: 'Verification failed.' });
         }
     } catch (error) {
         next(error);
@@ -1050,6 +1190,19 @@ app.get('/api/system/backup', (req, res) => {
  *     summary: Live Bitcoin Fee estimates for notarization priority.
  */
 app.get('/api/system/fees', async (req, res) => {
+    const cacheKey = 'fees:latest';
+
+    // Try cache first (60-second TTL — fee data doesn't change that fast)
+    try {
+        const cached = await redis.get(cacheKey);
+        if (cached) {
+            res.setHeader('X-Cache', 'HIT');
+            return res.json(JSON.parse(cached));
+        }
+    } catch (cacheErr) {
+        // Redis unavailable — fall through to live fetch
+    }
+
     try {
         const response = await fetch('https://mempool.space/api/v1/fees/recommended', {
             headers: { 'Accept': 'application/json' },
@@ -1057,14 +1210,20 @@ app.get('/api/system/fees', async (req, res) => {
         })
         if (!response.ok) throw new Error('mempool.space unavailable')
         const fees = await response.json()
-        res.json({
+        const result = {
             high: fees.fastestFee ?? 25,
             medium: fees.halfHourFee ?? 18,
             low: fees.hourFee ?? 12,
             instant_anchor: fees.fastestFee ?? 45,
             unit: 'sat/vB',
             source: 'mempool.space'
-        })
+        }
+
+        // Cache for 60 seconds (fire and forget)
+        try { redis.setex(cacheKey, 60, JSON.stringify(result)); } catch {}
+
+        res.setHeader('X-Cache', 'MISS');
+        res.json(result)
     } catch (e) {
         res.json({ high: 25, medium: 18, low: 12, instant_anchor: 45, unit: 'sat/vB', source: 'fallback' })
     }

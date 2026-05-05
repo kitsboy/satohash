@@ -13,7 +13,6 @@ import {
   Stamp
 } from 'lucide-react'
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
 import { toast } from 'sonner'
 import { jsPDF } from 'jspdf'
 import { useSocket } from '../hooks/useSocket'
@@ -75,6 +74,7 @@ export default function Vault() {
       date: s.created_at ? new Date(s.created_at).toISOString().split('T')[0] : '—',
       status: s.status || 'pending',
       confirmations: s.bitcoin_block_height ? 999 : 0,
+      bitcoin_block_height: s.bitcoin_block_height || null,
       size: '—'
     }))
 
@@ -371,7 +371,9 @@ export default function Vault() {
       )}
 
       {/* Elite Data Grid — Desktop Table */}
-      <div className={`overflow-hidden rounded-[2.5rem] border border-[var(--border)] bg-[var(--bg-secondary)] shadow-[0_50px_100px_rgba(0,0,0,0.5)] md:block ${loading ? 'hidden' : 'hidden md:block'}`}>
+      <div
+        className={`overflow-hidden rounded-[2.5rem] border border-[var(--border)] bg-[var(--bg-secondary)] shadow-[0_50px_100px_rgba(0,0,0,0.5)] md:block ${loading ? 'hidden' : 'hidden md:block'}`}
+      >
         <div className="overflow-x-auto">
           <table className="w-full border-collapse text-left">
             <thead>
@@ -458,6 +460,12 @@ export default function Vault() {
                       <div className="space-y-3">
                         <StatusBadge status={item.status} />
                         <SecurityAge confirmations={item.confirmations} />
+                        {item.status === 'confirmed' && item.bitcoin_block_height && (
+                          <span className="flex items-center gap-1 font-mono text-xs text-emerald-400">
+                            <span>₿</span>
+                            <span>Block {item.bitcoin_block_height.toLocaleString()}</span>
+                          </span>
+                        )}
                       </div>
                     </td>
                     <td className="px-10 py-8">
@@ -548,6 +556,12 @@ export default function Vault() {
                     <span className="text-[10px] font-bold text-[var(--text-secondary)]">
                       {item.date}
                     </span>
+                    {item.status === 'confirmed' && item.bitcoin_block_height && (
+                      <span className="flex items-center gap-1 font-mono text-xs text-emerald-400">
+                        <span>₿</span>
+                        <span>Block {item.bitcoin_block_height.toLocaleString()}</span>
+                      </span>
+                    )}
                   </div>
                 </div>
               </div>
