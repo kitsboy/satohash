@@ -45,6 +45,9 @@ const ContractEditor = React.lazy(() => import('./pages/contracts/ContractEditor
 const ImageVault = React.lazy(() => import('./pages/ImageVault'))
 const ProtocolStats = React.lazy(() => import('./pages/ProtocolStats'))
 const Offers = React.lazy(() => import('./pages/Offers'))
+const Forum = React.lazy(() => import('./pages/Forum'))
+const Identity = React.lazy(() => import('./pages/Identity'))
+const MobileSigner = React.lazy(() => import('./pages/MobileSigner'))
 
 function ProtectedRoute({ children }) {
   const location = useLocation()
@@ -242,6 +245,44 @@ function AppContent() {
               </ProtectedRoute>
             }
           />
+          <Route
+            path="/forum"
+            element={
+              <ProtectedRoute>
+                <Forum />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/forum/:id"
+            element={
+              <ProtectedRoute>
+                <Forum />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/identity"
+            element={
+              <ProtectedRoute>
+                <Identity />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/mobile-signer"
+            element={
+              <ProtectedRoute>
+                <MobileSigner />
+              </ProtectedRoute>
+            }
+          />
+          {/* Alias routes for renamed/consolidated paths */}
+          <Route path="/developers" element={<Navigate to="/developer" replace />} />
+          <Route path="/web-capture" element={<Navigate to="/snapper" replace />} />
+          <Route path="/audit-log" element={<Navigate to="/vault" replace />} />
+          <Route path="/documentation" element={<Navigate to="/developer" replace />} />
+          <Route path="/status" element={<Navigate to="/atlas" replace />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </Suspense>

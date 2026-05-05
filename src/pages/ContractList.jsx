@@ -12,6 +12,7 @@ import {
   Search
 } from 'lucide-react'
 import { useState, useEffect } from 'react'
+import { SkeletonContractCard } from '../components/Skeletons'
 
 const SignerRow = ({ identity, status, role }) => (
   <div className="group flex items-center justify-between rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] p-4 transition-all hover:border-[var(--border-bright)]">
@@ -141,7 +142,15 @@ export default function ContractList() {
           </div>
 
           <div className="space-y-4">
-            {filteredContracts.map((contract) => (
+            {loading ? (
+              Array.from({ length: 2 }).map((_, i) => <SkeletonContractCard key={i} />)
+            ) : filteredContracts.length === 0 ? (
+              <div className="rounded-3xl border border-[var(--border)] bg-[var(--bg-secondary)] p-12 text-center">
+                <p className="text-sm font-medium text-[var(--text-secondary)]">
+                  No {activeTab} agreements found.
+                </p>
+              </div>
+            ) : filteredContracts.map((contract) => (
               <div
                 key={contract.id}
                 className="group space-y-5 rounded-3xl border border-[var(--border)] bg-[var(--bg-secondary)] p-5 transition-all hover:border-[var(--border-bright)] md:space-y-6 md:p-8"

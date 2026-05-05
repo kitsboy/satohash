@@ -1,7 +1,9 @@
 import React from 'react';
-import { ExternalLink, GitHub, Award } from 'lucide-react';
+import { ExternalLink, Award } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { glassCard, btnHolographic } from '../../index.css'; // Adjust import if needed
+
+const glassCard = 'rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)]';
+const btnHolographic = 'bg-[var(--accent-active)] text-white px-4 py-2 rounded-lg font-medium hover:opacity-90 transition-all duration-200 inline-flex items-center';
 
 const Contribute = () => {
   return (
@@ -23,7 +25,7 @@ const Contribute = () => {
           <h2 className="text-2xl font-semibold mb-4">Get Involved</h2>
           <div className="space-y-4">
             <div className="flex items-center space-x-4 p-4 bg-surface-raised rounded-lg">
-              <GitHub className="w-6 h-6 text-accent-purple" />
+              <Award className="w-6 h-6 text-[var(--accent-purple)]" />
               <div>
                 <h3 className="font-medium">GitHub Issues</h3>
                 <p>Browse and tackle open issues to help build Satohash.</p>

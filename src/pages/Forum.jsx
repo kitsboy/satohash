@@ -1,4 +1,3 @@
-// TODO: add /forum route in App.jsx
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Plus, Send, MessageSquare } from 'lucide-react';
@@ -7,8 +6,8 @@ import { toast } from 'sonner';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
 
-const glassCard = 'bg-surface-raised/80 backdrop-blur-lg border border-border-bright/30 rounded-2xl shadow-lg shadow-shadow-noir/10';
-const btnHolographic = 'bg-gradient-to-r from-accent-active/90 to-accent-active/70 text-white px-4 py-2 rounded-lg font-medium hover:from-accent-active/80 hover:to-accent-active/60 transition-all duration-200 shadow-lg shadow-accent-active/10 inline-flex items-center';
+const glassCard = 'rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] shadow-lg';
+const btnHolographic = 'bg-[var(--accent-active)] text-white px-4 py-2 rounded-lg font-medium hover:opacity-90 transition-all duration-200 shadow-lg inline-flex items-center';
 
 const Forum = () => {
   const [threads, setThreads] = useState([]);

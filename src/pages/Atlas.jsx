@@ -299,7 +299,7 @@ export default function Atlas() {
             </p>
             <button
               onClick={downloadCSV}
-              className="flex h-14 w-full items-center justify-center gap-3 rounded-2xl bg-white text-[11px] font-black tracking-widest text-black uppercase transition-all hover:scale-[1.02]"
+              className="flex h-14 w-full items-center justify-center gap-3 rounded-2xl bg-[var(--text-primary)] text-[11px] font-black tracking-widest text-[var(--bg-primary)] uppercase transition-all hover:scale-[1.02]"
             >
               Download Global Index <ArrowRight size={16} />
             </button>

@@ -336,7 +336,7 @@ export default function Developer() {
                           <div className="h-2 w-2 rounded-full bg-yellow-500/50" />
                           <div className="h-2 w-2 rounded-full bg-green-500/50" />
                         </div>
-                        <pre className="overflow-x-auto font-mono text-[12px] leading-relaxed text-indigo-300">
+                        <pre className="overflow-x-auto font-mono text-[12px] leading-relaxed text-[var(--accent-active)]">
                           {CODE_EXAMPLES[codeLang]}
                         </pre>
                       </div>
@@ -383,7 +383,7 @@ export default function Developer() {
                     </div>
                     <button
                       onClick={handleGenerateKey}
-                      className="flex h-12 items-center gap-2 rounded-xl bg-white px-6 text-[10px] font-black tracking-widest text-black uppercase transition-all hover:scale-105"
+                      className="flex h-12 items-center gap-2 rounded-xl bg-[var(--text-primary)] px-6 text-[10px] font-black tracking-widest text-[var(--bg-primary)] uppercase transition-all hover:scale-105"
                     >
                       <Plus size={16} /> Generate New Key
                     </button>
@@ -589,7 +589,7 @@ export default function Developer() {
                       <div className="h-full w-2/3 bg-[var(--accent-active)] shadow-[0_0_10px_var(--accent-active)]" />
                     </div>
                   </div>
-                  <button className="flex h-14 w-full items-center justify-center gap-3 rounded-2xl bg-white text-[11px] font-black tracking-widest text-black uppercase transition-all hover:scale-[1.02]">
+                  <button className="flex h-14 w-full items-center justify-center gap-3 rounded-2xl bg-[var(--text-primary)] text-[11px] font-black tracking-widest text-[var(--bg-primary)] uppercase transition-all hover:scale-[1.02]">
                     Top Up Credits <ChevronRight size={16} />
                   </button>
                 </div>
