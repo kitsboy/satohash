@@ -4,10 +4,42 @@ import { Link } from 'react-router-dom'
 
 export default function About() {
   return (
-    <div className="relative min-h-screen overflow-hidden bg-[#f7f8fc] pb-32">
+    <div
+      className="relative min-h-screen overflow-hidden pb-32"
+      style={{ backgroundColor: 'var(--bg-primary)', color: 'var(--text-primary)' }}
+    >
       <div className="grid-pattern-slate pointer-events-none absolute inset-0 opacity-[0.03]" />
+
+      {/* ── Simple top nav ─────────────────────────────────────────── */}
+      <nav
+        className="sticky top-0 z-50 flex items-center gap-4 border-b px-6 py-4"
+        style={{
+          borderColor: 'var(--border)',
+          backgroundColor: 'var(--bg-secondary)',
+          backdropFilter: 'blur(16px)'
+        }}
+      >
+        <Link
+          to="/"
+          className="flex items-center gap-2 text-sm font-bold transition-opacity hover:opacity-70"
+          style={{ color: 'var(--text-secondary)' }}
+        >
+          ← Home
+        </Link>
+        <span style={{ color: 'var(--border)', userSelect: 'none' }}>|</span>
+        <span
+          className="text-sm font-black tracking-widest uppercase"
+          style={{ color: 'var(--accent-gold)' }}
+        >
+          About / Whitepaper
+        </span>
+      </nav>
+
       {/* Institutional Header */}
-      <header className="mesh-bg-light relative border-b border-indigo-100 bg-white pt-24 pb-16">
+      <header
+        className="mesh-bg-light relative border-b pb-16 pt-16"
+        style={{ borderColor: 'var(--border)', backgroundColor: 'var(--bg-secondary)' }}
+      >
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-indigo-50/20 to-transparent" />
         <div className="layout-container relative z-10 text-center">
           <motion.div
@@ -450,18 +482,38 @@ export default function About() {
       </main>
 
       {/* Institutional Footer Seal */}
-      <footer className="border-t border-indigo-50 bg-white py-20">
-        <div className="layout-container flex flex-col items-center opacity-30">
-          <Shield size={60} className="mb-8 text-indigo-900" />
-          <div className="text-[10px] font-black tracking-[0.5em] text-indigo-900 uppercase">
+      <footer
+        className="border-t py-16"
+        style={{ borderColor: 'var(--border)', backgroundColor: 'var(--bg-secondary)' }}
+      >
+        <div className="layout-container flex flex-col items-center" style={{ opacity: 0.5 }}>
+          <Shield size={48} className="mb-6" style={{ color: 'var(--text-secondary)' }} />
+          <div
+            className="text-[10px] font-black tracking-[0.5em] uppercase"
+            style={{ color: 'var(--text-secondary)' }}
+          >
             SATOHASH_PROTOCOL_SECURITY_COUNCIL
           </div>
-          <div className="mt-4 font-mono text-[9px]">
+          <div className="mt-3 font-mono text-[9px]" style={{ color: 'var(--text-muted)' }}>
             GENESIS_HASH: 000000000019d6689c085ae165831e934ff763...
           </div>
-          <p className="mt-6 text-[8px] font-black tracking-widest text-indigo-900/60 uppercase">
+          <p
+            className="mt-4 text-[8px] font-black tracking-widest uppercase"
+            style={{ color: 'var(--text-muted)' }}
+          >
             Immutable Data Rights Reserved • {new Date().getFullYear()}
           </p>
+        </div>
+
+        {/* Legal links */}
+        <div
+          className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 border-t py-4 text-xs"
+          style={{ color: 'var(--text-muted)', borderColor: 'var(--border)' }}
+        >
+          <Link to="/legal/terms" className="transition-opacity hover:opacity-70">Terms of Service</Link>
+          <Link to="/legal/privacy" className="transition-opacity hover:opacity-70">Privacy Policy</Link>
+          <Link to="/legal/crypto-notice" className="transition-opacity hover:opacity-70">Cryptographic Notice</Link>
+          <Link to="/trust" className="transition-opacity hover:opacity-70">Trust Center</Link>
         </div>
       </footer>
     </div>

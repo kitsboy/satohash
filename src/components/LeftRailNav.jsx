@@ -1,4 +1,4 @@
-import { Link, useLocation } from 'react-router-dom'
+import { Link, NavLink, useLocation } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
 import {
@@ -61,6 +61,14 @@ const NAV_GROUPS = [
       { name: 'Trust Center', path: '/trust', icon: Scale }
     ]
   }
+]
+
+// ─── "More" compact links ─────────────────────────────────────────────────────
+const MORE_ITEMS = [
+  { name: 'Image Vault', path: '/image-vault' },
+  { name: 'Protocol Stats', path: '/protocol-stats' },
+  { name: 'Explorer', path: '/explorer' },
+  { name: 'Offers', path: '/offers' }
 ]
 
 // ─── Single nav item ─────────────────────────────────────────────────────────
@@ -187,6 +195,45 @@ export default function LeftRailNav() {
             </div>
           </div>
         ))}
+
+        {/* ── More section ───────────────────────────────────────── */}
+        <div>
+          <p
+            className="mb-2 px-3 text-[9px] font-black tracking-widest uppercase"
+            style={{ color: 'var(--text-muted)' }}
+          >
+            More
+          </p>
+          <div className="space-y-0.5">
+            {MORE_ITEMS.map((item) => (
+              <NavLink
+                key={item.path}
+                to={item.path}
+                aria-label={item.name}
+                aria-current={undefined}
+                className={({ isActive }) =>
+                  [
+                    'flex items-center rounded-md px-3 py-1.5 text-[11px] font-semibold tracking-tight transition-colors duration-150',
+                    isActive
+                      ? 'text-[var(--accent-gold)]'
+                      : 'text-[var(--text-secondary)] hover:text-[var(--accent-gold)]'
+                  ].join(' ')
+                }
+                style={({ isActive }) =>
+                  isActive
+                    ? {
+                        background:
+                          'linear-gradient(90deg, rgba(240,180,41,0.08) 0%, rgba(240,180,41,0.02) 100%)',
+                        boxShadow: 'inset 2px 0 0 var(--accent-gold)'
+                      }
+                    : {}
+                }
+              >
+                {item.name}
+              </NavLink>
+            ))}
+          </div>
+        </div>
       </div>
 
       {/* ── Bottom widgets ─────────────────────────────────────── */}
@@ -324,6 +371,13 @@ export default function LeftRailNav() {
             style={{ color: 'var(--accent-success)' }}
           />
         </div>
+      </div>
+
+      {/* ── Legal footer ───────────────────────────────────────── */}
+      <div className="px-4 pb-4 flex flex-col gap-1">
+        <Link to="/legal/terms" className="text-[9px] opacity-40 hover:opacity-70 transition-opacity" style={{ color: 'var(--text-secondary)' }}>Terms</Link>
+        <Link to="/legal/privacy" className="text-[9px] opacity-40 hover:opacity-70 transition-opacity" style={{ color: 'var(--text-secondary)' }}>Privacy</Link>
+        <Link to="/trust" className="text-[9px] opacity-40 hover:opacity-70 transition-opacity" style={{ color: 'var(--text-secondary)' }}>Trust Center</Link>
       </div>
 
       <HelpOverlay isOpen={showHelp} onClose={() => setShowHelp(false)} />

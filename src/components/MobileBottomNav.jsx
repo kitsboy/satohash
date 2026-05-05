@@ -90,7 +90,10 @@ export default function MobileBottomNav() {
                 { name: 'Web Capture', path: '/snapper' },
                 { name: 'Templates', path: '/templates' },
                 { name: 'Settings', path: '/settings' },
-                { name: 'Trust Center', path: '/trust' }
+                { name: 'Trust Center', path: '/trust' },
+                { name: 'Image Vault', path: '/image-vault' },
+                { name: 'Protocol Stats', path: '/protocol-stats' },
+                { name: 'Explorer', path: '/explorer' }
               ].map((link) => (
                 <NavLink
                   key={link.path}

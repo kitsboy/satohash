@@ -979,6 +979,17 @@ export default function Landing() {
       {/* ── FOOTER ───────────────────────────────────────────────── */}
       <Footer />
 
+      {/* ── LEGAL LINKS ──────────────────────────────────────────── */}
+      <div
+        className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 py-4 text-xs"
+        style={{ color: 'var(--text-muted)', borderTop: '1px solid var(--border)' }}
+      >
+        <Link to="/legal/terms" className="transition-opacity hover:opacity-70">Terms of Service</Link>
+        <Link to="/legal/privacy" className="transition-opacity hover:opacity-70">Privacy Policy</Link>
+        <Link to="/legal/crypto-notice" className="transition-opacity hover:opacity-70">Cryptographic Notice</Link>
+        <Link to="/trust" className="transition-opacity hover:opacity-70">Trust Center</Link>
+      </div>
+
       {/* ── DONATION MODAL ───────────────────────────────────────── */}
       <AnimatePresence>
         {donationOpen && (
