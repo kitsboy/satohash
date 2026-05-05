@@ -4,10 +4,10 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Database, Fingerprint, ShieldCheck, Globe, MoreHorizontal } from 'lucide-react'
 
 const PRIMARY_LINKS = [
-  { name: 'Vault',  path: '/vault',  icon: Database },
-  { name: 'Stamp',  path: '/stamp',  icon: Fingerprint },
-  { name: 'Verify', path: '/verify', icon: ShieldCheck },
-  { name: 'Atlas',  path: '/atlas',  icon: Globe },
+  { name: 'Vault', path: '/vault', icon: Database },
+  { name: 'Stamp', path: '/stamp', icon: Fingerprint },
+  { name: 'Atlas', path: '/atlas', icon: Globe },
+  { name: 'Dashboard', path: '/dashboard', icon: ShieldCheck }
 ]
 
 // ─── MobileBottomNav ─────────────────────────────────────────────────────────
@@ -43,37 +43,53 @@ export default function MobileBottomNav() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 12, scale: 0.95 }}
               transition={{ type: 'spring', stiffness: 380, damping: 28 }}
-              className="fixed bottom-[84px] right-4 z-50 w-52 overflow-hidden rounded-2xl border shadow-2xl"
+              className="fixed right-4 bottom-[84px] z-50 w-52 overflow-hidden rounded-2xl border shadow-2xl"
               style={{
                 background: 'var(--bg-secondary)',
                 borderColor: 'var(--border-bright)',
-                boxShadow: '0 20px 60px rgba(0,0,0,0.6)',
+                boxShadow: '0 20px 60px rgba(0,0,0,0.6)'
               }}
             >
               {/* Auth state chip */}
-              <div className="flex items-center gap-2 border-b px-4 py-2.5" style={{ borderColor: 'var(--border)' }}>
+              <div
+                className="flex items-center gap-2 border-b px-4 py-2.5"
+                style={{ borderColor: 'var(--border)' }}
+              >
                 <span className="relative flex h-1.5 w-1.5 flex-shrink-0">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-60" style={{ background: npub ? 'var(--accent-success)' : 'var(--text-secondary)' }} />
-                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full" style={{ background: npub ? 'var(--accent-success)' : 'var(--text-secondary)' }} />
+                  <span
+                    className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-60"
+                    style={{ background: npub ? 'var(--accent-success)' : 'var(--text-secondary)' }}
+                  />
+                  <span
+                    className="relative inline-flex h-1.5 w-1.5 rounded-full"
+                    style={{ background: npub ? 'var(--accent-success)' : 'var(--text-secondary)' }}
+                  />
                 </span>
                 {npub ? (
-                  <span className="truncate font-mono text-[8px] font-semibold" style={{ color: 'var(--text-primary)' }}>
+                  <span
+                    className="truncate font-mono text-[8px] font-semibold"
+                    style={{ color: 'var(--text-primary)' }}
+                  >
                     {npub.substring(0, 12)}...
                   </span>
                 ) : (
-                  <span className="text-[9px] font-semibold tracking-wider" style={{ color: 'var(--text-secondary)', opacity: 0.6 }}>
+                  <span
+                    className="text-[9px] font-semibold tracking-wider"
+                    style={{ color: 'var(--text-secondary)', opacity: 0.6 }}
+                  >
                     Not Connected
                   </span>
                 )}
               </div>
 
               {[
+                { name: 'Verify', path: '/verify' },
                 { name: 'Developer API', path: '/developer' },
-                { name: 'Contracts',     path: '/contracts'  },
-                { name: 'Web Capture',   path: '/snapper'    },
-                { name: 'Templates',     path: '/templates'  },
-                { name: 'Settings',      path: '/settings'   },
-                { name: 'Trust Center',  path: '/trust'      },
+                { name: 'Contracts', path: '/contracts' },
+                { name: 'Web Capture', path: '/snapper' },
+                { name: 'Templates', path: '/templates' },
+                { name: 'Settings', path: '/settings' },
+                { name: 'Trust Center', path: '/trust' }
               ].map((link) => (
                 <NavLink
                   key={link.path}
@@ -83,8 +99,8 @@ export default function MobileBottomNav() {
                     [
                       'flex items-center px-4 py-3 text-[12px] font-semibold tracking-tight transition-colors',
                       isActive
-                        ? 'text-[var(--accent-gold)] bg-[var(--accent-gold-subtle)]'
-                        : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-white/5',
+                        ? 'bg-[var(--accent-gold-subtle)] text-[var(--accent-gold)]'
+                        : 'text-[var(--text-secondary)] hover:bg-white/5 hover:text-[var(--text-primary)]'
                     ].join(' ')
                   }
                 >
@@ -100,8 +116,7 @@ export default function MobileBottomNav() {
       <nav className="flex h-full items-center justify-around px-2">
         {PRIMARY_LINKS.map((link) => {
           const isActive =
-            location.pathname === link.path ||
-            location.pathname.startsWith(link.path)
+            location.pathname === link.path || location.pathname.startsWith(link.path)
           const Icon = link.icon
 
           return (
@@ -124,7 +139,7 @@ export default function MobileBottomNav() {
                       className="absolute inset-x-[-10px] inset-y-[-6px] rounded-2xl"
                       style={{
                         background: 'rgba(240,180,41,0.15)',
-                        border: '1px solid rgba(240,180,41,0.25)',
+                        border: '1px solid rgba(240,180,41,0.25)'
                       }}
                       transition={{ type: 'spring', stiffness: 400, damping: 30 }}
                     />
@@ -136,14 +151,14 @@ export default function MobileBottomNav() {
                   strokeWidth={isActive ? 2.5 : 1.8}
                   style={{
                     color: isActive ? 'var(--accent-gold)' : 'var(--text-secondary)',
-                    position: 'relative',
+                    position: 'relative'
                   }}
                 />
                 <span
                   className="relative text-[9px] font-black tracking-widest uppercase"
                   style={{
                     color: isActive ? 'var(--accent-gold)' : 'var(--text-secondary)',
-                    opacity: isActive ? 1 : 0.7,
+                    opacity: isActive ? 1 : 0.7
                   }}
                 >
                   {link.name}
@@ -169,7 +184,7 @@ export default function MobileBottomNav() {
                 className="absolute inset-x-[-10px] inset-y-[-6px] rounded-2xl"
                 style={{
                   background: 'rgba(240,180,41,0.15)',
-                  border: '1px solid rgba(240,180,41,0.25)',
+                  border: '1px solid rgba(240,180,41,0.25)'
                 }}
               />
             )}
@@ -178,21 +193,15 @@ export default function MobileBottomNav() {
               size={20}
               strokeWidth={moreActive || moreOpen ? 2.5 : 1.8}
               style={{
-                color:
-                  moreActive || moreOpen
-                    ? 'var(--accent-gold)'
-                    : 'var(--text-secondary)',
-                position: 'relative',
+                color: moreActive || moreOpen ? 'var(--accent-gold)' : 'var(--text-secondary)',
+                position: 'relative'
               }}
             />
             <span
               className="relative text-[9px] font-black tracking-widest uppercase"
               style={{
-                color:
-                  moreActive || moreOpen
-                    ? 'var(--accent-gold)'
-                    : 'var(--text-secondary)',
-                opacity: moreActive || moreOpen ? 1 : 0.7,
+                color: moreActive || moreOpen ? 'var(--accent-gold)' : 'var(--text-secondary)',
+                opacity: moreActive || moreOpen ? 1 : 0.7
               }}
             >
               More

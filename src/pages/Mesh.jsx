@@ -57,17 +57,45 @@ const NodeCard = ({ city, country, status, latency, uptime, load }) => (
 )
 
 const nodes = [
-  { city: 'Frankfurt', country: 'Germany', status: 'Active', latency: '12', uptime: '99.99', region: 'Europe' },
-  { city: 'Singapore', country: 'Singapore', status: 'Active', latency: '45', uptime: '100.0', region: 'Asia' },
-  { city: 'New York', country: 'USA', status: 'Active', latency: '8', uptime: '99.98', region: 'North America' },
-  { city: 'Tokyo', country: 'Japan', status: 'Active', latency: '62', uptime: '99.95', region: 'Asia' }
+  {
+    city: 'Frankfurt',
+    country: 'Germany',
+    status: 'Active',
+    latency: '12',
+    uptime: '99.99',
+    region: 'Europe'
+  },
+  {
+    city: 'Singapore',
+    country: 'Singapore',
+    status: 'Active',
+    latency: '45',
+    uptime: '100.0',
+    region: 'Asia'
+  },
+  {
+    city: 'New York',
+    country: 'USA',
+    status: 'Active',
+    latency: '8',
+    uptime: '99.98',
+    region: 'North America'
+  },
+  {
+    city: 'Tokyo',
+    country: 'Japan',
+    status: 'Active',
+    latency: '62',
+    uptime: '99.95',
+    region: 'Asia'
+  }
 ]
 
 export default function Mesh() {
   const [activeRegion, setActiveRegion] = useState('Global')
 
   return (
-    <div className="mx-auto max-w-7xl space-y-12 p-8 pt-32">
+    <div className="mx-auto max-w-7xl space-y-12 p-8">
       <header className="flex flex-col justify-between gap-8 border-b border-[var(--border)] pb-12 lg:flex-row lg:items-end">
         <div className="space-y-6">
           <div className="inline-flex items-center gap-2 rounded-full border border-[var(--accent-active)]/30 bg-[var(--accent-active)]/10 px-4 py-1.5">

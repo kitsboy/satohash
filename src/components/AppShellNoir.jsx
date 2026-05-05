@@ -48,8 +48,7 @@ export default function AppShellNoir({ children }) {
         const q = searchQuery.toLowerCase()
         const matches = stamps.filter(
           (s) =>
-            (s.hash ?? '').toLowerCase().includes(q) ||
-            (s.filename ?? '').toLowerCase().includes(q)
+            (s.hash ?? '').toLowerCase().includes(q) || (s.filename ?? '').toLowerCase().includes(q)
         )
         setStampResults(matches.slice(0, 5))
       } catch {
@@ -61,17 +60,19 @@ export default function AppShellNoir({ children }) {
 
   return (
     <div className="flex min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)]">
-
       {/* ── Global Command Palette ──────────────────────────────────────── */}
       <AnimatePresence>
         {isSearchOpen && (
-          <div className="fixed inset-0 z-[200] flex items-start justify-center px-4 pt-[15vh]">
+          <div className="fixed inset-0 z-[200] flex items-start justify-center px-4 pt-20 md:pt-[15vh]">
             {/* Backdrop */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              onClick={() => { setIsSearchOpen(false); setSearchQuery('') }}
+              onClick={() => {
+                setIsSearchOpen(false)
+                setSearchQuery('')
+              }}
               className="absolute inset-0 bg-black/80 backdrop-blur-xl"
             />
 
@@ -85,10 +86,7 @@ export default function AppShellNoir({ children }) {
             >
               {/* Search input row */}
               <div className="flex items-center gap-4 border-b border-[var(--border)] p-6">
-                <Search
-                  size={22}
-                  style={{ color: 'var(--accent-gold)', flexShrink: 0 }}
-                />
+                <Search size={22} style={{ color: 'var(--accent-gold)', flexShrink: 0 }} />
                 <input
                   autoFocus
                   placeholder="Search vaults, stamps, blocks, or proofs..."
@@ -96,7 +94,18 @@ export default function AppShellNoir({ children }) {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
-                <div className="flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 py-1.5">
+                <button
+                  onClick={() => {
+                    setIsSearchOpen(false)
+                    setSearchQuery('')
+                  }}
+                  className="flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 md:hidden"
+                >
+                  <span className="text-[10px] font-black tracking-widest text-white/40 uppercase">
+                    Close
+                  </span>
+                </button>
+                <div className="hidden items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 md:flex">
                   <span className="text-[10px] font-black tracking-widest text-white/40 uppercase">
                     ESC to close
                   </span>
@@ -105,14 +114,33 @@ export default function AppShellNoir({ children }) {
 
               {/* Results area */}
               <div className="scrollbar-hide max-h-[420px] overflow-y-auto p-4">
-
                 {/* Quick Navigation — filtered by searchQuery */}
                 {(() => {
                   const navItems = [
-                    { icon: Database, label: 'Vault',          sub: 'Browse sovereign anchors',    path: '/vault' },
-                    { icon: Globe,    label: 'Atlas',          sub: 'Temporal provenance search',  path: '/atlas' },
-                    { icon: Terminal, label: 'Developer Plane',sub: 'API keys and strategies',     path: '/developer' },
-                    { icon: Zap,      label: 'Settlement',     sub: 'L402 Wallet & Billing',       path: '/settings' },
+                    {
+                      icon: Database,
+                      label: 'Vault',
+                      sub: 'Browse sovereign anchors',
+                      path: '/vault'
+                    },
+                    {
+                      icon: Globe,
+                      label: 'Atlas',
+                      sub: 'Temporal provenance search',
+                      path: '/atlas'
+                    },
+                    {
+                      icon: Terminal,
+                      label: 'Developer Plane',
+                      sub: 'API keys and strategies',
+                      path: '/developer'
+                    },
+                    {
+                      icon: Zap,
+                      label: 'Settlement',
+                      sub: 'L402 Wallet & Billing',
+                      path: '/settings'
+                    }
                   ]
                   const q = searchQuery.toLowerCase()
                   const filtered = navItems.filter(
@@ -131,7 +159,11 @@ export default function AppShellNoir({ children }) {
                           icon={icon}
                           label={label}
                           sub={sub}
-                          onClick={() => { navigate(path); setIsSearchOpen(false); setSearchQuery('') }}
+                          onClick={() => {
+                            navigate(path)
+                            setIsSearchOpen(false)
+                            setSearchQuery('')
+                          }}
                         />
                       ))}
                     </>
@@ -150,17 +182,18 @@ export default function AppShellNoir({ children }) {
                         icon={Database}
                         label={s.filename ?? 'Untitled'}
                         sub={(s.hash ?? '').slice(0, 24) + '…'}
-                        onClick={() => { navigate('/vault'); setIsSearchOpen(false); setSearchQuery('') }}
+                        onClick={() => {
+                          navigate('/vault')
+                          setIsSearchOpen(false)
+                          setSearchQuery('')
+                        }}
                       />
                     ))}
                   </>
                 )}
 
                 {/* Divider */}
-                <div
-                  className="mx-4 my-3"
-                  style={{ height: '1px', background: 'var(--border)' }}
-                />
+                <div className="mx-4 my-3" style={{ height: '1px', background: 'var(--border)' }} />
 
                 {/* Bitcoin Tips */}
                 <div className="px-4 py-3 text-[10px] font-black tracking-[0.3em] text-[var(--text-secondary)] uppercase">
@@ -171,21 +204,33 @@ export default function AppShellNoir({ children }) {
                   icon={Scale}
                   label="View Trust Center"
                   sub="Compliance & legal information"
-                  onClick={() => { navigate('/trust'); setIsSearchOpen(false); setSearchQuery('') }}
+                  onClick={() => {
+                    navigate('/trust')
+                    setIsSearchOpen(false)
+                    setSearchQuery('')
+                  }}
                   gold
                 />
                 <SearchItem
                   icon={BookOpen}
                   label="Read Privacy Policy"
                   sub="How your data is protected"
-                  onClick={() => { navigate('/trust'); setIsSearchOpen(false); setSearchQuery('') }}
+                  onClick={() => {
+                    navigate('/trust')
+                    setIsSearchOpen(false)
+                    setSearchQuery('')
+                  }}
                   gold
                 />
                 <SearchItem
                   icon={Terminal}
                   label="API Documentation"
                   sub="Integrate the Satohash API"
-                  onClick={() => { navigate('/developer'); setIsSearchOpen(false); setSearchQuery('') }}
+                  onClick={() => {
+                    navigate('/developer')
+                    setIsSearchOpen(false)
+                    setSearchQuery('')
+                  }}
                   gold
                 />
               </div>
@@ -195,7 +240,8 @@ export default function AppShellNoir({ children }) {
       </AnimatePresence>
 
       {/* ── Desktop Left Rail ───────────────────────────────────────────── */}
-      <div className="fixed inset-y-0 left-0 z-50 hidden w-64 border-r border-[var(--border)] md:block"
+      <div
+        className="fixed inset-y-0 left-0 z-50 hidden w-64 border-r border-[var(--border)] md:block"
         style={{ background: '#13171f' }}
       >
         <LeftRailNav />
@@ -222,7 +268,6 @@ export default function AppShellNoir({ children }) {
 
       {/* ── Main Content Area ───────────────────────────────────────────── */}
       <div className="flex min-h-screen flex-1 flex-col pb-20 md:ml-64 md:pb-0">
-
         {/* Desktop Top Signal Bar */}
         <div className="sticky top-0 z-40 hidden h-14 items-center justify-between border-b border-[var(--border)] bg-[var(--bg-primary)]/80 px-6 backdrop-blur-md md:flex">
           <TopSignalBar />
@@ -242,9 +287,7 @@ export default function AppShellNoir({ children }) {
         </div>
 
         {/* Page content */}
-        <main className="animate-fade-in flex-1 p-4 pt-20 md:p-8 md:pt-8">
-          {children}
-        </main>
+        <main className="animate-fade-in flex-1 p-4 pt-20 md:p-8 md:pt-8">{children}</main>
       </div>
 
       {/* ── Mobile Bottom Nav ───────────────────────────────────────────── */}
@@ -266,7 +309,7 @@ function SearchItem({ icon: Icon, label, sub, onClick, gold = false }) {
         className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl transition-all"
         style={{
           background: gold ? 'rgba(240,180,41,0.08)' : 'rgba(255,255,255,0.05)',
-          color: gold ? 'var(--accent-gold)' : 'var(--text-secondary)',
+          color: gold ? 'var(--accent-gold)' : 'var(--text-secondary)'
         }}
       >
         <Icon size={18} />
@@ -279,7 +322,7 @@ function SearchItem({ icon: Icon, label, sub, onClick, gold = false }) {
       </div>
       <ChevronRight
         size={15}
-        className="ml-auto -translate-x-2 flex-shrink-0 text-[var(--text-secondary)] opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100"
+        className="ml-auto flex-shrink-0 -translate-x-2 text-[var(--text-secondary)] opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100"
       />
     </button>
   )

@@ -28,3 +28,5 @@ export const FOOTER_EXTRA_LINKS = [
   { name: 'Trust', path: '/trust', internal: true },
   { name: 'About', path: '/about', internal: true }
 ]
+
+export const BTC_ADDRESS = 'bc1qhm5ndfjhqxdk3cx0pngyps4f5nnwdckulmge6c8keyf2pk0neqtshjn8ad'

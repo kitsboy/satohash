@@ -27,7 +27,7 @@ const Settings = React.lazy(() => import('./pages/Settings'))
 const Access = React.lazy(() => import('./pages/Access'))
 const Landing = React.lazy(() => import('./pages/Landing'))
 const Trust = React.lazy(() => import('./pages/trust/TrustCenter'))
-const About = React.lazy(() => import('./pages/Placeholders').then((m) => ({ default: m.About })))
+const About = React.lazy(() => import('./pages/About'))
 
 const NotaryTemplates = React.lazy(() => import('./pages/NotaryTemplates'))
 const Dashboard = React.lazy(() => import('./pages/Dashboard'))
@@ -151,41 +151,7 @@ function AppContent() {
             </ProtectedRoute>
           }
         />
-        <Route
-          path="/audit-log"
-          element={
-            <ProtectedRoute>
-              <Vault />
-            </ProtectedRoute>
-          }
-        />{' '}
-        {/* Reusing Vault as audit log for now */}
-        <Route
-          path="/documentation"
-          element={
-            <ProtectedRoute>
-              <Developer />
-            </ProtectedRoute>
-          }
-        />{' '}
-        {/* Reusing Developer for docs */}
-        <Route
-          path="/status"
-          element={
-            <ProtectedRoute>
-              <Atlas />
-            </ProtectedRoute>
-          }
-        />{' '}
-        {/* Reusing Atlas for status */}
-        <Route
-          path="/trust-center"
-          element={
-            <ProtectedRoute>
-              <Trust />
-            </ProtectedRoute>
-          }
-        />
+        <Route path="/trust-center" element={<Navigate to="/trust" replace />} />
         <Route path="/about" element={<About />} />
         <Route path="/trust" element={<Trust />} />
         <Route

@@ -57,21 +57,57 @@ export default function Atlas() {
   const [searchQuery, setSearchQuery] = useState('')
   const [proofCount, setProofCount] = useState(null)
   const [blockHeight, setBlockHeight] = useState(null)
+  const [stamps, setStamps] = useState([])
+  const [searchResults, setSearchResults] = useState(null)
   const navigate = useNavigate()
 
   useEffect(() => {
     const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
     Promise.all([
-      fetch(`${API}/api/history`).then(r => r.json()).catch(() => []),
+      fetch(`${API}/api/history`)
+        .then((r) => r.json())
+        .catch(() => []),
       getBlockHeight()
-    ]).then(([stamps, height]) => {
-      setProofCount(Array.isArray(stamps) ? stamps.length : null)
+    ]).then(([data, height]) => {
+      const list = Array.isArray(data) ? data : []
+      setStamps(list)
+      setProofCount(list.length)
       setBlockHeight(height)
     })
   }, [])
 
+  const handleSearch = () => {
+    const q = searchQuery.trim().toLowerCase()
+    if (!q) {
+      setSearchResults(null)
+      return
+    }
+    const matches = stamps.filter(
+      (s) =>
+        (s.hash ?? '').toLowerCase().includes(q) ||
+        (s.filename ?? '').toLowerCase().includes(q) ||
+        (s.id ?? '').toLowerCase().includes(q)
+    )
+    setSearchResults(matches)
+  }
+
+  const downloadCSV = () => {
+    const headers = ['id', 'hash', 'filename', 'status', 'created_at', 'bitcoin_block_height']
+    const rows = stamps.map((s) =>
+      [s.id, s.hash, s.filename, s.status, s.created_at, s.bitcoin_block_height].join(',')
+    )
+    const csv = [headers.join(','), ...rows].join('\n')
+    const blob = new Blob([csv], { type: 'text/csv' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `satohash_global_index_${new Date().toISOString().split('T')[0]}.csv`
+    a.click()
+    URL.revokeObjectURL(url)
+  }
+
   return (
-    <div className="mx-auto max-w-7xl space-y-16 p-8 pt-32">
+    <div className="mx-auto max-w-7xl space-y-16 p-8">
       <header className="flex flex-col justify-between gap-12 border-b border-[var(--border)] pb-12 lg:flex-row lg:items-end">
         <div className="space-y-6">
           <div className="inline-flex items-center gap-2 rounded-full border border-[var(--accent-purple)]/30 bg-[var(--accent-purple)]/10 px-4 py-1.5">
@@ -98,10 +134,17 @@ export default function Atlas() {
           <input
             type="text"
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={(e) => {
+              setSearchQuery(e.target.value)
+              if (!e.target.value.trim()) setSearchResults(null)
+            }}
             onKeyDown={(e) => {
-              if (e.key === 'Enter' && searchQuery.trim().length === 64) {
-                navigate(`/verify?hash=${searchQuery.trim()}`)
+              if (e.key === 'Enter') {
+                if (searchQuery.trim().length === 64) {
+                  navigate(`/verify?hash=${searchQuery.trim()}`)
+                } else {
+                  handleSearch()
+                }
               }
             }}
             placeholder="Search by Hash, Block, or Proof ID..."
@@ -124,34 +167,47 @@ export default function Atlas() {
             </div>
 
             <div className="rounded-[3rem] border border-[var(--border)] bg-[var(--bg-secondary)] p-10 lg:p-16">
-              <TimelineStep
-                icon={Stamp}
-                label="Anchor Initiated"
-                time="12:42:01 UTC"
-                description="SHA-256 fingerprint captured locally. Payload identity established via sovereign keys."
-                status="completed"
-              />
-              <TimelineStep
-                icon={Layers}
-                label="Merkle Bundling"
-                time="12:44:15 UTC"
-                description="Proof aggregated into Block #842,125. Merkle path established across 4,204 sibling hashes."
-                status="completed"
-              />
-              <TimelineStep
-                icon={Database}
-                label="Blockchain Commitment"
-                time="12:51:30 UTC"
-                description="Hash irrevocably anchored to Bitcoin mainnet. OpReturn confirmed with 6+ depth."
-                status="completed"
-              />
-              <TimelineStep
-                icon={ShieldCheck}
-                label="Witness Attestation"
-                time="12:55:00 UTC"
-                description="Global mesh quorum reached. 1,402 independent nodes have verified the anchor integrity."
-                status="active"
-              />
+              {stamps.slice(0, 4).map((s, i) => (
+                <TimelineStep
+                  key={s.id || i}
+                  icon={i === 0 ? Stamp : i === 1 ? Layers : i === 2 ? Database : ShieldCheck}
+                  label={
+                    i === 0
+                      ? 'Anchor Initiated'
+                      : i === 1
+                        ? 'Merkle Bundling'
+                        : i === 2
+                          ? 'Blockchain Commitment'
+                          : 'Witness Attestation'
+                  }
+                  time={
+                    s.created_at
+                      ? new Date(s.created_at).toISOString().split('T')[1].slice(0, 8) + ' UTC'
+                      : '—'
+                  }
+                  description={
+                    i === 0
+                      ? 'SHA-256 fingerprint captured locally. Payload identity established via sovereign keys.'
+                      : i === 1
+                        ? `Proof aggregated into Block #${s.bitcoin_block_height || 'Pending'}. Merkle path established.`
+                        : i === 2
+                          ? 'Hash irrevocably anchored to Bitcoin mainnet. OpReturn confirmed with 6+ depth.'
+                          : 'Global mesh quorum reached. Independent nodes have verified the anchor integrity.'
+                  }
+                  status={i < 3 ? 'completed' : 'active'}
+                />
+              ))}
+              {stamps.length === 0 && (
+                <>
+                  <TimelineStep
+                    icon={Stamp}
+                    label="Anchor Initiated"
+                    time="—"
+                    description="No stamps available yet. Create your first anchor to see the provenance timeline."
+                    status="active"
+                  />
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -210,7 +266,10 @@ export default function Atlas() {
               Average proof query latency is 420ms. Global search index is distributed across the
               entire witness mesh for ultra-high availability.
             </p>
-            <button className="flex h-14 w-full items-center justify-center gap-3 rounded-2xl bg-white text-[11px] font-black tracking-widest text-black uppercase transition-all hover:scale-[1.02]">
+            <button
+              onClick={downloadCSV}
+              className="flex h-14 w-full items-center justify-center gap-3 rounded-2xl bg-white text-[11px] font-black tracking-widest text-black uppercase transition-all hover:scale-[1.02]"
+            >
               Download Global Index <ArrowRight size={16} />
             </button>
           </div>

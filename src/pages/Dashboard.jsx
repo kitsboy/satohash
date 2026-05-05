@@ -124,11 +124,10 @@ export default function Dashboard() {
   }, [])
 
   const handleFileProcessed = async (processedFile) => {
-    // Simulate free limit (e.g., 5 stamps/day)
-    if (userTier === 'free' && Math.random() < 0.8) {
-      // 80% chance to trigger upsell for demo
+    // Free tier limit: 5 stamps
+    if (userTier === 'free' && stampCount >= 5) {
       setShowUpsell(true)
-      toast.warning('Free tier limit reached. Upgrade to continue unlimited stamping.')
+      toast.warning('Free tier limit reached (5 stamps). Upgrade to continue unlimited stamping.')
       return
     }
 
@@ -218,7 +217,7 @@ export default function Dashboard() {
         onSubscribe={handleSubscribe}
       />
       {showVoiceStamp && <VoiceStamp onStamp={handleVoiceStamp} isActive={showVoiceStamp} />}
-      <div className="relative min-h-screen overflow-hidden bg-[#f7f8fc] pt-32 pb-32 selection:bg-indigo-500/30">
+      <div className="relative min-h-screen overflow-hidden bg-[#f7f8fc] pb-32 selection:bg-indigo-500/30">
         {/* Tier Badge */}
         <div className="absolute top-4 right-4 z-40">
           <span

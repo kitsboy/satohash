@@ -48,18 +48,21 @@ export default function VerificationTool() {
         setResult(data.verified ? 'success' : 'error')
         setVerifyData(data)
       } else if (hashInput.trim().length === 64) {
-        // Look up hash in our DB
-        const res = await fetch(`${API}/api/history`)
-        const stamps = await res.json()
-        const match = stamps.find(s => s.hash === hashInput.trim())
-        if (match) {
-          setResult('success')
-          setVerifyData({
-            verified: true,
-            details: `Found in Satohash DB — Status: ${match.status}`,
-            stamp: match
-          })
-        } else {
+        // Look up hash directly via dedicated endpoint
+        try {
+          const res = await fetch(`${API}/api/stamps/${hashInput.trim()}`)
+          if (res.ok) {
+            const match = await res.json()
+            setResult('success')
+            setVerifyData({
+              verified: true,
+              details: `Found in Satohash DB — Status: ${match.status}`,
+              stamp: match
+            })
+          } else {
+            throw new Error('Not found')
+          }
+        } catch {
           setResult('error')
           setVerifyData({
             verified: false,
@@ -212,7 +215,11 @@ export default function VerificationTool() {
               </p>
             </div>
             <button
-              onClick={() => { setResult(null); setOtsFile(null); setHashInput('') }}
+              onClick={() => {
+                setResult(null)
+                setOtsFile(null)
+                setHashInput('')
+              }}
               className="h-14 rounded-xl border border-[var(--border)] px-8 font-bold tracking-widest text-[var(--text-secondary)] uppercase transition-all hover:text-[var(--text-primary)]"
             >
               Try Again
@@ -237,7 +244,9 @@ export default function VerificationTool() {
                   attestation time represented by this OpenTimestamps proof.
                 </p>
                 {verifyData?.details && (
-                  <p className="text-xs font-medium text-[var(--text-secondary)]">{verifyData.details}</p>
+                  <p className="text-xs font-medium text-[var(--text-secondary)]">
+                    {verifyData.details}
+                  </p>
                 )}
                 {verifyData?.stamp?.bitcoin_block_height && (
                   <div className="border-t border-[var(--accent-success)]/20 pt-4">
@@ -245,7 +254,9 @@ export default function VerificationTool() {
                       <span className="text-[10px] font-bold text-[var(--text-secondary)] uppercase">
                         Bitcoin Attestation
                       </span>
-                      <span className="font-mono text-xl font-bold">Block #{verifyData.stamp.bitcoin_block_height.toLocaleString()}</span>
+                      <span className="font-mono text-xl font-bold">
+                        Block #{verifyData.stamp.bitcoin_block_height.toLocaleString()}
+                      </span>
                     </div>
                   </div>
                 )}
@@ -261,7 +272,11 @@ export default function VerificationTool() {
                       Original Hash
                     </span>
                     <span className="font-mono text-xs">
-                      {hashInput ? hashInput.substring(0, 8) + '...' + hashInput.slice(-4) : (verifyData?.stamp?.hash ? verifyData.stamp.hash.substring(0,8) + '...' : '—')}
+                      {hashInput
+                        ? hashInput.substring(0, 8) + '...' + hashInput.slice(-4)
+                        : verifyData?.stamp?.hash
+                          ? verifyData.stamp.hash.substring(0, 8) + '...'
+                          : '—'}
                     </span>
                   </div>
                   <div className="flex justify-between border-b border-[var(--border)] pb-2">
@@ -275,9 +290,7 @@ export default function VerificationTool() {
                     </span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-xs font-medium text-[var(--text-secondary)]">
-                      Status
-                    </span>
+                    <span className="text-xs font-medium text-[var(--text-secondary)]">Status</span>
                     <span className="font-mono text-xs font-bold text-[var(--accent-success)] uppercase">
                       {verifyData?.stamp?.status || 'VERIFIED'}
                     </span>
@@ -293,7 +306,11 @@ export default function VerificationTool() {
                   Download Report
                 </button>
                 <button
-                  onClick={() => { setResult(null); setOtsFile(null); setHashInput('') }}
+                  onClick={() => {
+                    setResult(null)
+                    setOtsFile(null)
+                    setHashInput('')
+                  }}
                   className="h-14 rounded-xl border border-[var(--border)] px-8 font-bold tracking-widest text-[var(--text-secondary)] uppercase transition-all hover:text-[var(--text-primary)]"
                 >
                   New
@@ -309,7 +326,9 @@ export default function VerificationTool() {
                 <div className="absolute top-4 bottom-4 left-[15px] -z-10 w-px bg-[var(--border)]" />
                 <MerklePathNode
                   level={4}
-                  hash={hashInput || 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'}
+                  hash={
+                    hashInput || 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'
+                  }
                   active={true}
                 />
                 <MerklePathNode

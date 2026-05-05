@@ -17,7 +17,7 @@ import {
   Scale,
   Command,
   Wifi,
-  Blocks,
+  Blocks
 } from 'lucide-react'
 import HelpOverlay from './HelpOverlay'
 import { getBlockHeight } from '../utils/mempool'
@@ -25,38 +25,42 @@ import { getBlockHeight } from '../utils/mempool'
 // ─── Nav groups ──────────────────────────────────────────────────────────────
 const NAV_GROUPS = [
   {
+    label: 'WORKSPACE',
+    items: [{ name: 'Dashboard', path: '/dashboard', icon: Globe }]
+  },
+  {
     label: 'NOTARY',
     items: [
-      { name: 'Vault',         path: '/vault',         icon: Database },
-      { name: 'Stamp',         path: '/stamp',         icon: Fingerprint },
-      { name: 'Verify',        path: '/verify',        icon: ShieldCheck },
-      { name: 'Certificates',  path: '/certificates',  icon: Award },
-    ],
+      { name: 'Vault', path: '/vault', icon: Database },
+      { name: 'Stamp', path: '/stamp', icon: Fingerprint },
+      { name: 'Verify', path: '/verify', icon: ShieldCheck },
+      { name: 'Certificates', path: '/certificates', icon: Award }
+    ]
   },
   {
     label: 'ATLAS',
     items: [
-      { name: 'Chain Explorer', path: '/atlas',    icon: Globe },
-      { name: 'Node Mesh',      path: '/nodes',    icon: Network },
-      { name: 'Block Explorer', path: '/explorer', icon: Search },
-    ],
+      { name: 'Chain Explorer', path: '/atlas', icon: Globe },
+      { name: 'Node Mesh', path: '/nodes', icon: Network },
+      { name: 'Block Explorer', path: '/explorer', icon: Search }
+    ]
   },
   {
     label: 'MESH',
     items: [
       { name: 'Developer API', path: '/developer', icon: Terminal },
-      { name: 'Contracts',     path: '/contracts', icon: FileText },
-      { name: 'Web Capture',   path: '/snapper',   icon: Camera },
-      { name: 'Templates',     path: '/templates', icon: LayoutTemplate },
-    ],
+      { name: 'Contracts', path: '/contracts', icon: FileText },
+      { name: 'Web Capture', path: '/snapper', icon: Camera },
+      { name: 'Templates', path: '/templates', icon: LayoutTemplate }
+    ]
   },
   {
     label: 'SYSTEM',
     items: [
-      { name: 'Settings',     path: '/settings', icon: Settings },
-      { name: 'Trust Center', path: '/trust',    icon: Scale },
-    ],
-  },
+      { name: 'Settings', path: '/settings', icon: Settings },
+      { name: 'Trust Center', path: '/trust', icon: Scale }
+    ]
+  }
 ]
 
 // ─── Single nav item ─────────────────────────────────────────────────────────
@@ -68,24 +72,21 @@ function NavItem({ item }) {
   const Icon = item.icon
 
   return (
-    <motion.div
-      whileHover={{ x: 4 }}
-      transition={{ type: 'spring', stiffness: 400, damping: 28 }}
-    >
+    <motion.div whileHover={{ x: 4 }} transition={{ type: 'spring', stiffness: 400, damping: 28 }}>
       <Link
         to={item.path}
         className={[
           'group relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors duration-150',
           isActive
             ? 'text-[var(--accent-gold)]'
-            : 'text-[var(--text-secondary)] hover:text-[var(--accent-gold)]',
+            : 'text-[var(--text-secondary)] hover:text-[var(--accent-gold)]'
         ].join(' ')}
         style={
           isActive
             ? {
                 background:
                   'linear-gradient(90deg, rgba(240,180,41,0.10) 0%, rgba(240,180,41,0.03) 100%)',
-                boxShadow: 'inset 2px 0 0 var(--accent-gold)',
+                boxShadow: 'inset 2px 0 0 var(--accent-gold)'
               }
             : {}
         }
@@ -138,10 +139,7 @@ export default function LeftRailNav() {
   }, [])
 
   return (
-    <nav
-      className="flex h-full w-64 flex-col"
-      style={{ background: '#13171f' }}
-    >
+    <nav className="flex h-full w-64 flex-col" style={{ background: '#13171f' }}>
       {/* ── Logo area ──────────────────────────────────────────── */}
       <div className="flex-shrink-0 px-5 pt-6 pb-5">
         <Link to="/" className="group flex items-center gap-3">
@@ -152,13 +150,13 @@ export default function LeftRailNav() {
           />
           <div className="flex flex-col">
             <span
-              className="text-[15px] font-black tracking-[0.15em] uppercase leading-none"
+              className="text-[15px] leading-none font-black tracking-[0.15em] uppercase"
               style={{ color: 'var(--accent-gold)' }}
             >
               SATOHASH
             </span>
             <span
-              className="mt-[3px] text-[9px] font-semibold tracking-[0.2em] uppercase leading-none"
+              className="mt-[3px] text-[9px] leading-none font-semibold tracking-[0.2em] uppercase"
               style={{ color: 'var(--text-secondary)', opacity: 0.6 }}
             >
               Sovereign Notary Protocol
@@ -168,10 +166,7 @@ export default function LeftRailNav() {
       </div>
 
       {/* ── Divider ────────────────────────────────────────────── */}
-      <div
-        className="mx-5 mb-4"
-        style={{ height: '1px', background: 'var(--border)' }}
-      />
+      <div className="mx-5 mb-4" style={{ height: '1px', background: 'var(--border)' }} />
 
       {/* ── Scrollable nav groups ───────────────────────────────── */}
       <div className="scrollbar-hide flex-1 space-y-5 overflow-y-auto px-3 pb-2">
@@ -194,7 +189,6 @@ export default function LeftRailNav() {
 
       {/* ── Bottom widgets ─────────────────────────────────────── */}
       <div className="flex-shrink-0 space-y-2 border-t border-[var(--border)] px-3 py-4">
-
         {/* ⌘K hint */}
         <button
           onClick={() => {
@@ -208,7 +202,7 @@ export default function LeftRailNav() {
             className="flex h-6 w-6 items-center justify-center rounded-md border"
             style={{
               borderColor: 'var(--border-bright)',
-              background: 'rgba(255,255,255,0.04)',
+              background: 'rgba(255,255,255,0.04)'
             }}
           >
             <Command size={12} style={{ color: 'var(--text-secondary)' }} />
@@ -223,23 +217,63 @@ export default function LeftRailNav() {
 
         {/* Identity chip — shows npub when authed, "Not Connected" otherwise */}
         {npub ? (
-          <div className="flex items-center gap-3 rounded-xl border px-4 py-3" style={{ borderColor: 'var(--border)', background: 'rgba(255,255,255,0.02)' }}>
-            <div className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full border-2 text-[9px] font-black" style={{ borderColor: 'var(--border-gold)', background: 'rgba(240,180,41,0.12)', color: 'var(--accent-gold)' }}>
+          <div
+            className="flex items-center gap-3 rounded-xl border px-4 py-3"
+            style={{ borderColor: 'var(--border)', background: 'rgba(255,255,255,0.02)' }}
+          >
+            <div
+              className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full border-2 text-[9px] font-black"
+              style={{
+                borderColor: 'var(--border-gold)',
+                background: 'rgba(240,180,41,0.12)',
+                color: 'var(--accent-gold)'
+              }}
+            >
               {initials}
             </div>
             <div className="min-w-0 flex-1">
-              <p className="text-[9px] font-bold uppercase tracking-widest" style={{ color: 'var(--text-secondary)', opacity: 0.6 }}>Identity</p>
-              <p className="truncate font-mono text-[9px] font-semibold" style={{ color: 'var(--text-primary)' }}>{npub.substring(0, 16)}...</p>
+              <p
+                className="text-[9px] font-bold tracking-widest uppercase"
+                style={{ color: 'var(--text-secondary)', opacity: 0.6 }}
+              >
+                Identity
+              </p>
+              <p
+                className="truncate font-mono text-[9px] font-semibold"
+                style={{ color: 'var(--text-primary)' }}
+              >
+                {npub.substring(0, 16)}...
+              </p>
             </div>
           </div>
         ) : (
-          <div className="flex items-center gap-3 rounded-xl border px-4 py-3" style={{ borderColor: 'var(--border)', background: 'rgba(255,255,255,0.02)' }}>
-            <div className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full border-2 text-[9px] font-black" style={{ borderColor: 'var(--border)', background: 'rgba(255,255,255,0.04)', color: 'var(--text-secondary)' }}>
+          <div
+            className="flex items-center gap-3 rounded-xl border px-4 py-3"
+            style={{ borderColor: 'var(--border)', background: 'rgba(255,255,255,0.02)' }}
+          >
+            <div
+              className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full border-2 text-[9px] font-black"
+              style={{
+                borderColor: 'var(--border)',
+                background: 'rgba(255,255,255,0.04)',
+                color: 'var(--text-secondary)'
+              }}
+            >
               SH
             </div>
             <div className="min-w-0 flex-1">
-              <p className="text-[9px] font-bold uppercase tracking-widest" style={{ color: 'var(--text-secondary)', opacity: 0.6 }}>Identity</p>
-              <p className="truncate text-[9px] font-semibold" style={{ color: 'var(--text-secondary)', opacity: 0.5 }}>Not Connected</p>
+              <p
+                className="text-[9px] font-bold tracking-widest uppercase"
+                style={{ color: 'var(--text-secondary)', opacity: 0.6 }}
+              >
+                Identity
+              </p>
+              <p
+                className="truncate text-[9px] font-semibold"
+                style={{ color: 'var(--text-secondary)', opacity: 0.5 }}
+              >
+                Not Connected
+              </p>
             </div>
           </div>
         )}
@@ -249,7 +283,7 @@ export default function LeftRailNav() {
           className="flex items-center gap-3 rounded-xl border px-4 py-3"
           style={{
             borderColor: 'var(--border-gold)',
-            background: 'rgba(240,180,41,0.04)',
+            background: 'rgba(240,180,41,0.04)'
           }}
         >
           {/* Live dot */}
@@ -266,7 +300,7 @@ export default function LeftRailNav() {
 
           <div className="min-w-0 flex-1">
             <p
-              className="text-[10px] font-bold tracking-wide uppercase leading-none"
+              className="text-[10px] leading-none font-bold tracking-wide uppercase"
               style={{ color: 'var(--text-primary)' }}
             >
               Bitcoin Mainnet

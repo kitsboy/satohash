@@ -11,7 +11,7 @@ import {
   FileText,
   Search
 } from 'lucide-react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 const SignerRow = ({ identity, status, role }) => (
   <div className="group flex items-center justify-between rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] p-4 transition-all hover:border-[var(--border-bright)]">
@@ -39,8 +39,30 @@ const SignerRow = ({ identity, status, role }) => (
 
 export default function ContractList() {
   const [activeTab, setActiveTab] = useState('active')
+  const [contracts, setContracts] = useState([])
+  const [loading, setLoading] = useState(true)
 
-  const contracts = [
+  useEffect(() => {
+    const fetchContracts = async () => {
+      try {
+        const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+        const res = await fetch(`${API}/api/contracts`)
+        if (res.ok) {
+          const data = await res.json()
+          setContracts(Array.isArray(data) ? data : [])
+        } else {
+          setContracts([])
+        }
+      } catch {
+        setContracts([])
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchContracts()
+  }, [])
+
+  const mockContracts = [
     {
       id: '1',
       title: 'Asset Purchase Agreement - Q2',
@@ -61,7 +83,9 @@ export default function ContractList() {
     }
   ]
 
-  const filteredContracts = contracts.filter((c) => {
+  const displayContracts = contracts.length > 0 ? contracts : mockContracts
+
+  const filteredContracts = displayContracts.filter((c) => {
     if (activeTab === 'active') return c.tabStatus === 'active'
     if (activeTab === 'completed') return c.tabStatus === 'completed'
     if (activeTab === 'drafts') return c.tabStatus === 'draft'

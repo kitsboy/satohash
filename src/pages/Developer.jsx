@@ -113,7 +113,7 @@ export default function Developer() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-[var(--bg-primary)] pt-32 pb-20 text-[var(--text-primary)]">
+    <div className="min-h-screen bg-[var(--bg-primary)] pb-20 text-[var(--text-primary)]">
       <div className="mx-auto max-w-[90rem] space-y-16 px-8">
         {/* Terminal Header */}
         <header className="flex flex-col justify-between gap-8 border-b border-[var(--border)] pb-12 lg:flex-row lg:items-end">
@@ -348,33 +348,74 @@ export default function Developer() {
               )}
 
               {activeTab === 'docs' && (
-                <motion.div key="docs" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
-                  <div className="rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] p-6 space-y-4">
-                    <h3 className="text-sm font-black uppercase tracking-widest text-[var(--text-primary)]">API Reference</h3>
-                    <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
-                      Full interactive documentation is available via Swagger UI. The API follows REST conventions with JSON request/response bodies.
+                <motion.div
+                  key="docs"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="space-y-6"
+                >
+                  <div className="space-y-4 rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] p-6">
+                    <h3 className="text-sm font-black tracking-widest text-[var(--text-primary)] uppercase">
+                      API Reference
+                    </h3>
+                    <p className="text-sm leading-relaxed text-[var(--text-secondary)]">
+                      Full interactive documentation is available via Swagger UI. The API follows
+                      REST conventions with JSON request/response bodies.
                     </p>
                     <a
                       href="http://localhost:3001/api-docs"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 rounded-xl border border-[var(--border)] px-5 py-3 text-xs font-black uppercase tracking-widest transition-all hover:border-[var(--accent-gold)] hover:text-[var(--accent-gold)]"
+                      className="inline-flex items-center gap-2 rounded-xl border border-[var(--border)] px-5 py-3 text-xs font-black tracking-widest uppercase transition-all hover:border-[var(--accent-gold)] hover:text-[var(--accent-gold)]"
                     >
                       Open Swagger UI →
                     </a>
                   </div>
                   {[
-                    { method: 'POST', path: '/api/stamp',        desc: 'Submit a SHA-256 hash to be anchored to Bitcoin via OpenTimestamps.' },
-                    { method: 'POST', path: '/api/verify',       desc: 'Verify an .ots proof file. Returns verified: true/false and attestation details.' },
-                    { method: 'GET',  path: '/api/history',      desc: 'Retrieve the last 50 timestamps for this node.' },
-                    { method: 'GET',  path: '/api/stamps/:id',   desc: 'Fetch stamp metadata or download the raw .ots binary.' },
-                    { method: 'POST', path: '/api/upgrade',      desc: 'Upgrade a pending OTS proof to check for Bitcoin confirmation.' },
-                    { method: 'GET',  path: '/api/system/fees',  desc: 'Live Bitcoin fee estimates from mempool.space.' },
+                    {
+                      method: 'POST',
+                      path: '/api/stamp',
+                      desc: 'Submit a SHA-256 hash to be anchored to Bitcoin via OpenTimestamps.'
+                    },
+                    {
+                      method: 'POST',
+                      path: '/api/verify',
+                      desc: 'Verify an .ots proof file. Returns verified: true/false and attestation details.'
+                    },
+                    {
+                      method: 'GET',
+                      path: '/api/history',
+                      desc: 'Retrieve the last 50 timestamps for this node.'
+                    },
+                    {
+                      method: 'GET',
+                      path: '/api/stamps/:id',
+                      desc: 'Fetch stamp metadata or download the raw .ots binary.'
+                    },
+                    {
+                      method: 'POST',
+                      path: '/api/upgrade',
+                      desc: 'Upgrade a pending OTS proof to check for Bitcoin confirmation.'
+                    },
+                    {
+                      method: 'GET',
+                      path: '/api/system/fees',
+                      desc: 'Live Bitcoin fee estimates from mempool.space.'
+                    }
                   ].map(({ method, path, desc }) => (
-                    <div key={path} className="flex gap-4 rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] p-4">
-                      <span className={`shrink-0 rounded-lg px-2 py-1 text-[9px] font-black uppercase tracking-widest ${method === 'GET' ? 'bg-[var(--accent-success)]/10 text-[var(--accent-success)]' : 'bg-[var(--accent-gold)]/10 text-[var(--accent-gold)]'}`}>{method}</span>
+                    <div
+                      key={path}
+                      className="flex gap-4 rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] p-4"
+                    >
+                      <span
+                        className={`shrink-0 rounded-lg px-2 py-1 text-[9px] font-black tracking-widest uppercase ${method === 'GET' ? 'bg-[var(--accent-success)]/10 text-[var(--accent-success)]' : 'bg-[var(--accent-gold)]/10 text-[var(--accent-gold)]'}`}
+                      >
+                        {method}
+                      </span>
                       <div>
-                        <p className="font-mono text-xs font-bold text-[var(--text-primary)]">{path}</p>
+                        <p className="font-mono text-xs font-bold text-[var(--text-primary)]">
+                          {path}
+                        </p>
                         <p className="mt-1 text-[11px] text-[var(--text-secondary)]">{desc}</p>
                       </div>
                     </div>

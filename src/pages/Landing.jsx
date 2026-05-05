@@ -21,8 +21,7 @@ import {
 } from 'lucide-react'
 import Footer from '../components/Footer'
 import { getBlockHeight } from '../utils/mempool'
-
-const BTC_ADDRESS = 'bc1qhm5ndfjhqxdk3cx0pngyps4f5nnwdckulmge6c8keyf2pk0neqtshjn8ad'
+import { BTC_ADDRESS } from '../config/constants'
 
 const fadeUp = {
   hidden: { opacity: 0, y: 32 },

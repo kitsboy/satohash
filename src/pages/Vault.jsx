@@ -24,8 +24,7 @@ const StatusBadge = ({ status }) => {
       'bg-[var(--accent-success)]/10 text-[var(--accent-success)] border-[var(--accent-success)]/20',
     pending:
       'bg-[var(--accent-pending)]/10 text-[var(--accent-pending)] border-[var(--accent-pending)]/20',
-    hashing:
-      'bg-[var(--accent-gold)]/10 text-[var(--accent-gold)] border-[var(--accent-gold)]/20'
+    hashing: 'bg-[var(--accent-gold)]/10 text-[var(--accent-gold)] border-[var(--accent-gold)]/20'
   }
   return (
     <span
@@ -66,7 +65,7 @@ export default function Vault() {
   const { lastEvent } = useSocket()
 
   const mapStamps = (data) =>
-    data.map(s => ({
+    data.map((s) => ({
       id: s.id,
       name: s.filename || s.original_filename || 'Unnamed document',
       type: s.filename?.includes('SNAP') ? 'snapper' : 'file',
@@ -104,13 +103,15 @@ export default function Vault() {
       } catch (e) {
         // Fall back to localStorage stamps if server not running
         const local = JSON.parse(localStorage.getItem('satohash_stamps') || '[]')
-        const mapped = local.map(s => ({
+        const mapped = local.map((s) => ({
           id: s.id,
           name: s.filename || 'Unnamed',
           type: 'file',
           hash: s.hash ? s.hash.substring(0, 8) + '...' + s.hash.slice(-4) : '—',
           fullHash: s.hash,
-          date: s.created_at ? new Date(s.created_at).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
+          date: s.created_at
+            ? new Date(s.created_at).toISOString().split('T')[0]
+            : new Date().toISOString().split('T')[0],
           status: s.status || 'pending',
           confirmations: 0,
           size: '—'
@@ -156,7 +157,8 @@ export default function Vault() {
 
   const downloadCertificate = (item) => {
     const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' })
-    const pageW = 210, margin = 20
+    const pageW = 210,
+      margin = 20
 
     // Background
     doc.setFillColor(253, 251, 247)
@@ -192,7 +194,7 @@ export default function Vault() {
       ['Date Notarized', item.date],
       ['Status', item.status.toUpperCase()],
       ['Protocol', 'OpenTimestamps / Bitcoin Mainnet'],
-      ['Verification', `https://satohash.com/verify`],
+      ['Verification', `https://satohash.com/verify`]
     ]
 
     let y = 75
@@ -237,7 +239,7 @@ export default function Vault() {
   })
 
   return (
-    <div className="mx-auto max-w-[90rem] space-y-12 p-8 pt-32 pb-24">
+    <div className="mx-auto max-w-[90rem] space-y-12 p-8 pb-24">
       {/* Export Modal Overlay */}
       <AnimatePresence>
         {isExporting && (
@@ -358,8 +360,8 @@ export default function Vault() {
         ))}
       </div>
 
-      {/* Elite Data Grid */}
-      <div className="overflow-hidden rounded-[2.5rem] border border-[var(--border)] bg-[var(--bg-secondary)] shadow-[0_50px_100px_rgba(0,0,0,0.5)]">
+      {/* Elite Data Grid — Desktop Table */}
+      <div className="hidden overflow-hidden rounded-[2.5rem] border border-[var(--border)] bg-[var(--bg-secondary)] shadow-[0_50px_100px_rgba(0,0,0,0.5)] md:block">
         <div className="overflow-x-auto">
           <table className="w-full border-collapse text-left">
             <thead>
@@ -382,7 +384,10 @@ export default function Vault() {
               {loading && (
                 <tr>
                   <td colSpan={4} className="px-10 py-16 text-center">
-                    <div className="flex items-center justify-center gap-3" style={{ color: 'var(--text-secondary)' }}>
+                    <div
+                      className="flex items-center justify-center gap-3"
+                      style={{ color: 'var(--text-secondary)' }}
+                    >
                       <Loader2 size={18} className="animate-spin" />
                       <span className="text-sm font-medium">Loading stamps from Bitcoin...</span>
                     </div>
@@ -395,86 +400,171 @@ export default function Vault() {
                     <div className="space-y-3">
                       <p className="text-lg font-bold">No stamps yet</p>
                       <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-                        <a href="/stamp" className="underline" style={{ color: 'var(--accent-gold)' }}>Notarize your first document →</a>
+                        <a
+                          href="/stamp"
+                          className="underline"
+                          style={{ color: 'var(--accent-gold)' }}
+                        >
+                          Notarize your first document →
+                        </a>
                       </p>
                     </div>
                   </td>
                 </tr>
               )}
-              {!loading && filteredItems.map((item) => (
-                <tr key={item.id} className="group transition-all hover:bg-white/5">
-                  <td className="px-10 py-8">
-                    <div className="flex items-center gap-6">
-                      <div
-                        className={`flex h-14 w-14 items-center justify-center rounded-2xl border border-[var(--border)] ${item.type === 'capsule' ? 'bg-[var(--accent-gold)]/10 text-[var(--accent-gold)]' : 'bg-[var(--bg-primary)] text-[var(--text-secondary)]'} transition-transform group-hover:scale-110`}
-                      >
-                        {item.type === 'capsule' ? (
-                          <FileArchive size={24} />
-                        ) : item.type === 'snapper' ? (
-                          <Layers size={24} />
-                        ) : (
-                          <FileText size={24} />
-                        )}
-                      </div>
-                      <div className="space-y-1">
-                        <p className="text-lg font-bold tracking-tight text-white">{item.name}</p>
-                        <div className="flex items-center gap-3">
-                          <p className="font-mono text-[10px] tracking-widest text-[var(--text-secondary)] uppercase">
-                            {item.size}
-                          </p>
-                          <span className="text-[10px] text-[var(--text-secondary)] opacity-20">
-                            |
-                          </span>
-                          <p className="font-mono text-[10px] text-[var(--text-secondary)]">
-                            {item.hash}
-                          </p>
+              {!loading &&
+                filteredItems.map((item) => (
+                  <tr key={item.id} className="group transition-all hover:bg-white/5">
+                    <td className="px-10 py-8">
+                      <div className="flex items-center gap-6">
+                        <div
+                          className={`flex h-14 w-14 items-center justify-center rounded-2xl border border-[var(--border)] ${item.type === 'capsule' ? 'bg-[var(--accent-gold)]/10 text-[var(--accent-gold)]' : 'bg-[var(--bg-primary)] text-[var(--text-secondary)]'} transition-transform group-hover:scale-110`}
+                        >
+                          {item.type === 'capsule' ? (
+                            <FileArchive size={24} />
+                          ) : item.type === 'snapper' ? (
+                            <Layers size={24} />
+                          ) : (
+                            <FileText size={24} />
+                          )}
+                        </div>
+                        <div className="space-y-1">
+                          <p className="text-lg font-bold tracking-tight text-white">{item.name}</p>
+                          <div className="flex items-center gap-3">
+                            <p className="font-mono text-[10px] tracking-widest text-[var(--text-secondary)] uppercase">
+                              {item.size}
+                            </p>
+                            <span className="text-[10px] text-[var(--text-secondary)] opacity-20">
+                              |
+                            </span>
+                            <p className="font-mono text-[10px] text-[var(--text-secondary)]">
+                              {item.hash}
+                            </p>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </td>
-                  <td className="px-10 py-8">
-                    <div className="space-y-3">
-                      <StatusBadge status={item.status} />
-                      <SecurityAge confirmations={item.confirmations} />
-                    </div>
-                  </td>
-                  <td className="px-10 py-8">
-                    <div className="space-y-1">
-                      <p className="text-sm font-bold text-white">{item.date}</p>
-                      <p className="text-[10px] font-black tracking-widest text-[var(--text-secondary)] uppercase">
-                        Anchored Epoch
-                      </p>
-                    </div>
-                  </td>
-                  <td className="px-10 py-8 text-right">
-                    <div className="flex translate-x-4 justify-end gap-3 opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100">
-                      <ActionBtn
-                        icon={Stamp}
-                        label="Badge"
-                        onClick={() => {
-                          navigator.clipboard.writeText('https://satohash.com/proof/' + item.id)
-                          toast.success('Proof URL Copied', { description: 'Share link is in your clipboard' })
-                        }}
-                      />
-                      <ActionBtn
-                        icon={Download}
-                        label="Raw"
-                        onClick={() => downloadCertificate(item)}
-                      />
-                      <ActionBtn
-                        icon={Globe}
-                        label="Verify"
-                        onClick={() => {
-                          window.location.href = '/verify?hash=' + item.fullHash
-                        }}
-                      />
-                    </div>
-                  </td>
-                </tr>
-              ))}
+                    </td>
+                    <td className="px-10 py-8">
+                      <div className="space-y-3">
+                        <StatusBadge status={item.status} />
+                        <SecurityAge confirmations={item.confirmations} />
+                      </div>
+                    </td>
+                    <td className="px-10 py-8">
+                      <div className="space-y-1">
+                        <p className="text-sm font-bold text-white">{item.date}</p>
+                        <p className="text-[10px] font-black tracking-widest text-[var(--text-secondary)] uppercase">
+                          Anchored Epoch
+                        </p>
+                      </div>
+                    </td>
+                    <td className="px-10 py-8 text-right">
+                      <div className="flex translate-x-4 justify-end gap-3 opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100">
+                        <ActionBtn
+                          icon={Stamp}
+                          label="Badge"
+                          onClick={() => {
+                            navigator.clipboard.writeText(
+                              window.location.origin + '/verify/' + item.id
+                            )
+                            toast.success('Proof URL Copied', {
+                              description: 'Share link is in your clipboard'
+                            })
+                          }}
+                        />
+                        <ActionBtn
+                          icon={Download}
+                          label="Raw"
+                          onClick={() => downloadCertificate(item)}
+                        />
+                        <ActionBtn
+                          icon={Globe}
+                          label="Verify"
+                          onClick={() => {
+                            window.location.href = '/verify?hash=' + item.fullHash
+                          }}
+                        />
+                      </div>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>
+      </div>
+
+      {/* Mobile Card List */}
+      <div className="space-y-4 md:hidden">
+        {loading && (
+          <div
+            className="flex items-center justify-center gap-3 py-16"
+            style={{ color: 'var(--text-secondary)' }}
+          >
+            <Loader2 size={18} className="animate-spin" />
+            <span className="text-sm font-medium">Loading stamps from Bitcoin...</span>
+          </div>
+        )}
+        {!loading && filteredItems.length === 0 && (
+          <div className="space-y-3 py-16 text-center">
+            <p className="text-lg font-bold">No stamps yet</p>
+            <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+              <a href="/stamp" className="underline" style={{ color: 'var(--accent-gold)' }}>
+                Notarize your first document →
+              </a>
+            </p>
+          </div>
+        )}
+        {!loading &&
+          filteredItems.map((item) => (
+            <div
+              key={item.id}
+              className="rounded-3xl border border-[var(--border)] bg-[var(--bg-secondary)] p-6"
+            >
+              <div className="flex items-start gap-4">
+                <div
+                  className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-[var(--border)] ${item.type === 'capsule' ? 'bg-[var(--accent-gold)]/10 text-[var(--accent-gold)]' : 'bg-[var(--bg-primary)] text-[var(--text-secondary)]'}`}
+                >
+                  {item.type === 'capsule' ? (
+                    <FileArchive size={20} />
+                  ) : item.type === 'snapper' ? (
+                    <Layers size={20} />
+                  ) : (
+                    <FileText size={20} />
+                  )}
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="font-bold tracking-tight text-white">{item.name}</p>
+                  <p className="font-mono text-[10px] text-[var(--text-secondary)]">{item.hash}</p>
+                  <div className="mt-2 flex flex-wrap items-center gap-2">
+                    <StatusBadge status={item.status} />
+                    <span className="text-[10px] font-bold text-[var(--text-secondary)]">
+                      {item.date}
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div className="mt-4 flex justify-end gap-2">
+                <ActionBtn
+                  icon={Stamp}
+                  label="Badge"
+                  onClick={() => {
+                    navigator.clipboard.writeText(window.location.origin + '/verify/' + item.id)
+                    toast.success('Proof URL Copied', {
+                      description: 'Share link is in your clipboard'
+                    })
+                  }}
+                />
+                <ActionBtn icon={Download} label="Raw" onClick={() => downloadCertificate(item)} />
+                <ActionBtn
+                  icon={Globe}
+                  label="Verify"
+                  onClick={() => {
+                    window.location.href = '/verify?hash=' + item.fullHash
+                  }}
+                />
+              </div>
+            </div>
+          ))}
       </div>
     </div>
   )

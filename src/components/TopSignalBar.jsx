@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { getFeeEstimates, getBlockHeight } from '../utils/mempool'
 import { QRCodeSVG } from 'qrcode.react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { BTC_ADDRESS } from '../config/constants'
 
 // ─── Route → human-readable breadcrumb ────────────────────────────────────
 const ROUTE_LABELS = {
@@ -21,8 +22,6 @@ const ROUTE_LABELS = {
   '/settings': 'Settings',
   '/trust': 'Trust Center'
 }
-
-const BTC_ADDRESS = 'bc1qhm5ndfjhqxdk3cx0pngyps4f5nnwdckulmge6c8keyf2pk0neqtshjn8ad'
 
 function getPageLabel(pathname) {
   // Exact match first

@@ -16,6 +16,7 @@ import {
 import { useState, useCallback, useEffect } from 'react'
 import { getTieredFeeEstimates } from '../utils/mempool.js'
 import { addErrorBreadcrumb } from '../utils/errors.js'
+import { toast } from 'sonner'
 
 export default function Stamp() {
   const [isCapsuleMode, setIsCapsuleMode] = useState(false)
@@ -28,6 +29,9 @@ export default function Stamp() {
   const [error, setError] = useState('')
   const [feeEstimates, setFeeEstimates] = useState(null)
   const [feeTier, setFeeTier] = useState('medium')
+  const [multiParty, setMultiParty] = useState(false)
+  const [l402Gating, setL402Gating] = useState(false)
+  const [coSigners, setCoSigners] = useState([])
 
   useEffect(() => {
     const fetchFees = async () => {
@@ -163,11 +167,15 @@ export default function Stamp() {
             onDragLeave={handleDrag}
             onDragOver={handleDrag}
             onDrop={handleDrop}
+            onClick={() => {
+              const input = document.getElementById('file-input')
+              if (input && stampingStatus === 'idle') input.click()
+            }}
             animate={{
               borderColor: isDragging ? 'var(--accent-gold)' : 'var(--border)',
               backgroundColor: isDragging ? 'rgba(79, 70, 229, 0.05)' : 'transparent'
             }}
-            className="group relative flex h-[400px] flex-col items-center justify-center overflow-hidden rounded-[2.5rem] border-2 border-dashed p-12 text-center transition-colors"
+            className="group relative flex h-[400px] cursor-pointer flex-col items-center justify-center overflow-hidden rounded-[2.5rem] border-2 border-dashed p-12 text-center transition-colors"
           >
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,var(--accent-gold),transparent)] opacity-0 transition-opacity group-hover:opacity-[0.03]" />
 
@@ -277,6 +285,18 @@ export default function Stamp() {
                       style={{ backgroundColor: 'var(--accent-gold)', color: '#141b25' }}
                     >
                       View in Vault →
+                    </button>
+                    <button
+                      onClick={() => {
+                        navigator.clipboard.writeText(
+                          window.location.origin + '/verify/' + proofResult.id
+                        )
+                        toast.success('Share link copied to clipboard')
+                      }}
+                      className="rounded-xl border py-3 text-xs font-black uppercase transition-all hover:text-white"
+                      style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
+                    >
+                      Share Proof
                     </button>
                   </div>
                 </motion.div>
@@ -398,13 +418,50 @@ export default function Stamp() {
                   <span className="text-[10px] font-bold text-[var(--text-secondary)] uppercase">
                     Multi-Party
                   </span>
-                  <input type="checkbox" className="accent-[var(--accent-gold)]" />
+                  <input
+                    type="checkbox"
+                    className="accent-[var(--accent-gold)]"
+                    checked={multiParty}
+                    onChange={(e) => {
+                      setMultiParty(e.target.checked)
+                      if (!e.target.checked) setCoSigners([])
+                    }}
+                  />
                 </div>
+                {multiParty && (
+                  <div className="space-y-2">
+                    {coSigners.map((s, i) => (
+                      <input
+                        key={i}
+                        type="text"
+                        value={s}
+                        onChange={(e) => {
+                          const next = [...coSigners]
+                          next[i] = e.target.value
+                          setCoSigners(next)
+                        }}
+                        placeholder="npub1..."
+                        className="h-9 w-full rounded-lg border border-[var(--border)] bg-[var(--bg-secondary)] px-3 font-mono text-xs outline-none focus:border-[var(--accent-gold)]"
+                      />
+                    ))}
+                    <button
+                      onClick={() => setCoSigners([...coSigners, ''])}
+                      className="text-[10px] font-bold text-[var(--accent-gold)] uppercase"
+                    >
+                      + Add Co-Signer
+                    </button>
+                  </div>
+                )}
                 <div className="flex items-center justify-between">
                   <span className="text-[10px] font-bold text-[var(--text-secondary)] uppercase">
                     L402 Gating
                   </span>
-                  <input type="checkbox" className="accent-[var(--accent-gold)]" />
+                  <input
+                    type="checkbox"
+                    className="accent-[var(--accent-gold)]"
+                    checked={l402Gating}
+                    onChange={(e) => setL402Gating(e.target.checked)}
+                  />
                 </div>
               </div>
             </div>

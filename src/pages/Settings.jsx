@@ -220,8 +220,8 @@ export default function Settings() {
         )}
       </AnimatePresence>
 
-      <header className="flex flex-col justify-between gap-8 border-b border-[var(--border)] pb-12 lg:flex-row lg:items-end">
-        <div className="min-w-0 space-y-6">
+      <header className="flex flex-col justify-between gap-4 border-b border-[var(--border)] pb-8 lg:flex-row lg:items-end lg:gap-8 lg:pb-12">
+        <div className="min-w-0 space-y-3 lg:space-y-6">
           <div className="inline-flex items-center gap-2 rounded-full border border-[var(--border-bright)] bg-white/5 px-4 py-1.5">
             <User size={14} className="shrink-0 text-[var(--text-secondary)]" />
             <span className="font-mono text-[10px] font-bold tracking-[0.2em] text-[var(--text-secondary)] uppercase">
@@ -234,12 +234,12 @@ export default function Settings() {
           </h1>
         </div>
 
-        <div className="scrollbar-hide flex shrink-0 overflow-x-auto rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] p-1.5 shadow-2xl">
+        <div className="scrollbar-hide flex shrink-0 overflow-x-auto rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] p-1 shadow-2xl lg:p-1.5">
           {['profile', 'security', 'billing', 'nodes'].map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`rounded-xl px-4 py-3 text-[10px] font-black tracking-widest whitespace-nowrap uppercase transition-all sm:px-6 ${activeTab === tab ? 'border border-[var(--border-bright)] bg-[var(--bg-primary)] text-white shadow-lg' : 'text-[var(--text-secondary)] hover:text-white'}`}
+              className={`rounded-xl px-3 py-2 text-[10px] font-black tracking-widest whitespace-nowrap uppercase transition-all sm:px-6 lg:px-4 lg:py-3 ${activeTab === tab ? 'border border-[var(--border-bright)] bg-[var(--bg-primary)] text-white shadow-lg' : 'text-[var(--text-secondary)] hover:text-white'}`}
             >
               {tab}
             </button>
@@ -672,24 +672,9 @@ export default function Settings() {
               </h4>
             </div>
             <div className="space-y-4">
-              <div className="flex items-start gap-4">
-                <div className="mt-1 h-2 w-2 rounded-full bg-[var(--accent-active)] shadow-[0_0_8px_var(--accent-active)]" />
-                <p className="text-[11px] leading-relaxed font-medium text-[var(--text-secondary)]">
-                  Account Login from <span className="text-white">Berlin, DE</span>
-                </p>
-              </div>
-              <div className="flex items-start gap-4">
-                <div className="mt-1 h-2 w-2 rounded-full bg-[var(--accent-purple)] shadow-[0_0_8px_var(--accent-purple)]" />
-                <p className="text-[11px] leading-relaxed font-medium text-[var(--text-secondary)]">
-                  API Key Created <span className="text-white">...A9B</span>
-                </p>
-              </div>
-              <div className="flex items-start gap-4">
-                <div className="mt-1 h-2 w-2 rounded-full bg-[var(--accent-success)] shadow-[0_0_8px_var(--accent-success)]" />
-                <p className="text-[11px] leading-relaxed font-medium text-[var(--text-secondary)]">
-                  Deposit of <span className="text-white">500k SATS</span>
-                </p>
-              </div>
+              <p className="text-[11px] leading-relaxed text-[var(--text-secondary)]">
+                Activity will appear here once your node is synced with the mesh.
+              </p>
             </div>
           </div>
 
