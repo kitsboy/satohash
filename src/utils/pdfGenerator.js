@@ -129,7 +129,7 @@ export const generatePDF = async (stampInfo, watermarkType = 'SATOHASH PROTOCOL 
   doc.text('BLOCKCHAIN AUTHENTICATED', margin + 25, sealY + 35, { align: 'center' })
 
   // --- QR Code ---
-  const verifyUrl = `https://satohash.com/verify/${stampInfo.id}`
+  const verifyUrl = `${window.location.origin}/verify/${stampInfo.id}`
   const qrDataUrl = await QRCode.toDataURL(verifyUrl, {
     margin: 1,
     color: { dark: '#1a1d2e', light: '#ffffff' }

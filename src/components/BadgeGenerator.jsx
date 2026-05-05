@@ -8,8 +8,9 @@ import { Shield, CheckCircle, Download, Copy, Code } from 'lucide-react';
  */
 export default function BadgeGenerator({ hash, id }) {
   const [copied, setCopied] = useState(false);
-  const badgeCode = `<a href="https://satohash.com/verify/${id}" target="_blank">
-  <img src="https://satohash.com/api/badge/${id}.svg" alt="Secured by Satohash" style="height: 32px;" />
+  const origin = window.location.origin
+  const badgeCode = `<a href="${origin}/verify/${id}" target="_blank">
+  <img src="${origin}/api/badge/${id}.svg" alt="Secured by Satohash" style="height: 32px;" />
 </a>`;
 
   const copyToClipboard = () => {

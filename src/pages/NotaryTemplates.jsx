@@ -688,7 +688,7 @@ const generatePDF = (template, data) => {
   doc.setFontSize(7)
   doc.setTextColor(148, 163, 184)
   doc.text('Generated via Satohash', margin, pageH - 10)
-  doc.text('satohash.com', pageW - margin, pageH - 10, { align: 'right' })
+  doc.text(window.location.hostname, pageW - margin, pageH - 10, { align: 'right' })
   doc.save(`Satohash_${template.id}_${Date.now()}.pdf`)
 }
 
@@ -1063,7 +1063,7 @@ function TemplateEditor({ template, onBack }) {
                     Satohash — Sovereign Notary Protocol
                   </p>
                   <p className="text-[10px]" style={{ color: '#94a3b8' }}>
-                    satohash.com
+                    {window.location.hostname}
                   </p>
                 </div>
                 <div className="text-right">

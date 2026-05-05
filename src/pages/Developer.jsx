@@ -20,9 +20,20 @@ import {
   FileText,
   Copy,
   CheckCircle2,
-  ArrowRight
+  ArrowRight,
+  Loader2
 } from 'lucide-react'
 import { useState, useEffect } from 'react'
+import { toast } from 'sonner'
+
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+
+const MOCK_KEYS = [
+  { id: 1, name: 'Main Production Node', key: 'SAT_LIVE_8F2...A9B', status: 'Active' },
+  { id: 2, name: 'Financial Ledger Worker', key: 'SAT_LIVE_4K9...R2D', status: 'Active' },
+  { id: 3, name: 'iOS Personal Sync', key: 'SAT_TEST_3C1...D4E', status: 'Active' },
+  { id: 4, name: 'Legacy Archive', key: 'SAT_REVOKED_1A2...B3C', status: 'Revoked' },
+]
 
 const CODE_EXAMPLES = {
   curl: `curl -X POST https://api.satohash.io/v1/anchor \\
@@ -59,34 +70,37 @@ result = api.timestamp_media(
 print(f"Sovereign proof generated: {result.proof_id}")`
 }
 
-const ApiKeyRow = ({ name, keySnippet, status }) => (
-  <div className="group flex items-center justify-between rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] p-5 transition-all hover:border-[var(--border-bright)] hover:bg-[var(--surface-raised)]/10">
-    <div className="flex items-center gap-4">
-      <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--bg-secondary)] text-[var(--accent-active)]">
-        <Key size={20} />
+const ApiKeyRow = ({ name, keySnippet, key: keyProp, status }) => {
+  const displayKey = keySnippet || keyProp || '—'
+  return (
+    <div className="group flex items-center justify-between rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] p-5 transition-all hover:border-[var(--border-bright)] hover:bg-[var(--surface-raised)]/10">
+      <div className="flex items-center gap-4">
+        <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--bg-secondary)] text-[var(--accent-active)]">
+          <Key size={20} />
+        </div>
+        <div>
+          <p className="text-sm font-bold tracking-tight text-white">{name}</p>
+          <p className="font-mono text-[10px] tracking-[0.2em] text-[var(--text-secondary)] uppercase">
+            {displayKey}
+          </p>
+        </div>
       </div>
-      <div>
-        <p className="text-sm font-bold tracking-tight text-white">{name}</p>
-        <p className="font-mono text-[10px] tracking-[0.2em] text-[var(--text-secondary)] uppercase">
-          {keySnippet}
-        </p>
+      <div className="flex items-center gap-6">
+        <div className="flex items-center gap-2">
+          <div
+            className={`h-1.5 w-1.5 rounded-full ${status === 'Active' ? 'bg-[var(--accent-success)] shadow-[0_0_8px_var(--accent-success)]' : 'bg-red-500'}`}
+          />
+          <span className="text-[10px] font-black tracking-widest text-[var(--text-secondary)] uppercase">
+            {status}
+          </span>
+        </div>
+        <button className="text-[var(--text-secondary)] opacity-0 transition-colors group-hover:opacity-100 hover:text-white">
+          <Copy size={16} />
+        </button>
       </div>
     </div>
-    <div className="flex items-center gap-6">
-      <div className="flex items-center gap-2">
-        <div
-          className={`h-1.5 w-1.5 rounded-full ${status === 'Active' ? 'bg-[var(--accent-success)] shadow-[0_0_8px_var(--accent-success)]' : 'bg-red-500'}`}
-        />
-        <span className="text-[10px] font-black tracking-widest text-[var(--text-secondary)] uppercase">
-          {status}
-        </span>
-      </div>
-      <button className="text-[var(--text-secondary)] opacity-0 transition-colors group-hover:opacity-100 hover:text-white">
-        <Copy size={16} />
-      </button>
-    </div>
-  </div>
-)
+  )
+}
 
 export default function Developer() {
   const [activeTab, setActiveTab] = useState('overview')
@@ -95,6 +109,8 @@ export default function Developer() {
     '> INITIALIZING API MESH...',
     '> AUTHENTICATED: SAT_LIVE_8F2...'
   ])
+  const [apiKeys, setApiKeys] = useState(null) // null = loading
+  const [keysError, setKeysError] = useState(false)
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -111,6 +127,44 @@ export default function Developer() {
     }, 3000)
     return () => clearInterval(interval)
   }, [])
+
+  useEffect(() => {
+    const fetchKeys = async () => {
+      try {
+        const res = await fetch(`${API_URL}/api/keys`)
+        if (res.ok) {
+          const data = await res.json()
+          setApiKeys(Array.isArray(data) ? data : MOCK_KEYS)
+        } else {
+          setKeysError(true)
+          setApiKeys(MOCK_KEYS)
+        }
+      } catch {
+        setKeysError(true)
+        setApiKeys(MOCK_KEYS)
+      }
+    }
+    fetchKeys()
+  }, [])
+
+  const handleGenerateKey = async () => {
+    try {
+      const res = await fetch(`${API_URL}/api/keys`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: 'New Key' })
+      })
+      if (res.ok) {
+        const newKey = await res.json()
+        setApiKeys((prev) => [...(prev || MOCK_KEYS), newKey])
+        toast.success('API Key Generated')
+      } else {
+        toast.error('Key generation failed')
+      }
+    } catch {
+      toast.error('Key generation failed')
+    }
+  }
 
   return (
     <div className="min-h-screen bg-[var(--bg-primary)] pb-20 text-[var(--text-primary)]">
@@ -317,34 +371,51 @@ export default function Developer() {
                   className="space-y-8"
                 >
                   <div className="flex items-center justify-between">
-                    <h2 className="text-3xl font-black tracking-tighter uppercase">
-                      API Authentication
-                    </h2>
-                    <button className="flex h-12 items-center gap-2 rounded-xl bg-white px-6 text-[10px] font-black tracking-widest text-black uppercase transition-all hover:scale-105">
+                    <div className="flex items-center gap-4">
+                      <h2 className="text-3xl font-black tracking-tighter uppercase">
+                        API Authentication
+                      </h2>
+                      {keysError && (
+                        <span className="rounded-full border border-[var(--accent-pending)]/30 bg-[var(--accent-pending)]/10 px-3 py-1 text-[9px] font-black tracking-widest text-[var(--accent-pending)] uppercase">
+                          Demo data
+                        </span>
+                      )}
+                    </div>
+                    <button
+                      onClick={handleGenerateKey}
+                      className="flex h-12 items-center gap-2 rounded-xl bg-white px-6 text-[10px] font-black tracking-widest text-black uppercase transition-all hover:scale-105"
+                    >
                       <Plus size={16} /> Generate New Key
                     </button>
                   </div>
                   <div className="space-y-4">
-                    <ApiKeyRow
-                      name="Main Production Node"
-                      keySnippet="SAT_LIVE_8F2...A9B"
-                      status="Active"
-                    />
-                    <ApiKeyRow
-                      name="Financial Ledger Worker"
-                      keySnippet="SAT_LIVE_4K9...R2D"
-                      status="Active"
-                    />
-                    <ApiKeyRow
-                      name="iOS Personal Sync"
-                      keySnippet="SAT_TEST_3C1...D4E"
-                      status="Active"
-                    />
-                    <ApiKeyRow
-                      name="Legacy Archive"
-                      keySnippet="SAT_REVOKED_1A2...B3C"
-                      status="Revoked"
-                    />
+                    {apiKeys === null ? (
+                      // Loading skeletons
+                      Array.from({ length: 3 }).map((_, i) => (
+                        <div
+                          key={i}
+                          className="flex animate-pulse items-center justify-between rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] p-5"
+                        >
+                          <div className="flex items-center gap-4">
+                            <div className="h-12 w-12 rounded-xl bg-white/5" />
+                            <div className="space-y-2">
+                              <div className="h-3 w-36 rounded bg-white/10" />
+                              <div className="h-2 w-24 rounded bg-white/5" />
+                            </div>
+                          </div>
+                          <div className="h-2 w-12 rounded bg-white/5" />
+                        </div>
+                      ))
+                    ) : (
+                      apiKeys.map((k) => (
+                        <ApiKeyRow
+                          key={k.id}
+                          name={k.name}
+                          keySnippet={k.key || k.keySnippet}
+                          status={k.status}
+                        />
+                      ))
+                    )}
                   </div>
                 </motion.div>
               )}
@@ -365,7 +436,7 @@ export default function Developer() {
                       REST conventions with JSON request/response bodies.
                     </p>
                     <a
-                      href="http://localhost:3001/api-docs"
+                      href={`${import.meta.env.VITE_API_URL || 'http://localhost:3001'}/api-docs`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 rounded-xl border border-[var(--border)] px-5 py-3 text-xs font-black tracking-widest uppercase transition-all hover:border-[var(--accent-gold)] hover:text-[var(--accent-gold)]"

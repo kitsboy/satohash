@@ -223,7 +223,7 @@ export default function ContractView() {
 
       // QR Code
       try {
-        const qrDataUrl = await QRCode.toDataURL(`https://satohash.io/verify/${contract.id}`, {
+        const qrDataUrl = await QRCode.toDataURL(`${window.location.origin}/verify/${contract.id}`, {
           width: 200,
           color: { dark: '#4f46e5' }
         })
@@ -243,7 +243,7 @@ export default function ContractView() {
       doc.setFont('helvetica', 'italic')
       doc.setTextColor(120, 120, 120)
       const footerText =
-        'This document is cryptographically anchored to the Bitcoin blockchain via the Satohash Protocol. The underlying content is protected by SHA-256 hashing. Modifying even a single character in the original file will invalidate this certificate. For verification, visit satohash.com/verify or scan the QR code above.'
+        `This document is cryptographically anchored to the Bitcoin blockchain via the Satohash Protocol. The underlying content is protected by SHA-256 hashing. Modifying even a single character in the original file will invalidate this certificate. For verification, visit ${window.location.hostname}/verify or scan the QR code above.`
       const splitFooter = doc.splitTextToSize(footerText, pageWidth - margin * 2)
       doc.text(splitFooter, margin, currentY)
     }
@@ -284,14 +284,14 @@ export default function ContractView() {
           )}
           <div className="hidden gap-0.5 rounded-xl border border-slate-100 bg-slate-50 p-1 sm:flex">
             <a
-              href={`mailto:?subject=Satohash Proof&body=Check out this cryptographic proof: https://satohash.com/verify/${contractId}`}
+              href={`mailto:?subject=Satohash Proof&body=Check out this cryptographic proof: ${window.location.origin}/verify/${contractId}`}
               className="rounded-lg p-2 text-slate-400 transition-colors hover:bg-white hover:text-indigo-600"
               title="Share via Email"
             >
               <Mail size={14} />
             </a>
             <a
-              href={`https://twitter.com/intent/tweet?text=Cryptographic Proof on Satohash&url=https://satohash.com/verify/${contractId}`}
+              href={`https://twitter.com/intent/tweet?text=Cryptographic Proof on Satohash&url=${window.location.origin}/verify/${contractId}`}
               target="_blank"
               rel="noreferrer"
               className="rounded-lg p-2 text-slate-400 transition-colors hover:bg-white hover:text-blue-500"
@@ -300,7 +300,7 @@ export default function ContractView() {
               <Twitter size={14} />
             </a>
             <a
-              href={`https://www.linkedin.com/sharing/share-offsite/?url=https://satohash.com/verify/${contractId}`}
+              href={`https://www.linkedin.com/sharing/share-offsite/?url=${window.location.origin}/verify/${contractId}`}
               target="_blank"
               rel="noreferrer"
               className="rounded-lg p-2 text-slate-400 transition-colors hover:bg-white hover:text-blue-700"

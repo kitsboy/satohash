@@ -176,7 +176,7 @@ export default function TimestampResult() {
             }}
           >
             <QRCodeSVG
-              value={`https://satohash.com/verify?hash=${contract.timestamp.hash}`}
+              value={`${window.location.origin}/verify?hash=${contract.timestamp.hash}`}
               size={120}
               level="H"
               includeMargin={false}

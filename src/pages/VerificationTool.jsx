@@ -98,7 +98,7 @@ export default function VerificationTool() {
     const details = verifyData?.details || ''
     const detailLines = doc.splitTextToSize(`Details: ${details}`, 170)
     doc.text(detailLines, 20, 95)
-    doc.text('Verified via Satohash — satohash.com', 20, 260)
+    doc.text(`Verified via Satohash — ${window.location.hostname}`, 20, 260)
     doc.save('Satohash_Verification_Report.pdf')
   }
 
