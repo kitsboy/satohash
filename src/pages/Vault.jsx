@@ -17,6 +17,7 @@ import { Link } from 'react-router-dom'
 import { toast } from 'sonner'
 import { jsPDF } from 'jspdf'
 import { useSocket } from '../hooks/useSocket'
+import { SkeletonCard } from '../components/Skeletons'
 
 const StatusBadge = ({ status }) => {
   const styles = {
@@ -360,8 +361,17 @@ export default function Vault() {
         ))}
       </div>
 
+      {/* Skeleton loader — shown while loading (desktop) */}
+      {loading && (
+        <div className="hidden grid-cols-1 gap-6 md:grid md:grid-cols-2 lg:grid-cols-3">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <SkeletonCard key={i} />
+          ))}
+        </div>
+      )}
+
       {/* Elite Data Grid — Desktop Table */}
-      <div className="hidden overflow-hidden rounded-[2.5rem] border border-[var(--border)] bg-[var(--bg-secondary)] shadow-[0_50px_100px_rgba(0,0,0,0.5)] md:block">
+      <div className={`overflow-hidden rounded-[2.5rem] border border-[var(--border)] bg-[var(--bg-secondary)] shadow-[0_50px_100px_rgba(0,0,0,0.5)] md:block ${loading ? 'hidden' : 'hidden md:block'}`}>
         <div className="overflow-x-auto">
           <table className="w-full border-collapse text-left">
             <thead>
@@ -496,12 +506,10 @@ export default function Vault() {
       {/* Mobile Card List */}
       <div className="space-y-4 md:hidden">
         {loading && (
-          <div
-            className="flex items-center justify-center gap-3 py-16"
-            style={{ color: 'var(--text-secondary)' }}
-          >
-            <Loader2 size={18} className="animate-spin" />
-            <span className="text-sm font-medium">Loading stamps from Bitcoin...</span>
+          <div className="grid grid-cols-1 gap-4">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <SkeletonCard key={i} />
+            ))}
           </div>
         )}
         {!loading && filteredItems.length === 0 && (

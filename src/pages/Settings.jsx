@@ -108,6 +108,8 @@ export default function Settings() {
   const [eliteMode, setEliteMode] = useState(() => {
     return localStorage.getItem('satohash_theme') === 'elite'
   })
+  const [balance, setBalance] = useState(null)
+  const [balanceLoading, setBalanceLoading] = useState(true)
 
   useEffect(() => {
     const theme = eliteMode ? 'elite' : 'noir'
@@ -122,6 +124,25 @@ export default function Settings() {
   useEffect(() => {
     localStorage.setItem('satohash_security', JSON.stringify(security))
   }, [security])
+
+  useEffect(() => {
+    const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+    fetch(`${API}/api/lightning/balance`)
+      .then((res) => {
+        if (res.ok) return res.json()
+        throw new Error('Unavailable')
+      })
+      .then((data) => {
+        const sats = data?.balance ?? data?.sats ?? data?.satoshis ?? null
+        setBalance(typeof sats === 'number' ? sats : null)
+      })
+      .catch(() => {
+        setBalance(null)
+      })
+      .finally(() => {
+        setBalanceLoading(false)
+      })
+  }, [])
 
   const handleSave = () => {
     toast.success('Protocol configuration updated', {
@@ -546,9 +567,9 @@ export default function Settings() {
                           className="fill-[var(--accent-active)] text-[var(--accent-active)]"
                         />
                         <div className="flex items-center gap-2">
-                          <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-[var(--accent-success)] shadow-[0_0_10px_var(--accent-success)]" />
+                          <div className={`h-1.5 w-1.5 rounded-full ${balance !== null ? 'animate-pulse bg-[var(--accent-success)] shadow-[0_0_10px_var(--accent-success)]' : 'bg-white/20'}`} />
                           <span className="text-[10px] font-black tracking-widest text-white/60 uppercase">
-                            Node Connected
+                            {balance !== null ? 'Node Connected' : 'Not Connected'}
                           </span>
                         </div>
                       </div>
@@ -556,10 +577,22 @@ export default function Settings() {
                         <p className="text-[10px] font-black tracking-widest text-[var(--text-secondary)] uppercase">
                           Available Credits
                         </p>
-                        <h4 className="text-5xl font-black tracking-tighter text-white">
-                          2,142,000{' '}
-                          <span className="text-lg text-[var(--text-secondary)]">SATS</span>
-                        </h4>
+                        {balanceLoading ? (
+                          <div className="h-12 w-48 animate-pulse rounded-xl bg-white/10" />
+                        ) : balance !== null ? (
+                          <h4 className="text-5xl font-black tracking-tighter text-white">
+                            {balance.toLocaleString()}{' '}
+                            <span className="text-lg text-[var(--text-secondary)]">SATS</span>
+                          </h4>
+                        ) : (
+                          <button
+                            onClick={() => toast.info('Connect your Lightning node to see live balance')}
+                            className="flex items-center gap-2 rounded-xl border px-4 py-2 text-[11px] font-black tracking-widest uppercase transition-all hover:scale-[1.02]"
+                            style={{ borderColor: 'var(--accent-gold)', color: 'var(--accent-gold)' }}
+                          >
+                            <Zap size={14} /> Connect Lightning Wallet
+                          </button>
+                        )}
                       </div>
                       <button
                         onClick={() => setIsInvoiceOpen(true)}

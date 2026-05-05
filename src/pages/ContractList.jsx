@@ -69,8 +69,12 @@ export default function ContractList() {
       client: 'Truth Capital',
       status: 'Pending Signatures',
       tabStatus: 'active',
-      signers: 3,
-      signed: 1
+      signerCount: 3,
+      signed: 1,
+      signers: [
+        { identity: 'legal@truth.nip05', role: 'Originator', status: 'Signed' },
+        { identity: 'counterparty@firm.com', role: 'Recipient', status: 'Pending' },
+      ]
     },
     {
       id: '2',
@@ -78,8 +82,12 @@ export default function ContractList() {
       client: 'Sovereign Nodes',
       status: 'Anchored',
       tabStatus: 'active',
-      signers: 2,
-      signed: 2
+      signerCount: 2,
+      signed: 2,
+      signers: [
+        { identity: 'partner@sovereign.nodes', role: 'Originator', status: 'Signed' },
+        { identity: 'legal@firm.io', role: 'Co-Signer', status: 'Signed' },
+      ]
     }
   ]
 
@@ -165,12 +173,14 @@ export default function ContractList() {
                       Signer Status
                     </h4>
                     <div className="space-y-2">
-                      <SignerRow identity="legal@truth.nip05" role="Originator" status="Signed" />
-                      <SignerRow
-                        identity="counterparty@firm.com"
-                        role="Recipient"
-                        status="Pending"
-                      />
+                      {(contract.signers || []).map((s) => (
+                        <SignerRow
+                          key={s.identity}
+                          identity={s.identity}
+                          role={s.role}
+                          status={s.status}
+                        />
+                      ))}
                     </div>
                   </div>
                   <div className="space-y-4">

@@ -13,7 +13,14 @@ import {
   ChevronRight,
   ArrowUpRight
 } from 'lucide-react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+
+const FALLBACK_NODES = [
+  { city: 'Frankfurt', country: 'Germany', status: 'Active', latency: '12', uptime: '99.99', region: 'Europe' },
+  { city: 'Singapore', country: 'Singapore', status: 'Active', latency: '45', uptime: '100.0', region: 'Asia' },
+  { city: 'New York', country: 'USA', status: 'Active', latency: '8', uptime: '99.98', region: 'North America' },
+  { city: 'Tokyo', country: 'Japan', status: 'Active', latency: '62', uptime: '99.95', region: 'Asia' },
+]
 
 const NodeCard = ({ city, country, status, latency, uptime, load }) => (
   <div className="group rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] p-6 transition-all hover:border-[var(--border-bright)] hover:bg-[var(--surface-raised)]/20">
@@ -56,43 +63,28 @@ const NodeCard = ({ city, country, status, latency, uptime, load }) => (
   </div>
 )
 
-const nodes = [
-  {
-    city: 'Frankfurt',
-    country: 'Germany',
-    status: 'Active',
-    latency: '12',
-    uptime: '99.99',
-    region: 'Europe'
-  },
-  {
-    city: 'Singapore',
-    country: 'Singapore',
-    status: 'Active',
-    latency: '45',
-    uptime: '100.0',
-    region: 'Asia'
-  },
-  {
-    city: 'New York',
-    country: 'USA',
-    status: 'Active',
-    latency: '8',
-    uptime: '99.98',
-    region: 'North America'
-  },
-  {
-    city: 'Tokyo',
-    country: 'Japan',
-    status: 'Active',
-    latency: '62',
-    uptime: '99.95',
-    region: 'Asia'
-  }
-]
-
 export default function Mesh() {
   const [activeRegion, setActiveRegion] = useState('Global')
+  const [nodes, setNodes] = useState([])
+  const [nodesLoading, setNodesLoading] = useState(true)
+
+  useEffect(() => {
+    const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+    fetch(`${API}/api/mesh/nodes`)
+      .then((res) => {
+        if (res.ok) return res.json()
+        throw new Error('Failed')
+      })
+      .then((data) => {
+        setNodes(Array.isArray(data) ? data : FALLBACK_NODES)
+      })
+      .catch(() => {
+        setNodes(FALLBACK_NODES)
+      })
+      .finally(() => {
+        setNodesLoading(false)
+      })
+  }, [])
 
   return (
     <div className="mx-auto max-w-7xl space-y-12 p-8">
@@ -185,7 +177,10 @@ export default function Mesh() {
             </div>
 
             <div className="absolute top-10 right-10">
-              <button className="flex h-12 items-center gap-3 rounded-xl border border-[var(--border-bright)] bg-[var(--bg-primary)] px-6 text-[10px] font-black tracking-widest uppercase transition-all hover:scale-105">
+              <button
+                onClick={() => { window.location.href = '/explorer' }}
+                className="flex h-12 items-center gap-3 rounded-xl border border-[var(--border-bright)] bg-[var(--bg-primary)] px-6 text-[10px] font-black tracking-widest uppercase transition-all hover:scale-105"
+              >
                 Full Mesh Explorer <ArrowUpRight size={16} />
               </button>
             </div>
@@ -257,18 +252,46 @@ export default function Mesh() {
           </button>
         </div>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-          {nodes
-            .filter((n) => activeRegion === 'Global' || n.region === activeRegion)
-            .map((n) => (
-              <NodeCard
-                key={n.city}
-                city={n.city}
-                country={n.country}
-                status={n.status}
-                latency={n.latency}
-                uptime={n.uptime}
-              />
-            ))}
+          {nodesLoading
+            ? Array.from({ length: 4 }).map((_, i) => (
+                <div
+                  key={i}
+                  className="animate-pulse rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] p-6"
+                >
+                  <div className="mb-6 flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="h-10 w-10 rounded-xl bg-white/5" />
+                      <div className="space-y-1.5">
+                        <div className="h-3 w-20 rounded bg-white/10" />
+                        <div className="h-2 w-14 rounded bg-white/5" />
+                      </div>
+                    </div>
+                    <div className="h-2 w-10 rounded bg-white/5" />
+                  </div>
+                  <div className="grid grid-cols-2 gap-4 border-t border-[var(--border)] pt-4">
+                    <div className="space-y-1.5">
+                      <div className="h-2 w-12 rounded bg-white/5" />
+                      <div className="h-4 w-10 rounded bg-white/10" />
+                    </div>
+                    <div className="space-y-1.5">
+                      <div className="h-2 w-12 rounded bg-white/5" />
+                      <div className="h-4 w-14 rounded bg-white/10" />
+                    </div>
+                  </div>
+                </div>
+              ))
+            : nodes
+                .filter((n) => activeRegion === 'Global' || n.region === activeRegion)
+                .map((n) => (
+                  <NodeCard
+                    key={n.city}
+                    city={n.city}
+                    country={n.country}
+                    status={n.status}
+                    latency={n.latency}
+                    uptime={n.uptime}
+                  />
+                ))}
         </div>
       </div>
     </div>
