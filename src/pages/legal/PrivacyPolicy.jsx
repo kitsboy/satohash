@@ -94,7 +94,7 @@ const SECTIONS = [
         </p>
         <div className="grid gap-3 sm:grid-cols-2">
           {[
-            'Your document's contents',
+            "Your document's contents",
             'Your name or email address',
             'Your wallet address or cryptocurrency holdings',
             'Biometric data of any kind',
