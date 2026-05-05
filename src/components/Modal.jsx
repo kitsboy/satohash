@@ -43,10 +43,11 @@ export default function Modal({ isOpen, onClose, title, children, actions }) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 24, scale: 0.96 }}
             transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-            className="relative w-full max-w-[460px] overflow-hidden bg-white sm:rounded-3xl rounded-t-3xl"
+            className="relative w-full max-w-[460px] overflow-hidden sm:rounded-3xl rounded-t-3xl"
             style={{
+              background: 'var(--bg-secondary)',
               border: '1px solid var(--border)',
-              boxShadow: '0 25px 80px -12px rgba(79, 70, 229, 0.25), 0 0 0 1px rgba(255,255,255,0.8) inset',
+              boxShadow: 'var(--shadow-noir)',
             }}
           >
             {/* Close Button */}

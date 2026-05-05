@@ -97,34 +97,34 @@ export default function VoiceStamp({ onStamp, isActive }) {
   if (!isActive) return null
 
   return (
-    <div className="voice-stamp-wrapper rounded-lg border bg-white/50 p-4">
+    <div className="voice-stamp-wrapper rounded-lg border border-[var(--border)] bg-[var(--bg-secondary)] p-4">
       <div className="mb-2 flex items-center justify-between">
-        <h4 className="text-sm font-bold">Voice Stamp</h4>
+        <h4 className="text-sm font-bold text-[var(--text-primary)]">Voice Stamp</h4>
         <button
           onClick={isListening ? stopListening : startListening}
           disabled={isProcessing}
           className={`rounded-full p-2 transition-colors ${
-            isListening ? 'bg-red-500 text-white' : 'bg-indigo-500 text-white hover:bg-indigo-600'
+            isListening ? 'bg-red-500 text-white' : 'bg-[var(--accent-active)] text-white hover:opacity-90'
           }`}
         >
           {isListening ? <MicOff size={20} /> : <Mic size={20} />}
         </button>
       </div>
       {isListening && (
-        <p className="mb-2 text-xs text-gray-600">Listening... Speak your document or command.</p>
+        <p className="mb-2 text-xs text-[var(--text-secondary)]">Listening... Speak your document or command.</p>
       )}
       {transcript && (
-        <div className="transcript-preview mb-2 max-h-20 overflow-y-auto rounded bg-gray-100 p-2 text-xs">
+        <div className="transcript-preview mb-2 max-h-20 overflow-y-auto rounded bg-[var(--surface-raised)] p-2 text-xs text-[var(--text-primary)]">
           <FileText size={12} className="mr-1 inline" />
           {transcript}
         </div>
       )}
-      {isProcessing && <p className="text-xs text-indigo-600">Processing hash and stamping...</p>}
+      {isProcessing && <p className="text-xs text-[var(--accent-active)]">Processing hash and stamping...</p>}
       {transcript && !isListening && !isProcessing && (
         <button
           onClick={handleStamp}
           disabled={isProcessing}
-          className="flex w-full items-center justify-center gap-2 rounded bg-indigo-600 py-2 text-xs text-white hover:bg-indigo-700"
+          className="flex w-full items-center justify-center gap-2 rounded bg-[var(--accent-active)] py-2 text-xs text-white hover:opacity-90"
         >
           <Hash size={14} />
           Stamp Voice Transcript

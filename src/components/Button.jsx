@@ -11,12 +11,12 @@ export default function Button({
   ...props
 }) {
   const variants = {
-    primary: 'bg-indigo-600 text-white hover:bg-indigo-700 shadow-lg shadow-indigo-200/50 hover:shadow-xl hover:shadow-indigo-300/40 hover:-translate-y-0.5',
-    secondary: 'bg-slate-800 text-white hover:bg-slate-900 shadow-lg shadow-slate-200/50 hover:shadow-xl hover:-translate-y-0.5',
+    primary: 'bg-[var(--accent-active)] text-white hover:opacity-90 shadow-lg shadow-[var(--accent-active)]/20 hover:shadow-xl hover:-translate-y-0.5',
+    secondary: 'bg-[var(--surface-raised)] text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] shadow-lg hover:shadow-xl hover:-translate-y-0.5',
     outline:
-      'bg-transparent border-2 border-slate-200 text-slate-700 hover:border-indigo-500 hover:text-indigo-600 hover:bg-indigo-50/50 hover:-translate-y-0.5',
-    ghost: 'bg-transparent text-slate-600 hover:bg-slate-100 hover:text-slate-900',
-    danger: 'bg-rose-500 text-white hover:bg-rose-600 shadow-lg shadow-rose-200/50 hover:shadow-xl hover:-translate-y-0.5'
+      'bg-transparent border-2 border-[var(--border)] text-[var(--text-secondary)] hover:border-[var(--accent-active)] hover:text-[var(--accent-active)] hover:bg-[var(--accent-active)]/5 hover:-translate-y-0.5',
+    ghost: 'bg-transparent text-[var(--text-secondary)] hover:bg-[var(--surface-raised)] hover:text-[var(--text-primary)]',
+    danger: 'bg-[var(--accent-danger)] text-white hover:opacity-90 shadow-lg shadow-[var(--accent-danger)]/20 hover:shadow-xl hover:-translate-y-0.5'
   }
 
   const sizes = {

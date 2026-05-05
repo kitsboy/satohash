@@ -68,7 +68,7 @@ const HistoryList = () => {
       <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
         <h2 className="flex items-center gap-2 text-xl font-bold text-white">
             Recent Stamping History
-            <span className="rounded-full border border-indigo-500/30 bg-indigo-500/20 px-2 py-0.5 text-xs text-indigo-400">
+            <span className="rounded-full border border-[var(--accent-active)]/30 bg-[var(--accent-active)]/20 px-2 py-0.5 text-xs text-[var(--accent-active)]">
                 {history.length}
             </span>
         </h2>
@@ -129,7 +129,7 @@ const HistoryList = () => {
                       <div className="flex items-center gap-4">
                         <ProofDNA hash={item.hash} size="sm" />
                         <div className="flex flex-col">
-                            <span className="text-sm font-black text-white transition-colors group-hover:text-indigo-400 uppercase italic tracking-tight">
+                            <span className="text-sm font-black text-white transition-colors group-hover:text-[var(--accent-active)] uppercase italic tracking-tight">
                             {item.filename}
                             </span>
                             <span className="max-w-[150px] truncate font-mono text-[9px] text-white/20 uppercase">
@@ -155,7 +155,7 @@ const HistoryList = () => {
                       <div className="flex items-center justify-end gap-2">
                         <button
                           onClick={() => generatePDF(item)}
-                          className="inline-flex items-center gap-2 rounded-lg border border-indigo-500/30 bg-indigo-500/10 px-3 py-1.5 text-xs text-indigo-400 transition-all hover:bg-indigo-500 hover:text-white"
+                          className="inline-flex items-center gap-2 rounded-lg border border-[var(--accent-active)]/30 bg-[var(--accent-active)]/10 px-3 py-1.5 text-xs text-[var(--accent-active)] transition-all hover:bg-[var(--accent-active)] hover:text-white"
                         >
                           <FileText className="h-3.5 w-3.5" />
                           Certificate

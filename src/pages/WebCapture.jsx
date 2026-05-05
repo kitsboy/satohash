@@ -64,8 +64,9 @@ export default function WebCapture() {
         id: data.id
       })
       setStatus('captured')
-    } catch {
+    } catch (err) {
       setStatus('idle')
+      toast.error('Capture failed', { description: err?.message || 'Check your connection and try again' })
     }
   }
 
@@ -85,8 +86,10 @@ export default function WebCapture() {
       })
       await res.json()
       setStatus('anchored')
-    } catch {
+      toast.success('Anchored to Bitcoin', { description: 'Proof is propagating to the global mesh' })
+    } catch (err) {
       setStatus('captured')
+      toast.error('Anchoring failed', { description: err?.message || 'Check your connection and try again' })
     }
   }
 

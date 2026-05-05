@@ -41,7 +41,7 @@ export default function MerkleExplorer({ tree, highlightedIndex = null }) {
       {/* Visual Header */}
       <div className="mb-12 flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-indigo-500/30 bg-indigo-500/20 text-indigo-400">
+          <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-[var(--accent-active)]/30 bg-[var(--accent-active)]/20 text-[var(--accent-active)]">
             <Layers size={24} />
           </div>
           <div>
@@ -67,19 +67,19 @@ export default function MerkleExplorer({ tree, highlightedIndex = null }) {
           className="group relative cursor-help"
           onClick={() => setSelectedLevel('root')}
         >
-          <div className="relative z-10 w-64 rounded-2xl border-4 border-indigo-400/30 bg-indigo-600 p-6 text-center shadow-2xl shadow-indigo-500/20 transition-transform active:scale-95">
-            <div className="mb-2 flex items-center justify-center gap-2 text-indigo-100">
+          <div className="relative z-10 w-64 rounded-2xl border-4 border-[var(--accent-active)]/30 bg-[var(--accent-active)] p-6 text-center shadow-2xl shadow-[var(--accent-active)]/20 transition-transform active:scale-95">
+            <div className="mb-2 flex items-center justify-center gap-2 text-white/90">
               <Shield size={16} />
               <span className="text-[10px] font-black tracking-widest uppercase">
                 Merkle Root (Anchor)
               </span>
             </div>
-            <div className="truncate rounded-lg border border-indigo-400/20 bg-indigo-700/50 px-2 py-2 font-mono text-[11px] text-white">
+            <div className="truncate rounded-lg border border-white/20 bg-black/30 px-2 py-2 font-mono text-[11px] text-white">
               {tree.root}
             </div>
           </div>
           {/* Animated Lines coming down (pseudo-code visualization) */}
-          <div className="absolute top-full left-1/2 h-16 w-0.5 bg-gradient-to-b from-indigo-500 to-transparent" />
+          <div className="absolute top-full left-1/2 h-16 w-0.5 bg-gradient-to-b from-[var(--accent-active)] to-transparent" />
         </motion.div>
 
         {/* INTERMEDIATE BRANCHES (Simplified for UI depth) */}
@@ -107,7 +107,7 @@ export default function MerkleExplorer({ tree, highlightedIndex = null }) {
                     onClick={() => setSelectedAtom(atom)}
                     className={`w-32 cursor-pointer rounded-xl border-2 p-4 transition-all ${
                       highlightedIndex === (i - 1) * 2 + idx
-                        ? 'border-indigo-500 bg-indigo-500/20 shadow-lg shadow-indigo-500/10'
+                        ? 'border-[var(--accent-active)] bg-[var(--accent-active)]/20 shadow-lg shadow-[var(--accent-active)]/10'
                         : 'border-slate-700 bg-slate-800/50 hover:border-slate-500'
                     }`}
                   >
@@ -116,7 +116,7 @@ export default function MerkleExplorer({ tree, highlightedIndex = null }) {
                         size={14}
                         className={
                           highlightedIndex === (i - 1) * 2 + idx
-                            ? 'text-indigo-400'
+                            ? 'text-[var(--accent-active)]'
                             : 'text-slate-500'
                         }
                       />
@@ -131,7 +131,7 @@ export default function MerkleExplorer({ tree, highlightedIndex = null }) {
                       <motion.div
                         initial={{ width: 0 }}
                         animate={{ width: '100%' }}
-                        className="h-full bg-indigo-500"
+                        className="h-full bg-[var(--accent-active)]"
                       />
                     </div>
                   </motion.div>
@@ -156,7 +156,7 @@ export default function MerkleExplorer({ tree, highlightedIndex = null }) {
             >
               ✕
             </button>
-            <h4 className="mb-4 text-xs font-black tracking-widest text-indigo-400 uppercase">
+            <h4 className="mb-4 text-xs font-black tracking-widest text-[var(--accent-active)] uppercase">
               Leaf Specification
             </h4>
             <div className="grid grid-cols-2 gap-4">
@@ -178,7 +178,7 @@ export default function MerkleExplorer({ tree, highlightedIndex = null }) {
 
       {/* PROOF OF HISTORY TIMELINE */}
       <div className="mt-20 border-t border-slate-800 pt-12">
-        <h4 className="mb-8 text-center text-[10px] font-black tracking-[0.2em] text-indigo-400 uppercase">
+        <h4 className="mb-8 text-center text-[10px] font-black tracking-[0.2em] text-[var(--accent-active)] uppercase">
           Protocol Journey: Proof of History
         </h4>
         <div className="relative mx-auto flex max-w-2xl items-start justify-between">
@@ -193,15 +193,15 @@ export default function MerkleExplorer({ tree, highlightedIndex = null }) {
 
       <div className="mt-16 flex justify-center gap-8 border-t border-slate-800 pt-8 text-[10px] font-black tracking-[0.2em] text-slate-500 uppercase">
         <div className="flex items-center gap-2">
-          <div className="h-2 w-2 rounded-full bg-indigo-500" />
+          <div className="h-2 w-2 rounded-full bg-[var(--accent-active)]" />
           Secure Anchor
         </div>
         <div className="flex items-center gap-2">
           <div className="h-2 w-2 rounded-full bg-slate-700" />
           Cryptographic Branch
         </div>
-        <div className="flex items-center gap-2 text-indigo-400">
-          <div className="h-2 w-2 animate-ping rounded-full bg-indigo-400" />
+        <div className="flex items-center gap-2 text-[var(--accent-active)]">
+          <div className="h-2 w-2 animate-ping rounded-full bg-[var(--accent-active)]" />
           Verified Leaf
         </div>
       </div>
@@ -213,7 +213,7 @@ function HistoryStep({ icon: Icon, label, status, active }) {
   return (
     <div className="relative z-10 flex w-24 flex-col items-center gap-3">
       <div
-        className={`flex h-8 w-8 items-center justify-center rounded-full border-2 ${active ? 'border-indigo-400 bg-indigo-500 text-white' : 'border-slate-800 bg-slate-900 text-slate-600'}`}
+        className={`flex h-8 w-8 items-center justify-center rounded-full border-2 ${active ? 'border-[var(--accent-active)] bg-[var(--accent-active)] text-white' : 'border-slate-800 bg-slate-900 text-slate-600'}`}
       >
         <Icon size={14} />
       </div>

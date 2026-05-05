@@ -129,7 +129,7 @@ export default function HelpOverlay({ isOpen, onClose }) {
                         setCurrentStep((prev) => prev + 1)
                       }
                     }}
-                    className="flex h-14 items-center gap-3 rounded-2xl bg-white px-10 text-[11px] font-black tracking-widest text-black uppercase transition-all hover:scale-105 active:scale-95"
+                    className="flex h-14 items-center gap-3 rounded-2xl bg-[var(--text-primary)] px-10 text-[11px] font-black tracking-widest text-[var(--bg-primary)] uppercase transition-all hover:scale-105 active:scale-95"
                   >
                     {currentStep === steps.length - 1 ? 'Initialize Workbench' : 'Continue'}
                     <ChevronRight size={16} />

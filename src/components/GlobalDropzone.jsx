@@ -80,7 +80,7 @@ export default function GlobalDropzone({ children, onFileProcessed }) {
   })
 
   return (
-    <div {...getRootProps()} className="relative min-h-screen font-sans selection:bg-indigo-500/30">
+    <div {...getRootProps()} className="relative min-h-screen font-sans selection:bg-[var(--accent-active)]/30">
       <input {...getInputProps()} />
 
       {/* Render Children */}
@@ -195,7 +195,7 @@ export default function GlobalDropzone({ children, onFileProcessed }) {
                   animate={{ scale: 1, opacity: 1 }}
                   className="relative z-10 flex h-56 flex-col items-center justify-center"
                 >
-                  <div className="mb-3 rounded-full bg-indigo-500/20 px-3 py-1 text-[10px] font-black tracking-[0.2em] text-indigo-400 uppercase italic">
+                  <div className="mb-3 rounded-full bg-[var(--accent-active)]/20 px-3 py-1 text-[10px] font-black tracking-[0.2em] text-[var(--accent-active)] uppercase italic">
                     {fileData?.intent} Active
                   </div>
                   <h3 className="px-4 text-4xl font-black tracking-tighter text-white uppercase italic">

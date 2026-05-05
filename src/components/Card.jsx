@@ -15,9 +15,9 @@ export default function Card({
   }
 
   const variantClasses = {
-    elevated: 'bg-white border-2 border-indigo-100 shadow-lg shadow-indigo-500/10',
+    elevated: 'bg-[var(--bg-secondary)] border border-[var(--border)] shadow-lg',
     glass: 'glass-card',
-    flat: 'bg-indigo-50/50 border-2 border-indigo-200 text-indigo-950'
+    flat: 'bg-[var(--surface-raised)] border border-[var(--border)] text-[var(--text-primary)]'
   }
 
   const classes = [
@@ -26,7 +26,7 @@ export default function Card({
     paddingMap[padding],
     interactive &&
       variant !== 'glass' &&
-      'cursor-pointer hover:shadow-2xl hover:shadow-indigo-500/20 hover:border-indigo-400 hover:-translate-y-1 active:scale-[0.98]',
+      'cursor-pointer hover:shadow-2xl hover:border-[var(--border-bright)] hover:-translate-y-1 active:scale-[0.98]',
     interactive && variant === 'glass' && 'cursor-pointer active:scale-[0.98]',
     className
   ]
