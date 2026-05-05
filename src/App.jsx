@@ -4,6 +4,8 @@ import AppShellNoir from './components/AppShellNoir'
 import LoadingScreen from './components/LoadingScreen'
 import { Toaster } from 'sonner'
 import { ToastProvider } from './components/Toast'
+import { ThemeProvider } from './components/ThemeProvider'
+import ErrorBoundary from './components/ErrorBoundary'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 
@@ -13,9 +15,7 @@ const Vault = React.lazy(() => import('./pages/Vault'))
 const Stamp = React.lazy(() => import('./pages/Stamp'))
 const Verify = React.lazy(() => import('./pages/VerificationTool'))
 const Contracts = React.lazy(() => import('./pages/ContractList'))
-const Snapper = React.lazy(() =>
-  import('./pages/Placeholders').then((m) => ({ default: m.Snapper }))
-)
+const WebCapture = React.lazy(() => import('./pages/WebCapture'))
 const Certificates = React.lazy(() =>
   import('./pages/Placeholders').then((m) => ({ default: m.Certificates }))
 )
@@ -31,6 +31,20 @@ const About = React.lazy(() => import('./pages/About'))
 
 const NotaryTemplates = React.lazy(() => import('./pages/NotaryTemplates'))
 const Dashboard = React.lazy(() => import('./pages/Dashboard'))
+
+// Legal pages (public)
+const CryptoNotice = React.lazy(() => import('./pages/legal/CryptoNotice'))
+const PrivacyPolicy = React.lazy(() => import('./pages/legal/PrivacyPolicy'))
+const TermsOfService = React.lazy(() => import('./pages/legal/TermsOfService'))
+
+// Contracts sub-pages (protected)
+const ContractView = React.lazy(() => import('./pages/contracts/ContractView'))
+const ContractEditor = React.lazy(() => import('./pages/contracts/ContractEditor'))
+
+// Orphaned protected pages
+const ImageVault = React.lazy(() => import('./pages/ImageVault'))
+const ProtocolStats = React.lazy(() => import('./pages/ProtocolStats'))
+const Offers = React.lazy(() => import('./pages/Offers'))
 
 function ProtectedRoute({ children }) {
   const location = useLocation()
@@ -55,132 +69,183 @@ function AppContent() {
     location.pathname === '/' ||
     location.pathname === '/access' ||
     location.pathname === '/about' ||
-    location.pathname === '/trust'
+    location.pathname === '/trust' ||
+    location.pathname.startsWith('/legal/')
 
   const content = (
-    <Suspense fallback={<LoadingScreen />}>
-      <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path="/access" element={<Access />} />
-        <Route
-          path="/vault"
-          element={
-            <ProtectedRoute>
-              <Vault />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/stamp"
-          element={
-            <ProtectedRoute>
-              <Stamp />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/verify"
-          element={
-            <ProtectedRoute>
-              <Verify />
-            </ProtectedRoute>
-          }
-        />
-        <Route path="/verify/:id" element={<VerifyPublic />} />
-        <Route
-          path="/contracts"
-          element={
-            <ProtectedRoute>
-              <Contracts />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/snapper"
-          element={
-            <ProtectedRoute>
-              <Snapper />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/certificates"
-          element={
-            <ProtectedRoute>
-              <Certificates />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/developer"
-          element={
-            <ProtectedRoute>
-              <Developer />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/developers"
-          element={
-            <ProtectedRoute>
-              <Developer />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/atlas"
-          element={
-            <ProtectedRoute>
-              <Atlas />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/nodes"
-          element={
-            <ProtectedRoute>
-              <Nodes />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/explorer"
-          element={
-            <ProtectedRoute>
-              <Explorer />
-            </ProtectedRoute>
-          }
-        />
-        <Route path="/trust-center" element={<Navigate to="/trust" replace />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/trust" element={<Trust />} />
-        <Route
-          path="/templates"
-          element={
-            <ProtectedRoute>
-              <NotaryTemplates />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/settings"
-          element={
-            <ProtectedRoute>
-              <Settings />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          }
-        />
-        <Route path="*" element={<Navigate to="/" />} />
-      </Routes>
-    </Suspense>
+    <ErrorBoundary>
+      <Suspense fallback={<LoadingScreen />}>
+        <Routes>
+          {/* Public routes */}
+          <Route path="/" element={<Landing />} />
+          <Route path="/access" element={<Access />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/trust" element={<Trust />} />
+          <Route path="/trust-center" element={<Navigate to="/trust" replace />} />
+          <Route path="/verify/:id" element={<VerifyPublic />} />
+
+          {/* Public legal pages */}
+          <Route path="/legal/crypto-notice" element={<CryptoNotice />} />
+          <Route path="/legal/privacy" element={<PrivacyPolicy />} />
+          <Route path="/legal/terms" element={<TermsOfService />} />
+
+          {/* Protected routes */}
+          <Route
+            path="/vault"
+            element={
+              <ProtectedRoute>
+                <Vault />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/stamp"
+            element={
+              <ProtectedRoute>
+                <Stamp />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/verify"
+            element={
+              <ProtectedRoute>
+                <Verify />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/contracts"
+            element={
+              <ProtectedRoute>
+                <Contracts />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/contracts/:id"
+            element={
+              <ProtectedRoute>
+                <ContractView />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/contracts/new/:templateType"
+            element={
+              <ProtectedRoute>
+                <ContractEditor />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/contracts/edit/:id"
+            element={
+              <ProtectedRoute>
+                <ContractEditor />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/snapper"
+            element={
+              <ProtectedRoute>
+                <WebCapture />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/certificates"
+            element={
+              <ProtectedRoute>
+                <Certificates />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/developer"
+            element={
+              <ProtectedRoute>
+                <Developer />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/atlas"
+            element={
+              <ProtectedRoute>
+                <Atlas />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/nodes"
+            element={
+              <ProtectedRoute>
+                <Nodes />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/explorer"
+            element={
+              <ProtectedRoute>
+                <Explorer />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/templates"
+            element={
+              <ProtectedRoute>
+                <NotaryTemplates />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/settings"
+            element={
+              <ProtectedRoute>
+                <Settings />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/image-vault"
+            element={
+              <ProtectedRoute>
+                <ImageVault />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/protocol-stats"
+            element={
+              <ProtectedRoute>
+                <ProtocolStats />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/offers"
+            element={
+              <ProtectedRoute>
+                <Offers />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
+      </Suspense>
+    </ErrorBoundary>
   )
 
   if (isPublic) return content
@@ -189,23 +254,25 @@ function AppContent() {
 
 function App() {
   return (
-    <ToastProvider>
-      <Router>
-        <AppContent />
-        <Toaster
-          position="bottom-right"
-          richColors
-          toastOptions={{
-            style: {
-              borderRadius: '12px',
-              background: 'var(--bg-secondary)',
-              border: '1px solid var(--border)',
-              color: 'var(--text-primary)'
-            }
-          }}
-        />
-      </Router>
-    </ToastProvider>
+    <ThemeProvider>
+      <ToastProvider>
+        <Router>
+          <AppContent />
+          <Toaster
+            position="bottom-right"
+            richColors
+            toastOptions={{
+              style: {
+                borderRadius: '12px',
+                background: 'var(--bg-secondary)',
+                border: '1px solid var(--border)',
+                color: 'var(--text-primary)'
+              }
+            }}
+          />
+        </Router>
+      </ToastProvider>
+    </ThemeProvider>
   )
 }
 
