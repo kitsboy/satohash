@@ -93,7 +93,7 @@ export default function ContractList() {
   })
 
   return (
-    <div className="mx-auto max-w-6xl space-y-12 p-8">
+    <div className="mx-auto max-w-6xl space-y-10 p-4 md:space-y-12 md:p-8">
       <header className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
         <div className="space-y-2">
           <div className="flex items-center gap-3">
@@ -136,12 +136,14 @@ export default function ContractList() {
             {filteredContracts.map((contract) => (
               <div
                 key={contract.id}
-                className="group space-y-6 rounded-3xl border border-[var(--border)] bg-[var(--bg-secondary)] p-8 transition-all hover:border-[var(--border-bright)]"
+                className="group space-y-5 rounded-3xl border border-[var(--border)] bg-[var(--bg-secondary)] p-5 transition-all hover:border-[var(--border-bright)] md:space-y-6 md:p-8"
               >
                 <div className="flex items-start justify-between">
                   <div className="space-y-2">
-                    <div className="flex items-center gap-3">
-                      <h3 className="text-2xl font-bold tracking-tight">{contract.title}</h3>
+                    <div className="flex flex-wrap items-center gap-2 md:gap-3">
+                      <h3 className="text-lg font-bold tracking-tight md:text-2xl">
+                        {contract.title}
+                      </h3>
                       <span
                         className={`rounded-md border px-2 py-0.5 text-[8px] font-black tracking-widest uppercase ${contract.status === 'Anchored' ? 'border-[var(--accent-success)]/20 bg-[var(--accent-success)]/10 text-[var(--accent-success)]' : 'border-[var(--accent-pending)]/20 bg-[var(--accent-pending)]/10 text-[var(--accent-pending)]'}`}
                       >
@@ -197,7 +199,7 @@ export default function ContractList() {
 
         {/* Sidebar */}
         <div className="space-y-8">
-          <div className="space-y-6 rounded-[2.5rem] border border-[var(--border)] bg-[var(--bg-secondary)] p-8">
+          <div className="space-y-5 rounded-[2.5rem] border border-[var(--border)] bg-[var(--bg-secondary)] p-5 md:space-y-6 md:p-8">
             <div className="flex items-center gap-3 text-[var(--accent-active)]">
               <UserPlus size={18} />
               <h3 className="text-[10px] font-bold tracking-widest uppercase">Signer Resolution</h3>

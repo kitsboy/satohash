@@ -8,7 +8,6 @@ import {
   Globe,
   Clock,
   Link2,
-  Server,
   Eye,
   EyeOff,
   Database,
@@ -17,18 +16,18 @@ import {
   Mail,
   ArrowRight,
   Cpu,
-  ShieldCheck,
+  ShieldCheck
 } from 'lucide-react'
 
 /* ─── Animation Variants ─────────────────────────────────── */
 const fadeUp = {
   hidden: { opacity: 0, y: 32 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.65, ease: [0.16, 1, 0.3, 1] } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.65, ease: [0.16, 1, 0.3, 1] } }
 }
 
 const stagger = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.1 } },
+  visible: { transition: { staggerChildren: 0.1 } }
 }
 
 /* ─── Data ────────────────────────────────────────────────── */
@@ -37,66 +36,66 @@ const COMPLIANCE_ROWS = [
     framework: 'ESIGN Act',
     jurisdiction: 'United States',
     status: 'Compliant',
-    standard: 'Electronic Signature',
+    standard: 'Electronic Signature'
   },
   {
     framework: 'UETA',
     jurisdiction: 'United States (47 states)',
     status: 'Compliant',
-    standard: 'Uniform Electronic Transactions',
+    standard: 'Uniform Electronic Transactions'
   },
   {
     framework: 'eIDAS Regulation',
     jurisdiction: 'European Union',
     status: 'Compatible',
-    standard: 'Electronic Identification',
+    standard: 'Electronic Identification'
   },
   {
     framework: 'Swiss eIDAS',
     jurisdiction: 'Switzerland',
     status: 'Compatible',
-    standard: 'Federal Act on Electronic Signatures',
+    standard: 'Federal Act on Electronic Signatures'
   },
   {
     framework: 'GDPR',
     jurisdiction: 'European Union',
     status: 'By Design',
-    standard: 'Zero personal data stored',
+    standard: 'Zero personal data stored'
   },
   {
     framework: 'Common Law',
     jurisdiction: 'UK / Commonwealth',
     status: 'Evidentiary',
-    standard: 'Hash-based evidence admissible',
-  },
+    standard: 'Hash-based evidence admissible'
+  }
 ]
 
 const BITCOIN_FACTS = [
   {
     icon: Link2,
     text: 'Bitcoin has operated without downtime since January 3, 2009',
-    color: 'var(--accent-active)',
+    color: 'var(--accent-active)'
   },
   {
     icon: Globe,
     text: '~18,000 full nodes globally validate every transaction',
-    color: 'var(--accent-purple)',
+    color: 'var(--accent-purple)'
   },
   {
     icon: Lock,
     text: 'Rewriting a Bitcoin block would require 51% of global mining power — economically impossible',
-    color: 'var(--accent-success)',
+    color: 'var(--accent-success)'
   },
   {
     icon: Clock,
     text: 'Each block is timestamped by global consensus — not by any single server',
-    color: 'var(--accent-pending)',
+    color: 'var(--accent-pending)'
   },
   {
     icon: FileCheck,
     text: 'OpenTimestamps (opentimestamps.org) is an open protocol — not a Satohash product',
-    color: 'var(--text-secondary)',
-  },
+    color: 'var(--text-secondary)'
+  }
 ]
 
 /* ─── Component ──────────────────────────────────────────── */
@@ -110,7 +109,6 @@ export default function TrustCenter() {
       </div>
 
       <div className="layout-container relative z-10 pt-36 pb-32">
-
         {/* ── Hero ─────────────────────────────────────────── */}
         <section className="mb-32 text-center">
           {/* Top status bar */}
@@ -134,7 +132,7 @@ export default function TrustCenter() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="mb-6 text-6xl font-extrabold leading-[0.9] tracking-tighter uppercase md:text-8xl lg:text-9xl"
+            className="mb-6 text-6xl leading-[0.9] font-extrabold tracking-tighter uppercase md:text-8xl lg:text-9xl"
           >
             Built on Math.
             <br />
@@ -150,7 +148,7 @@ export default function TrustCenter() {
             className="mx-auto mb-10 max-w-2xl text-lg leading-relaxed text-[var(--text-secondary)] md:text-xl"
           >
             Satohash uses cryptographic proof — not contracts or promises — to guarantee document
-            integrity. Here's exactly how it works and what it means for you legally.
+            integrity. Here&apos;s exactly how it works and what it means for you legally.
           </motion.p>
 
           {/* Pills */}
@@ -176,7 +174,10 @@ export default function TrustCenter() {
           <motion.div variants={fadeUp} className="mb-4">
             <SectionLabel icon={EyeOff} label="Zero-Knowledge Architecture" />
           </motion.div>
-          <motion.h2 variants={fadeUp} className="mb-6 text-3xl font-bold tracking-tight md:text-4xl">
+          <motion.h2
+            variants={fadeUp}
+            className="mb-6 text-3xl font-bold tracking-tight md:text-4xl"
+          >
             What Is Zero-Knowledge?{' '}
             <span className="text-[var(--text-secondary)]">Why Does It Matter?</span>
           </motion.h2>
@@ -189,7 +190,7 @@ export default function TrustCenter() {
             >
               <p className="mb-5 text-base">
                 In traditional notarization, you hand your document to someone who reads it and
-                stamps it. You're trusting that person — and every system they use.
+                stamps it. You&apos;re trusting that person — and every system they use.
               </p>
               <p className="mb-5 text-base">
                 With Satohash, we use a mathematical technique called a{' '}
@@ -199,11 +200,9 @@ export default function TrustCenter() {
               </p>
               <p className="text-base">
                 This is called{' '}
-                <strong className="text-[var(--text-primary)]">
-                  Zero-Knowledge architecture
-                </strong>
-                : we can prove your document existed at a specific time without ever knowing what's
-                in it.
+                <strong className="text-[var(--text-primary)]">Zero-Knowledge architecture</strong>:
+                we can prove your document existed at a specific time without ever knowing
+                what&apos;s in it.
               </p>
             </motion.div>
 
@@ -213,7 +212,7 @@ export default function TrustCenter() {
                 <p className="mb-3 text-[10px] font-black tracking-[0.2em] text-[var(--text-secondary)] uppercase">
                   Example SHA-256 fingerprint
                 </p>
-                <code className="block break-all font-mono text-xs leading-relaxed text-[var(--accent-active)]">
+                <code className="block font-mono text-xs leading-relaxed break-all text-[var(--accent-active)]">
                   a3f8d2c1e9b4756f0a1d3e7c2b5f8a9d0e6c3b2a1f4e7d8c9b0a2e5f1d3c6b4
                 </code>
                 <p className="mt-3 text-xs text-[var(--text-secondary)]">
@@ -244,50 +243,52 @@ export default function TrustCenter() {
           <motion.div variants={fadeUp} className="mb-4">
             <SectionLabel icon={Scale} label="Legal Compliance" />
           </motion.div>
-          <motion.h2 variants={fadeUp} className="mb-2 text-3xl font-bold tracking-tight md:text-4xl">
+          <motion.h2
+            variants={fadeUp}
+            className="mb-2 text-3xl font-bold tracking-tight md:text-4xl"
+          >
             International Standards
           </motion.h2>
           <motion.p variants={fadeUp} className="mb-8 text-[var(--text-secondary)]">
             Satohash proofs are designed to meet the requirements of major global legal frameworks.
           </motion.p>
 
-          <motion.div
-            variants={fadeUp}
-            className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)]"
-          >
-            {/* Table header */}
-            <div className="grid grid-cols-4 border-b border-[var(--border)] bg-[var(--surface-raised)] px-6 py-4 text-[10px] font-black tracking-[0.2em] text-[var(--text-secondary)] uppercase">
-              <span>Framework</span>
-              <span>Jurisdiction</span>
-              <span>Status</span>
-              <span>Standard Met</span>
-            </div>
+          {/* Horizontal scroll wrapper keeps desktop layout intact on mobile */}
+          <motion.div variants={fadeUp} className="-mx-4 sm:mx-0">
+            <div className="overflow-x-auto px-4 sm:px-0">
+              <div className="min-w-[560px] overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)]">
+                {/* Table header */}
+                <div className="grid grid-cols-4 border-b border-[var(--border)] bg-[var(--surface-raised)] px-6 py-4 text-[10px] font-black tracking-[0.2em] text-[var(--text-secondary)] uppercase">
+                  <span>Framework</span>
+                  <span>Jurisdiction</span>
+                  <span>Status</span>
+                  <span>Standard Met</span>
+                </div>
 
-            {COMPLIANCE_ROWS.map((row, i) => (
-              <div
-                key={i}
-                className="grid grid-cols-4 items-center border-b border-[var(--border)] px-6 py-5 transition-colors last:border-0 hover:bg-[var(--surface-raised)]"
-              >
-                <span className="text-sm font-bold text-[var(--text-primary)]">
-                  {row.framework}
-                </span>
-                <span className="text-sm text-[var(--text-secondary)]">{row.jurisdiction}</span>
-                <span>
-                  <StatusBadge label={row.status} />
-                </span>
-                <span className="text-sm text-[var(--text-secondary)]">{row.standard}</span>
+                {COMPLIANCE_ROWS.map((row, i) => (
+                  <div
+                    key={i}
+                    className="grid grid-cols-4 items-center border-b border-[var(--border)] px-6 py-5 transition-colors last:border-0 hover:bg-[var(--surface-raised)]"
+                  >
+                    <span className="text-sm font-bold text-[var(--text-primary)]">
+                      {row.framework}
+                    </span>
+                    <span className="text-sm text-[var(--text-secondary)]">{row.jurisdiction}</span>
+                    <span>
+                      <StatusBadge label={row.status} />
+                    </span>
+                    <span className="text-sm text-[var(--text-secondary)]">{row.standard}</span>
+                  </div>
+                ))}
               </div>
-            ))}
+            </div>
           </motion.div>
 
           <motion.p
             variants={fadeUp}
             className="mt-5 rounded-xl border border-[var(--border)] bg-[var(--surface-raised)] px-5 py-4 text-sm leading-relaxed text-[var(--text-secondary)]"
           >
-            <AlertCircle
-              size={14}
-              className="mr-2 inline-block text-[var(--accent-pending)]"
-            />
+            <AlertCircle size={14} className="mr-2 inline-block text-[var(--accent-pending)]" />
             Satohash proofs provide cryptographic evidence meeting international standards. They do
             not constitute legal advice. For legal proceedings, consult qualified counsel.
           </motion.p>
@@ -304,12 +305,15 @@ export default function TrustCenter() {
           <motion.div variants={fadeUp} className="mb-4">
             <SectionLabel icon={Lock} label="Privacy by Architecture" />
           </motion.div>
-          <motion.h2 variants={fadeUp} className="mb-2 text-3xl font-bold tracking-tight md:text-4xl">
-            We Can't See Your Documents.{' '}
-            <span className="text-[var(--text-secondary)]">That's the Point.</span>
+          <motion.h2
+            variants={fadeUp}
+            className="mb-2 text-3xl font-bold tracking-tight md:text-4xl"
+          >
+            We Can&apos;t See Your Documents.{' '}
+            <span className="text-[var(--text-secondary)]">That&apos;s the Point.</span>
           </motion.h2>
           <motion.p variants={fadeUp} className="mb-8 text-[var(--text-secondary)]">
-            Our architecture is designed so that privacy isn't a policy decision — it's a
+            Our architecture is designed so that privacy isn&apos;t a policy decision — it&apos;s a
             mathematical impossibility to violate it.
           </motion.p>
 
@@ -319,21 +323,37 @@ export default function TrustCenter() {
               icon={Eye}
               title="What We Receive"
               color="var(--accent-active)"
-              items={['SHA-256 hash only (64 hex chars)', 'No file bytes', 'No metadata from the file itself', 'No identifying information']}
+              items={[
+                'SHA-256 hash only (64 hex chars)',
+                'No file bytes',
+                'No metadata from the file itself',
+                'No identifying information'
+              ]}
             />
             <PrivacyColumn
               index={1}
               icon={Database}
               title="What We Store"
               color="var(--accent-purple)"
-              items={['Hash string', 'Filename (you provide)', 'Timestamp of submission', 'Proof ID', 'No file content — ever']}
+              items={[
+                'Hash string',
+                'Filename (you provide)',
+                'Timestamp of submission',
+                'Proof ID',
+                'No file content — ever'
+              ]}
             />
             <PrivacyColumn
               index={2}
               icon={Bitcoin}
               title="What Bitcoin Stores"
               color="var(--accent-pending)"
-              items={['Your hash, embedded in a block', 'Publicly visible forever', 'Immutable and tamper-proof', 'Verifiable by anyone, anywhere']}
+              items={[
+                'Your hash, embedded in a block',
+                'Publicly visible forever',
+                'Immutable and tamper-proof',
+                'Verifiable by anyone, anywhere'
+              ]}
             />
           </div>
 
@@ -341,14 +361,11 @@ export default function TrustCenter() {
             variants={fadeUp}
             className="mt-6 rounded-2xl border border-[var(--accent-success)]/20 bg-[var(--accent-success)]/5 p-6"
           >
-            <ShieldCheck
-              size={18}
-              className="mb-3 text-[var(--accent-success)]"
-            />
+            <ShieldCheck size={18} className="mb-3 text-[var(--accent-success)]" />
             <p className="text-sm leading-relaxed text-[var(--text-secondary)]">
-              <strong className="text-[var(--text-primary)]">GDPR Article 11 compliance:</strong>{' '}
-              We cannot identify you from a hash alone. There is no personal data to delete, breach,
-              or sell. Your privacy is not a promise — it is a cryptographic constraint.
+              <strong className="text-[var(--text-primary)]">GDPR Article 11 compliance:</strong> We
+              cannot identify you from a hash alone. There is no personal data to delete, breach, or
+              sell. Your privacy is not a promise — it is a cryptographic constraint.
             </p>
           </motion.div>
         </motion.section>
@@ -364,7 +381,10 @@ export default function TrustCenter() {
           <motion.div variants={fadeUp} className="mb-4">
             <SectionLabel icon={Globe} label="Permanence" />
           </motion.div>
-          <motion.h2 variants={fadeUp} className="mb-2 text-3xl font-bold tracking-tight md:text-4xl">
+          <motion.h2
+            variants={fadeUp}
+            className="mb-2 text-3xl font-bold tracking-tight md:text-4xl"
+          >
             Why Bitcoin?{' '}
             <span className="text-[var(--text-secondary)]">Because No One Controls It.</span>
           </motion.h2>
@@ -384,7 +404,7 @@ export default function TrustCenter() {
                   className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl"
                   style={{
                     backgroundColor: `color-mix(in srgb, ${fact.color} 12%, transparent)`,
-                    color: fact.color,
+                    color: fact.color
                   }}
                 >
                   <fact.icon size={18} />
@@ -406,9 +426,12 @@ export default function TrustCenter() {
           <motion.div variants={fadeUp} className="mb-4">
             <SectionLabel icon={AlertCircle} label="Scope of Service" />
           </motion.div>
-          <motion.h2 variants={fadeUp} className="mb-8 text-3xl font-bold tracking-tight md:text-4xl">
+          <motion.h2
+            variants={fadeUp}
+            className="mb-8 text-3xl font-bold tracking-tight md:text-4xl"
+          >
             What Our Service Is{' '}
-            <span className="text-[var(--text-secondary)]">(And Isn't)</span>
+            <span className="text-[var(--text-secondary)]">(And Isn&apos;t)</span>
           </motion.h2>
 
           <div className="grid gap-6 md:grid-cols-2">
@@ -430,9 +453,12 @@ export default function TrustCenter() {
                   'Cryptographic timestamping service',
                   'Evidence-generation tool',
                   'Privacy-preserving document notarization',
-                  'Bitcoin blockchain anchoring',
+                  'Bitcoin blockchain anchoring'
                 ].map((item, i) => (
-                  <li key={i} className="flex items-start gap-3 text-sm text-[var(--text-secondary)]">
+                  <li
+                    key={i}
+                    className="flex items-start gap-3 text-sm text-[var(--text-secondary)]"
+                  >
                     <CheckCircle
                       size={15}
                       className="mt-0.5 shrink-0 text-[var(--accent-success)]"
@@ -461,9 +487,12 @@ export default function TrustCenter() {
                   'A legal services firm',
                   'A substitute for legal counsel',
                   'A guarantor of document authenticity (only existence)',
-                  'Liable for how proofs are used',
+                  'Liable for how proofs are used'
                 ].map((item, i) => (
-                  <li key={i} className="flex items-start gap-3 text-sm text-[var(--text-secondary)]">
+                  <li
+                    key={i}
+                    className="flex items-start gap-3 text-sm text-[var(--text-secondary)]"
+                  >
                     <AlertCircle
                       size={15}
                       className="mt-0.5 shrink-0 text-[var(--accent-danger)]"
@@ -489,7 +518,7 @@ export default function TrustCenter() {
             className="pointer-events-none absolute inset-0 opacity-[0.025]"
             style={{
               backgroundImage: 'radial-gradient(var(--text-secondary) 1px, transparent 1px)',
-              backgroundSize: '28px 28px',
+              backgroundSize: '28px 28px'
             }}
           />
 
@@ -537,8 +566,10 @@ function HeroPill({ icon: Icon, label, gold }) {
       className="inline-flex items-center gap-2 rounded-full border px-5 py-2.5 text-[11px] font-bold tracking-wide"
       style={{
         borderColor: gold ? 'var(--accent-pending)' : 'var(--border-bright)',
-        backgroundColor: gold ? 'color-mix(in srgb, var(--accent-pending) 10%, transparent)' : 'var(--surface-raised)',
-        color: gold ? 'var(--accent-pending)' : 'var(--text-secondary)',
+        backgroundColor: gold
+          ? 'color-mix(in srgb, var(--accent-pending) 10%, transparent)'
+          : 'var(--surface-raised)',
+        color: gold ? 'var(--accent-pending)' : 'var(--text-secondary)'
       }}
     >
       <Icon size={13} />
@@ -552,7 +583,7 @@ function FlowDiagram() {
     { label: 'Your Document', sub: 'Stays on your device', color: 'var(--text-secondary)' },
     { label: 'SHA-256 Hash', sub: '64-char fingerprint', color: 'var(--accent-active)' },
     { label: 'Bitcoin', sub: 'Anchored in a block', color: 'var(--accent-pending)' },
-    { label: 'Immutable Proof', sub: 'Forever verifiable', color: 'var(--accent-success)' },
+    { label: 'Immutable Proof', sub: 'Forever verifiable', color: 'var(--accent-success)' }
   ]
 
   return (
@@ -579,7 +610,7 @@ function StatusBadge({ label }) {
     Compliant: { bg: 'var(--accent-success)', text: '#fff' },
     Compatible: { bg: 'var(--accent-active)', text: '#fff' },
     'By Design': { bg: 'var(--accent-purple)', text: '#fff' },
-    Evidentiary: { bg: 'var(--accent-pending)', text: '#000' },
+    Evidentiary: { bg: 'var(--accent-pending)', text: '#000' }
   }
   const c = colorMap[label] ?? { bg: 'var(--surface-raised)', text: 'var(--text-secondary)' }
 
@@ -605,7 +636,7 @@ function PrivacyColumn({ index, icon: Icon, title, color, items }) {
         className="mb-5 flex h-11 w-11 items-center justify-center rounded-xl"
         style={{
           backgroundColor: `color-mix(in srgb, ${color} 12%, transparent)`,
-          color,
+          color
         }}
       >
         <Icon size={20} />
@@ -628,14 +659,12 @@ function PrivacyColumn({ index, icon: Icon, title, color, items }) {
 
 function ContactCard({ icon: Icon, title, description, cta, href, color, border }) {
   return (
-    <div
-      className={`p-10 ${border ? 'border-l border-[var(--border)]' : ''}`}
-    >
+    <div className={`p-10 ${border ? 'border-l border-[var(--border)]' : ''}`}>
       <div
         className="mb-5 flex h-11 w-11 items-center justify-center rounded-xl"
         style={{
           backgroundColor: `color-mix(in srgb, ${color} 12%, transparent)`,
-          color,
+          color
         }}
       >
         <Icon size={20} />

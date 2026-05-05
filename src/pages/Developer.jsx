@@ -114,7 +114,7 @@ export default function Developer() {
 
   return (
     <div className="min-h-screen bg-[var(--bg-primary)] pb-20 text-[var(--text-primary)]">
-      <div className="mx-auto max-w-[90rem] space-y-16 px-8">
+      <div className="mx-auto max-w-[90rem] space-y-16 px-4 md:px-8">
         {/* Terminal Header */}
         <header className="flex flex-col justify-between gap-8 border-b border-[var(--border)] pb-12 lg:flex-row lg:items-end">
           <div className="space-y-6">
@@ -134,16 +134,18 @@ export default function Developer() {
             </p>
           </div>
 
-          <div className="flex rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] p-1.5 shadow-2xl">
-            {['overview', 'keys', 'docs', 'strategy'].map((tab) => (
-              <button
-                key={tab}
-                onClick={() => setActiveTab(tab)}
-                className={`rounded-xl px-6 py-3 text-[10px] font-black tracking-widest uppercase transition-all ${activeTab === tab ? 'border border-[var(--border-bright)] bg-[var(--bg-primary)] text-white shadow-lg' : 'text-[var(--text-secondary)] hover:text-white'}`}
-              >
-                {tab}
-              </button>
-            ))}
+          <div className="overflow-x-auto">
+            <div className="flex min-w-max rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] p-1.5 shadow-2xl">
+              {['overview', 'keys', 'docs', 'strategy'].map((tab) => (
+                <button
+                  key={tab}
+                  onClick={() => setActiveTab(tab)}
+                  className={`flex-shrink-0 rounded-xl px-4 py-2.5 text-[10px] font-black tracking-widest uppercase transition-all md:px-6 md:py-3 ${activeTab === tab ? 'border border-[var(--border-bright)] bg-[var(--bg-primary)] text-white shadow-lg' : 'text-[var(--text-secondary)] hover:text-white'}`}
+                >
+                  {tab}
+                </button>
+              ))}
+            </div>
           </div>
         </header>
 
@@ -619,7 +621,7 @@ function ResourceLink({ icon: Icon, label }) {
 function PricingTier({ tier, price, unit, features, accent, recommended }) {
   return (
     <div
-      className={`relative flex flex-col space-y-8 rounded-[2.5rem] border p-10 transition-all hover:shadow-2xl ${recommended ? 'scale-105 border-[var(--accent-purple)] bg-[var(--accent-purple)]/5 shadow-purple-500/10' : 'border-[var(--border)] bg-[var(--bg-secondary)]'}`}
+      className={`relative flex flex-col space-y-8 rounded-[2.5rem] border p-8 transition-all hover:shadow-2xl md:p-10 ${recommended ? 'border-[var(--accent-purple)] bg-[var(--accent-purple)]/5 shadow-purple-500/10 sm:scale-105' : 'border-[var(--border)] bg-[var(--bg-secondary)]'}`}
     >
       {recommended && (
         <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[var(--accent-purple)] px-4 py-1.5 text-[9px] font-black tracking-widest text-white uppercase shadow-lg">
