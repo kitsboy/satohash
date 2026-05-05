@@ -32,6 +32,7 @@ export default function Stamp() {
   const [multiParty, setMultiParty] = useState(false)
   const [l402Gating, setL402Gating] = useState(false)
   const [coSigners, setCoSigners] = useState([])
+  const [coSignerErrors, setCoSignerErrors] = useState([])
 
   useEffect(() => {
     const fetchFees = async () => {
@@ -69,8 +70,30 @@ export default function Stamp() {
     [isCapsuleMode]
   )
 
+  const validateNpub = (value) => {
+    if (!value.trim()) return '' // empty is fine — optional field
+    if (!value.startsWith('npub1') || value.length <= 10) {
+      return 'Invalid Nostr key — must start with npub1'
+    }
+    return ''
+  }
+
+  const handleCoSignerBlur = (index) => {
+    const errs = [...coSignerErrors]
+    errs[index] = validateNpub(coSigners[index] || '')
+    setCoSignerErrors(errs)
+  }
+
   const startStamping = async () => {
     if (!files.length) return
+
+    // Validate all co-signer npub fields before proceeding
+    if (multiParty && coSigners.length > 0) {
+      const errs = coSigners.map(validateNpub)
+      setCoSignerErrors(errs)
+      if (errs.some(Boolean)) return
+    }
+
     setError('')
     setProofResult(null)
 
@@ -112,7 +135,9 @@ export default function Stamp() {
       existing.unshift({ ...data, filename: caseLabel || file.name, size: file.size })
       localStorage.setItem('satohash_stamps', JSON.stringify(existing.slice(0, 100)))
     } catch (err) {
-      setError(err.message || 'Failed to stamp. Is the server running?')
+      const msg = err.message || 'Failed to stamp. Is the server running?'
+      setError(msg)
+      toast.error('Stamping failed', { description: msg })
       setStampingStatus('idle')
     }
   }
@@ -424,25 +449,41 @@ export default function Stamp() {
                     checked={multiParty}
                     onChange={(e) => {
                       setMultiParty(e.target.checked)
-                      if (!e.target.checked) setCoSigners([])
+                      if (!e.target.checked) {
+                        setCoSigners([])
+                        setCoSignerErrors([])
+                      }
                     }}
                   />
                 </div>
                 {multiParty && (
                   <div className="space-y-2">
                     {coSigners.map((s, i) => (
-                      <input
-                        key={i}
-                        type="text"
-                        value={s}
-                        onChange={(e) => {
-                          const next = [...coSigners]
-                          next[i] = e.target.value
-                          setCoSigners(next)
-                        }}
-                        placeholder="npub1..."
-                        className="h-9 w-full rounded-lg border border-[var(--border)] bg-[var(--bg-secondary)] px-3 font-mono text-xs outline-none focus:border-[var(--accent-gold)]"
-                      />
+                      <div key={i}>
+                        <input
+                          type="text"
+                          value={s}
+                          onChange={(e) => {
+                            const next = [...coSigners]
+                            next[i] = e.target.value
+                            setCoSigners(next)
+                            // Clear error on change so user gets live feedback on correction
+                            if (coSignerErrors[i]) {
+                              const errs = [...coSignerErrors]
+                              errs[i] = validateNpub(e.target.value)
+                              setCoSignerErrors(errs)
+                            }
+                          }}
+                          onBlur={() => handleCoSignerBlur(i)}
+                          placeholder="npub1..."
+                          className={`h-9 w-full rounded-lg border bg-[var(--bg-secondary)] px-3 font-mono text-xs outline-none focus:border-[var(--accent-gold)] ${coSignerErrors[i] ? 'border-[var(--accent-danger)]' : 'border-[var(--border)]'}`}
+                        />
+                        {coSignerErrors[i] && (
+                          <p className="mt-1 text-xs text-[var(--accent-danger)]">
+                            {coSignerErrors[i]}
+                          </p>
+                        )}
+                      </div>
                     ))}
                     <button
                       onClick={() => setCoSigners([...coSigners, ''])}

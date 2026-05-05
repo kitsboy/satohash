@@ -75,6 +75,8 @@ function NavItem({ item }) {
     <motion.div whileHover={{ x: 4 }} transition={{ type: 'spring', stiffness: 400, damping: 28 }}>
       <Link
         to={item.path}
+        aria-label={item.name}
+        aria-current={isActive ? 'page' : undefined}
         className={[
           'group relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors duration-150',
           isActive
@@ -139,7 +141,7 @@ export default function LeftRailNav() {
   }, [])
 
   return (
-    <nav className="flex h-full w-64 flex-col" style={{ background: '#13171f' }}>
+    <nav role="navigation" aria-label="Sidebar navigation" className="flex h-full w-64 flex-col" style={{ background: '#13171f' }}>
       {/* ── Logo area ──────────────────────────────────────────── */}
       <div className="flex-shrink-0 px-5 pt-6 pb-5">
         <Link to="/" className="group flex items-center gap-3">

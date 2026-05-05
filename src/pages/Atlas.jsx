@@ -17,6 +17,8 @@ import {
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { getBlockHeight } from '../utils/mempool'
+import { toast } from 'sonner'
+import { SkeletonCard } from '../components/Skeletons'
 
 const TimelineStep = ({ step, label, time, description, status, icon: Icon }) => (
   <div className="relative pb-12 pl-12 last:pb-0">
@@ -59,22 +61,47 @@ export default function Atlas() {
   const [blockHeight, setBlockHeight] = useState(null)
   const [stamps, setStamps] = useState([])
   const [searchResults, setSearchResults] = useState(null)
+  const [loading, setLoading] = useState(true)
   const navigate = useNavigate()
 
   useEffect(() => {
     const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
-    Promise.all([
-      fetch(`${API}/api/history`)
-        .then((r) => r.json())
-        .catch(() => []),
-      getBlockHeight()
-    ]).then(([data, height]) => {
+
+    const fetchHistory = fetch(`${API}/api/history`)
+      .then((r) => {
+        if (!r.ok) throw new Error(`HTTP ${r.status}`)
+        return r.json()
+      })
+      .catch((err) => {
+        toast.error('Failed to load stamp history', { description: 'Check your connection' })
+        return []
+      })
+
+    const fetchHeight = getBlockHeight().catch(() => null)
+
+    Promise.all([fetchHistory, fetchHeight]).then(([data, height]) => {
       const list = Array.isArray(data) ? data : []
       setStamps(list)
       setProofCount(list.length)
       setBlockHeight(height)
+      setLoading(false)
     })
   }, [])
+
+  // Debounced live search — fires 300ms after searchQuery changes
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const q = searchQuery.trim().toLowerCase()
+      if (!q) { setSearchResults(null); return }
+      const results = stamps.filter(s =>
+        (s.hash || '').toLowerCase().includes(q) ||
+        (s.filename || '').toLowerCase().includes(q) ||
+        (s.id || '').toString().includes(q)
+      )
+      setSearchResults(results)
+    }, 300)
+    return () => clearTimeout(timer)
+  }, [searchQuery, stamps])
 
   const handleSearch = () => {
     const q = searchQuery.trim().toLowerCase()
@@ -134,10 +161,7 @@ export default function Atlas() {
           <input
             type="text"
             value={searchQuery}
-            onChange={(e) => {
-              setSearchQuery(e.target.value)
-              if (!e.target.value.trim()) setSearchResults(null)
-            }}
+            onChange={(e) => setSearchQuery(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === 'Enter') {
                 if (searchQuery.trim().length === 64) {
@@ -166,7 +190,14 @@ export default function Atlas() {
               </div>
             </div>
 
-            <div className="rounded-[3rem] border border-[var(--border)] bg-[var(--bg-secondary)] p-10 lg:p-16">
+            {loading ? (
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                {Array.from({ length: 4 }).map((_, i) => (
+                  <SkeletonCard key={i} />
+                ))}
+              </div>
+            ) : null}
+            <div className={`rounded-[3rem] border border-[var(--border)] bg-[var(--bg-secondary)] p-10 lg:p-16 ${loading ? 'hidden' : ''}`}>
               {stamps.slice(0, 4).map((s, i) => (
                 <TimelineStep
                   key={s.id || i}

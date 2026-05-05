@@ -39,6 +39,7 @@ export default function MobileBottomNav() {
             {/* Popover card */}
             <motion.div
               key="more-panel"
+              aria-label="Navigation menu"
               initial={{ opacity: 0, y: 12, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 12, scale: 0.95 }}
@@ -113,7 +114,7 @@ export default function MobileBottomNav() {
       </AnimatePresence>
 
       {/* Nav bar */}
-      <nav className="flex h-full items-center justify-around px-2">
+      <nav role="navigation" aria-label="Mobile navigation" className="flex h-full items-center justify-around px-2">
         {PRIMARY_LINKS.map((link) => {
           const isActive =
             location.pathname === link.path || location.pathname.startsWith(link.path)
@@ -123,6 +124,7 @@ export default function MobileBottomNav() {
             <NavLink
               key={link.path}
               to={link.path}
+              aria-label={link.name}
               className="relative flex flex-1 flex-col items-center justify-center gap-0 py-1"
             >
               <motion.div
@@ -171,6 +173,8 @@ export default function MobileBottomNav() {
         {/* More button */}
         <button
           onClick={() => setMoreOpen((o) => !o)}
+          aria-label="More navigation options"
+          aria-expanded={moreOpen}
           className="relative flex flex-1 flex-col items-center justify-center gap-0 py-1"
         >
           <motion.div

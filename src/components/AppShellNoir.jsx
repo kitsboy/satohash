@@ -240,15 +240,16 @@ export default function AppShellNoir({ children }) {
       </AnimatePresence>
 
       {/* ── Desktop Left Rail ───────────────────────────────────────────── */}
-      <div
+      <aside
+        aria-label="Main navigation"
         className="fixed inset-y-0 left-0 z-50 hidden w-64 border-r border-[var(--border)] md:block"
         style={{ background: '#13171f' }}
       >
         <LeftRailNav />
-      </div>
+      </aside>
 
       {/* ── Mobile Header ──────────────────────────────────────────────── */}
-      <div className="fixed inset-x-0 top-0 z-[100] flex h-16 items-center justify-between border-b border-[var(--border)] bg-[var(--bg-primary)]/80 px-6 backdrop-blur-xl md:hidden">
+      <div role="banner" className="fixed inset-x-0 top-0 z-[100] flex h-16 items-center justify-between border-b border-[var(--border)] bg-[var(--bg-primary)]/80 px-6 backdrop-blur-xl md:hidden">
         <Link to="/" className="flex items-center gap-3">
           <img src="/logo.png" alt="Satohash" className="h-8 w-8 object-contain" />
           <span
@@ -260,6 +261,7 @@ export default function AppShellNoir({ children }) {
         </Link>
         <button
           onClick={() => setIsSearchOpen(true)}
+          aria-label="Open navigation menu"
           className="flex h-10 w-10 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--surface-raised)]"
         >
           <Search size={17} style={{ color: 'var(--accent-gold)' }} />
