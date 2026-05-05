@@ -837,9 +837,11 @@ app.post('/api/capture/snapper', async (req, res, next) => {
         }
 
         const id = uuidv4();
-        // Item 1: Snapper Intelligent Notarization
-        db.prepare("INSERT INTO timestamps (id, hash, original_filename, merkle_root) VALUES (?, ?, ?, ?)").run(
-            id, hash, `SNAP: ${title || url}`, url
+        // ots_binary gets a placeholder so the NOT NULL constraint is satisfied;
+        // the upgrade daemon will stamp and replace this on the next polling cycle.
+        const placeholderOts = Buffer.from(`ots:pending:${id}`);
+        db.prepare("INSERT INTO timestamps (id, hash, original_filename, ots_binary, merkle_root) VALUES (?, ?, ?, ?, ?)").run(
+            id, hash, `SNAP: ${title || url}`, placeholderOts, url
         );
 
         publishTimestampToNostr(hash, title || url, id).catch(() => {});
