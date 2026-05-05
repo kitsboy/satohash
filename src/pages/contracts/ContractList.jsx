@@ -25,6 +25,10 @@ import BlockchainPulse from '../../components/BlockchainPulse'
 import { useState, useEffect } from 'react'
 import { clsx } from 'clsx'
 
+// TODO: fetch from /api/contracts/activity
+// TODO: fetch node integrity stat from /api/stats
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+
 export default function ContractList() {
   const navigate = useNavigate()
 
@@ -64,37 +68,57 @@ export default function ContractList() {
   const stats = {
     total: contracts.length,
     secured: contracts.filter((c) => c.status === 'timestamped' || c.status === 'signed').length,
-    avgHealth: 99.9
+    avgHealth: 99.9 // TODO: fetch from /api/stats
   }
 
   return (
-    <div className="relative flex min-h-screen flex-col overflow-hidden bg-[#f7f8fc]">
+    <div
+      className="relative flex min-h-screen flex-col overflow-hidden"
+      style={{ background: 'var(--bg-primary)' }}
+    >
       <div className="grid-pattern-slate pointer-events-none absolute inset-0 opacity-[0.03]" />
       <div className="layout-container flex-1 pt-24 pb-12">
         {/* Header Hero */}
-        <header className="mesh-bg-light relative mb-12 overflow-hidden rounded-[3.5rem] border border-slate-200 bg-white p-8 shadow-sm ring-1 ring-slate-100/50 md:p-12">
+        <header
+          className="mesh-bg-light relative mb-12 overflow-hidden rounded-[3.5rem] p-8 shadow-sm md:p-12"
+          style={{
+            border: '1px solid var(--border)',
+            background: 'var(--bg-secondary)',
+            boxShadow: 'var(--shadow-noir)'
+          }}
+        >
           <div className="bg-grid-slate-100 pointer-events-none absolute inset-0 opacity-[0.03]" />
           <div className="relative z-10">
             <BlockchainPulse />
             <div className="mt-12 flex flex-col justify-between gap-8 md:flex-row md:items-end">
               <div className="space-y-3">
                 <div className="flex items-center gap-2">
-                  <span className="text-[10px] font-black tracking-[0.4em] text-indigo-600 uppercase italic">
+                  <span
+                    className="text-[10px] font-black tracking-[0.4em] uppercase italic"
+                    style={{ color: 'var(--accent-active)' }}
+                  >
                     Sovereign_Records
                   </span>
-                  <div className="h-px w-8 bg-indigo-100" />
+                  <div className="h-px w-8" style={{ background: 'var(--border-bright)' }} />
                 </div>
                 <h1 className="text-noir-primary text-4xl font-black tracking-tighter uppercase italic md:text-6xl">
-                  Protocol <br /> <span className="text-indigo-600">Dashboard.</span>
+                  Protocol <br />{' '}
+                  <span style={{ color: 'var(--accent-active)' }}>Dashboard.</span>
                 </h1>
-                <p className="max-w-md text-sm leading-relaxed font-bold text-slate-600 italic">
+                <p
+                  className="max-w-md text-sm leading-relaxed font-bold italic"
+                  style={{ color: 'var(--text-secondary)' }}
+                >
                   Managing {contracts.length} active cryptographic proofs anchored to the Bitcoin
                   settlement layer.
                 </p>
               </div>
               <div className="flex flex-col items-start gap-4 md:items-end">
                 <div className="hidden text-right lg:block">
-                  <p className="text-[8px] font-black tracking-widest text-slate-300 uppercase">
+                  <p
+                    className="text-[8px] font-black tracking-widest uppercase"
+                    style={{ color: 'var(--text-muted)' }}
+                  >
                     Archive_Status
                   </p>
                   <p className="text-[10px] font-bold text-emerald-500 uppercase">
@@ -103,8 +127,15 @@ export default function ContractList() {
                 </div>
                 <div className="flex gap-4">
                   <Link to="/choose-template">
-                    <button className="group relative h-14 overflow-hidden rounded-2xl bg-indigo-900 px-8 text-[11px] font-black tracking-widest text-white uppercase shadow-2xl shadow-indigo-500/20 transition-all hover:scale-[1.02] active:scale-[0.98]">
-                      <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 to-indigo-400 opacity-0 transition-opacity group-hover:opacity-100" />
+                    <button
+                      className="group relative h-14 overflow-hidden rounded-2xl px-8 text-[11px] font-black tracking-widest text-white uppercase shadow-2xl transition-all hover:scale-[1.02] active:scale-[0.98]"
+                      style={{
+                        background: 'var(--accent-active)',
+                        boxShadow:
+                          '0 8px 32px color-mix(in srgb, var(--accent-active) 20%, transparent)'
+                      }}
+                    >
+                      <div className="absolute inset-0 bg-linear-to-r from-transparent via-white/10 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
                       <span className="relative z-10 flex items-center gap-3">
                         Create New Artifact <Plus size={16} />
                       </span>
@@ -127,7 +158,7 @@ export default function ContractList() {
             <div className="space-y-8">
               {/* Stats */}
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-                <StatCard icon={Zap} label="Total Anchors" value={stats.total} color="indigo" />
+                <StatCard icon={Zap} label="Total Anchors" value={stats.total} color="accent" />
                 <StatCard
                   icon={ShieldCheck}
                   label="Secured Proofs"
@@ -146,15 +177,21 @@ export default function ContractList() {
               <div className="flex flex-col gap-3 sm:flex-row">
                 <div className="relative flex-1">
                   <Search
-                    className="absolute top-1/2 left-4 -translate-y-1/2 text-slate-300"
+                    className="absolute top-1/2 left-4 -translate-y-1/2"
                     size={16}
+                    style={{ color: 'var(--text-muted)' }}
                   />
                   <input
                     type="text"
                     placeholder="Search agreements..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full rounded-2xl border border-slate-100 bg-white py-3 pr-4 pl-11 text-sm font-medium transition-all outline-none focus:border-indigo-200 focus:ring-4 focus:ring-indigo-50"
+                    className="w-full rounded-2xl py-3 pr-4 pl-11 text-sm font-medium transition-all outline-none"
+                    style={{
+                      border: '1px solid var(--border)',
+                      background: 'var(--bg-secondary)',
+                      color: 'var(--text-primary)'
+                    }}
                   />
                 </div>
                 <div className="flex gap-1.5 overflow-x-auto">
@@ -162,12 +199,22 @@ export default function ContractList() {
                     <button
                       key={status}
                       onClick={() => setFilterStatus(status)}
-                      className={clsx(
-                        'rounded-xl border px-4 py-2.5 text-[10px] font-bold tracking-widest whitespace-nowrap uppercase transition-all',
+                      className="rounded-xl px-4 py-2.5 text-[10px] font-bold tracking-widest whitespace-nowrap uppercase transition-all"
+                      style={
                         filterStatus === status
-                          ? 'border-indigo-600 bg-indigo-600 text-white shadow-md shadow-indigo-200'
-                          : 'border-slate-100 bg-white text-slate-400 hover:border-slate-200'
-                      )}
+                          ? {
+                              border: '1px solid var(--accent-active)',
+                              background: 'var(--accent-active)',
+                              color: '#fff',
+                              boxShadow:
+                                '0 4px 12px color-mix(in srgb, var(--accent-active) 25%, transparent)'
+                            }
+                          : {
+                              border: '1px solid var(--border)',
+                              background: 'var(--bg-secondary)',
+                              color: 'var(--text-muted)'
+                            }
+                      }
                     >
                       {status}
                     </button>
@@ -192,18 +239,35 @@ export default function ContractList() {
 
             {/* Right Sidebar */}
             <aside className="space-y-6">
-              <div className="sticky top-32 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+              <div
+                className="sticky top-32 rounded-3xl p-6 shadow-sm"
+                style={{ border: '1px solid var(--border)', background: 'var(--bg-secondary)' }}
+              >
                 <div className="mb-6 flex items-center gap-3">
-                  <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-indigo-50 text-indigo-600">
+                  <div
+                    className="flex h-9 w-9 items-center justify-center rounded-xl"
+                    style={{
+                      background:
+                        'color-mix(in srgb, var(--accent-active) 10%, transparent)',
+                      color: 'var(--accent-active)'
+                    }}
+                  >
                     <ActivityIcon size={18} />
                   </div>
-                  <h3 className="text-sm font-extrabold tracking-tight text-slate-900">
+                  <h3
+                    className="text-sm font-extrabold tracking-tight"
+                    style={{ color: 'var(--text-primary)' }}
+                  >
                     Protocol Feed
                   </h3>
                 </div>
 
+                {/* TODO: fetch from /api/contracts/activity */}
                 <div className="relative space-y-6">
-                  <div className="absolute top-0 bottom-0 left-3.5 w-px bg-slate-100" />
+                  <div
+                    className="absolute top-0 bottom-0 left-3.5 w-px"
+                    style={{ background: 'var(--border)' }}
+                  />
                   <ActivityItem
                     icon={Lock}
                     title="Merkle Root Anchored"
@@ -224,9 +288,18 @@ export default function ContractList() {
                   />
                 </div>
 
-                <div className="mt-8 border-t border-slate-50 pt-6">
-                  <div className="flex items-center justify-between rounded-xl bg-slate-50 p-3">
-                    <span className="text-[10px] font-bold tracking-widest text-slate-400 uppercase">
+                <div
+                  className="mt-8 pt-6"
+                  style={{ borderTop: '1px solid var(--border)' }}
+                >
+                  <div
+                    className="flex items-center justify-between rounded-xl p-3"
+                    style={{ background: 'var(--surface-raised)' }}
+                  >
+                    <span
+                      className="text-[10px] font-bold tracking-widest uppercase"
+                      style={{ color: 'var(--text-muted)' }}
+                    >
                       Global Ops
                     </span>
                     <div className="flex items-center gap-2">
@@ -241,7 +314,8 @@ export default function ContractList() {
 
               <Card
                 variant="glass"
-                className="relative overflow-hidden border-none bg-gradient-to-br from-indigo-900 to-slate-900 p-6"
+                className="relative overflow-hidden border-none p-6"
+                style={{ background: 'linear-gradient(135deg, #1e1b4b, #0f172a)' }}
               >
                 <Sparkles className="absolute -top-4 -right-4 h-24 w-24 rotate-12 text-white/10" />
                 <h4 className="relative z-10 mb-2 text-sm font-extrabold text-white">
@@ -268,23 +342,39 @@ export default function ContractList() {
 }
 
 function StatCard({ icon: Icon, label, value, color }) {
-  const colors = {
-    indigo: 'text-indigo-600 bg-indigo-50 border-indigo-100',
-    emerald: 'text-emerald-600 bg-emerald-50 border-emerald-100',
-    blue: 'text-blue-600 bg-blue-50 border-blue-100'
+  const styles = {
+    accent: {
+      icon: { color: 'var(--accent-active)', background: 'color-mix(in srgb, var(--accent-active) 10%, transparent)' }
+    },
+    emerald: {
+      icon: { color: '#10b981', background: 'color-mix(in srgb, #10b981 10%, transparent)' }
+    },
+    blue: {
+      icon: { color: '#3b82f6', background: 'color-mix(in srgb, #3b82f6 10%, transparent)' }
+    }
   }
 
   return (
     <motion.div
       whileHover={{ scale: 1.02, y: -2 }}
-      className="flex items-center gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm ring-1 ring-slate-100/50 transition-all hover:border-indigo-100 hover:shadow-md hover:ring-indigo-50/50"
+      className="flex items-center gap-4 rounded-2xl p-5 shadow-sm transition-all"
+      style={{
+        border: '1px solid var(--border)',
+        background: 'var(--bg-secondary)'
+      }}
     >
-      <div className={clsx('flex h-11 w-11 items-center justify-center rounded-xl', colors[color])}>
+      <div
+        className="flex h-11 w-11 items-center justify-center rounded-xl"
+        style={styles[color]?.icon}
+      >
         <Icon size={20} />
       </div>
       <div>
         <div className="flex items-center gap-2">
-          <p className="mb-0.5 text-[10px] font-black tracking-widest text-slate-500 uppercase">
+          <p
+            className="mb-0.5 text-[10px] font-black tracking-widest uppercase"
+            style={{ color: 'var(--text-muted)' }}
+          >
             {label}
           </p>
           <Tooltip
@@ -308,7 +398,8 @@ function ContractCard({ contract, onClick, onDelete }) {
       exit={{ opacity: 0, scale: 0.95 }}
       whileHover={{ scale: 1.01 }}
       onClick={onClick}
-      className="group relative cursor-pointer rounded-2xl border border-slate-200 bg-white p-6 shadow-sm ring-1 ring-slate-100/50 transition-all hover:border-indigo-100 hover:shadow-lg hover:ring-indigo-50/50"
+      className="group relative cursor-pointer rounded-2xl p-6 shadow-sm transition-all"
+      style={{ border: '1px solid var(--border)', background: 'var(--bg-secondary)' }}
     >
       <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-[1rem]">
         <div className="bg-grid-slate-100 absolute inset-0 opacity-0 transition-opacity group-hover:opacity-[0.03]" />
@@ -317,7 +408,8 @@ function ContractCard({ contract, onClick, onDelete }) {
         {!isTimestamped && (
           <button
             onClick={onDelete}
-            className="rounded-lg p-1.5 text-slate-300 opacity-0 transition-all group-hover:opacity-100 hover:bg-rose-50 hover:text-rose-500"
+            className="rounded-lg p-1.5 opacity-0 transition-all group-hover:opacity-100 hover:bg-rose-50 hover:text-rose-500"
+            style={{ color: 'var(--text-muted)' }}
           >
             <Trash2 size={16} />
           </button>
@@ -325,7 +417,13 @@ function ContractCard({ contract, onClick, onDelete }) {
       </div>
 
       <div className="relative z-10 mb-5 flex items-start justify-between">
-        <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-slate-100 text-slate-600 transition-all group-hover:bg-indigo-600 group-hover:text-white">
+        <div
+          className="flex h-11 w-11 items-center justify-center rounded-xl transition-all group-hover:text-white"
+          style={{
+            background: 'var(--surface-raised)',
+            color: 'var(--text-secondary)'
+          }}
+        >
           <FileText size={20} />
         </div>
         <div className="flex items-center gap-2">
@@ -340,21 +438,37 @@ function ContractCard({ contract, onClick, onDelete }) {
         </div>
       </div>
 
-      <h3 className="text-noir-primary relative z-10 mb-2 text-base font-extrabold tracking-tight transition-colors group-hover:text-indigo-600">
+      <h3
+        className="text-noir-primary relative z-10 mb-2 text-base font-extrabold tracking-tight transition-colors"
+        style={{ color: 'var(--text-primary)' }}
+      >
         {contract.name}
       </h3>
 
-      <div className="relative z-10 mt-5 flex items-center gap-4 border-t border-slate-50 pt-4">
-        <div className="flex items-center gap-1.5 text-[10px] font-black tracking-wider text-slate-600">
-          <Calendar size={11} className="text-indigo-600" />{' '}
+      <div
+        className="relative z-10 mt-5 flex items-center gap-4 pt-4"
+        style={{ borderTop: '1px solid var(--border)' }}
+      >
+        <div
+          className="flex items-center gap-1.5 text-[10px] font-black tracking-wider"
+          style={{ color: 'var(--text-secondary)' }}
+        >
+          <Calendar size={11} style={{ color: 'var(--accent-active)' }} />{' '}
           {new Date(contract.updatedAt).toLocaleDateString()}
         </div>
-        <div className="flex items-center gap-1.5 text-[10px] font-black tracking-wider text-slate-600">
-          <Clock size={11} className="text-indigo-600" /> {isTimestamped ? 'Verified' : 'Pending'}
+        <div
+          className="flex items-center gap-1.5 text-[10px] font-black tracking-wider"
+          style={{ color: 'var(--text-secondary)' }}
+        >
+          <Clock size={11} style={{ color: 'var(--accent-active)' }} />{' '}
+          {isTimestamped ? 'Verified' : 'Pending'}
         </div>
       </div>
 
-      <div className="absolute right-0 bottom-0 left-0 z-20 h-0.5 origin-left scale-x-0 bg-gradient-to-r from-indigo-500 to-violet-500 transition-transform group-hover:scale-x-100" />
+      <div
+        className="absolute right-0 bottom-0 left-0 z-20 h-0.5 origin-left scale-x-0 transition-transform group-hover:scale-x-100"
+        style={{ background: 'linear-gradient(to right, var(--accent-active), var(--accent-purple))' }}
+      />
       <div className="absolute inset-0 z-0 -translate-x-full bg-linear-to-r from-transparent via-indigo-500/5 to-transparent transition-transform duration-1000 group-hover:translate-x-full" />
     </motion.div>
   )
@@ -363,7 +477,14 @@ function ContractCard({ contract, onClick, onDelete }) {
 function ActivityItem({ icon: Icon, title, time, status }) {
   return (
     <div className="relative z-10 flex gap-4">
-      <div className="flex h-7 w-7 items-center justify-center rounded-full border-2 border-slate-200 bg-white text-slate-600 shadow-sm">
+      <div
+        className="flex h-7 w-7 items-center justify-center rounded-full border-2 shadow-sm"
+        style={{
+          borderColor: 'var(--border)',
+          background: 'var(--bg-secondary)',
+          color: 'var(--text-secondary)'
+        }}
+      >
         <Icon size={12} />
       </div>
       <div className="flex-1">
@@ -371,9 +492,19 @@ function ActivityItem({ icon: Icon, title, time, status }) {
           <h4 className="text-noir-primary text-[11px] font-black tracking-tight uppercase italic">
             {title}
           </h4>
-          <span className="text-[9px] font-bold text-slate-400">{time}</span>
+          <span
+            className="text-[9px] font-bold"
+            style={{ color: 'var(--text-muted)' }}
+          >
+            {time}
+          </span>
         </div>
-        <p className="text-[9px] font-bold text-slate-500">{status}</p>
+        <p
+          className="text-[9px] font-bold"
+          style={{ color: 'var(--text-secondary)' }}
+        >
+          {status}
+        </p>
       </div>
     </div>
   )
@@ -382,7 +513,14 @@ function ActivityItem({ icon: Icon, title, time, status }) {
 function Tooltip({ text }) {
   return (
     <div className="group/tooltip relative">
-      <div className="flex h-6 w-6 cursor-help items-center justify-center rounded-full border border-slate-200 bg-slate-100 text-slate-400 transition-all hover:bg-indigo-600 hover:text-white">
+      <div
+        className="flex h-6 w-6 cursor-help items-center justify-center rounded-full transition-all hover:text-white"
+        style={{
+          border: '1px solid var(--border)',
+          background: 'var(--surface-raised)',
+          color: 'var(--text-muted)'
+        }}
+      >
         <Info size={12} />
       </div>
       <div className="pointer-events-none absolute bottom-full left-1/2 mb-3 w-48 -translate-x-1/2 opacity-0 transition-all group-hover/tooltip:opacity-100">
@@ -399,21 +537,37 @@ function EmptyState({ onAction }) {
   return (
     <div className="space-y-10">
       {/* Empty state card */}
-      <div className="rounded-3xl border border-dashed border-slate-200 bg-white px-8 py-20 text-center md:px-12 md:py-28">
-        <div className="relative mx-auto mb-8 flex h-20 w-20 items-center justify-center rounded-2xl bg-indigo-50">
-          <FileText size={36} className="text-indigo-600" />
+      <div
+        className="rounded-3xl border-dashed px-8 py-20 text-center md:px-12 md:py-28"
+        style={{ border: '1px dashed var(--border)', background: 'var(--bg-secondary)' }}
+      >
+        <div
+          className="relative mx-auto mb-8 flex h-20 w-20 items-center justify-center rounded-2xl"
+          style={{
+            background: 'color-mix(in srgb, var(--accent-active) 10%, transparent)',
+            color: 'var(--accent-active)'
+          }}
+        >
+          <FileText size={36} />
           <motion.div
             animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
             transition={{ duration: 3, repeat: Infinity }}
-            className="absolute -top-2 -right-2 flex h-8 w-8 items-center justify-center rounded-xl bg-white text-amber-500 shadow-lg"
+            className="absolute -top-2 -right-2 flex h-8 w-8 items-center justify-center rounded-xl text-amber-500 shadow-lg"
+            style={{ background: 'var(--bg-secondary)' }}
           >
             <Sparkles size={16} />
           </motion.div>
         </div>
-        <h2 className="mb-3 text-2xl font-extrabold tracking-tighter text-slate-900">
+        <h2
+          className="mb-3 text-2xl font-extrabold tracking-tighter"
+          style={{ color: 'var(--text-primary)' }}
+        >
           Your Control Center is Ready
         </h2>
-        <p className="mx-auto mb-10 max-w-sm text-sm leading-relaxed font-medium text-slate-400">
+        <p
+          className="mx-auto mb-10 max-w-sm text-sm leading-relaxed font-medium"
+          style={{ color: 'var(--text-muted)' }}
+        >
           Launch your first cryptographic agreement anchored to the Bitcoin network.
         </p>
         <div className="flex flex-col justify-center gap-3 sm:flex-row">
@@ -427,17 +581,32 @@ function EmptyState({ onAction }) {
       </div>
 
       {/* Educational section */}
-      <div className="rounded-3xl border border-indigo-100 bg-gradient-to-br from-indigo-50 to-violet-50/30 p-8 md:p-12">
+      <div
+        className="rounded-3xl p-8 md:p-12"
+        style={{
+          border: '1px solid var(--border)',
+          background: 'color-mix(in srgb, var(--accent-active) 4%, var(--bg-secondary))'
+        }}
+      >
         <div className="mb-6 flex items-center gap-3">
-          <BookOpen size={18} className="text-indigo-600" />
-          <span className="text-[11px] font-bold tracking-[0.12em] text-indigo-600 uppercase">
+          <BookOpen size={18} style={{ color: 'var(--accent-active)' }} />
+          <span
+            className="text-[11px] font-bold tracking-[0.12em] uppercase"
+            style={{ color: 'var(--accent-active)' }}
+          >
             Learn
           </span>
         </div>
-        <h3 className="mb-4 text-2xl font-extrabold tracking-tight text-indigo-900">
+        <h3
+          className="mb-4 text-2xl font-extrabold tracking-tight"
+          style={{ color: 'var(--text-primary)' }}
+        >
           What is Cryptographic Timestamping?
         </h3>
-        <p className="mb-6 max-w-2xl text-sm leading-relaxed font-medium text-slate-500">
+        <p
+          className="mb-6 max-w-2xl text-sm leading-relaxed font-medium"
+          style={{ color: 'var(--text-secondary)' }}
+        >
           Cryptographic timestamping creates permanent, tamper-proof evidence that a document
           existed at a specific moment in time. By anchoring a mathematical fingerprint (hash) of
           your document to the Bitcoin blockchain, you create proof that is:
@@ -450,12 +619,27 @@ function EmptyState({ onAction }) {
           ].map((item, i) => (
             <div
               key={i}
-              className="flex items-start gap-3 rounded-2xl border border-indigo-50 bg-white p-4"
+              className="flex items-start gap-3 rounded-2xl p-4"
+              style={{ border: '1px solid var(--border)', background: 'var(--bg-secondary)' }}
             >
-              <item.icon size={18} className="mt-0.5 shrink-0 text-indigo-600" />
+              <item.icon
+                size={18}
+                className="mt-0.5 shrink-0"
+                style={{ color: 'var(--accent-active)' }}
+              />
               <div>
-                <h4 className="mb-1 text-sm font-extrabold text-indigo-900">{item.title}</h4>
-                <p className="text-[12px] font-medium text-slate-500">{item.desc}</p>
+                <h4
+                  className="mb-1 text-sm font-extrabold"
+                  style={{ color: 'var(--text-primary)' }}
+                >
+                  {item.title}
+                </h4>
+                <p
+                  className="text-[12px] font-medium"
+                  style={{ color: 'var(--text-secondary)' }}
+                >
+                  {item.desc}
+                </p>
               </div>
             </div>
           ))}

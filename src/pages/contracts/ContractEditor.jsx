@@ -26,6 +26,7 @@ export default function ContractEditor() {
     name: '',
     content: '',
     status: 'draft',
+    signers: [],
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString()
   })
@@ -61,6 +62,7 @@ export default function ContractEditor() {
           id: `contract_${Date.now()}`,
           name: template.name,
           content: template.content,
+          signers: [],
           templateType
         }))
       }
@@ -107,28 +109,42 @@ export default function ContractEditor() {
   }
 
   return (
-    <div className="relative flex min-h-screen flex-col overflow-hidden bg-[#f7f8fc]">
+    <div
+      className="relative flex min-h-screen flex-col overflow-hidden"
+      style={{ background: 'var(--bg-primary)' }}
+    >
       <div className="grid-pattern-slate pointer-events-none absolute inset-0 opacity-[0.03]" />
       {/* Top Navigation Bar */}
-      <nav className="mesh-bg-light sticky top-0 z-50 flex h-14 items-center justify-between border-b border-indigo-100 bg-white/80 px-4 backdrop-blur-xl md:h-16 md:px-6">
+      <nav
+        className="mesh-bg-light sticky top-0 z-50 flex h-14 items-center justify-between px-4 backdrop-blur-xl md:h-16 md:px-6"
+        style={{
+          borderBottom: '1px solid var(--border)',
+          background: 'color-mix(in srgb, var(--bg-secondary) 80%, transparent)'
+        }}
+      >
         <div className="flex items-center gap-3">
           <Button variant="ghost" size="small" onClick={() => navigate('/contracts')}>
             <ArrowLeft size={16} />
           </Button>
-          <div className="hidden h-5 w-px bg-slate-200 sm:block" />
+          <div className="hidden h-5 w-px sm:block" style={{ background: 'var(--border)' }} />
           <h1 className="text-noir-primary max-w-[180px] truncate text-sm font-black tracking-tight uppercase italic sm:max-w-none">
             {contract.name || 'Untitled Document'}
           </h1>
         </div>
 
         <div className="flex items-center gap-2">
-          <span className="mr-2 hidden text-[10px] font-bold tracking-widest text-slate-400 uppercase sm:block">
-            Status: <span className="text-indigo-600">{contract.status}</span>
+          <span
+            className="mr-2 hidden text-[10px] font-bold tracking-widest uppercase sm:block"
+            style={{ color: 'var(--text-muted)' }}
+          >
+            Status:{' '}
+            <span style={{ color: 'var(--accent-active)' }}>{contract.status}</span>
           </span>
 
           {/* Mobile panel toggle */}
           <button
-            className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 text-slate-400 md:hidden"
+            className="flex h-9 w-9 items-center justify-center rounded-xl md:hidden"
+            style={{ border: '1px solid var(--border)', color: 'var(--text-secondary)' }}
             onClick={() => setIsMobilePanelOpen(true)}
           >
             <Layout size={16} />
@@ -142,7 +158,10 @@ export default function ContractEditor() {
 
       <div className="flex flex-1 overflow-hidden">
         {/* Left Mini Sidebar — Hidden on mobile */}
-        <div className="hidden w-14 flex-col items-center gap-4 border-r border-slate-200 bg-white py-4 md:flex">
+        <div
+          className="hidden w-14 flex-col items-center gap-4 py-4 md:flex"
+          style={{ borderRight: '1px solid var(--border)', background: 'var(--bg-secondary)' }}
+        >
           <SidebarIcon
             icon={Layout}
             active={activeTab === 'editor'}
@@ -158,9 +177,12 @@ export default function ContractEditor() {
         </div>
 
         {/* Main Content Area */}
-        <main className="relative flex-1 overflow-y-auto bg-slate-50">
+        <main
+          className="relative flex-1 overflow-y-auto"
+          style={{ background: 'var(--bg-secondary)' }}
+        >
           <div className="mx-auto max-w-[850px] px-4 py-8 md:px-8 md:py-12">
-            {/* The Paper */}
+            {/* The Paper — cream background is intentional UX for legal documents */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -190,7 +212,8 @@ export default function ContractEditor() {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 20 }}
-            className="hidden w-72 overflow-y-auto border-l border-slate-200 bg-white md:block lg:w-80"
+            className="hidden w-72 overflow-y-auto md:block lg:w-80"
+            style={{ borderLeft: '1px solid var(--border)', background: 'var(--bg-secondary)' }}
           >
             <SidebarContent
               activeTab={activeTab}
@@ -220,30 +243,65 @@ export default function ContractEditor() {
                 animate={{ y: 0 }}
                 exit={{ y: '100%' }}
                 transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-                className="fixed inset-x-0 bottom-0 z-[101] max-h-[80vh] overflow-y-auto rounded-t-3xl border-t border-slate-200 bg-white shadow-2xl md:hidden"
+                className="fixed inset-x-0 bottom-0 z-[101] max-h-[80vh] overflow-y-auto rounded-t-3xl shadow-2xl md:hidden"
+                style={{
+                  borderTop: '1px solid var(--border)',
+                  background: 'var(--bg-secondary)'
+                }}
               >
-                <div className="sticky top-0 flex items-center justify-between border-b border-slate-100 bg-white px-5 py-3">
+                <div
+                  className="sticky top-0 flex items-center justify-between px-5 py-3"
+                  style={{
+                    borderBottom: '1px solid var(--border)',
+                    background: 'var(--bg-secondary)'
+                  }}
+                >
                   <div className="flex items-center gap-2">
-                    <div className="mx-auto h-1 w-10 rounded-full bg-slate-200" />
+                    <div
+                      className="mx-auto h-1 w-10 rounded-full"
+                      style={{ background: 'var(--border)' }}
+                    />
                   </div>
                   <button
                     onClick={() => setIsMobilePanelOpen(false)}
-                    className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100"
+                    className="flex h-8 w-8 items-center justify-center rounded-lg"
+                    style={{ color: 'var(--text-secondary)' }}
                   >
                     <X size={16} />
                   </button>
                 </div>
                 {/* Tab selector for mobile */}
-                <div className="flex gap-2 border-b border-slate-50 px-5 py-3">
+                <div
+                  className="flex gap-2 px-5 py-3"
+                  style={{ borderBottom: '1px solid var(--border)' }}
+                >
                   <button
                     onClick={() => setActiveTab('editor')}
-                    className={`rounded-xl px-4 py-2 text-xs font-bold transition-all ${activeTab === 'editor' ? 'border border-indigo-100 bg-indigo-50 text-indigo-600' : 'text-slate-400'}`}
+                    className="rounded-xl px-4 py-2 text-xs font-bold transition-all"
+                    style={
+                      activeTab === 'editor'
+                        ? {
+                            border: '1px solid var(--accent-active)',
+                            background: 'color-mix(in srgb, var(--accent-active) 10%, transparent)',
+                            color: 'var(--accent-active)'
+                          }
+                        : { color: 'var(--text-secondary)' }
+                    }
                   >
                     Inspector
                   </button>
                   <button
                     onClick={() => setActiveTab('settings')}
-                    className={`rounded-xl px-4 py-2 text-xs font-bold transition-all ${activeTab === 'settings' ? 'border border-indigo-100 bg-indigo-50 text-indigo-600' : 'text-slate-400'}`}
+                    className="rounded-xl px-4 py-2 text-xs font-bold transition-all"
+                    style={
+                      activeTab === 'settings'
+                        ? {
+                            border: '1px solid var(--accent-active)',
+                            background: 'color-mix(in srgb, var(--accent-active) 10%, transparent)',
+                            color: 'var(--accent-active)'
+                          }
+                        : { color: 'var(--text-secondary)' }
+                    }
                   >
                     Settings
                   </button>
@@ -269,7 +327,11 @@ export default function ContractEditor() {
           whileTap={{ scale: 0.95 }}
           onClick={handleSave}
           disabled={isSaving}
-          className="flex h-14 w-14 items-center justify-center rounded-2xl bg-indigo-600 text-white shadow-xl shadow-indigo-500/30"
+          className="flex h-14 w-14 items-center justify-center rounded-2xl text-white shadow-xl"
+          style={{
+            background: 'var(--accent-active)',
+            boxShadow: '0 8px 24px color-mix(in srgb, var(--accent-active) 30%, transparent)'
+          }}
         >
           {isSaving ? (
             <div className="h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent" />
@@ -286,12 +348,16 @@ function SidebarIcon({ icon: Icon, active, onClick, label }) {
   return (
     <button
       onClick={onClick}
-      className={clsx(
-        'group relative flex h-10 w-10 items-center justify-center rounded-xl transition-all duration-300',
+      className="group relative flex h-10 w-10 items-center justify-center rounded-xl transition-all duration-300"
+      style={
         active
-          ? 'bg-indigo-600 text-white shadow-md shadow-indigo-200'
-          : 'text-slate-400 hover:bg-slate-50 hover:text-indigo-600'
-      )}
+          ? {
+              background: 'var(--accent-active)',
+              color: '#fff',
+              boxShadow: '0 4px 12px color-mix(in srgb, var(--accent-active) 25%, transparent)'
+            }
+          : { color: 'var(--text-secondary)' }
+      }
     >
       <Icon size={18} strokeWidth={active ? 2.5 : 2} />
       <div className="pointer-events-none absolute left-full z-[100] ml-3 rounded-lg bg-slate-900 px-2.5 py-1 text-[10px] font-bold tracking-wide whitespace-nowrap text-white opacity-0 transition-opacity group-hover:opacity-100">
@@ -314,29 +380,46 @@ function SidebarContent({
     <>
       {activeTab === 'editor' && (
         <div className="p-5 md:p-6">
-          <div className="mb-5 flex items-center gap-2 border-b border-slate-100 pb-4 text-slate-900">
-            <Layout size={16} className="text-indigo-600" />
+          <div
+            className="mb-5 flex items-center gap-2 pb-4"
+            style={{ borderBottom: '1px solid var(--border)', color: 'var(--text-primary)' }}
+          >
+            <Layout size={16} style={{ color: 'var(--accent-active)' }} />
             <h3 className="text-sm font-extrabold tracking-tight">Inspector</h3>
           </div>
 
           <div className="space-y-6">
             {/* BASIC INFO */}
             <section className="space-y-3">
-              <label className="block text-[10px] font-bold tracking-widest text-slate-400 uppercase">
+              <label
+                className="block text-[10px] font-bold tracking-widest uppercase"
+                style={{ color: 'var(--text-muted)' }}
+              >
                 Document Name
               </label>
               <input
                 type="text"
                 value={contract.name}
                 onChange={(e) => setContract({ ...contract, name: e.target.value })}
-                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-bold ring-1 ring-slate-100/50 transition-all outline-none focus:border-indigo-400 focus:ring-4 focus:ring-indigo-100/50"
+                className="w-full rounded-xl px-4 py-3 text-sm font-bold transition-all outline-none"
+                style={{
+                  border: '1px solid var(--border)',
+                  background: 'var(--bg-primary)',
+                  color: 'var(--text-primary)'
+                }}
               />
             </section>
 
             {/* SMART FIELDS */}
             {placeholders.length > 0 && (
-              <section className="space-y-4 border-t border-slate-100 pt-5">
-                <div className="flex items-center gap-2 text-indigo-600">
+              <section
+                className="space-y-4 pt-5"
+                style={{ borderTop: '1px solid var(--border)' }}
+              >
+                <div
+                  className="flex items-center gap-2"
+                  style={{ color: 'var(--accent-active)' }}
+                >
                   <Sparkles size={14} fill="currentColor" />
                   <h4 className="text-[10px] font-bold tracking-widest uppercase">
                     Document Variables
@@ -350,13 +433,21 @@ function SidebarContent({
                 <div className="space-y-3">
                   {placeholders.map((p) => (
                     <div key={p}>
-                      <label className="mb-1.5 block text-[9px] font-bold tracking-widest text-slate-400 uppercase">
+                      <label
+                        className="mb-1.5 block text-[9px] font-bold tracking-widest uppercase"
+                        style={{ color: 'var(--text-muted)' }}
+                      >
                         {p.replace(/_/g, ' ')}
                       </label>
                       <input
                         type="text"
                         placeholder={`Value for [${p}]...`}
-                        className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-medium ring-1 ring-slate-100/50 transition-all outline-none focus:border-indigo-400 focus:ring-4 focus:ring-indigo-100/50"
+                        className="w-full rounded-xl px-4 py-3 text-sm font-medium transition-all outline-none"
+                        style={{
+                          border: '1px solid var(--border)',
+                          background: 'var(--bg-primary)',
+                          color: 'var(--text-primary)'
+                        }}
                         onChange={(e) => handlePlaceholderChange(p, e.target.value)}
                       />
                     </div>
@@ -366,8 +457,11 @@ function SidebarContent({
             )}
 
             {/* PROTOCOL EXTENSIONS */}
-            <section className="space-y-3 border-t border-slate-100 pt-5">
-              <label className="block text-[10px] font-bold tracking-widest text-slate-400 uppercase">
+            <section className="space-y-3 pt-5" style={{ borderTop: '1px solid var(--border)' }}>
+              <label
+                className="block text-[10px] font-bold tracking-widest uppercase"
+                style={{ color: 'var(--text-muted)' }}
+              >
                 Protocol Extensions
               </label>
               <div className="space-y-2">
@@ -435,21 +529,46 @@ function SidebarContent({
             </section>
 
             {/* METADATA */}
-            <div className="space-y-3 rounded-2xl border border-slate-100 bg-slate-50 p-4">
+            <div
+              className="space-y-3 rounded-2xl p-4"
+              style={{
+                border: '1px solid var(--border)',
+                background: 'var(--surface-raised)'
+              }}
+            >
               <div className="flex items-center justify-between text-[10px] font-medium">
-                <span className="tracking-widest text-slate-400 uppercase">Created</span>
-                <span className="text-slate-600">
+                <span
+                  className="tracking-widest uppercase"
+                  style={{ color: 'var(--text-muted)' }}
+                >
+                  Created
+                </span>
+                <span style={{ color: 'var(--text-secondary)' }}>
                   {new Date(contract.createdAt).toLocaleDateString()}
                 </span>
               </div>
               <div className="flex items-center justify-between text-[10px] font-medium">
-                <span className="tracking-widest text-slate-400 uppercase">Protocol Type</span>
-                <span className="font-bold tracking-widest text-indigo-600 uppercase">
+                <span
+                  className="tracking-widest uppercase"
+                  style={{ color: 'var(--text-muted)' }}
+                >
+                  Protocol Type
+                </span>
+                <span
+                  className="font-bold tracking-widest uppercase"
+                  style={{ color: 'var(--accent-active)' }}
+                >
                   {contract.templateType || 'Custom'}
                 </span>
               </div>
-              <div className="mt-1 flex flex-col gap-1 border-t border-slate-100 pt-3">
-                <span className="text-[9px] font-bold tracking-widest text-slate-400 uppercase">
+              <div
+                className="mt-1 flex flex-col gap-1 pt-3"
+                style={{ borderTop: '1px solid var(--border)' }}
+              >
+                <span
+                  className="text-[9px] font-bold tracking-widest uppercase"
+                  style={{ color: 'var(--text-muted)' }}
+                >
                   Live Client Hashing (Zero-Knowledge)
                 </span>
                 <span className="truncate font-mono text-[9px] font-bold text-emerald-600">
@@ -463,18 +582,28 @@ function SidebarContent({
 
       {activeTab === 'settings' && (
         <div className="p-5 md:p-6">
-          <div className="mb-5 flex items-center gap-2 text-slate-900">
+          <div
+            className="mb-5 flex items-center gap-2"
+            style={{ color: 'var(--text-primary)' }}
+          >
             <Settings size={16} />
             <h3 className="text-sm font-extrabold tracking-tight">Settings</h3>
           </div>
           <div className="space-y-4">
-            <p className="text-[10px] font-bold tracking-widest text-slate-400 uppercase">
-              Coming Soon
-            </p>
-            <div className="h-20 rounded-xl border-2 border-dashed border-slate-100" />
-            <p className="text-[12px] leading-relaxed font-medium text-slate-400">
-              Advanced settings for multi-party signatures and custom anchoring priorities.
-            </p>
+            <div
+              className="rounded-2xl p-6 text-center"
+              style={{
+                background: 'var(--surface-raised)',
+                border: '1px solid var(--border)'
+              }}
+            >
+              <p
+                className="text-sm font-semibold"
+                style={{ color: 'var(--text-secondary)' }}
+              >
+                Document settings coming soon.
+              </p>
+            </div>
           </div>
         </div>
       )}

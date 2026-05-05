@@ -18,6 +18,7 @@ import {
 import { jsPDF } from 'jspdf'
 import QRCode from 'qrcode'
 import { motion, AnimatePresence } from 'framer-motion'
+import { toast } from 'sonner'
 import Button from '../../components/Button'
 import StatusPill from '../../components/StatusPill'
 import ProofExplorer from '../../components/ProofExplorer'
@@ -33,12 +34,6 @@ export default function ContractView() {
   const [isZKToolOpen, setIsZKToolOpen] = useState(false)
   const [activePanel, setActivePanel] = useState('summary')
 
-  // Mock active signers
-  const [activeSigners] = useState([
-    { id: 1, name: 'Alex Rivera', status: 'viewing', color: '#10b981' },
-    { id: 2, name: 'Sarah Chen', status: 'idle', color: '#6366f1' }
-  ])
-
   useEffect(() => {
     const savedContracts = localStorage.getItem('satohash_contracts')
     if (savedContracts) {
@@ -48,13 +43,34 @@ export default function ContractView() {
     }
   }, [contractId])
 
+  // Derive active signers from contract.signers if available, else use display mock
+  const activeSigners = (() => {
+    if (contract?.signers && contract.signers.length > 0) {
+      return contract.signers.map((s, i) => ({
+        id: i + 1,
+        name: s.name || s.npub || `Signer ${i + 1}`,
+        status: s.status || 'idle',
+        color: i === 0 ? '#10b981' : '#6366f1'
+      }))
+    }
+    // Fallback mock for display when no signers have been added yet
+    return [
+      { id: 1, name: 'Alex Rivera', status: 'viewing', color: '#10b981' },
+      { id: 2, name: 'Sarah Chen', status: 'idle', color: '#6366f1' }
+    ]
+  })()
+
   if (!contract) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-slate-50">
+      <div
+        className="flex min-h-screen items-center justify-center"
+        style={{ background: 'var(--bg-secondary)' }}
+      >
         <motion.div
           animate={{ rotate: 360 }}
           transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-          className="h-10 w-10 rounded-full border-3 border-indigo-600 border-t-transparent"
+          className="h-10 w-10 rounded-full border-3 border-t-transparent"
+          style={{ borderColor: 'var(--accent-active)', borderTopColor: 'transparent' }}
         />
       </div>
     )
@@ -221,7 +237,7 @@ export default function ContractView() {
       doc.setFontSize(7)
       doc.text('v4.0-ELITE', margin + 30, currentY + 38, { align: 'center' })
 
-      // QR Code
+      // QR Code — uses window.location.origin for correct host in all environments
       try {
         const qrDataUrl = await QRCode.toDataURL(`${window.location.origin}/verify/${contract.id}`, {
           width: 200,
@@ -242,6 +258,7 @@ export default function ContractView() {
       doc.setFontSize(8)
       doc.setFont('helvetica', 'italic')
       doc.setTextColor(120, 120, 120)
+      // Uses window.location.hostname for correct host in all environments
       const footerText =
         `This document is cryptographically anchored to the Bitcoin blockchain via the Satohash Protocol. The underlying content is protected by SHA-256 hashing. Modifying even a single character in the original file will invalidate this certificate. For verification, visit ${window.location.hostname}/verify or scan the QR code above.`
       const splitFooter = doc.splitTextToSize(footerText, pageWidth - margin * 2)
@@ -252,20 +269,32 @@ export default function ContractView() {
   }
 
   return (
-    <div className="relative flex min-h-screen flex-col overflow-hidden bg-[#f7f8fc]">
+    <div
+      className="relative flex min-h-screen flex-col overflow-hidden"
+      style={{ background: 'var(--bg-primary)' }}
+    >
       <div className="grid-pattern-slate pointer-events-none absolute inset-0 opacity-[0.03]" />
       {/* Top Navigation Bar */}
-      <nav className="mesh-bg-light sticky top-0 z-50 flex h-14 items-center justify-between border-b border-indigo-100 bg-white/80 px-4 backdrop-blur-xl md:h-16 md:px-6">
+      <nav
+        className="mesh-bg-light sticky top-0 z-50 flex h-14 items-center justify-between px-4 backdrop-blur-xl md:h-16 md:px-6"
+        style={{
+          borderBottom: '1px solid var(--border)',
+          background: 'color-mix(in srgb, var(--bg-secondary) 80%, transparent)'
+        }}
+      >
         <div className="flex items-center gap-3">
           <Button variant="ghost" size="small" onClick={() => navigate('/contracts')}>
             <ArrowLeft size={16} />
           </Button>
-          <div className="hidden h-5 w-px bg-slate-200 sm:block" />
+          <div className="hidden h-5 w-px sm:block" style={{ background: 'var(--border)' }} />
           <div className="flex flex-col">
             <h1 className="text-noir-primary max-w-[160px] truncate text-sm font-black tracking-tight uppercase italic sm:max-w-none">
               {contract.name}
             </h1>
-            <span className="hidden text-[10px] font-medium tracking-wide text-slate-400 sm:block">
+            <span
+              className="hidden text-[10px] font-medium tracking-wide sm:block"
+              style={{ color: 'var(--text-muted)' }}
+            >
               Ref: {contract.id.substring(0, 8)}
             </span>
           </div>
@@ -282,10 +311,15 @@ export default function ContractView() {
               <Edit size={14} /> <span className="hidden sm:inline">Edit</span>
             </Button>
           )}
-          <div className="hidden gap-0.5 rounded-xl border border-slate-100 bg-slate-50 p-1 sm:flex">
+          {/* Share links — uses window.location.origin for correct host in all environments */}
+          <div
+            className="hidden gap-0.5 rounded-xl p-1 sm:flex"
+            style={{ border: '1px solid var(--border)', background: 'var(--surface-raised)' }}
+          >
             <a
               href={`mailto:?subject=Satohash Proof&body=Check out this cryptographic proof: ${window.location.origin}/verify/${contractId}`}
-              className="rounded-lg p-2 text-slate-400 transition-colors hover:bg-white hover:text-indigo-600"
+              className="rounded-lg p-2 transition-colors"
+              style={{ color: 'var(--text-secondary)' }}
               title="Share via Email"
             >
               <Mail size={14} />
@@ -294,7 +328,8 @@ export default function ContractView() {
               href={`https://twitter.com/intent/tweet?text=Cryptographic Proof on Satohash&url=${window.location.origin}/verify/${contractId}`}
               target="_blank"
               rel="noreferrer"
-              className="rounded-lg p-2 text-slate-400 transition-colors hover:bg-white hover:text-blue-500"
+              className="rounded-lg p-2 transition-colors hover:text-blue-500"
+              style={{ color: 'var(--text-secondary)' }}
               title="Share on X"
             >
               <Twitter size={14} />
@@ -303,7 +338,8 @@ export default function ContractView() {
               href={`https://www.linkedin.com/sharing/share-offsite/?url=${window.location.origin}/verify/${contractId}`}
               target="_blank"
               rel="noreferrer"
-              className="rounded-lg p-2 text-slate-400 transition-colors hover:bg-white hover:text-blue-700"
+              className="rounded-lg p-2 transition-colors hover:text-blue-700"
+              style={{ color: 'var(--text-secondary)' }}
               title="Share on LinkedIn"
             >
               <Linkedin size={14} />
@@ -313,8 +349,11 @@ export default function ContractView() {
       </nav>
 
       <div className="flex flex-1 flex-col overflow-hidden md:flex-row">
-        {/* Main Content */}
-        <main className="relative flex-1 overflow-y-auto bg-slate-50/50 px-4 py-8 md:px-8 md:py-12">
+        {/* Main Content — cream paper area is intentional UX for legal documents */}
+        <main
+          className="relative flex-1 overflow-y-auto px-4 py-8 md:px-8 md:py-12"
+          style={{ background: 'var(--bg-secondary)' }}
+        >
           <div className="mx-auto max-w-[850px]">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -347,18 +386,32 @@ export default function ContractView() {
                       <motion.div
                         animate={{ opacity: [0.1, 0.2, 0.1], scale: [1, 1.1, 1] }}
                         transition={{ duration: 4, repeat: Infinity }}
-                        className="absolute inset-0 bg-indigo-600 opacity-10 blur-3xl"
+                        className="absolute inset-0 opacity-10 blur-3xl"
+                        style={{ background: 'var(--accent-active)' }}
                       />
                       <div className="notary-seal border-noir relative rounded-full bg-white/50 p-6 shadow-xl backdrop-blur-sm">
-                        <div className="relative mb-3 flex h-14 w-14 items-center justify-center overflow-hidden rounded-full bg-indigo-600 text-white shadow-lg shadow-indigo-500/40">
+                        <div
+                          className="relative mb-3 flex h-14 w-14 items-center justify-center overflow-hidden rounded-full text-white shadow-lg"
+                          style={{
+                            background: 'var(--accent-active)',
+                            boxShadow:
+                              '0 8px 20px color-mix(in srgb, var(--accent-active) 40%, transparent)'
+                          }}
+                        >
                           <div className="absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-white/20 to-transparent transition-transform duration-1000 group-hover:translate-x-full" />
                           <ShieldCheck size={28} />
                         </div>
                         <span className="text-noir-primary text-[10px] font-black tracking-widest uppercase italic">
                           {isTimestamped ? 'Bitcoin Anchor' : 'Satohash Signed'}
                         </span>
-                        <div className="mx-auto mt-2 h-px w-12 bg-indigo-100" />
-                        <span className="mt-2 block font-mono text-[9px] font-bold text-slate-400">
+                        <div
+                          className="mx-auto mt-2 h-px w-12"
+                          style={{ background: 'var(--border)' }}
+                        />
+                        <span
+                          className="mt-2 block font-mono text-[9px] font-bold"
+                          style={{ color: 'var(--text-muted)' }}
+                        >
                           {contract.id.substring(0, 12).toUpperCase()}
                         </span>
                       </div>
@@ -371,9 +424,15 @@ export default function ContractView() {
         </main>
 
         {/* Right Metadata Panel — Stacked on mobile */}
-        <aside className="flex w-full flex-col border-t border-slate-200 bg-white md:w-80 md:border-t-0 md:border-l lg:w-96">
+        <aside
+          className="flex w-full flex-col border-t md:w-80 md:border-t-0 md:border-l lg:w-96"
+          style={{ borderColor: 'var(--border)', background: 'var(--bg-secondary)' }}
+        >
           {/* Panel Tabs */}
-          <div className="flex h-12 shrink-0 border-b border-slate-100 md:h-14">
+          <div
+            className="flex h-12 shrink-0 md:h-14"
+            style={{ borderBottom: '1px solid var(--border)' }}
+          >
             <PanelTab
               active={activePanel === 'summary'}
               onClick={() => setActivePanel('summary')}
@@ -435,7 +494,10 @@ export default function ContractView() {
 
                   {isTimestamped && (
                     <div className="space-y-4">
-                      <h4 className="text-[10px] font-bold tracking-[0.15em] text-slate-400 uppercase">
+                      <h4
+                        className="text-[10px] font-bold tracking-[0.15em] uppercase"
+                        style={{ color: 'var(--text-muted)' }}
+                      >
                         Verified Proofs
                       </h4>
                       <div className="grid grid-cols-1 gap-3">
@@ -454,9 +516,12 @@ export default function ContractView() {
                         />
                       </div>
 
-                      <div className="my-4 h-px bg-slate-100" />
+                      <div className="my-4 h-px" style={{ background: 'var(--border)' }} />
 
-                      <h4 className="text-[10px] font-bold tracking-[0.15em] text-slate-400 uppercase">
+                      <h4
+                        className="text-[10px] font-bold tracking-[0.15em] uppercase"
+                        style={{ color: 'var(--text-muted)' }}
+                      >
                         Advanced Tools
                       </h4>
                       <div className="grid grid-cols-2 gap-3">
@@ -475,10 +540,16 @@ export default function ContractView() {
                   )}
 
                   <div>
-                    <h4 className="mb-3 text-[10px] font-bold tracking-[0.15em] text-slate-400 uppercase">
+                    <h4
+                      className="mb-3 text-[10px] font-bold tracking-[0.15em] uppercase"
+                      style={{ color: 'var(--text-muted)' }}
+                    >
                       Metadata
                     </h4>
-                    <div className="space-y-3 rounded-2xl border border-slate-100 bg-slate-50 p-4">
+                    <div
+                      className="space-y-3 rounded-2xl p-4"
+                      style={{ border: '1px solid var(--border)', background: 'var(--surface-raised)' }}
+                    >
                       <MetaItem
                         label="Created"
                         value={new Date(contract.createdAt).toLocaleString()}
@@ -502,23 +573,40 @@ export default function ContractView() {
                   exit={{ opacity: 0, x: -10 }}
                   className="space-y-5"
                 >
-                  <h4 className="text-[10px] font-bold tracking-[0.15em] text-slate-400 uppercase">
+                  <h4
+                    className="text-[10px] font-bold tracking-[0.15em] uppercase"
+                    style={{ color: 'var(--text-muted)' }}
+                  >
                     Live Activity
                   </h4>
                   <div className="space-y-3">
                     {activeSigners.map((signer) => (
                       <div
                         key={signer.id}
-                        className="flex items-center gap-3 rounded-xl border border-slate-100 bg-slate-50 p-3"
+                        className="flex items-center gap-3 rounded-xl p-3"
+                        style={{
+                          border: '1px solid var(--border)',
+                          background: 'var(--surface-raised)'
+                        }}
                       >
-                        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-indigo-100 text-[10px] font-bold text-indigo-600">
+                        <div
+                          className="flex h-8 w-8 items-center justify-center rounded-full text-[10px] font-bold"
+                          style={{
+                            background:
+                              'color-mix(in srgb, var(--accent-active) 12%, transparent)',
+                            color: 'var(--accent-active)'
+                          }}
+                        >
                           {signer.name
                             .split(' ')
                             .map((n) => n[0])
                             .join('')}
                         </div>
                         <div className="flex-1">
-                          <p className="text-[12px] font-bold tracking-tight text-slate-900">
+                          <p
+                            className="text-[12px] font-bold tracking-tight"
+                            style={{ color: 'var(--text-primary)' }}
+                          >
                             {signer.name}
                           </p>
                           <div className="mt-1 flex items-center gap-1.5">
@@ -528,25 +616,73 @@ export default function ContractView() {
                                 signer.status === 'viewing' ? 'bg-green-500' : 'bg-slate-300'
                               )}
                             />
-                            <span className="text-[9px] font-medium tracking-widest text-slate-400 uppercase">
+                            <span
+                              className="text-[9px] font-medium tracking-widest uppercase"
+                              style={{ color: 'var(--text-muted)' }}
+                            >
                               {signer.status}
                             </span>
                           </div>
                         </div>
                       </div>
                     ))}
-                    <div className="mt-4 border-t border-slate-100 pt-4">
+                    <div
+                      className="mt-4 pt-4"
+                      style={{ borderTop: '1px solid var(--border)' }}
+                    >
                       <Button
                         variant="outline"
                         fullWidth
                         onClick={() => {
                           setContract({ ...contract, status: 'signed' })
-                          alert('Partner signature simulated. Ready to Anchor.')
+                          toast.success('Partner signature simulated', {
+                            description:
+                              'In production this would send a Nostr DM to the co-signer'
+                          })
                         }}
                       >
                         Simulate Partner Signature
                       </Button>
                     </div>
+                  </div>
+                </motion.div>
+              )}
+
+              {activePanel === 'history' && (
+                <motion.div
+                  key="history"
+                  initial={{ opacity: 0, x: 10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -10 }}
+                >
+                  <div className="space-y-3 py-4">
+                    <p
+                      className="text-xs font-semibold tracking-widest uppercase"
+                      style={{ color: 'var(--text-muted)' }}
+                    >
+                      Audit Trail
+                    </p>
+                    {[
+                      { action: 'Document Created', time: 'Just now' },
+                      { action: 'SHA-256 Hash Generated', time: 'Just now' },
+                      { action: 'Awaiting Bitcoin Anchor', time: 'Pending' }
+                    ].map((log, i) => (
+                      <div
+                        key={i}
+                        className="flex items-center justify-between rounded-xl px-4 py-3"
+                        style={{ background: 'var(--surface-raised)' }}
+                      >
+                        <span
+                          className="text-sm font-medium"
+                          style={{ color: 'var(--text-primary)' }}
+                        >
+                          {log.action}
+                        </span>
+                        <span className="text-xs" style={{ color: 'var(--text-muted)' }}>
+                          {log.time}
+                        </span>
+                      </div>
+                    ))}
                   </div>
                 </motion.div>
               )}
@@ -575,17 +711,20 @@ function PanelTab({ active, onClick, icon: Icon, label }) {
   return (
     <button
       onClick={onClick}
-      className={clsx(
-        'relative flex flex-1 items-center justify-center gap-2 overflow-hidden text-[10px] font-bold tracking-[0.1em] uppercase transition-all',
-        active ? 'text-indigo-600' : 'text-slate-400 hover:bg-slate-50 hover:text-slate-600'
-      )}
+      className="relative flex flex-1 items-center justify-center gap-2 overflow-hidden text-[10px] font-bold tracking-[0.1em] uppercase transition-all"
+      style={
+        active
+          ? { color: 'var(--accent-active)' }
+          : { color: 'var(--text-secondary)' }
+      }
     >
       <Icon size={13} strokeWidth={2.5} />
       {label}
       {active && (
         <motion.div
           layoutId="active-tab"
-          className="absolute right-0 bottom-0 left-0 h-0.5 bg-indigo-600"
+          className="absolute right-0 bottom-0 left-0 h-0.5"
+          style={{ background: 'var(--accent-active)' }}
         />
       )}
     </button>
@@ -595,14 +734,18 @@ function PanelTab({ active, onClick, icon: Icon, label }) {
 function MetaItem({ label, value, mono }) {
   return (
     <div className="flex items-start justify-between">
-      <span className="text-[10px] font-bold tracking-widest text-slate-400 uppercase">
+      <span
+        className="text-[10px] font-bold tracking-widest uppercase"
+        style={{ color: 'var(--text-muted)' }}
+      >
         {label}
       </span>
       <span
         className={clsx(
-          'max-w-[180px] text-right text-[11px] font-medium text-slate-700',
+          'max-w-[180px] text-right text-[11px] font-medium',
           mono && 'font-mono text-[9px] break-all'
         )}
+        style={{ color: 'var(--text-secondary)' }}
       >
         {value}
       </span>
@@ -614,31 +757,45 @@ function QuickAction({ icon: Icon, label, subLabel, highlight, onClick }) {
   return (
     <button
       onClick={onClick}
-      className={clsx(
-        'group flex items-center gap-4 rounded-2xl border p-4 text-left transition-all',
+      className="group flex items-center gap-4 rounded-2xl border p-4 text-left transition-all"
+      style={
         highlight
-          ? 'border-indigo-500 bg-indigo-600 text-white shadow-lg shadow-indigo-200'
-          : 'border-slate-100 bg-white text-slate-900 hover:border-indigo-200 hover:shadow-sm'
-      )}
+          ? {
+              borderColor: 'var(--accent-active)',
+              background: 'var(--accent-active)',
+              color: '#fff',
+              boxShadow:
+                '0 8px 24px color-mix(in srgb, var(--accent-active) 25%, transparent)'
+            }
+          : {
+              borderColor: 'var(--border)',
+              background: 'var(--surface-raised)',
+              color: 'var(--text-primary)'
+            }
+      }
     >
       <div
-        className={clsx(
-          'flex h-10 w-10 items-center justify-center rounded-xl',
-          highlight ? 'bg-white/10' : 'bg-slate-50 group-hover:bg-indigo-50'
-        )}
+        className="flex h-10 w-10 items-center justify-center rounded-xl"
+        style={
+          highlight
+            ? { background: 'rgba(255,255,255,0.1)' }
+            : { background: 'var(--bg-primary)' }
+        }
       >
         <Icon
           size={18}
-          className={highlight ? 'text-white' : 'text-slate-400 group-hover:text-indigo-600'}
+          style={
+            highlight
+              ? { color: '#fff' }
+              : { color: 'var(--text-secondary)' }
+          }
         />
       </div>
       <div>
         <p className="mb-0.5 text-xs font-bold tracking-tight">{label}</p>
         <p
-          className={clsx(
-            'text-[9px] font-medium tracking-wide uppercase opacity-60',
-            highlight ? 'text-indigo-100' : 'text-slate-400'
-          )}
+          className="text-[9px] font-medium tracking-wide uppercase opacity-60"
+          style={highlight ? { color: '#e0e7ff' } : { color: 'var(--text-muted)' }}
         >
           {subLabel}
         </p>
@@ -651,12 +808,19 @@ function ToolCard({ icon: Icon, label, onClick }) {
   return (
     <button
       onClick={onClick}
-      className="group flex flex-col items-center gap-3 rounded-2xl border border-slate-100 bg-slate-50 p-4 transition-all hover:border-indigo-200 hover:bg-indigo-50 hover:shadow-sm"
+      className="group flex flex-col items-center gap-3 rounded-2xl p-4 transition-all"
+      style={{ border: '1px solid var(--border)', background: 'var(--surface-raised)' }}
     >
-      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-slate-400 shadow-sm transition-colors group-hover:text-indigo-600">
+      <div
+        className="flex h-10 w-10 items-center justify-center rounded-xl shadow-sm transition-colors"
+        style={{ background: 'var(--bg-secondary)', color: 'var(--text-secondary)' }}
+      >
         <Icon size={18} />
       </div>
-      <span className="text-center text-[9px] font-bold tracking-widest text-slate-600 uppercase">
+      <span
+        className="text-center text-[9px] font-bold tracking-widest uppercase"
+        style={{ color: 'var(--text-secondary)' }}
+      >
         {label}
       </span>
     </button>
