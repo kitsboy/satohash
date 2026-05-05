@@ -129,19 +129,19 @@ To use this skill for the Furniture Collection project:
 
 1. **Retrieve project information:**
 
-   ```
+   ```text
    Use the Stitch MCP Server to get the Furniture Collection project
    ```
 
 2. **Get the Home page screen details:**
 
-   ```
+   ```text
    Retrieve the Home page screen's code, image, and screen object information
    ```
 
 3. **Reference best practices:**
 
-   ```
+   ```text
    Review the Stitch Effective Prompting Guide at:
    https://stitch.withgoogle.com/docs/learn/prompting/
    ```
