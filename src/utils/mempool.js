@@ -1,45 +1,41 @@
-// Mempool.space API client for fee estimates with CORS proxy
+// Mempool.space API client for fee estimates
+// mempool.space supports CORS natively — no proxy needed
 
-const CORS_PROXY_URL = 'https://proxy.shakespeare.diy/?url='
 const MEMPOOL_API_URL = import.meta.env.VITE_MEMPOOL_API_URL || 'https://mempool.space/api'
+
+const FALLBACK_FEES = {
+  high: 25,
+  medium: 18,
+  low: 12,
+  economy: 6,
+  minimum: 2,
+  unit: 'sat/vB',
+  timestamp: Date.now(),
+  source: 'fallback'
+}
 
 export const getTieredFeeEstimates = async () => {
   try {
-    const response = await fetch(
-      `${CORS_PROXY_URL}${encodeURIComponent(`${MEMPOOL_API_URL}/v1/fees/recommended`)}`
-    )
-    if (!response.ok) {
-      throw new Error('Failed to fetch fee estimates')
-    }
+    const response = await fetch(`${MEMPOOL_API_URL}/v1/fees/recommended`, {
+      signal: AbortSignal.timeout(5000)
+    })
+    if (!response.ok) return FALLBACK_FEES
     const data = await response.json()
-
-    // Tiered estimates based on mempool data
     return {
-      high: data.fastestFee || 25, // Fastest, ~10min
-      medium: data.halfHourFee || 18, // 30min
-      low: data.hourFee || 12, // 1hr
-      economy: data.economyFee || 6, // Variable
+      high: data.fastestFee || 25,
+      medium: data.halfHourFee || 18,
+      low: data.hourFee || 12,
+      economy: data.economyFee || 6,
       minimum: data.minimumFee || 2,
       unit: 'sat/vB',
       timestamp: Date.now()
-    };
-  } catch (error) {
-    console.error('Error fetching fee estimates:', error)
-    // Fallback tiered estimates
-    return {
-      high: 25,
-      medium: 18,
-      low: 12,
-      economy: 6,
-      minimum: 2,
-      unit: 'sat/vB',
-      timestamp: Date.now(),
-      source: 'fallback'
-    };
+    }
+  } catch {
+    return FALLBACK_FEES
   }
-};
+}
 
-export const getFeeEstimates = getTieredFeeEstimates; // Backward compatibility
+export const getFeeEstimates = getTieredFeeEstimates // Backward compatibility
 
 export const convertSatsToFiat = (sats, fiatRate = 50000) => {
   // Simple conversion - in production, fetch live rates
@@ -50,34 +46,24 @@ export const convertSatsToFiat = (sats, fiatRate = 50000) => {
 
 export const getMempoolStats = async () => {
   try {
-    const response = await fetch(
-      `${CORS_PROXY_URL}${encodeURIComponent(`${MEMPOOL_API_URL}/mempool`)}`
-    )
-    if (!response.ok) {
-      throw new Error('Failed to fetch mempool stats')
-    }
+    const response = await fetch(`${MEMPOOL_API_URL}/mempool`, {
+      signal: AbortSignal.timeout(5000)
+    })
+    if (!response.ok) throw new Error()
     return await response.json()
-  } catch (error) {
-    console.error('Error fetching mempool stats:', error)
-    return {
-      mempoolSize: 145200,
-      blockCount: 881234,
-      averageFee: 8.5
-    }
+  } catch {
+    return { mempoolSize: 145200, blockCount: 881234, averageFee: 8.5 }
   }
 }
 
 export const getBlockHeight = async () => {
   try {
-    const response = await fetch(
-      `${CORS_PROXY_URL}${encodeURIComponent(`${MEMPOOL_API_URL}/blocks/tip/height`)}`
-    )
-    if (!response.ok) {
-      throw new Error('Failed to fetch block height')
-    }
+    const response = await fetch(`${MEMPOOL_API_URL}/blocks/tip/height`, {
+      signal: AbortSignal.timeout(5000)
+    })
+    if (!response.ok) throw new Error()
     return await response.json()
-  } catch (error) {
-    console.error('Error fetching block height:', error)
-    return 880000 // Realistic placeholder
+  } catch {
+    return 880000
   }
 }
