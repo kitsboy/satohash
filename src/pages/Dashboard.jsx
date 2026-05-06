@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
+import { useI18n } from '../i18n'
 import GlobalDropzone from '../components/GlobalDropzone'
 import HistoryList from '../components/HistoryList'
 import Merkle3D from '../components/Merkle3D'
@@ -142,6 +143,7 @@ export default function Dashboard() {
   const [showWelcome, setShowWelcome] = useState(
     () => !localStorage.getItem('satohash-welcome-dismissed')
   )
+  const { t } = useI18n()
 
   const dismissWelcome = () => {
     localStorage.setItem('satohash-welcome-dismissed', 'true')
@@ -273,16 +275,15 @@ export default function Dashboard() {
                     className="text-sm font-black tracking-wide uppercase"
                     style={{ color: 'var(--accent-gold)' }}
                   >
-                    👋 Welcome to Satohash
+                    👋 {t('dashboard', 'welcome')}
                   </p>
                   <p className="text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                    Drop any file in the box below to create a permanent, Bitcoin-backed proof it
-                    existed right now. Your file never leaves your device — only its fingerprint
-                    goes to the blockchain.
+                    {t('dashboard', 'welcomeSubtitle')}
                   </p>
                 </div>
                 <button
                   onClick={dismissWelcome}
+                  aria-label={t('dashboard', 'dismiss')}
                   className="shrink-0 text-[var(--text-secondary)] transition-colors hover:text-[var(--text-primary)]"
                 >
                   <X size={16} />

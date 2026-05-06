@@ -22,43 +22,9 @@ import {
 } from 'lucide-react'
 import HelpOverlay from './HelpOverlay'
 import { getBlockHeight } from '../utils/mempool'
+import { useI18n } from '../i18n'
 
-// ─── Nav groups ──────────────────────────────────────────────────────────────
-const NAV_GROUPS = [
-  {
-    label: 'HOME',
-    items: [{ name: 'Dashboard', path: '/dashboard', icon: Globe }]
-  },
-  {
-    label: 'NOTARIZE',
-    items: [
-      { name: 'Vault', path: '/vault', icon: Database },
-      { name: 'Stamp', path: '/stamp', icon: Fingerprint },
-      { name: 'Verify', path: '/verify', icon: ShieldCheck }
-    ]
-  },
-  {
-    label: 'EXPLORE',
-    items: [{ name: 'Chain Explorer', path: '/atlas', icon: Globe }]
-  },
-  {
-    label: 'BUILD',
-    items: [
-      { name: 'Developer API', path: '/developer', icon: Terminal },
-      { name: 'Contracts', path: '/contracts', icon: FileText },
-      { name: 'Forum', path: '/forum', icon: MessageSquare }
-    ]
-  },
-  {
-    label: 'SETTINGS',
-    items: [
-      { name: 'Settings', path: '/settings', icon: Settings },
-      { name: 'Trust Center', path: '/trust', icon: Scale }
-    ]
-  }
-]
-
-// ─── "More" compact links ─────────────────────────────────────────────────────
+// ─── "More" compact links (static — no translation needed) ───────────────────
 const MORE_ITEMS = [
   { name: 'Protocol Stats', path: '/protocol-stats' },
   { name: 'Explorer', path: '/explorer' },
@@ -121,9 +87,45 @@ export default function LeftRailNav() {
   const [showHelp, setShowHelp] = useState(false)
   const [blockHeight, setBlockHeight] = useState(null)
   const [advancedOpen, setAdvancedOpen] = useState(false)
+  const { t } = useI18n()
 
   const npub = localStorage.getItem('satohash_npub') || ''
   const initials = npub.length > 8 ? npub.substring(4, 6).toUpperCase() : 'SH'
+
+  // ─── Nav groups (built here so t() is in scope) ─────────────────────────
+  const NAV_GROUPS = [
+    {
+      label: 'HOME',
+      items: [{ name: t('nav', 'dashboard'), path: '/dashboard', icon: Globe }]
+    },
+    {
+      label: 'NOTARIZE',
+      items: [
+        { name: t('nav', 'vault'), path: '/vault', icon: Database },
+        { name: t('nav', 'stamp'), path: '/stamp', icon: Fingerprint },
+        { name: t('nav', 'verify'), path: '/verify', icon: ShieldCheck }
+      ]
+    },
+    {
+      label: 'EXPLORE',
+      items: [{ name: t('nav', 'atlas'), path: '/atlas', icon: Globe }]
+    },
+    {
+      label: 'BUILD',
+      items: [
+        { name: t('nav', 'developer'), path: '/developer', icon: Terminal },
+        { name: t('nav', 'contracts'), path: '/contracts', icon: FileText },
+        { name: 'Forum', path: '/forum', icon: MessageSquare }
+      ]
+    },
+    {
+      label: 'SETTINGS',
+      items: [
+        { name: t('nav', 'settings'), path: '/settings', icon: Settings },
+        { name: t('nav', 'trust'), path: '/trust', icon: Scale }
+      ]
+    }
+  ]
 
   useEffect(() => {
     const seen = localStorage.getItem('satohash_intro_seen')
@@ -218,7 +220,9 @@ export default function LeftRailNav() {
               <NavItem item={{ name: 'Node Mesh', path: '/nodes', icon: Network }} />
               <NavItem item={{ name: 'Block Explorer', path: '/explorer', icon: Search }} />
               <NavItem item={{ name: 'Web Capture', path: '/snapper', icon: Camera }} />
-              <NavItem item={{ name: 'Templates', path: '/templates', icon: LayoutTemplate }} />
+              <NavItem
+                item={{ name: t('nav', 'templates'), path: '/templates', icon: LayoutTemplate }}
+              />
             </div>
           )}
         </div>

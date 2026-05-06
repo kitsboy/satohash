@@ -6,30 +6,36 @@ import { getFeeEstimates, getBlockHeight } from '../utils/mempool'
 import { QRCodeSVG } from 'qrcode.react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { BTC_ADDRESS } from '../config/constants'
+import { useI18n } from '../i18n'
 
-// ─── Route → human-readable breadcrumb ────────────────────────────────────
-const ROUTE_LABELS = {
-  '/vault': 'Vault',
-  '/stamp': 'Stamp',
-  '/verify': 'Verify',
-  '/certificates': 'Certificates',
-  '/atlas': 'Chain Explorer',
-  '/nodes': 'Node Mesh',
-  '/explorer': 'Block Explorer',
-  '/developer': 'Developer API',
-  '/contracts': 'Contracts',
-  '/snapper': 'Web Capture',
-  '/templates': 'Templates',
-  '/settings': 'Settings',
-  '/trust': 'Trust Center'
+// ─── Route → i18n key mapping ─────────────────────────────────────────────
+// Each entry maps a path prefix to [section, key] for t(section, key)
+const ROUTE_I18N = {
+  '/vault': ['nav', 'vault'],
+  '/stamp': ['nav', 'stamp'],
+  '/verify': ['nav', 'verify'],
+  '/atlas': ['nav', 'atlas'],
+  '/developer': ['nav', 'developer'],
+  '/contracts': ['nav', 'contracts'],
+  '/templates': ['nav', 'templates'],
+  '/settings': ['nav', 'settings'],
+  '/trust': ['nav', 'trust']
 }
 
-function getPageLabel(pathname) {
+function usePageLabel(pathname) {
+  const { t } = useI18n()
   // Exact match first
-  if (ROUTE_LABELS[pathname]) return ROUTE_LABELS[pathname]
+  if (ROUTE_I18N[pathname]) {
+    const [section, key] = ROUTE_I18N[pathname]
+    return t(section, key)
+  }
   // Prefix match (e.g. /vault/abc)
-  const prefix = Object.keys(ROUTE_LABELS).find((k) => k !== '/' && pathname.startsWith(k))
-  return prefix ? ROUTE_LABELS[prefix] : 'Dashboard'
+  const prefix = Object.keys(ROUTE_I18N).find((k) => k !== '/' && pathname.startsWith(k))
+  if (prefix) {
+    const [section, key] = ROUTE_I18N[prefix]
+    return t(section, key)
+  }
+  return t('nav', 'dashboard')
 }
 
 // ─── Status pill ──────────────────────────────────────────────────────────
@@ -62,7 +68,7 @@ function StatusPill({ children, dotColor }) {
 export default function TopSignalBar() {
   const location = useLocation()
   const navigate = useNavigate()
-  const pageLabel = getPageLabel(location.pathname)
+  const pageLabel = usePageLabel(location.pathname)
 
   const [blockHeight, setBlockHeight] = useState(null)
   const [feeRate, setFeeRate] = useState(null)

@@ -20,8 +20,10 @@ import { toast } from 'sonner'
 import { downloadCertificate } from '../utils/certificate'
 import { useSocket } from '../hooks/useSocket'
 import { SkeletonCard } from '../components/Skeletons'
+import { useI18n } from '../i18n'
 
 const StatusBadge = ({ status }) => {
+  const { t } = useI18n()
   const styles = {
     anchored:
       'bg-[var(--accent-success)]/10 text-[var(--accent-success)] border-[var(--accent-success)]/20',
@@ -33,8 +35,8 @@ const StatusBadge = ({ status }) => {
     failed: 'bg-white/5 text-[var(--text-secondary)] border-white/10'
   }
   const labels = {
-    pending: 'Waiting for Bitcoin (~10 min)',
-    confirmed: 'Confirmed on Bitcoin'
+    pending: t('vault', 'pending'),
+    confirmed: t('vault', 'confirmed')
   }
   return (
     <span
@@ -78,6 +80,7 @@ export default function Vault() {
   const [revokeTarget, setRevokeTarget] = useState(null)
   const [revokeReason, setRevokeReason] = useState('')
   const [revoking, setRevoking] = useState(false)
+  const { t } = useI18n()
 
   const { lastEvent } = useSocket()
 
@@ -475,7 +478,7 @@ export default function Vault() {
             />
             <input
               type="text"
-              placeholder="Search by hash, label or asset..."
+              placeholder={t('vault', 'search')}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="h-14 w-full rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] pr-6 pl-12 text-sm font-bold transition-all outline-none placeholder:text-[var(--text-secondary)] focus:border-[var(--accent-gold)] focus:ring-1 focus:ring-[var(--accent-gold)] md:w-80"

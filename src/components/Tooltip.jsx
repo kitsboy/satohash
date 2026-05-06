@@ -12,13 +12,15 @@ import { motion, AnimatePresence } from 'framer-motion'
 export default function Tooltip({ title, content, className = '' }) {
   const [visible, setVisible] = useState(false)
   const [flipBelow, setFlipBelow] = useState(false)
+  const [flipLeft, setFlipLeft] = useState(false)
   const triggerRef = useRef(null)
 
-  // Compute flip direction in an effect (safe ref access outside render)
+  // Compute flip directions in an effect (safe ref access outside render)
   useEffect(() => {
     if (visible && triggerRef.current) {
       const rect = triggerRef.current.getBoundingClientRect()
       setFlipBelow(rect.top < 120)
+      setFlipLeft(rect.left > window.innerWidth * 0.55)
     }
   }, [visible])
 
@@ -51,17 +53,19 @@ export default function Tooltip({ title, content, className = '' }) {
             transition={{ duration: 0.15, ease: 'easeOut' }}
             className="pointer-events-none absolute z-50 w-[280px] rounded-xl border border-[var(--border-bright)] bg-[var(--bg-secondary)] p-3.5 shadow-[var(--shadow-noir)]"
             style={{
-              // Position: centred horizontally under/over the button
-              left: '50%',
-              transform: 'translateX(-50%)',
+              // Horizontal: clamp to viewport when near right edge
+              ...(flipLeft
+                ? { right: 0, left: 'auto', transform: 'none' }
+                : { left: '50%', transform: 'translateX(-50%)' }),
+              // Vertical: flip above/below based on available room
               ...(flipBelow
                 ? { top: 'calc(100% + 8px)', bottom: 'auto' }
                 : { bottom: 'calc(100% + 8px)', top: 'auto' })
             }}
           >
-            {/* Small caret */}
+            {/* Small caret — repositioned when flipped left */}
             <span
-              className="absolute left-1/2 -translate-x-1/2 border-4 border-transparent"
+              className={`absolute border-4 border-transparent ${flipLeft ? 'right-2 -translate-x-0' : 'left-1/2 -translate-x-1/2'}`}
               style={
                 flipBelow
                   ? {

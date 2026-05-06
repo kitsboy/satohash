@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { Plus, Send, MessageSquare } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { toast } from 'sonner'
+import { useI18n } from '../i18n'
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
 
@@ -20,6 +21,7 @@ const Forum = () => {
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
   const { id } = useParams()
+  const { t } = useI18n()
 
   const fetchThreads = async () => {
     setLoading(true)
@@ -136,7 +138,7 @@ const Forum = () => {
             className="mb-4 hover:underline"
             style={{ color: 'var(--accent-active)' }}
           >
-            ← Back to Forum
+            {t('forum', 'backToForum')}
           </button>
           <h1 className="mb-4 text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>
             {selectedThread.title}
@@ -164,7 +166,7 @@ const Forum = () => {
             <div>
               <input
                 type="text"
-                placeholder="Your name"
+                placeholder={t('forum', 'yourName')}
                 value={newPostAuthor}
                 onChange={(e) => setNewPostAuthor(e.target.value)}
                 className="w-full rounded p-2"
@@ -177,7 +179,7 @@ const Forum = () => {
             </div>
             <div>
               <textarea
-                placeholder="Write your post..."
+                placeholder={t('forum', 'writePost')}
                 value={newPostContent}
                 onChange={(e) => setNewPostContent(e.target.value)}
                 className="w-full rounded p-2"
@@ -190,7 +192,7 @@ const Forum = () => {
               />
             </div>
             <button type="submit" className={btnHolographic} disabled={loading}>
-              <Send className="mr-2 h-4 w-4" /> Post Reply
+              <Send className="mr-2 h-4 w-4" /> {t('forum', 'postReply')}
             </button>
           </form>
         </motion.div>
@@ -205,19 +207,20 @@ const Forum = () => {
           className="mb-4 flex items-center text-3xl font-bold"
           style={{ color: 'var(--text-primary)' }}
         >
-          <MessageSquare className="mr-2 h-8 w-8" style={{ color: 'var(--accent-active)' }} /> Forum
+          <MessageSquare className="mr-2 h-8 w-8" style={{ color: 'var(--accent-active)' }} />{' '}
+          {t('forum', 'pageTitle')}
         </h1>
         <p className="mb-6" style={{ color: 'var(--text-secondary)' }}>
-          Discuss notarization, Bitcoin proofs, and the future of tamper-proof documents.
+          {t('forum', 'subtitle')}
         </p>
         <form onSubmit={createThread} className={`p-4 ${glassCard} mb-6`}>
           <h2 className="mb-3 text-xl font-semibold" style={{ color: 'var(--text-primary)' }}>
-            Start a New Thread
+            {t('forum', 'newThread')}
           </h2>
           <div className="space-y-2">
             <input
               type="text"
-              placeholder="Thread title"
+              placeholder={t('forum', 'threadTitle')}
               value={newThreadTitle}
               onChange={(e) => setNewThreadTitle(e.target.value)}
               className="w-full rounded p-2"
@@ -230,7 +233,7 @@ const Forum = () => {
             <div className="flex space-x-2">
               <input
                 type="text"
-                placeholder="Your name (optional)"
+                placeholder={t('forum', 'yourName')}
                 value={newAuthor}
                 onChange={(e) => setNewAuthor(e.target.value)}
                 className="flex-1 rounded p-2"
@@ -245,7 +248,7 @@ const Forum = () => {
                 className={btnHolographic}
                 disabled={loading || !newThreadTitle.trim()}
               >
-                <Plus className="mr-2 h-4 w-4" /> Create
+                <Plus className="mr-2 h-4 w-4" /> {t('forum', 'createThread')}
               </button>
             </div>
           </div>
@@ -255,7 +258,7 @@ const Forum = () => {
             <div className="flex flex-col items-center justify-center space-y-4 py-16 text-center">
               <span className="text-4xl">💬</span>
               <h3 className="text-lg font-black uppercase" style={{ color: 'var(--text-primary)' }}>
-                No discussions yet
+                {t('forum', 'noDiscussions')}
               </h3>
               <p className="max-w-sm text-sm" style={{ color: 'var(--text-secondary)' }}>
                 Be the first to start a conversation about Bitcoin timestamping, use cases, or the

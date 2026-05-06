@@ -588,18 +588,26 @@ app.get('/health', async (req, res) => {
     details.redis = { status: 'disabled' };
   }
 
-  // OTS Calendar check (simple fetch)
+  // OTS Calendar check (alice is the canonical free public calendar)
   try {
-    const otsResp = await fetch('https://octets.one', { timeout: 2000 });
-    details.ots = { status: otsResp.ok ? 'healthy' : 'degraded' };
+    const otsResp = await fetch('https://alice.btc.calendar.opentimestamps.org', { signal: AbortSignal.timeout(3000) });
+    details.ots = {
+      status: otsResp.ok ? 'healthy' : 'degraded',
+      calendars: ['alice.btc.calendar.opentimestamps.org', 'bob.btc.calendar.opentimestamps.org', 'finney.calendar.eternitywall.com'],
+      note: 'Free public calendars — no API key required'
+    };
   } catch (e) {
-    details.ots = { status: 'unhealthy' };
+    details.ots = {
+      status: 'unhealthy',
+      calendars: ['alice.btc.calendar.opentimestamps.org', 'bob.btc.calendar.opentimestamps.org', 'finney.calendar.eternitywall.com'],
+      note: 'Free public calendars — no API key required'
+    };
     status = 'degraded';
   }
 
   // Nostr relay check
   try {
-    const nostrResp = await fetch('https://relay.damus.io', { timeout: 2000 });
+    const nostrResp = await fetch('https://relay.damus.io', { signal: AbortSignal.timeout(3000) });
     details.nostr = { status: nostrResp.ok ? 'healthy' : 'degraded' };
   } catch (e) {
     details.nostr = { status: 'unhealthy' };
@@ -744,7 +752,13 @@ app.post('/api/stamp', stampRateLimit, paywallMiddleware, async (req, res, next)
 
         let otsBinary;
         try {
-            await OpenTimestamps.stamp(detached);
+            // Explicitly use the three free public OTS calendars (alice, bob, finney)
+            const calendarUrls = [
+              'https://alice.btc.calendar.opentimestamps.org',
+              'https://bob.btc.calendar.opentimestamps.org',
+              'https://finney.calendar.eternitywall.com'
+            ];
+            await OpenTimestamps.stamp(detached, calendarUrls);
             otsBinary = detached.serializeToBytes();
             // Item 10: Binary Proof Validation
             if (!otsBinary || otsBinary.length < 10) {

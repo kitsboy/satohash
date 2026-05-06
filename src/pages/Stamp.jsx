@@ -18,6 +18,7 @@ import { addErrorBreadcrumb } from '../utils/errors.js'
 import { toast } from 'sonner'
 import Tooltip from '../components/Tooltip'
 import { useSocket } from '../hooks/useSocket'
+import { useI18n } from '../i18n'
 
 export default function Stamp() {
   const [isCapsuleMode, setIsCapsuleMode] = useState(false)
@@ -36,6 +37,7 @@ export default function Stamp() {
   const [isConfirmed, setIsConfirmed] = useState(false)
   const [confirmedBlock, setConfirmedBlock] = useState(null)
   const [lightningInvoice, setLightningInvoice] = useState(null) // { payment_request, amount_msat, expires_at }
+  const { t } = useI18n()
 
   const { lastEvent } = useSocket()
 
@@ -309,11 +311,9 @@ export default function Stamp() {
         <div className="space-y-2">
           <div className="flex items-center gap-3">
             <ShieldCheck className="text-[var(--accent-gold)]" size={24} />
-            <h1 className="text-4xl font-bold tracking-tighter uppercase">Satohash Core</h1>
+            <h1 className="text-4xl font-bold tracking-tighter uppercase">{t('stamp', 'title')}</h1>
           </div>
-          <p className="font-medium text-[var(--text-secondary)]">
-            The cryptographic notary of record. Hash locally, anchor globally.
-          </p>
+          <p className="font-medium text-[var(--text-secondary)]">{t('stamp', 'subtitle')}</p>
         </div>
       </header>
 
@@ -399,12 +399,12 @@ export default function Stamp() {
                   </div>
                   <div className="space-y-2">
                     <h3 className="text-2xl font-bold tracking-tight">
-                      {isCapsuleMode ? 'Assemble Evidence Capsule' : 'Establish Provenance'}
+                      {isCapsuleMode ? 'Assemble Evidence Capsule' : t('stamp', 'title')}
                     </h3>
                     <p className="mx-auto max-w-sm font-medium text-[var(--text-secondary)]">
                       {isCapsuleMode
                         ? 'Drop multiple files to create a signed evidence bundle anchored as a single proof.'
-                        : 'Drop your document here. SHA-256 is calculated locally before any network request.'}
+                        : t('stamp', 'dropzone')}
                     </p>
                   </div>
 
@@ -686,7 +686,7 @@ export default function Stamp() {
                   onClick={startStamping}
                   className="flex h-14 w-full items-center justify-center gap-3 rounded-xl bg-[var(--text-primary)] font-bold tracking-widest text-[var(--bg-primary)] uppercase transition-all hover:scale-[1.01]"
                 >
-                  Confirm & Anchor <ChevronRight size={18} />
+                  {t('stamp', 'stamp')} <ChevronRight size={18} />
                 </button>
               )}
             </div>
@@ -806,7 +806,7 @@ export default function Stamp() {
                         onClick={() => setCoSigners([...coSigners, ''])}
                         className="text-[10px] font-bold text-[var(--accent-gold)] uppercase"
                       >
-                        + Add Co-Signer
+                        + {t('stamp', 'addCoSigner')}
                       </button>
                       <Tooltip
                         title="Co-Signers"

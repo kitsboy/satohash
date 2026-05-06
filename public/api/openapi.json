@@ -2,20 +2,46 @@
   "openapi": "3.0.3",
   "info": {
     "title": "Satohash API",
-    "description": "Bitcoin-native timestamping API. Create immutable proof of document existence secured by the Bitcoin blockchain.\n\n## Authentication\nAll API requests require an API key passed in the `X-API-Key` header.\n\n## Bitcoin-First Payments\n- Free tier: 100 requests/day\n- Pro tier: Pay per request in sats via Lightning Network\n- Enterprise: Contact us for custom pricing",
+    "description": "**Bitcoin-native document timestamping.** Satohash lets you prove a document existed at a specific point in time — secured by the Bitcoin blockchain, with no Bitcoin wallet required for users.\n\nWhen you submit a SHA-256 hash, Satohash stamps it against three free public OpenTimestamps calendars (alice, bob, and finney). Within ~10 minutes a Bitcoin miner will include the calendar's aggregated commitment in a block, giving you an immutable, independently-verifiable timestamp anchored to global proof-of-work.\n\n## How it works\n1. **Hash** — your document never leaves your device; only its SHA-256 hash is sent\n2. **Stamp** — the hash is committed to three public OTS calendars simultaneously\n3. **Mine** — within ~10 min a Bitcoin block seals the commitment permanently\n4. **Verify** — anyone can verify the `.ots` proof independently, forever, for free\n\n## Authentication\nAll API requests require an API key in the `X-API-Key` header.\n\n## Pricing\n- **Free tier**: 100 requests/day — no credit card, no signup friction\n- **Pro tier**: Pay per request in satoshis via Lightning Network (L402)\n- **Enterprise**: Contact us for custom pricing and SLA\n\n## AI / LLM Integration\nSatohash is designed to be called from AI agents, GPT Actions, Claude tool_use, Make, Zapier, and n8n. The only pre-processing requirement is computing a SHA-256 hash of the document on the client side before calling the API. See the full integration guide at `https://satohash.giveabit.io/docs/AI_INTEGRATION`.\n\n## Zero-Knowledge Design\nDocument contents never touch Satohash servers. Only the 64-character hex SHA-256 hash is transmitted. This means Satohash cannot read, store, or leak your documents.",
     "version": "1.0.0",
     "contact": {
       "name": "Satohash Support",
-      "email": "api@satohash.io"
+      "email": "hello@giveabit.io"
+    },
+    "x-satohash-ots": {
+      "description": "Satohash uses the OpenTimestamps protocol with three free public calendars. No API key or account is required to use these calendars — they are community-funded infrastructure maintained by the OTS project.",
+      "calendars": [
+        {
+          "name": "alice",
+          "url": "https://alice.btc.calendar.opentimestamps.org",
+          "operator": "OpenTimestamps Project",
+          "cost": "free"
+        },
+        {
+          "name": "bob",
+          "url": "https://bob.btc.calendar.opentimestamps.org",
+          "operator": "OpenTimestamps Project",
+          "cost": "free"
+        },
+        {
+          "name": "finney",
+          "url": "https://finney.calendar.eternitywall.com",
+          "operator": "Eternity Wall",
+          "cost": "free"
+        }
+      ],
+      "uptime_monitor": "https://uptime.opentimestamps.net",
+      "proof_lifecycle": ["pending", "confirmed"],
+      "confirmation_time_minutes": 10
     }
   },
   "servers": [
     {
-      "url": "https://api.satohash.io",
+      "url": "https://satohash.giveabit.io",
       "description": "Production server"
     },
     {
-      "url": "http://localhost:3005",
+      "url": "http://localhost:3001",
       "description": "Local development"
     }
   ],

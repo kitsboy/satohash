@@ -2,19 +2,21 @@ import { useState } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Database, Fingerprint, Globe, Search, MoreHorizontal } from 'lucide-react'
-
-const PRIMARY_LINKS = [
-  { name: 'Vault', path: '/vault', icon: Database },
-  { name: 'Stamp', path: '/stamp', icon: Fingerprint },
-  { name: 'Explore', path: '/atlas', icon: Globe },
-  { name: 'Blocks', path: '/explorer', icon: Search }
-]
+import { useI18n } from '../i18n'
 
 // ─── MobileBottomNav ─────────────────────────────────────────────────────────
 export default function MobileBottomNav() {
   const location = useLocation()
   const [moreOpen, setMoreOpen] = useState(false)
   const npub = localStorage.getItem('satohash_npub') || ''
+  const { t } = useI18n()
+
+  const PRIMARY_LINKS = [
+    { name: t('nav', 'vault'), path: '/vault', icon: Database },
+    { name: t('nav', 'stamp'), path: '/stamp', icon: Fingerprint },
+    { name: t('nav', 'atlas'), path: '/atlas', icon: Globe },
+    { name: 'Blocks', path: '/explorer', icon: Search }
+  ]
 
   // "More" is active when we're on a route not in the primary list
   const primaryPaths = PRIMARY_LINKS.map((l) => l.path)
@@ -84,16 +86,16 @@ export default function MobileBottomNav() {
               </div>
 
               {[
-                { name: 'Dashboard', path: '/dashboard' },
-                { name: 'Verify', path: '/verify' },
+                { name: t('nav', 'dashboard'), path: '/dashboard' },
+                { name: t('nav', 'verify'), path: '/verify' },
                 { name: 'Batch Stamp', path: '/batch' },
-                { name: 'Developer API', path: '/developer' },
-                { name: 'Contracts', path: '/contracts' },
+                { name: t('nav', 'developer'), path: '/developer' },
+                { name: t('nav', 'contracts'), path: '/contracts' },
                 { name: 'Web Capture', path: '/snapper' },
-                { name: 'Templates', path: '/templates' },
-                { name: 'Settings', path: '/settings' },
-                { name: 'Trust Center', path: '/trust' },
-                { name: 'Image Vault', path: '/image-vault' },
+                { name: t('nav', 'templates'), path: '/templates' },
+                { name: t('nav', 'settings'), path: '/settings' },
+                { name: t('nav', 'trust'), path: '/trust' },
+                { name: t('vault', 'title'), path: '/image-vault' },
                 { name: 'Protocol Stats', path: '/protocol-stats' }
               ].map((link) => (
                 <NavLink
