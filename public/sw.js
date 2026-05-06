@@ -21,16 +21,14 @@ self.addEventListener('activate', (event) => {
 })
 
 self.addEventListener('fetch', (event) => {
-  // Network-first for API calls; return a JSON offline sentinel on failure
+  // Don't cache API responses — they change (proof status, confirmations)
   if (event.request.url.includes('/api/')) {
-    event.respondWith(
-      fetch(event.request).catch(
-        () =>
-          new Response(JSON.stringify({ error: 'offline', offline: true }), {
-            headers: { 'Content-Type': 'application/json' }
-          })
-      )
-    )
+    event.respondWith(fetch(event.request).catch(
+      () =>
+        new Response(JSON.stringify({ error: 'offline', offline: true }), {
+          headers: { 'Content-Type': 'application/json' }
+        })
+    ))
     return
   }
 

@@ -297,7 +297,37 @@ function AppContent() {
           <Route path="/audit-log" element={<Navigate to="/vault" replace />} />
           <Route path="/documentation" element={<Navigate to="/developer" replace />} />
           <Route path="/status" element={<Navigate to="/atlas" replace />} />
-          <Route path="*" element={<Navigate to="/" />} />
+          <Route
+            path="*"
+            element={
+              <div
+                style={{
+                  minHeight: '100vh',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  background: 'var(--bg-primary)',
+                  color: 'var(--text-primary)'
+                }}
+              >
+                <h1 style={{ fontSize: '4rem', fontWeight: 900, marginBottom: '1rem' }}>404</h1>
+                <p style={{ color: 'var(--text-secondary)', marginBottom: '2rem' }}>
+                  Page not found
+                </p>
+                <a
+                  href="/"
+                  style={{
+                    color: 'var(--accent-active)',
+                    fontWeight: 700,
+                    textDecoration: 'underline'
+                  }}
+                >
+                  ← Back to Satohash
+                </a>
+              </div>
+            }
+          />
         </Routes>
       </Suspense>
     </ErrorBoundary>

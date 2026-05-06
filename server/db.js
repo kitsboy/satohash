@@ -68,6 +68,24 @@ db.exec(`
 
   CREATE INDEX IF NOT EXISTS idx_forum_threads_created ON forum_threads(created_at DESC);
   CREATE INDEX IF NOT EXISTS idx_forum_posts_thread ON forum_posts(thread_id);
+
+  CREATE TABLE IF NOT EXISTS push_subscriptions (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    endpoint TEXT UNIQUE NOT NULL,
+    keys TEXT,
+    npub TEXT,
+    created_at DATETIME DEFAULT (datetime('now'))
+  );
+
+  CREATE TABLE IF NOT EXISTS webhooks (
+    id TEXT PRIMARY KEY,
+    url TEXT NOT NULL,
+    events TEXT DEFAULT '["stamp.confirmed"]',
+    active INTEGER DEFAULT 1,
+    secret TEXT,
+    created_at DATETIME DEFAULT (datetime('now')),
+    last_triggered DATETIME
+  );
 `);
 
 logger.info(`🗄️ Database initialized at ${dbPath}`);

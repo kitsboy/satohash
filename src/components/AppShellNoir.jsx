@@ -15,7 +15,13 @@ const API = import.meta.env.VITE_API_URL ?? 'http://localhost:3001'
 export default function AppShellNoir({ children }) {
   const [isSearchOpen, setIsSearchOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
+  const [debouncedQuery, setDebouncedQuery] = useState('')
   const [stampResults, setStampResults] = useState([])
+
+  useEffect(() => {
+    const t = setTimeout(() => setDebouncedQuery(searchQuery), 150)
+    return () => clearTimeout(t)
+  }, [searchQuery])
   const navigate = useNavigate()
   const prevFocusRef = useRef(null)
   const paletteRef = useRef(null)
@@ -170,7 +176,7 @@ export default function AppShellNoir({ children }) {
 
               {/* Results area */}
               <div className="scrollbar-hide max-h-[420px] overflow-y-auto p-4">
-                {/* Quick Navigation — filtered by searchQuery */}
+                {/* Quick Navigation — filtered by debouncedQuery */}
                 {(() => {
                   const navItems = [
                     {
@@ -198,7 +204,7 @@ export default function AppShellNoir({ children }) {
                       path: '/settings'
                     }
                   ]
-                  const q = searchQuery.toLowerCase()
+                  const q = debouncedQuery.toLowerCase()
                   const filtered = navItems.filter(
                     ({ label, sub }) =>
                       label.toLowerCase().includes(q) || sub.toLowerCase().includes(q)

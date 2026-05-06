@@ -160,6 +160,14 @@ router.post('/offer', async (req, res) => {
 });
 
 /**
+ * GET /api/lightning/balance
+ * Returns the node's Lightning channel balance (stub — real LND not wired).
+ */
+router.get('/balance', (req, res) => {
+  res.json({ balance: 0, sats: 0, currency: 'BTC', mock: true });
+});
+
+/**
  * GET /api/lightning/status/:r_hash
  * Checks if an invoice has been settled (paid).
  * Secure: Validates no live tx, just mock/status.

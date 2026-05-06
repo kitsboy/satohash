@@ -43,7 +43,10 @@ export default defineConfig({
             output: {
                 manualChunks: {
                     vendor: ['react', 'react-dom', 'react-router-dom'],
-                    motion: ['framer-motion']
+                    motion: ['framer-motion'],
+                    icons: ['lucide-react'],
+                    three: ['three'],
+                    crypto: ['bitcoinjs-lib', 'ethers', 'tiny-secp256k1']
                 }
             }
         }

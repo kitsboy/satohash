@@ -477,11 +477,11 @@ Identify and flag any sections that may violate or require attention under ${sta
     res.json({ standard, flags, scannedAt: new Date().toISOString(), model: 'claude-haiku-4-5' });
 
   } catch (err) {
-    logger.error('Compliance check error:', err);
+    logger.error('Compliance check error: %o', err);
     if (err.message.includes('rate limit')) {
       res.status(429).json({ error: 'AI rate limited, try later' });
     } else {
-      res.status(500).json({ error: 'Scan failed' });
+      res.status(500).json({ error: 'Compliance check failed. Please try again.' });
     }
   }
 });
@@ -688,13 +688,21 @@ const loadOtsFile = (buffer) => {
     }
 };
 
+const stampRateLimit = rateLimit({
+  windowMs: 60 * 1000,
+  max: 10,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'Too many stamp requests. Please wait.' }
+});
+
 /**
  * @swagger
  * /api/stamp:
  *   post:
  *     summary: Create an OTS timestamp, save to database, and return JSON info.
  */
-app.post('/api/stamp', paywallMiddleware, async (req, res, next) => {
+app.post('/api/stamp', stampRateLimit, paywallMiddleware, async (req, res, next) => {
     try {
         const stampSchema = z.object({
             hash: z.string()

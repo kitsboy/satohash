@@ -59,7 +59,7 @@ const Toggle = ({ active, onToggle }) => (
 
 export default function Settings() {
   const navigate = useNavigate()
-  const { toggleTheme } = useTheme()
+  const { theme, toggleTheme } = useTheme()
   const [activeTab, setActiveTab] = useState('profile')
   const [isDark, setIsDark] = useState(
     () => document.documentElement.getAttribute('data-theme') !== 'elite'
@@ -137,12 +137,11 @@ export default function Settings() {
   const [webhookTestId, setWebhookTestId] = useState(null)
 
   useEffect(() => {
-    const theme = eliteMode ? 'elite' : 'noir'
-    document.documentElement.setAttribute('data-theme', theme)
-    localStorage.setItem('satohash_theme', theme)
-    // Sync with ThemeProvider (toggles light-mode class alongside data-theme)
-    toggleTheme()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const wantLight = eliteMode
+    const isLight = theme === 'light'
+    if (wantLight !== isLight) {
+      toggleTheme()
+    }
   }, [eliteMode])
 
   useEffect(() => {

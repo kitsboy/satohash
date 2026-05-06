@@ -83,7 +83,12 @@ export default function VerificationTool() {
         const formData = new FormData()
         formData.append('otsFile', otsFile)
         const res = await fetch(`${API}/api/verify`, { method: 'POST', body: formData })
-        const data = await res.json()
+        let data
+        try {
+          data = await res.json()
+        } catch (_e) {
+          throw new Error('Server returned an invalid response. Please try again.')
+        }
         setResult(data.verified ? 'success' : 'error')
         setVerifyData(data)
       } else if (hashInput.trim().length === 64) {
