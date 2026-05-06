@@ -5,19 +5,20 @@ import {
   Database,
   Fingerprint,
   ShieldCheck,
-  Award,
   Globe,
   Network,
   Search,
   Terminal,
   FileText,
+  MessageSquare,
   Camera,
   LayoutTemplate,
   Settings,
   Scale,
   Command,
   Wifi,
-  Blocks
+  Blocks,
+  ChevronRight
 } from 'lucide-react'
 import HelpOverlay from './HelpOverlay'
 import { getBlockHeight } from '../utils/mempool'
@@ -25,37 +26,31 @@ import { getBlockHeight } from '../utils/mempool'
 // ─── Nav groups ──────────────────────────────────────────────────────────────
 const NAV_GROUPS = [
   {
-    label: 'WORKSPACE',
+    label: 'HOME',
     items: [{ name: 'Dashboard', path: '/dashboard', icon: Globe }]
   },
   {
-    label: 'NOTARY',
+    label: 'NOTARIZE',
     items: [
       { name: 'Vault', path: '/vault', icon: Database },
       { name: 'Stamp', path: '/stamp', icon: Fingerprint },
-      { name: 'Verify', path: '/verify', icon: ShieldCheck },
-      { name: 'Certificates', path: '/certificates', icon: Award }
+      { name: 'Verify', path: '/verify', icon: ShieldCheck }
     ]
   },
   {
-    label: 'ATLAS',
-    items: [
-      { name: 'Chain Explorer', path: '/atlas', icon: Globe },
-      { name: 'Node Mesh', path: '/nodes', icon: Network },
-      { name: 'Block Explorer', path: '/explorer', icon: Search }
-    ]
+    label: 'EXPLORE',
+    items: [{ name: 'Chain Explorer', path: '/atlas', icon: Globe }]
   },
   {
-    label: 'MESH',
+    label: 'BUILD',
     items: [
       { name: 'Developer API', path: '/developer', icon: Terminal },
       { name: 'Contracts', path: '/contracts', icon: FileText },
-      { name: 'Web Capture', path: '/snapper', icon: Camera },
-      { name: 'Templates', path: '/templates', icon: LayoutTemplate }
+      { name: 'Forum', path: '/forum', icon: MessageSquare }
     ]
   },
   {
-    label: 'SYSTEM',
+    label: 'SETTINGS',
     items: [
       { name: 'Settings', path: '/settings', icon: Settings },
       { name: 'Trust Center', path: '/trust', icon: Scale }
@@ -65,7 +60,6 @@ const NAV_GROUPS = [
 
 // ─── "More" compact links ─────────────────────────────────────────────────────
 const MORE_ITEMS = [
-  { name: 'Image Vault', path: '/image-vault' },
   { name: 'Protocol Stats', path: '/protocol-stats' },
   { name: 'Explorer', path: '/explorer' },
   { name: 'Offers', path: '/offers' }
@@ -126,6 +120,7 @@ function NavItem({ item }) {
 export default function LeftRailNav() {
   const [showHelp, setShowHelp] = useState(false)
   const [blockHeight, setBlockHeight] = useState(null)
+  const [advancedOpen, setAdvancedOpen] = useState(false)
 
   const npub = localStorage.getItem('satohash_npub') || ''
   const initials = npub.length > 8 ? npub.substring(4, 6).toUpperCase() : 'SH'
@@ -149,7 +144,12 @@ export default function LeftRailNav() {
   }, [])
 
   return (
-    <nav role="navigation" aria-label="Sidebar navigation" className="flex h-full w-64 flex-col" style={{ background: '#13171f' }}>
+    <nav
+      role="navigation"
+      aria-label="Sidebar navigation"
+      className="flex h-full w-64 flex-col"
+      style={{ background: '#13171f' }}
+    >
       {/* ── Logo area ──────────────────────────────────────────── */}
       <div className="flex-shrink-0 px-5 pt-6 pb-5">
         <Link to="/" className="group flex items-center gap-3">
@@ -195,6 +195,33 @@ export default function LeftRailNav() {
             </div>
           </div>
         ))}
+
+        {/* ── Advanced (collapsible) ─────────────────────────────── */}
+        <div>
+          <button
+            onClick={() => setAdvancedOpen((o) => !o)}
+            className="flex w-full items-center justify-between rounded-lg px-3 py-2 text-[9px] font-black tracking-[0.15em] uppercase transition-colors hover:bg-white/5"
+            style={{ color: 'var(--text-secondary)' }}
+          >
+            <span>Advanced</span>
+            <ChevronRight
+              size={10}
+              style={{
+                transform: advancedOpen ? 'rotate(90deg)' : 'none',
+                transition: 'transform 0.2s'
+              }}
+            />
+          </button>
+
+          {advancedOpen && (
+            <div className="mt-1 space-y-0.5">
+              <NavItem item={{ name: 'Node Mesh', path: '/nodes', icon: Network }} />
+              <NavItem item={{ name: 'Block Explorer', path: '/explorer', icon: Search }} />
+              <NavItem item={{ name: 'Web Capture', path: '/snapper', icon: Camera }} />
+              <NavItem item={{ name: 'Templates', path: '/templates', icon: LayoutTemplate }} />
+            </div>
+          )}
+        </div>
 
         {/* ── More section ───────────────────────────────────────── */}
         <div>
@@ -374,10 +401,28 @@ export default function LeftRailNav() {
       </div>
 
       {/* ── Legal footer ───────────────────────────────────────── */}
-      <div className="px-4 pb-4 flex flex-col gap-1">
-        <Link to="/legal/terms" className="text-[9px] opacity-40 hover:opacity-70 transition-opacity" style={{ color: 'var(--text-secondary)' }}>Terms</Link>
-        <Link to="/legal/privacy" className="text-[9px] opacity-40 hover:opacity-70 transition-opacity" style={{ color: 'var(--text-secondary)' }}>Privacy</Link>
-        <Link to="/trust" className="text-[9px] opacity-40 hover:opacity-70 transition-opacity" style={{ color: 'var(--text-secondary)' }}>Trust Center</Link>
+      <div className="flex flex-col gap-1 px-4 pb-4">
+        <Link
+          to="/legal/terms"
+          className="text-[9px] opacity-40 transition-opacity hover:opacity-70"
+          style={{ color: 'var(--text-secondary)' }}
+        >
+          Terms
+        </Link>
+        <Link
+          to="/legal/privacy"
+          className="text-[9px] opacity-40 transition-opacity hover:opacity-70"
+          style={{ color: 'var(--text-secondary)' }}
+        >
+          Privacy
+        </Link>
+        <Link
+          to="/trust"
+          className="text-[9px] opacity-40 transition-opacity hover:opacity-70"
+          style={{ color: 'var(--text-secondary)' }}
+        >
+          Trust Center
+        </Link>
       </div>
 
       <HelpOverlay isOpen={showHelp} onClose={() => setShowHelp(false)} />

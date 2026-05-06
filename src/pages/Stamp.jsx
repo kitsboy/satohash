@@ -251,6 +251,60 @@ export default function Stamp() {
 
   return (
     <div className="mx-auto max-w-6xl space-y-12 p-8 pb-20">
+      {/* ── 3-Step Flow Banner ── */}
+      <div className="mb-8 grid grid-cols-3 gap-0 overflow-hidden rounded-2xl border border-[var(--border)]">
+        {[
+          {
+            n: '1',
+            icon: '📄',
+            label: 'Drop Your File',
+            desc: 'Any format. Stays on your device — never uploaded.'
+          },
+          {
+            n: '2',
+            icon: '🔒',
+            label: 'We Hash It Locally',
+            desc: 'A unique SHA-256 fingerprint is computed in your browser.'
+          },
+          {
+            n: '3',
+            icon: '₿',
+            label: 'Bitcoin Timestamps It',
+            desc: 'The fingerprint is permanently written to the blockchain.'
+          }
+        ].map((step, i) => (
+          <div
+            key={step.n}
+            className="flex flex-col gap-2 p-5"
+            style={{
+              background: i === 1 ? 'var(--surface-raised)' : 'var(--bg-secondary)',
+              borderRight: i < 2 ? '1px solid var(--border)' : 'none'
+            }}
+          >
+            <div className="flex items-center gap-2">
+              <span
+                className="flex h-5 w-5 items-center justify-center rounded-full text-[9px] font-black"
+                style={{ background: 'var(--accent-gold)', color: '#141b25' }}
+              >
+                {step.n}
+              </span>
+              <span className="text-[10px] font-black tracking-widest text-[var(--text-secondary)] uppercase">
+                Step {step.n}
+              </span>
+            </div>
+            <p
+              className="text-sm font-black tracking-tight"
+              style={{ color: 'var(--text-primary)' }}
+            >
+              {step.label}
+            </p>
+            <p className="text-[11px] leading-snug" style={{ color: 'var(--text-secondary)' }}>
+              {step.desc}
+            </p>
+          </div>
+        ))}
+      </div>
+
       <header className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
         <div className="space-y-2">
           <div className="flex items-center gap-3">
@@ -261,33 +315,59 @@ export default function Stamp() {
             The cryptographic notary of record. Hash locally, anchor globally.
           </p>
         </div>
-
-        {/* Toggle Switch */}
-        <div className="flex gap-1 rounded-xl border border-[var(--border)] bg-[var(--bg-secondary)] p-1">
-          <button
-            onClick={() => {
-              setIsCapsuleMode(false)
-              setFiles([])
-            }}
-            className={`rounded-lg px-4 py-2 text-[10px] font-bold tracking-widest uppercase transition-all ${!isCapsuleMode ? 'bg-[var(--bg-primary)] text-[var(--text-primary)] shadow-lg' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}
-          >
-            Single Asset
-          </button>
-          <button
-            onClick={() => {
-              setIsCapsuleMode(true)
-              setFiles([])
-            }}
-            className={`rounded-lg px-4 py-2 text-[10px] font-bold tracking-widest uppercase transition-all ${isCapsuleMode ? 'bg-[var(--bg-primary)] text-[var(--text-primary)] shadow-lg' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}
-          >
-            Time Capsule
-          </button>
-        </div>
       </header>
 
       <div className="grid grid-cols-1 gap-12 lg:grid-cols-3">
         {/* ── Main Dropzone ─────────────────────── */}
         <div className="space-y-8 lg:col-span-2">
+          {/* Mode Selector */}
+          <div className="mb-6 grid grid-cols-2 gap-3">
+            <button
+              onClick={() => {
+                setIsCapsuleMode(false)
+                setFiles([])
+              }}
+              className="rounded-2xl border p-4 text-left transition-all"
+              style={{
+                borderColor: !isCapsuleMode ? 'var(--accent-gold)' : 'var(--border)',
+                background: !isCapsuleMode ? 'rgba(240,180,41,0.06)' : 'var(--bg-secondary)'
+              }}
+            >
+              <div className="mb-1 text-lg">📄</div>
+              <div
+                className="mb-1 text-xs font-black tracking-widest uppercase"
+                style={{ color: !isCapsuleMode ? 'var(--accent-gold)' : 'var(--text-primary)' }}
+              >
+                Single File
+              </div>
+              <div className="text-[10px] leading-snug" style={{ color: 'var(--text-secondary)' }}>
+                Timestamp one document, image, or file.
+              </div>
+            </button>
+            <button
+              onClick={() => {
+                setIsCapsuleMode(true)
+                setFiles([])
+              }}
+              className="rounded-2xl border p-4 text-left transition-all"
+              style={{
+                borderColor: isCapsuleMode ? 'var(--accent-gold)' : 'var(--border)',
+                background: isCapsuleMode ? 'rgba(240,180,41,0.06)' : 'var(--bg-secondary)'
+              }}
+            >
+              <div className="mb-1 text-lg">📦</div>
+              <div
+                className="mb-1 text-xs font-black tracking-widest uppercase"
+                style={{ color: isCapsuleMode ? 'var(--accent-gold)' : 'var(--text-primary)' }}
+              >
+                Time Capsule
+              </div>
+              <div className="text-[10px] leading-snug" style={{ color: 'var(--text-secondary)' }}>
+                Bundle multiple files into one proof.
+              </div>
+            </button>
+          </div>
+
           <motion.div
             onDragEnter={handleDrag}
             onDragLeave={handleDrag}
@@ -387,98 +467,134 @@ export default function Stamp() {
                   animate={{ opacity: 1, y: 0 }}
                   className="w-full max-w-md space-y-5"
                 >
-                  <div
-                    className="flex items-center gap-3 rounded-2xl border p-4"
-                    style={{
-                      borderColor: 'var(--accent-success)',
-                      backgroundColor: 'rgba(34,211,165,0.08)'
-                    }}
-                  >
-                    <CheckCircle size={24} style={{ color: 'var(--accent-success)' }} />
-                    <div>
-                      <p className="text-sm font-black" style={{ color: 'var(--accent-success)' }}>
-                        Anchored to Bitcoin
-                      </p>
-                      <p className="font-mono text-xs opacity-60">
-                        ID: {proofResult.id?.substring(0, 16)}...
+                  <div className="w-full max-w-lg space-y-6">
+                    {/* Success header */}
+                    <div className="space-y-2 text-center">
+                      <div
+                        className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full"
+                        style={{
+                          background: 'rgba(34,211,165,0.12)',
+                          border: '2px solid var(--accent-success)'
+                        }}
+                      >
+                        <CheckCircle size={32} style={{ color: 'var(--accent-success)' }} />
+                      </div>
+                      <h3
+                        className="text-2xl font-black tracking-tight uppercase"
+                        style={{ color: 'var(--text-primary)' }}
+                      >
+                        Proof Created
+                      </h3>
+                      <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+                        Your file&apos;s fingerprint has been submitted to the Bitcoin blockchain
+                        via OpenTimestamps.
                       </p>
                     </div>
-                  </div>
-                  <div
-                    className="space-y-2 rounded-2xl border p-4"
-                    style={{
-                      borderColor: 'var(--border)',
-                      backgroundColor: 'var(--surface-raised)'
-                    }}
-                  >
-                    <p
-                      className="text-xs font-bold tracking-widest uppercase"
-                      style={{ color: 'var(--text-secondary)' }}
+
+                    {/* Status pill */}
+                    {isConfirmed ? (
+                      <div
+                        className="flex items-center justify-center gap-2 rounded-xl px-4 py-3"
+                        style={{
+                          background: 'rgba(34,211,165,0.08)',
+                          border: '1px solid rgba(34,211,165,0.25)'
+                        }}
+                      >
+                        <CheckCircle size={16} style={{ color: 'var(--accent-success)' }} />
+                        <span
+                          className="text-sm font-black"
+                          style={{ color: 'var(--accent-success)' }}
+                        >
+                          Confirmed in Bitcoin Block {confirmedBlock?.toLocaleString()}
+                        </span>
+                      </div>
+                    ) : (
+                      <div
+                        className="flex items-center justify-center gap-2 rounded-xl px-4 py-3"
+                        style={{
+                          background: 'rgba(240,180,41,0.08)',
+                          border: '1px solid rgba(240,180,41,0.25)'
+                        }}
+                      >
+                        <Activity
+                          size={16}
+                          className="animate-pulse"
+                          style={{ color: 'var(--accent-gold)' }}
+                        />
+                        <span className="text-sm font-bold" style={{ color: 'var(--accent-gold)' }}>
+                          Pending Bitcoin confirmation (~10 min)
+                        </span>
+                      </div>
+                    )}
+
+                    {/* Hash */}
+                    <div
+                      className="space-y-1 rounded-xl border p-4"
+                      style={{ borderColor: 'var(--border)', background: 'var(--bg-primary)' }}
                     >
-                      SHA-256 Hash
-                    </p>
-                    <p
-                      className="font-mono text-xs break-all"
-                      style={{ color: 'var(--accent-gold)' }}
-                    >
-                      {hashValue}
-                    </p>
-                  </div>
-                  {isConfirmed && confirmedBlock && (
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      className="mt-4 flex items-center justify-center gap-2 rounded-2xl px-6 py-3"
-                      style={{ background: 'var(--accent-success)', color: '#fff' }}
-                    >
-                      <CheckCircle size={18} />
-                      <span className="text-sm font-black">
-                        Confirmed in Bitcoin Block {confirmedBlock.toLocaleString()}
-                      </span>
-                    </motion.div>
-                  )}
-                  {stampingStatus === 'complete' && !isConfirmed && (
-                    <p
-                      className="mt-3 animate-pulse text-center text-xs"
-                      style={{ color: 'var(--text-secondary)' }}
-                    >
-                      ⏳ Waiting for Bitcoin calendar confirmation...
-                    </p>
-                  )}
-                  <div className="flex gap-3">
-                    <button
-                      onClick={() => {
-                        setStampingStatus('idle')
-                        setFiles([])
-                        setProofResult(null)
-                        setHashValue('')
-                        setIsConfirmed(false)
-                        setConfirmedBlock(null)
-                      }}
-                      className="flex-1 rounded-xl border py-3 text-xs font-black uppercase transition-all hover:text-[var(--text-primary)]"
-                      style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
-                    >
-                      New Stamp
-                    </button>
-                    <button
-                      onClick={() => (window.location.href = '/vault')}
-                      className="flex-1 rounded-xl py-3 text-xs font-black uppercase transition-all hover:opacity-90"
-                      style={{ backgroundColor: 'var(--accent-gold)', color: '#141b25' }}
-                    >
-                      View in Vault →
-                    </button>
-                    <button
-                      onClick={() => {
-                        navigator.clipboard.writeText(
-                          window.location.origin + '/verify/' + proofResult.id
-                        )
-                        toast.success('Share link copied to clipboard')
-                      }}
-                      className="rounded-xl border py-3 text-xs font-black uppercase transition-all hover:text-[var(--text-primary)]"
-                      style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
-                    >
-                      Share Proof
-                    </button>
+                      <p
+                        className="text-[9px] font-black tracking-widest uppercase"
+                        style={{ color: 'var(--text-secondary)' }}
+                      >
+                        SHA-256 Fingerprint
+                      </p>
+                      <p
+                        className="font-mono text-xs break-all select-all"
+                        style={{ color: 'var(--text-primary)' }}
+                      >
+                        {proofResult?.hash}
+                      </p>
+                    </div>
+
+                    {/* 3 CTA buttons */}
+                    <div className="grid grid-cols-1 gap-3">
+                      <a
+                        href={`${import.meta.env.VITE_API_URL || 'http://localhost:3001'}/api/stamps/${proofResult?.id}?download=true`}
+                        className="flex items-center justify-center gap-2 rounded-xl py-3.5 text-sm font-black tracking-wider uppercase transition-all hover:opacity-90"
+                        style={{ background: 'var(--accent-gold)', color: '#141b25' }}
+                      >
+                        ⬇ Download OTS Proof File
+                      </a>
+                      <div className="grid grid-cols-2 gap-3">
+                        <button
+                          onClick={() => (window.location.href = '/vault')}
+                          className="flex items-center justify-center gap-2 rounded-xl border py-3 text-xs font-black uppercase transition-all hover:text-[var(--text-primary)]"
+                          style={{
+                            borderColor: 'var(--accent-active)',
+                            color: 'var(--accent-active)',
+                            background: 'rgba(59,130,246,0.06)'
+                          }}
+                        >
+                          View in Vault →
+                        </button>
+                        <button
+                          onClick={() => {
+                            navigator.clipboard.writeText(
+                              window.location.origin + '/verify/' + proofResult?.id
+                            )
+                            toast.success('Share link copied!')
+                          }}
+                          className="flex items-center justify-center gap-2 rounded-xl border py-3 text-xs font-black uppercase transition-all hover:text-[var(--text-primary)]"
+                          style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
+                        >
+                          🔗 Copy Share Link
+                        </button>
+                      </div>
+                      <button
+                        onClick={() => {
+                          setStampingStatus('idle')
+                          setFiles([])
+                          setProofResult(null)
+                          setHashValue('')
+                          setIsConfirmed(false)
+                          setConfirmedBlock(null)
+                        }}
+                        className="rounded-xl border py-3 text-xs font-bold uppercase transition-all hover:text-[var(--text-primary)]"
+                        style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
+                      >
+                        + Stamp Another File
+                      </button>
+                    </div>
                   </div>
                 </motion.div>
               ) : (
@@ -579,6 +695,39 @@ export default function Stamp() {
 
         {/* ── Configuration Sidebar ──────────────── */}
         <div className="space-y-8">
+          {/* Web Capture shortcut */}
+          <div className="space-y-3 rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] p-5">
+            <div className="flex items-center gap-3">
+              <div
+                className="flex h-8 w-8 items-center justify-center rounded-xl"
+                style={{ background: 'var(--surface-raised)', border: '1px solid var(--border)' }}
+              >
+                <span className="text-base">🌐</span>
+              </div>
+              <div>
+                <p
+                  className="text-[10px] font-black tracking-widest uppercase"
+                  style={{ color: 'var(--text-primary)' }}
+                >
+                  Web Capture
+                </p>
+                <p className="text-[9px]" style={{ color: 'var(--text-secondary)' }}>
+                  Stamp a URL or webpage
+                </p>
+              </div>
+            </div>
+            <p className="text-[11px] leading-snug" style={{ color: 'var(--text-secondary)' }}>
+              Capture and timestamp any webpage as proof it existed at this moment.
+            </p>
+            <a
+              href="/snapper"
+              className="flex items-center justify-center gap-2 rounded-xl border py-2.5 text-[10px] font-black tracking-widest uppercase transition-all hover:text-[var(--text-primary)]"
+              style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
+            >
+              Open Web Capture →
+            </a>
+          </div>
+
           <div className="space-y-6 rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] p-6">
             <div className="flex items-center gap-3">
               <Layers size={18} className="text-[var(--accent-gold)]" />

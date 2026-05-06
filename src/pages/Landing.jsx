@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { QRCodeSVG } from 'qrcode.react'
 import {
-  Shield,
   Lock,
   Zap,
   Globe,
@@ -15,7 +14,6 @@ import {
   Award,
   X,
   Fingerprint,
-  CheckCircle,
   Menu,
   ChevronRight
 } from 'lucide-react'
@@ -433,7 +431,7 @@ export default function Landing() {
               color: 'var(--accent-gold)'
             }}
           >
-            <Zap size={12} /> Bitcoin&apos;s Most Underused Feature
+            <Zap size={12} /> Free • No account needed • Zero data stored
           </motion.div>
 
           <motion.h1
@@ -443,9 +441,9 @@ export default function Landing() {
             custom={0.1}
             className="font-display mb-6 text-4xl leading-[1.05] font-black tracking-tighter sm:text-5xl md:text-7xl lg:text-8xl"
           >
-            Bitcoin Does More
+            Prove Any File
             <br />
-            Than Move <span className="gold-text">Money.</span>
+            Existed. <span className="gold-text">Forever.</span>
           </motion.h1>
 
           <motion.p
@@ -456,9 +454,8 @@ export default function Landing() {
             className="mx-auto mb-6 max-w-2xl text-xl leading-relaxed font-medium md:text-2xl"
             style={{ color: 'var(--text-secondary)' }}
           >
-            It proves your documents existed. Permanently.
-            <br />
-            Without lawyers, notaries, or trust.
+            Drop any file. Get a permanent, Bitcoin-backed timestamp. Valid in court. No lawyers. No
+            trust required.
           </motion.p>
 
           <motion.p
@@ -469,9 +466,9 @@ export default function Landing() {
             className="mx-auto mb-10 max-w-xl text-base leading-relaxed"
             style={{ color: 'var(--text-muted)' }}
           >
-            Satohash anchors the cryptographic fingerprint of any file to the Bitcoin blockchain via
-            OpenTimestamps. The result is mathematical, immutable proof — valid in court, forever
-            verifiable, owned by no one.
+            Satohash hashes your file locally in your browser — your document never leaves your
+            device. Only a cryptographic fingerprint gets written to the Bitcoin blockchain,
+            creating immutable proof of existence for any file, contract, photo, or dataset.
           </motion.p>
 
           <motion.div
@@ -486,7 +483,7 @@ export default function Landing() {
               className="flex w-full items-center justify-center gap-2 rounded-2xl px-8 py-4 text-base font-black transition-all hover:scale-105 hover:opacity-90 sm:w-auto"
               style={{ backgroundColor: 'var(--accent-gold)', color: '#141b25' }}
             >
-              Notarize a Document Free <ArrowRight size={16} />
+              Stamp a File — It&apos;s Free <ArrowRight size={16} />
             </Link>
             <a
               href="#how-it-works"
@@ -505,9 +502,11 @@ export default function Landing() {
             className="flex flex-wrap items-center justify-center gap-2"
           >
             {[
-              `${proofCount !== null ? proofCount.toLocaleString() : '847,293'} Documents Notarized`,
+              `${proofCount !== null ? proofCount.toLocaleString() : '847,293'} Proofs Created`,
               `Bitcoin Block #${blockHeight ? blockHeight.toLocaleString() : '895,441'}`,
-              'Zero Data Stored — Ever'
+              'Zero Data Stored — Ever',
+              '~60 Min to Anchor',
+              'ESIGN · UETA · eIDAS'
             ].map((s) => (
               <div
                 key={s}
@@ -699,75 +698,23 @@ export default function Landing() {
               Try It Now — Free <ArrowRight size={16} />
             </Link>
           </motion.div>
-        </div>
-      </section>
 
-      {/* ── FACTS & STATS TABLE ───────────────────────────────────── */}
-      <section id="stats" className="py-28" style={{ backgroundColor: 'var(--bg-secondary)' }}>
-        <div className="layout-container">
           <motion.div
             variants={fadeUp}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="mb-12 text-center"
+            custom={0.4}
+            className="mx-auto mt-12 max-w-2xl rounded-2xl border p-6 text-center"
+            style={{ borderColor: 'var(--border)', backgroundColor: 'var(--surface-raised)' }}
           >
-            <h2 className="font-display text-4xl font-black tracking-tighter md:text-5xl">
-              The Numbers Behind <span className="gold-text">Immutable Truth</span>
-            </h2>
-            <p
-              className="mx-auto mt-4 max-w-xl text-base"
-              style={{ color: 'var(--text-secondary)' }}
-            >
-              Bitcoin&apos;s blockchain has been running without interruption since January 3, 2009.
+            <p className="text-sm font-bold" style={{ color: 'var(--text-primary)' }}>
+              🔒 Your files never leave your device
             </p>
-          </motion.div>
-
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            custom={0.1}
-            className="overflow-x-auto rounded-3xl border"
-            style={{ borderColor: 'var(--border-gold)', backgroundColor: 'var(--surface-raised)' }}
-          >
-            <table className="w-full">
-              <tbody>
-                {[
-                  ['Bitcoin blocks produced since 2009', '895,000+'],
-                  ['Probability of blockchain rewrite', '< 0.00001%'],
-                  ['OTS proof file size', '~350 bytes'],
-                  ['Average time to anchor', '~60 minutes'],
-                  ['Cost per timestamp', 'Fractions of a cent'],
-                  ['Legal frameworks supported', 'ESIGN, UETA, eIDAS, Swiss eIDAS'],
-                  ['File types you can timestamp', 'Any — PDF, JPG, ZIP, DOCX...'],
-                  ['Data stored about your document', 'Zero bytes of content']
-                ].map(([fact, value], i) => (
-                  <tr
-                    key={fact}
-                    className="border-b last:border-0"
-                    style={{
-                      borderColor: 'var(--border)',
-                      backgroundColor: i % 2 === 0 ? 'transparent' : 'rgba(255,255,255,0.02)'
-                    }}
-                  >
-                    <td
-                      className="px-6 py-5 text-sm font-semibold md:px-8"
-                      style={{ color: 'var(--text-secondary)' }}
-                    >
-                      {fact}
-                    </td>
-                    <td
-                      className="px-6 py-5 text-right font-mono text-sm font-bold md:px-8"
-                      style={{ color: 'var(--accent-gold)' }}
-                    >
-                      {value}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            <p className="mt-1 text-xs" style={{ color: 'var(--text-secondary)' }}>
+              Satohash only sees a SHA-256 hash — never your original document. Zero-knowledge by
+              design.
+            </p>
           </motion.div>
         </div>
       </section>
@@ -842,128 +789,6 @@ export default function Landing() {
                 </p>
               </motion.div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── ZERO KNOWLEDGE EXPLAINER ─────────────────────────────── */}
-      <section id="privacy" className="py-28" style={{ backgroundColor: 'var(--bg-secondary)' }}>
-        <div className="layout-container">
-          <div className="grid items-center gap-16 lg:grid-cols-2">
-            <motion.div
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-            >
-              <div
-                className="mb-4 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-xs font-black tracking-widest uppercase"
-                style={{
-                  borderColor: 'var(--border-gold)',
-                  backgroundColor: 'var(--accent-gold-subtle)',
-                  color: 'var(--accent-gold)'
-                }}
-              >
-                <Shield size={12} /> Privacy by Design
-              </div>
-              <h2 className="font-display mb-6 text-4xl font-black tracking-tighter md:text-5xl">
-                Your Privacy Is
-                <br />
-                <span className="gold-text">Mathematically Guaranteed</span>
-              </h2>
-              <p
-                className="mb-5 text-base leading-relaxed"
-                style={{ color: 'var(--text-secondary)' }}
-              >
-                In traditional notarization, you hand your document to someone who reads it. You
-                trust that person — and every system they use.
-              </p>
-              <p
-                className="mb-8 text-base leading-relaxed"
-                style={{ color: 'var(--text-secondary)' }}
-              >
-                With Satohash, your document is converted to a SHA-256 fingerprint in your browser.
-                We never see, store, or transmit your actual document. Only the fingerprint goes to
-                Bitcoin. This is zero-knowledge architecture: we prove your document existed without
-                ever knowing what&apos;s in it.
-              </p>
-              <div
-                className="rounded-2xl border p-5"
-                style={{
-                  borderColor: 'var(--border-gold)',
-                  backgroundColor: 'var(--accent-gold-subtle)'
-                }}
-              >
-                <p
-                  className="text-sm leading-relaxed font-semibold"
-                  style={{ color: 'var(--accent-gold)' }}
-                >
-                  Even if our servers were seized tomorrow, your proof is already embedded in
-                  Bitcoin — independently verifiable by anyone, forever.
-                </p>
-              </div>
-            </motion.div>
-
-            <motion.div
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              custom={0.2}
-            >
-              <div className="terminal-card overflow-x-auto p-8">
-                <div className="mb-6 flex items-center gap-2">
-                  <div className="h-3 w-3 rounded-full bg-red-500/70" />
-                  <div className="h-3 w-3 rounded-full bg-yellow-500/70" />
-                  <div className="h-3 w-3 rounded-full bg-green-500/70" />
-                  <span className="ml-2 font-mono text-xs opacity-40">satohash-proof.sh</span>
-                </div>
-                <div className="space-y-5 font-mono text-sm">
-                  <div>
-                    <p className="mb-1 text-xs tracking-widest uppercase opacity-40">
-                      Your Document
-                    </p>
-                    <p className="text-white/80">contract_draft_v3.pdf</p>
-                  </div>
-                  <div className="flex items-center gap-2 opacity-30">
-                    <div className="h-px flex-1" style={{ backgroundColor: 'var(--border)' }} />
-                    <span className="text-xs">SHA-256</span>
-                    <div className="h-px flex-1" style={{ backgroundColor: 'var(--border)' }} />
-                  </div>
-                  <div>
-                    <p className="mb-1 text-xs tracking-widest uppercase opacity-40">
-                      Fingerprint Sent to Bitcoin
-                    </p>
-                    <p className="text-xs break-all" style={{ color: 'var(--accent-gold)' }}>
-                      3a7bc8f2e194d05f8c29a3e6b1d44f92c8...
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-2 opacity-30">
-                    <div className="h-px flex-1" style={{ backgroundColor: 'var(--border)' }} />
-                    <span className="text-xs">OpenTimestamps</span>
-                    <div className="h-px flex-1" style={{ backgroundColor: 'var(--border)' }} />
-                  </div>
-                  <div>
-                    <p className="mb-1 text-xs tracking-widest uppercase opacity-40">
-                      Bitcoin Block
-                    </p>
-                    <p className="text-white/80">#895,441 — Confirmed</p>
-                  </div>
-                  <div
-                    className="flex items-center gap-2 rounded-xl p-3"
-                    style={{
-                      backgroundColor: 'rgba(34,211,165,0.1)',
-                      border: '1px solid rgba(34,211,165,0.2)'
-                    }}
-                  >
-                    <CheckCircle size={16} style={{ color: 'var(--accent-success)' }} />
-                    <span className="font-bold" style={{ color: 'var(--accent-success)' }}>
-                      Immutable Proof Confirmed
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
           </div>
         </div>
       </section>

@@ -32,11 +32,15 @@ const StatusBadge = ({ status }) => {
       'bg-[var(--accent-danger)]/10 text-[var(--accent-danger)] border-[var(--accent-danger)]/20',
     failed: 'bg-white/5 text-[var(--text-secondary)] border-white/10'
   }
+  const labels = {
+    pending: 'Waiting for Bitcoin (~10 min)',
+    confirmed: 'Confirmed on Bitcoin'
+  }
   return (
     <span
       className={`rounded-md border px-2 py-1 text-[9px] font-black tracking-widest uppercase ${styles[status] || styles.pending}`}
     >
-      {status}
+      {labels[status] ?? status}
     </span>
   )
 }
@@ -63,6 +67,7 @@ const SecurityAge = ({ confirmations }) => {
 export default function Vault() {
   const [searchQuery, setSearchQuery] = useState('')
   const [activeTab, setActiveTab] = useState('all')
+  const [typeFilter, setTypeFilter] = useState('All')
   const [isExporting, setIsExporting] = useState(false)
   const [exportProgress, setExportProgress] = useState(0)
   const [items, setItems] = useState([])
@@ -298,7 +303,13 @@ export default function Vault() {
       item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.hash.toLowerCase().includes(searchQuery.toLowerCase())
 
-    return matchesTab && matchesSearch
+    const matchesType =
+      typeFilter === 'All' ||
+      (typeFilter === 'Images' && /\.(png|jpg|jpeg|gif|webp|svg)/i.test(item.name)) ||
+      (typeFilter === 'Documents' && /\.(pdf|doc|docx|txt|md)/i.test(item.name)) ||
+      (typeFilter === 'Archives' && /\.(zip|tar|gz|rar)/i.test(item.name))
+
+    return matchesTab && matchesSearch && matchesType
   })
 
   const virtualizer = useVirtualizer({
@@ -499,6 +510,23 @@ export default function Vault() {
         ))}
       </div>
 
+      {/* Asset Type Filter */}
+      <div className="flex items-center gap-2 self-start rounded-xl border border-[var(--border)] bg-[var(--bg-secondary)] p-1">
+        {['All', 'Images', 'Documents', 'Archives'].map((tab) => (
+          <button
+            key={tab}
+            onClick={() => setTypeFilter(tab)}
+            className="rounded-lg px-3 py-1.5 text-[10px] font-black tracking-widest uppercase transition-all"
+            style={{
+              background: typeFilter === tab ? 'var(--accent-active)' : 'transparent',
+              color: typeFilter === tab ? '#fff' : 'var(--text-secondary)'
+            }}
+          >
+            {tab}
+          </button>
+        ))}
+      </div>
+
       {/* Skeleton loader — shown while loading (desktop) */}
       {loading && (
         <div className="hidden grid-cols-1 gap-6 md:grid md:grid-cols-2 lg:grid-cols-3">
@@ -544,21 +572,51 @@ export default function Vault() {
                   </td>
                 </tr>
               )}
-              {!loading && filteredItems.length === 0 && (
+              {!loading && filteredItems.length === 0 && items.length === 0 && (
+                <tr>
+                  <td colSpan={4}>
+                    <div className="flex flex-col items-center justify-center space-y-6 py-24 text-center">
+                      <div
+                        className="flex h-20 w-20 items-center justify-center rounded-3xl"
+                        style={{
+                          background: 'var(--surface-raised)',
+                          border: '1px solid var(--border)'
+                        }}
+                      >
+                        <span className="text-4xl">🔒</span>
+                      </div>
+                      <div className="space-y-2">
+                        <h3
+                          className="text-xl font-black tracking-tight uppercase"
+                          style={{ color: 'var(--text-primary)' }}
+                        >
+                          Your vault is empty
+                        </h3>
+                        <p
+                          className="max-w-sm text-sm leading-relaxed"
+                          style={{ color: 'var(--text-secondary)' }}
+                        >
+                          You haven&apos;t stamped anything yet. Drop a file on the Stamp page to
+                          create your first Bitcoin-backed proof of existence.
+                        </p>
+                      </div>
+                      <a
+                        href="/stamp"
+                        className="inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-black tracking-wider uppercase transition-all hover:opacity-90"
+                        style={{ background: 'var(--accent-gold)', color: '#141b25' }}
+                      >
+                        Stamp Your First File →
+                      </a>
+                    </div>
+                  </td>
+                </tr>
+              )}
+              {!loading && filteredItems.length === 0 && items.length > 0 && (
                 <tr>
                   <td colSpan={4} className="px-10 py-16 text-center">
-                    <div className="space-y-3">
-                      <p className="text-lg font-bold">No stamps yet</p>
-                      <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-                        <a
-                          href="/stamp"
-                          className="underline"
-                          style={{ color: 'var(--accent-gold)' }}
-                        >
-                          Notarize your first document →
-                        </a>
-                      </p>
-                    </div>
+                    <p className="text-sm font-bold" style={{ color: 'var(--text-secondary)' }}>
+                      No stamps match your search.
+                    </p>
                   </td>
                 </tr>
               )}
@@ -691,13 +749,42 @@ export default function Vault() {
             ))}
           </div>
         )}
-        {!loading && filteredItems.length === 0 && (
-          <div className="space-y-3 py-16 text-center">
-            <p className="text-lg font-bold">No stamps yet</p>
-            <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-              <a href="/stamp" className="underline" style={{ color: 'var(--accent-gold)' }}>
-                Notarize your first document →
-              </a>
+        {!loading && filteredItems.length === 0 && items.length === 0 && (
+          <div className="flex flex-col items-center justify-center space-y-6 py-24 text-center">
+            <div
+              className="flex h-20 w-20 items-center justify-center rounded-3xl"
+              style={{ background: 'var(--surface-raised)', border: '1px solid var(--border)' }}
+            >
+              <span className="text-4xl">🔒</span>
+            </div>
+            <div className="space-y-2">
+              <h3
+                className="text-xl font-black tracking-tight uppercase"
+                style={{ color: 'var(--text-primary)' }}
+              >
+                Your vault is empty
+              </h3>
+              <p
+                className="max-w-sm text-sm leading-relaxed"
+                style={{ color: 'var(--text-secondary)' }}
+              >
+                You haven&apos;t stamped anything yet. Drop a file on the Stamp page to create your
+                first Bitcoin-backed proof of existence.
+              </p>
+            </div>
+            <a
+              href="/stamp"
+              className="inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-black tracking-wider uppercase transition-all hover:opacity-90"
+              style={{ background: 'var(--accent-gold)', color: '#141b25' }}
+            >
+              Stamp Your First File →
+            </a>
+          </div>
+        )}
+        {!loading && filteredItems.length === 0 && items.length > 0 && (
+          <div className="py-16 text-center">
+            <p className="text-sm font-bold" style={{ color: 'var(--text-secondary)' }}>
+              No stamps match your search.
             </p>
           </div>
         )}

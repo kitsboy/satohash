@@ -6,8 +6,8 @@ import { Database, Fingerprint, Globe, Search, MoreHorizontal } from 'lucide-rea
 const PRIMARY_LINKS = [
   { name: 'Vault', path: '/vault', icon: Database },
   { name: 'Stamp', path: '/stamp', icon: Fingerprint },
-  { name: 'Atlas', path: '/atlas', icon: Globe },
-  { name: 'Explorer', path: '/explorer', icon: Search }
+  { name: 'Explore', path: '/atlas', icon: Globe },
+  { name: 'Blocks', path: '/explorer', icon: Search }
 ]
 
 // ─── MobileBottomNav ─────────────────────────────────────────────────────────

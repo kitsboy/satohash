@@ -26,7 +26,8 @@ import {
   Mic,
   Award,
   BookOpen,
-  ArrowRight
+  ArrowRight,
+  X
 } from 'lucide-react'
 import { generatePDF } from '../utils/pdfGenerator'
 import { toast } from 'sonner'
@@ -58,14 +59,26 @@ function UpsellModal({ isOpen, onClose, onSubscribe }) {
               <h3 className="text-xl font-black uppercase" style={{ color: 'var(--text-primary)' }}>
                 Upgrade to Pro
               </h3>
-              <button onClick={onClose} className="ml-auto opacity-40 hover:opacity-100 transition-opacity" style={{ color: 'var(--text-secondary)' }}>
+              <button
+                onClick={onClose}
+                className="ml-auto opacity-40 transition-opacity hover:opacity-100"
+                style={{ color: 'var(--text-secondary)' }}
+              >
                 <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
                 </svg>
               </button>
             </div>
 
-            <div className="mb-6 space-y-3 rounded-xl p-4" style={{ background: 'var(--surface-raised)', border: '1px solid var(--border)' }}>
+            <div
+              className="mb-6 space-y-3 rounded-xl p-4"
+              style={{ background: 'var(--surface-raised)', border: '1px solid var(--border)' }}
+            >
               {[
                 'Unlimited document stamps per month',
                 'Priority Bitcoin confirmation queue',
@@ -75,13 +88,19 @@ function UpsellModal({ isOpen, onClose, onSubscribe }) {
               ].map((feature) => (
                 <div key={feature} className="flex items-center gap-2">
                   <ShieldCheck size={12} style={{ color: 'var(--accent-success)' }} />
-                  <span className="text-xs" style={{ color: 'var(--text-secondary)' }}>{feature}</span>
+                  <span className="text-xs" style={{ color: 'var(--text-secondary)' }}>
+                    {feature}
+                  </span>
                 </div>
               ))}
             </div>
 
             <p className="mb-5 text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-              Only <span className="font-black" style={{ color: 'var(--accent-gold)' }}>$9/month</span> — cancel any time.
+              Only{' '}
+              <span className="font-black" style={{ color: 'var(--accent-gold)' }}>
+                $9/month
+              </span>{' '}
+              — cancel any time.
             </p>
 
             <div className="space-y-3">
@@ -95,7 +114,11 @@ function UpsellModal({ isOpen, onClose, onSubscribe }) {
               <button
                 onClick={onClose}
                 className="w-full rounded-xl border px-4 py-3 text-sm transition-all hover:opacity-80"
-                style={{ border: '1px solid var(--border)', color: 'var(--text-secondary)', background: 'transparent' }}
+                style={{
+                  border: '1px solid var(--border)',
+                  color: 'var(--text-secondary)',
+                  background: 'transparent'
+                }}
               >
                 Maybe Later
               </button>
@@ -117,6 +140,12 @@ export default function Dashboard() {
   const [achievements, setAchievements] = useState({})
   const [showVoiceStamp, setShowVoiceStamp] = useState(false)
   const [stampCount, setStampCount] = useState(0)
+  const [showWelcome, setShowWelcome] = useState(() => !localStorage.getItem('satohash_welcomed'))
+
+  const dismissWelcome = () => {
+    localStorage.setItem('satohash_welcomed', '1')
+    setShowWelcome(false)
+  }
 
   useEffect(() => {
     const storedTier = localStorage.getItem('userTier') || 'free'
@@ -147,7 +176,9 @@ export default function Dashboard() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          hash: processedFile.hash || 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
+          hash:
+            processedFile.hash ||
+            'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
           filename: processedFile.name
         })
       })
@@ -209,14 +240,55 @@ export default function Dashboard() {
 
   return (
     <>
-      <UpsellModal isOpen={showUpsell} onClose={() => setShowUpsell(false)} onSubscribe={handleSubscribe} />
+      <UpsellModal
+        isOpen={showUpsell}
+        onClose={() => setShowUpsell(false)}
+        onSubscribe={handleSubscribe}
+      />
 
-      <div className="relative min-h-screen pb-24" style={{ background: 'var(--bg-primary)', color: 'var(--text-primary)' }}>
+      <div
+        className="relative min-h-screen pb-24"
+        style={{ background: 'var(--bg-primary)', color: 'var(--text-primary)' }}
+      >
         {/* Ambient glow */}
-        <div className="pointer-events-none absolute top-0 left-1/4 h-[500px] w-1/2 blur-[160px]"
-          style={{ background: 'var(--accent-active)', opacity: 0.025 }} />
+        <div
+          className="pointer-events-none absolute top-0 left-1/4 h-[500px] w-1/2 blur-[160px]"
+          style={{ background: 'var(--accent-active)', opacity: 0.025 }}
+        />
 
         <div className="layout-container relative z-10 max-w-7xl">
+          {/* First-visit welcome hint */}
+          <AnimatePresence>
+            {showWelcome && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="mb-6 flex items-start justify-between gap-4 rounded-2xl border p-5"
+                style={{ borderColor: 'rgba(240,180,41,0.3)', background: 'rgba(240,180,41,0.05)' }}
+              >
+                <div className="space-y-1">
+                  <p
+                    className="text-sm font-black tracking-wide uppercase"
+                    style={{ color: 'var(--accent-gold)' }}
+                  >
+                    👋 Welcome to Satohash
+                  </p>
+                  <p className="text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                    Drop any file in the box below to create a permanent, Bitcoin-backed proof it
+                    existed right now. Your file never leaves your device — only its fingerprint
+                    goes to the blockchain.
+                  </p>
+                </div>
+                <button
+                  onClick={dismissWelcome}
+                  className="shrink-0 text-[var(--text-secondary)] transition-colors hover:text-[var(--text-primary)]"
+                >
+                  <X size={16} />
+                </button>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           {/* ── Hero Row ── */}
           <div className="mb-12 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
@@ -225,17 +297,32 @@ export default function Dashboard() {
               <div className="mb-5 flex flex-wrap items-center gap-2">
                 <span
                   className="inline-flex items-center gap-1 rounded-full px-3 py-1 text-[10px] font-black tracking-wider uppercase"
-                  style={userTier === 'pro'
-                    ? { background: 'rgba(240,180,41,0.12)', color: 'var(--accent-gold)', border: '1px solid rgba(240,180,41,0.25)' }
-                    : { background: 'var(--surface-raised)', color: 'var(--text-secondary)', border: '1px solid var(--border)' }
+                  style={
+                    userTier === 'pro'
+                      ? {
+                          background: 'rgba(240,180,41,0.12)',
+                          color: 'var(--accent-gold)',
+                          border: '1px solid rgba(240,180,41,0.25)'
+                        }
+                      : {
+                          background: 'var(--surface-raised)',
+                          color: 'var(--text-secondary)',
+                          border: '1px solid var(--border)'
+                        }
                   }
                 >
                   <Crown size={10} /> {userTier.toUpperCase()} Tier
                 </span>
 
                 {Object.keys(achievements).length > 0 && (
-                  <span className="inline-flex items-center gap-1 rounded-full px-3 py-1 text-[10px] font-black uppercase"
-                    style={{ background: 'rgba(34,211,165,0.08)', color: 'var(--accent-success)', border: '1px solid rgba(34,211,165,0.2)' }}>
+                  <span
+                    className="inline-flex items-center gap-1 rounded-full px-3 py-1 text-[10px] font-black uppercase"
+                    style={{
+                      background: 'rgba(34,211,165,0.08)',
+                      color: 'var(--accent-success)',
+                      border: '1px solid rgba(34,211,165,0.2)'
+                    }}
+                  >
                     <Award size={10} /> {Object.keys(achievements).length} Badges
                   </span>
                 )}
@@ -254,22 +341,38 @@ export default function Dashboard() {
                 initial={{ scale: 0.9, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 className="mb-5 inline-flex h-11 w-11 items-center justify-center rounded-2xl"
-                style={{ background: 'var(--surface-raised)', color: 'var(--accent-active)', border: '1px solid var(--border)' }}
+                style={{
+                  background: 'var(--surface-raised)',
+                  color: 'var(--accent-active)',
+                  border: '1px solid var(--border)'
+                }}
               >
                 <Network size={20} />
               </motion.div>
 
-              <h1 className="mb-4 text-5xl leading-none font-black tracking-tighter uppercase italic md:text-6xl"
-                style={{ color: 'var(--text-primary)' }}>
+              <h1
+                className="mb-4 text-5xl leading-none font-black tracking-tighter uppercase italic md:text-6xl"
+                style={{ color: 'var(--text-primary)' }}
+              >
                 Sovereign <br />
                 <span style={{ color: 'var(--accent-active)' }}>WORKSPACE.</span>
               </h1>
-              <p className="max-w-lg text-sm leading-relaxed md:text-base" style={{ color: 'var(--text-secondary)' }}>
-                Anchor any document to Bitcoin with one drop. Your files never leave your device — only a cryptographic fingerprint is recorded on the blockchain.
+              <p
+                className="max-w-lg text-sm leading-relaxed md:text-base"
+                style={{ color: 'var(--text-secondary)' }}
+              >
+                Anchor any document to Bitcoin with one drop. Your files never leave your device —
+                only a cryptographic fingerprint is recorded on the blockchain.
               </p>
             </div>
             <div className="hidden lg:block">
               <BlockchainPulse />
+              <p
+                className="mt-2 text-center text-[9px] font-bold tracking-widest uppercase"
+                style={{ color: 'var(--text-secondary)' }}
+              >
+                Live Bitcoin network activity
+              </p>
             </div>
           </div>
 
@@ -290,7 +393,6 @@ export default function Dashboard() {
           <div className="grid gap-8 lg:grid-cols-12">
             {/* ── Main Work Area ── */}
             <div className="space-y-8 lg:col-span-8">
-
               {/* ── INGEST PROTOCOL CARD ── */}
               <motion.div
                 initial={{ opacity: 0, y: 16 }}
@@ -299,16 +401,27 @@ export default function Dashboard() {
                 style={{ border: '1px solid var(--border)', background: 'var(--bg-secondary)' }}
               >
                 {/* Card header */}
-                <div className="flex items-center justify-between border-b px-6 py-4 md:px-8"
-                  style={{ borderColor: 'var(--border)', background: 'var(--surface-raised)' }}>
+                <div
+                  className="flex items-center justify-between border-b px-6 py-4 md:px-8"
+                  style={{ borderColor: 'var(--border)', background: 'var(--surface-raised)' }}
+                >
                   <div className="flex items-center gap-3">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-xl"
-                      style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border)', color: 'var(--accent-active)' }}>
+                    <div
+                      className="flex h-8 w-8 items-center justify-center rounded-xl"
+                      style={{
+                        background: 'var(--bg-secondary)',
+                        border: '1px solid var(--border)',
+                        color: 'var(--accent-active)'
+                      }}
+                    >
                       <FileCheck size={15} />
                     </div>
                     <div>
                       <div className="flex items-center gap-1.5">
-                        <h3 className="text-sm font-black tracking-wide uppercase" style={{ color: 'var(--text-primary)' }}>
+                        <h3
+                          className="text-sm font-black tracking-wide uppercase"
+                          style={{ color: 'var(--text-primary)' }}
+                        >
                           Ingest Protocol
                         </h3>
                         <Tooltip
@@ -324,24 +437,68 @@ export default function Dashboard() {
                   {/* Live protocol indicators */}
                   <div className="hidden items-center gap-4 sm:flex">
                     <div className="flex items-center gap-1.5">
-                      <div className="h-1.5 w-1.5 animate-pulse rounded-full" style={{ background: 'var(--accent-success)' }} />
-                      <span className="text-[9px] font-black uppercase tracking-widest" style={{ color: 'var(--accent-success)' }}>Live</span>
+                      <div
+                        className="h-1.5 w-1.5 animate-pulse rounded-full"
+                        style={{ background: 'var(--accent-success)' }}
+                      />
+                      <span
+                        className="text-[9px] font-black tracking-widest uppercase"
+                        style={{ color: 'var(--accent-success)' }}
+                      >
+                        Live
+                      </span>
                     </div>
-                    <span className="text-[9px] font-bold uppercase" style={{ color: 'var(--text-muted)' }}>AES-256-GCM</span>
+                    <span
+                      className="text-[9px] font-bold uppercase"
+                      style={{ color: 'var(--text-muted)' }}
+                    >
+                      AES-256-GCM
+                    </span>
                   </div>
                 </div>
 
                 {/* How it works — always visible educational strip */}
                 <div className="grid grid-cols-3 border-b" style={{ borderColor: 'var(--border)' }}>
                   {[
-                    { step: '01', label: 'Drop File', desc: 'Any format accepted. Stays in your browser.' },
-                    { step: '02', label: 'SHA-256 Hash', desc: 'A unique fingerprint is generated locally.' },
-                    { step: '03', label: 'Bitcoin Anchor', desc: 'Fingerprint is written to the blockchain forever.' }
+                    {
+                      step: '01',
+                      label: 'Drop File',
+                      desc: 'Any document, image, or file. It never leaves your device.'
+                    },
+                    {
+                      step: '02',
+                      label: 'SHA-256 Hash',
+                      desc: 'A unique fingerprint is created in your browser. Instant, private.'
+                    },
+                    {
+                      step: '03',
+                      label: 'Bitcoin Anchor',
+                      desc: 'Your fingerprint is permanently recorded on Bitcoin. Valid forever.'
+                    }
                   ].map((s, i) => (
-                    <div key={i} className="flex flex-col gap-1 p-4 md:p-5" style={{ borderRight: i < 2 ? '1px solid var(--border)' : 'none' }}>
-                      <span className="text-[9px] font-black tracking-widest uppercase" style={{ color: 'var(--accent-active)' }}>{s.step}</span>
-                      <span className="text-xs font-black uppercase" style={{ color: 'var(--text-primary)' }}>{s.label}</span>
-                      <span className="text-[10px] leading-snug" style={{ color: 'var(--text-muted)' }}>{s.desc}</span>
+                    <div
+                      key={i}
+                      className="flex flex-col gap-1 p-4 md:p-5"
+                      style={{ borderRight: i < 2 ? '1px solid var(--border)' : 'none' }}
+                    >
+                      <span
+                        className="text-[9px] font-black tracking-widest uppercase"
+                        style={{ color: 'var(--accent-active)' }}
+                      >
+                        {s.step}
+                      </span>
+                      <span
+                        className="text-xs font-black uppercase"
+                        style={{ color: 'var(--text-primary)' }}
+                      >
+                        {s.label}
+                      </span>
+                      <span
+                        className="text-[10px] leading-snug"
+                        style={{ color: 'var(--text-muted)' }}
+                      >
+                        {s.desc}
+                      </span>
                     </div>
                   ))}
                 </div>
@@ -356,12 +513,23 @@ export default function Dashboard() {
                       <div className="flex items-center justify-between">
                         <span
                           className={`rounded-xl border px-3 py-1.5 text-[9px] font-black tracking-widest uppercase ${file.status === 'confirmed' ? '' : 'animate-pulse'}`}
-                          style={file.status === 'confirmed'
-                            ? { border: '1px solid rgba(34,211,165,0.2)', background: 'rgba(34,211,165,0.08)', color: 'var(--accent-success)' }
-                            : { border: '1px solid rgba(240,180,41,0.2)', background: 'rgba(240,180,41,0.08)', color: 'var(--accent-gold)' }
+                          style={
+                            file.status === 'confirmed'
+                              ? {
+                                  border: '1px solid rgba(34,211,165,0.2)',
+                                  background: 'rgba(34,211,165,0.08)',
+                                  color: 'var(--accent-success)'
+                                }
+                              : {
+                                  border: '1px solid rgba(240,180,41,0.2)',
+                                  background: 'rgba(240,180,41,0.08)',
+                                  color: 'var(--accent-gold)'
+                                }
                           }
                         >
-                          {file.status === 'confirmed' ? '✓ Bitcoin Confirmed' : '⏳ Pending Confirmation'}
+                          {file.status === 'confirmed'
+                            ? '✓ Bitcoin Confirmed'
+                            : '⏳ Pending Confirmation'}
                         </span>
                         <button
                           onClick={() => setFile(null)}
@@ -373,28 +541,76 @@ export default function Dashboard() {
                       </div>
 
                       {/* File info */}
-                      <div className="flex items-center gap-4 rounded-2xl p-4"
-                        style={{ background: 'var(--bg-primary)', border: '1px solid var(--border)' }}>
-                        <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl"
-                          style={{ background: 'var(--surface-raised)', color: 'var(--accent-active)', border: '1px solid var(--border)' }}>
+                      <div
+                        className="flex items-center gap-4 rounded-2xl p-4"
+                        style={{
+                          background: 'var(--bg-primary)',
+                          border: '1px solid var(--border)'
+                        }}
+                      >
+                        <div
+                          className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl"
+                          style={{
+                            background: 'var(--surface-raised)',
+                            color: 'var(--accent-active)',
+                            border: '1px solid var(--border)'
+                          }}
+                        >
                           <FileCheck size={22} />
                         </div>
                         <div className="min-w-0 flex-1">
-                          <p className="truncate text-sm font-black uppercase" style={{ color: 'var(--text-primary)' }}>{file.name}</p>
-                          <code className="truncate text-[10px] font-mono" style={{ color: 'var(--text-muted)' }}>{file.hash}</code>
+                          <p
+                            className="truncate text-sm font-black uppercase"
+                            style={{ color: 'var(--text-primary)' }}
+                          >
+                            {file.name}
+                          </p>
+                          <code
+                            className="truncate font-mono text-[10px]"
+                            style={{ color: 'var(--text-muted)' }}
+                          >
+                            {file.hash}
+                          </code>
                         </div>
                       </div>
 
                       {/* Merkle visualization */}
-                      <div className="overflow-hidden rounded-2xl" style={{ border: '1px solid var(--border)', background: 'var(--bg-primary)' }}>
+                      <div
+                        className="overflow-hidden rounded-2xl"
+                        style={{
+                          border: '1px solid var(--border)',
+                          background: 'var(--bg-primary)'
+                        }}
+                      >
                         <Merkle3D hash={file.hash} />
+                        <p
+                          className="mt-3 text-center text-[9px] font-bold tracking-widest uppercase"
+                          style={{ color: 'var(--text-secondary)' }}
+                        >
+                          Each node = one proof anchored to Bitcoin
+                        </p>
                       </div>
 
                       {/* Action buttons */}
                       <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-                        <ActionBtn icon={Download} label="Download .ots Proof" onClick={downloadOTS} secondary />
-                        <ActionBtn icon={FileText} label="PDF Certificate" onClick={() => generatePDF(file)} secondary />
-                        <ActionBtn icon={ExternalLink} label="View on Mempool" onClick={() => window.open('https://mempool.space', '_blank')} amber />
+                        <ActionBtn
+                          icon={Download}
+                          label="Download .ots Proof"
+                          onClick={downloadOTS}
+                          secondary
+                        />
+                        <ActionBtn
+                          icon={FileText}
+                          label="PDF Certificate"
+                          onClick={() => generatePDF(file)}
+                          secondary
+                        />
+                        <ActionBtn
+                          icon={ExternalLink}
+                          label="View on Mempool"
+                          onClick={() => window.open('https://mempool.space', '_blank')}
+                          amber
+                        />
                       </div>
                     </div>
                   )}
@@ -406,8 +622,10 @@ export default function Dashboard() {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <Terminal size={18} style={{ color: 'var(--accent-active)' }} />
-                    <h3 className="text-lg font-black tracking-tight uppercase italic"
-                      style={{ color: 'var(--text-primary)' }}>
+                    <h3
+                      className="text-lg font-black tracking-tight uppercase italic"
+                      style={{ color: 'var(--text-primary)' }}
+                    >
                       Stamp <span style={{ color: 'var(--accent-active)' }}>History</span>
                     </h3>
                     <Tooltip
@@ -415,9 +633,11 @@ export default function Dashboard() {
                       content="Every file you've anchored appears here. Each entry shows the SHA-256 hash, timestamp, and Bitcoin confirmation status. Confirmed stamps are immutable — they exist on Bitcoin forever."
                     />
                   </div>
-                  <Link to="/vault"
+                  <Link
+                    to="/vault"
                     className="flex items-center gap-1 text-[10px] font-black tracking-widest uppercase transition-opacity hover:opacity-70"
-                    style={{ color: 'var(--accent-active)' }}>
+                    style={{ color: 'var(--accent-active)' }}
+                  >
                     Open Vault <ArrowRight size={12} />
                   </Link>
                 </div>
@@ -427,30 +647,46 @@ export default function Dashboard() {
 
             {/* ── Sidebar ── */}
             <div className="space-y-6 lg:col-span-4">
-
               {/* Dark Vault Feature Card */}
               <motion.div
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 }}
                 className="overflow-hidden rounded-3xl"
-                style={{ border: '1px solid rgba(244,63,94,0.2)', background: 'var(--bg-secondary)' }}
+                style={{
+                  border: '1px solid rgba(244,63,94,0.2)',
+                  background: 'var(--bg-secondary)'
+                }}
               >
                 <div className="p-6">
                   <div className="mb-4 flex items-center gap-3">
-                    <div className="flex h-9 w-9 items-center justify-center rounded-xl"
-                      style={{ background: 'rgba(244,63,94,0.1)', color: '#f43f5e', border: '1px solid rgba(244,63,94,0.2)' }}>
+                    <div
+                      className="flex h-9 w-9 items-center justify-center rounded-xl"
+                      style={{
+                        background: 'rgba(244,63,94,0.1)',
+                        color: '#f43f5e',
+                        border: '1px solid rgba(244,63,94,0.2)'
+                      }}
+                    >
                       <Lock size={16} />
                     </div>
                     <div>
                       <div className="flex items-center gap-1.5">
-                        <h4 className="text-sm font-black uppercase" style={{ color: 'var(--text-primary)' }}>Dark Vault</h4>
+                        <h4
+                          className="text-sm font-black uppercase"
+                          style={{ color: 'var(--text-primary)' }}
+                        >
+                          Dark Vault
+                        </h4>
                         <Tooltip
                           title="Dark Vault"
                           content="When enabled, your file is encrypted with AES-256-GCM directly in your browser before any processing. Only you hold the key. Not even Satohash can read your document — we only ever see the encrypted hash."
                         />
                       </div>
-                      <p className="text-[9px] font-bold uppercase tracking-widest" style={{ color: 'rgba(244,63,94,0.7)' }}>
+                      <p
+                        className="text-[9px] font-bold tracking-widest uppercase"
+                        style={{ color: 'rgba(244,63,94,0.7)' }}
+                      >
                         Zero-Knowledge Encryption
                       </p>
                     </div>
@@ -464,21 +700,38 @@ export default function Dashboard() {
                     ].map(({ icon: Icon, text }) => (
                       <div key={text} className="flex items-center gap-2">
                         <Icon size={11} style={{ color: '#f43f5e', opacity: 0.7 }} />
-                        <span className="text-[11px]" style={{ color: 'var(--text-secondary)' }}>{text}</span>
+                        <span className="text-[11px]" style={{ color: 'var(--text-secondary)' }}>
+                          {text}
+                        </span>
                       </div>
                     ))}
                   </div>
 
-                  <div className="rounded-xl p-3 text-xs leading-relaxed"
-                    style={{ background: 'rgba(244,63,94,0.06)', border: '1px solid rgba(244,63,94,0.12)', color: 'var(--text-secondary)' }}>
-                    Activate Dark Vault mode using the toggle inside the Ingest Protocol drop zone above. Your document stays private — only the timestamp proof is public.
+                  <div
+                    className="rounded-xl p-3 text-xs leading-relaxed"
+                    style={{
+                      background: 'rgba(244,63,94,0.06)',
+                      border: '1px solid rgba(244,63,94,0.12)',
+                      color: 'var(--text-secondary)'
+                    }}
+                  >
+                    Activate Dark Vault mode using the toggle inside the Ingest Protocol drop zone
+                    above. Your document stays private — only the timestamp proof is public.
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2 border-t px-6 py-3"
-                  style={{ borderColor: 'rgba(244,63,94,0.15)', background: 'rgba(244,63,94,0.04)' }}>
+                <div
+                  className="flex items-center gap-2 border-t px-6 py-3"
+                  style={{
+                    borderColor: 'rgba(244,63,94,0.15)',
+                    background: 'rgba(244,63,94,0.04)'
+                  }}
+                >
                   <div className="h-1.5 w-1.5 rounded-full" style={{ background: '#f43f5e' }} />
-                  <span className="text-[9px] font-black tracking-widest uppercase" style={{ color: 'rgba(244,63,94,0.6)' }}>
+                  <span
+                    className="text-[9px] font-black tracking-widest uppercase"
+                    style={{ color: 'rgba(244,63,94,0.6)' }}
+                  >
                     Phase IV Alpha — Toggle in drop zone above
                   </span>
                 </div>
@@ -492,25 +745,44 @@ export default function Dashboard() {
                 className="relative overflow-hidden rounded-3xl p-6"
                 style={{ background: 'var(--surface-raised)', border: '1px solid var(--border)' }}
               >
-                <div className="pointer-events-none absolute top-0 right-0 p-8 opacity-[0.03]" style={{ color: 'var(--accent-active)' }}>
+                <div
+                  className="pointer-events-none absolute top-0 right-0 p-8 opacity-[0.03]"
+                  style={{ color: 'var(--accent-active)' }}
+                >
                   <ShieldCheck size={140} />
                 </div>
-                <h3 className="relative z-10 mb-5 text-lg font-black tracking-tight uppercase italic"
-                  style={{ color: 'var(--text-primary)' }}>
+                <h3
+                  className="relative z-10 mb-5 text-lg font-black tracking-tight uppercase italic"
+                  style={{ color: 'var(--text-primary)' }}
+                >
                   Quick <span style={{ color: 'var(--text-secondary)' }}>Access</span>
                 </h3>
                 <div className="relative z-10 space-y-2.5">
                   <Link to="/stamp" className="block w-full">
-                    <SideBtn icon={FileCheck} label="Stamp a Document" sublabel="Hash & anchor any file" primary />
+                    <SideBtn
+                      icon={FileCheck}
+                      label="Stamp a Document"
+                      sublabel="Hash & anchor any file"
+                      primary
+                    />
                   </Link>
                   <Link to="/verify" className="block w-full">
-                    <SideBtn icon={ShieldCheck} label="Verify a Proof" sublabel="Check a .ots timestamp" />
+                    <SideBtn
+                      icon={ShieldCheck}
+                      label="Verify a Proof"
+                      sublabel="Check a .ots timestamp"
+                    />
                   </Link>
                   <Link to="/contracts" className="block w-full">
                     <SideBtn icon={FileText} label="Contracts" sublabel="Multi-party signing" />
                   </Link>
                   <Link to="/developer" className="block w-full">
-                    <SideBtn icon={Cpu} label="Developer API" sublabel="Keys, webhooks, endpoints" amber />
+                    <SideBtn
+                      icon={Cpu}
+                      label="Developer API"
+                      sublabel="Keys, webhooks, endpoints"
+                      amber
+                    />
                   </Link>
                 </div>
               </motion.div>
@@ -524,7 +796,10 @@ export default function Dashboard() {
                 style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border)' }}
               >
                 <div className="mb-4 flex items-center gap-2">
-                  <h4 className="text-[10px] font-black tracking-[0.3em] uppercase" style={{ color: 'var(--text-muted)' }}>
+                  <h4
+                    className="text-[10px] font-black tracking-[0.3em] uppercase"
+                    style={{ color: 'var(--text-muted)' }}
+                  >
                     Network Status
                   </h4>
                   <Tooltip
@@ -533,13 +808,28 @@ export default function Dashboard() {
                   />
                 </div>
                 <div className="space-y-4">
-                  <TeleItem icon={Globe} label="Global Mirroring" status="NOMINAL" emerald
-                    tooltip="Your proof is replicated across multiple geographic nodes simultaneously, ensuring it can never be lost or censored." />
-                  <TeleItem icon={Zap} label="L2 Settlement" status="BOLT-12 ACTIVE" amber
-                    tooltip="Lightning Network Layer 2 payment channel is active. Enables instant micropayment-gated stamping without on-chain fees per stamp." />
+                  <TeleItem
+                    icon={Globe}
+                    label="Global Mirroring"
+                    status="NOMINAL"
+                    emerald
+                    tooltip="Your proof is replicated across multiple geographic nodes simultaneously, ensuring it can never be lost or censored."
+                  />
+                  <TeleItem
+                    icon={Zap}
+                    label="L2 Settlement"
+                    status="BOLT-12 ACTIVE"
+                    amber
+                    tooltip="Lightning Network Layer 2 payment channel is active. Enables instant micropayment-gated stamping without on-chain fees per stamp."
+                  />
                   <TeleItem icon={Box} label="Bitcoin Height" status="#845,922+" />
-                  <TeleItem icon={Lock} label="Privacy Layer" status="ZK HARDENED" emerald
-                    tooltip="Zero-knowledge proofs ensure that the content of stamped files is never exposed, even during verification." />
+                  <TeleItem
+                    icon={Lock}
+                    label="Privacy Layer"
+                    status="ZK HARDENED"
+                    emerald
+                    tooltip="Zero-knowledge proofs ensure that the content of stamped files is never exposed, even during verification."
+                  />
                 </div>
               </motion.div>
 
@@ -549,9 +839,15 @@ export default function Dashboard() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.25 }}
                 className="rounded-3xl p-5"
-                style={{ border: '1px solid rgba(34,211,165,0.12)', background: 'rgba(34,211,165,0.03)' }}
+                style={{
+                  border: '1px solid rgba(34,211,165,0.12)',
+                  background: 'rgba(34,211,165,0.03)'
+                }}
               >
-                <p className="mb-3 text-[9px] font-black tracking-widest uppercase" style={{ color: 'var(--accent-success)', opacity: 0.7 }}>
+                <p
+                  className="mb-3 text-[9px] font-black tracking-widest uppercase"
+                  style={{ color: 'var(--accent-success)', opacity: 0.7 }}
+                >
                   Legal Compliance
                 </p>
                 <div className="grid grid-cols-3 gap-3">
@@ -562,14 +858,26 @@ export default function Dashboard() {
                   ].map(({ label, desc }) => (
                     <div key={label} className="flex flex-col items-center gap-1 text-center">
                       <ShieldCheck size={14} style={{ color: 'var(--accent-success)' }} />
-                      <span className="text-[9px] font-black uppercase" style={{ color: 'var(--text-primary)' }}>{label}</span>
-                      <span className="text-[8px] leading-tight" style={{ color: 'var(--text-muted)' }}>{desc}</span>
+                      <span
+                        className="text-[9px] font-black uppercase"
+                        style={{ color: 'var(--text-primary)' }}
+                      >
+                        {label}
+                      </span>
+                      <span
+                        className="text-[8px] leading-tight"
+                        style={{ color: 'var(--text-muted)' }}
+                      >
+                        {desc}
+                      </span>
                     </div>
                   ))}
                 </div>
-                <Link to="/trust"
+                <Link
+                  to="/trust"
                   className="mt-4 flex items-center justify-center gap-1 text-[9px] font-black tracking-widest uppercase transition-opacity hover:opacity-70"
-                  style={{ color: 'var(--accent-success)' }}>
+                  style={{ color: 'var(--accent-success)' }}
+                >
                   View Full Compliance Report <ChevronRight size={10} />
                 </Link>
               </motion.div>
@@ -584,18 +892,30 @@ export default function Dashboard() {
                 onMouseEnter={(e) => (e.currentTarget.style.borderColor = 'var(--border-bright)')}
                 onMouseLeave={(e) => (e.currentTarget.style.borderColor = 'var(--border)')}
               >
-                <div className="pointer-events-none absolute top-0 right-0 p-6 opacity-[0.04]" style={{ color: 'var(--accent-active)' }}>
+                <div
+                  className="pointer-events-none absolute top-0 right-0 p-6 opacity-[0.04]"
+                  style={{ color: 'var(--accent-active)' }}
+                >
                   <BookOpen size={80} />
                 </div>
-                <h4 className="mb-2 text-sm font-black uppercase italic" style={{ color: 'var(--text-primary)' }}>
+                <h4
+                  className="mb-2 text-sm font-black uppercase italic"
+                  style={{ color: 'var(--text-primary)' }}
+                >
                   The Giving Machine.
                 </h4>
-                <p className="mb-5 text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                  Every anchor funds global truth preservation. Satohash is a non-profit protocol — revenue goes to maintaining the open witness mesh and expanding access worldwide.
+                <p
+                  className="mb-5 text-xs leading-relaxed"
+                  style={{ color: 'var(--text-secondary)' }}
+                >
+                  Every anchor funds global truth preservation. Satohash is a non-profit protocol —
+                  revenue goes to maintaining the open witness mesh and expanding access worldwide.
                 </p>
-                <Link to="/about"
+                <Link
+                  to="/about"
                   className="flex items-center gap-2 text-[10px] font-black tracking-widest uppercase transition-all group-hover:gap-3"
-                  style={{ color: 'var(--accent-active)' }}>
+                  style={{ color: 'var(--accent-active)' }}
+                >
                   Read the Whitepaper <ChevronRight size={12} />
                 </Link>
               </motion.div>
@@ -614,11 +934,20 @@ function ActionBtn({ icon: Icon, label, onClick, secondary, amber }) {
     <button
       onClick={onClick}
       className="flex w-full items-center justify-center gap-2 rounded-xl px-4 py-3 text-[10px] font-black tracking-wide uppercase transition-all hover:opacity-90"
-      style={amber
-        ? { background: 'rgba(240,180,41,0.1)', color: 'var(--accent-gold)', border: '1px solid rgba(240,180,41,0.2)' }
-        : secondary
-          ? { background: 'var(--surface-raised)', color: 'var(--text-secondary)', border: '1px solid var(--border)' }
-          : { background: 'var(--accent-active)', color: '#fff' }
+      style={
+        amber
+          ? {
+              background: 'rgba(240,180,41,0.1)',
+              color: 'var(--accent-gold)',
+              border: '1px solid rgba(240,180,41,0.2)'
+            }
+          : secondary
+            ? {
+                background: 'var(--surface-raised)',
+                color: 'var(--text-secondary)',
+                border: '1px solid var(--border)'
+              }
+            : { background: 'var(--accent-active)', color: '#fff' }
       }
     >
       <Icon size={14} /> {label}
@@ -630,11 +959,20 @@ function SideBtn({ icon: Icon, label, sublabel, amber, primary }) {
   return (
     <div
       className="flex cursor-pointer items-center justify-between rounded-2xl p-4 transition-all hover:opacity-90"
-      style={primary
-        ? { background: 'var(--accent-active)', color: '#fff' }
-        : amber
-          ? { background: 'rgba(240,180,41,0.08)', color: 'var(--accent-gold)', border: '1px solid rgba(240,180,41,0.15)' }
-          : { background: 'var(--bg-primary)', color: 'var(--text-secondary)', border: '1px solid var(--border)' }
+      style={
+        primary
+          ? { background: 'var(--accent-active)', color: '#fff' }
+          : amber
+            ? {
+                background: 'rgba(240,180,41,0.08)',
+                color: 'var(--accent-gold)',
+                border: '1px solid rgba(240,180,41,0.15)'
+              }
+            : {
+                background: 'var(--bg-primary)',
+                color: 'var(--text-secondary)',
+                border: '1px solid var(--border)'
+              }
       }
     >
       <div className="flex items-center gap-3">
@@ -654,20 +992,31 @@ function TeleItem({ icon: Icon, label, status, emerald, amber, tooltip }) {
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-3">
         <Icon size={13} style={{ color: 'var(--text-muted)' }} />
-        <span className="text-xs font-bold uppercase italic" style={{ color: 'var(--text-secondary)' }}>
+        <span
+          className="text-xs font-bold uppercase italic"
+          style={{ color: 'var(--text-secondary)' }}
+        >
           {label}
         </span>
-        {tooltip && (
-          <Tooltip title={label} content={tooltip} />
-        )}
+        {tooltip && <Tooltip title={label} content={tooltip} />}
       </div>
       <div className="flex items-center gap-1.5">
         {(emerald || amber) && (
-          <div className="h-1.5 w-1.5 rounded-full"
-            style={{ background: emerald ? 'var(--accent-success)' : 'var(--accent-gold)' }} />
+          <div
+            className="h-1.5 w-1.5 rounded-full"
+            style={{ background: emerald ? 'var(--accent-success)' : 'var(--accent-gold)' }}
+          />
         )}
-        <span className="text-[9px] font-black uppercase"
-          style={{ color: emerald ? 'var(--accent-success)' : amber ? 'var(--accent-gold)' : 'var(--text-muted)' }}>
+        <span
+          className="text-[9px] font-black uppercase"
+          style={{
+            color: emerald
+              ? 'var(--accent-success)'
+              : amber
+                ? 'var(--accent-gold)'
+                : 'var(--text-muted)'
+          }}
+        >
           {status}
         </span>
       </div>

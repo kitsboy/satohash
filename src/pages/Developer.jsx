@@ -5,11 +5,9 @@ import {
   Zap,
   Activity,
   Code2,
-  Layers,
   Lock,
   Plus,
   ChevronRight,
-  ShieldAlert,
   ShieldCheck,
   BarChart3,
   Cpu,
@@ -17,11 +15,9 @@ import {
   Database,
   Smartphone,
   Building2,
-  FileText,
   Copy,
   CheckCircle2,
-  ArrowRight,
-  Loader2
+  ArrowRight
 } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { toast } from 'sonner'
@@ -33,7 +29,7 @@ const MOCK_KEYS = [
   { id: 1, name: 'Main Production Node', key: 'SAT_LIVE_8F2...A9B', status: 'Active' },
   { id: 2, name: 'Financial Ledger Worker', key: 'SAT_LIVE_4K9...R2D', status: 'Active' },
   { id: 3, name: 'iOS Personal Sync', key: 'SAT_TEST_3C1...D4E', status: 'Active' },
-  { id: 4, name: 'Legacy Archive', key: 'SAT_REVOKED_1A2...B3C', status: 'Revoked' },
+  { id: 4, name: 'Legacy Archive', key: 'SAT_REVOKED_1A2...B3C', status: 'Revoked' }
 ]
 
 const CODE_EXAMPLES = {
@@ -400,33 +396,31 @@ export default function Developer() {
                     </button>
                   </div>
                   <div className="space-y-4">
-                    {apiKeys === null ? (
-                      // Loading skeletons
-                      Array.from({ length: 3 }).map((_, i) => (
-                        <div
-                          key={i}
-                          className="flex animate-pulse items-center justify-between rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] p-5"
-                        >
-                          <div className="flex items-center gap-4">
-                            <div className="h-12 w-12 rounded-xl bg-white/5" />
-                            <div className="space-y-2">
-                              <div className="h-3 w-36 rounded bg-white/10" />
-                              <div className="h-2 w-24 rounded bg-white/5" />
+                    {apiKeys === null
+                      ? // Loading skeletons
+                        Array.from({ length: 3 }).map((_, i) => (
+                          <div
+                            key={i}
+                            className="flex animate-pulse items-center justify-between rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] p-5"
+                          >
+                            <div className="flex items-center gap-4">
+                              <div className="h-12 w-12 rounded-xl bg-white/5" />
+                              <div className="space-y-2">
+                                <div className="h-3 w-36 rounded bg-white/10" />
+                                <div className="h-2 w-24 rounded bg-white/5" />
+                              </div>
                             </div>
+                            <div className="h-2 w-12 rounded bg-white/5" />
                           </div>
-                          <div className="h-2 w-12 rounded bg-white/5" />
-                        </div>
-                      ))
-                    ) : (
-                      apiKeys.map((k) => (
-                        <ApiKeyRow
-                          key={k.id}
-                          name={k.name}
-                          keySnippet={k.key || k.keySnippet}
-                          status={k.status}
-                        />
-                      ))
-                    )}
+                        ))
+                      : apiKeys.map((k) => (
+                          <ApiKeyRow
+                            key={k.id}
+                            name={k.name}
+                            keySnippet={k.key || k.keySnippet}
+                            status={k.status}
+                          />
+                        ))}
                   </div>
                 </motion.div>
               )}
@@ -695,6 +689,42 @@ export default function Developer() {
                   </span>
                 </div>
               </div>
+            </div>
+
+            {/* Webhooks & Nodes */}
+            <div className="space-y-5 rounded-[2.5rem] border border-[var(--border)] bg-[var(--bg-secondary)] p-8">
+              <div className="flex items-center gap-3">
+                <Globe size={18} className="text-[var(--accent-active)]" />
+                <span className="text-[10px] font-black tracking-widest text-white uppercase">
+                  Webhooks &amp; Nodes
+                </span>
+              </div>
+              <p className="text-xs leading-relaxed text-[var(--text-secondary)]">
+                Register HTTP endpoints to receive real-time callbacks when stamps are confirmed or
+                revoked. Configure peer witness nodes for redundant proof anchoring.
+              </p>
+              <div className="space-y-2">
+                <div className="flex items-center gap-2 text-[10px] font-bold text-[var(--text-secondary)] uppercase">
+                  <div className="h-1.5 w-1.5 rounded-full bg-[var(--accent-success)] shadow-[0_0_6px_var(--accent-success)]" />
+                  Events:{' '}
+                  <span className="font-mono tracking-normal normal-case">
+                    confirmed · revoked · upgraded
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 text-[10px] font-bold text-[var(--text-secondary)] uppercase">
+                  <div className="h-1.5 w-1.5 rounded-full bg-[var(--accent-active)] shadow-[0_0_6px_var(--accent-active)]" />
+                  3 OTS calendar nodes active
+                </div>
+              </div>
+              <a
+                href={`${import.meta.env.VITE_API_URL || 'http://localhost:3001'}/api-docs#/Webhooks`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-xl border border-[var(--border-bright)] px-4 py-2 text-[10px] font-black tracking-widest uppercase transition-all hover:border-[var(--accent-active)] hover:text-[var(--accent-active)]"
+                style={{ color: 'var(--text-secondary)' }}
+              >
+                Webhook API Docs <ArrowRight size={12} />
+              </a>
             </div>
           </div>
         </div>

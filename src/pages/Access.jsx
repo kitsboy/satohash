@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion'
 import {
   Shield,
-  Zap,
   Lock,
   ChevronRight,
   Fingerprint,
@@ -93,8 +92,11 @@ export default function Access() {
 
   // Redirect immediately if already authenticated
   useEffect(() => {
-    if (localStorage.getItem('satohash_authed') === 'true' || sessionStorage.getItem('satohash_authed') === 'true') {
-      navigate('/vault')
+    if (
+      localStorage.getItem('satohash_authed') === 'true' ||
+      sessionStorage.getItem('satohash_authed') === 'true'
+    ) {
+      navigate('/stamp')
     }
   }, [])
 
@@ -122,7 +124,7 @@ export default function Access() {
           description: `npub: ${npubEncoded.substring(0, 20)}...`
         })
         await saveWithPin(nsecEncoded)
-        navigate('/vault')
+        navigate('/stamp')
       } catch (e) {
         setIsVerifying(false)
         toast.error('Key generation failed: ' + e.message)
@@ -154,7 +156,7 @@ export default function Access() {
           description: `Welcome back. npub: ${npubEncoded.substring(0, 20)}...`
         })
         await saveWithPin(nsec.trim())
-        navigate('/vault')
+        navigate('/stamp')
       } catch (e) {
         setIsVerifying(false)
         toast.error('Invalid nsec key')
@@ -184,7 +186,7 @@ export default function Access() {
       storage.setItem('satohash_token', data.token)
       storage.setItem('satohash_authed', 'true')
       toast.success('Admin access granted', { description: 'JWT stored — session lasts 24 h' })
-      navigate('/vault')
+      navigate('/stamp')
     } catch (err) {
       toast.error('Network error: ' + err.message)
     } finally {
@@ -489,15 +491,19 @@ export default function Access() {
         </div>
 
         {/* Stay signed in checkbox */}
-        <div className="flex items-center justify-center gap-3 mt-4">
+        <div className="mt-4 flex items-center justify-center gap-3">
           <input
             type="checkbox"
             id="remember-me"
             checked={rememberMe}
             onChange={(e) => setRememberMe(e.target.checked)}
-            className="h-4 w-4 rounded accent-[var(--accent-gold)] cursor-pointer"
+            className="h-4 w-4 cursor-pointer rounded accent-[var(--accent-gold)]"
           />
-          <label htmlFor="remember-me" className="text-sm font-semibold cursor-pointer" style={{ color: 'var(--text-secondary)' }}>
+          <label
+            htmlFor="remember-me"
+            className="cursor-pointer text-sm font-semibold"
+            style={{ color: 'var(--text-secondary)' }}
+          >
             Stay signed in on this device
           </label>
         </div>

@@ -48,11 +48,11 @@ const HistoryList = () => {
   const getConversationalStatus = (status) => {
     switch (status) {
       case 'confirmed':
-        return 'Permanently Anchored'
+        return 'Confirmed on Bitcoin'
       case 'pending':
-        return 'Propagating to Global Mesh...'
+        return 'Waiting for Bitcoin (~10 min)'
       default:
-        return 'Protocol Error'
+        return 'Unknown Status'
     }
   }
 

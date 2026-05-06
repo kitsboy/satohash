@@ -18,7 +18,6 @@ import {
   Copy,
   X,
   Layers,
-  Network,
   Bell
 } from 'lucide-react'
 import { useState, useEffect } from 'react'
@@ -458,7 +457,7 @@ export default function Settings() {
         </div>
 
         <div className="scrollbar-hide flex shrink-0 overflow-x-auto rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] p-1 shadow-2xl lg:p-1.5">
-          {['profile', 'security', 'billing', 'nodes', 'webhooks'].map((tab) => (
+          {['profile', 'security', 'billing'].map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
@@ -896,189 +895,26 @@ export default function Settings() {
                     </div>
                   </div>
                 </SettingSection>
-              </motion.div>
-            )}
 
-            {activeTab === 'nodes' && (
-              <motion.div
-                key="nodes"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="space-y-8"
-              >
-                <SettingSection
-                  icon={Network}
-                  title="Peer Node Configuration"
-                  description="Configure witness nodes for redundant proof anchoring."
-                >
-                  <div className="space-y-4">
-                    {(meshNodes.length > 0
-                      ? meshNodes
-                      : [
-                          {
-                            name: 'alice.btc.calendar.opentimestamps.org',
-                            status: 'Active',
-                            latency: '42ms'
-                          },
-                          {
-                            name: 'bob.btc.calendar.opentimestamps.org',
-                            status: 'Active',
-                            latency: '38ms'
-                          },
-                          {
-                            name: 'finney.calendar.eternitywall.com',
-                            status: 'Active',
-                            latency: '61ms'
-                          }
-                        ]
-                    ).map((node) => {
-                      const accent =
-                        node.status === 'Active'
-                          ? 'var(--accent-success)'
-                          : node.status === 'Degraded'
-                            ? 'var(--accent-pending)'
-                            : 'var(--accent-danger)'
-                      return (
-                        <div
-                          key={node.name}
-                          className="flex min-w-0 items-center justify-between gap-3 rounded-2xl border border-[var(--border)] bg-[var(--bg-primary)] px-4 py-4"
-                        >
-                          <div className="flex min-w-0 flex-1 items-center gap-3">
-                            <span
-                              className="h-2 w-2 shrink-0 rounded-full"
-                              style={{ backgroundColor: accent, boxShadow: `0 0 6px ${accent}` }}
-                            />
-                            <span className="min-w-0 truncate font-mono text-xs text-[var(--text-primary)]">
-                              {node.name}
-                            </span>
-                          </div>
-                          <div className="flex shrink-0 items-center gap-3">
-                            <span className="font-mono text-[10px] text-[var(--text-secondary)]">
-                              {node.latency}
-                            </span>
-                            <span
-                              className="rounded-md px-2 py-0.5 text-[9px] font-black uppercase"
-                              style={{
-                                color: accent,
-                                backgroundColor: `color-mix(in srgb, ${accent} 10%, transparent)`,
-                                border: `1px solid color-mix(in srgb, ${accent} 20%, transparent)`
-                              }}
-                            >
-                              {node.status}
-                            </span>
-                          </div>
-                        </div>
-                      )
-                    })}
-                    <p className="pt-2 text-xs text-[var(--text-secondary)]">
-                      These are the official OpenTimestamps calendar servers. Custom node support
-                      coming soon.
-                    </p>
-                  </div>
-                </SettingSection>
-              </motion.div>
-            )}
-
-            {activeTab === 'webhooks' && (
-              <motion.div
-                key="webhooks"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="space-y-8"
-              >
-                <SettingSection
-                  icon={Network}
-                  title="Webhook Endpoints"
-                  description="Receive HTTP POST notifications when stamps are confirmed or revoked."
-                >
-                  <div className="space-y-6">
-                    {/* Add new webhook */}
-                    <div className="flex gap-3">
-                      <input
-                        type="url"
-                        value={newWebhookUrl}
-                        onChange={(e) => setNewWebhookUrl(e.target.value)}
-                        placeholder="https://your-server.com/webhook"
-                        className="h-12 flex-1 rounded-xl border bg-transparent px-4 text-sm outline-none focus:border-[var(--accent-active)]"
-                        style={{ borderColor: 'var(--border)', color: 'var(--text-primary)' }}
-                        onKeyDown={(e) => e.key === 'Enter' && addWebhook()}
-                      />
-                      <button
-                        onClick={addWebhook}
-                        disabled={webhookLoading || !newWebhookUrl}
-                        className="h-12 rounded-xl px-6 text-xs font-black uppercase disabled:opacity-40"
-                        style={{ background: 'var(--accent-active)', color: '#fff' }}
-                      >
-                        {webhookLoading ? '...' : 'Add'}
-                      </button>
-                    </div>
-
-                    {/* Existing webhooks */}
-                    <div className="space-y-3">
-                      {webhooks.length === 0 && (
-                        <p
-                          className="py-8 text-center text-sm"
-                          style={{ color: 'var(--text-secondary)' }}
-                        >
-                          No webhooks configured yet.
-                        </p>
-                      )}
-                      {webhooks.map((hook) => (
-                        <div
-                          key={hook.id}
-                          className="flex items-center gap-3 rounded-2xl border p-4"
-                          style={{ borderColor: 'var(--border)', background: 'var(--bg-primary)' }}
-                        >
-                          <div className="min-w-0 flex-1">
-                            <div className="flex items-center gap-2">
-                              <p
-                                className="truncate font-mono text-xs"
-                                style={{ color: 'var(--text-primary)' }}
-                              >
-                                {hook.url}
-                              </p>
-                              {hook.last_delivery_status && (
-                                <span
-                                  className={`shrink-0 rounded px-2 py-0.5 text-[9px] font-black uppercase ${
-                                    hook.last_delivery_status === 'ok'
-                                      ? 'border border-[var(--accent-success)]/20 bg-[var(--accent-success)]/10 text-[var(--accent-success)]'
-                                      : 'border border-[var(--accent-danger)]/20 bg-[var(--accent-danger)]/10 text-[var(--accent-danger)]'
-                                  }`}
-                                >
-                                  {hook.last_delivery_status === 'ok' ? 'OK' : 'FAIL'}
-                                </span>
-                              )}
-                            </div>
-                            <p
-                              className="mt-0.5 text-[10px] font-black tracking-widest uppercase"
-                              style={{ color: 'var(--text-secondary)' }}
-                            >
-                              Events:{' '}
-                              {Array.isArray(hook.events)
-                                ? hook.events.join(', ')
-                                : hook.events || 'all'}
-                            </p>
-                          </div>
-                          <button
-                            onClick={() => testWebhook(hook.id)}
-                            disabled={webhookTestId === hook.id}
-                            className="rounded-lg px-3 py-1.5 text-[10px] font-black uppercase transition-opacity hover:opacity-80 disabled:opacity-40"
-                            style={{ background: 'var(--accent-success)', color: '#fff' }}
-                          >
-                            {webhookTestId === hook.id ? '...' : 'Test'}
-                          </button>
-                          <button
-                            onClick={() => deleteWebhook(hook.id)}
-                            className="rounded-lg px-3 py-1.5 text-[10px] font-black uppercase transition-opacity hover:opacity-80"
-                            style={{ background: 'var(--accent-danger)', color: '#fff' }}
-                          >
-                            Delete
-                          </button>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </SettingSection>
+                <div className="space-y-3 rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] p-6">
+                  <h3
+                    className="text-sm font-black tracking-widest uppercase"
+                    style={{ color: 'var(--text-primary)' }}
+                  >
+                    Developer Tools
+                  </h3>
+                  <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>
+                    Webhook endpoints, peer node configuration, and API access are managed in the
+                    Developer section.
+                  </p>
+                  <a
+                    href="/developer"
+                    className="inline-flex items-center gap-2 rounded-xl border border-[var(--accent-active)] px-4 py-2 text-xs font-black uppercase"
+                    style={{ color: 'var(--accent-active)' }}
+                  >
+                    Go to Developer Settings →
+                  </a>
+                </div>
               </motion.div>
             )}
           </AnimatePresence>

@@ -129,7 +129,7 @@ export default function TopSignalBar() {
             className="font-mono text-[10px] font-bold tracking-[0.15em] uppercase"
             style={{ color: 'var(--accent-gold)' }}
           >
-            Block #{blockHeight ? blockHeight.toLocaleString() : '—'}
+            Block {blockHeight ? blockHeight.toLocaleString() : '—'}
           </span>
         </div>
 
@@ -146,7 +146,7 @@ export default function TopSignalBar() {
             className="font-mono text-[10px] font-bold tracking-[0.15em] uppercase"
             style={{ color: 'var(--text-secondary)' }}
           >
-            ~{feeRate ?? '—'} sat/vB
+            Fee ~{feeRate ?? '—'} sat/vB
           </span>
         </div>
       </div>

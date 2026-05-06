@@ -45,7 +45,6 @@ const ContractView = React.lazy(() => import('./pages/contracts/ContractView'))
 const ContractEditor = React.lazy(() => import('./pages/contracts/ContractEditor'))
 
 // Orphaned protected pages
-const ImageVault = React.lazy(() => import('./pages/ImageVault'))
 const ProtocolStats = React.lazy(() => import('./pages/ProtocolStats'))
 const Offers = React.lazy(() => import('./pages/Offers'))
 const Forum = React.lazy(() => import('./pages/Forum'))
@@ -227,14 +226,7 @@ function AppContent() {
               </ProtectedRoute>
             }
           />
-          <Route
-            path="/image-vault"
-            element={
-              <ProtectedRoute>
-                <ImageVault />
-              </ProtectedRoute>
-            }
-          />
+          <Route path="/image-vault" element={<Navigate to="/vault" replace />} />
           <Route
             path="/protocol-stats"
             element={
