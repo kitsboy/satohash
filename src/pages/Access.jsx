@@ -26,6 +26,7 @@ export default function Access() {
   const [adminLoading, setAdminLoading] = useState(false)
   const [adminMode, setAdminMode] = useState(false)
   const [showPinRestore, setShowPinRestore] = useState(false)
+  const [rememberMe, setRememberMe] = useState(false)
   const navigate = useNavigate()
 
   // Encrypt nsec with AES-GCM using a PIN-derived key and persist to localStorage
@@ -92,10 +93,12 @@ export default function Access() {
 
   // Redirect immediately if already authenticated
   useEffect(() => {
-    if (localStorage.getItem('satohash_authed') === 'true') {
+    if (localStorage.getItem('satohash_authed') === 'true' || sessionStorage.getItem('satohash_authed') === 'true') {
       navigate('/vault')
     }
   }, [])
+
+  const storage = rememberMe ? localStorage : sessionStorage
 
   // Generate a brand new Nostr keypair
   const handleGenerateKey = () => {
@@ -109,10 +112,10 @@ export default function Access() {
         const nsecEncoded = nip19.nsecEncode(sk)
         const npubEncoded = nip19.npubEncode(pk)
 
-        localStorage.setItem('satohash_nsec', nsecEncoded)
-        localStorage.setItem('satohash_npub', npubEncoded)
-        localStorage.setItem('satohash_pk', pk)
-        localStorage.setItem('satohash_authed', 'true')
+        storage.setItem('satohash_nsec', nsecEncoded)
+        storage.setItem('satohash_npub', npubEncoded)
+        storage.setItem('satohash_pk', pk)
+        storage.setItem('satohash_authed', 'true')
 
         setIsVerifying(false)
         toast.success('Sovereign Identity Created', {
@@ -141,10 +144,10 @@ export default function Access() {
         const pk = getPublicKey(sk)
         const npubEncoded = nip19.npubEncode(pk)
 
-        localStorage.setItem('satohash_nsec', nsec.trim())
-        localStorage.setItem('satohash_npub', npubEncoded)
-        localStorage.setItem('satohash_pk', pk)
-        localStorage.setItem('satohash_authed', 'true')
+        storage.setItem('satohash_nsec', nsec.trim())
+        storage.setItem('satohash_npub', npubEncoded)
+        storage.setItem('satohash_pk', pk)
+        storage.setItem('satohash_authed', 'true')
 
         setIsVerifying(false)
         toast.success('Identity Verified', {
@@ -178,8 +181,8 @@ export default function Access() {
         setAdminLoading(false)
         return
       }
-      localStorage.setItem('satohash_token', data.token)
-      localStorage.setItem('satohash_authed', 'true')
+      storage.setItem('satohash_token', data.token)
+      storage.setItem('satohash_authed', 'true')
       toast.success('Admin access granted', { description: 'JWT stored — session lasts 24 h' })
       navigate('/vault')
     } catch (err) {
@@ -483,6 +486,20 @@ export default function Access() {
               </div>
             )}
           </motion.div>
+        </div>
+
+        {/* Stay signed in checkbox */}
+        <div className="flex items-center justify-center gap-3 mt-4">
+          <input
+            type="checkbox"
+            id="remember-me"
+            checked={rememberMe}
+            onChange={(e) => setRememberMe(e.target.checked)}
+            className="h-4 w-4 rounded accent-[var(--accent-gold)] cursor-pointer"
+          />
+          <label htmlFor="remember-me" className="text-sm font-semibold cursor-pointer" style={{ color: 'var(--text-secondary)' }}>
+            Stay signed in on this device
+          </label>
         </div>
 
         {/* Privacy Disclaimer */}

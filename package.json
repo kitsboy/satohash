@@ -37,6 +37,7 @@
     "@sentry/react": "^10.45.0",
     "@simplewebauthn/server": "^13.3.0",
     "@tailwindcss/postcss": "^4.1.18",
+    "@tanstack/react-virtual": "^3.13.24",
     "@types/three": "^0.183.1",
     "autoprefixer": "^10.4.24",
     "axios": "^1.13.6",
@@ -45,6 +46,7 @@
     "buffer": "^6.0.3",
     "canvas-confetti": "^1.9.4",
     "clsx": "^2.1.1",
+    "comlink": "^4.4.2",
     "commander": "^14.0.3",
     "compression": "^1.8.1",
     "concurrently": "^9.2.1",
@@ -103,9 +105,9 @@
     "three": "^0.183.2",
     "tiny-secp256k1": "^2.2.4",
     "uuid": "^13.0.0",
-    "zustand": "^4.5.0",
     "xss-clean": "^0.1.4",
-    "zod": "^4.3.6"
+    "zod": "^4.3.6",
+    "zustand": "^4.5.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.9.1",

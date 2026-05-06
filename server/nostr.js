@@ -77,12 +77,20 @@ export const fetchNostrProfile = async (pubkey) => {
 
         if (events.length > 0) {
           const event = events[0];
-          profile = {
-            name: event.tags.find(t => t[0] === 'name')?.[1] || '',
-            about: event.content || '',
-            picture: event.tags.find(t => t[0] === 'picture')?.[1] || '',
-            created_at: event.created_at
-          };
+          try {
+            const meta = JSON.parse(event.content || '{}');
+            profile = {
+              name: meta.name || meta.display_name || '',
+              about: meta.about || '',
+              picture: meta.picture || '',
+              nip05: meta.nip05 || '',
+              lud16: meta.lud16 || '',
+              website: meta.website || '',
+              created_at: event.created_at
+            };
+          } catch {
+            profile = { name: '', about: event.content || '', picture: '', created_at: event.created_at };
+          }
           break;
         }
       } catch (err) {
@@ -90,21 +98,16 @@ export const fetchNostrProfile = async (pubkey) => {
       }
     }
 
-    // Try NIP-05 verification if name suggests a domain (contains @)
-    if (profile && profile.name && profile.name.includes('@')) {
+    // Try NIP-05 verification using the nip05 field from kind 0 metadata
+    if (profile && profile.nip05 && profile.nip05.includes('@')) {
       try {
-        const nip05Result = await nip05.verify(profile.name, pubkey);
+        const nip05Result = await nip05.verify(profile.nip05, pubkey);
         if (nip05Result) {
-          verifiedNip05 = profile.name;
           profile.verified = true;
         }
       } catch (err) {
-        logger.warn(`NIP-05 verification failed for ${profile.name}: ${err.message}`);
+        logger.warn(`NIP-05 verification failed for ${profile.nip05}: ${err.message}`);
       }
-    }
-
-    if (profile) {
-      profile.nip05 = verifiedNip05;
     }
 
     logger.info(`Fetched profile for pubkey ${pubkey.slice(0,8)}...: ${profile ? 'success' : 'no data'}`);

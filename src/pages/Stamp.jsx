@@ -118,9 +118,12 @@ export default function Stamp() {
       // Real SHA-256 hashing in browser - file NEVER leaves device
       const file = files[0]
       const arrayBuffer = await file.arrayBuffer()
-      const hashBuffer = await crypto.subtle.digest('SHA-256', arrayBuffer)
-      const hashArray = Array.from(new Uint8Array(hashBuffer))
-      const hash = hashArray.map((b) => b.toString(16).padStart(2, '0')).join('')
+      // Off-thread hashing via Web Worker to avoid freezing UI on large files
+      const { wrap } = await import('comlink')
+      const worker = new Worker(new URL('../workers/hashWorker.js', import.meta.url), { type: 'module' })
+      const hashFn = wrap(worker)
+      const hash = await hashFn.hashFile(arrayBuffer)
+      worker.terminate()
       setHashValue(hash)
 
       setStampingStatus('anchoring')
@@ -161,6 +164,8 @@ export default function Stamp() {
       const data = await res.json()
       setProofResult(data)
       setStampingStatus('complete')
+      // Haptic feedback on mobile
+      navigator.vibrate?.([50, 30, 100]);
 
       // Save to localStorage for vault
       const existing = JSON.parse(localStorage.getItem('satohash_stamps') || '[]')

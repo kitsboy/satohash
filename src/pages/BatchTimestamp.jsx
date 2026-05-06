@@ -1,4 +1,5 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect, useRef } from 'react'
+import JSZip from 'jszip'
 import { useDropzone } from 'react-dropzone'
 import {
   FileText,
@@ -22,6 +23,32 @@ export default function BatchTimestamp() {
   const [batchResult, setBatchResult] = useState(null)
   const [error, setError] = useState(null)
   const [progress, setProgress] = useState(0)
+  const abortRef = useRef(null)
+
+  // On mount, restore any in-progress batch results from localStorage
+  useEffect(() => {
+    const saved = localStorage.getItem('satohash_batch_results')
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved)
+        if (parsed && parsed.length > 0) {
+          setBatchResult(parsed)
+        }
+      } catch {}
+    }
+  }, [])
+
+  // Warn user before leaving while a batch is processing
+  useEffect(() => {
+    if (!isProcessing) return
+    const handler = (e) => {
+      e.preventDefault()
+      e.returnValue = 'Batch stamping in progress — are you sure you want to leave?'
+      return e.returnValue
+    }
+    window.addEventListener('beforeunload', handler)
+    return () => window.removeEventListener('beforeunload', handler)
+  }, [isProcessing])
 
   const onDrop = useCallback((acceptedFiles) => {
     setError(null)
@@ -47,24 +74,23 @@ export default function BatchTimestamp() {
   }
 
   const calculateHashes = async () => {
-    const crypto = window.crypto || window.msCrypto
+    const { wrap } = await import('comlink')
     const updatedFiles = [...files]
 
     for (let i = 0; i < updatedFiles.length; i++) {
       const fileData = updatedFiles[i]
       try {
         const buffer = await fileData.file.arrayBuffer()
-        const hashBuffer = await crypto.subtle.digest('SHA-256', buffer)
-        const hashArray = Array.from(new Uint8Array(hashBuffer))
-        const hashHex = hashArray.map((b) => b.toString(16).padStart(2, '0')).join('')
-
+        const worker = new Worker(new URL('../workers/hashWorker.js', import.meta.url), { type: 'module' })
+        const hashFn = wrap(worker)
+        const hashHex = await hashFn.hashFile(buffer)
+        worker.terminate()
         updatedFiles[i] = { ...fileData, hash: hashHex, status: 'hashed' }
-        setFiles([...updatedFiles])
-        setProgress(Math.round(((i + 1) / updatedFiles.length) * 50))
       } catch (err) {
         updatedFiles[i] = { ...fileData, status: 'error', error: err.message }
-        setFiles([...updatedFiles])
       }
+      setFiles([...updatedFiles])
+      setProgress(Math.round(((i + 1) / updatedFiles.length) * 50))
     }
 
     return updatedFiles.filter((f) => f.hash).map((f) => f.hash)
@@ -76,13 +102,16 @@ export default function BatchTimestamp() {
       return
     }
 
+    abortRef.current = new AbortController()
+    const { signal } = abortRef.current
+
     setIsProcessing(true)
     setError(null)
     setProgress(0)
 
     const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
 
-    // Step 1: hash all files in browser
+    // Step 1: hash all files in browser (off-thread via Web Worker)
     const hashes = await calculateHashes()
 
     if (hashes.length === 0) {
@@ -95,8 +124,10 @@ export default function BatchTimestamp() {
     // Step 2: stamp each hash via API one at a time
     let successCount = 0
     const results = []
+    const currentResults = []
 
     for (let i = 0; i < files.length; i++) {
+      if (signal.aborted) break
       const fileData = files[i]
       if (!fileData.hash) continue
 
@@ -106,7 +137,8 @@ export default function BatchTimestamp() {
         const res = await fetch(`${API}/api/stamp`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ hash: fileData.hash, filename: fileData.file.name })
+          body: JSON.stringify({ hash: fileData.hash, filename: fileData.file.name }),
+          signal
         })
 
         if (res.status === 429) {
@@ -115,7 +147,8 @@ export default function BatchTimestamp() {
           const retry = await fetch(`${API}/api/stamp`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ hash: fileData.hash, filename: fileData.file.name })
+            body: JSON.stringify({ hash: fileData.hash, filename: fileData.file.name }),
+            signal
           })
           const retryData = await retry.json()
           setFiles((prev) =>
@@ -125,8 +158,19 @@ export default function BatchTimestamp() {
                 : f
             )
           )
-          if (retry.ok) successCount++
+          if (retry.ok) {
+            successCount++
+            navigator.vibrate?.([20])
+          }
           results.push(retryData)
+          currentResults.push({
+            id: retryData.id,
+            filename: fileData.file.name,
+            hash: fileData.hash,
+            status: retry.ok ? 'stamped' : 'error',
+            created_at: retryData.created_at
+          })
+          localStorage.setItem('satohash_batch_results', JSON.stringify(currentResults))
         } else {
           const data = await res.json()
           setFiles((prev) =>
@@ -134,8 +178,19 @@ export default function BatchTimestamp() {
               idx === i ? { ...f, status: res.ok ? 'stamped' : 'error', stampId: data.id } : f
             )
           )
-          if (res.ok) successCount++
+          if (res.ok) {
+            successCount++
+            navigator.vibrate?.([20])
+          }
           results.push(data)
+          currentResults.push({
+            id: data.id,
+            filename: fileData.file.name,
+            hash: fileData.hash,
+            status: res.ok ? 'stamped' : 'error',
+            created_at: data.created_at
+          })
+          localStorage.setItem('satohash_batch_results', JSON.stringify(currentResults))
         }
 
         setProgress(Math.round(((i + 1) / files.length) * 100))
@@ -143,6 +198,7 @@ export default function BatchTimestamp() {
         // Small delay between stamps to avoid rate limiting
         if (i < files.length - 1) await new Promise((r) => setTimeout(r, 100))
       } catch (err) {
+        if (err.name === 'AbortError') break
         setFiles((prev) =>
           prev.map((f, idx) => (idx === i ? { ...f, status: 'error', error: err.message } : f))
         )
@@ -158,33 +214,54 @@ export default function BatchTimestamp() {
     })
     if (successCount > 0) {
       toast.success(`Batch complete — ${successCount} of ${files.length} stamped`)
-    } else {
+    } else if (!signal.aborted) {
       toast.error('Batch failed — no stamps succeeded')
     }
+    localStorage.removeItem('satohash_batch_results')
     setIsProcessing(false)
   }
 
-  const downloadBatch = () => {
+  const downloadBatch = async () => {
     if (!batchResult?.results?.length) return
+    const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+    const zip = new JSZip()
+    const manifest = []
 
-    // Build a JSON manifest of all stamp IDs and hashes for download
-    const manifest = batchResult.results.map((r, i) => ({
-      index: i + 1,
-      filename: files[i]?.file?.name || `file_${i + 1}`,
-      hash: files[i]?.hash || '',
-      stampId: r?.id || '',
-      status: files[i]?.status || ''
-    }))
+    toast.info('Building ZIP archive...', { duration: 3000 })
 
-    const blob = new Blob([JSON.stringify(manifest, null, 2)], { type: 'application/json' })
-    const url = window.URL.createObjectURL(blob)
+    for (const result of batchResult.results) {
+      if (result.id) {
+        try {
+          const res = await fetch(`${API}/api/stamps/${result.id}?download=true`)
+          if (res.ok) {
+            const blob = await res.blob()
+            const buffer = await blob.arrayBuffer()
+            const filename = `${result.filename || result.id}.ots`
+            zip.file(filename, buffer)
+          }
+        } catch {}
+      }
+      manifest.push({
+        id: result.id,
+        filename: result.filename || result.name,
+        hash: result.hash,
+        status: result.status,
+        created_at: result.created_at
+      })
+    }
+
+    zip.file('manifest.json', JSON.stringify(manifest, null, 2))
+
+    const blob = await zip.generateAsync({ type: 'blob', compression: 'DEFLATE' })
+    const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
     a.href = url
-    a.download = `satohash-batch-${Date.now()}.json`
+    a.download = `satohash-batch-${Date.now()}.zip`
     document.body.appendChild(a)
     a.click()
-    window.URL.revokeObjectURL(url)
     document.body.removeChild(a)
+    URL.revokeObjectURL(url)
+    toast.success('ZIP downloaded!', { description: `${batchResult.results.length} proofs + manifest` })
   }
 
   const formatFileSize = (bytes) => {
@@ -413,6 +490,18 @@ export default function BatchTimestamp() {
                   ? 'Submitting to OpenTimestamps...'
                   : 'Waiting for confirmation...'}
             </p>
+            <div className="mt-6 text-center">
+              <button
+                onClick={() => {
+                  abortRef.current?.abort()
+                  setIsProcessing(false)
+                }}
+                className="text-[10px] font-black uppercase italic transition-colors"
+                style={{ color: 'var(--accent-danger)' }}
+              >
+                Cancel Batch
+              </button>
+            </div>
           </motion.div>
         )}
 

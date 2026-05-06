@@ -55,7 +55,7 @@ const BatchTimestamp = React.lazy(() => import('./pages/BatchTimestamp'))
 
 function ProtectedRoute({ children }) {
   const location = useLocation()
-  const authed = localStorage.getItem('satohash_authed') === 'true'
+  const authed = localStorage.getItem('satohash_authed') === 'true' || sessionStorage.getItem('satohash_authed') === 'true'
   if (!authed) return <Navigate to="/access" state={{ from: location }} replace />
   return children
 }

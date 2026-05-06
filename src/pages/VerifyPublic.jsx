@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { Copy, Share2, Hash, ExternalLink, CheckCircle2, XCircle, Clock } from 'lucide-react'
+import { Copy, Share2, Hash, ExternalLink, CheckCircle2, XCircle, Clock, Download } from 'lucide-react'
 import { toast } from 'sonner'
 import { motion } from 'framer-motion'
 import { QRCodeSVG as QRCode } from 'qrcode.react'
+import { downloadCertificate } from '../utils/certificate'
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
 
@@ -280,6 +281,21 @@ export default function VerifyPublic() {
                 <Hash size={14} /> Copy Hash
               </button>
             )}
+
+            <button
+              onClick={() => downloadCertificate({
+                id: proof.id,
+                name: proof.filename || proof.label || proof.original_filename || 'Document',
+                fullHash: proof.hash,
+                hash: proof.hash,
+                date: proof.created_at ? new Date(proof.created_at).toLocaleDateString() : '—',
+                status: proof.status || 'pending'
+              })}
+              className="flex items-center justify-center gap-2 rounded-2xl px-5 py-3 text-xs font-black uppercase transition-all hover:opacity-80 col-span-2"
+              style={{ background: 'var(--accent-gold)', color: '#141b25' }}
+            >
+              <Download size={14} /> Download Certificate PDF
+            </button>
           </motion.div>
 
           {/* Footer note */}

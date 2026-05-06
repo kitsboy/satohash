@@ -1,10 +1,77 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { User, CheckCircle, Shield, Globe, Terminal, Fingerprint, Key, Link2, ExternalLink, Zap } from 'lucide-react';
+import { User, CheckCircle, XCircle, Shield, Globe, Terminal, Fingerprint, Key, Link2, ExternalLink, Zap, Loader2 } from 'lucide-react';
+import { nip19 } from 'nostr-tools';
+import { toast } from 'sonner';
 
 export default function IdentityVerification() {
   const [npub, setNpub] = useState('');
-  const [isVerified, setIsVerified] = useState(false);
+  const [nip05Handle, setNip05Handle] = useState('');
+  const [extensionAvailable, setExtensionAvailable] = useState(false);
+  const [isConnecting, setIsConnecting] = useState(false);
+  const [isVerifying, setIsVerifying] = useState(false);
+  const [verifyResult, setVerifyResult] = useState(null); // null | 'verified' | 'failed'
+
+  useEffect(() => {
+    setExtensionAvailable(!!window.nostr)
+    const storedNpub = localStorage.getItem('satohash_npub') || ''
+    setNpub(storedNpub)
+    try {
+      const profile = JSON.parse(localStorage.getItem('satohash_profile') || '{}')
+      setNip05Handle(profile.nip05 || '')
+    } catch {}
+  }, [])
+
+  const handleConnectExtension = async () => {
+    if (!window.nostr) {
+      toast.error('No Nostr extension found. Install Alby or nos2x.')
+      return
+    }
+    setIsConnecting(true)
+    try {
+      const pubkeyHex = await window.nostr.getPublicKey()
+      const npubEncoded = nip19.npubEncode(pubkeyHex)
+      localStorage.setItem('satohash_npub', npubEncoded)
+      localStorage.setItem('satohash_pk', pubkeyHex)
+      localStorage.setItem('satohash_authed', 'true')
+      setNpub(npubEncoded)
+      toast.success('Extension connected!', { description: npubEncoded.substring(0, 20) + '...' })
+    } catch (e) {
+      toast.error('Extension error: ' + e.message)
+    } finally {
+      setIsConnecting(false)
+    }
+  }
+
+  const handleVerifyNip05 = async () => {
+    if (!nip05Handle || !nip05Handle.includes('@')) {
+      toast.error('Enter a valid NIP-05 handle (user@domain.com)')
+      return
+    }
+    setIsVerifying(true)
+    setVerifyResult(null)
+    try {
+      const [local, domain] = nip05Handle.split('@')
+      const url = `https://${domain}/.well-known/nostr.json?name=${local}`
+      const res = await fetch(url)
+      if (!res.ok) throw new Error('NIP-05 server unreachable')
+      const data = await res.json()
+      const resolvedPk = data.names?.[local] || data.names?.['_']
+      const storedPk = localStorage.getItem('satohash_pk')
+      if (resolvedPk && storedPk && resolvedPk.toLowerCase() === storedPk.toLowerCase()) {
+        setVerifyResult('verified')
+        toast.success('NIP-05 Verified!', { description: nip05Handle })
+      } else {
+        setVerifyResult('failed')
+        toast.error('NIP-05 mismatch — pubkeys do not match')
+      }
+    } catch (e) {
+      setVerifyResult('failed')
+      toast.error('Verification failed: ' + e.message)
+    } finally {
+      setIsVerifying(false)
+    }
+  }
 
   return (
     <div className="min-h-screen pb-20 selection:bg-[var(--accent-active)]/30" style={{ background: 'var(--bg-primary)' }}>
@@ -36,7 +103,9 @@ export default function IdentityVerification() {
                 </div>
                 <div>
                     <h4 className="text-[10px] font-black uppercase italic" style={{ color: 'var(--text-primary)' }}>Identity Status</h4>
-                    <p className="text-[10px] font-bold uppercase tracking-widest" style={{ color: 'var(--text-secondary)' }}>Awaiting Verification</p>
+                    <p className="text-[10px] font-bold uppercase tracking-widest" style={{ color: verifyResult === 'verified' ? 'var(--accent-success)' : 'var(--text-secondary)' }}>
+                      {verifyResult === 'verified' ? 'NIP-05 Verified' : npub ? 'Key Loaded' : 'Awaiting Verification'}
+                    </p>
                 </div>
             </div>
         </div>
@@ -72,6 +141,41 @@ export default function IdentityVerification() {
                         </div>
                     </div>
 
+                    {/* NIP-05 handle input + verify */}
+                    <div>
+                        <label className="mb-4 block text-[10px] font-black uppercase tracking-[0.2em] italic" style={{ color: 'var(--text-primary)' }}>NIP-05 Handle</label>
+                        <div className="flex gap-3">
+                            <input
+                                value={nip05Handle}
+                                onChange={(e) => { setNip05Handle(e.target.value); setVerifyResult(null) }}
+                                className="flex-1 rounded-2xl p-4 font-mono text-xs outline-none transition-all shadow-inner"
+                                style={{
+                                    border: `2px solid ${verifyResult === 'verified' ? 'var(--accent-success)' : verifyResult === 'failed' ? 'var(--accent-danger)' : 'var(--border)'}`,
+                                    background: 'var(--surface-raised)',
+                                    color: 'var(--text-primary)'
+                                }}
+                                placeholder="you@domain.com"
+                                onKeyDown={(e) => e.key === 'Enter' && handleVerifyNip05()}
+                            />
+                            <button
+                                onClick={handleVerifyNip05}
+                                disabled={isVerifying || !nip05Handle}
+                                className="flex items-center gap-2 rounded-2xl px-5 py-2 text-[10px] font-black uppercase tracking-widest transition-all hover:opacity-90 disabled:opacity-40"
+                                style={{ background: 'var(--accent-active)', color: '#fff' }}
+                            >
+                                {isVerifying ? <Loader2 size={14} className="animate-spin" /> : 'Verify'}
+                            </button>
+                        </div>
+                        {verifyResult && (
+                            <div className="mt-3 flex items-center gap-2">
+                                {verifyResult === 'verified'
+                                    ? <><CheckCircle size={14} style={{ color: 'var(--accent-success)' }} /><span className="text-[10px] font-black uppercase tracking-widest" style={{ color: 'var(--accent-success)' }}>NIP-05 Verified ✓</span></>
+                                    : <><XCircle size={14} style={{ color: 'var(--accent-danger)' }} /><span className="text-[10px] font-black uppercase tracking-widest" style={{ color: 'var(--accent-danger)' }}>Verification Failed ✗</span></>
+                                }
+                            </div>
+                        )}
+                    </div>
+
                     <div className="grid sm:grid-cols-2 gap-6">
                         <SocialLink
                             icon={Globe}
@@ -88,14 +192,20 @@ export default function IdentityVerification() {
                     </div>
 
                     <button
-                        onClick={() => setIsVerified(true)}
-                        className="btn-holographic w-full py-6 text-[12px] font-black uppercase tracking-[0.2em]"
+                        onClick={handleConnectExtension}
+                        disabled={isConnecting}
+                        className="btn-holographic w-full py-6 text-[12px] font-black uppercase tracking-[0.2em] flex items-center justify-center gap-3"
                     >
-                        Anchor Identity Protocol
+                        {isConnecting
+                            ? <><Loader2 size={16} className="animate-spin" /> Connecting...</>
+                            : extensionAvailable
+                                ? 'Anchor Identity Protocol'
+                                : 'Anchor Identity Protocol (No Extension Found)'
+                        }
                     </button>
 
                     <AnimatePresence>
-                        {isVerified && (
+                        {npub && (
                             <motion.div
                                 initial={{ opacity: 0, y: 10 }}
                                 animate={{ opacity: 1, y: 0 }}
@@ -105,9 +215,9 @@ export default function IdentityVerification() {
                                 <div className="h-12 w-12 rounded-full flex items-center justify-center text-emerald-500 shadow-sm border border-emerald-200" style={{ background: 'var(--bg-secondary)' }}>
                                     <CheckCircle size={24} />
                                 </div>
-                                <div>
+                                <div className="min-w-0">
                                     <p className="text-sm font-black uppercase italic" style={{ color: 'var(--accent-success)' }}>Identity Witnessed</p>
-                                    <p className="text-[10px] font-bold uppercase tracking-widest leading-relaxed" style={{ color: 'var(--text-secondary)' }}>Cross-protocol signature active on 12 relays.</p>
+                                    <p className="text-[10px] font-mono truncate mt-1" style={{ color: 'var(--text-secondary)' }}>{npub}</p>
                                 </div>
                             </motion.div>
                         )}
@@ -123,7 +233,7 @@ export default function IdentityVerification() {
                     <span className="uppercase tracking-[0.4em] font-bold">Mesh_Auth_Kernel::v3</span>
                 </div>
                 <div className="space-y-2 opacity-60">
-                    <p><span style={{ color: 'var(--accent-active)' }}>[SYSTEM]</span> Awaiting NIP-07 extension signature...</p>
+                    <p><span style={{ color: 'var(--accent-active)' }}>[SYSTEM]</span> {extensionAvailable ? 'NIP-07 extension detected.' : 'Awaiting NIP-07 extension signature...'}</p>
                     <p><span style={{ color: 'var(--accent-success)' }}>[NOSTR]</span> Global relay discovery initiated (wss://relay.satohash.io)</p>
                     <p><span style={{ color: 'var(--accent-active)' }}>[MESH]</span> Synchronizing identity state with witness mesh nodes...</p>
                     <p><span style={{ color: 'var(--accent-active)' }}>[PROOF]</span> Constructing Merkle branch for pubkey attestation.</p>

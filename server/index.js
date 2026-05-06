@@ -71,6 +71,16 @@ if (!envValidation.success) {
 
 const config = envValidation.data;
 
+// Production safety guard
+if (process.env.NODE_ENV === 'production') {
+  if (!process.env.ADMIN_KEY || process.env.ADMIN_KEY.includes('change-me')) {
+    throw new Error('FATAL: Set a real ADMIN_KEY before running in production');
+  }
+  if (!process.env.JWT_SECRET || process.env.JWT_SECRET.includes('change')) {
+    throw new Error('FATAL: Set a real JWT_SECRET before running in production');
+  }
+}
+
 // IPFS disabled — ipfs-http-client is not ESM-compatible; using mock CIDs
 let ipfs = null;
 
@@ -222,10 +232,20 @@ app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
+      scriptSrc: ["'self'", "'unsafe-inline'"],
       styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
       imgSrc: ["'self'", "data:", "https:"],
-      connectSrc: ["'self'", "https://mempool.space", "https://*.opentimestamps.org"],
+      connectSrc: [
+        "'self'",
+        "https://mempool.space",
+        "https://*.opentimestamps.org",
+        "wss://relay.damus.io",
+        "wss://nos.lol",
+        "wss://relay.snort.social",
+        "https://alice.btc.calendar.opentimestamps.org",
+        "https://bob.btc.calendar.opentimestamps.org",
+        "https://finney.calendar.eternitywall.com"
+      ],
       fontSrc: ["'self'", "https://fonts.gstatic.com"],
       objectSrc: ["'none'"],
       upgradeInsecureRequests: [],
@@ -234,6 +254,11 @@ app.use(helmet({
   crossOriginResourcePolicy: { policy: "cross-origin" }
 }));
 app.use(hpp());
+app.use((req, res, next) => {
+  res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  next();
+});
 
 const corsOptions = {
     origin: config.CORS_ORIGIN === '*'
@@ -940,6 +965,12 @@ app.get('/api/stamps/:id', (req, res) => {
     const stamp = db.prepare("SELECT * FROM timestamps WHERE id = ?").get(req.params.id);
     if (!stamp) return res.status(404).json({ error: 'Timestamp not found.' });
 
+    if (stamp.status === 'confirmed') {
+      res.setHeader('Cache-Control', 'public, max-age=3600, immutable');
+    } else {
+      res.setHeader('Cache-Control', 'private, no-cache');
+    }
+
     // If query ?download=true, return binary
     if (req.query.download === 'true') {
         const rawBinary = stamp.upgraded_binary || stamp.ots_binary;
@@ -1042,6 +1073,7 @@ app.get('/api/history', async (req, res) => {
         try { redis.setex(cacheKey, 30, JSON.stringify(result)); } catch {}
 
         res.setHeader('X-Cache', 'MISS');
+        res.setHeader('Cache-Control', 'private, max-age=30, stale-while-revalidate=60');
         res.json(result);
     } catch (e) {
         logger.error('History error:', e);
@@ -1175,6 +1207,57 @@ app.post('/api/verify', upload.single('otsFile'), async (req, res, next) => {
     } catch (error) {
         next(error);
     }
+});
+
+// NIP-05 identity resolution (/.well-known/nostr.json)
+app.get('/.well-known/nostr.json', (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  const name = req.query.name;
+  const pk = process.env.NOSTR_PUBLIC_KEY || '';
+  const relayList = ['wss://relay.damus.io', 'wss://nos.lol', 'wss://relay.snort.social'];
+  const relays = pk ? { [pk]: relayList } : {};
+  const names = {};
+  if (pk) names['_'] = pk;
+  try {
+    // Create identities table if not exists
+    db.prepare(`CREATE TABLE IF NOT EXISTS identities (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      nip05_name TEXT UNIQUE NOT NULL,
+      pubkey_hex TEXT NOT NULL,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    )`).run();
+    const rows = db.prepare('SELECT nip05_name, pubkey_hex FROM identities').all();
+    rows.forEach(r => { names[r.nip05_name] = r.pubkey_hex; });
+  } catch (e) {
+    // Table may not exist yet — silent fail
+  }
+  if (name) {
+    const resolved = names[name];
+    if (!resolved) return res.status(404).json({ error: 'Name not found' });
+    return res.json({ names: { [name]: resolved }, relays });
+  }
+  res.json({ names, relays });
+});
+
+// Store NIP-05 identity
+app.post('/api/identity/nip05', (req, res) => {
+  const { nip05_name, pubkey_hex } = req.body;
+  if (!nip05_name || !pubkey_hex) return res.status(400).json({ error: 'Missing nip05_name or pubkey_hex' });
+  // Basic validation
+  if (!/^[a-z0-9_\-\.]+$/.test(nip05_name)) return res.status(400).json({ error: 'Invalid NIP-05 name format' });
+  if (!/^[a-f0-9]{64}$/i.test(pubkey_hex)) return res.status(400).json({ error: 'Invalid pubkey_hex format' });
+  try {
+    db.prepare(`CREATE TABLE IF NOT EXISTS identities (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      nip05_name TEXT UNIQUE NOT NULL,
+      pubkey_hex TEXT NOT NULL,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    )`).run();
+    db.prepare('INSERT OR REPLACE INTO identities (nip05_name, pubkey_hex) VALUES (?, ?)').run(nip05_name, pubkey_hex);
+    res.json({ ok: true, nip05: `${nip05_name}@satohash.io` });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
 });
 
 Sentry.setupExpressErrorHandler(app);

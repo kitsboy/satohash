@@ -11,11 +11,13 @@ import {
   Loader2,
   Globe,
   Stamp,
-  RefreshCw
+  RefreshCw,
+  Trash2
 } from 'lucide-react'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
+import { useVirtualizer } from '@tanstack/react-virtual'
 import { toast } from 'sonner'
-import { jsPDF } from 'jspdf'
+import { downloadCertificate } from '../utils/certificate'
 import { useSocket } from '../hooks/useSocket'
 import { SkeletonCard } from '../components/Skeletons'
 
@@ -25,7 +27,9 @@ const StatusBadge = ({ status }) => {
       'bg-[var(--accent-success)]/10 text-[var(--accent-success)] border-[var(--accent-success)]/20',
     pending:
       'bg-[var(--accent-pending)]/10 text-[var(--accent-pending)] border-[var(--accent-pending)]/20',
-    hashing: 'bg-[var(--accent-gold)]/10 text-[var(--accent-gold)] border-[var(--accent-gold)]/20'
+    hashing: 'bg-[var(--accent-gold)]/10 text-[var(--accent-gold)] border-[var(--accent-gold)]/20',
+    revoked: 'bg-[var(--accent-danger)]/10 text-[var(--accent-danger)] border-[var(--accent-danger)]/20',
+    failed: 'bg-white/5 text-[var(--text-secondary)] border-white/10'
   }
   return (
     <span
@@ -62,6 +66,12 @@ export default function Vault() {
   const [exportProgress, setExportProgress] = useState(0)
   const [items, setItems] = useState([])
   const [loading, setLoading] = useState(true)
+  const [page, setPage] = useState(1)
+  const [hasMore, setHasMore] = useState(false)
+  const parentRef = useRef(null)
+  const [revokeTarget, setRevokeTarget] = useState(null)
+  const [revokeReason, setRevokeReason] = useState('')
+  const [revoking, setRevoking] = useState(false)
 
   const { lastEvent } = useSocket()
 
@@ -76,7 +86,9 @@ export default function Vault() {
       status: s.status || 'pending',
       confirmations: s.bitcoin_block_height ? 999 : 0,
       bitcoin_block_height: s.bitcoin_block_height || null,
-      size: '—'
+      size: '—',
+      is_revoked: s.is_revoked || false,
+      revocation_reason: s.revocation_reason || ''
     }))
 
   const refreshStamps = async () => {
@@ -98,12 +110,13 @@ export default function Vault() {
     const fetchStamps = async () => {
       try {
         const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
-        const res = await fetch(`${API}/api/history`)
+        const res = await fetch(`${API}/api/history?page=1&limit=50`)
         if (res.ok) {
           const data = await res.json()
           // API returns { stamps: [...], pagination: {...} }
           const rows = Array.isArray(data) ? data : (data.stamps ?? [])
           setItems(mapStamps(rows))
+          setHasMore(data.pagination?.hasNext || false)
         }
       } catch (e) {
         // Fall back to localStorage stamps if server not running
@@ -137,6 +150,42 @@ export default function Vault() {
     }
   }, [lastEvent])
 
+  const loadMore = async () => {
+    const nextPage = page + 1
+    try {
+      const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+      const res = await fetch(`${API}/api/history?page=${nextPage}&limit=50`)
+      if (res.ok) {
+        const data = await res.json()
+        const rows = Array.isArray(data) ? data : (data.stamps ?? [])
+        setItems(prev => [...prev, ...mapStamps(rows)])
+        setHasMore(data.pagination?.hasNext || false)
+        setPage(nextPage)
+      }
+    } catch {}
+  }
+
+  const handleRevoke = async (item) => {
+    setRevoking(true)
+    try {
+      const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+      const res = await fetch(`${API}/api/revoke/${item.id}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ reason: revokeReason })
+      })
+      if (!res.ok) throw new Error('Revoke request failed')
+      setItems(prev => prev.map(i => i.id === item.id ? { ...i, is_revoked: true, status: 'revoked' } : i))
+      setRevokeTarget(null)
+      setRevokeReason('')
+      toast.success('Proof revoked', { description: item.name })
+    } catch (e) {
+      toast.error('Revoke failed: ' + e.message)
+    } finally {
+      setRevoking(false)
+    }
+  }
+
   const handleExport = () => {
     setIsExporting(true)
     setExportProgress(0)
@@ -158,75 +207,6 @@ export default function Vault() {
         icon: <FileDown className="text-[var(--accent-success)]" />
       })
     }, 4000)
-  }
-
-  const downloadCertificate = (item) => {
-    const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' })
-    const pageW = 210,
-      margin = 20
-
-    // Background
-    doc.setFillColor(253, 251, 247)
-    doc.rect(0, 0, pageW, 297, 'F')
-
-    // Gold top bar
-    doc.setFillColor(240, 180, 41)
-    doc.rect(0, 0, pageW, 6, 'F')
-
-    // Watermark
-    doc.setTextColor(220, 220, 220)
-    doc.setFontSize(60)
-    doc.setFont('helvetica', 'bold')
-    doc.text('SATOHASH', 105, 160, { align: 'center', angle: 45 })
-
-    // Title
-    doc.setTextColor(15, 23, 42)
-    doc.setFontSize(28)
-    doc.setFont('helvetica', 'bold')
-    doc.text('CERTIFICATE OF', margin, 40)
-    doc.text('BLOCKCHAIN NOTARIZATION', margin, 52)
-
-    // Gold line
-    doc.setDrawColor(240, 180, 41)
-    doc.setLineWidth(1)
-    doc.line(margin, 58, pageW - margin, 58)
-
-    // Fields
-    const fields = [
-      ['Document', item.name],
-      ['SHA-256 Hash', item.fullHash || item.hash],
-      ['Proof ID', item.id],
-      ['Date Notarized', item.date],
-      ['Status', item.status.toUpperCase()],
-      ['Protocol', 'OpenTimestamps / Bitcoin Mainnet'],
-      ['Verification', `${window.location.origin}/verify`]
-    ]
-
-    let y = 75
-    fields.forEach(([label, value]) => {
-      doc.setFontSize(8)
-      doc.setTextColor(120, 130, 150)
-      doc.setFont('helvetica', 'bold')
-      doc.text(label.toUpperCase(), margin, y)
-      doc.setFontSize(11)
-      doc.setTextColor(15, 23, 42)
-      doc.setFont('helvetica', 'normal')
-      const lines = doc.splitTextToSize(String(value), pageW - margin * 2)
-      doc.text(lines, margin, y + 6)
-      y += lines.length * 6 + 12
-    })
-
-    // Footer
-    doc.setDrawColor(240, 180, 41)
-    doc.setLineWidth(0.5)
-    doc.line(margin, 270, pageW - margin, 270)
-    doc.setFontSize(8)
-    doc.setTextColor(150, 163, 175)
-    doc.text('Generated by Satohash — Bitcoin-Anchored Document Notarization', margin, 278)
-    doc.text(window.location.hostname, pageW - margin, 278, { align: 'right' })
-
-    doc.save(`Satohash_Certificate_${item.id?.substring(0, 8) || 'proof'}.pdf`)
-    toast.success('Certificate Downloaded', { description: `${item.name} — PDF ready` })
   }
 
   const downloadOtsFile = async (item) => {
@@ -289,6 +269,13 @@ export default function Vault() {
     return matchesTab && matchesSearch
   })
 
+  const virtualizer = useVirtualizer({
+    count: filteredItems.length,
+    getScrollElement: () => parentRef.current,
+    estimateSize: () => 148,
+    overscan: 5,
+  })
+
   return (
     <div className="mx-auto max-w-[90rem] space-y-12 p-8 pb-24">
       {/* Export Modal Overlay */}
@@ -347,6 +334,54 @@ export default function Vault() {
               </div>
             </motion.div>
           </div>
+        )}
+      </AnimatePresence>
+
+      {/* Revoke Confirmation Dialog */}
+      <AnimatePresence>
+        {revokeTarget && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+              className="fixed inset-0 z-[150] bg-black/70 backdrop-blur-sm"
+              onClick={() => { setRevokeTarget(null); setRevokeReason('') }}
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="fixed inset-x-4 top-1/2 z-[151] mx-auto max-w-md -translate-y-1/2 space-y-5 rounded-3xl border p-8"
+              style={{ background: 'var(--bg-secondary)', borderColor: 'color-mix(in srgb, var(--accent-danger) 40%, transparent)' }}
+            >
+              <h3 className="text-xl font-black tracking-tight">Revoke Proof?</h3>
+              <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                This permanently marks <strong className="text-white">{revokeTarget.name}</strong> as revoked. The Bitcoin anchor remains immutable — this only flags the record in Satohash.
+              </p>
+              <textarea
+                value={revokeReason}
+                onChange={e => setRevokeReason(e.target.value)}
+                placeholder="Reason for revocation (optional)..."
+                rows={3}
+                className="w-full resize-none rounded-xl border bg-transparent p-3 text-sm outline-none focus:border-[var(--accent-danger)]"
+                style={{ borderColor: 'var(--border)', color: 'var(--text-primary)' }}
+              />
+              <div className="flex gap-3">
+                <button
+                  onClick={() => handleRevoke(revokeTarget)}
+                  disabled={revoking}
+                  className="flex h-12 flex-1 items-center justify-center gap-2 rounded-xl text-xs font-black uppercase disabled:opacity-50"
+                  style={{ background: 'var(--accent-danger)', color: '#fff' }}
+                >
+                  {revoking ? <><Loader2 size={14} className="animate-spin" /> Revoking...</> : 'Confirm Revoke'}
+                </button>
+                <button
+                  onClick={() => { setRevokeTarget(null); setRevokeReason('') }}
+                  className="h-12 flex-1 rounded-xl border text-xs font-black uppercase opacity-60 hover:opacity-100"
+                  style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
+                >
+                  Cancel
+                </button>
+              </div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
 
@@ -491,7 +526,7 @@ export default function Vault() {
                           )}
                         </div>
                         <div className="space-y-1">
-                          <p className="text-lg font-bold tracking-tight text-white">{item.name}</p>
+                          <p className={`text-lg font-bold tracking-tight text-white ${item.is_revoked ? 'line-through opacity-50' : ''}`}>{item.name}</p>
                           <div className="flex items-center gap-3">
                             <p className="font-mono text-[10px] tracking-widest text-[var(--text-secondary)] uppercase">
                               {item.size}
@@ -564,6 +599,9 @@ export default function Vault() {
                             window.location.href = '/verify?hash=' + item.fullHash
                           }}
                         />
+                        {!item.is_revoked && (
+                          <ActionBtn icon={Trash2} label="Revoke" onClick={() => setRevokeTarget(item)} />
+                        )}
                       </div>
                     </td>
                   </tr>
@@ -571,10 +609,17 @@ export default function Vault() {
             </tbody>
           </table>
         </div>
+        {hasMore && !loading && (
+          <div className="flex justify-center border-t border-[var(--border)] p-6">
+            <button onClick={loadMore} className="flex items-center gap-2 rounded-xl border border-[var(--border)] bg-white/5 px-8 py-3 text-xs font-black tracking-widest uppercase text-[var(--text-secondary)] transition-all hover:bg-white hover:text-black">
+              Load more stamps
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Mobile Card List */}
-      <div className="space-y-4 md:hidden">
+      <div className="md:hidden">
         {loading && (
           <div className="grid grid-cols-1 gap-4">
             {Array.from({ length: 6 }).map((_, i) => (
@@ -592,98 +637,129 @@ export default function Vault() {
             </p>
           </div>
         )}
-        {!loading &&
-          filteredItems.map((item) => (
-            <motion.div
-              key={item.id}
-              drag="x"
-              dragConstraints={{ left: -80, right: 0 }}
-              dragElastic={0.1}
-              onDragEnd={(e, info) => {
-                if (info.offset.x < -60) {
-                  navigator.clipboard.writeText(item.fullHash || item.hash)
-                  toast.success('Hash copied!', {
-                    description: (item.fullHash?.substring(0, 16) ?? item.hash) + '...'
-                  })
-                }
-              }}
-              className="relative"
-            >
-              {/* Swipe hint shown behind card */}
-              <div
-                className="absolute inset-y-0 right-0 flex w-20 items-center justify-center rounded-r-2xl"
-                style={{ background: 'var(--accent-success, rgba(16,185,129,0.15))' }}
-              >
-                <span
-                  className="text-xs font-black"
-                  style={{ color: 'var(--accent-success, #10b981)' }}
-                >
-                  Copy
-                </span>
-              </div>
-              <div className="rounded-3xl border border-[var(--border)] bg-[var(--bg-secondary)] p-6">
-                <div className="flex items-start gap-4">
-                  <div
-                    className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-[var(--border)] ${item.type === 'capsule' ? 'bg-[var(--accent-gold)]/10 text-[var(--accent-gold)]' : 'bg-[var(--bg-primary)] text-[var(--text-secondary)]'}`}
-                  >
-                    {item.type === 'capsule' ? (
-                      <FileArchive size={20} />
-                    ) : item.type === 'snapper' ? (
-                      <Layers size={20} />
-                    ) : (
-                      <FileText size={20} />
-                    )}
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <p className="font-bold tracking-tight text-white">{item.name}</p>
-                    <p className="font-mono text-[10px] text-[var(--text-secondary)]">
-                      {item.hash}
-                    </p>
-                    <div className="mt-2 flex flex-wrap items-center gap-2">
-                      <StatusBadge status={item.status} />
-                      <span className="text-[10px] font-bold text-[var(--text-secondary)]">
-                        {item.date}
-                      </span>
-                      {item.status === 'confirmed' && item.bitcoin_block_height && (
-                        <span className="flex items-center gap-1 font-mono text-xs text-emerald-400">
-                          <span>₿</span>
-                          <span>Block {item.bitcoin_block_height.toLocaleString()}</span>
-                        </span>
-                      )}
+        {!loading && filteredItems.length > 0 && (
+          <>
+            <div ref={parentRef} style={{ height: '600px', overflow: 'auto' }}>
+              <div style={{ height: `${virtualizer.getTotalSize()}px`, width: '100%', position: 'relative' }}>
+                {virtualizer.getVirtualItems().map((virtualItem) => {
+                  const item = filteredItems[virtualItem.index]
+                  return (
+                    <div
+                      key={virtualItem.key}
+                      style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        transform: `translateY(${virtualItem.start}px)`,
+                        paddingBottom: '1rem'
+                      }}
+                    >
+                      <motion.div
+                        drag="x"
+                        dragConstraints={{ left: -80, right: 0 }}
+                        dragElastic={0.1}
+                        onDragEnd={(e, info) => {
+                          if (info.offset.x < -60) {
+                            navigator.clipboard.writeText(item.fullHash || item.hash)
+                            toast.success('Hash copied!', {
+                              description: (item.fullHash?.substring(0, 16) ?? item.hash) + '...'
+                            })
+                          }
+                        }}
+                        className="relative"
+                      >
+                        {/* Swipe hint shown behind card */}
+                        <div
+                          className="absolute inset-y-0 right-0 flex w-20 items-center justify-center rounded-r-2xl"
+                          style={{ background: 'var(--accent-success, rgba(16,185,129,0.15))' }}
+                        >
+                          <span
+                            className="text-xs font-black"
+                            style={{ color: 'var(--accent-success, #10b981)' }}
+                          >
+                            Copy
+                          </span>
+                        </div>
+                        <div className="rounded-3xl border border-[var(--border)] bg-[var(--bg-secondary)] p-6">
+                          <div className="flex items-start gap-4">
+                            <div
+                              className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-[var(--border)] ${item.type === 'capsule' ? 'bg-[var(--accent-gold)]/10 text-[var(--accent-gold)]' : 'bg-[var(--bg-primary)] text-[var(--text-secondary)]'}`}
+                            >
+                              {item.type === 'capsule' ? (
+                                <FileArchive size={20} />
+                              ) : item.type === 'snapper' ? (
+                                <Layers size={20} />
+                              ) : (
+                                <FileText size={20} />
+                              )}
+                            </div>
+                            <div className="min-w-0 flex-1">
+                              <p className={`font-bold tracking-tight text-white ${item.is_revoked ? 'line-through opacity-50' : ''}`}>{item.name}</p>
+                              <p className="font-mono text-[10px] text-[var(--text-secondary)]">
+                                {item.hash}
+                              </p>
+                              <div className="mt-2 flex flex-wrap items-center gap-2">
+                                <StatusBadge status={item.status} />
+                                <span className="text-[10px] font-bold text-[var(--text-secondary)]">
+                                  {item.date}
+                                </span>
+                                {item.status === 'confirmed' && item.bitcoin_block_height && (
+                                  <span className="flex items-center gap-1 font-mono text-xs text-emerald-400">
+                                    <span>₿</span>
+                                    <span>Block {item.bitcoin_block_height.toLocaleString()}</span>
+                                  </span>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                          <div className="mt-4 flex justify-end gap-2">
+                            <ActionBtn
+                              icon={Stamp}
+                              label="Badge"
+                              onClick={() => {
+                                navigator.clipboard.writeText(window.location.origin + '/verify/' + item.id)
+                                toast.success('Proof URL Copied', {
+                                  description: 'Share link is in your clipboard'
+                                })
+                              }}
+                            />
+                            <ActionBtn
+                              icon={Download}
+                              label="Raw"
+                              onClick={() => downloadCertificate(item)}
+                            />
+                            <ActionBtn icon={FileDown} label=".ots" onClick={() => downloadOtsFile(item)} />
+                            {item.status === 'pending' && (
+                              <ActionBtn icon={RefreshCw} label="Check" onClick={() => upgradeStamp(item)} />
+                            )}
+                            <ActionBtn
+                              icon={Globe}
+                              label="Verify"
+                              onClick={() => {
+                                window.location.href = '/verify?hash=' + item.fullHash
+                              }}
+                            />
+                            {!item.is_revoked && (
+                              <ActionBtn icon={Trash2} label="Revoke" onClick={() => setRevokeTarget(item)} />
+                            )}
+                          </div>
+                        </div>
+                      </motion.div>
                     </div>
-                  </div>
-                </div>
-                <div className="mt-4 flex justify-end gap-2">
-                  <ActionBtn
-                    icon={Stamp}
-                    label="Badge"
-                    onClick={() => {
-                      navigator.clipboard.writeText(window.location.origin + '/verify/' + item.id)
-                      toast.success('Proof URL Copied', {
-                        description: 'Share link is in your clipboard'
-                      })
-                    }}
-                  />
-                  <ActionBtn
-                    icon={Download}
-                    label="Raw"
-                    onClick={() => downloadCertificate(item)}
-                  />
-                  <ActionBtn icon={FileDown} label=".ots" onClick={() => downloadOtsFile(item)} />
-                  {item.status === 'pending' && (
-                    <ActionBtn icon={RefreshCw} label="Check" onClick={() => upgradeStamp(item)} />
-                  )}
-                  <ActionBtn
-                    icon={Globe}
-                    label="Verify"
-                    onClick={() => {
-                      window.location.href = '/verify?hash=' + item.fullHash
-                    }}
-                  />
-                </div>
+                  )
+                })}
               </div>
-            </motion.div>
-          ))}
+            </div>
+            {hasMore && !loading && (
+              <div className="flex justify-center py-4">
+                <button onClick={loadMore} className="rounded-xl border border-[var(--border)] bg-white/5 px-6 py-2 text-xs font-black uppercase text-[var(--text-secondary)] hover:bg-white hover:text-black">
+                  Load more
+                </button>
+              </div>
+            )}
+          </>
+        )}
       </div>
     </div>
   )

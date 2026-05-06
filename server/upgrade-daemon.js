@@ -127,7 +127,24 @@ const startUpgradeDaemon = (io) => {
         
       } catch (error) {
         logger.error(`❌ [DAEMON] Upgrade failure for ${stamp.id}: ${error.message}`);
-        
+
+        // Increment retry counter and mark failure time
+        try {
+          db.prepare(`
+            UPDATE timestamps
+            SET retry_count = COALESCE(retry_count, 0) + 1,
+                upgrade_failed_at = CURRENT_TIMESTAMP
+            WHERE id = ?
+          `).run(stamp.id);
+          const updated = db.prepare('SELECT retry_count FROM timestamps WHERE id = ?').get(stamp.id);
+          if (updated && updated.retry_count >= 10) {
+            db.prepare("UPDATE timestamps SET status = 'failed' WHERE id = ?").run(stamp.id);
+            logger.warn(`[DAEMON] Stamp ${stamp.id} permanently failed after ${updated.retry_count} retries.`);
+          }
+        } catch (dbErr) {
+          logger.error(`[DAEMON] Failed to update retry_count for ${stamp.id}: ${dbErr.message}`);
+        }
+
         // Graceful handling of calendar rate limits (HTTP 429)
         if (error.message.toLowerCase().includes('rate limit') || error.message.includes('429')) {
           logger.warn('⚠️ [DAEMON] OTS calendar rate limit hit. Pausing daemon until next cycle.');

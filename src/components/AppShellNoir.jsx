@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Search, Globe, Zap, Database, Terminal, ChevronRight, Scale, BookOpen } from 'lucide-react'
 import LeftRailNav from './LeftRailNav'
@@ -17,6 +17,8 @@ export default function AppShellNoir({ children }) {
   const [searchQuery, setSearchQuery] = useState('')
   const [stampResults, setStampResults] = useState([])
   const navigate = useNavigate()
+  const prevFocusRef = useRef(null)
+  const paletteRef = useRef(null)
 
   const handleKeyDown = useCallback((e) => {
     if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
@@ -33,6 +35,35 @@ export default function AppShellNoir({ children }) {
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [handleKeyDown])
+
+  // Restore focus when palette closes
+  useEffect(() => {
+    if (isSearchOpen) {
+      prevFocusRef.current = document.activeElement
+    } else {
+      prevFocusRef.current?.focus()
+    }
+  }, [isSearchOpen])
+
+  // Focus trap inside palette
+  useEffect(() => {
+    if (!isSearchOpen || !paletteRef.current) return
+    const focusable = paletteRef.current.querySelectorAll(
+      'button, input, a[href], [tabindex]:not([tabindex="-1"])'
+    )
+    const first = focusable[0]
+    const last = focusable[focusable.length - 1]
+    const handleTab = (e) => {
+      if (e.key !== 'Tab') return
+      if (e.shiftKey) {
+        if (document.activeElement === first) { e.preventDefault(); last?.focus() }
+      } else {
+        if (document.activeElement === last) { e.preventDefault(); first?.focus() }
+      }
+    }
+    document.addEventListener('keydown', handleTab)
+    return () => document.removeEventListener('keydown', handleTab)
+  }, [isSearchOpen])
 
   // Debounced stamp search — fires when query looks like a hash prefix (>= 8 chars)
   useEffect(() => {
@@ -79,6 +110,10 @@ export default function AppShellNoir({ children }) {
 
             {/* Palette panel */}
             <motion.div
+              ref={paletteRef}
+              role="dialog"
+              aria-modal="true"
+              aria-label="Command palette"
               initial={{ opacity: 0, scale: 0.95, y: -20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: -20 }}
@@ -240,6 +275,9 @@ export default function AppShellNoir({ children }) {
         )}
       </AnimatePresence>
 
+      {/* ── App content (hidden from AT when palette is open) ──────────── */}
+      <div aria-hidden={isSearchOpen ? 'true' : undefined} className="contents">
+
       {/* ── Desktop Left Rail ───────────────────────────────────────────── */}
       <aside
         aria-label="Main navigation"
@@ -302,6 +340,9 @@ export default function AppShellNoir({ children }) {
       {/* ── Mobile Bottom Nav ───────────────────────────────────────────── */}
       <div className="fixed inset-x-4 bottom-4 z-50 h-16 overflow-visible rounded-2xl border border-[var(--border-bright)] bg-[var(--bg-secondary)]/90 shadow-[0_20px_50px_rgba(0,0,0,0.5)] backdrop-blur-xl md:hidden">
         <MobileBottomNav />
+      </div>
+
+      {/* ── End app content wrapper ──────────────────────────────────────── */}
       </div>
     </div>
   )
