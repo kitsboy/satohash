@@ -1,7 +1,7 @@
-import { useState, useMemo, useEffect } from 'react'
+import { useState, useMemo, useEffect, useRef, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Tooltip from '../components/Tooltip'
-import { useNavigate } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 import { toast } from 'sonner'
 import { jsPDF } from 'jspdf'
 import QRCode from 'qrcode'
@@ -30,7 +30,20 @@ import {
   Circle,
   ExternalLink,
   Lock,
-  Mail
+  Mail,
+  Eye,
+  X,
+  Link2,
+  Moon,
+  Sun,
+  Camera,
+  ShoppingBag,
+  Crown,
+  BarChart3,
+  AlertTriangle,
+  History,
+  ChevronDown,
+  RotateCcw
 } from 'lucide-react'
 
 // ─── TEMPLATES DATA ────────────────────────────────────────────────────────────
@@ -607,6 +620,402 @@ const TEMPLATES = [
       sale_date: 'October 25, 2025',
       state: 'Colorado'
     }
+  },
+  // ── NEW TEMPLATES ──────────────────────────────────────────────────────────────
+  {
+    id: 'residential-lease-agreement',
+    title: 'Lease Agreement',
+    category: 'Property',
+    badge: 'Popular',
+    icon: Home,
+    description:
+      'A comprehensive residential lease capturing tenant and landlord details, monthly rent, security deposit, lease term, and house rules.',
+    fields: [
+      { id: 'landlord_name', label: 'Landlord Full Name', type: 'text' },
+      { id: 'landlord_address', label: 'Landlord Address', type: 'text' },
+      { id: 'tenant_name', label: 'Tenant(s) Full Name(s)', type: 'text' },
+      { id: 'tenant_address', label: 'Tenant Current Address', type: 'text' },
+      { id: 'property_address', label: 'Rental Property Address', type: 'text' },
+      { id: 'lease_start', label: 'Lease Start Date', type: 'text' },
+      { id: 'lease_end', label: 'Lease End Date', type: 'text' },
+      { id: 'monthly_rent', label: 'Monthly Rent Amount', type: 'text' },
+      { id: 'due_date', label: 'Rent Due Date (day of month)', type: 'text' },
+      { id: 'security_deposit', label: 'Security Deposit Amount', type: 'text' },
+      { id: 'late_fee', label: 'Late Fee Policy', type: 'text' },
+      { id: 'utilities', label: 'Utilities Responsibility', type: 'textarea' },
+      { id: 'pets', label: 'Pet Policy', type: 'text' },
+      { id: 'smoking', label: 'Smoking Policy', type: 'text' },
+      { id: 'house_rules', label: 'House Rules & Restrictions', type: 'textarea' },
+      { id: 'termination', label: 'Early Termination Clause', type: 'textarea' },
+      { id: 'governing_law', label: 'Governing State / Jurisdiction', type: 'text' }
+    ],
+    demoData: {
+      landlord_name: 'Patricia Ann Holloway',
+      landlord_address: '55 Magnolia Drive, Raleigh, NC 27601',
+      tenant_name: 'Marcus T. Williams & Renee C. Williams',
+      tenant_address: '210 Oak Park Lane, Durham, NC 27703',
+      property_address: '14 Birchwood Court, Raleigh, NC 27604',
+      lease_start: 'January 1, 2026',
+      lease_end: 'December 31, 2026',
+      monthly_rent: 'Two Thousand One Hundred Dollars ($2,100.00)',
+      due_date: '1st of each month',
+      security_deposit: 'Four Thousand Two Hundred Dollars ($4,200.00)',
+      late_fee: '$75 if rent is received after the 5th of the month.',
+      utilities:
+        'Tenant is responsible for electricity, gas, internet, and cable. Landlord covers water, sewer, and trash removal.',
+      pets: 'One pet allowed with a non-refundable pet fee of $300. No pets over 50 lbs.',
+      smoking: 'No smoking permitted inside the property or within 25 feet of any entrance.',
+      house_rules:
+        'No subletting without written landlord consent. Quiet hours 10 PM – 8 AM. Tenant must maintain yard in neat condition. No alterations to the property without written approval.',
+      termination:
+        'Tenant may terminate with 60 days written notice and payment of a 2-month early termination fee. Landlord may terminate with 30 days written notice for material breach of lease.',
+      governing_law: 'State of North Carolina'
+    }
+  },
+  {
+    id: 'employment-contract',
+    title: 'Employment Contract',
+    category: 'HR',
+    badge: 'Legal-Grade',
+    icon: Briefcase,
+    description:
+      'A full employment agreement covering position title, salary, duties, IP assignment, non-compete obligations, and termination provisions.',
+    fields: [
+      { id: 'employer_name', label: 'Employer / Company Name', type: 'text' },
+      { id: 'employer_address', label: 'Employer Address', type: 'text' },
+      { id: 'employee_name', label: 'Employee Full Name', type: 'text' },
+      { id: 'employee_address', label: 'Employee Address', type: 'text' },
+      { id: 'position', label: 'Position Title', type: 'text' },
+      { id: 'department', label: 'Department', type: 'text' },
+      { id: 'start_date', label: 'Employment Start Date', type: 'text' },
+      { id: 'salary', label: 'Annual Base Salary', type: 'text' },
+      { id: 'pay_frequency', label: 'Pay Frequency', type: 'text' },
+      { id: 'duties', label: 'Key Duties & Responsibilities', type: 'textarea' },
+      { id: 'hours', label: 'Working Hours / Schedule', type: 'text' },
+      { id: 'benefits', label: 'Benefits Package', type: 'textarea' },
+      { id: 'ip_assignment', label: 'Intellectual Property Assignment', type: 'textarea' },
+      { id: 'non_compete', label: 'Non-Compete / Non-Solicitation Terms', type: 'textarea' },
+      { id: 'termination', label: 'Termination & Notice Period', type: 'textarea' },
+      { id: 'governing_law', label: 'Governing Law', type: 'text' },
+      { id: 'effective_date', label: 'Contract Effective Date', type: 'text' }
+    ],
+    demoData: {
+      employer_name: 'Crestwood Digital Solutions, Inc.',
+      employer_address: '4400 Westlake Avenue, Seattle, WA 98109',
+      employee_name: 'Devon R. Hargrove',
+      employee_address: '811 Eastlake Ave E, Seattle, WA 98102',
+      position: 'Lead Product Designer',
+      department: 'Product & Design',
+      start_date: 'February 3, 2026',
+      salary: '$148,000 per year',
+      pay_frequency: 'Bi-weekly (26 pay periods per year)',
+      duties:
+        'Lead end-to-end product design for mobile and web platforms; manage a team of 3 junior designers; partner with engineering and product management; own the design system; present design decisions to executive stakeholders.',
+      hours: 'Full-time, Monday–Friday, 9 AM – 5 PM PST. Flexible with core hours 10 AM – 3 PM.',
+      benefits:
+        'Comprehensive medical, dental, and vision (100% premium covered). 401(k) with 5% match. 20 days PTO + 10 federal holidays. 12 weeks parental leave. $3,000 annual professional development budget.',
+      ip_assignment:
+        'All work product, inventions, designs, and developments created by Employee in the course of employment are the exclusive property of the Employer. Employee hereby assigns all rights, title, and interest in such work product to the Employer.',
+      non_compete:
+        'For 12 months following termination, Employee shall not solicit Employer clients or employees, nor engage in substantially similar work for a direct competitor within the Pacific Northwest region.',
+      termination:
+        'Either party may terminate this agreement with 30 days written notice. Employer may terminate immediately for cause. Upon termination, Employee must return all company property within 5 business days.',
+      governing_law: 'State of Washington',
+      effective_date: 'February 3, 2026'
+    }
+  },
+  {
+    id: 'photography-release',
+    title: 'Photography Release',
+    category: 'Commercial',
+    badge: 'Popular',
+    icon: Camera,
+    description:
+      'A model and property release authorizing commercial use of photographs and video for advertising, editorial, and digital media purposes.',
+    fields: [
+      { id: 'photographer_name', label: 'Photographer / Rights Holder Name', type: 'text' },
+      { id: 'photographer_address', label: 'Photographer Address', type: 'text' },
+      { id: 'model_name', label: 'Model / Subject Full Name', type: 'text' },
+      { id: 'model_address', label: 'Model Address', type: 'text' },
+      { id: 'guardian_name', label: 'Parent / Guardian Name (if minor)', type: 'text' },
+      { id: 'shoot_date', label: 'Date(s) of Photo Shoot', type: 'text' },
+      { id: 'shoot_location', label: 'Location of Shoot', type: 'text' },
+      { id: 'description', label: 'Description of Images / Content', type: 'textarea' },
+      { id: 'permitted_uses', label: 'Permitted Uses', type: 'textarea' },
+      { id: 'territory', label: 'Territory (Geographic Scope)', type: 'text' },
+      { id: 'duration', label: 'Duration of License', type: 'text' },
+      { id: 'compensation', label: 'Compensation to Model', type: 'text' },
+      { id: 'exclusions', label: 'Prohibited Uses / Exclusions', type: 'textarea' },
+      { id: 'governing_law', label: 'Governing State', type: 'text' },
+      { id: 'execution_date', label: 'Release Execution Date', type: 'text' }
+    ],
+    demoData: {
+      photographer_name: 'Lena Vasari Photography, LLC',
+      photographer_address: '2801 N. Milwaukee Avenue, Chicago, IL 60618',
+      model_name: 'Tobias Grant Ellison',
+      model_address: '433 W Armitage Avenue, Chicago, IL 60614',
+      guardian_name: 'N/A — Model is 28 years of age.',
+      shoot_date: 'November 8, 2025',
+      shoot_location: 'Studio 4, 2801 N. Milwaukee Avenue, Chicago, IL 60618',
+      description:
+        'Portrait and lifestyle photography session for brand campaign. Approximately 150 digital images and 2 short video clips (under 30 seconds each) depicting subject in casual urban settings.',
+      permitted_uses:
+        'Commercial advertising (print, digital, out-of-home); social media marketing; website imagery; product packaging; editorial publication; corporate presentations; stock licensing.',
+      territory: 'Worldwide, including all digital and online platforms.',
+      duration: 'Perpetual, irrevocable license.',
+      compensation:
+        '$500 flat fee paid upon execution of this release. Model acknowledges receipt of full compensation.',
+      exclusions:
+        'Images shall not be used in pornographic, defamatory, or political content, or in any manner that would be reasonably considered offensive or harmful to the Model.',
+      governing_law: 'State of Illinois',
+      execution_date: 'November 8, 2025'
+    }
+  },
+  {
+    id: 'bill-of-sale-general',
+    title: 'Bill of Sale — General',
+    category: 'Commercial',
+    badge: 'Popular',
+    icon: ShoppingBag,
+    description:
+      'A general-purpose bill of sale for transferring ownership of goods with full item description, purchase price, warranties, and as-is disclosure.',
+    fields: [
+      { id: 'seller_name', label: 'Seller Full Name', type: 'text' },
+      { id: 'seller_address', label: 'Seller Address', type: 'text' },
+      { id: 'buyer_name', label: 'Buyer Full Name', type: 'text' },
+      { id: 'buyer_address', label: 'Buyer Address', type: 'text' },
+      { id: 'item_description', label: 'Item(s) Description', type: 'textarea' },
+      { id: 'quantity', label: 'Quantity / Unit Count', type: 'text' },
+      { id: 'serial_numbers', label: 'Serial / Model Numbers (if applicable)', type: 'text' },
+      { id: 'condition', label: 'Condition of Item(s)', type: 'text' },
+      { id: 'purchase_price', label: 'Purchase Price', type: 'text' },
+      { id: 'payment_method', label: 'Payment Method', type: 'text' },
+      { id: 'warranties', label: 'Warranties (or As-Is Disclosure)', type: 'textarea' },
+      { id: 'delivery', label: 'Delivery / Transfer Terms', type: 'textarea' },
+      { id: 'governing_law', label: 'Governing State', type: 'text' },
+      { id: 'sale_date', label: 'Date of Sale', type: 'text' }
+    ],
+    demoData: {
+      seller_name: 'Nathaniel J. Forsythe',
+      seller_address: '822 Ridgewood Lane, Nashville, TN 37205',
+      buyer_name: 'Amelia C. Rhodes',
+      buyer_address: '115 5th Avenue South, Nashville, TN 37203',
+      item_description:
+        'Complete professional video production kit including: (1) Sony FX3 Full-Frame Cinema Camera Body; (1) Sony FE 24–70mm f/2.8 GM II Lens; (1) DJI RS 3 Pro Gimbal; (2) V-Mount Battery Packs; (1) SmallRig Camera Cage; all original accessories and carry cases.',
+      quantity: '6 individual items (see description)',
+      serial_numbers:
+        'FX3 Body: S/N 4421-8832-XX; Lens: S/N 2891-0044-YY; Gimbal: S/N DJI-RS3P-00441',
+      condition: 'Excellent — used professionally for 18 months. No damage or functional defects.',
+      purchase_price: 'Seven Thousand Five Hundred Dollars ($7,500.00)',
+      payment_method: 'Bank wire transfer, confirmed prior to delivery.',
+      warranties:
+        'Item is sold AS-IS with no express warranty from Seller. Seller warrants that they are the lawful owner with full right to sell, and that the item is free of liens or encumbrances.',
+      delivery:
+        'Buyer shall take physical possession of all items on the date of this agreement. Risk of loss transfers to Buyer upon physical handover.',
+      governing_law: 'State of Tennessee',
+      sale_date: 'December 1, 2025'
+    }
+  },
+  {
+    id: 'power-of-attorney',
+    title: 'Power of Attorney',
+    category: 'Estate',
+    badge: 'Legal-Grade',
+    icon: Crown,
+    description:
+      'Grant a trusted agent the legal authority to act on your behalf for financial, legal, or medical matters with a durable power of attorney.',
+    fields: [
+      { id: 'principal_name', label: 'Principal (Grantor) Full Name', type: 'text' },
+      { id: 'principal_dob', label: 'Principal Date of Birth', type: 'text' },
+      { id: 'principal_address', label: 'Principal Address', type: 'text' },
+      { id: 'agent_name', label: 'Agent (Attorney-in-Fact) Full Name', type: 'text' },
+      { id: 'agent_address', label: 'Agent Address', type: 'text' },
+      { id: 'alternate_agent', label: 'Successor Agent Full Name', type: 'text' },
+      { id: 'poa_type', label: 'Type of POA (Durable / Springing / Limited)', type: 'text' },
+      { id: 'scope', label: 'Scope of Authority Granted', type: 'textarea' },
+      { id: 'financial_powers', label: 'Financial Powers', type: 'textarea' },
+      { id: 'real_estate_powers', label: 'Real Estate Powers', type: 'textarea' },
+      { id: 'healthcare_powers', label: 'Healthcare Powers (if included)', type: 'textarea' },
+      { id: 'limitations', label: 'Limitations on Authority', type: 'textarea' },
+      { id: 'effective_date', label: 'Effective Date / Trigger Conditions', type: 'text' },
+      { id: 'expiration', label: 'Expiration Date (or "Until Revoked")', type: 'text' },
+      { id: 'governing_law', label: 'Governing State', type: 'text' },
+      { id: 'execution_date', label: 'Date of Execution', type: 'text' }
+    ],
+    demoData: {
+      principal_name: 'Eleanor Grace Pemberton',
+      principal_dob: 'April 3, 1945',
+      principal_address: '1 Harborview Court, Newport, RI 02840',
+      agent_name: 'Charles Douglas Pemberton',
+      agent_address: '78 Bellevue Avenue, Newport, RI 02840',
+      alternate_agent: 'Susan M. Aldrich, CPA',
+      poa_type: 'Durable General Power of Attorney',
+      scope:
+        'Agent is granted broad authority to manage all financial, legal, and property matters on behalf of Principal, effective immediately upon execution and remaining in force notwithstanding any subsequent incapacity of Principal.',
+      financial_powers:
+        'Authority to manage bank accounts; execute investment transactions; file tax returns; pay bills and debts; collect income and benefits; execute contracts; operate business interests.',
+      real_estate_powers:
+        'Authority to purchase, sell, lease, mortgage, or refinance real property; execute deeds; manage rental properties; resolve property tax assessments.',
+      healthcare_powers:
+        'Not included in this instrument. A separate Healthcare Power of Attorney has been executed.',
+      limitations:
+        'Agent may not make gifts from Principal assets exceeding $5,000 per recipient per year without written court approval. Agent may not change beneficiary designations on life insurance or retirement accounts.',
+      effective_date: 'Effective immediately upon execution.',
+      expiration: 'Until revoked in writing by Principal.',
+      governing_law: 'State of Rhode Island',
+      execution_date: 'September 30, 2025'
+    }
+  },
+  {
+    id: 'service-level-agreement',
+    title: 'Service Level Agreement',
+    category: 'Corporate',
+    badge: 'Legal-Grade',
+    icon: BarChart3,
+    description:
+      'Define measurable service standards between a provider and client including uptime guarantees, response times, penalties, and escalation procedures.',
+    fields: [
+      { id: 'provider_name', label: 'Service Provider Name', type: 'text' },
+      { id: 'provider_address', label: 'Service Provider Address', type: 'text' },
+      { id: 'client_name', label: 'Client Name', type: 'text' },
+      { id: 'client_address', label: 'Client Address', type: 'text' },
+      { id: 'service_description', label: 'Service(s) Covered', type: 'textarea' },
+      { id: 'service_hours', label: 'Service Hours / Availability Window', type: 'text' },
+      { id: 'uptime_sla', label: 'Uptime / Availability Guarantee', type: 'text' },
+      { id: 'response_times', label: 'Incident Response Time Targets', type: 'textarea' },
+      { id: 'resolution_times', label: 'Resolution Time Targets by Severity', type: 'textarea' },
+      { id: 'penalties', label: 'Service Credit / Penalty Structure', type: 'textarea' },
+      { id: 'exclusions', label: 'Exclusions from SLA (Force Majeure, etc.)', type: 'textarea' },
+      { id: 'reporting', label: 'Reporting & Measurement Methodology', type: 'textarea' },
+      { id: 'escalation', label: 'Escalation Path & Contact Details', type: 'textarea' },
+      { id: 'review_period', label: 'SLA Review Period', type: 'text' },
+      { id: 'governing_law', label: 'Governing Law', type: 'text' },
+      { id: 'effective_date', label: 'SLA Effective Date', type: 'text' }
+    ],
+    demoData: {
+      provider_name: 'Apex Cloud Infrastructure, Inc.',
+      provider_address: '900 Corporate Blvd, Suite 500, Atlanta, GA 30328',
+      client_name: 'Greenfield Logistics Group, LLC',
+      client_address: '3300 Peachtree Road NE, Atlanta, GA 30326',
+      service_description:
+        'Managed cloud hosting services including: dedicated virtual servers (4 vCPU / 16 GB RAM), managed PostgreSQL database cluster, CDN services, automated daily backups, DDoS mitigation, and 24/7 infrastructure monitoring.',
+      service_hours: '24 hours per day, 7 days per week, 365 days per year.',
+      uptime_sla: '99.95% monthly uptime (maximum 21.9 minutes downtime per month).',
+      response_times:
+        'P1 (Critical — full service outage): 15-minute response. P2 (High — major degradation): 1-hour response. P3 (Medium — partial impact): 4-hour response. P4 (Low — minor issue): 1-business-day response.',
+      resolution_times:
+        'P1: 4-hour resolution target. P2: 8-hour resolution target. P3: 3-business-day resolution target. P4: 10-business-day resolution target.',
+      penalties:
+        'Uptime below 99.95%: 5% monthly service credit. Uptime below 99.5%: 10% service credit. Uptime below 99.0%: 25% service credit. Credits capped at 50% of monthly fee.',
+      exclusions:
+        'SLA excludes downtime caused by: scheduled maintenance (with 48-hour notice); Client-side infrastructure failures; force majeure events; third-party DNS or ISP failures; Client actions or configurations.',
+      reporting:
+        'Provider shall deliver a monthly SLA report by the 5th of each month, detailing uptime, incidents, and credits owed. Measurement is based on external synthetic monitoring from 3 global checkpoints.',
+      escalation:
+        'Tier 1: support@apexcloud.io (24/7). Tier 2: oncall@apexcloud.io. Tier 3: VP Engineering — direct line provided in Schedule A.',
+      review_period: 'SLA shall be reviewed annually or upon material change in services.',
+      governing_law: 'State of Georgia',
+      effective_date: 'January 1, 2026'
+    }
+  },
+  {
+    id: 'loan-agreement',
+    title: 'Loan Agreement',
+    category: 'Financial',
+    badge: 'Legal-Grade',
+    icon: DollarSign,
+    description:
+      'A formal loan agreement with principal amount, interest rate, repayment schedule, default provisions, and security arrangements between two parties.',
+    fields: [
+      { id: 'lender_name', label: 'Lender Full Name / Entity', type: 'text' },
+      { id: 'lender_address', label: 'Lender Address', type: 'text' },
+      { id: 'borrower_name', label: 'Borrower Full Name / Entity', type: 'text' },
+      { id: 'borrower_address', label: 'Borrower Address', type: 'text' },
+      { id: 'loan_amount', label: 'Loan Principal Amount', type: 'text' },
+      { id: 'interest_rate', label: 'Annual Interest Rate', type: 'text' },
+      { id: 'interest_type', label: 'Interest Type (Simple / Compound)', type: 'text' },
+      { id: 'disbursement_date', label: 'Disbursement Date', type: 'text' },
+      { id: 'maturity_date', label: 'Maturity / Final Due Date', type: 'text' },
+      { id: 'repayment_schedule', label: 'Repayment Schedule', type: 'textarea' },
+      { id: 'prepayment', label: 'Prepayment Terms', type: 'text' },
+      { id: 'security', label: 'Security / Collateral', type: 'textarea' },
+      { id: 'default_events', label: 'Events of Default', type: 'textarea' },
+      { id: 'remedies', label: "Lender's Remedies Upon Default", type: 'textarea' },
+      { id: 'governing_law', label: 'Governing Law', type: 'text' },
+      { id: 'execution_date', label: 'Date of Execution', type: 'text' }
+    ],
+    demoData: {
+      lender_name: 'Vanguard Capital Partners, LLC',
+      lender_address: '1200 K Street NW, Suite 700, Washington, DC 20005',
+      borrower_name: 'Horizon Wellness Spa, LLC',
+      borrower_address: '4814 Massachusetts Avenue NW, Washington, DC 20016',
+      loan_amount: 'Three Hundred Fifty Thousand Dollars ($350,000.00)',
+      interest_rate: '8.25% per annum',
+      interest_type: 'Simple interest, calculated on outstanding principal balance.',
+      disbursement_date: 'January 15, 2026',
+      maturity_date: 'January 15, 2031 (5-year term)',
+      repayment_schedule:
+        'Sixty (60) equal monthly installments of $7,151.93, due on the 15th of each month commencing February 15, 2026. Final balloon payment of any remaining balance due January 15, 2031.',
+      prepayment:
+        'Borrower may prepay all or any portion of the outstanding principal without penalty after the 12-month anniversary of the disbursement date.',
+      security:
+        "Loan is secured by a first priority security interest in all of Borrower's business equipment, accounts receivable, and furniture/fixtures as described in the UCC-1 Financing Statement filed contemporaneously herewith.",
+      default_events:
+        'Events of Default include: (i) failure to make any payment within 10 days of due date; (ii) insolvency or bankruptcy filing; (iii) material misrepresentation in loan application; (iv) dissolution of Borrower entity.',
+      remedies:
+        'Upon default, Lender may: (i) declare all outstanding principal and accrued interest immediately due; (ii) exercise rights under the security agreement; (iii) pursue all available legal remedies. Lender shall provide 5 days written cure notice for payment defaults.',
+      governing_law: 'District of Columbia',
+      execution_date: 'January 15, 2026'
+    }
+  },
+  {
+    id: 'cease-and-desist',
+    title: 'Cease and Desist Letter',
+    category: 'Corporate',
+    badge: 'New',
+    icon: AlertTriangle,
+    description:
+      'A formal legal demand letter requiring the recipient to immediately stop infringing activity, with legal basis, evidence, and consequences of non-compliance.',
+    fields: [
+      { id: 'sender_name', label: 'Sender Full Name / Company', type: 'text' },
+      { id: 'sender_address', label: 'Sender Address', type: 'text' },
+      { id: 'sender_counsel', label: "Sender's Legal Counsel (if any)", type: 'text' },
+      { id: 'recipient_name', label: 'Recipient Full Name / Company', type: 'text' },
+      { id: 'recipient_address', label: 'Recipient Address', type: 'text' },
+      { id: 'violation_type', label: 'Type of Infringing / Harmful Activity', type: 'text' },
+      { id: 'violation_description', label: 'Detailed Description of Violation', type: 'textarea' },
+      { id: 'legal_basis', label: 'Legal Basis for Demand', type: 'textarea' },
+      { id: 'evidence', label: 'Evidence / Documentation of Violation', type: 'textarea' },
+      { id: 'demands', label: 'Specific Demands (Actions Required)', type: 'textarea' },
+      { id: 'deadline', label: 'Compliance Deadline', type: 'text' },
+      { id: 'consequences', label: 'Consequences of Non-Compliance', type: 'textarea' },
+      { id: 'reservation_of_rights', label: 'Reservation of Rights', type: 'textarea' },
+      { id: 'contact', label: 'Contact for Compliance Confirmation', type: 'text' },
+      { id: 'letter_date', label: 'Date of Letter', type: 'text' }
+    ],
+    demoData: {
+      sender_name: 'Meridian Software Corp.',
+      sender_address: '500 Technology Square, Cambridge, MA 02139',
+      sender_counsel: 'Pierce & Aldridge LLP, 100 High Street, Boston, MA 02110',
+      recipient_name: 'Nova Digital Solutions, Inc.',
+      recipient_address: '1250 Broadway, Suite 3600, New York, NY 10001',
+      violation_type: 'Copyright Infringement / Unauthorized Use of Proprietary Software',
+      violation_description:
+        'It has come to our attention that Nova Digital Solutions, Inc. has incorporated substantial portions of our proprietary codebase — specifically the "MeridianSync" data synchronization module (registered US Copyright Reg. TXu-003-114-782) — into your commercial product "NovaBridge v2.1" without authorization, license, or compensation.',
+      legal_basis:
+        'This demand is made pursuant to the United States Copyright Act, 17 U.S.C. § 101 et seq., the Computer Fraud and Abuse Act, and applicable state trade secret laws. Meridian Software Corp. holds registered copyright in the infringed material and has never granted any license to Recipient.',
+      evidence:
+        'A side-by-side code comparison analysis prepared by our technical experts demonstrates greater than 60% similarity between the MeridianSync module and sections of NovaBridge v2.1. Screen captures, version history data, and the expert report are on file and available upon request.',
+      demands:
+        '(1) Immediately cease all distribution, sale, and deployment of NovaBridge v2.1 or any version containing the infringing code. (2) Destroy or remove all copies of the infringing material from all systems. (3) Provide written certification of compliance signed by an authorized officer. (4) Account for all revenues derived from products containing the infringement.',
+      deadline: 'Ten (10) business days from the date of this letter (by December 19, 2025).',
+      consequences:
+        "Failure to comply within the stated deadline will result in immediate commencement of civil litigation seeking injunctive relief, statutory damages up to $150,000 per infringed work, actual damages, disgorgement of profits, and attorneys' fees as permitted by law. We will also report the infringement to relevant industry bodies.",
+      reservation_of_rights:
+        'This letter is not a waiver of any rights or remedies, all of which are expressly reserved. Nothing herein shall be construed as an admission of any fact or limitation of our legal position.',
+      contact: 'legal@meridiansoftware.com / (617) 555-0188',
+      letter_date: 'December 5, 2025'
+    }
   }
 ]
 
@@ -978,6 +1387,256 @@ const generatePDF = async (template, data) => {
   doc.save(`Satohash_${template.id}_${Date.now()}.pdf`)
 }
 
+// ─── PREVIEW MODAL ───────────────────────────────────────────────────────────────
+
+function PreviewModal({ template, data, onClose, onDownloadPDF, onEmail }) {
+  const catColor = CATEGORY_COLORS[template.category] || {}
+
+  // Prevent body scroll while modal is open
+  useEffect(() => {
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [])
+
+  return (
+    <AnimatePresence>
+      {/* Backdrop */}
+      <motion.div
+        key="preview-backdrop"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.2 }}
+        className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto p-4 md:p-8"
+        style={{ background: 'rgba(0,0,0,0.75)', backdropFilter: 'blur(6px)' }}
+        onClick={(e) => {
+          if (e.target === e.currentTarget) onClose()
+        }}
+      >
+        {/* Modal panel */}
+        <motion.div
+          key="preview-panel"
+          initial={{ opacity: 0, scale: 0.96, y: 24 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.96, y: 16 }}
+          transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+          className="relative my-auto w-full max-w-3xl overflow-hidden rounded-2xl shadow-2xl"
+          style={{ background: '#fdfbf7' }}
+        >
+          {/* Gold-teal accent bar */}
+          <div
+            style={{ height: 4, background: 'linear-gradient(90deg, #F0B429 0%, #0d9488 100%)' }}
+          />
+
+          {/* Modal toolbar */}
+          <div
+            className="flex items-center justify-between gap-3 px-6 py-4"
+            style={{ borderBottom: '1px solid #e2e8f0', background: '#f8fafc' }}
+          >
+            <div className="flex items-center gap-2">
+              <Eye size={15} style={{ color: '#64748b' }} />
+              <span className="text-sm font-bold" style={{ color: '#0f172a' }}>
+                Document Preview
+              </span>
+              <span
+                className="ml-1 rounded-full px-2 py-0.5 text-[10px] font-bold"
+                style={{
+                  background: catColor.bg,
+                  color: catColor.text,
+                  border: `1px solid ${catColor.border}`
+                }}
+              >
+                {template.category}
+              </span>
+            </div>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={onEmail}
+                className="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold transition-all active:scale-95"
+                style={{
+                  background: 'var(--bg-secondary)',
+                  border: '1px solid var(--border)',
+                  color: 'var(--text-primary)'
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.borderColor = 'var(--accent-purple)')}
+                onMouseLeave={(e) => (e.currentTarget.style.borderColor = 'var(--border)')}
+              >
+                <Mail size={13} style={{ color: 'var(--accent-purple)' }} />
+                Email Package
+              </button>
+              <button
+                onClick={onDownloadPDF}
+                className="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold transition-all active:scale-95"
+                style={{
+                  background: 'linear-gradient(135deg, #F0B429 0%, #d97706 100%)',
+                  color: '#0f172a'
+                }}
+              >
+                <Download size={13} />
+                Download PDF
+              </button>
+              <button
+                onClick={onClose}
+                className="flex h-8 w-8 items-center justify-center rounded-lg transition-colors"
+                style={{ color: '#64748b' }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = '#f1f5f9'
+                  e.currentTarget.style.color = '#0f172a'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = 'transparent'
+                  e.currentTarget.style.color = '#64748b'
+                }}
+              >
+                <X size={16} />
+              </button>
+            </div>
+          </div>
+
+          {/* Document body — read-only */}
+          <div className="p-6 md:p-12">
+            {/* Logos row */}
+            <div className="mb-8 flex items-start justify-between">
+              <div
+                className="flex flex-shrink-0 flex-col items-start"
+                style={{ opacity: 0.45, filter: 'grayscale(100%)' }}
+              >
+                <img
+                  src="/logo.png"
+                  alt="Satohash"
+                  className="mb-0.5 h-7 w-auto"
+                  onError={(e) => {
+                    e.target.style.display = 'none'
+                  }}
+                />
+                <span
+                  className="text-[9px] font-semibold tracking-[0.15em] uppercase"
+                  style={{ color: '#94a3b8' }}
+                >
+                  Powered by
+                </span>
+              </div>
+
+              <div className="mx-4 flex-1">
+                <h2
+                  className="text-2xl font-black tracking-tight md:text-3xl"
+                  style={{ color: '#0f172a' }}
+                >
+                  {template.title.toUpperCase()}
+                </h2>
+                <div className="mt-1.5 flex flex-wrap items-center gap-3">
+                  <span
+                    className="rounded-full px-2 py-0.5 text-[11px] font-bold tracking-widest uppercase"
+                    style={{
+                      background: catColor.bg,
+                      color: catColor.text,
+                      border: `1px solid ${catColor.border}`
+                    }}
+                  >
+                    {template.category}
+                  </span>
+                  <span className="text-xs" style={{ color: '#94a3b8' }}>
+                    {new Date().toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric'
+                    })}
+                  </span>
+                </div>
+              </div>
+
+              <div
+                className="flex flex-shrink-0 flex-col items-end"
+                style={{ opacity: 0.45, filter: 'grayscale(100%)' }}
+              >
+                <img
+                  src="/giveabit.png"
+                  alt="Give A Bit"
+                  className="mb-0.5 h-7 w-auto"
+                  onError={(e) => {
+                    e.target.style.display = 'none'
+                  }}
+                />
+                <span
+                  className="text-[9px] font-semibold tracking-[0.15em] uppercase"
+                  style={{ color: '#94a3b8' }}
+                >
+                  Created by
+                </span>
+              </div>
+            </div>
+
+            {/* Gold divider */}
+            <div
+              style={{
+                height: 1,
+                background: 'linear-gradient(90deg, #F0B429 0%, transparent 100%)',
+                marginBottom: '2.5rem'
+              }}
+            />
+
+            {/* Read-only fields */}
+            <div className="flex flex-col gap-6">
+              {template.fields.map((field) => (
+                <div key={field.id}>
+                  <p
+                    className="mb-1 text-[10px] font-black tracking-[0.18em] uppercase"
+                    style={{ color: '#64748b' }}
+                  >
+                    {field.label}
+                  </p>
+                  <p
+                    className="text-sm leading-relaxed"
+                    style={{
+                      color: data[field.id]?.trim() ? '#0f172a' : '#94a3b8',
+                      borderBottom: '1px solid #e2e8f0',
+                      paddingBottom: '0.5rem',
+                      fontStyle: data[field.id]?.trim() ? 'normal' : 'italic'
+                    }}
+                  >
+                    {data[field.id]?.trim() || '— not filled —'}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            {/* Document footer */}
+            <div
+              className="mt-14 flex items-center justify-between gap-4 pt-6"
+              style={{ borderTop: '1px solid #e2e8f0' }}
+            >
+              <div>
+                <p
+                  className="text-[10px] font-bold tracking-widest uppercase"
+                  style={{ color: '#94a3b8' }}
+                >
+                  Generated via
+                </p>
+                <p className="text-sm font-black" style={{ color: '#0f172a' }}>
+                  Satohash — Sovereign Notary Protocol
+                </p>
+                <p className="text-[10px]" style={{ color: '#94a3b8' }}>
+                  {window.location.hostname}
+                </p>
+              </div>
+              <div
+                className="flex h-8 items-center justify-center rounded-lg px-3"
+                style={{ background: '#f1f5f9' }}
+              >
+                <span className="text-[9px] font-bold" style={{ color: '#94a3b8' }}>
+                  READ-ONLY PREVIEW
+                </span>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      </motion.div>
+    </AnimatePresence>
+  )
+}
+
 // ─── TEMPLATE CARD ───────────────────────────────────────────────────────────────
 
 function TemplateCard({ template, onOpen }) {
@@ -1061,6 +1720,20 @@ function TemplateCard({ template, onOpen }) {
 function TemplateList({ onSelect }) {
   const [search, setSearch] = useState('')
   const [category, setCategory] = useState('All')
+  const [searchParams] = useSearchParams()
+
+  useEffect(() => {
+    document.title = 'Notary Templates — Satohash'
+  }, [])
+
+  // Auto-select template from ?t= URL param
+  useEffect(() => {
+    const tid = searchParams.get('t')
+    if (tid) {
+      const match = TEMPLATES.find((t) => t.id === tid)
+      if (match) onSelect(match)
+    }
+  }, [searchParams, onSelect])
 
   const filtered = useMemo(() => {
     return TEMPLATES.filter((t) => {
@@ -1175,9 +1848,97 @@ function TemplateList({ onSelect }) {
 
 // ─── EDITOR VIEW ────────────────────────────────────────────────────────────────
 
+const MAX_HISTORY_SNAPSHOTS = 5
+
 function TemplateEditor({ template, onBack }) {
   const [data, setData] = useState({ ...template.demoData })
   const [qrUrl, setQrUrl] = useState('')
+  const [darkDoc, setDarkDoc] = useState(false)
+  const [showPreview, setShowPreview] = useState(false)
+
+  // ── Version History ────────────────────────────────────────────────────────
+  const historyKey = `satohash_template_history_${template.id}`
+  const [snapshots, setSnapshots] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem(historyKey) || '[]')
+    } catch {
+      return []
+    }
+  })
+  const [historyOpen, setHistoryOpen] = useState(false)
+  const debounceRef = useRef(null)
+
+  // Debounce-save a snapshot whenever data changes
+  const saveSnapshot = useCallback(
+    (currentData) => {
+      clearTimeout(debounceRef.current)
+      debounceRef.current = setTimeout(() => {
+        setSnapshots((prev) => {
+          const snap = { timestamp: Date.now(), data: { ...currentData } }
+          const next = [snap, ...prev].slice(0, MAX_HISTORY_SNAPSHOTS)
+          try {
+            localStorage.setItem(historyKey, JSON.stringify(next))
+          } catch {
+            // storage quota — ignore
+          }
+          return next
+        })
+      }, 2000)
+    },
+    [historyKey]
+  )
+
+  // Trigger save on every data change
+  useEffect(() => {
+    saveSnapshot(data)
+    return () => clearTimeout(debounceRef.current)
+  }, [data, saveSnapshot])
+
+  const restoreSnapshot = useCallback((snap) => {
+    setData({ ...snap.data })
+    toast.success('Restored snapshot from ' + new Date(snap.timestamp).toLocaleTimeString())
+  }, [])
+
+  // Dynamic SEO meta tags
+  useEffect(() => {
+    document.title = `${template.title} — Satohash Notary Templates`
+
+    const setMeta = (selector, attrName, attrValue, content) => {
+      let el = document.querySelector(selector)
+      if (!el) {
+        el = document.createElement('meta')
+        el.setAttribute(attrName, attrValue)
+        document.head.appendChild(el)
+      }
+      el.setAttribute('content', content)
+    }
+
+    setMeta('meta[name="description"]', 'name', 'description', template.description)
+    setMeta('meta[property="og:title"]', 'property', 'og:title', template.title)
+    setMeta('meta[property="og:description"]', 'property', 'og:description', template.description)
+
+    return () => {
+      document.title = 'Satohash — Sovereign Notary Protocol'
+      setMeta(
+        'meta[name="description"]',
+        'name',
+        'description',
+        'Satohash anchors any document to the Bitcoin blockchain in under 60 seconds. Immutable, court-admissible proof of existence — free, private, no lawyers needed. Your file never leaves your device.'
+      )
+      setMeta(
+        'meta[property="og:title"]',
+        'property',
+        'og:title',
+        'Satohash — Stamp Any Document on Bitcoin. Forever.'
+      )
+      setMeta(
+        'meta[property="og:description"]',
+        'property',
+        'og:description',
+        'Drop a file. Get permanent, tamper-proof Bitcoin proof of existence in 60 seconds. Free. Private. No lawyers. Your document never leaves your device.'
+      )
+    }
+  }, [template])
 
   useEffect(() => {
     QRCode.toDataURL(VERIFY_URL, { width: 80, margin: 1 })
@@ -1224,10 +1985,31 @@ function TemplateEditor({ template, onBack }) {
     window.location.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
   }
 
+  const handleShareLink = async () => {
+    const url = `${window.location.origin}/templates?t=${template.id}`
+    try {
+      await navigator.clipboard.writeText(url)
+      toast.success('Share link copied!', {
+        description: 'Recipients can open this template directly.'
+      })
+    } catch {
+      toast.error('Could not copy to clipboard.')
+    }
+  }
+
   const catColor = CATEGORY_COLORS[template.category] || {}
 
   return (
     <div className="min-h-screen overflow-x-hidden" style={{ background: 'var(--bg-primary)' }}>
+      {showPreview && (
+        <PreviewModal
+          template={template}
+          data={data}
+          onClose={() => setShowPreview(false)}
+          onDownloadPDF={handlePDF}
+          onEmail={handleEmail}
+        />
+      )}
       <div className="mx-auto max-w-7xl px-4 py-8 md:px-8 md:py-12">
         {/* Back */}
         <button
@@ -1241,21 +2023,24 @@ function TemplateEditor({ template, onBack }) {
           <span className="text-sm font-semibold">Back to Templates</span>
         </button>
 
-        <div className="flex flex-col items-start gap-6 lg:flex-row lg:gap-8">
+        <div className="flex flex-col-reverse gap-6 lg:flex-row lg:items-start lg:gap-8">
           {/* ── Document panel ── */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.35 }}
             className="w-full flex-1 overflow-hidden rounded-2xl shadow-2xl"
-            style={{ background: '#fdfbf7' }}
+            style={{
+              background: darkDoc ? '#0f172a' : '#fdfbf7',
+              transition: 'background 0.25s ease, color 0.25s ease'
+            }}
           >
             {/* Gold-teal accent bar */}
             <div
               style={{ height: 4, background: 'linear-gradient(90deg, #F0B429 0%, #0d9488 100%)' }}
             />
 
-            <div className="p-5 md:p-12">
+            <div className="p-4 md:p-8 lg:p-12">
               {/* Logos row: Satohash left ("Powered by"), Give A Bit right ("Created by") */}
               <div className="mb-8 flex items-start justify-between">
                 {/* Left: Satohash logo — "Powered by" */}
@@ -1283,7 +2068,7 @@ function TemplateEditor({ template, onBack }) {
                 <div className="mx-4 flex-1">
                   <h1
                     className="text-2xl font-black tracking-tight md:text-3xl"
-                    style={{ color: '#0f172a' }}
+                    style={{ color: darkDoc ? '#f8fafc' : '#0f172a' }}
                   >
                     {template.title.toUpperCase()}
                   </h1>
@@ -1341,12 +2126,12 @@ function TemplateEditor({ template, onBack }) {
 
               {/* Fields */}
               <div className="flex flex-col gap-6">
-                {template.fields.map((field, idx) => (
+                {template.fields.map((field) => (
                   <div key={field.id}>
                     <label
                       htmlFor={field.id}
                       className="mb-1.5 block text-[10px] font-black tracking-[0.18em] uppercase"
-                      style={{ color: '#64748b' }}
+                      style={{ color: darkDoc ? '#94a3b8' : '#64748b' }}
                     >
                       {field.label}
                     </label>
@@ -1358,15 +2143,17 @@ function TemplateEditor({ template, onBack }) {
                         rows={3}
                         className="w-full resize-y bg-transparent px-0 py-1 text-sm leading-relaxed transition-colors outline-none"
                         style={{
-                          color: '#0f172a',
-                          borderBottom: '1.5px solid #e2e8f0',
+                          color: darkDoc ? '#f8fafc' : '#0f172a',
+                          borderBottom: `1.5px solid ${darkDoc ? '#334155' : '#e2e8f0'}`,
                           borderTop: 'none',
                           borderLeft: 'none',
                           borderRight: 'none',
                           borderRadius: 0
                         }}
                         onFocus={(e) => (e.target.style.borderBottomColor = '#eab308')}
-                        onBlur={(e) => (e.target.style.borderBottomColor = '#e2e8f0')}
+                        onBlur={(e) =>
+                          (e.target.style.borderBottomColor = darkDoc ? '#334155' : '#e2e8f0')
+                        }
                       />
                     ) : (
                       <input
@@ -1376,15 +2163,17 @@ function TemplateEditor({ template, onBack }) {
                         onChange={(e) => setData((d) => ({ ...d, [field.id]: e.target.value }))}
                         className="w-full bg-transparent px-0 py-1 text-sm transition-colors outline-none"
                         style={{
-                          color: '#0f172a',
-                          borderBottom: '1.5px solid #e2e8f0',
+                          color: darkDoc ? '#f8fafc' : '#0f172a',
+                          borderBottom: `1.5px solid ${darkDoc ? '#334155' : '#e2e8f0'}`,
                           borderTop: 'none',
                           borderLeft: 'none',
                           borderRight: 'none',
                           borderRadius: 0
                         }}
                         onFocus={(e) => (e.target.style.borderBottomColor = '#eab308')}
-                        onBlur={(e) => (e.target.style.borderBottomColor = '#e2e8f0')}
+                        onBlur={(e) =>
+                          (e.target.style.borderBottomColor = darkDoc ? '#334155' : '#e2e8f0')
+                        }
                       />
                     )}
                   </div>
@@ -1394,7 +2183,7 @@ function TemplateEditor({ template, onBack }) {
               {/* Document footer */}
               <div
                 className="mt-14 flex items-end justify-between gap-4 pt-6"
-                style={{ borderTop: '1px solid #e2e8f0' }}
+                style={{ borderTop: `1px solid ${darkDoc ? '#1e293b' : '#e2e8f0'}` }}
               >
                 <div>
                   <p
@@ -1403,7 +2192,10 @@ function TemplateEditor({ template, onBack }) {
                   >
                     Generated via
                   </p>
-                  <p className="text-sm font-black" style={{ color: '#0f172a' }}>
+                  <p
+                    className="text-sm font-black"
+                    style={{ color: darkDoc ? '#f8fafc' : '#0f172a' }}
+                  >
                     Satohash — Sovereign Notary Protocol
                   </p>
                   <p className="text-[10px]" style={{ color: '#94a3b8' }}>
@@ -1519,6 +2311,24 @@ function TemplateEditor({ template, onBack }) {
               </p>
             </div>
 
+            {/* Dark Mode Toggle */}
+            <button
+              onClick={() => setDarkDoc((v) => !v)}
+              className="flex w-full items-center gap-2.5 rounded-xl px-4 py-3 text-sm font-semibold transition-all active:scale-95"
+              style={{
+                background: darkDoc ? 'rgba(248,250,252,0.08)' : 'var(--bg-secondary)',
+                border: darkDoc ? '1px solid rgba(248,250,252,0.15)' : '1px solid var(--border)',
+                color: darkDoc ? '#f8fafc' : 'var(--text-primary)'
+              }}
+            >
+              {darkDoc ? (
+                <Sun size={15} style={{ color: '#f0b429' }} />
+              ) : (
+                <Moon size={15} style={{ color: 'var(--text-muted)' }} />
+              )}
+              {darkDoc ? 'Light Mode' : 'Dark Mode'}
+            </button>
+
             {/* Action buttons */}
             <div className="flex flex-col gap-2.5">
               <button
@@ -1534,6 +2344,21 @@ function TemplateEditor({ template, onBack }) {
               >
                 <Download size={15} style={{ color: 'var(--accent-gold)' }} />
                 Download PDF
+              </button>
+
+              <button
+                onClick={() => setShowPreview(true)}
+                className="flex w-full items-center gap-2.5 rounded-xl px-4 py-3 text-sm font-semibold transition-all active:scale-95"
+                style={{
+                  background: 'var(--bg-secondary)',
+                  border: '1px solid var(--border)',
+                  color: 'var(--text-primary)'
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.borderColor = 'var(--accent-active)')}
+                onMouseLeave={(e) => (e.currentTarget.style.borderColor = 'var(--border)')}
+              >
+                <Eye size={15} style={{ color: 'var(--accent-active)' }} />
+                Preview
               </button>
 
               <button
@@ -1579,6 +2404,21 @@ function TemplateEditor({ template, onBack }) {
               >
                 <Mail size={15} style={{ color: 'var(--accent-purple)' }} />
                 Email Package
+              </button>
+
+              <button
+                onClick={handleShareLink}
+                className="flex w-full items-center gap-2.5 rounded-xl px-4 py-3 text-sm font-semibold transition-all active:scale-95"
+                style={{
+                  background: 'var(--bg-secondary)',
+                  border: '1px solid var(--border)',
+                  color: 'var(--text-primary)'
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.borderColor = 'var(--accent-active)')}
+                onMouseLeave={(e) => (e.currentTarget.style.borderColor = 'var(--border)')}
+              >
+                <Link2 size={15} style={{ color: 'var(--accent-active)' }} />
+                Copy Share Link
               </button>
             </div>
 
@@ -1646,6 +2486,128 @@ function TemplateEditor({ template, onBack }) {
                   )
                 })}
               </div>
+            </div>
+
+            {/* ── Version History ── */}
+            <div
+              className="overflow-hidden rounded-2xl"
+              style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border)' }}
+            >
+              {/* Collapsible header */}
+              <button
+                onClick={() => setHistoryOpen((v) => !v)}
+                className="flex w-full items-center justify-between px-5 py-4 transition-colors"
+                style={{ color: 'var(--text-secondary)' }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--text-primary)')}
+                onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-secondary)')}
+              >
+                <div className="flex items-center gap-2">
+                  <History size={13} style={{ color: 'var(--accent-active)' }} />
+                  <span className="text-xs font-bold">Version History</span>
+                  {snapshots.length > 0 && (
+                    <span
+                      className="rounded-full px-1.5 py-0.5 text-[9px] font-black"
+                      style={{
+                        background: 'color-mix(in srgb, var(--accent-active) 15%, transparent)',
+                        color: 'var(--accent-active)'
+                      }}
+                    >
+                      {snapshots.length}
+                    </span>
+                  )}
+                </div>
+                <ChevronDown
+                  size={13}
+                  style={{
+                    transition: 'transform 0.2s',
+                    transform: historyOpen ? 'rotate(180deg)' : 'rotate(0deg)'
+                  }}
+                />
+              </button>
+
+              {/* Snapshot list */}
+              <AnimatePresence>
+                {historyOpen && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                    style={{ overflow: 'hidden' }}
+                  >
+                    <div
+                      className="flex flex-col gap-1.5 border-t px-3 py-3"
+                      style={{ borderColor: 'var(--border)' }}
+                    >
+                      {snapshots.length === 0 ? (
+                        <p
+                          className="py-2 text-center text-[10px]"
+                          style={{ color: 'var(--text-muted)' }}
+                        >
+                          No snapshots yet — edits auto-save after 2 s.
+                        </p>
+                      ) : (
+                        snapshots.map((snap, idx) => {
+                          const d = new Date(snap.timestamp)
+                          const label = d.toLocaleDateString('en-US', {
+                            month: 'short',
+                            day: 'numeric'
+                          })
+                          const time = d.toLocaleTimeString('en-US', {
+                            hour: '2-digit',
+                            minute: '2-digit',
+                            second: '2-digit'
+                          })
+                          return (
+                            <div
+                              key={snap.timestamp}
+                              className="flex items-center justify-between gap-2 rounded-lg px-3 py-2"
+                              style={{
+                                background:
+                                  idx === 0
+                                    ? 'color-mix(in srgb, var(--accent-active) 6%, transparent)'
+                                    : 'var(--bg-primary)',
+                                border: '1px solid var(--border)'
+                              }}
+                            >
+                              <div className="min-w-0 flex-1">
+                                <p
+                                  className="text-[10px] font-bold"
+                                  style={{ color: 'var(--text-primary)' }}
+                                >
+                                  {label} · {time}
+                                </p>
+                                {idx === 0 && (
+                                  <p
+                                    className="text-[9px]"
+                                    style={{ color: 'var(--accent-active)' }}
+                                  >
+                                    Latest
+                                  </p>
+                                )}
+                              </div>
+                              <button
+                                onClick={() => restoreSnapshot(snap)}
+                                className="flex flex-shrink-0 items-center gap-1 rounded-lg px-2 py-1 text-[10px] font-bold transition-all active:scale-95"
+                                style={{
+                                  background:
+                                    'color-mix(in srgb, var(--accent-pending) 12%, transparent)',
+                                  border:
+                                    '1px solid color-mix(in srgb, var(--accent-pending) 25%, transparent)',
+                                  color: 'var(--accent-pending)'
+                                }}
+                              >
+                                <RotateCcw size={10} />
+                                Restore
+                              </button>
+                            </div>
+                          )
+                        })
+                      )}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           </motion.aside>
         </div>

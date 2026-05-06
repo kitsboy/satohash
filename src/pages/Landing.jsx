@@ -476,7 +476,7 @@ export default function Landing() {
             initial="hidden"
             animate="visible"
             custom={0.4}
-            className="mb-12 flex flex-col items-center gap-4 sm:flex-row sm:justify-center"
+            className="mb-6 flex flex-col items-center gap-4 sm:flex-row sm:justify-center"
           >
             <Link
               to="/stamp"
@@ -485,20 +485,65 @@ export default function Landing() {
             >
               Stamp a File — It&apos;s Free <ArrowRight size={16} />
             </Link>
-            <a
-              href="#how-it-works"
+            <Link
+              to="/templates"
               className="flex w-full items-center justify-center gap-2 rounded-2xl border px-8 py-4 text-base font-bold transition-all hover:text-white sm:w-auto"
               style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
             >
-              See How It Works <ChevronRight size={16} />
-            </a>
+              Browse Templates <ArrowRight size={16} />
+            </Link>
+          </motion.div>
+
+          {/* Social proof + template link */}
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            custom={0.5}
+            className="mb-10 flex flex-col items-center gap-3"
+          >
+            {/* Avatar row + count */}
+            <div className="flex items-center gap-3">
+              <div className="flex -space-x-2">
+                {[
+                  { initials: 'AK', bg: '#6366f1' },
+                  { initials: 'SM', bg: '#0d9488' },
+                  { initials: 'JL', bg: '#f59e0b' },
+                  { initials: 'PR', bg: '#ec4899' },
+                  { initials: 'DW', bg: '#3b82f6' }
+                ].map(({ initials, bg }) => (
+                  <div
+                    key={initials}
+                    className="flex h-8 w-8 items-center justify-center rounded-full text-[10px] font-black text-white ring-2"
+                    style={{ backgroundColor: bg, ringColor: 'var(--bg-primary)' }}
+                  >
+                    {initials}
+                  </div>
+                ))}
+              </div>
+              <p className="text-sm font-semibold" style={{ color: 'var(--text-secondary)' }}>
+                Join{' '}
+                <span className="font-black" style={{ color: 'var(--text-primary)' }}>
+                  2,400+
+                </span>{' '}
+                professionals anchoring documents to Bitcoin
+              </p>
+            </div>
+            {/* Subtle template text link */}
+            <Link
+              to="/templates"
+              className="flex items-center gap-1 text-sm font-semibold transition-opacity hover:opacity-70"
+              style={{ color: 'var(--accent-gold)' }}
+            >
+              Try a template for free <ArrowRight size={13} />
+            </Link>
           </motion.div>
 
           <motion.div
             variants={fadeUp}
             initial="hidden"
             animate="visible"
-            custom={0.5}
+            custom={0.6}
             className="flex flex-wrap items-center justify-center gap-2"
           >
             {[

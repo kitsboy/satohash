@@ -1,198 +1,319 @@
 {
-    "welcome": {
-        "title": "Bienvenue sur Satohash",
-        "subtitle": "Transformez vos accords importants en preuve cryptographique qu'ils ont existé à un moment précis—ancrés sur Bitcoin et faciles à vérifier.",
-        "getStarted": "Commencer",
-        "howThisWorks": "Comment ça marche",
-        "language": "Langue",
-        "change": "Changer",
-        "pricingNote": "Satohash est actuellement gratuit pendant notre période d'accès anticipé. Vous ne payez que les frais de réseau Bitcoin lorsque vous horodatez un document.",
-        "features": {
-            "cryptoProof": "Preuve Cryptographique",
-            "cryptoProofDesc": "Créez une empreinte infalsifiable de votre document grâce à la cryptographie SHA-256.",
-            "cryptoProofDetail": "Le hachage convertit n'importe quel fichier en une chaîne unique de 64 caractères. Même une virgule modifiée produit un hachage complètement différent. Satohash gère cela localement sur votre appareil.",
-            "timestamp": "Horodatage Bitcoin",
-            "timestampDesc": "Ancrez votre preuve sur la blockchain Bitcoin via le protocole OpenTimestamps.",
-            "timestampDetail": "Le hachage de votre document est regroupé avec des milliers d'autres dans un arbre de Merkle. Un hachage racine unique est ensuite inscrit sur le réseau Bitcoin, offrant une preuve d'existence permanente et immuable.",
-            "verify": "Vérification Facile",
-            "verifyDesc": "N'importe qui peut vérifier votre preuve de manière indépendante avec des outils open-source.",
-            "verifyDetail": "Un fichier .ots contient le 'chemin' de votre document vers le bloc Bitcoin. Vous n'avez pas besoin de Satohash pour le prouver ; utilisez le client officiel OpenTimestamps ou des explorateurs de blocs tiers."
-        }
-    },
-    "howItWorks": {
-        "title": "Comment ça marche",
-        "subtitle": "Trois étapes simples pour protéger vos documents",
-        "card1": {
-            "title": "Verrouiller la date",
-            "description": "Satohash donne à votre document une empreinte unique et verrouille sa date sur le réseau Bitcoin. Plus tard, n'importe qui peut vérifier que ce document exact existait à ce moment-là."
-        },
-        "card2": {
-            "title": "Votre contenu reste privé",
-            "description": "Nous n'avons pas besoin de voir votre document complet. Nous n'utilisons qu'une empreinte cryptographique, pas le texte lui-même."
-        },
-        "card3": {
-            "title": "Facile à prouver plus tard",
-            "description": "Vous obtenez un PDF et un petit fichier de preuve. Même sans Satohash, vous ou votre avocat pouvez le vérifier en utilisant des outils ouverts."
-        },
-        "continue": "Continuer"
-    },
-    "chooseTemplate": {
-        "title": "Que voulez-vous protéger aujourd'hui ?",
-        "prenup": "Contrat de mariage",
-        "property": "Document immobilier / propriété",
-        "powerOfAttorney": "Procuration",
-        "custom": "Autre chose (télécharger votre propre PDF)",
-        "disclaimer": "Vous pouvez modifier chaque modèle. Satohash ne donne pas de conseils juridiques ; nous vous aidons à verrouiller les preuves."
-    },
-    "account": {
-        "title": "Créez votre compte",
-        "email": "Email",
-        "name": "Nom",
-        "organization": "Organisation (facultatif)",
-        "securityNote": "Vos documents et preuves sont chiffrés en transit et au repos. Vous pouvez également tout télécharger localement pour conserver vos propres copies.",
-        "createAccount": "Créer un compte",
-        "signInInstead": "Se connecter à la place",
-        "emailPlaceholder": "votre@email.com",
-        "namePlaceholder": "Votre nom",
-        "organizationPlaceholder": "Nom de société ou cabinet"
-    },
-    "valueConfirmation": {
-        "title": "Vous êtes presque prêt",
-        "step1": "Créer ou télécharger un accord",
-        "step2": "Inviter d'autres personnes à examiner et signer",
-        "step3": "Horodater et télécharger votre package de preuve (PDF + fichier de preuve)",
-        "start": "Commencer mon premier accord"
-    },
-    "contracts": {
-        "title": "Mes Contrats",
-        "new": "Nouveau Contrat",
-        "empty": "Pas encore de contrats",
-        "emptyDescription": "Créez votre premier contrat pour commencer.",
-        "status": {
-            "draft": "Brouillon",
-            "waiting": "En attente de signatures",
-            "signed": "Entièrement signé",
-            "timestamped": "Horodaté",
-            "pending": "Confirmation en attente",
-            "error": "Erreur"
-        }
-    },
-    "contractEditor": {
-        "title": "Modifier le Contrat",
-        "newTitle": "Nouveau Contrat",
-        "contractName": "Nom du Contrat",
-        "content": "Contenu du Contrat",
-        "save": "Enregistrer",
-        "cancel": "Annuler",
-        "namePlaceholder": "Entrez un nom pour ce contrat..."
-    },
-    "signatures": {
-        "title": "Collecter les Signatures",
-        "you": "Vous",
-        "signNow": "Signer maintenant",
-        "sendInvite": "Envoyer un lien d'invitation",
-        "addSigner": "Ajouter un signataire",
-        "otherParty": "Autre partie",
-        "allSigned": "Toutes les parties requises ont signé. Il est temps de verrouiller ce document dans le temps.",
-        "drawSignature": "Dessinez votre signature",
-        "typeSignature": "Tapez votre signature",
-        "agreeCheckbox": "J'accepte les termes de ce document",
-        "clear": "Effacer",
-        "submit": "Soumettre la signature"
-    },
-    "timestamp": {
-        "review": {
-            "title": "Examen Final",
-            "confirmTitle": "Prêt à horodater ?",
-            "confirmMessage": "Toutes les personnes qui doivent signer ont-elles examiné ce document ? Une fois que nous l'horodatons, tout changement cassera la preuve.",
-            "yes": "Oui, continuer",
-            "goBack": "Revenir et modifier",
-            "readyToSign": "Prêt à signer",
-            "timestampThisAgreement": "Horodater cet accord"
-        },
-        "explain": {
-            "title": "Que fait l'horodatage ?",
-            "description": "Satohash créera une empreinte cryptographique de ce document et l'enverra au réseau Bitcoin en utilisant un standard ouvert appelé OpenTimestamps. Cela prouve que ce document exact existait avant un certain moment, sans révéler son contenu.",
-            "point1": "Nous ne téléchargeons pas votre document sur la blockchain, uniquement l'empreinte.",
-            "point2": "Plus tard, n'importe qui peut vérifier la preuve en utilisant des outils ouverts, pas seulement Satohash.",
-            "point3": "Si le document change, l'empreinte et la preuve ne correspondent plus.",
-            "feeTitle": "Frais de réseau Bitcoin estimés",
-            "feeDescription": "Ces frais vont aux mineurs Bitcoin, pas à Satohash. Ils changent avec l'activité du réseau.",
-            "details": "Détails",
-            "timestampNow": "Horodater maintenant",
-            "cancel": "Annuler",
-            "loading": "Chargement de l'estimation des frais..."
-        },
-        "progress": {
-            "title": "Création de votre horodatage…",
-            "step1": "Création de l'empreinte…",
-            "step2": "Soumission aux serveurs d'horodatage…",
-            "step3": "Ancrage dans Bitcoin…",
-            "info": "Cela prend généralement quelques secondes pour soumettre, et jusqu'à quelques heures pour être entièrement confirmé par le réseau Bitcoin. Vous pouvez déjà télécharger un reçu, et Satohash le mettra à jour en preuve complète une fois que le réseau confirme.",
-            "done": "Terminé – voir le reçu"
-        },
-        "result": {
-            "title": "Votre horodatage est créé",
-            "statusPending": "Statut de preuve : Confirmation blockchain en attente (reçu précoce)",
-            "statusComplete": "Statut de preuve : Confirmé sur la blockchain Bitcoin",
-            "fingerprint": "Empreinte du document (hash)",
-            "timestampedAt": "Horodatage créé le",
-            "blockchain": "Blockchain : Bitcoin (via OpenTimestamps)",
-            "downloadProof": "Télécharger le package de preuve (PDF + fichier de preuve)",
-            "emailCopy": "M'envoyer une copie sécurisée par email",
-            "keepSafe": "Conservez ce package de preuve en lieu sûr. Même si Satohash disparaissait, vous pourriez toujours vérifier que ce document exact existait avant ce moment en utilisant des outils open-source."
-        },
-        "verificationHelp": {
-            "title": "Comment vérifier cela plus tard",
-            "withSatohash": "Avec Satohash",
-            "withSatohashDesc": "Téléchargez votre PDF et fichier de preuve ici. Nous le vérifierons contre le réseau Bitcoin et vous dirons si tout correspond.",
-            "withoutSatohash": "Sans Satohash",
-            "withoutSatohashDesc": "Vous pouvez utiliser n'importe quel outil compatible OpenTimestamps pour vérifier votre preuve. Téléchargez votre document original et le fichier de preuve .ots. L'outil vous dira si l'empreinte correspond et quand elle a été ancrée dans Bitcoin.",
-            "noMatch": "Si quelque chose ne correspond pas",
-            "noMatchDesc": "Si la preuve ne vérifie pas, cela signifie généralement que le document a été modifié ou que le mauvais fichier a été utilisé.",
-            "backToContracts": "Retour à mes contrats"
-        }
-    },
-    "trust": {
-        "title": "Centre de Confiance",
-        "howItWorks": "Comment fonctionne Satohash",
-        "howItWorksDetail": "Satohash utilise l'algorithme SHA-256 (Secure Hash Algorithm 256-bit) pour créer une empreinte numérique unique de votre document. Cela se produit localement dans votre navigateur ; le texte de votre document ne quitte jamais votre appareil. Ce hash est ensuite regroupé avec des milliers d'autres dans un arbre de Merkle et sa racine est ancrée sur la blockchain Bitcoin via le protocole OpenTimestamps. Cela crée un enregistrement permanent et immuable de son existence.",
-        "whatBlockchain": "Capacités et Limites",
-        "whatBlockchainDetail": "L'horodatage blockchain fournit une preuve mathématique qu'un ensemble de données spécifique existait à un moment donné et n'a pas été modifié. Il ne prouve PAS l'identité du signataire par lui-même, il ne garantit PAS la justesse juridique du contenu du contrat, et il NE PEUT PAS être modifié ou supprimé une fois ancré. C'est un outil de 'preuve d'existence', pas un substitut à un examen juridique.",
-        "zkPrivacy": "Confidentialité & Connaissance Nulle",
-        "zkPrivacyDetail": "Notre technologie 'Privacy Shield' est inspirée par les preuves à divulgation nulle de connaissance (ZKP). Puisque nous ne stockons que le hash cryptographique de votre document, nous avons une connaissance nulle de son contenu. Grâce aux preuves d'inclusion de Merkle, nous vous permettons de biffer sélectivement des parties sensibles d'un document tout en prouvant que les parties restantes correspondent à la version originale ancrée.",
-        "legallyBinding": "Force Juridique",
-        "legallyBindingDetail": "Dans de nombreuses juridictions, les preuves cryptographiques sont reconnues par des lois comme l'ESIGN Act (US) et l'eIDAS (UE). Ces cadres stipulent généralement qu'un document électronique ne doit pas être privé d'effet juridique au seul motif qu'il est sous forme électronique. Les horodatages blockchain offrent un niveau de preuve extrêmement élevé utilisable en justice pour contrer les allégations de falsification ou postdatage.",
-        "legalDisclaimer": "Satohash fournit des preuves et des outils, pas de conseils juridiques. Les utilisateurs doivent consulter les lois locales et un avocat."
-    },
-    "legal": {
-        "terms": "Conditions d'Utilisation",
-        "privacy": "Politique de Confidentialité",
-        "cryptoNotice": "Avis de Signature Numérique et Preuve Cryptographique"
-    },
-    "donation": {
-        "title": "Soutenez nos développeurs",
-        "description": "Satohash est alimenté par une petite équipe qui se soucie des accords ouverts et vérifiables. Si vous trouvez cela utile, vous pouvez nous donner un pourboire en Bitcoin ou Lightning. Merci de soutenir le développement continu.",
-        "onchain": "Envoyer BTC à cette adresse :",
-        "lightning": "Envoyer un pourboire Lightning en utilisant ce code QR ou cette facture.",
-        "transparency": "Les dons nous aident à couvrir l'infrastructure, les audits de sécurité et les contributions open-source. Ils n'achètent pas de conseils juridiques ou de support prioritaire.",
-        "close": "Fermer",
-        "copy": "Copier",
-        "copied": "Copié !"
-    },
-    "footer": {
-        "supportDevelopers": "Soutenez nos développeurs"
-    },
-    "common": {
-        "back": "Retour",
-        "next": "Suivant",
-        "save": "Enregistrer",
-        "cancel": "Annuler",
-        "delete": "Supprimer",
-        "edit": "Modifier",
-        "view": "Voir",
-        "loading": "Chargement...",
-        "error": "Erreur",
-        "success": "Succès"
+  "welcome": {
+    "title": "Bienvenue sur Satohash",
+    "subtitle": "Transformez vos accords importants en preuve cryptographique qu'ils ont existé à un moment précis—ancrés sur Bitcoin et faciles à vérifier.",
+    "getStarted": "Commencer",
+    "howThisWorks": "Comment ça marche",
+    "language": "Langue",
+    "change": "Changer",
+    "pricingNote": "Satohash est actuellement gratuit pendant notre période d'accès anticipé. Vous ne payez que les frais de réseau Bitcoin lorsque vous horodatez un document.",
+    "features": {
+      "cryptoProof": "Preuve Cryptographique",
+      "cryptoProofDesc": "Créez une empreinte infalsifiable de votre document grâce à la cryptographie SHA-256.",
+      "cryptoProofDetail": "Le hachage convertit n'importe quel fichier en une chaîne unique de 64 caractères. Même une virgule modifiée produit un hachage complètement différent. Satohash gère cela localement sur votre appareil.",
+      "timestamp": "Horodatage Bitcoin",
+      "timestampDesc": "Ancrez votre preuve sur la blockchain Bitcoin via le protocole OpenTimestamps.",
+      "timestampDetail": "Le hachage de votre document est regroupé avec des milliers d'autres dans un arbre de Merkle. Un hachage racine unique est ensuite inscrit sur le réseau Bitcoin, offrant une preuve d'existence permanente et immuable.",
+      "verify": "Vérification Facile",
+      "verifyDesc": "N'importe qui peut vérifier votre preuve de manière indépendante avec des outils open-source.",
+      "verifyDetail": "Un fichier .ots contient le 'chemin' de votre document vers le bloc Bitcoin. Vous n'avez pas besoin de Satohash pour le prouver ; utilisez le client officiel OpenTimestamps ou des explorateurs de blocs tiers."
     }
+  },
+  "howItWorks": {
+    "title": "Comment ça marche",
+    "subtitle": "Trois étapes simples pour protéger vos documents",
+    "card1": {
+      "title": "Verrouiller la date",
+      "description": "Satohash donne à votre document une empreinte unique et verrouille sa date sur le réseau Bitcoin. Plus tard, n'importe qui peut vérifier que ce document exact existait à ce moment-là."
+    },
+    "card2": {
+      "title": "Votre contenu reste privé",
+      "description": "Nous n'avons pas besoin de voir votre document complet. Nous n'utilisons qu'une empreinte cryptographique, pas le texte lui-même."
+    },
+    "card3": {
+      "title": "Facile à prouver plus tard",
+      "description": "Vous obtenez un PDF et un petit fichier de preuve. Même sans Satohash, vous ou votre avocat pouvez le vérifier en utilisant des outils ouverts."
+    },
+    "continue": "Continuer"
+  },
+  "chooseTemplate": {
+    "title": "Que voulez-vous protéger aujourd'hui ?",
+    "prenup": "Contrat de mariage",
+    "property": "Document immobilier / propriété",
+    "powerOfAttorney": "Procuration",
+    "commercialLease": "Bail commercial",
+    "childTravel": "Autorisation de voyage pour mineur",
+    "billOfSale": "Acte de vente",
+    "employment": "Contrat de travail",
+    "promissory": "Billet à ordre",
+    "consulting": "Contrat de conseil",
+    "ip-assignment": "Cession de propriété intellectuelle",
+    "domain-notary": "Notaire de nom de domaine",
+    "web-archive": "Archive Snap & Stamp",
+    "nda": "Accord de non-divulgation (NDA)",
+    "will": "Testament",
+    "affidavit": "Déclaration sous serment",
+    "custom": "Autre chose (télécharger votre propre PDF)",
+    "disclaimer": "Vous pouvez modifier chaque modèle. Satohash ne donne pas de conseils juridiques ; nous vous aidons à verrouiller les preuves."
+  },
+  "account": {
+    "title": "Créez votre compte",
+    "email": "Email",
+    "name": "Nom",
+    "organization": "Organisation (facultatif)",
+    "securityNote": "Vos documents et preuves sont chiffrés en transit et au repos. Vous pouvez également tout télécharger localement pour conserver vos propres copies.",
+    "createAccount": "Créer un compte",
+    "signInInstead": "Se connecter à la place",
+    "emailPlaceholder": "votre@email.com",
+    "namePlaceholder": "Votre nom",
+    "organizationPlaceholder": "Nom de société ou cabinet"
+  },
+  "valueConfirmation": {
+    "title": "Vous êtes presque prêt",
+    "step1": "Créer ou télécharger un accord",
+    "step2": "Inviter d'autres personnes à examiner et signer",
+    "step3": "Horodater et télécharger votre package de preuve (PDF + fichier de preuve)",
+    "start": "Commencer mon premier accord"
+  },
+  "contracts": {
+    "title": "Mes Contrats",
+    "new": "Nouveau Contrat",
+    "empty": "Pas encore de contrats",
+    "emptyDescription": "Créez votre premier contrat pour commencer.",
+    "status": {
+      "draft": "Brouillon",
+      "waiting": "En attente de signatures",
+      "signed": "Entièrement signé",
+      "timestamped": "Horodaté",
+      "pending": "Confirmation en attente",
+      "error": "Erreur"
+    }
+  },
+  "contractEditor": {
+    "title": "Modifier le Contrat",
+    "newTitle": "Nouveau Contrat",
+    "contractName": "Nom du Contrat",
+    "content": "Contenu du Contrat",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "namePlaceholder": "Entrez un nom pour ce contrat..."
+  },
+  "signatures": {
+    "title": "Collecter les Signatures",
+    "you": "Vous",
+    "signNow": "Signer maintenant",
+    "sendInvite": "Envoyer un lien d'invitation",
+    "addSigner": "Ajouter un signataire",
+    "otherParty": "Autre partie",
+    "allSigned": "Toutes les parties requises ont signé. Il est temps de verrouiller ce document dans le temps.",
+    "drawSignature": "Dessinez votre signature",
+    "typeSignature": "Tapez votre signature",
+    "agreeCheckbox": "J'accepte les termes de ce document",
+    "clear": "Effacer",
+    "submit": "Soumettre la signature"
+  },
+  "timestamp": {
+    "review": {
+      "title": "Examen Final",
+      "confirmTitle": "Prêt à horodater ?",
+      "confirmMessage": "Toutes les personnes qui doivent signer ont-elles examiné ce document ? Une fois que nous l'horodatons, tout changement cassera la preuve.",
+      "yes": "Oui, continuer",
+      "goBack": "Revenir et modifier",
+      "readyToSign": "Prêt à signer",
+      "timestampThisAgreement": "Horodater cet accord"
+    },
+    "explain": {
+      "title": "Que fait l'horodatage ?",
+      "description": "Satohash créera une empreinte cryptographique de ce document et l'enverra au réseau Bitcoin en utilisant un standard ouvert appelé OpenTimestamps. Cela prouve que ce document exact existait avant un certain moment, sans révéler son contenu.",
+      "point1": "Nous ne téléchargeons pas votre document sur la blockchain, uniquement l'empreinte.",
+      "point2": "Plus tard, n'importe qui peut vérifier la preuve en utilisant des outils ouverts, pas seulement Satohash.",
+      "point3": "Si le document change, l'empreinte et la preuve ne correspondent plus.",
+      "feeTitle": "Frais de réseau Bitcoin estimés",
+      "feeDescription": "Ces frais vont aux mineurs Bitcoin, pas à Satohash. Ils changent avec l'activité du réseau.",
+      "details": "Détails",
+      "timestampNow": "Horodater maintenant",
+      "cancel": "Annuler",
+      "loading": "Chargement de l'estimation des frais..."
+    },
+    "progress": {
+      "title": "Création de votre horodatage…",
+      "step1": "Création de l'empreinte…",
+      "step2": "Soumission aux serveurs d'horodatage…",
+      "step3": "Ancrage dans Bitcoin…",
+      "info": "Cela prend généralement quelques secondes pour soumettre, et jusqu'à quelques heures pour être entièrement confirmé par le réseau Bitcoin. Vous pouvez déjà télécharger un reçu, et Satohash le mettra à jour en preuve complète une fois que le réseau confirme.",
+      "done": "Terminé – voir le reçu"
+    },
+    "result": {
+      "title": "Votre horodatage est créé",
+      "statusPending": "Statut de preuve : Confirmation blockchain en attente (reçu précoce)",
+      "statusComplete": "Statut de preuve : Confirmé sur la blockchain Bitcoin",
+      "fingerprint": "Empreinte du document (hash)",
+      "timestampedAt": "Horodatage créé le",
+      "blockchain": "Blockchain : Bitcoin (via OpenTimestamps)",
+      "downloadProof": "Télécharger le package de preuve (PDF + fichier de preuve)",
+      "emailCopy": "M'envoyer une copie sécurisée par email",
+      "keepSafe": "Conservez ce package de preuve en lieu sûr. Même si Satohash disparaissait, vous pourriez toujours vérifier que ce document exact existait avant ce moment en utilisant des outils open-source."
+    },
+    "verificationHelp": {
+      "title": "Comment vérifier cela plus tard",
+      "withSatohash": "Avec Satohash",
+      "withSatohashDesc": "Téléchargez votre PDF et fichier de preuve ici. Nous le vérifierons contre le réseau Bitcoin et vous dirons si tout correspond.",
+      "withoutSatohash": "Sans Satohash",
+      "withoutSatohashDesc": "Vous pouvez utiliser n'importe quel outil compatible OpenTimestamps pour vérifier votre preuve. Téléchargez votre document original et le fichier de preuve .ots. L'outil vous dira si l'empreinte correspond et quand elle a été ancrée dans Bitcoin.",
+      "noMatch": "Si quelque chose ne correspond pas",
+      "noMatchDesc": "Si la preuve ne vérifie pas, cela signifie généralement que le document a été modifié ou que le mauvais fichier a été utilisé.",
+      "backToContracts": "Retour à mes contrats"
+    }
+  },
+  "trust": {
+    "title": "Centre de Confiance",
+    "howItWorks": "Comment fonctionne Satohash",
+    "howItWorksDetail": "Satohash utilise l'algorithme SHA-256 (Secure Hash Algorithm 256-bit) pour créer une empreinte numérique unique de votre document. Cela se produit localement dans votre navigateur ; le texte de votre document ne quitte jamais votre appareil. Ce hash est ensuite regroupé avec des milliers d'autres dans un arbre de Merkle et sa racine est ancrée sur la blockchain Bitcoin via le protocole OpenTimestamps. Cela crée un enregistrement permanent et immuable de son existence.",
+    "whatBlockchain": "Capacités et Limites",
+    "whatBlockchainDetail": "L'horodatage blockchain fournit une preuve mathématique qu'un ensemble de données spécifique existait à un moment donné et n'a pas été modifié. Il ne prouve PAS l'identité du signataire par lui-même, il ne garantit PAS la justesse juridique du contenu du contrat, et il NE PEUT PAS être modifié ou supprimé une fois ancré. C'est un outil de 'preuve d'existence', pas un substitut à un examen juridique.",
+    "zkPrivacy": "Confidentialité & Connaissance Nulle",
+    "zkPrivacyDetail": "Notre technologie 'Privacy Shield' est inspirée par les preuves à divulgation nulle de connaissance (ZKP). Puisque nous ne stockons que le hash cryptographique de votre document, nous avons une connaissance nulle de son contenu. Grâce aux preuves d'inclusion de Merkle, nous vous permettons de biffer sélectivement des parties sensibles d'un document tout en prouvant que les parties restantes correspondent à la version originale ancrée.",
+    "legallyBinding": "Force Juridique",
+    "legallyBindingDetail": "Dans de nombreuses juridictions, les preuves cryptographiques sont reconnues par des lois comme l'ESIGN Act (US) et l'eIDAS (UE). Ces cadres stipulent généralement qu'un document électronique ne doit pas être privé d'effet juridique au seul motif qu'il est sous forme électronique. Les horodatages blockchain offrent un niveau de preuve extrêmement élevé utilisable en justice pour contrer les allégations de falsification ou postdatage.",
+    "legalDisclaimer": "Satohash fournit des preuves et des outils, pas de conseils juridiques. Les utilisateurs doivent consulter les lois locales et un avocat."
+  },
+  "legal": {
+    "terms": "Conditions d'Utilisation",
+    "privacy": "Politique de Confidentialité",
+    "cryptoNotice": "Avis de Signature Numérique et Preuve Cryptographique"
+  },
+  "donation": {
+    "title": "Soutenez nos développeurs",
+    "description": "Satohash est alimenté par une petite équipe qui se soucie des accords ouverts et vérifiables. Si vous trouvez cela utile, vous pouvez nous donner un pourboire en Bitcoin ou Lightning. Merci de soutenir le développement continu.",
+    "onchain": "Envoyer BTC à cette adresse :",
+    "lightning": "Envoyer un pourboire Lightning en utilisant ce code QR ou cette facture.",
+    "transparency": "Les dons nous aident à couvrir l'infrastructure, les audits de sécurité et les contributions open-source. Ils n'achètent pas de conseils juridiques ou de support prioritaire.",
+    "close": "Fermer",
+    "copy": "Copier",
+    "copied": "Copié !"
+  },
+  "footer": {
+    "supportDevelopers": "Soutenez nos développeurs",
+    "verifyAt": "Vérifiez ce document sur",
+    "poweredBy": "Propulsé par OpenTimestamps et Bitcoin",
+    "createdBy": "Créé par",
+    "rights": "Tous droits réservés"
+  },
+  "common": {
+    "back": "Retour",
+    "next": "Suivant",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "view": "Voir",
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "success": "Succès"
+  },
+  "landing": {
+    "heroTitle": "Ancrez Vos Documents sur Bitcoin — Pour Toujours",
+    "heroSubtitle": "Créez une preuve cryptographique que vos documents ont existé à un moment précis. Zéro connaissance. Inviolable. Vérifié par la blockchain Bitcoin.",
+    "heroCta": "Tamponner un Document Maintenant",
+    "heroCta2": "Voir Comment Ça Marche",
+    "step1": "Hash local",
+    "step2": "Ancrage sur Bitcoin",
+    "step3": "Preuve permanente",
+    "socialProof": "Rejoignez plus de 2 400 professionnels ancrant leurs documents sur Bitcoin",
+    "tryTemplate": "Essayez un modèle gratuitement",
+    "features": {
+      "title": "Tout ce qu'il Faut pour des Documents Inviolables",
+      "subtitle": "Notarisation professionnelle propulsée par Bitcoin et des standards ouverts"
+    }
+  },
+  "templates": {
+    "pageTitle": "Modèles Notariaux",
+    "subtitle": "Choisissez un modèle pour pré-remplir votre document et l'ancrer sur Bitcoin",
+    "searchPlaceholder": "Rechercher des modèles…",
+    "downloadPdf": "Télécharger PDF",
+    "emailPackage": "Envoyer le Paquet",
+    "anchorBitcoin": "Ancrer sur Bitcoin",
+    "saveVault": "Enregistrer dans le Coffre",
+    "print": "Imprimer le Document",
+    "backToTemplates": "← Retour aux Modèles",
+    "preview": "Aperçu",
+    "shareLink": "Copier le Lien",
+    "darkMode": "Mode Sombre",
+    "fieldsComplete": "Champs Remplis",
+    "checklist": "Liste de Contrôle",
+    "versionHistory": "Historique des Versions",
+    "restore": "Restaurer",
+    "zeroKnowledge": "Zéro Connaissance",
+    "zeroKnowledgeDesc": "Le contenu de votre document ne quitte jamais votre appareil — seul le hash SHA-256 est envoyé au serveur.",
+    "progress": "des champs remplis"
+  },
+  "contracts": {
+    "pageTitle": "Contrats",
+    "newArtifact": "Créer un Nouvel Artefact",
+    "downloadAll": "Tout Télécharger",
+    "statusDraft": "Brouillon",
+    "statusSigned": "Signé",
+    "statusTimestamped": "Horodaté",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "inspector": "Inspecteur",
+    "documentName": "Nom du Document",
+    "proofPackage": "Paquet de Preuve",
+    "emailPackage": "Envoyer le Paquet",
+    "otsQr": "QR de Vérification OTS",
+    "scanToVerify": "Scanner pour Vérifier"
+  },
+  "verify": {
+    "pageTitle": "Vérifier le Document",
+    "subtitle": "Téléchargez un document et son fichier de preuve .ots pour confirmer l'authenticité sur la blockchain Bitcoin",
+    "verified": "Vérifié",
+    "invalid": "Invalide",
+    "pending": "Confirmation en Attente",
+    "copyHash": "Copier le Hash",
+    "viewOnChain": "Voir sur la Chaîne"
+  },
+  "forum": {
+    "pageTitle": "Forum",
+    "subtitle": "Discutez de notarisation, de preuves Bitcoin et de documents inviolables.",
+    "newThread": "Démarrer un Nouveau Fil",
+    "threadTitle": "Titre du fil",
+    "yourName": "Votre nom",
+    "createThread": "Créer",
+    "writePost": "Rédigez votre message…",
+    "postReply": "Publier la Réponse",
+    "backToForum": "← Retour au Forum",
+    "noDiscussions": "Pas encore de discussions"
+  },
+  "dashboard": {
+    "welcome": "Bienvenue sur Satohash",
+    "welcomeSubtitle": "Votre centre de gestion de documents inviolables. Tamponnez, vérifiez et gérez tous vos documents notarisés en un seul endroit.",
+    "dismiss": "Ignorer",
+    "recentActivity": "Activité Récente",
+    "quickActions": "Actions Rapides"
+  },
+  "settings": {
+    "pageTitle": "Paramètres",
+    "theme": "Thème",
+    "language": "Langue",
+    "account": "Compte",
+    "notifications": "Notifications",
+    "save": "Enregistrer les Modifications",
+    "darkMode": "Mode Sombre",
+    "lightMode": "Mode Clair"
+  },
+  "access": {
+    "signIn": "Se Connecter",
+    "title": "Bienvenue sur Satohash",
+    "subtitle": "Le standard professionnel pour la notarisation de documents ancrés sur Bitcoin",
+    "getStarted": "Commencer",
+    "learnMore": "En Savoir Plus"
+  },
+  "errors": {
+    "generic": "Une erreur s'est produite",
+    "network": "Erreur réseau — veuillez réessayer",
+    "hashFailed": "Échec de la génération du hash",
+    "stampFailed": "Échec du tamponnage du document",
+    "verifyFailed": "Échec de la vérification",
+    "loadFailed": "Échec du chargement"
+  }
 }

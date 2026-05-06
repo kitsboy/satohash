@@ -12,7 +12,6 @@ import {
   ExternalLink,
   ShieldCheck,
   Zap,
-  UserCheck,
   FileText,
   ChevronRight,
   Terminal,
@@ -140,10 +139,12 @@ export default function Dashboard() {
   const [achievements, setAchievements] = useState({})
   const [showVoiceStamp, setShowVoiceStamp] = useState(false)
   const [stampCount, setStampCount] = useState(0)
-  const [showWelcome, setShowWelcome] = useState(() => !localStorage.getItem('satohash_welcomed'))
+  const [showWelcome, setShowWelcome] = useState(
+    () => !localStorage.getItem('satohash-welcome-dismissed')
+  )
 
   const dismissWelcome = () => {
-    localStorage.setItem('satohash_welcomed', '1')
+    localStorage.setItem('satohash-welcome-dismissed', 'true')
     setShowWelcome(false)
   }
 

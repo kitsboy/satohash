@@ -9,12 +9,13 @@ import {
   Globe,
   Layers,
   PlusCircle,
-  X
+  X,
+  Moon,
+  Sun
 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Button from '../../components/Button'
 import { getTemplate } from '../../templates'
-import { clsx } from 'clsx'
 import { generateSHA256Hash } from '../../utils/crypto'
 
 export default function ContractEditor() {
@@ -35,6 +36,7 @@ export default function ContractEditor() {
   const [activeTab, setActiveTab] = useState('editor')
   const [isMobilePanelOpen, setIsMobilePanelOpen] = useState(false)
   const [localHash, setLocalHash] = useState('')
+  const [darkDoc, setDarkDoc] = useState(false)
 
   useEffect(() => {
     if (contract.content) {
@@ -137,8 +139,7 @@ export default function ContractEditor() {
             className="mr-2 hidden text-[10px] font-bold tracking-widest uppercase sm:block"
             style={{ color: 'var(--text-muted)' }}
           >
-            Status:{' '}
-            <span style={{ color: 'var(--accent-active)' }}>{contract.status}</span>
+            Status: <span style={{ color: 'var(--accent-active)' }}>{contract.status}</span>
           </span>
 
           {/* Mobile panel toggle */}
@@ -174,6 +175,26 @@ export default function ContractEditor() {
             onClick={() => setActiveTab('settings')}
             label="Settings"
           />
+          {/* Dark Mode Toggle */}
+          <button
+            onClick={() => setDarkDoc((v) => !v)}
+            className="group relative flex h-10 w-10 items-center justify-center rounded-xl transition-all duration-300"
+            style={
+              darkDoc
+                ? {
+                    background: 'rgba(248,250,252,0.1)',
+                    color: '#f0b429',
+                    border: '1px solid rgba(240,180,41,0.3)'
+                  }
+                : { color: 'var(--text-secondary)' }
+            }
+            title={darkDoc ? 'Light Mode' : 'Dark Mode'}
+          >
+            {darkDoc ? <Sun size={18} /> : <Moon size={18} />}
+            <div className="pointer-events-none absolute left-full z-[100] ml-3 rounded-lg bg-slate-900 px-2.5 py-1 text-[10px] font-bold tracking-wide whitespace-nowrap text-white opacity-0 transition-opacity group-hover:opacity-100">
+              {darkDoc ? 'Light Mode' : 'Dark Mode'}
+            </div>
+          </button>
         </div>
 
         {/* Main Content Area */}
@@ -187,6 +208,14 @@ export default function ContractEditor() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               className="document-paper border-noir relative overflow-hidden shadow-2xl"
+              style={
+                darkDoc
+                  ? {
+                      background: '#0f172a',
+                      transition: 'background 0.25s ease'
+                    }
+                  : {}
+              }
             >
               <div className="grid-pattern-slate pointer-events-none absolute inset-0 opacity-[0.02]" />
               {/* Watermark */}
@@ -195,8 +224,12 @@ export default function ContractEditor() {
               </div>
 
               <textarea
-                className="relative z-10 h-full min-h-[600px] w-full resize-none border-none bg-transparent pt-16 text-[16px] leading-[1.8] text-slate-800 outline-none placeholder:text-slate-300 md:min-h-[900px] md:pt-20 md:text-[18px]"
-                style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+                className="relative z-10 h-full min-h-[600px] w-full resize-none border-none bg-transparent pt-16 text-[16px] leading-[1.8] outline-none placeholder:text-slate-300 md:min-h-[900px] md:pt-20 md:text-[18px]"
+                style={{
+                  fontFamily: "'Plus Jakarta Sans', sans-serif",
+                  color: darkDoc ? '#f8fafc' : 'var(--text-primary)',
+                  transition: 'color 0.25s ease'
+                }}
                 value={contract.content}
                 onChange={(e) => setContract({ ...contract, content: e.target.value })}
                 placeholder="Start drafting your legal document..."
@@ -412,14 +445,8 @@ function SidebarContent({
 
             {/* SMART FIELDS */}
             {placeholders.length > 0 && (
-              <section
-                className="space-y-4 pt-5"
-                style={{ borderTop: '1px solid var(--border)' }}
-              >
-                <div
-                  className="flex items-center gap-2"
-                  style={{ color: 'var(--accent-active)' }}
-                >
+              <section className="space-y-4 pt-5" style={{ borderTop: '1px solid var(--border)' }}>
+                <div className="flex items-center gap-2" style={{ color: 'var(--accent-active)' }}>
                   <Sparkles size={14} fill="currentColor" />
                   <h4 className="text-[10px] font-bold tracking-widest uppercase">
                     Document Variables
@@ -537,10 +564,7 @@ function SidebarContent({
               }}
             >
               <div className="flex items-center justify-between text-[10px] font-medium">
-                <span
-                  className="tracking-widest uppercase"
-                  style={{ color: 'var(--text-muted)' }}
-                >
+                <span className="tracking-widest uppercase" style={{ color: 'var(--text-muted)' }}>
                   Created
                 </span>
                 <span style={{ color: 'var(--text-secondary)' }}>
@@ -548,10 +572,7 @@ function SidebarContent({
                 </span>
               </div>
               <div className="flex items-center justify-between text-[10px] font-medium">
-                <span
-                  className="tracking-widest uppercase"
-                  style={{ color: 'var(--text-muted)' }}
-                >
+                <span className="tracking-widest uppercase" style={{ color: 'var(--text-muted)' }}>
                   Protocol Type
                 </span>
                 <span
@@ -582,10 +603,7 @@ function SidebarContent({
 
       {activeTab === 'settings' && (
         <div className="p-5 md:p-6">
-          <div
-            className="mb-5 flex items-center gap-2"
-            style={{ color: 'var(--text-primary)' }}
-          >
+          <div className="mb-5 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
             <Settings size={16} />
             <h3 className="text-sm font-extrabold tracking-tight">Settings</h3>
           </div>
@@ -597,10 +615,7 @@ function SidebarContent({
                 border: '1px solid var(--border)'
               }}
             >
-              <p
-                className="text-sm font-semibold"
-                style={{ color: 'var(--text-secondary)' }}
-              >
+              <p className="text-sm font-semibold" style={{ color: 'var(--text-secondary)' }}>
                 Document settings coming soon.
               </p>
             </div>

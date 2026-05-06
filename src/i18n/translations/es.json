@@ -1,198 +1,319 @@
 {
-    "welcome": {
-        "title": "Bienvenido a Satohash",
-        "subtitle": "Convierte tus acuerdos importantes en prueba criptográfica de que existieron en un momento específico—anclados a Bitcoin y fáciles de verificar.",
-        "getStarted": "Comenzar",
-        "howThisWorks": "Cómo funciona",
-        "language": "Idioma",
-        "change": "Cambiar",
-        "pricingNote": "Satohash es actualmente gratuito durante nuestro período de acceso anticipado. Solo pagas la tarifa de red de Bitcoin cuando creas una marca de tiempo para un documento.",
-        "features": {
-            "cryptoProof": "Prueba Criptográfica",
-            "cryptoProofDesc": "Crea una huella digital infalsificable de tu documento mediante criptografía SHA-256.",
-            "cryptoProofDetail": "El hashing convierte cualquier archivo en una cadena única de 64 caracteres. Incluso una coma cambiada da como resultado un hash completamente diferente. Satohash maneja esto localmente en tu dispositivo.",
-            "timestamp": "Sellado de Tiempo en Bitcoin",
-            "timestampDesc": "Ancla tu prueba a la cadena de bloques de Bitcoin mediante el protocolo OpenTimestamps.",
-            "timestampDetail": "El hash de tu documento se agrupa con miles de otros en un árbol de Merkle. Luego, un único hash 'raíz' se envía a la red Bitcoin, proporcionando una prueba de existencia permanente e inmutable.",
-            "verify": "Verificación Fácil",
-            "verifyDesc": "Cualquiera puede verificar tu prueba de forma independiente mediante herramientas de código abierto.",
-            "verifyDetail": "Un archivo .ots contiene la 'ruta' desde tu documento hasta el bloque de Bitcoin. No necesitas Satohash para probarlo; puedes usar el cliente oficial de OpenTimestamps o exploradores de bloques de terceros."
-        }
-    },
-    "howItWorks": {
-        "title": "Cómo funciona",
-        "subtitle": "Tres simples pasos para proteger tus documentos",
-        "card1": {
-            "title": "Fijar la fecha",
-            "description": "Satohash le da a tu documento una huella digital única y fija su fecha en la red Bitcoin. Más tarde, cualquiera puede verificar que este documento exacto existió en ese momento."
-        },
-        "card2": {
-            "title": "Tu contenido permanece privado",
-            "description": "No necesitamos ver tu documento completo. Solo usamos una huella criptográfica, no el texto en sí."
-        },
-        "card3": {
-            "title": "Fácil de probar después",
-            "description": "Obtienes un PDF y un pequeño archivo de prueba. Incluso sin Satohash, tú o tu abogado pueden verificarlo usando herramientas abiertas."
-        },
-        "continue": "Continuar"
-    },
-    "chooseTemplate": {
-        "title": "¿Qué quieres proteger hoy?",
-        "prenup": "Acuerdo prenupcial",
-        "property": "Documento de propiedad / bienes raíces",
-        "powerOfAttorney": "Poder notarial",
-        "custom": "Algo más (sube tu propio PDF)",
-        "disclaimer": "Puedes editar cada plantilla. Satohash no proporciona asesoramiento legal; te ayudamos a asegurar la evidencia."
-    },
-    "account": {
-        "title": "Crea tu cuenta",
-        "email": "Correo electrónico",
-        "name": "Nombre",
-        "organization": "Organización (opcional)",
-        "securityNote": "Tus documentos y pruebas están cifrados en tránsito y en reposo. También puedes descargar todo localmente para guardar tus propias copias.",
-        "createAccount": "Crear cuenta",
-        "signInInstead": "Iniciar sesión en su lugar",
-        "emailPlaceholder": "tu@correo.com",
-        "namePlaceholder": "Tu nombre",
-        "organizationPlaceholder": "Nombre de empresa o firma"
-    },
-    "valueConfirmation": {
-        "title": "Ya casi estás listo",
-        "step1": "Crear o subir un acuerdo",
-        "step2": "Invitar a otros a revisar y firmar",
-        "step3": "Crear marca de tiempo y descargar tu paquete de prueba (PDF + archivo de prueba)",
-        "start": "Comenzar mi primer acuerdo"
-    },
-    "contracts": {
-        "title": "Mis Contratos",
-        "new": "Nuevo Contrato",
-        "empty": "Aún no hay contratos",
-        "emptyDescription": "Crea tu primer contrato para comenzar.",
-        "status": {
-            "draft": "Borrador",
-            "waiting": "Esperando firmas",
-            "signed": "Completamente firmado",
-            "timestamped": "Con marca de tiempo",
-            "pending": "Confirmación pendiente",
-            "error": "Error"
-        }
-    },
-    "contractEditor": {
-        "title": "Editar Contrato",
-        "newTitle": "Nuevo Contrato",
-        "contractName": "Nombre del Contrato",
-        "content": "Contenido del Contrato",
-        "save": "Guardar",
-        "cancel": "Cancelar",
-        "namePlaceholder": "Ingresa un nombre para este contrato..."
-    },
-    "signatures": {
-        "title": "Recopilar Firmas",
-        "you": "Tú",
-        "signNow": "Firmar ahora",
-        "sendInvite": "Enviar enlace de invitación",
-        "addSigner": "Agregar firmante",
-        "otherParty": "Otra parte",
-        "allSigned": "Todas las partes requeridas han firmado. Es hora de fijar este documento en el tiempo.",
-        "drawSignature": "Dibuja tu firma",
-        "typeSignature": "Escribe tu firma",
-        "agreeCheckbox": "Acepto los términos de este documento",
-        "clear": "Limpiar",
-        "submit": "Enviar firma"
-    },
-    "timestamp": {
-        "review": {
-            "title": "Revisión Final",
-            "confirmTitle": "¿Listo para crear marca de tiempo?",
-            "confirmMessage": "¿Todos los que necesitan firmar han revisado este documento? Una vez que creamos la marca de tiempo, cualquier cambio romperá la prueba.",
-            "yes": "Sí, continuar",
-            "goBack": "Volver y editar",
-            "readyToSign": "Listo para firmar",
-            "timestampThisAgreement": "Crear marca de tiempo de este acuerdo"
-        },
-        "explain": {
-            "title": "¿Qué hace la marca de tiempo?",
-            "description": "Satohash creará una huella criptográfica de este documento y la enviará a la red Bitcoin usando un estándar abierto llamado OpenTimestamps. Esto prueba que este documento exacto existió antes de cierto momento, sin revelar su contenido.",
-            "point1": "No subimos tu documento a la blockchain, solo la huella digital.",
-            "point2": "Más tarde, cualquiera puede verificar la prueba usando herramientas abiertas, no solo Satohash.",
-            "point3": "Si el documento cambia, la huella digital y la prueba ya no coinciden.",
-            "feeTitle": "Tarifa estimada de red de Bitcoin",
-            "feeDescription": "Esta tarifa va a los mineros de Bitcoin, no a Satohash. Cambia con la actividad de la red.",
-            "details": "Detalles",
-            "timestampNow": "Crear marca de tiempo ahora",
-            "cancel": "Cancelar",
-            "loading": "Cargando estimación de tarifa..."
-        },
-        "progress": {
-            "title": "Creando tu marca de tiempo…",
-            "step1": "Creando huella digital…",
-            "step2": "Enviando a servidores de marca de tiempo…",
-            "step3": "Anclando en Bitcoin…",
-            "info": "Esto generalmente toma unos segundos para enviar, y hasta unas horas para ser completamente confirmado por la red Bitcoin. Ya puedes descargar un recibo, y Satohash lo actualizará a una prueba completa una vez que la red confirme.",
-            "done": "Listo – ver recibo"
-        },
-        "result": {
-            "title": "Tu marca de tiempo está creada",
-            "statusPending": "Estado de prueba: Confirmación de blockchain pendiente (recibo temprano)",
-            "statusComplete": "Estado de prueba: Confirmado en blockchain de Bitcoin",
-            "fingerprint": "Huella digital del documento (hash)",
-            "timestampedAt": "Marca de tiempo creada en",
-            "blockchain": "Blockchain: Bitcoin (vía OpenTimestamps)",
-            "downloadProof": "Descargar paquete de prueba (PDF + archivo de prueba)",
-            "emailCopy": "Enviarme una copia segura por correo",
-            "keepSafe": "Guarda este paquete de prueba en un lugar seguro. Incluso si Satohash desapareciera, aún podrías verificar que este documento exacto existió antes de este momento usando herramientas de código abierto."
-        },
-        "verificationHelp": {
-            "title": "Cómo verificar esto más tarde",
-            "withSatohash": "Con Satohash",
-            "withSatohashDesc": "Sube tu PDF y archivo de prueba aquí. Verificaremos contra la red Bitcoin y te diremos si todo coincide.",
-            "withoutSatohash": "Sin Satohash",
-            "withoutSatohashDesc": "Puedes usar cualquier herramienta compatible con OpenTimestamps para verificar tu prueba. Sube tu documento original y el archivo de prueba .ots. La herramienta te dirá si la huella digital coincide y cuándo fue anclada en Bitcoin.",
-            "noMatch": "Si algo no coincide",
-            "noMatchDesc": "Si la prueba no verifica, generalmente significa que el documento fue cambiado o se usó el archivo incorrecto.",
-            "backToContracts": "Volver a mis contratos"
-        }
-    },
-    "trust": {
-        "title": "Centro de Confianza",
-        "howItWorks": "Cómo funciona Satohash",
-        "howItWorksDetail": "Satohash utiliza SHA-256 (Algoritmo de Hash Seguro de 256 bits) para crear una huella digital única de su documento. Esto sucede localmente en su navegador; el texto de su documento nunca sale de su dispositivo. Este hash se agrupa con miles de otros en un Árbol de Merkle y su raíz se ancla a la cadena de bloques de Bitcoin mediante el protocolo OpenTimestamps, creando un registro permanente e inmutable.",
-        "whatBlockchain": "Capacidades y Limitaciones",
-        "whatBlockchainDetail": "El sellado de tiempo en blockchain proporciona una prueba matemática de que un conjunto de datos existió en un momento dado y no ha sido alterado. NO prueba la identidad del firmante por sí solo, NO garantiza la corrección legal del contenido del contrato y NO puede ser modificado ni eliminado una vez anclado. Es una herramienta de 'prueba de existencia', no un sustituto de una revisión legal.",
-        "zkPrivacy": "Privacidad y Conocimiento Cero",
-        "zkPrivacyDetail": "Nuestra tecnología 'Privacy Shield' está inspirada en las pruebas de Conocimiento Cero (ZK). Debido a que solo almacenamos el hash criptográfico de su documento, tenemos cero conocimiento de su contenido. Utilizando pruebas de inclusión de Merkle, permitimos redactar selectivamente partes sensibles de un documento mientras se demuestra que las partes restantes coinciden con la versión original anclada.",
-        "legallyBinding": "Exigibilidad Legal",
-        "legallyBindingDetail": "En muchas jurisdicciones, la evidencia criptográfica se reconoce bajo leyes como la Ley ESIGN (EE. UU.) y eIDAS (UE). Estos marcos establecen que un registro electrónico no debe negarse efectos legales solo por estar en formato electrónico. Los sellos de tiempo en blockchain proporcionan un nivel de evidencia extremadamente alto que se puede usar en tribunales para refutar reclamos de falsificación o antedatado.",
-        "legalDisclaimer": "Satohash proporciona evidencia y herramientas, no asesoramiento legal. Los usuarios deben consultar las leyes locales y un abogado."
-    },
-    "legal": {
-        "terms": "Términos de Servicio",
-        "privacy": "Política de Privacidad",
-        "cryptoNotice": "Aviso de Firma Digital y Evidencia Criptográfica"
-    },
-    "donation": {
-        "title": "Apoya a nuestros desarrolladores",
-        "description": "Satohash está impulsado por un pequeño equipo que se preocupa por acuerdos abiertos y verificables. Si encuentras esto útil, puedes darnos una propina en Bitcoin o Lightning. Gracias por apoyar el desarrollo continuo.",
-        "onchain": "Enviar BTC a esta dirección:",
-        "lightning": "Enviar una propina Lightning usando este código QR o factura.",
-        "transparency": "Las donaciones nos ayudan a cubrir infraestructura, auditorías de seguridad y contribuciones de código abierto. No compran asesoramiento legal o soporte prioritario.",
-        "close": "Cerrar",
-        "copy": "Copiar",
-        "copied": "¡Copiado!"
-    },
-    "footer": {
-        "supportDevelopers": "Apoya a nuestros desarrolladores"
-    },
-    "common": {
-        "back": "Atrás",
-        "next": "Siguiente",
-        "save": "Guardar",
-        "cancel": "Cancelar",
-        "delete": "Eliminar",
-        "edit": "Editar",
-        "view": "Ver",
-        "loading": "Cargando...",
-        "error": "Error",
-        "success": "Éxito"
+  "welcome": {
+    "title": "Bienvenido a Satohash",
+    "subtitle": "Convierte tus acuerdos importantes en prueba criptográfica de que existieron en un momento específico—anclados a Bitcoin y fáciles de verificar.",
+    "getStarted": "Comenzar",
+    "howThisWorks": "Cómo funciona",
+    "language": "Idioma",
+    "change": "Cambiar",
+    "pricingNote": "Satohash es actualmente gratuito durante nuestro período de acceso anticipado. Solo pagas la tarifa de red de Bitcoin cuando creas una marca de tiempo para un documento.",
+    "features": {
+      "cryptoProof": "Prueba Criptográfica",
+      "cryptoProofDesc": "Crea una huella digital infalsificable de tu documento mediante criptografía SHA-256.",
+      "cryptoProofDetail": "El hashing convierte cualquier archivo en una cadena única de 64 caracteres. Incluso una coma cambiada da como resultado un hash completamente diferente. Satohash maneja esto localmente en tu dispositivo.",
+      "timestamp": "Sellado de Tiempo en Bitcoin",
+      "timestampDesc": "Ancla tu prueba a la cadena de bloques de Bitcoin mediante el protocolo OpenTimestamps.",
+      "timestampDetail": "El hash de tu documento se agrupa con miles de otros en un árbol de Merkle. Luego, un único hash 'raíz' se envía a la red Bitcoin, proporcionando una prueba de existencia permanente e inmutable.",
+      "verify": "Verificación Fácil",
+      "verifyDesc": "Cualquiera puede verificar tu prueba de forma independiente mediante herramientas de código abierto.",
+      "verifyDetail": "Un archivo .ots contiene la 'ruta' desde tu documento hasta el bloque de Bitcoin. No necesitas Satohash para probarlo; puedes usar el cliente oficial de OpenTimestamps o exploradores de bloques de terceros."
     }
+  },
+  "howItWorks": {
+    "title": "Cómo funciona",
+    "subtitle": "Tres simples pasos para proteger tus documentos",
+    "card1": {
+      "title": "Fijar la fecha",
+      "description": "Satohash le da a tu documento una huella digital única y fija su fecha en la red Bitcoin. Más tarde, cualquiera puede verificar que este documento exacto existió en ese momento."
+    },
+    "card2": {
+      "title": "Tu contenido permanece privado",
+      "description": "No necesitamos ver tu documento completo. Solo usamos una huella criptográfica, no el texto en sí."
+    },
+    "card3": {
+      "title": "Fácil de probar después",
+      "description": "Obtienes un PDF y un pequeño archivo de prueba. Incluso sin Satohash, tú o tu abogado pueden verificarlo usando herramientas abiertas."
+    },
+    "continue": "Continuar"
+  },
+  "chooseTemplate": {
+    "title": "¿Qué quieres proteger hoy?",
+    "prenup": "Acuerdo prenupcial",
+    "property": "Documento de propiedad / bienes raíces",
+    "powerOfAttorney": "Poder notarial",
+    "commercialLease": "Arrendamiento comercial",
+    "childTravel": "Consentimiento de viaje de menores",
+    "billOfSale": "Contrato de compraventa",
+    "employment": "Contrato laboral",
+    "promissory": "Pagaré",
+    "consulting": "Contrato de consultoría",
+    "ip-assignment": "Cesión de propiedad intelectual",
+    "domain-notary": "Notaría de propiedad de dominio",
+    "web-archive": "Archivo Snap & Stamp",
+    "nda": "Acuerdo de no divulgación (NDA)",
+    "will": "Testamento",
+    "affidavit": "Declaración jurada",
+    "custom": "Algo más (sube tu propio PDF)",
+    "disclaimer": "Puedes editar cada plantilla. Satohash no proporciona asesoramiento legal; te ayudamos a asegurar la evidencia."
+  },
+  "account": {
+    "title": "Crea tu cuenta",
+    "email": "Correo electrónico",
+    "name": "Nombre",
+    "organization": "Organización (opcional)",
+    "securityNote": "Tus documentos y pruebas están cifrados en tránsito y en reposo. También puedes descargar todo localmente para guardar tus propias copias.",
+    "createAccount": "Crear cuenta",
+    "signInInstead": "Iniciar sesión en su lugar",
+    "emailPlaceholder": "tu@correo.com",
+    "namePlaceholder": "Tu nombre",
+    "organizationPlaceholder": "Nombre de empresa o firma"
+  },
+  "valueConfirmation": {
+    "title": "Ya casi estás listo",
+    "step1": "Crear o subir un acuerdo",
+    "step2": "Invitar a otros a revisar y firmar",
+    "step3": "Crear marca de tiempo y descargar tu paquete de prueba (PDF + archivo de prueba)",
+    "start": "Comenzar mi primer acuerdo"
+  },
+  "contracts": {
+    "title": "Mis Contratos",
+    "new": "Nuevo Contrato",
+    "empty": "Aún no hay contratos",
+    "emptyDescription": "Crea tu primer contrato para comenzar.",
+    "status": {
+      "draft": "Borrador",
+      "waiting": "Esperando firmas",
+      "signed": "Completamente firmado",
+      "timestamped": "Con marca de tiempo",
+      "pending": "Confirmación pendiente",
+      "error": "Error"
+    }
+  },
+  "contractEditor": {
+    "title": "Editar Contrato",
+    "newTitle": "Nuevo Contrato",
+    "contractName": "Nombre del Contrato",
+    "content": "Contenido del Contrato",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "namePlaceholder": "Ingresa un nombre para este contrato..."
+  },
+  "signatures": {
+    "title": "Recopilar Firmas",
+    "you": "Tú",
+    "signNow": "Firmar ahora",
+    "sendInvite": "Enviar enlace de invitación",
+    "addSigner": "Agregar firmante",
+    "otherParty": "Otra parte",
+    "allSigned": "Todas las partes requeridas han firmado. Es hora de fijar este documento en el tiempo.",
+    "drawSignature": "Dibuja tu firma",
+    "typeSignature": "Escribe tu firma",
+    "agreeCheckbox": "Acepto los términos de este documento",
+    "clear": "Limpiar",
+    "submit": "Enviar firma"
+  },
+  "timestamp": {
+    "review": {
+      "title": "Revisión Final",
+      "confirmTitle": "¿Listo para crear marca de tiempo?",
+      "confirmMessage": "¿Todos los que necesitan firmar han revisado este documento? Una vez que creamos la marca de tiempo, cualquier cambio romperá la prueba.",
+      "yes": "Sí, continuar",
+      "goBack": "Volver y editar",
+      "readyToSign": "Listo para firmar",
+      "timestampThisAgreement": "Crear marca de tiempo de este acuerdo"
+    },
+    "explain": {
+      "title": "¿Qué hace la marca de tiempo?",
+      "description": "Satohash creará una huella criptográfica de este documento y la enviará a la red Bitcoin usando un estándar abierto llamado OpenTimestamps. Esto prueba que este documento exacto existió antes de cierto momento, sin revelar su contenido.",
+      "point1": "No subimos tu documento a la blockchain, solo la huella digital.",
+      "point2": "Más tarde, cualquiera puede verificar la prueba usando herramientas abiertas, no solo Satohash.",
+      "point3": "Si el documento cambia, la huella digital y la prueba ya no coinciden.",
+      "feeTitle": "Tarifa estimada de red de Bitcoin",
+      "feeDescription": "Esta tarifa va a los mineros de Bitcoin, no a Satohash. Cambia con la actividad de la red.",
+      "details": "Detalles",
+      "timestampNow": "Crear marca de tiempo ahora",
+      "cancel": "Cancelar",
+      "loading": "Cargando estimación de tarifa..."
+    },
+    "progress": {
+      "title": "Creando tu marca de tiempo…",
+      "step1": "Creando huella digital…",
+      "step2": "Enviando a servidores de marca de tiempo…",
+      "step3": "Anclando en Bitcoin…",
+      "info": "Esto generalmente toma unos segundos para enviar, y hasta unas horas para ser completamente confirmado por la red Bitcoin. Ya puedes descargar un recibo, y Satohash lo actualizará a una prueba completa una vez que la red confirme.",
+      "done": "Listo – ver recibo"
+    },
+    "result": {
+      "title": "Tu marca de tiempo está creada",
+      "statusPending": "Estado de prueba: Confirmación de blockchain pendiente (recibo temprano)",
+      "statusComplete": "Estado de prueba: Confirmado en blockchain de Bitcoin",
+      "fingerprint": "Huella digital del documento (hash)",
+      "timestampedAt": "Marca de tiempo creada en",
+      "blockchain": "Blockchain: Bitcoin (vía OpenTimestamps)",
+      "downloadProof": "Descargar paquete de prueba (PDF + archivo de prueba)",
+      "emailCopy": "Enviarme una copia segura por correo",
+      "keepSafe": "Guarda este paquete de prueba en un lugar seguro. Incluso si Satohash desapareciera, aún podrías verificar que este documento exacto existió antes de este momento usando herramientas de código abierto."
+    },
+    "verificationHelp": {
+      "title": "Cómo verificar esto más tarde",
+      "withSatohash": "Con Satohash",
+      "withSatohashDesc": "Sube tu PDF y archivo de prueba aquí. Verificaremos contra la red Bitcoin y te diremos si todo coincide.",
+      "withoutSatohash": "Sin Satohash",
+      "withoutSatohashDesc": "Puedes usar cualquier herramienta compatible con OpenTimestamps para verificar tu prueba. Sube tu documento original y el archivo de prueba .ots. La herramienta te dirá si la huella digital coincide y cuándo fue anclada en Bitcoin.",
+      "noMatch": "Si algo no coincide",
+      "noMatchDesc": "Si la prueba no verifica, generalmente significa que el documento fue cambiado o se usó el archivo incorrecto.",
+      "backToContracts": "Volver a mis contratos"
+    }
+  },
+  "trust": {
+    "title": "Centro de Confianza",
+    "howItWorks": "Cómo funciona Satohash",
+    "howItWorksDetail": "Satohash utiliza SHA-256 (Algoritmo de Hash Seguro de 256 bits) para crear una huella digital única de su documento. Esto sucede localmente en su navegador; el texto de su documento nunca sale de su dispositivo. Este hash se agrupa con miles de otros en un Árbol de Merkle y su raíz se ancla a la cadena de bloques de Bitcoin mediante el protocolo OpenTimestamps, creando un registro permanente e inmutable.",
+    "whatBlockchain": "Capacidades y Limitaciones",
+    "whatBlockchainDetail": "El sellado de tiempo en blockchain proporciona una prueba matemática de que un conjunto de datos existió en un momento dado y no ha sido alterado. NO prueba la identidad del firmante por sí solo, NO garantiza la corrección legal del contenido del contrato y NO puede ser modificado ni eliminado una vez anclado. Es una herramienta de 'prueba de existencia', no un sustituto de una revisión legal.",
+    "zkPrivacy": "Privacidad y Conocimiento Cero",
+    "zkPrivacyDetail": "Nuestra tecnología 'Privacy Shield' está inspirada en las pruebas de Conocimiento Cero (ZK). Debido a que solo almacenamos el hash criptográfico de su documento, tenemos cero conocimiento de su contenido. Utilizando pruebas de inclusión de Merkle, permitimos redactar selectivamente partes sensibles de un documento mientras se demuestra que las partes restantes coinciden con la versión original anclada.",
+    "legallyBinding": "Exigibilidad Legal",
+    "legallyBindingDetail": "En muchas jurisdicciones, la evidencia criptográfica se reconoce bajo leyes como la Ley ESIGN (EE. UU.) y eIDAS (UE). Estos marcos establecen que un registro electrónico no debe negarse efectos legales solo por estar en formato electrónico. Los sellos de tiempo en blockchain proporcionan un nivel de evidencia extremadamente alto que se puede usar en tribunales para refutar reclamos de falsificación o antedatado.",
+    "legalDisclaimer": "Satohash proporciona evidencia y herramientas, no asesoramiento legal. Los usuarios deben consultar las leyes locales y un abogado."
+  },
+  "legal": {
+    "terms": "Términos de Servicio",
+    "privacy": "Política de Privacidad",
+    "cryptoNotice": "Aviso de Firma Digital y Evidencia Criptográfica"
+  },
+  "donation": {
+    "title": "Apoya a nuestros desarrolladores",
+    "description": "Satohash está impulsado por un pequeño equipo que se preocupa por acuerdos abiertos y verificables. Si encuentras esto útil, puedes darnos una propina en Bitcoin o Lightning. Gracias por apoyar el desarrollo continuo.",
+    "onchain": "Enviar BTC a esta dirección:",
+    "lightning": "Enviar una propina Lightning usando este código QR o factura.",
+    "transparency": "Las donaciones nos ayudan a cubrir infraestructura, auditorías de seguridad y contribuciones de código abierto. No compran asesoramiento legal o soporte prioritario.",
+    "close": "Cerrar",
+    "copy": "Copiar",
+    "copied": "¡Copiado!"
+  },
+  "footer": {
+    "supportDevelopers": "Apoya a nuestros desarrolladores",
+    "verifyAt": "Verifica este documento en",
+    "poweredBy": "Desarrollado con OpenTimestamps y Bitcoin",
+    "createdBy": "Creado por",
+    "rights": "Todos los derechos reservados"
+  },
+  "common": {
+    "back": "Atrás",
+    "next": "Siguiente",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "view": "Ver",
+    "loading": "Cargando...",
+    "error": "Error",
+    "success": "Éxito"
+  },
+  "landing": {
+    "heroTitle": "Ancla tus Documentos a Bitcoin — Para Siempre",
+    "heroSubtitle": "Crea pruebas criptográficas de que tus documentos existieron en un momento determinado. Conocimiento cero. A prueba de manipulaciones. Verificado por la blockchain de Bitcoin.",
+    "heroCta": "Sellar un Documento Ahora",
+    "heroCta2": "Ver Cómo Funciona",
+    "step1": "Hash local",
+    "step2": "Anclar a Bitcoin",
+    "step3": "Probar para siempre",
+    "socialProof": "Únete a más de 2.400 profesionales anclando documentos a Bitcoin",
+    "tryTemplate": "Prueba una plantilla gratis",
+    "features": {
+      "title": "Todo lo que Necesitas para Documentos a Prueba de Manipulaciones",
+      "subtitle": "Notarización de nivel profesional con Bitcoin y estándares abiertos"
+    }
+  },
+  "templates": {
+    "pageTitle": "Plantillas Notariales",
+    "subtitle": "Elige una plantilla para pre-rellenar tu documento y anclarlo a Bitcoin",
+    "searchPlaceholder": "Buscar plantillas…",
+    "downloadPdf": "Descargar PDF",
+    "emailPackage": "Enviar Paquete",
+    "anchorBitcoin": "Anclar a Bitcoin",
+    "saveVault": "Guardar en Bóveda",
+    "print": "Imprimir Documento",
+    "backToTemplates": "← Volver a Plantillas",
+    "preview": "Vista Previa",
+    "shareLink": "Copiar Enlace",
+    "darkMode": "Modo Oscuro",
+    "fieldsComplete": "Campos Completados",
+    "checklist": "Lista de Verificación",
+    "versionHistory": "Historial de Versiones",
+    "restore": "Restaurar",
+    "zeroKnowledge": "Conocimiento Cero",
+    "zeroKnowledgeDesc": "El contenido de tu documento nunca sale de tu dispositivo — solo se envía el hash SHA-256 al servidor.",
+    "progress": "de campos completados"
+  },
+  "contracts": {
+    "pageTitle": "Contratos",
+    "newArtifact": "Crear Nuevo Artefacto",
+    "downloadAll": "Descargar Todo",
+    "statusDraft": "Borrador",
+    "statusSigned": "Firmado",
+    "statusTimestamped": "Con Marca de Tiempo",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "inspector": "Inspector",
+    "documentName": "Nombre del Documento",
+    "proofPackage": "Paquete de Prueba",
+    "emailPackage": "Enviar Paquete",
+    "otsQr": "QR de Verificación OTS",
+    "scanToVerify": "Escanear para Verificar"
+  },
+  "verify": {
+    "pageTitle": "Verificar Documento",
+    "subtitle": "Sube un documento y su archivo de prueba .ots para confirmar la autenticidad en la blockchain de Bitcoin",
+    "verified": "Verificado",
+    "invalid": "Inválido",
+    "pending": "Confirmación Pendiente",
+    "copyHash": "Copiar Hash",
+    "viewOnChain": "Ver en Cadena"
+  },
+  "forum": {
+    "pageTitle": "Foro",
+    "subtitle": "Debate sobre notarización, pruebas Bitcoin y documentos a prueba de manipulaciones.",
+    "newThread": "Iniciar un Nuevo Hilo",
+    "threadTitle": "Título del hilo",
+    "yourName": "Tu nombre",
+    "createThread": "Crear",
+    "writePost": "Escribe tu mensaje…",
+    "postReply": "Publicar Respuesta",
+    "backToForum": "← Volver al Foro",
+    "noDiscussions": "Aún no hay discusiones"
+  },
+  "dashboard": {
+    "welcome": "Bienvenido a Satohash",
+    "welcomeSubtitle": "Tu centro de gestión de documentos a prueba de manipulaciones. Sella, verifica y administra todos tus documentos notarizados en un solo lugar.",
+    "dismiss": "Descartar",
+    "recentActivity": "Actividad Reciente",
+    "quickActions": "Acciones Rápidas"
+  },
+  "settings": {
+    "pageTitle": "Ajustes",
+    "theme": "Tema",
+    "language": "Idioma",
+    "account": "Cuenta",
+    "notifications": "Notificaciones",
+    "save": "Guardar Cambios",
+    "darkMode": "Modo Oscuro",
+    "lightMode": "Modo Claro"
+  },
+  "access": {
+    "signIn": "Iniciar Sesión",
+    "title": "Bienvenido a Satohash",
+    "subtitle": "El estándar profesional para la notarización de documentos anclados a Bitcoin",
+    "getStarted": "Comenzar",
+    "learnMore": "Más Información"
+  },
+  "errors": {
+    "generic": "Algo salió mal",
+    "network": "Error de red — por favor inténtalo de nuevo",
+    "hashFailed": "Error al generar el hash",
+    "stampFailed": "Error al sellar el documento",
+    "verifyFailed": "Error en la verificación",
+    "loadFailed": "Error al cargar"
+  }
 }

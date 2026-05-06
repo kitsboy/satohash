@@ -15,7 +15,8 @@ import {
   Trash2,
   BookOpen,
   CheckCircle2,
-  Info
+  Info,
+  FolderDown
 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Button from '../../components/Button'
@@ -23,11 +24,12 @@ import Card from '../../components/Card'
 import StatusPill from '../../components/StatusPill'
 import BlockchainPulse from '../../components/BlockchainPulse'
 import { useState, useEffect } from 'react'
-import { clsx } from 'clsx'
+import { jsPDF } from 'jspdf'
+import JSZip from 'jszip'
+import { toast } from 'sonner'
 
 // TODO: fetch from /api/contracts/activity
 // TODO: fetch node integrity stat from /api/stats
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
 
 export default function ContractList() {
   const navigate = useNavigate()
@@ -63,6 +65,109 @@ export default function ContractList() {
     const updatedContracts = contracts.filter((c) => c.id !== id)
     setContracts(updatedContracts)
     localStorage.setItem('satohash_contracts', JSON.stringify(updatedContracts))
+  }
+
+  const handleDownloadAll = async () => {
+    toast.info('Preparing your archive...')
+    try {
+      const zip = new JSZip()
+      for (const contract of contracts) {
+        const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' })
+        const pageW = 210
+        const margin = 20
+        const contentW = pageW - margin * 2
+
+        // Background
+        doc.setFillColor(253, 251, 247)
+        doc.rect(0, 0, pageW, 297, 'F')
+
+        // Header bar
+        doc.setFillColor(240, 180, 41)
+        doc.rect(0, 0, pageW / 2, 4, 'F')
+        doc.setFillColor(13, 148, 136)
+        doc.rect(pageW / 2, 0, pageW / 2, 4, 'F')
+
+        // Title
+        doc.setTextColor(15, 23, 42)
+        doc.setFontSize(18)
+        doc.setFont('helvetica', 'bold')
+        doc.text(contract.name.toUpperCase(), margin, 28)
+
+        // Subtitle
+        doc.setFontSize(8)
+        doc.setTextColor(100, 116, 139)
+        doc.setFont('helvetica', 'normal')
+        doc.text('Satohash — Sovereign Notary Protocol', margin, 35)
+
+        // Divider
+        doc.setDrawColor(240, 180, 41)
+        doc.setLineWidth(0.5)
+        doc.line(margin, 39, pageW - margin, 39)
+
+        // Fields
+        let y = 50
+        const addRow = (label, value) => {
+          if (y > 270) {
+            doc.addPage()
+            doc.setFillColor(253, 251, 247)
+            doc.rect(0, 0, pageW, 297, 'F')
+            y = 20
+          }
+          doc.setFontSize(7)
+          doc.setTextColor(100, 116, 139)
+          doc.setFont('helvetica', 'bold')
+          doc.text(label.toUpperCase(), margin, y)
+          y += 5
+          doc.setFontSize(10)
+          doc.setTextColor(15, 23, 42)
+          doc.setFont('helvetica', 'normal')
+          const lines = doc.splitTextToSize(value || '—', contentW)
+          doc.text(lines, margin, y)
+          y += lines.length * 5 + 6
+          doc.setDrawColor(226, 232, 240)
+          doc.setLineWidth(0.2)
+          doc.line(margin, y - 2, pageW - margin, y - 2)
+        }
+
+        addRow('Contract Name', contract.name)
+        addRow('Status', contract.status)
+        addRow(
+          'Created',
+          contract.createdAt ? new Date(contract.createdAt).toLocaleDateString() : '—'
+        )
+        addRow(
+          'Last Updated',
+          contract.updatedAt ? new Date(contract.updatedAt).toLocaleDateString() : '—'
+        )
+        if (contract.content) addRow('Content', contract.content)
+
+        // Footer
+        doc.setFontSize(7)
+        doc.setTextColor(148, 163, 184)
+        doc.setFont('helvetica', 'normal')
+        doc.text('Generated via Satohash — Sovereign Notary Protocol', margin, 287)
+
+        // Footer bar
+        doc.setFillColor(240, 180, 41)
+        doc.rect(0, 293, pageW / 2, 4, 'F')
+        doc.setFillColor(13, 148, 136)
+        doc.rect(pageW / 2, 293, pageW / 2, 4, 'F')
+
+        const fileName = `Satohash_${contract.name.replace(/\s+/g, '_')}.pdf`
+        zip.file(fileName, doc.output('arraybuffer'))
+      }
+
+      const blob = await zip.generateAsync({ type: 'blob' })
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = `Satohash_Contracts_${new Date().toISOString().split('T')[0]}.zip`
+      a.click()
+      URL.revokeObjectURL(url)
+      toast.success(`Downloaded ${contracts.length} contract${contracts.length !== 1 ? 's' : ''}`)
+    } catch {
+      toast.error('Failed to generate archive. Please try again.')
+    }
   }
 
   const stats = {
@@ -102,8 +207,7 @@ export default function ContractList() {
                   <div className="h-px w-8" style={{ background: 'var(--border-bright)' }} />
                 </div>
                 <h1 className="text-noir-primary text-4xl font-black tracking-tighter uppercase italic md:text-6xl">
-                  Protocol <br />{' '}
-                  <span style={{ color: 'var(--accent-active)' }}>Dashboard.</span>
+                  Protocol <br /> <span style={{ color: 'var(--accent-active)' }}>Dashboard.</span>
                 </h1>
                 <p
                   className="max-w-md text-sm leading-relaxed font-bold italic"
@@ -126,6 +230,22 @@ export default function ContractList() {
                   </p>
                 </div>
                 <div className="flex gap-4">
+                  {contracts.length > 0 && (
+                    <button
+                      onClick={handleDownloadAll}
+                      className="group relative h-14 overflow-hidden rounded-2xl px-6 text-[11px] font-black tracking-widest uppercase shadow-lg transition-all hover:scale-[1.02] active:scale-[0.98]"
+                      style={{
+                        background: 'var(--bg-primary)',
+                        border: '1px solid var(--border)',
+                        color: 'var(--text-secondary)'
+                      }}
+                    >
+                      <span className="relative z-10 flex items-center gap-2">
+                        <FolderDown size={16} />
+                        Download All
+                      </span>
+                    </button>
+                  )}
                   <Link to="/choose-template">
                     <button
                       className="group relative h-14 overflow-hidden rounded-2xl px-8 text-[11px] font-black tracking-widest text-white uppercase shadow-2xl transition-all hover:scale-[1.02] active:scale-[0.98]"
@@ -247,8 +367,7 @@ export default function ContractList() {
                   <div
                     className="flex h-9 w-9 items-center justify-center rounded-xl"
                     style={{
-                      background:
-                        'color-mix(in srgb, var(--accent-active) 10%, transparent)',
+                      background: 'color-mix(in srgb, var(--accent-active) 10%, transparent)',
                       color: 'var(--accent-active)'
                     }}
                   >
@@ -288,10 +407,7 @@ export default function ContractList() {
                   />
                 </div>
 
-                <div
-                  className="mt-8 pt-6"
-                  style={{ borderTop: '1px solid var(--border)' }}
-                >
+                <div className="mt-8 pt-6" style={{ borderTop: '1px solid var(--border)' }}>
                   <div
                     className="flex items-center justify-between rounded-xl p-3"
                     style={{ background: 'var(--surface-raised)' }}
@@ -344,7 +460,10 @@ export default function ContractList() {
 function StatCard({ icon: Icon, label, value, color }) {
   const styles = {
     accent: {
-      icon: { color: 'var(--accent-active)', background: 'color-mix(in srgb, var(--accent-active) 10%, transparent)' }
+      icon: {
+        color: 'var(--accent-active)',
+        background: 'color-mix(in srgb, var(--accent-active) 10%, transparent)'
+      }
     },
     emerald: {
       icon: { color: '#10b981', background: 'color-mix(in srgb, #10b981 10%, transparent)' }
@@ -467,7 +586,9 @@ function ContractCard({ contract, onClick, onDelete }) {
 
       <div
         className="absolute right-0 bottom-0 left-0 z-20 h-0.5 origin-left scale-x-0 transition-transform group-hover:scale-x-100"
-        style={{ background: 'linear-gradient(to right, var(--accent-active), var(--accent-purple))' }}
+        style={{
+          background: 'linear-gradient(to right, var(--accent-active), var(--accent-purple))'
+        }}
       />
       <div className="absolute inset-0 z-0 -translate-x-full bg-linear-to-r from-transparent via-indigo-500/5 to-transparent transition-transform duration-1000 group-hover:translate-x-full" />
     </motion.div>
@@ -492,17 +613,11 @@ function ActivityItem({ icon: Icon, title, time, status }) {
           <h4 className="text-noir-primary text-[11px] font-black tracking-tight uppercase italic">
             {title}
           </h4>
-          <span
-            className="text-[9px] font-bold"
-            style={{ color: 'var(--text-muted)' }}
-          >
+          <span className="text-[9px] font-bold" style={{ color: 'var(--text-muted)' }}>
             {time}
           </span>
         </div>
-        <p
-          className="text-[9px] font-bold"
-          style={{ color: 'var(--text-secondary)' }}
-        >
+        <p className="text-[9px] font-bold" style={{ color: 'var(--text-secondary)' }}>
           {status}
         </p>
       </div>
@@ -634,10 +749,7 @@ function EmptyState({ onAction }) {
                 >
                   {item.title}
                 </h4>
-                <p
-                  className="text-[12px] font-medium"
-                  style={{ color: 'var(--text-secondary)' }}
-                >
+                <p className="text-[12px] font-medium" style={{ color: 'var(--text-secondary)' }}>
                   {item.desc}
                 </p>
               </div>
