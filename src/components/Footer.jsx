@@ -307,11 +307,24 @@ export default function Footer() {
               Support the Mission
             </button>
           </div>
-          <div className="flex items-center gap-4">
-            <div className="h-2 w-2 animate-pulse rounded-full bg-[var(--accent-active)] shadow-[0_0_12px_var(--accent-active)]" />
-            <span className="font-mono text-[11px] font-bold tracking-[0.3em] text-[var(--text-secondary)] uppercase">
-              Powered by OpenTimestamps & Bitcoin
-            </span>
+          <div className="flex flex-col items-end gap-3">
+            <div className="flex items-center gap-4">
+              <div className="h-2 w-2 animate-pulse rounded-full bg-[var(--accent-active)] shadow-[0_0_12px_var(--accent-active)]" />
+              <span className="font-mono text-[11px] font-bold tracking-[0.3em] text-[var(--text-secondary)] uppercase">
+                Powered by OpenTimestamps & Bitcoin
+              </span>
+            </div>
+            <a
+              href="https://giveabit.io"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 opacity-50 transition-opacity hover:opacity-80"
+            >
+              <span className="text-[9px] font-bold tracking-[0.2em] text-[var(--text-secondary)] uppercase">
+                Created by
+              </span>
+              <img src="/giveabit.png" alt="Give A Bit" className="h-5 w-auto object-contain" />
+            </a>
           </div>
         </div>
       </div>
