@@ -55,7 +55,9 @@ const BatchTimestamp = React.lazy(() => import('./pages/BatchTimestamp'))
 
 function ProtectedRoute({ children }) {
   const location = useLocation()
-  const authed = localStorage.getItem('satohash_authed') === 'true' || sessionStorage.getItem('satohash_authed') === 'true'
+  const authed =
+    localStorage.getItem('satohash_authed') === 'true' ||
+    sessionStorage.getItem('satohash_authed') === 'true'
   if (!authed) return <Navigate to="/access" state={{ from: location }} replace />
   return children
 }
@@ -313,6 +315,34 @@ function App() {
       !localStorage.getItem('satohash-onboarded')
     )
   })
+
+  // FIX 2 — Auto-refresh JWT if it exists and is near expiry
+  useEffect(() => {
+    const token = localStorage.getItem('satohash_token')
+    if (!token) return
+    const refresh = async () => {
+      try {
+        const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+        const res = await fetch(`${API}/api/auth/refresh`, {
+          method: 'POST',
+          headers: { Authorization: `Bearer ${token}` }
+        })
+        if (res.ok) {
+          const data = await res.json()
+          if (data.refreshed) {
+            localStorage.setItem('satohash_token', data.token)
+          }
+        } else {
+          // Token invalid — clear auth
+          localStorage.removeItem('satohash_token')
+          localStorage.removeItem('satohash_authed')
+        }
+      } catch (_err) {
+        // Token invalid — silently ignore
+      }
+    }
+    refresh()
+  }, [])
 
   useEffect(() => {
     const goOffline = () => setIsOffline(true)

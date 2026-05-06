@@ -10,8 +10,7 @@ import {
   Database,
   Plus,
   Lock,
-  CheckCircle,
-  TrendingUp
+  CheckCircle
 } from 'lucide-react'
 import { useState, useCallback, useEffect } from 'react'
 import { getTieredFeeEstimates } from '../utils/mempool.js'
@@ -30,21 +29,35 @@ export default function Stamp() {
   const [hashValue, setHashValue] = useState('')
   const [error, setError] = useState('')
   const [feeEstimates, setFeeEstimates] = useState(null)
-  const [feeTier, setFeeTier] = useState('medium')
   const [multiParty, setMultiParty] = useState(false)
   const [l402Gating, setL402Gating] = useState(false)
   const [coSigners, setCoSigners] = useState([])
   const [coSignerErrors, setCoSignerErrors] = useState([])
   const [isConfirmed, setIsConfirmed] = useState(false)
   const [confirmedBlock, setConfirmedBlock] = useState(null)
+  const [lightningInvoice, setLightningInvoice] = useState(null) // { payment_request, amount_msat, expires_at }
 
   const { lastEvent } = useSocket()
 
   useEffect(() => {
     if (lastEvent?.type === 'confirmed' && proofResult?.id) {
       if (lastEvent.data?.id === proofResult.id || lastEvent.data?.hash === proofResult.hash) {
+        const blockHeight = lastEvent.data?.blockHeight
         setIsConfirmed(true)
-        setConfirmedBlock(lastEvent.data?.blockHeight)
+        setConfirmedBlock(blockHeight)
+        // Actionable toast with mempool link
+        toast.success('⛓ Confirmed on Bitcoin!', {
+          description: blockHeight
+            ? `Block ${blockHeight.toLocaleString()} — view on mempool.space`
+            : 'Proof anchored to Bitcoin mainnet',
+          duration: 10000,
+          action: blockHeight
+            ? {
+                label: 'View Block →',
+                onClick: () => window.open(`https://mempool.space/block/${blockHeight}`, '_blank')
+              }
+            : undefined
+        })
       }
     }
   }, [lastEvent, proofResult])
@@ -120,7 +133,9 @@ export default function Stamp() {
       const arrayBuffer = await file.arrayBuffer()
       // Off-thread hashing via Web Worker to avoid freezing UI on large files
       const { wrap } = await import('comlink')
-      const worker = new Worker(new URL('../workers/hashWorker.js', import.meta.url), { type: 'module' })
+      const worker = new Worker(new URL('../workers/hashWorker.js', import.meta.url), {
+        type: 'module'
+      })
       const hashFn = wrap(worker)
       const hash = await hashFn.hashFile(arrayBuffer)
       worker.terminate()
@@ -128,14 +143,40 @@ export default function Stamp() {
 
       setStampingStatus('anchoring')
 
+      // FIX 1 — Optional NIP-07 co-sign: attach user's signed Nostr event to the stamp request
+      let nostr_signed_event = null
+      if (window.nostr) {
+        try {
+          const eventTemplate = {
+            kind: 1063,
+            created_at: Math.floor(Date.now() / 1000),
+            tags: [
+              ['hash', hash],
+              ['t', 'satohash']
+            ],
+            content: `Proof-of-existence: ${caseLabel || file.name} — ${hash.substring(0, 16)}...`
+          }
+          nostr_signed_event = await window.nostr.signEvent(eventTemplate)
+        } catch {
+          // Extension not available or user rejected — continue without signature
+        }
+      }
+
       // POST to real backend
       const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+      // FIX 3d — include X-Npub header for user scoping if npub is stored locally
+      const storedNpub =
+        localStorage.getItem('satohash_npub') || sessionStorage.getItem('satohash_npub')
       const res = await fetch(`${API}/api/stamp`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          ...(storedNpub ? { 'X-Npub': storedNpub } : {})
+        },
         body: JSON.stringify({
           hash,
-          filename: caseLabel || file.name
+          filename: caseLabel || file.name,
+          ...(nostr_signed_event ? { nostr_signed_event } : {})
         })
       })
 
@@ -156,6 +197,31 @@ export default function Stamp() {
         return
       }
 
+      if (res.status === 402) {
+        let invoiceData = null
+        try {
+          invoiceData = await res.json()
+        } catch (_err) {
+          /* ignore parse error */
+        }
+        const invoice =
+          invoiceData?.invoice || invoiceData?.payment_request || invoiceData?.www_authenticate
+        if (invoice) {
+          setLightningInvoice({
+            payment_request: invoice,
+            amount_msat: invoiceData?.amount_msat || 1000,
+            expires_at: invoiceData?.expires_at || Date.now() + 600000
+          })
+          setStampingStatus('idle')
+        } else {
+          toast.error('Lightning payment required to stamp', {
+            description: 'Set REQUIRE_LIGHTNING=false in .env to disable'
+          })
+          setStampingStatus('idle')
+        }
+        return
+      }
+
       if (!res.ok) {
         const err = await res.json()
         throw new Error(err.error || 'Stamping failed')
@@ -165,7 +231,7 @@ export default function Stamp() {
       setProofResult(data)
       setStampingStatus('complete')
       // Haptic feedback on mobile
-      navigator.vibrate?.([50, 30, 100]);
+      navigator.vibrate?.([50, 30, 100])
 
       // Save to localStorage for vault
       const existing = JSON.parse(localStorage.getItem('satohash_stamps') || '[]')
@@ -182,8 +248,6 @@ export default function Stamp() {
   // Progress percentage per status
   const progressPercent =
     stampingStatus === 'hashing' ? '30%' : stampingStatus === 'anchoring' ? '70%' : '100%'
-
-  const estimatedCost = feeEstimates ? ((files[0]?.size || 0) * feeEstimates[feeTier]) / 1000 : 0 // Rough estimate
 
   return (
     <div className="mx-auto max-w-6xl space-y-12 p-8 pb-20">
@@ -655,6 +719,73 @@ export default function Stamp() {
           </div>
         </div>
       </div>
+
+      {/* Lightning Payment Modal */}
+      <AnimatePresence>
+        {lightningInvoice && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-[150] bg-black/80 backdrop-blur-xl"
+              onClick={() => setLightningInvoice(null)}
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              className="fixed inset-x-4 top-1/2 z-[151] mx-auto max-w-sm -translate-y-1/2 space-y-6 rounded-3xl border p-8 text-center"
+              style={{
+                background: 'var(--bg-secondary)',
+                borderColor: 'color-mix(in srgb, var(--accent-gold) 40%, transparent)'
+              }}
+            >
+              <div className="text-4xl">⚡</div>
+              <div className="space-y-1">
+                <h3 className="text-xl font-black tracking-tight">Lightning Payment Required</h3>
+                <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+                  {(lightningInvoice.amount_msat / 1000).toFixed(0)} sats to notarize this document
+                </p>
+              </div>
+              <div className="rounded-2xl bg-white p-4">
+                <img
+                  src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent('lightning:' + lightningInvoice.payment_request)}`}
+                  alt="Lightning invoice QR"
+                  className="mx-auto h-48 w-48"
+                />
+              </div>
+              <div className="rounded-xl bg-black/30 p-3">
+                <p
+                  className="font-mono text-[9px] break-all"
+                  style={{ color: 'var(--accent-gold)' }}
+                >
+                  {lightningInvoice.payment_request.substring(0, 60)}...
+                </p>
+              </div>
+              <div className="flex gap-3">
+                <button
+                  onClick={() => {
+                    navigator.clipboard.writeText(lightningInvoice.payment_request)
+                    toast.success('Invoice copied!')
+                  }}
+                  className="flex-1 rounded-xl py-3 text-xs font-black uppercase"
+                  style={{ background: 'var(--accent-gold)', color: '#141b25' }}
+                >
+                  Copy Invoice
+                </button>
+                <button
+                  onClick={() => setLightningInvoice(null)}
+                  className="flex-1 rounded-xl border py-3 text-xs font-black uppercase opacity-60"
+                  style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
+                >
+                  Cancel
+                </button>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </div>
   )
 }

@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 /**
@@ -11,16 +11,16 @@ import { motion, AnimatePresence } from 'framer-motion'
  */
 export default function Tooltip({ title, content, className = '' }) {
   const [visible, setVisible] = useState(false)
+  const [flipBelow, setFlipBelow] = useState(false)
   const triggerRef = useRef(null)
 
-  // Flip below if trigger is within 120px of the top of the viewport
-  const shouldFlipBelow = () => {
-    if (!triggerRef.current) return false
-    const rect = triggerRef.current.getBoundingClientRect()
-    return rect.top < 120
-  }
-
-  const flipBelow = visible && shouldFlipBelow()
+  // Compute flip direction in an effect (safe ref access outside render)
+  useEffect(() => {
+    if (visible && triggerRef.current) {
+      const rect = triggerRef.current.getBoundingClientRect()
+      setFlipBelow(rect.top < 120)
+    }
+  }, [visible])
 
   return (
     <span
@@ -35,7 +35,7 @@ export default function Tooltip({ title, content, className = '' }) {
         ref={triggerRef}
         type="button"
         aria-label={`Info: ${title}`}
-        className="ml-1.5 flex h-4 w-4 flex-shrink-0 cursor-default items-center justify-center rounded-full border border-[var(--border)] text-[9px] font-black text-[var(--text-secondary)] transition-all hover:border-[var(--accent-active)] hover:text-[var(--accent-active)] focus:outline-none focus:ring-1 focus:ring-[var(--accent-active)]"
+        className="ml-1.5 flex h-4 w-4 flex-shrink-0 cursor-default items-center justify-center rounded-full border border-[var(--accent-active)] text-[9px] font-black text-[var(--accent-active)] shadow-[0_0_6px_var(--accent-active)] transition-all hover:shadow-[0_0_12px_var(--accent-active)] focus:ring-1 focus:ring-[var(--accent-active)] focus:outline-none"
       >
         i
       </button>
@@ -76,7 +76,7 @@ export default function Tooltip({ title, content, className = '' }) {
             />
 
             {title && (
-              <p className="mb-1.5 text-[10px] font-black tracking-widest uppercase text-[var(--accent-active)]">
+              <p className="mb-1.5 text-[10px] font-black tracking-widest text-[var(--accent-active)] uppercase">
                 {title}
               </p>
             )}

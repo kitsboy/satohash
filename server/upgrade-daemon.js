@@ -36,9 +36,35 @@ const startUpgradeDaemon = (io) => {
 
     for (const stamp of oldStamps) {
       try {
-        // Simulate IPFS CID generation (in real impl, use IPFS client)
-        const content = `${stamp.hash}:${stamp.confirmed_at}`;
-        const simulatedCid = `Qm${crypto.createHash('sha256').update(content).digest('hex').slice(0, 44)}`;
+        // Real IPFS via web3.storage (if API key configured), fallback to simulated
+        let simulatedCid;
+        const web3StorageToken = process.env.WEB3_STORAGE_TOKEN;
+        if (web3StorageToken) {
+          try {
+            const { Blob } = await import('buffer');
+            const content = Buffer.from(`${stamp.hash}:${stamp.confirmed_at}:${stamp.id}`);
+            const formData = new FormData();
+            formData.append('file', new Blob([content], { type: 'application/octet-stream' }), `${stamp.id}.proof`);
+            const uploadRes = await fetch('https://api.web3.storage/upload', {
+              method: 'POST',
+              headers: { Authorization: `Bearer ${web3StorageToken}` },
+              body: formData
+            });
+            if (uploadRes.ok) {
+              const uploadData = await uploadRes.json();
+              simulatedCid = uploadData.cid;
+              logger.info(`🌐 Real IPFS CID for ${stamp.id}: ${simulatedCid}`);
+            } else {
+              throw new Error(`web3.storage error: ${uploadRes.status}`);
+            }
+          } catch (ipfsErr) {
+            logger.warn(`IPFS upload failed, using simulated CID: ${ipfsErr.message}`);
+            simulatedCid = `Qm${crypto.createHash('sha256').update(`${stamp.hash}:${stamp.confirmed_at}`).digest('hex').slice(0, 44)}`;
+          }
+        } else {
+          // No token configured — use deterministic placeholder CID
+          simulatedCid = `Qm${crypto.createHash('sha256').update(`${stamp.hash}:${stamp.confirmed_at}`).digest('hex').slice(0, 44)}`;
+        }
 
         db.prepare(`
           UPDATE timestamps

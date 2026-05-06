@@ -1,11 +1,10 @@
 import { useLocation, useNavigate } from 'react-router-dom'
-import { Settings, Zap, Boxes, Heart, X, Copy, Check } from 'lucide-react'
+import { Settings, Zap, Boxes, Heart, X, Copy, Check, Sun, Moon } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { getFeeEstimates, getBlockHeight } from '../utils/mempool'
 import { QRCodeSVG } from 'qrcode.react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { BTC_ADDRESS } from '../config/constants'
-import { ThemeToggle } from './ThemeProvider'
 
 // ─── Route → human-readable breadcrumb ────────────────────────────────────
 const ROUTE_LABELS = {
@@ -68,6 +67,20 @@ export default function TopSignalBar() {
   const [feeRate, setFeeRate] = useState(null)
   const [showTip, setShowTip] = useState(false)
   const [copied, setCopied] = useState(false)
+  const [isDark, setIsDark] = useState(
+    () => document.documentElement.getAttribute('data-theme') !== 'elite'
+  )
+
+  const toggleTheme = () => {
+    const newDark = !isDark
+    setIsDark(newDark)
+    if (newDark) {
+      document.documentElement.removeAttribute('data-theme')
+    } else {
+      document.documentElement.setAttribute('data-theme', 'elite')
+    }
+    localStorage.setItem('satohash_theme', newDark ? 'dark' : 'elite')
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -153,7 +166,14 @@ export default function TopSignalBar() {
       {/* Right: avatar + settings ------------------------------------------ */}
       <div className="relative flex flex-shrink-0 items-center gap-3">
         {/* Theme toggle */}
-        <ThemeToggle />
+        <button
+          onClick={toggleTheme}
+          className="flex h-8 w-8 items-center justify-center rounded-lg transition-all hover:opacity-80"
+          style={{ color: 'var(--text-secondary)' }}
+          aria-label="Toggle theme"
+        >
+          {isDark ? <Sun size={14} /> : <Moon size={14} />}
+        </button>
 
         {/* Tip button */}
         <button

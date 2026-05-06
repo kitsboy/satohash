@@ -123,7 +123,7 @@ if (config.ANTHROPIC_API_KEY) {
   // Mock: log and return fake response
   anthropicClient = {
     messages: {
-      create: async ({ model = 'claude-3-sonnet-20240229', max_tokens = 1000, messages = [] }) => {
+      create: async ({ model = 'claude-haiku-4-5', max_tokens = 1000, messages = [] }) => {
         const prompt = messages[0]?.content?.[0]?.text || 'No prompt';
         console.log('[MOCK CLAUDE] Prompt:', prompt);
         // Simple heuristic response
@@ -266,7 +266,7 @@ const corsOptions = {
         : config.CORS_ORIGIN?.split(',').map(s => s.trim()),
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'X-Request-Id', 'X-Snapper-Key', 'X-L402-Token', 'X-Ots-Upgraded'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Request-Id', 'X-Snapper-Key', 'X-L402-Token', 'X-Ots-Upgraded', 'X-Npub'],
     exposedHeaders: ['Content-Disposition', 'X-Ots-Upgraded']
 };
 app.use(cors(corsOptions));
@@ -301,6 +301,29 @@ app.post('/api/auth/login', (req, res) => {
         { expiresIn: '24h' }
     );
     res.json({ token, expiresIn: '24h' });
+});
+
+// FIX 2 — JWT refresh: issues a new token if existing one is valid and near expiry
+app.post('/api/auth/refresh', (req, res) => {
+  const token = req.headers['authorization']?.replace('Bearer ', '');
+  if (!token) return res.status(401).json({ error: 'No token' });
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'satohash-jwt-32chars-change-in-prod');
+    // Only refresh if less than 2 hours remain
+    const expiresAt = decoded.exp * 1000;
+    const remaining = expiresAt - Date.now();
+    if (remaining > 2 * 60 * 60 * 1000) {
+      return res.json({ token, refreshed: false, message: 'Token still fresh' });
+    }
+    const newToken = jwt.sign(
+      { role: decoded.role || 'admin', sub: decoded.sub },
+      process.env.JWT_SECRET || 'satohash-jwt-32chars-change-in-prod',
+      { expiresIn: '24h' }
+    );
+    res.json({ token: newToken, refreshed: true });
+  } catch (err) {
+    res.status(401).json({ error: 'Invalid or expired token' });
+  }
 });
 
 // Subscribe endpoint for monetization (1)
@@ -690,6 +713,8 @@ app.post('/api/stamp', paywallMiddleware, async (req, res, next) => {
         }
 
         const { hash, filename, email, nostr_pubkey } = validation.data;
+        // FIX 3a — extract npub from header or body for user scoping
+        const userNpub = req.headers['x-npub'] || req.body.npub || null;
         const hashBuffer = Buffer.from(hash, 'hex');
         const opSHA256 = new OpenTimestamps.Ops.OpSHA256();
         const detached = OpenTimestamps.DetachedTimestampFile.fromHash(opSHA256, hashBuffer);
@@ -718,6 +743,24 @@ app.post('/api/stamp', paywallMiddleware, async (req, res, next) => {
         // Background tasks
         publishTimestampToNostr(hash, filename, id).catch(() => {});
         stampCounter.inc({ status: 'pending' });
+
+        // FIX 1 — NIP-07: store user-signed Nostr event id if provided
+        if (req.body.nostr_signed_event) {
+          try {
+            const evt = typeof req.body.nostr_signed_event === 'string'
+              ? JSON.parse(req.body.nostr_signed_event)
+              : req.body.nostr_signed_event;
+            db.prepare('UPDATE timestamps SET nostr_event_id = ? WHERE id = ?')
+              .run(evt.id || null, id);
+          } catch {}
+        }
+
+        // FIX 3a — store user npub for multi-user scoping (wrapped in try/catch: column may not exist on older DBs)
+        if (userNpub) {
+          try {
+            db.prepare('UPDATE timestamps SET user_npub = ? WHERE id = ?').run(userNpub, id);
+          } catch {}
+        }
 
         // Send confirmation email if email provided
         if (email) {
@@ -1018,9 +1061,11 @@ app.get('/api/history', async (req, res) => {
         const limit = Math.min(100, Math.max(1, parseInt(req.query.limit) || 20));
         const offset = (page - 1) * limit;
         const status = req.query.status; // optional filter: pending|confirmed|failed
+        // FIX 3b — scope to authenticated user's npub if provided
+        const userNpub = req.headers['x-npub'] || null;
 
-        // Build cache key from query params
-        const cacheKey = `history:${page}:${limit}:${status || 'all'}`;
+        // Build cache key from query params (include npub for per-user cache isolation)
+        const cacheKey = `history:${page}:${limit}:${status || 'all'}:${userNpub || 'global'}`;
 
         // Try cache first
         try {
@@ -1037,10 +1082,19 @@ app.get('/api/history', async (req, res) => {
                             confirmed_at, bitcoin_block_height, ipfs_cid, merkle_root
                      FROM timestamps`;
         const params = [];
+        const conditions = [];
 
         if (status && ['pending', 'confirmed', 'failed'].includes(status)) {
-            query += ` WHERE status = ?`;
+            conditions.push(`status = ?`);
             params.push(status);
+        }
+        // FIX 3b — filter by npub when provided; keep NULL rows for backwards compatibility
+        if (userNpub) {
+            conditions.push(`(user_npub = ? OR user_npub IS NULL)`);
+            params.push(userNpub);
+        }
+        if (conditions.length > 0) {
+            query += ` WHERE ` + conditions.join(' AND ');
         }
 
         query += ` ORDER BY created_at DESC LIMIT ? OFFSET ?`;
@@ -1051,9 +1105,17 @@ app.get('/api/history', async (req, res) => {
         // Get total count for pagination metadata
         let countQuery = `SELECT COUNT(*) as total FROM timestamps`;
         const countParams = [];
+        const countConditions = [];
         if (status && ['pending', 'confirmed', 'failed'].includes(status)) {
-            countQuery += ` WHERE status = ?`;
+            countConditions.push(`status = ?`);
             countParams.push(status);
+        }
+        if (userNpub) {
+            countConditions.push(`(user_npub = ? OR user_npub IS NULL)`);
+            countParams.push(userNpub);
+        }
+        if (countConditions.length > 0) {
+            countQuery += ` WHERE ` + countConditions.join(' AND ');
         }
         const { total } = db.prepare(countQuery).all(...countParams)[0];
 
@@ -1080,6 +1142,61 @@ app.get('/api/history', async (req, res) => {
         res.status(500).json({ error: 'Failed to fetch history' });
     }
 });
+
+// GET /api/og/:id — returns SVG proof card for Open Graph
+app.get('/api/og/:id', (req, res) => {
+  try {
+    const stamp = db.prepare('SELECT id, hash, original_filename, status, bitcoin_block_height, created_at FROM timestamps WHERE id = ?').get(req.params.id)
+    if (!stamp) return res.status(404).send('Not found')
+
+    const filename = stamp.original_filename || 'Document'
+    const status = stamp.status || 'pending'
+    const block = stamp.bitcoin_block_height ? `Block ${stamp.bitcoin_block_height.toLocaleString()}` : 'Pending'
+    const hash = stamp.hash ? stamp.hash.substring(0, 16) + '...' + stamp.hash.slice(-8) : '—'
+    const statusColor = status === 'confirmed' ? '#10b981' : '#f0b429'
+
+    const svg = `<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+      <rect width="1200" height="630" fill="#05070a"/>
+      <rect width="1200" height="6" fill="#f0b429"/>
+      <rect x="60" y="60" width="1080" height="510" rx="24" fill="#0d1117" stroke="#1e2d3d" stroke-width="1"/>
+      <text x="100" y="180" font-family="monospace" font-size="64" font-weight="900" fill="white">${filename.substring(0, 28)}</text>
+      <text x="100" y="240" font-family="monospace" font-size="20" fill="#64748b">${hash}</text>
+      <rect x="100" y="280" width="200" height="40" rx="8" fill="${statusColor}20"/>
+      <text x="120" y="306" font-family="monospace" font-size="16" font-weight="700" fill="${statusColor}">${status.toUpperCase()}</text>
+      <text x="100" y="380" font-family="monospace" font-size="28" font-weight="700" fill="#f0b429">${block}</text>
+      <text x="100" y="430" font-family="monospace" font-size="18" fill="#64748b">OpenTimestamps / Bitcoin Mainnet</text>
+      <text x="100" y="530" font-family="monospace" font-size="16" fill="#374151">satohash.io/verify/${req.params.id.substring(0, 20)}...</text>
+      <text x="1100" y="530" font-family="monospace" font-size="16" font-weight="900" fill="#f0b429" text-anchor="end">SATOHASH</text>
+    </svg>`
+
+    res.setHeader('Content-Type', 'image/svg+xml')
+    res.setHeader('Cache-Control', 'public, max-age=3600')
+    res.send(svg)
+  } catch (e) {
+    res.status(500).send('Error')
+  }
+})
+
+// GET /api/search — full-text search on hash, filename
+app.get('/api/search', (req, res) => {
+  const q = (req.query.q || '').trim()
+  const limit = Math.min(20, parseInt(req.query.limit) || 10)
+  if (!q || q.length < 4) return res.json({ results: [] })
+  try {
+    const pattern = `%${q}%`
+    const rows = db.prepare(`
+      SELECT id, hash, original_filename as filename, status, created_at, bitcoin_block_height
+      FROM timestamps
+      WHERE (hash LIKE ? OR original_filename LIKE ?)
+        AND is_revoked = 0
+      ORDER BY created_at DESC
+      LIMIT ?
+    `).all(pattern, pattern, limit)
+    res.json({ results: rows })
+  } catch (e) {
+    res.status(500).json({ error: e.message })
+  }
+})
 
 app.post('/api/upgrade', upload.single('otsFile'), async (req, res, next) => {
     try {
@@ -1259,6 +1376,101 @@ app.post('/api/identity/nip05', (req, res) => {
     res.status(500).json({ error: e.message });
   }
 });
+
+// ─── Push Notification Endpoints ─────────────────────────────────────────────
+
+// GET /api/push/vapid-key — return public VAPID key
+app.get('/api/push/vapid-key', (req, res) => {
+  const publicKey = process.env.VAPID_PUBLIC_KEY || 'BEl62iUYgUivxIkv69yViEuiBIa-Ib9-SkvMeAtA3LFgDzkrxZJjSgSnfckjBJuBkr3qBUYIHBQFLXYp5Nksh8U'
+  res.json({ publicKey })
+})
+
+// POST /api/push/subscribe — store push subscription
+app.post('/api/push/subscribe', (req, res) => {
+  const { subscription, npub } = req.body
+  if (!subscription || !subscription.endpoint) return res.status(400).json({ error: 'Invalid subscription' })
+  try {
+    db.prepare(`CREATE TABLE IF NOT EXISTS push_subscriptions (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      npub TEXT,
+      endpoint TEXT UNIQUE NOT NULL,
+      p256dh TEXT,
+      auth TEXT,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    )`).run()
+    db.prepare('INSERT OR REPLACE INTO push_subscriptions (npub, endpoint, p256dh, auth) VALUES (?, ?, ?, ?)')
+      .run(npub || null, subscription.endpoint, subscription.keys?.p256dh || null, subscription.keys?.auth || null)
+    res.json({ ok: true })
+  } catch (e) {
+    res.status(500).json({ error: e.message })
+  }
+})
+
+// POST /api/push/unsubscribe
+app.post('/api/push/unsubscribe', (req, res) => {
+  const { endpoint } = req.body
+  if (!endpoint) return res.status(400).json({ error: 'endpoint required' })
+  try {
+    db.prepare('DELETE FROM push_subscriptions WHERE endpoint = ?').run(endpoint)
+    res.json({ ok: true })
+  } catch (e) {
+    res.status(500).json({ error: e.message })
+  }
+})
+
+// ─── Webhook CRUD Endpoints ───────────────────────────────────────────────────
+
+// GET /api/webhooks — list all webhooks
+app.get('/api/webhooks', (req, res) => {
+  try {
+    const rows = db.prepare('SELECT id, url, events, created_at FROM webhooks ORDER BY created_at DESC').all()
+    res.json({ webhooks: rows.map(r => ({ ...r, events: JSON.parse(r.events || '[]') })) })
+  } catch (e) {
+    res.status(500).json({ error: e.message })
+  }
+})
+
+// POST /api/webhooks — add webhook
+app.post('/api/webhooks', (req, res) => {
+  const { url, events = ['confirmed', 'revoked'] } = req.body
+  if (!url) return res.status(400).json({ error: 'url required' })
+  try {
+    const id = crypto.randomUUID()
+    db.prepare('INSERT INTO webhooks (id, url, events, created_at) VALUES (?, ?, ?, CURRENT_TIMESTAMP)')
+      .run(id, url, JSON.stringify(events))
+    res.json({ webhook: { id, url, events } })
+  } catch (e) {
+    res.status(500).json({ error: e.message })
+  }
+})
+
+// DELETE /api/webhooks/:id
+app.delete('/api/webhooks/:id', (req, res) => {
+  try {
+    db.prepare('DELETE FROM webhooks WHERE id = ?').run(req.params.id)
+    res.json({ ok: true })
+  } catch (e) {
+    res.status(500).json({ error: e.message })
+  }
+})
+
+// POST /api/webhooks/:id/test — send a test ping
+app.post('/api/webhooks/:id/test', async (req, res) => {
+  try {
+    const hook = db.prepare('SELECT * FROM webhooks WHERE id = ?').get(req.params.id)
+    if (!hook) return res.status(404).json({ error: 'Webhook not found' })
+    const testPayload = { event: 'test', timestamp: new Date().toISOString(), message: 'Satohash webhook test ping' }
+    const response = await fetch(hook.url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-Satohash-Event': 'test' },
+      body: JSON.stringify(testPayload),
+      signal: AbortSignal.timeout(5000)
+    })
+    res.json({ ok: response.ok, status: response.status })
+  } catch (e) {
+    res.status(500).json({ error: e.message })
+  }
+})
 
 Sentry.setupExpressErrorHandler(app);
 

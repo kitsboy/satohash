@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import { Upload, ShieldCheck, Hash, Globe, Database, CheckCircle2, XCircle } from 'lucide-react'
-import { useState, useRef } from 'react'
+import { useState, useRef, useCallback } from 'react'
 import { jsPDF } from 'jspdf'
 import { toast } from 'sonner'
 
@@ -29,7 +29,45 @@ export default function VerificationTool() {
   const [hashInput, setHashInput] = useState('')
   const [otsFile, setOtsFile] = useState(null)
   const [verifyData, setVerifyData] = useState(null)
+  const [isDragOver, setIsDragOver] = useState(false)
   const fileRef = useRef()
+
+  const handleFileSelect = (e) => {
+    if (e.target.files?.[0]) setOtsFile(e.target.files[0])
+  }
+
+  const handleDragEnter = useCallback((e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setIsDragOver(true)
+  }, [])
+
+  const handleDragLeave = useCallback((e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    // Only leave if exiting the dropzone completely
+    if (!e.currentTarget.contains(e.relatedTarget)) setIsDragOver(false)
+  }, [])
+
+  const handleDragOver = useCallback((e) => {
+    e.preventDefault()
+    e.stopPropagation()
+  }, [])
+
+  const handleDrop = useCallback((e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setIsDragOver(false)
+    const droppedFile = e.dataTransfer.files?.[0]
+    if (!droppedFile) return
+    if (droppedFile.name.endsWith('.ots')) {
+      // Trigger the same file handling as the file input
+      handleFileSelect({ target: { files: [droppedFile] } })
+    } else {
+      // Could be a document to verify by hash
+      handleFileSelect({ target: { files: [droppedFile] } })
+    }
+  }, [])
 
   const handleVerify = async () => {
     if (!hashInput && !otsFile) return
@@ -124,7 +162,20 @@ export default function VerificationTool() {
       </header>
 
       {/* Input Selector */}
-      <div className="group relative space-y-8 overflow-hidden rounded-[2.5rem] border border-[var(--border)] bg-[var(--bg-secondary)] p-8 text-center md:p-16">
+      <div
+        className="group relative space-y-8 overflow-hidden rounded-[2.5rem] border bg-[var(--bg-secondary)] p-8 text-center md:p-16"
+        onDragEnter={handleDragEnter}
+        onDragLeave={handleDragLeave}
+        onDragOver={handleDragOver}
+        onDrop={handleDrop}
+        style={{
+          borderColor: isDragOver ? 'var(--accent-active)' : 'var(--border)',
+          background: isDragOver
+            ? 'color-mix(in srgb, var(--accent-active) 8%, transparent)'
+            : undefined,
+          transition: 'border-color 0.15s, background 0.15s'
+        }}
+      >
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,var(--accent-active),transparent)] opacity-0 transition-opacity group-hover:opacity-[0.02]" />
 
         {!result && !verifying && (
@@ -135,9 +186,7 @@ export default function VerificationTool() {
               type="file"
               accept=".ots"
               className="hidden"
-              onChange={(e) => {
-                if (e.target.files?.[0]) setOtsFile(e.target.files[0])
-              }}
+              onChange={handleFileSelect}
             />
             {/* Desktop upload icon */}
             <div
@@ -155,14 +204,7 @@ export default function VerificationTool() {
                 maxWidth: '280px'
               }}
             >
-              <input
-                type="file"
-                accept=".ots"
-                className="hidden"
-                onChange={(e) => {
-                  if (e.target.files?.[0]) setOtsFile(e.target.files[0])
-                }}
-              />
+              <input type="file" accept=".ots" className="hidden" onChange={handleFileSelect} />
               <div
                 className="flex h-16 w-16 items-center justify-center rounded-2xl"
                 style={{ background: 'rgba(59,130,246,0.1)', color: 'var(--accent-active)' }}

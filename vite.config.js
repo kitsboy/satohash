@@ -4,8 +4,10 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 import { VitePWA } from 'vite-plugin-pwa'
 import viteCompression from 'vite-plugin-compression'
+import { readFileSync } from 'fs'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
+const pkg = JSON.parse(readFileSync(new URL('./package.json', import.meta.url), 'utf8'))
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -29,6 +31,9 @@ export default defineConfig({
                 ws: true
             }
         }
+    },
+    define: {
+        __APP_VERSION__: JSON.stringify(pkg.version)
     },
     build: {
         outDir: 'dist',

@@ -28,7 +28,8 @@ const StatusBadge = ({ status }) => {
     pending:
       'bg-[var(--accent-pending)]/10 text-[var(--accent-pending)] border-[var(--accent-pending)]/20',
     hashing: 'bg-[var(--accent-gold)]/10 text-[var(--accent-gold)] border-[var(--accent-gold)]/20',
-    revoked: 'bg-[var(--accent-danger)]/10 text-[var(--accent-danger)] border-[var(--accent-danger)]/20',
+    revoked:
+      'bg-[var(--accent-danger)]/10 text-[var(--accent-danger)] border-[var(--accent-danger)]/20',
     failed: 'bg-white/5 text-[var(--text-secondary)] border-white/10'
   }
   return (
@@ -94,7 +95,11 @@ export default function Vault() {
   const refreshStamps = async () => {
     try {
       const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
-      const res = await fetch(`${API}/api/history`)
+      const vaultNpub =
+        localStorage.getItem('satohash_npub') || sessionStorage.getItem('satohash_npub')
+      const res = await fetch(`${API}/api/history`, {
+        headers: vaultNpub ? { 'X-Npub': vaultNpub } : {}
+      })
       if (res.ok) {
         const data = await res.json()
         // API returns { stamps: [...], pagination: {...} }
@@ -110,7 +115,11 @@ export default function Vault() {
     const fetchStamps = async () => {
       try {
         const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
-        const res = await fetch(`${API}/api/history?page=1&limit=50`)
+        const vaultNpub =
+          localStorage.getItem('satohash_npub') || sessionStorage.getItem('satohash_npub')
+        const res = await fetch(`${API}/api/history?page=1&limit=50`, {
+          headers: vaultNpub ? { 'X-Npub': vaultNpub } : {}
+        })
         if (res.ok) {
           const data = await res.json()
           // API returns { stamps: [...], pagination: {...} }
@@ -145,7 +154,22 @@ export default function Vault() {
   // Re-fetch the full list whenever a new stamp or confirmation arrives via Socket.io
   useEffect(() => {
     if (!lastEvent) return
-    if (lastEvent.type === 'stamped' || lastEvent.type === 'confirmed') {
+    if (lastEvent.type === 'stamped') {
+      refreshStamps()
+    }
+    if (lastEvent.type === 'confirmed') {
+      const blockHeight = lastEvent.data?.blockHeight
+      const stampId = lastEvent.data?.id
+      toast.success('⛓ Proof confirmed on Bitcoin!', {
+        description: blockHeight ? `Block ${blockHeight.toLocaleString()}` : 'Anchored to mainnet',
+        duration: 8000,
+        action: stampId
+          ? {
+              label: 'Download .ots →',
+              onClick: () => downloadOtsFile({ id: stampId })
+            }
+          : undefined
+      })
       refreshStamps()
     }
   }, [lastEvent])
@@ -154,15 +178,21 @@ export default function Vault() {
     const nextPage = page + 1
     try {
       const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
-      const res = await fetch(`${API}/api/history?page=${nextPage}&limit=50`)
+      const vaultNpub =
+        localStorage.getItem('satohash_npub') || sessionStorage.getItem('satohash_npub')
+      const res = await fetch(`${API}/api/history?page=${nextPage}&limit=50`, {
+        headers: vaultNpub ? { 'X-Npub': vaultNpub } : {}
+      })
       if (res.ok) {
         const data = await res.json()
         const rows = Array.isArray(data) ? data : (data.stamps ?? [])
-        setItems(prev => [...prev, ...mapStamps(rows)])
+        setItems((prev) => [...prev, ...mapStamps(rows)])
         setHasMore(data.pagination?.hasNext || false)
         setPage(nextPage)
       }
-    } catch {}
+    } catch (_err) {
+      // Load more failed — keep current items
+    }
   }
 
   const handleRevoke = async (item) => {
@@ -175,7 +205,9 @@ export default function Vault() {
         body: JSON.stringify({ reason: revokeReason })
       })
       if (!res.ok) throw new Error('Revoke request failed')
-      setItems(prev => prev.map(i => i.id === item.id ? { ...i, is_revoked: true, status: 'revoked' } : i))
+      setItems((prev) =>
+        prev.map((i) => (i.id === item.id ? { ...i, is_revoked: true, status: 'revoked' } : i))
+      )
       setRevokeTarget(null)
       setRevokeReason('')
       toast.success('Proof revoked', { description: item.name })
@@ -273,7 +305,7 @@ export default function Vault() {
     count: filteredItems.length,
     getScrollElement: () => parentRef.current,
     estimateSize: () => 148,
-    overscan: 5,
+    overscan: 5
   })
 
   return (
@@ -342,22 +374,34 @@ export default function Vault() {
         {revokeTarget && (
           <>
             <motion.div
-              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
               className="fixed inset-0 z-[150] bg-black/70 backdrop-blur-sm"
-              onClick={() => { setRevokeTarget(null); setRevokeReason('') }}
+              onClick={() => {
+                setRevokeTarget(null)
+                setRevokeReason('')
+              }}
             />
             <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
               className="fixed inset-x-4 top-1/2 z-[151] mx-auto max-w-md -translate-y-1/2 space-y-5 rounded-3xl border p-8"
-              style={{ background: 'var(--bg-secondary)', borderColor: 'color-mix(in srgb, var(--accent-danger) 40%, transparent)' }}
+              style={{
+                background: 'var(--bg-secondary)',
+                borderColor: 'color-mix(in srgb, var(--accent-danger) 40%, transparent)'
+              }}
             >
               <h3 className="text-xl font-black tracking-tight">Revoke Proof?</h3>
               <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                This permanently marks <strong className="text-white">{revokeTarget.name}</strong> as revoked. The Bitcoin anchor remains immutable — this only flags the record in Satohash.
+                This permanently marks <strong className="text-white">{revokeTarget.name}</strong>{' '}
+                as revoked. The Bitcoin anchor remains immutable — this only flags the record in
+                Satohash.
               </p>
               <textarea
                 value={revokeReason}
-                onChange={e => setRevokeReason(e.target.value)}
+                onChange={(e) => setRevokeReason(e.target.value)}
                 placeholder="Reason for revocation (optional)..."
                 rows={3}
                 className="w-full resize-none rounded-xl border bg-transparent p-3 text-sm outline-none focus:border-[var(--accent-danger)]"
@@ -370,10 +414,19 @@ export default function Vault() {
                   className="flex h-12 flex-1 items-center justify-center gap-2 rounded-xl text-xs font-black uppercase disabled:opacity-50"
                   style={{ background: 'var(--accent-danger)', color: '#fff' }}
                 >
-                  {revoking ? <><Loader2 size={14} className="animate-spin" /> Revoking...</> : 'Confirm Revoke'}
+                  {revoking ? (
+                    <>
+                      <Loader2 size={14} className="animate-spin" /> Revoking...
+                    </>
+                  ) : (
+                    'Confirm Revoke'
+                  )}
                 </button>
                 <button
-                  onClick={() => { setRevokeTarget(null); setRevokeReason('') }}
+                  onClick={() => {
+                    setRevokeTarget(null)
+                    setRevokeReason('')
+                  }}
                   className="h-12 flex-1 rounded-xl border text-xs font-black uppercase opacity-60 hover:opacity-100"
                   style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
                 >
@@ -526,7 +579,11 @@ export default function Vault() {
                           )}
                         </div>
                         <div className="space-y-1">
-                          <p className={`text-lg font-bold tracking-tight text-white ${item.is_revoked ? 'line-through opacity-50' : ''}`}>{item.name}</p>
+                          <p
+                            className={`text-lg font-bold tracking-tight text-white ${item.is_revoked ? 'line-through opacity-50' : ''}`}
+                          >
+                            {item.name}
+                          </p>
                           <div className="flex items-center gap-3">
                             <p className="font-mono text-[10px] tracking-widest text-[var(--text-secondary)] uppercase">
                               {item.size}
@@ -600,7 +657,11 @@ export default function Vault() {
                           }}
                         />
                         {!item.is_revoked && (
-                          <ActionBtn icon={Trash2} label="Revoke" onClick={() => setRevokeTarget(item)} />
+                          <ActionBtn
+                            icon={Trash2}
+                            label="Revoke"
+                            onClick={() => setRevokeTarget(item)}
+                          />
                         )}
                       </div>
                     </td>
@@ -611,7 +672,10 @@ export default function Vault() {
         </div>
         {hasMore && !loading && (
           <div className="flex justify-center border-t border-[var(--border)] p-6">
-            <button onClick={loadMore} className="flex items-center gap-2 rounded-xl border border-[var(--border)] bg-white/5 px-8 py-3 text-xs font-black tracking-widest uppercase text-[var(--text-secondary)] transition-all hover:bg-white hover:text-black">
+            <button
+              onClick={loadMore}
+              className="flex items-center gap-2 rounded-xl border border-[var(--border)] bg-white/5 px-8 py-3 text-xs font-black tracking-widest text-[var(--text-secondary)] uppercase transition-all hover:bg-white hover:text-black"
+            >
               Load more stamps
             </button>
           </div>
@@ -640,7 +704,13 @@ export default function Vault() {
         {!loading && filteredItems.length > 0 && (
           <>
             <div ref={parentRef} style={{ height: '600px', overflow: 'auto' }}>
-              <div style={{ height: `${virtualizer.getTotalSize()}px`, width: '100%', position: 'relative' }}>
+              <div
+                style={{
+                  height: `${virtualizer.getTotalSize()}px`,
+                  width: '100%',
+                  position: 'relative'
+                }}
+              >
                 {virtualizer.getVirtualItems().map((virtualItem) => {
                   const item = filteredItems[virtualItem.index]
                   return (
@@ -695,7 +765,11 @@ export default function Vault() {
                               )}
                             </div>
                             <div className="min-w-0 flex-1">
-                              <p className={`font-bold tracking-tight text-white ${item.is_revoked ? 'line-through opacity-50' : ''}`}>{item.name}</p>
+                              <p
+                                className={`font-bold tracking-tight text-white ${item.is_revoked ? 'line-through opacity-50' : ''}`}
+                              >
+                                {item.name}
+                              </p>
                               <p className="font-mono text-[10px] text-[var(--text-secondary)]">
                                 {item.hash}
                               </p>
@@ -718,7 +792,9 @@ export default function Vault() {
                               icon={Stamp}
                               label="Badge"
                               onClick={() => {
-                                navigator.clipboard.writeText(window.location.origin + '/verify/' + item.id)
+                                navigator.clipboard.writeText(
+                                  window.location.origin + '/verify/' + item.id
+                                )
                                 toast.success('Proof URL Copied', {
                                   description: 'Share link is in your clipboard'
                                 })
@@ -729,9 +805,17 @@ export default function Vault() {
                               label="Raw"
                               onClick={() => downloadCertificate(item)}
                             />
-                            <ActionBtn icon={FileDown} label=".ots" onClick={() => downloadOtsFile(item)} />
+                            <ActionBtn
+                              icon={FileDown}
+                              label=".ots"
+                              onClick={() => downloadOtsFile(item)}
+                            />
                             {item.status === 'pending' && (
-                              <ActionBtn icon={RefreshCw} label="Check" onClick={() => upgradeStamp(item)} />
+                              <ActionBtn
+                                icon={RefreshCw}
+                                label="Check"
+                                onClick={() => upgradeStamp(item)}
+                              />
                             )}
                             <ActionBtn
                               icon={Globe}
@@ -741,7 +825,11 @@ export default function Vault() {
                               }}
                             />
                             {!item.is_revoked && (
-                              <ActionBtn icon={Trash2} label="Revoke" onClick={() => setRevokeTarget(item)} />
+                              <ActionBtn
+                                icon={Trash2}
+                                label="Revoke"
+                                onClick={() => setRevokeTarget(item)}
+                              />
                             )}
                           </div>
                         </div>
@@ -753,7 +841,10 @@ export default function Vault() {
             </div>
             {hasMore && !loading && (
               <div className="flex justify-center py-4">
-                <button onClick={loadMore} className="rounded-xl border border-[var(--border)] bg-white/5 px-6 py-2 text-xs font-black uppercase text-[var(--text-secondary)] hover:bg-white hover:text-black">
+                <button
+                  onClick={loadMore}
+                  className="rounded-xl border border-[var(--border)] bg-white/5 px-6 py-2 text-xs font-black text-[var(--text-secondary)] uppercase hover:bg-white hover:text-black"
+                >
                   Load more
                 </button>
               </div>

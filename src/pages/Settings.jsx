@@ -18,7 +18,8 @@ import {
   Copy,
   X,
   Layers,
-  Network
+  Network,
+  Bell
 } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -60,6 +61,20 @@ export default function Settings() {
   const navigate = useNavigate()
   const { toggleTheme } = useTheme()
   const [activeTab, setActiveTab] = useState('profile')
+  const [isDark, setIsDark] = useState(
+    () => document.documentElement.getAttribute('data-theme') !== 'elite'
+  )
+
+  const toggleDarkMode = () => {
+    const newDark = !isDark
+    setIsDark(newDark)
+    if (newDark) {
+      document.documentElement.removeAttribute('data-theme')
+    } else {
+      document.documentElement.setAttribute('data-theme', 'elite')
+    }
+    localStorage.setItem('satohash_theme', newDark ? 'dark' : 'elite')
+  }
 
   // Persisted State with Error Boundaries
   const [profile, setProfile] = useState(() => {
@@ -112,6 +127,14 @@ export default function Settings() {
   })
   const [balance, setBalance] = useState(null)
   const [balanceLoading, setBalanceLoading] = useState(true)
+  const [pushEnabled, setPushEnabled] = useState(false)
+  const [pushLoading, setPushLoading] = useState(false)
+
+  // Webhook state
+  const [webhooks, setWebhooks] = useState([])
+  const [newWebhookUrl, setNewWebhookUrl] = useState('')
+  const [webhookLoading, setWebhookLoading] = useState(false)
+  const [webhookTestId, setWebhookTestId] = useState(null)
 
   useEffect(() => {
     const theme = eliteMode ? 'elite' : 'noir'
@@ -148,6 +171,149 @@ export default function Settings() {
         setBalanceLoading(false)
       })
   }, [])
+
+  useEffect(() => {
+    const checkPush = async () => {
+      if (!('serviceWorker' in navigator) || !('PushManager' in window)) return
+      const reg = await navigator.serviceWorker.ready
+      const sub = await reg.pushManager.getSubscription()
+      setPushEnabled(!!sub)
+    }
+    checkPush()
+  }, [])
+
+  const togglePushNotifications = async () => {
+    setPushLoading(true)
+    try {
+      const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+      const reg = await navigator.serviceWorker.ready
+      if (pushEnabled) {
+        const sub = await reg.pushManager.getSubscription()
+        if (sub) {
+          await sub.unsubscribe()
+          await fetch(`${API}/api/push/unsubscribe`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ endpoint: sub.endpoint })
+          })
+        }
+        setPushEnabled(false)
+        toast.success('Notifications disabled')
+      } else {
+        const keyRes = await fetch(`${API}/api/push/vapid-key`)
+        const { publicKey } = await keyRes.json()
+        const permission = await Notification.requestPermission()
+        if (permission !== 'granted') {
+          toast.error('Notification permission denied')
+          return
+        }
+        const sub = await reg.pushManager.subscribe({
+          userVisibleOnly: true,
+          applicationServerKey: publicKey
+        })
+        await fetch(`${API}/api/push/subscribe`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            subscription: sub.toJSON(),
+            npub: localStorage.getItem('satohash_npub') || null
+          })
+        })
+        setPushEnabled(true)
+        toast.success('Notifications enabled!', {
+          description: "You'll get notified when stamps confirm on Bitcoin."
+        })
+      }
+    } catch (e) {
+      toast.error('Push notification error: ' + e.message)
+    } finally {
+      setPushLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    const fetchWebhooks = async () => {
+      try {
+        const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+        const token = localStorage.getItem('satohash_token')
+        const res = await fetch(`${API}/api/webhooks`, {
+          headers: token ? { Authorization: `Bearer ${token}` } : {}
+        })
+        if (res.ok) {
+          const data = await res.json()
+          setWebhooks(data.webhooks || data || [])
+        }
+      } catch (_err) {
+        // Fetch failed — webhooks unavailable
+      }
+    }
+    fetchWebhooks()
+  }, [])
+
+  const addWebhook = async () => {
+    if (!newWebhookUrl.startsWith('https://') && !newWebhookUrl.startsWith('http://')) {
+      toast.error('URL must start with http:// or https://')
+      return
+    }
+    setWebhookLoading(true)
+    try {
+      const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+      const token = localStorage.getItem('satohash_token')
+      const res = await fetch(`${API}/api/webhooks`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { Authorization: `Bearer ${token}` } : {})
+        },
+        body: JSON.stringify({ url: newWebhookUrl, events: ['confirmed', 'revoked'] })
+      })
+      if (res.ok) {
+        const data = await res.json()
+        setWebhooks((prev) => [...prev, data.webhook || data])
+        setNewWebhookUrl('')
+        toast.success('Webhook added!')
+      } else {
+        toast.error('Failed to add webhook')
+      }
+    } catch (e) {
+      toast.error('Error: ' + e.message)
+    } finally {
+      setWebhookLoading(false)
+    }
+  }
+
+  const deleteWebhook = async (id) => {
+    try {
+      const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+      const token = localStorage.getItem('satohash_token')
+      await fetch(`${API}/api/webhooks/${id}`, {
+        method: 'DELETE',
+        headers: token ? { Authorization: `Bearer ${token}` } : {}
+      })
+      setWebhooks((prev) => prev.filter((w) => w.id !== id))
+      toast.success('Webhook removed')
+    } catch (_err) {
+      toast.error('Failed to remove webhook')
+    }
+  }
+
+  const testWebhook = async (id) => {
+    setWebhookTestId(id)
+    try {
+      const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+      const token = localStorage.getItem('satohash_token')
+      const res = await fetch(`${API}/api/webhooks/${id}/test`, {
+        method: 'POST',
+        headers: token ? { Authorization: `Bearer ${token}` } : {}
+      })
+      if (res.ok) toast.success('Test ping sent!')
+      else toast.error('Test failed')
+    } catch (e) {
+      toast.error('Test error: ' + e.message)
+    } finally {
+      setWebhookTestId(null)
+    }
+  }
 
   const handleSave = () => {
     toast.success('Protocol configuration updated', {
@@ -221,7 +387,9 @@ export default function Settings() {
 
               <div className="space-y-4">
                 <div className="space-y-1">
-                  <p className="text-3xl font-black tracking-tighter text-[var(--text-primary)]">500,000 SATS</p>
+                  <p className="text-3xl font-black tracking-tighter text-[var(--text-primary)]">
+                    500,000 SATS
+                  </p>
                   <p className="text-[9px] font-black tracking-[0.2em] text-[var(--text-secondary)] uppercase">
                     Institutional Credit Deposit
                   </p>
@@ -261,7 +429,7 @@ export default function Settings() {
         </div>
 
         <div className="scrollbar-hide flex shrink-0 overflow-x-auto rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] p-1 shadow-2xl lg:p-1.5">
-          {['profile', 'security', 'billing', 'nodes'].map((tab) => (
+          {['profile', 'security', 'billing', 'nodes', 'webhooks'].map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
@@ -395,7 +563,9 @@ export default function Settings() {
                           <Layers size={28} />
                         </div>
                         <div>
-                          <p className="text-lg font-bold text-[var(--text-primary)]">Elite Signature Theme</p>
+                          <p className="text-lg font-bold text-[var(--text-primary)]">
+                            Elite Signature Theme
+                          </p>
                           <p className="text-[10px] font-bold tracking-widest text-[var(--text-secondary)] uppercase">
                             Toggle Sovereign Light Mode
                           </p>
@@ -404,13 +574,38 @@ export default function Settings() {
                       <Toggle active={eliteMode} onToggle={() => setEliteMode(!eliteMode)} />
                     </div>
 
+                    {/* Theme */}
+                    <div
+                      className="flex items-center justify-between rounded-2xl border p-5"
+                      style={{ borderColor: 'var(--border)', background: 'var(--bg-primary)' }}
+                    >
+                      <div className="space-y-0.5">
+                        <p className="font-black tracking-tight">Interface Theme</p>
+                        <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+                          {isDark ? 'Dark mode active' : 'Light mode active'}
+                        </p>
+                      </div>
+                      <button
+                        onClick={toggleDarkMode}
+                        className="flex items-center gap-2 rounded-xl border px-4 py-2 text-xs font-black uppercase transition-all hover:opacity-80"
+                        style={{
+                          borderColor: 'var(--border-bright)',
+                          color: 'var(--text-primary)'
+                        }}
+                      >
+                        {isDark ? '☀️ Light' : '🌙 Dark'}
+                      </button>
+                    </div>
+
                     <div className="group flex items-center justify-between rounded-3xl border border-[var(--border)] bg-[var(--bg-primary)] p-8 transition-all hover:border-[var(--accent-active)]/50">
                       <div className="flex items-center gap-6">
                         <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-[var(--accent-pending)]/20 bg-[var(--accent-pending)]/10 text-[var(--accent-pending)]">
                           <RefreshCw size={28} />
                         </div>
                         <div>
-                          <p className="text-lg font-bold text-[var(--text-primary)]">Network Selection</p>
+                          <p className="text-lg font-bold text-[var(--text-primary)]">
+                            Network Selection
+                          </p>
                           <p className="text-[10px] font-bold tracking-widest text-[var(--text-secondary)] uppercase">
                             Current: {security.network.toUpperCase()}
                           </p>
@@ -448,6 +643,44 @@ export default function Settings() {
                         setSecurity({ ...security, experimental: !security.experimental })
                       }
                     />
+
+                    {/* Push Notifications */}
+                    <div
+                      className="space-y-4 rounded-2xl border p-6"
+                      style={{ borderColor: 'var(--border)', background: 'var(--bg-primary)' }}
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="space-y-1">
+                          <div className="flex items-center gap-2">
+                            <Bell size={16} className="text-[var(--accent-active)]" />
+                            <h3 className="font-black tracking-tight">Push Notifications</h3>
+                          </div>
+                          <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+                            Get notified when your Bitcoin proofs confirm.
+                          </p>
+                        </div>
+                        <button
+                          onClick={togglePushNotifications}
+                          disabled={pushLoading || !('PushManager' in window)}
+                          className="relative h-7 w-12 rounded-full transition-colors disabled:opacity-40"
+                          style={{
+                            background: pushEnabled
+                              ? 'var(--accent-success)'
+                              : 'var(--border-bright)'
+                          }}
+                        >
+                          <span
+                            className={`absolute top-0.5 h-6 w-6 rounded-full bg-white shadow transition-transform ${pushEnabled ? 'translate-x-5' : 'translate-x-0.5'}`}
+                          />
+                        </button>
+                      </div>
+                      {!('PushManager' in window) && (
+                        <p className="text-xs" style={{ color: 'var(--accent-pending)' }}>
+                          ⚠️ Push notifications not supported in this browser.
+                        </p>
+                      )}
+                    </div>
+
                     <div className="border-t border-[var(--border)] pt-6">
                       <button
                         onClick={resetSettings}
@@ -481,7 +714,9 @@ export default function Settings() {
                           <Fingerprint size={28} />
                         </div>
                         <div>
-                          <p className="text-lg font-bold text-[var(--text-primary)]">Biometric Sign-In</p>
+                          <p className="text-lg font-bold text-[var(--text-primary)]">
+                            Biometric Sign-In
+                          </p>
                           <p className="text-[10px] font-bold tracking-widest text-[var(--text-secondary)] uppercase">
                             FIDO2 / PASSKEY ENABLED
                           </p>
@@ -499,7 +734,9 @@ export default function Settings() {
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-4 text-[var(--accent-purple)]">
                           <Key size={24} />
-                          <h4 className="text-xl font-bold text-[var(--text-primary)]">API Mesh Keys</h4>
+                          <h4 className="text-xl font-bold text-[var(--text-primary)]">
+                            API Mesh Keys
+                          </h4>
                         </div>
                         <button
                           onClick={generateKey}
@@ -515,7 +752,9 @@ export default function Settings() {
                             className="group flex items-center justify-between rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] p-5"
                           >
                             <div className="space-y-1">
-                              <p className="text-sm font-bold text-[var(--text-primary)]">{k.name}</p>
+                              <p className="text-sm font-bold text-[var(--text-primary)]">
+                                {k.name}
+                              </p>
                               <span className="font-mono text-[10px] tracking-widest text-[var(--text-secondary)]">
                                 {k.key}
                               </span>
@@ -572,7 +811,9 @@ export default function Settings() {
                           className="fill-[var(--accent-active)] text-[var(--accent-active)]"
                         />
                         <div className="flex items-center gap-2">
-                          <div className={`h-1.5 w-1.5 rounded-full ${balance !== null ? 'animate-pulse bg-[var(--accent-success)] shadow-[0_0_10px_var(--accent-success)]' : 'bg-white/20'}`} />
+                          <div
+                            className={`h-1.5 w-1.5 rounded-full ${balance !== null ? 'animate-pulse bg-[var(--accent-success)] shadow-[0_0_10px_var(--accent-success)]' : 'bg-white/20'}`}
+                          />
                           <span className="text-[10px] font-black tracking-widest text-[var(--text-secondary)] uppercase">
                             {balance !== null ? 'Node Connected' : 'Not Connected'}
                           </span>
@@ -591,9 +832,14 @@ export default function Settings() {
                           </h4>
                         ) : (
                           <button
-                            onClick={() => toast.info('Connect your Lightning node to see live balance')}
+                            onClick={() =>
+                              toast.info('Connect your Lightning node to see live balance')
+                            }
                             className="flex items-center gap-2 rounded-xl border px-4 py-2 text-[11px] font-black tracking-widest uppercase transition-all hover:scale-[1.02]"
-                            style={{ borderColor: 'var(--accent-gold)', color: 'var(--accent-gold)' }}
+                            style={{
+                              borderColor: 'var(--accent-gold)',
+                              color: 'var(--accent-gold)'
+                            }}
                           >
                             <Zap size={14} /> Connect Lightning Wallet
                           </button>
@@ -611,7 +857,9 @@ export default function Settings() {
                         size={48}
                         className="mx-auto text-[var(--text-secondary)] opacity-20"
                       />
-                      <h4 className="text-xl font-bold text-[var(--text-primary)]">Legacy Payments</h4>
+                      <h4 className="text-xl font-bold text-[var(--text-primary)]">
+                        Legacy Payments
+                      </h4>
                       <p className="mx-auto max-w-[200px] text-xs leading-relaxed text-[var(--text-secondary)]">
                         Satohash only accepts sovereign settlement via L402 Lightning. Legacy fiat
                         systems are unsupported.
@@ -677,6 +925,96 @@ export default function Settings() {
                       These are the official OpenTimestamps calendar servers. Custom node support
                       coming soon.
                     </p>
+                  </div>
+                </SettingSection>
+              </motion.div>
+            )}
+
+            {activeTab === 'webhooks' && (
+              <motion.div
+                key="webhooks"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="space-y-8"
+              >
+                <SettingSection
+                  icon={Network}
+                  title="Webhook Endpoints"
+                  description="Receive HTTP POST notifications when stamps are confirmed or revoked."
+                >
+                  <div className="space-y-6">
+                    {/* Add new webhook */}
+                    <div className="flex gap-3">
+                      <input
+                        type="url"
+                        value={newWebhookUrl}
+                        onChange={(e) => setNewWebhookUrl(e.target.value)}
+                        placeholder="https://your-server.com/webhook"
+                        className="h-12 flex-1 rounded-xl border bg-transparent px-4 text-sm outline-none focus:border-[var(--accent-active)]"
+                        style={{ borderColor: 'var(--border)', color: 'var(--text-primary)' }}
+                        onKeyDown={(e) => e.key === 'Enter' && addWebhook()}
+                      />
+                      <button
+                        onClick={addWebhook}
+                        disabled={webhookLoading || !newWebhookUrl}
+                        className="h-12 rounded-xl px-6 text-xs font-black uppercase disabled:opacity-40"
+                        style={{ background: 'var(--accent-active)', color: '#fff' }}
+                      >
+                        {webhookLoading ? '...' : 'Add'}
+                      </button>
+                    </div>
+
+                    {/* Existing webhooks */}
+                    <div className="space-y-3">
+                      {webhooks.length === 0 && (
+                        <p
+                          className="py-8 text-center text-sm"
+                          style={{ color: 'var(--text-secondary)' }}
+                        >
+                          No webhooks configured yet.
+                        </p>
+                      )}
+                      {webhooks.map((hook) => (
+                        <div
+                          key={hook.id}
+                          className="flex items-center gap-3 rounded-2xl border p-4"
+                          style={{ borderColor: 'var(--border)', background: 'var(--bg-primary)' }}
+                        >
+                          <div className="min-w-0 flex-1">
+                            <p
+                              className="truncate font-mono text-xs"
+                              style={{ color: 'var(--text-primary)' }}
+                            >
+                              {hook.url}
+                            </p>
+                            <p
+                              className="mt-0.5 text-[10px] font-black tracking-widest uppercase"
+                              style={{ color: 'var(--text-secondary)' }}
+                            >
+                              Events:{' '}
+                              {Array.isArray(hook.events)
+                                ? hook.events.join(', ')
+                                : hook.events || 'all'}
+                            </p>
+                          </div>
+                          <button
+                            onClick={() => testWebhook(hook.id)}
+                            disabled={webhookTestId === hook.id}
+                            className="rounded-lg px-3 py-1.5 text-[10px] font-black uppercase transition-opacity hover:opacity-80 disabled:opacity-40"
+                            style={{ background: 'var(--accent-success)', color: '#fff' }}
+                          >
+                            {webhookTestId === hook.id ? '...' : 'Test'}
+                          </button>
+                          <button
+                            onClick={() => deleteWebhook(hook.id)}
+                            className="rounded-lg px-3 py-1.5 text-[10px] font-black uppercase transition-opacity hover:opacity-80"
+                            style={{ background: 'var(--accent-danger)', color: '#fff' }}
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </SettingSection>
               </motion.div>
@@ -748,7 +1086,9 @@ function AlertToggle({ icon: Icon, label, active, onToggle }) {
         <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/5 transition-colors group-hover:bg-[var(--accent-active)]/10 group-hover:text-[var(--accent-active)]">
           <Icon size={18} />
         </div>
-        <span className="text-sm font-bold text-[var(--text-secondary)] group-hover:text-[var(--text-primary)]">{label}</span>
+        <span className="text-sm font-bold text-[var(--text-secondary)] group-hover:text-[var(--text-primary)]">
+          {label}
+        </span>
       </div>
       <Toggle active={active} onToggle={onToggle} />
     </div>

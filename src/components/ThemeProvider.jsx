@@ -15,10 +15,14 @@ export const ThemeProvider = ({ children }) => {
 
   useEffect(() => {
     setMounted(true)
-    // Check localStorage or system preference
-    const saved = localStorage.getItem('satohash-theme')
-    if (saved) {
-      setTheme(saved)
+    // Check localStorage (canonical key: satohash_theme) or system preference
+    const saved = localStorage.getItem('satohash_theme') || localStorage.getItem('satohash-theme')
+    if (saved === 'elite') {
+      setTheme('light')
+      document.documentElement.setAttribute('data-theme', 'elite')
+    } else if (saved === 'dark') {
+      setTheme('dark')
+      document.documentElement.removeAttribute('data-theme')
     } else if (window.matchMedia('(prefers-color-scheme: light)').matches) {
       setTheme('light')
     }
@@ -26,7 +30,7 @@ export const ThemeProvider = ({ children }) => {
 
   useEffect(() => {
     if (mounted) {
-      localStorage.setItem('satohash-theme', theme)
+      localStorage.setItem('satohash_theme', theme === 'light' ? 'elite' : 'dark')
       if (theme === 'light') {
         document.documentElement.setAttribute('data-theme', 'elite')
       } else {

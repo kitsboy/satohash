@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { Copy, Share2, Hash, ExternalLink, CheckCircle2, XCircle, Clock, Download } from 'lucide-react'
+import { Copy, Share2, Hash, ExternalLink, XCircle, Download } from 'lucide-react'
 import { toast } from 'sonner'
 import { motion } from 'framer-motion'
 import { QRCodeSVG as QRCode } from 'qrcode.react'
@@ -19,6 +19,46 @@ export default function VerifyPublic() {
       fetchProof(id)
     }
   }, [id])
+
+  useEffect(() => {
+    if (!proof) return
+    const filename = proof.filename || proof.original_filename || proof.label || 'Document'
+    const status = proof.status === 'confirmed' ? '✓ Verified' : '⏳ Pending'
+    document.title = `${status} — ${filename} | Satohash`
+
+    // Update OG meta tags dynamically
+    const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+    const ogImageUrl = `${API}/api/og/${proof.id}`
+
+    const setMeta = (property, content) => {
+      let el =
+        document.querySelector(`meta[property="${property}"]`) ||
+        document.querySelector(`meta[name="${property}"]`)
+      if (!el) {
+        el = document.createElement('meta')
+        el.setAttribute(
+          property.startsWith('og:') || property.startsWith('twitter:') ? 'property' : 'name',
+          property
+        )
+        document.head.appendChild(el)
+      }
+      el.setAttribute('content', content)
+    }
+
+    setMeta('og:title', `${status}: ${filename}`)
+    setMeta(
+      'og:description',
+      `SHA-256: ${proof.hash?.substring(0, 32)}... — Anchored to Bitcoin${proof.bitcoin_block_height ? ` block ${proof.bitcoin_block_height}` : ''}`
+    )
+    setMeta('og:image', ogImageUrl)
+    setMeta('twitter:card', 'summary_large_image')
+    setMeta('twitter:title', `${status}: ${filename}`)
+    setMeta('twitter:image', ogImageUrl)
+
+    return () => {
+      document.title = 'Satohash'
+    }
+  }, [proof])
 
   const fetchProof = async (proofId) => {
     try {
@@ -283,15 +323,17 @@ export default function VerifyPublic() {
             )}
 
             <button
-              onClick={() => downloadCertificate({
-                id: proof.id,
-                name: proof.filename || proof.label || proof.original_filename || 'Document',
-                fullHash: proof.hash,
-                hash: proof.hash,
-                date: proof.created_at ? new Date(proof.created_at).toLocaleDateString() : '—',
-                status: proof.status || 'pending'
-              })}
-              className="flex items-center justify-center gap-2 rounded-2xl px-5 py-3 text-xs font-black uppercase transition-all hover:opacity-80 col-span-2"
+              onClick={() =>
+                downloadCertificate({
+                  id: proof.id,
+                  name: proof.filename || proof.label || proof.original_filename || 'Document',
+                  fullHash: proof.hash,
+                  hash: proof.hash,
+                  date: proof.created_at ? new Date(proof.created_at).toLocaleDateString() : '—',
+                  status: proof.status || 'pending'
+                })
+              }
+              className="col-span-2 flex items-center justify-center gap-2 rounded-2xl px-5 py-3 text-xs font-black uppercase transition-all hover:opacity-80"
               style={{ background: 'var(--accent-gold)', color: '#141b25' }}
             >
               <Download size={14} /> Download Certificate PDF
