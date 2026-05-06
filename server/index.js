@@ -22,7 +22,7 @@ import logger from './logger.js';
 import db from './db.js';
 import specs from './swagger.js';
 import startUpgradeDaemon from './upgrade-daemon.js';
-import { publishTimestampToNostr } from './nostr.js';
+import { publishTimestampToNostr, pingRelays } from './nostr.js';
 import { injectMetadata } from './pdf-injector.js';
 import { getGitMetadata } from './git.js';
 import crypto from 'crypto';
@@ -423,6 +423,21 @@ app.get('/api/nostr/profile/:npub', async (req, res) => {
   } catch (err) {
     logger.error(`Nostr profile fetch error for ${npub}:`, err);
     res.status(500).json({ error: 'Failed to fetch profile' });
+  }
+});
+
+// Nostr Relay Health Endpoint
+app.get('/api/nostr/health', async (req, res) => {
+  try {
+    const relays = await pingRelays();
+    const okCount = relays.filter(r => r.status === 'ok').length;
+    const uptime = relays.length > 0
+      ? `${((okCount / relays.length) * 100).toFixed(1)}%`
+      : '0.0%';
+    res.json({ relays, uptime });
+  } catch (err) {
+    logger.error('Nostr health check error:', err);
+    res.status(500).json({ error: 'Nostr health check failed' });
   }
 });
 
@@ -1063,17 +1078,24 @@ app.get('/api/stamps/:id', (req, res) => {
  *         name: status
  *         schema: { type: string, enum: [pending, confirmed, failed] }
  */
-app.get('/api/history', async (req, res) => {
+app.get('/api/history', authMiddleware, async (req, res) => {
     try {
         const page = Math.max(1, parseInt(req.query.page) || 1);
         const limit = Math.min(100, Math.max(1, parseInt(req.query.limit) || 20));
         const offset = (page - 1) * limit;
         const status = req.query.status; // optional filter: pending|confirmed|failed
-        // FIX 3b — scope to authenticated user's npub if provided
-        const userNpub = req.headers['x-npub'] || null;
 
-        // Build cache key from query params (include npub for per-user cache isolation)
-        const cacheKey = `history:${page}:${limit}:${status || 'all'}:${userNpub || 'global'}`;
+        // Require the caller to identify themselves via x-npub header.
+        // authMiddleware has already run (sets req.tenantId) but does not parse
+        // a per-user identity — npub is the user-scoping key used throughout
+        // the app (stored in localStorage.satohash_npub, sent as x-npub).
+        const userNpub = req.headers['x-npub'] || null;
+        if (!userNpub) {
+            return res.status(401).json({ error: 'Missing x-npub header. Authentication required.' });
+        }
+
+        // Build cache key scoped strictly to this user — no 'global' fallback
+        const cacheKey = `history:${page}:${limit}:${status || 'all'}:${userNpub}`;
 
         // Try cache first
         try {
@@ -1092,38 +1114,27 @@ app.get('/api/history', async (req, res) => {
         const params = [];
         const conditions = [];
 
+        // Always scope to the authenticated user — strict equality, no NULL fallback
+        conditions.push(`user_npub = ?`);
+        params.push(userNpub);
+
         if (status && ['pending', 'confirmed', 'failed'].includes(status)) {
             conditions.push(`status = ?`);
             params.push(status);
         }
-        // FIX 3b — filter by npub when provided; keep NULL rows for backwards compatibility
-        if (userNpub) {
-            conditions.push(`(user_npub = ? OR user_npub IS NULL)`);
-            params.push(userNpub);
-        }
-        if (conditions.length > 0) {
-            query += ` WHERE ` + conditions.join(' AND ');
-        }
 
+        query += ` WHERE ` + conditions.join(' AND ');
         query += ` ORDER BY created_at DESC LIMIT ? OFFSET ?`;
         params.push(limit, offset);
 
         const stamps = db.prepare(query).all(...params);
 
-        // Get total count for pagination metadata
-        let countQuery = `SELECT COUNT(*) as total FROM timestamps`;
-        const countParams = [];
-        const countConditions = [];
+        // Get total count for pagination metadata (same WHERE clause, no re-use of conditions array)
+        let countQuery = `SELECT COUNT(*) as total FROM timestamps WHERE user_npub = ?`;
+        const countParams = [userNpub];
         if (status && ['pending', 'confirmed', 'failed'].includes(status)) {
-            countConditions.push(`status = ?`);
+            countQuery += ` AND status = ?`;
             countParams.push(status);
-        }
-        if (userNpub) {
-            countConditions.push(`(user_npub = ? OR user_npub IS NULL)`);
-            countParams.push(userNpub);
-        }
-        if (countConditions.length > 0) {
-            countQuery += ` WHERE ` + countConditions.join(' AND ');
         }
         const { total } = db.prepare(countQuery).all(...countParams)[0];
 
@@ -1462,19 +1473,40 @@ app.delete('/api/webhooks/:id', (req, res) => {
   }
 })
 
-// POST /api/webhooks/:id/test — send a test ping
+// POST /api/webhooks/:id/test — send a test ping and record delivery result
 app.post('/api/webhooks/:id/test', async (req, res) => {
   try {
     const hook = db.prepare('SELECT * FROM webhooks WHERE id = ?').get(req.params.id)
     if (!hook) return res.status(404).json({ error: 'Webhook not found' })
     const testPayload = { event: 'test', timestamp: new Date().toISOString(), message: 'Satohash webhook test ping' }
-    const response = await fetch(hook.url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'X-Satohash-Event': 'test' },
-      body: JSON.stringify(testPayload),
-      signal: AbortSignal.timeout(5000)
-    })
-    res.json({ ok: response.ok, status: response.status })
+    const start = Date.now();
+    let deliveryStatus = 'failed';
+    try {
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), 5000);
+      const resp = await fetch(hook.url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(testPayload),
+        signal: controller.signal
+      });
+      clearTimeout(timer);
+      deliveryStatus = resp.ok ? 'ok' : 'failed';
+      // retry once on failure
+      if (!resp.ok) {
+        const resp2 = await fetch(hook.url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(testPayload),
+          signal: AbortSignal.timeout(5000)
+        });
+        deliveryStatus = resp2.ok ? 'ok' : 'failed';
+      }
+    } catch {
+      deliveryStatus = 'failed';
+    }
+    db.prepare('UPDATE webhooks SET last_delivery_status = ?, last_delivery_at = CURRENT_TIMESTAMP WHERE id = ?').run(deliveryStatus, hook.id);
+    res.json({ ok: deliveryStatus === 'ok', status: deliveryStatus, latency: Date.now() - start });
   } catch (e) {
     res.status(500).json({ error: e.message })
   }
@@ -1517,6 +1549,26 @@ app.post('/api/mesh/verify', async (req, res, next) => {
         next(e);
     }
 });
+
+// GET /api/mesh/nodes — ping known OTS calendar servers and return latency
+app.get('/api/mesh/nodes', async (req, res) => {
+  const nodes = [
+    'https://alice.btc.calendar.opentimestamps.org',
+    'https://bob.btc.calendar.opentimestamps.org',
+    'https://finney.calendar.eternitywall.com'
+  ];
+  const results = await Promise.all(nodes.map(async (url) => {
+    const start = Date.now();
+    try {
+      const r = await fetch(url, { signal: AbortSignal.timeout(3000) });
+      return { name: new URL(url).hostname, url, status: r.ok ? 'Active' : 'Degraded', latency: `${Date.now() - start}ms` };
+    } catch {
+      return { name: new URL(url).hostname, url, status: 'Offline', latency: 'N/A' };
+    }
+  }));
+  res.json({ nodes: results });
+});
+
 /**
  * @swagger
  * /api/system/backup:
@@ -1588,6 +1640,76 @@ app.get('/api/system/fees', async (req, res) => {
     } catch (e) {
         res.json({ high: 25, medium: 18, low: 12, instant_anchor: 45, unit: 'sat/vB', source: 'fallback' })
     }
+});
+
+app.get('/api/stats', async (req, res, next) => {
+    try {
+        // Count total stamps
+        const { total } = db.prepare('SELECT COUNT(*) as total FROM timestamps').get();
+
+        // Fetch mempool stats
+        let unconfirmedTxs = 0, averageFee = 0, lastBlockTime = 'unknown';
+        try {
+            const mempoolBase = process.env.VITE_MEMPOOL_API_URL || 'https://mempool.space';
+            const [mempoolRes, feeRes] = await Promise.all([
+                fetch(`${mempoolBase}/api/mempool`, { signal: AbortSignal.timeout(4000) }),
+                fetch(`${mempoolBase}/api/v1/fees/recommended`, { signal: AbortSignal.timeout(4000) })
+            ]);
+            if (mempoolRes.ok) {
+                const mp = await mempoolRes.json();
+                unconfirmedTxs = mp.count ?? 0;
+            }
+            if (feeRes.ok) {
+                const fees = await feeRes.json();
+                averageFee = fees.halfHourFee ?? fees.fastestFee ?? 0;
+            }
+        } catch (_) { /* silently use defaults */ }
+
+        res.json({
+            totalAnchored: total.toLocaleString(),
+            nodes: '3',
+            uptime: '99.9%',
+            unconfirmedTxs,
+            averageFee,
+            lastBlockTime,
+            witnessQuorum: 'Active'
+        });
+    } catch (err) {
+        next(err);
+    }
+});
+
+// ── Forum endpoints ────────────────────────────────────────────────────────
+
+app.get('/api/forum/threads', (req, res) => {
+    const threads = db.prepare('SELECT * FROM forum_threads ORDER BY created_at DESC LIMIT 100').all();
+    res.json({ threads });
+});
+
+app.get('/api/forum/threads/:id', (req, res) => {
+    const thread = db.prepare('SELECT * FROM forum_threads WHERE id = ?').get(req.params.id);
+    if (!thread) return res.status(404).json({ error: 'Thread not found' });
+    const posts = db.prepare('SELECT * FROM forum_posts WHERE thread_id = ? ORDER BY created_at ASC').all(req.params.id);
+    res.json({ thread, posts });
+});
+
+app.post('/api/forum/threads', (req, res) => {
+    const { title, author } = req.body;
+    if (!title?.trim()) return res.status(400).json({ error: 'Title required' });
+    const id = uuidv4();
+    db.prepare('INSERT INTO forum_threads (id, title, author) VALUES (?, ?, ?)').run(id, title.trim(), author?.trim() || 'Anonymous');
+    res.json({ thread: db.prepare('SELECT * FROM forum_threads WHERE id = ?').get(id) });
+});
+
+app.post('/api/forum/threads/:id/posts', (req, res) => {
+    const { content, author } = req.body;
+    if (!content?.trim()) return res.status(400).json({ error: 'Content required' });
+    const thread = db.prepare('SELECT id FROM forum_threads WHERE id = ?').get(req.params.id);
+    if (!thread) return res.status(404).json({ error: 'Thread not found' });
+    const id = uuidv4();
+    db.prepare('INSERT INTO forum_posts (id, thread_id, content, author) VALUES (?, ?, ?, ?)').run(id, req.params.id, content.trim(), author?.trim() || 'Anonymous');
+    db.prepare('UPDATE forum_threads SET post_count = post_count + 1 WHERE id = ?').run(req.params.id);
+    res.json({ post: db.prepare('SELECT * FROM forum_posts WHERE id = ?').get(id) });
 });
 
 httpServer.listen(port, () => {

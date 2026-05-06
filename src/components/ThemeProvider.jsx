@@ -3,6 +3,7 @@ import { Sun, Moon } from 'lucide-react'
 
 const ThemeContext = createContext()
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useTheme = () => {
   const context = useContext(ThemeContext)
   if (!context) throw new Error('useTheme must be used within ThemeProvider')
@@ -16,7 +17,7 @@ export const ThemeProvider = ({ children }) => {
   useEffect(() => {
     setMounted(true)
     // Check localStorage (canonical key: satohash_theme) or system preference
-    const saved = localStorage.getItem('satohash_theme') || localStorage.getItem('satohash-theme')
+    const saved = localStorage.getItem('satohash_theme')
     if (saved === 'elite') {
       setTheme('light')
       document.documentElement.setAttribute('data-theme', 'elite')

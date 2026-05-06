@@ -24,41 +24,43 @@ export default function ProtocolStats() {
   const [stats, setStats] = useState({
     network: 'Bitcoin Mainnet',
     height: 0,
-    unconfirmedTxs: 12450,       // TODO: fetch from /api/stats
-    averageFee: 42,               // TODO: fetch from /api/stats
-    totalAnchored: '1,245,672',  // TODO: fetch from /api/stats
-    nodes: '18,450+',            // TODO: fetch from /api/stats
-    uptime: '99.999%',           // TODO: fetch from /api/stats
-    lastBlockTime: '8m 42s',     // TODO: fetch from /api/stats
-    witnessQuorum: 'Active'      // TODO: fetch from /api/stats
+    unconfirmedTxs: 12450, // TODO: fetch from /api/stats
+    averageFee: 42, // TODO: fetch from /api/stats
+    totalAnchored: '1,245,672', // TODO: fetch from /api/stats
+    nodes: '18,450+', // TODO: fetch from /api/stats
+    uptime: '99.999%', // TODO: fetch from /api/stats
+    lastBlockTime: '8m 42s', // TODO: fetch from /api/stats
+    witnessQuorum: 'Active' // TODO: fetch from /api/stats
   })
   const [isAuditing, setIsAuditing] = useState(false)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const fetchHeight = async () => {
       const height = await getBlockHeight()
       setStats((prev) => ({ ...prev, height: height || 845922 }))
     }
-    fetchHeight()
 
-    // Fetch live stats from the API; fall back to hardcoded values on error
-    fetch(`${API_URL}/api/stats`)
-      .then((r) => r.ok ? r.json() : Promise.reject())
-      .then((data) => {
-        setStats((prev) => ({
-          ...prev,
-          ...(data.totalAnchored !== undefined && { totalAnchored: data.totalAnchored }),
-          ...(data.nodes !== undefined && { nodes: data.nodes }),
-          ...(data.uptime !== undefined && { uptime: data.uptime }),
-          ...(data.unconfirmedTxs !== undefined && { unconfirmedTxs: data.unconfirmedTxs }),
-          ...(data.averageFee !== undefined && { averageFee: data.averageFee }),
-          ...(data.lastBlockTime !== undefined && { lastBlockTime: data.lastBlockTime }),
-          ...(data.witnessQuorum !== undefined && { witnessQuorum: data.witnessQuorum }),
-        }))
-      })
-      .catch(() => {
-        // Silently keep hardcoded fallback values
-      })
+    // Resolve loading once both height + stats calls settle
+    Promise.allSettled([
+      fetchHeight(),
+      fetch(`${API_URL}/api/stats`)
+        .then((r) => (r.ok ? r.json() : Promise.reject()))
+        .then((data) => {
+          setStats((prev) => ({
+            ...prev,
+            ...(data.totalAnchored !== undefined && { totalAnchored: data.totalAnchored }),
+            ...(data.nodes !== undefined && { nodes: data.nodes }),
+            ...(data.uptime !== undefined && { uptime: data.uptime }),
+            ...(data.unconfirmedTxs !== undefined && { unconfirmedTxs: data.unconfirmedTxs }),
+            ...(data.averageFee !== undefined && { averageFee: data.averageFee }),
+            ...(data.lastBlockTime !== undefined && { lastBlockTime: data.lastBlockTime }),
+            ...(data.witnessQuorum !== undefined && { witnessQuorum: data.witnessQuorum })
+          }))
+        })
+        // Silently keep hardcoded fallback values on error
+        .catch(() => {})
+    ]).finally(() => setLoading(false))
 
     const interval = setInterval(() => {
       setStats((prev) => ({
@@ -69,6 +71,118 @@ export default function ProtocolStats() {
     return () => clearInterval(interval)
   }, [])
 
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[var(--bg-primary)] pt-32 pb-32">
+        <div className="layout-container space-y-20">
+          {/* Header skeleton */}
+          <div className="flex flex-col items-end justify-between gap-12 md:flex-row">
+            <div className="w-full max-w-2xl space-y-6">
+              <div className="h-12 w-12 animate-pulse rounded-2xl bg-[var(--bg-secondary)]" />
+              <div className="h-16 w-3/4 animate-pulse rounded-2xl bg-[var(--bg-secondary)]" />
+              <div className="h-5 w-full animate-pulse rounded-lg bg-[var(--bg-secondary)]" />
+              <div className="h-5 w-2/3 animate-pulse rounded-lg bg-[var(--bg-secondary)]" />
+            </div>
+            <div
+              className="h-28 w-full max-w-sm animate-pulse rounded-2xl"
+              style={{ backgroundColor: 'var(--bg-secondary)', border: '1px solid var(--border)' }}
+            />
+          </div>
+
+          {/* Stat tiles skeleton — 4 columns */}
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {[1, 2, 3, 4].map((i) => (
+              <div
+                key={i}
+                className="animate-pulse rounded-2xl p-10"
+                style={{
+                  backgroundColor: 'var(--bg-secondary)',
+                  border: '1px solid var(--border)'
+                }}
+              >
+                <div className="mb-10 h-16 w-16 rounded-[2rem] bg-[var(--surface-raised)]" />
+                <div className="mb-2 h-3 w-20 rounded bg-[var(--surface-raised)]" />
+                <div className="mb-6 h-8 w-32 rounded-lg bg-[var(--surface-raised)]" />
+                <div className="h-3 w-28 rounded bg-[var(--surface-raised)]" />
+              </div>
+            ))}
+          </div>
+
+          {/* Visualization layer skeleton — 2/3 + 1/3 */}
+          <div className="grid gap-12 lg:grid-cols-3">
+            {/* Chart panel */}
+            <div
+              className="animate-pulse rounded-2xl p-12 lg:col-span-2"
+              style={{ backgroundColor: 'var(--bg-secondary)', border: '1px solid var(--border)' }}
+            >
+              <div className="mb-12 space-y-2">
+                <div className="h-7 w-56 rounded-lg bg-[var(--surface-raised)]" />
+                <div className="h-3 w-40 rounded bg-[var(--surface-raised)]" />
+              </div>
+              <div className="flex h-64 items-end gap-3 pb-8">
+                {[40, 65, 30, 85, 45, 90, 60, 75, 55, 80, 65, 95].map((h, i) => (
+                  <div
+                    key={i}
+                    className="flex-1 rounded-full bg-[var(--surface-raised)]"
+                    style={{ height: `${h}%` }}
+                  />
+                ))}
+              </div>
+            </div>
+
+            {/* Mesh sidebar */}
+            <div
+              className="animate-pulse rounded-2xl p-10"
+              style={{ backgroundColor: 'var(--bg-secondary)', border: '1px solid var(--border)' }}
+            >
+              <div className="mb-8 h-6 w-36 rounded-lg bg-[var(--surface-raised)]" />
+              <div className="mb-12 space-y-6">
+                {[1, 2, 3, 4].map((i) => (
+                  <div key={i} className="flex items-center justify-between">
+                    <div className="flex items-center gap-4">
+                      <div className="h-5 w-5 rounded bg-[var(--surface-raised)]" />
+                      <div className="h-3 w-32 rounded bg-[var(--surface-raised)]" />
+                    </div>
+                    <div className="h-3 w-20 rounded bg-[var(--surface-raised)]" />
+                  </div>
+                ))}
+              </div>
+              <div className="rounded-3xl bg-[var(--surface-raised)] p-6">
+                <div className="mb-2 h-3 w-full rounded bg-[var(--bg-secondary)]" />
+                <div className="mb-4 h-3 w-4/5 rounded bg-[var(--bg-secondary)]" />
+                <div className="h-3 w-24 rounded bg-[var(--bg-secondary)]" />
+              </div>
+            </div>
+          </div>
+
+          {/* Activity stream skeleton */}
+          <div className="space-y-12">
+            <div className="flex items-center justify-between">
+              <div className="h-10 w-72 animate-pulse rounded-2xl bg-[var(--bg-secondary)]" />
+              <div className="h-8 w-40 animate-pulse rounded-full bg-[var(--bg-secondary)]" />
+            </div>
+            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+              {[1, 2, 3].map((i) => (
+                <div
+                  key={i}
+                  className="animate-pulse rounded-[2.5rem] p-8"
+                  style={{
+                    backgroundColor: 'var(--bg-secondary)',
+                    border: '1px solid var(--border)'
+                  }}
+                >
+                  <div className="mb-4 h-3 w-16 rounded bg-[var(--surface-raised)]" />
+                  <div className="mb-4 h-4 w-40 rounded bg-[var(--surface-raised)]" />
+                  <div className="h-10 w-full rounded-2xl bg-[var(--surface-raised)]" />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen bg-[var(--bg-primary)] pt-32 pb-32 text-[var(--text-primary)] selection:bg-[var(--accent-active)]/30">
       <div className="layout-container">
@@ -78,7 +192,7 @@ export default function ProtocolStats() {
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              className="mb-8 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-[var(--accent-active)] text-white shadow-2xl shadow-[var(--accent-active)]/20"
+              className="mb-8 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-[var(--accent-active)] text-white shadow-[var(--accent-active)]/20 shadow-2xl"
             >
               <Activity size={24} />
             </motion.div>
@@ -165,7 +279,7 @@ export default function ProtocolStats() {
                   initial={{ height: 0 }}
                   animate={{ height: `${h}%` }}
                   transition={{ delay: i * 0.05, duration: 1 }}
-                  className={`flex-1 cursor-pointer rounded-full transition-all duration-500 hover:scale-110 ${i === 9 ? 'bg-[var(--accent-active)] shadow-xl shadow-[var(--accent-active)]/20' : 'bg-[var(--surface-raised)] italic opacity-40 hover:bg-[var(--accent-active)]/10 hover:opacity-100'}`}
+                  className={`flex-1 cursor-pointer rounded-full transition-all duration-500 hover:scale-110 ${i === 9 ? 'bg-[var(--accent-active)] shadow-[var(--accent-active)]/20 shadow-xl' : 'bg-[var(--surface-raised)] italic opacity-40 hover:bg-[var(--accent-active)]/10 hover:opacity-100'}`}
                 />
               ))}
             </div>
@@ -178,7 +292,10 @@ export default function ProtocolStats() {
           </div>
 
           {/* Mesh Status Sidebar */}
-          <div className="glass-card relative flex flex-col justify-between overflow-hidden border-none bg-[var(--bg-secondary)] p-10 shadow-2xl" style={{ border: '1px solid var(--border)' }}>
+          <div
+            className="glass-card relative flex flex-col justify-between overflow-hidden border-none bg-[var(--bg-secondary)] p-10 shadow-2xl"
+            style={{ border: '1px solid var(--border)' }}
+          >
             <div
               className="pointer-events-none absolute inset-0 opacity-[0.04]"
               style={{
@@ -313,11 +430,18 @@ function HealthMetric({ icon: Icon, label, value, pulse, emerald }) {
   return (
     <div className="group flex items-center justify-between">
       <div className="flex items-center gap-4">
-        <Icon size={18} className="text-[var(--accent-active)] transition-colors group-hover:text-[var(--text-primary)]" />
-        <span className="text-xs font-bold text-[var(--text-secondary)] uppercase italic">{label}</span>
+        <Icon
+          size={18}
+          className="text-[var(--accent-active)] transition-colors group-hover:text-[var(--text-primary)]"
+        />
+        <span className="text-xs font-bold text-[var(--text-secondary)] uppercase italic">
+          {label}
+        </span>
       </div>
       <div className="flex items-center gap-2">
-        {pulse && <div className="h-1.5 w-1.5 animate-ping rounded-full bg-[var(--accent-success)]" />}
+        {pulse && (
+          <div className="h-1.5 w-1.5 animate-ping rounded-full bg-[var(--accent-success)]" />
+        )}
         <span
           className="text-xs font-black uppercase italic"
           style={{ color: emerald ? 'var(--accent-success)' : 'var(--text-primary)' }}
@@ -340,7 +464,9 @@ function ActivityItem({ label, hash, time, type }) {
         <span className="mb-2 rounded-full bg-[var(--accent-danger)]/10 px-2.5 py-1 text-[8px] font-black tracking-tighter text-[var(--accent-danger)] uppercase italic">
           Witnessed
         </span>
-        <span className="text-[8px] font-black text-[var(--text-secondary)] uppercase italic">{time}</span>
+        <span className="text-[8px] font-black text-[var(--text-secondary)] uppercase italic">
+          {time}
+        </span>
       </div>
       <div className="mb-4 text-[9px] font-black tracking-widest text-[var(--accent-active)]/50 uppercase">
         {type}

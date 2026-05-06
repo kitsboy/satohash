@@ -1,6 +1,7 @@
 import { useLocation, useNavigate } from 'react-router-dom'
 import { Settings, Zap, Boxes, Heart, X, Copy, Check, Sun, Moon } from 'lucide-react'
 import { useState, useEffect } from 'react'
+import { useTheme } from './ThemeProvider'
 import { getFeeEstimates, getBlockHeight } from '../utils/mempool'
 import { QRCodeSVG } from 'qrcode.react'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -67,20 +68,7 @@ export default function TopSignalBar() {
   const [feeRate, setFeeRate] = useState(null)
   const [showTip, setShowTip] = useState(false)
   const [copied, setCopied] = useState(false)
-  const [isDark, setIsDark] = useState(
-    () => document.documentElement.getAttribute('data-theme') !== 'elite'
-  )
-
-  const toggleTheme = () => {
-    const newDark = !isDark
-    setIsDark(newDark)
-    if (newDark) {
-      document.documentElement.removeAttribute('data-theme')
-    } else {
-      document.documentElement.setAttribute('data-theme', 'elite')
-    }
-    localStorage.setItem('satohash_theme', newDark ? 'dark' : 'elite')
-  }
+  const { theme, toggleTheme } = useTheme()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -172,7 +160,7 @@ export default function TopSignalBar() {
           style={{ color: 'var(--text-secondary)' }}
           aria-label="Toggle theme"
         >
-          {isDark ? <Sun size={14} /> : <Moon size={14} />}
+          {theme === 'dark' ? <Sun size={14} /> : <Moon size={14} />}
         </button>
 
         {/* Tip button */}

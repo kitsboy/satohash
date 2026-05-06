@@ -5,6 +5,8 @@ import { fileURLToPath } from 'url'
 import { VitePWA } from 'vite-plugin-pwa'
 import viteCompression from 'vite-plugin-compression'
 import { readFileSync } from 'fs'
+import wasm from 'vite-plugin-wasm'
+import topLevelAwait from 'vite-plugin-top-level-await'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const pkg = JSON.parse(readFileSync(new URL('./package.json', import.meta.url), 'utf8'))
@@ -12,6 +14,8 @@ const pkg = JSON.parse(readFileSync(new URL('./package.json', import.meta.url), 
 // https://vitejs.dev/config/
 export default defineConfig({
     plugins: [
+        wasm(),
+        topLevelAwait(),
         react(),
         VitePWA({ registerType: 'autoUpdate' }),
         viteCompression({ algorithm: 'brotliCompress' })

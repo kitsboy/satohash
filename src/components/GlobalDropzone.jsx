@@ -4,30 +4,21 @@ import { useDropzone } from 'react-dropzone'
 import { UploadCloud, ShieldCheck, Lock } from 'lucide-react'
 import { clsx } from 'clsx'
 import confetti from 'canvas-confetti'
+import { toast } from 'sonner'
 import { encryptFile } from '../utils/crypto'
 
 /**
  * GlobalDropzone
  *
- * Renders a drop-target area (not full-screen). Dark Vault toggle is
- * exported via the `darkVaultProps` render prop so the parent can
- * place it wherever it likes — no more `fixed` positioned button
- * competing with the shell nav.
+ * Renders a drop-target area (not full-screen). Dark Vault mode toggles
+ * zero-knowledge encryption before hashing.
  */
-export default function GlobalDropzone({ onFileProcessed, darkVaultProps }) {
+export default function GlobalDropzone({ onFileProcessed }) {
   const [isProcessing, setIsProcessing] = useState(false)
   const [dragActive, setDragActive] = useState(false)
   const [fileData, setFileData] = useState(null)
   const [processingMessage, setProcessingMessage] = useState('')
-
-  // Dark Vault state lives here; parent controls the toggle button via prop
   const [isDarkVault, setIsDarkVault] = useState(false)
-
-  // Expose toggle state to parent if they passed a ref-like object
-  if (darkVaultProps) {
-    darkVaultProps.isDarkVault = isDarkVault
-    darkVaultProps.toggle = () => setIsDarkVault((v) => !v)
-  }
 
   const processFile = useCallback(
     async (file) => {
@@ -57,7 +48,7 @@ export default function GlobalDropzone({ onFileProcessed, darkVaultProps }) {
           const { iv } = await encryptFile(arrayBuffer, 'local_satohash_vault_key')
           console.log(`🔐 ZK-Encryption Active: ${file.name} | [IV: ${iv}]`)
         } catch (e) {
-          console.error('Encryption stage failed', e)
+          toast.error('Encryption failed', { description: e?.message || 'Unknown error' })
         }
       }
 
@@ -120,7 +111,10 @@ export default function GlobalDropzone({ onFileProcessed, darkVaultProps }) {
             className="mx-auto mb-3 transition-transform group-hover:scale-110"
             style={{ color: isDarkVault ? '#f43f5e' : 'var(--accent-active)' }}
           />
-          <p className="mb-1 text-sm font-black tracking-wide uppercase" style={{ color: 'var(--text-primary)' }}>
+          <p
+            className="mb-1 text-sm font-black tracking-wide uppercase"
+            style={{ color: 'var(--text-primary)' }}
+          >
             {isDarkVault ? 'Drop to Encrypt & Anchor' : 'Drop File or Click to Browse'}
           </p>
           <p className="text-[10px] font-medium" style={{ color: 'var(--text-secondary)' }}>
@@ -142,7 +136,10 @@ export default function GlobalDropzone({ onFileProcessed, darkVaultProps }) {
 
         {/* Dark Vault toggle — inline below the drop zone */}
         <div className="mt-3 flex items-center justify-between">
-          <span className="flex items-center gap-1.5 text-[9px] font-black tracking-widest uppercase" style={{ color: 'var(--text-muted)' }}>
+          <span
+            className="flex items-center gap-1.5 text-[9px] font-black tracking-widest uppercase"
+            style={{ color: 'var(--text-muted)' }}
+          >
             <Lock size={9} />
             Encryption Mode
           </span>
@@ -189,7 +186,10 @@ export default function GlobalDropzone({ onFileProcessed, darkVaultProps }) {
                 animate={{ scale: [1, 1.05, 1], rotate: [0, 3, -3, 0] }}
                 transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
                 className="mx-auto mb-10 flex h-40 w-40 items-center justify-center rounded-[2.5rem] shadow-[0_0_80px_rgba(59,130,246,0.25)]"
-                style={{ border: '1px solid rgba(255,255,255,0.06)', background: 'rgba(59,130,246,0.12)' }}
+                style={{
+                  border: '1px solid rgba(255,255,255,0.06)',
+                  background: 'rgba(59,130,246,0.12)'
+                }}
               >
                 <UploadCloud size={52} className="text-white" />
               </motion.div>
@@ -198,7 +198,8 @@ export default function GlobalDropzone({ onFileProcessed, darkVaultProps }) {
               </h2>
               <p className="mx-auto max-w-md text-base leading-relaxed text-white/40">
                 Drop your file to generate a{' '}
-                <span className="italic text-white">permanent cryptographic record</span> on Bitcoin.
+                <span className="text-white italic">permanent cryptographic record</span> on
+                Bitcoin.
               </p>
             </div>
           </motion.div>
@@ -227,8 +228,14 @@ export default function GlobalDropzone({ onFileProcessed, darkVaultProps }) {
                   animate={{ scale: 1, opacity: 1 }}
                   className="relative z-10 flex h-56 flex-col items-center justify-center"
                 >
-                  <div className="mb-3 rounded-full px-3 py-1 text-[10px] font-black tracking-[0.2em] uppercase italic"
-                    style={{ background: 'var(--accent-active)/20', color: 'var(--accent-active)', backgroundColor: 'rgba(59,130,246,0.15)' }}>
+                  <div
+                    className="mb-3 rounded-full px-3 py-1 text-[10px] font-black tracking-[0.2em] uppercase italic"
+                    style={{
+                      background: 'var(--accent-active)/20',
+                      color: 'var(--accent-active)',
+                      backgroundColor: 'rgba(59,130,246,0.15)'
+                    }}
+                  >
                     {fileData?.intent} Active
                   </div>
                   <h3 className="px-4 text-4xl font-black tracking-tighter text-white uppercase italic">
@@ -240,7 +247,9 @@ export default function GlobalDropzone({ onFileProcessed, darkVaultProps }) {
               <div className="relative mb-8 h-2 overflow-hidden rounded-full bg-white/5">
                 <motion.div
                   className="absolute inset-0 rounded-full"
-                  style={{ background: 'linear-gradient(to right, var(--accent-active), #6366f1, #22d3a5)' }}
+                  style={{
+                    background: 'linear-gradient(to right, var(--accent-active), #6366f1, #22d3a5)'
+                  }}
                   initial={{ x: '-100%' }}
                   animate={{ x: '0%' }}
                   transition={{ duration: 2.5, ease: 'circOut' }}

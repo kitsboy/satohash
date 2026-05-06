@@ -136,12 +136,16 @@ export default function Settings() {
   const [webhookLoading, setWebhookLoading] = useState(false)
   const [webhookTestId, setWebhookTestId] = useState(null)
 
+  // Mesh nodes state
+  const [meshNodes, setMeshNodes] = useState([])
+
   useEffect(() => {
     const wantLight = eliteMode
     const isLight = theme === 'light'
     if (wantLight !== isLight) {
       toggleTheme()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [eliteMode])
 
   useEffect(() => {
@@ -230,23 +234,40 @@ export default function Settings() {
     }
   }
 
+  const fetchWebhooks = async () => {
+    try {
+      const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+      const token = localStorage.getItem('satohash_token')
+      const res = await fetch(`${API}/api/webhooks`, {
+        headers: token ? { Authorization: `Bearer ${token}` } : {}
+      })
+      if (res.ok) {
+        const data = await res.json()
+        setWebhooks(data.webhooks || data || [])
+      }
+    } catch (_err) {
+      // Fetch failed — webhooks unavailable
+    }
+  }
+
   useEffect(() => {
-    const fetchWebhooks = async () => {
+    fetchWebhooks()
+  }, [])
+
+  useEffect(() => {
+    const fetchMeshNodes = async () => {
       try {
         const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
-        const token = localStorage.getItem('satohash_token')
-        const res = await fetch(`${API}/api/webhooks`, {
-          headers: token ? { Authorization: `Bearer ${token}` } : {}
-        })
+        const res = await fetch(`${API}/api/mesh/nodes`)
         if (res.ok) {
           const data = await res.json()
-          setWebhooks(data.webhooks || data || [])
+          setMeshNodes(data.nodes || [])
         }
       } catch (_err) {
-        // Fetch failed — webhooks unavailable
+        // Fetch failed — fall back to hardcoded nodes
       }
     }
-    fetchWebhooks()
+    fetchMeshNodes()
   }, [])
 
   const addWebhook = async () => {
@@ -305,8 +326,17 @@ export default function Settings() {
         method: 'POST',
         headers: token ? { Authorization: `Bearer ${token}` } : {}
       })
-      if (res.ok) toast.success('Test ping sent!')
-      else toast.error('Test failed')
+      if (res.ok) {
+        const data = await res.json()
+        toast.success(
+          data.ok
+            ? `Test ping delivered (${data.latency}ms)`
+            : 'Test ping failed — endpoint returned an error'
+        )
+        await fetchWebhooks()
+      } else {
+        toast.error('Test failed')
+      }
     } catch (e) {
       toast.error('Test error: ' + e.message)
     } finally {
@@ -882,44 +912,64 @@ export default function Settings() {
                   description="Configure witness nodes for redundant proof anchoring."
                 >
                   <div className="space-y-4">
-                    {/* TODO: fetch from /api/mesh/nodes */}
-                    {[
-                      {
-                        name: 'alice.btc.calendar.opentimestamps.org',
-                        status: 'Active',
-                        latency: '42ms'
-                      },
-                      {
-                        name: 'bob.btc.calendar.opentimestamps.org',
-                        status: 'Active',
-                        latency: '38ms'
-                      },
-                      {
-                        name: 'finney.calendar.eternitywall.com',
-                        status: 'Active',
-                        latency: '61ms'
-                      }
-                    ].map((node) => (
-                      <div
-                        key={node.name}
-                        className="flex min-w-0 items-center justify-between gap-3 rounded-2xl border border-[var(--border)] bg-[var(--bg-primary)] px-4 py-4"
-                      >
-                        <div className="flex min-w-0 flex-1 items-center gap-3">
-                          <span className="h-2 w-2 shrink-0 rounded-full bg-[var(--accent-success)] shadow-[0_0_6px_var(--accent-success)]" />
-                          <span className="min-w-0 truncate font-mono text-xs text-[var(--text-primary)]">
-                            {node.name}
-                          </span>
+                    {(meshNodes.length > 0
+                      ? meshNodes
+                      : [
+                          {
+                            name: 'alice.btc.calendar.opentimestamps.org',
+                            status: 'Active',
+                            latency: '42ms'
+                          },
+                          {
+                            name: 'bob.btc.calendar.opentimestamps.org',
+                            status: 'Active',
+                            latency: '38ms'
+                          },
+                          {
+                            name: 'finney.calendar.eternitywall.com',
+                            status: 'Active',
+                            latency: '61ms'
+                          }
+                        ]
+                    ).map((node) => {
+                      const accent =
+                        node.status === 'Active'
+                          ? 'var(--accent-success)'
+                          : node.status === 'Degraded'
+                            ? 'var(--accent-pending)'
+                            : 'var(--accent-danger)'
+                      return (
+                        <div
+                          key={node.name}
+                          className="flex min-w-0 items-center justify-between gap-3 rounded-2xl border border-[var(--border)] bg-[var(--bg-primary)] px-4 py-4"
+                        >
+                          <div className="flex min-w-0 flex-1 items-center gap-3">
+                            <span
+                              className="h-2 w-2 shrink-0 rounded-full"
+                              style={{ backgroundColor: accent, boxShadow: `0 0 6px ${accent}` }}
+                            />
+                            <span className="min-w-0 truncate font-mono text-xs text-[var(--text-primary)]">
+                              {node.name}
+                            </span>
+                          </div>
+                          <div className="flex shrink-0 items-center gap-3">
+                            <span className="font-mono text-[10px] text-[var(--text-secondary)]">
+                              {node.latency}
+                            </span>
+                            <span
+                              className="rounded-md px-2 py-0.5 text-[9px] font-black uppercase"
+                              style={{
+                                color: accent,
+                                backgroundColor: `color-mix(in srgb, ${accent} 10%, transparent)`,
+                                border: `1px solid color-mix(in srgb, ${accent} 20%, transparent)`
+                              }}
+                            >
+                              {node.status}
+                            </span>
+                          </div>
                         </div>
-                        <div className="flex shrink-0 items-center gap-3">
-                          <span className="font-mono text-[10px] text-[var(--text-secondary)]">
-                            {node.latency}
-                          </span>
-                          <span className="rounded-md border border-[var(--accent-success)]/20 bg-[var(--accent-success)]/10 px-2 py-0.5 text-[9px] font-black text-[var(--accent-success)] uppercase">
-                            {node.status}
-                          </span>
-                        </div>
-                      </div>
-                    ))}
+                      )
+                    })}
                     <p className="pt-2 text-xs text-[var(--text-secondary)]">
                       These are the official OpenTimestamps calendar servers. Custom node support
                       coming soon.
@@ -980,12 +1030,25 @@ export default function Settings() {
                           style={{ borderColor: 'var(--border)', background: 'var(--bg-primary)' }}
                         >
                           <div className="min-w-0 flex-1">
-                            <p
-                              className="truncate font-mono text-xs"
-                              style={{ color: 'var(--text-primary)' }}
-                            >
-                              {hook.url}
-                            </p>
+                            <div className="flex items-center gap-2">
+                              <p
+                                className="truncate font-mono text-xs"
+                                style={{ color: 'var(--text-primary)' }}
+                              >
+                                {hook.url}
+                              </p>
+                              {hook.last_delivery_status && (
+                                <span
+                                  className={`shrink-0 rounded px-2 py-0.5 text-[9px] font-black uppercase ${
+                                    hook.last_delivery_status === 'ok'
+                                      ? 'border border-[var(--accent-success)]/20 bg-[var(--accent-success)]/10 text-[var(--accent-success)]'
+                                      : 'border border-[var(--accent-danger)]/20 bg-[var(--accent-danger)]/10 text-[var(--accent-danger)]'
+                                  }`}
+                                >
+                                  {hook.last_delivery_status === 'ok' ? 'OK' : 'FAIL'}
+                                </span>
+                              )}
+                            </div>
                             <p
                               className="mt-0.5 text-[10px] font-black tracking-widest uppercase"
                               style={{ color: 'var(--text-secondary)' }}
