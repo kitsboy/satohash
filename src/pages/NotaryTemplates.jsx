@@ -1,9 +1,10 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Tooltip from '../components/Tooltip'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 import { jsPDF } from 'jspdf'
+import QRCode from 'qrcode'
 import {
   Heart,
   Home,
@@ -28,7 +29,8 @@ import {
   CheckCircle,
   Circle,
   ExternalLink,
-  Lock
+  Lock,
+  Mail
 } from 'lucide-react'
 
 // ─── TEMPLATES DATA ────────────────────────────────────────────────────────────
@@ -641,34 +643,114 @@ const BADGE_STYLES = {
 
 // ─── PDF GENERATION ─────────────────────────────────────────────────────────────
 
-const generatePDF = (template, data) => {
+const VERIFY_URL = 'https://satohash.giveabit.io/verify'
+
+const generatePDF = async (template, data) => {
   const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' })
   const pageW = 210,
     pageH = 297,
     margin = 20,
     contentW = pageW - margin * 2
+
+  // ── Helper: load image as base64 ──────────────────────────────────────────
+  const loadImg = (src) =>
+    new Promise((resolve) => {
+      const img = new Image()
+      img.crossOrigin = 'anonymous'
+      img.onload = () => {
+        const canvas = document.createElement('canvas')
+        canvas.width = img.naturalWidth
+        canvas.height = img.naturalHeight
+        const ctx = canvas.getContext('2d')
+        ctx.drawImage(img, 0, 0)
+        resolve({
+          dataUrl: canvas.toDataURL('image/png'),
+          w: img.naturalWidth,
+          h: img.naturalHeight
+        })
+      }
+      img.onerror = () => resolve(null)
+      img.src = src
+    })
+
+  // ── Pre-load logos & QR ───────────────────────────────────────────────────
+  const [satohashImg, giveabitImg, qrDataUrl] = await Promise.all([
+    loadImg('/logo.png'),
+    loadImg('/giveabit.png'),
+    QRCode.toDataURL(VERIFY_URL, { width: 200, margin: 1 })
+  ])
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // PAGE 1 — Document content
+  // ═══════════════════════════════════════════════════════════════════════════
   doc.setFillColor(253, 251, 247)
   doc.rect(0, 0, pageW, pageH, 'F')
+
+  // Gold-teal top bar
   doc.setFillColor(240, 180, 41)
-  doc.rect(0, 0, pageW, 4, 'F')
-  doc.setTextColor(200, 200, 200)
-  doc.setFontSize(8)
-  doc.setFont('helvetica', 'bold')
-  doc.text('SATOHASH', pageW - margin, 20, { align: 'right' })
-  doc.text('Sovereign Notary Protocol', pageW - margin, 25, { align: 'right' })
+  doc.rect(0, 0, pageW / 2, 4, 'F')
+  doc.setFillColor(13, 148, 136)
+  doc.rect(pageW / 2, 0, pageW / 2, 4, 'F')
+
+  // ── Logos row ──────────────────────────────────────────────────────────────
+  const logoH = 9
+  // Satohash logo — left ("Powered by")
+  if (satohashImg) {
+    const aspect = satohashImg.w / satohashImg.h
+    const logoW = logoH * aspect
+    doc.saveGraphicsState()
+    doc.setGState(new doc.GState({ opacity: 0.4 }))
+    doc.addImage(satohashImg.dataUrl, 'PNG', margin, 10, logoW, logoH)
+    doc.restoreGraphicsState()
+    doc.setFontSize(6)
+    doc.setTextColor(148, 163, 184)
+    doc.setFont('helvetica', 'normal')
+    doc.text('Powered by', margin, 10 + logoH + 3)
+  } else {
+    doc.setFontSize(8)
+    doc.setTextColor(200, 200, 200)
+    doc.setFont('helvetica', 'bold')
+    doc.text('SATOHASH', margin, 16)
+  }
+
+  // Give A Bit logo — right ("Created by")
+  if (giveabitImg) {
+    const aspect = giveabitImg.w / giveabitImg.h
+    const logoW = logoH * aspect
+    doc.saveGraphicsState()
+    doc.setGState(new doc.GState({ opacity: 0.4 }))
+    doc.addImage(giveabitImg.dataUrl, 'PNG', pageW - margin - logoW, 10, logoW, logoH)
+    doc.restoreGraphicsState()
+    doc.setFontSize(6)
+    doc.setTextColor(148, 163, 184)
+    doc.setFont('helvetica', 'normal')
+    doc.text('Created by', pageW - margin, 10 + logoH + 3, { align: 'right' })
+  }
+
+  // ── Document title ─────────────────────────────────────────────────────────
   doc.setTextColor(15, 23, 42)
-  doc.setFontSize(22)
-  doc.text(template.title.toUpperCase(), margin, 35)
+  doc.setFontSize(20)
+  doc.setFont('helvetica', 'bold')
+  doc.text(template.title.toUpperCase(), margin, 36)
   doc.setFontSize(8)
   doc.setTextColor(100, 116, 139)
-  doc.text(`Bitcoin-Anchored • Satohash • ${new Date().toLocaleDateString()}`, margin, 42)
+  doc.setFont('helvetica', 'normal')
+  doc.text(
+    `${template.category} • Bitcoin-Anchored • ${new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}`,
+    margin,
+    42
+  )
   doc.setDrawColor(240, 180, 41)
   doc.setLineWidth(0.5)
   doc.line(margin, 46, pageW - margin, 46)
+
+  // ── Fields ─────────────────────────────────────────────────────────────────
   let y = 56
   template.fields.forEach((field) => {
-    if (y > 260) {
+    if (y > 262) {
       doc.addPage()
+      doc.setFillColor(253, 251, 247)
+      doc.rect(0, 0, pageW, pageH, 'F')
       y = 20
     }
     doc.setFontSize(7)
@@ -686,10 +768,213 @@ const generatePDF = (template, data) => {
     doc.setLineWidth(0.2)
     doc.line(margin, y - 4, pageW - margin, y - 4)
   })
+
+  // ── Page 1 footer ──────────────────────────────────────────────────────────
   doc.setFontSize(7)
   doc.setTextColor(148, 163, 184)
-  doc.text('Generated via Satohash', margin, pageH - 10)
-  doc.text(window.location.hostname, pageW - margin, pageH - 10, { align: 'right' })
+  doc.setFont('helvetica', 'normal')
+  doc.text('Generated via Satohash — Sovereign Notary Protocol', margin, pageH - 10)
+  doc.text(`Verify: ${VERIFY_URL}`, pageW - margin, pageH - 10, { align: 'right' })
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // PAGE 2 — Certificate of Authenticity
+  // ═══════════════════════════════════════════════════════════════════════════
+  doc.addPage()
+  doc.setFillColor(253, 251, 247)
+  doc.rect(0, 0, pageW, pageH, 'F')
+
+  // ── Blue header bar ────────────────────────────────────────────────────────
+  const headerH = 28
+  doc.setFillColor(30, 58, 138) // deep blue
+  doc.rect(0, 0, pageW, headerH, 'F')
+
+  // Header text
+  doc.setTextColor(255, 255, 255)
+  doc.setFontSize(10)
+  doc.setFont('helvetica', 'bold')
+  doc.text('CERTIFICATE OF AUTHENTICITY', margin, 11)
+  doc.setFontSize(7)
+  doc.setFont('helvetica', 'normal')
+  doc.text('SATOHASH NOTARY PROTOCOL', margin, 17)
+  doc.setFontSize(6)
+  doc.setTextColor(147, 197, 253) // light blue
+  doc.text('Bitcoin-Anchored • Cryptographically Verified • Tamper-Evident', margin, 23)
+
+  // Give A Bit logo in header top-right
+  if (giveabitImg) {
+    const hLogoH = 14
+    const aspect = giveabitImg.w / giveabitImg.h
+    const hLogoW = hLogoH * aspect
+    doc.saveGraphicsState()
+    doc.setGState(new doc.GState({ opacity: 0.85 }))
+    doc.addImage(
+      giveabitImg.dataUrl,
+      'PNG',
+      pageW - margin - hLogoW,
+      (headerH - hLogoH) / 2,
+      hLogoW,
+      hLogoH
+    )
+    doc.restoreGraphicsState()
+  }
+
+  // ── Certificate body ───────────────────────────────────────────────────────
+  let cy = headerH + 14
+
+  // "This certifies that…" intro
+  doc.setTextColor(15, 23, 42)
+  doc.setFontSize(9)
+  doc.setFont('helvetica', 'italic')
+  const introParagraph =
+    `This Certificate of Authenticity confirms that the document titled "${template.title}" has been ` +
+    `processed through the Satohash Sovereign Notary Protocol. The cryptographic hash of this document ` +
+    `has been immutably anchored to the Bitcoin blockchain, providing irrefutable proof of existence ` +
+    `and integrity at the time of notarization.`
+  const introLines = doc.splitTextToSize(introParagraph, contentW)
+  doc.text(introLines, margin, cy)
+  cy += introLines.length * 5 + 8
+
+  // Gold divider
+  doc.setDrawColor(240, 180, 41)
+  doc.setLineWidth(0.6)
+  doc.line(margin, cy, pageW - margin, cy)
+  cy += 10
+
+  // ── Metadata rows ──────────────────────────────────────────────────────────
+  const metaItems = [
+    { label: 'DOCUMENT TITLE', value: template.title },
+    { label: 'TEMPLATE CATEGORY', value: template.category },
+    { label: 'BADGE / TIER', value: template.badge },
+    {
+      label: 'DATE OF NOTARIZATION',
+      value: new Date().toLocaleDateString('en-US', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      })
+    },
+    { label: 'TOTAL FIELDS', value: `${template.fields.length} fields` },
+    { label: 'DOCUMENT HASH (SHA-256)', value: '[Computed client-side — hash pending anchor]' },
+    { label: 'BITCOIN BLOCK HEIGHT', value: '[Pending — OTS upgrade in progress]' },
+    { label: 'NOTARY PROTOCOL', value: 'Satohash v1 — OpenTimestamps (OTS) / Bitcoin' },
+    { label: 'VERIFY URL', value: VERIFY_URL }
+  ]
+
+  const colW = contentW / 2 - 4
+  metaItems.forEach((item, idx) => {
+    const col = idx % 2
+    const cx = margin + col * (colW + 8)
+    if (col === 0 && idx > 0) cy += 0
+    if (col === 0) {
+      // New row
+      doc.setFillColor(248, 250, 252)
+      doc.rect(margin, cy - 4, contentW, 14, 'F')
+      doc.setDrawColor(226, 232, 240)
+      doc.setLineWidth(0.15)
+      doc.rect(margin, cy - 4, contentW, 14, 'S')
+    }
+    doc.setFontSize(6.5)
+    doc.setTextColor(100, 116, 139)
+    doc.setFont('helvetica', 'bold')
+    doc.text(item.label, cx + 2, cy + 1)
+    doc.setFontSize(8.5)
+    doc.setTextColor(15, 23, 42)
+    doc.setFont('helvetica', 'normal')
+    const valLines = doc.splitTextToSize(item.value, colW - 4)
+    doc.text(valLines[0], cx + 2, cy + 7)
+    if (col === 1 || idx === metaItems.length - 1) cy += 14
+  })
+
+  cy += 6
+
+  // ── QR Code + Seal row ─────────────────────────────────────────────────────
+  doc.setDrawColor(226, 232, 240)
+  doc.setLineWidth(0.3)
+
+  // QR Code box (left side)
+  const qrBoxSize = 48
+  const qrX = margin
+  doc.setFillColor(255, 255, 255)
+  doc.rect(qrX, cy, qrBoxSize, qrBoxSize + 10, 'F')
+  doc.rect(qrX, cy, qrBoxSize, qrBoxSize + 10, 'S')
+  if (qrDataUrl) {
+    doc.addImage(qrDataUrl, 'PNG', qrX + 4, cy + 4, qrBoxSize - 8, qrBoxSize - 8)
+  }
+  doc.setFontSize(6)
+  doc.setTextColor(30, 58, 138)
+  doc.setFont('helvetica', 'bold')
+  doc.text('SCAN TO VERIFY', qrX + qrBoxSize / 2, cy + qrBoxSize + 6, { align: 'center' })
+
+  // Official Seal box (right side)
+  const sealX = pageW - margin - 64
+  doc.setFillColor(255, 255, 255)
+  doc.rect(sealX, cy, 64, qrBoxSize + 10, 'F')
+  doc.setDrawColor(240, 180, 41)
+  doc.setLineWidth(0.5)
+  doc.rect(sealX, cy, 64, qrBoxSize + 10, 'S')
+  // Inner seal decoration
+  doc.setDrawColor(240, 180, 41)
+  doc.setLineWidth(0.25)
+  doc.rect(sealX + 3, cy + 3, 58, qrBoxSize + 4, 'S')
+  doc.setFontSize(7)
+  doc.setTextColor(15, 23, 42)
+  doc.setFont('helvetica', 'bold')
+  doc.text('OFFICIAL SEAL', sealX + 32, cy + 13, { align: 'center' })
+  doc.setFontSize(6)
+  doc.setFont('helvetica', 'normal')
+  doc.setTextColor(100, 116, 139)
+  doc.text('SATOHASH', sealX + 32, cy + 20, { align: 'center' })
+  doc.text('SOVEREIGN NOTARY', sealX + 32, cy + 26, { align: 'center' })
+  doc.text('PROTOCOL', sealX + 32, cy + 32, { align: 'center' })
+  // Satohash logo in seal
+  if (satohashImg) {
+    const sLogoH = 8
+    const sAspect = satohashImg.w / satohashImg.h
+    const sLogoW = sLogoH * sAspect
+    doc.saveGraphicsState()
+    doc.setGState(new doc.GState({ opacity: 0.5 }))
+    doc.addImage(satohashImg.dataUrl, 'PNG', sealX + 32 - sLogoW / 2, cy + 36, sLogoW, sLogoH)
+    doc.restoreGraphicsState()
+  }
+  doc.setFontSize(6)
+  doc.setTextColor(148, 163, 184)
+  doc.text(new Date().getFullYear().toString(), sealX + 32, cy + 52, { align: 'center' })
+
+  cy += qrBoxSize + 16
+
+  // ── Legal disclaimer ───────────────────────────────────────────────────────
+  doc.setFillColor(239, 246, 255)
+  doc.rect(margin, cy, contentW, 22, 'F')
+  doc.setDrawColor(147, 197, 253)
+  doc.setLineWidth(0.2)
+  doc.rect(margin, cy, contentW, 22, 'S')
+  doc.setFontSize(6.5)
+  doc.setTextColor(30, 58, 138)
+  doc.setFont('helvetica', 'bold')
+  doc.text('LEGAL NOTICE', margin + 3, cy + 6)
+  doc.setFont('helvetica', 'normal')
+  doc.setTextColor(30, 64, 175)
+  const disclaimer =
+    'This certificate is generated by the Satohash Sovereign Notary Protocol. The Bitcoin-anchored ' +
+    'timestamp provides cryptographic proof of document existence at the time of notarization. ' +
+    'This certificate does not constitute legal advice. Consult qualified legal counsel for binding agreements.'
+  const disclaimerLines = doc.splitTextToSize(disclaimer, contentW - 6)
+  doc.text(disclaimerLines, margin + 3, cy + 12)
+  cy += 26
+
+  // ── Page 2 footer ──────────────────────────────────────────────────────────
+  doc.setFontSize(7)
+  doc.setTextColor(148, 163, 184)
+  doc.setFont('helvetica', 'normal')
+  doc.text('Satohash — Sovereign Notary Protocol', margin, pageH - 10)
+  doc.text(`Verify this document at: ${VERIFY_URL}`, pageW - margin, pageH - 10, { align: 'right' })
+  // Gold footer bar
+  doc.setFillColor(240, 180, 41)
+  doc.rect(0, pageH - 4, pageW / 2, 4, 'F')
+  doc.setFillColor(13, 148, 136)
+  doc.rect(pageW / 2, pageH - 4, pageW / 2, 4, 'F')
+
   doc.save(`Satohash_${template.id}_${Date.now()}.pdf`)
 }
 
@@ -892,6 +1177,13 @@ function TemplateList({ onSelect }) {
 
 function TemplateEditor({ template, onBack }) {
   const [data, setData] = useState({ ...template.demoData })
+  const [qrUrl, setQrUrl] = useState('')
+
+  useEffect(() => {
+    QRCode.toDataURL(VERIFY_URL, { width: 80, margin: 1 })
+      .then(setQrUrl)
+      .catch(() => {})
+  }, [])
 
   const completedFields = template.fields.filter((f) => data[f.id]?.trim?.())
   const progress = Math.round((completedFields.length / template.fields.length) * 100)
@@ -908,13 +1200,28 @@ function TemplateEditor({ template, onBack }) {
     })
   }
 
-  const handlePDF = () => {
+  const handlePDF = async () => {
     try {
-      generatePDF(template, data)
+      await generatePDF(template, data)
       toast.success('📄 PDF downloaded!')
     } catch {
       toast.error('PDF generation failed. Please try again.')
     }
+  }
+
+  const handleEmail = () => {
+    const subject = `Notarized Document: ${template.title}`
+    const fieldLines = template.fields.map((f) => `${f.label}: ${data[f.id] || '—'}`).join('\n')
+    const body =
+      `${template.title}\n` +
+      `Category: ${template.category}\n` +
+      `Date: ${new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}\n\n` +
+      `--- DOCUMENT FIELDS ---\n\n` +
+      `${fieldLines}\n\n` +
+      `--- VERIFICATION ---\n\n` +
+      `This document has been notarized via the Satohash Sovereign Notary Protocol.\n` +
+      `Verify at: ${VERIFY_URL}\n`
+    window.location.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
   }
 
   const catColor = CATEGORY_COLORS[template.category] || {}
@@ -949,9 +1256,31 @@ function TemplateEditor({ template, onBack }) {
             />
 
             <div className="p-5 md:p-12">
-              {/* Watermark logo top-right */}
+              {/* Logos row: Satohash left ("Powered by"), Give A Bit right ("Created by") */}
               <div className="mb-8 flex items-start justify-between">
-                <div>
+                {/* Left: Satohash logo — "Powered by" */}
+                <div
+                  className="flex flex-shrink-0 flex-col items-start"
+                  style={{ opacity: 0.45, filter: 'grayscale(100%)' }}
+                >
+                  <img
+                    src="/logo.png"
+                    alt="Satohash"
+                    className="mb-0.5 h-7 w-auto"
+                    onError={(e) => {
+                      e.target.style.display = 'none'
+                    }}
+                  />
+                  <span
+                    className="text-[9px] font-semibold tracking-[0.15em] uppercase"
+                    style={{ color: '#94a3b8' }}
+                  >
+                    Powered by
+                  </span>
+                </div>
+
+                {/* Centre: title + badge */}
+                <div className="mx-4 flex-1">
                   <h1
                     className="text-2xl font-black tracking-tight md:text-3xl"
                     style={{ color: '#0f172a' }}
@@ -978,23 +1307,25 @@ function TemplateEditor({ template, onBack }) {
                     </span>
                   </div>
                 </div>
+
+                {/* Right: Give A Bit logo — "Created by" */}
                 <div
                   className="flex flex-shrink-0 flex-col items-end"
                   style={{ opacity: 0.45, filter: 'grayscale(100%)' }}
                 >
                   <img
-                    src="/logo.png"
-                    alt="Satohash"
+                    src="/giveabit.png"
+                    alt="Give A Bit"
                     className="mb-0.5 h-7 w-auto"
                     onError={(e) => {
                       e.target.style.display = 'none'
                     }}
                   />
                   <span
-                    className="text-[10px] font-black tracking-[0.3em]"
-                    style={{ color: '#0f172a' }}
+                    className="text-[9px] font-semibold tracking-[0.15em] uppercase"
+                    style={{ color: '#94a3b8' }}
                   >
-                    SATOHASH
+                    Created by
                   </span>
                 </div>
               </div>
@@ -1062,7 +1393,7 @@ function TemplateEditor({ template, onBack }) {
 
               {/* Document footer */}
               <div
-                className="mt-14 flex items-center justify-between pt-6"
+                className="mt-14 flex items-end justify-between gap-4 pt-6"
                 style={{ borderTop: '1px solid #e2e8f0' }}
               >
                 <div>
@@ -1079,9 +1410,11 @@ function TemplateEditor({ template, onBack }) {
                     {window.location.hostname}
                   </p>
                 </div>
-                <div className="text-right">
+
+                {/* Centre: hash pending badge */}
+                <div className="flex flex-col items-center gap-1">
                   <p
-                    className="mb-1 flex items-center justify-end text-[10px] tracking-widest uppercase"
+                    className="flex items-center text-[10px] tracking-widest uppercase"
                     style={{ color: '#94a3b8' }}
                   >
                     Bitcoin-Anchored Document
@@ -1098,6 +1431,32 @@ function TemplateEditor({ template, onBack }) {
                       HASH PENDING
                     </span>
                   </div>
+                </div>
+
+                {/* Right: inline QR code */}
+                <div className="flex flex-shrink-0 flex-col items-center gap-1">
+                  {qrUrl ? (
+                    <img
+                      src={qrUrl}
+                      alt="Scan to verify"
+                      style={{ width: 56, height: 56, opacity: 0.6 }}
+                    />
+                  ) : (
+                    <div
+                      style={{
+                        width: 56,
+                        height: 56,
+                        background: '#f1f5f9',
+                        borderRadius: 4
+                      }}
+                    />
+                  )}
+                  <span
+                    className="text-[8px] font-bold tracking-widest uppercase"
+                    style={{ color: '#94a3b8' }}
+                  >
+                    Scan to verify
+                  </span>
                 </div>
               </div>
             </div>
@@ -1205,6 +1564,21 @@ function TemplateEditor({ template, onBack }) {
               >
                 <Vault size={15} style={{ color: 'var(--accent-success)' }} />
                 Save to Vault
+              </button>
+
+              <button
+                onClick={handleEmail}
+                className="flex w-full items-center gap-2.5 rounded-xl px-4 py-3 text-sm font-semibold transition-all active:scale-95"
+                style={{
+                  background: 'var(--bg-secondary)',
+                  border: '1px solid var(--border)',
+                  color: 'var(--text-primary)'
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.borderColor = 'var(--accent-purple)')}
+                onMouseLeave={(e) => (e.currentTarget.style.borderColor = 'var(--border)')}
+              >
+                <Mail size={15} style={{ color: 'var(--accent-purple)' }} />
+                Email Package
               </button>
             </div>
 

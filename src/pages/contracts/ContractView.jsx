@@ -26,6 +26,8 @@ import ZKRedactionTool from '../../components/ZKRedactionTool'
 import Card from '../../components/Card'
 import { clsx } from 'clsx'
 
+const GIVEABIT_VERIFY_BASE = 'https://satohash.giveabit.io/verify'
+
 export default function ContractView() {
   const navigate = useNavigate()
   const { contractId } = useParams()
@@ -33,6 +35,7 @@ export default function ContractView() {
   const [isProofExplorerOpen, setIsProofExplorerOpen] = useState(false)
   const [isZKToolOpen, setIsZKToolOpen] = useState(false)
   const [activePanel, setActivePanel] = useState('summary')
+  const [qrDataUrl, setQrDataUrl] = useState(null)
 
   useEffect(() => {
     const savedContracts = localStorage.getItem('satohash_contracts')
@@ -42,6 +45,18 @@ export default function ContractView() {
       setContract(found)
     }
   }, [contractId])
+
+  // Generate QR code for the verification URL when the document is timestamped
+  useEffect(() => {
+    if (!contract || contract.status !== 'timestamped') return
+    QRCode.toDataURL(`${GIVEABIT_VERIFY_BASE}/${contract.id}`, {
+      width: 200,
+      margin: 1,
+      color: { dark: '#4f46e5', light: '#ffffff' }
+    })
+      .then((url) => setQrDataUrl(url))
+      .catch((err) => console.error('QR generation failed', err))
+  }, [contract])
 
   // Derive active signers from contract.signers if available, else use display mock
   const activeSigners = (() => {
@@ -156,7 +171,7 @@ export default function ContractView() {
       doc.setFillColor(79, 70, 229)
       doc.rect(0, 0, pageWidth, 45, 'F')
 
-      // Logo on certificate page
+      // Satohash logo on certificate page (left side of header)
       try {
         const base64data = await new Promise((resolve) => {
           const img = new Image()
@@ -177,6 +192,30 @@ export default function ContractView() {
         }
       } catch (e) {
         console.error('Failed to load logo for certificate:', e)
+      }
+
+      // Give A Bit logo on certificate page (right side of header)
+      try {
+        const giveABitData = await new Promise((resolve) => {
+          const img = new Image()
+          img.crossOrigin = 'Anonymous'
+          img.onload = () => {
+            const canvas = document.createElement('canvas')
+            canvas.width = img.width
+            canvas.height = img.height
+            const ctx = canvas.getContext('2d')
+            ctx.drawImage(img, 0, 0)
+            resolve(canvas.toDataURL('image/png'))
+          }
+          img.onerror = () => resolve(null)
+          img.src = '/giveabit.png'
+        })
+        if (giveABitData) {
+          // Fit into ~24x12 box on the right side of the header bar
+          doc.addImage(giveABitData, 'PNG', pageWidth - 39, 11, 24, 10)
+        }
+      } catch (e) {
+        console.error('Failed to load Give A Bit logo for certificate:', e)
       }
 
       doc.setTextColor(255, 255, 255)
@@ -237,13 +276,13 @@ export default function ContractView() {
       doc.setFontSize(7)
       doc.text('v4.0-ELITE', margin + 30, currentY + 38, { align: 'center' })
 
-      // QR Code — uses window.location.origin for correct host in all environments
+      // QR Code — points to satohash.giveabit.io for stable verification URL
       try {
-        const qrDataUrl = await QRCode.toDataURL(`${window.location.origin}/verify/${contract.id}`, {
+        const pdfQrDataUrl = await QRCode.toDataURL(`${GIVEABIT_VERIFY_BASE}/${contract.id}`, {
           width: 200,
           color: { dark: '#4f46e5' }
         })
-        doc.addImage(qrDataUrl, 'PNG', pageWidth - margin - 60, currentY, 60, 60)
+        doc.addImage(pdfQrDataUrl, 'PNG', pageWidth - margin - 60, currentY, 60, 60)
         doc.setTextColor(100, 100, 100)
         doc.setFontSize(7)
         doc.text('SCAN TO VERIFY ON-CHAIN', pageWidth - margin - 30, currentY + 65, {
@@ -258,9 +297,7 @@ export default function ContractView() {
       doc.setFontSize(8)
       doc.setFont('helvetica', 'italic')
       doc.setTextColor(120, 120, 120)
-      // Uses window.location.hostname for correct host in all environments
-      const footerText =
-        `This document is cryptographically anchored to the Bitcoin blockchain via the Satohash Protocol. The underlying content is protected by SHA-256 hashing. Modifying even a single character in the original file will invalidate this certificate. For verification, visit ${window.location.hostname}/verify or scan the QR code above.`
+      const footerText = `This document is cryptographically anchored to the Bitcoin blockchain via the Satohash Protocol. The underlying content is protected by SHA-256 hashing. Modifying even a single character in the original file will invalidate this certificate. For verification, visit ${GIVEABIT_VERIFY_BASE} or scan the QR code above.`
       const splitFooter = doc.splitTextToSize(footerText, pageWidth - margin * 2)
       doc.text(splitFooter, margin, currentY)
     }
@@ -364,6 +401,27 @@ export default function ContractView() {
               {/* Watermark */}
               <div className="document-watermark">
                 <img src="/logo.png" alt="Satohash Watermark" />
+              </div>
+
+              {/* Give A Bit branding — subtle top-right of document paper */}
+              <div
+                className="absolute top-4 right-5 z-20 flex items-center gap-1.5"
+                style={{ opacity: 0.5 }}
+              >
+                <span
+                  className="text-[8px] font-semibold tracking-wide"
+                  style={{
+                    color: 'var(--text-muted)',
+                    fontFamily: "'Plus Jakarta Sans', sans-serif"
+                  }}
+                >
+                  Created by
+                </span>
+                <img
+                  src="/giveabit.png"
+                  alt="Give A Bit"
+                  style={{ height: '20px', width: 'auto' }}
+                />
               </div>
 
               <div
@@ -508,6 +566,28 @@ export default function ContractView() {
                           onClick={handleDownload}
                         />
                         <QuickAction
+                          icon={Mail}
+                          label="Email Package"
+                          subLabel="Share via Email"
+                          onClick={() => {
+                            const subject = encodeURIComponent(
+                              `Notarized Document: ${contract.name}`
+                            )
+                            const body = encodeURIComponent(
+                              `Notarized Document Details\n` +
+                                `──────────────────────────\n` +
+                                `Name:       ${contract.name}\n` +
+                                `Created:    ${new Date(contract.createdAt).toLocaleString()}\n` +
+                                `Reference:  ${contract.id}\n` +
+                                `Status:     Timestamped on Bitcoin\n\n` +
+                                `Verify this document on-chain:\n` +
+                                `${GIVEABIT_VERIFY_BASE}/${contract.id}\n\n` +
+                                `This document is cryptographically anchored to the Bitcoin blockchain via the Satohash Protocol. Its authenticity can be independently verified at any time using the link above.`
+                            )
+                            window.location.href = `mailto:?subject=${subject}&body=${body}`
+                          }}
+                        />
+                        <QuickAction
                           icon={ExternalLink}
                           label="Mempool.space"
                           subLabel="View Anchor"
@@ -515,6 +595,38 @@ export default function ContractView() {
                           onClick={() => {}}
                         />
                       </div>
+
+                      {/* Inline QR Code panel */}
+                      {qrDataUrl && (
+                        <div
+                          className="rounded-2xl p-4"
+                          style={{
+                            border: '1px solid var(--border)',
+                            background: 'var(--surface-raised)'
+                          }}
+                        >
+                          <p
+                            className="mb-3 text-[10px] font-bold tracking-[0.15em] uppercase"
+                            style={{ color: 'var(--text-muted)' }}
+                          >
+                            OTS Verification QR
+                          </p>
+                          <div className="flex flex-col items-center gap-2">
+                            <img
+                              src={qrDataUrl}
+                              alt="Verification QR Code"
+                              className="rounded-xl"
+                              style={{ width: 120, height: 120 }}
+                            />
+                            <span
+                              className="font-mono text-[9px] font-medium tracking-wide"
+                              style={{ color: 'var(--text-muted)' }}
+                            >
+                              satohash.giveabit.io/verify
+                            </span>
+                          </div>
+                        </div>
+                      )}
 
                       <div className="my-4 h-px" style={{ background: 'var(--border)' }} />
 
@@ -548,7 +660,10 @@ export default function ContractView() {
                     </h4>
                     <div
                       className="space-y-3 rounded-2xl p-4"
-                      style={{ border: '1px solid var(--border)', background: 'var(--surface-raised)' }}
+                      style={{
+                        border: '1px solid var(--border)',
+                        background: 'var(--surface-raised)'
+                      }}
                     >
                       <MetaItem
                         label="Created"
@@ -592,8 +707,7 @@ export default function ContractView() {
                         <div
                           className="flex h-8 w-8 items-center justify-center rounded-full text-[10px] font-bold"
                           style={{
-                            background:
-                              'color-mix(in srgb, var(--accent-active) 12%, transparent)',
+                            background: 'color-mix(in srgb, var(--accent-active) 12%, transparent)',
                             color: 'var(--accent-active)'
                           }}
                         >
@@ -626,18 +740,14 @@ export default function ContractView() {
                         </div>
                       </div>
                     ))}
-                    <div
-                      className="mt-4 pt-4"
-                      style={{ borderTop: '1px solid var(--border)' }}
-                    >
+                    <div className="mt-4 pt-4" style={{ borderTop: '1px solid var(--border)' }}>
                       <Button
                         variant="outline"
                         fullWidth
                         onClick={() => {
                           setContract({ ...contract, status: 'signed' })
                           toast.success('Partner signature simulated', {
-                            description:
-                              'In production this would send a Nostr DM to the co-signer'
+                            description: 'In production this would send a Nostr DM to the co-signer'
                           })
                         }}
                       >
@@ -712,11 +822,7 @@ function PanelTab({ active, onClick, icon: Icon, label }) {
     <button
       onClick={onClick}
       className="relative flex flex-1 items-center justify-center gap-2 overflow-hidden text-[10px] font-bold tracking-[0.1em] uppercase transition-all"
-      style={
-        active
-          ? { color: 'var(--accent-active)' }
-          : { color: 'var(--text-secondary)' }
-      }
+      style={active ? { color: 'var(--accent-active)' } : { color: 'var(--text-secondary)' }}
     >
       <Icon size={13} strokeWidth={2.5} />
       {label}
@@ -764,8 +870,7 @@ function QuickAction({ icon: Icon, label, subLabel, highlight, onClick }) {
               borderColor: 'var(--accent-active)',
               background: 'var(--accent-active)',
               color: '#fff',
-              boxShadow:
-                '0 8px 24px color-mix(in srgb, var(--accent-active) 25%, transparent)'
+              boxShadow: '0 8px 24px color-mix(in srgb, var(--accent-active) 25%, transparent)'
             }
           : {
               borderColor: 'var(--border)',
@@ -777,18 +882,12 @@ function QuickAction({ icon: Icon, label, subLabel, highlight, onClick }) {
       <div
         className="flex h-10 w-10 items-center justify-center rounded-xl"
         style={
-          highlight
-            ? { background: 'rgba(255,255,255,0.1)' }
-            : { background: 'var(--bg-primary)' }
+          highlight ? { background: 'rgba(255,255,255,0.1)' } : { background: 'var(--bg-primary)' }
         }
       >
         <Icon
           size={18}
-          style={
-            highlight
-              ? { color: '#fff' }
-              : { color: 'var(--text-secondary)' }
-          }
+          style={highlight ? { color: '#fff' } : { color: 'var(--text-secondary)' }}
         />
       </div>
       <div>
