@@ -212,13 +212,13 @@ export default function TopSignalBar() {
               <div className="mb-4 flex items-center justify-between border-b border-[var(--border)] pb-3">
                 <div className="flex items-center gap-2">
                   <Heart size={14} className="text-[var(--accent-active)]" />
-                  <span className="text-[10px] font-bold tracking-widest text-white uppercase">
+                  <span className="text-[10px] font-bold tracking-widest text-[var(--text-primary)] uppercase">
                     Tip Satohash
                   </span>
                 </div>
                 <button
                   onClick={() => setShowTip(false)}
-                  className="text-[var(--text-secondary)] hover:text-white"
+                  className="text-[var(--text-secondary)] transition-colors hover:text-[var(--text-primary)]"
                 >
                   <X size={14} />
                 </button>
@@ -238,7 +238,7 @@ export default function TopSignalBar() {
                   Bitcoin Address
                 </p>
                 <div
-                  className="cursor-pointer rounded-lg border border-[var(--border)] bg-[var(--bg-primary)] p-2 font-mono text-[9px] break-all transition-colors select-all hover:border-[var(--accent-active)]"
+                  className="cursor-pointer rounded-lg border border-[var(--border)] bg-[var(--bg-primary)] p-2 font-mono text-[9px] break-all text-[var(--text-primary)] transition-colors select-all hover:border-[var(--accent-active)]"
                   onClick={copyAddress}
                   title="Click to copy"
                 >

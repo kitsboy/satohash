@@ -102,7 +102,7 @@ export default function Landing() {
         className="fixed inset-x-0 top-0 z-[100] border-b"
         style={{
           borderColor: 'var(--border)',
-          backgroundColor: 'rgba(20,27,37,0.85)',
+          backgroundColor: 'var(--bg-navbar)',
           backdropFilter: 'blur(20px)'
         }}
       >

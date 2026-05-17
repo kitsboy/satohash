@@ -63,6 +63,7 @@
     --warning: var(--accent-warning);
     --success: var(--accent-success);
     --danger: var(--accent-danger);
+    --bg-navbar: rgba(20, 27, 37, 0.85);
   }
 
   [data-theme='elite'] {
@@ -80,6 +81,8 @@
 
     --accent-active: #d97706;
     --accent-active-glow: rgba(217, 119, 6, 0.2);
+
+    --bg-navbar: rgba(243, 244, 246, 0.85);
 
     background-color: var(--bg-primary) !important;
   }

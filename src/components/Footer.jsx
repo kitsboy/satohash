@@ -25,7 +25,7 @@ const JobCard = ({ title, description }) => {
       className="group block rounded-2xl border border-[var(--border)] bg-[var(--bg-primary)] p-6 transition-all hover:border-[var(--accent-active)] hover:shadow-[0_0_20px_var(--accent-active-glow)]"
     >
       <div className="mb-3 flex items-start justify-between">
-        <h4 className="text-lg font-bold tracking-tight text-white transition-colors group-hover:text-[var(--accent-active)]">
+        <h4 className="text-lg font-bold tracking-tight text-[var(--text-primary)] transition-colors group-hover:text-[var(--accent-active)]">
           {title}
         </h4>
         <ArrowUpRight
@@ -106,7 +106,7 @@ export default function Footer() {
               </div>
               <button
                 onClick={() => setShowDonation(false)}
-                className="text-[var(--text-secondary)] transition-colors hover:text-white"
+                className="text-[var(--text-secondary)] transition-colors hover:text-[var(--text-primary)]"
               >
                 <X size={20} />
               </button>
@@ -125,7 +125,7 @@ export default function Footer() {
               <p className="text-[10px] font-bold tracking-widest text-[var(--accent-active)] uppercase">
                 Bitcoin Address
               </p>
-              <div className="rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] p-4 font-mono text-[11px] font-bold break-all text-white select-all">
+              <div className="rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] p-4 font-mono text-[11px] font-bold break-all text-[var(--text-primary)] select-all">
                 {btcAddress}
               </div>
             </div>
@@ -161,7 +161,7 @@ export default function Footer() {
             </div>
 
             <div className="space-y-6">
-              <div className="flex items-center gap-3 text-white">
+              <div className="flex items-center gap-3 text-[var(--text-primary)]">
                 <Scale size={18} className="text-[var(--accent-active)]" />
                 <h3 className="text-[11px] font-bold tracking-[0.2em] uppercase">
                   Legal Framework
@@ -187,7 +187,7 @@ export default function Footer() {
           {/* Jobs Board Column */}
           <div className="space-y-10 lg:col-span-5">
             <div className="flex items-center justify-between border-b border-[var(--border)] pb-4">
-              <div className="flex items-center gap-3 text-white">
+              <div className="flex items-center gap-3 text-[var(--text-primary)]">
                 <Briefcase size={18} className="text-[var(--accent-active)]" />
                 <h3 className="text-[11px] font-bold tracking-[0.2em] uppercase">
                   Sovereign Careers
@@ -207,7 +207,7 @@ export default function Footer() {
           {/* Contact & Navigation Column */}
           <div className="space-y-12 lg:col-span-3">
             <div className="space-y-8">
-              <div className="flex items-center gap-3 border-b border-[var(--border)] pb-4 text-white">
+              <div className="flex items-center gap-3 border-b border-[var(--border)] pb-4 text-[var(--text-primary)]">
                 <Mail size={18} className="text-[var(--accent-purple)]" />
                 <h3 className="text-[11px] font-bold tracking-[0.2em] uppercase">Communications</h3>
               </div>
@@ -219,7 +219,7 @@ export default function Footer() {
                   <p className="mb-2 text-[10px] font-bold tracking-widest text-[var(--text-secondary)] uppercase">
                     Email Terminal
                   </p>
-                  <p className="text-[13px] font-bold text-white transition-colors group-hover:text-[var(--accent-purple)]">
+                  <p className="text-[13px] font-bold text-[var(--text-primary)] transition-colors group-hover:text-[var(--accent-purple)]">
                     hello@giveabit.io
                   </p>
                 </a>
@@ -230,7 +230,7 @@ export default function Footer() {
                   <p className="mb-2 text-[10px] font-bold tracking-widest text-[var(--text-secondary)] uppercase">
                     Nostr NIP-05
                   </p>
-                  <p className="text-[13px] font-bold text-white transition-colors group-hover:text-[var(--accent-purple)]">
+                  <p className="text-[13px] font-bold text-[var(--text-primary)] transition-colors group-hover:text-[var(--accent-purple)]">
                     kimi@giveabit.io
                   </p>
                 </a>
@@ -238,7 +238,7 @@ export default function Footer() {
             </div>
 
             <div className="space-y-8">
-              <div className="flex items-center gap-3 border-b border-[var(--border)] pb-4 text-white">
+              <div className="flex items-center gap-3 border-b border-[var(--border)] pb-4 text-[var(--text-primary)]">
                 <Globe size={18} className="text-[var(--accent-success)]" />
                 <h3 className="text-[11px] font-bold tracking-[0.2em] uppercase">Atlas Links</h3>
               </div>
@@ -298,7 +298,7 @@ export default function Footer() {
             </span>
             <button
               onClick={() => setShowDonation(!showDonation)}
-              className="group flex items-center gap-3 rounded-full border border-[var(--border)] bg-[var(--bg-primary)] px-4 py-2 text-[10px] font-bold tracking-widest text-white uppercase transition-all hover:border-[var(--accent-active)] hover:bg-[var(--surface-raised)]"
+              className="group flex items-center gap-3 rounded-full border border-[var(--border)] bg-[var(--bg-primary)] px-4 py-2 text-[10px] font-bold tracking-widest text-[var(--text-primary)] uppercase transition-all hover:border-[var(--accent-active)] hover:bg-[var(--surface-raised)]"
             >
               <Heart
                 size={12}
