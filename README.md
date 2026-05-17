@@ -3,13 +3,16 @@
 [![Version](https://img.shields.io/badge/version-4.0.0--ELITE-indigo.svg)](https://github.com/kitsboy/satohash)
 [![License](https://img.shields.io/badge/license-MIT-black.svg)](LICENSE)
 [![Protocol](https://img.shields.io/badge/protocol-OpenTimestamps-orange.svg)](https://opentimestamps.org)
+[![Parent Studio](https://img.shields.io/badge/studio-Give_A_Bit-orange.svg)](https://giveabit.io)
 
-**Institutional-Grade Digital Notary & Cryptographic Settlement Mesh.** Satohash is a high-fidelity platform for verifiable document provenance, multi-party contract signatures, and automated cryptographic evidence gathering, anchored to the Bitcoin blockchain.
+**Institutional-Grade Digital Notary & Cryptographic Settlement Mesh.** Satohash is a high-fidelity platform for verifiable document provenance, multi-party contract signatures, and automated cryptographic evidence gathering, anchored to the Bitcoin blockchain. Built as a Free and Open Source (F.O.S.S.) Bitcoin app engineered by [Give A Bit](https://giveabit.io).
+
+For a deep dive into the business value, sovereign architecture, and unique advantages of this protocol, see our comprehensive [Product Pitch & Marketing Brief](file:///Users/cam/Documents/Satahash/docs/PRODUCT_PITCH.md).
 
 ---
 
 ## 🏛 The Elite Standard
-Satohash v4.0 transitions from a simple timestamping tool to a comprehensive **Sovereign Settlement Layer**. Designed for legal professionals, institutional archives, and autonomous agents, it provides absolute proof of existence with a premium, high-contrast user experience.
+Satohash v4.0 transitions from a simple timestamping tool to a comprehensive **Sovereign Settlement Layer**. Designed by [Give A Bit](https://giveabit.io) for legal professionals, institutional archives, and autonomous agents, it provides absolute proof of existence with a premium, high-contrast user experience.
 
 ### 🚀 Core Protocol Features
 

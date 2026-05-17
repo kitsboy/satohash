@@ -371,7 +371,7 @@ export default function AppShellNoir({ children }) {
         </div>
 
         {/* ── Main Content Area ───────────────────────────────────────────── */}
-        <div className="flex min-h-screen flex-1 flex-col pb-20 md:ml-64 md:pb-0">
+        <div className="flex min-h-screen w-full max-w-full flex-1 flex-col overflow-x-hidden pb-20 md:ml-64 md:pb-0">
           {/* Desktop Top Signal Bar */}
           <div className="sticky top-0 z-40 hidden h-14 items-center justify-between border-b border-[var(--border)] bg-[var(--bg-primary)]/80 px-6 backdrop-blur-md md:flex">
             <TopSignalBar />

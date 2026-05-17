@@ -5,10 +5,10 @@
 @layer base {
   :root {
     /* ── Backgrounds ──────────────────────────────────────── */
-    --bg-primary: #141b25;       /* Deep navy — breathable dark */
-    --bg-secondary: #1a2233;     /* Nav/surface */
-    --surface-raised: #1e2a3a;   /* Cards */
-    --surface-overlay: #223044;  /* Modals/tooltips */
+    --bg-primary: #141b25; /* Deep navy — breathable dark */
+    --bg-secondary: #1a2233; /* Nav/surface */
+    --surface-raised: #1e2a3a; /* Cards */
+    --surface-overlay: #223044; /* Modals/tooltips */
 
     /* ── Typography ───────────────────────────────────────── */
     --text-primary: #f1f5f9;
@@ -16,27 +16,27 @@
     --text-muted: #4a5568;
 
     /* ── Primary accent: Bitcoin Gold ────────────────────── */
-    --accent-gold: #F0B429;
+    --accent-gold: #f0b429;
     --accent-gold-glow: rgba(240, 180, 41, 0.35);
     --accent-gold-subtle: rgba(240, 180, 41, 0.08);
 
     /* ── Secondary accent: Teal ───────────────────────────── */
-    --accent-teal: #0EA5E9;
+    --accent-teal: #0ea5e9;
     --accent-teal-glow: rgba(14, 165, 233, 0.35);
     --accent-teal-subtle: rgba(14, 165, 233, 0.08);
 
     /* ── Semantic ─────────────────────────────────────────── */
-    --accent-success: #22D3A5;
-    --accent-danger: #F43F5E;
-    --accent-warning: #F0B429;
-    --accent-pending: #F0B429;
+    --accent-success: #22d3a5;
+    --accent-danger: #f43f5e;
+    --accent-warning: #f0b429;
+    --accent-pending: #f0b429;
 
     /* ── Legacy compatibility aliases ────────────────────── */
-    --primary: #F0B429;
-    --accent: #0EA5E9;
-    --accent-active: #0EA5E9;
+    --primary: #f0b429;
+    --accent: #0ea5e9;
+    --accent-active: #0ea5e9;
     --accent-active-glow: rgba(14, 165, 233, 0.35);
-    --accent-purple: #8B5CF6;
+    --accent-purple: #8b5cf6;
 
     /* ── Borders ──────────────────────────────────────────── */
     --border: rgba(255, 255, 255, 0.06);
@@ -78,7 +78,7 @@
     --border: rgba(0, 0, 0, 0.08);
     --border-bright: rgba(0, 0, 0, 0.15);
 
-    --accent-active: #D97706;
+    --accent-active: #d97706;
     --accent-active-glow: rgba(217, 119, 6, 0.2);
 
     background-color: var(--bg-primary) !important;
@@ -89,6 +89,9 @@
     background-color: var(--bg-primary) !important;
     color: var(--text-primary);
     scroll-behavior: smooth;
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100%;
   }
 
   body {
@@ -149,7 +152,9 @@
 
   .glass-card:hover {
     border-color: rgba(240, 180, 41, 0.3);
-    box-shadow: 0 0 0 1px rgba(240, 180, 41, 0.1), var(--shadow-elevated);
+    box-shadow:
+      0 0 0 1px rgba(240, 180, 41, 0.1),
+      var(--shadow-elevated);
     transform: translateY(-4px);
   }
 
@@ -175,7 +180,7 @@
     text-transform: uppercase;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     border-radius: var(--radius-button);
-    background: linear-gradient(135deg, #F0B429 0%, #D97706 100%);
+    background: linear-gradient(135deg, #f0b429 0%, #d97706 100%);
     box-shadow:
       0 4px 16px -4px rgba(240, 180, 41, 0.45),
       0 1px 1px rgba(255, 255, 255, 0.15) inset;
@@ -406,7 +411,7 @@
   .status-pill-waiting {
     border-color: rgba(240, 180, 41, 0.3);
     background-color: rgba(240, 180, 41, 0.06);
-    color: #D97706;
+    color: #d97706;
   }
 
   .status-pill-signed {
@@ -457,9 +462,7 @@
     background: var(--surface-overlay);
     border-radius: var(--radius-card);
     border: 1px solid var(--border-gold);
-    box-shadow:
-      var(--shadow-noir),
-      var(--shadow-gold);
+    box-shadow: var(--shadow-noir), var(--shadow-gold);
     animation: slideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     overflow: hidden;
   }
@@ -549,13 +552,13 @@
     font-weight: 800;
     color: #0d1117;
     border-radius: 1rem;
-    background: linear-gradient(135deg, #F0B429 0%, #D97706 100%);
+    background: linear-gradient(135deg, #f0b429 0%, #d97706 100%);
     box-shadow: 0 4px 16px -4px rgba(240, 180, 41, 0.4);
   }
 
   /* ─── New Utility Classes ───────────────────────────── */
   .gold-text {
-    background: linear-gradient(135deg, #F0B429 0%, #FCD34D 50%, #D97706 100%);
+    background: linear-gradient(135deg, #f0b429 0%, #fcd34d 50%, #d97706 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -583,11 +586,15 @@
   }
 
   .glow-gold {
-    box-shadow: 0 0 20px rgba(240, 180, 41, 0.3), 0 0 60px rgba(240, 180, 41, 0.1);
+    box-shadow:
+      0 0 20px rgba(240, 180, 41, 0.3),
+      0 0 60px rgba(240, 180, 41, 0.1);
   }
 
   .glow-teal {
-    box-shadow: 0 0 20px rgba(14, 165, 233, 0.3), 0 0 60px rgba(14, 165, 233, 0.1);
+    box-shadow:
+      0 0 20px rgba(14, 165, 233, 0.3),
+      0 0 60px rgba(14, 165, 233, 0.1);
   }
 }
 
@@ -680,10 +687,20 @@
 }
 
 @keyframes scanLine {
-  0% { transform: translateY(-100%); opacity: 0; }
-  10% { opacity: 1; }
-  90% { opacity: 1; }
-  100% { transform: translateY(100vh); opacity: 0; }
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
 }
 
 .animate-breathing {
@@ -704,14 +721,14 @@
 
 /* ─── Text Gradient ──────────────────────────────────────── */
 .text-gradient {
-  background: linear-gradient(135deg, #F0B429 0%, #0EA5E9 100%);
+  background: linear-gradient(135deg, #f0b429 0%, #0ea5e9 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .text-gradient-warm {
-  background: linear-gradient(135deg, #F0B429 0%, #D97706 100%);
+  background: linear-gradient(135deg, #f0b429 0%, #d97706 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -743,7 +760,7 @@
 .terminal-inset {
   background: #0d1117;
   border: 1px solid rgba(240, 180, 41, 0.08);
-  color: #FCD34D;
+  color: #fcd34d;
   font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
 }
 
