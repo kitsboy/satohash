@@ -152,7 +152,8 @@ export default function Landing() {
               className="flex items-center gap-2 rounded-xl border px-4 py-2 text-sm font-bold transition-all hover:text-yellow-400"
               style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
             >
-              ₿ Donate
+              <img src="/Bitcoin120x120.png" alt="Bitcoin" className="h-4 w-4 object-contain" />
+              Donate
             </button>
             <Link
               to="/stamp"
@@ -217,10 +218,11 @@ export default function Landing() {
                     setDonationOpen(true)
                     setNavOpen(false)
                   }}
-                  className="rounded-xl border py-3 text-sm font-bold"
+                  className="flex items-center justify-center gap-2 rounded-xl border py-3 text-sm font-bold"
                   style={{ borderColor: 'var(--border-gold)', color: 'var(--accent-gold)' }}
                 >
-                  ₿ Donate Bitcoin
+                  <img src="/Bitcoin120x120.png" alt="Bitcoin" className="h-4 w-4 object-contain" />
+                  Donate Bitcoin
                 </button>
                 <Link
                   to="/stamp"
@@ -1041,7 +1043,13 @@ export default function Landing() {
               >
                 <X size={16} />
               </button>
-              <div className="mb-2 text-3xl">₿</div>
+              <div className="mx-auto mb-4 flex justify-center">
+                <img
+                  src="/Bitcoin120x120.png"
+                  alt="Bitcoin Donation"
+                  className="h-16 w-16 object-contain"
+                />
+              </div>
               <h3 className="font-display mb-1 text-xl font-black">Support Satohash</h3>
               <p className="mb-6 text-sm" style={{ color: 'var(--text-secondary)' }}>
                 Keep timestamps free for everyone
