@@ -75,7 +75,7 @@ export default function ContractList() {
       signed: 1,
       signers: [
         { identity: 'legal@truth.nip05', role: 'Originator', status: 'Signed' },
-        { identity: 'counterparty@firm.com', role: 'Recipient', status: 'Pending' },
+        { identity: 'counterparty@firm.com', role: 'Recipient', status: 'Pending' }
       ]
     },
     {
@@ -88,7 +88,7 @@ export default function ContractList() {
       signed: 2,
       signers: [
         { identity: 'partner@sovereign.nodes', role: 'Originator', status: 'Signed' },
-        { identity: 'legal@firm.io', role: 'Co-Signer', status: 'Signed' },
+        { identity: 'legal@firm.io', role: 'Co-Signer', status: 'Signed' }
       ]
     }
   ]
@@ -160,89 +160,91 @@ export default function ContractList() {
                   No {activeTab} agreements found.
                 </p>
               </div>
-            ) : filteredContracts.map((contract) => (
-              <div
-                key={contract.id}
-                className="group space-y-5 rounded-3xl border border-[var(--border)] bg-[var(--bg-secondary)] p-5 transition-all hover:border-[var(--border-bright)] md:space-y-6 md:p-8"
-              >
-                <div className="flex items-start justify-between">
-                  <div className="space-y-2">
-                    <div className="flex flex-wrap items-center gap-2 md:gap-3">
-                      <h3 className="text-lg font-bold tracking-tight md:text-2xl">
-                        {contract.title}
-                      </h3>
-                      <span className="inline-flex items-center">
-                        <span
-                          className={`rounded-md border px-2 py-0.5 text-[8px] font-black tracking-widest uppercase ${contract.status === 'Anchored' ? 'border-[var(--accent-success)]/20 bg-[var(--accent-success)]/10 text-[var(--accent-success)]' : 'border-[var(--accent-pending)]/20 bg-[var(--accent-pending)]/10 text-[var(--accent-pending)]'}`}
-                        >
-                          {contract.status}
-                        </span>
-                        {contract.status === 'Anchored' && (
-                          <Tooltip
-                            title="Bitcoin Anchored"
-                            content="This document's hash has been permanently written into the Bitcoin blockchain. It can never be altered or backdated."
-                          />
-                        )}
-                      </span>
-                    </div>
-                    <p className="text-sm font-medium text-[var(--text-secondary)]">
-                      Client: {contract.client}
-                    </p>
-                  </div>
-                  <button className="flex h-10 w-10 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] text-[var(--text-secondary)] transition-all hover:text-[var(--text-primary)]">
-                    <ChevronRight size={18} />
-                  </button>
-                </div>
-
-                <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                  <div className="space-y-4">
-                    <h4 className="text-[10px] font-bold tracking-widest text-[var(--text-secondary)] uppercase">
-                      Signer Status
-                    </h4>
+            ) : (
+              filteredContracts.map((contract) => (
+                <div
+                  key={contract.id}
+                  className="group space-y-5 rounded-3xl border border-[var(--border)] bg-[var(--bg-secondary)] p-5 transition-all hover:border-[var(--border-bright)] md:space-y-6 md:p-8"
+                >
+                  <div className="flex items-start justify-between">
                     <div className="space-y-2">
-                      {(contract.signers || []).map((s) => (
-                        <SignerRow
-                          key={s.identity}
-                          identity={s.identity}
-                          role={s.role}
-                          status={s.status}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                  <div className="space-y-4">
-                    <h4 className="text-[10px] font-bold tracking-widest text-[var(--text-secondary)] uppercase">
-                      Settlement Info
-                    </h4>
-                    <div className="space-y-3 rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] p-4">
-                      <div className="flex items-center justify-between text-[10px] font-bold text-[var(--text-secondary)] uppercase">
-                        <span className="flex items-center">
-                          L402 Cost
-                          <Tooltip
-                            title="L402 Gating"
-                            content="A Bitcoin Lightning micropayment paywall. Callers pay a tiny SATS fee per API request — no account needed, just a Lightning wallet."
-                          />
+                      <div className="flex flex-wrap items-center gap-2 md:gap-3">
+                        <h3 className="text-lg font-bold tracking-tight md:text-2xl">
+                          {contract.title}
+                        </h3>
+                        <span className="inline-flex items-center">
+                          <span
+                            className={`rounded-md border px-2 py-0.5 text-[8px] font-black tracking-widest uppercase ${contract.status === 'Anchored' ? 'border-[var(--accent-success)]/20 bg-[var(--accent-success)]/10 text-[var(--accent-success)]' : 'border-[var(--accent-pending)]/20 bg-[var(--accent-pending)]/10 text-[var(--accent-pending)]'}`}
+                          >
+                            {contract.status}
+                          </span>
+                          {contract.status === 'Anchored' && (
+                            <Tooltip
+                              title="Bitcoin Anchored"
+                              content="This document's hash has been permanently written into the Bitcoin blockchain. It can never be altered or backdated."
+                            />
+                          )}
                         </span>
-                        <span className="text-white">1,200 SATS</span>
                       </div>
-                      <div className="flex items-center justify-between text-[10px] font-bold text-[var(--text-secondary)] uppercase">
-                        <span className="flex items-center">
-                          Escrow
-                          <Tooltip
-                            title="Escrow"
-                            content="Funds held in a neutral Lightning channel until all contract conditions are met. Released automatically when all parties sign."
-                          />
-                        </span>
-                        <span className="text-[var(--accent-pending)]">Awaiting Fund</span>
-                      </div>
+                      <p className="text-sm font-medium text-[var(--text-secondary)]">
+                        Client: {contract.client}
+                      </p>
                     </div>
-                    <button className="h-11 w-full rounded-xl border border-[var(--border)] text-[10px] font-bold tracking-widest uppercase transition-all hover:bg-[var(--surface-raised)]">
-                      Manage Orchestration
+                    <button className="flex h-10 w-10 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] text-[var(--text-secondary)] transition-all hover:text-[var(--text-primary)]">
+                      <ChevronRight size={18} />
                     </button>
                   </div>
+
+                  <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+                    <div className="space-y-4">
+                      <h4 className="text-[10px] font-bold tracking-widest text-[var(--text-secondary)] uppercase">
+                        Signer Status
+                      </h4>
+                      <div className="space-y-2">
+                        {(contract.signers || []).map((s) => (
+                          <SignerRow
+                            key={s.identity}
+                            identity={s.identity}
+                            role={s.role}
+                            status={s.status}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                    <div className="space-y-4">
+                      <h4 className="text-[10px] font-bold tracking-widest text-[var(--text-secondary)] uppercase">
+                        Settlement Info
+                      </h4>
+                      <div className="space-y-3 rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] p-4">
+                        <div className="flex items-center justify-between text-[10px] font-bold text-[var(--text-secondary)] uppercase">
+                          <span className="flex items-center">
+                            L402 Cost
+                            <Tooltip
+                              title="L402 Gating"
+                              content="A Bitcoin Lightning micropayment paywall. Callers pay a tiny SATS fee per API request — no account needed, just a Lightning wallet."
+                            />
+                          </span>
+                          <span className="text-white">1,200 SATS</span>
+                        </div>
+                        <div className="flex items-center justify-between text-[10px] font-bold text-[var(--text-secondary)] uppercase">
+                          <span className="flex items-center">
+                            Escrow
+                            <Tooltip
+                              title="Escrow"
+                              content="Funds held in a neutral Lightning channel until all contract conditions are met. Released automatically when all parties sign."
+                            />
+                          </span>
+                          <span className="text-[var(--accent-pending)]">Awaiting Fund</span>
+                        </div>
+                      </div>
+                      <button className="h-11 w-full rounded-xl border border-[var(--border)] text-[10px] font-bold tracking-widest uppercase transition-all hover:bg-[var(--surface-raised)]">
+                        Manage Orchestration
+                      </button>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))
+            )}
           </div>
         </div>
 

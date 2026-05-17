@@ -66,7 +66,9 @@ export default function WebCapture() {
       setStatus('captured')
     } catch (err) {
       setStatus('idle')
-      toast.error('Capture failed', { description: err?.message || 'Check your connection and try again' })
+      toast.error('Capture failed', {
+        description: err?.message || 'Check your connection and try again'
+      })
     }
   }
 
@@ -86,10 +88,14 @@ export default function WebCapture() {
       })
       await res.json()
       setStatus('anchored')
-      toast.success('Anchored to Bitcoin', { description: 'Proof is propagating to the global mesh' })
+      toast.success('Anchored to Bitcoin', {
+        description: 'Proof is propagating to the global mesh'
+      })
     } catch (err) {
       setStatus('captured')
-      toast.error('Anchoring failed', { description: err?.message || 'Check your connection and try again' })
+      toast.error('Anchoring failed', {
+        description: err?.message || 'Check your connection and try again'
+      })
     }
   }
 
@@ -114,8 +120,7 @@ export default function WebCapture() {
               className="mb-6 text-6xl leading-none font-black tracking-tighter uppercase italic md:text-8xl"
               style={{ color: 'var(--text-primary)' }}
             >
-              Snap{' '}
-              <span style={{ color: 'var(--accent-active)' }}>&amp;</span> <br />{' '}
+              Snap <span style={{ color: 'var(--accent-active)' }}>&amp;</span> <br />{' '}
               <span style={{ color: 'var(--accent-active)' }}>STAMP.</span>
             </h1>
             <p
@@ -264,7 +269,8 @@ export default function WebCapture() {
                             className="rounded-xl px-4 py-2 text-[10px] font-black tracking-widest uppercase"
                             style={{
                               border: '1px solid var(--accent-success)',
-                              background: 'color-mix(in srgb, var(--accent-success) 10%, transparent)',
+                              background:
+                                'color-mix(in srgb, var(--accent-success) 10%, transparent)',
                               color: 'var(--accent-success)'
                             }}
                           >
@@ -274,7 +280,8 @@ export default function WebCapture() {
                         <button
                           className="flex items-center gap-2 border-b-2 pb-1 text-[10px] font-black uppercase transition-all"
                           style={{
-                            borderColor: 'color-mix(in srgb, var(--accent-active) 20%, transparent)',
+                            borderColor:
+                              'color-mix(in srgb, var(--accent-active) 20%, transparent)',
                             color: 'var(--accent-active)'
                           }}
                         >
@@ -295,7 +302,9 @@ export default function WebCapture() {
                       {status === 'anchoring' && (
                         <div
                           className="absolute inset-0 flex flex-col items-center justify-center text-white backdrop-blur-sm"
-                          style={{ background: 'color-mix(in srgb, var(--accent-active) 40%, transparent)' }}
+                          style={{
+                            background: 'color-mix(in srgb, var(--accent-active) 40%, transparent)'
+                          }}
                         >
                           <Loader2 className="mb-8 animate-spin text-white" size={64} />
                           <p className="text-[12px] font-black tracking-[0.5em] uppercase italic">
@@ -387,7 +396,8 @@ export default function WebCapture() {
               <div
                 className="pointer-events-none absolute inset-0 opacity-10"
                 style={{
-                  background: 'radial-gradient(circle at 2px 2px, var(--accent-active) 1px, transparent 0)',
+                  background:
+                    'radial-gradient(circle at 2px 2px, var(--accent-active) 1px, transparent 0)',
                   backgroundSize: '16px 16px'
                 }}
               />
@@ -420,14 +430,22 @@ export default function WebCapture() {
                   <>
                     <button
                       className="group flex w-full items-center justify-center gap-3 rounded-2xl py-6 text-[10px] font-black tracking-[0.2em] uppercase transition-all"
-                      style={{ background: 'var(--bg-secondary)', color: 'var(--text-secondary)', border: '1px solid var(--border)' }}
+                      style={{
+                        background: 'var(--bg-secondary)',
+                        color: 'var(--text-secondary)',
+                        border: '1px solid var(--border)'
+                      }}
                     >
                       <Download size={16} style={{ color: 'var(--accent-active)' }} />{' '}
                       DOWNLOAD_ZIP_AFFIDAVIT
                     </button>
                     <button
                       className="flex w-full items-center justify-center gap-3 rounded-2xl py-6 text-[10px] font-black tracking-[0.2em] uppercase transition-all"
-                      style={{ background: 'var(--bg-primary)', border: '1px solid var(--border)', color: 'var(--text-secondary)' }}
+                      style={{
+                        background: 'var(--bg-primary)',
+                        border: '1px solid var(--border)',
+                        color: 'var(--text-secondary)'
+                      }}
                     >
                       <Share2 size={16} /> GENERATE_PUBLIC_LINK
                     </button>

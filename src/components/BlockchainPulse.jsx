@@ -32,7 +32,7 @@ export default function BlockchainPulse() {
       <div className="flex flex-col gap-1 p-6 md:flex-row md:items-center md:justify-between md:gap-8">
         {/* Network Status Label */}
         <div className="mb-4 flex items-center gap-4 border-[var(--border)] md:mb-0 md:border-r md:pr-8">
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[var(--surface-raised)] text-[var(--accent-active)] shadow-xl shadow-[var(--accent-active)]/10">
+          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[var(--surface-raised)] text-[var(--accent-active)] shadow-[var(--accent-active)]/10 shadow-xl">
             <Activity size={20} />
           </div>
           <div>

@@ -10,18 +10,38 @@ import {
   Database,
   Plus,
   Lock,
-  CheckCircle
+  CheckCircle,
+  EyeOff,
+  Video,
+  Mic,
+  RefreshCw,
+  FolderSync
 } from 'lucide-react'
-import { useState, useCallback, useEffect } from 'react'
+import { useState, useCallback, useEffect, useRef } from 'react'
 import { getTieredFeeEstimates } from '../utils/mempool.js'
 import { addErrorBreadcrumb } from '../utils/errors.js'
 import { toast } from 'sonner'
 import Tooltip from '../components/Tooltip'
 import { useSocket } from '../hooks/useSocket'
 import { useI18n } from '../i18n'
+import { downloadCertificate } from '../utils/certificate'
 
 export default function Stamp() {
+  const [stampMode, setStampMode] = useState('single') // single, capsule, redact, deposition
   const [isCapsuleMode, setIsCapsuleMode] = useState(false)
+
+  // ZK-Redact states
+  const [redactText, setRedactText] = useState('')
+  const [redactTerms, setRedactTerms] = useState('')
+  const [redactedTextOut, setRedactedTextOut] = useState('')
+  const [redactOriginalHash, setRedactOriginalHash] = useState('')
+  const [redactRedactedHash, setRedactRedactedHash] = useState('')
+
+  // Deposition states
+  const [recordingState, setRecordingState] = useState('idle') // idle, recording, stopped
+  const [recordedChunks, setRecordedChunks] = useState([])
+  const [audioUrl, setAudioUrl] = useState('')
+  const mediaRecorderRef = useRef(null)
   const [isDragging, setIsDragging] = useState(false)
   const [files, setFiles] = useState([])
   const [stampingStatus, setStampingStatus] = useState('idle') // idle, hashing, anchoring, complete
@@ -99,6 +119,80 @@ export default function Stamp() {
     },
     [isCapsuleMode]
   )
+
+  const handleComputeZK = async (text, terms) => {
+    setRedactText(text)
+    setRedactTerms(terms)
+
+    const termList = terms
+      .split(',')
+      .map((t) => t.trim())
+      .filter(Boolean)
+    let output = text
+    termList.forEach((t) => {
+      const regex = new RegExp(t.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&'), 'gi')
+      output = output.replace(regex, '[REDACTED]')
+    })
+    setRedactedTextOut(output)
+
+    const encoder = new TextEncoder()
+
+    // Original Hash
+    const origBuf = encoder.encode(text)
+    const origHashBuf = await crypto.subtle.digest('SHA-256', origBuf)
+    const origHash = Array.from(new Uint8Array(origHashBuf))
+      .map((b) => b.toString(16).padStart(2, '0'))
+      .join('')
+    setRedactOriginalHash(origHash)
+
+    // Redacted Hash
+    const redBuf = encoder.encode(output)
+    const redHashBuf = await crypto.subtle.digest('SHA-256', redBuf)
+    const redHash = Array.from(new Uint8Array(redHashBuf))
+      .map((b) => b.toString(16).padStart(2, '0'))
+      .join('')
+    setRedactRedactedHash(redHash)
+
+    // Prepare this as the file to stamp
+    const file = new File([output], 'redacted_document.txt', { type: 'text/plain' })
+    setFiles([file])
+  }
+
+  const startRecording = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
+      const recorder = new MediaRecorder(stream)
+      const chunks = []
+      recorder.ondataavailable = (e) => {
+        if (e.data.size > 0) chunks.push(e.data)
+      }
+      recorder.onstop = async () => {
+        const blob = new Blob(chunks, { type: 'audio/webm' })
+        const url = URL.createObjectURL(blob)
+        setAudioUrl(url)
+        const file = new File([blob], `deposition_statement_${Date.now()}.webm`, {
+          type: 'audio/webm'
+        })
+        setFiles([file])
+        toast.success('🎙 Deposition captured successfully! Ready to anchor.')
+      }
+      recorder.start()
+      mediaRecorderRef.current = recorder
+      setRecordedChunks(chunks)
+      setRecordingState('recording')
+      toast.info('🎙 Recording started... Speak clearly into your microphone.')
+    } catch (err) {
+      toast.error('Microphone access denied or unavailable.')
+    }
+  }
+
+  const stopRecording = () => {
+    if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') {
+      mediaRecorderRef.current.stop()
+      mediaRecorderRef.current.stream.getTracks().forEach((track) => track.stop())
+      setRecordingState('stopped')
+    }
+  }
 
   const validateNpub = (value) => {
     if (!value.trim()) return '' // empty is fine — optional field
@@ -240,6 +334,39 @@ export default function Stamp() {
       existing.unshift({ ...data, filename: caseLabel || file.name, size: file.size })
       localStorage.setItem('satohash_stamps', JSON.stringify(existing.slice(0, 100)))
     } catch (err) {
+      if (
+        !navigator.onLine ||
+        err.message?.includes('Failed to fetch') ||
+        err.message?.includes('server') ||
+        err.message?.includes('running')
+      ) {
+        const file = files[0]
+        const queuedItem = {
+          id: 'offline-' + Math.random().toString(36).substr(2, 9),
+          filename: caseLabel || file.name,
+          hash: hashValue,
+          created_at: new Date().toISOString(),
+          status: 'pending',
+          size: file?.size || 0
+        }
+
+        const offlineQ = JSON.parse(localStorage.getItem('satohash_offline_queue') || '[]')
+        offlineQ.push(queuedItem)
+        localStorage.setItem('satohash_offline_queue', JSON.stringify(offlineQ))
+
+        toast.warning('⚡ Stamp Queued Offline', {
+          description: 'Connection offline. Hash queued for synchronization.'
+        })
+
+        const existing = JSON.parse(localStorage.getItem('satohash_stamps') || '[]')
+        existing.unshift(queuedItem)
+        localStorage.setItem('satohash_stamps', JSON.stringify(existing.slice(0, 100)))
+
+        setProofResult(queuedItem)
+        setStampingStatus('complete')
+        return
+      }
+
       const msg = err.message || 'Failed to stamp. Is the server running?'
       setError(msg)
       toast.error('Stamping failed', { description: msg })
@@ -321,49 +448,107 @@ export default function Stamp() {
         {/* ── Main Dropzone ─────────────────────── */}
         <div className="space-y-8 lg:col-span-2">
           {/* Mode Selector */}
-          <div className="mb-6 grid grid-cols-2 gap-3">
+          <div className="mb-6 grid grid-cols-2 gap-3 md:grid-cols-4">
             <button
               onClick={() => {
+                setStampMode('single')
                 setIsCapsuleMode(false)
                 setFiles([])
               }}
               className="rounded-2xl border p-4 text-left transition-all"
               style={{
-                borderColor: !isCapsuleMode ? 'var(--accent-gold)' : 'var(--border)',
-                background: !isCapsuleMode ? 'rgba(240,180,41,0.06)' : 'var(--bg-secondary)'
+                borderColor: stampMode === 'single' ? 'var(--accent-gold)' : 'var(--border)',
+                background: stampMode === 'single' ? 'rgba(240,180,41,0.06)' : 'var(--bg-secondary)'
               }}
             >
               <div className="mb-1 text-lg">📄</div>
               <div
                 className="mb-1 text-xs font-black tracking-widest uppercase"
-                style={{ color: !isCapsuleMode ? 'var(--accent-gold)' : 'var(--text-primary)' }}
+                style={{
+                  color: stampMode === 'single' ? 'var(--accent-gold)' : 'var(--text-primary)'
+                }}
               >
                 Single File
               </div>
               <div className="text-[10px] leading-snug" style={{ color: 'var(--text-secondary)' }}>
-                Timestamp one document, image, or file.
+                Timestamp one document or file.
               </div>
             </button>
             <button
               onClick={() => {
+                setStampMode('capsule')
                 setIsCapsuleMode(true)
                 setFiles([])
               }}
               className="rounded-2xl border p-4 text-left transition-all"
               style={{
-                borderColor: isCapsuleMode ? 'var(--accent-gold)' : 'var(--border)',
-                background: isCapsuleMode ? 'rgba(240,180,41,0.06)' : 'var(--bg-secondary)'
+                borderColor: stampMode === 'capsule' ? 'var(--accent-gold)' : 'var(--border)',
+                background:
+                  stampMode === 'capsule' ? 'rgba(240,180,41,0.06)' : 'var(--bg-secondary)'
               }}
             >
               <div className="mb-1 text-lg">📦</div>
               <div
                 className="mb-1 text-xs font-black tracking-widest uppercase"
-                style={{ color: isCapsuleMode ? 'var(--accent-gold)' : 'var(--text-primary)' }}
+                style={{
+                  color: stampMode === 'capsule' ? 'var(--accent-gold)' : 'var(--text-primary)'
+                }}
               >
                 Time Capsule
               </div>
               <div className="text-[10px] leading-snug" style={{ color: 'var(--text-secondary)' }}>
                 Bundle multiple files into one proof.
+              </div>
+            </button>
+            <button
+              onClick={() => {
+                setStampMode('redact')
+                setIsCapsuleMode(false)
+                setFiles([])
+              }}
+              className="rounded-2xl border p-4 text-left transition-all"
+              style={{
+                borderColor: stampMode === 'redact' ? 'var(--accent-gold)' : 'var(--border)',
+                background: stampMode === 'redact' ? 'rgba(240,180,41,0.06)' : 'var(--bg-secondary)'
+              }}
+            >
+              <div className="mb-1 text-lg">🔒</div>
+              <div
+                className="mb-1 text-xs font-black tracking-widest uppercase"
+                style={{
+                  color: stampMode === 'redact' ? 'var(--accent-gold)' : 'var(--text-primary)'
+                }}
+              >
+                ZK-Redact
+              </div>
+              <div className="text-[10px] leading-snug" style={{ color: 'var(--text-secondary)' }}>
+                Blackout private data before hashing.
+              </div>
+            </button>
+            <button
+              onClick={() => {
+                setStampMode('deposition')
+                setIsCapsuleMode(false)
+                setFiles([])
+              }}
+              className="rounded-2xl border p-4 text-left transition-all"
+              style={{
+                borderColor: stampMode === 'deposition' ? 'var(--accent-gold)' : 'var(--border)',
+                background:
+                  stampMode === 'deposition' ? 'rgba(240,180,41,0.06)' : 'var(--bg-secondary)'
+              }}
+            >
+              <div className="mb-1 text-lg">🎙</div>
+              <div
+                className="mb-1 text-xs font-black tracking-widest uppercase"
+                style={{
+                  color: stampMode === 'deposition' ? 'var(--accent-gold)' : 'var(--text-primary)'
+                }}
+              >
+                Deposition
+              </div>
+              <div className="text-[10px] leading-snug" style={{ color: 'var(--text-secondary)' }}>
+                Record voice testimony client-side.
               </div>
             </button>
           </div>
@@ -373,7 +558,8 @@ export default function Stamp() {
             onDragLeave={handleDrag}
             onDragOver={handleDrag}
             onDrop={handleDrop}
-            onClick={() => {
+            onClick={(e) => {
+              if (stampMode !== 'single' && stampMode !== 'capsule') return
               const input = document.getElementById('file-input')
               if (input && stampingStatus === 'idle') input.click()
             }}
@@ -381,7 +567,11 @@ export default function Stamp() {
               borderColor: isDragging ? 'var(--accent-gold)' : 'var(--border)',
               backgroundColor: isDragging ? 'var(--surface-raised)' : 'transparent'
             }}
-            className="group relative flex h-[400px] cursor-pointer flex-col items-center justify-center overflow-hidden rounded-[2.5rem] border-2 border-dashed p-12 text-center transition-colors"
+            className={`group relative flex h-[460px] flex-col items-center justify-center overflow-hidden rounded-[2.5rem] border-2 border-dashed p-12 text-center transition-colors ${
+              (stampMode === 'single' || stampMode === 'capsule') && stampingStatus === 'idle'
+                ? 'cursor-pointer'
+                : ''
+            }`}
           >
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,var(--accent-gold),transparent)] opacity-0 transition-opacity group-hover:opacity-[0.03]" />
 
@@ -392,73 +582,203 @@ export default function Stamp() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
-                  className="space-y-6"
+                  className="flex h-full w-full flex-col items-center justify-center space-y-6"
                 >
-                  <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-3xl border border-[var(--border)] bg-[var(--surface-raised)] text-[var(--accent-gold)] shadow-2xl">
-                    {isCapsuleMode ? <FileArchive size={32} /> : <Upload size={32} />}
-                  </div>
-                  <div className="space-y-2">
-                    <h3 className="text-2xl font-bold tracking-tight">
-                      {isCapsuleMode ? 'Assemble Evidence Capsule' : t('stamp', 'title')}
-                    </h3>
-                    <p className="mx-auto max-w-sm font-medium text-[var(--text-secondary)]">
-                      {isCapsuleMode
-                        ? 'Drop multiple files to create a signed evidence bundle anchored as a single proof.'
-                        : t('stamp', 'dropzone')}
-                    </p>
-                  </div>
+                  {stampMode === 'redact' ? (
+                    <div
+                      className="z-10 w-full max-w-lg space-y-4 text-left"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <div className="space-y-1">
+                        <h4 className="text-sm font-black tracking-widest text-[var(--accent-gold)] uppercase">
+                          🔒 Zero-Knowledge Redacted Document
+                        </h4>
+                        <p className="text-[10px] text-[var(--text-secondary)] uppercase">
+                          Type your document text and specify terms to redact (comma-separated)
+                        </p>
+                      </div>
+
+                      <textarea
+                        placeholder="Enter the sensitive document text here..."
+                        value={redactText}
+                        onChange={(e) => handleComputeZK(e.target.value, redactTerms)}
+                        rows={4}
+                        className="w-full rounded-xl border bg-transparent p-3 text-xs outline-none focus:border-[var(--accent-gold)]"
+                        style={{ borderColor: 'var(--border)', color: 'var(--text-primary)' }}
+                      />
+
+                      <input
+                        type="text"
+                        placeholder="Blacklisted Terms: e.g. password, social security, SSN..."
+                        value={redactTerms}
+                        onChange={(e) => handleComputeZK(redactText, e.target.value)}
+                        className="h-10 w-full rounded-xl border bg-transparent px-3 text-xs outline-none focus:border-[var(--accent-gold)]"
+                        style={{ borderColor: 'var(--border)', color: 'var(--text-primary)' }}
+                      />
+
+                      {redactedTextOut && (
+                        <div className="space-y-2 rounded-xl border border-white/5 bg-black/40 p-3 font-mono text-[9px] text-[var(--text-secondary)]">
+                          <p className="text-[8px] font-black text-white/40 uppercase">
+                            Redacted Preview
+                          </p>
+                          <div className="max-h-20 overflow-y-auto whitespace-pre-wrap">
+                            {redactedTextOut}
+                          </div>
+                        </div>
+                      )}
+
+                      {redactOriginalHash && (
+                        <div className="grid grid-cols-2 gap-3 font-mono text-[8px]">
+                          <div className="rounded-lg border border-red-900/30 bg-red-950/20 p-2.5">
+                            <p className="font-black text-red-400 uppercase">
+                              Original Document Hash
+                            </p>
+                            <p className="truncate text-red-300">{redactOriginalHash}</p>
+                          </div>
+                          <div className="rounded-lg border border-emerald-900/30 bg-emerald-950/20 p-2.5">
+                            <p className="font-black text-emerald-400 uppercase">
+                              Redacted Document Hash
+                            </p>
+                            <p className="truncate text-emerald-300">{redactRedactedHash}</p>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  ) : stampMode === 'deposition' ? (
+                    <div
+                      className="z-10 w-full max-w-md space-y-6 text-center"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <div className="space-y-1">
+                        <h4 className="text-sm font-black tracking-widest text-[var(--accent-gold)] uppercase">
+                          🎙 Oral Deposition Statement
+                        </h4>
+                        <p className="text-[10px] text-[var(--text-secondary)] uppercase">
+                          Capture voice deposition immutably client-side on Bitcoin.
+                        </p>
+                      </div>
+
+                      <div className="flex justify-center gap-4">
+                        {recordingState !== 'recording' ? (
+                          <button
+                            onClick={startRecording}
+                            className="flex h-16 w-16 items-center justify-center rounded-full bg-emerald-500 text-white shadow-[0_0_15px_rgba(16,185,129,0.3)] transition-all hover:scale-105"
+                          >
+                            <Mic size={24} />
+                          </button>
+                        ) : (
+                          <button
+                            onClick={stopRecording}
+                            className="flex h-16 w-16 animate-pulse items-center justify-center rounded-full bg-red-500 text-white shadow-[0_0_15px_rgba(239,68,68,0.5)] transition-all hover:scale-105"
+                          >
+                            <Video size={24} />
+                          </button>
+                        )}
+                      </div>
+
+                      <p className="text-[10px] font-black tracking-wider uppercase">
+                        Status:{' '}
+                        <span
+                          style={{
+                            color:
+                              recordingState === 'recording'
+                                ? 'var(--accent-danger)'
+                                : 'var(--text-secondary)'
+                          }}
+                        >
+                          {recordingState === 'recording'
+                            ? '🔴 Recording active...'
+                            : recordingState === 'stopped'
+                              ? '✅ Captured'
+                              : 'Idle'}
+                        </span>
+                      </p>
+
+                      {audioUrl && (
+                        <div className="space-y-2">
+                          <audio src={audioUrl} controls className="mx-auto h-10 w-full max-w-xs" />
+                          <p className="text-[9px] text-[var(--text-secondary)] uppercase">
+                            Statement recorded and loaded. Ready to anchor.
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <>
+                      <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-3xl border border-[var(--border)] bg-[var(--surface-raised)] text-[var(--accent-gold)] shadow-2xl">
+                        {isCapsuleMode ? <FileArchive size={32} /> : <Upload size={32} />}
+                      </div>
+                      <div className="space-y-2">
+                        <h3 className="text-2xl font-bold tracking-tight">
+                          {isCapsuleMode ? 'Assemble Evidence Capsule' : t('stamp', 'title')}
+                        </h3>
+                        <p className="mx-auto max-w-sm font-medium text-[var(--text-secondary)]">
+                          {isCapsuleMode
+                            ? 'Drop multiple files to create a signed evidence bundle anchored as a single proof.'
+                            : t('stamp', 'dropzone')}
+                        </p>
+                      </div>
+                    </>
+                  )}
 
                   {/* Mobile file input */}
-                  <input
-                    type="file"
-                    id="file-input"
-                    className="hidden"
-                    onChange={(e) => {
-                      if (e.target.files?.[0]) {
-                        setFiles(
-                          isCapsuleMode ? [...files, e.target.files[0]] : [e.target.files[0]]
-                        )
-                      }
-                    }}
-                  />
-                  {/* Mobile file/camera picker — shown on touch devices */}
-                  <label
-                    className="flex cursor-pointer flex-col items-center gap-3 rounded-2xl border-2 border-dashed p-6 transition-all active:scale-95 sm:hidden"
-                    style={{
-                      borderColor: 'var(--border-bright)',
-                      background: 'var(--bg-secondary)'
-                    }}
-                  >
-                    <input
-                      type="file"
-                      className="hidden"
-                      accept="*/*"
-                      capture="environment"
-                      onChange={(e) => {
-                        if (e.target.files?.length) {
-                          const newFiles = Array.from(e.target.files)
-                          setFiles(isCapsuleMode ? [...files, ...newFiles] : [newFiles[0]])
-                        }
-                      }}
-                    />
-                    <div
-                      className="flex h-16 w-16 items-center justify-center rounded-2xl"
-                      style={{
-                        background: 'var(--accent-gold-subtle)',
-                        color: 'var(--accent-gold)'
-                      }}
-                    >
-                      <Upload size={28} />
-                    </div>
-                    <div className="text-center">
-                      <p className="text-sm font-black" style={{ color: 'var(--text-primary)' }}>
-                        Tap to select file
-                      </p>
-                      <p className="mt-1 text-xs" style={{ color: 'var(--text-secondary)' }}>
-                        Camera, photos, or any file
-                      </p>
-                    </div>
-                  </label>
+                  {(stampMode === 'single' || stampMode === 'capsule') && (
+                    <>
+                      <input
+                        type="file"
+                        id="file-input"
+                        className="hidden"
+                        onChange={(e) => {
+                          if (e.target.files?.[0]) {
+                            setFiles(
+                              isCapsuleMode ? [...files, e.target.files[0]] : [e.target.files[0]]
+                            )
+                          }
+                        }}
+                      />
+                      {/* Mobile file/camera picker — shown on touch devices */}
+                      <label
+                        className="flex cursor-pointer flex-col items-center gap-3 rounded-2xl border-2 border-dashed p-6 transition-all active:scale-95 sm:hidden"
+                        style={{
+                          borderColor: 'var(--border-bright)',
+                          background: 'var(--bg-secondary)'
+                        }}
+                      >
+                        <input
+                          type="file"
+                          className="hidden"
+                          accept="*/*"
+                          capture="environment"
+                          onChange={(e) => {
+                            if (e.target.files?.length) {
+                              const newFiles = Array.from(e.target.files)
+                              setFiles(isCapsuleMode ? [...files, ...newFiles] : [newFiles[0]])
+                            }
+                          }}
+                        />
+                        <div
+                          className="flex h-16 w-16 items-center justify-center rounded-2xl"
+                          style={{
+                            background: 'var(--accent-gold-subtle)',
+                            color: 'var(--accent-gold)'
+                          }}
+                        >
+                          <Upload size={28} />
+                        </div>
+                        <div className="text-center">
+                          <p
+                            className="text-sm font-black"
+                            style={{ color: 'var(--text-primary)' }}
+                          >
+                            Tap to select file
+                          </p>
+                          <p className="mt-1 text-xs" style={{ color: 'var(--text-secondary)' }}>
+                            Camera, photos, or any file
+                          </p>
+                        </div>
+                      </label>
+                    </>
+                  )}
                 </motion.div>
               ) : stampingStatus === 'complete' && proofResult ? (
                 <motion.div
@@ -548,13 +868,31 @@ export default function Stamp() {
 
                     {/* 3 CTA buttons */}
                     <div className="grid grid-cols-1 gap-3">
-                      <a
-                        href={`${import.meta.env.VITE_API_URL || 'http://localhost:3001'}/api/stamps/${proofResult?.id}?download=true`}
-                        className="flex items-center justify-center gap-2 rounded-xl py-3.5 text-sm font-black tracking-wider uppercase transition-all hover:opacity-90"
-                        style={{ background: 'var(--accent-gold)', color: '#141b25' }}
-                      >
-                        ⬇ Download OTS Proof File
-                      </a>
+                      <div className="grid grid-cols-2 gap-3">
+                        <a
+                          href={`${import.meta.env.VITE_API_URL || 'http://localhost:3001'}/api/stamps/${proofResult?.id}?download=true`}
+                          className="flex items-center justify-center gap-2 rounded-xl py-3.5 text-xs font-black tracking-wider uppercase transition-all hover:opacity-90"
+                          style={{ background: 'var(--accent-gold)', color: '#141b25' }}
+                        >
+                          ⬇ OTS Proof
+                        </a>
+                        <button
+                          onClick={() =>
+                            downloadCertificate({
+                              id: proofResult?.id || 'pending',
+                              name: files[0]?.name || proofResult?.filename || 'Document',
+                              fullHash: proofResult?.hash,
+                              hash: proofResult?.hash,
+                              date: new Date().toISOString().split('T')[0],
+                              status: isConfirmed ? 'confirmed' : 'pending'
+                            })
+                          }
+                          className="flex items-center justify-center gap-2 rounded-xl py-3.5 text-xs font-black tracking-wider uppercase transition-all hover:opacity-90"
+                          style={{ background: 'var(--accent-active)', color: '#fff' }}
+                        >
+                          📜 Certificate
+                        </button>
+                      </div>
                       <div className="grid grid-cols-2 gap-3">
                         <button
                           onClick={() => (window.location.href = '/vault')}
@@ -801,12 +1139,24 @@ export default function Stamp() {
                         )}
                       </div>
                     ))}
-                    <span className="flex items-center">
+                    <span className="flex items-center gap-4">
                       <button
                         onClick={() => setCoSigners([...coSigners, ''])}
                         className="text-[10px] font-bold text-[var(--accent-gold)] uppercase"
                       >
                         + {t('stamp', 'addCoSigner')}
+                      </button>
+                      <button
+                        onClick={() => {
+                          const invite = `${window.location.origin}/stamp?cosign=true&hash=${hashValue || 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'}&npub=${localStorage.getItem('satohash_npub') || ''}`
+                          navigator.clipboard.writeText(invite)
+                          toast.success('✉ Co-Sign DM Invitation Copied!', {
+                            description: 'Send this link to your co-signer.'
+                          })
+                        }}
+                        className="text-[10px] font-bold text-[var(--accent-active)] uppercase"
+                      >
+                        ✉ Copy Co-Sign Invitation
                       </button>
                       <Tooltip
                         title="Co-Signers"

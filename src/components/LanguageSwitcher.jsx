@@ -30,7 +30,7 @@ export default function LanguageSwitcher() {
         aria-label="Select language"
         aria-haspopup="listbox"
         aria-expanded={open}
-        className="flex h-8 items-center gap-2 rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] px-3 text-[10px] font-black tracking-widest uppercase text-[var(--text-secondary)] transition-all hover:border-[var(--border-bright)] hover:text-[var(--text-primary)]"
+        className="flex h-8 items-center gap-2 rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] px-3 text-[10px] font-black tracking-widest text-[var(--text-secondary)] uppercase transition-all hover:border-[var(--border-bright)] hover:text-[var(--text-primary)]"
       >
         <span className="text-sm leading-none">{current.flag}</span>
         <span>{current.code.toUpperCase()}</span>
@@ -60,9 +60,7 @@ export default function LanguageSwitcher() {
                     setOpen(false)
                   }}
                   className={`flex w-full cursor-pointer items-center gap-3 px-4 py-2.5 text-left text-xs font-bold transition-colors hover:bg-[var(--surface-raised)] ${
-                    isActive
-                      ? 'text-[var(--accent-active)]'
-                      : 'text-[var(--text-secondary)]'
+                    isActive ? 'text-[var(--accent-active)]' : 'text-[var(--text-secondary)]'
                   }`}
                 >
                   <span className="text-base leading-none">{l.flag}</span>

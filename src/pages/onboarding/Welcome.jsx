@@ -420,7 +420,10 @@ export default function Welcome() {
         </div>
 
         {/* PROTOCOL DEEP DIVE - Moved from HowItWorks */}
-        <div id="protocol-deep-dive" style={{ paddingBottom: '120px', background: '#fff', position: 'relative' }}>
+        <div
+          id="protocol-deep-dive"
+          style={{ paddingBottom: '120px', background: '#fff', position: 'relative' }}
+        >
           <div className="layout-container">
             <div className="mx-auto max-w-4xl">
               <h2

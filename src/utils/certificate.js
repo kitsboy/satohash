@@ -6,7 +6,8 @@ import { jsPDF } from 'jspdf'
  */
 export function downloadCertificate(item) {
   const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' })
-  const pageW = 210, margin = 20
+  const pageW = 210,
+    margin = 20
 
   // Background
   doc.setFillColor(253, 251, 247)

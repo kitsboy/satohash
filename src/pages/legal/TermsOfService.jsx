@@ -14,7 +14,7 @@ import {
   Mail,
   AlertCircle,
   Scale,
-  Gavel,
+  Gavel
 } from 'lucide-react'
 
 /* ─── Animation ──────────────────────────────────────────── */
@@ -23,8 +23,8 @@ const fadeUp = {
   visible: (i = 0) => ({
     opacity: 1,
     y: 0,
-    transition: { duration: 0.55, ease: [0.16, 1, 0.3, 1], delay: i * 0.065 },
-  }),
+    transition: { duration: 0.55, ease: [0.16, 1, 0.3, 1], delay: i * 0.065 }
+  })
 }
 
 /* ─── Sections ────────────────────────────────────────────── */
@@ -54,7 +54,7 @@ const SECTIONS = [
           and we'll explain it.
         </div>
       </div>
-    ),
+    )
   },
   {
     id: '02',
@@ -70,8 +70,24 @@ const SECTIONS = [
         </p>
         <div className="grid gap-3 sm:grid-cols-2">
           {[
-            { label: 'What we do', items: ['Hash your document client-side', 'Relay the hash to Bitcoin via OpenTimestamps', 'Generate a verifiable proof record', 'Store your hash and timestamp'] },
-            { label: 'What we never do', items: ["Read or store your document's contents", 'Provide legal advice or representation', 'Guarantee legal outcomes in any jurisdiction', 'Act as a custodian of your original files'] },
+            {
+              label: 'What we do',
+              items: [
+                'Hash your document client-side',
+                'Relay the hash to Bitcoin via OpenTimestamps',
+                'Generate a verifiable proof record',
+                'Store your hash and timestamp'
+              ]
+            },
+            {
+              label: 'What we never do',
+              items: [
+                "Read or store your document's contents",
+                'Provide legal advice or representation',
+                'Guarantee legal outcomes in any jurisdiction',
+                'Act as a custodian of your original files'
+              ]
+            }
           ].map((col, i) => (
             <div
               key={i}
@@ -84,7 +100,10 @@ const SECTIONS = [
               </p>
               <ul className="space-y-2">
                 {col.items.map((item, j) => (
-                  <li key={j} className={`flex items-start gap-2 text-sm ${i === 0 ? 'text-emerald-900/80' : 'text-rose-900/70'}`}>
+                  <li
+                    key={j}
+                    className={`flex items-start gap-2 text-sm ${i === 0 ? 'text-emerald-900/80' : 'text-rose-900/70'}`}
+                  >
                     {i === 0 ? (
                       <CheckCircle size={13} className="mt-0.5 shrink-0 text-emerald-600" />
                     ) : (
@@ -98,7 +117,7 @@ const SECTIONS = [
           ))}
         </div>
       </div>
-    ),
+    )
   },
   {
     id: '03',
@@ -114,40 +133,43 @@ const SECTIONS = [
               icon: CheckCircle,
               color: 'text-emerald-600',
               bg: 'bg-emerald-50 border-emerald-200',
-              text: 'You are using the Service for lawful purposes only.',
+              text: 'You are using the Service for lawful purposes only.'
             },
             {
               icon: CheckCircle,
               color: 'text-emerald-600',
               bg: 'bg-emerald-50 border-emerald-200',
-              text: 'You own or have the right to timestamp the documents you submit.',
+              text: 'You own or have the right to timestamp the documents you submit.'
             },
             {
               icon: CheckCircle,
               color: 'text-emerald-600',
               bg: 'bg-emerald-50 border-emerald-200',
-              text: 'You are at least 18 years of age or have parental consent.',
+              text: 'You are at least 18 years of age or have parental consent.'
             },
             {
               icon: XCircle,
               color: 'text-rose-500',
               bg: 'bg-rose-50 border-rose-100',
-              text: 'You will not timestamp documents that contain illegal content (CSAM, classified government material, etc.).',
+              text: 'You will not timestamp documents that contain illegal content (CSAM, classified government material, etc.).'
             },
             {
               icon: XCircle,
               color: 'text-rose-500',
               bg: 'bg-rose-50 border-rose-100',
-              text: 'You will not use the Service to fabricate, backdate, or misrepresent document provenance.',
+              text: 'You will not use the Service to fabricate, backdate, or misrepresent document provenance.'
             },
             {
               icon: XCircle,
               color: 'text-rose-500',
               bg: 'bg-rose-50 border-rose-100',
-              text: 'You will not attempt to reverse-engineer, flood, or disrupt the Service.',
-            },
+              text: 'You will not attempt to reverse-engineer, flood, or disrupt the Service.'
+            }
           ].map((item, i) => (
-            <div key={i} className={`flex items-start gap-3 rounded-xl border px-4 py-3 ${item.bg}`}>
+            <div
+              key={i}
+              className={`flex items-start gap-3 rounded-xl border px-4 py-3 ${item.bg}`}
+            >
               <item.icon size={15} className={`mt-0.5 shrink-0 ${item.color}`} />
               <span className="text-sm leading-relaxed">{item.text}</span>
             </div>
@@ -158,7 +180,7 @@ const SECTIONS = [
           reporting to relevant authorities.
         </p>
       </div>
-    ),
+    )
   },
   {
     id: '04',
@@ -168,9 +190,7 @@ const SECTIONS = [
     content: (
       <div className="space-y-4 text-slate-700">
         <div className="rounded-2xl border border-amber-200 bg-amber-50 p-5">
-          <p className="text-sm font-bold text-amber-900">
-            Your documents are yours. Full stop.
-          </p>
+          <p className="text-sm font-bold text-amber-900">Your documents are yours. Full stop.</p>
           <p className="mt-1 text-sm leading-relaxed text-amber-800/80">
             Using Satohash does not transfer any rights in your documents to us. We claim no
             license, ownership, or interest in the content of anything you timestamp.
@@ -188,7 +208,7 @@ const SECTIONS = [
           verification.
         </p>
       </div>
-    ),
+    )
   },
   {
     id: '05',
@@ -198,16 +218,15 @@ const SECTIONS = [
     content: (
       <div className="space-y-4 text-slate-700">
         <p className="leading-relaxed">
-          Satohash provides a{' '}
-          <strong>technical tool for generating cryptographic evidence</strong>. We do not provide
-          legal services, and our proofs do not constitute legal advice.
+          Satohash provides a <strong>technical tool for generating cryptographic evidence</strong>.
+          We do not provide legal services, and our proofs do not constitute legal advice.
         </p>
         <div className="space-y-3">
           {[
-            "Satohash is not responsible for the legal admissibility of proofs in any specific jurisdiction. Laws vary, and you should consult counsel for legal proceedings.",
-            "We are not liable for loss of your original files. Without the original file, a Bitcoin-anchored hash cannot be verified. Keep secure backups.",
-            "Our total liability to you for any claim arising from use of the Service is limited to the amount you paid us in the preceding 12 months.",
-            "We are not liable for indirect, incidental, special, or consequential damages — including lost profits, lost data, or reputational harm.",
+            'Satohash is not responsible for the legal admissibility of proofs in any specific jurisdiction. Laws vary, and you should consult counsel for legal proceedings.',
+            'We are not liable for loss of your original files. Without the original file, a Bitcoin-anchored hash cannot be verified. Keep secure backups.',
+            'Our total liability to you for any claim arising from use of the Service is limited to the amount you paid us in the preceding 12 months.',
+            'We are not liable for indirect, incidental, special, or consequential damages — including lost profits, lost data, or reputational harm.'
           ].map((item, i) => (
             <div
               key={i}
@@ -219,16 +238,14 @@ const SECTIONS = [
           ))}
         </div>
         <div className="rounded-2xl border border-rose-100 bg-rose-50 p-5">
-          <p className="text-sm font-bold text-rose-800 uppercase tracking-wide mb-1">
-            Important
-          </p>
+          <p className="mb-1 text-sm font-bold tracking-wide text-rose-800 uppercase">Important</p>
           <p className="text-sm leading-relaxed text-rose-700/80">
             The Service is provided "as is" without warranties of any kind, express or implied,
             including merchantability, fitness for a particular purpose, or non-infringement.
           </p>
         </div>
       </div>
-    ),
+    )
   },
   {
     id: '06',
@@ -255,7 +272,7 @@ const SECTIONS = [
           </p>
         </div>
       </div>
-    ),
+    )
   },
   {
     id: '07',
@@ -280,8 +297,8 @@ const SECTIONS = [
           Satohash account. Termination does not affect Bitcoin-level records.
         </div>
       </div>
-    ),
-  },
+    )
+  }
 ]
 
 /* ─── Component ──────────────────────────────────────────── */
@@ -289,7 +306,7 @@ export default function TermsOfService() {
   const navigate = useNavigate()
 
   return (
-    <div className="min-h-screen bg-[var(--bg-primary)] pb-32 pt-32 text-[var(--text-primary)]">
+    <div className="min-h-screen bg-[var(--bg-primary)] pt-32 pb-32 text-[var(--text-primary)]">
       {/* Ambient glow */}
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
         <div className="absolute top-0 right-1/3 h-[400px] w-[400px] rounded-full bg-[var(--accent-active)] opacity-[0.04] blur-[130px]" />
@@ -385,10 +402,10 @@ export default function TermsOfService() {
                 Summary — Plain Language
               </p>
               <p className="text-sm leading-relaxed text-indigo-900/80">
-                You keep full ownership of your documents. We provide a tool to create
-                cryptographic proof that your document existed at a certain time. We are a software
-                provider, not a law firm. Use the Service legally and responsibly. Delaware law
-                governs any disputes.
+                You keep full ownership of your documents. We provide a tool to create cryptographic
+                proof that your document existed at a certain time. We are a software provider, not
+                a law firm. Use the Service legally and responsibly. Delaware law governs any
+                disputes.
               </p>
             </motion.div>
 
@@ -408,7 +425,7 @@ export default function TermsOfService() {
                       className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl"
                       style={{
                         backgroundColor: `color-mix(in srgb, ${section.color} 12%, transparent)`,
-                        color: section.color,
+                        color: section.color
                       }}
                     >
                       <section.icon size={17} />

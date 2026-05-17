@@ -1,12 +1,23 @@
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Tablet, Smartphone, CheckCircle, Shield, QrCode, Fingerprint, Lock, Bell, ChevronRight, Activity } from 'lucide-react';
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import {
+  Tablet,
+  Smartphone,
+  CheckCircle,
+  Shield,
+  QrCode,
+  Fingerprint,
+  Lock,
+  Bell,
+  ChevronRight,
+  Activity
+} from 'lucide-react'
 
 export default function MobileSigner() {
-  const [isPaired, setIsPaired] = useState(false);
+  const [isPaired, setIsPaired] = useState(false)
   const [pendingRequests, setPendingRequests] = useState([
     { id: 'sig-8492', type: 'MULTI-SIG', doc: 'Institutional_Asset_Registry.pdf', time: '2m ago' }
-  ]);
+  ])
 
   return (
     <div
@@ -39,29 +50,38 @@ export default function MobileSigner() {
               <span style={{ color: 'var(--accent-active)' }}>SIGNER.</span>
             </h1>
             <p
-              className="mb-8 text-lg font-medium leading-relaxed italic"
+              className="mb-8 text-lg leading-relaxed font-medium italic"
               style={{ color: 'var(--text-secondary)' }}
             >
-              Authorize protocol actions using your mobile device&apos;s Secure Enclave.
-              The Satohash Signer app turns your phone into a high-security hardware security module (HSM).
+              Authorize protocol actions using your mobile device&apos;s Secure Enclave. The
+              Satohash Signer app turns your phone into a high-security hardware security module
+              (HSM).
             </p>
 
             <div className="flex flex-col gap-4">
               {[
-                { icon: Shield, label: 'Zero-Knowledge Pairing', desc: 'Secure Handshake via WebRTC' },
-                { icon: Lock, label: 'Hardware-Level Security', desc: 'Protected by Apple/Android Secure Core' },
-                { icon: Activity, label: 'Real-time Authority', desc: 'Instant push-notarization' },
+                {
+                  icon: Shield,
+                  label: 'Zero-Knowledge Pairing',
+                  desc: 'Secure Handshake via WebRTC'
+                },
+                {
+                  icon: Lock,
+                  label: 'Hardware-Level Security',
+                  desc: 'Protected by Apple/Android Secure Core'
+                },
+                { icon: Activity, label: 'Real-time Authority', desc: 'Instant push-notarization' }
               ].map((item, i) => (
-                <div key={i} className="flex gap-4 items-start group">
+                <div key={i} className="group flex items-start gap-4">
                   <div
-                    className="mt-1 h-5 w-5 rounded-full flex items-center justify-center transition-colors"
+                    className="mt-1 flex h-5 w-5 items-center justify-center rounded-full transition-colors"
                     style={{ backgroundColor: 'var(--surface-raised)' }}
                   >
                     <item.icon size={12} style={{ color: 'var(--text-muted)' }} />
                   </div>
                   <div>
                     <h4
-                      className="text-[10px] font-black uppercase tracking-widest"
+                      className="text-[10px] font-black tracking-widest uppercase"
                       style={{ color: 'var(--text-secondary)' }}
                     >
                       {item.label}
@@ -92,8 +112,11 @@ export default function MobileSigner() {
               >
                 <div className="absolute top-0 right-0 p-6">
                   <div
-                    className="h-2 w-2 rounded-full animate-pulse"
-                    style={{ backgroundColor: 'var(--accent-pending)', boxShadow: '0 0 12px var(--accent-pending)' }}
+                    className="h-2 w-2 animate-pulse rounded-full"
+                    style={{
+                      backgroundColor: 'var(--accent-pending)',
+                      boxShadow: '0 0 12px var(--accent-pending)'
+                    }}
                   />
                 </div>
 
@@ -104,24 +127,28 @@ export default function MobileSigner() {
                   >
                     {/* High-end Simulated QR */}
                     <div
-                      className="h-48 w-48 flex flex-wrap items-center justify-center rounded-xl p-2 gap-[1px]"
+                      className="flex h-48 w-48 flex-wrap items-center justify-center gap-[1px] rounded-xl p-2"
                       style={{ backgroundColor: 'var(--bg-primary)' }}
                     >
-                      {Array(400).fill(0).map((_, i) => (
-                        <div
-                          key={i}
-                          className="h-[8px] w-[8px] rounded-[1px]"
-                          style={{
-                            backgroundColor: [0, 1, 2, 19, 20, 21].some(x => i % 20 === x)
-                              ? 'var(--accent-active)'
-                              : (Math.random() > 0.7 ? 'var(--border-bright)' : 'transparent')
-                          }}
-                        />
-                      ))}
+                      {Array(400)
+                        .fill(0)
+                        .map((_, i) => (
+                          <div
+                            key={i}
+                            className="h-[8px] w-[8px] rounded-[1px]"
+                            style={{
+                              backgroundColor: [0, 1, 2, 19, 20, 21].some((x) => i % 20 === x)
+                                ? 'var(--accent-active)'
+                                : Math.random() > 0.7
+                                  ? 'var(--border-bright)'
+                                  : 'transparent'
+                            }}
+                          />
+                        ))}
                     </div>
                   </div>
                   <p
-                    className="text-center text-[10px] font-black uppercase tracking-[0.3em]"
+                    className="text-center text-[10px] font-black tracking-[0.3em] uppercase"
                     style={{ color: 'var(--text-muted)' }}
                   >
                     Scan with Satohash Signer App
@@ -137,7 +164,7 @@ export default function MobileSigner() {
                   </button>
                   <div className="flex gap-3">
                     <div
-                      className="flex-1 flex items-center justify-center gap-2 p-3 rounded-2xl opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all cursor-pointer"
+                      className="flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-2xl p-3 opacity-60 grayscale transition-all hover:opacity-100 hover:grayscale-0"
                       style={{
                         backgroundColor: 'var(--surface-raised)',
                         border: '1px solid var(--border)'
@@ -152,7 +179,7 @@ export default function MobileSigner() {
                       </span>
                     </div>
                     <div
-                      className="flex-1 flex items-center justify-center gap-2 p-3 rounded-2xl opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all cursor-pointer"
+                      className="flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-2xl p-3 opacity-60 grayscale transition-all hover:opacity-100 hover:grayscale-0"
                       style={{
                         backgroundColor: 'var(--surface-raised)',
                         border: '1px solid var(--border)'
@@ -183,7 +210,7 @@ export default function MobileSigner() {
                     borderColor: 'rgba(34,211,165,0.3)'
                   }}
                 >
-                  <div className="flex items-center justify-between mb-8">
+                  <div className="mb-8 flex items-center justify-between">
                     <div
                       className="flex h-12 w-12 items-center justify-center rounded-2xl"
                       style={{
@@ -196,13 +223,13 @@ export default function MobileSigner() {
                     <span className="pill-emerald text-[9px]">ENCRYPTED CONTEXT</span>
                   </div>
                   <h3
-                    className="text-xl font-black uppercase italic tracking-tighter"
+                    className="text-xl font-black tracking-tighter uppercase italic"
                     style={{ color: 'var(--text-primary)' }}
                   >
                     Device Synchronized
                   </h3>
                   <p
-                    className="text-[9px] font-bold uppercase tracking-widest mt-1"
+                    className="mt-1 text-[9px] font-bold tracking-widest uppercase"
                     style={{ color: 'var(--accent-success)' }}
                   >
                     iPhone 16 Pro · Authorizing Node-01
@@ -215,7 +242,7 @@ export default function MobileSigner() {
                   style={{ borderColor: 'var(--border)' }}
                 >
                   <div
-                    className="flex items-center justify-between p-6 border-b"
+                    className="flex items-center justify-between border-b p-6"
                     style={{
                       borderColor: 'var(--border)',
                       backgroundColor: 'var(--surface-raised)'
@@ -243,20 +270,24 @@ export default function MobileSigner() {
                         <motion.div
                           key={req.id}
                           exit={{ height: 0, opacity: 0 }}
-                          className="p-6 flex items-center justify-between group cursor-pointer transition-colors"
+                          className="group flex cursor-pointer items-center justify-between p-6 transition-colors"
                           style={{ borderTop: '1px solid var(--border)' }}
-                          onMouseEnter={e => e.currentTarget.style.backgroundColor = 'var(--surface-raised)'}
-                          onMouseLeave={e => e.currentTarget.style.backgroundColor = 'transparent'}
+                          onMouseEnter={(e) =>
+                            (e.currentTarget.style.backgroundColor = 'var(--surface-raised)')
+                          }
+                          onMouseLeave={(e) =>
+                            (e.currentTarget.style.backgroundColor = 'transparent')
+                          }
                         >
                           <div className="overflow-hidden">
                             <p
-                              className="text-[8px] font-black uppercase mb-1"
+                              className="mb-1 text-[8px] font-black uppercase"
                               style={{ color: 'var(--text-muted)' }}
                             >
                               {req.type} REQUEST
                             </p>
                             <p
-                              className="text-xs font-bold truncate max-w-[180px]"
+                              className="max-w-[180px] truncate text-xs font-bold"
                               style={{ color: 'var(--text-primary)' }}
                             >
                               {req.doc}
@@ -270,7 +301,7 @@ export default function MobileSigner() {
                               {req.time}
                             </span>
                             <div
-                              className="h-8 w-8 rounded-lg flex items-center justify-center transition-all"
+                              className="flex h-8 w-8 items-center justify-center rounded-lg transition-all"
                               style={{
                                 backgroundColor: 'var(--surface-raised)',
                                 color: 'var(--text-secondary)'
@@ -287,10 +318,10 @@ export default function MobileSigner() {
 
                 <button
                   onClick={() => setIsPaired(false)}
-                  className="w-full py-4 text-[9px] font-black uppercase tracking-[0.4em] transition-colors"
+                  className="w-full py-4 text-[9px] font-black tracking-[0.4em] uppercase transition-colors"
                   style={{ color: 'var(--text-muted)' }}
-                  onMouseEnter={e => e.currentTarget.style.color = 'var(--accent-active)'}
-                  onMouseLeave={e => e.currentTarget.style.color = 'var(--text-muted)'}
+                  onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--accent-active)')}
+                  onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-muted)')}
                 >
                   Revoke Device Access
                 </button>
@@ -300,5 +331,5 @@ export default function MobileSigner() {
         </div>
       </div>
     </div>
-  );
+  )
 }

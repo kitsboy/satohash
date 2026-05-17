@@ -30,11 +30,11 @@ export default function Modal({ isOpen, onClose, title, children, actions }) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
-          className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center p-0 sm:p-4"
+          className="fixed inset-0 z-[9999] flex items-end justify-center p-0 sm:items-center sm:p-4"
           style={{
             background: 'rgba(15, 23, 42, 0.5)',
             backdropFilter: 'blur(12px)',
-            WebkitBackdropFilter: 'blur(12px)',
+            WebkitBackdropFilter: 'blur(12px)'
           }}
           onClick={(e) => e.target === e.currentTarget && onClose()}
         >
@@ -43,11 +43,11 @@ export default function Modal({ isOpen, onClose, title, children, actions }) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 24, scale: 0.96 }}
             transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-            className="relative w-full max-w-[460px] overflow-hidden sm:rounded-3xl rounded-t-3xl"
+            className="relative w-full max-w-[460px] overflow-hidden rounded-t-3xl sm:rounded-3xl"
             style={{
               background: 'var(--bg-secondary)',
               border: '1px solid var(--border)',
-              boxShadow: 'var(--shadow-noir)',
+              boxShadow: 'var(--shadow-noir)'
             }}
           >
             {/* Close Button */}
@@ -62,22 +62,21 @@ export default function Modal({ isOpen, onClose, title, children, actions }) {
             {/* Header */}
             {title && (
               <div className="px-6 pt-6 pb-0 sm:px-8 sm:pt-8">
-                <h2 className="text-xl font-extrabold tracking-tight text-slate-900" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                <h2
+                  className="text-xl font-extrabold tracking-tight text-slate-900"
+                  style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+                >
                   {title}
                 </h2>
               </div>
             )}
 
             {/* Content */}
-            <div className="px-6 pt-4 pb-6 sm:px-8 sm:pb-8">
-              {children}
-            </div>
+            <div className="px-6 pt-4 pb-6 sm:px-8 sm:pb-8">{children}</div>
 
             {/* Actions */}
             {actions && (
-              <div className="flex gap-3 justify-end px-6 pb-6 sm:px-8 sm:pb-8">
-                {actions}
-              </div>
+              <div className="flex justify-end gap-3 px-6 pb-6 sm:px-8 sm:pb-8">{actions}</div>
             )}
           </motion.div>
         </motion.div>

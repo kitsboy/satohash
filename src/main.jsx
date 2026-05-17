@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import * as Sentry from '@sentry/react'
-import { addErrorBreadcrumb } from './utils/errors.js';
+import { addErrorBreadcrumb } from './utils/errors.js'
 import App from './App.jsx'
 import ErrorBoundary from './components/ErrorBoundary.jsx'
 import UpdatePrompt from './components/UpdatePrompt.jsx'
@@ -18,8 +18,8 @@ if (import.meta.env.VITE_SENTRY_DSN) {
     environment: import.meta.env.MODE,
     beforeSend(event) {
       // Add breadcrumbs before sending
-      addErrorBreadcrumb('app.init', 'Application initialization', 'info');
-      return event;
+      addErrorBreadcrumb('app.init', 'Application initialization', 'info')
+      return event
     }
   })
 }
@@ -27,10 +27,11 @@ if (import.meta.env.VITE_SENTRY_DSN) {
 // Register Service Worker for push notifications
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js')
+    navigator.serviceWorker
+      .register('/sw.js')
       .then((reg) => console.log('SW registered', reg))
-      .catch((err) => console.log('SW registration failed', err));
-  });
+      .catch((err) => console.log('SW registration failed', err))
+  })
 
   // Dispatch a custom event when a new SW takes control so UpdatePrompt can show
   navigator.serviceWorker.addEventListener('controllerchange', () => {

@@ -14,11 +14,11 @@ export default function UpdatePrompt() {
 
   return (
     <div
-      className="fixed bottom-24 left-1/2 z-[200] -translate-x-1/2 rounded-2xl px-5 py-3 shadow-2xl flex items-center gap-3"
+      className="fixed bottom-24 left-1/2 z-[200] flex -translate-x-1/2 items-center gap-3 rounded-2xl px-5 py-3 shadow-2xl"
       style={{
         background: 'var(--bg-secondary)',
         border: '1px solid var(--border-bright)',
-        color: 'var(--text-primary)',
+        color: 'var(--text-primary)'
       }}
     >
       <RefreshCw size={14} style={{ color: 'var(--accent-active)' }} />

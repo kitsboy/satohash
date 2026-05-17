@@ -67,7 +67,7 @@ export default function MerkleExplorer({ tree, highlightedIndex = null }) {
           className="group relative cursor-help"
           onClick={() => setSelectedLevel('root')}
         >
-          <div className="relative z-10 w-64 rounded-2xl border-4 border-[var(--accent-active)]/30 bg-[var(--accent-active)] p-6 text-center shadow-2xl shadow-[var(--accent-active)]/20 transition-transform active:scale-95">
+          <div className="relative z-10 w-64 rounded-2xl border-4 border-[var(--accent-active)]/30 bg-[var(--accent-active)] p-6 text-center shadow-[var(--accent-active)]/20 shadow-2xl transition-transform active:scale-95">
             <div className="mb-2 flex items-center justify-center gap-2 text-white/90">
               <Shield size={16} />
               <span className="text-[10px] font-black tracking-widest uppercase">
@@ -107,7 +107,7 @@ export default function MerkleExplorer({ tree, highlightedIndex = null }) {
                     onClick={() => setSelectedAtom(atom)}
                     className={`w-32 cursor-pointer rounded-xl border-2 p-4 transition-all ${
                       highlightedIndex === (i - 1) * 2 + idx
-                        ? 'border-[var(--accent-active)] bg-[var(--accent-active)]/20 shadow-lg shadow-[var(--accent-active)]/10'
+                        ? 'border-[var(--accent-active)] bg-[var(--accent-active)]/20 shadow-[var(--accent-active)]/10 shadow-lg'
                         : 'border-slate-700 bg-slate-800/50 hover:border-slate-500'
                     }`}
                   >

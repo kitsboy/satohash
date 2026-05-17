@@ -16,10 +16,38 @@ import {
 import { useState, useEffect } from 'react'
 
 const FALLBACK_NODES = [
-  { city: 'Frankfurt', country: 'Germany', status: 'Active', latency: '12', uptime: '99.99', region: 'Europe' },
-  { city: 'Singapore', country: 'Singapore', status: 'Active', latency: '45', uptime: '100.0', region: 'Asia' },
-  { city: 'New York', country: 'USA', status: 'Active', latency: '8', uptime: '99.98', region: 'North America' },
-  { city: 'Tokyo', country: 'Japan', status: 'Active', latency: '62', uptime: '99.95', region: 'Asia' },
+  {
+    city: 'Frankfurt',
+    country: 'Germany',
+    status: 'Active',
+    latency: '12',
+    uptime: '99.99',
+    region: 'Europe'
+  },
+  {
+    city: 'Singapore',
+    country: 'Singapore',
+    status: 'Active',
+    latency: '45',
+    uptime: '100.0',
+    region: 'Asia'
+  },
+  {
+    city: 'New York',
+    country: 'USA',
+    status: 'Active',
+    latency: '8',
+    uptime: '99.98',
+    region: 'North America'
+  },
+  {
+    city: 'Tokyo',
+    country: 'Japan',
+    status: 'Active',
+    latency: '62',
+    uptime: '99.95',
+    region: 'Asia'
+  }
 ]
 
 const NodeCard = ({ city, country, status, latency, uptime, load }) => (
@@ -178,7 +206,9 @@ export default function Mesh() {
 
             <div className="absolute top-10 right-10">
               <button
-                onClick={() => { window.location.href = '/explorer' }}
+                onClick={() => {
+                  window.location.href = '/explorer'
+                }}
                 className="flex h-12 items-center gap-3 rounded-xl border border-[var(--border-bright)] bg-[var(--bg-primary)] px-6 text-[10px] font-black tracking-widest uppercase transition-all hover:scale-105"
               >
                 Full Mesh Explorer <ArrowUpRight size={16} />

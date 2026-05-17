@@ -30,7 +30,7 @@ export const useSocket = () => {
           title: 'Stamp Confirmed!',
           body: `Your proof is now anchored in Bitcoin block ${data.blockHeight}.`,
           hash: data.hash
-        });
+        })
       }
     })
 

@@ -104,14 +104,18 @@ export default function VoiceStamp({ onStamp, isActive }) {
           onClick={isListening ? stopListening : startListening}
           disabled={isProcessing}
           className={`rounded-full p-2 transition-colors ${
-            isListening ? 'bg-red-500 text-white' : 'bg-[var(--accent-active)] text-white hover:opacity-90'
+            isListening
+              ? 'bg-red-500 text-white'
+              : 'bg-[var(--accent-active)] text-white hover:opacity-90'
           }`}
         >
           {isListening ? <MicOff size={20} /> : <Mic size={20} />}
         </button>
       </div>
       {isListening && (
-        <p className="mb-2 text-xs text-[var(--text-secondary)]">Listening... Speak your document or command.</p>
+        <p className="mb-2 text-xs text-[var(--text-secondary)]">
+          Listening... Speak your document or command.
+        </p>
       )}
       {transcript && (
         <div className="transcript-preview mb-2 max-h-20 overflow-y-auto rounded bg-[var(--surface-raised)] p-2 text-xs text-[var(--text-primary)]">
@@ -119,7 +123,9 @@ export default function VoiceStamp({ onStamp, isActive }) {
           {transcript}
         </div>
       )}
-      {isProcessing && <p className="text-xs text-[var(--accent-active)]">Processing hash and stamping...</p>}
+      {isProcessing && (
+        <p className="text-xs text-[var(--accent-active)]">Processing hash and stamping...</p>
+      )}
       {transcript && !isListening && !isProcessing && (
         <button
           onClick={handleStamp}

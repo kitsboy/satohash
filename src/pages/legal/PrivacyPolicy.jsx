@@ -15,7 +15,7 @@ import {
   Trash2,
   Mail,
   AlertCircle,
-  CheckCircle,
+  CheckCircle
 } from 'lucide-react'
 
 /* ─── Animation ──────────────────────────────────────────── */
@@ -24,8 +24,8 @@ const fadeUp = {
   visible: (i = 0) => ({
     opacity: 1,
     y: 0,
-    transition: { duration: 0.55, ease: [0.16, 1, 0.3, 1], delay: i * 0.07 },
-  }),
+    transition: { duration: 0.55, ease: [0.16, 1, 0.3, 1], delay: i * 0.07 }
+  })
 }
 
 /* ─── Sections data ───────────────────────────────────────── */
@@ -38,31 +38,31 @@ const SECTIONS = [
     content: (
       <>
         <p className="mb-4">
-          We collect the absolute minimum necessary to provide the service. Here's the complete
-          list — nothing is hidden in sub-clauses:
+          We collect the absolute minimum necessary to provide the service. Here's the complete list
+          — nothing is hidden in sub-clauses:
         </p>
         <ul className="space-y-3">
           {[
             {
               label: 'Cryptographic hashes',
               detail:
-                'The SHA-256 fingerprint of your document. This is a 64-character string that cannot be reversed into your original file.',
+                'The SHA-256 fingerprint of your document. This is a 64-character string that cannot be reversed into your original file.'
             },
             {
               label: 'IP addresses',
               detail:
-                'Collected temporarily for rate-limiting and abuse prevention. Not stored beyond 24 hours. Not linked to your proofs.',
+                'Collected temporarily for rate-limiting and abuse prevention. Not stored beyond 24 hours. Not linked to your proofs.'
             },
             {
               label: 'Usage analytics',
               detail:
-                'Anonymised page-view counts and feature usage (e.g., "Stamp page visited 400 times today"). No individual user is identifiable.',
+                'Anonymised page-view counts and feature usage (e.g., "Stamp page visited 400 times today"). No individual user is identifiable.'
             },
             {
               label: 'Filename (optional)',
               detail:
-                "If you provide a filename when creating a proof, we store it alongside the hash so you can find your proof later. You can use any label — it doesn't have to be the real filename.",
-            },
+                "If you provide a filename when creating a proof, we store it alongside the hash so you can find your proof later. You can use any label — it doesn't have to be the real filename."
+            }
           ].map((item, i) => (
             <li
               key={i}
@@ -79,7 +79,7 @@ const SECTIONS = [
           ))}
         </ul>
       </>
-    ),
+    )
   },
   {
     id: '02',
@@ -101,7 +101,7 @@ const SECTIONS = [
             'Precise geolocation',
             'Contact lists or social graph',
             'Financial information',
-            'Device identifiers beyond IP',
+            'Device identifiers beyond IP'
           ].map((item, i) => (
             <div
               key={i}
@@ -113,7 +113,7 @@ const SECTIONS = [
           ))}
         </div>
       </>
-    ),
+    )
   },
   {
     id: '03',
@@ -125,20 +125,20 @@ const SECTIONS = [
         {[
           {
             title: 'Proof generation',
-            body: 'Your hash is relayed to the Bitcoin network via OpenTimestamps to create a permanent, verifiable timestamp.',
+            body: 'Your hash is relayed to the Bitcoin network via OpenTimestamps to create a permanent, verifiable timestamp.'
           },
           {
             title: 'Service improvement',
-            body: 'Aggregate, anonymised analytics help us understand which features are useful and where the product can be improved.',
+            body: 'Aggregate, anonymised analytics help us understand which features are useful and where the product can be improved.'
           },
           {
             title: 'Security and rate limiting',
-            body: 'IP addresses are used to prevent abuse (e.g., bulk spamming the API). This data is not stored beyond 24 hours and is never used for identification.',
+            body: 'IP addresses are used to prevent abuse (e.g., bulk spamming the API). This data is not stored beyond 24 hours and is never used for identification.'
           },
           {
             title: 'No advertising. Ever.',
-            body: 'We do not sell, rent, trade, or share your data with advertising networks or data brokers. This is not in our business model.',
-          },
+            body: 'We do not sell, rent, trade, or share your data with advertising networks or data brokers. This is not in our business model.'
+          }
         ].map((item, i) => (
           <div
             key={i}
@@ -149,7 +149,7 @@ const SECTIONS = [
           </div>
         ))}
       </div>
-    ),
+    )
   },
   {
     id: '04',
@@ -158,7 +158,7 @@ const SECTIONS = [
     title: 'Data Retention',
     content: (
       <>
-        <p className="mb-4 text-[var(--text-secondary)] leading-relaxed">
+        <p className="mb-4 leading-relaxed text-[var(--text-secondary)]">
           Our retention policy is designed around a simple principle:{' '}
           <strong className="text-[var(--text-primary)]">
             we keep only what's necessary for the proof to function
@@ -171,32 +171,32 @@ const SECTIONS = [
               item: 'Document hashes',
               period: 'Indefinitely',
               reason: 'The proof record must persist for verification',
-              keep: true,
+              keep: true
             },
             {
               item: 'Proof IDs & timestamps',
               period: 'Indefinitely',
               reason: 'Required to reconstruct verification history',
-              keep: true,
+              keep: true
             },
             {
               item: 'Filenames / labels',
               period: 'Until deleted by you',
               reason: 'Convenience metadata — deletable on request',
-              keep: null,
+              keep: null
             },
             {
               item: 'IP addresses',
               period: '24 hours',
               reason: 'Rate-limiting only',
-              keep: false,
+              keep: false
             },
             {
               item: 'Analytics data',
               period: '90 days (aggregated)',
               reason: 'Anonymised, no user linkage',
-              keep: false,
-            },
+              keep: false
+            }
           ].map((row, i) => (
             <div
               key={i}
@@ -211,7 +211,7 @@ const SECTIONS = [
                       ? 'var(--accent-pending)'
                       : row.keep === false
                         ? 'var(--accent-success)'
-                        : 'var(--text-secondary)',
+                        : 'var(--text-secondary)'
                 }}
               >
                 {row.period}
@@ -225,7 +225,7 @@ const SECTIONS = [
           this is a fundamental property of the protocol, not a policy choice.
         </p>
       </>
-    ),
+    )
   },
   {
     id: '05',
@@ -243,20 +243,20 @@ const SECTIONS = [
           {[
             {
               right: 'Right of Access',
-              desc: 'Request a copy of everything we hold associated with your proof IDs.',
+              desc: 'Request a copy of everything we hold associated with your proof IDs.'
             },
             {
               right: 'Right to Deletion',
-              desc: 'Request deletion of metadata (filename, proof ID). Note: hashes on Bitcoin cannot be deleted.',
+              desc: 'Request deletion of metadata (filename, proof ID). Note: hashes on Bitcoin cannot be deleted.'
             },
             {
               right: 'Right to Portability',
-              desc: 'Receive your proof records in a machine-readable format (JSON).',
+              desc: 'Receive your proof records in a machine-readable format (JSON).'
             },
             {
               right: 'Right to Object',
-              desc: 'Object to any processing beyond what is strictly necessary.',
-            },
+              desc: 'Object to any processing beyond what is strictly necessary.'
+            }
           ].map((item, i) => (
             <div
               key={i}
@@ -281,7 +281,7 @@ const SECTIONS = [
           . We respond within 30 days.
         </p>
       </>
-    ),
+    )
   },
   {
     id: '06',
@@ -299,18 +299,18 @@ const SECTIONS = [
             {
               name: 'session_token',
               purpose: 'Keeps you logged in during a session',
-              tracking: false,
+              tracking: false
             },
             {
               name: 'theme_preference',
               purpose: 'Remembers your light/dark mode preference',
-              tracking: false,
+              tracking: false
             },
             {
               name: 'Analytics (anonymised)',
               purpose: 'Counts page views with no user identifier attached',
-              tracking: false,
-            },
+              tracking: false
+            }
           ].map((cookie, i) => (
             <div
               key={i}
@@ -327,7 +327,7 @@ const SECTIONS = [
           ))}
         </div>
       </>
-    ),
+    )
   },
   {
     id: '07',
@@ -342,8 +342,8 @@ const SECTIONS = [
         Continued use of the service after the effective date constitutes acceptance of the updated
         policy. We will never retroactively expand data collection on data we've already collected.
       </p>
-    ),
-  },
+    )
+  }
 ]
 
 /* ─── Component ──────────────────────────────────────────── */
@@ -351,7 +351,7 @@ export default function PrivacyPolicy() {
   const navigate = useNavigate()
 
   return (
-    <div className="min-h-screen bg-[var(--bg-primary)] pb-32 pt-32 text-[var(--text-primary)]">
+    <div className="min-h-screen bg-[var(--bg-primary)] pt-32 pb-32 text-[var(--text-primary)]">
       {/* Ambient glow */}
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
         <div className="absolute top-0 left-1/3 h-[400px] w-[400px] rounded-full bg-[var(--accent-success)] opacity-[0.04] blur-[130px]" />
@@ -445,7 +445,7 @@ export default function PrivacyPolicy() {
                       className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl"
                       style={{
                         backgroundColor: `color-mix(in srgb, ${section.color} 12%, transparent)`,
-                        color: section.color,
+                        color: section.color
                       }}
                     >
                       <section.icon size={17} />
@@ -471,7 +471,7 @@ export default function PrivacyPolicy() {
             <div className="mt-14 border-t-2 border-slate-100 pt-10">
               <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
                 <div>
-                  <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">
+                  <p className="mb-1 text-xs font-bold tracking-widest text-slate-400 uppercase">
                     Questions or requests?
                   </p>
                   <a

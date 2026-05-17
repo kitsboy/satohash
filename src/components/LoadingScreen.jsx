@@ -2,7 +2,10 @@ import { motion } from 'framer-motion'
 
 export default function LoadingScreen() {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center" style={{ background: 'var(--bg-primary)' }}>
+    <div
+      className="flex min-h-screen flex-col items-center justify-center"
+      style={{ background: 'var(--bg-primary)' }}
+    >
       <motion.div
         animate={{ rotate: 360 }}
         transition={{ repeat: Infinity, duration: 2, ease: 'linear' }}

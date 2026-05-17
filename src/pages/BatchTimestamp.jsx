@@ -81,7 +81,9 @@ export default function BatchTimestamp() {
       const fileData = updatedFiles[i]
       try {
         const buffer = await fileData.file.arrayBuffer()
-        const worker = new Worker(new URL('../workers/hashWorker.js', import.meta.url), { type: 'module' })
+        const worker = new Worker(new URL('../workers/hashWorker.js', import.meta.url), {
+          type: 'module'
+        })
         const hashFn = wrap(worker)
         const hashHex = await hashFn.hashFile(buffer)
         worker.terminate()
@@ -261,7 +263,9 @@ export default function BatchTimestamp() {
     a.click()
     document.body.removeChild(a)
     URL.revokeObjectURL(url)
-    toast.success('ZIP downloaded!', { description: `${batchResult.results.length} proofs + manifest` })
+    toast.success('ZIP downloaded!', {
+      description: `${batchResult.results.length} proofs + manifest`
+    })
   }
 
   const formatFileSize = (bytes) => {

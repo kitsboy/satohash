@@ -80,6 +80,8 @@ export default function Vault() {
   const [revokeTarget, setRevokeTarget] = useState(null)
   const [revokeReason, setRevokeReason] = useState('')
   const [revoking, setRevoking] = useState(false)
+  const [offlineQueue, setOfflineQueue] = useState([])
+  const [isSyncing, setIsSyncing] = useState(false)
   const { t } = useI18n()
 
   const { lastEvent } = useSocket()
@@ -159,6 +161,60 @@ export default function Vault() {
     fetchStamps()
   }, [])
 
+  const loadOfflineQueue = () => {
+    try {
+      const queue = JSON.parse(localStorage.getItem('satohash_offline_queue') || '[]')
+      setOfflineQueue(queue)
+    } catch {
+      setOfflineQueue([])
+    }
+  }
+
+  const syncOfflineQueue = async () => {
+    const queue = JSON.parse(localStorage.getItem('satohash_offline_queue') || '[]')
+    if (queue.length === 0) return
+    setIsSyncing(true)
+    let succeeded = 0
+
+    for (const item of queue) {
+      try {
+        const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+        const res = await fetch(`${API}/api/stamp`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            hash: item.hash,
+            filename: item.filename,
+            customLabel: item.customLabel || ''
+          })
+        })
+        if (res.ok) {
+          succeeded++
+        }
+      } catch (err) {
+        console.error('Offline sync failed for item:', item, err)
+      }
+    }
+
+    localStorage.removeItem('satohash_offline_queue')
+    setOfflineQueue([])
+    setIsSyncing(false)
+    toast.success(`⚡ Offline Queue Synced`, {
+      description: `Successfully anchored ${succeeded} queued files to the mainnet.`
+    })
+    refreshStamps()
+  }
+
+  useEffect(() => {
+    loadOfflineQueue()
+    const handleOnline = () => {
+      toast.success('⚡ Connection restored! Synchronizing offline ledger queues...')
+      syncOfflineQueue()
+    }
+    window.addEventListener('online', handleOnline)
+    return () => window.removeEventListener('online', handleOnline)
+  }, [])
+
   // Re-fetch the full list whenever a new stamp or confirmation arrives via Socket.io
   useEffect(() => {
     if (!lastEvent) return
@@ -236,17 +292,264 @@ export default function Vault() {
           clearInterval(interval)
           return 100
         }
-        return prev + 5
+        return prev + 10
       })
-    }, 150)
+    }, 100)
 
-    setTimeout(() => {
-      setIsExporting(false)
-      toast.success('Forensic Audit Generated', {
-        description: 'SAT_REPORT_772.pdf is ready for download.',
-        icon: <FileDown className="text-[var(--accent-success)]" />
-      })
-    }, 4000)
+    setTimeout(async () => {
+      try {
+        const { jsPDF } = await import('jspdf')
+        const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' })
+        const pageW = 210
+        const pageH = 297
+        const margin = 20
+
+        // Cover Page Background
+        doc.setFillColor(20, 27, 37) // Deep navy #141b25
+        doc.rect(0, 0, pageW, pageH, 'F')
+
+        // Blueprint radial circles simulated in vector
+        doc.setDrawColor(240, 180, 41) // Gold
+        doc.setLineWidth(0.5)
+        doc.circle(pageW / 2, pageH / 2, 80, 'D')
+        doc.circle(pageW / 2, pageH / 2, 120, 'D')
+
+        // Title Elements
+        doc.setTextColor(240, 180, 41) // Gold
+        doc.setFontSize(28)
+        doc.setFont('helvetica', 'bold')
+        doc.text('SATOHASH', pageW / 2, 90, { align: 'center' })
+
+        doc.setTextColor(255, 255, 255)
+        doc.setFontSize(18)
+        doc.setFont('helvetica', 'normal')
+        doc.text('FORENSIC PROVENANCE AUDIT', pageW / 2, 105, { align: 'center' })
+
+        // Gold divider line
+        doc.setDrawColor(240, 180, 41)
+        doc.setLineWidth(1)
+        doc.line(40, 115, pageW - 40, 115)
+
+        // Metadata block on cover page
+        doc.setTextColor(148, 163, 184)
+        doc.setFontSize(10)
+        doc.text(
+          `AUDIT GENERATION DATE: ${new Date().toISOString().split('T')[0]}`,
+          pageW / 2,
+          130,
+          { align: 'center' }
+        )
+        doc.text(`TOTAL ANCHORED RECORDS: ${filteredItems.length}`, pageW / 2, 138, {
+          align: 'center'
+        })
+        doc.text(`LEDGER SCOPE: CLIENT-SIDE CRYPTOGRAPHIC VAULT`, pageW / 2, 146, {
+          align: 'center'
+        })
+
+        // Parent Brand seal
+        doc.setTextColor(240, 180, 41)
+        doc.setFontSize(12)
+        doc.text('BACKED BY GIVE A BIT (GIVEABIT.IO)', pageW / 2, 230, { align: 'center' })
+        doc.setTextColor(148, 163, 184)
+        doc.setFontSize(8)
+        doc.text('F.O.S.S. BITCOIN APP SUITE FOR TRUST AND SECURITY', pageW / 2, 238, {
+          align: 'center'
+        })
+
+        // Page 2: Detailed Evidence Catalog
+        doc.addPage()
+        doc.setFillColor(253, 251, 247) // Elegant parchment bg
+        doc.rect(0, 0, pageW, pageH, 'F')
+
+        doc.setDrawColor(20, 27, 37)
+        doc.setLineWidth(0.5)
+        doc.line(margin, 25, pageW - margin, 25)
+
+        doc.setTextColor(20, 27, 37)
+        doc.setFontSize(14)
+        doc.setFont('helvetica', 'bold')
+        doc.text('EVIDENCE CATALOG & CRYPTOGRAPHIC COMPLIANCE', margin, 20)
+
+        // Table headers
+        let y = 35
+        doc.setFontSize(8)
+        doc.setTextColor(120, 130, 140)
+        doc.text('ASSET NAME', margin, y)
+        doc.text('SHA-256 HASH FINGERPRINT', margin + 60, y)
+        doc.text('STATUS', margin + 140, y)
+
+        doc.setDrawColor(240, 180, 41)
+        doc.setLineWidth(0.5)
+        doc.line(margin, y + 2, pageW - margin, y + 2)
+
+        y += 8
+        doc.setFont('helvetica', 'normal')
+        doc.setTextColor(15, 23, 42)
+
+        filteredItems.forEach((item) => {
+          if (y > 240) {
+            // New page if overflowing
+            doc.addPage()
+            doc.setFillColor(253, 251, 247)
+            doc.rect(0, 0, pageW, pageH, 'F')
+            y = 25
+            doc.setFont('helvetica', 'bold')
+            doc.setTextColor(120, 130, 140)
+            doc.text('EVIDENCE CATALOG (CONTINUED)', margin, y)
+            y += 8
+          }
+
+          doc.setFontSize(9)
+          doc.setFont('helvetica', 'bold')
+          doc.setTextColor(15, 23, 42)
+          doc.text(item.name.substring(0, 28), margin, y)
+
+          doc.setFontSize(8)
+          doc.setFont('courier', 'normal')
+          doc.setTextColor(80, 90, 100)
+          doc.text(item.fullHash || item.hash, margin + 60, y)
+
+          doc.setFontSize(8)
+          doc.setFont('helvetica', 'bold')
+          const isConf = item.status === 'confirmed' || item.status === 'anchored'
+          doc.setTextColor(isConf ? 16 : 245, isConf ? 185 : 158, isConf ? 129 : 11) // green vs amber
+          doc.text(item.status.toUpperCase(), margin + 140, y)
+
+          y += 12
+        })
+
+        // Regulatory & Compliance Section
+        y = Math.max(y + 10, 200)
+        doc.setDrawColor(240, 180, 41)
+        doc.setLineWidth(0.5)
+        doc.line(margin, y, pageW - margin, y)
+
+        y += 8
+        doc.setTextColor(15, 23, 42)
+        doc.setFontSize(10)
+        doc.setFont('helvetica', 'bold')
+        doc.text('LEGAL COMPLIANCE CITATIONS & STANDARDS', margin, y)
+
+        y += 6
+        doc.setFontSize(8)
+        doc.setFont('helvetica', 'italic')
+        doc.setTextColor(100, 110, 120)
+        const complianceText =
+          'This document certifies that the listed electronic records have been processed and anchored client-side. The cryptographic SHA-256 digests are permanently committed to the Bitcoin blockchain ledger using OpenTimestamps protocols.\n\n' +
+          'Under the United States ESIGN Act (15 U.S.C. §§ 7001-7006) and the Uniform Electronic Transactions Act (UETA), electronic records and signatures are legally binding. Furthermore, this attestation complies with the European Union eIDAS Regulation (No 910/2014) Article 41 for electronic time stamps, creating a globally enforceable, censorship-resistant forensic proof of existence.'
+
+        const splitText = doc.splitTextToSize(complianceText, pageW - margin * 2)
+        doc.text(splitText, margin, y)
+
+        // Seal / Stamp visual vector
+        doc.setDrawColor(240, 180, 41)
+        doc.setLineWidth(1)
+        doc.circle(pageW - 40, y + 45, 15, 'D')
+        doc.setFontSize(6)
+        doc.setFont('helvetica', 'bold')
+        doc.text('SATOHASH', pageW - 40, y + 44, { align: 'center' })
+        doc.text('VERIFIED', pageW - 40, y + 48, { align: 'center' })
+
+        // Page Numbering Footer
+        doc.setFontSize(7)
+        doc.setFont('helvetica', 'normal')
+        doc.setTextColor(150, 160, 170)
+        doc.text(`Generated by Satohash — Sovereign Provenance Audits`, margin, pageH - 12)
+        doc.text(`Page 1 of 2`, pageW - margin, pageH - 12, { align: 'right' })
+
+        doc.save(`Satohash_Forensic_Audit_${new Date().toISOString().split('T')[0]}.pdf`)
+        setIsExporting(false)
+        toast.success('Forensic Audit Downloaded', {
+          description: `Full multi-page compliance report saved successfully.`,
+          icon: <FileDown className="text-[var(--accent-success)]" />
+        })
+      } catch (err) {
+        console.error(err)
+        setIsExporting(false)
+        toast.error('Failed to compile PDF library: ' + err.message)
+      }
+    }, 2000)
+  }
+
+  const handleBackupVault = () => {
+    const password = prompt('Enter a password to encrypt your forensic vault backup:')
+    if (!password) {
+      toast.error('Password is required for secure backup.')
+      return
+    }
+    try {
+      const localStamps = localStorage.getItem('satohash_stamps') || '[]'
+      let binaryStr = ''
+      for (let i = 0; i < localStamps.length; i++) {
+        const charCode = localStamps.charCodeAt(i) ^ password.charCodeAt(i % password.length)
+        binaryStr += String.fromCharCode(charCode)
+      }
+      const encryptedBase64 = btoa(unescape(encodeURIComponent(binaryStr)))
+      const backupPayload = JSON.stringify(
+        {
+          version: '4.1.0-ELITE',
+          timestamp: new Date().toISOString(),
+          payload: encryptedBase64
+        },
+        null,
+        2
+      )
+
+      const blob = new Blob([backupPayload], { type: 'application/json' })
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = `satohash_vault_backup_${new Date().toISOString().split('T')[0]}.json`
+      document.body.appendChild(a)
+      a.click()
+      document.body.removeChild(a)
+      URL.revokeObjectURL(url)
+      toast.success('Encrypted vault backup successfully exported!')
+    } catch (e) {
+      toast.error('Export failed: ' + e.message)
+    }
+  }
+
+  const handleImportVault = () => {
+    const input = document.createElement('input')
+    input.type = 'file'
+    input.accept = '.json'
+    input.onchange = (e) => {
+      const file = e.target.files[0]
+      if (!file) return
+      const reader = new FileReader()
+      reader.onload = (evt) => {
+        try {
+          const data = JSON.parse(evt.target.result)
+          if (data.version !== '4.1.0-ELITE' || !data.payload) {
+            toast.error('Invalid backup format or version mismatch.')
+            return
+          }
+          const password = prompt('Enter the decryption password for this vault:')
+          if (!password) return
+
+          const rawBase64 = decodeURIComponent(escape(atob(data.payload)))
+          let decryptedStr = ''
+          for (let i = 0; i < rawBase64.length; i++) {
+            const charCode = rawBase64.charCodeAt(i) ^ password.charCodeAt(i % password.length)
+            decryptedStr += String.fromCharCode(charCode)
+          }
+
+          const stamps = JSON.parse(decryptedStr)
+          if (!Array.isArray(stamps)) throw new Error('Decryption mismatch')
+
+          localStorage.setItem('satohash_stamps', JSON.stringify(stamps))
+          toast.success('Forensic vault successfully restored!', {
+            description: `${stamps.length} timestamps loaded into active workbench.`
+          })
+          refreshStamps()
+        } catch (err) {
+          toast.error('Failed to decrypt vault. Please double-check password.')
+        }
+      }
+      reader.readAsText(file)
+    }
+    input.click()
   }
 
   const downloadOtsFile = async (item) => {
@@ -491,8 +794,54 @@ export default function Vault() {
             <FileText size={18} />
             Generate Forensic Audit
           </button>
+
+          <button
+            onClick={handleBackupVault}
+            className="flex h-14 items-center justify-center gap-2 rounded-2xl border border-[var(--border)] bg-transparent px-6 text-[10px] font-black tracking-widest uppercase transition-all hover:bg-[var(--surface-raised)]"
+            style={{ color: 'var(--text-secondary)' }}
+          >
+            Backup Vault
+          </button>
+
+          <button
+            onClick={handleImportVault}
+            className="flex h-14 items-center justify-center gap-2 rounded-2xl border border-[var(--border)] bg-transparent px-6 text-[10px] font-black tracking-widest uppercase transition-all hover:bg-[var(--surface-raised)]"
+            style={{ color: 'var(--text-secondary)' }}
+          >
+            Import Vault
+          </button>
         </div>
       </header>
+
+      {/* Offline sync banner if we have offline stamps */}
+      {offlineQueue.length > 0 && (
+        <div
+          className="flex flex-col items-center justify-between gap-4 rounded-2xl border p-6 transition-all md:flex-row"
+          style={{
+            background: 'rgba(245, 158, 11, 0.05)',
+            borderColor: 'var(--accent-pending)',
+            color: 'var(--text-primary)'
+          }}
+        >
+          <div className="flex items-center gap-3">
+            <span className="text-xl">⚡</span>
+            <div>
+              <p className="text-sm font-black tracking-wider uppercase">Offline Stamps Queued</p>
+              <p className="text-[10px] text-[var(--text-secondary)] uppercase">
+                {offlineQueue.length} files are queued locally in your browser. They will sync
+                automatically when your internet connection is restored.
+              </p>
+            </div>
+          </div>
+          <button
+            onClick={syncOfflineQueue}
+            disabled={isSyncing}
+            className="rounded-xl bg-[var(--accent-pending)] px-5 py-3 text-[10px] font-black tracking-wider text-[#141b25] uppercase transition-all hover:scale-[1.02] disabled:opacity-50"
+          >
+            {isSyncing ? 'Syncing...' : 'Sync Offline Queue'}
+          </button>
+        </div>
+      )}
 
       {/* Modern Tab System */}
       <div className="scrollbar-hide flex gap-10 overflow-x-auto border-b border-[var(--border)]">

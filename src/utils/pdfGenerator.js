@@ -19,7 +19,7 @@ export const generatePDF = async (stampInfo, watermarkType = 'SATOHASH PROTOCOL 
   // --- Background: Professional Legal White ---
   doc.setFillColor(255, 255, 255)
   doc.rect(0, 0, pageWidth, pageHeight, 'F')
-  
+
   // --- Institutional Watermark (Logo + Text) ---
   try {
     const logoData = await new Promise((resolve) => {
@@ -41,7 +41,7 @@ export const generatePDF = async (stampInfo, watermarkType = 'SATOHASH PROTOCOL 
       doc.saveGraphicsState()
       doc.setGState(new doc.GState({ opacity: 0.03 }))
       // Center logo watermark
-      doc.addImage(logoData, 'PNG', pageWidth/4, pageHeight/4, pageWidth/2, pageWidth/2)
+      doc.addImage(logoData, 'PNG', pageWidth / 4, pageHeight / 4, pageWidth / 2, pageWidth / 2)
       doc.restoreGraphicsState()
     }
   } catch (e) {
@@ -53,9 +53,9 @@ export const generatePDF = async (stampInfo, watermarkType = 'SATOHASH PROTOCOL 
   doc.setGState(new doc.GState({ opacity: 0.05 }))
   doc.setFontSize(60)
   doc.setFont('helvetica', 'bold')
-  doc.text(watermarkType, pageWidth / 2, pageHeight / 2, { 
-    align: 'center', 
-    angle: 35 
+  doc.text(watermarkType, pageWidth / 2, pageHeight / 2, {
+    align: 'center',
+    angle: 35
   })
   doc.restoreGraphicsState()
 
@@ -73,12 +73,14 @@ export const generatePDF = async (stampInfo, watermarkType = 'SATOHASH PROTOCOL 
   doc.setTextColor(79, 70, 229)
   doc.setFontSize(9)
   doc.setFont('helvetica', 'bold')
-  doc.text('BITCOIN BLOCKCHAIN ANCHOR · CRYPTOGRAPHIC PROOF OF EXISTENCE', pageWidth / 2, 47, { align: 'center' })
+  doc.text('BITCOIN BLOCKCHAIN ANCHOR · CRYPTOGRAPHIC PROOF OF EXISTENCE', pageWidth / 2, 47, {
+    align: 'center'
+  })
 
   // --- Content Body ---
   doc.setTextColor(26, 29, 46)
   doc.setFontSize(11)
-  
+
   const startY = 75
   const labels = [
     { l: 'DOCUMENT FILENAME:', v: stampInfo.filename },
@@ -97,7 +99,7 @@ export const generatePDF = async (stampInfo, watermarkType = 'SATOHASH PROTOCOL 
 
   labels.forEach((item, i) => {
     const y = startY + i * 14
-    
+
     // Bottom border for each row
     doc.setDrawColor(240, 240, 240)
     doc.setLineWidth(0.1)
@@ -119,7 +121,7 @@ export const generatePDF = async (stampInfo, watermarkType = 'SATOHASH PROTOCOL 
   doc.setDrawColor(79, 70, 229)
   doc.setLineWidth(1.5)
   doc.rect(margin, sealY, 50, 50)
-  
+
   doc.setFont('times', 'bold')
   doc.setFontSize(8)
   doc.setTextColor(79, 70, 229)
@@ -144,7 +146,7 @@ export const generatePDF = async (stampInfo, watermarkType = 'SATOHASH PROTOCOL 
   doc.setFont('times', 'bold')
   doc.setFontSize(18)
   doc.text('TECHNICAL WITNESS STATEMENT', margin, 30)
-  
+
   doc.setFontSize(10)
   doc.setFont('times', 'normal')
   doc.setTextColor(60, 60, 60)
@@ -156,7 +158,7 @@ export const generatePDF = async (stampInfo, watermarkType = 'SATOHASH PROTOCOL 
 
 3. Immutability & Verifiability: Because the Bitcoin blockchain is secured by globally distributed Proof-of-Work, the record is tamper-proof. Any party in possession of the original file and this certificate can independently verify the attestation without relying on a centralized authority.
 
-4. Legal Admissibility: This attestation satisfies requirements for digital evidence integrity as outlined in the ESIGN Act (USA), UETA (USA), and eIDAS Regulation (EU), providing a mathematically certain date and state of existence.`;
+4. Legal Admissibility: This attestation satisfies requirements for digital evidence integrity as outlined in the ESIGN Act (USA), UETA (USA), and eIDAS Regulation (EU), providing a mathematically certain date and state of existence.`
 
   doc.text(doc.splitTextToSize(statement, pageWidth - margin * 2), margin, 45)
 

@@ -92,11 +92,15 @@ export default function Atlas() {
   useEffect(() => {
     const timer = setTimeout(() => {
       const q = searchQuery.trim().toLowerCase()
-      if (!q) { setSearchResults(null); return }
-      const results = stamps.filter(s =>
-        (s.hash || '').toLowerCase().includes(q) ||
-        (s.filename || '').toLowerCase().includes(q) ||
-        (s.id || '').toString().includes(q)
+      if (!q) {
+        setSearchResults(null)
+        return
+      }
+      const results = stamps.filter(
+        (s) =>
+          (s.hash || '').toLowerCase().includes(q) ||
+          (s.filename || '').toLowerCase().includes(q) ||
+          (s.id || '').toString().includes(q)
       )
       setSearchResults(results)
     }, 300)
@@ -197,7 +201,9 @@ export default function Atlas() {
                 ))}
               </div>
             ) : null}
-            <div className={`rounded-[3rem] border border-[var(--border)] bg-[var(--bg-secondary)] p-10 lg:p-16 ${loading ? 'hidden' : ''}`}>
+            <div
+              className={`rounded-[3rem] border border-[var(--border)] bg-[var(--bg-secondary)] p-10 lg:p-16 ${loading ? 'hidden' : ''}`}
+            >
               {stamps.slice(0, 4).map((s, i) => (
                 <TimelineStep
                   key={s.id || i}

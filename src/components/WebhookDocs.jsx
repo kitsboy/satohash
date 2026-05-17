@@ -1,15 +1,6 @@
-import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { 
-  Webhook, 
-  Shield, 
-  Clock,
-  CheckCircle,
-  RefreshCw,
-  Lock,
-  Copy,
-  Check
-} from 'lucide-react';
+import { useState } from 'react'
+import { motion } from 'framer-motion'
+import { Webhook, Shield, Clock, CheckCircle, RefreshCw, Lock, Copy, Check } from 'lucide-react'
 
 const WEBHOOK_EVENTS = [
   {
@@ -67,7 +58,7 @@ const WEBHOOK_EVENTS = [
   "reset_at": "2024-03-20T00:00:00Z"
 }`
   }
-];
+]
 
 const SIGNATURE_VERIFICATION = `// Node.js - Verify webhook signature
 const crypto = require('crypto');
@@ -98,7 +89,7 @@ app.post('/webhooks/satohash', (req, res) => {
   console.log('Received:', event.event);
   
   res.status(200).send('OK');
-});`;
+});`
 
 const RETRY_LOGIC = `// Python - Handle webhook retries
 from flask import Flask, request, Response
@@ -130,34 +121,30 @@ def handle_webhook():
 
 def is_duplicate(event_id):
     # Check Redis/cache for duplicate
-    return redis.get(f"webhook:{event_id}") is not None`;
+    return redis.get(f"webhook:{event_id}") is not None`
 
 export default function WebhookDocs() {
-  const [activeEvent, setActiveEvent] = useState(WEBHOOK_EVENTS[0]);
-  const [copied, setCopied] = useState(false);
+  const [activeEvent, setActiveEvent] = useState(WEBHOOK_EVENTS[0])
+  const [copied, setCopied] = useState(false)
 
   const copyPayload = () => {
-    navigator.clipboard.writeText(activeEvent.payload);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
+    navigator.clipboard.writeText(activeEvent.payload)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      className="space-y-8"
-    >
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-8">
       {/* Overview */}
-      <div className="bg-gradient-to-r from-gray-800/50 to-gray-900/50 rounded-xl p-6 border border-gray-700">
+      <div className="rounded-xl border border-gray-700 bg-gradient-to-r from-gray-800/50 to-gray-900/50 p-6">
         <div className="flex items-start gap-4">
-          <div className="w-12 h-12 rounded-xl bg-orange-500/20 flex items-center justify-center flex-shrink-0">
-            <Webhook className="w-6 h-6 text-orange-400" />
+          <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-orange-500/20">
+            <Webhook className="h-6 w-6 text-orange-400" />
           </div>
           <div>
-            <h2 className="text-2xl font-bold mb-2">Webhook Events</h2>
+            <h2 className="mb-2 text-2xl font-bold">Webhook Events</h2>
             <p className="text-gray-400">
-              Receive real-time notifications when timestamps are confirmed, payments are received, 
+              Receive real-time notifications when timestamps are confirmed, payments are received,
               or other events occur. Webhooks are available on Pro and Enterprise tiers.
             </p>
           </div>
@@ -165,52 +152,52 @@ export default function WebhookDocs() {
       </div>
 
       {/* Configuration */}
-      <div className="grid md:grid-cols-2 gap-6">
-        <div className="bg-gray-800/50 rounded-xl p-6 border border-gray-700">
-          <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-            <Shield className="w-5 h-5 text-orange-400" />
+      <div className="grid gap-6 md:grid-cols-2">
+        <div className="rounded-xl border border-gray-700 bg-gray-800/50 p-6">
+          <h3 className="mb-4 flex items-center gap-2 text-lg font-semibold">
+            <Shield className="h-5 w-5 text-orange-400" />
             Configuration
           </h3>
           <ul className="space-y-3 text-sm text-gray-400">
             <li className="flex items-start gap-2">
-              <CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
+              <CheckCircle className="mt-0.5 h-4 w-4 flex-shrink-0 text-green-400" />
               <span>Set your webhook URL in the dashboard</span>
             </li>
             <li className="flex items-start gap-2">
-              <CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
+              <CheckCircle className="mt-0.5 h-4 w-4 flex-shrink-0 text-green-400" />
               <span>We&apos;ll send a POST request with JSON payload</span>
             </li>
             <li className="flex items-start gap-2">
-              <CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
+              <CheckCircle className="mt-0.5 h-4 w-4 flex-shrink-0 text-green-400" />
               <span>Verify signatures using your webhook secret</span>
             </li>
             <li className="flex items-start gap-2">
-              <CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
+              <CheckCircle className="mt-0.5 h-4 w-4 flex-shrink-0 text-green-400" />
               <span>Return HTTP 200 within 30 seconds</span>
             </li>
           </ul>
         </div>
 
-        <div className="bg-gray-800/50 rounded-xl p-6 border border-gray-700">
-          <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-            <RefreshCw className="w-5 h-5 text-orange-400" />
+        <div className="rounded-xl border border-gray-700 bg-gray-800/50 p-6">
+          <h3 className="mb-4 flex items-center gap-2 text-lg font-semibold">
+            <RefreshCw className="h-5 w-5 text-orange-400" />
             Retry Policy
           </h3>
           <ul className="space-y-3 text-sm text-gray-400">
             <li className="flex items-start gap-2">
-              <Clock className="w-4 h-4 text-blue-400 flex-shrink-0 mt-0.5" />
+              <Clock className="mt-0.5 h-4 w-4 flex-shrink-0 text-blue-400" />
               <span>Immediate first attempt</span>
             </li>
             <li className="flex items-start gap-2">
-              <Clock className="w-4 h-4 text-blue-400 flex-shrink-0 mt-0.5" />
+              <Clock className="mt-0.5 h-4 w-4 flex-shrink-0 text-blue-400" />
               <span>Retry after 5 seconds (2nd attempt)</span>
             </li>
             <li className="flex items-start gap-2">
-              <Clock className="w-4 h-4 text-blue-400 flex-shrink-0 mt-0.5" />
+              <Clock className="mt-0.5 h-4 w-4 flex-shrink-0 text-blue-400" />
               <span>Retry after 25 seconds (3rd attempt)</span>
             </li>
             <li className="flex items-start gap-2">
-              <Clock className="w-4 h-4 text-blue-400 flex-shrink-0 mt-0.5" />
+              <Clock className="mt-0.5 h-4 w-4 flex-shrink-0 text-blue-400" />
               <span>Retry after 125 seconds (final attempt)</span>
             </li>
           </ul>
@@ -219,43 +206,45 @@ export default function WebhookDocs() {
 
       {/* Event Types */}
       <div>
-        <h3 className="text-xl font-bold mb-4">Event Types</h3>
-        <div className="grid lg:grid-cols-2 gap-6">
+        <h3 className="mb-4 text-xl font-bold">Event Types</h3>
+        <div className="grid gap-6 lg:grid-cols-2">
           {/* Event List */}
           <div className="space-y-2">
             {WEBHOOK_EVENTS.map((event) => (
               <button
                 key={event.name}
                 onClick={() => setActiveEvent(event)}
-                className={`w-full text-left p-4 rounded-xl border transition-all ${
+                className={`w-full rounded-xl border p-4 text-left transition-all ${
                   activeEvent.name === event.name
-                    ? 'bg-orange-500/20 border-orange-500/50'
-                    : 'bg-gray-800/50 border-gray-700 hover:border-gray-600'
+                    ? 'border-orange-500/50 bg-orange-500/20'
+                    : 'border-gray-700 bg-gray-800/50 hover:border-gray-600'
                 }`}
               >
-                <code className={`text-sm font-mono ${
-                  activeEvent.name === event.name ? 'text-orange-400' : 'text-gray-300'
-                }`}>
+                <code
+                  className={`font-mono text-sm ${
+                    activeEvent.name === event.name ? 'text-orange-400' : 'text-gray-300'
+                  }`}
+                >
                   {event.name}
                 </code>
-                <p className="text-sm text-gray-400 mt-1">{event.description}</p>
+                <p className="mt-1 text-sm text-gray-400">{event.description}</p>
               </button>
             ))}
           </div>
 
           {/* Payload Preview */}
-          <div className="bg-black/50 rounded-xl border border-gray-700 overflow-hidden">
-            <div className="flex items-center justify-between px-4 py-3 border-b border-gray-800">
+          <div className="overflow-hidden rounded-xl border border-gray-700 bg-black/50">
+            <div className="flex items-center justify-between border-b border-gray-800 px-4 py-3">
               <span className="text-sm font-semibold text-gray-400">Payload Example</span>
               <button
                 onClick={copyPayload}
                 className="flex items-center gap-1 text-xs text-gray-500 hover:text-gray-300"
               >
-                {copied ? <Check className="w-3 h-3" /> : <Copy className="w-3 h-3" />}
+                {copied ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
                 {copied ? 'Copied!' : 'Copy'}
               </button>
             </div>
-            <pre className="p-4 text-sm font-mono text-gray-300 overflow-x-auto">
+            <pre className="overflow-x-auto p-4 font-mono text-sm text-gray-300">
               {activeEvent.payload}
             </pre>
           </div>
@@ -263,86 +252,89 @@ export default function WebhookDocs() {
       </div>
 
       {/* Headers Reference */}
-      <div className="bg-gray-800/50 rounded-xl border border-gray-700 overflow-hidden">
-        <div className="px-6 py-4 border-b border-gray-700">
+      <div className="overflow-hidden rounded-xl border border-gray-700 bg-gray-800/50">
+        <div className="border-b border-gray-700 px-6 py-4">
           <h3 className="text-lg font-semibold">Webhook Headers</h3>
         </div>
         <table className="w-full text-sm">
           <thead className="bg-gray-900/50">
             <tr>
-              <th className="text-left px-6 py-3 text-gray-400 font-medium">Header</th>
-              <th className="text-left px-6 py-3 text-gray-400 font-medium">Description</th>
-              <th className="text-left px-6 py-3 text-gray-400 font-medium">Example</th>
+              <th className="px-6 py-3 text-left font-medium text-gray-400">Header</th>
+              <th className="px-6 py-3 text-left font-medium text-gray-400">Description</th>
+              <th className="px-6 py-3 text-left font-medium text-gray-400">Example</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-700">
             <tr>
               <td className="px-6 py-3 font-mono text-orange-400">X-Satohash-Signature</td>
               <td className="px-6 py-3 text-gray-400">HMAC-SHA256 signature</td>
-              <td className="px-6 py-3 font-mono text-gray-500 text-xs">sha256=a1b2c3...</td>
+              <td className="px-6 py-3 font-mono text-xs text-gray-500">sha256=a1b2c3...</td>
             </tr>
             <tr>
               <td className="px-6 py-3 font-mono text-orange-400">X-Event-ID</td>
               <td className="px-6 py-3 text-gray-400">Unique event ID (idempotency)</td>
-              <td className="px-6 py-3 font-mono text-gray-500 text-xs">evt_1234567890</td>
+              <td className="px-6 py-3 font-mono text-xs text-gray-500">evt_1234567890</td>
             </tr>
             <tr>
               <td className="px-6 py-3 font-mono text-orange-400">X-Event-Type</td>
               <td className="px-6 py-3 text-gray-400">Event type identifier</td>
-              <td className="px-6 py-3 font-mono text-gray-500 text-xs">timestamp.confirmed</td>
+              <td className="px-6 py-3 font-mono text-xs text-gray-500">timestamp.confirmed</td>
             </tr>
             <tr>
               <td className="px-6 py-3 font-mono text-orange-400">X-Attempt-Number</td>
               <td className="px-6 py-3 text-gray-400">Delivery attempt (1-4)</td>
-              <td className="px-6 py-3 font-mono text-gray-500 text-xs">1</td>
+              <td className="px-6 py-3 font-mono text-xs text-gray-500">1</td>
             </tr>
           </tbody>
         </table>
       </div>
 
       {/* Security Section */}
-      <div className="grid md:grid-cols-2 gap-6">
-        <div className="bg-gray-800/50 rounded-xl p-6 border border-gray-700">
-          <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-            <Lock className="w-5 h-5 text-green-400" />
+      <div className="grid gap-6 md:grid-cols-2">
+        <div className="rounded-xl border border-gray-700 bg-gray-800/50 p-6">
+          <h3 className="mb-4 flex items-center gap-2 text-lg font-semibold">
+            <Lock className="h-5 w-5 text-green-400" />
             Signature Verification
           </h3>
-          <p className="text-sm text-gray-400 mb-4">
-            Always verify webhook signatures to ensure requests are from Satohash. 
-            Use your webhook secret from the dashboard.
+          <p className="mb-4 text-sm text-gray-400">
+            Always verify webhook signatures to ensure requests are from Satohash. Use your webhook
+            secret from the dashboard.
           </p>
-          <pre className="bg-black/50 rounded-lg p-4 text-xs font-mono text-gray-300 overflow-x-auto">
+          <pre className="overflow-x-auto rounded-lg bg-black/50 p-4 font-mono text-xs text-gray-300">
             {SIGNATURE_VERIFICATION}
           </pre>
         </div>
 
-        <div className="bg-gray-800/50 rounded-xl p-6 border border-gray-700">
-          <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-            <RefreshCw className="w-5 h-5 text-blue-400" />
+        <div className="rounded-xl border border-gray-700 bg-gray-800/50 p-6">
+          <h3 className="mb-4 flex items-center gap-2 text-lg font-semibold">
+            <RefreshCw className="h-5 w-5 text-blue-400" />
             Handling Retries
           </h3>
-          <p className="text-sm text-gray-400 mb-4">
-            Implement idempotency using the X-Event-ID header. Store processed 
-            event IDs to avoid duplicate processing.
+          <p className="mb-4 text-sm text-gray-400">
+            Implement idempotency using the X-Event-ID header. Store processed event IDs to avoid
+            duplicate processing.
           </p>
-          <pre className="bg-black/50 rounded-lg p-4 text-xs font-mono text-gray-300 overflow-x-auto">
+          <pre className="overflow-x-auto rounded-lg bg-black/50 p-4 font-mono text-xs text-gray-300">
             {RETRY_LOGIC}
           </pre>
         </div>
       </div>
 
       {/* IP Whitelist */}
-      <div className="bg-blue-500/10 border border-blue-500/30 rounded-xl p-6">
-        <h4 className="text-blue-400 font-semibold mb-3 flex items-center gap-2">
-          <Shield className="w-5 h-5" />
+      <div className="rounded-xl border border-blue-500/30 bg-blue-500/10 p-6">
+        <h4 className="mb-3 flex items-center gap-2 font-semibold text-blue-400">
+          <Shield className="h-5 w-5" />
           IP Whitelist
         </h4>
-        <p className="text-sm text-gray-400 mb-3">
+        <p className="mb-3 text-sm text-gray-400">
           For additional security, you can whitelist these IP addresses:
         </p>
         <div className="flex flex-wrap gap-2">
           {['52.23.45.123', '54.172.89.45', '18.209.234.67'].map((ip) => (
-            <code key={ip} className="bg-black/50 px-3 py-1 rounded text-sm font-mono text-gray-300">
+            <code
+              key={ip}
+              className="rounded bg-black/50 px-3 py-1 font-mono text-sm text-gray-300"
+            >
               {ip}
             </code>
           ))}
@@ -350,41 +342,41 @@ export default function WebhookDocs() {
       </div>
 
       {/* Testing Webhooks */}
-      <div className="bg-gray-800/50 rounded-xl p-6 border border-gray-700">
-        <h3 className="text-lg font-semibold mb-4">Testing Webhooks</h3>
-        <p className="text-gray-400 mb-4">
+      <div className="rounded-xl border border-gray-700 bg-gray-800/50 p-6">
+        <h3 className="mb-4 text-lg font-semibold">Testing Webhooks</h3>
+        <p className="mb-4 text-gray-400">
           Use these tools to test your webhook integration locally:
         </p>
-        <div className="grid md:grid-cols-3 gap-4">
-          <a 
-            href="https://webhook.site" 
-            target="_blank" 
+        <div className="grid gap-4 md:grid-cols-3">
+          <a
+            href="https://webhook.site"
+            target="_blank"
             rel="noopener noreferrer"
-            className="p-4 rounded-lg bg-gray-900/50 border border-gray-700 hover:border-orange-500/50 transition-colors"
+            className="rounded-lg border border-gray-700 bg-gray-900/50 p-4 transition-colors hover:border-orange-500/50"
           >
-            <div className="font-semibold mb-1">webhook.site</div>
+            <div className="mb-1 font-semibold">webhook.site</div>
             <div className="text-xs text-gray-500">Instant webhook URL for testing</div>
           </a>
-          <a 
-            href="https://ngrok.com" 
-            target="_blank" 
+          <a
+            href="https://ngrok.com"
+            target="_blank"
             rel="noopener noreferrer"
-            className="p-4 rounded-lg bg-gray-900/50 border border-gray-700 hover:border-orange-500/50 transition-colors"
+            className="rounded-lg border border-gray-700 bg-gray-900/50 p-4 transition-colors hover:border-orange-500/50"
           >
-            <div className="font-semibold mb-1">ngrok</div>
+            <div className="mb-1 font-semibold">ngrok</div>
             <div className="text-xs text-gray-500">Expose localhost to internet</div>
           </a>
-          <a 
-            href="https://requestbin.com" 
-            target="_blank" 
+          <a
+            href="https://requestbin.com"
+            target="_blank"
             rel="noopener noreferrer"
-            className="p-4 rounded-lg bg-gray-900/50 border border-gray-700 hover:border-orange-500/50 transition-colors"
+            className="rounded-lg border border-gray-700 bg-gray-900/50 p-4 transition-colors hover:border-orange-500/50"
           >
-            <div className="font-semibold mb-1">RequestBin</div>
+            <div className="mb-1 font-semibold">RequestBin</div>
             <div className="text-xs text-gray-500">Inspect HTTP requests</div>
           </a>
         </div>
       </div>
     </motion.div>
-  );
+  )
 }

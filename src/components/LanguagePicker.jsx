@@ -37,18 +37,18 @@ export default function LanguagePicker({ isOpen, onClose }) {
               onClick={() => handleLanguageSelect(lang.code)}
               className={`group flex items-center gap-4 rounded-2xl px-5 py-4 text-left transition-all ${
                 isActive
-                  ? 'bg-indigo-50 border-2 border-indigo-200 shadow-sm'
-                  : 'border-2 border-transparent hover:bg-slate-50 hover:border-slate-100'
+                  ? 'border-2 border-indigo-200 bg-indigo-50 shadow-sm'
+                  : 'border-2 border-transparent hover:border-slate-100 hover:bg-slate-50'
               }`}
             >
               <span className="text-2xl">{lang.flag}</span>
               <div className="flex-1">
-                <span className={`block text-sm font-bold ${isActive ? 'text-indigo-900' : 'text-slate-900'}`}>
+                <span
+                  className={`block text-sm font-bold ${isActive ? 'text-indigo-900' : 'text-slate-900'}`}
+                >
                   {lang.name}
                 </span>
-                <span className="text-[11px] text-slate-400 font-medium">
-                  {lang.native}
-                </span>
+                <span className="text-[11px] font-medium text-slate-400">{lang.native}</span>
               </div>
               {isActive && (
                 <motion.div

@@ -577,7 +577,7 @@ export default function TrustCenter() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="mt-12 flex flex-wrap gap-4 justify-center"
+          className="mt-12 flex flex-wrap justify-center gap-4"
         >
           <Link
             to="/legal/terms"

@@ -1,16 +1,16 @@
-import { useState, useRef } from 'react';
-import { motion } from 'framer-motion';
-import { 
-  Send, 
-  FileText, 
-  CheckCircle, 
-  XCircle, 
+import { useState, useRef } from 'react'
+import { motion } from 'framer-motion'
+import {
+  Send,
+  FileText,
+  CheckCircle,
+  XCircle,
   Clock,
   Hash,
   Loader2,
   AlertTriangle,
   Bitcoin
-} from 'lucide-react';
+} from 'lucide-react'
 
 const ENDPOINTS = [
   {
@@ -50,55 +50,55 @@ const ENDPOINTS = [
     description: 'Latest Bitcoin block height',
     requiresAuth: false
   }
-];
+]
 
 export default function ApiPlayground() {
-  const [selectedEndpoint, setSelectedEndpoint] = useState(ENDPOINTS[0]);
-  const [apiKey, setApiKey] = useState('demo_key_' + Math.random().toString(36).slice(2, 10));
-  const [requestBody, setRequestBody] = useState(JSON.stringify(ENDPOINTS[0].body, null, 2));
-  const [file, setFile] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [response, setResponse] = useState(null);
-  const [error, setError] = useState(null);
-  const fileInputRef = useRef(null);
+  const [selectedEndpoint, setSelectedEndpoint] = useState(ENDPOINTS[0])
+  const [apiKey, setApiKey] = useState('demo_key_' + Math.random().toString(36).slice(2, 10))
+  const [requestBody, setRequestBody] = useState(JSON.stringify(ENDPOINTS[0].body, null, 2))
+  const [file, setFile] = useState(null)
+  const [loading, setLoading] = useState(false)
+  const [response, setResponse] = useState(null)
+  const [error, setError] = useState(null)
+  const fileInputRef = useRef(null)
 
   const handleEndpointChange = (endpoint) => {
-    setSelectedEndpoint(endpoint);
+    setSelectedEndpoint(endpoint)
     if (endpoint.body) {
-      setRequestBody(JSON.stringify(endpoint.body, null, 2));
+      setRequestBody(JSON.stringify(endpoint.body, null, 2))
     } else {
-      setRequestBody('');
+      setRequestBody('')
     }
-    setResponse(null);
-    setError(null);
-    setFile(null);
-  };
+    setResponse(null)
+    setError(null)
+    setFile(null)
+  }
 
   const generateRandomHash = () => {
-    const chars = 'abcdef0123456789';
-    let hash = '';
+    const chars = 'abcdef0123456789'
+    let hash = ''
     for (let i = 0; i < 64; i++) {
-      hash += chars[Math.floor(Math.random() * chars.length)];
+      hash += chars[Math.floor(Math.random() * chars.length)]
     }
-    const body = JSON.parse(requestBody || '{}');
-    body.hash = hash;
-    setRequestBody(JSON.stringify(body, null, 2));
-  };
+    const body = JSON.parse(requestBody || '{}')
+    body.hash = hash
+    setRequestBody(JSON.stringify(body, null, 2))
+  }
 
   const handleFileSelect = (e) => {
-    const selectedFile = e.target.files[0];
+    const selectedFile = e.target.files[0]
     if (selectedFile) {
-      setFile(selectedFile);
+      setFile(selectedFile)
     }
-  };
+  }
 
   const simulateRequest = async () => {
-    setLoading(true);
-    setError(null);
-    setResponse(null);
+    setLoading(true)
+    setError(null)
+    setResponse(null)
 
     // Simulate network delay
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    await new Promise((resolve) => setTimeout(resolve, 1500))
 
     try {
       // Demo mode - simulate responses
@@ -147,39 +147,42 @@ export default function ApiPlayground() {
             { name: 'blockchain.info', height: 850233, status: 'syncing' }
           ]
         }
-      };
+      }
 
       // Simulate occasional errors for demo
       if (Math.random() > 0.9) {
-        throw new Error('Rate limit exceeded. Try again in 60 seconds.');
+        throw new Error('Rate limit exceeded. Try again in 60 seconds.')
       }
 
-      setResponse(mockResponses[selectedEndpoint.id]);
+      setResponse(mockResponses[selectedEndpoint.id])
     } catch (err) {
-      setError(err.message);
+      setError(err.message)
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   const getMethodColor = (method) => {
     switch (method) {
-      case 'GET': return 'text-blue-400 bg-blue-500/20';
-      case 'POST': return 'text-green-400 bg-green-500/20';
-      default: return 'text-gray-400 bg-gray-500/20';
+      case 'GET':
+        return 'text-blue-400 bg-blue-500/20'
+      case 'POST':
+        return 'text-green-400 bg-green-500/20'
+      default:
+        return 'text-gray-400 bg-gray-500/20'
     }
-  };
+  }
 
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="grid lg:grid-cols-3 gap-6"
+      className="grid gap-6 lg:grid-cols-3"
     >
       {/* Left Panel - Endpoint Selection */}
-      <div className="lg:col-span-1 space-y-4">
-        <div className="bg-gray-800/50 rounded-xl border border-gray-700 p-4">
-          <h3 className="text-sm font-semibold text-gray-400 mb-3 uppercase tracking-wider">
+      <div className="space-y-4 lg:col-span-1">
+        <div className="rounded-xl border border-gray-700 bg-gray-800/50 p-4">
+          <h3 className="mb-3 text-sm font-semibold tracking-wider text-gray-400 uppercase">
             Endpoints
           </h3>
           <div className="space-y-2">
@@ -187,23 +190,25 @@ export default function ApiPlayground() {
               <button
                 key={endpoint.id}
                 onClick={() => handleEndpointChange(endpoint)}
-                className={`w-full text-left p-3 rounded-lg border transition-all ${
+                className={`w-full rounded-lg border p-3 text-left transition-all ${
                   selectedEndpoint.id === endpoint.id
-                    ? 'bg-orange-500/20 border-orange-500/50'
-                    : 'bg-gray-900/50 border-gray-700 hover:border-gray-600'
+                    ? 'border-orange-500/50 bg-orange-500/20'
+                    : 'border-gray-700 bg-gray-900/50 hover:border-gray-600'
                 }`}
               >
-                <div className="flex items-center gap-2 mb-1">
-                  <span className={`text-xs font-mono px-2 py-0.5 rounded ${getMethodColor(endpoint.method)}`}>
+                <div className="mb-1 flex items-center gap-2">
+                  <span
+                    className={`rounded px-2 py-0.5 font-mono text-xs ${getMethodColor(endpoint.method)}`}
+                  >
                     {endpoint.method}
                   </span>
-                  {endpoint.requiresAuth && (
-                    <span className="text-xs text-yellow-500">🔒</span>
-                  )}
+                  {endpoint.requiresAuth && <span className="text-xs text-yellow-500">🔒</span>}
                 </div>
-                <div className={`text-sm font-mono ${
-                  selectedEndpoint.id === endpoint.id ? 'text-orange-400' : 'text-gray-300'
-                }`}>
+                <div
+                  className={`font-mono text-sm ${
+                    selectedEndpoint.id === endpoint.id ? 'text-orange-400' : 'text-gray-300'
+                  }`}
+                >
                   {endpoint.path}
                 </div>
               </button>
@@ -212,59 +217,57 @@ export default function ApiPlayground() {
         </div>
 
         {/* API Key Input */}
-        <div className="bg-gray-800/50 rounded-xl border border-gray-700 p-4">
-          <label className="text-sm font-semibold text-gray-400 mb-2 block">
-            X-API-Key
-          </label>
+        <div className="rounded-xl border border-gray-700 bg-gray-800/50 p-4">
+          <label className="mb-2 block text-sm font-semibold text-gray-400">X-API-Key</label>
           <input
             type="text"
             value={apiKey}
             onChange={(e) => setApiKey(e.target.value)}
-            className="w-full bg-black/50 border border-gray-600 rounded-lg px-4 py-2 text-sm font-mono text-gray-300 focus:border-orange-500 focus:outline-none"
+            className="w-full rounded-lg border border-gray-600 bg-black/50 px-4 py-2 font-mono text-sm text-gray-300 focus:border-orange-500 focus:outline-none"
             placeholder="Enter your API key"
           />
-          <p className="text-xs text-gray-500 mt-2">
-            Demo mode: any key works for testing
-          </p>
+          <p className="mt-2 text-xs text-gray-500">Demo mode: any key works for testing</p>
         </div>
       </div>
 
       {/* Right Panel - Request/Response */}
-      <div className="lg:col-span-2 space-y-4">
+      <div className="space-y-4 lg:col-span-2">
         {/* Endpoint Info */}
-        <div className="bg-gray-800/50 rounded-xl border border-gray-700 p-4">
-          <h2 className="text-xl font-bold mb-2">{selectedEndpoint.name}</h2>
+        <div className="rounded-xl border border-gray-700 bg-gray-800/50 p-4">
+          <h2 className="mb-2 text-xl font-bold">{selectedEndpoint.name}</h2>
           <p className="text-gray-400">{selectedEndpoint.description}</p>
         </div>
 
         {/* Request Builder */}
-        <div className="bg-gray-800/50 rounded-xl border border-gray-700 overflow-hidden">
-          <div className="flex items-center justify-between px-4 py-3 border-b border-gray-700 bg-gray-900/50">
+        <div className="overflow-hidden rounded-xl border border-gray-700 bg-gray-800/50">
+          <div className="flex items-center justify-between border-b border-gray-700 bg-gray-900/50 px-4 py-3">
             <span className="text-sm font-semibold text-gray-400">Request</span>
             <div className="flex items-center gap-2">
-              <span className={`text-xs px-2 py-1 rounded ${getMethodColor(selectedEndpoint.method)}`}>
+              <span
+                className={`rounded px-2 py-1 text-xs ${getMethodColor(selectedEndpoint.method)}`}
+              >
                 {selectedEndpoint.method}
               </span>
               <code className="text-xs text-gray-500">{selectedEndpoint.path}</code>
             </div>
           </div>
 
-          <div className="p-4 space-y-4">
+          <div className="space-y-4 p-4">
             {selectedEndpoint.isFileUpload ? (
               <div>
-                <label className="text-sm text-gray-400 mb-2 block">.ots File</label>
+                <label className="mb-2 block text-sm text-gray-400">.ots File</label>
                 <div
                   onClick={() => fileInputRef.current?.click()}
-                  className="border-2 border-dashed border-gray-600 rounded-lg p-6 text-center cursor-pointer hover:border-orange-500/50 transition-colors"
+                  className="cursor-pointer rounded-lg border-2 border-dashed border-gray-600 p-6 text-center transition-colors hover:border-orange-500/50"
                 >
                   {file ? (
                     <div className="flex items-center justify-center gap-2 text-green-400">
-                      <FileText className="w-5 h-5" />
+                      <FileText className="h-5 w-5" />
                       <span>{file.name}</span>
                     </div>
                   ) : (
                     <div className="text-gray-500">
-                      <Upload className="w-8 h-8 mx-auto mb-2" />
+                      <Upload className="mx-auto mb-2 h-8 w-8" />
                       <p>Click to select .ots file</p>
                     </div>
                   )}
@@ -279,14 +282,14 @@ export default function ApiPlayground() {
               </div>
             ) : selectedEndpoint.body ? (
               <div>
-                <div className="flex items-center justify-between mb-2">
+                <div className="mb-2 flex items-center justify-between">
                   <label className="text-sm text-gray-400">Request Body (JSON)</label>
                   {selectedEndpoint.id === 'timestamp' && (
                     <button
                       onClick={generateRandomHash}
-                      className="text-xs flex items-center gap-1 text-orange-400 hover:text-orange-300"
+                      className="flex items-center gap-1 text-xs text-orange-400 hover:text-orange-300"
                     >
-                      <Hash className="w-3 h-3" />
+                      <Hash className="h-3 w-3" />
                       Random Hash
                     </button>
                   )}
@@ -295,7 +298,7 @@ export default function ApiPlayground() {
                   value={requestBody}
                   onChange={(e) => setRequestBody(e.target.value)}
                   rows={6}
-                  className="w-full bg-black/50 border border-gray-600 rounded-lg p-4 text-sm font-mono text-gray-300 focus:border-orange-500 focus:outline-none resize-none"
+                  className="w-full resize-none rounded-lg border border-gray-600 bg-black/50 p-4 font-mono text-sm text-gray-300 focus:border-orange-500 focus:outline-none"
                 />
               </div>
             ) : null}
@@ -303,16 +306,16 @@ export default function ApiPlayground() {
             <button
               onClick={simulateRequest}
               disabled={loading}
-              className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-orange-500 hover:bg-orange-600 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold transition-colors"
+              className="flex w-full items-center justify-center gap-2 rounded-lg bg-orange-500 px-6 py-3 font-semibold text-white transition-colors hover:bg-orange-600 disabled:cursor-not-allowed disabled:opacity-50"
             >
               {loading ? (
                 <>
-                  <Loader2 className="w-5 h-5 animate-spin" />
+                  <Loader2 className="h-5 w-5 animate-spin" />
                   Sending Request...
                 </>
               ) : (
                 <>
-                  <Send className="w-5 h-5" />
+                  <Send className="h-5 w-5" />
                   Send Request
                 </>
               )}
@@ -322,14 +325,14 @@ export default function ApiPlayground() {
 
         {/* Response */}
         {(response || error) && (
-          <div className="bg-gray-800/50 rounded-xl border border-gray-700 overflow-hidden">
-            <div className="flex items-center justify-between px-4 py-3 border-b border-gray-700 bg-gray-900/50">
+          <div className="overflow-hidden rounded-xl border border-gray-700 bg-gray-800/50">
+            <div className="flex items-center justify-between border-b border-gray-700 bg-gray-900/50 px-4 py-3">
               <span className="text-sm font-semibold text-gray-400">Response</span>
               {response && (
                 <div className="flex items-center gap-4 text-xs">
                   {response.cost !== undefined && (
                     <span className="flex items-center gap-1 text-orange-400">
-                      <Bitcoin className="w-3 h-3" />
+                      <Bitcoin className="h-3 w-3" />
                       {response.cost} sats
                     </span>
                   )}
@@ -346,29 +349,29 @@ export default function ApiPlayground() {
             <div className="p-4">
               {error ? (
                 <div className="flex items-center gap-3 text-red-400">
-                  <XCircle className="w-5 h-5" />
+                  <XCircle className="h-5 w-5" />
                   <span>{error}</span>
                 </div>
               ) : (
-                <pre className="text-sm font-mono text-gray-300 overflow-x-auto">
+                <pre className="overflow-x-auto font-mono text-sm text-gray-300">
                   {JSON.stringify(response, null, 2)}
                 </pre>
               )}
             </div>
 
             {response?.verified && (
-              <div className="px-4 py-3 bg-green-500/10 border-t border-green-500/30 flex items-center gap-2">
-                <CheckCircle className="w-5 h-5 text-green-400" />
-                <span className="text-green-400 text-sm">
+              <div className="flex items-center gap-2 border-t border-green-500/30 bg-green-500/10 px-4 py-3">
+                <CheckCircle className="h-5 w-5 text-green-400" />
+                <span className="text-sm text-green-400">
                   ✓ Verified on Bitcoin block #{response.bitcoin_block}
                 </span>
               </div>
             )}
 
             {response?.status === 'pending' && (
-              <div className="px-4 py-3 bg-yellow-500/10 border-t border-yellow-500/30 flex items-center gap-2">
-                <Clock className="w-5 h-5 text-yellow-400" />
-                <span className="text-yellow-400 text-sm">
+              <div className="flex items-center gap-2 border-t border-yellow-500/30 bg-yellow-500/10 px-4 py-3">
+                <Clock className="h-5 w-5 text-yellow-400" />
+                <span className="text-sm text-yellow-400">
                   ⏳ Pending confirmation (estimated: {response.estimated_confirmation})
                 </span>
               </div>
@@ -377,22 +380,30 @@ export default function ApiPlayground() {
         )}
 
         {/* Demo Notice */}
-        <div className="flex items-start gap-3 p-4 rounded-xl bg-blue-500/10 border border-blue-500/30">
-          <AlertTriangle className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
+        <div className="flex items-start gap-3 rounded-xl border border-blue-500/30 bg-blue-500/10 p-4">
+          <AlertTriangle className="mt-0.5 h-5 w-5 flex-shrink-0 text-blue-400" />
           <div className="text-sm text-gray-400">
-            <p className="font-semibold text-blue-400 mb-1">Demo Mode</p>
-            <p>This playground simulates API responses for testing. In production, requests are processed against the live Bitcoin blockchain via OpenTimestamps.</p>
+            <p className="mb-1 font-semibold text-blue-400">Demo Mode</p>
+            <p>
+              This playground simulates API responses for testing. In production, requests are
+              processed against the live Bitcoin blockchain via OpenTimestamps.
+            </p>
           </div>
         </div>
       </div>
     </motion.div>
-  );
+  )
 }
 
 function Upload({ className }) {
   return (
     <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+      />
     </svg>
-  );
+  )
 }

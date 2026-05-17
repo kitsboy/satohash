@@ -11,7 +11,12 @@ export default function CryptoNotice() {
     <div className="page min-h-screen bg-[var(--bg-primary)] pt-[140px] pb-20">
       <div className="layout-container">
         <div className="mb-6 flex items-center gap-4">
-          <Button variant="ghost" size="small" onClick={() => navigate(-1)} className="flex items-center gap-1.5">
+          <Button
+            variant="ghost"
+            size="small"
+            onClick={() => navigate(-1)}
+            className="flex items-center gap-1.5"
+          >
             <ArrowLeft size={18} /> Back
           </Button>
           <Link

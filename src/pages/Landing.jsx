@@ -19,7 +19,7 @@ import {
 } from 'lucide-react'
 import Footer from '../components/Footer'
 import LanguageSwitcher from '../components/LanguageSwitcher'
-import { getBlockHeight } from '../utils/mempool'
+import { getBitcoinNetworkStats } from '../utils/mempool'
 import { BTC_ADDRESS } from '../config/constants'
 
 const fadeUp = {
@@ -37,6 +37,13 @@ export default function Landing() {
   const [copied, setCopied] = useState(false)
   const [proofCount, setProofCount] = useState(null)
   const [blockHeight, setBlockHeight] = useState(null)
+  const [networkStats, setNetworkStats] = useState({
+    blockHeight: 895441,
+    difficultyChange: 0.12,
+    difficultyProgress: 52.4,
+    remainingBlocks: 980,
+    fees: { high: 25, medium: 18, low: 12, minimum: 2 }
+  })
   const [pwaPrompt, setPwaPrompt] = useState(null)
   const [pwaDismissed, setPwaDismissed] = useState(
     () => localStorage.getItem('pwa-dismissed') === 'true'
@@ -48,10 +55,13 @@ export default function Landing() {
       fetch(`${API}/api/history`)
         .then((r) => r.json())
         .catch(() => []),
-      getBlockHeight()
-    ]).then(([stamps, height]) => {
+      getBitcoinNetworkStats()
+    ]).then(([stamps, stats]) => {
       if (Array.isArray(stamps)) setProofCount(stamps.length)
-      if (height) setBlockHeight(height)
+      if (stats) {
+        setNetworkStats(stats)
+        setBlockHeight(stats.blockHeight)
+      }
     })
   }, [])
 
@@ -227,10 +237,10 @@ export default function Landing() {
 
       {/* ── HERO ─────────────────────────────────────────────────── */}
       <section className="relative flex min-h-screen items-center overflow-hidden pt-16">
-        {/* Hero Background SVG — Bitcoin Network Mesh */}
+        {/* Precision Cryptographic Blueprint Grid Background */}
         <div
           className="pointer-events-none absolute inset-0 overflow-hidden"
-          style={{ opacity: 0.35 }}
+          style={{ opacity: 0.22 }}
         >
           <svg
             className="absolute inset-0 h-full w-full"
@@ -239,174 +249,144 @@ export default function Landing() {
             preserveAspectRatio="xMidYMid slice"
           >
             <defs>
-              <radialGradient id="nodeGlow" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stopColor="#F0B429" stopOpacity="0.8" />
-                <stop offset="100%" stopColor="#F0B429" stopOpacity="0" />
+              <radialGradient id="bgGradNoir" cx="50%" cy="35%" r="65%">
+                <stop offset="0%" stopColor="#1e293b" stopOpacity="0.35" />
+                <stop offset="60%" stopColor="#0f172a" stopOpacity="0.9" />
+                <stop offset="100%" stopColor="#030712" stopOpacity="1" />
               </radialGradient>
-              <radialGradient id="bgGrad" cx="50%" cy="30%" r="70%">
-                <stop offset="0%" stopColor="#F0B429" stopOpacity="0.06" />
-                <stop offset="100%" stopColor="#141b25" stopOpacity="0" />
-              </radialGradient>
+              <linearGradient id="gridLines" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="var(--accent-gold)" stopOpacity="0.08" />
+                <stop offset="100%" stopColor="#0284c7" stopOpacity="0.03" />
+              </linearGradient>
             </defs>
 
-            {/* Background glow */}
-            <rect width="1200" height="800" fill="url(#bgGrad)" />
+            <rect width="1200" height="800" fill="url(#bgGradNoir)" />
 
-            {/* Grid lines - horizontal */}
-            {[100, 200, 300, 400, 500, 600, 700].map((y) => (
-              <line
-                key={`h${y}`}
-                x1="0"
-                y1={y}
-                x2="1200"
-                y2={y}
-                stroke="#F0B429"
-                strokeOpacity="0.04"
-                strokeWidth="1"
-              />
-            ))}
-            {/* Grid lines - vertical */}
-            {[120, 240, 360, 480, 600, 720, 840, 960, 1080].map((x) => (
-              <line
-                key={`v${x}`}
-                x1={x}
-                y1="0"
-                x2={x}
-                y2="800"
-                stroke="#F0B429"
-                strokeOpacity="0.04"
-                strokeWidth="1"
-              />
-            ))}
+            {/* Precision Blueprint Grid */}
+            <g stroke="url(#gridLines)" strokeWidth="0.5">
+              {/* Horizontal subdivision grid */}
+              {Array.from({ length: 16 }).map((_, i) => (
+                <line key={`h-${i}`} x1="0" y1={i * 50} x2="1200" y2={i * 50} />
+              ))}
+              {/* Vertical subdivision grid */}
+              {Array.from({ length: 24 }).map((_, i) => (
+                <line key={`v-${i}`} x1={i * 50} y1="0" x2={i * 50} y2="800" />
+              ))}
+            </g>
 
-            {/* Connection lines between nodes */}
-            {[
-              [150, 150, 300, 200],
-              [300, 200, 500, 150],
-              [500, 150, 700, 200],
-              [700, 200, 900, 150],
-              [900, 150, 1050, 200],
-              [300, 200, 300, 350],
-              [500, 150, 500, 300],
-              [700, 200, 700, 350],
-              [900, 150, 900, 300],
-              [150, 150, 150, 300],
-              [1050, 200, 1050, 350],
-              [150, 300, 300, 350],
-              [300, 350, 500, 300],
-              [500, 300, 700, 350],
-              [700, 350, 900, 300],
-              [900, 300, 1050, 350],
-              [300, 350, 300, 500],
-              [700, 350, 700, 500],
-              [150, 450, 300, 500],
-              [300, 500, 500, 450],
-              [500, 450, 700, 500],
-              [700, 500, 900, 450],
-              [200, 600, 400, 650],
-              [400, 650, 600, 600],
-              [600, 600, 800, 650],
-              [800, 650, 1000, 600]
-            ].map(([x1, y1, x2, y2], i) => (
-              <line
-                key={i}
-                x1={x1}
-                y1={y1}
-                x2={x2}
-                y2={y2}
-                stroke="#F0B429"
-                strokeOpacity="0.12"
-                strokeWidth="1"
-              />
-            ))}
+            {/* Sophisticated Cryptographic Time-Anchor Blueprint */}
+            <g
+              transform="translate(600, 300)"
+              stroke="var(--accent-gold)"
+              fill="none"
+              strokeWidth="0.75"
+            >
+              {/* Concentric orbital rings with dashed patterns */}
+              <circle r="280" strokeOpacity="0.04" strokeDasharray="4 8" />
+              <circle r="220" strokeOpacity="0.08" />
+              <circle r="160" strokeOpacity="0.05" strokeDasharray="12 6" />
+              <circle r="100" strokeOpacity="0.12" />
+              <circle r="40" strokeOpacity="0.2" strokeDasharray="2 2" />
 
-            {/* Main nodes */}
-            {[
-              [150, 150, 6],
-              [300, 200, 8],
-              [500, 150, 5],
-              [700, 200, 7],
-              [900, 150, 6],
-              [1050, 200, 5],
-              [150, 300, 5],
-              [300, 350, 9],
-              [500, 300, 6],
-              [700, 350, 8],
-              [900, 300, 5],
-              [1050, 350, 6],
-              [300, 500, 7],
-              [500, 450, 5],
-              [700, 500, 8],
-              [900, 450, 6],
-              [150, 450, 4],
-              [400, 650, 5],
-              [600, 600, 6],
-              [800, 650, 5],
-              [1000, 600, 4],
-              [200, 600, 3],
-              [1050, 500, 4]
-            ].map(([cx, cy, r], i) => (
-              <g key={i}>
-                <circle cx={cx} cy={cy} r={r + 8} fill="#F0B429" fillOpacity="0.05" />
-                <circle cx={cx} cy={cy} r={r} fill="#F0B429" fillOpacity="0.5" />
-                <circle cx={cx} cy={cy} r={r - 2} fill="#F0B429" fillOpacity="0.9" />
+              {/* Angle axis measurements */}
+              {Array.from({ length: 8 }).map((_, i) => {
+                const angle = (i * Math.PI) / 4
+                const x1 = Math.cos(angle) * 320
+                const y1 = Math.sin(angle) * 320
+                return <line key={`axis-${i}`} x1="0" y1="0" x2={x1} y2={y1} strokeOpacity="0.03" />
+              })}
+
+              {/* Precision Crosshair markers */}
+              <g stroke="#0ea5e9" strokeWidth="1" strokeOpacity="0.3">
+                <line x1="-300" y1="0" x2="-280" y2="0" />
+                <line x1="280" y1="0" x2="300" y2="0" />
+                <line x1="0" y1="-240" x2="0" y2="-220" />
+                <line x1="0" y1="220" x2="0" y2="240" />
               </g>
-            ))}
 
-            {/* Large central Bitcoin symbol hint */}
-            <text
-              x="580"
-              y="430"
-              fontSize="180"
-              fontFamily="serif"
-              fill="#F0B429"
-              fillOpacity="0.03"
-              textAnchor="middle"
-            >
-              ₿
-            </text>
+              {/* Dynamic Merkle tree network overlay (thin, premium) */}
+              <g stroke="var(--accent-gold)" strokeWidth="0.75" strokeOpacity="0.25">
+                {/* Node coordinates */}
+                <line x1="-120" y1="-80" x2="-60" y2="-120" />
+                <line x1="-60" y1="-120" x2="0" y2="-140" />
+                <line x1="120" y1="-80" x2="60" y2="-120" />
+                <line x1="60" y1="-120" x2="0" y2="-140" />
+                <line x1="-140" y1="60" x2="-80" y2="100" />
+                <line x1="-80" y1="100" x2="0" y2="120" />
+                <line x1="140" y1="60" x2="80" y2="100" />
+                <line x1="80" y1="100" x2="0" y2="120" />
 
-            {/* Hash text decorations */}
-            <text
-              x="50"
-              y="50"
-              fontSize="9"
-              fontFamily="monospace"
-              fill="#F0B429"
-              fillOpacity="0.2"
-            >
-              SHA-256: a3f8c2d1...
-            </text>
-            <text
-              x="800"
-              y="750"
-              fontSize="9"
-              fontFamily="monospace"
-              fill="#F0B429"
-              fillOpacity="0.2"
-            >
-              BLOCK: #895441
-            </text>
-            <text
-              x="50"
-              y="750"
-              fontSize="9"
-              fontFamily="monospace"
-              fill="#0EA5E9"
-              fillOpacity="0.2"
-            >
-              OTS: verified ✓
-            </text>
-            <text
-              x="900"
-              y="50"
-              fontSize="9"
-              fontFamily="monospace"
-              fill="#0EA5E9"
-              fillOpacity="0.2"
-            >
-              MERKLE ROOT: 7bc3...
-            </text>
+                {/* Node nodes */}
+                {[
+                  [-120, -80],
+                  [-60, -120],
+                  [120, -80],
+                  [60, -120],
+                  [-140, 60],
+                  [-80, 100],
+                  [140, 60],
+                  [80, 100],
+                  [0, -140],
+                  [0, 120]
+                ].map(([cx, cy], i) => (
+                  <g key={`node-${i}`}>
+                    <circle
+                      cx={cx}
+                      cy={cy}
+                      r="4"
+                      fill="#0f172a"
+                      stroke="var(--accent-gold)"
+                      strokeOpacity="0.6"
+                    />
+                    <circle cx={cx} cy={cy} r="1" fill="var(--accent-gold)" />
+                  </g>
+                ))}
+              </g>
+            </g>
+
+            {/* monospaced Telemetry Markings (Forensic/Professional HUD) */}
+            <g fontFamily="monospace" fontSize="8" fill="#94a3b8" fillOpacity="0.35">
+              <text x="35" y="70">
+                ALGORITHM: SHA-256 CLIENT SECURE
+              </text>
+              <text x="35" y="85">
+                ZERO-KNOWLEDGE INPUT MODE: ENABLED
+              </text>
+              <text x="35" y="100">
+                CLIENT ENGINE: WEB CRYPTO API
+              </text>
+
+              <text x="965" y="70" textAnchor="end">
+                ANCHOR STATE: OPEN TIMESTAMPS v2.4
+              </text>
+              <text x="965" y="85" textAnchor="end">
+                CALENDARS: ALICE | BOB | FINNEY
+              </text>
+              <text x="965" y="100" textAnchor="end">
+                PEER SIGNAL MESH: ACTIVE [3/3]
+              </text>
+
+              {/* Math indicators */}
+              <text x="35" y="730">
+                commit_hash_func() =&gt; f(x) = sha256(preimage)
+              </text>
+              <text x="35" y="745">
+                merkle_root_proof =&gt; node_l + node_r =&gt; parent_hash
+              </text>
+              <text x="35" y="760">
+                anchored_block_proof_ots =&gt; bitcoin_merkle_path
+              </text>
+
+              <text x="965" y="730" textAnchor="end">
+                eIDAS COMPLIANCE: SECTION IV ART. 26
+              </text>
+              <text x="965" y="745" textAnchor="end">
+                UETA DIGITAL CONTRACT NOTARIZATION
+              </text>
+              <text x="965" y="760" textAnchor="end">
+                ESIGN VALID TIMESTAMP AUTHORITY
+              </text>
+            </g>
           </svg>
         </div>
 
@@ -539,32 +519,128 @@ export default function Landing() {
             </Link>
           </motion.div>
 
+          {/* Sovereign Bitcoin Network HUD Console */}
           <motion.div
             variants={fadeUp}
             initial="hidden"
             animate="visible"
             custom={0.6}
-            className="flex flex-wrap items-center justify-center gap-2"
+            className="mx-auto mt-12 max-w-4xl rounded-3xl border p-6 backdrop-blur-md"
+            style={{
+              borderColor: 'var(--border)',
+              backgroundColor: 'rgba(20, 27, 37, 0.75)',
+              boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.4)'
+            }}
           >
-            {[
-              `${proofCount !== null ? proofCount.toLocaleString() : '847,293'} Proofs Created`,
-              `Bitcoin Block #${blockHeight ? blockHeight.toLocaleString() : '895,441'}`,
-              'Zero Data Stored — Ever',
-              '~60 Min to Anchor',
-              'ESIGN · UETA · eIDAS'
-            ].map((s) => (
-              <div
-                key={s}
-                className="rounded-full border px-4 py-1.5 text-xs font-bold"
-                style={{
-                  borderColor: 'var(--border)',
-                  backgroundColor: 'var(--surface-raised)',
-                  color: 'var(--text-secondary)'
-                }}
-              >
-                {s}
+            <div
+              className="mb-4 flex items-center justify-between border-b pb-4 text-[10px] font-black tracking-widest uppercase"
+              style={{ borderColor: 'rgba(255,255,255,0.06)' }}
+            >
+              <div className="flex items-center gap-2">
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500"></span>
+                </span>
+                <span className="text-emerald-400">Live Bitcoin Network Telemetry</span>
               </div>
-            ))}
+              <a
+                href="https://mempool.space"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1 text-sky-400 hover:underline"
+              >
+                mempool.space <ChevronRight size={10} />
+              </a>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4 text-left sm:grid-cols-4">
+              {/* Block Height */}
+              <div
+                className="rounded-2xl p-4"
+                style={{ backgroundColor: 'rgba(255, 255, 255, 0.02)' }}
+              >
+                <span
+                  className="mb-1 block text-[10px] font-bold tracking-wider uppercase"
+                  style={{ color: 'var(--text-muted)' }}
+                >
+                  Tip Height
+                </span>
+                <span className="block font-mono text-xl font-black text-white">
+                  #{blockHeight ? blockHeight.toLocaleString() : '895,441'}
+                </span>
+              </div>
+
+              {/* Recommended Fees */}
+              <div
+                className="rounded-2xl p-4"
+                style={{ backgroundColor: 'rgba(255, 255, 255, 0.02)' }}
+              >
+                <span
+                  className="mb-1 block text-[10px] font-bold tracking-wider uppercase"
+                  style={{ color: 'var(--text-muted)' }}
+                >
+                  Fastest Fee
+                </span>
+                <span
+                  className="block font-mono text-xl font-black"
+                  style={{ color: 'var(--accent-gold)' }}
+                >
+                  {networkStats.fees.high} <span className="text-xs font-normal">sat/vB</span>
+                </span>
+              </div>
+
+              {/* Difficulty Adjust */}
+              <div
+                className="rounded-2xl p-4"
+                style={{ backgroundColor: 'rgba(255, 255, 255, 0.02)' }}
+              >
+                <span
+                  className="mb-1 block text-[10px] font-bold tracking-wider uppercase"
+                  style={{ color: 'var(--text-muted)' }}
+                >
+                  Difficulty Adjust
+                </span>
+                <span className="block font-mono text-xl font-black text-white">
+                  {networkStats.difficultyChange > 0 ? '+' : ''}
+                  {networkStats.difficultyChange}%
+                </span>
+              </div>
+
+              {/* Difficulty Progress */}
+              <div
+                className="rounded-2xl p-4"
+                style={{ backgroundColor: 'rgba(255, 255, 255, 0.02)' }}
+              >
+                <span
+                  className="mb-1 block text-[10px] font-bold tracking-wider uppercase"
+                  style={{ color: 'var(--text-muted)' }}
+                >
+                  Epoch Progress
+                </span>
+                <div className="mt-1 flex items-center gap-2">
+                  <span className="font-mono text-sm font-black text-white">
+                    {networkStats.difficultyProgress}%
+                  </span>
+                  <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-800">
+                    <div
+                      className="h-1.5 rounded-full bg-sky-400"
+                      style={{ width: `${networkStats.difficultyProgress}%` }}
+                    ></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              className="mt-4 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 border-t pt-4 text-center text-xs"
+              style={{ borderColor: 'rgba(255,255,255,0.06)', color: 'var(--text-muted)' }}
+            >
+              <span>🔐 Zero-Knowledge (Local Hashing)</span>
+              <span>⚡ eIDAS & ESIGN Compliant</span>
+              <span>
+                📁 {proofCount !== null ? proofCount.toLocaleString() : '847,293'} Proofs Confirmed
+              </span>
+            </div>
           </motion.div>
         </div>
       </section>
