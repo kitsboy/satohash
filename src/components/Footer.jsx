@@ -1,11 +1,9 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import {
-  Shield,
   Mail,
   Globe,
   ChevronRight,
   ArrowUpRight,
-  Zap,
   Briefcase,
   Lock,
   Scale,
@@ -278,7 +276,8 @@ export default function Footer() {
               <div className="flex items-center gap-4 rounded-xl border border-[var(--border)] bg-[var(--surface-raised)] p-4 text-[var(--text-secondary)]">
                 <Lock size={16} className="text-[var(--accent-success)]" />
                 <span className="text-[11px] font-bold tracking-widest uppercase">
-                  v5.0.0 Verified
+                  v{typeof __APP_VERSION__ !== 'undefined' ? __APP_VERSION__ : '5.0.0'} (Build{' '}
+                  {typeof __BUILD_NUMBER__ !== 'undefined' ? __BUILD_NUMBER__ : '1'}) Verified
                 </span>
               </div>
             </div>

@@ -4,6 +4,7 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 import { VitePWA } from 'vite-plugin-pwa'
 import viteCompression from 'vite-plugin-compression'
+import { ViteImageOptimizer } from 'vite-plugin-image-optimizer'
 import { readFileSync } from 'fs'
 import wasm from 'vite-plugin-wasm'
 import topLevelAwait from 'vite-plugin-top-level-await'
@@ -17,7 +18,34 @@ export default defineConfig({
         wasm(),
         topLevelAwait(),
         react(),
-        VitePWA({ registerType: 'autoUpdate' }),
+        VitePWA({ 
+            registerType: 'autoUpdate',
+            workbox: {
+                globPatterns: ['**/*.{js,css,html,ico,png,svg,webp}'],
+                runtimeCaching: [
+                    {
+                        urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
+                        handler: 'CacheFirst',
+                        options: {
+                            cacheName: 'google-fonts-cache',
+                            expiration: {
+                                maxEntries: 10,
+                                maxAgeSeconds: 60 * 60 * 24 * 365
+                            },
+                            cacheableResponse: {
+                                statuses: [0, 200]
+                            }
+                        }
+                    }
+                ]
+            }
+        }),
+        ViteImageOptimizer({
+            png: { quality: 80 },
+            jpeg: { quality: 80 },
+            webp: { lossless: true },
+            svg: { multipass: true }
+        }),
         viteCompression({ algorithm: 'brotliCompress' })
     ],
     resolve: {
@@ -37,7 +65,8 @@ export default defineConfig({
         }
     },
     define: {
-        __APP_VERSION__: JSON.stringify(pkg.version)
+        __APP_VERSION__: JSON.stringify(pkg.version),
+        __BUILD_NUMBER__: JSON.stringify(JSON.parse(readFileSync(new URL('./build-metadata.json', import.meta.url), 'utf8')).buildNumber)
     },
     build: {
         outDir: 'dist',
@@ -50,7 +79,8 @@ export default defineConfig({
                     motion: ['framer-motion'],
                     icons: ['lucide-react'],
                     three: ['three'],
-                    crypto: ['bitcoinjs-lib', 'ethers', 'tiny-secp256k1']
+                    crypto: ['bitcoinjs-lib', 'ethers', 'tiny-secp256k1'],
+                    utils: ['html2canvas', 'jspdf']
                 }
             }
         }

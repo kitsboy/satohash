@@ -16,7 +16,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
-    "prepare": "husky || true"
+    "prepare": "husky",
+    "version:bump": "node scripts/increment-build.js"
   },
   "lint-staged": {
     "src/**/*.{js,jsx}": [
@@ -130,6 +131,7 @@
     "prettier-plugin-tailwindcss": "^0.7.2",
     "vite": "^6.0.5",
     "vite-plugin-compression": "^0.5.1",
+    "vite-plugin-image-optimizer": "^2.0.3",
     "vite-plugin-pwa": "^1.2.0",
     "vite-plugin-top-level-await": "^1.6.0",
     "vite-plugin-wasm": "^3.6.0",

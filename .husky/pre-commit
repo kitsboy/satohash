@@ -1,2 +1,3 @@
+npm run version:bump
+git add build-metadata.json
 npx lint-staged
-npm run test
