@@ -1,0 +1,91 @@
+{
+  "project": "satohash",
+  "orchestrator": "satohash-orchestrator",
+  "tasks": [
+    {
+      "id": "design-system-consolidation",
+      "title": "Consolidate Satohash design tokens and style system",
+      "description": "Create a unified design token layer for colors, typography, spacing, borders, shadows, and focus states in src/index.css.",
+      "steps": [
+        "Audit the current tokens and remove dead alias variables",
+        "Define semantic base tokens for background, surface, text, border, accent, success, danger, and focus",
+        "Add accessible contrast token variants for hover, focus, disabled, and soft states",
+        "Document the design token set in a shared style reference"
+      ],
+      "acceptance": [
+        "No design token aliases remain inconsistent",
+        "Primary text and controls use semantic tokens",
+        "All primary text and CTA colors meet WCAG AA"
+      ],
+      "labels": ["design", "frontend", "high-priority"]
+    },
+    {
+      "id": "navigation-simplification",
+      "title": "Simplify navigation and improve flow",
+      "description": "Trim the shell navigation to core journeys, surface the main path, and reduce information density on desktop and mobile.",
+      "steps": [
+        "Identify the core flows: Vault, Stamp, Verify, Atlas",
+        "Reduce left rail and mobile nav items to the essentials",
+        "Hide advanced/secondary options behind a compact panel or secondary menu",
+        "Ensure the mobile bottom nav is clear, touch-friendly, and not overloaded"
+      ],
+      "acceptance": [
+        "Primary navigation contains no more than 5 top items",
+        "Secondary actions are hidden or collapsed by default",
+        "Mobile nav uses large tap areas and only highest-value routes"
+      ],
+      "labels": ["ux", "design"]
+    },
+    {
+      "id": "typography-and-spacing",
+      "title": "Improve typography scale and visual breathing room",
+      "description": "Raise readable text sizes, add consistent spacing tokens, and reduce visual crowding in cards, headers, and lists.",
+      "steps": [
+        "Replace tiny text sizes with a clearer scale (12px minimum for body copy)",
+        "Increase line-height and spacing around cards, sections, and nav groups",
+        "Reduce all-caps microcopy where it hurts readability",
+        "Ensure headings and sections have clear hierarchy and visual separation"
+      ],
+      "acceptance": [
+        "Body copy is readable on desktop and mobile",
+        "Sections have clear visual separation without extra noise",
+        "Typography feels consistent across the main user flows"
+      ],
+      "labels": ["design", "accessibility"]
+    },
+    {
+      "id": "button-card-frames",
+      "title": "Add thin illuminated frames to buttons and cards",
+      "description": "Update the visual treatment for cards and buttons so they feel premium, sharp, and easy to scan.",
+      "steps": [
+        "Create a thin lit frame style for primary cards and panels",
+        "Refine button styling with a premium border, subtle glow, and defined variants",
+        "Ensure buttons have at least 44px tap areas and crisp labels",
+        "Apply the new framed styles consistently to cards on the vault, stamp, and dashboard pages"
+      ],
+      "acceptance": [
+        "Cards have a polished frame and reduced surface noise",
+        "Buttons are visually distinct with clear hierarchy",
+        "Framed surfaces read as elevated and premium"
+      ],
+      "labels": ["design", "visual"]
+    },
+    {
+      "id": "theme-visibility",
+      "title": "Surface theme switching and polish dark/light balance",
+      "description": "Make the theme toggle obvious, persist theme preference, and ensure both themes feel equally refined.",
+      "steps": [
+        "Expose the ThemeToggle in the shell top bar or header",
+        "Persist theme choice in local storage and respect system preference",
+        "Audit the light theme for contrast and polish",
+        "Ensure the dark theme remains sharp with clear information flow"
+      ],
+      "acceptance": [
+        "Users can switch theme from the main shell",
+        "Theme preference persists across sessions",
+        "Both themes are balanced and readable"
+      ],
+      "labels": ["design", "frontend"]
+    }
+  ]
+}

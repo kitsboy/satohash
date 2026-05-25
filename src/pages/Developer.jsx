@@ -27,7 +27,7 @@ import { toast } from 'sonner'
 import Tooltip from '../components/Tooltip'
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
-const BASE_URL = 'https://satohash.giveabit.io'
+const BASE_URL = 'https://satohash.io'
 
 const MOCK_KEYS = [
   { id: 1, name: 'Main Production Node', key: 'SAT_LIVE_8F2...A9B', status: 'Active' },
@@ -377,7 +377,7 @@ export default function Developer() {
                 className="font-mono text-[10px] font-bold tracking-widest uppercase"
                 style={{ color: 'var(--accent-active)' }}
               >
-                Developer API — satohash.giveabit.io
+                Developer API — satohash.io
               </span>
             </div>
             <h1

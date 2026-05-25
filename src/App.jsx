@@ -51,6 +51,7 @@ const Forum = React.lazy(() => import('./pages/Forum'))
 const Identity = React.lazy(() => import('./pages/Identity'))
 const MobileSigner = React.lazy(() => import('./pages/MobileSigner'))
 const BatchTimestamp = React.lazy(() => import('./pages/BatchTimestamp'))
+const ProofDNA = React.lazy(() => import('./pages/ProofDNA'))
 
 function ProtectedRoute({ children }) {
   const location = useLocation()
@@ -280,6 +281,14 @@ function AppContent() {
             element={
               <ProtectedRoute>
                 <BatchTimestamp />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/widgets"
+            element={
+              <ProtectedRoute>
+                <ProofDNA />
               </ProtectedRoute>
             }
           />

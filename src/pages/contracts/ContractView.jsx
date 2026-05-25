@@ -26,7 +26,7 @@ import ZKRedactionTool from '../../components/ZKRedactionTool'
 import Card from '../../components/Card'
 import { clsx } from 'clsx'
 
-const GIVEABIT_VERIFY_BASE = 'https://satohash.giveabit.io/verify'
+const GIVEABIT_VERIFY_BASE = 'https://satohash.io/verify'
 
 export default function ContractView() {
   const navigate = useNavigate()
@@ -622,7 +622,7 @@ export default function ContractView() {
                               className="font-mono text-[9px] font-medium tracking-wide"
                               style={{ color: 'var(--text-muted)' }}
                             >
-                              satohash.giveabit.io/verify
+                              satohash.io/verify
                             </span>
                           </div>
                         </div>

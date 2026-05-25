@@ -1,0 +1,60 @@
+{
+  "project": "satohash",
+  "orchestrator": "satohash-orchestrator",
+  "tasks": [
+    {
+      "id": "contrast-improvements",
+      "title": "Improve color contrast and define accessible tokens",
+      "description": "Audit and update color tokens in src/index.css and tailwind config to meet WCAG AA for normal text and large text. Add contrast tokens for states.",
+      "steps": [
+        "Extract current color variables in src/index.css into a single :root token block (--bg-primary, --text-primary, --accent-active, --accent-muted, etc.)",
+        "Run automated contrast checks (axe-core) and list failing selectors",
+        "Update tokens to accessible values and add --focus, --hover, --disabled variants",
+        "Create a small CSS utility file with accessible alias classes for critical components (btn-primary, btn-secondary, badge)"
+      ],
+      "acceptance": [
+        "All primary text passes WCAG AA (4.5:1)",
+        "Primary CTA and badges meet contrast requirements",
+        "No new visual regressions on desktop/mobile snapshots"
+      ],
+      "labels": ["design", "accessibility", "high-impact"],
+      "estimate_hours": 6
+    },
+    {
+      "id": "cta-hierarchy",
+      "title": "Clarify CTA hierarchy and affordance",
+      "description": "Standardize CTA sizes, spacing, and color to reduce visual competition and guide primary user flows.",
+      "steps": [
+        "Define primary, secondary, tertiary CTA styles in index.css and tailwind tokens",
+        "Audit main screens to identify competing CTAs and reduce to 1 primary action per screen",
+        "Increase clickable areas to 44px and ensure visual emphasis on primary actions",
+        "Update components/Button.jsx to consume new tokens and variants"
+      ],
+      "acceptance": [
+        "Primary action visible within first viewport",
+        "Buttons meet touch target sizes",
+        "Updated Button component has variant prop and documentation"
+      ],
+      "labels": ["design", "ux"],
+      "estimate_hours": 4
+    },
+    {
+      "id": "lazy-loading-code-split",
+      "title": "Add lazy-loading and code-splitting for heavy routes/components",
+      "description": "Improve initial load by lazy-loading non-critical components and routes using React.lazy + Suspense and dynamic imports.",
+      "steps": [
+        "Identify heavy components (ARViewer, InstitutionalHUD, large charts) via bundle analyzer",
+        "Replace static imports with React.lazy and wrap with Suspense fallbacks",
+        "Add route-level code splitting for rarely-used pages",
+        "Verify that server-side assets still build and that snapshots for critical routes remain unchanged"
+      ],
+      "acceptance": [
+        "Initial bundle size reduced",
+        "Lighthouse FCP/LCP improved by target (configurable)",
+        "No runtime errors from lazy-loaded components"
+      ],
+      "labels": ["performance", "frontend"],
+      "estimate_hours": 6
+    }
+  ]
+}

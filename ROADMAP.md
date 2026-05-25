@@ -14,7 +14,7 @@ This roadmap tracks the evolution of Satohash from a standalone notary tool to a
 
 ## 🚧 PHASE III: IDENTITY & ORCHESTRATION (Q3-Q4 2026)
 7.  **[/] NIP-05 Identity**: Verifiable identity links for contract signers (In Progress).
-8.  **[ ] Proof DNA Widgets**: Embeddable, verifiable badges for digital assets.
+8.  **[x] Proof DNA Widgets**: Embeddable, verifiable badges for digital assets.
 9.  **[ ] Mobile Signer Pro**: Dedicated iOS/Android secure enclave signing app.
 10. **[x] BOLT-12 Offers**: Native Lightning Network billing for automated anchoring.
 

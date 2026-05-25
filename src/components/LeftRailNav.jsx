@@ -18,7 +18,8 @@ import {
   Command,
   Wifi,
   Blocks,
-  ChevronRight
+  ChevronRight,
+  Dna
 } from 'lucide-react'
 import HelpOverlay from './HelpOverlay'
 import { getBlockHeight } from '../utils/mempool'
@@ -103,7 +104,8 @@ export default function LeftRailNav() {
       items: [
         { name: t('nav', 'vault'), path: '/vault', icon: Database },
         { name: t('nav', 'stamp'), path: '/stamp', icon: Fingerprint },
-        { name: t('nav', 'verify'), path: '/verify', icon: ShieldCheck }
+        { name: t('nav', 'verify'), path: '/verify', icon: ShieldCheck },
+        { name: 'Proof DNA', path: '/widgets', icon: Dna }
       ]
     },
     {

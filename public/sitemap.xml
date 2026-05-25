@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://satohash.com/</loc><priority>1.0</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://satohash.com/stamp</loc><priority>0.9</priority><changefreq>monthly</changefreq></url>
-  <url><loc>https://satohash.com/verify</loc><priority>0.9</priority><changefreq>monthly</changefreq></url>
-  <url><loc>https://satohash.com/vault</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
-  <url><loc>https://satohash.com/templates</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://satohash.com/trust</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
-  <url><loc>https://satohash.com/developer</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
-  <url><loc>https://satohash.com/about</loc><priority>0.6</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://satohash.io/</loc><priority>1.0</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://satohash.io/stamp</loc><priority>0.9</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://satohash.io/verify</loc><priority>0.9</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://satohash.io/vault</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://satohash.io/templates</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://satohash.io/trust</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://satohash.io/developer</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://satohash.io/about</loc><priority>0.6</priority><changefreq>monthly</changefreq></url>
 </urlset>

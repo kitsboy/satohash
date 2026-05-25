@@ -1,3 +1,12 @@
+Short summary of changes and the task spec included.
+
+What and why:
+- Add orchestrator task spec and scaffolding for review.
+
+Checklist:
+- [ ] CI passes (lint, tests, build)
+- [ ] Assigned reviewers
+- [ ] Human approval set for deploy environment
 ## Description
 _Describe the goal of this pull request concisely._
 

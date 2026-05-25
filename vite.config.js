@@ -80,7 +80,7 @@ export default defineConfig({
                     icons: ['lucide-react'],
                     three: ['three'],
                     crypto: ['bitcoinjs-lib', 'ethers', 'tiny-secp256k1'],
-                    utils: ['html2canvas', 'jspdf']
+                    jspdf: ['jspdf']
                 }
             }
         }

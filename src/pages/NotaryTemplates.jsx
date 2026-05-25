@@ -1052,7 +1052,7 @@ const BADGE_STYLES = {
 
 // ─── PDF GENERATION ─────────────────────────────────────────────────────────────
 
-const VERIFY_URL = 'https://satohash.giveabit.io/verify'
+const VERIFY_URL = 'https://satohash.io/verify'
 
 const generatePDF = async (template, data) => {
   const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' })
