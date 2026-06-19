@@ -1,184 +1,178 @@
 # Satohash — Executive Summary
 
-**Version:** 1.0  
-**Date:** May 2026  
+**Version:** 4.1.0-ELITE (Sovereign Settlement Mesh)  
+**Date:** 2026-06-10  
+**Live at:** https://satohash.io | https://satohash.giveabit.io  
 **Built by:** Give A Bit (https://giveabit.io)  
-**Live at:** https://satohash.giveabit.io
+**GitHub:** https://github.com/kitsboy/satohash (local filesystem is currently the most up-to-date source of truth — recent push did not fully land)
 
 ---
 
-## What is Satohash?
+## What Is Satohash?
 
-Satohash is a Bitcoin-native document timestamping platform. It allows anyone to create cryptographic, tamper-proof proof that a document existed at a specific point in time — secured by the Bitcoin blockchain — without needing a Bitcoin wallet, a notary, or any subscription.
+Satohash is the **Bitcoin-native sovereign settlement layer** for digital truth. It lets anyone — individuals, law firms, enterprises, journalists, AI agents, and developers — create cryptographic, tamper-proof, independently verifiable proof that a digital artifact (document, photo, contract, code state, AI output, or web capture) existed at a precise moment in time, anchored permanently to the Bitcoin blockchain via the OpenTimestamps (OTS) protocol.
 
-The core action is simple: upload a document, and Satohash returns an immutable `.ots` proof file. That proof is independently verifiable by anyone, forever, using only Bitcoin's public blockchain. No trust in Satohash is required — if Satohash disappeared tomorrow, all existing proofs would remain valid.
+**Core value:** Upload (or hash locally) a file → receive a portable, self-contained `.ots` proof file. Any third party can verify it forever using only open-source tools and a Bitcoin node or public explorer. No trust in Satohash is required after the proof is issued. No Bitcoin wallet is needed for basic use. Documents never leave the user's device.
 
----
-
-## The Problem We Solve
-
-Proving that something existed *before* a specific date is valuable in dozens of contexts:
-
-- A freelancer whose client claims they were the author of a design
-- A journalist protecting a pre-publication source document
-- A researcher establishing priority of discovery
-- A law firm proving a contract was drafted before a dispute arose
-- A developer proving the state of a codebase at a specific release
-- An AI team proving when a model produced a specific output
-
-Traditional solutions — notaries, lawyers, certified mail — are slow, expensive, and depend on a trusted intermediary. Cloud-based solutions (DocuSign, etc.) store your documents on their servers. Satohash does neither: it timestamps only the mathematical fingerprint (SHA-256 hash) of your document, keeping your content private by design.
-
----
-
-## How It Works
-
-### The OTS Protocol
-
-Satohash is built on [OpenTimestamps](https://opentimestamps.org) (OTS), an open protocol invented by Peter Todd in 2016. OTS is free, open source, and community-operated.
-
-**Proof lifecycle:**
+Satohash is not "blockchain notarization theater." It is a production-grade, four-plane cryptographic system:
 
 ```
-Document (your device)
-    ↓ SHA-256 hash (computed in browser — file never leaves your device)
-    ↓
-POST /api/stamp
-    ↓
-Three free OTS calendars (alice / bob / finney)
-    ↓ Merkle tree aggregation (~5 min)
-    ↓
-Bitcoin miner includes commitment in a block (~10 min)
-    ↓
-Status: "confirmed" | bitcoin_block_height: 898234
-    ↓
-.ots proof file — verifiable forever, by anyone, offline
+Plane 4: ATLAS — Live chain intelligence, mempool, node mesh, protocol stats, jurisdiction signals
+Plane 3: SETTLEMENT — Native BOLT-12 Lightning offers + L402 micropayment metering
+Plane 2: IDENTITY — Nostr NIP-05 / NIP-07 cryptographic signer identity & multi-party provenance
+Plane 1: PROOF — SHA-256 + OpenTimestamps calendar aggregation → Bitcoin PoW commitment (the eternal foundation)
 ```
 
-### Free Public Calendars
-
-Satohash submits to three independent, community-funded OTS calendars simultaneously:
-
-| Calendar | URL | Operator |
-|----------|-----|----------|
-| alice | https://alice.btc.calendar.opentimestamps.org | OTS Project |
-| bob | https://bob.btc.calendar.opentimestamps.org | OTS Project |
-| finney | https://finney.calendar.eternitywall.com | Eternity Wall |
-
-Using three calendars provides redundancy. These are free, require no API key, and are monitored at https://uptime.opentimestamps.net.
+Higher planes can evolve rapidly without ever invalidating historical proofs on Plane 1.
 
 ---
 
-## Current Feature Set (v1.0)
+## The Problem
 
-### Core Timestamping
-- **Document hashing** — SHA-256 in browser via Web Crypto API; files never transmitted
-- **OTS stamp** — submits to three calendars with explicit calendar URL configuration
-- **OTS verify** — verifies `.ots` file against Bitcoin blockchain
-- **OTS upgrade** — upgrades pending proofs when Bitcoin confirmation arrives
-- **Background upgrade daemon** — polls calendars automatically; no manual upgrade required
+Proving that something existed *before* a specific date has enormous legal, commercial, and intellectual value — especially in an era of generative AI, deepfakes, and eroding institutional trust.
 
-### Vault & History
-- **Stamp vault** — dashboard showing all timestamps with status, filename, and proof download
-- **History API** — `GET /api/history` returns recent 50 stamps
-- **Image vault** — filtered view of notarised images (`GET /api/vault/images`)
+| Use Case                    | Traditional Friction                  | Satohash Solution                          |
+|-----------------------------|---------------------------------------|--------------------------------------------|
+| IP / Patent priority        | Expensive, slow legal filings         | Instant client-side hash + Bitcoin anchor  |
+| Freelance / creator disputes| "He said / she said", no evidence     | Cryptographic timestamp before delivery    |
+| Investigative journalism    | Sources alter or deny content         | Immutable forensic snapshot + OTS          |
+| Smart contract / escrow evidence | Custodial third parties            | Self-sovereign, portable mathematical proof|
+| AI model / output provenance| No standard, easy to contest later    | Hash at generation time → Bitcoin block    |
+| Web content preservation    | Archives can be edited or taken down  | Snapper + browser fingerprint + OTS        |
+| Multi-party contracts       | Signature chains, repudiation risk    | Nostr-linked co-signing + drawn seals      |
+| Compliance / audit trails   | Expensive manual processes            | API + webhooks + courtroom PDF exports     |
+
+---
+
+## How It Works (Zero-Knowledge)
+
+1. **Hash** — The browser (or CLI) computes the SHA-256 fingerprint of your file using the Web Crypto API. The original bytes **never leave your device**.
+2. **Stamp** — Only the 64-character hex hash is sent to Satohash, which forwards it to three independent public OpenTimestamps calendars (alice, bob, finney).
+3. **Anchor** — Calendars aggregate thousands of hashes into a Merkle tree and commit the root to Bitcoin in an OP_RETURN (or Taproot) transaction.
+4. **Confirm** — ~10 minutes later (median block time) a Bitcoin block permanently seals the commitment. Satohash's background upgrade daemon detects this and upgrades the local proof record.
+5. **Prove** — Download the final `.ots` file. Verification is completely independent: `ots verify`, the official OTS website, or any compatible tool + a Bitcoin block explorer. The proof is valid even if Satohash never existed again.
+
+**No trust required.** The security comes from Bitcoin's proof-of-work, not from any company or server.
+
+---
+
+## Platform Features (v4.1 ELITE)
+
+### Core Proof
+- One-click / drag-and-drop timestamping (SPA, CLI, REST API)
+- Batch timestamping (hundreds of files in one Bitcoin commitment)
+- Verification Shield with 3D Merkle tree visualization and path explorer
+- Personal Vault with searchable history and bulk actions
+- Full OpenTimestamps compatibility + portable `.ots` files
+
+### Advanced / Institutional
+- **ZK Redaction Tool** — Redact sections of a document while preserving a valid Bitcoin anchor for the unredacted hash (courtroom magic)
+- **Courtroom-Ready PDF Customizer** — Watermarks, variable paper sizes, judicial metadata blocks, attestation language, injected OTS proof
+- **Forensic Web Capture (Snapper)** — Screenshot any public URL + rich browser fingerprint metadata; immediately stamp the evidence package
+- **Git State Notarization** — One-click anchoring of current repo state (tags, commit, tree)
+- **Offline Sync Queue** — Create stamps while offline; automatically reconcile when connectivity returns
+- **Real-Time Mempool Ticker** — Live fee rates and block height always visible in the signal bar
+- **Global Command Palette (⌘K)** — Keyboard-first navigation everywhere
 
 ### Identity & Collaboration
-- **Nostr integration** — publishes timestamps to Nostr relay; stores NIP-07 signed events
-- **Co-signing** — add co-signers via Nostr npub (`POST /api/collaboration/sign`)
-- **Revocation** — revoke and supersede a proof (`POST /api/revoke/:id`)
+- **Nostr Signer (NIP-07)** — Passwordless cryptographic identity via browser extension (Alby, etc.)
+- **Multi-Party Contract Signing** — Add co-signers by npub, collect drawn + typed seals, produce a single anchored proof package
+- **Proof DNA / Badge Generator** — Embeddable, verifiable visual attestations for assets
 
-### Capture
-- **URL capture** — notarise a URL's content at a point in time (`POST /api/capture/url`)
-- **Browser extension endpoint** — `POST /api/capture/snapper` for the Satohash browser extension
-- **Git notarisation** — timestamp current git repo state (`POST /api/git/stamp`)
+### Settlement
+- **BOLT-12 Lightning Invoices** — Reusable, privacy-preserving offers presented in-drawer
+- **L402 Paywalling** — Native HTTP 402 + Lightning for high-volume or automated API usage (no credit cards)
 
-### PDF Tooling
-- **PDF proof injection** — embed OTS metadata into an existing PDF (`POST /api/pdf/inject/:id`)
-
-### Payments
-- **L402 / Lightning** — BOLT-12 Lightning micropayments for paid tier (paywallMiddleware)
-- **Free tier** — 100 requests/day, no wallet required, tiered rate limiting
-
-### Developer / Ops
-- **REST API** — full CRUD for stamps, history, system info
-- **Swagger / OpenAPI** — live docs at `/api-docs`; spec at `/public/api/openapi.json`
-- **Socket.io** — real-time events: `ots:stamped`, `ots:collaborated`, `ots:revoked`
-- **Prometheus metrics** — `/metrics` endpoint
-- **Health check** — `/health?deep=true` with OTS calendar, Redis, and Nostr status
-- **Admin dashboard** — `/admin/stats` (Bearer token protected)
-- **CSV export** — `GET /api/export/csv` for CRM integration
-- **Full DB export** — `GET /api/system/backup`
-- **Peer mesh network** — multi-node witness verification (`POST /api/mesh/verify`)
-- **Bitcoin fee estimates** — `GET /api/system/fees`
-
-### AI Integration
-- **OpenAPI spec** — importable into GPT Actions, Claude tool_use, Make, Zapier, n8n
-- **Zero-knowledge design** — documents never touch the server; safe for confidential content
-- **Documented integration guides** — Python, Node.js, curl, Claude API, Make, Zapier, n8n
+### Developer & Automation
+- Full REST API + OpenAPI 3.0 spec + interactive playground in-app
+- Webhook subscriptions for stamp lifecycle events (`stamped`, `collaborated`, `revoked`)
+- Rich SDK examples (Python, Node, curl) and AI agent integration guides (Claude tool_use, GPT Actions, Make, Zapier, n8n)
+- Mesh / peer witness verification endpoints
 
 ---
 
-## Technical Architecture
+## Technology Stack (Current)
 
-| Layer | Technology |
-|-------|-----------|
-| Frontend | React 18, Vite, Tailwind CSS v4, Framer Motion |
-| Backend | Node.js, Express |
-| Database | SQLite via better-sqlite3 + Knex migrations |
-| Timestamping | `javascript-opentimestamps` npm package |
-| Identity | Nostr (NIP-05, NIP-07) |
-| Payments | BOLT-12 Lightning / L402 |
-| Real-time | Socket.io |
-| Caching | Redis (optional, graceful degradation) |
-| Metrics | Prometheus |
-| Process management | PM2 |
-| Error tracking | Sentry (optional) |
+| Layer          | Technology                                      |
+|----------------|-------------------------------------------------|
+| Frontend       | React 18 + Vite 6 + Tailwind CSS 4 + Framer Motion |
+| Shell & UX     | AppShellNoir (LeftRail + TopSignal + Mobile), Institutional Noir design tokens |
+| Cryptography   | Web Crypto (client) + opentimestamps (server) + bitcoinjs-lib |
+| Blockchain     | Bitcoin Mainnet via 3 public OTS calendars      |
+| Payments       | Lightning Network (BOLT-12 offers + L402)       |
+| Identity       | Nostr (NIP-05 publishing + NIP-07 browser auth) |
+| Backend        | Node 20+ + Express 5 + Socket.io + better-sqlite3 + Knex |
+| Persistence    | SQLite (metadata only) + client IndexedDB / LocalStorage for local-first |
+| Observability  | Sentry (full-stack), Pino, Prometheus           |
+| Real-time      | Socket.io (`ots:*` events)                      |
+| Build / Deploy | Vite build → dist/ served by Express; PM2, Docker, Cloudflare options |
 
-**Deployment:** Single-process or two-process. In production, Express serves the Vite build from `dist/` as static files. In development, Vite runs on port 3000 and proxies API calls to Express on port 3001.
-
-**Self-hostable:** All dependencies are open source. A self-hosted instance requires only Node.js, an SQLite-capable filesystem, and outbound HTTPS to the OTS calendar URLs.
+See `CLAUDE.md` and `docs/ARCHITECTURE.md` for the living operational view.
 
 ---
 
-## Privacy & Security Design
+## Market Opportunity
 
-- **Zero-knowledge:** Document contents are SHA-256-hashed in the browser before any network request. Satohash never receives, stores, or transmits document content.
-- **Hash-only storage:** The SQLite database stores only SHA-256 hashes, filenames (optional, user-provided), and `.ots` binary proofs.
-- **Portable proofs:** `.ots` files are self-contained and verifiable with the Python or JavaScript OTS CLI without involving Satohash.
-- **No vendor lock-in:** The OTS standard is openly specified. Proofs survive Satohash's shutdown.
-- **Rate limiting:** Tiered rate limiter (express-rate-limit) protects against abuse. Correlation IDs on all requests for traceability.
+- Global notarization / legal attestation market still largely paper-era (~$5B+/yr).
+- Legal tech ~$27B+ and growing double digits.
+- AI provenance and deepfake defense are brand-new, exploding greenfield categories.
+- Bitcoin-anchored, zero-trust, portable proofs have <1% penetration — massive first-mover + standards position.
 
----
-
-## Pricing & Business Model
-
-| Tier | Cost | Limit | Payment |
-|------|------|-------|---------|
-| Free | $0 | 100 req/day | None |
-| Pro | Sats per request | Unlimited | Lightning (L402) |
-| Enterprise | Custom | Custom | Invoice / contact |
-
-The OTS calendars used by Satohash are community-funded and free to use. There are no per-timestamp Bitcoin transaction fees charged to Satohash or its users. The Lightning Pro tier funds hosting, development, and Give A Bit infrastructure.
+**Primary buyers:** IP attorneys & law firms, compliance / records teams at enterprises, investigative journalists, freelance creative & dev platforms, AI research labs, government technologists exploring evidence standards.
 
 ---
 
-## Roadmap Highlights
+## Revenue Model (see FINANCIALS.md for projections)
 
-- **BOLT-12 Lightning** — fully live L402 paywall (currently mock in `details.lightning`)
-- **Mobile app** — React Native client with camera-to-hash capture
-- **Nostr NIP-05 verification** — full identity binding with Nostr public keys
-- **Webhook delivery** — confirmed, with re-try on failure
-- **Multi-language UI** — `VITE_DEFAULT_LANGUAGE` infrastructure in place
-- **Atlas chain intelligence** — Bitcoin chain analytics plane (`/status` → Atlas page)
-- **White-label API** — for legal tech and notary software providers
+| Tier            | Price          | Notes                                      |
+|-----------------|----------------|--------------------------------------------|
+| Free            | $0             | 5–100 stamps/day (tiered), basic verify    |
+| Professional    | $29/mo         | Unlimited, full vault, API, PDF exports    |
+| Enterprise      | $299+/mo       | White-label, SLA, custom webhooks, volume  |
+| Pay-per-use API | ~$0.01/stamp   | Lightning (L402) — no subscription friction|
+
+Gross margins are extremely high once past fixed infra (Bitcoin anchoring itself is effectively free via public OTS calendars).
 
 ---
 
-## About Give A Bit
+## Competitive Advantages (Durable)
 
-Give A Bit is a Bitcoin-native development studio building open infrastructure for micropayments, proofs, and decentralised identity. Satohash is our flagship public product.
+1. **Trustless & Portable** — Proofs verify without Satohash forever.
+2. **True Zero-Knowledge** — We literally cannot see or store your documents.
+3. **Bitcoin Security** — The hardest, most decentralized timestamping root in existence.
+4. **Open Standard** — Any OTS verifier in the world works; no vendor lock-in.
+5. **Lightning-Native Economics** — Sub-cent, sub-second settlement for volume.
+6. **Self-Sovereign Identity** — Nostr, not email or corporate accounts.
+7. **Full Sovereign Stack** — Self-hostable, auditable F.O.S.S., multi-plane extensibility.
 
-**Contact:** hello@giveabit.io  
-**Website:** https://giveabit.io  
-**Satohash:** https://satohash.giveabit.io  
-**API docs:** https://satohash.giveabit.io/api-docs
+---
+
+## Team & Backing
+
+Engineered by **Give A Bit** (giveabit.io) — a Bitcoin-native studio building open-source micropayment rails, cryptographic proof systems, and decentralized legal infrastructure for the sovereign individual.
+
+**Contact**  
+Partnerships / press: hello@giveabit.io  
+Technical / developer: satohash.giveabit.io/developer or the in-app API playground
+
+---
+
+## Handoff & Source-of-Truth Note (2026-06-10)
+
+This Executive Summary, together with:
+- `docs/PRODUCT_PITCH.md`
+- `docs/MARKETING.md` + `MARKETING_FLYER.md`
+- `docs/FINANCIALS.md`
+- `docs/ARCHITECTURE.md`
+- Root `README.md` + `CLAUDE.md`
+
+…form the primary handoff package for Kimi / Give A Bit Master Brain.
+
+**Local path `/Users/cam/projects/satohash` on 2026-06-10 is the authoritative current version.** GitHub remote is intentionally noted as lagged until the next reconciliation.
+
+See `SOURCE-OF-TRUTH.md` and `KIMI-HANDOFF-satohash-2026-06-10.md` (generated alongside this update) for the full structured hand-off record following the giveabit-project-handoff skill.
+
+---
+
+*Mathematics on an immutable ledger beats any signature or notary stamp.*
+

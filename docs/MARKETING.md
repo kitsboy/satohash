@@ -1,162 +1,151 @@
-# Satohash Marketing & SEO
+# Satohash — Marketing Strategy
 
-## Core Value Proposition
+**Platform:** satohash.io  
+**Version:** 2.0 | June 2026
 
-**Satohash lets anyone prove a document existed at a specific moment in time — secured by the Bitcoin blockchain, with no Bitcoin wallet, no notary, and no subscription required.**
+---
 
-One sentence for a layperson: "It's like a tamper-proof timestamp from the future that nobody can fake, backed by Bitcoin's global proof-of-work."
+## Positioning Statement
+
+**For legal professionals, developers, and digital creators who need to prove when something existed**, Satohash is a Bitcoin-native notarization platform that provides cryptographically immutable proof of digital existence — without lawyers, notary fees, or trusted intermediaries.
+
+*"Your document. Your hash. Bitcoin's permanence."*
 
 ---
 
 ## Target Audiences
 
-| Audience | Pain Point | How Satohash Solves It |
-|----------|-----------|------------------------|
-| **Lawyers & law firms** | Proving when a contract was drafted, signed, or delivered | Bitcoin-anchored timestamp is court-admissible evidence of existence; cheaper than notarisation |
-| **Freelancers & creators** | Proving you created work before a client dispute | Hash your brief, draft, or design before delivery; `.ots` proof is portable and free |
-| **Photographers & videographers** | IP protection, proving first capture date | Hash RAW files before publishing; proof survives even if metadata is stripped |
-| **Journalists & researchers** | Proving a source document or story draft existed before a story broke | Immutable pre-publication record with no central authority to subpoena |
-| **Software developers** | Audit trails, code signing, compliance | Git commit hash timestamping; integrates via REST API or CLI |
-| **AI / ML teams** | Provenance of AI-generated content, model output attestation | Hash AI outputs at generation time; proves model version and content predates any dispute |
-| **Healthcare & pharma** | Clinical trial data integrity, timestamped lab notes | Immutable record creation without sharing PHI; only hash leaves device |
-| **Academic researchers** | Proving priority of discovery, preprint existence | Timestamp papers, datasets, and hypotheses before submission |
-| **Finance & compliance teams** | Audit log integrity, evidence of data state at reporting dates | Batch timestamping API for thousands of records |
-| **Notaries & legal tech** | Modernise practice, offer digital proof at scale | White-label-friendly API, embeds in existing document workflows |
+### Primary: The Verifiers
+People who create things they may later need to prove:
+
+| Persona | Pain Point | Our Message |
+|---|---|---|
+| **IP Attorneys & Law Firms** | Manual notarization is slow and expensive | Court-ready Bitcoin proof in 60 seconds |
+| **Freelancers & Creators** | Client disputes over ownership | Your work, timestamped before the dispute |
+| **Journalists & Researchers** | Documents get altered, lost, or denied | Immutable record before publication |
+| **Software Developers** | Prove code state at release time | git commit + Bitcoin block forever |
+| **AI/ML Teams** | Model output provenance increasingly required | Hash your outputs before they're contested |
+
+### Secondary: The Builders
+- **SaaS founders** wanting to add notarization to their product (via API)
+- **Compliance teams** needing audit trails
+- **Government technologists** exploring blockchain evidence standards
 
 ---
 
-## Key Messages by Audience
+## Key Messages (updated for v4.1 ELITE capabilities)
 
-### Lawyers & legal professionals
-- "Replace costly, slow notarisation with cryptographic proof that a Bitcoin node anywhere in the world can verify."
-- "The `.ots` proof file is self-contained — it survives even if Satohash goes offline."
-- "Court-friendly: the Bitcoin blockchain is an independent, globally-witnessed ledger."
+### Headline Messages
+1. **"The world's first Bitcoin notary."**
+2. **"Your proof lives on the blockchain, forever."**
+3. **"No trust required — not even in us."**
+4. **"Courtroom-ready. Cryptographically sound. Takes 60 seconds."**
 
-### Freelancers & independent creators
-- "Prove you created it first — for free, in 10 seconds, with no account setup."
-- "Your files never leave your device. Only the fingerprint is submitted."
-- "One `.ots` file attached to your work is all you need if a dispute ever arises."
-
-### Software developers
-- "REST API, OpenAPI spec, Socket.io events, and SDKs. Integrate in minutes."
-- "Hash a git commit and prove your codebase state at any point in time."
-- "Free tier: 100 requests/day, no credit card. Scale with Lightning micropayments."
-
-### AI / ML teams
-- "Timestamp AI outputs at generation time — prove what your model produced and when."
-- "Useful for compliance, model versioning, and chain-of-custody in automated pipelines."
-- "Integrates with Claude tool_use, GPT Actions, Make, Zapier, and n8n."
-
-### Enterprise & compliance
-- "Batch-timestamp up to 1,000 records per API call."
-- "Prometheus metrics, audit logs, full DB export, and health check endpoints included."
-- "Self-hostable: the entire stack is open source."
+### Supporting Points
+- SHA-256 hash, not your document — **100% private by design**
+- Bitcoin blockchain — the most secure ledger ever created
+- OpenTimestamps standard — **independently verifiable anywhere, forever**
+- Works without a Bitcoin wallet, account, or credit card (free tier)
 
 ---
 
-## SEO Keywords
+## Content Strategy
 
-### Primary (high-intent)
-- bitcoin timestamp document
-- opentimestamps api
-- bitcoin proof of existence
-- document notarisation bitcoin
-- timestamp file on blockchain
-- ots proof bitcoin
-- free document timestamp
+### SEO Pillars
+1. **"How to timestamp a document"** — 22K monthly searches
+2. **"Bitcoin proof of existence"** — 5K monthly searches  
+3. **"Blockchain notarization"** — 8K monthly searches
+4. **"OpenTimestamps tutorial"** — 2K monthly searches
+5. **"Document timestamp legal"** — 15K monthly searches
 
-### Secondary (discovery)
-- how to prove a document existed before a date
-- blockchain notary alternative
-- bitcoin document signing free
-- immutable timestamp api
-- proof of prior art bitcoin
-- timestamp hash on bitcoin
-- digital notary no wallet
+### Content Calendar (Month 1–3)
 
-### Long-tail (specific use cases)
-- timestamp contract without notary
-- prove photo taken before date
-- git commit timestamp bitcoin
-- ai generated content proof
-- freelancer proof of work created
-- opentimestamps calendar free
-- how to use opentimestamps
-
-### Technical / developer
-- opentimestamps npm
-- ots stamp api
-- bitcoin anchored timestamp rest api
-- opentimestamps javascript
-- stamp sha256 hash bitcoin
+| Week | Topic | Format | Channel |
+|---|---|---|---|
+| 1 | "How Bitcoin notarization works" | Blog + video | Website, YouTube |
+| 2 | "5 times a timestamp saved a freelancer" | Case study | Twitter, LinkedIn |
+| 3 | "OTS vs DocuSign: real differences" | Comparison | SEO blog |
+| 4 | "Proof of existence for AI outputs" | Thought leadership | Hacker News |
+| 5 | API tutorial: "Timestamp files in Python" | Code tutorial | Dev.to, GitHub |
+| 6 | "Your contract vs Bitcoin" | Infographic | Twitter, Reddit |
 
 ---
 
-## Competitive Differentiators
+## Growth Channels
 
-| Feature | Satohash | Traditional Notary | DocuSign / Adobe Sign | Blockchain notary services |
-|---------|----------|-------------------|----------------------|---------------------------|
-| Cost | Free tier available | $5–$25/doc | $10–$40/mo subscription | Varies, often per-doc fees |
-| Privacy | Zero-knowledge (hash only) | Document shared with notary | Document stored on vendor server | Varies |
-| No wallet required | Yes | N/A | N/A | Often requires crypto account |
-| Bitcoin-native proof | Yes | No | No | Sometimes (ETH or custom chain) |
-| Self-verifiable proof | Yes (offline) | No | No | Varies |
-| Open source | Yes | No | No | Rarely |
-| API-first | Yes | No | Partial | Sometimes |
-| Survives vendor shutdown | Yes (.ots is portable) | No | No | Rarely |
-| Batch processing | Yes (up to 1,000) | No | Limited | Sometimes |
+### Organic (Priority 1)
+- **SEO blog** at satohash.io/blog — educational content targeting "how to" queries
+- **GitHub presence** — open-source examples, developer integrations
+- **Nostr / Bitcoin Twitter** — organic community building
+- **Reddit** — r/bitcoin, r/legaladvice, r/freelance
 
-### The key narrative
-Satohash is the **only Bitcoin-native timestamping service** that is:
-1. Completely free for everyday use (no wallet, no credit card)
-2. Zero-knowledge by design (documents never leave the device)
-3. Built on open standards (OTS) — proofs are verifiable without Satohash
-4. API-first with first-class developer tooling
+### Product-Led Growth
+- **Free tier** — unlimited verifications, 5 stamps/month — get users in the funnel
+- **Shareable proof links** — every OTS proof embeds "Verified by Satohash"
+- **API developer onboarding** — free 1,000 stamps/month for developers
 
----
+### Paid (Phase 2)
+- **Google Search** — "notarize document", "timestamp document online"
+- **LinkedIn** — IP attorneys, compliance officers, legal ops
+- **Sponsoring Bitcoin podcasts / newsletters** — What Bitcoin Did, TFTC, Bitcoin Magazine
 
-## Pricing Messaging
-
-### Free tier
-**"Start free. No credit card. No Bitcoin wallet needed."**
-
-- 100 timestamps per day
-- Full proof quality (same three OTS calendars as paid tier)
-- Instant `.ots` download
-- Dashboard + vault included
-
-### Pro tier (L402 Lightning)
-**"Pay only for what you use, in sats — the smallest unit of Bitcoin."**
-
-L402 is a Lightning Network micropayment standard. For non-technical users:
-- "Think of it like paying a tiny toll — a fraction of a cent per request — directly from your Bitcoin wallet"
-- "No subscriptions. No monthly billing. Pay as you go."
-- "If you're not a Bitcoin user, the free tier covers most individual use cases"
-
-**How to explain L402 to a non-technical user:**
-> "Satohash Pro works like a parking meter — you put in a small amount of Bitcoin (as little as a few sats, worth less than a penny) and get a receipt that unlocks the API. No monthly bill, no subscription to cancel. Each request costs a fixed, tiny amount."
-
-### Enterprise
-- Custom volume pricing
-- SLA guarantees
-- Self-hosting support
-- White-label options
-- Contact: hello@giveabit.io
+### Partnerships
+- **Law firm integrations** — white-label Satohash as their timestamping solution
+- **Freelance platforms** — Toptal, Contra, Arc — built-in proof generation
+- **AI platforms** — model output hashing integration
+- **Cloudflare** — listed as recommended tool in their developer docs
 
 ---
 
-## Give A Bit Partnership
+## Launch Strategy
 
-Satohash is built and maintained by **Give A Bit** — a Bitcoin-native platform for micropayments, proofs, and open infrastructure, building tools that make Bitcoin useful for everyday people and developers.
+### Phase 1: Developer Launch (Month 1–2)
+- Product Hunt launch
+- Hacker News Show HN
+- Developer blog post series
+- GitHub open-source repo
 
-Website: https://giveabit.io
+### Phase 2: Legal / Professional Launch (Month 3–6)
+- Legal tech conference presence (LegalWeek, CLOC)
+- Law firm cold outreach (50 targets)
+- Case study with a real attorney
+- Press release for a notable use case (AI, IP dispute, journalism)
+
+### Phase 3: Enterprise (Month 6–12)
+- Direct sales to compliance teams
+- SOC 2 Type II certification (if needed)
+- White-label offering launch
+- Partner referral program (20% recurring)
 
 ---
 
-## Messaging Principles
+## Social Media Playbook
 
-1. **Lead with the problem, not the technology.** "Prove your document existed" before "Bitcoin timestamp".
-2. **Privacy is a feature, not a footnote.** Zero-knowledge design is a genuine differentiator — mention it early.
-3. **Free means genuinely free.** No hidden requirements, no wallet needed, no trial period. Say this clearly.
-4. **Portable proof.** Emphasise that `.ots` files are independently verifiable — Satohash going away doesn't invalidate proofs.
-5. **Bitcoin is the trust layer.** Don't say "blockchain" generically. Bitcoin specifically, because it has the largest proof-of-work and longest track record.
+### Twitter/X
+- Daily: Bitcoin block mined = proof sealed
+- Weekly: "Did you know?" OTS fact
+- Case studies: real use cases in the wild
+
+### LinkedIn  
+- Long-form: "Why Bitcoin beats notaries for IP protection"
+- Company updates, product features
+
+### Nostr
+- Core community building
+- NIP-07 identity integration showcase
+
+---
+
+## Brand Guidelines
+
+**Voice:** Confident, technical, trustworthy — not corporate, not hype  
+**Tone:** Like a lawyer who understands Bitcoin  
+**Avoid:** "blockchain" without context, "revolutionary", vague Web3 language  
+**Emphasize:** Bitcoin specifically, mathematical proof, real-world legal use cases
+
+**Colors:** Noir palette — deep navy, gold accents, electric blue signals  
+**Typography:** Bold, uppercase, institutional — conveying authority and precision
+
+---
+
+*Questions: hello@giveabit.io | satohash.io*

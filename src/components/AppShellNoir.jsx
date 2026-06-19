@@ -1,10 +1,12 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Search, Globe, Zap, Database, Terminal, ChevronRight, Scale, BookOpen } from 'lucide-react'
+import { Search, Globe, Zap, Database, Terminal, ChevronRight, Scale, BookOpen, WifiOff } from 'lucide-react'
 import LeftRailNav from './LeftRailNav'
 import TopSignalBar from './TopSignalBar'
 import MobileBottomNav from './MobileBottomNav'
 import LanguageSwitcher from './LanguageSwitcher'
+import MempoolTicker from './MempoolTicker'
+import { useOfflineSync } from '../hooks/useOfflineSync'
 import { useNavigate, Link } from 'react-router-dom'
 
 /**
@@ -17,6 +19,7 @@ export default function AppShellNoir({ children }) {
   const [searchQuery, setSearchQuery] = useState('')
   const [debouncedQuery, setDebouncedQuery] = useState('')
   const [stampResults, setStampResults] = useState([])
+  const { isOnline, queueCount } = useOfflineSync()
 
   useEffect(() => {
     const t = setTimeout(() => setDebouncedQuery(searchQuery), 150)
@@ -372,24 +375,27 @@ export default function AppShellNoir({ children }) {
 
         {/* ── Main Content Area ───────────────────────────────────────────── */}
         <div className="flex min-h-screen w-full max-w-full flex-1 flex-col overflow-x-hidden pb-20 md:ml-64 md:pb-0">
-          {/* Desktop Top Signal Bar */}
-          <div className="sticky top-0 z-40 hidden h-14 items-center justify-between border-b border-[var(--border)] bg-[var(--bg-primary)]/80 px-6 backdrop-blur-md md:flex">
-            <TopSignalBar />
-            <div className="ml-4 flex flex-shrink-0 items-center gap-3">
-              <LanguageSwitcher />
-              <button
-                onClick={() => setIsSearchOpen(true)}
-                className="group flex items-center gap-3 rounded-xl border border-[var(--border)] bg-[var(--bg-secondary)] px-4 py-1.5 transition-all hover:border-[var(--border-gold)]"
-              >
-                <Search
-                  size={13}
-                  className="transition-colors group-hover:text-[var(--accent-gold)]"
-                  style={{ color: 'var(--text-secondary)' }}
-                />
-                <span className="text-[10px] font-black tracking-widest text-white/40 uppercase group-hover:text-[var(--accent-gold)]/60">
-                  ⌘K Search
-                </span>
-              </button>
+          {/* Desktop Top Signal Bar + Mempool Ticker */}
+          <div className="sticky top-0 z-40 hidden flex-col border-b border-[var(--border)] bg-[var(--bg-primary)]/90 backdrop-blur-md md:flex">
+            <MempoolTicker />
+            <div className="flex h-12 items-center justify-between px-6">
+              <TopSignalBar />
+              <div className="ml-4 flex flex-shrink-0 items-center gap-3">
+                {!isOnline && (
+                  <span className="flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[9px] font-black tracking-widest uppercase"
+                    style={{ background:'rgba(234,179,8,0.12)', border:'1px solid rgba(234,179,8,0.3)', color:'#eab308' }}>
+                    <WifiOff size={10} />{queueCount > 0 ? `${queueCount} queued` : 'Offline'}
+                  </span>
+                )}
+                <LanguageSwitcher />
+                <button
+                  onClick={() => setIsSearchOpen(true)}
+                  className="group flex items-center gap-3 rounded-xl border border-[var(--border)] bg-[var(--bg-secondary)] px-4 py-1.5 transition-all hover:border-[var(--border-gold)]"
+                >
+                  <Search size={13} className="transition-colors group-hover:text-[var(--accent-gold)]" style={{ color: 'var(--text-secondary)' }} />
+                  <span className="text-[10px] font-black tracking-widest text-white/40 uppercase group-hover:text-[var(--accent-gold)]/60">⌘K Search</span>
+                </button>
+              </div>
             </div>
           </div>
 
