@@ -49,6 +49,7 @@ const NotFound = React.lazy(() => import('./pages/NotFound'))
 const TemplateDetail = React.lazy(() => import('./pages/TemplateDetail'))
 const FAQ = React.lazy(() => import('./pages/FAQ'))
 const Pricing = React.lazy(() => import('./pages/Pricing'))
+const Comparison = React.lazy(() => import('./pages/Comparison'))
 const Dashboard = React.lazy(() => import('./pages/Dashboard'))
 
 // Legal pages (public)
@@ -241,6 +242,7 @@ function AppContent() {
             path="/templates/:templateId" element={<TemplateDetail />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/pricing" element={<Pricing />} />
+          <Route path="/comparison" element={<Comparison />} />
           <Route
             path="/templates/new"
             element={
