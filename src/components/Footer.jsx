@@ -258,7 +258,6 @@ export default function Footer() {
                   { name: 'Security', path: '/security' },
                   { name: 'X', path: 'https://x.com/give_bit', external: true },
                   { name: 'Integrations', path: '/integrations' },
-                  { name: 'Security', path: '/security' },
                   { name: 'GitHub', path: 'https://github.com/kitsboy/satohash', external: true }
                 ].map((link) =>
                   link.external ? (
