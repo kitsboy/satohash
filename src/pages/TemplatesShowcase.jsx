@@ -3,13 +3,27 @@ import { Link } from 'react-router-dom'
 import {
   Heart, Home, Stethoscope, Shield, Briefcase, Lightbulb,
   DollarSign, ScrollText, UserCheck, Building2, Handshake,
-  Car, FileText, Zap, Search, ArrowRight, ChevronDown, X
+  Car, FileText, Zap, Search, ArrowRight, X, Clock, Share2,
+  Star, Code, Sparkles
 } from 'lucide-react'
 
 const ICON_MAP = {
   Heart, Home, Stethoscope, Shield, Briefcase, Lightbulb,
   DollarSign, ScrollText, UserCheck, Building2, Handshake,
-  Car, FileText, Zap
+  Car, FileText, Zap, Star, Code, Sparkles
+}
+
+const BADGE_ORDER = { 'Popular': 0, 'New': 1, 'Legal-Grade': 2 }
+
+function getRecentViews() {
+  try { return JSON.parse(localStorage.getItem('satohash_recent_templates') || '[]') }
+  catch { return [] }
+}
+
+function addRecentView(id) {
+  const recent = getRecentViews().filter(v => v !== id)
+  recent.unshift(id)
+  localStorage.setItem('satohash_recent_templates', JSON.stringify(recent.slice(0, 6)))
 }
 
 export default function TemplatesShowcase() {
@@ -17,6 +31,9 @@ export default function TemplatesShowcase() {
   const [activeCategory, setActiveCategory] = useState('all')
   const [searchQuery, setSearchQuery] = useState('')
   const [loading, setLoading] = useState(true)
+  const [previewTemplate, setPreviewTemplate] = useState(null)
+  const [sortBy, setSortBy] = useState('default')
+  const recentViews = getRecentViews()
 
   useEffect(() => {
     fetch('/data/templates-manifest.json')
@@ -25,25 +42,58 @@ export default function TemplatesShowcase() {
       .catch(() => setLoading(false))
   }, [])
 
-  const filteredTemplates = manifest
-    ? manifest.templates.filter(t => {
-        const matchesCategory = activeCategory === 'all' || t.category === activeCategory
-        const matchesSearch = !searchQuery ||
-          t.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          t.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          t.category.toLowerCase().includes(searchQuery.toLowerCase())
-        return matchesCategory && matchesSearch
-      })
-    : []
+  const categoryCounts = {}
+  if (manifest) {
+    categoryCounts['all'] = manifest.templates.length
+    manifest.categories.forEach(cat => {
+      categoryCounts[cat.id] = manifest.templates.filter(t => t.category === cat.id).length
+    })
+  }
+
+  let filteredTemplates = manifest ? [...manifest.templates] : []
+  
+  // Filter by category
+  if (activeCategory !== 'all') {
+    filteredTemplates = filteredTemplates.filter(t => t.category === activeCategory)
+  }
+  
+  // Filter by search
+  if (searchQuery) {
+    const q = searchQuery.toLowerCase()
+    filteredTemplates = filteredTemplates.filter(t =>
+      t.title.toLowerCase().includes(q) ||
+      t.description.toLowerCase().includes(q) ||
+      t.category.toLowerCase().includes(q)
+    )
+  }
+  
+  // Sort
+  if (sortBy === 'popular') {
+    filteredTemplates.sort((a, b) => (BADGE_ORDER[a.badge] ?? 99) - (BADGE_ORDER[b.badge] ?? 99))
+  } else if (sortBy === 'alpha') {
+    filteredTemplates.sort((a, b) => a.title.localeCompare(b.title))
+  }
 
   const activeCatLabel = manifest
-    ? manifest.categories.find(c => c.id === activeCategory)?.label || 'All Templates'
-    : 'All Templates'
+    ? manifest.categories.find(c => c.id === activeCategory)?.label || 'Templates'
+    : 'Templates'
+
+  const recentTemplates = manifest
+    ? recentViews.map(id => manifest.templates.find(t => t.id === id)).filter(Boolean)
+    : []
 
   if (loading) {
     return (
-      <div className="flex min-h-[60vh] items-center justify-center">
-        <div className="h-8 w-8 animate-spin rounded-full border-2 border-[var(--accent-gold)] border-t-transparent" />
+      <div className="min-h-screen bg-[var(--bg-primary)]">
+        <div className="mx-auto max-w-6xl px-6 pt-24 pb-12">
+          <div className="mx-auto mb-12 h-10 w-64 skeleton" />
+          <div className="mx-auto mb-16 h-6 w-96 skeleton" />
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {[1,2,3,4,5,6].map(i => (
+              <div key={i} className="h-52 rounded-2xl skeleton" />
+            ))}
+          </div>
+        </div>
       </div>
     )
   }
@@ -72,16 +122,16 @@ export default function TemplatesShowcase() {
 
       {/* Search & Filters */}
       <section className="sticky top-0 z-30 border-b border-[var(--border)] bg-[var(--bg-primary)]/95 backdrop-blur-md">
-        <div className="mx-auto flex max-w-6xl items-center gap-4 px-6 py-4">
+        <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-3 px-6 py-4">
           {/* Search */}
-          <div className="relative flex-1">
+          <div className="relative min-w-[200px] flex-1">
             <Search size={14} className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-tertiary)]" />
             <input
               type="text"
               placeholder="Search templates..."
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
-              className="w-full rounded-lg border border-[var(--border)] bg-[var(--bg-primary)] py-2.5 pr-3 pl-9 text-sm text-[var(--text-primary)] placeholder-[var(--text-tertiary)] outline-none transition-colors focus:border-[var(--accent-gold)]"
+              className="w-full min-h-[44px] rounded-lg border border-[var(--border)] bg-[var(--bg-primary)] py-2.5 pr-3 pl-9 text-sm text-[var(--text-primary)] placeholder-[var(--text-tertiary)] outline-none transition-colors focus:border-[var(--accent-gold)]"
             />
             {searchQuery && (
               <button onClick={() => setSearchQuery('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--text-tertiary)] hover:text-[var(--text-primary)]">
@@ -89,19 +139,36 @@ export default function TemplatesShowcase() {
               </button>
             )}
           </div>
-          {/* Category selector */}
+          {/* Sort */}
+          <select
+            value={sortBy}
+            onChange={e => setSortBy(e.target.value)}
+            className="min-h-[44px] rounded-lg border border-[var(--border)] bg-[var(--bg-primary)] px-3 text-[11px] font-bold tracking-wider text-[var(--text-secondary)] uppercase outline-none focus:border-[var(--accent-gold)]"
+          >
+            <option value="default">Default</option>
+            <option value="popular">Most Popular</option>
+            <option value="alpha">A-Z</option>
+          </select>
+          {/* Categories - desktop */}
           <div className="hidden gap-2 sm:flex">
             {manifest?.categories.map(cat => (
               <button
                 key={cat.id}
                 onClick={() => setActiveCategory(cat.id)}
-                className={`whitespace-nowrap rounded-lg px-4 py-2 text-[11px] font-bold tracking-wider uppercase transition-all ${
+                className={`min-h-[44px] whitespace-nowrap rounded-lg px-4 py-2 text-[11px] font-bold tracking-wider uppercase transition-all ${
                   activeCategory === cat.id
                     ? 'bg-[var(--accent-gold)] text-black'
                     : 'border border-[var(--border)] text-[var(--text-secondary)] hover:border-[var(--accent-gold)] hover:text-[var(--text-primary)]'
                 }`}
               >
                 {cat.label}
+                {categoryCounts[cat.id] > 0 && (
+                  <span className={`ml-1.5 inline-flex h-4 min-w-[16px] items-center justify-center rounded-full px-1 text-[9px] font-black ${
+                    activeCategory === cat.id ? 'text-black/60' : 'text-[var(--text-tertiary)]'
+                  }`}>
+                    {categoryCounts[cat.id]}
+                  </span>
+                )}
               </button>
             ))}
           </div>
@@ -109,80 +176,122 @@ export default function TemplatesShowcase() {
           <select
             value={activeCategory}
             onChange={e => setActiveCategory(e.target.value)}
-            className="rounded-lg border border-[var(--border)] bg-[var(--bg-primary)] px-3 py-2.5 text-[11px] font-bold tracking-wider text-[var(--text-primary)] uppercase outline-none focus:border-[var(--accent-gold)] sm:hidden"
+            className="min-h-[44px] rounded-lg border border-[var(--border)] bg-[var(--bg-primary)] px-3 py-2.5 text-[11px] font-bold tracking-wider text-[var(--text-primary)] uppercase outline-none focus:border-[var(--accent-gold)] sm:hidden"
           >
             {manifest?.categories.map(cat => (
-              <option key={cat.id} value={cat.id}>{cat.label}</option>
+              <option key={cat.id} value={cat.id}>{cat.label} ({categoryCounts[cat.id] || 0})</option>
             ))}
           </select>
         </div>
       </section>
 
+      {/* Recently Viewed */}
+      {recentTemplates.length > 0 && activeCategory === 'all' && !searchQuery && (
+        <section className="mx-auto max-w-6xl px-6 pt-8">
+          <div className="mb-3 flex items-center gap-2">
+            <Clock size={13} className="text-[var(--accent-gold)]" />
+            <p className="text-[10px] font-bold tracking-widest text-[var(--accent-gold)] uppercase">
+              Recently Viewed
+            </p>
+          </div>
+          <div className="mb-8 flex flex-wrap gap-3">
+            {recentTemplates.map(t => {
+              const Icon = ICON_MAP[t.icon] || FileText
+              return (
+                <Link
+                  key={t.id}
+                  to={`/templates/${t.id}`}
+                  onClick={() => addRecentView(t.id)}
+                  className="inline-flex items-center gap-2 rounded-xl border border-[var(--border)] bg-[var(--surface-raised)] px-4 py-2.5 text-xs font-bold text-[var(--text-primary)] transition-all hover:border-[var(--accent-gold)]"
+                >
+                  <Icon size={14} className="text-[var(--accent-gold)]" />
+                  {t.title}
+                </Link>
+              )
+            })}
+          </div>
+        </section>
+      )}
+
       {/* Template Grid */}
-      <section className="mx-auto max-w-6xl px-6 py-12">
+      <section className="mx-auto max-w-6xl px-6 py-8">
         {filteredTemplates.length === 0 ? (
           <div className="flex flex-col items-center gap-4 py-20 text-center">
             <FileText size={40} className="text-[var(--text-tertiary)]" />
             <p className="text-lg font-bold text-[var(--text-primary)]">No templates found</p>
             <p className="text-sm text-[var(--text-secondary)]">Try a different search or category.</p>
             <button
-              onClick={() => { setSearchQuery(''); setActiveCategory('all') }}
-              className="rounded-lg border border-[var(--border)] px-4 py-2 text-xs font-bold text-[var(--text-primary)] uppercase tracking-wider"
+              onClick={() => { setSearchQuery(''); setActiveCategory('all'); setSortBy('default') }}
+              className="min-h-[44px] rounded-lg border border-[var(--border)] px-4 py-2 text-xs font-bold text-[var(--text-primary)] uppercase tracking-wider"
             >
               Reset Filters
             </button>
           </div>
         ) : (
-          <>
-            <div className="mb-3 flex items-center justify-between">
-              <p className="text-xs font-bold tracking-wider text-[var(--text-secondary)] uppercase">
-                {activeCatLabel} <span className="text-[var(--text-tertiary)]">({filteredTemplates.length})</span>
-              </p>
-            </div>
-            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              {filteredTemplates.map(template => {
-                const Icon = ICON_MAP[template.icon] || FileText
-                return (
-                  <Link
-                    key={template.id}
-                    to={`/templates/${template.id}`}
-                    className="group relative rounded-2xl border border-[var(--border)] bg-[var(--surface-raised)] p-6 transition-all hover:border-[var(--accent-gold)] hover:shadow-[0_0_30px_var(--accent-gold-glow)]"
-                  >
-                    {template.badge && (
-                      <span className={`absolute top-4 right-4 rounded-full px-2.5 py-0.5 text-[9px] font-black tracking-widest uppercase ${
-                        template.badge === 'Popular'
-                          ? 'bg-[var(--accent-gold)]/15 text-[var(--accent-gold)] border border-[var(--accent-gold)]/30'
-                          : template.badge === 'New'
-                          ? 'bg-green-500/15 text-green-400 border border-green-500/30'
-                          : 'bg-[var(--accent-purple)]/15 text-[var(--accent-purple)] border border-[var(--accent-purple)]/30'
-                      }`}>
-                        {template.badge}
-                      </span>
-                    )}
-                    <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-[var(--accent-gold)]/10">
-                      <Icon size={22} className="text-[var(--accent-gold)]" />
-                    </div>
-                    <h3 className="mb-2 text-base font-bold text-[var(--text-primary)] group-hover:text-[var(--accent-gold)]">
-                      {template.title}
-                    </h3>
-                    <p className="text-xs leading-relaxed text-[var(--text-secondary)]">
-                      {template.description}
-                    </p>
-                    <div className="mt-4 flex items-center gap-1 text-[10px] font-bold tracking-wider text-[var(--accent-gold)] uppercase">
-                      View Template <ArrowRight size={12} />
-                    </div>
-                  </Link>
-                )
-              })}
-            </div>
-          </>
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {filteredTemplates.map(template => {
+              const Icon = ICON_MAP[template.icon] || FileText
+              return (
+                <div
+                  key={template.id}
+                  className="group relative rounded-2xl border border-[var(--border)] bg-[var(--surface-raised)] p-6 transition-all hover:border-[var(--accent-gold)] hover:shadow-[0_0_30px_var(--accent-gold-glow)]"
+                >
+                  {template.badge && (
+                    <span className={`absolute top-4 right-4 rounded-full px-2.5 py-0.5 text-[9px] font-black tracking-widest uppercase ${
+                      template.badge === 'Popular'
+                        ? 'bg-[var(--accent-gold)]/15 text-[var(--accent-gold)] border border-[var(--accent-gold)]/30'
+                        : template.badge === 'New'
+                        ? 'bg-green-500/15 text-green-400 border border-green-500/30'
+                        : 'bg-[var(--accent-purple)]/15 text-[var(--accent-purple)] border border-[var(--accent-purple)]/30'
+                    }`}>
+                      {template.badge}
+                    </span>
+                  )}
+                  <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-[var(--accent-gold)]/10">
+                    <Icon size={22} className="text-[var(--accent-gold)]" />
+                  </div>
+                  <h3 className="mb-2 text-base font-bold text-[var(--text-primary)] group-hover:text-[var(--accent-gold)]">
+                    {template.title}
+                  </h3>
+                  <p className="mb-4 text-xs leading-relaxed text-[var(--text-secondary)]">
+                    {template.description}
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    <Link
+                      to={`/templates/${template.id}`}
+                      onClick={() => addRecentView(template.id)}
+                      className="inline-flex min-h-[36px] items-center gap-1.5 rounded-lg bg-[var(--accent-gold)]/10 px-3.5 py-1.5 text-[10px] font-bold tracking-wider text-[var(--accent-gold)] uppercase transition-all hover:bg-[var(--accent-gold)] hover:text-black"
+                    >
+                      View Details <ArrowRight size={11} />
+                    </Link>
+                    <button
+                      onClick={() => { setPreviewTemplate(template); addRecentView(template.id) }}
+                      className="inline-flex min-h-[36px] items-center gap-1.5 rounded-lg border border-[var(--border)] px-3.5 py-1.5 text-[10px] font-bold tracking-wider text-[var(--text-secondary)] uppercase transition-all hover:border-[var(--accent-gold)] hover:text-[var(--text-primary)]"
+                    >
+                      Quick Preview
+                    </button>
+                    <button
+                      onClick={() => {
+                        const url = `${window.location.origin}/templates/${template.id}`
+                        navigator.clipboard?.writeText(url)
+                      }}
+                      className="ml-auto inline-flex h-[36px] w-[36px] items-center justify-center rounded-lg border border-[var(--border)] text-[var(--text-tertiary)] transition-all hover:border-[var(--accent-gold)] hover:text-[var(--accent-gold)]"
+                      title="Copy link"
+                    >
+                      <Share2 size={13} />
+                    </button>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
         )}
       </section>
 
-      {/* Special Sections: Make Your Own + API */}
+      {/* Special Sections */}
       <section className="border-t border-[var(--border)] bg-[var(--bg-secondary)]">
         <div className="mx-auto max-w-6xl px-6 py-16">
-          <div className="grid gap-8 md:grid-cols-2">
+          <div className="grid gap-8 md:grid-cols-3">
             {manifest?.specialSections.map(section => {
               const Icon = ICON_MAP[section.icon] || FileText
               return (
@@ -190,9 +299,7 @@ export default function TemplatesShowcase() {
                   key={section.id}
                   className="group relative overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface-raised)] p-8 transition-all hover:border-[var(--accent-gold)] hover:shadow-[0_0_30px_var(--accent-gold-glow)]"
                 >
-                  {/* Glow overlay */}
                   <div className="pointer-events-none absolute -inset-40 bg-gradient-radial from-[var(--accent-gold)]/5 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
-
                   <div className="relative">
                     <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-[var(--accent-gold)]/10">
                       <Icon size={26} className="text-[var(--accent-gold)]" />
@@ -211,20 +318,98 @@ export default function TemplatesShowcase() {
                         </li>
                       ))}
                     </ul>
-                    <Link
-                      to={section.id === 'make-your-own' ? '/onboarding/choose-template' : '/developer'}
-                      className="inline-flex items-center gap-2 rounded-lg border border-[var(--accent-gold)]/30 bg-[var(--accent-gold)]/10 px-5 py-2.5 text-[11px] font-bold tracking-wider text-[var(--accent-gold)] uppercase transition-all hover:bg-[var(--accent-gold)] hover:text-black"
-                    >
-                      {section.id === 'make-your-own' ? 'Start Building' : 'View API Docs'}
-                      <ArrowRight size={14} />
-                    </Link>
                   </div>
                 </div>
               )
             })}
+            {/* Coming Soon */}
+            <div className="group relative overflow-hidden rounded-2xl border border-[var(--border)] border-dashed bg-[var(--surface-raised)]/50 p-8">
+              <div className="relative">
+                <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-[var(--accent-purple)]/10">
+                  <Sparkles size={26} className="text-[var(--accent-purple)]" />
+                </div>
+                <h3 className="mb-2 text-xl font-bold text-[var(--text-primary)]">
+                  Coming Soon
+                </h3>
+                <p className="mb-5 text-sm leading-relaxed text-[var(--text-secondary)]">
+                  More templates, integrations, and features in development. Stay sovereign.
+                </p>
+                <Link
+                  to="/changelog"
+                  className="inline-flex items-center gap-2 rounded-lg border border-[var(--accent-purple)]/30 px-5 py-2.5 text-[11px] font-bold tracking-wider text-[var(--accent-purple)] uppercase transition-all hover:bg-[var(--accent-purple)]/10"
+                >
+                  View Roadmap <ArrowRight size={14} />
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </section>
+
+      {/* Template Preview Modal */}
+      {previewTemplate && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm" onClick={() => setPreviewTemplate(null)}>
+          <div
+            className="relative w-full max-w-lg rounded-2xl border border-[var(--border)] bg-[var(--surface-overlay)] p-6 shadow-2xl"
+            onClick={e => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setPreviewTemplate(null)}
+              className="absolute top-4 right-4 flex h-8 w-8 items-center justify-center rounded-lg text-[var(--text-tertiary)] transition-colors hover:bg-[var(--surface-raised)] hover:text-[var(--text-primary)]"
+            >
+              <X size={16} />
+            </button>
+
+            <div className="mb-4 flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--accent-gold)]/10">
+                {(() => {
+                  const Icon = ICON_MAP[previewTemplate.icon] || FileText
+                  return <Icon size={20} className="text-[var(--accent-gold)]" />
+                })()}
+              </div>
+              <div>
+                <h3 className="text-lg font-bold text-[var(--text-primary)]">{previewTemplate.title}</h3>
+                <p className="text-[10px] font-bold tracking-widest text-[var(--accent-gold)] uppercase">
+                  {manifest?.categories.find(c => c.id === previewTemplate.category)?.label}
+                </p>
+              </div>
+            </div>
+
+            <p className="mb-6 text-sm leading-relaxed text-[var(--text-secondary)]">
+              {previewTemplate.description}
+            </p>
+
+            <div className="mb-6 space-y-3">
+              <p className="text-[10px] font-bold tracking-widest text-[var(--text-tertiary)] uppercase">What you get:</p>
+              <div className="flex flex-wrap gap-2">
+                <span className="rounded-full border border-[var(--border)] px-3 py-1 text-[10px] font-bold text-[var(--text-secondary)]">Bitcoin-anchored proof</span>
+                <span className="rounded-full border border-[var(--border)] px-3 py-1 text-[10px] font-bold text-[var(--text-secondary)]">Filled demo data</span>
+                <span className="rounded-full border border-[var(--border)] px-3 py-1 text-[10px] font-bold text-[var(--text-secondary)]">PDF export</span>
+                <span className="rounded-full border border-[var(--border)] px-3 py-1 text-[10px] font-bold text-[var(--text-secondary)]">Co-signer ready</span>
+              </div>
+            </div>
+
+            <div className="flex gap-3">
+              <Link
+                to={`/templates/${previewTemplate.id}`}
+                onClick={() => { setPreviewTemplate(null); addRecentView(previewTemplate.id) }}
+                className="flex-1 rounded-xl bg-[var(--accent-gold)] py-3 text-center text-xs font-black text-black uppercase tracking-wider transition-all hover:bg-[var(--accent-gold)]/90"
+              >
+                Try with Demo Data <ArrowRight size={13} className="inline ml-1" />
+              </Link>
+              <button
+                onClick={() => {
+                  const url = `${window.location.origin}/templates/${previewTemplate.id}`
+                  navigator.clipboard?.writeText(url)
+                }}
+                className="flex items-center gap-2 rounded-xl border border-[var(--border)] px-5 py-3 text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider transition-all hover:border-[var(--accent-gold)]"
+              >
+                <Share2 size={14} /> Share
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Bottom CTA */}
       <section className="border-t border-[var(--border)] px-6 py-16">

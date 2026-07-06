@@ -234,6 +234,8 @@ function AppContent() {
             element={<TemplatesShowcase />}
           />
           <Route
+            path="/templates/:templateId" element={<TemplateDetail />} />
+          <Route
             path="/templates/new"
             element={
               <ProtectedRoute>
