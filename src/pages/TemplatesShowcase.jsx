@@ -33,6 +33,7 @@ export default function TemplatesShowcase() {
   const [loading, setLoading] = useState(true)
   const [previewTemplate, setPreviewTemplate] = useState(null)
   const [sortBy, setSortBy] = useState('default')
+  const [showSuggestions, setShowSuggestions] = useState(false)
   const recentViews = getRecentViews()
 
   useEffect(() => {
@@ -131,12 +132,37 @@ export default function TemplatesShowcase() {
               placeholder="Search templates..."
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
+              onFocus={() => setShowSuggestions(true)}
+              onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
               className="w-full min-h-[44px] rounded-lg border border-[var(--border)] bg-[var(--bg-primary)] py-2.5 pr-3 pl-9 text-sm text-[var(--text-primary)] placeholder-[var(--text-tertiary)] outline-none transition-colors focus:border-[var(--accent-gold)]"
             />
             {searchQuery && (
-              <button onClick={() => setSearchQuery('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--text-tertiary)] hover:text-[var(--text-primary)]">
+              <button onClick={() => { setSearchQuery(''); setShowSuggestions(false) }} className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--text-tertiary)] hover:text-[var(--text-primary)]">
                 <X size={14} />
               </button>
+            )}
+            {/* Search autocomplete */}
+            {showSuggestions && searchQuery && manifest && (
+              <div className="absolute top-full left-0 right-0 z-50 mt-1 max-h-60 overflow-y-auto rounded-xl border border-[var(--border)] bg-[var(--surface-overlay)] shadow-2xl">
+                {manifest.templates
+                  .filter(t => t.title.toLowerCase().includes(searchQuery.toLowerCase()))
+                  .slice(0, 6)
+                  .map(t => {
+                    const Icon = ICON_MAP[t.icon] || FileText
+                    return (
+                      <Link
+                        key={t.id}
+                        to={"/templates/" + t.id}
+                        onClick={() => { setSearchQuery(''); setShowSuggestions(false) }}
+                        className="flex items-center gap-3 px-4 py-3 text-xs text-[var(--text-secondary)] hover:bg-[var(--surface-raised)] hover:text-[var(--text-primary)] transition-colors"
+                      >
+                        <Icon size={14} className="text-[var(--accent-gold)]" />
+                        <span className="font-bold">{t.title}</span>
+                        <span className="ml-auto text-[10px] text-[var(--text-tertiary)] uppercase">{t.category}</span>
+                      </Link>
+                    )
+                  })}
+              </div>
             )}
           </div>
           {/* Sort */}
