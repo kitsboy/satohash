@@ -23,4 +23,4 @@ ROLLBACK.md, SEO.md, SEO-*.md (6 languages)
 
 ### Notes
 - docs/ARCHITECTURE.md and docs/QUICKSTART.md remain from June 10 — check if Grok's code changes made them stale
-- Still needs GitHub push (ahead by 2 commits now: a7641f8 + 466bd88)
+- Still needs GitHub push (ahead by 3 commits now: a7641f8 + 466bd88 + c892906)
