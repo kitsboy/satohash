@@ -1,5 +1,5 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.giveabit.io · **Version:** 4.1.0-ELITE (Build 4) · **Updated:** 2026-07-06
+> **Live:** https://satohash.giveabit.io · **Version:** 4.1.0-ELITE (Build 6) · **Updated:** 2026-07-06
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Satohash Design Context
@@ -54,3 +54,5 @@ Business docs (`EXECUTIVE-SUMMARY`, `MARKETING`, `FINANCIALS`, `PITCH`) auto-sta
 | Atlas | `/atlas`, `/nodes`, `/protocol-stats` | Mempool amber |
 
 *Synced by `npm run docs:sync`*
+
+

@@ -172,6 +172,8 @@ export default function TopSignalBar() {
         {/* Tip button */}
         <button
           onClick={() => setShowTip((prev) => !prev)}
+          aria-label="Support Satohash — tip with Bitcoin"
+          aria-expanded={showTip}
           className="flex h-8 w-8 items-center justify-center rounded-lg border transition-all hover:border-[var(--accent-active)] hover:bg-[var(--accent-active)/5]"
           style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
           title="Support Satohash"
@@ -182,6 +184,7 @@ export default function TopSignalBar() {
         {/* Settings icon */}
         <button
           onClick={() => navigate('/settings')}
+          aria-label="Open settings"
           className="flex h-8 w-8 items-center justify-center rounded-lg border transition-colors hover:border-[var(--border-gold)] hover:bg-[var(--accent-gold-subtle)]"
           style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
         >
@@ -218,6 +221,7 @@ export default function TopSignalBar() {
                 </div>
                 <button
                   onClick={() => setShowTip(false)}
+                  aria-label="Close tip dialog"
                   className="text-[var(--text-secondary)] transition-colors hover:text-[var(--text-primary)]"
                 >
                   <X size={14} />
@@ -246,6 +250,7 @@ export default function TopSignalBar() {
                 </div>
                 <button
                   onClick={copyAddress}
+                  aria-label={copied ? 'Bitcoin address copied' : 'Copy Bitcoin tip address'}
                   className="flex w-full items-center justify-center gap-2 rounded-lg border border-[var(--border)] py-2 text-[10px] font-bold tracking-widest uppercase transition-all hover:border-[var(--accent-active)] hover:text-[var(--accent-active)]"
                   style={{ color: 'var(--text-secondary)' }}
                 >

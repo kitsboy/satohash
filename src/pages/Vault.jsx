@@ -12,14 +12,18 @@ import {
   Globe,
   Stamp,
   RefreshCw,
-  Trash2
+  Trash2,
+  FileImage,
+  FileCode,
+  FileSpreadsheet,
+  File
 } from 'lucide-react'
 import { useState, useEffect, useRef } from 'react'
 import { useVirtualizer } from '@tanstack/react-virtual'
 import { toast } from 'sonner'
 import { downloadCertificate } from '../utils/certificate'
 import { useSocket } from '../hooks/useSocket'
-import { SkeletonCard } from '../components/Skeletons'
+import { SkeletonList } from '../components/Skeletons'
 import { useI18n } from '../i18n'
 
 const StatusBadge = ({ status }) => {
@@ -47,6 +51,18 @@ const StatusBadge = ({ status }) => {
   )
 }
 
+const getFileTypeIcon = (filename, type) => {
+  if (type === 'capsule') return FileArchive
+  if (type === 'snapper') return Layers
+  const ext = (filename || '').split('.').pop()?.toLowerCase() || ''
+  if (['png', 'jpg', 'jpeg', 'gif', 'webp', 'svg', 'bmp', 'ico'].includes(ext)) return FileImage
+  if (['zip', 'tar', 'gz', 'rar', '7z'].includes(ext)) return FileArchive
+  if (['pdf', 'doc', 'docx', 'txt', 'md', 'rtf'].includes(ext)) return FileText
+  if (['xls', 'xlsx', 'csv'].includes(ext)) return FileSpreadsheet
+  if (['js', 'ts', 'jsx', 'tsx', 'py', 'json', 'html', 'css'].includes(ext)) return FileCode
+  return File
+}
+
 const SecurityAge = ({ confirmations }) => {
   const getLevel = (c) => {
     if (c < 6) return { label: 'In Motion', color: 'text-[var(--accent-pending)]' }
@@ -70,6 +86,8 @@ export default function Vault() {
   const [searchQuery, setSearchQuery] = useState('')
   const [activeTab, setActiveTab] = useState('all')
   const [typeFilter, setTypeFilter] = useState('All')
+  const [statusFilter, setStatusFilter] = useState('All')
+  const [sortBy, setSortBy] = useState('date-desc')
   const [isExporting, setIsExporting] = useState(false)
   const [exportProgress, setExportProgress] = useState(0)
   const [items, setItems] = useState([])
@@ -80,6 +98,7 @@ export default function Vault() {
   const [revokeTarget, setRevokeTarget] = useState(null)
   const [revokeReason, setRevokeReason] = useState('')
   const [revoking, setRevoking] = useState(false)
+  const [exportingZip, setExportingZip] = useState(false)
   const [offlineQueue, setOfflineQueue] = useState([])
   const [isSyncing, setIsSyncing] = useState(false)
   const { t } = useI18n()
@@ -259,26 +278,101 @@ export default function Vault() {
     }
   }
 
-  const handleRevoke = async (item) => {
-    setRevoking(true)
+  const handleRevoke = (item) => {
+    const snapshot = items
+    const reason = revokeReason
+    setItems((prev) =>
+      prev.map((i) => (i.id === item.id ? { ...i, is_revoked: true, status: 'revoked' } : i))
+    )
+    setRevokeTarget(null)
+    setRevokeReason('')
+    setRevoking(false)
+
+    let undone = false
+    const timer = setTimeout(async () => {
+      if (undone) return
+      try {
+        const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+        const res = await fetch(`${API}/api/revoke/${item.id}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ reason })
+        })
+        if (!res.ok) throw new Error('Revoke request failed')
+      } catch (e) {
+        setItems(snapshot)
+        toast.error('Revoke failed: ' + e.message)
+      }
+    }, 5000)
+
+    toast.success('Proof revoked', {
+      description: item.name,
+      duration: 5000,
+      action: {
+        label: 'Undo',
+        onClick: () => {
+          undone = true
+          clearTimeout(timer)
+          setItems(snapshot)
+          toast.info('Revoke cancelled', { description: item.name })
+        }
+      }
+    })
+  }
+
+  const handleExportZip = async () => {
+    if (items.length === 0) {
+      toast.error('No proofs to export')
+      return
+    }
+    setExportingZip(true)
     try {
+      const JSZip = (await import('jszip')).default
+      const zip = new JSZip()
       const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
-      const res = await fetch(`${API}/api/revoke/${item.id}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ reason: revokeReason })
-      })
-      if (!res.ok) throw new Error('Revoke request failed')
-      setItems((prev) =>
-        prev.map((i) => (i.id === item.id ? { ...i, is_revoked: true, status: 'revoked' } : i))
-      )
-      setRevokeTarget(null)
-      setRevokeReason('')
-      toast.success('Proof revoked', { description: item.name })
+      let added = 0
+
+      for (const item of items) {
+        try {
+          const res = await fetch(`${API}/api/stamps/${item.id}?download=true`)
+          if (!res.ok) continue
+          const blob = await res.blob()
+          const safeName = (item.name || item.id).replace(/[^a-z0-9._-]/gi, '_')
+          zip.file(`${safeName}-${item.id.substring(0, 8)}.ots`, blob)
+          added++
+        } catch {
+          // Skip proofs without downloadable OTS binaries
+        }
+      }
+
+      if (added === 0) {
+        toast.error('No downloadable OTS proofs found — proofs may still be pending')
+        return
+      }
+
+      const manifest = items.map((i) => ({
+        id: i.id,
+        name: i.name,
+        hash: i.fullHash,
+        status: i.status,
+        date: i.date
+      }))
+      zip.file('manifest.json', JSON.stringify(manifest, null, 2))
+
+      const zipBlob = await zip.generateAsync({ type: 'blob' })
+      const url = URL.createObjectURL(zipBlob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = `satohash-proofs-${new Date().toISOString().split('T')[0]}.zip`
+      document.body.appendChild(a)
+      a.click()
+      document.body.removeChild(a)
+      URL.revokeObjectURL(url)
+      toast.success(`Exported ${added} proof${added === 1 ? '' : 's'} as ZIP`)
     } catch (e) {
-      toast.error('Revoke failed: ' + e.message)
+      toast.error('ZIP export failed: ' + e.message)
     } finally {
-      setRevoking(false)
+      setExportingZip(false)
     }
   }
 
@@ -598,25 +692,39 @@ export default function Vault() {
     }
   }
 
-  const filteredItems = items.filter((item) => {
-    const matchesTab =
-      activeTab === 'all' ||
-      (activeTab === 'capsules' && item.type === 'capsule') ||
-      (activeTab === 'files' && item.type === 'file') ||
-      (activeTab === 'snaps' && item.type === 'snapper')
+  const filteredItems = items
+    .filter((item) => {
+      const matchesTab =
+        activeTab === 'all' ||
+        (activeTab === 'capsules' && item.type === 'capsule') ||
+        (activeTab === 'files' && item.type === 'file') ||
+        (activeTab === 'snaps' && item.type === 'snapper')
 
-    const matchesSearch =
-      item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.hash.toLowerCase().includes(searchQuery.toLowerCase())
+      const matchesSearch =
+        item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.hash.toLowerCase().includes(searchQuery.toLowerCase())
 
-    const matchesType =
-      typeFilter === 'All' ||
-      (typeFilter === 'Images' && /\.(png|jpg|jpeg|gif|webp|svg)/i.test(item.name)) ||
-      (typeFilter === 'Documents' && /\.(pdf|doc|docx|txt|md)/i.test(item.name)) ||
-      (typeFilter === 'Archives' && /\.(zip|tar|gz|rar)/i.test(item.name))
+      const matchesType =
+        typeFilter === 'All' ||
+        (typeFilter === 'Images' && /\.(png|jpg|jpeg|gif|webp|svg)/i.test(item.name)) ||
+        (typeFilter === 'Documents' && /\.(pdf|doc|docx|txt|md)/i.test(item.name)) ||
+        (typeFilter === 'Archives' && /\.(zip|tar|gz|rar)/i.test(item.name))
 
-    return matchesTab && matchesSearch && matchesType
-  })
+      const matchesStatus =
+        statusFilter === 'All' ||
+        item.status === statusFilter ||
+        (statusFilter === 'confirmed' && item.status === 'anchored')
+
+      return matchesTab && matchesSearch && matchesType && matchesStatus
+    })
+    .sort((a, b) => {
+      if (sortBy === 'status') {
+        return (a.status || '').localeCompare(b.status || '')
+      }
+      const dateA = a.date === '—' ? 0 : new Date(a.date).getTime()
+      const dateB = b.date === '—' ? 0 : new Date(b.date).getTime()
+      return sortBy === 'date-asc' ? dateA - dateB : dateB - dateA
+    })
 
   const virtualizer = useVirtualizer({
     count: filteredItems.length,
@@ -796,6 +904,20 @@ export default function Vault() {
           </button>
 
           <button
+            onClick={handleExportZip}
+            disabled={exportingZip || items.length === 0}
+            className="flex h-14 items-center justify-center gap-3 rounded-2xl border border-[var(--border-gold)] bg-[var(--accent-gold-subtle)] px-8 text-[11px] font-black tracking-widest uppercase transition-all hover:bg-[var(--accent-gold)] hover:text-[#141b25] active:scale-[0.98] disabled:opacity-50"
+            style={{ color: 'var(--accent-gold)' }}
+          >
+            {exportingZip ? (
+              <Loader2 size={18} className="animate-spin" />
+            ) : (
+              <FileArchive size={18} />
+            )}
+            Export All Proofs (ZIP)
+          </button>
+
+          <button
             onClick={handleBackupVault}
             className="flex h-14 items-center justify-center gap-2 rounded-2xl border border-[var(--border)] bg-transparent px-6 text-[10px] font-black tracking-widest uppercase transition-all hover:bg-[var(--surface-raised)]"
             style={{ color: 'var(--text-secondary)' }}
@@ -862,6 +984,36 @@ export default function Vault() {
         ))}
       </div>
 
+      {/* Sort, status & type filters */}
+      <div className="flex flex-wrap items-center gap-3">
+        <div className="flex items-center gap-2 rounded-xl border border-[var(--border)] bg-[var(--bg-secondary)] p-1">
+          {[
+            ['date-desc', 'Newest'],
+            ['date-asc', 'Oldest'],
+            ['status', 'Status']
+          ].map(([value, label]) => (
+            <button
+              key={value}
+              onClick={() => setSortBy(value)}
+              className={`rounded-lg px-4 py-2 text-[10px] font-black tracking-widest uppercase transition-all ${sortBy === value ? 'bg-[var(--accent-gold)] text-[#141b25]' : 'text-[var(--text-secondary)] hover:text-white'}`}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+        <div className="flex items-center gap-2 rounded-xl border border-[var(--border)] bg-[var(--bg-secondary)] p-1">
+          {['All', 'confirmed', 'pending', 'anchored', 'failed'].map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setStatusFilter(tab)}
+              className={`rounded-lg px-4 py-2 text-[10px] font-black tracking-widest uppercase transition-all ${statusFilter === tab ? 'bg-white/10 text-white' : 'text-[var(--text-secondary)] hover:text-white'}`}
+            >
+              {tab}
+            </button>
+          ))}
+        </div>
+      </div>
+
       {/* Asset Type Filter */}
       <div className="flex items-center gap-2 self-start rounded-xl border border-[var(--border)] bg-[var(--bg-secondary)] p-1">
         {['All', 'Images', 'Documents', 'Archives'].map((tab) => (
@@ -880,13 +1032,7 @@ export default function Vault() {
       </div>
 
       {/* Skeleton loader — shown while loading (desktop) */}
-      {loading && (
-        <div className="hidden grid-cols-1 gap-6 md:grid md:grid-cols-2 lg:grid-cols-3">
-          {Array.from({ length: 6 }).map((_, i) => (
-            <SkeletonCard key={i} />
-          ))}
-        </div>
-      )}
+      {loading && <SkeletonList count={6} className="hidden md:grid" />}
 
       {/* Elite Data Grid — Desktop Table */}
       <div
@@ -973,110 +1119,107 @@ export default function Vault() {
                 </tr>
               )}
               {!loading &&
-                filteredItems.map((item) => (
-                  <tr key={item.id} className="group transition-all hover:bg-white/5">
-                    <td className="px-10 py-8">
-                      <div className="flex items-center gap-6">
-                        <div
-                          className={`flex h-14 w-14 items-center justify-center rounded-2xl border border-[var(--border)] ${item.type === 'capsule' ? 'bg-[var(--accent-gold)]/10 text-[var(--accent-gold)]' : 'bg-[var(--bg-primary)] text-[var(--text-secondary)]'} transition-transform group-hover:scale-110`}
-                        >
-                          {item.type === 'capsule' ? (
-                            <FileArchive size={24} />
-                          ) : item.type === 'snapper' ? (
-                            <Layers size={24} />
-                          ) : (
-                            <FileText size={24} />
-                          )}
-                        </div>
-                        <div className="space-y-1">
-                          <p
-                            className={`text-lg font-bold tracking-tight text-white ${item.is_revoked ? 'line-through opacity-50' : ''}`}
+                filteredItems.map((item) => {
+                  const FileIcon = getFileTypeIcon(item.name, item.type)
+                  return (
+                    <tr key={item.id} className="group transition-all hover:bg-white/5">
+                      <td className="px-10 py-8">
+                        <div className="flex items-center gap-6">
+                          <div
+                            className={`flex h-14 w-14 items-center justify-center rounded-2xl border border-[var(--border)] ${item.type === 'capsule' ? 'bg-[var(--accent-gold)]/10 text-[var(--accent-gold)]' : 'bg-[var(--bg-primary)] text-[var(--text-secondary)]'} transition-transform group-hover:scale-110`}
                           >
-                            {item.name}
-                          </p>
-                          <div className="flex items-center gap-3">
-                            <p className="font-mono text-[10px] tracking-widest text-[var(--text-secondary)] uppercase">
-                              {item.size}
+                            <FileIcon size={24} />
+                          </div>
+                          <div className="space-y-1">
+                            <p
+                              className={`text-lg font-bold tracking-tight text-white ${item.is_revoked ? 'line-through opacity-50' : ''}`}
+                            >
+                              {item.name}
                             </p>
-                            <span className="text-[10px] text-[var(--text-secondary)] opacity-20">
-                              |
-                            </span>
-                            <p className="font-mono text-[10px] text-[var(--text-secondary)]">
-                              {item.hash}
-                            </p>
+                            <div className="flex items-center gap-3">
+                              <p className="font-mono text-[10px] tracking-widest text-[var(--text-secondary)] uppercase">
+                                {item.size}
+                              </p>
+                              <span className="text-[10px] text-[var(--text-secondary)] opacity-20">
+                                |
+                              </span>
+                              <p className="font-mono text-[10px] text-[var(--text-secondary)]">
+                                {item.hash}
+                              </p>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </td>
-                    <td className="px-10 py-8">
-                      <div className="space-y-3">
-                        <StatusBadge status={item.status} />
-                        <SecurityAge confirmations={item.confirmations} />
-                        {item.status === 'confirmed' && item.bitcoin_block_height && (
-                          <span className="flex items-center gap-1 font-mono text-xs text-emerald-400">
-                            <span>₿</span>
-                            <span>Block {item.bitcoin_block_height.toLocaleString()}</span>
-                          </span>
-                        )}
-                      </div>
-                    </td>
-                    <td className="px-10 py-8">
-                      <div className="space-y-1">
-                        <p className="text-sm font-bold text-white">{item.date}</p>
-                        <p className="text-[10px] font-black tracking-widest text-[var(--text-secondary)] uppercase">
-                          Anchored Epoch
-                        </p>
-                      </div>
-                    </td>
-                    <td className="px-10 py-8 text-right">
-                      <div className="flex translate-x-4 justify-end gap-3 opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100">
-                        <ActionBtn
-                          icon={Stamp}
-                          label="Badge"
-                          onClick={() => {
-                            navigator.clipboard.writeText(
-                              window.location.origin + '/verify/' + item.id
-                            )
-                            toast.success('Proof URL Copied', {
-                              description: 'Share link is in your clipboard'
-                            })
-                          }}
-                        />
-                        <ActionBtn
-                          icon={Download}
-                          label="Raw"
-                          onClick={() => downloadCertificate(item)}
-                        />
-                        <ActionBtn
-                          icon={FileDown}
-                          label=".ots"
-                          onClick={() => downloadOtsFile(item)}
-                        />
-                        {item.status === 'pending' && (
+                      </td>
+                      <td className="px-10 py-8">
+                        <div className="space-y-3">
+                          <StatusBadge status={item.status} />
+                          <SecurityAge confirmations={item.confirmations} />
+                          {item.status === 'confirmed' && item.bitcoin_block_height && (
+                            <span className="flex items-center gap-1 font-mono text-xs text-emerald-400">
+                              <span>₿</span>
+                              <span>Block {item.bitcoin_block_height.toLocaleString()}</span>
+                            </span>
+                          )}
+                        </div>
+                      </td>
+                      <td className="px-10 py-8">
+                        <div className="space-y-1">
+                          <p className="text-sm font-bold text-white">{item.date}</p>
+                          <p className="text-[10px] font-black tracking-widest text-[var(--text-secondary)] uppercase">
+                            Anchored Epoch
+                          </p>
+                        </div>
+                      </td>
+                      <td className="px-10 py-8 text-right">
+                        <div className="flex translate-x-4 justify-end gap-3 opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100">
                           <ActionBtn
-                            icon={RefreshCw}
-                            label="Check"
-                            onClick={() => upgradeStamp(item)}
+                            icon={Stamp}
+                            label="Badge"
+                            onClick={() => {
+                              navigator.clipboard.writeText(
+                                window.location.origin + '/verify/' + item.id
+                              )
+                              toast.success('Proof URL Copied', {
+                                description: 'Share link is in your clipboard'
+                              })
+                            }}
                           />
-                        )}
-                        <ActionBtn
-                          icon={Globe}
-                          label="Verify"
-                          onClick={() => {
-                            window.location.href = '/verify?hash=' + item.fullHash
-                          }}
-                        />
-                        {!item.is_revoked && (
                           <ActionBtn
-                            icon={Trash2}
-                            label="Revoke"
-                            onClick={() => setRevokeTarget(item)}
+                            icon={Download}
+                            label="Raw"
+                            onClick={() => downloadCertificate(item)}
                           />
-                        )}
-                      </div>
-                    </td>
-                  </tr>
-                ))}
+                          <ActionBtn
+                            icon={FileDown}
+                            label=".ots"
+                            onClick={() => downloadOtsFile(item)}
+                          />
+                          {item.status === 'pending' && (
+                            <ActionBtn
+                              icon={RefreshCw}
+                              label="Check"
+                              onClick={() => upgradeStamp(item)}
+                            />
+                          )}
+                          <ActionBtn
+                            icon={Globe}
+                            label="Verify"
+                            onClick={() => {
+                              window.location.href = '/verify?hash=' + item.fullHash
+                            }}
+                          />
+                          {!item.is_revoked && (
+                            <ActionBtn
+                              icon={Trash2}
+                              label="Revoke"
+                              onClick={() => setRevokeTarget(item)}
+                            />
+                          )}
+                        </div>
+                      </td>
+                    </tr>
+                  )
+                })}
             </tbody>
           </table>
         </div>
@@ -1094,13 +1237,7 @@ export default function Vault() {
 
       {/* Mobile Card List */}
       <div className="md:hidden">
-        {loading && (
-          <div className="grid grid-cols-1 gap-4">
-            {Array.from({ length: 6 }).map((_, i) => (
-              <SkeletonCard key={i} />
-            ))}
-          </div>
-        )}
+        {loading && <SkeletonList count={6} className="grid-cols-1 gap-4" />}
         {!loading && filteredItems.length === 0 && items.length === 0 && (
           <div className="flex flex-col items-center justify-center space-y-6 py-24 text-center">
             <div
@@ -1152,6 +1289,7 @@ export default function Vault() {
               >
                 {virtualizer.getVirtualItems().map((virtualItem) => {
                   const item = filteredItems[virtualItem.index]
+                  const FileIcon = getFileTypeIcon(item.name, item.type)
                   return (
                     <div
                       key={virtualItem.key}
@@ -1195,13 +1333,7 @@ export default function Vault() {
                             <div
                               className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-[var(--border)] ${item.type === 'capsule' ? 'bg-[var(--accent-gold)]/10 text-[var(--accent-gold)]' : 'bg-[var(--bg-primary)] text-[var(--text-secondary)]'}`}
                             >
-                              {item.type === 'capsule' ? (
-                                <FileArchive size={20} />
-                              ) : item.type === 'snapper' ? (
-                                <Layers size={20} />
-                              ) : (
-                                <FileText size={20} />
-                              )}
+                              <FileIcon size={20} />
                             </div>
                             <div className="min-w-0 flex-1">
                               <p

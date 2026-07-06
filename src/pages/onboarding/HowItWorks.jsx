@@ -9,19 +9,19 @@ const CARDS = [
     icon: Lock,
     titleKey: 'howItWorks.card1.title',
     descriptionKey: 'howItWorks.card1.description',
-    color: '#6366f1'
+    color: 'var(--accent-gold)'
   },
   {
     icon: Shield,
     titleKey: 'howItWorks.card2.title',
     descriptionKey: 'howItWorks.card2.description',
-    color: '#8b5cf6'
+    color: 'var(--accent-teal)'
   },
   {
     icon: FileCheck,
     titleKey: 'howItWorks.card3.title',
     descriptionKey: 'howItWorks.card3.description',
-    color: '#ec4899'
+    color: 'var(--accent-gold)'
   }
 ]
 
@@ -31,6 +31,11 @@ export default function HowItWorks() {
   const [currentCard, setCurrentCard] = useState(0)
   const [isAutoPlaying, setIsAutoPlaying] = useState(true)
   const [slideDirection, setSlideDirection] = useState('next')
+
+  const nextCard = () => {
+    setSlideDirection('next')
+    setCurrentCard((prev) => (prev + 1) % CARDS.length)
+  }
 
   // Auto-play functionality
   useEffect(() => {
@@ -42,11 +47,6 @@ export default function HowItWorks() {
 
     return () => clearInterval(interval)
   }, [currentCard, isAutoPlaying])
-
-  const nextCard = () => {
-    setSlideDirection('next')
-    setCurrentCard((prev) => (prev + 1) % CARDS.length)
-  }
 
   const prevCard = () => {
     setSlideDirection('prev')
@@ -107,7 +107,7 @@ export default function HowItWorks() {
               fontWeight: '900',
               textTransform: 'uppercase',
               letterSpacing: '1px',
-              color: 'var(--color-primary)',
+              color: 'var(--accent-gold)',
               marginBottom: '8px'
             }}
           >
@@ -158,7 +158,7 @@ export default function HowItWorks() {
                 height: '48px',
                 borderRadius: '50%',
                 background: '#f3f4ff', // Light purple tint
-                color: '#6366f1',
+                color: 'var(--accent-gold)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -175,7 +175,7 @@ export default function HowItWorks() {
                 width: '120px',
                 height: '120px',
                 borderRadius: '50%',
-                background: 'linear-gradient(135deg, #a78bfa 0%, #8b5cf6 100%)',
+                background: 'linear-gradient(135deg, var(--accent-gold) 0%, #d4a017 100%)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -246,7 +246,7 @@ export default function HowItWorks() {
                     width: idx === currentCard ? '32px' : '8px',
                     height: '8px',
                     borderRadius: '10px',
-                    background: idx === currentCard ? '#6366f1' : '#e2e8f0',
+                    background: idx === currentCard ? 'var(--accent-gold)' : '#e2e8f0',
                     border: 'none',
                     cursor: 'pointer',
                     transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
@@ -265,7 +265,7 @@ export default function HowItWorks() {
                   background: 'none',
                   border: 'none',
                   cursor: 'pointer',
-                  color: '#6366f1',
+                  color: 'var(--accent-gold)',
                   display: 'flex'
                 }}
               >
@@ -292,7 +292,7 @@ export default function HowItWorks() {
               justifyContent: 'center',
               cursor: 'pointer',
               boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
-              color: '#6366f1',
+              color: 'var(--accent-gold)',
               opacity: currentCard === 0 ? 0 : 1,
               transition: 'all 0.3s ease'
             }}
@@ -316,7 +316,7 @@ export default function HowItWorks() {
               justifyContent: 'center',
               cursor: 'pointer',
               boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
-              color: '#6366f1',
+              color: 'var(--accent-gold)',
               opacity: currentCard === CARDS.length - 1 ? 0 : 1,
               transition: 'all 0.3s ease'
             }}
@@ -336,14 +336,14 @@ export default function HowItWorks() {
         >
           <Button
             variant="primary"
-            onClick={() => navigate('/choose-template')}
+            onClick={() => navigate('/onboarding/choose-template')}
             style={{
               width: '100%',
               height: '72px',
               borderRadius: '16px',
               fontSize: '20px',
               fontWeight: '950',
-              background: 'linear-gradient(135deg, #6366f1 0%, #4f46e5 100%)',
+              background: 'linear-gradient(135deg, var(--accent-gold) 0%, #d4a017 100%)',
               boxShadow: '0 20px 40px rgba(99, 102, 241, 0.25)',
               border: 'none'
             }}
@@ -407,7 +407,7 @@ function ProtocolStep({ title, text }) {
           margin: '0 0 12px 0',
           fontSize: '14px',
           fontWeight: '950',
-          color: '#6366f1',
+          color: 'var(--accent-teal)',
           textTransform: 'uppercase'
         }}
       >

@@ -37,20 +37,21 @@ export const ThemeProvider = ({ children }) => {
   return <ThemeContext.Provider value={{ theme, toggleTheme }}>{children}</ThemeContext.Provider>
 }
 
-export const ThemeToggle = () => {
+export const ThemeToggle = ({ className = '' }) => {
   const { theme, toggleTheme } = useTheme()
 
   return (
     <button
       onClick={toggleTheme}
-      className="rounded-lg border border-gray-700 bg-gray-800/50 p-2 transition-colors hover:bg-gray-700/50"
+      className={`flex h-10 min-h-[44px] w-10 min-w-[44px] items-center justify-center rounded-xl border transition-colors hover:bg-white/5 ${className}`}
+      style={{
+        borderColor: 'var(--border)',
+        background: 'var(--bg-secondary)',
+        color: theme === 'dark' ? 'var(--accent-gold)' : 'var(--accent-active)'
+      }}
       aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
     >
-      {theme === 'dark' ? (
-        <Sun className="h-5 w-5 text-yellow-400" />
-      ) : (
-        <Moon className="h-5 w-5 text-blue-400" />
-      )}
+      {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
     </button>
   )
 }

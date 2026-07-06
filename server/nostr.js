@@ -1,15 +1,11 @@
-import { finalizeEvent, getPublicKey, generateSecretKey } from 'nostr-tools/pure';
-import { Relay, nip05 } from 'nostr-tools';
-import logger from './logger.js';
+import { finalizeEvent, getPublicKey, generateSecretKey } from 'nostr-tools/pure'
+import { Relay, nip05 } from 'nostr-tools'
+import logger from './logger.js'
 
-const RELAYS = [
-  'wss://relay.damus.io',
-  'wss://nos.lol',
-  'wss://relay.snort.social'
-];
+const RELAYS = ['wss://relay.damus.io', 'wss://nos.lol', 'wss://relay.snort.social']
 
-const BOT_SK = process.env.NOSTR_SECRET_KEY || generateSecretKey(); // Use persistent key in prod
-const BOT_PK = getPublicKey(BOT_SK);
+const BOT_SK = process.env.NOSTR_SECRET_KEY || generateSecretKey() // Use persistent key in prod
+const BOT_PK = getPublicKey(BOT_SK)
 
 /**
  * Publishes a "Satohash Timestamp Event" to Nostr.
@@ -24,28 +20,28 @@ export const publishTimestampToNostr = async (hash, filename, id) => {
         ['hash', hash],
         ['filename', filename],
         ['ots_id', id],
-        ['url', `https://satohash.com/verify/${id}`],
+        ['url', `https://satohash.giveabit.io/verify/${id}`],
         ['p', BOT_PK]
       ],
       content: `🔒 Cryptographic Proof-of-Existence\nFile: ${filename}\nHash: ${hash}\nVerified with Satohash Protocol.`
-    };
+    }
 
-    const event = finalizeEvent(eventTemplate, BOT_SK);
+    const event = finalizeEvent(eventTemplate, BOT_SK)
 
     for (const url of RELAYS) {
       try {
-        const relay = await Relay.connect(url);
-        await relay.publish(event);
-        logger.info(`🟣 Nostr event published to ${url}`);
-        relay.close();
+        const relay = await Relay.connect(url)
+        await relay.publish(event)
+        logger.info(`🟣 Nostr event published to ${url}`)
+        relay.close()
       } catch (err) {
-        logger.error(`❌ Nostr publish error on ${url}: %o`, err);
+        logger.error(`❌ Nostr publish error on ${url}: %o`, err)
       }
     }
   } catch (error) {
-    logger.error('Nostr integration error: %o', error);
+    logger.error('Nostr integration error: %o', error)
   }
-};
+}
 
 /**
  * Fetches Nostr profile (kind 0) and NIP-05 verification for a given pubkey.
@@ -53,32 +49,40 @@ export const publishTimestampToNostr = async (hash, filename, id) => {
  */
 export const fetchNostrProfile = async (pubkey) => {
   if (!pubkey || pubkey.length !== 64 || !/^[a-f0-9]{64}$/i.test(pubkey)) {
-    logger.warn('Invalid pubkey provided for profile fetch');
-    return null;
+    logger.warn('Invalid pubkey provided for profile fetch')
+    return null
   }
 
   try {
-    let profile = null;
-    let verifiedNip05 = null;
+    let profile = null
+    let verifiedNip05 = null
 
     // Fetch from relays
     for (const relayUrl of RELAYS) {
       try {
-        const relay = await Relay.connect(relayUrl);
+        const relay = await Relay.connect(relayUrl)
         const events = await new Promise((resolve) => {
-          const collected = [];
+          const collected = []
           const sub = relay.subscribe([{ kinds: [0], authors: [pubkey], limit: 1 }], {
-            onevent(event) { collected.push(event); },
-            oneose() { sub.close(); resolve(collected); }
-          });
-          setTimeout(() => { sub.close(); resolve(collected); }, 5000);
-        });
-        relay.close();
+            onevent(event) {
+              collected.push(event)
+            },
+            oneose() {
+              sub.close()
+              resolve(collected)
+            }
+          })
+          setTimeout(() => {
+            sub.close()
+            resolve(collected)
+          }, 5000)
+        })
+        relay.close()
 
         if (events.length > 0) {
-          const event = events[0];
+          const event = events[0]
           try {
-            const meta = JSON.parse(event.content || '{}');
+            const meta = JSON.parse(event.content || '{}')
             profile = {
               name: meta.name || meta.display_name || '',
               about: meta.about || '',
@@ -87,68 +91,75 @@ export const fetchNostrProfile = async (pubkey) => {
               lud16: meta.lud16 || '',
               website: meta.website || '',
               created_at: event.created_at
-            };
+            }
           } catch {
-            profile = { name: '', about: event.content || '', picture: '', created_at: event.created_at };
+            profile = {
+              name: '',
+              about: event.content || '',
+              picture: '',
+              created_at: event.created_at
+            }
           }
-          break;
+          break
         }
       } catch (err) {
-        logger.warn(`Failed to fetch profile from ${relayUrl}: ${err.message}`);
+        logger.warn(`Failed to fetch profile from ${relayUrl}: ${err.message}`)
       }
     }
 
     // Try NIP-05 verification using the nip05 field from kind 0 metadata
     if (profile && profile.nip05 && profile.nip05.includes('@')) {
       try {
-        const nip05Result = await nip05.verify(profile.nip05, pubkey);
+        const nip05Result = await nip05.verify(profile.nip05, pubkey)
         if (nip05Result) {
-          profile.verified = true;
+          profile.verified = true
         }
       } catch (err) {
-        logger.warn(`NIP-05 verification failed for ${profile.nip05}: ${err.message}`);
+        logger.warn(`NIP-05 verification failed for ${profile.nip05}: ${err.message}`)
       }
     }
 
-    logger.info(`Fetched profile for pubkey ${pubkey.slice(0,8)}...: ${profile ? 'success' : 'no data'}`);
-    return profile || null;
+    logger.info(
+      `Fetched profile for pubkey ${pubkey.slice(0, 8)}...: ${profile ? 'success' : 'no data'}`
+    )
+    return profile || null
   } catch (error) {
-    logger.error(`Error fetching Nostr profile for ${pubkey}: %o`, error);
-    return null;
+    logger.error(`Error fetching Nostr profile for ${pubkey}: %o`, error)
+    return null
   }
-};
+}
 
 /**
  * Pings all configured Nostr relays and measures connection latency.
  * Returns array of {url, latency (ms), status ('ok' | 'error'), error?}
  */
 export const pingRelays = async () => {
-  const results = [];
-  const timeout = 5000; // 5s timeout per relay
+  const results = []
+  const timeout = 5000 // 5s timeout per relay
 
   for (const url of RELAYS) {
-    const start = performance.now(); // Use performance for ms precision
-    let latency = -1;
-    let status = 'error';
-    let error = '';
+    const start = performance.now() // Use performance for ms precision
+    let latency = -1
+    let status = 'error'
+    let error = ''
 
     try {
       const relay = await Promise.race([
         Relay.connect(url),
         new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), timeout))
-      ]);
-      latency = Math.round(performance.now() - start);
-      status = 'ok';
-      relay.close();
+      ])
+      latency = Math.round(performance.now() - start)
+      status = 'ok'
+      relay.close()
     } catch (err) {
-      latency = Math.round(performance.now() - start);
-      error = err.message;
-      logger.warn(`Nostr ping failed for ${url}: ${error}`);
+      latency = Math.round(performance.now() - start)
+      error = err.message
+      logger.warn(`Nostr ping failed for ${url}: ${error}`)
     }
 
-    results.push({ url, latency, status, error });
+    results.push({ url, latency, status, error })
   }
 
-  logger.info('Nostr relay ping results: %o', results);
-  return results;
-};
+  logger.info('Nostr relay ping results: %o', results)
+  return results
+}

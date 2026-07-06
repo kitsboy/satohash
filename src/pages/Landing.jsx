@@ -19,6 +19,7 @@ import {
 } from 'lucide-react'
 import Footer from '../components/Footer'
 import LanguageSwitcher from '../components/LanguageSwitcher'
+import { ThemeToggle } from '../components/ThemeProvider'
 import { getBitcoinNetworkStats } from '../utils/mempool'
 import { BTC_ADDRESS } from '../config/constants'
 
@@ -146,6 +147,7 @@ export default function Landing() {
           </div>
 
           <div className="hidden items-center gap-3 md:flex">
+            <ThemeToggle />
             <LanguageSwitcher />
             <button
               onClick={() => setDonationOpen(true)}
@@ -165,6 +167,7 @@ export default function Landing() {
           </div>
 
           <div className="flex items-center gap-2 md:hidden">
+            <ThemeToggle />
             <LanguageSwitcher />
             <button
               className="rounded-lg border p-2"
@@ -943,13 +946,22 @@ export default function Landing() {
               No account required. No credit card. Your first proof is free. Anchored to Bitcoin in
               under an hour.
             </p>
-            <Link
-              to="/stamp"
-              className="inline-flex w-full items-center justify-center gap-3 rounded-2xl px-10 py-5 text-lg font-black transition-all hover:scale-105 hover:opacity-90 sm:w-auto"
-              style={{ backgroundColor: 'var(--accent-gold)', color: '#141b25' }}
-            >
-              Notarize Your First Document — Free <ArrowRight size={20} />
-            </Link>
+            <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+              <Link
+                to="/stamp"
+                className="inline-flex w-full items-center justify-center gap-3 rounded-2xl px-10 py-5 text-lg font-black transition-all hover:scale-105 hover:opacity-90 sm:w-auto"
+                style={{ backgroundColor: 'var(--accent-gold)', color: '#141b25' }}
+              >
+                Notarize Your First Document — Free <ArrowRight size={20} />
+              </Link>
+              <Link
+                to="/pitch"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-2xl border px-8 py-5 text-sm font-black tracking-widest uppercase transition-all hover:opacity-80 sm:w-auto"
+                style={{ borderColor: 'var(--border-gold)', color: 'var(--accent-gold)' }}
+              >
+                Read the Pitch <ChevronRight size={16} />
+              </Link>
+            </div>
           </motion.div>
         </div>
       </section>

@@ -87,7 +87,21 @@
       "timestamped": "Con marca de tiempo",
       "pending": "Confirmación pendiente",
       "error": "Error"
-    }
+    },
+    "pageTitle": "Contratos",
+    "newArtifact": "Crear Nuevo Artefacto",
+    "downloadAll": "Descargar Todo",
+    "statusDraft": "Borrador",
+    "statusSigned": "Firmado",
+    "statusTimestamped": "Con Marca de Tiempo",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "inspector": "Inspector",
+    "documentName": "Nombre del Documento",
+    "proofPackage": "Paquete de Prueba",
+    "emailPackage": "Enviar Paquete",
+    "otsQr": "QR de Verificación OTS",
+    "scanToVerify": "Escanear para Verificar"
   },
   "contractEditor": {
     "title": "Editar Contrato",
@@ -174,6 +188,7 @@
     "zkPrivacy": "Privacidad y Conocimiento Cero",
     "zkPrivacyDetail": "Nuestra tecnología 'Privacy Shield' está inspirada en las pruebas de Conocimiento Cero (ZK). Debido a que solo almacenamos el hash criptográfico de su documento, tenemos cero conocimiento de su contenido. Utilizando pruebas de inclusión de Merkle, permitimos redactar selectivamente partes sensibles de un documento mientras se demuestra que las partes restantes coinciden con la versión original anclada.",
     "legallyBinding": "Exigibilidad Legal",
+    "zkPrivacyPoint": "Redacción selectiva inspirada en Conocimiento Cero (ZK)",
     "legallyBindingDetail": "En muchas jurisdicciones, la evidencia criptográfica se reconoce bajo leyes como la Ley ESIGN (EE. UU.) y eIDAS (UE). Estos marcos establecen que un registro electrónico no debe negarse efectos legales solo por estar en formato electrónico. Los sellos de tiempo en blockchain proporcionan un nivel de evidencia extremadamente alto que se puede usar en tribunales para refutar reclamos de falsificación o antedatado.",
     "legalDisclaimer": "Satohash proporciona evidencia y herramientas, no asesoramiento legal. Los usuarios deben consultar las leyes locales y un abogado."
   },
@@ -246,22 +261,6 @@
     "zeroKnowledge": "Conocimiento Cero",
     "zeroKnowledgeDesc": "El contenido de tu documento nunca sale de tu dispositivo — solo se envía el hash SHA-256 al servidor.",
     "progress": "de campos completados"
-  },
-  "contracts": {
-    "pageTitle": "Contratos",
-    "newArtifact": "Crear Nuevo Artefacto",
-    "downloadAll": "Descargar Todo",
-    "statusDraft": "Borrador",
-    "statusSigned": "Firmado",
-    "statusTimestamped": "Con Marca de Tiempo",
-    "edit": "Editar",
-    "delete": "Eliminar",
-    "inspector": "Inspector",
-    "documentName": "Nombre del Documento",
-    "proofPackage": "Paquete de Prueba",
-    "emailPackage": "Enviar Paquete",
-    "otsQr": "QR de Verificación OTS",
-    "scanToVerify": "Escanear para Verificar"
   },
   "verify": {
     "pageTitle": "Verificar Documento",

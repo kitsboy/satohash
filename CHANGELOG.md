@@ -2,6 +2,32 @@
 
 All notable changes to the Satahash project will be documented in this file.
 
+## [4.1.0-ELITE] - 2026-07-05 (Improvement Batches 1–4)
+
+### 🧪 Testing & Quality (Batch 4)
+- **Vitest suite expanded**: `ProtectedRoute`, `Access`, and `/health` API tests; 20% coverage threshold configured.
+- **Playwright E2E**: `auth-stamp.spec.js` — access page load, stamp redirect when unauthenticated, axe-core a11y check.
+- **Pre-push hook**: Husky runs `npm test` before every push.
+
+### 🔧 Infrastructure & DX
+- **lint-staged**: Server `*.js` files now formatted on pre-commit.
+- **i18n:check**: `scripts/i18n-check.js` validates key parity across locale files.
+- **Prometheus**: `satohash_forum_posts_total` counter for forum post creation.
+- **OTS upgrade socket**: `ots:upgrade:status` events surfaced in Stamp results UI.
+
+### 🎨 UX Polish
+- **BatchTimestamp**: Per-file progress bars during hash + stamp pipeline.
+- **Stamp dropzone**: 3-step guided tour tooltips (drop → hash → anchor).
+- **PWA**: `site.webmanifest` + `manifest.json` name aligned to "Satohash"; removed redundant manual SW registration (Vite PWA handles it).
+
+### 📚 Docs & Hygiene (Batches 1–3 summary)
+- Docs sync, SEO pages, design tokens, deploy playbook, rollback guide.
+- ContractList duplicate removed; `contracts/ContractList` wired in router.
+- Root lint artifact cleanup; `.env.example` security warnings for `ADMIN_KEY` / `JWT_SECRET`.
+- `docs/IMPROVEMENTS-LOG.md`, `LATEST-UPDATE.md`, `docs/KIMI-HANDOFF.md` handoff entries.
+
+---
+
 ## [1.0.0] - 2026-02-07 (The Base Case Release)
 
 ### 🚀 Features

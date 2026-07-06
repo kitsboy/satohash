@@ -891,6 +891,60 @@
   height: 160px;
 }
 
+/* ─── Print stylesheet — certificates & proof documents ─── */
+@media print {
+  body {
+    background: #fff !important;
+    color: #0f172a !important;
+  }
+
+  nav,
+  header,
+  footer,
+  .mobile-bottom-nav,
+  [data-print-hide],
+  button:not([data-print-show]) {
+    display: none !important;
+  }
+
+  .notary-seal,
+  .certificate-card,
+  .proof-certificate,
+  [data-print-certificate] {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    border: 2px solid #f0b429 !important;
+    box-shadow: none !important;
+    background: #fff !important;
+    color: #0f172a !important;
+  }
+
+  .certificate-card h1,
+  .proof-certificate h1,
+  [data-print-certificate] h1 {
+    color: #0f172a !important;
+    font-size: 1.5rem !important;
+  }
+
+  .certificate-meta,
+  .proof-hash {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 0.75rem !important;
+    word-break: break-all;
+  }
+
+  a[href]::after {
+    content: ' (' attr(href) ')';
+    font-size: 0.65rem;
+    color: #64748b;
+  }
+
+  @page {
+    margin: 1.5cm;
+    size: A4 portrait;
+  }
+}
+
 /* ─── Mobile-first utilities ─────────────────────────────── */
 @media (max-width: 767px) {
   .layout-container {

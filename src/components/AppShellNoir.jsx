@@ -14,6 +14,7 @@ import {
 import LeftRailNav from './LeftRailNav'
 import TopSignalBar from './TopSignalBar'
 import MobileBottomNav from './MobileBottomNav'
+import KeyboardShortcutsOverlay from './KeyboardShortcutsOverlay'
 import LanguageSwitcher from './LanguageSwitcher'
 import MempoolTicker from './MempoolTicker'
 import { useOfflineSync } from '../hooks/useOfflineSync'
@@ -26,6 +27,7 @@ const API = import.meta.env.VITE_API_URL ?? 'http://localhost:3001'
 
 export default function AppShellNoir({ children }) {
   const [isSearchOpen, setIsSearchOpen] = useState(false)
+  const [showShortcuts, setShowShortcuts] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const [debouncedQuery, setDebouncedQuery] = useState('')
   const [stampResults, setStampResults] = useState([])
@@ -64,6 +66,18 @@ export default function AppShellNoir({ children }) {
       if ((e.metaKey || e.ctrlKey) && e.key === 'b' && !isSearchOpen) {
         e.preventDefault()
         navigate('/batch')
+      }
+      if (
+        e.key === '?' &&
+        !isSearchOpen &&
+        !e.metaKey &&
+        !e.ctrlKey &&
+        !e.altKey &&
+        !(e.target instanceof HTMLInputElement) &&
+        !(e.target instanceof HTMLTextAreaElement)
+      ) {
+        e.preventDefault()
+        setShowShortcuts((prev) => !prev)
       }
     },
     [isSearchOpen, navigate]
@@ -433,6 +447,8 @@ export default function AppShellNoir({ children }) {
 
         {/* ── End app content wrapper ──────────────────────────────────────── */}
       </div>
+
+      <KeyboardShortcutsOverlay isOpen={showShortcuts} onClose={() => setShowShortcuts(false)} />
     </div>
   )
 }

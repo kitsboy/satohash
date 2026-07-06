@@ -34,7 +34,9 @@ export default function BatchTimestamp() {
         if (parsed && parsed.length > 0) {
           setBatchResult(parsed)
         }
-      } catch {}
+      } catch (_e) {
+        /* ignore corrupt cache */
+      }
     }
   }, [])
 
@@ -56,7 +58,8 @@ export default function BatchTimestamp() {
       file,
       id: Math.random().toString(36).substr(2, 9),
       status: 'pending',
-      hash: null
+      hash: null,
+      progress: 0
     }))
     setFiles((prev) => [...prev, ...newFiles].slice(0, 100)) // Max 100 files for UI
   }, [])
@@ -87,9 +90,10 @@ export default function BatchTimestamp() {
         const hashFn = wrap(worker)
         const hashHex = await hashFn.hashFile(buffer)
         worker.terminate()
-        updatedFiles[i] = { ...fileData, hash: hashHex, status: 'hashed' }
+        const hashProgress = Math.round(((i + 1) / updatedFiles.length) * 50)
+        updatedFiles[i] = { ...fileData, hash: hashHex, status: 'hashed', progress: hashProgress }
       } catch (err) {
-        updatedFiles[i] = { ...fileData, status: 'error', error: err.message }
+        updatedFiles[i] = { ...fileData, status: 'error', error: err.message, progress: 0 }
       }
       setFiles([...updatedFiles])
       setProgress(Math.round(((i + 1) / updatedFiles.length) * 50))
@@ -134,7 +138,12 @@ export default function BatchTimestamp() {
       if (!fileData.hash) continue
 
       try {
-        setFiles((prev) => prev.map((f, idx) => (idx === i ? { ...f, status: 'stamping' } : f)))
+        const stampProgress = Math.round(50 + ((i + 1) / files.length) * 50)
+        setFiles((prev) =>
+          prev.map((f, idx) =>
+            idx === i ? { ...f, status: 'stamping', progress: stampProgress } : f
+          )
+        )
 
         const res = await fetch(`${API}/api/stamp`, {
           method: 'POST',
@@ -156,7 +165,12 @@ export default function BatchTimestamp() {
           setFiles((prev) =>
             prev.map((f, idx) =>
               idx === i
-                ? { ...f, status: retry.ok ? 'stamped' : 'error', stampId: retryData.id }
+                ? {
+                    ...f,
+                    status: retry.ok ? 'stamped' : 'error',
+                    stampId: retryData.id,
+                    progress: retry.ok ? 100 : stampProgress
+                  }
                 : f
             )
           )
@@ -177,7 +191,14 @@ export default function BatchTimestamp() {
           const data = await res.json()
           setFiles((prev) =>
             prev.map((f, idx) =>
-              idx === i ? { ...f, status: res.ok ? 'stamped' : 'error', stampId: data.id } : f
+              idx === i
+                ? {
+                    ...f,
+                    status: res.ok ? 'stamped' : 'error',
+                    stampId: data.id,
+                    progress: res.ok ? 100 : stampProgress
+                  }
+                : f
             )
           )
           if (res.ok) {
@@ -202,7 +223,9 @@ export default function BatchTimestamp() {
       } catch (err) {
         if (err.name === 'AbortError') break
         setFiles((prev) =>
-          prev.map((f, idx) => (idx === i ? { ...f, status: 'error', error: err.message } : f))
+          prev.map((f, idx) =>
+            idx === i ? { ...f, status: 'error', error: err.message, progress: 0 } : f
+          )
         )
       }
     }
@@ -241,7 +264,9 @@ export default function BatchTimestamp() {
             const filename = `${result.filename || result.id}.ots`
             zip.file(filename, buffer)
           }
-        } catch {}
+        } catch (_e) {
+          /* skip missing stamp in zip */
+        }
       }
       manifest.push({
         id: result.id,
@@ -422,6 +447,28 @@ export default function BatchTimestamp() {
                           >
                             {fileData.hash.substring(0, 12)}...
                           </span>
+                        )}
+                        {isProcessing && (
+                          <div className="mt-2 flex items-center gap-2">
+                            <div
+                              className="h-1 flex-1 overflow-hidden rounded-full"
+                              style={{ backgroundColor: 'var(--border)', maxWidth: '120px' }}
+                            >
+                              <div
+                                className="h-full transition-all duration-300"
+                                style={{
+                                  width: `${fileData.progress || 0}%`,
+                                  backgroundColor: 'var(--accent-active)'
+                                }}
+                              />
+                            </div>
+                            <span
+                              className="font-mono text-[9px]"
+                              style={{ color: 'var(--text-muted)' }}
+                            >
+                              {fileData.progress || 0}%
+                            </span>
+                          </div>
                         )}
                       </div>
                     </div>

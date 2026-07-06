@@ -126,7 +126,17 @@ export default function Settings() {
   })
   const [balance, setBalance] = useState(null)
   const [balanceLoading, setBalanceLoading] = useState(true)
-  const [pushEnabled, setPushEnabled] = useState(false)
+  const [notifPrefs, setNotifPrefs] = useState(() => {
+    try {
+      const saved = localStorage.getItem('satohash_notif_prefs')
+      return saved
+        ? JSON.parse(saved)
+        : { push: false, emailAlerts: true, confirmedOnly: true, pendingAlerts: false }
+    } catch {
+      return { push: false, emailAlerts: true, confirmedOnly: true, pendingAlerts: false }
+    }
+  })
+  const [pushEnabled, setPushEnabled] = useState(() => notifPrefs.push)
   const [pushLoading, setPushLoading] = useState(false)
 
   // Webhook state
@@ -154,6 +164,10 @@ export default function Settings() {
   useEffect(() => {
     localStorage.setItem('satohash_security', JSON.stringify(security))
   }, [security])
+
+  useEffect(() => {
+    localStorage.setItem('satohash_notif_prefs', JSON.stringify(notifPrefs))
+  }, [notifPrefs])
 
   useEffect(() => {
     const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
@@ -200,6 +214,7 @@ export default function Settings() {
           })
         }
         setPushEnabled(false)
+        setNotifPrefs((prev) => ({ ...prev, push: false }))
         toast.success('Notifications disabled')
       } else {
         const keyRes = await fetch(`${API}/api/push/vapid-key`)
@@ -222,6 +237,7 @@ export default function Settings() {
           })
         })
         setPushEnabled(true)
+        setNotifPrefs((prev) => ({ ...prev, push: true }))
         toast.success('Notifications enabled!', {
           description: "You'll get notified when stamps confirm on Bitcoin."
         })
@@ -672,24 +688,65 @@ export default function Settings() {
                       }
                     />
 
-                    {/* Push Notifications */}
                     <div
                       className="space-y-4 rounded-2xl border p-6"
                       style={{ borderColor: 'var(--border)', background: 'var(--bg-primary)' }}
                     >
-                      <div className="flex items-center justify-between">
+                      <div className="space-y-1 border-b border-[var(--border)] pb-4">
+                        <div className="flex items-center gap-2">
+                          <Bell size={16} className="text-[var(--accent-active)]" />
+                          <h3 className="font-black tracking-tight">Notification Preferences</h3>
+                        </div>
+                        <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+                          Saved locally on this device via localStorage.
+                        </p>
+                      </div>
+                      <AlertToggle
+                        icon={Mail}
+                        label="Email Alerts"
+                        active={notifPrefs.emailAlerts}
+                        onToggle={() =>
+                          setNotifPrefs((prev) => ({ ...prev, emailAlerts: !prev.emailAlerts }))
+                        }
+                      />
+                      <AlertToggle
+                        icon={Bell}
+                        label="Confirmed Proofs Only"
+                        active={notifPrefs.confirmedOnly}
+                        onToggle={() =>
+                          setNotifPrefs((prev) => ({
+                            ...prev,
+                            confirmedOnly: !prev.confirmedOnly
+                          }))
+                        }
+                      />
+                      <AlertToggle
+                        icon={Activity}
+                        label="Pending Stamp Alerts"
+                        active={notifPrefs.pendingAlerts}
+                        onToggle={() =>
+                          setNotifPrefs((prev) => ({
+                            ...prev,
+                            pendingAlerts: !prev.pendingAlerts
+                          }))
+                        }
+                      />
+                      <div className="flex items-center justify-between border-t border-[var(--border)] pt-4">
                         <div className="space-y-1">
                           <div className="flex items-center gap-2">
-                            <Bell size={16} className="text-[var(--accent-active)]" />
+                            <Smartphone size={16} className="text-[var(--accent-active)]" />
                             <h3 className="font-black tracking-tight">Push Notifications</h3>
                           </div>
                           <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-                            Get notified when your Bitcoin proofs confirm.
+                            Browser push when proofs confirm on Bitcoin.
                           </p>
                         </div>
                         <button
                           onClick={togglePushNotifications}
                           disabled={pushLoading || !('PushManager' in window)}
+                          aria-label={
+                            pushEnabled ? 'Disable push notifications' : 'Enable push notifications'
+                          }
                           className="relative h-7 w-12 rounded-full transition-colors disabled:opacity-40"
                           style={{
                             background: pushEnabled
@@ -704,7 +761,8 @@ export default function Settings() {
                       </div>
                       {!('PushManager' in window) && (
                         <p className="text-xs" style={{ color: 'var(--accent-pending)' }}>
-                          ⚠️ Push notifications not supported in this browser.
+                          Push notifications not supported in this browser. Preferences are still
+                          saved locally.
                         </p>
                       )}
                     </div>

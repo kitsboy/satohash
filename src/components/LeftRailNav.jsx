@@ -129,7 +129,10 @@ export default function LeftRailNav() {
 
   useEffect(() => {
     const seen = localStorage.getItem('satohash_intro_seen')
-    if (!seen) {
+    const onboardingModalActive =
+      localStorage.getItem('satohash_authed') === 'true' &&
+      !localStorage.getItem('satohash-onboarded')
+    if (!seen && !onboardingModalActive) {
       setShowHelp(true)
       localStorage.setItem('satohash_intro_seen', 'true')
     }

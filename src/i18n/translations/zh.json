@@ -87,7 +87,21 @@
       "timestamped": "已添加时间戳",
       "pending": "等待确认",
       "error": "错误"
-    }
+    },
+    "pageTitle": "合同",
+    "newArtifact": "创建新工件",
+    "downloadAll": "全部下载",
+    "statusDraft": "草稿",
+    "statusSigned": "已签署",
+    "statusTimestamped": "已加时间戳",
+    "edit": "编辑",
+    "delete": "删除",
+    "inspector": "检查器",
+    "documentName": "文件名称",
+    "proofPackage": "证明包",
+    "emailPackage": "发送包",
+    "otsQr": "OTS 验证二维码",
+    "scanToVerify": "扫描验证"
   },
   "contractEditor": {
     "title": "编辑合约",
@@ -174,6 +188,7 @@
     "zkPrivacy": "隐私与零知识",
     "zkPrivacyDetail": "我们的'隐私盾'（Privacy Shield）技术的灵感源自零知识证明（ZK Proofs）。由于我们只存储文档的加密哈希，因此我们对其内容一无所知。利用 Merkle 包含证明，我们允许您选择性地脱敏文档的敏感部分，同时仍能证明剩余部分与原始锚定版本匹配——兼具绝对隐私和绝对可验证性。",
     "legallyBinding": "法律效力",
+    "zkPrivacyPoint": "零知识（ZK）启发的选择性编辑",
     "legallyBindingDetail": "在许多司法管辖区，根据 ESIGN 法案（美国）和 eIDAS（欧盟）等法律，加密证据已获得认可。这些框架通常规定，不应仅因其为电子形式而否认电子记录的法律效力。区块链时间戳提供了极高等级的'电子时间戳'和'电子证据'，可用于法庭驳回有关文档伪造或倒填日期的指控。",
     "legalDisclaimer": "Satohash 提供证据和工具，而不是法律建议。用户必须咨询当地法律和律师。"
   },
@@ -246,22 +261,6 @@
     "zeroKnowledge": "零知识",
     "zeroKnowledgeDesc": "您的文件内容永远不会离开您的设备——只有SHA-256哈希会发送到服务器。",
     "progress": "字段已填写"
-  },
-  "contracts": {
-    "pageTitle": "合同",
-    "newArtifact": "创建新工件",
-    "downloadAll": "全部下载",
-    "statusDraft": "草稿",
-    "statusSigned": "已签署",
-    "statusTimestamped": "已加时间戳",
-    "edit": "编辑",
-    "delete": "删除",
-    "inspector": "检查器",
-    "documentName": "文件名称",
-    "proofPackage": "证明包",
-    "emailPackage": "发送包",
-    "otsQr": "OTS 验证二维码",
-    "scanToVerify": "扫描验证"
   },
   "verify": {
     "pageTitle": "验证文件",

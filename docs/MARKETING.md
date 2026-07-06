@@ -1,11 +1,11 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.giveabit.io · **Version:** 4.1.0-ELITE (Build 4) · **Updated:** 2026-07-06
+> **Live:** https://satohash.giveabit.io · **Version:** 4.1.0-ELITE (Build 6) · **Updated:** 2026-07-06
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Satohash — Marketing Strategy
 
-**Platform:** satohash.io  
-**Version:** 2.0 | June 2026
+**Platform:** https://satohash.giveabit.io  
+**Version:** 4.1.0-ELITE | July 2026
 
 ---
 
@@ -78,7 +78,7 @@ People who create things they may later need to prove:
 ## Growth Channels
 
 ### Organic (Priority 1)
-- **SEO blog** at satohash.io/blog — educational content targeting "how to" queries
+- **SEO blog** at satohash.giveabit.io/blog — educational content targeting "how to" queries
 - **GitHub presence** — open-source examples, developer integrations
 - **Nostr / Bitcoin Twitter** — organic community building
 - **Reddit** — r/bitcoin, r/legaladvice, r/freelance
@@ -152,5 +152,7 @@ People who create things they may later need to prove:
 
 ---
 
-*Questions: hello@giveabit.io | satohash.io*
+*Questions: hello@giveabit.io | https://satohash.giveabit.io*
+
+
 

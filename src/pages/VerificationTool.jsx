@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { Upload, ShieldCheck, Hash, Globe, Database, CheckCircle2, XCircle } from 'lucide-react'
-import { useState, useRef, useCallback } from 'react'
+import { useState, useRef, useCallback, useEffect } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { jsPDF } from 'jspdf'
 import { toast } from 'sonner'
 
@@ -24,6 +25,7 @@ const MerklePathNode = ({ level, hash, active }) => (
 )
 
 export default function VerificationTool() {
+  const [searchParams] = useSearchParams()
   const [verifying, setVerifying] = useState(false)
   const [result, setResult] = useState(null) // null, 'success', 'error'
   const [hashInput, setHashInput] = useState('')
@@ -31,6 +33,7 @@ export default function VerificationTool() {
   const [verifyData, setVerifyData] = useState(null)
   const [isDragOver, setIsDragOver] = useState(false)
   const fileRef = useRef()
+  const autoVerifiedRef = useRef(false)
 
   const handleFileSelect = (e) => {
     if (e.target.files?.[0]) setOtsFile(e.target.files[0])
@@ -69,8 +72,57 @@ export default function VerificationTool() {
     }
   }, [])
 
+  const handleVerifyWithHash = async (hash) => {
+    if (!hash) return
+    setVerifying(true)
+    setResult(null)
+    setVerifyData(null)
+
+    try {
+      const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+      const res = await fetch(`${API}/api/stamps/${hash.trim()}`)
+      if (res.ok) {
+        const match = await res.json()
+        setResult('success')
+        setVerifyData({
+          verified: true,
+          details: `Found in Satohash DB — Status: ${match.status}`,
+          stamp: match
+        })
+      } else {
+        throw new Error('Not found')
+      }
+    } catch {
+      toast.error('Hash not found on this node')
+      setResult('error')
+      setVerifyData({
+        verified: false,
+        details: 'Hash not found in this node. It may be on another node or not yet stamped.'
+      })
+    } finally {
+      setVerifying(false)
+    }
+  }
+
+  // Support ?q=<hash> deep-link for hash lookup
+  useEffect(() => {
+    const q = searchParams.get('q')?.trim()
+    if (!q || autoVerifiedRef.current) return
+    setHashInput(q)
+    if (q.length === 64) {
+      autoVerifiedRef.current = true
+      handleVerifyWithHash(q)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams])
+
   const handleVerify = async () => {
     if (!hashInput && !otsFile) return
+
+    if (!otsFile && hashInput.trim().length === 64) {
+      return handleVerifyWithHash(hashInput)
+    }
+
     setVerifying(true)
     setResult(null)
     setVerifyData(null)
@@ -91,29 +143,6 @@ export default function VerificationTool() {
         }
         setResult(data.verified ? 'success' : 'error')
         setVerifyData(data)
-      } else if (hashInput.trim().length === 64) {
-        // Look up hash directly via dedicated endpoint
-        try {
-          const res = await fetch(`${API}/api/stamps/${hashInput.trim()}`)
-          if (res.ok) {
-            const match = await res.json()
-            setResult('success')
-            setVerifyData({
-              verified: true,
-              details: `Found in Satohash DB — Status: ${match.status}`,
-              stamp: match
-            })
-          } else {
-            throw new Error('Not found')
-          }
-        } catch {
-          toast.error('Hash not found on this node')
-          setResult('error')
-          setVerifyData({
-            verified: false,
-            details: 'Hash not found in this node. It may be on another node or not yet stamped.'
-          })
-        }
       } else {
         setResult('error')
         setVerifyData({

@@ -15,6 +15,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { toast } from 'sonner'
 import { generateSecretKey, getPublicKey, nip19 } from 'nostr-tools'
+import PinModal from '../components/PinModal'
 
 export default function Access() {
   const [isVerifying, setIsVerifying] = useState(false)
@@ -25,16 +26,12 @@ export default function Access() {
   const [adminLoading, setAdminLoading] = useState(false)
   const [adminMode, setAdminMode] = useState(false)
   const [showPinRestore, setShowPinRestore] = useState(false)
+  const [pinModalMode, setPinModalMode] = useState(null) // 'save' | 'restore'
+  const [pendingNsec, setPendingNsec] = useState(null)
   const [rememberMe, setRememberMe] = useState(false)
   const navigate = useNavigate()
 
-  // Encrypt nsec with AES-GCM using a PIN-derived key and persist to localStorage
-  const saveWithPin = async (nsecValue) => {
-    const pin = prompt(
-      'Set a 4-6 digit PIN to remember your key (optional — press Cancel to skip):'
-    )
-    if (!pin || pin.length < 4) return
-
+  const encryptWithPin = async (nsecValue, pin) => {
     const encoder = new TextEncoder()
     const keyData = encoder.encode(pin.padEnd(32, pin))
     const cryptoKey = await window.crypto.subtle.importKey(
@@ -58,12 +55,28 @@ export default function Access() {
     toast.success('Key saved! Enter your PIN next time to restore it.')
   }
 
+  const saveWithPin = async (nsecValue) => {
+    setPendingNsec(nsecValue)
+    setPinModalMode('save')
+  }
+
+  const handlePinSave = async (pin) => {
+    if (!pendingNsec) return
+    await encryptWithPin(pendingNsec, pin)
+    setPinModalMode(null)
+    setPendingNsec(null)
+  }
+
   // Decrypt a previously saved nsec using the PIN and fill the import field
-  const handlePinRestore = async () => {
+  const handlePinRestore = () => {
     const raw = localStorage.getItem('satohash_encrypted_nsec')
     if (!raw) return
-    const pin = prompt('Enter your PIN to restore your saved key:')
-    if (!pin) return
+    setPinModalMode('restore')
+  }
+
+  const handlePinRestoreSubmit = async (pin) => {
+    const raw = localStorage.getItem('satohash_encrypted_nsec')
+    if (!raw) return
     try {
       const { iv, data } = JSON.parse(raw)
       const encoder = new TextEncoder()
@@ -84,6 +97,7 @@ export default function Access() {
       setNsec(nsecValue)
       setImportMode(true)
       setShowPinRestore(false)
+      setPinModalMode(null)
       toast.success('Key restored — press Import & Enter to continue.')
     } catch {
       toast.error('Wrong PIN or corrupted key data.')
@@ -548,6 +562,26 @@ export default function Access() {
           </div>
         </footer>
       </div>
+
+      <PinModal
+        isOpen={pinModalMode === 'save'}
+        onClose={() => {
+          setPinModalMode(null)
+          setPendingNsec(null)
+        }}
+        onSubmit={handlePinSave}
+        title="Set PIN"
+        description="Set a 4–6 digit PIN to remember your key on this device (optional)."
+        submitLabel="Save Key"
+      />
+      <PinModal
+        isOpen={pinModalMode === 'restore'}
+        onClose={() => setPinModalMode(null)}
+        onSubmit={handlePinRestoreSubmit}
+        title="Restore Key"
+        description="Enter your PIN to restore your saved nsec key."
+        submitLabel="Restore"
+      />
     </div>
   )
 }

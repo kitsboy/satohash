@@ -4,6 +4,7 @@ import { Plus, Send, MessageSquare } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { toast } from 'sonner'
 import { useI18n } from '../i18n'
+import EmptyState from '../components/EmptyState'
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
 
@@ -255,16 +256,11 @@ const Forum = () => {
         </form>
         <div className="space-y-4">
           {threads.length === 0 ? (
-            <div className="flex flex-col items-center justify-center space-y-4 py-16 text-center">
-              <span className="text-4xl">💬</span>
-              <h3 className="text-lg font-black uppercase" style={{ color: 'var(--text-primary)' }}>
-                {t('forum', 'noDiscussions')}
-              </h3>
-              <p className="max-w-sm text-sm" style={{ color: 'var(--text-secondary)' }}>
-                Be the first to start a conversation about Bitcoin timestamping, use cases, or the
-                protocol.
-              </p>
-            </div>
+            <EmptyState
+              icon="💬"
+              title={t('forum', 'noDiscussions')}
+              description="Be the first to start a conversation about Bitcoin timestamping, use cases, or the protocol."
+            />
           ) : (
             threads.map((thread) => (
               <motion.div

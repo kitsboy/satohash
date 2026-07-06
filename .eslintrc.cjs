@@ -24,4 +24,14 @@ module.exports = {
     'no-unused-vars': 'warn',
     'react-hooks/set-state-in-effect': 'off'
   },
+  overrides: [
+    {
+      files: ['server/**/*.js'],
+      env: { node: true, es2020: true },
+      rules: {
+        'react-hooks/rules-of-hooks': 'off',
+        'react-refresh/only-export-components': 'off'
+      }
+    }
+  ]
 }

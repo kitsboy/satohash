@@ -1,3 +1,23 @@
+/** Repeat a skeleton N times — used by Vault and other list views */
+export const SkeletonList = ({ count = 3, Skeleton = SkeletonCard, className = '' }) => (
+  <div className={`grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 ${className}`}>
+    {Array.from({ length: count }).map((_, i) => (
+      <Skeleton key={i} />
+    ))}
+  </div>
+)
+
+export const SkeletonVaultRow = () => (
+  <div className="animate-pulse rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] p-6">
+    <div className="mb-4 flex items-center justify-between">
+      <div className="h-5 w-48 rounded bg-[var(--surface-raised)]" />
+      <div className="h-6 w-20 rounded-full bg-[var(--surface-raised)]" />
+    </div>
+    <div className="mb-2 h-3 w-32 rounded bg-[var(--surface-raised)]" />
+    <div className="h-3 w-full rounded bg-[var(--surface-raised)]" />
+  </div>
+)
+
 export const SkeletonCard = () => (
   <div className="animate-pulse rounded-xl border border-[var(--border)] bg-[var(--bg-secondary)] p-6">
     <div className="mb-4 h-12 w-12 rounded-lg bg-[var(--surface-raised)]" />

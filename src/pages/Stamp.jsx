@@ -56,10 +56,23 @@ export default function Stamp() {
   const [coSignerErrors, setCoSignerErrors] = useState([])
   const [isConfirmed, setIsConfirmed] = useState(false)
   const [confirmedBlock, setConfirmedBlock] = useState(null)
+  const [upgradeStatus, setUpgradeStatus] = useState(null) // pending | upgrading | confirmed
   const [lightningInvoice, setLightningInvoice] = useState(null) // { payment_request, amount_msat, expires_at }
   const { t } = useI18n()
 
   const { lastEvent } = useSocket()
+
+  useEffect(() => {
+    if (lastEvent?.type === 'upgrade:status' && proofResult?.id) {
+      if (lastEvent.data?.id === proofResult.id || lastEvent.data?.hash === proofResult.hash) {
+        setUpgradeStatus(lastEvent.data.status)
+        if (lastEvent.data.status === 'confirmed' && lastEvent.data.blockHeight) {
+          setIsConfirmed(true)
+          setConfirmedBlock(lastEvent.data.blockHeight)
+        }
+      }
+    }
+  }, [lastEvent, proofResult])
 
   useEffect(() => {
     if (lastEvent?.type === 'confirmed' && proofResult?.id) {
@@ -709,13 +722,28 @@ export default function Stamp() {
                         {isCapsuleMode ? <FileArchive size={32} /> : <Upload size={32} />}
                       </div>
                       <div className="space-y-2">
-                        <h3 className="text-2xl font-bold tracking-tight">
+                        <h3 className="flex items-center justify-center gap-2 text-2xl font-bold tracking-tight">
                           {isCapsuleMode ? 'Assemble Evidence Capsule' : t('stamp', 'title')}
+                          <Tooltip
+                            title="Step 1 — Drop Your File"
+                            content="Drag any document here or click to browse. Your file stays on your device — only a SHA-256 hash is sent to the server."
+                          />
                         </h3>
-                        <p className="mx-auto max-w-sm font-medium text-[var(--text-secondary)]">
+                        <p className="mx-auto flex max-w-sm items-center justify-center gap-1 font-medium text-[var(--text-secondary)]">
                           {isCapsuleMode
                             ? 'Drop multiple files to create a signed evidence bundle anchored as a single proof.'
                             : t('stamp', 'dropzone')}
+                          <Tooltip
+                            title="Step 2 — Local Hashing"
+                            content="Satohash computes a unique SHA-256 fingerprint in your browser using a Web Worker. The original file never leaves your machine."
+                          />
+                        </p>
+                        <p className="mx-auto flex max-w-sm items-center justify-center gap-1 text-[10px] font-bold tracking-widest text-[var(--text-muted)] uppercase">
+                          Anchored via OpenTimestamps → Bitcoin
+                          <Tooltip
+                            title="Step 3 — Bitcoin Timestamp"
+                            content="The hash is submitted to public OTS calendars and permanently committed to the Bitcoin blockchain. Download your .ots proof when complete."
+                          />
                         </p>
                       </div>
                     </>
@@ -830,20 +858,37 @@ export default function Stamp() {
                       </div>
                     ) : (
                       <div
-                        className="flex items-center justify-center gap-2 rounded-xl px-4 py-3"
+                        className="flex flex-col items-center gap-2 rounded-xl px-4 py-3"
                         style={{
                           background: 'rgba(240,180,41,0.08)',
                           border: '1px solid rgba(240,180,41,0.25)'
                         }}
                       >
-                        <Activity
-                          size={16}
-                          className="animate-pulse"
-                          style={{ color: 'var(--accent-gold)' }}
-                        />
-                        <span className="text-sm font-bold" style={{ color: 'var(--accent-gold)' }}>
-                          Pending Bitcoin confirmation (~10 min)
-                        </span>
+                        <div className="flex items-center justify-center gap-2">
+                          <Activity
+                            size={16}
+                            className={
+                              upgradeStatus === 'upgrading' ? 'animate-spin' : 'animate-pulse'
+                            }
+                            style={{ color: 'var(--accent-gold)' }}
+                          />
+                          <span
+                            className="text-sm font-bold"
+                            style={{ color: 'var(--accent-gold)' }}
+                          >
+                            {upgradeStatus === 'upgrading'
+                              ? 'OTS upgrade in progress…'
+                              : 'Pending Bitcoin confirmation (~10 min)'}
+                          </span>
+                        </div>
+                        {upgradeStatus && (
+                          <span
+                            className="text-[10px] font-black tracking-widest uppercase"
+                            style={{ color: 'var(--text-muted)' }}
+                          >
+                            Live status: {upgradeStatus}
+                          </span>
+                        )}
                       </div>
                     )}
 
@@ -926,6 +971,7 @@ export default function Stamp() {
                           setHashValue('')
                           setIsConfirmed(false)
                           setConfirmedBlock(null)
+                          setUpgradeStatus(null)
                         }}
                         className="rounded-xl border py-3 text-xs font-bold uppercase transition-all hover:text-[var(--text-primary)]"
                         style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}

@@ -73,9 +73,9 @@ export default function BatchProof() {
             style={{
               display: 'inline-flex',
               padding: '12px',
-              background: '#e0e7ff',
+              background: 'var(--accent-gold-subtle)',
               borderRadius: '16px',
-              color: '#4338ca',
+              color: 'var(--accent-gold)',
               marginBottom: '16px'
             }}
           >
@@ -126,7 +126,7 @@ export default function BatchProof() {
                   textAlign: 'center',
                   cursor: 'pointer',
                   transition: 'all 0.3s ease',
-                  borderColor: isDragActive ? 'var(--color-primary)' : '#e2e8f0'
+                  borderColor: isDragActive ? 'var(--accent-gold)' : '#e2e8f0'
                 }}
               >
                 <input {...getInputProps()} />
@@ -140,7 +140,7 @@ export default function BatchProof() {
                     alignItems: 'center',
                     justifyContent: 'center',
                     margin: '0 auto 24px',
-                    color: 'var(--color-primary)'
+                    color: 'var(--accent-gold)'
                   }}
                 >
                   <UploadCloud size={40} />
@@ -341,7 +341,7 @@ export default function BatchProof() {
                       style={{
                         fontFamily: 'var(--font-mono)',
                         fontSize: '11px',
-                        color: '#6366f1',
+                        color: 'var(--accent-teal)',
                         wordBreak: 'break-all'
                       }}
                     >

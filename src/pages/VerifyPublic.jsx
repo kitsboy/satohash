@@ -323,6 +323,33 @@ export default function VerifyPublic() {
             )}
 
             <button
+              onClick={() => {
+                const proofText = [
+                  `Satohash Proof — ${proof.status === 'confirmed' ? 'VERIFIED' : 'PENDING'}`,
+                  `Document: ${proof.filename || proof.label || 'Unnamed document'}`,
+                  `SHA-256: ${proof.hash}`,
+                  proof.bitcoin_block_height
+                    ? `Bitcoin Block: ${proof.bitcoin_block_height}`
+                    : null,
+                  proof.created_at ? `Stamped: ${new Date(proof.created_at).toISOString()}` : null,
+                  `Verify: ${window.location.href}`
+                ]
+                  .filter(Boolean)
+                  .join('\n')
+                navigator.clipboard.writeText(proofText)
+                toast.success('Proof copied!')
+              }}
+              className="col-span-2 flex items-center justify-center gap-2 rounded-2xl py-4 text-xs font-black tracking-wider uppercase transition-all hover:opacity-80 active:scale-95"
+              style={{
+                background: 'color-mix(in srgb, var(--accent-success) 12%, transparent)',
+                color: 'var(--accent-success)',
+                border: '1px solid var(--border)'
+              }}
+            >
+              <Share2 size={14} /> Copy Proof
+            </button>
+
+            <button
               onClick={() =>
                 downloadCertificate({
                   id: proof.id,

@@ -11,6 +11,18 @@
 
 For the deep business case, four-plane architecture, and sovereign positioning, start with the handoff package in `docs/` (especially [docs/EXECUTIVE_SUMMARY.md](docs/EXECUTIVE_SUMMARY.md) and [docs/PRODUCT_PITCH.md](docs/PRODUCT_PITCH.md)). A full documentation index is at [docs/DOCS_INDEX.md](docs/DOCS_INDEX.md).
 
+### 📖 Documentation & Pitch
+
+| Resource | Path |
+|----------|------|
+| **Live pitch deck** | [/pitch](/pitch) (in-app route) |
+| Executive summary | [docs/EXECUTIVE-SUMMARY.md](docs/EXECUTIVE-SUMMARY.md) |
+| Product pitch | [docs/PITCH.md](docs/PITCH.md) |
+| Architecture | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) |
+| Quickstart | [docs/QUICKSTART.md](docs/QUICKSTART.md) |
+| Deploy playbook | [docs/DEPLOY-PLAYBOOK.md](docs/DEPLOY-PLAYBOOK.md) |
+| Improvement log | [docs/IMPROVEMENTS-LOG.md](docs/IMPROVEMENTS-LOG.md) |
+
 ---
 
 ## 🏛 The Elite Standard

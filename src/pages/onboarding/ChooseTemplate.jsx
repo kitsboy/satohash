@@ -61,9 +61,9 @@ export default function ChooseTemplate() {
 
   const handleTemplateSelect = (templateType) => {
     if (templateType === 'custom') {
-      navigate('/account-creation')
+      navigate('/onboarding/account-creation')
     } else {
-      navigate('/account-creation', { state: { templateType } })
+      navigate('/onboarding/account-creation', { state: { templateType } })
     }
   }
 

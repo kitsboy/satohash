@@ -31,9 +31,9 @@ const FEATURE_DATA = [
     id: 'proof',
     icon: Fingerprint,
     techIcon: Binary,
-    color: '#6366f1',
-    bgGradient: 'linear-gradient(135deg, #6366f108 0%, #6366f115 100%)',
-    accent: '#818cf8',
+    color: 'var(--accent-gold)',
+    bgGradient: 'linear-gradient(135deg, rgba(240,180,41,0.08) 0%, rgba(240,180,41,0.15) 100%)',
+    accent: 'var(--accent-gold)',
     educationalInsight:
       "SHA-256 Hashing: Every document gets a unique 64-character 'fingerprint'. Even a one-pixel change creates a totally different ID.",
     spec: 'Hash Algorithm: SHA-256',
@@ -196,7 +196,7 @@ export default function Welcome() {
             >
               <Button
                 variant="primary"
-                onClick={() => navigate('/choose-template')}
+                onClick={() => navigate('/onboarding/choose-template')}
                 style={{
                   height: '72px',
                   paddingLeft: '40px',
@@ -204,7 +204,7 @@ export default function Welcome() {
                   borderRadius: '20px',
                   fontSize: '18px',
                   fontWeight: '950',
-                  background: 'linear-gradient(135deg, #6366f1 0%, #4f46e5 100%)',
+                  background: 'linear-gradient(135deg, var(--accent-gold) 0%, #d4a017 100%)',
                   boxShadow: '0 20px 40px rgba(99, 102, 241, 0.25)'
                 }}
               >
@@ -485,7 +485,7 @@ export default function Welcome() {
                   style={{
                     fontSize: '14px',
                     fontWeight: '950',
-                    color: '#6366f1',
+                    color: 'var(--accent-gold)',
                     textTransform: 'uppercase',
                     letterSpacing: '3px',
                     marginBottom: '16px'
@@ -514,8 +514,8 @@ export default function Welcome() {
                     marginBottom: '40px'
                   }}
                 >
-                  Satohash isn't just a signing tool. It's a bridge between your legal intent and
-                  the mathematical certainty of the blockchain.
+                  Satohash isn&apos;t just a signing tool. It&apos;s a bridge between your legal
+                  intent and the mathematical certainty of the blockchain.
                 </p>
                 <div className="flex flex-wrap gap-4">
                   {['SHA-256', 'Bitcoin L1', 'Merkle Trees', 'OTS Standard'].map((tag) => (
@@ -527,7 +527,7 @@ export default function Welcome() {
                         borderRadius: '100px',
                         fontSize: '12px',
                         fontWeight: '950',
-                        color: '#6366f1',
+                        color: 'var(--accent-gold)',
                         border: '1px solid rgba(99, 102, 241, 0.2)'
                       }}
                     >
@@ -577,7 +577,7 @@ export default function Welcome() {
                               height: '40px',
                               borderRadius: '12px',
                               background: 'rgba(99, 102, 241, 0.2)',
-                              color: '#6366f1',
+                              color: 'var(--accent-gold)',
                               display: 'flex',
                               alignItems: 'center',
                               justifyContent: 'center',
@@ -644,7 +644,7 @@ function ProtocolStep({ title, text }) {
           margin: '0 0 12px 0',
           fontSize: '12px',
           fontWeight: '950',
-          color: '#6366f1',
+          color: 'var(--accent-teal)',
           textTransform: 'uppercase',
           letterSpacing: '2px'
         }}

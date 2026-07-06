@@ -1,12 +1,12 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.giveabit.io · **Version:** 4.1.0-ELITE (Build 4) · **Updated:** 2026-07-06
+> **Live:** https://satohash.giveabit.io · **Version:** 4.1.0-ELITE (Build 6) · **Updated:** 2026-07-06
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Satohash — Executive Summary
 
 **Version:** 4.1.0-ELITE (Sovereign Settlement Mesh)  
 **Date:** 2026-06-10  
-**Live at:** https://satohash.io | https://satohash.giveabit.io  
+**Live at:** https://satohash.giveabit.io (primary)
 **Built by:** Give A Bit (https://giveabit.io)  
 **GitHub:** https://github.com/kitsboy/satohash (local filesystem is currently the most up-to-date source of truth — recent push did not fully land)
 
@@ -179,5 +179,7 @@ See `SOURCE-OF-TRUTH.md` and `KIMI-HANDOFF-satohash-2026-06-10.md` (generated al
 ---
 
 *Mathematics on an immutable ledger beats any signature or notary stamp.*
+
+
 
 

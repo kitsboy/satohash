@@ -17,18 +17,25 @@ export const useSocket = () => {
       toast.info(`New hash stamped: ${data.filename}`)
     })
 
+    newSocket.on('ots:upgrade:status', (data) => {
+      setLastEvent({ type: 'upgrade:status', data })
+    })
+
     newSocket.on('ots:confirmed', (data) => {
-      setLastEvent({ type: 'confirmed', data })
-      toast.success(`Proof confirmed in Bitcoin block ${data.blockHeight}!`, {
-        description: `Hash: ${data.hash.substring(0, 16)}...`,
-        duration: 10000
-      })
+      const blockHeight = data.blockHeight ?? data.bitcoin_block_height
+      setLastEvent({ type: 'confirmed', data: { ...data, blockHeight } })
+      if (blockHeight) {
+        toast.success(`Proof confirmed in Bitcoin block ${blockHeight}!`, {
+          description: data.hash ? `Hash: ${data.hash.substring(0, 16)}...` : undefined,
+          duration: 10000
+        })
+      }
       // Mobile push via SW
       if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
         navigator.serviceWorker.controller.postMessage({
           type: 'PUSH_NOTIFICATION',
           title: 'Stamp Confirmed!',
-          body: `Your proof is now anchored in Bitcoin block ${data.blockHeight}.`,
+          body: `Your proof is now anchored in Bitcoin block ${blockHeight}.`,
           hash: data.hash
         })
       }

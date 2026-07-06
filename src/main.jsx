@@ -24,18 +24,15 @@ if (import.meta.env.VITE_SENTRY_DSN) {
   })
 }
 
-// Register Service Worker for push notifications
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker
-      .register('/sw.js')
-      .then((reg) => console.log('SW registered', reg))
-      .catch((err) => console.log('SW registration failed', err))
-  })
-
-  // Dispatch a custom event when a new SW takes control so UpdatePrompt can show
-  navigator.serviceWorker.addEventListener('controllerchange', () => {
-    window.dispatchEvent(new CustomEvent('sw-update-available'))
+// Vite PWA handles service worker registration; wire updates to UpdatePrompt
+if (import.meta.env.PROD) {
+  import('virtual:pwa-register').then(({ registerSW }) => {
+    registerSW({
+      immediate: true,
+      onNeedRefresh() {
+        window.dispatchEvent(new CustomEvent('sw-update-available'))
+      }
+    })
   })
 }
 

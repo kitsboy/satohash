@@ -87,7 +87,21 @@
       "timestamped": "Horodaté",
       "pending": "Confirmation en attente",
       "error": "Erreur"
-    }
+    },
+    "pageTitle": "Contrats",
+    "newArtifact": "Créer un Nouvel Artefact",
+    "downloadAll": "Tout Télécharger",
+    "statusDraft": "Brouillon",
+    "statusSigned": "Signé",
+    "statusTimestamped": "Horodaté",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "inspector": "Inspecteur",
+    "documentName": "Nom du Document",
+    "proofPackage": "Paquet de Preuve",
+    "emailPackage": "Envoyer le Paquet",
+    "otsQr": "QR de Vérification OTS",
+    "scanToVerify": "Scanner pour Vérifier"
   },
   "contractEditor": {
     "title": "Modifier le Contrat",
@@ -174,6 +188,7 @@
     "zkPrivacy": "Confidentialité & Connaissance Nulle",
     "zkPrivacyDetail": "Notre technologie 'Privacy Shield' est inspirée par les preuves à divulgation nulle de connaissance (ZKP). Puisque nous ne stockons que le hash cryptographique de votre document, nous avons une connaissance nulle de son contenu. Grâce aux preuves d'inclusion de Merkle, nous vous permettons de biffer sélectivement des parties sensibles d'un document tout en prouvant que les parties restantes correspondent à la version originale ancrée.",
     "legallyBinding": "Force Juridique",
+    "zkPrivacyPoint": "Rédaction sélective inspirée du Zero-Knowledge (ZK)",
     "legallyBindingDetail": "Dans de nombreuses juridictions, les preuves cryptographiques sont reconnues par des lois comme l'ESIGN Act (US) et l'eIDAS (UE). Ces cadres stipulent généralement qu'un document électronique ne doit pas être privé d'effet juridique au seul motif qu'il est sous forme électronique. Les horodatages blockchain offrent un niveau de preuve extrêmement élevé utilisable en justice pour contrer les allégations de falsification ou postdatage.",
     "legalDisclaimer": "Satohash fournit des preuves et des outils, pas de conseils juridiques. Les utilisateurs doivent consulter les lois locales et un avocat."
   },
@@ -246,22 +261,6 @@
     "zeroKnowledge": "Zéro Connaissance",
     "zeroKnowledgeDesc": "Le contenu de votre document ne quitte jamais votre appareil — seul le hash SHA-256 est envoyé au serveur.",
     "progress": "des champs remplis"
-  },
-  "contracts": {
-    "pageTitle": "Contrats",
-    "newArtifact": "Créer un Nouvel Artefact",
-    "downloadAll": "Tout Télécharger",
-    "statusDraft": "Brouillon",
-    "statusSigned": "Signé",
-    "statusTimestamped": "Horodaté",
-    "edit": "Modifier",
-    "delete": "Supprimer",
-    "inspector": "Inspecteur",
-    "documentName": "Nom du Document",
-    "proofPackage": "Paquet de Preuve",
-    "emailPackage": "Envoyer le Paquet",
-    "otsQr": "QR de Vérification OTS",
-    "scanToVerify": "Scanner pour Vérifier"
   },
   "verify": {
     "pageTitle": "Vérifier le Document",

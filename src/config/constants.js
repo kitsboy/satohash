@@ -4,6 +4,16 @@ export const APP_CONFIG = {
   DEFAULT_LANGUAGE: 'en'
 }
 
+/** Health check / public URL constants used by clients and ops tooling. */
+export const HEALTH_CONFIG = {
+  ENDPOINT: '/health',
+  DEEP_CHECK_PARAM: 'deep',
+  DEEP_CHECK_VALUE: 'true',
+  VALID_STATUSES: ['ok', 'degraded'],
+  PUBLIC_URL: 'https://satohash.giveabit.io',
+  VERIFY_URL: 'https://satohash.giveabit.io/verify'
+}
+
 export const NAV_LINKS = [
   { name: 'Vault', path: '/vault', icon: 'Database', group: 'Notary' },
   { name: 'Stamp', path: '/stamp', icon: 'ShieldCheck', group: 'Notary' },
