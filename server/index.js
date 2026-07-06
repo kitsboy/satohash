@@ -57,7 +57,7 @@ const envSchema = z.object({
   ADMIN_KEY: z.string().optional().default('admin123'),
   ANTHROPIC_API_KEY: z.string().optional(),
   EMAIL_HOST: z.string().optional(),
-  EMAIL_PORT: z.number().optional(),
+  EMAIL_PORT: z.coerce.number().optional(),
   EMAIL_USER: z.string().optional(),
   EMAIL_PASS: z.string().optional(),
   IPFS_URL: z.string().optional().default('http://localhost:5001')
@@ -87,7 +87,7 @@ let ipfs = null;
 // Mock Nodemailer transporter
 let emailTransporter;
 if (config.EMAIL_HOST && config.EMAIL_USER && config.EMAIL_PASS) {
-  emailTransporter = nodemailer.createTransporter({
+  emailTransporter = nodemailer.createTransport({
     host: config.EMAIL_HOST,
     port: config.EMAIL_PORT || 587,
     secure: false,
@@ -272,6 +272,33 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(correlationIdMiddleware);
 app.use(compression());
+
+// Stripe webhook must receive raw body — register before express.json()
+app.post('/api/stripe/webhook', express.raw({ type: 'application/json' }), async (req, res) => {
+  const sig = req.headers['stripe-signature'];
+  let event;
+
+  try {
+    if (process.env.STRIPE_WEBHOOK_SECRET && stripe?.webhooks) {
+      event = stripe.webhooks.constructEvent(req.body, sig, process.env.STRIPE_WEBHOOK_SECRET);
+    } else {
+      event = JSON.parse(req.body.toString());
+    }
+
+    if (event.type === 'checkout.session.completed') {
+      const session = event.data.object;
+      const userId = session.metadata?.userId || 'anonymous_' + session.customer_email;
+      logger.info('Subscription completed for user:', userId);
+      io.emit('user:tier-updated', { userId, tier: 'pro' });
+    }
+
+    res.json({ received: true });
+  } catch (err) {
+    logger.error('Webhook error:', err);
+    res.status(400).json({ error: 'Webhook signature failed' });
+  }
+});
+
 app.use(express.static('dist'));
 app.use(express.json());
 
@@ -364,36 +391,6 @@ app.post('/api/subscribe', async (req, res) => {
   } catch (err) {
     logger.error('Stripe subscribe error:', err);
     res.status(500).json({ error: 'Subscription creation failed' });
-  }
-});
-
-// Webhook for Stripe (live updates, optional for mock)
-app.post('/api/stripe/webhook', express.raw({type: 'application/json'}), async (req, res) => {
-  const sig = req.headers['stripe-signature'];
-  let event;
-
-  try {
-    if (process.env.STRIPE_WEBHOOK_SECRET) {
-      event = stripe.webhooks.constructEvent(req.body, sig, process.env.STRIPE_WEBHOOK_SECRET);
-    } else {
-      // Mock: accept all
-      event = req.body;
-    }
-
-    if (event.type === 'checkout.session.completed') {
-      const session = event.data.object;
-      const userId = session.metadata.userId || 'anonymous_' + session.customer_email;
-      // Update DB user tier to 'pro'
-      // db.prepare('UPDATE users SET tier = "pro", subscribed_at = ? WHERE id = ?').run(new Date(), userId);
-      logger.info('Subscription completed for user:', userId);
-      // Emit socket for real-time tier update
-      io.emit('user:tier-updated', { userId, tier: 'pro' });
-    }
-
-    res.json({ received: true });
-  } catch (err) {
-    logger.error('Webhook error:', err);
-    res.status(400).json({ error: 'Webhook signature failed' });
   }
 });
 
@@ -1724,6 +1721,19 @@ app.post('/api/forum/threads/:id/posts', (req, res) => {
     db.prepare('INSERT INTO forum_posts (id, thread_id, content, author) VALUES (?, ?, ?, ?)').run(id, req.params.id, content.trim(), author?.trim() || 'Anonymous');
     db.prepare('UPDATE forum_threads SET post_count = post_count + 1 WHERE id = ?').run(req.params.id);
     res.json({ post: db.prepare('SELECT * FROM forum_posts WHERE id = ?').get(id) });
+});
+
+// SPA fallback — serve index.html for client-side routes on hard refresh
+app.use((req, res, next) => {
+    if (req.method !== 'GET' && req.method !== 'HEAD') return next();
+    const apiPrefixes = ['/api', '/admin', '/api-docs', '/metrics', '/health', '/socket.io'];
+    if (apiPrefixes.some((p) => req.path.startsWith(p))) return next();
+    const indexPath = path.resolve('dist/index.html');
+    if (fs.existsSync(indexPath)) {
+        res.sendFile(indexPath);
+    } else {
+        next();
+    }
 });
 
 httpServer.listen(port, () => {

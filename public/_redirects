@@ -1,1 +1,2 @@
-# No SPA redirects — HashRouter handles routing
+# SPA fallback — BrowserRouter requires all routes to serve index.html
+/*    /index.html   200

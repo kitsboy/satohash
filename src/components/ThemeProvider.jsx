@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from 'react'
+import { createContext, useContext, useState, useEffect, useLayoutEffect } from 'react'
 import { Sun, Moon } from 'lucide-react'
 
 const ThemeContext = createContext()
@@ -10,39 +10,29 @@ export const useTheme = () => {
   return context
 }
 
+function getInitialTheme() {
+  const saved = localStorage.getItem('satohash_theme')
+  if (saved === 'elite') return 'light'
+  if (saved === 'dark') return 'dark'
+  return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'
+}
+
 export const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useState('dark')
-  const [mounted, setMounted] = useState(false)
+  const [theme, setTheme] = useState(getInitialTheme)
 
-  useEffect(() => {
-    setMounted(true)
-    // Check localStorage (canonical key: satohash_theme) or system preference
-    const saved = localStorage.getItem('satohash_theme')
-    if (saved === 'elite') {
-      setTheme('light')
+  useLayoutEffect(() => {
+    if (theme === 'light') {
       document.documentElement.setAttribute('data-theme', 'elite')
-    } else if (saved === 'dark') {
-      setTheme('dark')
+    } else {
       document.documentElement.removeAttribute('data-theme')
-    } else if (window.matchMedia('(prefers-color-scheme: light)').matches) {
-      setTheme('light')
     }
-  }, [])
+  }, [theme])
 
   useEffect(() => {
-    if (mounted) {
-      localStorage.setItem('satohash_theme', theme === 'light' ? 'elite' : 'dark')
-      if (theme === 'light') {
-        document.documentElement.setAttribute('data-theme', 'elite')
-      } else {
-        document.documentElement.removeAttribute('data-theme')
-      }
-    }
-  }, [theme, mounted])
+    localStorage.setItem('satohash_theme', theme === 'light' ? 'elite' : 'dark')
+  }, [theme])
 
   const toggleTheme = () => setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'))
-
-  if (!mounted) return null
 
   return <ThemeContext.Provider value={{ theme, toggleTheme }}>{children}</ThemeContext.Provider>
 }

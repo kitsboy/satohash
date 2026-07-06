@@ -13,10 +13,28 @@
 `sudo systemctl restart satohash` — Restart Satohash
 `sudo journalctl -u satohash -f` — Live logs
 
+## Deploy Workflow (M3 → GitHub → Production)
+
+```bash
+# Local: lint, test, build
+npm run lint && npm test && npm run build
+
+# Commit & push
+git add -A && git commit -m "feat: your change"
+git push origin main
+
+# Deploy (pick one):
+./deploy.sh                              # Cloudflare Pages (static SPA)
+DEPLOY_TARGET=umbrel ./deploy.sh         # prints Umbrel restart commands
+cd /home/umbrel/satohash && git pull && npm ci && npm run production && sudo systemctl restart satohash
+```
+
+CI (`.github/workflows/ci.yml`) runs lint, unit tests, build, and E2E on every push to `main`.
+
 ## Known Issues
-- **Satohash**: Hard refresh on `/developers` = 404 (SPA limitation - use Nginx try_files)
 - **TadBuy**: Build takes ~6 minutes
 - **Elite Architecture**: Requires Node 20+ for Sentry performance tracing.
+- **Dual deploy**: Cloudflare Pages serves static SPA; Express API must run separately (Umbrel/Docker).
 
 ---
 © 2026 Satahash Institutional Division

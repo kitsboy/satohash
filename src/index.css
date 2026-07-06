@@ -78,11 +78,20 @@
 
     --border: rgba(0, 0, 0, 0.08);
     --border-bright: rgba(0, 0, 0, 0.15);
+    --border-gold: rgba(217, 119, 6, 0.35);
 
     --accent-active: #d97706;
     --accent-active-glow: rgba(217, 119, 6, 0.2);
+    --accent-gold: #d97706;
+    --accent-gold-subtle: rgba(217, 119, 6, 0.08);
+    --accent-teal: #0d9488;
+    --accent-success: #059669;
+    --accent-pending: #d97706;
+    --accent-danger: #dc2626;
 
     --bg-navbar: rgba(243, 244, 246, 0.85);
+    --shadow-noir: 0 4px 24px rgba(0, 0, 0, 0.08);
+    --shadow-glow: 0 0 20px rgba(217, 119, 6, 0.15);
 
     background-color: var(--bg-primary) !important;
   }

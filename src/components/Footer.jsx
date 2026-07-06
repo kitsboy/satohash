@@ -246,8 +246,11 @@ export default function Footer() {
                   { name: 'Trust Center', path: '/trust' },
                   { name: 'Documentation', path: '/developer' },
                   { name: 'Status', path: '/status' },
+                  { name: 'Privacy', path: '/legal/privacy' },
+                  { name: 'Terms', path: '/legal/terms' },
+                  { name: 'Crypto Notice', path: '/legal/crypto-notice' },
                   { name: 'Twitter', path: 'https://twitter.com/satohash', external: true },
-                  { name: 'GitHub', path: 'https://github.com/satohash', external: true }
+                  { name: 'GitHub', path: 'https://github.com/kitsboy/satohash', external: true }
                 ].map((link) =>
                   link.external ? (
                     <a

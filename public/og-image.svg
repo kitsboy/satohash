@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Satohash — Bitcoin Document Notarization">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0d1117"/>
+      <stop offset="100%" stop-color="#141b25"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#f0b429"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect x="48" y="48" width="1104" height="534" rx="24" fill="none" stroke="rgba(240,180,41,0.25)" stroke-width="2"/>
+  <circle cx="180" cy="315" r="72" fill="rgba(240,180,41,0.12)" stroke="url(#gold)" stroke-width="3"/>
+  <text x="180" y="330" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="56" font-weight="900" fill="url(#gold)">₿</text>
+  <text x="290" y="280" font-family="system-ui, -apple-system, sans-serif" font-size="72" font-weight="900" fill="#f8fafc" letter-spacing="-2">Satohash</text>
+  <text x="290" y="340" font-family="system-ui, -apple-system, sans-serif" font-size="28" font-weight="600" fill="#94a3b8">Stamp any document on Bitcoin. Forever.</text>
+  <text x="290" y="400" font-family="system-ui, -apple-system, sans-serif" font-size="20" font-weight="500" fill="#64748b">Zero-knowledge · OpenTimestamps · Court-ready proof</text>
+  <rect x="290" y="440" width="280" height="52" rx="12" fill="url(#gold)"/>
+  <text x="430" y="473" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="800" fill="#0d1117">satohash.giveabit.io</text>
+</svg>

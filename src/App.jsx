@@ -1,4 +1,11 @@
-import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom'
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+  Navigate,
+  Link
+} from 'react-router-dom'
 import React, { Suspense, useEffect, useState } from 'react'
 import { AnimatePresence } from 'framer-motion'
 import AppShellNoir from './components/AppShellNoir'
@@ -307,8 +314,8 @@ function AppContent() {
                 <p style={{ color: 'var(--text-secondary)', marginBottom: '2rem' }}>
                   Page not found
                 </p>
-                <a
-                  href="/"
+                <Link
+                  to="/"
                   style={{
                     color: 'var(--accent-active)',
                     fontWeight: 700,
@@ -316,7 +323,7 @@ function AppContent() {
                   }}
                 >
                   ← Back to Satohash
-                </a>
+                </Link>
               </div>
             }
           />
@@ -388,7 +395,7 @@ function App() {
                 className="fixed top-0 right-0 left-0 z-[200] flex items-center justify-center gap-2 py-2 text-xs font-black tracking-widest uppercase"
                 style={{ background: 'var(--accent-pending)', color: '#141b25' }}
               >
-                ⚡ Offline — showing cached data
+                ⚡ Offline — changes will sync when reconnected
               </div>
             )}
 
