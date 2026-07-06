@@ -1,0 +1,45 @@
+{
+  "version": "1.0",
+  "categories": [
+    { "id": "all", "label": "All Templates" },
+    { "id": "family-law", "label": "Family Law" },
+    { "id": "property", "label": "Property" },
+    { "id": "corporate", "label": "Corporate" },
+    { "id": "commercial", "label": "Commercial & Freelance" },
+    { "id": "financial", "label": "Financial" },
+    { "id": "estate", "label": "Estate & Medical" },
+    { "id": "hr", "label": "HR & Employment" }
+  ],
+  "templates": [
+    { "id": "prenuptial-agreement", "title": "Prenuptial Agreement", "category": "family-law", "badge": "Legal-Grade", "description": "Define asset ownership, debt liability, and spousal rights before marriage. Legally-structured, notarized, Bitcoin-anchored.", "icon": "Heart" },
+    { "id": "real-estate-title-deed", "title": "Real Estate Title Deed", "category": "property", "badge": "Popular", "description": "Transfer real property ownership with a complete, notarized title deed including legal description and covenant terms.", "icon": "Home" },
+    { "id": "residential-lease-agreement", "title": "Lease Agreement", "category": "property", "badge": "Popular", "description": "Residential lease with deposit tracking, maintenance obligations, and inspection terms.", "icon": "Home" },
+    { "id": "commercial-lease-agreement", "title": "Commercial Lease", "category": "property", "badge": "Legal-Grade", "description": "Full commercial lease with CAM charges, use clauses, and tenant improvement allowances.", "icon": "Building2" },
+    { "id": "mutual-nda", "title": "Mutual NDA", "category": "corporate", "badge": "Popular", "description": "Bidirectional non-disclosure agreement for business discussions and partnership evaluations.", "icon": "Shield" },
+    { "id": "ip-assignment-agreement", "title": "IP Assignment", "category": "corporate", "badge": "Legal-Grade", "description": "Assign IP rights from creator to company. Covers patents, copyrights, and trade secrets.", "icon": "Lightbulb" },
+    { "id": "partnership-agreement", "title": "Partnership Agreement", "category": "corporate", "badge": "Legal-Grade", "description": "Formalize business partnership with capital contributions, profit sharing, and dissolution terms.", "icon": "Handshake" },
+    { "id": "freelance-service-contract", "title": "Freelance Contract", "category": "commercial", "badge": "Popular", "description": "Independent contractor agreement with SOW, payment milestones, IP ownership, and termination clauses.", "icon": "Briefcase" },
+    { "id": "vehicle-sale-agreement", "title": "Vehicle Sale", "category": "commercial", "badge": "New", "description": "Bill of sale with odometer disclosure, warranty terms, and lien release certification.", "icon": "Car" },
+    { "id": "personal-loan-agreement", "title": "Personal Loan", "category": "financial", "badge": "Popular", "description": "Promissory note with repayment schedule, interest, late fees, collateral, and acceleration clause.", "icon": "DollarSign" },
+    { "id": "last-will-testament", "title": "Last Will & Testament", "category": "estate", "badge": "Legal-Grade", "description": "Complete last will with executor nomination, asset distribution, and guardian designation.", "icon": "ScrollText" },
+    { "id": "living-will-advance-directive", "title": "Living Will", "category": "estate", "badge": "Legal-Grade", "description": "Document medical care preferences and appoint a healthcare proxy for end-of-life decisions.", "icon": "Stethoscope" },
+    { "id": "employment-offer-letter", "title": "Offer Letter", "category": "hr", "badge": "New", "description": "Professional offer letter with compensation, start date, at-will employment, and benefits.", "icon": "UserCheck" },
+    { "id": "employment-contract", "title": "Employment Contract", "category": "hr", "badge": "Legal-Grade", "description": "Comprehensive employment agreement with duties, compensation, benefits, and restrictive covenants.", "icon": "Briefcase" }
+  ],
+  "specialSections": [
+    {
+      "id": "make-your-own",
+      "title": "Create Your Own Template",
+      "description": "Start from scratch or customize any template. No legal degree required.",
+      "features": ["Custom fields for any document type", "Drag-and-drop clause editor", "Auto-fill with demo data", "Export as PDF or share with co-signers", "Bitcoin-anchored proof included"],
+      "icon": "FileText"
+    },
+    {
+      "id": "api-benefits",
+      "title": "Developer API",
+      "description": "Integrate Satohash verification into your own apps, websites, and workflows.",
+      "features": ["REST API for stamping and verification", "Webhook notifications on proof completion", "API key management dashboard", "BOLT-12 Lightning billing for volume", "OpenAPI 3.0 specification included"],
+      "icon": "Zap"
+    }
+  ]
+}

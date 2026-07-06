@@ -44,6 +44,7 @@ const Admin = React.lazy(() => import('./pages/Admin'))
 const NostrHealth = React.lazy(() => import('./pages/NostrHealth'))
 
 const NotaryTemplates = React.lazy(() => import('./pages/NotaryTemplates'))
+const TemplatesShowcase = React.lazy(() => import('./pages/TemplatesShowcase'))
 const Dashboard = React.lazy(() => import('./pages/Dashboard'))
 
 // Legal pages (public)
@@ -230,6 +231,10 @@ function AppContent() {
           />
           <Route
             path="/templates"
+            element={<TemplatesShowcase />}
+          />
+          <Route
+            path="/templates/new"
             element={
               <ProtectedRoute>
                 <NotaryTemplates />
