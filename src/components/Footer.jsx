@@ -246,7 +246,7 @@ export default function Footer() {
                   { name: 'About', path: '/about' },
                   { name: 'Pitch', path: '/pitch' },
                   { name: 'Trust Center', path: '/trust' },
-                  { name: 'Documentation', path: '/developer' },
+                  { name: 'Documentation', path: '/docs' },
                   { name: 'Status', path: '/status' },
                   { name: 'FAQ', path: '/faq' },
                   { name: 'Pricing', path: '/pricing' },
