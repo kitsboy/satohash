@@ -89,3 +89,36 @@ All notable changes to the Satahash project will be documented in this file.
 
 ---
 © 2026 Satahash Institutional Division
+
+## [4.1.0-ELITE] - 2026-07-06 (Batches 1-4)
+
+### Batch 4 — SEO, i18n, GitHub Governance
+- Added feature request + documentation issue templates to .github/
+- Improved i18n locale alignment check (en, es, fr, zh, ar, de verified)
+- Removed duplicate manifest.json (site.webmanifest is canonical)
+- Updated README with latest badges and links
+
+### Batch 3 — Kimi Agent Card + Developer Polish
+- Kimi contact card: glowing border, NIP-05 verified badge, online status dot
+- DM hint text and background hover states
+- Training doc updated with full project context
+
+### Batch 2 — Templates Showcase
+- Public gallery at /templates (no auth needed)
+- 14 templates with category filters, search, sort, recently viewed
+- Quick preview modal with demo data
+- New TemplateDetail page at /templates/:id
+- Skeleton loading, Coming Soon section
+
+### Batch 1 — Content, Legal, Landing, A11y
+- Branded 404 page component
+- Pitch page: loads from static /docs/*.md (no backend needed)
+- Accessibility: reduced motion, focus-visible, 44px touch targets
+- Skeleton loading animations, custom scrollbars, print styles
+- Sitemap: all pages listed, canonical URL fixed to satohash.io
+- robots.txt fixed
+
+### Infrastructure
+- GitHub: main branch fully pushed (14 builds ahead)
+- Cloudflare Pages: auto-deploy enabled
+- Deployment analysis captured in devops/satohash-deploy-options skill
