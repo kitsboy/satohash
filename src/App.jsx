@@ -45,6 +45,8 @@ const NostrHealth = React.lazy(() => import('./pages/NostrHealth'))
 
 const NotaryTemplates = React.lazy(() => import('./pages/NotaryTemplates'))
 const TemplatesShowcase = React.lazy(() => import('./pages/TemplatesShowcase'))
+const NotFound = React.lazy(() => import('./pages/NotFound'))
+const TemplateDetail = React.lazy(() => import('./pages/TemplateDetail'))
 const Dashboard = React.lazy(() => import('./pages/Dashboard'))
 
 // Legal pages (public)
@@ -474,34 +476,7 @@ function AppContent() {
           <Route path="/status" element={<Navigate to="/atlas" replace />} />
           <Route
             path="*"
-            element={
-              <div
-                style={{
-                  minHeight: '100vh',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  background: 'var(--bg-primary)',
-                  color: 'var(--text-primary)'
-                }}
-              >
-                <h1 style={{ fontSize: '4rem', fontWeight: 900, marginBottom: '1rem' }}>404</h1>
-                <p style={{ color: 'var(--text-secondary)', marginBottom: '2rem' }}>
-                  Page not found
-                </p>
-                <Link
-                  to="/"
-                  style={{
-                    color: 'var(--accent-active)',
-                    fontWeight: 700,
-                    textDecoration: 'underline'
-                  }}
-                >
-                  ← Back to Satohash
-                </Link>
-              </div>
-            }
+            element={<NotFound />}
           />
         </Routes>
       </Suspense>
