@@ -255,6 +255,7 @@ export default function Footer() {
                   { name: 'Privacy', path: '/legal/privacy' },
                   { name: 'Terms', path: '/legal/terms' },
                   { name: 'Crypto Notice', path: '/legal/crypto-notice' },
+                  { name: 'Security', path: '/security' },
                   { name: 'X', path: 'https://x.com/give_bit', external: true },
                   { name: 'GitHub', path: 'https://github.com/kitsboy/satohash', external: true }
                 ].map((link) =>

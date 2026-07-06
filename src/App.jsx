@@ -54,6 +54,7 @@ const Guides = React.lazy(() => import('./pages/Guides'))
 const Glossary = React.lazy(() => import('./pages/Glossary'))
 const Docs = React.lazy(() => import('./pages/Docs'))
 const DocViewer = React.lazy(() => import('./pages/DocViewer'))
+const Security = React.lazy(() => import('./pages/Security'))
 const Dashboard = React.lazy(() => import('./pages/Dashboard'))
 
 // Legal pages (public)
@@ -251,6 +252,7 @@ function AppContent() {
           <Route path="/glossary" element={<Glossary />} />
           <Route path="/docs" element={<Docs />} />
           <Route path="/docs/:slug" element={<DocViewer />} />
+          <Route path="/security" element={<Security />} />
           <Route
             path="/templates/new"
             element={
