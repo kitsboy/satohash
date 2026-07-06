@@ -86,3 +86,34 @@ a.small,
   nav, footer, .no-print { display: none !important; }
   body { background: white !important; color: black !important; }
 }
+
+/* ─── SKIP TO CONTENT ──────────────────────────────── */
+.skip-to-content {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  z-index: 10000;
+  padding: 12px 24px;
+  background: var(--accent-gold);
+  color: black;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: top 0.1s;
+}
+.skip-to-content:focus {
+  top: 0;
+}
+
+/* ─── TOUCH FEEDBACK ───────────────────────────────── */
+@media (hover: hover) {
+  a:active, button:active, [role="button"]:active {
+    transform: scale(0.97);
+    transition: transform 0.1s;
+  }
+}
+
+/* ─── REDUCED MOTION OVERRIDE ──────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .animate-pulse { animation: none !important; }
+}
