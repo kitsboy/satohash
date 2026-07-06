@@ -14,6 +14,7 @@ import OnboardingModal from './components/OnboardingModal'
 import { Toaster } from 'sonner'
 import { ToastProvider } from './components/Toast'
 import { ThemeProvider } from './components/ThemeProvider'
+import usePageMeta from './hooks/usePageMeta'
 import { I18nProvider } from './i18n'
 import ErrorBoundary from './components/ErrorBoundary'
 import ProtectedRoute from './components/ProtectedRoute'
@@ -506,6 +507,8 @@ function AppContent() {
 }
 
 function App() {
+  usePageMeta({ title: null, description: 'Stamp any document on the Bitcoin blockchain. Free, private, court-admissible proof of existence.' })
+
   const [isOffline, setIsOffline] = useState(!navigator.onLine)
   const [showOnboarding, setShowOnboarding] = useState(() => {
     return (
