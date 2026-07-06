@@ -62,3 +62,21 @@ This links a human-readable name to a cryptographic key for verifiable communica
 - [ ] Proof DNA Widgets (embed badges)
 - [ ] Mobile Signer Pro (iOS/Android)
 - [x] BOLT-12 Offers (done)
+
+## Batch 3 Updates — July 6, 2026
+
+### What Was Added
+- TemplatesShowcase: public gallery at /templates with 14 templates, filters, search, recently viewed, preview modal
+- TemplateDetail page: individual template view at /templates/:id
+- NotFound: branded 404 page
+- Accessibility CSS: reduced motion, focus-visible, touch targets, skeleton loading
+- Pitch page: now renders from static /docs/*.md instead of backend API
+- Sitemap: includes all pages, correct canonical URLs
+- Kimi card: glowing border, NIP-05 verified badge, online status dot, DM hint
+- robots.txt: fixed Sitemap URL to satohash.io
+
+### What's Still Needed
+- Backend server deployment (VPS) — without it, stamping, history, auth, forum don't work
+- NIP-05 identity verification end-to-end
+- Proof DNA Widgets
+Mobile Signer Pro
