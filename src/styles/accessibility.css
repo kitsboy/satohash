@@ -183,3 +183,66 @@ select:focus-visible, textarea:focus-visible, [tabindex]:focus-visible {
   body { background: white !important; color: black !important; }
   a { color: #0366d6 !important; text-decoration: underline !important; }
 }
+
+/* ─── TOAST POSITIONING ──────────────────────────── */
+.sonner-toast-wrapper {
+  z-index: 9999 !important;
+}
+
+/* ─── CARD HOVER 3D LIFT ─────────────────────────── */
+.hover-lift {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.hover-lift:hover {
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* ─── INPUT FOCUS RING ───────────────────────────── */
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--accent-gold);
+  box-shadow: 0 0 0 3px rgba(240, 180, 41, 0.15);
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+/* ─── SKELETON SHIMMER ───────────────────────────── */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--skeleton-base, rgba(255, 255, 255, 0.04)) 25%,
+    var(--skeleton-shine, rgba(255, 255, 255, 0.1)) 50%,
+    var(--skeleton-base, rgba(255, 255, 255, 0.04)) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.8s ease-in-out infinite;
+}
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ─── BUTTON LOADING SPINNER ─────────────────────── */
+.btn-loading {
+  position: relative;
+  color: transparent !important;
+  pointer-events: none;
+}
+.btn-loading::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 18px;
+  height: 18px;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: btn-spin 0.6s linear infinite;
+}
+@keyframes btn-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ─── MODAL ESCAPE / FOCUS ───────────────────────── */
+.modal-overlay[aria-hidden='true'] { display: none; }
