@@ -172,7 +172,7 @@ This Executive Summary, together with:
 
 …form the primary handoff package for Kimi / Give A Bit Master Brain.
 
-**Local path `/Users/cam/projects/satohash` on 2026-06-10 is the authoritative current version.** GitHub remote is intentionally noted as lagged until the next reconciliation.
+**Local path `the local development machine` on 2026-06-10 is the authoritative current version.** GitHub remote is intentionally noted as lagged until the next reconciliation.
 
 See `SOURCE-OF-TRUTH.md` and `KIMI-HANDOFF-satohash-2026-06-10.md` (generated alongside this update) for the full structured hand-off record following the giveabit-project-handoff skill.
 
