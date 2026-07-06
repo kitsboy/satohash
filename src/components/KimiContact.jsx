@@ -8,7 +8,7 @@ export default function KimiContact({ compact = false }) {
         className="flex items-center gap-3 rounded-xl border border-[var(--border)] bg-[var(--surface-raised)] p-3 transition-colors hover:border-[var(--accent-gold)]"
         aria-label="Contact Kimi agent"
       >
-        <img src="/kimi-avatar.svg" alt="Kimi" className="h-10 w-10 shrink-0 rounded-full" />
+        <img src="/kimi-avatar.png" alt="Kimi" className="h-10 w-10 shrink-0 rounded-full" />
         <div className="min-w-0">
           <p className="text-xs font-bold text-[var(--text-primary)]">Kimi</p>
           <p className="truncate text-[10px] text-[var(--text-secondary)]">Orchestration · M4</p>
@@ -23,8 +23,8 @@ export default function KimiContact({ compact = false }) {
       style={{ minHeight: '44px' }}
     >
       <img
-        src="/kimi-avatar.svg"
-        alt="Kimi — Give A Bit orchestration agent on M4 HERMES"
+        src="/kimi-avatar.png"
+        alt="Kimi — Give A Bit orchestration agent"
         className="mx-auto h-20 w-20 shrink-0 rounded-full sm:mx-0"
         width={80}
         height={80}
@@ -35,7 +35,7 @@ export default function KimiContact({ compact = false }) {
         </p>
         <h3 className="text-lg font-bold text-[var(--text-primary)]">Kimi</h3>
         <p className="mt-1 text-sm text-[var(--text-secondary)]">
-          M4 orchestration agent. Docs, automation, Obsidian vault, and cross-machine handoffs.
+          Orchestration agent. Docs, automation.
         </p>
         <div className="mt-4 flex flex-wrap justify-center gap-3 sm:justify-start">
           <a
