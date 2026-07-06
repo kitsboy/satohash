@@ -45,22 +45,22 @@ export default function Pitch() {
   const [content, setContent] = useState('')
   const [meta, setMeta] = useState(null)
   const [loading, setLoading] = useState(true)
-  const API = import.meta.env.VITE_API_URL || ''
+  const API = ''
 
   useEffect(() => {
     setLoading(true)
-    fetch(`${API}/api/docs/${tab}`)
-      .then((r) => r.json())
-      .then((d) => {
-        setContent(d.content || '')
-        setMeta(d)
+    fetch(`/docs/${tab}.md`)
+      .then((r) => r.text())
+      .then((text) => {
+        setContent(text || '')
+        setMeta({ updatedAt: null })
       })
-      .catch(() => setContent('# Document unavailable\n\nRun the API server to load live docs.'))
+      .catch(() => setContent('# Document unavailable\n\nThe pitch content could not be loaded. Please try again later.'))
       .finally(() => setLoading(false))
   }, [tab, API])
 
   useEffect(() => {
-    fetch(`${API}/api/docs/manifest`)
+    fetch(`/docs/pitch.md`)
       .then((r) => r.json())
       .catch(() => null)
   }, [API])

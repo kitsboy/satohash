@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://satohash.giveabit.io/</loc><priority>1.0</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://satohash.giveabit.io/about</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
-  <url><loc>https://satohash.giveabit.io/trust</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
-  <url><loc>https://satohash.giveabit.io/access</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
-  <url><loc>https://satohash.giveabit.io/legal/privacy</loc><priority>0.5</priority><changefreq>yearly</changefreq></url>
-  <url><loc>https://satohash.giveabit.io/legal/terms</loc><priority>0.5</priority><changefreq>yearly</changefreq></url>
-  <url><loc>https://satohash.giveabit.io/legal/crypto-notice</loc><priority>0.5</priority><changefreq>yearly</changefreq></url>
+  <url><loc>https://satohash.io/</loc><priority>1.0</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://satohash.io/about</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://satohash.io/pitch</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://satohash.io/templates</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://satohash.io/trust</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://satohash.io/developer</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://satohash.io/atlas</loc><priority>0.6</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://satohash.io/legal/privacy</loc><priority>0.5</priority><changefreq>yearly</changefreq></url>
+  <url><loc>https://satohash.io/legal/terms</loc><priority>0.5</priority><changefreq>yearly</changefreq></url>
+  <url><loc>https://satohash.io/legal/crypto-notice</loc><priority>0.5</priority><changefreq>yearly</changefreq></url>
 </urlset>
