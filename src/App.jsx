@@ -16,6 +16,7 @@ import { ToastProvider } from './components/Toast'
 import { ThemeProvider } from './components/ThemeProvider'
 import { I18nProvider } from './i18n'
 import ErrorBoundary from './components/ErrorBoundary'
+import ProtectedRoute from './components/ProtectedRoute'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 
@@ -38,6 +39,9 @@ const Access = React.lazy(() => import('./pages/Access'))
 const Landing = React.lazy(() => import('./pages/Landing'))
 const Trust = React.lazy(() => import('./pages/trust/TrustCenter'))
 const About = React.lazy(() => import('./pages/About'))
+const Pitch = React.lazy(() => import('./pages/Pitch'))
+const Admin = React.lazy(() => import('./pages/Admin'))
+const NostrHealth = React.lazy(() => import('./pages/NostrHealth'))
 
 const NotaryTemplates = React.lazy(() => import('./pages/NotaryTemplates'))
 const Dashboard = React.lazy(() => import('./pages/Dashboard'))
@@ -59,15 +63,6 @@ const Identity = React.lazy(() => import('./pages/Identity'))
 const MobileSigner = React.lazy(() => import('./pages/MobileSigner'))
 const BatchTimestamp = React.lazy(() => import('./pages/BatchTimestamp'))
 
-function ProtectedRoute({ children }) {
-  const location = useLocation()
-  const authed =
-    localStorage.getItem('satohash_authed') === 'true' ||
-    sessionStorage.getItem('satohash_authed') === 'true'
-  if (!authed) return <Navigate to="/access" state={{ from: location }} replace />
-  return children
-}
-
 function AppContent() {
   const location = useLocation()
 
@@ -85,6 +80,7 @@ function AppContent() {
     location.pathname === '/access' ||
     location.pathname === '/about' ||
     location.pathname === '/trust' ||
+    location.pathname === '/pitch' ||
     location.pathname.startsWith('/legal/')
 
   const content = (
@@ -95,6 +91,7 @@ function AppContent() {
           <Route path="/" element={<Landing />} />
           <Route path="/access" element={<Access />} />
           <Route path="/about" element={<About />} />
+          <Route path="/pitch" element={<Pitch />} />
           <Route path="/trust" element={<Trust />} />
           <Route path="/trust-center" element={<Navigate to="/trust" replace />} />
           <Route path="/verify/:id" element={<VerifyPublic />} />
@@ -291,6 +288,22 @@ function AppContent() {
             }
           />
           {/* Alias routes for renamed/consolidated paths */}
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute>
+                <Admin />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/nostr-health"
+            element={
+              <ProtectedRoute>
+                <NostrHealth />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/developers" element={<Navigate to="/developer" replace />} />
           <Route path="/web-capture" element={<Navigate to="/snapper" replace />} />
           <Route path="/audit-log" element={<Navigate to="/vault" replace />} />

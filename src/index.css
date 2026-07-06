@@ -4,6 +4,13 @@
 
 @layer base {
   :root {
+    /* ── Mobile-first breakpoints (reference) ─────────────── */
+    --bp-sm: 640px;
+    --bp-md: 768px;
+    --bp-lg: 1024px;
+    --bp-xl: 1280px;
+    --touch-min: 44px;
+
     /* ── Backgrounds ──────────────────────────────────────── */
     --bg-primary: #141b25; /* Deep navy — breathable dark */
     --bg-secondary: #1a2233; /* Nav/surface */

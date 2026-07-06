@@ -1,0 +1,50 @@
+# Satohash — Nginx reverse proxy example (Umbrel / VPS)
+# Place in /etc/nginx/sites-available/satohash
+
+server {
+    listen 80;
+    server_name satohash.giveabit.io;
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl http2;
+    server_name satohash.giveabit.io;
+
+    # ssl_certificate /path/to/cert.pem;
+    # ssl_certificate_key /path/to/key.pem;
+
+    # API + WebSocket proxy
+    location /api/ {
+        proxy_pass http://127.0.0.1:3001;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    location /socket.io/ {
+        proxy_pass http://127.0.0.1:3001;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+    }
+
+    location /admin/ {
+        proxy_pass http://127.0.0.1:3001;
+        proxy_set_header Host $host;
+    }
+
+    location /health {
+        proxy_pass http://127.0.0.1:3001;
+    }
+
+    # SPA — serve static dist with fallback
+    location / {
+        root /home/umbrel/satohash/dist;
+        try_files $uri $uri/ /index.html;
+    }
+}

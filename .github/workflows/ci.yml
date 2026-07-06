@@ -8,23 +8,28 @@ on:
 
 jobs:
   test_and_build:
+    strategy:
+      matrix:
+        node-version: [20, 22]
     runs-on: ubuntu-latest
     
     steps:
     - uses: actions/checkout@v4
     
-    - name: Set up Node.js
+    - name: Set up Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v4
       with:
-        node-version: '20'
+        node-version: ${{ matrix.node-version }}
         cache: 'npm'
         
     - name: Install Dependencies
       run: npm ci
       
-    - name: Security Audit
-      run: npm audit --audit-level=moderate
-      continue-on-error: true # Don't block build on moderate, but log it
+    - name: Security Audit (high/critical)
+      run: npm audit --audit-level=high
+      
+    - name: Sync docs
+      run: npm run docs:sync
       
     - name: Run ESLint
       run: npm run lint
@@ -36,7 +41,9 @@ jobs:
       run: npm run build
 
     - name: Install Playwright Browsers
+      if: matrix.node-version == 20
       run: npx playwright install --with-deps
 
     - name: Run E2E Tests
+      if: matrix.node-version == 20
       run: npx playwright test

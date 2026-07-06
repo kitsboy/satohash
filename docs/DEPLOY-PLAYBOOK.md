@@ -1,3 +1,7 @@
+<!-- AUTO-GENERATED HEADER — do not edit manually -->
+> **Live:** https://satohash.giveabit.io · **Version:** 4.1.0-ELITE (Build 4) · **Updated:** 2026-07-06
+> **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
+
 # SATOHASH ELITE DEPLOY PLAYBOOK
 
 ## Quick Reference
@@ -38,3 +42,4 @@ CI (`.github/workflows/ci.yml`) runs lint, unit tests, build, and E2E on every p
 
 ---
 © 2026 Satahash Institutional Division
+

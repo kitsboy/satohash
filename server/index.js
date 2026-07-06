@@ -45,6 +45,8 @@ import { Anthropic } from '@anthropic-ai/sdk';
 import { nip19 } from 'nostr-tools';
 import { fetchNostrProfile } from './nostr.js';
 import jwt from 'jsonwebtoken';
+import xss from 'xss-clean';
+import { requireBearerAdmin, requireNpub, validateWebhookUrl, sanitizeGitPath } from './security.js';
 
 dotenv.config();
 
@@ -254,6 +256,7 @@ app.use(helmet({
   crossOriginResourcePolicy: { policy: "cross-origin" }
 }));
 app.use(hpp());
+app.use(xss());
 app.use((req, res, next) => {
   res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
   res.setHeader('X-Content-Type-Options', 'nosniff');
@@ -623,8 +626,8 @@ app.get('/health', async (req, res) => {
   res.json({ status, details });
 });
 
-// Metrics Endpoint (Internal/Admin)
-app.get('/metrics', async (req, res) => {
+// Metrics Endpoint (Internal/Admin only)
+app.get('/metrics', requireBearerAdmin, async (req, res) => {
   res.set('Content-Type', register.contentType);
   res.end(await register.metrics());
 });
@@ -848,8 +851,9 @@ app.post('/api/stamp', stampRateLimit, paywallMiddleware, async (req, res, next)
  */
 app.post('/api/git/stamp', paywallMiddleware, async (req, res, next) => {
     try {
-        const repoPath = req.body.path ? path.resolve(req.body.path) : process.cwd();
-        const metadata = getGitMetadata(repoPath);
+        const gitPath = sanitizeGitPath(req.body.path || '.', process.cwd());
+        if (!gitPath.ok) return res.status(403).json({ error: gitPath.error });
+        const metadata = getGitMetadata(gitPath.path);
 
         // We'll hash a string containing repo, branch, commit, tree to make it a unique "Proof of State"
         const proofJson = JSON.stringify(metadata);
@@ -1010,7 +1014,7 @@ app.post('/api/collaboration/sign', async (req, res, next) => {
  *   post:
  *     summary: "Revoke or supersede a proof (Item 19: Revocation)."
  */
-app.post('/api/revoke/:id', async (req, res, next) => {
+app.post('/api/revoke/:id', requireNpub, async (req, res, next) => {
     try {
         const { reason, superseded_by } = req.body;
         const stamp = db.prepare("SELECT id FROM timestamps WHERE id = ?").get(req.params.id);
@@ -1387,7 +1391,7 @@ app.get('/.well-known/nostr.json', (req, res) => {
 });
 
 // Store NIP-05 identity
-app.post('/api/identity/nip05', (req, res) => {
+app.post('/api/identity/nip05', requireNpub, (req, res) => {
   const { nip05_name, pubkey_hex } = req.body;
   if (!nip05_name || !pubkey_hex) return res.status(400).json({ error: 'Missing nip05_name or pubkey_hex' });
   // Basic validation
@@ -1411,7 +1415,8 @@ app.post('/api/identity/nip05', (req, res) => {
 
 // GET /api/push/vapid-key — return public VAPID key
 app.get('/api/push/vapid-key', (req, res) => {
-  const publicKey = process.env.VAPID_PUBLIC_KEY || 'BEl62iUYgUivxIkv69yViEuiBIa-Ib9-SkvMeAtA3LFgDzkrxZJjSgSnfckjBJuBkr3qBUYIHBQFLXYp5Nksh8U'
+  const publicKey = process.env.VAPID_PUBLIC_KEY
+  if (!publicKey) return res.status(503).json({ error: 'Push notifications not configured' })
   res.json({ publicKey })
 })
 
@@ -1461,13 +1466,15 @@ app.get('/api/webhooks', (req, res) => {
 })
 
 // POST /api/webhooks — add webhook
-app.post('/api/webhooks', (req, res) => {
+app.post('/api/webhooks', requireNpub, (req, res) => {
   const { url, events = ['confirmed', 'revoked'] } = req.body
   if (!url) return res.status(400).json({ error: 'url required' })
+  const urlCheck = validateWebhookUrl(url)
+  if (!urlCheck.ok) return res.status(400).json({ error: urlCheck.error })
   try {
     const id = crypto.randomUUID()
     db.prepare('INSERT INTO webhooks (id, url, events, created_at) VALUES (?, ?, ?, CURRENT_TIMESTAMP)')
-      .run(id, url, JSON.stringify(events))
+      .run(id, urlCheck.url, JSON.stringify(events))
     res.json({ webhook: { id, url, events } })
   } catch (e) {
     res.status(500).json({ error: e.message })
@@ -1489,6 +1496,8 @@ app.post('/api/webhooks/:id/test', async (req, res) => {
   try {
     const hook = db.prepare('SELECT * FROM webhooks WHERE id = ?').get(req.params.id)
     if (!hook) return res.status(404).json({ error: 'Webhook not found' })
+    const urlCheck = validateWebhookUrl(hook.url)
+    if (!urlCheck.ok) return res.status(400).json({ error: urlCheck.error })
     const testPayload = { event: 'test', timestamp: new Date().toISOString(), message: 'Satohash webhook test ping' }
     const start = Date.now();
     let deliveryStatus = 'failed';
@@ -1704,7 +1713,7 @@ app.get('/api/forum/threads/:id', (req, res) => {
     res.json({ thread, posts });
 });
 
-app.post('/api/forum/threads', (req, res) => {
+app.post('/api/forum/threads', requireNpub, (req, res) => {
     const { title, author } = req.body;
     if (!title?.trim()) return res.status(400).json({ error: 'Title required' });
     const id = uuidv4();
@@ -1712,7 +1721,7 @@ app.post('/api/forum/threads', (req, res) => {
     res.json({ thread: db.prepare('SELECT * FROM forum_threads WHERE id = ?').get(id) });
 });
 
-app.post('/api/forum/threads/:id/posts', (req, res) => {
+app.post('/api/forum/threads/:id/posts', requireNpub, (req, res) => {
     const { content, author } = req.body;
     if (!content?.trim()) return res.status(400).json({ error: 'Content required' });
     const thread = db.prepare('SELECT id FROM forum_threads WHERE id = ?').get(req.params.id);
@@ -1721,6 +1730,33 @@ app.post('/api/forum/threads/:id/posts', (req, res) => {
     db.prepare('INSERT INTO forum_posts (id, thread_id, content, author) VALUES (?, ?, ?, ?)').run(id, req.params.id, content.trim(), author?.trim() || 'Anonymous');
     db.prepare('UPDATE forum_threads SET post_count = post_count + 1 WHERE id = ?').run(req.params.id);
     res.json({ post: db.prepare('SELECT * FROM forum_posts WHERE id = ?').get(id) });
+});
+
+// Self-evolving docs API — serves markdown from docs/
+const DOC_SLUGS = {
+  'executive-summary': 'docs/EXECUTIVE-SUMMARY.md',
+  marketing: 'docs/MARKETING.md',
+  financials: 'docs/FINANCIALS.md',
+  pitch: 'docs/PITCH.md',
+  'design-tokens': 'docs/DESIGN-TOKENS.md',
+  'design-context': 'docs/DESIGN-CONTEXT.md',
+};
+
+app.get('/api/docs/manifest', (req, res) => {
+  const manifestPath = path.resolve('docs/manifest.json');
+  if (fs.existsSync(manifestPath)) {
+    res.json(JSON.parse(fs.readFileSync(manifestPath, 'utf-8')));
+  } else {
+    res.json({ docs: Object.keys(DOC_SLUGS).map((slug) => ({ slug })) });
+  }
+});
+
+app.get('/api/docs/:slug', (req, res) => {
+  const rel = DOC_SLUGS[req.params.slug];
+  if (!rel) return res.status(404).json({ error: 'Document not found' });
+  const full = path.resolve(rel);
+  if (!fs.existsSync(full)) return res.status(404).json({ error: 'Document file missing' });
+  res.json({ slug: req.params.slug, content: fs.readFileSync(full, 'utf-8'), updatedAt: fs.statSync(full).mtime.toISOString() });
 });
 
 // SPA fallback — serve index.html for client-side routes on hard refresh

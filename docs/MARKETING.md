@@ -1,3 +1,7 @@
+<!-- AUTO-GENERATED HEADER — do not edit manually -->
+> **Live:** https://satohash.giveabit.io · **Version:** 4.1.0-ELITE (Build 4) · **Updated:** 2026-07-06
+> **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
+
 # Satohash — Marketing Strategy
 
 **Platform:** satohash.io  
@@ -149,3 +153,4 @@ People who create things they may later need to prove:
 ---
 
 *Questions: hello@giveabit.io | satohash.io*
+

@@ -16,6 +16,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
+    "deploy": "bash deploy.sh",
+    "docs:sync": "node scripts/sync-docs.js",
     "prepare": "husky",
     "version:bump": "node scripts/increment-build.js"
   },
@@ -95,6 +97,7 @@
     "react-error-boundary": "^6.1.1",
     "react-i18next": "^14.1.0",
     "react-router-dom": "^6.28.0",
+    "recharts": "^3.9.2",
     "socket.io": "^4.8.3",
     "socket.io-client": "^4.8.3",
     "sonner": "^2.0.7",
@@ -135,6 +138,7 @@
     "vite-plugin-pwa": "^1.2.0",
     "vite-plugin-top-level-await": "^1.6.0",
     "vite-plugin-wasm": "^3.6.0",
-    "vitest": "^3.2.4"
+    "vitest": "^3.2.4",
+    "wrangler": "^4.107.0"
   }
 }

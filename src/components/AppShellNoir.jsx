@@ -1,6 +1,16 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Search, Globe, Zap, Database, Terminal, ChevronRight, Scale, BookOpen, WifiOff } from 'lucide-react'
+import {
+  Search,
+  Globe,
+  Zap,
+  Database,
+  Terminal,
+  ChevronRight,
+  Scale,
+  BookOpen,
+  WifiOff
+} from 'lucide-react'
 import LeftRailNav from './LeftRailNav'
 import TopSignalBar from './TopSignalBar'
 import MobileBottomNav from './MobileBottomNav'
@@ -342,7 +352,7 @@ export default function AppShellNoir({ children }) {
         <aside
           aria-label="Main navigation"
           className="fixed inset-y-0 left-0 z-50 hidden w-64 border-r border-[var(--border)] md:block"
-          style={{ background: '#13171f' }}
+          style={{ background: 'var(--bg-secondary)' }}
         >
           <LeftRailNav />
         </aside>
@@ -382,9 +392,16 @@ export default function AppShellNoir({ children }) {
               <TopSignalBar />
               <div className="ml-4 flex flex-shrink-0 items-center gap-3">
                 {!isOnline && (
-                  <span className="flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[9px] font-black tracking-widest uppercase"
-                    style={{ background:'rgba(234,179,8,0.12)', border:'1px solid rgba(234,179,8,0.3)', color:'#eab308' }}>
-                    <WifiOff size={10} />{queueCount > 0 ? `${queueCount} queued` : 'Offline'}
+                  <span
+                    className="flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[9px] font-black tracking-widest uppercase"
+                    style={{
+                      background: 'rgba(234,179,8,0.12)',
+                      border: '1px solid rgba(234,179,8,0.3)',
+                      color: '#eab308'
+                    }}
+                  >
+                    <WifiOff size={10} />
+                    {queueCount > 0 ? `${queueCount} queued` : 'Offline'}
                   </span>
                 )}
                 <LanguageSwitcher />
@@ -392,8 +409,14 @@ export default function AppShellNoir({ children }) {
                   onClick={() => setIsSearchOpen(true)}
                   className="group flex items-center gap-3 rounded-xl border border-[var(--border)] bg-[var(--bg-secondary)] px-4 py-1.5 transition-all hover:border-[var(--border-gold)]"
                 >
-                  <Search size={13} className="transition-colors group-hover:text-[var(--accent-gold)]" style={{ color: 'var(--text-secondary)' }} />
-                  <span className="text-[10px] font-black tracking-widest text-white/40 uppercase group-hover:text-[var(--accent-gold)]/60">⌘K Search</span>
+                  <Search
+                    size={13}
+                    className="transition-colors group-hover:text-[var(--accent-gold)]"
+                    style={{ color: 'var(--text-secondary)' }}
+                  />
+                  <span className="text-[10px] font-black tracking-widest text-white/40 uppercase group-hover:text-[var(--accent-gold)]/60">
+                    ⌘K Search
+                  </span>
                 </button>
               </div>
             </div>

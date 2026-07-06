@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import { Shield, Globe, Heart, Scale, BookOpen, Quote, Network, Binary, Cpu } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import LanguageSwitcher from '../components/LanguageSwitcher'
+import KimiContact from '../components/KimiContact'
 
 export default function About() {
   return (
@@ -622,6 +623,18 @@ export default function About() {
           </article>
         </div>
       </main>
+
+      <section className="layout-container mb-16 px-6">
+        <h2
+          className="mb-6 text-center text-sm font-bold tracking-widest uppercase"
+          style={{ color: 'var(--accent-gold)' }}
+        >
+          Agent Roster · Give A Bit
+        </h2>
+        <div className="mx-auto max-w-lg">
+          <KimiContact />
+        </div>
+      </section>
 
       {/* Institutional Footer Seal */}
       <footer

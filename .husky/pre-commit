@@ -1,3 +1,4 @@
 npm run version:bump
-git add build-metadata.json
+npm run docs:sync
+git add build-metadata.json docs/manifest.json
 npx lint-staged

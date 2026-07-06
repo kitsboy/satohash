@@ -13,6 +13,7 @@ import {
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import { QRCodeSVG } from 'qrcode.react'
+import KimiContact from './KimiContact'
 
 const JobCard = ({ title, description }) => {
   const emailLink = `mailto:hello@giveabit.io?subject=Application for ${title}`
@@ -243,6 +244,7 @@ export default function Footer() {
               <div className="grid grid-cols-2 gap-x-8 gap-y-5">
                 {[
                   { name: 'About', path: '/about' },
+                  { name: 'Pitch', path: '/pitch' },
                   { name: 'Trust Center', path: '/trust' },
                   { name: 'Documentation', path: '/developer' },
                   { name: 'Status', path: '/status' },
@@ -275,7 +277,8 @@ export default function Footer() {
               </div>
             </div>
 
-            <div className="border-t border-[var(--border)] pt-8">
+            <div className="space-y-4 border-t border-[var(--border)] pt-8">
+              <KimiContact compact />
               <div className="flex items-center gap-4 rounded-xl border border-[var(--border)] bg-[var(--surface-raised)] p-4 text-[var(--text-secondary)]">
                 <Lock size={16} className="text-[var(--accent-success)]" />
                 <span className="text-[11px] font-bold tracking-widest uppercase">

@@ -59,14 +59,10 @@ export const authMiddleware = async (req, res, next) => {
 };
 
 // DB query wrapper for tenant isolation
-export const withTenantFilter = (query, tenantId) => {
-  if (tenantId && tenantId !== 'default') {
-    if (query.includes('WHERE') || query.includes('where')) {
-      return query + ` AND tenant_id = '${tenantId}'`;
-    }
-    return query + ` WHERE tenant_id = '${tenantId}'`;
-  }
-  return query;
+export const withTenantFilter = (query, tenantId, params = []) => {
+  if (!tenantId || tenantId === 'default') return { query, params };
+  const clause = query.match(/where/i) ? ' AND tenant_id = ?' : ' WHERE tenant_id = ?';
+  return { query: query + clause, params: [...params, tenantId] };
 };
 
 export default authMiddleware;

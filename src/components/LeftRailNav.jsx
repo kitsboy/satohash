@@ -150,7 +150,7 @@ export default function LeftRailNav() {
       role="navigation"
       aria-label="Sidebar navigation"
       className="flex h-full w-64 flex-col"
-      style={{ background: '#13171f' }}
+      style={{ background: 'var(--bg-secondary)' }}
     >
       {/* ── Logo area ──────────────────────────────────────────── */}
       <div className="flex-shrink-0 px-5 pt-6 pb-5">

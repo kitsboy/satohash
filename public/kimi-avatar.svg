@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" role="img" aria-label="Kimi — Give A Bit orchestration agent">
+  <defs>
+    <linearGradient id="kimi-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1a2233"/>
+      <stop offset="100%" stop-color="#141b25"/>
+    </linearGradient>
+    <linearGradient id="kimi-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f0b429"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+  </defs>
+  <circle cx="64" cy="64" r="62" fill="url(#kimi-bg)" stroke="url(#kimi-gold)" stroke-width="3"/>
+  <text x="64" y="78" text-anchor="middle" font-family="system-ui,sans-serif" font-size="48" font-weight="800" fill="url(#kimi-gold)">K</text>
+  <circle cx="96" cy="32" r="10" fill="#22d3a5" stroke="#141b25" stroke-width="2"/>
+</svg>
