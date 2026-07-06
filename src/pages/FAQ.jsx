@@ -184,6 +184,8 @@ export default function FAQ() {
                 >
                   <button
                     onClick={() => setOpenIndex(isOpen ? null : i)}
+                    aria-expanded={isOpen}
+                    aria-controls={"faq-" + i}
                     className="flex w-full min-h-[56px] items-center justify-between gap-4 px-6 py-4 text-left"
                   >
                     <span className="text-sm font-bold text-[var(--text-primary)]">{faq.q}</span>
@@ -195,7 +197,7 @@ export default function FAQ() {
                     />
                   </button>
                   {isOpen && (
-                    <div className="border-t border-[var(--border)] px-6 py-4">
+                    <div id={"faq-" + i} className="border-t border-[var(--border)] px-6 py-4">
                       <p className="text-sm leading-relaxed text-[var(--text-secondary)]">{faq.a}</p>
                     </div>
                   )}

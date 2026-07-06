@@ -117,3 +117,69 @@ a.small,
 @media (prefers-reduced-motion: reduce) {
   .animate-pulse { animation: none !important; }
 }
+
+/* ─── A11Y REFINEMENTS ────────────────────────────── */
+
+/* Focus indicator on all interactive elements */
+a:focus-visible, button:focus-visible, input:focus-visible,
+select:focus-visible, textarea:focus-visible, [tabindex]:focus-visible {
+  outline: 2px solid var(--accent-gold) !important;
+  outline-offset: 2px;
+}
+
+/* Skip-to-content link */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  z-index: 10000;
+  padding: 12px 24px;
+  background: var(--accent-gold);
+  color: black;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: top 0.1s;
+}
+.skip-link:focus {
+  top: 0;
+  outline: none;
+}
+
+/* Screen reader only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Reduced motion - disable all unnecessary animations */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: more) {
+  :root {
+    --text-secondary: #b0b0b0;
+    --border: rgba(255, 255, 255, 0.3);
+  }
+}
+
+/* Print - hide nav, footer, no-print elements */
+@media print {
+  nav, footer, header, .no-print, .skip-link { display: none !important; }
+  body { background: white !important; color: black !important; }
+  a { color: #0366d6 !important; text-decoration: underline !important; }
+}
