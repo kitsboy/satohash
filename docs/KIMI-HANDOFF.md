@@ -109,3 +109,32 @@ Docs (items 46–47, 50):
 ## Prior Reference
 
 See `KIMI-HANDOFF-satohash-2026-06-10.md` in repo root for the original comprehensive handoff (four-plane architecture, mission context, full doc inventory).
+
+## Handoff to Kimi — 2026-07-06
+
+**Machine:** M4 (Hermes)
+**Project:** satohash
+
+### Done
+- [x] Project docs audit & cleanup: removed 8 stale/conflicting root files that duplicated Grok's v4.1.0-ELITE work
+- [x] Cleaned docs/ cruft (MARKETING.md.bak, misplaced .ai_docs/)
+- [x] Committed as 466bd88
+- [x] Updated LATEST-UPDATE.md
+- [x] This handoff entry
+
+### Decisions
+- All June 10 handoff artifacts (KIMI-HANDOFF-satohash-2026-06-10.md, SOURCE-OF-TRUTH.md, STATUS.md, SESSION-SUMMARY-2026-06-10.md) removed — superseded by Grok's docs/KIMI-HANDOFF.md + IMPROVEMENTS-LOG.md
+- Blank templates (EXEC-SUMMARY.md, MARKETING-ONELINER.md) removed — duplicated real docs
+- CLAUDE.md removed — Grok's GROK-SESSION-PROTOCOL.md is the active agent protocol
+- archives/ preserved as-is for historical reference
+
+### What's Next
+- Push to GitHub (2 commits ahead: a7641f8 + 466bd88)
+- Review docs/ARCHITECTURE.md and docs/QUICKSTART.md for staleness against Grok's code changes
+- Continue Phase III NIP-05 identity work per ROADMAP
+- Consider cross-project wiring (Motopass, Katoa proof verification)
+
+### Git State
+- Last commit: 466bd88
+- Branch: main
+- Unpushed: 2 (a7641f8, 466bd88)
