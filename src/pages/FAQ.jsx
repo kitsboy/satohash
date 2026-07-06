@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ChevronDown, Search, ArrowLeft, HelpCircle, BookOpen, Mail } from 'lucide-react'
 import Footer from '../components/Footer'
+import usePageMeta from '../hooks/usePageMeta'
 
 const FAQS = [
   {
@@ -89,6 +90,11 @@ const CATEGORY_MAP = {
 }
 
 export default function FAQ() {
+  usePageMeta({
+    title: 'Frequently Asked Questions — Satohash',
+    description: 'Answers to common questions about Bitcoin timestamping, OpenTimestamps, legal validity, Nostr identity, and Satohash pricing.'
+  })
+
   const [openIndex, setOpenIndex] = useState(null)
   const [searchQuery, setSearchQuery] = useState('')
   const [activeCategory, setActiveCategory] = useState('all')

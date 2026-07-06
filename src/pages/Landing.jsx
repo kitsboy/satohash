@@ -18,6 +18,7 @@ import {
   ChevronRight
 } from 'lucide-react'
 import Footer from '../components/Footer'
+import usePageMeta from '../hooks/usePageMeta'
 import LanguageSwitcher from '../components/LanguageSwitcher'
 import { ThemeToggle } from '../components/ThemeProvider'
 import { getBitcoinNetworkStats } from '../utils/mempool'
@@ -33,6 +34,11 @@ const fadeUp = {
 }
 
 export default function Landing() {
+  usePageMeta({
+    title: 'Stamp Documents on Bitcoin — Free Proof of Existence',
+    description: 'Drop any file. Get a Bitcoin-anchored proof of existence in under 60 seconds. Free, private, zero-knowledge. Your file never leaves your device.'
+  })
+
   const [navOpen, setNavOpen] = useState(false)
   const [donationOpen, setDonationOpen] = useState(false)
   const [copied, setCopied] = useState(false)

@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { Code, Server, Globe, Smartphone, ArrowLeft, Copy, Check, Terminal, Zap } from 'lucide-react'
 import { useState } from 'react'
 import Footer from '../components/Footer'
+import usePageMeta from '../hooks/usePageMeta'
 
 const SNIPPETS = {
   curl: `curl -X POST https://api.satohash.io/api/v1/timestamp \\
@@ -90,6 +91,11 @@ function CodeBlock({ label, code }) {
 }
 
 export default function Integrations() {
+  usePageMeta({
+    title: 'Integrations & API — Satohash',
+    description: 'REST API, webhooks, WordPress, and CLI integrations for Bitcoin-anchored proof of existence. Code samples in curl, JS, Python.'
+  })
+
   return (
     <div className="min-h-screen bg-[var(--bg-primary)]">
       <header className="border-b border-[var(--border)] bg-[var(--bg-navbar)]/95 px-6 py-4 backdrop-blur-md">

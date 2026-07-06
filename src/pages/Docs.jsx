@@ -6,6 +6,7 @@ import {
   ExternalLink, Zap, Settings, Download
 } from 'lucide-react'
 import Footer from '../components/Footer'
+import usePageMeta from '../hooks/usePageMeta'
 
 const CATEGORIES = [
   {
@@ -60,6 +61,11 @@ const CATEGORIES = [
 ]
 
 export default function Docs() {
+  usePageMeta({
+    title: 'Documentation — Satohash',
+    description: 'Complete documentation for Satohash: architecture, deployment, SEO, business, and handoff docs. Everything in one place.'
+  })
+
   const [search, setSearch] = useState('')
   const [activeCategory, setActiveCategory] = useState('all')
 

@@ -24,6 +24,11 @@ const TERMS = [
 ]
 
 export default function Glossary() {
+  usePageMeta({
+    title: 'Glossary — Satohash',
+    description: 'Key terms explained: SHA-256, OpenTimestamps, Merkle Trees, NIP-05, BOLT-12, Zero-Knowledge Proofs and more.'
+  })
+
   const [search, setSearch] = useState('')
 
   const filtered = TERMS.filter(t =>

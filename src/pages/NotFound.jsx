@@ -2,6 +2,11 @@ import { Link } from 'react-router-dom'
 import { Home, Search } from 'lucide-react'
 
 export default function NotFound() {
+  usePageMeta({
+    title: '404 — Page Not Found',
+    description: 'This page does not exist. Browse our documentation, templates, or FAQ for help.'
+  })
+
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-[var(--bg-primary)] px-6">
       <div className="mx-auto max-w-md text-center">

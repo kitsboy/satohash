@@ -5,6 +5,7 @@ import {
   Mail, Server, Shield, TrendingUp
 } from 'lucide-react'
 import Footer from '../components/Footer'
+import usePageMeta from '../hooks/usePageMeta'
 
 const TIERS = [
   {
@@ -61,6 +62,11 @@ const TIERS = [
 ]
 
 export default function Pricing() {
+  usePageMeta({
+    title: 'Pricing — Satohash',
+    description: 'Free Bitcoin document timestamping. Premium and Enterprise plans for volume stamping, Lightning payments, and dedicated infrastructure.'
+  })
+
   return (
     <div className="min-h-screen bg-[var(--bg-primary)]">
       {/* Header */}

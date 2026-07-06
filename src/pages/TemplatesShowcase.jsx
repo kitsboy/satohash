@@ -27,6 +27,11 @@ function addRecentView(id) {
 }
 
 export default function TemplatesShowcase() {
+  usePageMeta({
+    title: 'Browse Legal Templates — Satohash',
+    description: '14 ready-to-use document templates for prenuptial agreements, NDAs, leases, wills and more. Bitcoin-anchored proof of existence included.'
+  })
+
   const [manifest, setManifest] = useState(null)
   const [activeCategory, setActiveCategory] = useState('all')
   const [searchQuery, setSearchQuery] = useState('')

@@ -33,6 +33,11 @@ const GUIDES = [
 ]
 
 export default function Guides() {
+  usePageMeta({
+    title: 'Educational Guides — Satohash',
+    description: 'Learn how cryptographic proofs, OpenTimestamps, and Bitcoin create verifiable truth. Guides for beginners and experts.'
+  })
+
   return (
     <div className="min-h-screen bg-[var(--bg-primary)]">
       <header className="border-b border-[var(--border)] bg-[var(--bg-navbar)]/95 px-6 py-4 backdrop-blur-md">

@@ -4,8 +4,14 @@ import {
   FileText, Github, Key, Download
 } from 'lucide-react'
 import Footer from '../components/Footer'
+import usePageMeta from '../hooks/usePageMeta'
 
 export default function Security() {
+  usePageMeta({
+    title: 'Security — Satohash',
+    description: 'Zero-knowledge architecture, client-side hashing, open source. Learn how Satohash keeps your documents private and your proofs valid.'
+  })
+
   return (
     <div className="min-h-screen bg-[var(--bg-primary)]">
       <header className="border-b border-[var(--border)] bg-[var(--bg-navbar)]/95 px-6 py-4 backdrop-blur-md">

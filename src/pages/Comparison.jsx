@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Check, X as XIcon, ArrowLeft, FileText, Download, ExternalLink } from 'lucide-react'
 import Footer from '../components/Footer'
+import usePageMeta from '../hooks/usePageMeta'
 
 const COMPARISON = [
   { feature: 'Zero-knowledge (file never leaves device)', satohash: true, docuSign: false, eth: true, diyOTS: true },
@@ -28,6 +29,11 @@ const COLUMNS = [
 ]
 
 export default function Comparison() {
+  usePageMeta({
+    title: 'Satohash vs Alternatives — Comparison',
+    description: 'Honest comparison: Satohash vs DocuSign, Ethereum dApps, and DIY OpenTimestamps. See how Bitcoin stacks up for proof of existence.'
+  })
+
   return (
     <div className="min-h-screen bg-[var(--bg-primary)]">
       <header className="border-b border-[var(--border)] bg-[var(--bg-navbar)]/95 px-6 py-4 backdrop-blur-md">

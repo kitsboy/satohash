@@ -76,6 +76,11 @@ function renderMarkdown(md) {
 }
 
 export default function DocViewer() {
+  usePageMeta({
+    title: 'Documentation — Satohash',
+    description: 'View Satohash documentation. Architecture, deployment guides, SEO strategy, and project handoffs.'
+  })
+
   const { slug } = useParams()
   const [content, setContent] = useState('')
   const [loading, setLoading] = useState(true)
