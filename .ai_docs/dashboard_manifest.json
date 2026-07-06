@@ -1,0 +1,128 @@
+{
+  "project": "satohash",
+  "version": "4.1.0-ELITE",
+  "description": "Institutional-Grade Digital Notary & Cryptographic Settlement Mesh — zero-knowledge document provenance, multi-party contract signatures, forensic web capture, and automated cryptographic evidence anchoring to Bitcoin via OpenTimestamps",
+  "studio": "Give A Bit",
+  "studio_url": "https://giveabit.io",
+  "license": "MIT",
+  "node_version": ">=20.0.0",
+  "nvmrc": "v20.11.0",
+  "module_system": "ESM",
+  "package_manager": "npm",
+  "architecture": {
+    "type": "dual-server",
+    "frontend": {
+      "framework": "React 18",
+      "bundler": "Vite 6",
+      "css": "Tailwind CSS 4",
+      "port_dev": 3000,
+      "port_prod": null,
+      "static_dir": "dist"
+    },
+    "backend": {
+      "framework": "Express 5",
+      "port": 3001,
+      "websocket": "Socket.IO 4",
+      "database": {
+        "engine": "better-sqlite3 (SQLite)",
+        "file": "data/satohash.db",
+        "migrations": true,
+        "migration_dir": "server/migrations/"
+      },
+      "cache": {
+        "engine": "ioredis (Redis)",
+        "optional": true,
+        "fallback": "in-memory mock"
+      },
+      "logging": "pino (structured JSON)",
+      "metrics": "prom-client (Prometheus)"
+    }
+  },
+  "services": {
+    "pwa": {
+      "enabled": true,
+      "plugin": "vite-plugin-pwa",
+      "update_strategy": "autoUpdate",
+      "manifest": "public/site.webmanifest"
+    },
+    "docker": {
+      "enabled": true,
+      "base_image": "node:20-alpine",
+      "orchestration": "docker-compose",
+      "services": ["app", "redis"]
+    },
+    "pm2": {
+      "enabled": true,
+      "mode": "cluster",
+      "max_instances": "auto (max CPU)",
+      "config": "ecosystem.config.cjs"
+    },
+    "ci_cd": {
+      "platform": "GitHub Actions",
+      "workflow_file": ".github/workflows/",
+      "triggers": ["push: main/develop", "pull_request: main"],
+      "steps": ["npm ci", "npm audit", "lint", "unit test", "build", "E2E test"]
+    },
+    "deployment": {
+      "cloudflare_pages": true,
+      "deploy_script": "deploy.sh"
+    },
+    "api_docs": {
+      "enabled": true,
+      "tool": "swagger-jsdoc + swagger-ui-express",
+      "endpoint": "/api-docs"
+    },
+    "error_tracking": {
+      "provider": "@sentry/node + @sentry/react",
+      "optional": true
+    }
+  },
+  "ports": [
+    {"port": 3000, "service": "Vite Dev Server", "protocol": "HTTP", "scope": "dev"},
+    {"port": 3001, "service": "Express API Server", "protocol": "HTTP/WS", "scope": "all"},
+    {"port": 6379, "service": "Redis", "protocol": "TCP", "scope": "docker"}
+  ],
+  "env_vars": {
+    "required": ["PORT", "NODE_ENV"],
+    "required_production": ["ADMIN_KEY", "JWT_SECRET", "SNAPPER_KEY", "CORS_ORIGIN"],
+    "optional": ["REDIS_URL", "OTS_CALENDARS", "NOSTR_SECRET_KEY", "SENTRY_DSN", "EMAIL_HOST", "EMAIL_PORT", "EMAIL_USER", "EMAIL_PASS", "SWAGGER_URL", "NODE_ID", "MESH_SECRET", "IPFS_URL", "VITE_SENTRY_DSN", "VITE_API_URL", "VITE_MEMPOOL_API_URL", "VITE_OTS_CALENDARS"]
+  },
+  "key_dependencies": {
+    "bitcoin_protocols": ["bitcoinjs-lib", "ethers", "opentimestamps", "tiny-secp256k1", "ecpair"],
+    "nostr": ["nostr-tools"],
+    "payment": ["stripe", "qrcode"],
+    "ai": ["@anthropic-ai/sdk"],
+    "ipfs": ["ipfs-http-client"],
+    "email": ["nodemailer"],
+    "cli": ["commander"],
+    "i18n": ["i18next", "react-i18next", "i18next-http-backend", "i18next-browser-languagedetector"]
+  },
+  "scripts": {
+    "server": "node server/index.js",
+    "dev": "concurrently \"npm run server\" \"vite\"",
+    "build": "vite build",
+    "production": "cross-env NODE_ENV=production vite build && cross-env NODE_ENV=production npm run server",
+    "start:pm2": "pm2 start ecosystem.config.cjs --env production",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "lint": "eslint src",
+    "format": "prettier --write \"src/**/*.{js,jsx,css,md}\""
+  },
+  "directories": {
+    "server": "Express API backend (25+ modules)",
+    "src": "React frontend (55+ components, 30+ pages)",
+    "bin": "CLI tool",
+    "extension": "Browser extension (forensic snapper)",
+    "docs": "Project documentation",
+    "archive": "Archived handoff documents",
+    "public": "Static assets + PWA manifest",
+    "tests": "E2E tests",
+    "scripts": "Build utilities",
+    "data": "Runtime database (gitignored)",
+    ".github": "CI/CD workflows"
+  },
+  "build_metadata": {
+    "buildNumber": 3,
+    "lastUpdated": "2026-05-19T20:30:56.477Z"
+  }
+}
