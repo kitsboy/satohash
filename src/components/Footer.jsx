@@ -14,6 +14,7 @@ import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import { QRCodeSVG } from 'qrcode.react'
 import KimiContact from './KimiContact'
+import BackToTop from './BackToTop'
 
 const JobCard = ({ title, description }) => {
   const emailLink = `mailto:hello@giveabit.io?subject=Application for ${title}`
@@ -86,6 +87,8 @@ export default function Footer() {
   const btcAddress = 'bc1qhm5ndfjhqxdk3cx0pngyps4f5nnwdckulmge6c8keyf2pk0neqtshjn8ad'
 
   return (
+    <>
+      <BackToTop />
     <footer className="relative overflow-hidden border-t border-[var(--border)] bg-[var(--bg-secondary)] pt-24 pb-12">
       {/* Donation Popup */}
       <AnimatePresence>
@@ -339,6 +342,7 @@ export default function Footer() {
           </div>
         </div>
       </div>
-    </footer>
+</footer>
+    </>
   )
 }
