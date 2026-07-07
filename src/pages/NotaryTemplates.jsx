@@ -48,7 +48,7 @@ import {
 
 // ─── TEMPLATES DATA ────────────────────────────────────────────────────────────
 
-const TEMPLATES = [
+export const TEMPLATES = [
   {
     id: 'prenuptial-agreement',
     title: 'Prenuptial Agreement',
@@ -1726,9 +1726,9 @@ function TemplateList({ onSelect }) {
     document.title = 'Notary Templates — Satohash'
   }, [])
 
-  // Auto-select template from ?t= URL param
+  // Auto-select template from ?t= or ?type= URL param
   useEffect(() => {
-    const tid = searchParams.get('t')
+    const tid = searchParams.get('t') || searchParams.get('type')
     if (tid) {
       const match = TEMPLATES.find((t) => t.id === tid)
       if (match) onSelect(match)
@@ -1850,7 +1850,7 @@ function TemplateList({ onSelect }) {
 
 const MAX_HISTORY_SNAPSHOTS = 5
 
-function TemplateEditor({ template, onBack }) {
+export function TemplateEditor({ template, onBack, demoMode = false }) {
   const [data, setData] = useState({ ...template.demoData })
   const [qrUrl, setQrUrl] = useState('')
   const [darkDoc, setDarkDoc] = useState(false)
@@ -1999,6 +1999,11 @@ function TemplateEditor({ template, onBack }) {
 
   const catColor = CATEGORY_COLORS[template.category] || {}
 
+  const resetDemoData = () => {
+    setData({ ...template.demoData })
+    toast.success('Demo data restored')
+  }
+
   return (
     <div className="min-h-screen overflow-x-hidden" style={{ background: 'var(--bg-primary)' }}>
       {showPreview && (
@@ -2011,6 +2016,41 @@ function TemplateEditor({ template, onBack }) {
         />
       )}
       <div className="mx-auto max-w-7xl px-4 py-8 md:px-8 md:py-12">
+        {demoMode && (
+          <div
+            className="mb-6 flex flex-col gap-3 rounded-xl border px-4 py-3 sm:flex-row sm:items-center sm:justify-between"
+            style={{
+              borderColor: 'color-mix(in srgb, var(--accent-gold) 35%, transparent)',
+              background: 'color-mix(in srgb, var(--accent-gold) 8%, transparent)'
+            }}
+          >
+            <div>
+              <p
+                className="text-[10px] font-black tracking-[0.2em] uppercase"
+                style={{ color: 'var(--accent-gold)' }}
+              >
+                Demo Preview
+              </p>
+              <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>
+                Pre-filled with sample data. Edit fields, export PDF, or sign in to anchor to
+                Bitcoin.
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={resetDemoData}
+              className="inline-flex min-h-[40px] shrink-0 items-center justify-center gap-2 rounded-lg border px-4 text-[10px] font-bold tracking-wider uppercase transition-all hover:opacity-90"
+              style={{
+                borderColor: 'color-mix(in srgb, var(--accent-gold) 40%, transparent)',
+                color: 'var(--accent-gold)'
+              }}
+            >
+              <RotateCcw size={12} />
+              Reset Demo Data
+            </button>
+          </div>
+        )}
+
         {/* Back */}
         <button
           onClick={onBack}
@@ -2020,7 +2060,9 @@ function TemplateEditor({ template, onBack }) {
           onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-secondary)')}
         >
           <ArrowLeft size={16} />
-          <span className="text-sm font-semibold">Back to Templates</span>
+          <span className="text-sm font-semibold">
+            {demoMode ? 'Back to Template Library' : 'Back to Templates'}
+          </span>
         </button>
 
         <div className="flex flex-col-reverse gap-6 lg:flex-row lg:items-start lg:gap-8">

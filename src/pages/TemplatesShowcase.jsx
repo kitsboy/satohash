@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { useState, useEffect, useCallback } from 'react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import usePageMeta from '../hooks/usePageMeta'
 import {
@@ -66,6 +66,8 @@ function addRecentView(id) {
 export default function TemplatesShowcase() {
   usePageMeta({ page: 'templates' })
   const { t } = useTranslation()
+  const navigate = useNavigate()
+  const location = useLocation()
 
   const [manifest, setManifest] = useState(null)
   const [activeCategory, setActiveCategory] = useState('all')
@@ -74,7 +76,26 @@ export default function TemplatesShowcase() {
   const [previewTemplate, setPreviewTemplate] = useState(null)
   const [sortBy, setSortBy] = useState('default')
   const [showSuggestions, setShowSuggestions] = useState(false)
+  const [openingDemoId, setOpeningDemoId] = useState(null)
   const recentViews = getRecentViews()
+
+  const openDemo = useCallback(
+    (templateId) => {
+      setOpeningDemoId(templateId)
+      setPreviewTemplate(null)
+      addRecentView(templateId)
+      navigate(`/templates/${templateId}`)
+    },
+    [navigate]
+  )
+
+  useEffect(() => {
+    import('./NotaryTemplates').catch(() => {})
+  }, [])
+
+  useEffect(() => {
+    setOpeningDemoId(null)
+  }, [location.pathname])
 
   useEffect(() => {
     fetch('/data/templates-manifest.json')
@@ -205,21 +226,22 @@ export default function TemplatesShowcase() {
                   .map((t) => {
                     const Icon = ICON_MAP[t.icon] || FileText
                     return (
-                      <Link
+                      <button
+                        type="button"
                         key={t.id}
-                        to={'/templates/' + t.id}
                         onClick={() => {
                           setSearchQuery('')
                           setShowSuggestions(false)
+                          openDemo(t.id)
                         }}
-                        className="flex items-center gap-3 px-4 py-3 text-xs text-[var(--text-secondary)] transition-colors hover:bg-[var(--surface-raised)] hover:text-[var(--text-primary)]"
+                        className="flex w-full items-center gap-3 px-4 py-3 text-left text-xs text-[var(--text-secondary)] transition-colors hover:bg-[var(--surface-raised)] hover:text-[var(--text-primary)]"
                       >
                         <Icon size={14} className="text-[var(--accent-gold)]" />
                         <span className="font-bold">{t.title}</span>
                         <span className="ml-auto text-[10px] text-[var(--text-tertiary)] uppercase">
                           {t.category}
                         </span>
-                      </Link>
+                      </button>
                     )
                   })}
               </div>
@@ -288,15 +310,15 @@ export default function TemplatesShowcase() {
             {recentTemplates.map((t) => {
               const Icon = ICON_MAP[t.icon] || FileText
               return (
-                <Link
+                <button
+                  type="button"
                   key={t.id}
-                  to={`/templates/${t.id}`}
-                  onClick={() => addRecentView(t.id)}
+                  onClick={() => openDemo(t.id)}
                   className="inline-flex items-center gap-2 rounded-xl border border-[var(--border)] bg-[var(--surface-raised)] px-4 py-2.5 text-xs font-bold text-[var(--text-primary)] transition-all hover:border-[var(--accent-gold)]"
                 >
                   <Icon size={14} className="text-[var(--accent-gold)]" />
                   {t.title}
-                </Link>
+                </button>
               )
             })}
           </div>
@@ -359,13 +381,18 @@ export default function TemplatesShowcase() {
                     {template.description}
                   </p>
                   <div className="flex flex-wrap gap-2">
-                    <Link
-                      to={`/templates/${template.id}`}
-                      onClick={() => addRecentView(template.id)}
-                      className="inline-flex min-h-[36px] items-center gap-1.5 rounded-lg bg-[var(--accent-gold)]/10 px-3.5 py-1.5 text-[10px] font-bold tracking-wider text-[var(--accent-gold)] uppercase transition-all hover:bg-[var(--accent-gold)] hover:text-black"
+                    <button
+                      type="button"
+                      onClick={() => openDemo(template.id)}
+                      onMouseEnter={() => import('./NotaryTemplates').catch(() => {})}
+                      disabled={openingDemoId === template.id}
+                      className="inline-flex min-h-[36px] items-center gap-1.5 rounded-lg bg-[var(--accent-gold)] px-3.5 py-1.5 text-[10px] font-bold tracking-wider text-black uppercase transition-all hover:bg-[var(--accent-gold)]/90 disabled:opacity-70"
                     >
-                      {t('templatesPage.viewDetails')} <ArrowRight size={11} />
-                    </Link>
+                      {openingDemoId === template.id
+                        ? t('common.loading', { defaultValue: 'Loading…' })
+                        : t('templatesPage.preview.tryDemo')}{' '}
+                      <ArrowRight size={11} />
+                    </button>
                     <button
                       onClick={() => {
                         setPreviewTemplate(template)
@@ -513,17 +540,17 @@ export default function TemplatesShowcase() {
             </div>
 
             <div className="flex gap-3">
-              <Link
-                to={`/templates/${previewTemplate.id}`}
-                onClick={() => {
-                  setPreviewTemplate(null)
-                  addRecentView(previewTemplate.id)
-                }}
-                className="flex-1 rounded-xl bg-[var(--accent-gold)] py-3 text-center text-xs font-black tracking-wider text-black uppercase transition-all hover:bg-[var(--accent-gold)]/90"
+              <button
+                type="button"
+                onClick={() => openDemo(previewTemplate.id)}
+                disabled={openingDemoId === previewTemplate.id}
+                className="flex-1 rounded-xl bg-[var(--accent-gold)] py-3 text-center text-xs font-black tracking-wider text-black uppercase transition-all hover:bg-[var(--accent-gold)]/90 disabled:opacity-70"
               >
-                {t('templatesPage.preview.tryDemo')}{' '}
+                {openingDemoId === previewTemplate.id
+                  ? t('common.loading', { defaultValue: 'Loading…' })
+                  : t('templatesPage.preview.tryDemo')}{' '}
                 <ArrowRight size={13} className="ml-1 inline" />
-              </Link>
+              </button>
               <button
                 onClick={() => {
                   const url = `${window.location.origin}/templates/${previewTemplate.id}`

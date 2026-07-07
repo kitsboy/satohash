@@ -119,6 +119,8 @@ function AppContent() {
     location.pathname === '/trust' ||
     location.pathname === '/pitch' ||
     location.pathname === '/contribute' ||
+    location.pathname === '/templates' ||
+    location.pathname.startsWith('/templates/') ||
     location.pathname.startsWith('/legal/')
 
   const content = (
@@ -247,6 +249,14 @@ function AppContent() {
               }
             />
             <Route path="/templates" element={<TemplatesShowcase />} />
+            <Route
+              path="/templates/new"
+              element={
+                <ProtectedRoute>
+                  <NotaryTemplates />
+                </ProtectedRoute>
+              }
+            />
             <Route path="/templates/:templateId" element={<TemplateDetail />} />
             <Route path="/faq" element={<FAQ />} />
             <Route path="/pricing" element={<Pricing />} />
@@ -259,14 +269,6 @@ function AppContent() {
             <Route path="/integrations" element={<Integrations />} />
             <Route path="/widgets" element={<Widgets />} />
             <Route path="/identity" element={<Identity />} />
-            <Route
-              path="/templates/new"
-              element={
-                <ProtectedRoute>
-                  <NotaryTemplates />
-                </ProtectedRoute>
-              }
-            />
             <Route
               path="/settings"
               element={
