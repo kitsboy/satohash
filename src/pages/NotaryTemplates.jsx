@@ -1851,13 +1851,25 @@ function TemplateList({ onSelect }) {
 const MAX_HISTORY_SNAPSHOTS = 5
 
 export function TemplateEditor({ template, onBack, demoMode = false }) {
-  const [data, setData] = useState({ ...template.demoData })
+  const documentRef = useRef(null)
+  const [data, setData] = useState(() => ({ ...template.demoData }))
   const [qrUrl, setQrUrl] = useState('')
   const [darkDoc, setDarkDoc] = useState(false)
   const [showPreview, setShowPreview] = useState(false)
 
+  useEffect(() => {
+    if (!demoMode) return
+    setData({ ...template.demoData })
+    const timer = setTimeout(() => {
+      documentRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }, 120)
+    return () => clearTimeout(timer)
+  }, [template.id, demoMode, template.demoData])
+
   // ── Version History ────────────────────────────────────────────────────────
-  const historyKey = `satohash_template_history_${template.id}`
+  const historyKey = demoMode
+    ? `satohash_template_demo_${template.id}`
+    : `satohash_template_history_${template.id}`
   const [snapshots, setSnapshots] = useState(() => {
     try {
       return JSON.parse(localStorage.getItem(historyKey) || '[]')
@@ -1888,11 +1900,12 @@ export function TemplateEditor({ template, onBack, demoMode = false }) {
     [historyKey]
   )
 
-  // Trigger save on every data change
+  // Trigger save on every data change (skip persisting demo sessions)
   useEffect(() => {
+    if (demoMode) return undefined
     saveSnapshot(data)
     return () => clearTimeout(debounceRef.current)
-  }, [data, saveSnapshot])
+  }, [data, saveSnapshot, demoMode])
 
   const restoreSnapshot = useCallback((snap) => {
     setData({ ...snap.data })
@@ -2065,9 +2078,14 @@ export function TemplateEditor({ template, onBack, demoMode = false }) {
           </span>
         </button>
 
-        <div className="flex flex-col-reverse gap-6 lg:flex-row lg:items-start lg:gap-8">
+        <div
+          className={`flex gap-6 lg:flex-row lg:items-start lg:gap-8 ${
+            demoMode ? 'flex-col' : 'flex-col-reverse'
+          }`}
+        >
           {/* ── Document panel ── */}
           <motion.div
+            ref={documentRef}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.35 }}

@@ -77,14 +77,34 @@ export default function TemplatesShowcase() {
   const [sortBy, setSortBy] = useState('default')
   const [showSuggestions, setShowSuggestions] = useState(false)
   const [openingDemoId, setOpeningDemoId] = useState(null)
+  const [activeDemo, setActiveDemo] = useState(null)
+  const [previewSamples, setPreviewSamples] = useState([])
   const recentViews = getRecentViews()
 
+  const closeDemo = useCallback(() => {
+    setActiveDemo(null)
+    document.body.style.overflow = ''
+  }, [])
+
   const openDemo = useCallback(
-    (templateId) => {
+    async (templateId) => {
       setOpeningDemoId(templateId)
       setPreviewTemplate(null)
       addRecentView(templateId)
-      navigate(`/templates/${templateId}`)
+      try {
+        const mod = await import('./NotaryTemplates')
+        const template = mod.TEMPLATES.find((item) => item.id === templateId)
+        if (!template) {
+          navigate(`/templates/${templateId}`)
+          return
+        }
+        setActiveDemo({ template, Editor: mod.TemplateEditor })
+        document.body.style.overflow = 'hidden'
+      } catch {
+        navigate(`/templates/${templateId}`)
+      } finally {
+        setOpeningDemoId(null)
+      }
     },
     [navigate]
   )
@@ -96,6 +116,41 @@ export default function TemplatesShowcase() {
   useEffect(() => {
     setOpeningDemoId(null)
   }, [location.pathname])
+
+  useEffect(() => {
+    if (!previewTemplate) {
+      setPreviewSamples([])
+      return undefined
+    }
+    let active = true
+    import('./NotaryTemplates')
+      .then((mod) => {
+        if (!active) return
+        const full = mod.TEMPLATES.find((item) => item.id === previewTemplate.id)
+        if (!full?.fields?.length || !full.demoData) {
+          setPreviewSamples([])
+          return
+        }
+        setPreviewSamples(
+          full.fields.slice(0, 4).map((field) => ({
+            label: field.label,
+            value: full.demoData[field.id] || ''
+          }))
+        )
+      })
+      .catch(() => {
+        if (active) setPreviewSamples([])
+      })
+    return () => {
+      active = false
+    }
+  }, [previewTemplate])
+
+  useEffect(() => {
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [])
 
   useEffect(() => {
     fetch('/data/templates-manifest.json')
@@ -515,9 +570,27 @@ export default function TemplatesShowcase() {
               </div>
             </div>
 
-            <p className="mb-6 text-sm leading-relaxed text-[var(--text-secondary)]">
+            <p className="mb-4 text-sm leading-relaxed text-[var(--text-secondary)]">
               {previewTemplate.description}
             </p>
+
+            {previewSamples.length > 0 && (
+              <div className="mb-6 rounded-xl border border-[var(--border)] bg-[#fdfbf7] p-4">
+                <p className="mb-3 text-[10px] font-bold tracking-widest text-[var(--accent-gold)] uppercase">
+                  {t('templatesPage.preview.tags.demoData')}
+                </p>
+                <div className="max-h-44 space-y-3 overflow-y-auto">
+                  {previewSamples.map((sample) => (
+                    <div key={sample.label}>
+                      <p className="text-[9px] font-bold tracking-wider text-[#64748b] uppercase">
+                        {sample.label}
+                      </p>
+                      <p className="text-xs leading-relaxed text-[#0f172a]">{sample.value}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
             <div className="mb-6 space-y-3">
               <p className="text-[10px] font-bold tracking-widest text-[var(--text-tertiary)] uppercase">
@@ -562,6 +635,18 @@ export default function TemplatesShowcase() {
               </button>
             </div>
           </div>
+        </div>
+      )}
+
+      {/* Fullscreen demo overlay — opens in-place so demo data is always visible */}
+      {activeDemo && (
+        <div className="fixed inset-0 z-[200] overflow-y-auto bg-[var(--bg-primary)]">
+          <activeDemo.Editor
+            key={activeDemo.template.id}
+            template={activeDemo.template}
+            demoMode
+            onBack={closeDemo}
+          />
         </div>
       )}
 

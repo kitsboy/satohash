@@ -66,5 +66,7 @@ export default function TemplateDetail() {
     )
   }
 
-  return <Editor template={template} demoMode onBack={() => navigate('/templates')} />
+  return (
+    <Editor key={template.id} template={template} demoMode onBack={() => navigate('/templates')} />
+  )
 }
