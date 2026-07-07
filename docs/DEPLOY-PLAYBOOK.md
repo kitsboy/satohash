@@ -1,89 +1,62 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.giveabit.io · **Version:** 4.1.0-ELITE (Build 76) · **Updated:** 2026-07-07
+> **Live:** https://satohash.giveabit.io · **Version:** 4.1.0-ELITE (Build 80) · **Updated:** 2026-07-07
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
-# SATOHASH ELITE DEPLOY PLAYBOOK
+# Satohash Deploy Playbook
 
-## Quick Reference
+> **Live:** https://satohash.io · https://satohash.giveabit.io  
+> **Host:** Cloudflare Pages · project name **`satohash`**  
+> **M3 path:** `~/projects/satohash`
 
-| Site | Source | Port | Deploy |
-|------|--------|------|--------|
-| **Satohash Elite** | `/home/umbrel/satohash/` | 3001 | `cd /home/umbrel/satohash && git pull && npm run production && sudo systemctl restart satohash` |
-| **TadBuy** | `/home/umbrel/umbrel/app-data/openclaw/data/.openclaw/workspace/sites/tadbuy/` | 3002 | `cd /home/umbrel/umbrel/app-data/openclaw/data/.openclaw/workspace/sites/tadbuy && npm run build && sudo systemctl restart tadbuy` |
-| **Stranded** | `/home/umbrel/giveabit-dashboard/sites/tools-giveabit-io/stranded/` | 3003 | `cd /home/umbrel/giveabit-dashboard/sites/tools-giveabit-io/stranded/ && git pull && npm run build && sudo systemctl restart stranded` |
+## What production is
 
-## Service Commands
-`sudo systemctl status satohash tadbuy stranded` — Check all
-`sudo systemctl restart satohash` — Restart Satohash
-`sudo journalctl -u satohash -f` — Live logs
+Satohash production is a **static React SPA** on Cloudflare Pages. There is **no Express server** on the live site.
 
-## Deploy Workflow (M3 → GitHub → Production)
+| Layer | Production | Local dev only |
+|-------|------------|----------------|
+| Frontend | Cloudflare Pages (`./dist`) | Vite on port 3000 |
+| `server/` Express API | **Not deployed** | `npm run dev` on port 3001 |
+
+Core stamping and verification run **in the browser** (Web Crypto + OpenTimestamps). That is intentional — smaller attack surface, files never leave the device.
+
+## Deploy (M3 Terminal)
 
 ```bash
-# Local: lint, test, build
-npm run lint && npm test && npm run build
-
-# Commit & push
-git add -A && git commit -m "feat: your change"
-git push origin main
-
-# Deploy (pick one):
-./deploy.sh                              # Cloudflare Pages (static SPA)
-DEPLOY_TARGET=umbrel ./deploy.sh         # prints Umbrel restart commands
-cd /home/umbrel/satohash && git pull && npm ci && npm run production && sudo systemctl restart satohash
+cd ~/projects/satohash
+git pull origin main
+./deploy.sh
 ```
 
-CI (`.github/workflows/ci.yml`) runs lint, unit tests, build, and E2E on every push to `main`.
+Or step by step:
 
-## Known Issues
-- **TadBuy**: Build takes ~6 minutes
-- **Elite Architecture**: Requires Node 20+ for Sentry performance tracing.
-- **Dual deploy**: Cloudflare Pages serves static SPA; Express API must run separately (Umbrel/Docker).
+```bash
+cd ~/projects/satohash
+npm ci
+npm run build
+npm run build:verify
+npx wrangler pages deploy ./dist --project-name=satohash
+```
+
+**Must use project name `satohash` and output folder `./dist`.**
+
+Auth: `npx wrangler login` (one-time in Terminal.app) **or** set `CLOUDFLARE_API_TOKEN` in the environment.
+
+## After push (GitHub)
+
+1. `git push origin main` — code is on GitHub
+2. **Deploy is not automatic** unless GitHub Actions has `CLOUDFLARE_API_TOKEN` set, or you run `./deploy.sh` locally
+3. Verify live bundle: `npm run build:verify` checks local build; production should not contain bare `.fees.high` in the Landing chunk
+
+## Rollback
+
+Cloudflare Dashboard → **Workers & Pages** → **satohash** → **Deployments** → **Rollback to this deployment**
+
+## Agent (Grok) rules
+
+- **Never** document or deploy Umbrel/systemctl paths for Satohash
+- **Never** assume `git push` updates satohash.io without a Cloudflare upload
+- After code fixes that affect the Landing page, confirm production bundle or have Cam run `./deploy.sh`
+- `server/` is for local development and tests — not production deploy
 
 ---
-© 2026 Satahash Institutional Division
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+© 2026 Satohash

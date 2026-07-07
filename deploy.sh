@@ -1,17 +1,16 @@
 #!/bin/bash
-# Satohash deploy script
-# Usage:
-#   ./deploy.sh              # Cloudflare Pages (static frontend)
-#   DEPLOY_TARGET=umbrel ./deploy.sh   # Umbrel Node/PM2 (full stack)
+# Satohash — Cloudflare Pages deploy (static SPA only)
 #
-# Prerequisites:
-#   npm ci && npm run build
-#   Cloudflare: wrangler CLI + CLOUDFLARE_API_TOKEN
-#   Umbrel: git pull on server, then systemctl restart satohash
+# Usage (from M3 Terminal.app):
+#   cd ~/projects/satohash
+#   ./deploy.sh
+#
+# Requires: CLOUDFLARE_API_TOKEN (env or wrangler login)
+# Project:  satohash
+# Domains:  satohash.io, satohash.giveabit.io
 
 set -euo pipefail
 
-DEPLOY_TARGET="${DEPLOY_TARGET:-cloudflare}"
 PROJECT_DIR="${PROJECT_DIR:-$(cd "$(dirname "$0")" && pwd)}"
 CF_PROJECT="${CF_PROJECT:-satohash}"
 
@@ -23,19 +22,12 @@ npm ci
 echo "🔨 Building..."
 npm run build
 
-if [ "$DEPLOY_TARGET" = "umbrel" ]; then
-  echo "🚀 Umbrel deploy — restart service on server:"
-  echo "   cd /home/umbrel/satohash && git pull && npm ci && npm run production"
-  echo "   sudo systemctl restart satohash"
-  exit 0
-fi
+echo "🔍 Verifying Landing bundle..."
+npm run build:verify
 
 echo "📤 Deploying to Cloudflare Pages ($CF_PROJECT)..."
-if ! command -v wrangler >/dev/null 2>&1; then
-  echo "❌ wrangler CLI not found. Install: npm i -g wrangler"
-  exit 1
-fi
-wrangler pages deploy ./dist --project-name="$CF_PROJECT"
+npx wrangler pages deploy ./dist --project-name="$CF_PROJECT"
 
 echo "✅ Deployed to Cloudflare Pages!"
-echo "   Note: API runs separately on Express (port 3001). See docs/DEPLOY-PLAYBOOK.md"
+echo "   Live: https://satohash.io"
+echo "   Rollback: Cloudflare Dashboard → Pages → satohash → Deployments"
