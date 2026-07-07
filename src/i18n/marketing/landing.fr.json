@@ -1,0 +1,132 @@
+{
+  "nav": {
+    "features": "Fonctionnalités",
+    "howItWorks": "Comment ça marche",
+    "legal": "Mentions légales",
+    "donate": "Faire un don",
+    "startFree": "Commencer gratuitement"
+  },
+  "hero": {
+    "badge": "Gratuit • Aucun compte requis • Aucune donnée stockée",
+    "titleLine1": "Prouvez qu'un fichier",
+    "titleLine2": "a existé.",
+    "titleHighlight": "Pour toujours.",
+    "subtitle": "Déposez n'importe quel fichier. Obtenez un horodatage permanent, ancré sur Bitcoin. Valable en justice. Sans avocat. Sans confiance requise.",
+    "description": "Satohash calcule l'empreinte de votre fichier localement dans votre navigateur — votre document ne quitte jamais votre appareil. Seule une empreinte cryptographique est inscrite dans la blockchain Bitcoin, créant une preuve d'existence immuable pour tout fichier, contrat, photo ou jeu de données.",
+    "ctaStamp": "Horodater un fichier — C'est gratuit",
+    "ctaTemplates": "Parcourir les modèles",
+    "socialProof": "Rejoignez {{count}} professionnels qui ancrent leurs documents sur Bitcoin",
+    "tryTemplate": "Essayer un modèle gratuitement"
+  },
+  "telemetry": {
+    "title": "Télémétrie en direct du réseau Bitcoin",
+    "tipHeight": "Hauteur du bloc",
+    "fastestFee": "Frais les plus rapides",
+    "difficultyAdjust": "Ajustement de difficulté",
+    "epochProgress": "Progression de l'époque",
+    "satPerVb": "sat/vB",
+    "zeroKnowledge": "Connaissance nulle (hachage local)",
+    "compliance": "Conforme eIDAS et ESIGN",
+    "proofsConfirmed": "{{count}} preuves confirmées"
+  },
+  "features": {
+    "badge": "Ce que la plupart ignorent",
+    "titleLine1": "Vous faites déjà confiance à Bitcoin pour la valeur.",
+    "titleLine2": "Faites-lui confiance pour la vérité.",
+    "subtitle": "Lorsque Satoshi Nakamoto a lancé Bitcoin en 2009, il a intégré un titre de journal dans le bloc genèse — preuve qu'il n'avait pas été pré-miné. Ce même pouvoir est désormais le vôtre, pour tout document, en quelques minutes.",
+    "cards": {
+      "noServer": {
+        "title": "Aucun serveur requis",
+        "body": "Votre document ne quitte jamais votre appareil. Nous ne voyons qu'un hachage cryptographique — comme une empreinte digitale, pas le fichier lui-même. Connaissance nulle par conception."
+      },
+      "anchored": {
+        "title": "Ancré en 60 minutes",
+        "body": "En un bloc Bitcoin, votre preuve est tissée dans la chaîne. Chaque nœud sur Terre la valide. Elle ne peut être modifiée, antidatée ni supprimée."
+      },
+      "court": {
+        "title": "Preuve recevable en justice",
+        "body": "Les preuves Satohash satisfont les exigences de la loi ESIGN (États-Unis), UETA et eIDAS (UE). Votre horodatage est mathématiquement incontestable."
+      },
+      "noMiddleman": {
+        "title": "Aucun intermédiaire. Jamais.",
+        "body": "Contrairement aux notaires traditionnels, il n'y a pas d'entreprise à fermer, pas de serveur à pirater. Bitcoin lui-même est le notaire — 18 000 nœuds complets."
+      }
+    }
+  },
+  "howItWorks": {
+    "titleLine1": "Trois étapes.",
+    "titleHighlight": "Preuve permanente.",
+    "subtitle": "Du fichier à Bitcoin en moins d'une heure. Aucun compte requis pour essayer.",
+    "steps": {
+      "upload": {
+        "title": "Téléversez ou hachez votre fichier",
+        "body": "Glissez n'importe quel document dans Satohash. Nous générons instantanément une empreinte SHA-256 dans votre navigateur. Votre fichier ne quitte jamais votre appareil."
+      },
+      "anchor": {
+        "title": "Ancrer sur Bitcoin",
+        "body": "Votre empreinte est soumise à la blockchain Bitcoin via OpenTimestamps. Intégrée au bloc suivant — généralement sous 60 minutes."
+      },
+      "certificate": {
+        "title": "Téléchargez votre certificat",
+        "body": "Recevez un certificat de preuve portable. Vérifiable indépendamment partout, à tout moment — même si Satohash cesse d'exister."
+      }
+    },
+    "cta": "Essayez maintenant — Gratuit",
+    "privacyTitle": "Vos fichiers ne quittent jamais votre appareil",
+    "privacyBody": "Satohash ne voit qu'un hachage SHA-256 — jamais votre document original. Connaissance nulle par conception."
+  },
+  "useCases": {
+    "title": "Qui a besoin d'une preuve infalsifiable ?",
+    "cards": {
+      "legal": {
+        "title": "Contrats juridiques",
+        "body": "Prouvez que votre contrat existait avant un litige. Fini les versions contradictoires au tribunal."
+      },
+      "creative": {
+        "title": "Œuvres créatives",
+        "body": "Photographes, écrivains, designers — horodatez avant de publier. Votre priorité est prouvée."
+      },
+      "medical": {
+        "title": "Dossiers médicaux",
+        "body": "Pistes d'audit immuables pour les documents patients et l'historique des traitements."
+      },
+      "corporate": {
+        "title": "Conformité d'entreprise",
+        "body": "Résolutions du conseil, états financiers, journaux d'audit — intégrité cryptographique, toujours."
+      },
+      "research": {
+        "title": "Recherche et PI",
+        "body": "Scientifiques et inventeurs prouvent les dates de découverte avec une certitude mathématique."
+      },
+      "government": {
+        "title": "Gouvernement et archives",
+        "body": "Registres publics qui ne peuvent jamais être modifiés ou antidatés — jamais."
+      }
+    }
+  },
+  "finalCta": {
+    "titleLine1": "Chaque document a une histoire.",
+    "titleHighlight": "Rendez la vôtre incontestable.",
+    "subtitle": "Aucun compte requis. Aucune carte bancaire. Votre première preuve est gratuite. Ancrée sur Bitcoin en moins d'une heure.",
+    "ctaStamp": "Notariser votre premier document — Gratuit",
+    "ctaPitch": "Lire le pitch"
+  },
+  "legal": {
+    "terms": "Conditions d'utilisation",
+    "privacy": "Politique de confidentialité",
+    "cryptoNotice": "Avis cryptographique",
+    "trustCenter": "Centre de confiance"
+  },
+  "pwa": {
+    "title": "Ajouter Satohash à l'écran d'accueil",
+    "subtitle": "Accès instantané, fonctionne hors ligne",
+    "install": "Installer"
+  },
+  "donation": {
+    "title": "Soutenir Satohash",
+    "subtitle": "Garder les horodatages gratuits pour tous",
+    "copy": "Copier l'adresse Bitcoin",
+    "copied": "Adresse copiée !",
+    "thanks": "Chaque satoshi aide à garder les horodatages gratuits. Merci. 🙏"
+  }
+}

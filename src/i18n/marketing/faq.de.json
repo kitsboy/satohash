@@ -1,0 +1,116 @@
+{
+  "hero": {
+    "eyebrow": "Fragen? Wir haben Antworten.",
+    "title": "Häufig gestellte",
+    "titleHighlight": "Fragen",
+    "subtitle": "Alles, was Sie über Bitcoin-verankerten Existenznachweis, OpenTimestamps und das Satohash-Protokoll wissen müssen.",
+    "searchPlaceholder": "Fragen suchen..."
+  },
+  "categories": {
+    "all": "Alle Fragen",
+    "basics": "Grundlagen",
+    "technical": "Technisch",
+    "legal": "Rechtliches",
+    "usage": "Nutzung"
+  },
+  "items": [
+    {
+      "id": "whatIs",
+      "category": "basics",
+      "q": "Was ist Satohash?",
+      "a": "Satohash ist ein kostenloses Open-Source-Tool, mit dem Sie nachweisen können, dass ein digitales Dokument, ein Foto, ein Vertrag oder eine KI-Ausgabe zu einem bestimmten Zeitpunkt existierte, indem ein kryptografischer Fingerabdruck über OpenTimestamps in die Bitcoin-Blockchain eingeschrieben wird."
+    },
+    {
+      "id": "privacy",
+      "category": "basics",
+      "q": "Verlassen meine Dokumente mein Gerät?",
+      "a": "Nein. Nur ein SHA-256-Kryptografie-Hash — ein kurzer Fingerabdruck — wird an das Netzwerk gesendet. Ihre eigentliche Datei verlässt niemals Ihren Browser. Das ist Zero-Knowledge by Design."
+    },
+    {
+      "id": "cost",
+      "category": "basics",
+      "q": "Was kostet es?",
+      "a": "Grundlegendes Bitcoin-Zeitstempeln ist völlig kostenlos. Kein Konto, keine Kreditkarte, kein Abonnement. Premium-Funktionen (BOLT-12 Lightning-Zahlungen, API-Zugang) sind in Entwicklung."
+    },
+    {
+      "id": "legal",
+      "category": "legal",
+      "q": "Ist der Nachweis rechtlich gültig?",
+      "a": "Bitcoin-Zeitstempel sind kryptografisch verifizierbar und wurden in Gerichtsverfahren akzeptiert. Der Nachweis entspricht den ESIGN Act-Standards und ist mit eIDAS-Vorschriften kompatibel. Konsultieren Sie qualifizierte Beratung für Ihre Rechtsordnung."
+    },
+    {
+      "id": "ots",
+      "category": "technical",
+      "q": "Was ist OpenTimestamps (OTS)?",
+      "a": "OpenTimestamps ist ein Protokoll, das einen Merkle-Baum aus vielen Dokument-Hashes erstellt und die Wurzel in einer einzigen Bitcoin-Transaktion verankert. Dadurch ist Zeitstempeln praktisch kostenlos bei voller Bitcoin-Sicherheit."
+    },
+    {
+      "id": "shutdown",
+      "category": "basics",
+      "q": "Was passiert, wenn Satohash schließt?",
+      "a": "Ihre Nachweise überleben unabhängig. Die .ots-Nachweisdatei ist in sich geschlossen und kann von jedem mit dem Open-Source-Tool ots verifiziert werden, selbst wenn Satohash morgen verschwindet."
+    },
+    {
+      "id": "wallet",
+      "category": "usage",
+      "q": "Brauche ich eine Bitcoin-Wallet?",
+      "a": "Nein. Für grundlegendes Zeitstempeln übernimmt Satohash alles. Für Premium-Funktionen wie Lightning-Zahlungen benötigen Sie möglicherweise eine kompatible Wallet für die Abwicklung."
+    },
+    {
+      "id": "fileTypes",
+      "category": "usage",
+      "q": "Welche Dateitypen kann ich stempeln?",
+      "a": "Jede digitale Datei: PDFs, Bilder, Videos, Audio, Quellcode, KI-Ausgaben, Verträge, E-Mails, Webseiten. Wenn es eine Datei ist, kann Satohash sie hashen."
+    },
+    {
+      "id": "duration",
+      "category": "usage",
+      "q": "Wie lange dauert das Stempeln?",
+      "a": "Der Hash wird sofort in Ihrem Browser erzeugt. Der OTS-Kalender committet periodisch in Bitcoin-Blöcke. Die meisten Nachweise sind innerhalb weniger Stunden verankert, und Sie erhalten sofort einen Verifizierungslink."
+    },
+    {
+      "id": "nip05",
+      "category": "technical",
+      "q": "Was ist NIP-05 / Nostr-Integration?",
+      "a": "NIP-05 verknüpft einen lesbaren Namen (wie kimi@giveabit.io) mit einem Nostr-Kryptografie-Schlüssel. Dies ermöglicht verifizierbare Kommunikation und Identität für Vertragsunterzeichner über das dezentrale Nostr-Protokoll."
+    },
+    {
+      "id": "api",
+      "category": "technical",
+      "q": "Kann ich Satohash über eine API nutzen?",
+      "a": "Ja. Satohash bietet eine REST-API für programmatisches Stempeln und Verifizieren. API-Schlüsselverwaltung ist für Entwickler verfügbar. Webhooks benachrichtigen Ihre App, wenn Nachweise abgeschlossen sind."
+    },
+    {
+      "id": "sha256",
+      "category": "technical",
+      "q": "Was ist ein SHA-256-Hash?",
+      "a": "Ein SHA-256-Hash ist ein 64-stelliger hexadezimaler Fingerabdruck, der für Ihre Datei einzigartig ist. Selbst die Änderung eines Pixels in einem Bild erzeugt einen völlig anderen Hash. Es ist ein mathematischer Identifikator, nicht die Datei selbst."
+    },
+    {
+      "id": "opensource",
+      "category": "basics",
+      "q": "Ist Satohash Open Source?",
+      "a": "Ja. Satohash ist MIT-lizenziert und auf GitHub unter github.com/kitsboy/satohash verfügbar. Der vollständige Quellcode ist öffentlich."
+    },
+    {
+      "id": "snapper",
+      "category": "usage",
+      "q": "Was ist der Satohash Snapper?",
+      "a": "Der Satohash Snapper ist eine Browser-Erweiterung, die Webseiten-Beweise erfasst. Machen Sie einen Schnappschuss einer beliebigen Webseite, und die Erweiterung stempelt ihren Hash und Metadaten in Bitcoin für einen verifizierbaren Nachweis ihres Zustands in diesem Moment."
+    }
+  ],
+  "empty": {
+    "title": "Keine Fragen gefunden",
+    "subtitle": "Versuchen Sie andere Stichwörter oder schauen Sie später wieder vorbei."
+  },
+  "cta": {
+    "title": "Noch Fragen?",
+    "subtitle": "Kontaktieren Sie das Team. Wir antworten in der Regel innerhalb von 24 Stunden.",
+    "button": "Frage stellen"
+  },
+  "related": {
+    "templates": "Vorlagen durchsuchen",
+    "pitch": "Pitch lesen",
+    "trust": "Trust Center"
+  }
+}

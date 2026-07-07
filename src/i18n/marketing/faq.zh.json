@@ -1,0 +1,116 @@
+{
+  "hero": {
+    "eyebrow": "有疑问？我们有答案。",
+    "title": "常见",
+    "titleHighlight": "问题",
+    "subtitle": "关于 Bitcoin 锚定存在证明、OpenTimestamps 和 Satohash 协议，您需要了解的一切。",
+    "searchPlaceholder": "搜索问题..."
+  },
+  "categories": {
+    "all": "全部问题",
+    "basics": "基础",
+    "technical": "技术",
+    "legal": "法律",
+    "usage": "使用"
+  },
+  "items": [
+    {
+      "id": "whatIs",
+      "category": "basics",
+      "q": "什么是 Satohash？",
+      "a": "Satohash 是一款免费的开源工具，让您能够通过 OpenTimestamps 将加密指纹锁定到 Bitcoin 区块链中，证明任何数字文档、照片、合同或 AI 输出在特定时刻曾经存在。"
+    },
+    {
+      "id": "privacy",
+      "category": "basics",
+      "q": "我的文档会离开我的设备吗？",
+      "a": "不会。只有 SHA-256 加密哈希——一个简短的指纹——会发送到网络。您的实际文件永远不会离开您的浏览器。这是零知识设计。"
+    },
+    {
+      "id": "cost",
+      "category": "basics",
+      "q": "费用是多少？",
+      "a": "基础 Bitcoin 时间戳完全免费。无需账户、信用卡或订阅。高级功能（BOLT-12 Lightning 支付、API 访问）正在开发中。"
+    },
+    {
+      "id": "legal",
+      "category": "legal",
+      "q": "证明是否具有法律效力？",
+      "a": "Bitcoin 时间戳可加密验证，并已在法律程序中被接受。该证明符合 ESIGN Act 标准，并与 eIDAS 法规兼容。请咨询您所在司法管辖区的合格法律顾问。"
+    },
+    {
+      "id": "ots",
+      "category": "technical",
+      "q": "什么是 OpenTimestamps (OTS)？",
+      "a": "OpenTimestamps 是一种协议，它将许多文档哈希构建成 Merkle 树，并将根锚定在单笔 Bitcoin 交易中。这使得时间戳几乎免费，同时保持完整的 Bitcoin 安全性。"
+    },
+    {
+      "id": "shutdown",
+      "category": "basics",
+      "q": "如果 Satohash 关闭会怎样？",
+      "a": "您的证明可以独立存在。.ots 证明文件是自包含的，任何人都可以使用开源 ots 工具进行验证，即使 Satohash 明天消失也不例外。"
+    },
+    {
+      "id": "wallet",
+      "category": "usage",
+      "q": "我需要 Bitcoin 钱包吗？",
+      "a": "不需要。对于基础时间戳，Satohash 会处理一切。对于 Lightning 支付等高级功能，您可能需要兼容的钱包进行结算。"
+    },
+    {
+      "id": "fileTypes",
+      "category": "usage",
+      "q": "我可以为哪些类型的文件加盖时间戳？",
+      "a": "任何数字文件：PDF、图像、视频、音频、源代码、AI 输出、合同、电子邮件、网页。只要是文件，Satohash 就能计算其哈希。"
+    },
+    {
+      "id": "duration",
+      "category": "usage",
+      "q": "加盖时间戳需要多长时间？",
+      "a": "哈希会在您的浏览器中即时生成。OTS 日历会定期提交到 Bitcoin 区块。大多数证明在几小时内完成锚定，您会立即获得验证链接。"
+    },
+    {
+      "id": "nip05",
+      "category": "technical",
+      "q": "什么是 NIP-05 / Nostr 集成？",
+      "a": "NIP-05 将人类可读的名称（如 kimi@giveabit.io）链接到 Nostr 加密密钥。这允许在去中心化的 Nostr 协议上为合同签署方提供可验证的通信和身份。"
+    },
+    {
+      "id": "api",
+      "category": "technical",
+      "q": "我可以通过 API 使用 Satohash 吗？",
+      "a": "可以。Satohash 提供 REST API 用于程序化加盖时间戳和验证。开发者可使用 API 密钥管理。Webhook 会在证明完成时通知您的应用。"
+    },
+    {
+      "id": "sha256",
+      "category": "technical",
+      "q": "什么是 SHA-256 哈希？",
+      "a": "SHA-256 哈希是 64 个字符的十六进制指纹，对您的文件唯一。即使更改图像中的一个像素也会产生完全不同的哈希。它是数学标识符，而非文件本身。"
+    },
+    {
+      "id": "opensource",
+      "category": "basics",
+      "q": "Satohash 是开源的吗？",
+      "a": "是的。Satohash 采用 MIT 许可证，可在 GitHub 上获取：github.com/kitsboy/satohash。完整源代码公开。"
+    },
+    {
+      "id": "snapper",
+      "category": "usage",
+      "q": "什么是 Satohash Snapper？",
+      "a": "Satohash Snapper 是一款浏览器扩展，用于捕获网页证据。对任意网页截图，扩展会将其哈希和元数据加盖时间戳到 Bitcoin，以可验证地证明该时刻的页面状态。"
+    }
+  ],
+  "empty": {
+    "title": "未找到问题",
+    "subtitle": "请尝试其他关键词或稍后再来。"
+  },
+  "cta": {
+    "title": "还有疑问？",
+    "subtitle": "联系团队。我们通常会在 24 小时内回复。",
+    "button": "提问"
+  },
+  "related": {
+    "templates": "浏览模板",
+    "pitch": "阅读项目介绍",
+    "trust": "信任中心"
+  }
+}

@@ -1,0 +1,132 @@
+{
+  "nav": {
+    "features": "Funktionen",
+    "howItWorks": "So funktioniert's",
+    "legal": "Rechtliches",
+    "donate": "Spenden",
+    "startFree": "Kostenlos starten"
+  },
+  "hero": {
+    "badge": "Kostenlos • Kein Konto nötig • Keine Daten gespeichert",
+    "titleLine1": "Beweisen Sie, dass eine Datei",
+    "titleLine2": "existiert hat.",
+    "titleHighlight": "Für immer.",
+    "subtitle": "Legen Sie eine beliebige Datei ab. Erhalten Sie einen permanenten, Bitcoin-gestützten Zeitstempel. Gerichtsfest. Keine Anwälte. Kein Vertrauen erforderlich.",
+    "description": "Satohash hasht Ihre Datei lokal in Ihrem Browser — Ihr Dokument verlässt niemals Ihr Gerät. Nur ein kryptografischer Fingerabdruck wird in die Bitcoin-Blockchain geschrieben und erstellt einen unveränderlichen Existenznachweis für jede Datei, jeden Vertrag, jedes Foto oder jeden Datensatz.",
+    "ctaStamp": "Datei stempeln — Kostenlos",
+    "ctaTemplates": "Vorlagen durchsuchen",
+    "socialProof": "Schließen Sie sich {{count}} Fachleuten an, die Dokumente in Bitcoin verankern",
+    "tryTemplate": "Vorlage kostenlos ausprobieren"
+  },
+  "telemetry": {
+    "title": "Live-Bitcoin-Netzwerk-Telemetrie",
+    "tipHeight": "Blockhöhe",
+    "fastestFee": "Schnellste Gebühr",
+    "difficultyAdjust": "Schwierigkeitsanpassung",
+    "epochProgress": "Epochenfortschritt",
+    "satPerVb": "sat/vB",
+    "zeroKnowledge": "Zero-Knowledge (lokales Hashing)",
+    "compliance": "eIDAS- und ESIGN-konform",
+    "proofsConfirmed": "{{count}} Nachweise bestätigt"
+  },
+  "features": {
+    "badge": "Was die meisten nicht wissen",
+    "titleLine1": "Sie vertrauen Bitcoin bereits mit Wert.",
+    "titleLine2": "Vertrauen Sie ihm jetzt mit der Wahrheit.",
+    "subtitle": "Als Satoshi Nakamoto 2009 Bitcoin startete, bettete er eine Zeitungsüberschrift in den Genesis-Block ein — Beweis, dass er nicht vorab geschürft wurde. Diese Kraft gehört jetzt Ihnen, für jedes Dokument, in Minuten.",
+    "cards": {
+      "noServer": {
+        "title": "Kein Server erforderlich",
+        "body": "Ihr Dokument verlässt niemals Ihr Gerät. Wir sehen nur einen kryptografischen Hash — wie einen Fingerabdruck, nicht die eigentliche Datei. Zero-Knowledge by Design."
+      },
+      "anchored": {
+        "title": "In 60 Minuten verankert",
+        "body": "Innerhalb eines Bitcoin-Blocks ist Ihr Nachweis in die Kette eingewoben. Jeder Knoten auf der Erde validiert ihn. Er kann nicht geändert, rückdatiert oder gelöscht werden."
+      },
+      "court": {
+        "title": "Gerichtsfeste Beweise",
+        "body": "Satohash-Nachweise erfüllen die Anforderungen des ESIGN Act (USA), UETA und eIDAS (EU). Ihr Zeitstempel ist mathematisch unbestreitbar."
+      },
+      "noMiddleman": {
+        "title": "Kein Mittelsmann. Niemals.",
+        "body": "Anders als bei traditionellen Notaren gibt es kein Unternehmen zum Schließen, keinen Server zum Hacken. Bitcoin selbst ist der Notar — 18.000 Full Nodes stark."
+      }
+    }
+  },
+  "howItWorks": {
+    "titleLine1": "Drei Schritte.",
+    "titleHighlight": "Permanenter Nachweis.",
+    "subtitle": "Von der Datei zu Bitcoin in unter einer Stunde. Kein Konto erforderlich zum Ausprobieren.",
+    "steps": {
+      "upload": {
+        "title": "Datei hochladen oder hashen",
+        "body": "Ziehen Sie ein beliebiges Dokument in Satohash. Wir erzeugen sofort einen SHA-256-Fingerabdruck in Ihrem Browser. Ihre Datei verlässt niemals Ihr Gerät."
+      },
+      "anchor": {
+        "title": "In Bitcoin verankern",
+        "body": "Ihr Fingerabdruck wird über OpenTimestamps an die Bitcoin-Blockchain übermittelt. Eingebettet im nächsten Block — typischerweise innerhalb von 60 Minuten."
+      },
+      "certificate": {
+        "title": "Zertifikat herunterladen",
+        "body": "Erhalten Sie ein portables Nachweiszertifikat. Unabhängig überall und jederzeit verifizierbar — selbst wenn Satohash aufhört zu existieren."
+      }
+    },
+    "cta": "Jetzt ausprobieren — Kostenlos",
+    "privacyTitle": "Ihre Dateien verlassen niemals Ihr Gerät",
+    "privacyBody": "Satohash sieht nur einen SHA-256-Hash — niemals Ihr Originaldokument. Zero-Knowledge by Design."
+  },
+  "useCases": {
+    "title": "Wer braucht einen nicht fälschbaren Nachweis?",
+    "cards": {
+      "legal": {
+        "title": "Rechtsverträge",
+        "body": "Beweisen Sie, dass Ihr Vertrag vor einem Streit existierte. Kein Hin und Her vor Gericht."
+      },
+      "creative": {
+        "title": "Kreative Werke",
+        "body": "Fotografen, Autoren, Designer — Zeitstempel vor der Veröffentlichung. Ihre Priorität ist bewiesen."
+      },
+      "medical": {
+        "title": "Medizinische Unterlagen",
+        "body": "Unveränderliche Audit-Trails für Patientendokumente und Behandlungsverläufe."
+      },
+      "corporate": {
+        "title": "Unternehmens-Compliance",
+        "body": "Vorstandsbeschlüsse, Finanzberichte, Audit-Logs — kryptografische Integrität, immer."
+      },
+      "research": {
+        "title": "Forschung & IP",
+        "body": "Wissenschaftler und Erfinder beweisen Entdeckungsdaten mit mathematischer Sicherheit."
+      },
+      "government": {
+        "title": "Regierung & Archive",
+        "body": "Öffentliche Aufzeichnungen, die niemals geändert oder rückdatiert werden können — niemals."
+      }
+    }
+  },
+  "finalCta": {
+    "titleLine1": "Jedes Dokument hat eine Geschichte.",
+    "titleHighlight": "Machen Sie Ihre unbestreitbar.",
+    "subtitle": "Kein Konto erforderlich. Keine Kreditkarte. Ihr erster Nachweis ist kostenlos. In Bitcoin verankert in unter einer Stunde.",
+    "ctaStamp": "Erstes Dokument notarisieren — Kostenlos",
+    "ctaPitch": "Pitch lesen"
+  },
+  "legal": {
+    "terms": "Nutzungsbedingungen",
+    "privacy": "Datenschutzrichtlinie",
+    "cryptoNotice": "Kryptografischer Hinweis",
+    "trustCenter": "Trust Center"
+  },
+  "pwa": {
+    "title": "Satohash zum Startbildschirm hinzufügen",
+    "subtitle": "Sofortiger Zugriff, funktioniert offline",
+    "install": "Installieren"
+  },
+  "donation": {
+    "title": "Satohash unterstützen",
+    "subtitle": "Zeitstempel für alle kostenlos halten",
+    "copy": "Bitcoin-Adresse kopieren",
+    "copied": "Adresse kopiert!",
+    "thanks": "Jeder Satoshi hilft, Zeitstempel kostenlos zu halten. Danke. 🙏"
+  }
+}

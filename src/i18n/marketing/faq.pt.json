@@ -1,0 +1,116 @@
+{
+  "hero": {
+    "eyebrow": "Perguntas? Temos respostas.",
+    "title": "Perguntas",
+    "titleHighlight": "frequentes",
+    "subtitle": "Tudo o que precisa de saber sobre prova de existência ancorada em Bitcoin, OpenTimestamps e o protocolo Satohash.",
+    "searchPlaceholder": "Pesquisar perguntas..."
+  },
+  "categories": {
+    "all": "Todas as perguntas",
+    "basics": "Noções básicas",
+    "technical": "Técnico",
+    "legal": "Legal",
+    "usage": "Utilização"
+  },
+  "items": [
+    {
+      "id": "whatIs",
+      "category": "basics",
+      "q": "O que é o Satohash?",
+      "a": "O Satohash é uma ferramenta gratuita e de código aberto que lhe permite provar que qualquer documento digital, fotografia, contrato ou resultado de IA existiu num momento específico, bloqueando uma impressão digital criptográfica na blockchain Bitcoin através do OpenTimestamps."
+    },
+    {
+      "id": "privacy",
+      "category": "basics",
+      "q": "Os meus documentos saem do meu dispositivo?",
+      "a": "Não. Apenas um hash criptográfico SHA-256 — uma impressão digital curta — é enviado para a rede. O seu ficheiro real nunca sai do seu navegador. É conhecimento zero por conceção."
+    },
+    {
+      "id": "cost",
+      "category": "basics",
+      "q": "Quanto custa?",
+      "a": "O carimbo temporal básico em Bitcoin é completamente gratuito. Sem conta, sem cartão de crédito, sem subscrição. As funcionalidades premium (pagamentos Lightning BOLT-12, acesso API) estão em desenvolvimento."
+    },
+    {
+      "id": "legal",
+      "category": "legal",
+      "q": "A prova é legalmente válida?",
+      "a": "Os carimbos temporais Bitcoin são criptograficamente verificáveis e foram aceites em processos legais. A prova cumpre os padrões da ESIGN Act e é compatível com os regulamentos eIDAS. Consulte um conselheiro qualificado para a sua jurisdição."
+    },
+    {
+      "id": "ots",
+      "category": "technical",
+      "q": "O que é o OpenTimestamps (OTS)?",
+      "a": "O OpenTimestamps é um protocolo que cria uma árvore de Merkle de muitos hashes de documentos e ancora a raiz numa única transação Bitcoin. Isto torna o carimbo temporal praticamente gratuito, mantendo a segurança total do Bitcoin."
+    },
+    {
+      "id": "shutdown",
+      "category": "basics",
+      "q": "O que acontece se o Satohash encerrar?",
+      "a": "As suas provas sobrevivem de forma independente. O ficheiro de prova .ots é autónomo e pode ser verificado por qualquer pessoa usando a ferramenta ots de código aberto, mesmo que o Satohash desapareça amanhã."
+    },
+    {
+      "id": "wallet",
+      "category": "usage",
+      "q": "Preciso de uma carteira Bitcoin?",
+      "a": "Não. Para o carimbo temporal básico, o Satohash trata de tudo. Para funcionalidades premium como pagamentos Lightning, pode precisar de uma carteira compatível para a liquidação."
+    },
+    {
+      "id": "fileTypes",
+      "category": "usage",
+      "q": "Que tipos de ficheiros posso carimbar?",
+      "a": "Qualquer ficheiro digital: PDFs, imagens, vídeos, áudio, código-fonte, resultados de IA, contratos, e-mails, páginas web. Se é um ficheiro, o Satohash consegue calcular o hash."
+    },
+    {
+      "id": "duration",
+      "category": "usage",
+      "q": "Quanto tempo demora o carimbo?",
+      "a": "O hash é gerado instantaneamente no seu navegador. O calendário OTS compromete-se periodicamente com blocos Bitcoin. A maioria das provas fica ancorada em poucas horas, e recebe um link de verificação de imediato."
+    },
+    {
+      "id": "nip05",
+      "category": "technical",
+      "q": "O que é NIP-05 / integração Nostr?",
+      "a": "O NIP-05 liga um nome legível (como kimi@giveabit.io) a uma chave criptográfica Nostr. Isto permite comunicação e identidade verificáveis para signatários de contratos no protocolo descentralizado Nostr."
+    },
+    {
+      "id": "api",
+      "category": "technical",
+      "q": "Posso usar o Satohash através de uma API?",
+      "a": "Sim. O Satohash fornece uma API REST para carimbo e verificação programáticos. A gestão de chaves API está disponível para programadores. Os webhooks notificam a sua aplicação quando as provas estão concluídas."
+    },
+    {
+      "id": "sha256",
+      "category": "technical",
+      "q": "O que é um hash SHA-256?",
+      "a": "Um hash SHA-256 é uma impressão digital hexadecimal de 64 caracteres única para o seu ficheiro. Mesmo alterar um píxel numa imagem produz um hash completamente diferente. É um identificador matemático, não o ficheiro em si."
+    },
+    {
+      "id": "opensource",
+      "category": "basics",
+      "q": "O Satohash é de código aberto?",
+      "a": "Sim. O Satohash tem licença MIT e está disponível no GitHub em github.com/kitsboy/satohash. O código-fonte completo é público."
+    },
+    {
+      "id": "snapper",
+      "category": "usage",
+      "q": "O que é o Satohash Snapper?",
+      "a": "O Satohash Snapper é uma extensão de navegador que captura evidência de páginas web. Tire uma captura de qualquer página, e a extensão carimba o seu hash e metadados em Bitcoin para prova verificável do seu estado nesse momento."
+    }
+  ],
+  "empty": {
+    "title": "Nenhuma pergunta encontrada",
+    "subtitle": "Tente outras palavras-chave ou volte mais tarde."
+  },
+  "cta": {
+    "title": "Ainda tem perguntas?",
+    "subtitle": "Contacte a equipa. Normalmente respondemos em 24 horas.",
+    "button": "Fazer uma pergunta"
+  },
+  "related": {
+    "templates": "Explorar modelos",
+    "pitch": "Ler o pitch",
+    "trust": "Centro de confiança"
+  }
+}

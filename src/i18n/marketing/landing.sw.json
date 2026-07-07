@@ -1,0 +1,132 @@
+{
+  "nav": {
+    "features": "Vipengele",
+    "howItWorks": "Jinsi inavyofanya kazi",
+    "legal": "Kisheria",
+    "donate": "Changia",
+    "startFree": "Anza bure"
+  },
+  "hero": {
+    "badge": "Bure • Hakuna akaunti inayohitajika • Hakuna data inayohifadhiwa",
+    "titleLine1": "Thibitisha faili yoyote",
+    "titleLine2": "ilikuwepo.",
+    "titleHighlight": "Milele.",
+    "subtitle": "Weka faili yoyote. Pata muhuri wa muda wa kudumu, unaounganishwa na Bitcoin. Halali mahakamani. Hakuna wanasheria. Hakuna uaminifu unaohitajika.",
+    "description": "Satohash inahesabu hash ya faili yako ndani ya kivinjari chako — hati yako haiondoki kwenye kifaa chako. Alama ya kidole ya kriptografia pekee ndiyo inayoandikwa kwenye blockchain ya Bitcoin, ikitengeneza uthibitisho usiobadilika wa kuwepo kwa faili, mkataba, picha, au seti ya data yoyote.",
+    "ctaStamp": "Weka muhuri kwenye faili — Ni bure",
+    "ctaTemplates": "Vinjari violezo",
+    "socialProof": "Jiunge na wataalamu {{count}} wanaounganisha hati kwenye Bitcoin",
+    "tryTemplate": "Jaribu kiolezo bure"
+  },
+  "telemetry": {
+    "title": "Telemetria ya mtandao wa Bitcoin moja kwa moja",
+    "tipHeight": "Urefu wa kizuizi",
+    "fastestFee": "Ada ya haraka zaidi",
+    "difficultyAdjust": "Marekebisho ya ugumu",
+    "epochProgress": "Maendeleo ya kipindi",
+    "satPerVb": "sat/vB",
+    "zeroKnowledge": "Ujuzi wa sifuri (hashing ya ndani)",
+    "compliance": "Inatii eIDAS na ESIGN",
+    "proofsConfirmed": "Uthibitisho {{count}} umethibitishwa"
+  },
+  "features": {
+    "badge": "Watu wengi hawajui",
+    "titleLine1": "Tayari unamwamini Bitcoin kwa thamani.",
+    "titleLine2": "Sasa mwamini kwa ukweli.",
+    "subtitle": "Satoshi Nakamoto alipozindua Bitcoin mwaka 2009, aliweka kichwa cha habari cha gazeti kwenye kizuizi cha kwanza — uthibitisho kwamba hakikuwa kimechimbwa mapema. Nguvu hiyo hiyo sasa ni yako, kwa hati yoyote, kwa dakika chache.",
+    "cards": {
+      "noServer": {
+        "title": "Hakuna seva inayohitajika",
+        "body": "Hati yako haiondoki kwenye kifaa chako. Tunaona hash ya kriptografia pekee — kama alama ya kidole, si faili halisi. Ujuzi wa sifuri kwa muundo."
+      },
+      "anchored": {
+        "title": "Imeunganishwa ndani ya dakika 60",
+        "body": "Ndani ya kizuizi kimoja cha Bitcoin, uthibitisho wako umejumuishwa kwenye mnyororo. Kila nodi duniani inauhakikisha. Hauwezi kubadilishwa, kuwekwa tarehe ya zamani, au kufutwa."
+      },
+      "court": {
+        "title": "Ushahidi unaokubalika mahakamani",
+        "body": "Uthibitisho wa Satohash unakidhi mahitaji ya ESIGN Act (Marekani), UETA, na eIDAS (Ulaya). Muhuri wako wa muda haukubaliki kukanushwa kwa hesabu."
+      },
+      "noMiddleman": {
+        "title": "Hakuna mpatanishi. Kamwe.",
+        "body": "Tofauti na notari wa jadi, hakuna kampuni ya kufungwa, hakuna seva ya kudukuliwa. Bitcoin yenyewe ndiyo notari — na nodi kamili 18,000."
+      }
+    }
+  },
+  "howItWorks": {
+    "titleLine1": "Hatua tatu.",
+    "titleHighlight": "Uthibitisho wa kudumu.",
+    "subtitle": "Kutoka faili hadi Bitcoin ndani ya saa moja. Hakuna akaunti inayohitajika kujaribu.",
+    "steps": {
+      "upload": {
+        "title": "Pakia au hesabu hash ya faili yako",
+        "body": "Buruta hati yoyote kwenye Satohash. Tunatengeneza alama ya kidole ya SHA-256 mara moja kwenye kivinjari chako. Faili yako haiondoki kwenye kifaa chako."
+      },
+      "anchor": {
+        "title": "Unganisha kwenye Bitcoin",
+        "body": "Alama yako ya kidole inawasilishwa kwenye blockchain ya Bitcoin kupitia OpenTimestamps. Imejumuishwa kwenye kizuizi kinachofuata — kawaida ndani ya dakika 60."
+      },
+      "certificate": {
+        "title": "Pakua cheti chako",
+        "body": "Pokea cheti cha uthibitisho kinachoweza kubebeka. Kinaweza kuhakikishwa kwa uhuru popote, wakati wowote — hata kama Satohash itaacha kuwepo."
+      }
+    },
+    "cta": "Jaribu sasa — Bure",
+    "privacyTitle": "Faili zako haziondoki kwenye kifaa chako",
+    "privacyBody": "Satohash inaona hash ya SHA-256 pekee — kamwe hati yako ya asili. Ujuzi wa sifuri kwa muundo."
+  },
+  "useCases": {
+    "title": "Nani anahitaji uthibitisho usioweza kughushiwa?",
+    "cards": {
+      "legal": {
+        "title": "Mikataba ya kisheria",
+        "body": "Thibitisha mkataba wako ulikuwepo kabla ya mzozo. Hakuna maneno yanayopingana mahakamani."
+      },
+      "creative": {
+        "title": "Kazi za ubunifu",
+        "body": "Wapiga picha, waandishi, wabunifu — weka muhuri wa muda kabla ya kuchapisha. Kipaumbele chako kinathibitishwa."
+      },
+      "medical": {
+        "title": "Rekodi za matibabu",
+        "body": "Njia za ukaguzi zisizobadilika kwa hati za wagonjwa na historia ya matibabu."
+      },
+      "corporate": {
+        "title": "Uzingatiaji wa kampuni",
+        "body": "Maazimio ya bodi, fedha, kumbukumbu za ukaguzi — uadilifu wa kriptografia, kila wakati."
+      },
+      "research": {
+        "title": "Utafiti na IP",
+        "body": "Wanasayansi na wabunifu wanathibitisha tarehe za ugunduzi kwa uhakika wa hesabu."
+      },
+      "government": {
+        "title": "Serikali na kumbukumbu",
+        "body": "Rekodi za umma ambazo haziwezi kubadilishwa au kuwekwa tarehe ya zamani — kamwe."
+      }
+    }
+  },
+  "finalCta": {
+    "titleLine1": "Kila hati ina hadithi.",
+    "titleHighlight": "Fanya yako isikubaliki kukanushwa.",
+    "subtitle": "Hakuna akaunti inayohitajika. Hakuna kadi ya mkopo. Uthibitisho wako wa kwanza ni bure. Imeunganishwa kwenye Bitcoin ndani ya saa moja.",
+    "ctaStamp": "Notari hati yako ya kwanza — Bure",
+    "ctaPitch": "Soma pitch"
+  },
+  "legal": {
+    "terms": "Masharti ya huduma",
+    "privacy": "Sera ya faragha",
+    "cryptoNotice": "Taarifa ya kriptografia",
+    "trustCenter": "Kituo cha uaminifu"
+  },
+  "pwa": {
+    "title": "Ongeza Satohash kwenye skrini ya nyumbani",
+    "subtitle": "Ufikiaji wa papo hapo, inafanya kazi nje ya mtandao",
+    "install": "Sakinisha"
+  },
+  "donation": {
+    "title": "Saidia Satohash",
+    "subtitle": "Weka mihuri ya muda bure kwa kila mtu",
+    "copy": "Nakili anwani ya Bitcoin",
+    "copied": "Anwani imenakiliwa!",
+    "thanks": "Kila satoshi husaidia kuweka mihuri ya muda bure. Asante. 🙏"
+  }
+}

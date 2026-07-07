@@ -1,0 +1,132 @@
+{
+  "nav": {
+    "features": "功能",
+    "howItWorks": "工作原理",
+    "legal": "法律",
+    "donate": "捐赠",
+    "startFree": "免费开始"
+  },
+  "hero": {
+    "badge": "免费 • 无需账户 • 零数据存储",
+    "titleLine1": "证明任何文件",
+    "titleLine2": "曾经存在。",
+    "titleHighlight": "永久有效。",
+    "subtitle": "拖放任意文件。获得永久、由 Bitcoin 背书的时间戳。法庭认可。无需律师。无需信任任何第三方。",
+    "description": "Satohash 在您的浏览器本地计算文件哈希——您的文档永远不会离开您的设备。只有加密指纹会被写入 Bitcoin 区块链，为任何文件、合同、照片或数据集创建不可篡改的存在证明。",
+    "ctaStamp": "为文件加盖时间戳——完全免费",
+    "ctaTemplates": "浏览模板",
+    "socialProof": "加入 {{count}} 位将文档锚定到 Bitcoin 的专业人士",
+    "tryTemplate": "免费试用模板"
+  },
+  "telemetry": {
+    "title": "Bitcoin 网络实时遥测",
+    "tipHeight": "区块高度",
+    "fastestFee": "最快费率",
+    "difficultyAdjust": "难度调整",
+    "epochProgress": "周期进度",
+    "satPerVb": "sat/vB",
+    "zeroKnowledge": "零知识（本地哈希）",
+    "compliance": "符合 eIDAS 与 ESIGN",
+    "proofsConfirmed": "已确认 {{count}} 条证明"
+  },
+  "features": {
+    "badge": "大多数人不知道的事",
+    "titleLine1": "您已信任 Bitcoin 保管价值。",
+    "titleLine2": "现在信任它保管真相。",
+    "subtitle": "2009 年 Satoshi Nakamoto 推出 Bitcoin 时，在创世区块中嵌入了报纸标题——证明它并非预挖。同样的力量现在属于您，适用于任何文档，只需几分钟。",
+    "cards": {
+      "noServer": {
+        "title": "无需服务器",
+        "body": "您的文档永远不会离开您的设备。我们仅能看到加密哈希——如同指纹，而非文件本身。零知识，从设计之初如此。"
+      },
+      "anchored": {
+        "title": "60 分钟内完成锚定",
+        "body": "在一个 Bitcoin 区块内，您的证明即被编织进链中。全球每个节点都会验证它。无法篡改、倒填日期或删除。"
+      },
+      "court": {
+        "title": "法庭可用证据",
+        "body": "Satohash 证明满足 ESIGN Act（美国）、UETA 和 eIDAS（欧盟）要求。您的时间戳在数学上不可抵赖。"
+      },
+      "noMiddleman": {
+        "title": "无中间人。永远如此。",
+        "body": "与传统公证不同，没有可关闭的公司，没有可攻击的服务器。Bitcoin 本身就是公证人——18,000 个全节点支撑。"
+      }
+    }
+  },
+  "howItWorks": {
+    "titleLine1": "三步完成。",
+    "titleHighlight": "永久证明。",
+    "subtitle": "从文件到 Bitcoin，不到一小时。试用无需账户。",
+    "steps": {
+      "upload": {
+        "title": "上传或哈希您的文件",
+        "body": "将任意文档拖入 Satohash。我们即时在您的浏览器中生成 SHA-256 指纹。您的文件永远不会离开您的设备。"
+      },
+      "anchor": {
+        "title": "锚定到 Bitcoin",
+        "body": "您的指纹通过 OpenTimestamps 提交到 Bitcoin 区块链。嵌入下一个区块——通常 60 分钟内完成。"
+      },
+      "certificate": {
+        "title": "下载您的证书",
+        "body": "获得可携带的证明证书。随时随地可独立验证——即使 Satohash 不复存在。"
+      }
+    },
+    "cta": "立即试用——免费",
+    "privacyTitle": "您的文件永远不会离开您的设备",
+    "privacyBody": "Satohash 仅能看到 SHA-256 哈希——绝不会看到您的原始文档。零知识，从设计之初如此。"
+  },
+  "useCases": {
+    "title": "谁需要无法伪造的证明？",
+    "cards": {
+      "legal": {
+        "title": "法律合同",
+        "body": "证明您的合同在争议发生前已存在。法庭上不再有各执一词。"
+      },
+      "creative": {
+        "title": "创意作品",
+        "body": "摄影师、作家、设计师——发布前加盖时间戳。您的优先权有据可查。"
+      },
+      "medical": {
+        "title": "医疗记录",
+        "body": "为患者文档和治疗历史提供不可篡改的审计追踪。"
+      },
+      "corporate": {
+        "title": "企业合规",
+        "body": "董事会决议、财务报表、审计日志——始终保持加密完整性。"
+      },
+      "research": {
+        "title": "研究与知识产权",
+        "body": "科学家和发明人以数学确定性证明发现日期。"
+      },
+      "government": {
+        "title": "政府与档案",
+        "body": "公共记录永远无法被篡改或倒填日期——永远如此。"
+      }
+    }
+  },
+  "finalCta": {
+    "titleLine1": "每份文档都有故事。",
+    "titleHighlight": "让您的故事无可辩驳。",
+    "subtitle": "无需账户。无需信用卡。您的第一份证明免费。一小时内锚定到 Bitcoin。",
+    "ctaStamp": "公证您的第一份文档——免费",
+    "ctaPitch": "阅读项目介绍"
+  },
+  "legal": {
+    "terms": "服务条款",
+    "privacy": "隐私政策",
+    "cryptoNotice": "加密声明",
+    "trustCenter": "信任中心"
+  },
+  "pwa": {
+    "title": "将 Satohash 添加到主屏幕",
+    "subtitle": "即时访问，支持离线使用",
+    "install": "安装"
+  },
+  "donation": {
+    "title": "支持 Satohash",
+    "subtitle": "让时间戳对所有人保持免费",
+    "copy": "复制 Bitcoin 地址",
+    "copied": "地址已复制！",
+    "thanks": "每一个 satoshi 都有助于保持时间戳免费。感谢您。🙏"
+  }
+}

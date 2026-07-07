@@ -1,0 +1,116 @@
+{
+  "hero": {
+    "eyebrow": "Questions? We Have Answers.",
+    "title": "Frequently Asked",
+    "titleHighlight": "Questions",
+    "subtitle": "Everything you need to know about Bitcoin-anchored proof of existence, OpenTimestamps, and the Satohash protocol.",
+    "searchPlaceholder": "Search questions..."
+  },
+  "categories": {
+    "all": "All Questions",
+    "basics": "Basics",
+    "technical": "Technical",
+    "legal": "Legal",
+    "usage": "Usage"
+  },
+  "items": [
+    {
+      "id": "whatIs",
+      "category": "basics",
+      "q": "What is Satohash?",
+      "a": "Satohash is a free, open-source tool that lets you prove any digital document, photo, contract, or AI output existed at a specific moment by locking a cryptographic fingerprint into the Bitcoin blockchain using OpenTimestamps."
+    },
+    {
+      "id": "privacy",
+      "category": "basics",
+      "q": "Do my documents leave my device?",
+      "a": "No. Only a SHA-256 cryptographic hash — a short fingerprint — is sent to the network. Your actual file never leaves your browser. This is zero-knowledge by design."
+    },
+    {
+      "id": "cost",
+      "category": "basics",
+      "q": "How much does it cost?",
+      "a": "Basic Bitcoin timestamping is completely free. No account, no credit card, no subscription. Premium features (BOLT-12 Lightning payments, API access) are in development."
+    },
+    {
+      "id": "legal",
+      "category": "legal",
+      "q": "Is the proof legally valid?",
+      "a": "Bitcoin timestamps are cryptographically verifiable and have been accepted in legal proceedings. The proof is compliant with ESIGN Act standards and compatible with eIDAS regulations. Consult qualified counsel for your jurisdiction."
+    },
+    {
+      "id": "ots",
+      "category": "technical",
+      "q": "What is OpenTimestamps (OTS)?",
+      "a": "OpenTimestamps is a protocol that creates a Merkle tree of many document hashes and anchors the root in a single Bitcoin transaction. This makes timestamping virtually free while maintaining full Bitcoin security."
+    },
+    {
+      "id": "shutdown",
+      "category": "basics",
+      "q": "What happens if Satohash shuts down?",
+      "a": "Your proofs survive independently. The .ots proof file is self-contained and can be verified by anyone using the open-source ots tool, even if Satohash disappears tomorrow."
+    },
+    {
+      "id": "wallet",
+      "category": "usage",
+      "q": "Do I need a Bitcoin wallet?",
+      "a": "No. For basic timestamping, Satohash handles everything. For premium features like Lightning payments, you may need a compatible wallet for settlement."
+    },
+    {
+      "id": "fileTypes",
+      "category": "usage",
+      "q": "What types of files can I stamp?",
+      "a": "Any digital file: PDFs, images, videos, audio, source code, AI outputs, contracts, emails, web pages. If it is a file, Satohash can hash it."
+    },
+    {
+      "id": "duration",
+      "category": "usage",
+      "q": "How long does stamping take?",
+      "a": "The hash is generated instantly in your browser. The OTS calendar commits periodically to Bitcoin blocks. Most proofs are anchored within a few hours, and you get a verification link immediately."
+    },
+    {
+      "id": "nip05",
+      "category": "technical",
+      "q": "What is NIP-05 / Nostr integration?",
+      "a": "NIP-05 links a human-readable name (like kimi@giveabit.io) to a Nostr cryptographic key. This allows verifiable communication and identity for contract signers across the decentralized Nostr protocol."
+    },
+    {
+      "id": "api",
+      "category": "technical",
+      "q": "Can I use Satohash from an API?",
+      "a": "Yes. Satohash provides a REST API for programmatic stamping and verification. API key management is available for developers. Webhooks notify your app when proofs complete."
+    },
+    {
+      "id": "sha256",
+      "category": "technical",
+      "q": "What is a SHA-256 hash?",
+      "a": "A SHA-256 hash is a 64-character hexadecimal fingerprint unique to your file. Even changing one pixel in an image produces a completely different hash. It is a mathematical identifier, not the file itself."
+    },
+    {
+      "id": "opensource",
+      "category": "basics",
+      "q": "Is Satohash open source?",
+      "a": "Yes. Satohash is MIT-licensed and available on GitHub at github.com/kitsboy/satohash. The full source code is public."
+    },
+    {
+      "id": "snapper",
+      "category": "usage",
+      "q": "What is the Satohash Snapper?",
+      "a": "The Satohash Snapper is a browser extension that captures web page evidence. Take a snapshot of any webpage, and the extension stamps its hash and metadata to Bitcoin for verifiable proof of its state at that moment."
+    }
+  ],
+  "empty": {
+    "title": "No questions found",
+    "subtitle": "Try different keywords or check back later."
+  },
+  "cta": {
+    "title": "Still Have Questions?",
+    "subtitle": "Reach out to the team. We typically respond within 24 hours.",
+    "button": "Ask a Question"
+  },
+  "related": {
+    "templates": "Browse Templates",
+    "pitch": "Read the Pitch",
+    "trust": "Trust Center"
+  }
+}

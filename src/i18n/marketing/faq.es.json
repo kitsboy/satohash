@@ -1,0 +1,116 @@
+{
+  "hero": {
+    "eyebrow": "¿Preguntas? Tenemos respuestas.",
+    "title": "Preguntas",
+    "titleHighlight": "frecuentes",
+    "subtitle": "Todo lo que necesitas saber sobre la prueba de existencia anclada en Bitcoin, OpenTimestamps y el protocolo Satohash.",
+    "searchPlaceholder": "Buscar preguntas..."
+  },
+  "categories": {
+    "all": "Todas las preguntas",
+    "basics": "Conceptos básicos",
+    "technical": "Técnico",
+    "legal": "Legal",
+    "usage": "Uso"
+  },
+  "items": [
+    {
+      "id": "whatIs",
+      "category": "basics",
+      "q": "¿Qué es Satohash?",
+      "a": "Satohash es una herramienta gratuita y de código abierto que te permite demostrar que cualquier documento digital, foto, contrato o salida de IA existió en un momento específico, bloqueando una huella criptográfica en la blockchain de Bitcoin mediante OpenTimestamps."
+    },
+    {
+      "id": "privacy",
+      "category": "basics",
+      "q": "¿Mis documentos salen de mi dispositivo?",
+      "a": "No. Solo se envía a la red un hash criptográfico SHA-256 — una huella breve. Tu archivo real nunca abandona tu navegador. Es conocimiento cero por diseño."
+    },
+    {
+      "id": "cost",
+      "category": "basics",
+      "q": "¿Cuánto cuesta?",
+      "a": "El sellado temporal básico en Bitcoin es completamente gratuito. Sin cuenta, sin tarjeta de crédito, sin suscripción. Las funciones premium (pagos Lightning BOLT-12, acceso API) están en desarrollo."
+    },
+    {
+      "id": "legal",
+      "category": "legal",
+      "q": "¿Es la prueba legalmente válida?",
+      "a": "Las marcas de tiempo de Bitcoin son criptográficamente verificables y han sido aceptadas en procedimientos legales. La prueba cumple los estándares de la ESIGN Act y es compatible con las regulaciones eIDAS. Consulta a un asesor cualificado para tu jurisdicción."
+    },
+    {
+      "id": "ots",
+      "category": "technical",
+      "q": "¿Qué es OpenTimestamps (OTS)?",
+      "a": "OpenTimestamps es un protocolo que crea un árbol de Merkle de muchos hashes de documentos y ancla la raíz en una sola transacción de Bitcoin. Esto hace que el sellado temporal sea prácticamente gratuito manteniendo la seguridad completa de Bitcoin."
+    },
+    {
+      "id": "shutdown",
+      "category": "basics",
+      "q": "¿Qué pasa si Satohash cierra?",
+      "a": "Tus pruebas sobreviven de forma independiente. El archivo de prueba .ots es autocontenido y puede ser verificado por cualquiera usando la herramienta ots de código abierto, incluso si Satohash desaparece mañana."
+    },
+    {
+      "id": "wallet",
+      "category": "usage",
+      "q": "¿Necesito una cartera Bitcoin?",
+      "a": "No. Para el sellado temporal básico, Satohash se encarga de todo. Para funciones premium como pagos Lightning, puede que necesites una cartera compatible para la liquidación."
+    },
+    {
+      "id": "fileTypes",
+      "category": "usage",
+      "q": "¿Qué tipos de archivos puedo sellar?",
+      "a": "Cualquier archivo digital: PDF, imágenes, vídeos, audio, código fuente, salidas de IA, contratos, correos, páginas web. Si es un archivo, Satohash puede calcular su hash."
+    },
+    {
+      "id": "duration",
+      "category": "usage",
+      "q": "¿Cuánto tarda el sellado?",
+      "a": "El hash se genera al instante en tu navegador. El calendario OTS se compromete periódicamente con bloques de Bitcoin. La mayoría de las pruebas se anclan en unas horas, y obtienes un enlace de verificación de inmediato."
+    },
+    {
+      "id": "nip05",
+      "category": "technical",
+      "q": "¿Qué es NIP-05 / integración con Nostr?",
+      "a": "NIP-05 vincula un nombre legible (como kimi@giveabit.io) a una clave criptográfica de Nostr. Esto permite comunicación e identidad verificables para firmantes de contratos en el protocolo descentralizado Nostr."
+    },
+    {
+      "id": "api",
+      "category": "technical",
+      "q": "¿Puedo usar Satohash desde una API?",
+      "a": "Sí. Satohash ofrece una API REST para sellado y verificación programáticos. La gestión de claves API está disponible para desarrolladores. Los webhooks notifican a tu aplicación cuando las pruebas se completan."
+    },
+    {
+      "id": "sha256",
+      "category": "technical",
+      "q": "¿Qué es un hash SHA-256?",
+      "a": "Un hash SHA-256 es una huella hexadecimal de 64 caracteres única para tu archivo. Incluso cambiar un píxel en una imagen produce un hash completamente diferente. Es un identificador matemático, no el archivo en sí."
+    },
+    {
+      "id": "opensource",
+      "category": "basics",
+      "q": "¿Es Satohash de código abierto?",
+      "a": "Sí. Satohash tiene licencia MIT y está disponible en GitHub en github.com/kitsboy/satohash. El código fuente completo es público."
+    },
+    {
+      "id": "snapper",
+      "category": "usage",
+      "q": "¿Qué es el Satohash Snapper?",
+      "a": "El Satohash Snapper es una extensión de navegador que captura evidencia de páginas web. Toma una instantánea de cualquier página y la extensión sella su hash y metadatos en Bitcoin para una prueba verificable de su estado en ese momento."
+    }
+  ],
+  "empty": {
+    "title": "No se encontraron preguntas",
+    "subtitle": "Prueba con otras palabras clave o vuelve más tarde."
+  },
+  "cta": {
+    "title": "¿Aún tienes preguntas?",
+    "subtitle": "Contacta con el equipo. Normalmente respondemos en 24 horas.",
+    "button": "Hacer una pregunta"
+  },
+  "related": {
+    "templates": "Explorar plantillas",
+    "pitch": "Leer el pitch",
+    "trust": "Centro de confianza"
+  }
+}

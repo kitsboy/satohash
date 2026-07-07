@@ -1,0 +1,132 @@
+{
+  "nav": {
+    "features": "Funcionalidades",
+    "howItWorks": "Como funciona",
+    "legal": "Legal",
+    "donate": "Doar",
+    "startFree": "Começar grátis"
+  },
+  "hero": {
+    "badge": "Grátis • Sem conta • Zero dados armazenados",
+    "titleLine1": "Prove que qualquer ficheiro",
+    "titleLine2": "existiu.",
+    "titleHighlight": "Para sempre.",
+    "subtitle": "Largue qualquer ficheiro. Obtenha um carimbo temporal permanente, ancorado em Bitcoin. Válido em tribunal. Sem advogados. Sem necessidade de confiança.",
+    "description": "O Satohash calcula o hash do seu ficheiro localmente no seu navegador — o seu documento nunca sai do seu dispositivo. Apenas uma impressão digital criptográfica é escrita na blockchain Bitcoin, criando prova imutável de existência para qualquer ficheiro, contrato, fotografia ou conjunto de dados.",
+    "ctaStamp": "Carimbar um ficheiro — É grátis",
+    "ctaTemplates": "Explorar modelos",
+    "socialProof": "Junte-se a {{count}} profissionais que ancoram documentos em Bitcoin",
+    "tryTemplate": "Experimente um modelo grátis"
+  },
+  "telemetry": {
+    "title": "Telemetria em direto da rede Bitcoin",
+    "tipHeight": "Altura do bloco",
+    "fastestFee": "Taxa mais rápida",
+    "difficultyAdjust": "Ajuste de dificuldade",
+    "epochProgress": "Progresso da época",
+    "satPerVb": "sat/vB",
+    "zeroKnowledge": "Conhecimento zero (hash local)",
+    "compliance": "Conforme com eIDAS e ESIGN",
+    "proofsConfirmed": "{{count}} provas confirmadas"
+  },
+  "features": {
+    "badge": "O que a maioria não sabe",
+    "titleLine1": "Já confia no Bitcoin com valor.",
+    "titleLine2": "Agora confie nele com a verdade.",
+    "subtitle": "Quando Satoshi Nakamoto lançou o Bitcoin em 2009, incorporou um título de jornal no bloco génesis — prova de que não foi pré-minado. Esse mesmo poder é agora seu, para qualquer documento, em minutos.",
+    "cards": {
+      "noServer": {
+        "title": "Sem servidor necessário",
+        "body": "O seu documento nunca sai do seu dispositivo. Só vemos um hash criptográfico — como uma impressão digital, não o ficheiro real. Conhecimento zero por conceção."
+      },
+      "anchored": {
+        "title": "Ancorado em 60 minutos",
+        "body": "Num bloco Bitcoin, a sua prova fica entrelaçada na cadeia. Cada nó na Terra a valida. Não pode ser alterada, antedatada nem eliminada."
+      },
+      "court": {
+        "title": "Prova válida em tribunal",
+        "body": "As provas Satohash cumprem os requisitos da ESIGN Act (EUA), UETA e eIDAS (UE). O seu carimbo temporal é matematicamente irrefutável."
+      },
+      "noMiddleman": {
+        "title": "Sem intermediários. Nunca.",
+        "body": "Ao contrário dos notários tradicionais, não há empresa para fechar nem servidor para hackear. O próprio Bitcoin é o notário — com 18.000 nós completos."
+      }
+    }
+  },
+  "howItWorks": {
+    "titleLine1": "Três passos.",
+    "titleHighlight": "Prova permanente.",
+    "subtitle": "Do ficheiro ao Bitcoin em menos de uma hora. Não é necessária conta para experimentar.",
+    "steps": {
+      "upload": {
+        "title": "Carregue ou faça hash do seu ficheiro",
+        "body": "Arraste qualquer documento para o Satohash. Geramos instantaneamente uma impressão digital SHA-256 no seu navegador. O seu ficheiro nunca sai do seu dispositivo."
+      },
+      "anchor": {
+        "title": "Ancorar em Bitcoin",
+        "body": "A sua impressão digital é submetida à blockchain Bitcoin via OpenTimestamps. Incorporada no bloco seguinte — normalmente em 60 minutos."
+      },
+      "certificate": {
+        "title": "Descarregue o seu certificado",
+        "body": "Receba um certificado de prova portátil. Verificável de forma independente em qualquer lugar, a qualquer momento — mesmo que o Satohash deixe de existir."
+      }
+    },
+    "cta": "Experimente agora — Grátis",
+    "privacyTitle": "Os seus ficheiros nunca saem do seu dispositivo",
+    "privacyBody": "O Satohash só vê um hash SHA-256 — nunca o seu documento original. Conhecimento zero por conceção."
+  },
+  "useCases": {
+    "title": "Quem precisa de uma prova que não possa ser falsificada?",
+    "cards": {
+      "legal": {
+        "title": "Contratos legais",
+        "body": "Prove que o seu contrato existia antes de uma disputa. Sem versões contraditórias em tribunal."
+      },
+      "creative": {
+        "title": "Trabalho criativo",
+        "body": "Fotógrafos, escritores, designers — carimbe antes de publicar. A sua prioridade fica provada."
+      },
+      "medical": {
+        "title": "Registos médicos",
+        "body": "Trilhos de auditoria imutáveis para documentos de pacientes e histórico de tratamentos."
+      },
+      "corporate": {
+        "title": "Conformidade corporativa",
+        "body": "Resoluções do conselho, finanças, registos de auditoria — integridade criptográfica, sempre."
+      },
+      "research": {
+        "title": "Investigação e PI",
+        "body": "Cientistas e inventores provam datas de descoberta com certeza matemática."
+      },
+      "government": {
+        "title": "Governo e arquivos",
+        "body": "Registos públicos que nunca podem ser alterados ou antedatados — nunca."
+      }
+    }
+  },
+  "finalCta": {
+    "titleLine1": "Cada documento tem uma história.",
+    "titleHighlight": "Torne a sua inegável.",
+    "subtitle": "Sem conta. Sem cartão de crédito. A sua primeira prova é grátis. Ancorada em Bitcoin em menos de uma hora.",
+    "ctaStamp": "Notarize o seu primeiro documento — Grátis",
+    "ctaPitch": "Ler o pitch"
+  },
+  "legal": {
+    "terms": "Termos de serviço",
+    "privacy": "Política de privacidade",
+    "cryptoNotice": "Aviso criptográfico",
+    "trustCenter": "Centro de confiança"
+  },
+  "pwa": {
+    "title": "Adicionar Satohash ao ecrã principal",
+    "subtitle": "Acesso instantâneo, funciona offline",
+    "install": "Instalar"
+  },
+  "donation": {
+    "title": "Apoiar o Satohash",
+    "subtitle": "Manter os carimbos temporais grátis para todos",
+    "copy": "Copiar endereço Bitcoin",
+    "copied": "Endereço copiado!",
+    "thanks": "Cada satoshi ajuda a manter os carimbos temporais grátis. Obrigado. 🙏"
+  }
+}

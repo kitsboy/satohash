@@ -1,0 +1,116 @@
+{
+  "hero": {
+    "eyebrow": "Des questions ? Nous avons les réponses.",
+    "title": "Foire aux",
+    "titleHighlight": "questions",
+    "subtitle": "Tout ce que vous devez savoir sur la preuve d'existence ancrée sur Bitcoin, OpenTimestamps et le protocole Satohash.",
+    "searchPlaceholder": "Rechercher des questions..."
+  },
+  "categories": {
+    "all": "Toutes les questions",
+    "basics": "Bases",
+    "technical": "Technique",
+    "legal": "Juridique",
+    "usage": "Utilisation"
+  },
+  "items": [
+    {
+      "id": "whatIs",
+      "category": "basics",
+      "q": "Qu'est-ce que Satohash ?",
+      "a": "Satohash est un outil gratuit et open source qui vous permet de prouver qu'un document numérique, une photo, un contrat ou une sortie IA a existé à un moment précis en verrouillant une empreinte cryptographique dans la blockchain Bitcoin via OpenTimestamps."
+    },
+    {
+      "id": "privacy",
+      "category": "basics",
+      "q": "Mes documents quittent-ils mon appareil ?",
+      "a": "Non. Seul un hachage cryptographique SHA-256 — une courte empreinte — est envoyé au réseau. Votre fichier réel ne quitte jamais votre navigateur. C'est de la connaissance nulle par conception."
+    },
+    {
+      "id": "cost",
+      "category": "basics",
+      "q": "Combien ça coûte ?",
+      "a": "L'horodatage Bitcoin de base est entièrement gratuit. Pas de compte, pas de carte bancaire, pas d'abonnement. Les fonctionnalités premium (paiements Lightning BOLT-12, accès API) sont en développement."
+    },
+    {
+      "id": "legal",
+      "category": "legal",
+      "q": "La preuve est-elle juridiquement valable ?",
+      "a": "Les horodatages Bitcoin sont vérifiables cryptographiquement et ont été acceptés dans des procédures judiciaires. La preuve est conforme aux normes de la loi ESIGN et compatible avec les réglementations eIDAS. Consultez un conseil qualifié pour votre juridiction."
+    },
+    {
+      "id": "ots",
+      "category": "technical",
+      "q": "Qu'est-ce qu'OpenTimestamps (OTS) ?",
+      "a": "OpenTimestamps est un protocole qui crée un arbre de Merkle de nombreux hachages de documents et ancre la racine dans une seule transaction Bitcoin. Cela rend l'horodatage pratiquement gratuit tout en conservant la sécurité complète de Bitcoin."
+    },
+    {
+      "id": "shutdown",
+      "category": "basics",
+      "q": "Que se passe-t-il si Satohash ferme ?",
+      "a": "Vos preuves survivent de manière indépendante. Le fichier de preuve .ots est autonome et peut être vérifié par quiconque à l'aide de l'outil ots open source, même si Satohash disparaît demain."
+    },
+    {
+      "id": "wallet",
+      "category": "usage",
+      "q": "Ai-je besoin d'un portefeuille Bitcoin ?",
+      "a": "Non. Pour l'horodatage de base, Satohash gère tout. Pour les fonctionnalités premium comme les paiements Lightning, vous pourriez avoir besoin d'un portefeuille compatible pour le règlement."
+    },
+    {
+      "id": "fileTypes",
+      "category": "usage",
+      "q": "Quels types de fichiers puis-je horodater ?",
+      "a": "Tout fichier numérique : PDF, images, vidéos, audio, code source, sorties IA, contrats, e-mails, pages web. Si c'est un fichier, Satohash peut le hacher."
+    },
+    {
+      "id": "duration",
+      "category": "usage",
+      "q": "Combien de temps prend l'horodatage ?",
+      "a": "Le hachage est généré instantanément dans votre navigateur. Le calendrier OTS s'engage périodiquement dans les blocs Bitcoin. La plupart des preuves sont ancrées en quelques heures, et vous obtenez un lien de vérification immédiatement."
+    },
+    {
+      "id": "nip05",
+      "category": "technical",
+      "q": "Qu'est-ce que NIP-05 / l'intégration Nostr ?",
+      "a": "NIP-05 lie un nom lisible (comme kimi@giveabit.io) à une clé cryptographique Nostr. Cela permet une communication et une identité vérifiables pour les signataires de contrats sur le protocole décentralisé Nostr."
+    },
+    {
+      "id": "api",
+      "category": "technical",
+      "q": "Puis-je utiliser Satohash via une API ?",
+      "a": "Oui. Satohash fournit une API REST pour l'horodatage et la vérification programmatiques. La gestion des clés API est disponible pour les développeurs. Les webhooks notifient votre application lorsque les preuves sont terminées."
+    },
+    {
+      "id": "sha256",
+      "category": "technical",
+      "q": "Qu'est-ce qu'un hachage SHA-256 ?",
+      "a": "Un hachage SHA-256 est une empreinte hexadécimale de 64 caractères unique à votre fichier. Même changer un pixel dans une image produit un hachage complètement différent. C'est un identifiant mathématique, pas le fichier lui-même."
+    },
+    {
+      "id": "opensource",
+      "category": "basics",
+      "q": "Satohash est-il open source ?",
+      "a": "Oui. Satohash est sous licence MIT et disponible sur GitHub à github.com/kitsboy/satohash. Le code source complet est public."
+    },
+    {
+      "id": "snapper",
+      "category": "usage",
+      "q": "Qu'est-ce que le Satohash Snapper ?",
+      "a": "Le Satohash Snapper est une extension de navigateur qui capture des preuves de pages web. Prenez un instantané de n'importe quelle page, et l'extension horodate son hachage et ses métadonnées sur Bitcoin pour une preuve vérifiable de son état à ce moment."
+    }
+  ],
+  "empty": {
+    "title": "Aucune question trouvée",
+    "subtitle": "Essayez d'autres mots-clés ou revenez plus tard."
+  },
+  "cta": {
+    "title": "Vous avez encore des questions ?",
+    "subtitle": "Contactez l'équipe. Nous répondons généralement sous 24 heures.",
+    "button": "Poser une question"
+  },
+  "related": {
+    "templates": "Parcourir les modèles",
+    "pitch": "Lire le pitch",
+    "trust": "Centre de confiance"
+  }
+}

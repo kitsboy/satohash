@@ -1,0 +1,116 @@
+{
+  "hero": {
+    "eyebrow": "Maswali? Tuna majibu.",
+    "title": "Maswali",
+    "titleHighlight": "yanayoulizwa mara kwa mara",
+    "subtitle": "Kila kitu unachohitaji kujua kuhusu uthibitisho wa kuwepo unaounganishwa na Bitcoin, OpenTimestamps, na itifaki ya Satohash.",
+    "searchPlaceholder": "Tafuta maswali..."
+  },
+  "categories": {
+    "all": "Maswali yote",
+    "basics": "Misingi",
+    "technical": "Kiufundi",
+    "legal": "Kisheria",
+    "usage": "Matumizi"
+  },
+  "items": [
+    {
+      "id": "whatIs",
+      "category": "basics",
+      "q": "Satohash ni nini?",
+      "a": "Satohash ni zana ya bure, ya chanzo wazi inayokuwezesha kuthibitisha hati yoyote ya kidijitali, picha, mkataba, au matokeo ya AI ilikuwepo wakati maalum kwa kufunga alama ya kidole ya kriptografia kwenye blockchain ya Bitcoin kwa kutumia OpenTimestamps."
+    },
+    {
+      "id": "privacy",
+      "category": "basics",
+      "q": "Je, hati zangu zinaondoka kwenye kifaa changu?",
+      "a": "Hapana. Hash ya kriptografia SHA-256 pekee — alama fupi ya kidole — ndiyo inayotumwa kwenye mtandao. Faili yako halisi haiondoki kwenye kivinjari chako. Hii ni ujuzi wa sifuri kwa muundo."
+    },
+    {
+      "id": "cost",
+      "category": "basics",
+      "q": "Inagharimu kiasi gani?",
+      "a": "Kuweka muhuri wa muda wa msingi wa Bitcoin ni bure kabisa. Hakuna akaunti, hakuna kadi ya mkopo, hakuna usajili. Vipengele vya premium (malipo ya Lightning BOLT-12, ufikiaji wa API) viko katika maendeleo."
+    },
+    {
+      "id": "legal",
+      "category": "legal",
+      "q": "Je, uthibitisho ni halali kisheria?",
+      "a": "Mihuri ya muda ya Bitcoin inaweza kuthibitishwa kwa kriptografia na imekubaliwa katika taratibu za kisheria. Uthibitisho unatii viwango vya ESIGN Act na unaoana na kanuni za eIDAS. Wasiliana na mshauri aliyehitimu kwa eneo lako la mamlaka."
+    },
+    {
+      "id": "ots",
+      "category": "technical",
+      "q": "OpenTimestamps (OTS) ni nini?",
+      "a": "OpenTimestamps ni itifaki inayounda mti wa Merkle wa hashes nyingi za hati na kuunganisha mzizi katika muamala mmoja wa Bitcoin. Hii inafanya kuweka muhuri wa muda kuwa bure kwa vitendo huku ikidumisha usalama kamili wa Bitcoin."
+    },
+    {
+      "id": "shutdown",
+      "category": "basics",
+      "q": "Nini kitatokea ikiwa Satohash itafungwa?",
+      "a": "Uthibitisho wako unabaki kwa uhuru. Faili ya uthibitisho .ots inajitegemea na inaweza kuthibitishwa na mtu yeyote kwa kutumia zana ya chanzo wazi ots, hata kama Satohash itapotea kesho."
+    },
+    {
+      "id": "wallet",
+      "category": "usage",
+      "q": "Je, ninahitaji pochi ya Bitcoin?",
+      "a": "Hapana. Kwa kuweka muhuri wa muda wa msingi, Satohash inashughulikia kila kitu. Kwa vipengele vya premium kama malipo ya Lightning, unaweza kuhitaji pochi inayooana kwa malipo."
+    },
+    {
+      "id": "fileTypes",
+      "category": "usage",
+      "q": "Ni aina gani za faili ninaweza kuweka muhuri?",
+      "a": "Faili yoyote ya kidijitali: PDF, picha, video, sauti, msimbo wa chanzo, matokeo ya AI, mikataba, barua pepe, kurasa za wavuti. Ikiwa ni faili, Satohash inaweza kuhesabu hash yake."
+    },
+    {
+      "id": "duration",
+      "category": "usage",
+      "q": "Kuweka muhuri kunachukua muda gani?",
+      "a": "Hash inatengenezwa mara moja kwenye kivinjari chako. Kalenda ya OTS inajitolea mara kwa mara kwenye vizuizi vya Bitcoin. Uthibitisho mwingi unaunganishwa ndani ya masaa machache, na unapata kiungo cha uthibitishaji mara moja."
+    },
+    {
+      "id": "nip05",
+      "category": "technical",
+      "q": "NIP-05 / ujumuishaji wa Nostr ni nini?",
+      "a": "NIP-05 huunganisha jina linalosomeka (kama kimi@giveabit.io) na ufunguo wa kriptografia wa Nostr. Hii inaruhusu mawasiliano na utambulisho unaoweza kuthibitishwa kwa wasaini wa mikataba kupitia itifaki iliyogatuliwa ya Nostr."
+    },
+    {
+      "id": "api",
+      "category": "technical",
+      "q": "Je, ninaweza kutumia Satohash kupitia API?",
+      "a": "Ndiyo. Satohash inatoa API ya REST kwa kuweka muhuri na uthibitishaji wa programu. Usimamizi wa funguo za API unapatikana kwa wasanidi programu. Webhooks zinaarifu programu yako uthibitisho unapokamilika."
+    },
+    {
+      "id": "sha256",
+      "category": "technical",
+      "q": "Hash ya SHA-256 ni nini?",
+      "a": "Hash ya SHA-256 ni alama ya kidole ya heksadesimali yenye herufi 64 inayobainisha faili yako pekee. Hata kubadilisha pikseli moja katika picha hutengeneza hash tofauti kabisa. Ni kitambulisho cha hesabu, si faili yenyewe."
+    },
+    {
+      "id": "opensource",
+      "category": "basics",
+      "q": "Je, Satohash ni chanzo wazi?",
+      "a": "Ndiyo. Satohash ina leseni ya MIT na inapatikana kwenye GitHub katika github.com/kitsboy/satohash. Msimbo kamili wa chanzo ni wa umma."
+    },
+    {
+      "id": "snapper",
+      "category": "usage",
+      "q": "Satohash Snapper ni nini?",
+      "a": "Satohash Snapper ni kiendelezi cha kivinjari kinachonasa ushahidi wa kurasa za wavuti. Piga picha ya ukurasa wowote, na kiendelezi kinaweka muhuri wa hash na metadata yake kwenye Bitcoin kwa uthibitisho unaoweza kuthibitishwa wa hali yake wakati huo."
+    }
+  ],
+  "empty": {
+    "title": "Hakuna maswali yaliyopatikana",
+    "subtitle": "Jaribu maneno mengine au rudi baadaye."
+  },
+  "cta": {
+    "title": "Bado una maswali?",
+    "subtitle": "Wasiliana na timu. Kawaida tunajibu ndani ya masaa 24.",
+    "button": "Uliza swali"
+  },
+  "related": {
+    "templates": "Vinjari violezo",
+    "pitch": "Soma pitch",
+    "trust": "Kituo cha uaminifu"
+  }
+}

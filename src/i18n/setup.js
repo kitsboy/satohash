@@ -8,25 +8,29 @@ import pt from './translations/pt.json'
 import sw from './translations/sw.json'
 import zh from './translations/zh.json'
 import { getInitialLang, LANG_CODES, STORAGE_KEY } from './language.js'
+import { buildTranslationBundle, marketingByLang } from './marketing/index.js'
 
 const initialLang = getInitialLang()
 
+const bundles = {
+  en: buildTranslationBundle(en, marketingByLang.en.landing, marketingByLang.en.faq),
+  es: buildTranslationBundle(es, marketingByLang.es.landing, marketingByLang.es.faq),
+  fr: buildTranslationBundle(fr, marketingByLang.fr.landing, marketingByLang.fr.faq),
+  de: buildTranslationBundle(de, marketingByLang.de.landing, marketingByLang.de.faq),
+  pt: buildTranslationBundle(pt, marketingByLang.pt.landing, marketingByLang.pt.faq),
+  sw: buildTranslationBundle(sw, marketingByLang.sw.landing, marketingByLang.sw.faq),
+  zh: buildTranslationBundle(zh, marketingByLang.zh.landing, marketingByLang.zh.faq)
+}
+
 i18n.use(initReactI18next).init({
-  resources: {
-    en: { translation: en },
-    es: { translation: es },
-    fr: { translation: fr },
-    de: { translation: de },
-    pt: { translation: pt },
-    sw: { translation: sw },
-    zh: { translation: zh }
-  },
+  resources: Object.fromEntries(LANG_CODES.map((code) => [code, { translation: bundles[code] }])),
   lng: initialLang,
   fallbackLng: 'en',
   supportedLngs: LANG_CODES,
   nonExplicitSupportedLngs: true,
   load: 'languageOnly',
-  interpolation: { escapeValue: false }
+  interpolation: { escapeValue: false },
+  returnObjects: true
 })
 
 i18n.on('languageChanged', (lng) => {

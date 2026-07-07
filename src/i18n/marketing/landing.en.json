@@ -1,0 +1,132 @@
+{
+  "nav": {
+    "features": "Features",
+    "howItWorks": "How It Works",
+    "legal": "Legal",
+    "donate": "Donate",
+    "startFree": "Start Free"
+  },
+  "hero": {
+    "badge": "Free • No account needed • Zero data stored",
+    "titleLine1": "Prove Any File",
+    "titleLine2": "Existed.",
+    "titleHighlight": "Forever.",
+    "subtitle": "Drop any file. Get a permanent, Bitcoin-backed timestamp. Valid in court. No lawyers. No trust required.",
+    "description": "Satohash hashes your file locally in your browser — your document never leaves your device. Only a cryptographic fingerprint gets written to the Bitcoin blockchain, creating immutable proof of existence for any file, contract, photo, or dataset.",
+    "ctaStamp": "Stamp a File — It's Free",
+    "ctaTemplates": "Browse Templates",
+    "socialProof": "Join {{count}} professionals anchoring documents to Bitcoin",
+    "tryTemplate": "Try a template for free"
+  },
+  "telemetry": {
+    "title": "Live Bitcoin Network Telemetry",
+    "tipHeight": "Tip Height",
+    "fastestFee": "Fastest Fee",
+    "difficultyAdjust": "Difficulty Adjust",
+    "epochProgress": "Epoch Progress",
+    "satPerVb": "sat/vB",
+    "zeroKnowledge": "Zero-Knowledge (Local Hashing)",
+    "compliance": "eIDAS & ESIGN Compliant",
+    "proofsConfirmed": "{{count}} Proofs Confirmed"
+  },
+  "features": {
+    "badge": "What Most People Don't Know",
+    "titleLine1": "You Already Trust Bitcoin With Value.",
+    "titleLine2": "Now Trust It With Truth.",
+    "subtitle": "When Satoshi Nakamoto launched Bitcoin in 2009, he embedded a newspaper headline in the genesis block — proof it wasn't pre-mined. That same power is now yours, for any document, in minutes.",
+    "cards": {
+      "noServer": {
+        "title": "No Server Required",
+        "body": "Your document never leaves your device. We only see a cryptographic hash — like a fingerprint, not the actual file. Zero-knowledge by design."
+      },
+      "anchored": {
+        "title": "Anchored in 60 Minutes",
+        "body": "Within one Bitcoin block, your proof is woven into the chain. Every node on Earth validates it. It cannot be altered, backdated, or deleted."
+      },
+      "court": {
+        "title": "Court-Ready Evidence",
+        "body": "Satohash proofs satisfy ESIGN Act (US), UETA, and eIDAS (EU) requirements. Your timestamp is mathematically non-repudiable."
+      },
+      "noMiddleman": {
+        "title": "No Middleman. Ever.",
+        "body": "Unlike traditional notaries, there's no company to shut down, no server to hack. Bitcoin itself is the notary — 18,000 full nodes strong."
+      }
+    }
+  },
+  "howItWorks": {
+    "titleLine1": "Three Steps.",
+    "titleHighlight": "Permanent Proof.",
+    "subtitle": "From file to Bitcoin in under an hour. No account required to try it.",
+    "steps": {
+      "upload": {
+        "title": "Upload or Hash Your File",
+        "body": "Drag any document into Satohash. We instantly generate a SHA-256 fingerprint in your browser. Your file never leaves your device."
+      },
+      "anchor": {
+        "title": "Anchor to Bitcoin",
+        "body": "Your fingerprint is submitted to the Bitcoin blockchain via OpenTimestamps. Embedded in the next block — typically within 60 minutes."
+      },
+      "certificate": {
+        "title": "Download Your Certificate",
+        "body": "Receive a portable proof certificate. Independently verifiable anywhere, anytime — even if Satohash ceases to exist."
+      }
+    },
+    "cta": "Try It Now — Free",
+    "privacyTitle": "Your files never leave your device",
+    "privacyBody": "Satohash only sees a SHA-256 hash — never your original document. Zero-knowledge by design."
+  },
+  "useCases": {
+    "title": "Who Needs Proof That Can't Be Faked?",
+    "cards": {
+      "legal": {
+        "title": "Legal Contracts",
+        "body": "Prove your contract existed before a dispute. No he-said-she-said in court."
+      },
+      "creative": {
+        "title": "Creative Work",
+        "body": "Photographers, writers, designers — timestamp before you publish. Your priority is proven."
+      },
+      "medical": {
+        "title": "Medical Records",
+        "body": "Immutable audit trails for patient documents and treatment history."
+      },
+      "corporate": {
+        "title": "Corporate Compliance",
+        "body": "Board resolutions, financials, audit logs — cryptographic integrity, always."
+      },
+      "research": {
+        "title": "Research & IP",
+        "body": "Scientists and inventors prove discovery dates with mathematical certainty."
+      },
+      "government": {
+        "title": "Government & Archives",
+        "body": "Public records that can never be altered or backdated — ever."
+      }
+    }
+  },
+  "finalCta": {
+    "titleLine1": "Every Document Has a Story.",
+    "titleHighlight": "Make Yours Undeniable.",
+    "subtitle": "No account required. No credit card. Your first proof is free. Anchored to Bitcoin in under an hour.",
+    "ctaStamp": "Notarize Your First Document — Free",
+    "ctaPitch": "Read the Pitch"
+  },
+  "legal": {
+    "terms": "Terms of Service",
+    "privacy": "Privacy Policy",
+    "cryptoNotice": "Cryptographic Notice",
+    "trustCenter": "Trust Center"
+  },
+  "pwa": {
+    "title": "Add Satohash to Home Screen",
+    "subtitle": "Instant access, works offline",
+    "install": "Install"
+  },
+  "donation": {
+    "title": "Support Satohash",
+    "subtitle": "Keep timestamps free for everyone",
+    "copy": "Copy Bitcoin Address",
+    "copied": "Address Copied!",
+    "thanks": "Every satoshi helps keep timestamps free. Thank you. 🙏"
+  }
+}

@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { QRCodeSVG } from 'qrcode.react'
@@ -33,8 +34,51 @@ const fadeUp = {
   })
 }
 
+const USE_CASE_EMOJI = {
+  legal: '📝',
+  creative: '🎨',
+  medical: '🏥',
+  corporate: '🏢',
+  research: '🔬',
+  government: '🏛️'
+}
+
 export default function Landing() {
   usePageMeta({ page: 'landing' })
+  const { t } = useTranslation()
+
+  const navLinks = useMemo(
+    () => [
+      [t('landingPage.nav.features'), '#features'],
+      [t('landingPage.nav.howItWorks'), '#how-it-works'],
+      [t('landingPage.nav.legal'), '/trust']
+    ],
+    [t]
+  )
+
+  const featureCards = useMemo(
+    () => [
+      { icon: Lock, key: 'noServer', delay: 0 },
+      { icon: Clock, key: 'anchored', delay: 0.1 },
+      { icon: Scale, key: 'court', delay: 0.2 },
+      { icon: Globe, key: 'noMiddleman', delay: 0.3 }
+    ],
+    []
+  )
+
+  const howSteps = useMemo(
+    () => [
+      { num: '01', icon: Fingerprint, key: 'upload', delay: 0 },
+      { num: '02', icon: Zap, key: 'anchor', delay: 0.1 },
+      { num: '03', icon: Award, key: 'certificate', delay: 0.2 }
+    ],
+    []
+  )
+
+  const useCaseKeys = useMemo(
+    () => ['legal', 'creative', 'medical', 'corporate', 'research', 'government'],
+    []
+  )
 
   const [navOpen, setNavOpen] = useState(false)
   const [donationOpen, setDonationOpen] = useState(false)
@@ -122,11 +166,7 @@ export default function Landing() {
           </Link>
 
           <div className="hidden items-center gap-8 md:flex">
-            {[
-              ['Features', '#features'],
-              ['How It Works', '#how-it-works'],
-              ['Legal', '/trust']
-            ].map(([label, href]) =>
+            {navLinks.map(([label, href]) =>
               href.startsWith('/') ? (
                 <Link
                   key={label}
@@ -158,14 +198,14 @@ export default function Landing() {
               style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
             >
               <img src="/Bitcoin120x120.png" alt="Bitcoin" className="h-4 w-4 object-contain" />
-              Donate
+              {t('landingPage.nav.donate')}
             </button>
             <Link
               to="/stamp"
               className="flex items-center gap-2 rounded-xl px-5 py-2 text-sm font-black transition-all hover:scale-105 hover:opacity-90"
               style={{ backgroundColor: 'var(--accent-gold)', color: '#141b25' }}
             >
-              Start Free <ArrowRight size={14} />
+              {t('landingPage.nav.startFree')} <ArrowRight size={14} />
             </Link>
           </div>
 
@@ -192,11 +232,7 @@ export default function Landing() {
               style={{ borderColor: 'var(--border)', backgroundColor: 'var(--bg-secondary)' }}
             >
               <div className="layout-container flex flex-col gap-4 py-6">
-                {[
-                  ['Features', '#features'],
-                  ['How It Works', '#how-it-works'],
-                  ['Legal', '/trust']
-                ].map(([label, href]) =>
+                {navLinks.map(([label, href]) =>
                   href.startsWith('/') ? (
                     <Link
                       key={label}
@@ -228,14 +264,14 @@ export default function Landing() {
                   style={{ borderColor: 'var(--border-gold)', color: 'var(--accent-gold)' }}
                 >
                   <img src="/Bitcoin120x120.png" alt="Bitcoin" className="h-4 w-4 object-contain" />
-                  Donate Bitcoin
+                  {t('landingPage.nav.donate')}
                 </button>
                 <Link
                   to="/stamp"
                   className="rounded-xl py-3 text-center text-sm font-black"
                   style={{ backgroundColor: 'var(--accent-gold)', color: '#141b25' }}
                 >
-                  Start Notarizing Free →
+                  {t('landingPage.nav.startFree')} →
                 </Link>
               </div>
             </motion.div>
@@ -419,7 +455,7 @@ export default function Landing() {
               color: 'var(--accent-gold)'
             }}
           >
-            <Zap size={12} /> Free • No account needed • Zero data stored
+            <Zap size={12} /> {t('landingPage.hero.badge')}
           </motion.div>
 
           <motion.h1
@@ -429,9 +465,10 @@ export default function Landing() {
             custom={0.1}
             className="font-display mb-6 text-4xl leading-[1.05] font-black tracking-tighter sm:text-5xl md:text-7xl lg:text-8xl"
           >
-            Prove Any File
+            {t('landingPage.hero.titleLine1')}
             <br />
-            Existed. <span className="gold-text">Forever.</span>
+            {t('landingPage.hero.titleLine2')}{' '}
+            <span className="gold-text">{t('landingPage.hero.titleHighlight')}</span>
           </motion.h1>
 
           <motion.p
@@ -442,8 +479,7 @@ export default function Landing() {
             className="mx-auto mb-6 max-w-2xl text-xl leading-relaxed font-medium md:text-2xl"
             style={{ color: 'var(--text-secondary)' }}
           >
-            Drop any file. Get a permanent, Bitcoin-backed timestamp. Valid in court. No lawyers. No
-            trust required.
+            {t('landingPage.hero.subtitle')}
           </motion.p>
 
           <motion.p
@@ -454,9 +490,7 @@ export default function Landing() {
             className="mx-auto mb-10 max-w-xl text-base leading-relaxed"
             style={{ color: 'var(--text-muted)' }}
           >
-            Satohash hashes your file locally in your browser — your document never leaves your
-            device. Only a cryptographic fingerprint gets written to the Bitcoin blockchain,
-            creating immutable proof of existence for any file, contract, photo, or dataset.
+            {t('landingPage.hero.description')}
           </motion.p>
 
           <motion.div
@@ -471,14 +505,14 @@ export default function Landing() {
               className="flex w-full items-center justify-center gap-2 rounded-2xl px-8 py-4 text-base font-black transition-all hover:scale-105 hover:opacity-90 sm:w-auto"
               style={{ backgroundColor: 'var(--accent-gold)', color: '#141b25' }}
             >
-              Stamp a File — It&apos;s Free <ArrowRight size={16} />
+              {t('landingPage.hero.ctaStamp')} <ArrowRight size={16} />
             </Link>
             <Link
               to="/templates"
               className="flex w-full items-center justify-center gap-2 rounded-2xl border px-8 py-4 text-base font-bold transition-all hover:text-white sm:w-auto"
               style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
             >
-              Browse Templates <ArrowRight size={16} />
+              {t('landingPage.hero.ctaTemplates')} <ArrowRight size={16} />
             </Link>
           </motion.div>
 
@@ -510,20 +544,15 @@ export default function Landing() {
                 ))}
               </div>
               <p className="text-sm font-semibold" style={{ color: 'var(--text-secondary)' }}>
-                Join{' '}
-                <span className="font-black" style={{ color: 'var(--text-primary)' }}>
-                  2,400+
-                </span>{' '}
-                professionals anchoring documents to Bitcoin
+                {t('landingPage.hero.socialProof', { count: '2,400+' })}
               </p>
             </div>
-            {/* Subtle template text link */}
             <Link
               to="/templates"
               className="flex items-center gap-1 text-sm font-semibold transition-opacity hover:opacity-70"
               style={{ color: 'var(--accent-gold)' }}
             >
-              Try a template for free <ArrowRight size={13} />
+              {t('landingPage.hero.tryTemplate')} <ArrowRight size={13} />
             </Link>
           </motion.div>
 
@@ -549,7 +578,7 @@ export default function Landing() {
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500"></span>
                 </span>
-                <span className="text-emerald-400">Live Bitcoin Network Telemetry</span>
+                <span className="text-emerald-400">{t('landingPage.telemetry.title')}</span>
               </div>
               <a
                 href="https://mempool.space"
@@ -571,7 +600,7 @@ export default function Landing() {
                   className="mb-1 block text-[10px] font-bold tracking-wider uppercase"
                   style={{ color: 'var(--text-muted)' }}
                 >
-                  Tip Height
+                  {t('landingPage.telemetry.tipHeight')}
                 </span>
                 <span className="block font-mono text-xl font-black text-white">
                   #{blockHeight ? blockHeight.toLocaleString() : '895,441'}
@@ -587,13 +616,14 @@ export default function Landing() {
                   className="mb-1 block text-[10px] font-bold tracking-wider uppercase"
                   style={{ color: 'var(--text-muted)' }}
                 >
-                  Fastest Fee
+                  {t('landingPage.telemetry.fastestFee')}
                 </span>
                 <span
                   className="block font-mono text-xl font-black"
                   style={{ color: 'var(--accent-gold)' }}
                 >
-                  {networkStats.fees.high} <span className="text-xs font-normal">sat/vB</span>
+                  {networkStats.fees.high}{' '}
+                  <span className="text-xs font-normal">{t('landingPage.telemetry.satPerVb')}</span>
                 </span>
               </div>
 
@@ -606,7 +636,7 @@ export default function Landing() {
                   className="mb-1 block text-[10px] font-bold tracking-wider uppercase"
                   style={{ color: 'var(--text-muted)' }}
                 >
-                  Difficulty Adjust
+                  {t('landingPage.telemetry.difficultyAdjust')}
                 </span>
                 <span className="block font-mono text-xl font-black text-white">
                   {networkStats.difficultyChange > 0 ? '+' : ''}
@@ -623,7 +653,7 @@ export default function Landing() {
                   className="mb-1 block text-[10px] font-bold tracking-wider uppercase"
                   style={{ color: 'var(--text-muted)' }}
                 >
-                  Epoch Progress
+                  {t('landingPage.telemetry.epochProgress')}
                 </span>
                 <div className="mt-1 flex items-center gap-2">
                   <span className="font-mono text-sm font-black text-white">
@@ -643,10 +673,13 @@ export default function Landing() {
               className="mt-4 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 border-t pt-4 text-center text-xs"
               style={{ borderColor: 'rgba(255,255,255,0.06)', color: 'var(--text-muted)' }}
             >
-              <span>🔐 Zero-Knowledge (Local Hashing)</span>
-              <span>⚡ eIDAS & ESIGN Compliant</span>
+              <span>🔐 {t('landingPage.telemetry.zeroKnowledge')}</span>
+              <span>⚡ {t('landingPage.telemetry.compliance')}</span>
               <span>
-                📁 {proofCount !== null ? proofCount.toLocaleString() : '847,293'} Proofs Confirmed
+                📁{' '}
+                {t('landingPage.telemetry.proofsConfirmed', {
+                  count: proofCount !== null ? proofCount.toLocaleString() : '847,293'
+                })}
               </span>
             </div>
           </motion.div>
@@ -671,52 +704,25 @@ export default function Landing() {
                 color: 'var(--accent-gold)'
               }}
             >
-              What Most People Don&apos;t Know
+              {t('landingPage.features.badge')}
             </div>
             <h2 className="font-display text-4xl font-black tracking-tighter md:text-5xl">
-              You Already Trust Bitcoin With Value.
+              {t('landingPage.features.titleLine1')}
               <br />
-              <span className="gold-text">Now Trust It With Truth.</span>
+              <span className="gold-text">{t('landingPage.features.titleLine2')}</span>
             </h2>
             <p
               className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed"
               style={{ color: 'var(--text-secondary)' }}
             >
-              When Satoshi Nakamoto launched Bitcoin in 2009, he embedded a newspaper headline in
-              the genesis block — proof it wasn&apos;t pre-mined. That same power is now yours, for
-              any document, in minutes.
+              {t('landingPage.features.subtitle')}
             </p>
           </motion.div>
 
           <div className="grid gap-6 md:grid-cols-2">
-            {[
-              {
-                icon: Lock,
-                title: 'No Server Required',
-                body: 'Your document never leaves your device. We only see a cryptographic hash — like a fingerprint, not the actual file. Zero-knowledge by design.',
-                delay: 0
-              },
-              {
-                icon: Clock,
-                title: 'Anchored in 60 Minutes',
-                body: 'Within one Bitcoin block, your proof is woven into the chain. Every node on Earth validates it. It cannot be altered, backdated, or deleted.',
-                delay: 0.1
-              },
-              {
-                icon: Scale,
-                title: 'Court-Ready Evidence',
-                body: 'Satohash proofs satisfy ESIGN Act (US), UETA, and eIDAS (EU) requirements. Your timestamp is mathematically non-repudiable.',
-                delay: 0.2
-              },
-              {
-                icon: Globe,
-                title: 'No Middleman. Ever.',
-                body: "Unlike traditional notaries, there's no company to shut down, no server to hack. Bitcoin itself is the notary — 18,000 full nodes strong.",
-                delay: 0.3
-              }
-            ].map(({ icon: Icon, title, body, delay }) => (
+            {featureCards.map(({ icon: Icon, key, delay }) => (
               <motion.div
-                key={title}
+                key={key}
                 variants={fadeUp}
                 initial="hidden"
                 whileInView="visible"
@@ -733,9 +739,11 @@ export default function Landing() {
                 >
                   <Icon size={22} />
                 </div>
-                <h3 className="font-display mb-3 text-xl font-black tracking-tight">{title}</h3>
+                <h3 className="font-display mb-3 text-xl font-black tracking-tight">
+                  {t(`landingPage.features.cards.${key}.title`)}
+                </h3>
                 <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                  {body}
+                  {t(`landingPage.features.cards.${key}.body`)}
                 </p>
               </motion.div>
             ))}
@@ -754,40 +762,19 @@ export default function Landing() {
             className="mb-16 text-center"
           >
             <h2 className="font-display text-4xl font-black tracking-tighter md:text-5xl">
-              Three Steps. <span className="gold-text">Permanent Proof.</span>
+              {t('landingPage.howItWorks.titleLine1')}{' '}
+              <span className="gold-text">{t('landingPage.howItWorks.titleHighlight')}</span>
             </h2>
             <p
               className="mx-auto mt-4 max-w-xl text-base"
               style={{ color: 'var(--text-secondary)' }}
             >
-              From file to Bitcoin in under an hour. No account required to try it.
+              {t('landingPage.howItWorks.subtitle')}
             </p>
           </motion.div>
 
           <div className="grid gap-6 md:grid-cols-3">
-            {[
-              {
-                num: '01',
-                icon: Fingerprint,
-                title: 'Upload or Hash Your File',
-                body: 'Drag any document into Satohash. We instantly generate a SHA-256 fingerprint in your browser. Your file never leaves your device.',
-                delay: 0
-              },
-              {
-                num: '02',
-                icon: Zap,
-                title: 'Anchor to Bitcoin',
-                body: 'Your fingerprint is submitted to the Bitcoin blockchain via OpenTimestamps. Embedded in the next block — typically within 60 minutes.',
-                delay: 0.1
-              },
-              {
-                num: '03',
-                icon: Award,
-                title: 'Download Your Certificate',
-                body: 'Receive a portable proof certificate. Independently verifiable anywhere, anytime — even if Satohash ceases to exist.',
-                delay: 0.2
-              }
-            ].map(({ num, icon: Icon, title, body, delay }) => (
+            {howSteps.map(({ num, icon: Icon, key, delay }) => (
               <motion.div
                 key={num}
                 variants={fadeUp}
@@ -803,9 +790,11 @@ export default function Landing() {
                 <div className="mb-4" style={{ color: 'var(--accent-gold)' }}>
                   <Icon size={24} />
                 </div>
-                <h3 className="font-display mb-3 text-lg font-black tracking-tight">{title}</h3>
+                <h3 className="font-display mb-3 text-lg font-black tracking-tight">
+                  {t(`landingPage.howItWorks.steps.${key}.title`)}
+                </h3>
                 <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                  {body}
+                  {t(`landingPage.howItWorks.steps.${key}.body`)}
                 </p>
               </motion.div>
             ))}
@@ -824,7 +813,7 @@ export default function Landing() {
               className="inline-flex items-center gap-2 rounded-2xl px-8 py-4 text-base font-black transition-all hover:scale-105"
               style={{ backgroundColor: 'var(--accent-gold)', color: '#141b25' }}
             >
-              Try It Now — Free <ArrowRight size={16} />
+              {t('landingPage.howItWorks.cta')} <ArrowRight size={16} />
             </Link>
           </motion.div>
 
@@ -838,11 +827,10 @@ export default function Landing() {
             style={{ borderColor: 'var(--border)', backgroundColor: 'var(--surface-raised)' }}
           >
             <p className="text-sm font-bold" style={{ color: 'var(--text-primary)' }}>
-              🔒 Your files never leave your device
+              🔒 {t('landingPage.howItWorks.privacyTitle')}
             </p>
             <p className="mt-1 text-xs" style={{ color: 'var(--text-secondary)' }}>
-              Satohash only sees a SHA-256 hash — never your original document. Zero-knowledge by
-              design.
+              {t('landingPage.howItWorks.privacyBody')}
             </p>
           </motion.div>
         </div>
@@ -859,62 +847,27 @@ export default function Landing() {
             className="mb-16 text-center"
           >
             <h2 className="font-display text-4xl font-black tracking-tighter md:text-5xl">
-              Who Needs Proof <span className="gold-text">That Can&apos;t Be Faked?</span>
+              {t('landingPage.useCases.title')}
             </h2>
           </motion.div>
 
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {[
-              {
-                emoji: '📝',
-                title: 'Legal Contracts',
-                body: 'Prove your contract existed before a dispute. No he-said-she-said in court.',
-                delay: 0
-              },
-              {
-                emoji: '🎨',
-                title: 'Creative Work',
-                body: 'Photographers, writers, designers — timestamp before you publish. Your priority is proven.',
-                delay: 0.05
-              },
-              {
-                emoji: '🏥',
-                title: 'Medical Records',
-                body: 'Immutable audit trails for patient documents and treatment history.',
-                delay: 0.1
-              },
-              {
-                emoji: '🏢',
-                title: 'Corporate Compliance',
-                body: 'Board resolutions, financials, audit logs — cryptographic integrity, always.',
-                delay: 0.15
-              },
-              {
-                emoji: '🔬',
-                title: 'Research & IP',
-                body: 'Scientists and inventors prove discovery dates with mathematical certainty.',
-                delay: 0.2
-              },
-              {
-                emoji: '🏛️',
-                title: 'Government & Archives',
-                body: 'Public records that can never be altered or backdated — ever.',
-                delay: 0.25
-              }
-            ].map(({ emoji, title, body, delay }) => (
+            {useCaseKeys.map((key, idx) => (
               <motion.div
-                key={title}
+                key={key}
                 variants={fadeUp}
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
-                custom={delay}
+                custom={idx * 0.05}
                 className="surface-card surface-card-hover rounded-3xl p-7"
               >
-                <div className="mb-4 text-3xl">{emoji}</div>
-                <h3 className="font-display mb-2 text-lg font-black tracking-tight">{title}</h3>
+                <div className="mb-4 text-3xl">{USE_CASE_EMOJI[key]}</div>
+                <h3 className="font-display mb-2 text-lg font-black tracking-tight">
+                  {t(`landingPage.useCases.cards.${key}.title`)}
+                </h3>
                 <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                  {body}
+                  {t(`landingPage.useCases.cards.${key}.body`)}
                 </p>
               </motion.div>
             ))}
@@ -938,16 +891,15 @@ export default function Landing() {
             }}
           >
             <h2 className="font-display mb-4 text-4xl font-black tracking-tighter md:text-5xl">
-              Every Document Has a Story.
+              {t('landingPage.finalCta.titleLine1')}
               <br />
-              <span className="gold-text">Make Yours Undeniable.</span>
+              <span className="gold-text">{t('landingPage.finalCta.titleHighlight')}</span>
             </h2>
             <p
               className="mx-auto mb-10 max-w-lg text-base"
               style={{ color: 'var(--text-secondary)' }}
             >
-              No account required. No credit card. Your first proof is free. Anchored to Bitcoin in
-              under an hour.
+              {t('landingPage.finalCta.subtitle')}
             </p>
             <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
               <Link
@@ -955,14 +907,14 @@ export default function Landing() {
                 className="inline-flex w-full items-center justify-center gap-3 rounded-2xl px-10 py-5 text-lg font-black transition-all hover:scale-105 hover:opacity-90 sm:w-auto"
                 style={{ backgroundColor: 'var(--accent-gold)', color: '#141b25' }}
               >
-                Notarize Your First Document — Free <ArrowRight size={20} />
+                {t('landingPage.finalCta.ctaStamp')} <ArrowRight size={20} />
               </Link>
               <Link
                 to="/pitch"
                 className="inline-flex w-full items-center justify-center gap-2 rounded-2xl border px-8 py-5 text-sm font-black tracking-widest uppercase transition-all hover:opacity-80 sm:w-auto"
                 style={{ borderColor: 'var(--border-gold)', color: 'var(--accent-gold)' }}
               >
-                Read the Pitch <ChevronRight size={16} />
+                {t('landingPage.finalCta.ctaPitch')} <ChevronRight size={16} />
               </Link>
             </div>
           </motion.div>
@@ -978,16 +930,16 @@ export default function Landing() {
         style={{ color: 'var(--text-muted)', borderTop: '1px solid var(--border)' }}
       >
         <Link to="/legal/terms" className="transition-opacity hover:opacity-70">
-          Terms of Service
+          {t('landingPage.legal.terms')}
         </Link>
         <Link to="/legal/privacy" className="transition-opacity hover:opacity-70">
-          Privacy Policy
+          {t('landingPage.legal.privacy')}
         </Link>
         <Link to="/legal/crypto-notice" className="transition-opacity hover:opacity-70">
-          Cryptographic Notice
+          {t('landingPage.legal.cryptoNotice')}
         </Link>
         <Link to="/trust" className="transition-opacity hover:opacity-70">
-          Trust Center
+          {t('landingPage.legal.trustCenter')}
         </Link>
       </div>
 
@@ -1009,10 +961,10 @@ export default function Landing() {
             </div>
             <div className="min-w-0 flex-1">
               <p className="text-xs font-black" style={{ color: 'var(--text-primary)' }}>
-                Add Satohash to Home Screen
+                {t('landingPage.pwa.title')}
               </p>
               <p className="text-[10px]" style={{ color: 'var(--text-secondary)' }}>
-                Instant access, works offline
+                {t('landingPage.pwa.subtitle')}
               </p>
             </div>
             <button
@@ -1020,7 +972,7 @@ export default function Landing() {
               className="flex-shrink-0 rounded-xl px-3 py-2 text-[10px] font-black tracking-wider uppercase"
               style={{ background: 'var(--accent-gold)', color: '#141b25' }}
             >
-              Install
+              {t('landingPage.pwa.install')}
             </button>
             <button onClick={dismissPWA} className="flex-shrink-0 p-1 opacity-40 hover:opacity-100">
               <span style={{ color: 'var(--text-secondary)' }}>✕</span>
@@ -1065,9 +1017,11 @@ export default function Landing() {
                   className="h-16 w-16 object-contain"
                 />
               </div>
-              <h3 className="font-display mb-1 text-xl font-black">Support Satohash</h3>
+              <h3 className="font-display mb-1 text-xl font-black">
+                {t('landingPage.donation.title')}
+              </h3>
               <p className="mb-6 text-sm" style={{ color: 'var(--text-secondary)' }}>
-                Keep timestamps free for everyone
+                {t('landingPage.donation.subtitle')}
               </p>
               <div
                 className="mx-auto mb-6 inline-block rounded-2xl border p-4"
@@ -1096,10 +1050,10 @@ export default function Landing() {
                 style={{ backgroundColor: 'var(--accent-gold)', color: '#141b25' }}
               >
                 {copied ? <Check size={15} /> : <Copy size={15} />}
-                {copied ? 'Address Copied!' : 'Copy Bitcoin Address'}
+                {copied ? t('landingPage.donation.copied') : t('landingPage.donation.copy')}
               </button>
               <p className="mt-4 text-xs" style={{ color: 'var(--text-muted)' }}>
-                Every satoshi helps keep timestamps free. Thank you. 🙏
+                {t('landingPage.donation.thanks')}
               </p>
             </motion.div>
           </div>
