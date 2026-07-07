@@ -28,6 +28,7 @@ import usePageMeta from '../../hooks/usePageMeta'
 import { getVerifyUrl } from '../../config/constants'
 import { loadContracts, updateContract } from '../../utils/contractStorage'
 import ContractLifecycleBar from '../../components/ContractLifecycleBar'
+import SignerIdentityBadge from '../../components/SignerIdentityBadge'
 import { generateContractPdf } from '../../utils/pdfHelpers'
 
 export default function ContractView() {
@@ -532,6 +533,13 @@ export default function ContractView() {
                             .join('')}
                         </div>
                         <div className="flex-1">
+                          <div className="mb-1">
+                            <SignerIdentityBadge
+                              nip05={signer.nip05}
+                              verified={!!signer.verified || !!signer.nip05}
+                              size="sm"
+                            />
+                          </div>
                           <p
                             className="text-[12px] font-bold tracking-tight"
                             style={{ color: 'var(--text-primary)' }}

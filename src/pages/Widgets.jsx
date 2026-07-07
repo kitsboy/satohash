@@ -11,6 +11,15 @@ const DEMO_HASH = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b
 const EMBED_BASIC = `<div class="satohash-dna" data-hash="${DEMO_HASH}"></div>
 <script src="https://satohash.io/widgets/proof-dna.js" async></script>`
 
+const EMBED_V3 = `<div
+  class="satohash-dna-v3"
+  data-hash="${DEMO_HASH}"
+  data-theme="noir"
+  data-domain="yourbrand.com"
+  data-verify="https://satohash.io/verify"
+></div>
+<script src="https://satohash.io/widgets/proof-dna-v3.js" async></script>`
+
 const EMBED_BADGE = `<div
   class="satohash-dna"
   data-hash="${DEMO_HASH}"
@@ -111,6 +120,12 @@ export default function Widgets() {
             <CopyBlock
               label={t('widgetsPage.embed.badge')}
               code={EMBED_BADGE}
+              copyLabel={t('common.copy')}
+              copiedLabel={t('common.copied')}
+            />
+            <CopyBlock
+              label="Proof DNA v3 (white-label)"
+              code={EMBED_V3}
               copyLabel={t('common.copy')}
               copiedLabel={t('common.copied')}
             />
