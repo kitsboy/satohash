@@ -1100,7 +1100,8 @@ export default function Settings() {
             </div>
             <div className="space-y-4">
               <p className="text-[11px] leading-relaxed text-[var(--text-secondary)]">
-                Activity will appear here once your node is synced with the mesh.
+                Activity will appear here once your node is synced with the mesh. Use the same npub
+                on another browser and import your encrypted vault backup for cross-device sync.
               </p>
             </div>
           </div>

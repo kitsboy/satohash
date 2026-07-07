@@ -28,6 +28,7 @@ import { useI18n } from '../i18n'
 import usePageMeta from '../hooks/usePageMeta'
 import { getApiUrl } from '../config/constants'
 import { useEscapeKey } from '../utils/a11y'
+import { exportEncryptedVault } from '../utils/vaultExport'
 
 const StatusBadge = ({ status }) => {
   const { t } = useI18n()
@@ -586,40 +587,15 @@ export default function Vault() {
     }, 2000)
   }
 
-  const handleBackupVault = () => {
-    const password = prompt('Enter a password to encrypt your forensic vault backup:')
+  const handleBackupVault = async () => {
+    const password = prompt('Enter a passphrase (8+ chars) to encrypt your vault backup:')
     if (!password) {
-      toast.error('Password is required for secure backup.')
+      toast.error('Passphrase is required for secure backup.')
       return
     }
     try {
-      const localStamps = localStorage.getItem('satohash_stamps') || '[]'
-      let binaryStr = ''
-      for (let i = 0; i < localStamps.length; i++) {
-        const charCode = localStamps.charCodeAt(i) ^ password.charCodeAt(i % password.length)
-        binaryStr += String.fromCharCode(charCode)
-      }
-      const encryptedBase64 = btoa(unescape(encodeURIComponent(binaryStr)))
-      const backupPayload = JSON.stringify(
-        {
-          version: '4.1.0-ELITE',
-          timestamp: new Date().toISOString(),
-          payload: encryptedBase64
-        },
-        null,
-        2
-      )
-
-      const blob = new Blob([backupPayload], { type: 'application/json' })
-      const url = URL.createObjectURL(blob)
-      const a = document.createElement('a')
-      a.href = url
-      a.download = `satohash_vault_backup_${new Date().toISOString().split('T')[0]}.json`
-      document.body.appendChild(a)
-      a.click()
-      document.body.removeChild(a)
-      URL.revokeObjectURL(url)
-      toast.success('Encrypted vault backup successfully exported!')
+      const { count } = await exportEncryptedVault(password)
+      toast.success(`Encrypted vault backup exported (${count} items)`)
     } catch (e) {
       toast.error('Export failed: ' + e.message)
     }

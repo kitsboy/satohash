@@ -12,6 +12,7 @@ import { I18nProvider } from './i18n'
 import LangUrlSync from './components/LangUrlSync'
 import SkipToContent from './components/SkipToContent'
 import OfflineBanner from './components/OfflineBanner'
+import DeepHealthBanner from './components/DeepHealthBanner'
 import ErrorBoundary from './components/ErrorBoundary'
 import ProtectedRoute from './components/ProtectedRoute'
 import NProgress from 'nprogress'
@@ -567,6 +568,7 @@ function App() {
             <LangUrlSync />
             <SkipToContent />
             {isOffline && <OfflineBanner />}
+            <DeepHealthBanner />
 
             <AppContent />
 
