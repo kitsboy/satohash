@@ -1,0 +1,225 @@
+{
+  "welcome": {
+    "title": "Karibu Satohash",
+    "subtitle": "Geuza makubaliano yako muhimu kuwa uthibitisho wa kriptografia kuwa yalikuwepo wakati maalum—yamefungwa kwenye Bitcoin na rahisi kuthibitisha.",
+    "getStarted": "Anza",
+    "howThisWorks": "Jinsi inavyofanya kazi",
+    "language": "Lugha",
+    "change": "Badilisha",
+    "pricingNote": "Satohash kwa sasa ni bure tunapokuwa katika ufikiaji wa awali. Unalipa ada ya mtandao wa Bitcoin tu unapoweka muhuri wa muda kwenye hati.",
+    "features": {
+      "cryptoProof": "Uthibitisho wa Kriptografia",
+      "cryptoProofDesc": "Unda alama ya kidole isiyoweza kuzaa bandia ya hati yako kwa kutumia kriptografia SHA-256.",
+      "cryptoProofDetail": "Hashing hubadilisha faili yoyote kuwa mfuatano wa herufi 64 wa kipekee. Hata koma moja iliyobadilishwa hutoa hash tofauti kabisa. Satohash hufanya hivi ndani ya kifaa chako.",
+      "timestamp": "Muhuri wa Muda kwenye Bitcoin",
+      "timestampDesc": "Funga uthibitisho wako kwenye blockchain ya Bitcoin kwa kutumia itifaki ya OpenTimestamps.",
+      "timestampDetail": "Hash ya hati yako inachanganywa na maelfu ya nyingine kwenye mti wa Merkle. Kisha hash moja ya «mzizi» inawekwa kwenye mtandao wa Bitcoin, ikikupa uthibitisho wa kudumu na usiobadilika wa kuwepo.",
+      "verify": "Uthibitishaji Rahisi",
+      "verifyDesc": "Mtu yeyote anaweza kuthibitisha uthibitisho wako kwa uhuru kwa kutumia zana za chanzo huria.",
+      "verifyDetail": "Faili ya .ots ina «njia» kutoka hati yako hadi kwenye kizuizi cha Bitcoin. Huhitaji Satohash ili kuthibitisha; unaweza kutumia mteja rasmi wa OpenTimestamps au wachunguzi wa kizuizi wa wahusika wengine."
+    }
+  },
+  "howItWorks": {
+    "title": "Jinsi Inavyofanya Kazi",
+    "subtitle": "Hatua tatu rahisi za kulinda hati zako",
+    "card1": {
+      "title": "Funga tarehe",
+      "description": "Satohash inampa hati yako alama ya kidole ya kipekee na kufunga tarehe yake kwenye mtandao wa Bitcoin. Baadaye, mtu yeyote anaweza kuthibitisha kuwa hati hii hasa ilikuwepo wakati huo."
+    },
+    "card2": {
+      "title": "Maudhui yako hubaki ya faragha",
+      "description": "Hatuoni hati yako kamili. Tunatumia tu alama ya kidole ya kriptografia, si maandishi yenyewe."
+    },
+    "card3": {
+      "title": "Rahisi kuthibitisha baadaye",
+      "description": "Unapata PDF na faili ndogo ya uthibitisho. Hata bila Satohash, wewe au wakili wako mnaweza kuthibitisha kwa kutumia zana wazi."
+    },
+    "continue": "Endelea"
+  },
+  "chooseTemplate": {
+    "title": "Unataka kulinda nini leo?",
+    "prenup": "Makubaliano ya kabla ya ndoa",
+    "property": "Hati ya mali / ardhi",
+    "powerOfAttorney": "Mamlaka ya Mwakilishi",
+    "commercialLease": "Mkataba wa Kukodisha Biashara",
+    "childTravel": "Idhini ya Kusafiri kwa Mtoto",
+    "billOfSale": "Hati ya Mauzo",
+    "employment": "Mkataba wa Ajira",
+    "promissory": "Hati ya Ahadi ya Malipo",
+    "consulting": "Makubaliano ya Ushauri",
+    "ip-assignment": "Uhamisho wa Haki Miliki",
+    "domain-notary": "Notari wa Umiliki wa Kikoa",
+    "web-archive": "Hifadhi ya Snap & Stamp",
+    "nda": "Makubaliano ya Usiri (NDA)",
+    "will": "Wasia",
+    "affidavit": "Taarifa ya Ukweli chini ya Kiapo",
+    "custom": "Hati Maalum",
+    "disclaimer": "Unaweza kuhariri kila kiolezo. Satohash haitoi ushauri wa kisheria; tunakusaidia kufunga ushahidi."
+  },
+  "account": {
+    "title": "Unda akaunti yako",
+    "email": "Barua pepe",
+    "name": "Jina",
+    "organization": "Shirika (si lazima)",
+    "securityNote": "Hati na uthibitisho wako vinasimbwa wakati wa usafirishaji na wakati vimehifadhiwa. Unaweza pia kupakua kila kitu ndani ya kifaa chako ili kuweka nakala zako mwenyewe.",
+    "createAccount": "Unda akaunti",
+    "signInInstead": "Ingia badala yake",
+    "emailPlaceholder": "wewe@baruapepe.com",
+    "namePlaceholder": "Jina lako",
+    "organizationPlaceholder": "Jina la kampuni au ofisi"
+  },
+  "valueConfirmation": {
+    "title": "Umekaribia kukamilika",
+    "step1": "Unda au pakia makubaliano",
+    "step2": "Alika wengine kukagua na kusaini",
+    "step3": "Weka muhuri wa muda na upakue kifurushi cha uthibitisho (PDF + faili ya uthibitisho)",
+    "start": "Anza makubaliano yangu ya kwanza"
+  },
+  "contracts": {
+    "title": "Mikataba Yangu",
+    "new": "Mkataba Mpya",
+    "empty": "Bado hakuna mikataba",
+    "emptyDescription": "Unda mkataba wako wa kwanza ili uanze.",
+    "status": {
+      "draft": "Rasimu",
+      "waiting": "Inasubiri saini",
+      "signed": "Imesainiwa kikamilifu",
+      "timestamped": "Imewekwa muhuri wa muda",
+      "pending": "Inasubiri uthibitisho",
+      "error": "Hitilafu"
+    },
+    "pageTitle": "Mikataba",
+    "newArtifact": "Unda Kipengee Kipya",
+    "downloadAll": "Pakua Zote",
+    "statusDraft": "Rasimu",
+    "statusSigned": "Imesainiwa",
+    "statusTimestamped": "Imewekwa muhuri wa muda",
+    "edit": "Hariri",
+    "delete": "Futa",
+    "inspector": "Mkaguzi",
+    "documentName": "Jina la Hati",
+    "proofPackage": "Kifurushi cha Uthibitisho",
+    "emailPackage": "Tuma Kifurushi kwa Barua Pepe",
+    "otsQr": "QR ya Uthibitishaji wa OTS",
+    "scanToVerify": "Changanua ili Kuthibitisha"
+  },
+  "contractEditor": {
+    "title": "Hariri Mkataba",
+    "newTitle": "Mkataba Mpya",
+    "contractName": "Jina la Mkataba",
+    "content": "Maudhui ya Mkataba",
+    "save": "Hifadhi",
+    "cancel": "Ghairi",
+    "namePlaceholder": "Weka jina la mkataba huu..."
+  },
+  "signatures": {
+    "title": "Kusanya Saini",
+    "you": "Wewe",
+    "signNow": "Saini sasa",
+    "sendInvite": "Tuma kiungo cha mwaliko",
+    "addSigner": "Ongeza msaini",
+    "otherParty": "Mhusika mwingine",
+    "allSigned": "Wahusika wote wanaohitajika wamesaini. Ni wakati wa kufunga hati hii katika muda.",
+    "drawSignature": "Chora saini yako",
+    "typeSignature": "Andika saini yako",
+    "agreeCheckbox": "Nakubaliana na masharti ya hati hii",
+    "clear": "Futa",
+    "submit": "Wasilisha saini"
+  },
+  "timestamp": {
+    "review": {
+      "title": "Ukaguzi wa Mwisho",
+      "confirmTitle": "Uko tayari kuweka muhuri wa muda?",
+      "confirmMessage": "Je, kila mtu anayehitaji kusaini amekagua hati hii? Mara tu tutakapoiwekea muhuri wa muda, mabadiliko yoyote yatavunja uthibitisho.",
+      "yes": "Ndiyo, endelea",
+      "goBack": "Rudi na uhariri",
+      "readyToSign": "Tayari kusaini",
+      "timestampThisAgreement": "Weka muhuri wa muda kwenye makubaliano haya"
+    },
+    "explain": {
+      "title": "Muhuri wa muda unafanya nini?",
+      "description": "Satohash itaunda alama ya kidole ya kriptografia ya hati hii na kuituma kwenye mtandao wa Bitcoin kwa kutumia kiwango wazi kinachoitwa OpenTimestamps. Hii inathibitisha kuwa hati hii hasa ilikuwepo kabla ya wakati fulani, bila kufichua maudhui yake.",
+      "point1": "Hatupakii hati yako kwenye blockchain, tunatumia tu alama ya kidole.",
+      "point2": "Baadaye, mtu yeyote anaweza kuthibitisha kwa zana wazi, si tu kwa Satohash.",
+      "point3": "Ikiwa hati itabadilishwa, alama ya kidole na uthibitisho haviendani tena.",
+      "feeTitle": "Makadirio ya ada ya mtandao wa Bitcoin",
+      "feeDescription": "Ada hii inaenda kwa wachimba Bitcoin, si kwa Satohash. Inabadilika kulingana na shughuli za mtandao.",
+      "details": "Maelezo",
+      "timestampNow": "Weka muhuri wa muda sasa",
+      "cancel": "Ghairi",
+      "loading": "Inapakia makadirio ya ada..."
+    },
+    "progress": {
+      "title": "Inaunda muhuri wako wa muda…",
+      "step1": "Inaunda alama ya kidole…",
+      "step2": "Inawasilisha kwa seva za muhuri wa muda…",
+      "step3": "Inafunga kwenye Bitcoin…",
+      "info": "Hii kwa kawaida huchukua sekunde chache kuwasilisha, na hadi masaa machache kuthibitishwa kikamilifu na mtandao wa Bitcoin. Tayari unaweza kupakua risiti, na Satohash itaiboresha kuwa uthibitisho kamili mtandao utakapothibitisha.",
+      "done": "Imekamilika – angalia risiti"
+    },
+    "result": {
+      "title": "Muhuri wako wa muda umeundwa",
+      "statusPending": "Hali ya uthibitisho: Inasubiri uthibitisho wa blockchain (risiti ya awali)",
+      "statusComplete": "Hali ya uthibitisho: Imethibitishwa kwenye blockchain ya Bitcoin",
+      "fingerprint": "Alama ya kidole ya hati (hash)",
+      "timestampedAt": "Muhuri wa muda umeundwa saa",
+      "blockchain": "Blockchain: Bitcoin (kupitia OpenTimestamps)",
+      "downloadProof": "Pakua kifurushi cha uthibitisho (PDF + faili ya uthibitisho)",
+      "emailCopy": "Nitumie nakala salama kwa barua pepe",
+      "keepSafe": "Weka kifurushi hiki cha uthibitisho mahali salama. Hata kama Satohash ingepotea, bado ungeweza kuthibitisha kuwa hati hii hasa ilikuwepo kabla ya wakati huu kwa kutumia zana za chanzo huria."
+    },
+    "verificationHelp": {
+      "title": "Jinsi ya kuthibitisha hili baadaye",
+      "withSatohash": "Kwa Satohash",
+      "withSatohashDesc": "Pakia PDF yako na faili ya uthibitisho hapa. Tutaiangalia dhidi ya mtandao wa Bitcoin na kukuambia kama kila kitu kinafanana.",
+      "withoutSatohash": "Bila Satohash",
+      "withoutSatohashDesc": "Unaweza kutumia zana yoyote inayooana na OpenTimestamps kuthibitisha uthibitisho wako. Pakia hati yako ya asili na faili ya uthibitisho .ots. Zana itakuambia kama alama ya kidole inafanana na lini ilifungwa kwenye Bitcoin.",
+      "noMatch": "Ikiwa kitu hakifanani",
+      "noMatchDesc": "Ikiwa uthibitisho hauthibitishwi, kwa kawaida inamaanisha hati ilibadilishwa au faili isiyo sahihi ilitumika.",
+      "backToContracts": "Rudi kwenye mikataba yangu"
+    }
+  },
+  "trust": {
+    "title": "Kituo cha Uaminifu",
+    "howItWorks": "Jinsi Satohash inavyofanya kazi",
+    "howItWorksDetail": "Satohash hutumia SHA-256 (Secure Hash Algorithm 256-bit) kuunda alama ya kidole ya kidijitali ya kipekee ya hati yako. Hii hufanyika ndani ya kivinjari chako; maandishi ya hati yako hayahitaji kuondoka kwenye kifaa chako. Kisha hash hii inachanganywa na maelfu ya nyingine kwenye Mti wa Merkle na mzizi wake unafungwa kwenye blockchain ya Bitcoin kwa kutumia itifaki ya OpenTimestamps. Hii inaunda rekodi ya kudumu na isiyobadilika ya kuwepo.",
+    "whatBlockchain": "Uwezo na Vikwazo",
+    "whatBlockchainDetail": "Muhuri wa muda wa blockchain hutoa uthibitisho wa kihesabu kuwa seti maalum ya data ilikuwepo wakati maalum na haijabadilishwa. HAITHIBITISHI utambulisho wa msaini peke yake (inahitaji uthibitisho wa ziada), HAITHIBITISHI usahihi wa kisheria wa maudhui ya mkataba, na HAIWEZI kubadilishwa au kufutwa mara tu inapofungwa. Ni zana ya «uthibitisho wa kuwepo», si mbadala wa ukaguzi wa kisheria.",
+    "zkPrivacy": "Faragha na Ujuzi wa Sifuri",
+    "zkPrivacyDetail": "Teknolojia yetu ya «Privacy Shield» imechochewa na uthibitisho wa Ujuzi wa Sifuri (ZK). Kwa kuwa tunahifadhi tu hash ya kriptografia ya hati yako, hatuna ujuzi wa maudhui yake. Kwa kutumia uthibitisho wa ujumuishaji wa Merkle, tunaweza hata kukuruhusu kuficha sehemu nyeti za hati kwa hiari huku ukithibitisha kuwa sehemu zilizobaki zinafanana na toleo la asili lililofungwa—ukikupa faragha kamili na uwezekano wa kuthibitisha kamili.",
+    "legallyBinding": "Utekelezaji wa Kisheria",
+    "zkPrivacyPoint": "Ufichaji wa hiari unaotokana na Ujuzi wa Sifuri (ZK)",
+    "legallyBindingDetail": "Katika mamlaka nyingi, ushahidi wa kriptografia unatambuliwa chini ya sheria kama ESIGN Act (Marekani), UETA (Marekani), na eIDAS (Ulaya). Mifumo hii kwa ujumla inasema kuwa rekodi ya kielektroniki haipaswi kukataliwa athari za kisheria kwa sababu tu iko katika umbo la kielektroniki. Muhuri wa muda wa blockchain hutoa kiwango cha juu sana cha «Mihuri ya Muda ya Kielektroniki» na «Ushahidi wa Kielektroniki» ambayo inaweza kutumika mahakamani kupinga madai ya uigaji au kuweka tarehe za nyuma za hati.",
+    "legalDisclaimer": "Satohash hutoa ushahidi na zana, si ushauri wa kisheria. Watumiaji lazima wawasiliane na sheria za eneo lao na mshauri wa kisheria."
+  },
+  "legal": {
+    "terms": "Masharti ya Huduma",
+    "privacy": "Sera ya Faragha",
+    "cryptoNotice": "Taarifa ya Saini ya Kidijitali na Ushahidi wa Kriptografia"
+  },
+  "donation": {
+    "title": "Waunge mkono wasanidi programu wetu",
+    "description": "Satohash inaendeshwa na timu ndogo inayojali makubaliano wazi na yanayoweza kuthibitishwa. Ukipata hii kuwa na manufaa, unaweza kutupa bakshishi kwa Bitcoin au Lightning. Asante kwa kuunga mkono maendeleo endelevu.",
+    "onchain": "Tuma BTC kwenye anwani hii:",
+    "lightning": "Tuma bakshishi ya Lightning kwa kutumia msimbo huu wa QR au ankara.",
+    "transparency": "Michango hutusaidia kulipia miundombinu, ukaguzi wa usalama, na michango ya chanzo huria. Haiununui ushauri wa kisheria wala msaada wa kipaumbele.",
+    "close": "Funga",
+    "copy": "Nakili",
+    "copied": "Imenakiliwa!"
+  },
+  "footer": {
+    "supportDevelopers": "Waunge mkono wasanidi programu wetu"
+  },
+  "common": {
+    "back": "Rudi",
+    "next": "Ifuatayo",
+    "save": "Hifadhi",
+    "cancel": "Ghairi",
+    "delete": "Futa",
+    "edit": "Hariri",
+    "view": "Angalia",
+    "loading": "Inapakia...",
+    "error": "Hitilafu",
+    "success": "Imefanikiwa"
+  }
+}

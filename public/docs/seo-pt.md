@@ -1,31 +1,43 @@
 ---
 title: Estratégia de SEO & Auditoria
 project: satohash
-version: 0.1.0
-last_updated: 2026-06-24
-owner: Kimi / Qwen (Auditoria Semanal)
-update_frequency: Semanal (Segunda-feira)
+version: 4.1.0-ELITE
+last_updated: 2026-07-07
+owner: Kimi / Grok (M3)
+build: 37
 ---
 
-# SEO — Satohash (satohash.io)
+# SEO — Satohash (satohash.io) — Português
 
 ## URL Ativa
-https://satohash.io
+https://satohash.io/?lang=pt
 
 ## Palavras-chave Alvo
-| Palavra-chave Primária | Intenção de Pesquisa |
-|------------------------|----------------------|
-| notariação de documentos em Bitcoin | Transacional |
-| OpenTimestamps Grátis | Informativa |
-| prova de carimbo de bloco | Comercial |
-| carimbos conformes eIDAS | Comercial |
+| Palavra-chave | Intenção | Página |
+|---------------|----------|--------|
+| notarização de documentos bitcoin | Transacional | / |
+| OpenTimestamps grátis | Informativa | /faq |
+| prova de existência blockchain | Comercial | /comparison |
+| carimbos conformes eIDAS | Comercial | /security |
+| identidade NIP-05 nostr | Informativa | /identity |
+| widget prova bitcoin | Comercial | /widgets |
 
-## Meta Tags Atuais
-| Tag | Valor Atual | Status |
-|-----|------------|--------|
-| Título | `Satohash — Carimbe Documentos no Bitcoin. Prova Imutável. Para Sempre.` | Bom (64 caracteres) |
+## Meta Tags (PT)
+| Tag | Valor | Status |
+|-----|-------|--------|
+| Título | Carimbe Documentos no Bitcoin — Prova Gratuita de Existência | ✅ |
+| Descrição | Envie qualquer arquivo. Prova ancorada no Bitcoin em 60 segundos. Grátis e privado. | ✅ |
+| og:locale | pt_BR | ✅ |
 
-## Log de Auditoria Semanal
-| Data | Auditor | Achados | Recomendações |
-|------|---------|---------|---------------|
-| 2026-06-24 | Kimi | Baseline criada | Auditoria completa do Qwen pendente |
+## Páginas Indexadas (Build 37)
+18 páginas públicas incluindo /widgets e /identity
+
+## Dados Estruturados
+- [x] Organization, WebSite, BreadcrumbList, FAQPage
+
+## Log de Auditoria
+| Data | Achados |
+|------|---------|
+| 2026-07-07 | SEO 7 idiomas, hreflang, widgets Proof DNA, NIP-05 |
+
+*Safe Harbour · Parte da família [Give A Bit](https://giveabit.io).*

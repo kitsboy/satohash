@@ -1,0 +1,225 @@
+{
+  "welcome": {
+    "title": "Bem-vindo ao Satohash",
+    "subtitle": "Transforme os seus acordos importantes em prova criptográfica de que existiram num momento específico—ancorados ao Bitcoin e fáceis de verificar.",
+    "getStarted": "Começar",
+    "howThisWorks": "Como funciona",
+    "language": "Idioma",
+    "change": "Alterar",
+    "pricingNote": "O Satohash é atualmente gratuito enquanto estamos em acesso antecipado. Só paga a taxa da rede Bitcoin quando carimba temporalmente um documento.",
+    "features": {
+      "cryptoProof": "Prova Criptográfica",
+      "cryptoProofDesc": "Crie uma impressão digital infalsificável do seu documento com criptografia SHA-256.",
+      "cryptoProofDetail": "O hash converte qualquer ficheiro numa cadeia única de 64 caracteres. Até uma única vírgula alterada resulta num hash completamente diferente. O Satohash faz isto localmente no seu dispositivo.",
+      "timestamp": "Carimbo Temporal no Bitcoin",
+      "timestampDesc": "Ancore a sua prova à blockchain Bitcoin com o protocolo OpenTimestamps.",
+      "timestampDetail": "O hash do seu documento é agrupado com milhares de outros numa árvore Merkle. Um único hash «raiz» é depois registado na rede Bitcoin, fornecendo prova permanente e imutável de existência.",
+      "verify": "Verificação Simples",
+      "verifyDesc": "Qualquer pessoa pode verificar a sua prova de forma independente com ferramentas de código aberto.",
+      "verifyDetail": "Um ficheiro .ots contém o «caminho» do seu documento até ao bloco Bitcoin. Não precisa do Satohash para o provar; pode usar o cliente oficial OpenTimestamps ou exploradores de blocos de terceiros."
+    }
+  },
+  "howItWorks": {
+    "title": "Como Funciona",
+    "subtitle": "Três passos simples para proteger os seus documentos",
+    "card1": {
+      "title": "Fixar a data",
+      "description": "O Satohash atribui ao seu documento uma impressão digital única e fixa a sua data na rede Bitcoin. Mais tarde, qualquer pessoa pode confirmar que este documento exato existia nesse momento."
+    },
+    "card2": {
+      "title": "O seu conteúdo permanece privado",
+      "description": "Não precisamos de ver o documento completo. Utilizamos apenas uma impressão digital criptográfica, não o texto em si."
+    },
+    "card3": {
+      "title": "Fácil de provar depois",
+      "description": "Recebe um PDF e um pequeno ficheiro de prova. Mesmo sem o Satohash, você ou o seu advogado podem verificá-lo com ferramentas abertas."
+    },
+    "continue": "Continuar"
+  },
+  "chooseTemplate": {
+    "title": "O que quer proteger hoje?",
+    "prenup": "Acordo pré-nupcial",
+    "property": "Documento de propriedade / imobiliário",
+    "powerOfAttorney": "Procuração",
+    "commercialLease": "Arrendamento comercial",
+    "childTravel": "Autorização de viagem para menores",
+    "billOfSale": "Contrato de compra e venda",
+    "employment": "Contrato de trabalho",
+    "promissory": "Nota promissória",
+    "consulting": "Contrato de consultoria",
+    "ip-assignment": "Cessão de propriedade intelectual",
+    "domain-notary": "Notário de propriedade de domínio",
+    "web-archive": "Arquivo Snap & Stamp",
+    "nda": "Acordo de confidencialidade (NDA)",
+    "will": "Testamento",
+    "affidavit": "Declaração sob compromisso de honra",
+    "custom": "Documento personalizado",
+    "disclaimer": "Pode editar todos os modelos. O Satohash não presta aconselhamento jurídico; ajudamos a fixar a evidência."
+  },
+  "account": {
+    "title": "Crie a sua conta",
+    "email": "E-mail",
+    "name": "Nome",
+    "organization": "Organização (opcional)",
+    "securityNote": "Os seus documentos e provas são encriptados em trânsito e em repouso. Também pode transferir tudo localmente para manter as suas próprias cópias.",
+    "createAccount": "Criar conta",
+    "signInInstead": "Iniciar sessão",
+    "emailPlaceholder": "o.seu@email.com",
+    "namePlaceholder": "O seu nome",
+    "organizationPlaceholder": "Nome da empresa ou escritório"
+  },
+  "valueConfirmation": {
+    "title": "Está quase pronto",
+    "step1": "Criar ou carregar um acordo",
+    "step2": "Convidar outras pessoas para rever e assinar",
+    "step3": "Carimbar temporalmente e transferir o pacote de prova (PDF + ficheiro de prova)",
+    "start": "Começar o meu primeiro acordo"
+  },
+  "contracts": {
+    "title": "Os Meus Contratos",
+    "new": "Novo Contrato",
+    "empty": "Ainda sem contratos",
+    "emptyDescription": "Crie o seu primeiro contrato para começar.",
+    "status": {
+      "draft": "Rascunho",
+      "waiting": "A aguardar assinaturas",
+      "signed": "Totalmente assinado",
+      "timestamped": "Carimbado temporalmente",
+      "pending": "Confirmação pendente",
+      "error": "Erro"
+    },
+    "pageTitle": "Contratos",
+    "newArtifact": "Criar Novo Artefacto",
+    "downloadAll": "Transferir Tudo",
+    "statusDraft": "Rascunho",
+    "statusSigned": "Assinado",
+    "statusTimestamped": "Carimbado temporalmente",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "inspector": "Inspetor",
+    "documentName": "Nome do Documento",
+    "proofPackage": "Pacote de Prova",
+    "emailPackage": "Enviar Pacote por E-mail",
+    "otsQr": "QR de Verificação OTS",
+    "scanToVerify": "Digitalizar para Verificar"
+  },
+  "contractEditor": {
+    "title": "Editar Contrato",
+    "newTitle": "Novo Contrato",
+    "contractName": "Nome do Contrato",
+    "content": "Conteúdo do Contrato",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "namePlaceholder": "Introduza um nome para este contrato..."
+  },
+  "signatures": {
+    "title": "Recolher Assinaturas",
+    "you": "Você",
+    "signNow": "Assinar agora",
+    "sendInvite": "Enviar link de convite",
+    "addSigner": "Adicionar signatário",
+    "otherParty": "Outra parte",
+    "allSigned": "Todas as partes necessárias assinaram. É hora de fixar este documento no tempo.",
+    "drawSignature": "Desenhe a sua assinatura",
+    "typeSignature": "Escreva a sua assinatura",
+    "agreeCheckbox": "Concordo com os termos deste documento",
+    "clear": "Limpar",
+    "submit": "Submeter assinatura"
+  },
+  "timestamp": {
+    "review": {
+      "title": "Revisão Final",
+      "confirmTitle": "Pronto para carimbar temporalmente?",
+      "confirmMessage": "Todas as pessoas que precisam de assinar já reveram este documento? Depois de o carimbarmos temporalmente, qualquer alteração invalida a prova.",
+      "yes": "Sim, continuar",
+      "goBack": "Voltar e editar",
+      "readyToSign": "Pronto para assinar",
+      "timestampThisAgreement": "Carimbar temporalmente este acordo"
+    },
+    "explain": {
+      "title": "O que faz o carimbo temporal?",
+      "description": "O Satohash criará uma impressão digital criptográfica deste documento e enviá-la-á para a rede Bitcoin com um padrão aberto chamado OpenTimestamps. Isto prova que este documento exato existia antes de determinado momento, sem revelar o seu conteúdo.",
+      "point1": "Não carregamos o seu documento na blockchain, apenas a impressão digital.",
+      "point2": "Mais tarde, qualquer pessoa pode verificar a prova com ferramentas abertas, não apenas com o Satohash.",
+      "point3": "Se o documento for alterado, a impressão digital e a prova deixam de corresponder.",
+      "feeTitle": "Taxa estimada da rede Bitcoin",
+      "feeDescription": "Esta taxa vai para os mineradores Bitcoin, não para o Satohash. Varia consoante a atividade da rede.",
+      "details": "Detalhes",
+      "timestampNow": "Carimbar temporalmente agora",
+      "cancel": "Cancelar",
+      "loading": "A carregar estimativa de taxa..."
+    },
+    "progress": {
+      "title": "A criar o seu carimbo temporal…",
+      "step1": "A criar impressão digital…",
+      "step2": "A submeter aos servidores de carimbo temporal…",
+      "step3": "A ancorar no Bitcoin…",
+      "info": "Isto demora normalmente alguns segundos a submeter e até algumas horas a ser totalmente confirmado pela rede Bitcoin. Já pode transferir um recibo, e o Satohash irá atualizá-lo para uma prova completa assim que a rede confirmar.",
+      "done": "Concluído – ver recibo"
+    },
+    "result": {
+      "title": "O seu carimbo temporal foi criado",
+      "statusPending": "Estado da prova: Confirmação na blockchain pendente (recibo inicial)",
+      "statusComplete": "Estado da prova: Confirmado na blockchain Bitcoin",
+      "fingerprint": "Impressão digital do documento (hash)",
+      "timestampedAt": "Carimbo temporal criado em",
+      "blockchain": "Blockchain: Bitcoin (via OpenTimestamps)",
+      "downloadProof": "Transferir pacote de prova (PDF + ficheiro de prova)",
+      "emailCopy": "Enviar-me uma cópia segura por e-mail",
+      "keepSafe": "Guarde este pacote de prova num local seguro. Mesmo que o Satohash deixasse de existir, ainda poderia verificar que este documento exato existia antes deste momento com ferramentas de código aberto."
+    },
+    "verificationHelp": {
+      "title": "Como verificar isto mais tarde",
+      "withSatohash": "Com o Satohash",
+      "withSatohashDesc": "Carregue aqui o seu PDF e ficheiro de prova. Verificaremos na rede Bitcoin e indicaremos se tudo corresponde.",
+      "withoutSatohash": "Sem o Satohash",
+      "withoutSatohashDesc": "Pode usar qualquer ferramenta compatível com OpenTimestamps para verificar a sua prova. Carregue o documento original e o ficheiro de prova .ots. A ferramenta indicará se a impressão digital corresponde e quando foi ancorada no Bitcoin.",
+      "noMatch": "Se algo não corresponder",
+      "noMatchDesc": "Se a prova não for verificada, normalmente significa que o documento foi alterado ou que foi utilizado o ficheiro errado.",
+      "backToContracts": "Voltar aos meus contratos"
+    }
+  },
+  "trust": {
+    "title": "Centro de Confiança",
+    "howItWorks": "Como funciona o Satohash",
+    "howItWorksDetail": "O Satohash utiliza SHA-256 (Secure Hash Algorithm 256-bit) para criar uma impressão digital única do seu documento. Isto acontece localmente no seu navegador; o texto do documento nunca precisa de sair do seu dispositivo. Este hash é depois agrupado com milhares de outros numa árvore Merkle e a sua raiz é ancorada na blockchain Bitcoin com o protocolo OpenTimestamps. Isto cria um registo permanente e imutável de existência.",
+    "whatBlockchain": "Capacidades e Limitações",
+    "whatBlockchainDetail": "O carimbo temporal na blockchain fornece prova matemática de que um conjunto de dados específico existia num determinado momento e não foi alterado. NÃO prova por si só a identidade do signatário (requer verificação adicional), NÃO garante a correção jurídica do conteúdo do contrato e NÃO pode ser modificado ou eliminado depois de ancorado. É uma ferramenta de «prova de existência», não um substituto de revisão jurídica.",
+    "zkPrivacy": "Privacidade e Conhecimento Zero",
+    "zkPrivacyDetail": "A nossa tecnologia «Privacy Shield» inspira-se em provas de Conhecimento Zero (ZK). Como apenas armazenamos o hash criptográfico do seu documento, não temos conhecimento do seu conteúdo. Com provas de inclusão Merkle, podemos até permitir que redija seletivamente partes sensíveis de um documento, mantendo a prova de que as partes restantes correspondem à versão original ancorada—oferecendo privacidade absoluta e verificabilidade absoluta.",
+    "legallyBinding": "Exequibilidade Jurídica",
+    "zkPrivacyPoint": "Redação seletiva inspirada em Conhecimento Zero (ZK)",
+    "legallyBindingDetail": "Em muitas jurisdições, a evidência criptográfica é reconhecida por leis como a ESIGN Act (EUA), UETA (EUA) e eIDAS (UE). Estes enquadramentos estabelecem em geral que um registo eletrónico não deve ser negado efeito jurídico apenas por estar em formato eletrónico. Os carimbos temporais na blockchain fornecem um nível extremamente elevado de «Carimbos Eletrónicos de Tempo» e «Evidência Eletrónica» que podem ser usados em tribunal para refutar alegações de falsificação ou antedatação de documentos.",
+    "legalDisclaimer": "O Satohash fornece evidência e ferramentas, não aconselhamento jurídico. Os utilizadores devem consultar a legislação local e um advogado."
+  },
+  "legal": {
+    "terms": "Termos de Serviço",
+    "privacy": "Política de Privacidade",
+    "cryptoNotice": "Aviso sobre Assinatura Digital e Evidência Criptográfica"
+  },
+  "donation": {
+    "title": "Apoie os nossos programadores",
+    "description": "O Satohash é desenvolvido por uma pequena equipa que se preocupa com acordos abertos e verificáveis. Se achar isto útil, pode dar-nos uma gorjeta em Bitcoin ou Lightning. Obrigado por apoiar o desenvolvimento contínuo.",
+    "onchain": "Enviar BTC para este endereço:",
+    "lightning": "Enviar uma gorjeta Lightning com este código QR ou fatura.",
+    "transparency": "As doações ajudam-nos a cobrir infraestrutura, auditorias de segurança e contribuições de código aberto. Não compram aconselhamento jurídico nem suporte prioritário.",
+    "close": "Fechar",
+    "copy": "Copiar",
+    "copied": "Copiado!"
+  },
+  "footer": {
+    "supportDevelopers": "Apoie os nossos programadores"
+  },
+  "common": {
+    "back": "Voltar",
+    "next": "Seguinte",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "view": "Ver",
+    "loading": "A carregar...",
+    "error": "Erro",
+    "success": "Sucesso"
+  }
+}

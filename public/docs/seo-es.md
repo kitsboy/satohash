@@ -1,31 +1,44 @@
 ---
 title: Estrategia SEO y Auditoría
 project: satohash
-version: 0.1.0
-last_updated: 2026-06-24
-owner: Kimi / Qwen (Auditoría Semanal)
-update_frequency: Semanal (Lunes)
+version: 4.1.0-ELITE
+last_updated: 2026-07-07
+owner: Kimi / Grok (M3)
+build: 37
 ---
 
-# SEO — Satohash (satohash.io)
+# SEO — Satohash (satohash.io) — Español
 
 ## URL en Vivo
-https://satohash.io
+https://satohash.io/?lang=es
 
 ## Palabras Clave Objetivo
-| Palabra Clave Principal | Intención de Búsqueda |
-|-------------------------|-----------------------|
-| Notarización de documentos de Bitcoin | Transaccional |
-| OpenTimestamps gratuito | Informativo |
-| Prueba de sello en la Blockchain | Comercial |
-| Sellos compatibles con eIDAS | Comercial |
+| Palabra Clave | Intención | Página |
+|---------------|-----------|--------|
+| notarización de documentos bitcoin | Transaccional | / |
+| OpenTimestamps gratuito | Informativo | /faq |
+| prueba de existencia blockchain | Comercial | /comparison |
+| sellos compatibles eIDAS | Comercial | /security |
+| identidad NIP-05 nostr | Informativo | /identity |
+| widget prueba bitcoin | Comercial | /widgets |
 
-## Meta Etiquetas Actuales
-| Etiqueta | Valor Actual | Estado |
-|----------|--------------|--------|
-| Título | `Satohash — Sellos Documentales en Bitcoin. Prueba Inmutable. Para Siempre.` | Bueno (64 caracteres) |
+## Meta Etiquetas (ES)
+| Etiqueta | Valor | Estado |
+|----------|-------|--------|
+| Título | Sella Documentos en Bitcoin — Prueba Gratuita de Existencia | ✅ |
+| Descripción | Sube cualquier archivo. Prueba anclada en Bitcoin en 60 segundos. Gratis y privado. | ✅ |
+| og:locale | es_ES | ✅ |
+| hreflang | es | ✅ |
 
-## Registro de Auditoría Semanal
-| Fecha | Auditor | Hallazgos | Recomendaciones |
-|-------|---------|-----------|-----------------|
-| 2026-06-24 | Kimi | Línea base creada | Auditoría completa de Qwen pendiente |
+## Páginas Indexadas (Build 37)
+/ · /templates · /docs · /faq · /pricing · /comparison · /guides · /glossary · /integrations · /widgets · /identity · /security
+
+## Datos Estructurados
+- [x] Organization, WebSite, BreadcrumbList, FAQPage
+
+## Registro de Auditoría
+| Fecha | Hallazgos |
+|-------|-----------|
+| 2026-07-07 | SEO multilingüe 7 idiomas, hreflang dinámico, NIP-05 + widgets indexados |
+
+*Safe Harbour · Parte de la familia [Give A Bit](https://giveabit.io).*

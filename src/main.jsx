@@ -7,7 +7,7 @@ import ErrorBoundary from './components/ErrorBoundary.jsx'
 import UpdatePrompt from './components/UpdatePrompt.jsx'
 import './index.css'
 import './styles/accessibility.css'
-import './i18n'
+import './i18n/setup'
 
 if (import.meta.env.VITE_SENTRY_DSN) {
   Sentry.init({

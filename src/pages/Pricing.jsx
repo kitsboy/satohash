@@ -1,8 +1,16 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import {
-  Check, Zap, Briefcase, Globe, ArrowRight, HelpCircle,
-  Mail, Server, Shield, TrendingUp
+  Check,
+  Zap,
+  Briefcase,
+  Globe,
+  ArrowRight,
+  HelpCircle,
+  Mail,
+  Server,
+  Shield,
+  TrendingUp
 } from 'lucide-react'
 import Footer from '../components/Footer'
 import usePageMeta from '../hooks/usePageMeta'
@@ -62,17 +70,17 @@ const TIERS = [
 ]
 
 export default function Pricing() {
-  usePageMeta({
-    title: 'Pricing — Satohash',
-    description: 'Free Bitcoin document timestamping. Premium and Enterprise plans for volume stamping, Lightning payments, and dedicated infrastructure.'
-  })
+  usePageMeta({ page: 'pricing' })
 
   return (
     <div className="min-h-screen bg-[var(--bg-primary)]">
       {/* Header */}
       <header className="border-b border-[var(--border)] bg-[var(--bg-navbar)]/95 px-6 py-4 backdrop-blur-md">
         <div className="mx-auto flex max-w-6xl items-center gap-4">
-          <Link to="/" className="flex min-h-[44px] items-center gap-2 text-sm font-bold text-[var(--text-secondary)] hover:text-[var(--accent-gold)]">
+          <Link
+            to="/"
+            className="flex min-h-[44px] items-center gap-2 text-sm font-bold text-[var(--text-secondary)] hover:text-[var(--accent-gold)]"
+          >
             <ArrowRight size={16} className="rotate-180" /> Satohash
           </Link>
         </div>
@@ -88,7 +96,8 @@ export default function Pricing() {
             Proof of Existence, <span className="text-[var(--accent-gold)]">For Everyone</span>
           </h1>
           <p className="mx-auto max-w-xl text-sm leading-relaxed text-[var(--text-secondary)]">
-            Start free. Scale when you need more. No lock-in, no hidden fees, no account required for basic use.
+            Start free. Scale when you need more. No lock-in, no hidden fees, no account required
+            for basic use.
           </p>
         </div>
       </section>
@@ -109,23 +118,31 @@ export default function Pricing() {
               }`}
             >
               {tier.highlighted && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-[var(--accent-gold)] px-4 py-1 text-[10px] font-black text-black uppercase tracking-widest">
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-[var(--accent-gold)] px-4 py-1 text-[10px] font-black tracking-widest whitespace-nowrap text-black uppercase">
                   Most Popular
                 </div>
               )}
 
               <div className="mb-6 flex items-center gap-3">
-                <div className={`flex h-10 w-10 items-center justify-center rounded-xl ${
-                  tier.highlighted ? 'bg-[var(--accent-gold)]/10' : 'bg-[var(--bg-secondary)]'
-                }`}>
-                  {i === 0 ? <Zap size={20} className="text-[var(--accent-gold)]" /> :
-                   i === 1 ? <TrendingUp size={20} className="text-[var(--accent-gold)]" /> :
-                   <Briefcase size={20} className="text-[var(--accent-gold)]" />}
+                <div
+                  className={`flex h-10 w-10 items-center justify-center rounded-xl ${
+                    tier.highlighted ? 'bg-[var(--accent-gold)]/10' : 'bg-[var(--bg-secondary)]'
+                  }`}
+                >
+                  {i === 0 ? (
+                    <Zap size={20} className="text-[var(--accent-gold)]" />
+                  ) : i === 1 ? (
+                    <TrendingUp size={20} className="text-[var(--accent-gold)]" />
+                  ) : (
+                    <Briefcase size={20} className="text-[var(--accent-gold)]" />
+                  )}
                 </div>
                 <div>
                   <h3 className="text-lg font-bold text-[var(--text-primary)]">{tier.name}</h3>
                   <p className="text-xs text-[var(--text-secondary)]">
-                    <span className="text-2xl font-black text-[var(--text-primary)]">{tier.price}</span>
+                    <span className="text-2xl font-black text-[var(--text-primary)]">
+                      {tier.price}
+                    </span>
                     {tier.price !== 'Custom' && <span className="ml-1">/{tier.period}</span>}
                   </p>
                 </div>
@@ -135,7 +152,10 @@ export default function Pricing() {
 
               <ul className="mb-8 space-y-3">
                 {tier.features.map((feat, j) => (
-                  <li key={j} className="flex items-start gap-2.5 text-xs text-[var(--text-secondary)]">
+                  <li
+                    key={j}
+                    className="flex items-start gap-2.5 text-xs text-[var(--text-secondary)]"
+                  >
                     <Check size={14} className="mt-0.5 shrink-0 text-[var(--accent-gold)]" />
                     {feat}
                   </li>
@@ -145,7 +165,7 @@ export default function Pricing() {
               {tier.to.startsWith('mailto') ? (
                 <a
                   href={tier.to}
-                  className={`flex min-h-[48px] w-full items-center justify-center gap-2 rounded-xl text-sm font-black uppercase tracking-wider transition-all ${
+                  className={`flex min-h-[48px] w-full items-center justify-center gap-2 rounded-xl text-sm font-black tracking-wider uppercase transition-all ${
                     tier.highlighted
                       ? 'bg-[var(--accent-gold)] text-black hover:bg-[var(--accent-gold)]/90'
                       : 'border border-[var(--border)] text-[var(--text-primary)] hover:border-[var(--accent-gold)]'
@@ -156,7 +176,7 @@ export default function Pricing() {
               ) : (
                 <Link
                   to={tier.to}
-                  className={`flex min-h-[48px] w-full items-center justify-center gap-2 rounded-xl text-sm font-black uppercase tracking-wider transition-all ${
+                  className={`flex min-h-[48px] w-full items-center justify-center gap-2 rounded-xl text-sm font-black tracking-wider uppercase transition-all ${
                     tier.highlighted
                       ? 'bg-[var(--accent-gold)] text-black hover:bg-[var(--accent-gold)]/90'
                       : 'border border-[var(--border)] text-[var(--text-primary)] hover:border-[var(--accent-gold)]'
@@ -183,7 +203,9 @@ export default function Pricing() {
                   <th className="p-4 font-bold text-[var(--text-primary)]">Feature</th>
                   <th className="p-4 text-center font-bold text-[var(--accent-gold)]">Free</th>
                   <th className="p-4 text-center font-bold text-[var(--accent-gold)]">Premium</th>
-                  <th className="p-4 text-center font-bold text-[var(--accent-gold)]">Enterprise</th>
+                  <th className="p-4 text-center font-bold text-[var(--accent-gold)]">
+                    Enterprise
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -202,19 +224,25 @@ export default function Pricing() {
                   ['On-premise deployment', '—', '—', 'Yes'],
                   ['Priority support', 'Community', 'Email', '24/7 Dedicated']
                 ].map((row, i) => (
-                  <tr key={i} className={`border-b border-[var(--border)] ${
-                    i % 2 === 0 ? 'bg-[var(--bg-primary)]' : 'bg-[var(--bg-secondary)]'
-                  }`}>
+                  <tr
+                    key={i}
+                    className={`border-b border-[var(--border)] ${
+                      i % 2 === 0 ? 'bg-[var(--bg-primary)]' : 'bg-[var(--bg-secondary)]'
+                    }`}
+                  >
                     {row.map((cell, j) => (
-                      <td key={j} className={`p-4 text-xs ${
-                        j === 0
-                          ? 'font-bold text-[var(--text-primary)]'
-                          : cell === 'Yes'
-                          ? 'text-center text-[var(--accent-success)]'
-                          : cell === '—'
-                          ? 'text-center text-[var(--text-tertiary)]'
-                          : 'text-center text-[var(--text-secondary)]'
-                      }`}>
+                      <td
+                        key={j}
+                        className={`p-4 text-xs ${
+                          j === 0
+                            ? 'font-bold text-[var(--text-primary)]'
+                            : cell === 'Yes'
+                              ? 'text-center text-[var(--accent-success)]'
+                              : cell === '—'
+                                ? 'text-center text-[var(--text-tertiary)]'
+                                : 'text-center text-[var(--text-secondary)]'
+                        }`}
+                      >
                         {cell}
                       </td>
                     ))}
@@ -230,13 +258,23 @@ export default function Pricing() {
       <section className="px-6 py-16">
         <div className="mx-auto max-w-xl text-center">
           <HelpCircle size={24} className="mx-auto mb-4 text-[var(--accent-gold)]" />
-          <h2 className="mb-3 text-xl font-black text-[var(--text-primary)]">Have Questions About Pricing?</h2>
-          <p className="mb-6 text-sm text-[var(--text-secondary)]">Check our FAQ for common questions or reach out directly.</p>
+          <h2 className="mb-3 text-xl font-black text-[var(--text-primary)]">
+            Have Questions About Pricing?
+          </h2>
+          <p className="mb-6 text-sm text-[var(--text-secondary)]">
+            Check our FAQ for common questions or reach out directly.
+          </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link to="/faq" className="inline-flex min-h-[44px] items-center gap-2 rounded-xl border border-[var(--border)] px-6 text-xs font-bold text-[var(--text-primary)] uppercase tracking-wider transition-all hover:border-[var(--accent-gold)]">
+            <Link
+              to="/faq"
+              className="inline-flex min-h-[44px] items-center gap-2 rounded-xl border border-[var(--border)] px-6 text-xs font-bold tracking-wider text-[var(--text-primary)] uppercase transition-all hover:border-[var(--accent-gold)]"
+            >
               View FAQ <HelpCircle size={14} />
             </Link>
-            <a href="mailto:hello@giveabit.io?subject=Satohash Pricing" className="inline-flex min-h-[44px] items-center gap-2 rounded-xl border border-[var(--border)] px-6 text-xs font-bold text-[var(--text-primary)] uppercase tracking-wider transition-all hover:border-[var(--accent-gold)]">
+            <a
+              href="mailto:hello@giveabit.io?subject=Satohash Pricing"
+              className="inline-flex min-h-[44px] items-center gap-2 rounded-xl border border-[var(--border)] px-6 text-xs font-bold tracking-wider text-[var(--text-primary)] uppercase transition-all hover:border-[var(--accent-gold)]"
+            >
               Contact Sales <Mail size={14} />
             </a>
           </div>
@@ -252,7 +290,10 @@ export default function Pricing() {
             { icon: Globe, text: 'No Vendor Lock-in' },
             { icon: Zap, text: 'Zero-Knowledge' }
           ].map((item, i) => (
-            <div key={i} className="flex items-center gap-2 text-xs font-bold tracking-widest text-[var(--text-tertiary)] uppercase">
+            <div
+              key={i}
+              className="flex items-center gap-2 text-xs font-bold tracking-widest text-[var(--text-tertiary)] uppercase"
+            >
               <item.icon size={16} className="text-[var(--accent-gold)]" />
               {item.text}
             </div>

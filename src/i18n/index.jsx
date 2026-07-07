@@ -1,11 +1,17 @@
 import { createContext, useContext, useState } from 'react'
+import i18n from './setup'
+import de from './inline/de.js'
+import pt from './inline/pt.js'
+import sw from './inline/sw.js'
 
 export const languages = [
   { code: 'en', label: 'English', flag: '🇬🇧', dir: 'ltr' },
   { code: 'es', label: 'Español', flag: '🇪🇸', dir: 'ltr' },
   { code: 'fr', label: 'Français', flag: '🇫🇷', dir: 'ltr' },
-  { code: 'zh', label: '中文', flag: '🇨🇳', dir: 'ltr' },
-  { code: 'ar', label: 'العربية', flag: '🇸🇦', dir: 'rtl' }
+  { code: 'de', label: 'Deutsch', flag: '🇩🇪', dir: 'ltr' },
+  { code: 'pt', label: 'Português', flag: '🇵🇹', dir: 'ltr' },
+  { code: 'sw', label: 'Kiswahili', flag: '🇰🇪', dir: 'ltr' },
+  { code: 'zh', label: '中文', flag: '🇨🇳', dir: 'ltr' }
 ]
 
 export const translations = {
@@ -499,6 +505,9 @@ export const translations = {
       rights: 'Tous droits réservés'
     }
   },
+  de,
+  pt,
+  sw,
   zh: {
     nav: {
       vault: '保险库',
@@ -835,6 +844,9 @@ export function I18nProvider({ children }) {
   const setLang = (code) => {
     setLangState(code)
     localStorage.setItem('satohash_lang', code)
+    if (typeof i18n?.changeLanguage === 'function') {
+      i18n.changeLanguage(code)
+    }
   }
 
   const t = (section, key) =>

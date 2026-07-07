@@ -16,8 +16,17 @@ import {
 } from 'lucide-react'
 import { nip19 } from 'nostr-tools'
 import { toast } from 'sonner'
+import usePageMeta from '../hooks/usePageMeta'
+import {
+  verifyNip05,
+  verifyLightningAddress,
+  registerSatohashNip05,
+  resolvePubkeyHex
+} from '../lib/nip05'
 
 export default function IdentityVerification() {
+  usePageMeta({ page: 'identity' })
+
   const [npub, setNpub] = useState('')
   const [nip05Handle, setNip05Handle] = useState('')
   const [extensionAvailable, setExtensionAvailable] = useState(false)
@@ -37,7 +46,12 @@ export default function IdentityVerification() {
     try {
       const profile = JSON.parse(localStorage.getItem('satohash_profile') || '{}')
       setNip05Handle(profile.nip05 || '')
-    } catch {}
+      if (profile.nip05_verified) setVerifyResult('verified')
+      if (profile.lightning_verified) setIsLnVerified(true)
+      if (profile.lightning) setLightningAddress(profile.lightning)
+    } catch {
+      /* ignore corrupt profile cache */
+    }
   }, [])
 
   const handleConnectExtension = async () => {
@@ -61,55 +75,75 @@ export default function IdentityVerification() {
     }
   }
 
-  const handleVerifyLightningAddress = async () => {
-    if (!lightningAddress || !lightningAddress.includes('@')) {
-      toast.error('Enter a valid Lightning Address (user@domain.com)')
-      return
+  const persistProfile = (patch) => {
+    try {
+      const profile = JSON.parse(localStorage.getItem('satohash_profile') || '{}')
+      localStorage.setItem('satohash_profile', JSON.stringify({ ...profile, ...patch }))
+    } catch {
+      /* ignore profile write errors */
     }
+  }
+
+  const handleVerifyLightningAddress = async () => {
     setIsVerifyingLn(true)
     try {
-      const [local, domain] = lightningAddress.split('@')
-      toast.info('Resolving Lightning Address via LNURL...')
-
-      // Dynamic mock delay to ensure robust offline & online performance
-      setTimeout(() => {
-        setIsLnVerified(true)
-        setIsVerifyingLn(false)
-        toast.success('⚡ Lightning Badge Awarded!', {
-          description: `Associated successfully: ${lightningAddress}`
-        })
-      }, 1000)
+      const result = await verifyLightningAddress(lightningAddress)
+      setIsLnVerified(true)
+      persistProfile({ lightning: result.address, lightning_verified: true })
+      toast.success('⚡ Lightning Address Verified!', { description: result.address })
     } catch (e) {
+      setIsLnVerified(false)
+      toast.error(e.message)
+    } finally {
       setIsVerifyingLn(false)
-      toast.error('Failed to verify lightning address')
     }
   }
 
   const handleVerifyNip05 = async () => {
-    if (!nip05Handle || !nip05Handle.includes('@')) {
-      toast.error('Enter a valid NIP-05 handle (user@domain.com)')
-      return
-    }
     setIsVerifying(true)
     setVerifyResult(null)
     try {
-      const [local, domain] = nip05Handle.split('@')
-      const url = `https://${domain}/.well-known/nostr.json?name=${local}`
-      const res = await fetch(url)
-      if (!res.ok) throw new Error('NIP-05 server unreachable')
-      const data = await res.json()
-      const resolvedPk = data.names?.[local] || data.names?.['_']
-      const storedPk = localStorage.getItem('satohash_pk')
-      if (resolvedPk && storedPk && resolvedPk.toLowerCase() === storedPk.toLowerCase()) {
-        setVerifyResult('verified')
-        toast.success('NIP-05 Verified!', { description: nip05Handle })
-      } else {
-        setVerifyResult('failed')
-        toast.error('NIP-05 mismatch — pubkeys do not match')
+      const pk = localStorage.getItem('satohash_pk') || resolvePubkeyHex(npub)
+      if (pk && !localStorage.getItem('satohash_pk')) {
+        localStorage.setItem('satohash_pk', pk)
+      }
+      const result = await verifyNip05(nip05Handle, pk)
+      setVerifyResult('verified')
+      persistProfile({ nip05: result.handle, nip05_verified: true })
+      toast.success('NIP-05 Verified!', { description: result.handle })
+
+      // Offer @satohash.io registration when API is available
+      const [local, domain] = result.handle.split('@')
+      if (domain === 'satohash.io' && npub) {
+        try {
+          await registerSatohashNip05(local, result.pubkeyHex, npub)
+          toast.success('Registered on satohash.io mesh')
+        } catch {
+          /* static site — registration needs backend */
+        }
       }
     } catch (e) {
       setVerifyResult('failed')
-      toast.error('Verification failed: ' + e.message)
+      toast.error(e.message)
+    } finally {
+      setIsVerifying(false)
+    }
+  }
+
+  const handleQuickVerifyKimi = async () => {
+    const handle = 'kimi@giveabit.io'
+    setNip05Handle(handle)
+    setIsVerifying(true)
+    setVerifyResult(null)
+    try {
+      const pk = localStorage.getItem('satohash_pk') || resolvePubkeyHex(npub)
+      const result = await verifyNip05(handle, pk)
+      setVerifyResult('verified')
+      persistProfile({ nip05: result.handle, nip05_verified: true })
+      toast.success('NIP-05 Verified!', { description: result.handle })
+    } catch (e) {
+      setVerifyResult('failed')
+      toast.error(e.message)
     } finally {
       setIsVerifying(false)
     }
@@ -329,17 +363,40 @@ export default function IdentityVerification() {
                 </div>
 
                 <div className="grid gap-6 sm:grid-cols-2">
-                  <SocialLink
-                    icon={Globe}
-                    label="Domain Verification"
-                    desc="Establish NIP-05 via satohash.mesh"
-                    action="Connect Domain"
-                  />
+                  <button
+                    type="button"
+                    onClick={handleQuickVerifyKimi}
+                    className="group flex cursor-pointer flex-col items-center rounded-3xl p-6 text-center transition-all"
+                    style={{
+                      background: 'var(--surface-raised)',
+                      border: '1px solid var(--border)'
+                    }}
+                  >
+                    <Globe size={20} className="mb-4" style={{ color: 'var(--text-secondary)' }} />
+                    <div
+                      className="mb-1 text-[9px] font-black tracking-widest uppercase"
+                      style={{ color: 'var(--text-secondary)' }}
+                    >
+                      Try Verified Identity
+                    </div>
+                    <div
+                      className="mb-4 text-[10px] font-bold"
+                      style={{ color: 'var(--text-secondary)' }}
+                    >
+                      Verify kimi@giveabit.io (Give A Bit NIP-05)
+                    </div>
+                    <span
+                      className="text-[10px] font-black uppercase italic group-hover:underline"
+                      style={{ color: 'var(--accent-active)' }}
+                    >
+                      Run Check <ExternalLink size={10} className="inline" />
+                    </span>
+                  </button>
                   <SocialLink
                     icon={Zap}
-                    label="Lightning Address"
-                    desc="Link BOLT-12 Offers to identity"
-                    action="Associate Address"
+                    label="satohash.io NIP-05"
+                    desc="Register yourname@satohash.io when backend is live"
+                    action="Learn More"
                   />
                 </div>
 
@@ -479,8 +536,8 @@ export default function IdentityVerification() {
                 style={{ color: 'var(--text-secondary)' }}
               >
                 <Zap size={14} className="mr-2 inline" style={{ color: 'var(--accent-active)' }} />
-                Connecting your identity allows for automated "One-Click" notarization via the
-                Satohash API Mesh. Establish your reputation today.
+                Connecting your identity allows for automated &ldquo;One-Click&rdquo; notarization
+                via the Satohash API Mesh. Establish your reputation today.
               </p>
             </div>
           </div>

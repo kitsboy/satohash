@@ -34,19 +34,21 @@ const GUIDES = [
 ]
 
 export default function Guides() {
-  usePageMeta({
-    title: 'Educational Guides — Satohash',
-    description: 'Learn how cryptographic proofs, OpenTimestamps, and Bitcoin create verifiable truth. Guides for beginners and experts.'
-  })
+  usePageMeta({ page: 'guides' })
 
   return (
     <div className="min-h-screen bg-[var(--bg-primary)]">
       <header className="border-b border-[var(--border)] bg-[var(--bg-navbar)]/95 px-6 py-4 backdrop-blur-md">
         <div className="mx-auto flex max-w-6xl items-center gap-4">
-          <Link to="/" className="flex min-h-[44px] items-center gap-2 text-sm font-bold text-[var(--text-secondary)] hover:text-[var(--accent-gold)]">
+          <Link
+            to="/"
+            className="flex min-h-[44px] items-center gap-2 text-sm font-bold text-[var(--text-secondary)] hover:text-[var(--accent-gold)]"
+          >
             <ArrowLeft size={16} /> Home
           </Link>
-          <p className="text-[10px] font-bold tracking-[0.25em] text-[var(--accent-gold)] uppercase">Educational Guides</p>
+          <p className="text-[10px] font-bold tracking-[0.25em] text-[var(--accent-gold)] uppercase">
+            Educational Guides
+          </p>
         </div>
       </header>
 
@@ -57,14 +59,15 @@ export default function Guides() {
             Learn How <span className="text-[var(--accent-gold)]">Proof Works</span>
           </h1>
           <p className="mx-auto max-w-xl text-sm leading-relaxed text-[var(--text-secondary)]">
-            Understand the cryptography, protocols, and philosophy behind Bitcoin-anchored proof of existence.
+            Understand the cryptography, protocols, and philosophy behind Bitcoin-anchored proof of
+            existence.
           </p>
         </div>
       </section>
 
       <section className="mx-auto max-w-4xl px-6 py-16">
         <div className="grid gap-6 sm:grid-cols-2">
-          {GUIDES.map(guide => {
+          {GUIDES.map((guide) => {
             const Icon = guide.icon
             return (
               <div
@@ -83,7 +86,9 @@ export default function Guides() {
                   {guide.desc}
                 </p>
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] text-[var(--text-tertiary)]">{guide.readTime} read</span>
+                  <span className="text-[10px] text-[var(--text-tertiary)]">
+                    {guide.readTime} read
+                  </span>
                   <span className="flex items-center gap-1 text-[10px] font-bold tracking-wider text-[var(--accent-gold)] uppercase">
                     Read <ArrowRight size={11} />
                   </span>
@@ -98,12 +103,19 @@ export default function Guides() {
         <div className="mx-auto max-w-xl text-center">
           <h2 className="mb-3 text-xl font-black text-[var(--text-primary)]">More Coming Soon</h2>
           <p className="mb-4 text-sm text-[var(--text-secondary)]">
-            Guides on NIP-05 identity, BOLT-12 Lightning, multi-party contracts, and advanced verification techniques are in development.
+            Guides on NIP-05 identity, BOLT-12 Lightning, multi-party contracts, and advanced
+            verification techniques are in development.
           </p>
           <div className="flex flex-wrap justify-center gap-4 text-xs font-bold tracking-wider uppercase">
-            <Link to="/faq" className="text-[var(--accent-gold)] hover:underline">FAQ</Link>
-            <Link to="/glossary" className="text-[var(--accent-gold)] hover:underline">Glossary</Link>
-            <Link to="/comparison" className="text-[var(--accent-gold)] hover:underline">Compare</Link>
+            <Link to="/faq" className="text-[var(--accent-gold)] hover:underline">
+              FAQ
+            </Link>
+            <Link to="/glossary" className="text-[var(--accent-gold)] hover:underline">
+              Glossary
+            </Link>
+            <Link to="/comparison" className="text-[var(--accent-gold)] hover:underline">
+              Compare
+            </Link>
           </div>
         </div>
       </section>

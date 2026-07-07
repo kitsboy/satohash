@@ -34,10 +34,7 @@ const fadeUp = {
 }
 
 export default function Landing() {
-  usePageMeta({
-    title: 'Stamp Documents on Bitcoin — Free Proof of Existence',
-    description: 'Drop any file. Get a Bitcoin-anchored proof of existence in under 60 seconds. Free, private, zero-knowledge. Your file never leaves your device.'
-  })
+  usePageMeta({ page: 'landing' })
 
   const [navOpen, setNavOpen] = useState(false)
   const [donationOpen, setDonationOpen] = useState(false)

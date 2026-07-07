@@ -29,17 +29,33 @@ function loadJsonKeys(relPath) {
   return { path: relPath, keys: new Set(flattenKeys(data)) }
 }
 
+function loadInlineLocale(relPath) {
+  const full = path.join(root, relPath)
+  if (!fs.existsSync(full)) return new Set()
+  const source = fs.readFileSync(full, 'utf-8')
+  const match = source.match(/export default (\{[\s\S]*\})\s*$/)
+  if (!match) return new Set()
+  // eslint-disable-next-line no-new-func
+  const tree = Function(`"use strict"; return (${match[1]})`)()
+  return new Set(flattenKeys(tree))
+}
+
 function extractInlineTranslations() {
   const indexPath = path.join(root, 'src/i18n/index.jsx')
   const source = fs.readFileSync(indexPath, 'utf-8')
-  const match = source.match(/export const translations = (\{[\s\S]*?\n\})\s*\n/)
-  if (!match) return {}
-
-  // eslint-disable-next-line no-new-func
-  const translations = Function(`"use strict"; return (${match[1]})`)()
+  // Only eval inline locale blocks (en, es, fr, zh, ar) — imported locales checked separately
+  const match = source.match(/export const translations = \{([\s\S]*?)\n  de,/)
+  const inlineBlock = match ? `{${match[1].trim().replace(/,\s*$/, '')}}` : null
   const result = {}
-  for (const [lang, tree] of Object.entries(translations)) {
-    result[lang] = new Set(flattenKeys(tree))
+  if (inlineBlock) {
+    // eslint-disable-next-line no-new-func
+    const translations = Function(`"use strict"; return (${inlineBlock})`)()
+    for (const [lang, tree] of Object.entries(translations)) {
+      result[lang] = new Set(flattenKeys(tree))
+    }
+  }
+  for (const lang of ['de', 'pt', 'sw']) {
+    result[lang] = loadInlineLocale(`src/i18n/inline/${lang}.js`)
   }
   return result
 }
@@ -49,6 +65,8 @@ const jsonLocales = [
   'src/i18n/translations/es.json',
   'src/i18n/translations/fr.json',
   'src/i18n/translations/de.json',
+  'src/i18n/translations/pt.json',
+  'src/i18n/translations/sw.json',
   'src/i18n/translations/zh.json'
 ]
 
@@ -76,14 +94,29 @@ for (const locale of loaded) {
 }
 
 const enInline = inline.en
+const requiredNav = ['nav.stamp', 'nav.vault', 'stamp.title', 'stamp.dropzone', 'common.loading']
 if (enInline) {
-  const requiredNav = ['nav.stamp', 'nav.vault', 'stamp.title', 'stamp.dropzone', 'common.loading']
   const missingInline = requiredNav.filter((k) => !enInline.has(k))
   if (missingInline.length) {
     failed = true
     console.error(`❌ src/i18n/index.jsx (en) missing keys: ${missingInline.join(', ')}`)
   } else {
     console.log(`✅ src/i18n/index.jsx inline en — core keys present`)
+  }
+}
+for (const lang of ['de', 'pt', 'sw']) {
+  const keys = inline[lang]
+  if (!keys?.size) {
+    failed = true
+    console.error(`❌ src/i18n/inline/${lang}.js — empty or missing`)
+    continue
+  }
+  const missing = requiredNav.filter((k) => !keys.has(k))
+  if (missing.length) {
+    failed = true
+    console.error(`❌ src/i18n/inline/${lang}.js missing: ${missing.join(', ')}`)
+  } else {
+    console.log(`✅ src/i18n/inline/${lang}.js — core keys present`)
   }
 }
 

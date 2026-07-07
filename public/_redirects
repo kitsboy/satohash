@@ -1,2 +1,5 @@
+# NIP-05 identity — serve static nostr.json before SPA fallback
+/.well-known/*  /.well-known/:splat  200
+
 # SPA fallback — BrowserRouter requires all routes to serve index.html
 /*    /index.html   200

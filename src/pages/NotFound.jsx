@@ -3,10 +3,7 @@ import { Home, Search } from 'lucide-react'
 import usePageMeta from '../hooks/usePageMeta'
 
 export default function NotFound() {
-  usePageMeta({
-    title: '404 — Page Not Found',
-    description: 'This page does not exist. Browse our documentation, templates, or FAQ for help.'
-  })
+  usePageMeta({ page: 'notFound' })
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-[var(--bg-primary)] px-6">
@@ -23,23 +20,22 @@ export default function NotFound() {
         <h1 className="mb-2 text-5xl font-black tracking-tighter text-[var(--text-primary)]">
           404
         </h1>
-        <p className="mb-2 text-lg font-bold text-[var(--text-secondary)]">
-          Page Not Found
-        </p>
+        <p className="mb-2 text-lg font-bold text-[var(--text-secondary)]">Page Not Found</p>
         <p className="mb-8 text-sm leading-relaxed text-[var(--text-tertiary)]">
-          This page doesn't exist or has been moved. The protocol hasn't recorded a proof for this path.
+          This page doesn&apos;t exist or has been moved. The protocol hasn&apos;t recorded a proof
+          for this path.
         </p>
 
         <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
           <Link
             to="/"
-            className="inline-flex min-h-[44px] min-w-[44px] items-center gap-2.5 rounded-xl bg-[var(--accent-gold)] px-6 text-sm font-black text-black uppercase tracking-wider transition-all hover:bg-[var(--accent-gold)]/90 hover:shadow-[0_0_30px_var(--accent-gold-glow)]"
+            className="inline-flex min-h-[44px] min-w-[44px] items-center gap-2.5 rounded-xl bg-[var(--accent-gold)] px-6 text-sm font-black tracking-wider text-black uppercase transition-all hover:bg-[var(--accent-gold)]/90 hover:shadow-[0_0_30px_var(--accent-gold-glow)]"
           >
             <Home size={16} /> Go Home
           </Link>
           <Link
             to="/templates"
-            className="inline-flex min-h-[44px] min-w-[44px] items-center gap-2.5 rounded-xl border border-[var(--border)] px-6 text-sm font-bold text-[var(--text-secondary)] uppercase tracking-wider transition-all hover:border-[var(--accent-gold)] hover:text-[var(--text-primary)]"
+            className="inline-flex min-h-[44px] min-w-[44px] items-center gap-2.5 rounded-xl border border-[var(--border)] px-6 text-sm font-bold tracking-wider text-[var(--text-secondary)] uppercase transition-all hover:border-[var(--accent-gold)] hover:text-[var(--text-primary)]"
           >
             <Search size={16} /> Browse Templates
           </Link>

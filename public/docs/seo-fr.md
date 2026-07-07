@@ -1,31 +1,43 @@
 ---
 title: Stratégie SEO et Audit
 project: satohash
-version: 0.1.0
-last_updated: 2026-06-24
-owner: Kimi / Qwen (Audit Hebdomadaire)
-update_frequency: Hebdomadaire (Lundi)
+version: 4.1.0-ELITE
+last_updated: 2026-07-07
+owner: Kimi / Grok (M3)
+build: 37
 ---
 
-# SEO — Satohash (satohash.io)
+# SEO — Satohash (satohash.io) — Français
 
 ## URL Actuelle
-https://satohash.io
+https://satohash.io/?lang=fr
 
 ## Mots-clés Cibles
-| Mot-clé Principal | Intention de Recherche |
-|-------------------|------------------------|
-| notarisation de documents Bitcoin | Transactionnel |
-| OpenTimestamps gratuit | Informationnel |
-| preuve de timestamp blockchain | Commercial |
-| timestamps conformes eIDAS | Commercial |
+| Mot-clé | Intention | Page |
+|---------|-----------|------|
+| notarisation documents bitcoin | Transactionnel | / |
+| OpenTimestamps gratuit | Informationnel | /faq |
+| preuve d'existence blockchain | Commercial | /comparison |
+| horodatages conformes eIDAS | Commercial | /security |
+| identité NIP-05 nostr | Informationnel | /identity |
+| badge preuve bitcoin intégrable | Commercial | /widgets |
 
-## Balises Meta Actuelles
-| Balise | Valeur Actuelle | Statut |
-|--------|----------------|--------|
-| Title | `Satohash — Pomper des Documents sur Bitcoin. Preuve Immuable. Pour Toujours.` | Bon (64 caractères) |
+## Balises Meta (FR)
+| Balise | Valeur | Statut |
+|--------|--------|--------|
+| Titre | Tamponnez des Documents sur Bitcoin — Preuve Gratuite | ✅ |
+| Description | Déposez un fichier. Preuve ancrée sur Bitcoin en 60 secondes. Gratuit et privé. | ✅ |
+| og:locale | fr_FR | ✅ |
 
-## Journal d'Audit Hebdomadaire
-| Date | Auditeur | Constatations | Recommandations |
-|------|----------|---------------|-----------------|
-| 2026-06-24 | Kimi | Baseline créée | Audit complet par Qwen en attente |
+## Pages Indexées (Build 37)
+18 pages publiques incluant /widgets et /identity
+
+## Données Structurées
+- [x] Organization, WebSite, BreadcrumbList, FAQPage
+
+## Journal d'Audit
+| Date | Constatations |
+|------|---------------|
+| 2026-07-07 | SEO 7 langues, hreflang, widgets Proof DNA, NIP-05 |
+
+*Safe Harbour · Partie de la famille [Give A Bit](https://giveabit.io).*

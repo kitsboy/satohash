@@ -90,17 +90,15 @@ const CATEGORY_MAP = {
 }
 
 export default function FAQ() {
-  usePageMeta({
-    title: 'Frequently Asked Questions — Satohash',
-    description: 'Answers to common questions about Bitcoin timestamping, OpenTimestamps, legal validity, Nostr identity, and Satohash pricing.'
-  })
+  usePageMeta({ page: 'faq' })
 
   const [openIndex, setOpenIndex] = useState(null)
   const [searchQuery, setSearchQuery] = useState('')
   const [activeCategory, setActiveCategory] = useState('all')
 
-  const filtered = FAQS.filter(faq => {
-    const matchesSearch = !searchQuery ||
+  const filtered = FAQS.filter((faq) => {
+    const matchesSearch =
+      !searchQuery ||
       faq.q.toLowerCase().includes(searchQuery.toLowerCase()) ||
       faq.a.toLowerCase().includes(searchQuery.toLowerCase())
     const cat = CATEGORY_MAP[faq.q] || 'basics'
@@ -113,7 +111,10 @@ export default function FAQ() {
       {/* Header */}
       <header className="border-b border-[var(--border)] bg-[var(--bg-navbar)]/95 px-6 py-4 backdrop-blur-md">
         <div className="mx-auto flex max-w-4xl items-center gap-4">
-          <Link to="/" className="flex min-h-[44px] items-center gap-2 text-sm font-bold text-[var(--text-secondary)] hover:text-[var(--accent-gold)]">
+          <Link
+            to="/"
+            className="flex min-h-[44px] items-center gap-2 text-sm font-bold text-[var(--text-secondary)] hover:text-[var(--accent-gold)]"
+          >
             <ArrowLeft size={16} /> Satohash
           </Link>
         </div>
@@ -129,17 +130,21 @@ export default function FAQ() {
             Frequently Asked <span className="text-[var(--accent-gold)]">Questions</span>
           </h1>
           <p className="mx-auto mb-8 max-w-xl text-sm leading-relaxed text-[var(--text-secondary)]">
-            Everything you need to know about Bitcoin-anchored proof of existence, OpenTimestamps, and the Satohash protocol.
+            Everything you need to know about Bitcoin-anchored proof of existence, OpenTimestamps,
+            and the Satohash protocol.
           </p>
           {/* Search */}
           <div className="relative mx-auto max-w-md">
-            <Search size={16} className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[var(--text-tertiary)]" />
+            <Search
+              size={16}
+              className="pointer-events-none absolute top-1/2 left-4 -translate-y-1/2 text-[var(--text-tertiary)]"
+            />
             <input
               type="text"
               placeholder="Search questions..."
               value={searchQuery}
-              onChange={e => setSearchQuery(e.target.value)}
-              className="w-full min-h-[48px] rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] pl-11 pr-4 text-sm text-[var(--text-primary)] placeholder-[var(--text-tertiary)] outline-none transition-colors focus:border-[var(--accent-gold)]"
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="min-h-[48px] w-full rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] pr-4 pl-11 text-sm text-[var(--text-primary)] placeholder-[var(--text-tertiary)] transition-colors outline-none focus:border-[var(--accent-gold)]"
             />
           </div>
         </div>
@@ -148,7 +153,7 @@ export default function FAQ() {
       {/* Categories */}
       <section className="border-b border-[var(--border)] bg-[var(--bg-secondary)]/50 px-6 py-4">
         <div className="mx-auto flex max-w-4xl flex-wrap items-center justify-center gap-2">
-          {CATEGORIES.map(cat => (
+          {CATEGORIES.map((cat) => (
             <button
               key={cat.id}
               onClick={() => setActiveCategory(cat.id)}
@@ -170,7 +175,9 @@ export default function FAQ() {
           <div className="py-20 text-center">
             <HelpCircle size={48} className="mx-auto mb-4 text-[var(--text-tertiary)]" />
             <p className="text-lg font-bold text-[var(--text-primary)]">No questions found</p>
-            <p className="text-sm text-[var(--text-secondary)]">Try different keywords or check back later.</p>
+            <p className="text-sm text-[var(--text-secondary)]">
+              Try different keywords or check back later.
+            </p>
           </div>
         ) : (
           <div className="space-y-3">
@@ -191,8 +198,8 @@ export default function FAQ() {
                   <button
                     onClick={() => setOpenIndex(isOpen ? null : i)}
                     aria-expanded={isOpen}
-                    aria-controls={"faq-" + i}
-                    className="flex w-full min-h-[56px] items-center justify-between gap-4 px-6 py-4 text-left"
+                    aria-controls={'faq-' + i}
+                    className="flex min-h-[56px] w-full items-center justify-between gap-4 px-6 py-4 text-left"
                   >
                     <span className="text-sm font-bold text-[var(--text-primary)]">{faq.q}</span>
                     <ChevronDown
@@ -203,8 +210,10 @@ export default function FAQ() {
                     />
                   </button>
                   {isOpen && (
-                    <div id={"faq-" + i} className="border-t border-[var(--border)] px-6 py-4">
-                      <p className="text-sm leading-relaxed text-[var(--text-secondary)]">{faq.a}</p>
+                    <div id={'faq-' + i} className="border-t border-[var(--border)] px-6 py-4">
+                      <p className="text-sm leading-relaxed text-[var(--text-secondary)]">
+                        {faq.a}
+                      </p>
                     </div>
                   )}
                 </motion.div>
@@ -220,13 +229,15 @@ export default function FAQ() {
           <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-[var(--accent-gold)]/10">
             <Mail size={24} className="text-[var(--accent-gold)]" />
           </div>
-          <h2 className="mb-3 text-2xl font-black text-[var(--text-primary)]">Still Have Questions?</h2>
+          <h2 className="mb-3 text-2xl font-black text-[var(--text-primary)]">
+            Still Have Questions?
+          </h2>
           <p className="mb-6 text-sm text-[var(--text-secondary)]">
             Reach out to the team. We typically respond within 24 hours.
           </p>
           <a
             href="mailto:hello@giveabit.io?subject=Satohash Question"
-            className="inline-flex min-h-[48px] items-center gap-2.5 rounded-xl bg-[var(--accent-gold)] px-8 text-sm font-black text-black uppercase tracking-wider transition-all hover:bg-[var(--accent-gold)]/90"
+            className="inline-flex min-h-[48px] items-center gap-2.5 rounded-xl bg-[var(--accent-gold)] px-8 text-sm font-black tracking-wider text-black uppercase transition-all hover:bg-[var(--accent-gold)]/90"
           >
             Ask a Question <Mail size={16} />
           </a>
@@ -237,13 +248,22 @@ export default function FAQ() {
       <section className="border-t border-[var(--border)] px-6 py-12">
         <div className="mx-auto max-w-2xl text-center">
           <div className="flex flex-wrap items-center justify-center gap-4 text-xs font-bold tracking-wider uppercase">
-            <Link to="/templates" className="text-[var(--text-secondary)] hover:text-[var(--accent-gold)] transition-colors">
+            <Link
+              to="/templates"
+              className="text-[var(--text-secondary)] transition-colors hover:text-[var(--accent-gold)]"
+            >
               <BookOpen size={14} className="mr-1.5 inline" /> Browse Templates
             </Link>
-            <Link to="/pitch" className="text-[var(--text-secondary)] hover:text-[var(--accent-gold)] transition-colors">
+            <Link
+              to="/pitch"
+              className="text-[var(--text-secondary)] transition-colors hover:text-[var(--accent-gold)]"
+            >
               <BookOpen size={14} className="mr-1.5 inline" /> Read the Pitch
             </Link>
-            <Link to="/trust" className="text-[var(--text-secondary)] hover:text-[var(--accent-gold)] transition-colors">
+            <Link
+              to="/trust"
+              className="text-[var(--text-secondary)] transition-colors hover:text-[var(--accent-gold)]"
+            >
               <BookOpen size={14} className="mr-1.5 inline" /> Trust Center
             </Link>
           </div>

@@ -1,31 +1,43 @@
 ---
-title: Mfumo wa SEO na Utopili wa Hali ya Kidijedha
+title: Mfumo wa SEO na Utopili
 project: satohash
-version: 0.1.0
-last_updated: 2026-06-24
-owner: Kimi / Qwen (Utopili wa wiki)
-update_frequency: wiki (Jumatatu)
+version: 4.1.0-ELITE
+last_updated: 2026-07-07
+owner: Kimi / Grok (M3)
+build: 37
 ---
 
-# SEO — Satohash (satohash.io)
+# SEO — Satohash (satohash.io) — Kiswahili
 
-## URL Iko kwenye uko
-https://satohash.io
+## URL Iko Hai
+https://satohash.io/?lang=sw
 
-## Maneno Muhimili ya Kutafuta
-| Neno Muhimu la Kwanza | Niyi ya Kutafuta |
-|----------------|--------------|
-| usasishaji wa hati za Bitcoin | Inafanya Umetegemea |
-| Hali ya bure ya OpenTimestamps | Ifaii |
-| ushahidi wa muda wa Blockchain | Kinabidi Ubaaliko |
-| muda wenye kilele la eIDAS | Kinabidi Ubaaliko |
+## Maneno Muhimu
+| Neno | Nia | Ukurasa |
+|------|-----|---------|
+| uthibitishaji wa hati za bitcoin | Ununuzi | / |
+| OpenTimestamps bure | Habari | /faq |
+| ushahidi wa kuwepo blockchain | Biashara | /comparison |
+| muhuri yanayolingana eIDAS | Biashara | /security |
+| utambulisho wa NIP-05 nostr | Habari | /identity |
+| wijeti ya ushahidi wa bitcoin | Biashara | /widgets |
 
-## Kiashirio cha Meta Kimsingi
-| Neno | Thamani Ikiwepo | Hali |
-|-----|--------------|--------|
-| Neno la Neno | `Satohash — Tia Hati kwenye Bitcoin. Uthibitisho hai-geuzi. dakika zote.` | Bora (maneno 64) |
+## Meta Tags (SW)
+| Tag | Thamani | Hali |
+|-----|---------|------|
+| Kichwa | Weka Muhuri wa Hati kwenye Bitcoin — Ushahidi wa Bure | ✅ |
+| Maelezo | Weka faili. Ushahidi uliofungwa kwenye Bitcoin ndani ya sekunde 60. Bure na faragha. | ✅ |
+| og:locale | sw_KE | ✅ |
 
-## Rekodi ya Utopili wa wiki
-| Tarehe | Mtupili | Taarifa za Kupatikana | Ushauri |
-|------|---------|----------|----------------|
-| 2026-06-24 | Kimi | Msingi ulijasazwa | Utopili kamili wa Qwen ni mwisho |
+## Kurasa Zilizoindex (Build 37)
+Kurasa 18 za umma pamoja na /widgets na /identity
+
+## Data Iliyopangwa
+- [x] Organization, WebSite, BreadcrumbList, FAQPage
+
+## Rekodi ya Ukaguzi
+| Tarehe | Matokeo |
+|--------|---------|
+| 2026-07-07 | SEO lugha 7, hreflang, wijeti Proof DNA, NIP-05 |
+
+*Safe Harbour · Sehemu ya familia ya [Give A Bit](https://giveabit.io).*

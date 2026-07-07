@@ -57,6 +57,7 @@ const Docs = React.lazy(() => import('./pages/Docs'))
 const DocViewer = React.lazy(() => import('./pages/DocViewer'))
 const Security = React.lazy(() => import('./pages/Security'))
 const Integrations = React.lazy(() => import('./pages/Integrations'))
+const Widgets = React.lazy(() => import('./pages/Widgets'))
 const Dashboard = React.lazy(() => import('./pages/Dashboard'))
 
 // Legal pages (public)
@@ -241,12 +242,8 @@ function AppContent() {
               </ProtectedRoute>
             }
           />
-          <Route
-            path="/templates"
-            element={<TemplatesShowcase />}
-          />
-          <Route
-            path="/templates/:templateId" element={<TemplateDetail />} />
+          <Route path="/templates" element={<TemplatesShowcase />} />
+          <Route path="/templates/:templateId" element={<TemplateDetail />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/comparison" element={<Comparison />} />
@@ -256,6 +253,8 @@ function AppContent() {
           <Route path="/docs/:slug" element={<DocViewer />} />
           <Route path="/security" element={<Security />} />
           <Route path="/integrations" element={<Integrations />} />
+          <Route path="/widgets" element={<Widgets />} />
+          <Route path="/identity" element={<Identity />} />
           <Route
             path="/templates/new"
             element={
@@ -313,14 +312,7 @@ function AppContent() {
               </ProtectedRoute>
             }
           />
-          <Route
-            path="/identity"
-            element={
-              <ProtectedRoute>
-                <Identity />
-              </ProtectedRoute>
-            }
-          />
+
           <Route
             path="/mobile-signer"
             element={
@@ -493,10 +485,7 @@ function AppContent() {
           <Route path="/audit-log" element={<Navigate to="/vault" replace />} />
           <Route path="/documentation" element={<Navigate to="/developer" replace />} />
           <Route path="/status" element={<Navigate to="/atlas" replace />} />
-          <Route
-            path="*"
-            element={<NotFound />}
-          />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
     </ErrorBoundary>
@@ -507,7 +496,11 @@ function AppContent() {
 }
 
 function App() {
-  usePageMeta({ title: null, description: 'Stamp any document on the Bitcoin blockchain. Free, private, court-admissible proof of existence.' })
+  usePageMeta({
+    title: null,
+    description:
+      'Stamp any document on the Bitcoin blockchain. Free, private, court-admissible proof of existence.'
+  })
 
   const [isOffline, setIsOffline] = useState(!navigator.onLine)
   const [showOnboarding, setShowOnboarding] = useState(() => {

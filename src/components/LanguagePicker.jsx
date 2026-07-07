@@ -8,6 +8,8 @@ const LANGUAGES = [
   { code: 'es', name: 'Español', flag: '🇪🇸', native: 'Spanish' },
   { code: 'fr', name: 'Français', flag: '🇫🇷', native: 'French' },
   { code: 'de', name: 'Deutsch', flag: '🇩🇪', native: 'German' },
+  { code: 'pt', name: 'Português', flag: '🇵🇹', native: 'Portuguese' },
+  { code: 'sw', name: 'Kiswahili', flag: '🇰🇪', native: 'Swahili' },
   { code: 'zh', name: '中文', flag: '🇨🇳', native: 'Chinese' }
 ]
 
@@ -16,7 +18,7 @@ export default function LanguagePicker({ isOpen, onClose }) {
 
   const handleLanguageSelect = (languageCode) => {
     i18n.changeLanguage(languageCode)
-    localStorage.setItem('satohash_language', languageCode)
+    localStorage.setItem('satohash_lang', languageCode)
     onClose()
   }
 

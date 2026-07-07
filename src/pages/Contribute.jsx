@@ -44,7 +44,7 @@ const WAYS_TO_CONTRIBUTE = [
     icon: Globe,
     title: 'Add Translations',
     description:
-      'Satohash supports EN, ES, FR, DE, and ZH. Add or improve strings in src/i18n/translations/.',
+      'Satohash supports EN, ES, FR, DE, PT, SW, and ZH. Add or improve strings in src/i18n/translations/.',
     href: 'https://github.com/kitsboy/satohash/tree/main/src/i18n/translations',
     cta: 'Translation Files'
   }

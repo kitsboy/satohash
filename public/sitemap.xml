@@ -11,6 +11,8 @@
   <url><loc>https://satohash.io/guides</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
   <url><loc>https://satohash.io/glossary</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
   <url><loc>https://satohash.io/integrations</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://satohash.io/widgets</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://satohash.io/identity</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
   <url><loc>https://satohash.io/trust</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
   <url><loc>https://satohash.io/security</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
   <url><loc>https://satohash.io/developer</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>

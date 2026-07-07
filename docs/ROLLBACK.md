@@ -1,5 +1,5 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.giveabit.io · **Version:** 4.1.0-ELITE (Build 7) · **Updated:** 2026-07-06
+> **Live:** https://satohash.giveabit.io · **Version:** 4.1.0-ELITE (Build 37) · **Updated:** 2026-07-07
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Satohash Rollback Procedure
@@ -46,6 +46,7 @@ npm run test:e2e   # optional smoke
 ```
 
 *Last updated: auto-synced by `npm run docs:sync`*
+
 
 
 
