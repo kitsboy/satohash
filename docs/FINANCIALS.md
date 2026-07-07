@@ -1,5 +1,5 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.giveabit.io · **Version:** 4.1.0-ELITE (Build 81) · **Updated:** 2026-07-07
+> **Live:** https://satohash.giveabit.io · **Version:** 4.1.0-ELITE (Build 82) · **Updated:** 2026-07-07
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Satohash — FINANCIALS (Approximate)
@@ -12,15 +12,16 @@
 
 | Category | Estimated Monthly Cost | Notes |
 |---|---|---|
-| Cloudflare Pages hosting | $0–$20 | Free tier covers most traffic; Pro for analytics |
-| Domain (satohash.io) | ~$2 | Annual ~$20, amortized |
+| Cloudflare Pages hosting | $0–$20 | **In use today** — static SPA at satohash.io |
+| Domain (satohash.io) | ~$2 | **In use today** — annual ~$20, amortized |
 | OTS Calendar node | $0 | Public calendar nodes are free |
-| Bitcoin node (optional) | $5–$30 | Self-hosted on VPS for full verification |
-| VPS / API server | $20–$80 | DigitalOcean / Hetzner for backend |
+| Bitcoin node (optional, not in use) | $5–$30 | Future only — self-hosted node for extra verification |
+| API server (optional, not in use) | $20–$80 | Future only — if forum/history/admin API is deployed |
 | Email (transactional) | $0–$10 | Resend/SendGrid free tier |
-| Redis (job queue) | $0–$15 | Redis Cloud free tier |
+| Redis (job queue) | $0–$15 | Future only — if backend job queue is added |
 | Monitoring (Sentry) | $0–$26 | Free tier for small error volume |
-| **Total (bootstrap)** | **~$27–$183/month** | Scales with usage |
+| **Total (today)** | **~$2–$46/month** | Cloudflare + domain + optional Sentry |
+| **Total (if all optional added)** | **~$27–$183/month** | Planning ceiling — not current spend |
 
 ---
 
@@ -107,6 +108,8 @@
 *Last updated: 2026-06-10 (handoff prep) | Contact: hello@giveabit.io*
 
 **Note for handoff**: These are planning approximations only. Recent work added production-grade Docker/PM2/PWA paths, richer client-side offline + Lightning components, and Nostr integration — all of which improve the reliability and perceived value of the paid tiers without materially changing the cost structure above. Gross margins remain excellent due to the near-zero marginal cost of OTS anchoring via public calendars.
+
+
 
 
 
