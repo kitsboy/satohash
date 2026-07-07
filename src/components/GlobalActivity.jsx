@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
+import { clientId, pickRotating, pseudoHash } from '../utils/id'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Radio, Shield, Globe, Clock, Zap } from 'lucide-react'
 
@@ -10,16 +11,18 @@ export default function GlobalActivity() {
     { id: 4, type: 'anchor', hash: '9b8c7d6e...', time: '12m ago', location: 'London, UK' }
   ])
 
+  const tick = useRef(0)
   useEffect(() => {
+    const types = ['anchor', 'signature', 'verify']
+    const locations = ['Paris, FR', 'Sydney, AU', 'Austin, TX', 'Seoul, KR', 'Dublin, IE']
     const interval = setInterval(() => {
-      const types = ['anchor', 'signature', 'verify']
-      const locations = ['Paris, FR', 'Sydney, AU', 'Austin, TX', 'Seoul, KR', 'Dublin, IE']
+      tick.current += 1
       const newActivity = {
-        id: Date.now(),
-        type: types[Math.floor(Math.random() * types.length)],
-        hash: Math.random().toString(16).substring(2, 10) + '...',
+        id: clientId('pulse'),
+        type: pickRotating(types, tick.current),
+        hash: `${pseudoHash(`pulse-${tick.current}`, 8)}...`,
         time: 'Just now',
-        location: locations[Math.floor(Math.random() * locations.length)]
+        location: pickRotating(locations, tick.current)
       }
       setActivities((prev) => [newActivity, ...prev.slice(0, 3)])
     }, 8000)

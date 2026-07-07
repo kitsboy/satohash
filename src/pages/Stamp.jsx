@@ -20,6 +20,7 @@ import {
 import { useState, useCallback, useEffect, useRef } from 'react'
 import { getTieredFeeEstimates } from '../utils/mempool.js'
 import { addErrorBreadcrumb } from '../utils/errors.js'
+import { clientId } from '../utils/id'
 import { toast } from 'sonner'
 import Tooltip from '../components/Tooltip'
 import { useSocket } from '../hooks/useSocket'
@@ -357,7 +358,7 @@ export default function Stamp() {
       ) {
         const file = files[0]
         const queuedItem = {
-          id: 'offline-' + Math.random().toString(36).substr(2, 9),
+          id: clientId('offline'),
           filename: caseLabel || file.name,
           hash: hashValue,
           created_at: new Date().toISOString(),

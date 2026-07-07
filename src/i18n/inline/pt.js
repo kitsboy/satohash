@@ -35,11 +35,14 @@ export default {
     verify: 'Verificar',
     certificate: 'Certificado',
     pending: 'Pendente',
-    confirmed: 'Confirmado'
+    confirmed: 'Confirmado',
+    serverUnreachable: 'Servidor inacessível — a mostrar provas em cache deste navegador.',
+    loadMoreFailed: 'Não foi possível carregar mais provas. Verifique a ligação e tente novamente.'
   },
   common: {
     loading: 'A carregar…',
     error: 'Erro',
+    retry: 'Tentar novamente',
     cancel: 'Cancelar',
     save: 'Guardar',
     close: 'Fechar',
@@ -124,7 +127,8 @@ export default {
     writePost: 'Escreva a sua publicação…',
     postReply: 'Publicar Resposta',
     backToForum: '← Voltar ao Fórum',
-    noDiscussions: 'Ainda não há discussões'
+    noDiscussions: 'Ainda não há discussões',
+    npubRequired: 'Ligue a sua identidade Nostr nas Definições antes de publicar no fórum.'
   },
   dashboard: {
     welcome: 'Bem-vindo ao Satohash',

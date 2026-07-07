@@ -75,7 +75,8 @@ export default function FAQ() {
               className="pointer-events-none absolute top-1/2 left-4 -translate-y-1/2 text-[var(--text-tertiary)]"
             />
             <input
-              type="text"
+              type="search"
+              aria-label={t('faqPage.hero.searchPlaceholder')}
               placeholder={t('faqPage.hero.searchPlaceholder')}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}

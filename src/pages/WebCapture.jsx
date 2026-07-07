@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   Globe,
@@ -37,7 +38,13 @@ const processUrl = (raw) => {
 
 export default function WebCapture() {
   usePageMeta({ page: 'snapper' })
+  const [searchParams] = useSearchParams()
   const [url, setUrl] = useState('')
+
+  useEffect(() => {
+    const prefill = searchParams.get('url')
+    if (prefill) setUrl(prefill)
+  }, [searchParams])
   const [status, setStatus] = useState('idle') // idle, fetching, captured, anchoring, anchored
   const [captureData, setCaptureData] = useState(null)
 

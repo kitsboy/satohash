@@ -16,4 +16,25 @@ test.describe('Frontend pipes', () => {
     await page.goto('/image-vault')
     await expect(page).toHaveURL(/\/access/)
   })
+
+  test('choose-template links to template library', async ({ page }) => {
+    await page.goto('/onboarding/choose-template')
+    await page.getByRole('button', { name: /browse full template library/i }).click()
+    await expect(page).toHaveURL(/\/onboarding\/template-library/)
+  })
+
+  test('onboarding chain welcome through how-it-works', async ({ page }) => {
+    await page.goto('/onboarding/welcome')
+    await page.getByRole('button', { name: /start new agreement/i }).click()
+    await expect(page).toHaveURL(/\/onboarding\/how-it-works/)
+    await page.getByRole('button', { name: /continue/i }).click()
+    await expect(page).toHaveURL(/\/onboarding\/choose-template/)
+  })
+
+  test('forum npub gate shows toast when posting without identity', async ({ page }) => {
+    await page.goto('/forum')
+    await page.getByPlaceholder(/thread title/i).fill('Test thread')
+    await page.getByRole('button', { name: /create/i }).click()
+    await expect(page.getByText(/nostr identity/i)).toBeVisible({ timeout: 5000 })
+  })
 })

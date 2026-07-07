@@ -28,14 +28,17 @@ export default function InstitutionalHUD() {
   const [activeNodes, setActiveNodes] = useState(1422)
 
   useEffect(() => {
+    let tick = 0
     const interval = setInterval(() => {
-      setMempoolSize((prev) => prev + Math.floor(Math.random() * 10) - 5)
+      tick += 1
+      const wave = Math.sin(tick * 0.7)
+      setMempoolSize((prev) => prev + Math.round(wave * 4))
       setFeeRates((prev) => ({
-        low: Math.max(1, prev.low + Math.floor(Math.random() * 3) - 1),
-        mid: Math.max(1, prev.mid + Math.floor(Math.random() * 3) - 1),
-        high: Math.max(1, prev.high + Math.floor(Math.random() * 5) - 2)
+        low: Math.max(1, prev.low + Math.round(Math.sin(tick * 0.5) * 2)),
+        mid: Math.max(1, prev.mid + Math.round(Math.cos(tick * 0.4) * 2)),
+        high: Math.max(1, prev.high + Math.round(Math.sin(tick * 0.3) * 3))
       }))
-      setActiveNodes((prev) => prev + Math.floor(Math.random() * 3) - 1)
+      setActiveNodes((prev) => prev + Math.round(Math.cos(tick * 0.6)))
     }, 5000)
     return () => clearInterval(interval)
   }, [])

@@ -6,6 +6,7 @@ import { clsx } from 'clsx'
 import confetti from 'canvas-confetti'
 import { toast } from 'sonner'
 import { encryptFile } from '../utils/crypto'
+import { pickRotating } from '../utils/id'
 
 /**
  * GlobalDropzone
@@ -29,7 +30,7 @@ export default function GlobalDropzone({ onFileProcessed }) {
         'Anchoring to global consensus…',
         'Finalising mathematical certainty…'
       ]
-      setProcessingMessage(messages[Math.floor(Math.random() * messages.length)])
+      setProcessingMessage(pickRotating(messages, file.name.length + file.size))
 
       const extension = file.name.split('.').pop()?.toLowerCase()
       let intent = isDarkVault ? 'Zero-Knowledge Archive' : 'Standard Notarization'

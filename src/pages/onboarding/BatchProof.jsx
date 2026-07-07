@@ -17,8 +17,13 @@ import Card from '../../components/Card'
 import { calculateHash } from '../../utils/crypto'
 import MerkleExplorer from '../../components/MerkleExplorer'
 import { Binary } from 'lucide-react'
+import OnboardingProgressBar from '../../components/OnboardingProgressBar'
+import usePageMetaOnboarding from '../../hooks/usePageMetaOnboarding'
+import { clientId, pseudoHash } from '../../utils/id'
+import { buildMerkleTree } from '../../utils/merkle'
 
 export default function BatchProof() {
+  usePageMetaOnboarding('batch-proof')
   const { t } = useTranslation()
   const [files, setFiles] = useState([])
   const [isProcessing, setIsProcessing] = useState(false)
@@ -29,7 +34,7 @@ export default function BatchProof() {
       acceptedFiles.map(async (file) => {
         const hash = await calculateHash(file)
         return {
-          id: Math.random().toString(36).substr(2, 9),
+          id: clientId('file'),
           name: file.name,
           size: (file.size / 1024).toFixed(2) + ' KB',
           type: file.type,
@@ -54,9 +59,10 @@ export default function BatchProof() {
     // Simulate batch anchoring process
     await new Promise((resolve) => setTimeout(resolve, 3000))
 
-    const mockRoot = Math.random().toString(16).substring(2, 66)
+    const hashes = files.map((f) => f.hash)
+    const tree = await buildMerkleTree(hashes)
     setMerkleTree({
-      root: mockRoot,
+      root: tree?.root || pseudoHash(hashes.join(':'), 64),
       atoms: files.map((f) => `${f.name} (SHA-256: ${f.hash.substring(0, 8)})`)
     })
 
@@ -68,6 +74,7 @@ export default function BatchProof() {
   return (
     <div className="page pb-24" style={{ background: 'var(--bg-base)', paddingTop: '100px' }}>
       <div className="layout-container">
+        <OnboardingProgressBar currentStepId="batch-proof" />
         <div className="page-header text-center" style={{ marginBottom: '40px' }}>
           <div
             style={{

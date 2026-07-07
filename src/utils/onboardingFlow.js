@@ -44,3 +44,10 @@ export function getNextOnboardingPath(currentStepId) {
   if (idx < 0 || idx >= ONBOARDING_STEPS.length - 1) return '/contracts'
   return ONBOARDING_STEPS[idx + 1].path
 }
+
+export function getResumeOnboardingPath() {
+  const progress = getOnboardingProgress()
+  if (!progress.currentStep) return null
+  const step = ONBOARDING_STEPS.find((s) => s.id === progress.currentStep)
+  return step?.path || null
+}

@@ -120,7 +120,7 @@ export function useOfflineSync(apiBase) {
   const queueStamp = useCallback(
     async (payload) => {
       const item = {
-        id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+        id: `queue-${Date.now().toString(36)}`,
         payload,
         queuedAt: new Date().toISOString(),
         retries: 0

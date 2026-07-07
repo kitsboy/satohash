@@ -2,8 +2,10 @@ import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ShieldCheck, Calendar, Hash, Globe, UserCheck, ShieldClose } from 'lucide-react'
+import { toast } from 'sonner'
 import ProofDNA from '../components/ProofDNA'
 import usePageMeta from '../hooks/usePageMeta'
+import { getApiUrl } from '../config/constants'
 
 /**
  * Item 28: Holographic Verification Shield
@@ -18,12 +20,13 @@ export default function PublicVerification() {
   useEffect(() => {
     const fetchStamp = async () => {
       try {
-        const api = import.meta.env.VITE_API_URL || 'http://localhost:3001'
-        const res = await fetch(`${api}/api/stamps/${id}`)
+        const res = await fetch(`${getApiUrl()}/api/stamps/${id}`)
+        if (!res.ok) throw new Error(`HTTP ${res.status}`)
         const data = await res.json()
         setStamp(data)
       } catch (e) {
         console.error(e)
+        toast.error('Could not load verification record', { description: e.message })
       }
       setLoading(false)
     }

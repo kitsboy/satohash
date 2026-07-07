@@ -27,7 +27,7 @@ import Card from '../../components/Card'
 import { clsx } from 'clsx'
 import usePageMeta from '../../hooks/usePageMeta'
 import { getVerifyUrl } from '../../config/constants'
-import { loadContracts } from '../../utils/contractStorage'
+import { loadContracts, updateContract } from '../../utils/contractStorage'
 
 export default function ContractView() {
   usePageMeta({ page: 'contracts' })
@@ -243,7 +243,7 @@ export default function ContractView() {
       doc.setFontSize(7)
       doc.text('v4.0-ELITE', margin + 30, currentY + 38, { align: 'center' })
 
-      // QR Code — points to satohash.giveabit.io for stable verification URL
+      // QR Code — uses getVerifyUrl() for origin-aware verification links
       try {
         const pdfQrDataUrl = await QRCode.toDataURL(`${getVerifyUrl()}/${contract.id}`, {
           width: 200,
@@ -596,7 +596,7 @@ export default function ContractView() {
                               className="font-mono text-[9px] font-medium tracking-wide"
                               style={{ color: 'var(--text-muted)' }}
                             >
-                              satohash.giveabit.io/verify
+                              {getVerifyUrl().replace(/^https?:\/\//, '')}
                             </span>
                           </div>
                         </div>
@@ -669,6 +669,11 @@ export default function ContractView() {
                     Live Activity
                   </h4>
                   <div className="space-y-3">
+                    {activeSigners.length === 0 && (
+                      <p className="py-6 text-center text-sm text-[var(--text-secondary)]">
+                        No co-signers yet. Invite partners from Settings or simulate below.
+                      </p>
+                    )}
                     {activeSigners.map((signer) => (
                       <div
                         key={signer.id}
@@ -718,10 +723,24 @@ export default function ContractView() {
                       <Button
                         variant="outline"
                         fullWidth
+                        aria-label="Simulate partner signature"
                         onClick={() => {
-                          setContract({ ...contract, status: 'signed' })
-                          toast.success('Partner signature simulated', {
-                            description: 'In production this would send a Nostr DM to the co-signer'
+                          const signers = [
+                            ...(contract.signers || []),
+                            {
+                              name: 'Partner (simulated)',
+                              status: 'signed',
+                              signedAt: new Date().toISOString()
+                            }
+                          ]
+                          const updated = updateContract(contract.id, {
+                            status: 'signed',
+                            signers,
+                            updatedAt: new Date().toISOString()
+                          })
+                          if (updated) setContract(updated)
+                          toast.success('Partner signature recorded', {
+                            description: 'Co-signer saved locally — timestamp when ready'
                           })
                         }}
                       >

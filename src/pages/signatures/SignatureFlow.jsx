@@ -6,6 +6,7 @@ import { ArrowLeft, Check, Zap, AlertTriangle, Info, Globe, ArrowRight } from 'l
 import Button from '../../components/Button'
 import Card from '../../components/Card'
 import usePageMetaOnboarding from '../../hooks/usePageMetaOnboarding'
+import { updateContract } from '../../utils/contractStorage'
 
 const FeeAdvisor = () => {
   const [fees, setFees] = useState(null)
@@ -87,17 +88,13 @@ export default function SignatureFlow() {
       // Simulate cryptographic seal generation
       await new Promise((r) => setTimeout(r, 2000))
 
-      const savedContracts = localStorage.getItem('satohash_contracts')
-      const contracts = JSON.parse(savedContracts)
-      const index = contracts.findIndex((c) => c.id === contractId)
-
-      contracts[index] = {
-        ...contracts[index],
+      updateContract({
+        ...contract,
         status: 'signed',
-        signedAt: new Date().toISOString()
-      }
-
-      localStorage.setItem('satohash_contracts', JSON.stringify(contracts))
+        signedAt: new Date().toISOString(),
+        signatureType,
+        signedName: typedName || 'Drawn signature'
+      })
       setStatus('success')
 
       // Auto-redirect after seeing the seal

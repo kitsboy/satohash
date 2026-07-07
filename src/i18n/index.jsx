@@ -220,11 +220,15 @@ export const translations = {
       verify: 'Verificar',
       certificate: 'Certificado',
       pending: 'Pendiente',
-      confirmed: 'Confirmado'
+      confirmed: 'Confirmado',
+      serverUnreachable: 'Servidor no disponible — mostrando pruebas en caché de este navegador.',
+      loadMoreFailed:
+        'No se pudieron cargar más pruebas. Comprueba tu conexión e inténtalo de nuevo.'
     },
     common: {
       loading: 'Cargando…',
       error: 'Error',
+      retry: 'Reintentar',
       cancel: 'Cancelar',
       save: 'Guardar',
       close: 'Cerrar',
@@ -310,7 +314,8 @@ export const translations = {
       writePost: 'Escribe tu mensaje…',
       postReply: 'Publicar Respuesta',
       backToForum: '← Volver al Foro',
-      noDiscussions: 'Aún no hay discusiones'
+      noDiscussions: 'Aún no hay discusiones',
+      npubRequired: 'Conecta tu identidad Nostr en Ajustes antes de publicar en el foro.'
     },
     dashboard: {
       welcome: 'Bienvenido a Satohash',
@@ -384,11 +389,15 @@ export const translations = {
       verify: 'Vérifier',
       certificate: 'Certificat',
       pending: 'En attente',
-      confirmed: 'Confirmé'
+      confirmed: 'Confirmé',
+      serverUnreachable: 'Serveur inaccessible — affichage des preuves en cache de ce navigateur.',
+      loadMoreFailed:
+        'Impossible de charger plus de preuves. Vérifiez votre connexion et réessayez.'
     },
     common: {
       loading: 'Chargement…',
       error: 'Erreur',
+      retry: 'Réessayer',
       cancel: 'Annuler',
       save: 'Enregistrer',
       close: 'Fermer',
@@ -473,7 +482,8 @@ export const translations = {
       writePost: 'Rédigez votre message…',
       postReply: 'Publier la Réponse',
       backToForum: '← Retour au Forum',
-      noDiscussions: 'Pas encore de discussions'
+      noDiscussions: 'Pas encore de discussions',
+      npubRequired: 'Connectez votre identité Nostr dans Paramètres avant de publier sur le forum.'
     },
     dashboard: {
       welcome: 'Bienvenue sur Satohash',
@@ -550,11 +560,14 @@ export const translations = {
       verify: '验证',
       certificate: '证书',
       pending: '待处理',
-      confirmed: '已确认'
+      confirmed: '已确认',
+      serverUnreachable: '服务器不可达 — 显示此浏览器中的缓存证明。',
+      loadMoreFailed: '无法加载更多证明。请检查网络连接后重试。'
     },
     common: {
       loading: '加载中…',
       error: '错误',
+      retry: '重试',
       cancel: '取消',
       save: '保存',
       close: '关闭',
@@ -637,7 +650,8 @@ export const translations = {
       writePost: '写下您的帖子…',
       postReply: '发表回复',
       backToForum: '← 返回论坛',
-      noDiscussions: '暂无讨论'
+      noDiscussions: '暂无讨论',
+      npubRequired: '请先在设置中连接 Nostr 身份，然后再在论坛发帖。'
     },
     dashboard: {
       welcome: '欢迎使用 Satohash',
@@ -710,11 +724,14 @@ export const translations = {
       verify: 'تحقق',
       certificate: 'شهادة',
       pending: 'معلّق',
-      confirmed: 'مؤكد'
+      confirmed: 'مؤكد',
+      serverUnreachable: 'الخادم غير متاح — عرض الأدلة المخزنة مؤقتاً في هذا المتصفح.',
+      loadMoreFailed: 'تعذر تحميل المزيد من الأدلة. تحقق من اتصالك وحاول مرة أخرى.'
     },
     common: {
       loading: 'جارٍ التحميل…',
       error: 'خطأ',
+      retry: 'إعادة المحاولة',
       cancel: 'إلغاء',
       save: 'حفظ',
       close: 'إغلاق',
@@ -797,7 +814,8 @@ export const translations = {
       writePost: 'اكتب مشاركتك…',
       postReply: 'نشر الرد',
       backToForum: '← العودة إلى المنتدى',
-      noDiscussions: 'لا توجد مناقشات بعد'
+      noDiscussions: 'لا توجد مناقشات بعد',
+      npubRequired: 'اربط هوية Nostr الخاصة بك في الإعدادات قبل النشر في المنتدى.'
     },
     dashboard: {
       welcome: 'مرحباً بك في Satohash',

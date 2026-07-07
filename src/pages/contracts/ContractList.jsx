@@ -28,6 +28,7 @@ import { jsPDF } from 'jspdf'
 import JSZip from 'jszip'
 import { toast } from 'sonner'
 import usePageMeta from '../../hooks/usePageMeta'
+import { SkeletonList } from '../../components/Skeletons'
 import {
   loadContracts,
   saveContracts,
@@ -48,7 +49,7 @@ export default function ContractList() {
   const [contracts, setContracts] = useState([])
   const [searchQuery, setSearchQuery] = useState('')
   const [filterStatus, setFilterStatus] = useState('all')
-  const [_loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     setContracts(loadContracts())
@@ -271,8 +272,12 @@ export default function ContractList() {
           </div>
         </header>
 
-        {contracts.length === 0 ? (
-          <EmptyState onAction={() => navigate('/choose-template')} />
+        {loading ? (
+          <div className="py-12" role="status" aria-busy="true">
+            <SkeletonList count={4} />
+          </div>
+        ) : contracts.length === 0 ? (
+          <EmptyState onAction={() => navigate('/onboarding/choose-template')} />
         ) : (
           <div className="grid grid-cols-1 gap-10 lg:grid-cols-[1fr_360px]">
             {/* Main Feed */}
@@ -320,6 +325,10 @@ export default function ContractList() {
                   {['all', 'draft', 'signed', 'timestamped'].map((status) => (
                     <button
                       key={status}
+                      type="button"
+                      role="button"
+                      aria-pressed={filterStatus === status}
+                      aria-label={`Filter ${status} agreements`}
                       onClick={() => setFilterStatus(status)}
                       className="rounded-xl px-4 py-2.5 text-[10px] font-bold tracking-widest whitespace-nowrap uppercase transition-all"
                       style={

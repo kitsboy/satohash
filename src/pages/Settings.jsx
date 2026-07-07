@@ -376,7 +376,7 @@ export default function Settings() {
     const newKey = {
       id: Date.now(),
       name: 'New API Key',
-      key: `SAT_LIVE_${Math.random().toString(36).substring(2, 8).toUpperCase()}...`,
+      key: `SAT_LIVE_${Date.now().toString(36).slice(-6).toUpperCase()}...`,
       status: 'Active'
     }
     setKeys([...keys, newKey])
@@ -486,9 +486,11 @@ export default function Settings() {
           {['profile', 'security', 'billing'].map((tab) => (
             <button
               key={tab}
+              id={`settings-tab-${tab}`}
               type="button"
               role="tab"
               aria-selected={activeTab === tab}
+              aria-controls={`settings-panel-${tab}`}
               onClick={() => setActiveTab(tab)}
               className={`rounded-xl px-3 py-2 text-[10px] font-black tracking-widest whitespace-nowrap uppercase transition-all sm:px-6 lg:px-4 lg:py-3 ${activeTab === tab ? 'border border-[var(--border-bright)] bg-[var(--bg-primary)] text-[var(--text-primary)] shadow-lg' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}
             >
@@ -504,6 +506,9 @@ export default function Settings() {
             {activeTab === 'profile' && (
               <motion.div
                 key="profile"
+                role="tabpanel"
+                id="settings-panel-profile"
+                aria-labelledby="settings-tab-profile"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: 20 }}
@@ -796,6 +801,9 @@ export default function Settings() {
             {activeTab === 'security' && (
               <motion.div
                 key="security"
+                role="tabpanel"
+                id="settings-panel-security"
+                aria-labelledby="settings-tab-security"
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
@@ -890,6 +898,9 @@ export default function Settings() {
             {activeTab === 'billing' && (
               <motion.div
                 key="billing"
+                role="tabpanel"
+                id="settings-panel-billing"
+                aria-labelledby="settings-tab-billing"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 className="space-y-8"

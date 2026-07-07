@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useCallback } from 'react'
+import { clientId } from '../utils/id'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Check, X, AlertCircle, Info } from 'lucide-react'
 
@@ -16,7 +17,7 @@ export const ToastProvider = ({ children }) => {
   const [toasts, setToasts] = useState([])
 
   const showToast = useCallback((message, type = 'success', duration = 3000) => {
-    const id = Math.random().toString(36).substr(2, 9)
+    const id = clientId('toast')
     setToasts((prev) => [...prev, { id, message, type }])
 
     setTimeout(() => {

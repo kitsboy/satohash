@@ -6,8 +6,9 @@ import { toast } from 'sonner'
 import { useI18n } from '../i18n'
 import EmptyState from '../components/EmptyState'
 import usePageMeta from '../hooks/usePageMeta'
+import { getApiUrl } from '../config/constants'
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+const API_URL = getApiUrl()
 
 const glassCard = 'rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] shadow-lg'
 const btnHolographic =

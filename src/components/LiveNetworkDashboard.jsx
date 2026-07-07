@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Zap, Activity, Shield, Database, Globe } from 'lucide-react'
 import { getFeeEstimates, getMempoolStats, getBlockHeight } from '../utils/mempool'
 
-const Bubble = ({ color, size, delay }) => (
+const Bubble = ({ color, size, delay, duration = 4 }) => (
   <motion.div
     initial={{ scale: 0, opacity: 0 }}
     animate={{
@@ -12,7 +12,7 @@ const Bubble = ({ color, size, delay }) => (
       y: [0, -20, 0]
     }}
     transition={{
-      duration: 3 + Math.random() * 2,
+      duration,
       repeat: Infinity,
       delay: delay
     }}
@@ -61,16 +61,16 @@ export default function LiveNetworkDashboard() {
       {/* Animated Background Bubbles */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div style={{ top: '20%', left: '10%' }}>
-          <Bubble color="rgba(99, 102, 241, 0.4)" size={100} delay={0} />
+          <Bubble color="rgba(99, 102, 241, 0.4)" size={100} delay={0} duration={3.5} />
         </div>
         <div style={{ top: '60%', left: '80%' }}>
-          <Bubble color="rgba(168, 85, 247, 0.4)" size={120} delay={1} />
+          <Bubble color="rgba(168, 85, 247, 0.4)" size={120} delay={1} duration={4.2} />
         </div>
         <div style={{ top: '10%', left: '70%' }}>
-          <Bubble color="rgba(244, 63, 94, 0.3)" size={80} delay={2} />
+          <Bubble color="rgba(244, 63, 94, 0.3)" size={80} delay={2} duration={5} />
         </div>
         <div style={{ top: '80%', left: '20%' }}>
-          <Bubble color="rgba(16, 185, 129, 0.3)" size={90} delay={0.5} />
+          <Bubble color="rgba(16, 185, 129, 0.3)" size={90} delay={0.5} duration={4.8} />
         </div>
       </div>
 

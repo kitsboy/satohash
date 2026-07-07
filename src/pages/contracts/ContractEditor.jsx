@@ -18,6 +18,7 @@ import Button from '../../components/Button'
 import { getTemplate } from '../../templates'
 import { generateSHA256Hash } from '../../utils/crypto'
 import usePageMetaOnboarding from '../../hooks/usePageMetaOnboarding'
+import { clientId } from '../../utils/id'
 
 export default function ContractEditor() {
   usePageMetaOnboarding('contract-editor')
@@ -258,6 +259,7 @@ export default function ContractEditor() {
               handlePlaceholderChange={handlePlaceholderChange}
               templateType={templateType}
               localHash={localHash}
+              navigate={navigate}
             />
           </motion.aside>
         </AnimatePresence>
@@ -349,6 +351,7 @@ export default function ContractEditor() {
                   handlePlaceholderChange={handlePlaceholderChange}
                   templateType={templateType}
                   localHash={localHash}
+                  navigate={navigate}
                 />
               </motion.div>
             </>
@@ -409,7 +412,8 @@ function SidebarContent({
   placeholders,
   handlePlaceholderChange,
   templateType,
-  localHash
+  localHash,
+  navigate
 }) {
   return (
     <>
@@ -524,17 +528,13 @@ function SidebarContent({
                     size="small"
                     fullWidth
                     onClick={() => {
-                      const url = prompt('Enter URL to Snap:')
+                      const url = prompt('Enter URL to capture:')
                       if (url) {
-                        setContract({
-                          ...contract,
-                          name: `Snap: ${url}`,
-                          content: `URL: ${url}\nSnapshot Date: ${new Date().toLocaleString()}\nHash: ${Math.random().toString(16).substring(2, 10)}\n\n[CONTENT ARCHIVED]`
-                        })
+                        navigate(`/snapper?url=${encodeURIComponent(url)}`)
                       }
                     }}
                   >
-                    <Globe size={14} /> Simulate Snapshot
+                    <Globe size={14} /> Capture via Snapper
                   </Button>
                 )}
                 <Button
@@ -547,7 +547,7 @@ function SidebarContent({
                       content:
                         contract.content +
                         '\n\n[CERTIFIED_ATTACHMENT_ID: ' +
-                        Math.random().toString(36).substring(7).toUpperCase() +
+                        clientId('SEAL').split('-').pop().toUpperCase() +
                         ']'
                     })
                   }}

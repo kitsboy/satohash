@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { APP_CONFIG, HEALTH_CONFIG, getVerifyUrl } from './constants'
+import { APP_CONFIG, HEALTH_CONFIG, getVerifyUrl, getApiUrl, getPublicBaseUrl } from './constants'
 
 describe('Global Application Configuration', () => {
   it('contains correctly shaped core configurations', () => {
@@ -35,5 +35,10 @@ describe('Deep health check constants', () => {
 
   it('resolves a verify URL ending in /verify', () => {
     expect(getVerifyUrl()).toMatch(/\/verify$/)
+  })
+
+  it('resolves API and public base URLs', () => {
+    expect(getApiUrl()).toBeTypeOf('string')
+    expect(getPublicBaseUrl()).toBeTypeOf('string')
   })
 })

@@ -394,6 +394,13 @@ export default function TimestampResult() {
           )}
         </Card>
 
+        <Button
+          variant="outline"
+          onClick={() => navigate('/timestamp/verification-help')}
+          style={{ width: '100%', marginBottom: '12px' }}
+        >
+          {t('timestamp.verificationHelp.title')}
+        </Button>
         <Button variant="ghost" onClick={() => navigate('/contracts')} style={{ width: '100%' }}>
           {t('timestamp.verificationHelp.backToContracts')}
         </Button>

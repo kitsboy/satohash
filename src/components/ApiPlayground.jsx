@@ -1,4 +1,6 @@
 import { useState, useRef } from 'react'
+import { clientId, pseudoHash } from '../utils/id'
+import { getApiUrl } from '../config/constants'
 import { motion } from 'framer-motion'
 import {
   Send,
@@ -54,7 +56,8 @@ const ENDPOINTS = [
 
 export default function ApiPlayground() {
   const [selectedEndpoint, setSelectedEndpoint] = useState(ENDPOINTS[0])
-  const [apiKey, setApiKey] = useState('demo_key_' + Math.random().toString(36).slice(2, 10))
+  const [apiKey, setApiKey] = useState(() => clientId('demo_key'))
+  const [demoMode, setDemoMode] = useState(true)
   const [requestBody, setRequestBody] = useState(JSON.stringify(ENDPOINTS[0].body, null, 2))
   const [file, setFile] = useState(null)
   const [loading, setLoading] = useState(false)
@@ -75,11 +78,7 @@ export default function ApiPlayground() {
   }
 
   const generateRandomHash = () => {
-    const chars = 'abcdef0123456789'
-    let hash = ''
-    for (let i = 0; i < 64; i++) {
-      hash += chars[Math.floor(Math.random() * chars.length)]
-    }
+    const hash = pseudoHash(`demo-${Date.now()}`, 64)
     const body = JSON.parse(requestBody || '{}')
     body.hash = hash
     setRequestBody(JSON.stringify(body, null, 2))
@@ -96,64 +95,49 @@ export default function ApiPlayground() {
     setLoading(true)
     setError(null)
     setResponse(null)
-
-    // Simulate network delay
-    await new Promise((resolve) => setTimeout(resolve, 1500))
+    await new Promise((resolve) => setTimeout(resolve, 800))
 
     try {
-      // Demo mode - simulate responses
-      const mockResponses = {
-        timestamp: {
-          success: true,
-          timestamp_id: 'tst_' + Math.random().toString(36).slice(2, 15),
-          status: 'pending',
-          message: 'Timestamp submitted to Bitcoin calendar servers',
-          bitcoin_block: null,
-          estimated_confirmation: '~1 hour',
-          ots_preview: '004f7054696d657374616d7073...',
-          cost: 50,
-          rate_limit_remaining: 97
-        },
-        verify: {
-          verified: Math.random() > 0.3,
-          bitcoin_block: 850234,
-          timestamp: '2024-03-19T14:32:10Z',
-          details: 'Attestation found in Bitcoin block 850234',
-          calendar_attestations: [
-            { url: 'https://alice.btc.calendar.opentimestamps.org', status: 'confirmed' },
-            { url: 'https://bob.btc.calendar.opentimestamps.org', status: 'confirmed' }
-          ]
-        },
-        price: {
-          timestamp: {
-            sats: 50,
-            usd_estimate: 0.035
-          },
-          verify: {
-            sats: 0,
-            free: true
-          },
-          upgrade: {
-            sats: 25
-          },
-          updated_at: new Date().toISOString()
-        },
-        'block-height': {
-          block_height: 850234,
-          timestamp: new Date().toISOString(),
-          sources: [
-            { name: 'mempool.space', height: 850234, status: 'online' },
-            { name: 'blockstream.info', height: 850234, status: 'online' },
-            { name: 'blockchain.info', height: 850233, status: 'syncing' }
-          ]
+      if (selectedEndpoint.id === 'block-height') {
+        const res = await fetch(`${getApiUrl()}/health`)
+        if (res.ok) {
+          const data = await res.json()
+          setDemoMode(false)
+          setResponse({ block_height: data.blockHeight || 880000, source: 'live', ...data })
+          return
         }
       }
 
-      // Simulate occasional errors for demo
-      if (Math.random() > 0.9) {
-        throw new Error('Rate limit exceeded. Try again in 60 seconds.')
+      setDemoMode(true)
+      const seed = pseudoHash(selectedEndpoint.id + requestBody, 8)
+      const mockResponses = {
+        timestamp: {
+          success: true,
+          timestamp_id: clientId('tst'),
+          status: 'pending',
+          message: 'Demo response — connect API key for live timestamps',
+          bitcoin_block: null,
+          estimated_confirmation: '~1 hour',
+          demo: true
+        },
+        verify: {
+          verified: true,
+          bitcoin_block: 850234,
+          timestamp: new Date().toISOString(),
+          details: 'Demo verification response',
+          demo: true
+        },
+        price: {
+          timestamp: { sats: 50, usd_estimate: 0.035 },
+          verify: { sats: 0, free: true },
+          demo: true
+        },
+        'block-height': {
+          block_height: 880000 + (parseInt(seed.slice(0, 4), 16) % 1000),
+          timestamp: new Date().toISOString(),
+          demo: true
+        }
       }
-
       setResponse(mockResponses[selectedEndpoint.id])
     } catch (err) {
       setError(err.message)
@@ -179,6 +163,14 @@ export default function ApiPlayground() {
       animate={{ opacity: 1 }}
       className="grid gap-6 lg:grid-cols-3"
     >
+      {demoMode && (
+        <div
+          role="status"
+          className="col-span-full rounded-lg border border-amber-500/30 bg-amber-500/10 px-4 py-2 text-xs text-amber-200"
+        >
+          Demo mode — responses are illustrative unless a live /health check succeeds.
+        </div>
+      )}
       {/* Left Panel - Endpoint Selection */}
       <div className="space-y-4 lg:col-span-1">
         <div className="rounded-xl border border-gray-700 bg-gray-800/50 p-4">

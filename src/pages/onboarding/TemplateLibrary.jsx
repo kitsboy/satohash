@@ -24,6 +24,8 @@ import {
 } from 'lucide-react'
 import Card from '../../components/Card'
 import Button from '../../components/Button'
+import OnboardingProgressBar from '../../components/OnboardingProgressBar'
+import usePageMetaOnboarding from '../../hooks/usePageMetaOnboarding'
 
 const categories = [
   { id: 'all', name: 'All Templates', icon: Library },
@@ -169,6 +171,7 @@ const templates = [
 ]
 
 export default function TemplateLibrary() {
+  usePageMetaOnboarding('template-library')
   const { t } = useTranslation()
   const navigate = useNavigate()
   const [activeCategory, setActiveCategory] = useState('all')
@@ -185,6 +188,7 @@ export default function TemplateLibrary() {
   return (
     <div className="page pb-24" style={{ background: '#f8fafc', paddingTop: '80px' }}>
       <div className="layout-container">
+        <OnboardingProgressBar currentStepId="template-library" />
         <div className="mb-20 text-center">
           <motion.h1
             initial={{ opacity: 0, scale: 0.9 }}
@@ -207,7 +211,8 @@ export default function TemplateLibrary() {
               <Search size={24} />
             </div>
             <input
-              type="text"
+              type="search"
+              aria-label="Search legal templates"
               placeholder="Search legal templates (e.g. NDA, Property)..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}

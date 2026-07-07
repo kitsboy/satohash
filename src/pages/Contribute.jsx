@@ -12,6 +12,7 @@ import {
 } from 'lucide-react'
 import { motion } from 'framer-motion'
 import usePageMeta from '../hooks/usePageMeta'
+import { getPublicBaseUrl } from '../config/constants'
 
 const glassCard = 'rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)]'
 const btnHolographic =
@@ -155,7 +156,7 @@ const Contribute = () => {
               {t('contributePage.why.github')} <ExternalLink className="ml-2 h-4 w-4" />
             </a>
             <a
-              href="https://satohash.giveabit.io/developer"
+              href={`${getPublicBaseUrl()}/developer`}
               className="btn-secondary inline-flex items-center rounded-lg border border-[var(--border)] px-4 py-2"
             >
               {t('contributePage.why.apiDocs')}

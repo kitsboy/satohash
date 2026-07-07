@@ -24,6 +24,7 @@ export default function AccountCreation() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    if (!formData.email.trim() || !formData.name.trim()) return
 
     // Save user data to localStorage (simulated account creation)
     localStorage.setItem('satohash_user', JSON.stringify(formData))

@@ -35,11 +35,16 @@ export default {
     verify: 'Thibitisha',
     certificate: 'Cheti',
     pending: 'Inasubiri',
-    confirmed: 'Imethibitishwa'
+    confirmed: 'Imethibitishwa',
+    serverUnreachable:
+      'Seva haipatikani — inaonyesha uthibitisho uliohifadhiwa kwenye kivinjari hiki.',
+    loadMoreFailed:
+      'Imeshindwa kupakia uthibitisho zaidi. Angalia muunganisho wako na ujaribu tena.'
   },
   common: {
     loading: 'Inapakia…',
     error: 'Hitilafu',
+    retry: 'Jaribu tena',
     cancel: 'Ghairi',
     save: 'Hifadhi',
     close: 'Funga',
@@ -124,7 +129,9 @@ export default {
     writePost: 'Andika chapisho lako…',
     postReply: 'Chapisha Jibu',
     backToForum: '← Rudi kwa Jukwaa',
-    noDiscussions: 'Hakuna mijadala bado'
+    noDiscussions: 'Hakuna mijadala bado',
+    npubRequired:
+      'Unganisha utambulisho wako wa Nostr katika Mipangilio kabla ya kuchapisha kwenye jukwaa.'
   },
   dashboard: {
     welcome: 'Karibu Satohash',

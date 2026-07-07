@@ -205,3 +205,37 @@ See `KIMI-HANDOFF-satohash-2026-06-10.md` in repo root for the original comprehe
 ### Git State
 - Branch: main
 - See `git log -1` after push for latest SHA
+
+---
+
+## Handoff to Kimi — 2026-07-07 (Batch 9)
+
+**Machine:** M3 (Grok)
+**Project:** satohash
+
+### Done
+- [x] Batch 9 fix & debug — items 366–465 (100 improvements)
+- [x] `id.js` utilities (`clientId`, `pseudoHash`, `pickRotating`) + unit tests
+- [x] `getApiUrl()` / `getPublicBaseUrl()` rolled out to Forum, Admin, NostrHealth, ImageVault, VerificationShield, HistoryList
+- [x] Silent failures → toasts/banners: VerificationShield, Offers, ImageVault, Admin, NostrHealth
+- [x] Welcome resume banner + live block height from `/health`
+- [x] Developer pricing buttons wired; Admin empty chart state; Offers NWC demo label
+- [x] i18n: `vault.serverUnreachable`, `loadMoreFailed`, `forum.npubRequired`, `common.retry` in all 7 locales
+- [x] `i18n-check.js` vault/forum parity; `OnboardingProgressBar` component test
+- [x] E2E: onboarding chain + forum npub gate in `frontend-pipes.spec.js`
+- [x] `contractStore` delegates to `contractStorage`; Build 56
+
+### Decisions
+- Kept dual i18n; extended shell keys rather than full Vault/WebCapture migration
+- PDF consolidation deferred — branding already aligned in batch 8
+- axe-core CI deferred; searchbox + progressbar tests added instead
+
+### What's Next
+- Deploy Build 56
+- Optional: full Vault/WebCapture i18n migration
+- Optional: axe-core on top 10 routes in CI
+
+### Git State
+- Branch: main
+- Build: 56
+- See `git log -1` after push for latest SHA

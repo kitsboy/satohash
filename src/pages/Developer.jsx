@@ -24,11 +24,14 @@ import {
   Workflow
 } from 'lucide-react'
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 import Tooltip from '../components/Tooltip'
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
-const BASE_URL = 'https://satohash.giveabit.io'
+import { getApiUrl, getPublicBaseUrl } from '../config/constants'
+
+const API_URL = getApiUrl()
+const BASE_URL = getPublicBaseUrl()
 
 const MOCK_KEYS = [
   { id: 1, name: 'Main Production Node', key: 'SAT_LIVE_8F2...A9B', status: 'Active' },
@@ -243,7 +246,7 @@ function ResourceLink({ icon: Icon, label }) {
   )
 }
 
-function PricingTier({ tier, price, unit, features, accent, recommended }) {
+function PricingTier({ tier, price, unit, features, accent, recommended, onSelect }) {
   return (
     <div
       className={`relative flex flex-col space-y-6 rounded-2xl border p-8 transition-all hover:shadow-2xl ${recommended ? 'border-[var(--accent-purple)] bg-[var(--accent-purple)]/5 sm:scale-105' : 'border-[var(--border)] bg-[var(--bg-secondary)]'}`}
@@ -285,6 +288,8 @@ function PricingTier({ tier, price, unit, features, accent, recommended }) {
         ))}
       </ul>
       <button
+        type="button"
+        onClick={onSelect}
         className="h-12 w-full rounded-xl border text-[11px] font-black tracking-widest uppercase transition-all"
         style={{
           borderColor: recommended ? 'var(--accent-purple)' : 'var(--border-bright)',
@@ -292,7 +297,7 @@ function PricingTier({ tier, price, unit, features, accent, recommended }) {
           color: 'white'
         }}
       >
-        {tier === 'Custom' ? 'Contact Sales' : 'Get Started'}
+        {tier === 'Enterprise' ? 'Contact Sales' : 'Get Started'}
       </button>
     </div>
   )
@@ -302,6 +307,7 @@ function PricingTier({ tier, price, unit, features, accent, recommended }) {
 
 export default function Developer() {
   usePageMeta({ page: 'developer' })
+  const navigate = useNavigate()
   const [activeTab, setActiveTab] = useState('overview')
   const [codeLang, setCodeLang] = useState('curl')
   const [terminalOutput, setTerminalOutput] = useState([
@@ -390,7 +396,7 @@ export default function Developer() {
                 className="font-mono text-[10px] font-bold tracking-widest uppercase"
                 style={{ color: 'var(--accent-active)' }}
               >
-                Developer API — satohash.giveabit.io
+                Developer API — {BASE_URL.replace(/^https?:\/\//, '')}
               </span>
             </div>
             <h1
@@ -942,6 +948,7 @@ export default function Developer() {
                         'Community support'
                       ]}
                       accent="var(--accent-active)"
+                      onSelect={() => navigate('/pricing')}
                     />
                     <PricingTier
                       tier="Pro"
@@ -955,6 +962,7 @@ export default function Developer() {
                       ]}
                       accent="var(--accent-purple)"
                       recommended
+                      onSelect={() => navigate('/pricing')}
                     />
                     <PricingTier
                       tier="Enterprise"
@@ -967,6 +975,10 @@ export default function Developer() {
                         'Dedicated support'
                       ]}
                       accent="var(--accent-success)"
+                      onSelect={() => {
+                        window.location.href =
+                          'mailto:hello@giveabit.io?subject=Satohash%20Enterprise%20API'
+                      }}
                     />
                   </div>
 

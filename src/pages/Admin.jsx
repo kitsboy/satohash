@@ -19,8 +19,9 @@ import {
 import { toast } from 'sonner'
 import { calculateCarbonFootprint } from '../utils/carbon.js'
 import usePageMetaOnboarding from '../hooks/usePageMetaOnboarding'
+import { getApiUrl } from '../config/constants'
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+const API_URL = getApiUrl()
 
 // ─── STAT CARD ────────────────────────────────────────────────────────────────
 
@@ -91,11 +92,7 @@ const HealthCard = ({ icon: Icon, label, value, sub, accent = 'var(--accent-acti
 
 // ─── STAMPS BAR CHART ─────────────────────────────────────────────────────────
 
-// Stable mock data computed once outside the component (pure, no Math.random in render)
-const MOCK_CHART_COUNTS = [12, 27, 8, 34, 19, 41, 23]
-
 const StampsBarChart = ({ recent }) => {
-  // Build 7-day dataset: use real data if available, else stable mock
   const days = React.useMemo(() => {
     if (recent && recent.length > 0) {
       return recent.slice(-7).map((d) => ({
@@ -103,17 +100,22 @@ const StampsBarChart = ({ recent }) => {
         count: Number(d.count ?? d.value ?? 0)
       }))
     }
-    // Stable mock 7 days — counts are fixed to avoid impure render
-    const now = new Date()
-    return Array.from({ length: 7 }, (_, i) => {
-      const d = new Date(now)
-      d.setDate(d.getDate() - (6 - i))
-      return {
-        label: d.toLocaleDateString('en-US', { weekday: 'short' }),
-        count: MOCK_CHART_COUNTS[i]
-      }
-    })
+    return []
   }, [recent])
+
+  if (!days.length) {
+    return (
+      <div className="flex h-full flex-col items-center justify-center gap-3 py-12 text-center">
+        <BarChart2 size={28} style={{ color: 'var(--text-secondary)', opacity: 0.4 }} />
+        <p className="text-sm font-bold" style={{ color: 'var(--text-secondary)' }}>
+          No stamp activity in the last 7 days
+        </p>
+        <p className="text-xs" style={{ color: 'var(--text-secondary)', opacity: 0.7 }}>
+          Chart populates when admin stats include daily counts.
+        </p>
+      </div>
+    )
+  }
 
   const maxVal = Math.max(...days.map((d) => d.count), 1)
 
@@ -273,6 +275,7 @@ const Admin = () => {
   const [history, setHistory] = useState([])
   const [loading, setLoading] = useState(true)
   const [refreshing, setRefreshing] = useState(false)
+  const [statsDegraded, setStatsDegraded] = useState(false)
 
   const fetchAll = useCallback(async (isRefresh = false) => {
     if (isRefresh) setRefreshing(true)
@@ -299,8 +302,10 @@ const Admin = () => {
         setHistory(items.slice(0, 10))
       }
 
+      setStatsDegraded(false)
       if (isRefresh) toast.success('Dashboard refreshed')
     } catch {
+      setStatsDegraded(true)
       toast.error('Failed to load admin stats — check your admin key.')
     } finally {
       setLoading(false)
@@ -360,6 +365,20 @@ const Admin = () => {
       style={{ background: 'var(--bg-primary)', color: 'var(--text-primary)' }}
     >
       <div className="mx-auto max-w-6xl space-y-8 p-8">
+        {statsDegraded && (
+          <div
+            role="alert"
+            className="flex items-center gap-3 rounded-xl border px-4 py-3 text-sm font-bold"
+            style={{
+              borderColor: 'color-mix(in srgb, var(--accent-pending) 40%, transparent)',
+              background: 'color-mix(in srgb, var(--accent-pending) 8%, transparent)',
+              color: 'var(--accent-pending)'
+            }}
+          >
+            <AlertCircle size={18} />
+            Admin stats unavailable — showing last known values. Check your admin key and retry.
+          </div>
+        )}
         {/* ── Header ── */}
         <div
           className="flex items-center justify-between border-b pb-8"

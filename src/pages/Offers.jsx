@@ -68,6 +68,7 @@ export default function Bolt12Offers() {
           }
         } catch (e) {
           console.error('Error fetching lightning status:', e)
+          toast.error('Lightning status check failed', { description: e.message })
         }
       }, 2000)
     }
@@ -81,6 +82,7 @@ export default function Bolt12Offers() {
     }
     setIsPaying(true)
     try {
+      toast.info('Demo mode — NWC payment uses a simulated invoice.', { duration: 4000 })
       await sendPaymentRequest(nwcUrl, 'mock_invoice_for_500k_sats')
       setIsPaid(true)
       toast.success('Sovereign payment successful!')

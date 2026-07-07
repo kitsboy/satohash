@@ -1902,7 +1902,7 @@ export function TemplateEditor({ template, onBack, demoMode = false }) {
     const verifyUrl = getVerifyUrl()
     QRCode.toDataURL(verifyUrl, { width: 120, margin: 1, errorCorrectionLevel: 'M' })
       .then(setQrUrl)
-      .catch(() => {})
+      .catch(() => toast.error('Could not generate verification QR code.'))
   }, [])
 
   const completedFields = template.fields.filter((f) => data[f.id]?.trim?.())

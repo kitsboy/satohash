@@ -7,21 +7,21 @@ export default function MerkleHeart() {
 
   useEffect(() => {
     // Generate static nodes for the tree
+    const seed = (i, m) => ((i * 2654435761) % m) / m
     const newNodes = Array.from({ length: 40 }).map((_, i) => ({
       id: i,
-      x: Math.random() * 100,
-      y: Math.random() * 100,
-      size: Math.random() * 4 + 1,
-      delay: Math.random() * 5,
-      duration: 3 + Math.random() * 10
+      x: seed(i, 97) * 100,
+      y: seed(i + 7, 89) * 100,
+      size: seed(i, 5) * 4 + 1,
+      delay: seed(i, 5) * 5,
+      duration: 3 + seed(i, 10) * 10
     }))
     setNodes(newNodes)
 
-    // Generate static line endpoints
     const newLines = Array.from({ length: 8 }).map((_, i) => ({
       id: i,
-      x2: 20 + Math.random() * 60,
-      y2: 20 + Math.random() * 60,
+      x2: 20 + seed(i + 3, 60) * 60,
+      y2: 20 + seed(i + 11, 60) * 60,
       duration: 5 + i,
       delay: i
     }))

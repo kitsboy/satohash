@@ -145,7 +145,7 @@ export default function Vault() {
         if (rows.length > 0 || Array.isArray(data)) setItems(mapStamps(rows))
       }
     } catch {
-      // Silent — already showing cached data
+      toast.error(t('vault', 'loadMoreFailed') || 'Sync failed — showing cached proofs')
     }
   }
 

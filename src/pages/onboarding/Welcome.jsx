@@ -27,7 +27,12 @@ import Card from '../../components/Card'
 import LanguagePicker from '../../components/LanguagePicker'
 import OnboardingProgressBar from '../../components/OnboardingProgressBar'
 import usePageMetaOnboarding from '../../hooks/usePageMetaOnboarding'
-import { setOnboardingStep } from '../../utils/onboardingFlow'
+import {
+  setOnboardingStep,
+  getResumeOnboardingPath,
+  isOnboardingComplete
+} from '../../utils/onboardingFlow'
+import { getApiUrl } from '../../config/constants'
 
 const FEATURE_DATA = [
   {
@@ -79,10 +84,23 @@ export default function Welcome() {
   const [blockHeight, setBlockHeight] = useState(830421)
   const [isHovered, setIsHovered] = useState(null)
 
+  const resumePath = getResumeOnboardingPath()
+  const showResume = resumePath && !isOnboardingComplete()
+
   useEffect(() => {
-    // Mock live block updates
+    fetch(`${getApiUrl()}/health`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => {
+        if (data?.blockHeight) setBlockHeight(data.blockHeight)
+      })
+      .catch(() => {})
     const interval = setInterval(() => {
-      setBlockHeight((prev) => prev + 1)
+      fetch(`${getApiUrl()}/health`)
+        .then((r) => (r.ok ? r.json() : null))
+        .then((data) => {
+          if (data?.blockHeight) setBlockHeight(data.blockHeight)
+        })
+        .catch(() => {})
     }, 600000)
 
     // Handle hash scrolling
@@ -148,6 +166,20 @@ export default function Welcome() {
         {/* HERO SECTION */}
         <div className="layout-container" style={{ paddingTop: '140px', paddingBottom: '100px' }}>
           <OnboardingProgressBar currentStepId="welcome" />
+          {showResume && (
+            <motion.div
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mx-auto mb-8 flex max-w-lg flex-col items-center gap-3 rounded-2xl border border-indigo-100 bg-indigo-50/80 px-6 py-4 text-center sm:flex-row sm:text-left"
+            >
+              <p className="flex-1 text-sm font-bold text-indigo-900">
+                Pick up where you left off in onboarding.
+              </p>
+              <Button type="button" onClick={() => navigate(resumePath)}>
+                Continue setup
+              </Button>
+            </motion.div>
+          )}
           <div className="text-center">
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}

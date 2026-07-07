@@ -35,11 +35,16 @@ export default {
     verify: 'Verifizieren',
     certificate: 'Zertifikat',
     pending: 'Ausstehend',
-    confirmed: 'Bestätigt'
+    confirmed: 'Bestätigt',
+    serverUnreachable:
+      'Server nicht erreichbar — zwischengespeicherte Nachweise aus diesem Browser.',
+    loadMoreFailed:
+      'Weitere Nachweise konnten nicht geladen werden. Verbindung prüfen und erneut versuchen.'
   },
   common: {
     loading: 'Laden…',
     error: 'Fehler',
+    retry: 'Erneut versuchen',
     cancel: 'Abbrechen',
     save: 'Speichern',
     close: 'Schließen',
@@ -126,7 +131,9 @@ export default {
     writePost: 'Beitrag schreiben…',
     postReply: 'Antwort veröffentlichen',
     backToForum: '← Zurück zum Forum',
-    noDiscussions: 'Noch keine Diskussionen'
+    noDiscussions: 'Noch keine Diskussionen',
+    npubRequired:
+      'Verbinden Sie Ihre Nostr-Identität in den Einstellungen, bevor Sie im Forum posten.'
   },
   dashboard: {
     welcome: 'Willkommen bei Satohash',

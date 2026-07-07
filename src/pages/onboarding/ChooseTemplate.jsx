@@ -110,6 +110,23 @@ export default function ChooseTemplate() {
           ))}
         </div>
 
+        <div className="mt-10 flex flex-wrap justify-center gap-4">
+          <button
+            type="button"
+            onClick={() => navigate('/onboarding/template-library')}
+            className="rounded-xl border border-[var(--border)] px-6 py-3 text-xs font-bold tracking-wider uppercase transition-colors hover:border-[var(--accent-gold)]"
+          >
+            Browse full template library
+          </button>
+          <button
+            type="button"
+            onClick={() => navigate('/onboarding/batch-proof')}
+            className="rounded-xl border border-[var(--border)] px-6 py-3 text-xs font-bold tracking-wider uppercase transition-colors hover:border-[var(--accent-gold)]"
+          >
+            Try batch proof demo
+          </button>
+        </div>
+
         {/* Educational Disclaimer */}
         <div className="mesh-bg-light mt-20 rounded-[2.5rem] border border-slate-200 bg-white p-8 shadow-sm ring-1 ring-slate-100/50">
           <div className="flex flex-col items-center gap-6 text-center md:flex-row md:text-left">

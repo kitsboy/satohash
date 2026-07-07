@@ -12,16 +12,19 @@ import {
 import { Wifi, AlertCircle } from 'lucide-react'
 import { toast } from 'sonner'
 import usePageMeta from '../hooks/usePageMeta'
+import { getApiUrl } from '../config/constants'
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+const API_URL = getApiUrl()
 
 const NostrHealth = () => {
   usePageMeta({ page: 'nostrHealth' })
   const [healthData, setHealthData] = useState([])
   const [uptime, setUptime] = useState('0%')
   const [loading, setLoading] = useState(true)
+  const [fetchError, setFetchError] = useState(null)
 
   const fetchHealth = async () => {
+    setFetchError(null)
     try {
       const response = await fetch(`${API_URL}/api/nostr/health`)
       if (!response.ok) {
@@ -40,6 +43,7 @@ const NostrHealth = () => {
       setLoading(false)
     } catch (error) {
       console.error('Failed to fetch Nostr health:', error)
+      setFetchError(error.message)
       toast.error('Nostr health check failed', { description: error.message })
       setLoading(false)
     }
@@ -97,6 +101,21 @@ const NostrHealth = () => {
 
   return (
     <div className="space-y-6 p-6 pb-20" style={{ color: 'var(--text-primary)' }}>
+      {fetchError && (
+        <div
+          role="alert"
+          className="flex items-center justify-between gap-4 rounded-xl border border-rose-500/30 bg-rose-500/10 px-4 py-3 text-sm text-rose-400"
+        >
+          <span>{fetchError}</span>
+          <button
+            type="button"
+            onClick={fetchHealth}
+            className="rounded-lg border border-rose-500/40 px-3 py-1 text-xs font-bold uppercase"
+          >
+            Retry
+          </button>
+        </div>
+      )}
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>
           Nostr Relay Health Dashboard

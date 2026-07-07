@@ -7,8 +7,9 @@ import { motion, AnimatePresence } from 'framer-motion'
 import ProofDNA from './ProofDNA'
 import { useI18n } from '../i18n'
 import { SkeletonList } from './Skeletons'
+import { getApiUrl } from '../config/constants'
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+const API_URL = getApiUrl()
 
 const HistoryList = () => {
   const { t } = useI18n()

@@ -95,13 +95,30 @@ for (const locale of loaded) {
 
 const enInline = inline.en
 const requiredNav = ['nav.stamp', 'nav.vault', 'stamp.title', 'stamp.dropzone', 'common.loading']
+const requiredShell = [
+  'vault.serverUnreachable',
+  'vault.loadMoreFailed',
+  'forum.npubRequired',
+  'common.retry'
+]
 if (enInline) {
-  const missingInline = requiredNav.filter((k) => !enInline.has(k))
+  const missingInline = [...requiredNav, ...requiredShell].filter((k) => !enInline.has(k))
   if (missingInline.length) {
     failed = true
     console.error(`❌ src/i18n/index.jsx (en) missing keys: ${missingInline.join(', ')}`)
   } else {
-    console.log(`✅ src/i18n/index.jsx inline en — core keys present`)
+    console.log(`✅ src/i18n/index.jsx inline en — core + vault/forum keys present`)
+  }
+}
+for (const lang of ['es', 'fr', 'zh', 'ar']) {
+  const keys = inline[lang]
+  if (!keys?.size) continue
+  const missing = requiredShell.filter((k) => !keys.has(k))
+  if (missing.length) {
+    failed = true
+    console.error(`❌ src/i18n/index.jsx (${lang}) missing: ${missing.join(', ')}`)
+  } else {
+    console.log(`✅ src/i18n/index.jsx (${lang}) — vault/forum keys present`)
   }
 }
 for (const lang of ['de', 'pt', 'sw']) {
@@ -111,12 +128,12 @@ for (const lang of ['de', 'pt', 'sw']) {
     console.error(`❌ src/i18n/inline/${lang}.js — empty or missing`)
     continue
   }
-  const missing = requiredNav.filter((k) => !keys.has(k))
+  const missing = [...requiredNav, ...requiredShell].filter((k) => !keys.has(k))
   if (missing.length) {
     failed = true
     console.error(`❌ src/i18n/inline/${lang}.js missing: ${missing.join(', ')}`)
   } else {
-    console.log(`✅ src/i18n/inline/${lang}.js — core keys present`)
+    console.log(`✅ src/i18n/inline/${lang}.js — core + vault/forum keys present`)
   }
 }
 

@@ -22,6 +22,22 @@ export function getVerifyUrl() {
   return HEALTH_CONFIG.VERIFY_URL
 }
 
+/** API base for client fetches — defaults to same-origin in production builds. */
+export function getApiUrl() {
+  if (import.meta.env.VITE_API_URL) return import.meta.env.VITE_API_URL
+  if (typeof window !== 'undefined' && window.location?.origin) {
+    return window.location.origin
+  }
+  return 'http://localhost:3001'
+}
+
+export function getPublicBaseUrl() {
+  if (typeof window !== 'undefined' && window.location?.origin) {
+    return window.location.origin
+  }
+  return HEALTH_CONFIG.PUBLIC_URL
+}
+
 export const NAV_LINKS = [
   { name: 'Vault', path: '/vault', icon: 'Database', group: 'Notary' },
   { name: 'Stamp', path: '/stamp', icon: 'ShieldCheck', group: 'Notary' },

@@ -20,8 +20,9 @@ import {
 } from 'lucide-react'
 import { toast } from 'sonner'
 import usePageMeta from '../hooks/usePageMeta'
+import { getApiUrl } from '../config/constants'
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+const API_URL = getApiUrl()
 
 const IMAGE_EXT = /\.(png|jpg|jpeg|gif|webp|svg|bmp|ico)$/i
 
@@ -51,31 +52,37 @@ export default function ImageVault() {
   const [images, setImages] = useState(loadImageStamps)
   const [isLoading, setIsLoading] = useState(false)
   const [usingCache, setUsingCache] = useState(false)
+  const [fetchError, setFetchError] = useState(null)
   const [searchQuery, setSearchQuery] = useState('')
   const [viewMode, setViewMode] = useState('grid') // grid, list
+
+  const fetchImages = async () => {
+    setIsLoading(true)
+    setFetchError(null)
+    try {
+      const res = await fetch(`${API_URL}/api/vault/images`)
+      if (!res.ok) throw new Error(`HTTP ${res.status}`)
+      const data = await res.json()
+      if (Array.isArray(data) && data.length) {
+        setImages(data)
+        setUsingCache(false)
+      } else {
+        setUsingCache(true)
+      }
+    } catch (e) {
+      setUsingCache(true)
+      setFetchError('Could not reach image vault API — showing cached proofs.')
+      toast.error('Image vault sync failed', { description: e.message })
+    } finally {
+      setIsLoading(false)
+    }
+  }
 
   useEffect(() => {
     const local = loadImageStamps()
     if (local.length) {
       setImages(local)
       setUsingCache(true)
-    }
-    const fetchImages = async () => {
-      setIsLoading(true)
-      try {
-        const res = await fetch(`${API_URL}/api/vault/images`)
-        if (res.ok) {
-          const data = await res.json()
-          if (Array.isArray(data) && data.length) {
-            setImages(data)
-            setUsingCache(false)
-          }
-        }
-      } catch {
-        setUsingCache(true)
-      } finally {
-        setIsLoading(false)
-      }
     }
     fetchImages()
   }, [])
@@ -116,10 +123,21 @@ export default function ImageVault() {
               Institutional-grade cryptographic storage for every visual asset notarized by the
               mesh. Search and verify forensic provenance instantly.
             </p>
-            {usingCache && (
-              <p className="mt-4 text-xs font-bold tracking-widest text-[var(--accent-pending)] uppercase">
-                Showing cached image proofs from this browser
-              </p>
+            {(usingCache || fetchError) && (
+              <div className="mt-4 flex flex-wrap items-center gap-3" role="alert">
+                <p className="text-xs font-bold tracking-widest text-[var(--accent-pending)] uppercase">
+                  {fetchError || 'Showing cached image proofs from this browser'}
+                </p>
+                {fetchError && (
+                  <button
+                    type="button"
+                    onClick={fetchImages}
+                    className="rounded-lg border border-[var(--border)] px-3 py-1 text-[10px] font-black tracking-widest uppercase"
+                  >
+                    Retry sync
+                  </button>
+                )}
+              </div>
             )}
           </div>
 
