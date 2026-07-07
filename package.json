@@ -20,6 +20,7 @@
     "test:template-demo": "PLAYWRIGHT_BASE_URL=http://localhost:3000 PLAYWRIGHT_SKIP_WEBSERVER=1 playwright test tests/e2e/template-demo.spec.js --workers=1 --reporter=line",
     "test:frontend-pipes": "PLAYWRIGHT_BASE_URL=http://localhost:3000 PLAYWRIGHT_SKIP_WEBSERVER=1 playwright test tests/e2e/frontend-pipes.spec.js --workers=1 --reporter=line",
     "test:a11y-smoke": "PLAYWRIGHT_BASE_URL=http://localhost:3000 PLAYWRIGHT_SKIP_WEBSERVER=1 playwright test tests/e2e/frontend-pipes.spec.js --grep 'accessible|searchbox' --workers=1 --reporter=line",
+    "test:a11y-ci": "PLAYWRIGHT_BASE_URL=http://localhost:3000 PLAYWRIGHT_SKIP_WEBSERVER=1 playwright test tests/e2e/a11y-routes.spec.js --workers=1 --reporter=line",
     "i18n:check": "node scripts/i18n-check.js",
     "deploy": "bash deploy.sh",
     "docs:sync": "node scripts/sync-docs.js",

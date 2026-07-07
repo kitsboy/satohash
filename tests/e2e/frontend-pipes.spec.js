@@ -37,4 +37,39 @@ test.describe('Frontend pipes', () => {
     await page.getByRole('button', { name: /create/i }).click()
     await expect(page.getByText(/nostr identity/i)).toBeVisible({ timeout: 5000 })
   })
+
+  test('contract create stores draft in localStorage', async ({ page }) => {
+    await page.addInitScript(() => {
+      localStorage.setItem('satohash_authed', 'true')
+      localStorage.setItem('satohash-onboarded', 'true')
+    })
+    await page.goto('/contracts/new/nda')
+    await expect(page).toHaveURL(/\/contracts\/new\/nda/)
+    await page.getByRole('textbox').first().fill('Test Contract Alpha')
+    await page.getByRole('button', { name: /save|draft/i }).first().click({ timeout: 8000 }).catch(() => {})
+    const stored = await page.evaluate(() => localStorage.getItem('satohash_contracts'))
+    expect(stored).toBeTruthy()
+  })
+
+  test('vault shows cached banner when history API fails', async ({ page }) => {
+    await page.addInitScript(() => {
+      localStorage.setItem('satohash_authed', 'true')
+      localStorage.setItem('satohash-onboarded', 'true')
+      localStorage.setItem(
+        'satohash_stamps',
+        JSON.stringify([
+          {
+            id: 'stamp_test',
+            filename: 'cached.pdf',
+            hash: 'a'.repeat(64),
+            status: 'pending',
+            created_at: Date.now()
+          }
+        ])
+      )
+    })
+    await page.route('**/api/history**', (route) => route.abort('failed'))
+    await page.goto('/vault')
+    await expect(page.getByText(/server unreachable|cached/i)).toBeVisible({ timeout: 8000 })
+  })
 })
