@@ -25,6 +25,9 @@ import { useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 import { useTheme } from '../components/ThemeProvider'
 import usePageMeta from '../hooks/usePageMeta'
+import { downloadAuditLog } from '../utils/auditExport'
+import { inviteTeamMember } from '../utils/orgTeam'
+import { getApiUrl } from '../config/constants'
 
 const SettingSection = ({ icon: Icon, title, description, children }) => (
   <motion.div
@@ -66,6 +69,7 @@ export default function Settings() {
   const navigate = useNavigate()
   const { theme, toggleTheme } = useTheme()
   const [activeTab, setActiveTab] = useState('profile')
+  const [teamInviteEmail, setTeamInviteEmail] = useState('')
   const [isDark, setIsDark] = useState(
     () => document.documentElement.getAttribute('data-theme') !== 'elite'
   )
@@ -176,7 +180,7 @@ export default function Settings() {
   }, [notifPrefs])
 
   useEffect(() => {
-    const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+    const API = getApiUrl()
     fetch(`${API}/api/lightning/balance`)
       .then((res) => {
         if (res.ok) return res.json()
@@ -207,7 +211,7 @@ export default function Settings() {
   const togglePushNotifications = async () => {
     setPushLoading(true)
     try {
-      const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+      const API = getApiUrl()
       const reg = await navigator.serviceWorker.ready
       if (pushEnabled) {
         const sub = await reg.pushManager.getSubscription()
@@ -257,7 +261,7 @@ export default function Settings() {
 
   const fetchWebhooks = async () => {
     try {
-      const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+      const API = getApiUrl()
       const token = localStorage.getItem('satohash_token')
       const res = await fetch(`${API}/api/webhooks`, {
         headers: token ? { Authorization: `Bearer ${token}` } : {}
@@ -278,7 +282,7 @@ export default function Settings() {
   useEffect(() => {
     const fetchMeshNodes = async () => {
       try {
-        const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+        const API = getApiUrl()
         const res = await fetch(`${API}/api/mesh/nodes`)
         if (res.ok) {
           const data = await res.json()
@@ -298,7 +302,7 @@ export default function Settings() {
     }
     setWebhookLoading(true)
     try {
-      const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+      const API = getApiUrl()
       const token = localStorage.getItem('satohash_token')
       const res = await fetch(`${API}/api/webhooks`, {
         method: 'POST',
@@ -325,7 +329,7 @@ export default function Settings() {
 
   const deleteWebhook = async (id) => {
     try {
-      const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+      const API = getApiUrl()
       const token = localStorage.getItem('satohash_token')
       await fetch(`${API}/api/webhooks/${id}`, {
         method: 'DELETE',
@@ -341,7 +345,7 @@ export default function Settings() {
   const testWebhook = async (id) => {
     setWebhookTestId(id)
     try {
-      const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+      const API = getApiUrl()
       const token = localStorage.getItem('satohash_token')
       const res = await fetch(`${API}/api/webhooks/${id}/test`, {
         method: 'POST',
@@ -551,6 +555,35 @@ export default function Settings() {
                             onChange={(e) => setProfile({ ...profile, nip05: e.target.value })}
                             className="h-14 w-full rounded-2xl border border-[var(--border)] bg-[var(--bg-primary)] px-6 text-sm font-bold transition-all outline-none focus:border-[var(--accent-active)]"
                           />
+                        </div>
+                      </div>
+                      <div className="space-y-2 rounded-2xl border border-[var(--border)] p-4">
+                        <label className="text-[10px] font-black tracking-widest text-[var(--text-secondary)] uppercase">
+                          Invite team member
+                        </label>
+                        <div className="flex gap-2">
+                          <input
+                            type="email"
+                            value={teamInviteEmail}
+                            onChange={(e) => setTeamInviteEmail(e.target.value)}
+                            placeholder="signer@firm.com"
+                            className="h-12 min-w-0 flex-1 rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] px-4 text-sm"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => {
+                              if (!teamInviteEmail.trim()) return
+                              inviteTeamMember({ email: teamInviteEmail.trim(), role: 'signer' })
+                              toast.success('Invite saved locally', {
+                                description: 'Org sync activates when backend teams API ships.'
+                              })
+                              setTeamInviteEmail('')
+                            }}
+                            className="rounded-xl px-4 text-[10px] font-black tracking-widest uppercase"
+                            style={{ background: 'var(--accent-active)', color: '#fff' }}
+                          >
+                            Invite
+                          </button>
                         </div>
                       </div>
                       <div className="space-y-2">
@@ -814,6 +847,18 @@ export default function Settings() {
                   title="Hardened Access"
                   description="Absolute security for your forensic data."
                 >
+                  <div className="mb-6 flex flex-wrap gap-3">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        downloadAuditLog()
+                        toast.success('Audit log exported')
+                      }}
+                      className="rounded-xl border border-[var(--border)] px-4 py-2 text-[10px] font-black tracking-widest uppercase"
+                    >
+                      Export audit log (JSON)
+                    </button>
+                  </div>
                   <div className="space-y-6">
                     <div className="group flex items-center justify-between rounded-3xl border border-[var(--border)] bg-[var(--bg-primary)] p-8 transition-colors hover:border-[var(--accent-active)]/50">
                       <div className="flex items-center gap-6">

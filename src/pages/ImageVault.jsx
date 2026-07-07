@@ -36,6 +36,7 @@ function loadImageStamps() {
         filename: s.filename || s.original_filename || 'image',
         hash: s.hash ? `${s.hash.substring(0, 4)}...${s.hash.slice(-4)}` : '—',
         fullHash: s.hash,
+        forensicId: s.hash ? s.hash.slice(0, 16) : null,
         created_at: s.created_at || new Date().toISOString()
       }))
   } catch {
@@ -328,6 +329,15 @@ function VaultItem({ image, viewMode, idx }) {
             <Clock size={12} />
             NOTARIZED_{new Date(image.created_at).toLocaleDateString()}
           </div>
+          {image.fullHash && (
+            <p
+              className="mt-2 truncate font-mono text-[9px]"
+              style={{ color: 'var(--accent-active)' }}
+              title={image.fullHash}
+            >
+              SHA-256: {image.forensicId || image.fullHash.slice(0, 16)}…
+            </p>
+          )}
         </div>
 
         {isGrid && (

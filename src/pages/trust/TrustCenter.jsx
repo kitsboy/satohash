@@ -1,4 +1,6 @@
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
+import { getApiUrl } from '../../config/constants'
 import { Link } from 'react-router-dom'
 import Tooltip from '../../components/Tooltip'
 import usePageMeta from '../../hooks/usePageMeta'
@@ -104,6 +106,17 @@ const BITCOIN_FACTS = [
 /* ─── Component ──────────────────────────────────────────── */
 export default function TrustCenter() {
   usePageMeta({ page: 'trust' })
+  const [health, setHealth] = useState({ status: 'checking', blockHeight: null })
+
+  useEffect(() => {
+    fetch(`${getApiUrl()}/health`)
+      .then((r) => (r.ok ? r.json() : Promise.reject()))
+      .then((data) =>
+        setHealth({ status: data.status || 'ok', blockHeight: data.blockHeight ?? null })
+      )
+      .catch(() => setHealth({ status: 'degraded', blockHeight: null }))
+  }, [])
+
   return (
     <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)]">
       {/* Ambient glows */}
@@ -123,8 +136,15 @@ export default function TrustCenter() {
             className="mb-10 flex flex-wrap items-center justify-center gap-6 text-[10px] font-black tracking-[0.3em] text-[var(--text-secondary)] uppercase"
           >
             <span className="flex items-center gap-2">
-              <span className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--accent-success)] shadow-[0_0_8px_var(--accent-success)]" />
-              Network Active
+              <span
+                className="inline-block h-1.5 w-1.5 rounded-full shadow-[0_0_8px_var(--accent-success)]"
+                style={{
+                  background:
+                    health.status === 'ok' ? 'var(--accent-success)' : 'var(--accent-pending)'
+                }}
+              />
+              {health.status === 'ok' ? 'Network Active' : 'Cached / Degraded'}
+              {health.blockHeight ? ` · Block ${health.blockHeight.toLocaleString()}` : ''}
             </span>
             <span className="text-[var(--border-bright)]">·</span>
             <span>Effective Date: May 1, 2025</span>
