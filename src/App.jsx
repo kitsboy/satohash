@@ -16,6 +16,7 @@ import { ToastProvider } from './components/Toast'
 import { ThemeProvider } from './components/ThemeProvider'
 import usePageMeta from './hooks/usePageMeta'
 import { I18nProvider } from './i18n'
+import LangUrlSync from './components/LangUrlSync'
 import ErrorBoundary from './components/ErrorBoundary'
 import ProtectedRoute from './components/ProtectedRoute'
 import NProgress from 'nprogress'
@@ -554,6 +555,7 @@ function App() {
       <ThemeProvider>
         <ToastProvider>
           <Router>
+            <LangUrlSync />
             {/* Offline banner */}
             {isOffline && (
               <div

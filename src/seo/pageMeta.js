@@ -1,5 +1,7 @@
+import { LANG_CODES } from '../i18n/language.js'
+
 /** Localized SEO titles & descriptions — Build 37 */
-export const SUPPORTED_LOCALES = ['en', 'es', 'fr', 'de', 'pt', 'sw', 'zh']
+export const SUPPORTED_LOCALES = LANG_CODES
 
 export const HREFLANG = {
   en: 'en',

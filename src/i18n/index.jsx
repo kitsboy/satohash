@@ -1,18 +1,18 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useState, useEffect, useCallback } from 'react'
 import i18n from './setup'
 import de from './inline/de.js'
 import pt from './inline/pt.js'
 import sw from './inline/sw.js'
+import {
+  LANGUAGES as languages,
+  getInitialLang,
+  normalizeLang,
+  syncLangToUrl,
+  getLanguageMeta,
+  STORAGE_KEY
+} from './language.js'
 
-export const languages = [
-  { code: 'en', label: 'English', flag: '🇬🇧', dir: 'ltr' },
-  { code: 'es', label: 'Español', flag: '🇪🇸', dir: 'ltr' },
-  { code: 'fr', label: 'Français', flag: '🇫🇷', dir: 'ltr' },
-  { code: 'de', label: 'Deutsch', flag: '🇩🇪', dir: 'ltr' },
-  { code: 'pt', label: 'Português', flag: '🇵🇹', dir: 'ltr' },
-  { code: 'sw', label: 'Kiswahili', flag: '🇰🇪', dir: 'ltr' },
-  { code: 'zh', label: '中文', flag: '🇨🇳', dir: 'ltr' }
-]
+export { languages }
 
 export const translations = {
   en: {
@@ -839,20 +839,57 @@ export const I18nContext = createContext({
 })
 
 export function I18nProvider({ children }) {
-  const [lang, setLangState] = useState(() => localStorage.getItem('satohash_lang') || 'en')
+  const [lang, setLangState] = useState(getInitialLang)
 
-  const setLang = (code) => {
+  const applyLang = useCallback((rawCode) => {
+    const code = normalizeLang(rawCode)
     setLangState(code)
-    localStorage.setItem('satohash_lang', code)
-    if (typeof i18n?.changeLanguage === 'function') {
+    localStorage.setItem(STORAGE_KEY, code)
+    syncLangToUrl(code)
+    const meta = getLanguageMeta(code)
+    document.documentElement.lang = code === 'zh' ? 'zh-Hans' : code
+    document.documentElement.dir = meta.dir
+    if (normalizeLang(i18n.language) !== code) {
       i18n.changeLanguage(code)
     }
-  }
+    return code
+  }, [])
+
+  const setLang = useCallback((code) => applyLang(code), [applyLang])
+
+  // Boot: align i18next + DOM with resolved initial language
+  useEffect(() => {
+    applyLang(getInitialLang())
+  }, [applyLang])
+
+  // Keep React state in sync when i18next changes (e.g. onboarding LanguagePicker)
+  useEffect(() => {
+    const onChange = (lng) => {
+      const code = normalizeLang(lng)
+      setLangState((prev) => (prev === code ? prev : code))
+      syncLangToUrl(code)
+      const meta = getLanguageMeta(code)
+      document.documentElement.lang = code === 'zh' ? 'zh-Hans' : code
+      document.documentElement.dir = meta.dir
+    }
+    i18n.on('languageChanged', onChange)
+    return () => i18n.off('languageChanged', onChange)
+  }, [])
+
+  // React to ?lang= changes (back/forward, shared links)
+  useEffect(() => {
+    const onPopState = () => {
+      const fromUrl = new URLSearchParams(window.location.search).get('lang')
+      if (fromUrl) applyLang(fromUrl)
+    }
+    window.addEventListener('popstate', onPopState)
+    return () => window.removeEventListener('popstate', onPopState)
+  }, [applyLang])
 
   const t = (section, key) =>
     translations[lang]?.[section]?.[key] ?? translations.en?.[section]?.[key] ?? key
 
-  const dir = languages.find((l) => l.code === lang)?.dir ?? 'ltr'
+  const dir = getLanguageMeta(lang).dir
 
   return <I18nContext.Provider value={{ lang, setLang, t, dir }}>{children}</I18nContext.Provider>
 }

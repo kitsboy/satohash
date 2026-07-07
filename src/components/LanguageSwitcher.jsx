@@ -17,11 +17,6 @@ export default function LanguageSwitcher() {
     return () => document.removeEventListener('mousedown', handler)
   }, [])
 
-  // Sync document direction for RTL languages
-  useEffect(() => {
-    document.documentElement.dir = current?.dir ?? 'ltr'
-  }, [lang, current])
-
   return (
     <div ref={ref} className="relative">
       {/* Trigger */}
@@ -46,7 +41,7 @@ export default function LanguageSwitcher() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -4, scale: 0.97 }}
             transition={{ duration: 0.15, ease: 'easeOut' }}
-            className="absolute top-full right-0 z-[200] mt-2 w-44 overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] shadow-[var(--shadow-noir)]"
+            className="absolute top-full right-0 z-[200] mt-2 max-h-[min(70vh,320px)] w-48 overflow-y-auto rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] shadow-[var(--shadow-noir)]"
           >
             {languages.map((l) => {
               const isActive = lang === l.code
