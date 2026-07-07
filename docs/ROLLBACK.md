@@ -1,5 +1,5 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.giveabit.io · **Version:** 4.1.0-ELITE (Build 80) · **Updated:** 2026-07-07
+> **Live:** https://satohash.giveabit.io · **Version:** 4.1.0-ELITE (Build 81) · **Updated:** 2026-07-07
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Satohash Rollback Procedure
@@ -26,3 +26,5 @@ curl -sf https://satohash.io/ -o /dev/null && echo "Site up"
 Open https://satohash.io/ and hard-refresh (**Cmd+Shift+R**).
 
 *Last updated: 2026-07-07*
+
+

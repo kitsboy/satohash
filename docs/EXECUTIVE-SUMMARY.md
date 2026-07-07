@@ -1,5 +1,5 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.giveabit.io · **Version:** 4.1.0-ELITE (Build 76) · **Updated:** 2026-07-07
+> **Live:** https://satohash.giveabit.io · **Version:** 4.1.0-ELITE (Build 81) · **Updated:** 2026-07-07
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Satohash — Executive Summary
@@ -109,7 +109,7 @@ Proving that something existed *before* a specific date has enormous legal, comm
 | Persistence    | SQLite (metadata only) + client IndexedDB / LocalStorage for local-first |
 | Observability  | Sentry (full-stack), Pino, Prometheus           |
 | Real-time      | Socket.io (`ots:*` events)                      |
-| Build / Deploy | Vite build → dist/ served by Express; PM2, Docker, Cloudflare options |
+| Build / Deploy | Vite build → `dist/` → Cloudflare Pages (`satohash` project) |
 
 See `CLAUDE.md` and `docs/ARCHITECTURE.md` for the living operational view.
 
@@ -179,6 +179,13 @@ See `SOURCE-OF-TRUTH.md` and `KIMI-HANDOFF-satohash-2026-06-10.md` (generated al
 ---
 
 *Mathematics on an immutable ledger beats any signature or notary stamp.*
+
+
+
+
+
+
+
 
 
 

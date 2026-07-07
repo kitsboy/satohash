@@ -1,4 +1,5 @@
-# Satohash — Nginx reverse proxy example (Umbrel / VPS)
+# Satohash — Nginx reverse proxy example (local dev / optional self-host only)
+# Production uses Cloudflare Pages (https://satohash.io) — not this file.
 # Place in /etc/nginx/sites-available/satohash
 
 server {
@@ -14,7 +15,7 @@ server {
     # ssl_certificate /path/to/cert.pem;
     # ssl_certificate_key /path/to/key.pem;
 
-    # API + WebSocket proxy
+    # API + WebSocket proxy (local Express only — npm run dev)
     location /api/ {
         proxy_pass http://127.0.0.1:3001;
         proxy_http_version 1.1;
@@ -44,7 +45,7 @@ server {
 
     # SPA — serve static dist with fallback
     location / {
-        root /home/umbrel/satohash/dist;
+        root ~/projects/satohash/dist;
         try_files $uri $uri/ /index.html;
     }
 }

@@ -1,5 +1,5 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.giveabit.io · **Version:** 4.1.0-ELITE (Build 80) · **Updated:** 2026-07-07
+> **Live:** https://satohash.giveabit.io · **Version:** 4.1.0-ELITE (Build 81) · **Updated:** 2026-07-07
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Satohash Deploy Playbook
@@ -51,12 +51,22 @@ Auth: `npx wrangler login` (one-time in Terminal.app) **or** set `CLOUDFLARE_API
 
 Cloudflare Dashboard → **Workers & Pages** → **satohash** → **Deployments** → **Rollback to this deployment**
 
-## Agent (Grok) rules
+## Stack (Give A Bit ecosystem)
 
-- **Never** document or deploy Umbrel/systemctl paths for Satohash
+| Machine | Role |
+|---------|------|
+| **M3** (Cam laptop) | Grok codes, builds, `./deploy.sh` |
+| **M4** (HERMES) | Kimi orchestration, docs, Obsidian vault |
+
+Other projects on M3 deploy separately (e.g. **TadBuy** uses Supabase + its own Cloudflare project). This playbook is **Satohash only**.
+
+## Agent rules (Grok + Kimi)
+
 - **Never** assume `git push` updates satohash.io without a Cloudflare upload
-- After code fixes that affect the Landing page, confirm production bundle or have Cam run `./deploy.sh`
-- `server/` is for local development and tests — not production deploy
+- After Landing or build changes, verify production bundle or run `./deploy.sh`
+- `server/` is local development only — not production
 
 ---
 © 2026 Satohash
+
+

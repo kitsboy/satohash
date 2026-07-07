@@ -1,51 +1,28 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.giveabit.io · **Version:** 4.1.0-ELITE (Build 7) · **Updated:** 2026-07-06
+> **Live:** https://satohash.giveabit.io · **Version:** 4.1.0-ELITE (Build 81) · **Updated:** 2026-07-07
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Satohash Rollback Procedure
 
-## Quick Rollback (Umbrel / PM2)
+## Cloudflare Pages (production)
 
-```bash
-cd /home/umbrel/satohash
-git log --oneline -5                    # find last good SHA
-git checkout <SHA>
-npm ci && npm run production
-sudo systemctl restart satohash
-curl -f http://localhost:3001/health?deep=true
-```
+1. Open [Cloudflare Dashboard](https://dash.cloudflare.com) → **Workers & Pages** → **satohash**
+2. **Deployments** tab
+3. Find the last good deployment
+4. Click **Rollback to this deployment**
 
-## Cloudflare Pages Rollback
-
-1. Open Cloudflare Dashboard → Pages → satohash → Deployments
-2. Find the last successful deployment
-3. Click **Rollback to this deployment**
-
-Or via CLI:
+Or via CLI (after `wrangler login` or `CLOUDFLARE_API_TOKEN`):
 
 ```bash
 wrangler pages deployment list --project-name=satohash
-# Note deployment ID, then promote previous
 ```
 
-## Docker Rollback
+## Verify after rollback
 
 ```bash
-docker compose down
-git checkout <SHA>
-docker compose build --no-cache
-docker compose up -d
-docker compose ps
+curl -sf https://satohash.io/ -o /dev/null && echo "Site up"
 ```
 
-## Verify After Rollback
+Open https://satohash.io/ and hard-refresh (**Cmd+Shift+R**).
 
-```bash
-curl -f https://satohash.giveabit.io/health?deep=true
-npm run test:e2e   # optional smoke
-```
-
-*Last updated: auto-synced by `npm run docs:sync`*
-
-
-
+*Last updated: 2026-07-07*

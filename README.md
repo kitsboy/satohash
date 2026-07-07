@@ -56,7 +56,7 @@ See the full feature set and positioning in [docs/EXECUTIVE_SUMMARY.md](docs/EXE
 - **Backend**: Express 5 + Socket.io + better-sqlite3 + Knex (migrations in `server/migrations/`)
 - **Observability**: Sentry (Node + React), Pino, Prometheus
 - **Real-time**: Socket.io events for stamp lifecycle
-- **Build**: `npm run build` → `dist/` served by the same Express process in production
+- **Build / Deploy**: `npm run build` → `dist/` → Cloudflare Pages (`./deploy.sh`). Express is **local dev only**.
 
 Full operational details (endpoints, env vars, known token inconsistencies, daemon behavior) live in [CLAUDE.md](CLAUDE.md).
 
@@ -89,9 +89,10 @@ See [docs/DOCS_INDEX.md](docs/DOCS_INDEX.md) for the complete documentation map 
 npm install                 # Install
 npm run dev                 # Concurrent dev (Vite 3000 + Express 3001)
 npm run build               # Production build to dist/
-npm run production          # Build + serve (single process)
-npm run server              # Backend only
-npm run start:pm2           # PM2 production (ecosystem.config.cjs)
+npm run production          # Build + serve locally (Express + dist)
+npm run server              # Backend only (local dev)
+./deploy.sh                 # Deploy static site to Cloudflare Pages
+npm run start:pm2           # PM2 local/self-host (optional)
 npm test                    # Vitest
 npm run test:e2e            # Playwright
 npm run lint && npm run format

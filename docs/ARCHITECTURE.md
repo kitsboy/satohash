@@ -113,7 +113,7 @@ Socket events for live updates.
 - Tests: `npm test` (Vitest), `npm run test:e2e` (Playwright)
 - Lint/Format: eslint + prettier (lint-staged + husky)
 - Version bump helper: `npm run version:bump`
-- Production: PM2, Docker multi-stage (see Dockerfile), Cloudflare or direct VPS.
+- Production: **Cloudflare Pages** (static `dist/`). PM2/Docker/nginx examples are optional local/self-host only.
 
 ## Security & Compliance Posture
 - Zero-knowledge core.

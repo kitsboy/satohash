@@ -289,3 +289,29 @@ See `KIMI-HANDOFF-satohash-2026-06-10.md` in repo root for the original comprehe
 - Branch: main
 - Builds: 59–65 pushed
 - See `git log -1` for latest SHA
+
+---
+
+## Handoff to Kimi — 2026-07-07 (Infrastructure)
+
+**Machine:** M3 (Grok)
+**Project:** satohash
+
+### Done
+- [x] Removed all Umbrel/VPS production references from deploy docs
+- [x] Production model documented: Cloudflare Pages static SPA only (`./deploy.sh`)
+- [x] Stack: M3 (Grok build/deploy) + M4 HERMES (Kimi orchestration)
+- [x] `server/` Express = local dev only; not deployed to satohash.io
+
+### Decisions
+- No home-server (Umbrel) stack — replaced by Kimi/HERMES on M4
+- TadBuy and other Give A Bit projects deploy on their own stacks (TadBuy: Supabase + Cloudflare)
+- Forum/history/stamp API features that need `server/` remain deferred or future Workers project
+
+### What's Next
+- Add `CLOUDFLARE_API_TOKEN` to GitHub secrets so push → deploy is automatic
+- Optional: Cloudflare Workers if server-side API is needed later
+
+### Git State
+- See `git log -1` for latest SHA
+- Branch: main

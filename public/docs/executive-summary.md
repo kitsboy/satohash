@@ -109,7 +109,7 @@ Proving that something existed *before* a specific date has enormous legal, comm
 | Persistence    | SQLite (metadata only) + client IndexedDB / LocalStorage for local-first |
 | Observability  | Sentry (full-stack), Pino, Prometheus           |
 | Real-time      | Socket.io (`ots:*` events)                      |
-| Build / Deploy | Vite build → dist/ served by Express; PM2, Docker, Cloudflare options |
+| Build / Deploy | Vite build → `dist/` → Cloudflare Pages (`satohash` project) |
 
 See `CLAUDE.md` and `docs/ARCHITECTURE.md` for the living operational view.
 
