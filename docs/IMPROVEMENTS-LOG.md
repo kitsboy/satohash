@@ -571,4 +571,31 @@
 
 **Status: 465/465 complete ✅ (Batches 1–9)**
 
+---
+
+## Post-465 Fix Pass (Builds 59–62)
+
+- [x] Mempool client returns ok/source/error metadata
+- [x] `getApiUrl()` rolled out to all remaining client fetches
+- [x] NWC demo uses deterministic preimage (no `Math.random`)
+- [x] ProtocolStats live/cached with mempool fallback
+- [x] `PageErrorBoundary` on protected routes
+- [x] `ContractList` wired to `useContractStore`
+- [x] Vault per-item offline sync toasts
+- [x] Trust Center live `/health` status
+- [x] Settings audit JSON export + team invites
+- [x] ImageVault SHA-256 forensic prefix display
+- [x] `useAppTranslation` dual-i18n bridge hook
+- [x] ContractEditor document settings (font/margins)
+- [x] 49 unit tests passing
+
+## Post-465 Enhance Pass (Builds 63–65)
+
+- [x] `ContractLifecycleBar` — draft → verify navigation
+- [x] `auditExport.js` — institutional audit log download
+- [x] `orgTeam.js` — local team invite storage
+- [x] ContractView signing invite link copy
+- [x] Developer portal local API usage counters
+- [x] Audit + org team unit tests
+
 *Safe Harbour · Part of the [Give A Bit](https://giveabit.io) family.*

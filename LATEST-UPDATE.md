@@ -1,3 +1,3 @@
 # satohash — Last Updated 2026-07-07 by Grok (M3)
 
-**Build 56** — Batch 9 complete: 465/465 improvements. Fix/debug pass: deterministic IDs, silent-failure toasts, URL consistency via `getApiUrl()`, onboarding resume banner, i18n vault/forum parity, expanded e2e + unit tests. See `docs/IMPROVEMENTS-LOG.md` and `docs/KIMI-HANDOFF.md`.
+**Build 65** — Post-465 fix + enhance pass: 8 commits (4 fix, 4 feat). getApiUrl rollout, mempool metadata, PageErrorBoundary, contractStore, Trust live health, audit export, ContractLifecycleBar, signing invites. 49 unit tests passing. See `docs/KIMI-HANDOFF.md`.

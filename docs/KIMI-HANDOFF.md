@@ -239,3 +239,31 @@ See `KIMI-HANDOFF-satohash-2026-06-10.md` in repo root for the original comprehe
 - Branch: main
 - Build: 56
 - See `git log -1` after push for latest SHA
+
+---
+
+## Handoff to Kimi — 2026-07-07 (Fix + Enhance Pass)
+
+**Machine:** M3 (Grok)
+**Project:** satohash
+
+### Done — 4 fix commits + 4 enhance commits (Builds 59–65)
+- [x] Fix batch 1: mempool error surfaces, ProtocolStats fallback, `useAppTranslation`
+- [x] Fix batch 2: `getApiUrl()` rollout (18 files)
+- [x] Fix batch 3: PageErrorBoundary, contractStore, vault sync, mobile signer, offers API
+- [x] Fix batch 4: Trust live health, audit export, ImageVault forensic hash, a11y smoke script
+- [x] Enhance 1: ContractLifecycleBar, auditExport, orgTeam utilities
+- [x] Enhance 2: Signing invite links, Developer usage stats
+- [x] Enhance 3: audit + org unit tests (49 total passing)
+
+### Deferred (still open)
+- Full Vault/WebCapture i18n migration
+- PDF system consolidation (pdfHelpers started)
+- axe-core CI gate
+- Express backend VPS deploy
+- Mobile Signer Pro native app
+
+### Git State
+- Branch: main
+- Builds: 59–65 pushed
+- See `git log -1` for latest SHA
