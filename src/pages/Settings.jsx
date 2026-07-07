@@ -157,6 +157,7 @@ export default function Settings() {
 
   // Mesh nodes state
   const [meshNodes, setMeshNodes] = useState([])
+  const [meshDegraded, setMeshDegraded] = useState(false)
 
   useEffect(() => {
     const wantLight = eliteMode
@@ -287,9 +288,12 @@ export default function Settings() {
         if (res.ok) {
           const data = await res.json()
           setMeshNodes(data.nodes || [])
+          setMeshDegraded(false)
+        } else {
+          setMeshDegraded(true)
         }
       } catch (_err) {
-        // Fetch failed — fall back to hardcoded nodes
+        setMeshDegraded(true)
       }
     }
     fetchMeshNodes()
@@ -1059,11 +1063,32 @@ export default function Settings() {
               </div>
               <RefreshCw size={14} className="animate-spin-slow text-[var(--text-secondary)]" />
             </div>
+            {meshDegraded && (
+              <p
+                className="rounded-xl border px-4 py-2 text-center text-[9px] font-black tracking-widest uppercase"
+                style={{
+                  borderColor: 'color-mix(in srgb, var(--accent-pending) 30%, transparent)',
+                  color: 'var(--accent-pending)'
+                }}
+                role="status"
+              >
+                Degraded — mesh API unreachable; showing last known status
+              </p>
+            )}
             <div className="space-y-6">
-              <StatusRow label="API Mesh" status="Online" latency="42ms" />
+              <StatusRow
+                label="API Mesh"
+                status={meshDegraded ? 'Cached' : 'Online'}
+                latency={meshDegraded ? '—' : '42ms'}
+              />
               <StatusRow label="Witness Chain" status="Online" latency="1.2s" />
               <StatusRow label="Vault Sync" status="Operational" latency="Synced" />
             </div>
+            {meshNodes.length > 0 && (
+              <p className="text-[10px] text-[var(--text-secondary)]">
+                {meshNodes.length} peer node{meshNodes.length === 1 ? '' : 's'} in mesh registry
+              </p>
+            )}
           </div>
 
           <div className="space-y-8 rounded-[3rem] border border-[var(--border)] bg-[var(--surface-raised)]/20 p-10">
