@@ -28,9 +28,12 @@ import { jsPDF } from 'jspdf'
 import JSZip from 'jszip'
 import { toast } from 'sonner'
 import usePageMeta from '../../hooks/usePageMeta'
-
-// TODO: fetch from /api/contracts/activity
-// TODO: fetch node integrity stat from /api/stats
+import {
+  loadContracts,
+  saveContracts,
+  getContractStats,
+  getContractActivity
+} from '../../utils/contractStorage'
 
 export default function ContractList() {
   usePageMeta({ page: 'contracts' })
@@ -45,12 +48,11 @@ export default function ContractList() {
   const [contracts, setContracts] = useState([])
   const [searchQuery, setSearchQuery] = useState('')
   const [filterStatus, setFilterStatus] = useState('all')
+  const [_loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const savedContracts = localStorage.getItem('satohash_contracts')
-    if (savedContracts) {
-      setContracts(JSON.parse(savedContracts))
-    }
+    setContracts(loadContracts())
+    setLoading(false)
   }, [])
 
   const filteredContracts = contracts.filter((c) => {
@@ -66,7 +68,7 @@ export default function ContractList() {
 
     const updatedContracts = contracts.filter((c) => c.id !== id)
     setContracts(updatedContracts)
-    localStorage.setItem('satohash_contracts', JSON.stringify(updatedContracts))
+    saveContracts(updatedContracts)
   }
 
   const handleDownloadAll = async () => {
@@ -172,11 +174,8 @@ export default function ContractList() {
     }
   }
 
-  const stats = {
-    total: contracts.length,
-    secured: contracts.filter((c) => c.status === 'timestamped' || c.status === 'signed').length,
-    avgHealth: 99.9 // TODO: fetch from /api/stats
-  }
+  const stats = getContractStats(contracts)
+  const activity = getContractActivity(contracts)
 
   return (
     <div
@@ -304,7 +303,8 @@ export default function ContractList() {
                     style={{ color: 'var(--text-muted)' }}
                   />
                   <input
-                    type="text"
+                    type="search"
+                    aria-label="Search agreements"
                     placeholder="Search agreements..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
@@ -383,30 +383,26 @@ export default function ContractList() {
                   </h3>
                 </div>
 
-                {/* TODO: fetch from /api/contracts/activity */}
                 <div className="relative space-y-6">
                   <div
                     className="absolute top-0 bottom-0 left-3.5 w-px"
                     style={{ background: 'var(--border)' }}
                   />
-                  <ActivityItem
-                    icon={Lock}
-                    title="Merkle Root Anchored"
-                    time="2m ago"
-                    status="confirmed"
-                  />
-                  <ActivityItem
-                    icon={Zap}
-                    title="SHA-256 Hash Generated"
-                    time="15m ago"
-                    status="processed"
-                  />
-                  <ActivityItem
-                    icon={Globe}
-                    title="Block #831,492 Confirmed"
-                    time="1h ago"
-                    status="immutable"
-                  />
+                  {activity.length === 0 ? (
+                    <p className="pl-10 text-xs text-[var(--text-secondary)]">
+                      No contract activity yet. Create your first agreement to see updates here.
+                    </p>
+                  ) : (
+                    activity.map((item) => (
+                      <ActivityItem
+                        key={item.id}
+                        icon={item.status === 'timestamped' ? Globe : Lock}
+                        title={`${item.name} — ${item.status}`}
+                        time={item.at ? new Date(item.at).toLocaleString() : '—'}
+                        status={item.status === 'timestamped' ? 'immutable' : 'processed'}
+                      />
+                    ))
+                  )}
                 </div>
 
                 <div className="mt-8 pt-6" style={{ borderTop: '1px solid var(--border)' }}>

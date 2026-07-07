@@ -10,6 +10,7 @@ import {
   Zap,
   CheckCircle2
 } from 'lucide-react'
+import Button from './Button'
 
 export default function MerkleExplorer({ tree, highlightedIndex = null }) {
   const [selectedLevel, setSelectedLevel] = useState(null)
@@ -17,14 +18,22 @@ export default function MerkleExplorer({ tree, highlightedIndex = null }) {
 
   if (!tree) return null
 
+  const pseudoHash = (input, salt) => {
+    let h = 0
+    const s = `${input}:${salt}`
+    for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0
+    return h.toString(16).padStart(64, '0').slice(0, 64)
+  }
+
   const downloadProof = (atom) => {
     const proofJson = {
       leaf: atom,
       root: tree.root,
       proof: [
-        { side: 'right', hash: Math.random().toString(16).substring(2, 66) },
-        { side: 'left', hash: Math.random().toString(16).substring(2, 66) }
+        { side: 'right', hash: pseudoHash(atom, 'right') },
+        { side: 'left', hash: pseudoHash(tree.root, 'left') }
       ],
+      note: 'Illustrative Merkle path — verify against your OTS proof for authoritative data.',
       protocol: 'Satohash SHIELD-256',
       timestamp: new Date().toISOString()
     }
@@ -125,7 +134,7 @@ export default function MerkleExplorer({ tree, highlightedIndex = null }) {
                       </span>
                     </div>
                     <div className="mb-2 line-clamp-2 text-[10px] font-medium text-slate-300 italic">
-                      "{atom.substring(0, 40)}..."
+                      &ldquo;{atom.substring(0, 40)}...&rdquo;
                     </div>
                     <div className="h-1 overflow-hidden rounded-full bg-slate-700">
                       <motion.div

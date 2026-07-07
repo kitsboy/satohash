@@ -23,8 +23,10 @@ import { downloadProofPackage, downloadOTSFile } from '../../utils/pdfGenerator'
 import { getBlockHeight } from '../../utils/mempool'
 import { getMerkleProof } from '../../utils/merkle'
 import MerkleExplorer from '../../components/MerkleExplorer'
+import usePageMetaOnboarding from '../../hooks/usePageMetaOnboarding'
 
 export default function TimestampResult() {
+  usePageMetaOnboarding('result')
   const { t } = useTranslation()
   const navigate = useNavigate()
   const { contractId } = useParams()

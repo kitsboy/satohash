@@ -24,16 +24,17 @@ function forumHeaders() {
   return headers
 }
 
-function requireForumNpub() {
-  if (!getForumNpub()) {
-    toast.error('Connect your Nostr identity in Settings before posting in the forum.')
-    return false
-  }
-  return true
-}
-
 const Forum = () => {
   usePageMeta({ page: 'forum' })
+  const { t } = useI18n()
+
+  const requireForumNpub = () => {
+    if (!getForumNpub()) {
+      toast.error(t('forum', 'npubRequired'))
+      return false
+    }
+    return true
+  }
   const [threads, setThreads] = useState([])
   const [selectedThread, setSelectedThread] = useState(null)
   const [newThreadTitle, setNewThreadTitle] = useState('')
@@ -44,7 +45,6 @@ const Forum = () => {
   const [fetchError, setFetchError] = useState(null)
   const navigate = useNavigate()
   const { id } = useParams()
-  const { t } = useI18n()
 
   const fetchThreads = useCallback(async () => {
     setLoading(true)

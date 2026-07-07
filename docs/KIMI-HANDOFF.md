@@ -174,3 +174,34 @@ See `KIMI-HANDOFF-satohash-2026-06-10.md` in repo root for the original comprehe
 - Branch: main
 - Build: 36
 - Status: fully pushed to origin/main
+
+---
+
+## Handoff to Kimi — 2026-07-07 (Batch 8)
+
+**Machine:** M3 (Grok)
+**Project:** satohash
+
+### Done
+- [x] Batch 8 frontend pipes — items 266–365 (100 improvements)
+- [x] Onboarding wizard unified (`onboardingFlow.js`, progress bar, linear navigation)
+- [x] Timestamp wizard meta + Explanation link from FinalReview
+- [x] Contract pipes: local activity feed, health stats, Mempool action, PDF branding fix
+- [x] ImageVault route restored; reads cached image stamps from localStorage
+- [x] ProtocolStats live/cached badge; Developer demo banner; MerkleExplorer/BlockchainPulse purity fixes
+- [x] `tests/e2e/frontend-pipes.spec.js` + `npm run test:frontend-pipes`
+- [x] `docs/IMPROVEMENTS-LOG.md` updated — 365/365 complete
+
+### Decisions
+- Frontend-only batch: no new server routes; client uses localStorage + existing APIs
+- `getVerifyUrl()` for origin-aware verify links in PDFs/QR
+- Dual i18n (`useI18n` + `react-i18next`) kept; shell keys extended for vault/forum
+
+### What's Next
+- Run e2e with dev server: `npm run test:frontend-pipes` + `npm run test:template-demo`
+- Optional: migrate Vault/WebCapture hardcoded English to `useI18n` across all 7 locales
+- Deploy Build 54
+
+### Git State
+- Branch: main
+- See `git log -1` after push for latest SHA

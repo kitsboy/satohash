@@ -26,8 +26,8 @@ import ZKRedactionTool from '../../components/ZKRedactionTool'
 import Card from '../../components/Card'
 import { clsx } from 'clsx'
 import usePageMeta from '../../hooks/usePageMeta'
-
-const GIVEABIT_VERIFY_BASE = 'https://satohash.giveabit.io/verify'
+import { getVerifyUrl } from '../../config/constants'
+import { loadContracts } from '../../utils/contractStorage'
 
 export default function ContractView() {
   usePageMeta({ page: 'contracts' })
@@ -40,18 +40,14 @@ export default function ContractView() {
   const [qrDataUrl, setQrDataUrl] = useState(null)
 
   useEffect(() => {
-    const savedContracts = localStorage.getItem('satohash_contracts')
-    if (savedContracts) {
-      const contracts = JSON.parse(savedContracts)
-      const found = contracts.find((c) => c.id === contractId)
-      setContract(found)
-    }
+    const found = loadContracts().find((c) => c.id === contractId)
+    setContract(found)
   }, [contractId])
 
   // Generate QR code for the verification URL when the document is timestamped
   useEffect(() => {
     if (!contract || contract.status !== 'timestamped') return
-    QRCode.toDataURL(`${GIVEABIT_VERIFY_BASE}/${contract.id}`, {
+    QRCode.toDataURL(`${getVerifyUrl()}/${contract.id}`, {
       width: 200,
       margin: 1,
       color: { dark: '#4f46e5', light: '#ffffff' }
@@ -70,11 +66,7 @@ export default function ContractView() {
         color: i === 0 ? '#10b981' : '#6366f1'
       }))
     }
-    // Fallback mock for display when no signers have been added yet
-    return [
-      { id: 1, name: 'Alex Rivera', status: 'viewing', color: '#10b981' },
-      { id: 2, name: 'Sarah Chen', status: 'idle', color: '#6366f1' }
-    ]
+    return []
   })()
 
   if (!contract) {
@@ -119,11 +111,8 @@ export default function ContractView() {
       })
 
       if (base64data) {
-        // Subtle top-left watermark logo (40% opacity)
-        doc.setGState(new doc.GState({ opacity: 0.4 }))
-        doc.addImage(base64data, 'PNG', 20, 18, 16, 16)
-
-        // Reset opacity for the rest of the document
+        doc.setGState(new doc.GState({ opacity: 0.35 }))
+        doc.addImage(base64data, 'PNG', 18, 16, 18, 18)
         doc.setGState(new doc.GState({ opacity: 1 }))
       }
     } catch (e) {
@@ -196,30 +185,6 @@ export default function ContractView() {
         console.error('Failed to load logo for certificate:', e)
       }
 
-      // Give A Bit logo on certificate page (right side of header)
-      try {
-        const giveABitData = await new Promise((resolve) => {
-          const img = new Image()
-          img.crossOrigin = 'Anonymous'
-          img.onload = () => {
-            const canvas = document.createElement('canvas')
-            canvas.width = img.width
-            canvas.height = img.height
-            const ctx = canvas.getContext('2d')
-            ctx.drawImage(img, 0, 0)
-            resolve(canvas.toDataURL('image/png'))
-          }
-          img.onerror = () => resolve(null)
-          img.src = '/giveabit.png'
-        })
-        if (giveABitData) {
-          // Fit into ~24x12 box on the right side of the header bar
-          doc.addImage(giveABitData, 'PNG', pageWidth - 39, 11, 24, 10)
-        }
-      } catch (e) {
-        console.error('Failed to load Give A Bit logo for certificate:', e)
-      }
-
       doc.setTextColor(255, 255, 255)
       doc.setFont('helvetica', 'bold')
       doc.setFontSize(16)
@@ -280,9 +245,9 @@ export default function ContractView() {
 
       // QR Code — points to satohash.giveabit.io for stable verification URL
       try {
-        const pdfQrDataUrl = await QRCode.toDataURL(`${GIVEABIT_VERIFY_BASE}/${contract.id}`, {
+        const pdfQrDataUrl = await QRCode.toDataURL(`${getVerifyUrl()}/${contract.id}`, {
           width: 200,
-          color: { dark: '#4f46e5' }
+          color: { dark: '#F7931A' }
         })
         doc.addImage(pdfQrDataUrl, 'PNG', pageWidth - margin - 60, currentY, 60, 60)
         doc.setTextColor(100, 100, 100)
@@ -299,7 +264,7 @@ export default function ContractView() {
       doc.setFontSize(8)
       doc.setFont('helvetica', 'italic')
       doc.setTextColor(120, 120, 120)
-      const footerText = `This document is cryptographically anchored to the Bitcoin blockchain via the Satohash Protocol. The underlying content is protected by SHA-256 hashing. Modifying even a single character in the original file will invalidate this certificate. For verification, visit ${GIVEABIT_VERIFY_BASE} or scan the QR code above.`
+      const footerText = `This document is cryptographically anchored to the Bitcoin blockchain via the Satohash Protocol. The underlying content is protected by SHA-256 hashing. Modifying even a single character in the original file will invalidate this certificate. For verification, visit ${getVerifyUrl()}/${contract.id} or scan the QR code above.`
       const splitFooter = doc.splitTextToSize(footerText, pageWidth - margin * 2)
       doc.text(splitFooter, margin, currentY)
     }
@@ -583,7 +548,7 @@ export default function ContractView() {
                                 `Reference:  ${contract.id}\n` +
                                 `Status:     Timestamped on Bitcoin\n\n` +
                                 `Verify this document on-chain:\n` +
-                                `${GIVEABIT_VERIFY_BASE}/${contract.id}\n\n` +
+                                `${getVerifyUrl()}/${contract.id}\n\n` +
                                 `This document is cryptographically anchored to the Bitcoin blockchain via the Satohash Protocol. Its authenticity can be independently verified at any time using the link above.`
                             )
                             window.location.href = `mailto:?subject=${subject}&body=${body}`
@@ -594,7 +559,14 @@ export default function ContractView() {
                           label="Mempool.space"
                           subLabel="View Anchor"
                           highlight
-                          onClick={() => {}}
+                          onClick={() => {
+                            const block =
+                              contract.bitcoin_block_height || contract.timestamp?.blockHeight
+                            const url = block
+                              ? `https://mempool.space/block/${block}`
+                              : 'https://mempool.space/'
+                            window.open(url, '_blank', 'noopener,noreferrer')
+                          }}
                         />
                       </div>
 

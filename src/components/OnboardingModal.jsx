@@ -1,4 +1,5 @@
 import { useMemo, useState, useEffect, useCallback } from 'react'
+import { markOnboardingComplete } from '../utils/onboardingFlow'
 import { useTranslation } from 'react-i18next'
 import { motion, AnimatePresence } from 'framer-motion'
 
@@ -25,7 +26,7 @@ export default function OnboardingModal({ onDone }) {
 
   const next = () => {
     if (isLast) {
-      localStorage.setItem('satohash-onboarded', 'true')
+      markOnboardingComplete()
       onDone()
     } else {
       setStep((s) => s + 1)
@@ -33,7 +34,7 @@ export default function OnboardingModal({ onDone }) {
   }
 
   const skip = useCallback(() => {
-    localStorage.setItem('satohash-onboarded', 'true')
+    markOnboardingComplete()
     onDone()
   }, [onDone])
 

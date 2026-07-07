@@ -3,10 +3,16 @@ import { motion } from 'framer-motion'
 import { Activity, Clock, Zap, Cpu, Globe } from 'lucide-react'
 import { getFeeEstimates, getMempoolStats } from '../utils/mempool'
 
+function entropyFromStats(stats) {
+  const seed = stats?.count ?? 124000
+  return ((seed * 2654435761) >>> 0).toString(16).substring(0, 8)
+}
+
 export default function BlockchainPulse() {
   const [stats, setStats] = useState(null)
   const [fees, setFees] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [entropy, setEntropy] = useState('00000000')
 
   useEffect(() => {
     const fetchPulse = async () => {
@@ -14,6 +20,7 @@ export default function BlockchainPulse() {
         const [mempoolData, feeResults] = await Promise.all([getMempoolStats(), getFeeEstimates()])
         setStats(mempoolData)
         setFees(feeResults)
+        setEntropy(entropyFromStats(mempoolData))
       } catch (err) {
         console.error('Pulse fetch failed', err)
       } finally {
@@ -71,7 +78,7 @@ export default function BlockchainPulse() {
               System_Entropy
             </p>
             <p className="font-mono text-[9px] font-bold text-[var(--accent-active)] uppercase">
-              0x{Math.random().toString(16).substring(2, 10)}
+              0x{entropy}
             </p>
           </div>
         </div>

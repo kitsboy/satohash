@@ -1,10 +1,17 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Shield, Mail, User, Building2, Sparkles } from 'lucide-react'
 import Button from '../../components/Button'
+import OnboardingProgressBar from '../../components/OnboardingProgressBar'
+import usePageMetaOnboarding from '../../hooks/usePageMetaOnboarding'
+import { setOnboardingStep } from '../../utils/onboardingFlow'
 
 export default function AccountCreation() {
+  usePageMetaOnboarding('account-creation')
+  useEffect(() => {
+    setOnboardingStep('account-creation')
+  }, [])
   const { t } = useTranslation()
   const navigate = useNavigate()
   const location = useLocation()
@@ -20,15 +27,8 @@ export default function AccountCreation() {
 
     // Save user data to localStorage (simulated account creation)
     localStorage.setItem('satohash_user', JSON.stringify(formData))
-    localStorage.setItem('satohash_onboarded', 'true')
-
-    // Pass template type to next screen
     const templateType = location.state?.templateType
-    if (templateType && templateType !== 'custom') {
-      navigate(`/contracts/new/${templateType}`)
-    } else {
-      navigate('/contracts')
-    }
+    navigate('/onboarding/value-confirmation', { state: { templateType } })
   }
 
   const handleChange = (e) => {
@@ -71,6 +71,7 @@ export default function AccountCreation() {
       style={{ background: 'linear-gradient(180deg, rgba(99, 102, 241, 0.03) 0%, white 40%)' }}
     >
       <div className="layout-container">
+        <OnboardingProgressBar currentStepId="account-creation" />
         {/* Header */}
         <div
           className="text-center"

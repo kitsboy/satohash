@@ -5,6 +5,7 @@ import { getFeeEstimates } from '../../utils/mempool'
 import { ArrowLeft, Check, Zap, AlertTriangle, Info, Globe, ArrowRight } from 'lucide-react'
 import Button from '../../components/Button'
 import Card from '../../components/Card'
+import usePageMetaOnboarding from '../../hooks/usePageMetaOnboarding'
 
 const FeeAdvisor = () => {
   const [fees, setFees] = useState(null)
@@ -59,6 +60,7 @@ const FeeAdvisor = () => {
 }
 
 export default function SignatureFlow() {
+  usePageMetaOnboarding('signatures')
   const { t } = useTranslation()
   const navigate = useNavigate()
   const { contractId } = useParams()

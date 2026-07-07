@@ -18,6 +18,7 @@ import {
 } from 'lucide-react'
 import { toast } from 'sonner'
 import { calculateCarbonFootprint } from '../utils/carbon.js'
+import usePageMetaOnboarding from '../hooks/usePageMetaOnboarding'
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
 
@@ -267,6 +268,7 @@ const ActivityFeedItem = ({ item, idx }) => {
 // ─── MAIN COMPONENT ───────────────────────────────────────────────────────────
 
 const Admin = () => {
+  usePageMetaOnboarding('admin')
   const [stats, setStats] = useState({})
   const [history, setHistory] = useState([])
   const [loading, setLoading] = useState(true)

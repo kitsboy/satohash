@@ -5,8 +5,10 @@ import { ArrowLeft, Info, Bitcoin } from 'lucide-react'
 import Button from '../../components/Button'
 import Card from '../../components/Card'
 import { getFeeEstimates, convertSatsToFiat } from '../../utils/mempool'
+import usePageMetaOnboarding from '../../hooks/usePageMetaOnboarding'
 
 export default function TimestampExplanation() {
+  usePageMetaOnboarding('explanation')
   const { t } = useTranslation()
   const navigate = useNavigate()
   const { contractId } = useParams()

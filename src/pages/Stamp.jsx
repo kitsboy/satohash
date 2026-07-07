@@ -88,12 +88,12 @@ export default function Stamp() {
             ? `Block ${blockHeight.toLocaleString()} — view on mempool.space`
             : 'Proof anchored to Bitcoin mainnet',
           duration: 10000,
-          action: blockHeight
-            ? {
-                label: 'View Block →',
-                onClick: () => window.open(`https://mempool.space/block/${blockHeight}`, '_blank')
-              }
-            : undefined
+          action: {
+            label: 'View in Vault →',
+            onClick: () => {
+              window.location.href = '/vault'
+            }
+          }
         })
       }
     }

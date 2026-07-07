@@ -36,6 +36,7 @@ export default function ProtocolStats() {
   })
   const [isAuditing, setIsAuditing] = useState(false)
   const [loading, setLoading] = useState(true)
+  const [isLive, setIsLive] = useState(false)
 
   useEffect(() => {
     const fetchHeight = async () => {
@@ -49,6 +50,7 @@ export default function ProtocolStats() {
       fetch(`${API_URL}/api/stats`)
         .then((r) => (r.ok ? r.json() : Promise.reject()))
         .then((data) => {
+          setIsLive(true)
           setStats((prev) => ({
             ...prev,
             ...(data.totalAnchored !== undefined && { totalAnchored: data.totalAnchored }),
@@ -60,16 +62,10 @@ export default function ProtocolStats() {
             ...(data.witnessQuorum !== undefined && { witnessQuorum: data.witnessQuorum })
           }))
         })
-        // Silently keep hardcoded fallback values on error
-        .catch(() => {})
+        .catch(() => setIsLive(false))
     ]).finally(() => setLoading(false))
 
-    const interval = setInterval(() => {
-      setStats((prev) => ({
-        ...prev,
-        unconfirmedTxs: prev.unconfirmedTxs + Math.floor(Math.random() * 20) - 5
-      }))
-    }, 3000)
+    const interval = setInterval(() => fetchHeight(), 30000)
     return () => clearInterval(interval)
   }, [])
 
@@ -205,6 +201,15 @@ export default function ProtocolStats() {
               Real-time telemetry from the global Witness Mesh and Bitcoin PoW consensus layer.
               Monitor bridge health and forensic finality.
             </p>
+            <span
+              className="mt-4 inline-flex rounded-full border px-3 py-1 text-[10px] font-bold tracking-widest uppercase"
+              style={{
+                borderColor: isLive ? 'var(--accent-success)' : 'var(--accent-pending)',
+                color: isLive ? 'var(--accent-success)' : 'var(--accent-pending)'
+              }}
+            >
+              {isLive ? 'Live feed' : 'Cached estimates'}
+            </span>
           </div>
 
           <div className="glass-card flex max-w-sm items-center gap-6 border-[var(--border)] bg-[var(--bg-secondary)] p-8">

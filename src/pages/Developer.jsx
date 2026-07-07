@@ -319,11 +319,10 @@ export default function Developer() {
       '> New stamp created — status: pending',
       '> Webhook fired → your-server.com/hooks/satohash'
     ]
+    let tick = 0
     const interval = setInterval(() => {
-      setTerminalOutput((prev) => [
-        ...prev.slice(-8),
-        msgs[Math.floor(Math.random() * msgs.length)]
-      ])
+      setTerminalOutput((prev) => [...prev.slice(-8), msgs[tick % msgs.length]])
+      tick += 1
     }, 3000)
     return () => clearInterval(interval)
   }, [])
@@ -361,6 +360,18 @@ export default function Developer() {
       style={{ background: 'var(--bg-primary)', color: 'var(--text-primary)' }}
     >
       <div className="mx-auto max-w-6xl space-y-12 px-4 py-8 md:px-8">
+        {keysError && (
+          <div
+            role="alert"
+            className="rounded-2xl border px-4 py-3 text-sm"
+            style={{
+              borderColor: 'var(--accent-pending)',
+              background: 'color-mix(in srgb, var(--accent-pending) 8%, transparent)'
+            }}
+          >
+            Demo mode — API keys are simulated until the developer API is reachable.
+          </div>
+        )}
         {/* ── Header ── */}
         <header
           className="flex flex-col justify-between gap-6 border-b pb-10 lg:flex-row lg:items-end"

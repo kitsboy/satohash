@@ -34,6 +34,7 @@ const WebCapture = React.lazy(() => import('./pages/WebCapture'))
 const Certificates = React.lazy(() =>
   import('./pages/Placeholders').then((m) => ({ default: m.Certificates }))
 )
+const ImageVault = React.lazy(() => import('./pages/ImageVault'))
 const Developer = React.lazy(() => import('./pages/Developer'))
 const Atlas = React.lazy(() => import('./pages/Atlas'))
 const Nodes = React.lazy(() => import('./pages/Mesh'))
@@ -285,7 +286,14 @@ function AppContent() {
                 </ProtectedRoute>
               }
             />
-            <Route path="/image-vault" element={<Navigate to="/vault" replace />} />
+            <Route
+              path="/image-vault"
+              element={
+                <ProtectedRoute>
+                  <ImageVault />
+                </ProtectedRoute>
+              }
+            />
             <Route
               path="/protocol-stats"
               element={

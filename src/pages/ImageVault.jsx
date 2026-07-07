@@ -23,26 +23,24 @@ import usePageMeta from '../hooks/usePageMeta'
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
 
-const MOCK_ITEMS = [
-  {
-    id: '1',
-    filename: 'Evidence_Alpha_01.png',
-    hash: '3c8e...f21a',
-    created_at: new Date().toISOString()
-  },
-  {
-    id: '2',
-    filename: 'Contract_Scan_Witness.jpg',
-    hash: '7d1a...902x',
-    created_at: new Date().toISOString()
-  },
-  {
-    id: '3',
-    filename: 'Web_Snapshot_Entry.webp',
-    hash: '1a2b...4c5d',
-    created_at: new Date().toISOString()
+const IMAGE_EXT = /\.(png|jpg|jpeg|gif|webp|svg|bmp|ico)$/i
+
+function loadImageStamps() {
+  try {
+    const stamps = JSON.parse(localStorage.getItem('satohash_stamps') || '[]')
+    return stamps
+      .filter((s) => IMAGE_EXT.test(s.filename || s.original_filename || ''))
+      .map((s) => ({
+        id: s.id,
+        filename: s.filename || s.original_filename || 'image',
+        hash: s.hash ? `${s.hash.substring(0, 4)}...${s.hash.slice(-4)}` : '—',
+        fullHash: s.hash,
+        created_at: s.created_at || new Date().toISOString()
+      }))
+  } catch {
+    return []
   }
-]
+}
 
 export default function ImageVault() {
   usePageMeta({
@@ -50,23 +48,31 @@ export default function ImageVault() {
     title: 'Image Vault',
     description: 'Browse and manage image proofs anchored to Bitcoin.'
   })
-  const [images, setImages] = useState(MOCK_ITEMS)
+  const [images, setImages] = useState(loadImageStamps)
   const [isLoading, setIsLoading] = useState(false)
+  const [usingCache, setUsingCache] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const [viewMode, setViewMode] = useState('grid') // grid, list
 
   useEffect(() => {
+    const local = loadImageStamps()
+    if (local.length) {
+      setImages(local)
+      setUsingCache(true)
+    }
     const fetchImages = async () => {
       setIsLoading(true)
       try {
         const res = await fetch(`${API_URL}/api/vault/images`)
         if (res.ok) {
           const data = await res.json()
-          setImages(data)
+          if (Array.isArray(data) && data.length) {
+            setImages(data)
+            setUsingCache(false)
+          }
         }
-        // on non-ok response, silently keep mock items
       } catch {
-        // silently keep mock items on network error
+        setUsingCache(true)
       } finally {
         setIsLoading(false)
       }
@@ -110,6 +116,11 @@ export default function ImageVault() {
               Institutional-grade cryptographic storage for every visual asset notarized by the
               mesh. Search and verify forensic provenance instantly.
             </p>
+            {usingCache && (
+              <p className="mt-4 text-xs font-bold tracking-widest text-[var(--accent-pending)] uppercase">
+                Showing cached image proofs from this browser
+              </p>
+            )}
           </div>
 
           <div className="flex w-full flex-col gap-4 sm:flex-row lg:w-auto">

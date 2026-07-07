@@ -6,6 +6,7 @@ import confetti from 'canvas-confetti'
 import Button from '../../components/Button'
 import { createTimestamp } from '../../utils/opentimestamps'
 import { buildMerkleTree } from '../../utils/merkle'
+import usePageMetaOnboarding from '../../hooks/usePageMetaOnboarding'
 
 const STEPS = [
   'Splitting document into atoms…',
@@ -14,6 +15,7 @@ const STEPS = [
 ]
 
 export default function TimestampProgress() {
+  usePageMetaOnboarding('progress')
   const { t } = useTranslation()
   const navigate = useNavigate()
   const { contractId } = useParams()

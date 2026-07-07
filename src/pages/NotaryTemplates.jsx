@@ -2,6 +2,7 @@ import { useState, useMemo, useEffect, useRef, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Tooltip from '../components/Tooltip'
 import { getVerifyUrl } from '../config/constants'
+import usePageMetaOnboarding from '../hooks/usePageMetaOnboarding'
 import { useSearchParams } from 'react-router-dom'
 import { toast } from 'sonner'
 import { jsPDF } from 'jspdf'
@@ -2602,6 +2603,7 @@ export function TemplateEditor({ template, onBack, demoMode = false }) {
 // ─── MAIN EXPORT ────────────────────────────────────────────────────────────────
 
 export default function NotaryTemplates() {
+  usePageMetaOnboarding('notary-templates')
   const [selected, setSelected] = useState(null)
 
   return (

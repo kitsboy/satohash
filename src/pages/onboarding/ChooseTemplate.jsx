@@ -1,4 +1,8 @@
+import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import OnboardingProgressBar from '../../components/OnboardingProgressBar'
+import usePageMetaOnboarding from '../../hooks/usePageMetaOnboarding'
+import { setOnboardingStep } from '../../utils/onboardingFlow'
 import {
   Heart,
   Upload,
@@ -57,6 +61,10 @@ const TEMPLATES = [
 ]
 
 export default function ChooseTemplate() {
+  usePageMetaOnboarding('choose-template')
+  useEffect(() => {
+    setOnboardingStep('choose-template')
+  }, [])
   const navigate = useNavigate()
 
   const handleTemplateSelect = (templateType) => {
@@ -72,6 +80,7 @@ export default function ChooseTemplate() {
       <div className="grid-pattern-slate pointer-events-none absolute inset-0 opacity-[0.03]" />
 
       <div className="layout-container relative z-10 pt-32 pb-24 md:pt-40">
+        <OnboardingProgressBar currentStepId="choose-template" />
         {/* Header Section */}
         <header className="mb-16 text-center">
           <div className="mb-6 inline-flex items-center gap-2">

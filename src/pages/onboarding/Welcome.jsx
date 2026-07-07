@@ -25,6 +25,9 @@ import {
 import Button from '../../components/Button'
 import Card from '../../components/Card'
 import LanguagePicker from '../../components/LanguagePicker'
+import OnboardingProgressBar from '../../components/OnboardingProgressBar'
+import usePageMetaOnboarding from '../../hooks/usePageMetaOnboarding'
+import { setOnboardingStep } from '../../utils/onboardingFlow'
 
 const FEATURE_DATA = [
   {
@@ -66,6 +69,10 @@ const FEATURE_DATA = [
 ]
 
 export default function Welcome() {
+  usePageMetaOnboarding('welcome')
+  useEffect(() => {
+    setOnboardingStep('welcome')
+  }, [])
   const { t, i18n } = useTranslation()
   const navigate = useNavigate()
   const location = useLocation()
@@ -140,6 +147,7 @@ export default function Welcome() {
       <div style={{ position: 'relative', zIndex: 1, flex: 1 }}>
         {/* HERO SECTION */}
         <div className="layout-container" style={{ paddingTop: '140px', paddingBottom: '100px' }}>
+          <OnboardingProgressBar currentStepId="welcome" />
           <div className="text-center">
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
@@ -196,7 +204,7 @@ export default function Welcome() {
             >
               <Button
                 variant="primary"
-                onClick={() => navigate('/onboarding/choose-template')}
+                onClick={() => navigate('/onboarding/how-it-works')}
                 style={{
                   height: '72px',
                   paddingLeft: '40px',

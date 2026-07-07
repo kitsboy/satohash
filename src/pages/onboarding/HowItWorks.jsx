@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Lock, Shield, FileCheck, ChevronLeft, ChevronRight, Play, Pause } from 'lucide-react'
 import Button from '../../components/Button'
+import OnboardingProgressBar from '../../components/OnboardingProgressBar'
+import usePageMetaOnboarding from '../../hooks/usePageMetaOnboarding'
+import { setOnboardingStep } from '../../utils/onboardingFlow'
 
 const CARDS = [
   {
@@ -26,6 +29,10 @@ const CARDS = [
 ]
 
 export default function HowItWorks() {
+  usePageMetaOnboarding('how-it-works')
+  useEffect(() => {
+    setOnboardingStep('how-it-works')
+  }, [])
   const { t } = useTranslation()
   const navigate = useNavigate()
   const [currentCard, setCurrentCard] = useState(0)
@@ -99,6 +106,7 @@ export default function HowItWorks() {
           paddingBottom: '40px'
         }}
       >
+        <OnboardingProgressBar currentStepId="how-it-works" />
         {/* Header */}
         <div className="text-center" style={{ marginBottom: '40px' }}>
           <div

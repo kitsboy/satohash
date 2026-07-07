@@ -1,5 +1,6 @@
 import { ShieldCheck, FileText, ArrowRight, Plus, Camera, Clock } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
+import usePageMetaOnboarding from '../hooks/usePageMetaOnboarding'
 
 // Legacy — /snapper now routes to WebCapture directly.
 // This export kept for backward compat with a coming-soon fallback UI.
@@ -46,6 +47,7 @@ export function Snapper() {
 }
 
 export function Certificates() {
+  usePageMetaOnboarding('certificates')
   const navigate = useNavigate()
 
   const templates = [

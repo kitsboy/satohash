@@ -140,7 +140,8 @@ export default function Explorer() {
                 <div className="relative mx-auto max-w-xl px-2">
                   <Search className="absolute top-1/2 left-6 h-5 w-5 -translate-y-1/2 text-[var(--text-secondary)] sm:left-6 sm:h-6 sm:w-6" />
                   <input
-                    type="text"
+                    type="search"
+                    aria-label="Search block height or date"
                     placeholder="Enter block height or date (e.g. 2009-01-03)"
                     className="h-14 w-full rounded-[1.75rem] border border-white/10 bg-white/5 pr-4 pl-12 text-sm font-medium transition-all outline-none focus:border-[var(--accent-active)] focus:bg-white/10 sm:h-20 sm:rounded-[2.5rem] sm:pr-8 sm:pl-16 sm:text-xl"
                   />

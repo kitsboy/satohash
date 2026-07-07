@@ -134,7 +134,7 @@ export const generatePDF = async (stampInfo, watermarkType = 'SATOHASH PROTOCOL 
   const verifyUrl = `${window.location.origin}/verify/${stampInfo.id}`
   const qrDataUrl = await QRCode.toDataURL(verifyUrl, {
     margin: 1,
-    color: { dark: '#1a1d2e', light: '#ffffff' }
+    color: { dark: '#F7931A', light: '#ffffff' }
   })
   doc.addImage(qrDataUrl, 'PNG', pageWidth - margin - 50, sealY, 50, 50)
   doc.setFontSize(7)

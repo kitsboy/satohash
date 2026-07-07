@@ -3,8 +3,10 @@ import { useTranslation } from 'react-i18next'
 import { CheckCircle, Globe, AlertCircle } from 'lucide-react'
 import Button from '../../components/Button'
 import Card from '../../components/Card'
+import usePageMetaOnboarding from '../../hooks/usePageMetaOnboarding'
 
 export default function VerificationHelp() {
+  usePageMetaOnboarding('verification-help')
   const { t } = useTranslation()
   const navigate = useNavigate()
 

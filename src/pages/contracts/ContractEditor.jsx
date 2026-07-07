@@ -17,8 +17,10 @@ import { motion, AnimatePresence } from 'framer-motion'
 import Button from '../../components/Button'
 import { getTemplate } from '../../templates'
 import { generateSHA256Hash } from '../../utils/crypto'
+import usePageMetaOnboarding from '../../hooks/usePageMetaOnboarding'
 
 export default function ContractEditor() {
+  usePageMetaOnboarding('contract-editor')
   const navigate = useNavigate()
   const { contractId, templateType } = useParams()
 

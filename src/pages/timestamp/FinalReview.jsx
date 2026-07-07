@@ -6,8 +6,10 @@ import Button from '../../components/Button'
 import Card from '../../components/Card'
 import Modal from '../../components/Modal'
 import { getFeeEstimates, convertSatsToFiat } from '../../utils/mempool'
+import usePageMetaOnboarding from '../../hooks/usePageMetaOnboarding'
 
 export default function FinalReview() {
+  usePageMetaOnboarding('review')
   const { t } = useTranslation()
   const navigate = useNavigate()
   const { contractId } = useParams()
@@ -34,6 +36,10 @@ export default function FinalReview() {
 
   const handleTimestamp = () => {
     navigate(`/contracts/${contractId}/timestamp/progress`)
+  }
+
+  const handleLearnMore = () => {
+    navigate(`/contracts/${contractId}/timestamp/explanation`)
   }
 
   if (!contract) return null
@@ -163,6 +169,13 @@ export default function FinalReview() {
               >
                 {t('timestamp.review.timestampThisAgreement')}
                 <ChevronRight size={20} className="ml-2" />
+              </Button>
+              <Button
+                variant="ghost"
+                onClick={handleLearnMore}
+                style={{ width: '100%', marginTop: '12px' }}
+              >
+                How timestamping works
               </Button>
             </Card>
 

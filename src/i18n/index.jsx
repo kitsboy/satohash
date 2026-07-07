@@ -52,7 +52,9 @@ export const translations = {
       verify: 'Verify',
       certificate: 'Certificate',
       pending: 'Pending',
-      confirmed: 'Confirmed'
+      confirmed: 'Confirmed',
+      serverUnreachable: 'Server unreachable — showing cached proofs from this browser.',
+      loadMoreFailed: 'Could not load more proofs. Check your connection and try again.'
     },
     common: {
       loading: 'Loading…',
@@ -142,7 +144,8 @@ export const translations = {
       writePost: 'Write your post…',
       postReply: 'Post Reply',
       backToForum: '← Back to Forum',
-      noDiscussions: 'No discussions yet'
+      noDiscussions: 'No discussions yet',
+      npubRequired: 'Connect your Nostr identity in Settings before posting in the forum.'
     },
     dashboard: {
       welcome: 'Welcome to Satohash',

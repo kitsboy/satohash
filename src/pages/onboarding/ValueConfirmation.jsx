@@ -1,17 +1,25 @@
+import { useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Check } from 'lucide-react'
 import Button from '../../components/Button'
 import Card from '../../components/Card'
+import OnboardingProgressBar from '../../components/OnboardingProgressBar'
+import usePageMetaOnboarding from '../../hooks/usePageMetaOnboarding'
+import { markOnboardingComplete, setOnboardingStep } from '../../utils/onboardingFlow'
 
 export default function ValueConfirmation() {
+  usePageMetaOnboarding('value-confirmation')
+  useEffect(() => {
+    setOnboardingStep('value-confirmation')
+  }, [])
   const { t } = useTranslation()
   const navigate = useNavigate()
   const location = useLocation()
 
   const handleStart = () => {
     // Mark onboarding as complete
-    localStorage.setItem('satohash_onboarded', 'true')
+    markOnboardingComplete()
 
     // If they selected a template, take them to the editor
     const templateType = location.state?.templateType
@@ -27,6 +35,7 @@ export default function ValueConfirmation() {
   return (
     <div className="page">
       <div className="container-narrow container">
+        <OnboardingProgressBar currentStepId="value-confirmation" />
         <div className="page-header text-center">
           <h1 className="page-title">{t('valueConfirmation.title')}</h1>
         </div>
