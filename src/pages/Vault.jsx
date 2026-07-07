@@ -25,6 +25,7 @@ import { downloadCertificate } from '../utils/certificate'
 import { useSocket } from '../hooks/useSocket'
 import { SkeletonList } from '../components/Skeletons'
 import { useI18n } from '../i18n'
+import usePageMeta from '../hooks/usePageMeta'
 
 const StatusBadge = ({ status }) => {
   const { t } = useI18n()
@@ -83,6 +84,7 @@ const SecurityAge = ({ confirmations }) => {
 }
 
 export default function Vault() {
+  usePageMeta({ page: 'vault' })
   const [searchQuery, setSearchQuery] = useState('')
   const [activeTab, setActiveTab] = useState('all')
   const [typeFilter, setTypeFilter] = useState('All')

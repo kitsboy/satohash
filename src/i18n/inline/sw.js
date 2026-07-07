@@ -9,7 +9,12 @@ export default {
     developer: 'API ya Msanidi',
     templates: 'Violezo',
     verify: 'Thibitisha',
-    trust: 'Kituo cha Uaminifu'
+    trust: 'Kituo cha Uaminifu',
+    explorer: 'Kichunguzi',
+    batch: 'Muhuri wa Kundi',
+    snapper: 'Nasa Wavuti',
+    protocolStats: 'Takwimu',
+    more: 'Zaidi'
   },
   stamp: {
     title: 'Thibitisha Hati',

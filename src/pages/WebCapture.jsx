@@ -22,6 +22,7 @@ import {
 import Button from '../components/Button'
 import MerkleExplorer from '../components/MerkleExplorer'
 import { toast } from 'sonner'
+import usePageMeta from '../hooks/usePageMeta'
 
 const processUrl = (raw) => {
   let u = raw.trim()
@@ -35,6 +36,7 @@ const processUrl = (raw) => {
 }
 
 export default function WebCapture() {
+  usePageMeta({ page: 'snapper' })
   const [url, setUrl] = useState('')
   const [status, setStatus] = useState('idle') // idle, fetching, captured, anchoring, anchored
   const [captureData, setCaptureData] = useState(null)

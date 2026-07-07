@@ -32,6 +32,7 @@ import {
 import { generatePDF } from '../utils/pdfGenerator'
 import { toast } from 'sonner'
 import BlockchainPulse from '../components/BlockchainPulse'
+import usePageMeta from '../hooks/usePageMeta'
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
 
@@ -40,6 +41,9 @@ function UpsellModal({ isOpen, onClose, onSubscribe }) {
     <AnimatePresence>
       {isOpen && (
         <motion.div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="upsell-title"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -56,11 +60,16 @@ function UpsellModal({ isOpen, onClose, onSubscribe }) {
           >
             <div className="mb-6 flex items-center gap-3">
               <Crown className="h-6 w-6" style={{ color: 'var(--accent-gold)' }} />
-              <h3 className="text-xl font-black uppercase" style={{ color: 'var(--text-primary)' }}>
+              <h3
+                id="upsell-title"
+                className="text-xl font-black uppercase"
+                style={{ color: 'var(--text-primary)' }}
+              >
                 Upgrade to Pro
               </h3>
               <button
                 onClick={onClose}
+                aria-label="Close upgrade dialog"
                 className="ml-auto opacity-40 transition-opacity hover:opacity-100"
                 style={{ color: 'var(--text-secondary)' }}
               >
@@ -134,6 +143,7 @@ function UpsellModal({ isOpen, onClose, onSubscribe }) {
 }
 
 export default function Dashboard() {
+  usePageMeta({ page: 'dashboard' })
   const [file, setFile] = useState(null)
   const [showUpsell, setShowUpsell] = useState(false)
   const [userTier, setUserTier] = useState('free')

@@ -17,10 +17,12 @@ import {
   Bell
 } from 'lucide-react'
 import { getBlockHeight } from '../utils/mempool'
+import usePageMeta from '../hooks/usePageMeta'
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
 
 export default function ProtocolStats() {
+  usePageMeta({ page: 'protocolStats' })
   const [stats, setStats] = useState({
     network: 'Bitcoin Mainnet',
     height: 0,

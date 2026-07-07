@@ -4,6 +4,7 @@ import { useState, useRef, useCallback, useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { jsPDF } from 'jspdf'
 import { toast } from 'sonner'
+import usePageMeta from '../hooks/usePageMeta'
 
 const MerklePathNode = ({ level, hash, active }) => (
   <div className={`flex items-center gap-4 ${active ? 'opacity-100' : 'opacity-40'}`}>
@@ -25,6 +26,7 @@ const MerklePathNode = ({ level, hash, active }) => (
 )
 
 export default function VerificationTool() {
+  usePageMeta({ page: 'verify' })
   const [searchParams] = useSearchParams()
   const [verifying, setVerifying] = useState(false)
   const [result, setResult] = useState(null) // null, 'success', 'error'
@@ -223,12 +225,14 @@ export default function VerificationTool() {
               onChange={handleFileSelect}
             />
             {/* Desktop upload icon */}
-            <div
+            <button
+              type="button"
+              aria-label="Upload .ots proof file"
               className="mx-auto hidden h-24 w-24 cursor-pointer items-center justify-center rounded-3xl border border-[var(--border)] bg-[var(--bg-primary)] text-[var(--text-secondary)] transition-all hover:border-[var(--accent-active)] hover:text-[var(--accent-active)] sm:flex"
               onClick={() => fileRef.current?.click()}
             >
               <Upload size={40} />
-            </div>
+            </button>
             {/* Mobile tap target — large button for easy finger tap */}
             <label
               className="mx-auto flex cursor-pointer flex-col items-center gap-3 rounded-2xl border-2 border-dashed p-6 transition-all active:scale-95 sm:hidden"
@@ -278,6 +282,13 @@ export default function VerificationTool() {
                     type="text"
                     value={hashInput}
                     onChange={(e) => setHashInput(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' && hashInput.trim()) {
+                        e.preventDefault()
+                        handleVerifyWithHash(hashInput.trim())
+                      }
+                    }}
+                    aria-label="SHA-256 hash to verify"
                     placeholder="e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
                     className="h-14 w-full rounded-2xl border border-[var(--border)] bg-[var(--bg-primary)] pr-4 pl-12 font-mono text-sm outline-none focus:border-[var(--accent-active)]"
                     inputMode="text"

@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 import { toast } from 'sonner'
 import { useI18n } from '../i18n'
 import EmptyState from '../components/EmptyState'
+import usePageMeta from '../hooks/usePageMeta'
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
 
@@ -13,6 +14,7 @@ const btnHolographic =
   'bg-[var(--accent-active)] text-white px-4 py-2 rounded-lg font-medium hover:opacity-90 transition-all duration-200 shadow-lg inline-flex items-center'
 
 const Forum = () => {
+  usePageMeta({ page: 'forum' })
   const [threads, setThreads] = useState([])
   const [selectedThread, setSelectedThread] = useState(null)
   const [newThreadTitle, setNewThreadTitle] = useState('')

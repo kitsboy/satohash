@@ -1,7 +1,10 @@
-import express from 'express';
-import crypto from 'crypto';
+import express from 'express'
+import crypto from 'crypto'
+import logger from '../logger.js'
+import { ERROR_CODES, sendError } from '../errors.js'
+import { anchorBodySchema } from '../validators.js'
 
-const router = express.Router();
+const router = express.Router()
 
 /**
  * PHASE 3: MOCK MERKLE AGGREGATOR
@@ -9,32 +12,23 @@ const router = express.Router();
  * and simulates Op_Return anchoring for the production witness mesh.
  */
 router.post('/', async (req, res) => {
-  const { hash, metadata } = req.body;
-  
-  // Basic validation for SHA-256 hash
-  if (!hash || typeof hash !== 'string' || hash.length !== 64) {
-    return res.status(400).json({ error: 'Valid 64-character hex SHA-256 hash required' });
+  const parsed = anchorBodySchema.safeParse(req.body)
+  if (!parsed.success) {
+    return sendError(res, ERROR_CODES.VALIDATION_FAILED, {
+      details: parsed.error.flatten().fieldErrors
+    })
   }
 
+  const { hash } = parsed.data
+
   try {
-    // 1. Simulate adding to the memory pool tree
-    // In production, this aggregates hashes over a time bucket until a threshold.
-    // Here we generate a mock partner hash to demonstrate branch merging.
-    const mockPartnerHash = crypto.randomBytes(32).toString('hex');
-    
-    // Combine our hash and the mock hash to simulate a Merkle branch
+    const mockPartnerHash = crypto.randomBytes(32).toString('hex')
     const combinedBuffer = Buffer.concat([
       Buffer.from(hash, 'hex'),
       Buffer.from(mockPartnerHash, 'hex')
-    ]);
-    
-    // Simulate generation of the Merkle Root using native Node crypto
-    const merkleRoot = crypto.createHash('sha256').update(combinedBuffer).digest('hex');
+    ])
+    const merkleRoot = crypto.createHash('sha256').update(combinedBuffer).digest('hex')
 
-    // 2. OpenTimestamps integration (Mocked)
-    // In production: const detachedFile = OpenTimestamps.DetachedTimestampFile.fromHash(new OpenTimestamps.Ops.OpSHA256(), Buffer.from(hash, 'hex'))
-    
-    // Return the preliminary receipt back to the client immediately
     const receipt = {
       status: 'pending_anchor',
       receivedHash: hash,
@@ -42,13 +36,13 @@ router.post('/', async (req, res) => {
       expectedConfirmations: 6,
       estimatedTime: '60 minutes',
       receiptId: `anch_${Date.now()}_${crypto.randomBytes(4).toString('hex')}`
-    };
+    }
 
-    res.status(202).json(receipt);
+    res.status(202).json(receipt)
   } catch (error) {
-    console.error('Anchor Routing Error:', error);
-    res.status(500).json({ error: 'Failed to process anchor routing' });
+    logger.error({ err: error }, 'Anchor routing error')
+    return sendError(res, ERROR_CODES.INTERNAL_ERROR)
   }
-});
+})
 
-export default router;
+export default router

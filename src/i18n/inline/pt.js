@@ -9,7 +9,12 @@ export default {
     developer: 'API de Desenvolvimento',
     templates: 'Modelos',
     verify: 'Verificar',
-    trust: 'Centro de Confiança'
+    trust: 'Centro de Confiança',
+    explorer: 'Explorador',
+    batch: 'Carimbo em Lote',
+    snapper: 'Captura Web',
+    protocolStats: 'Estatísticas',
+    more: 'Mais'
   },
   stamp: {
     title: 'Notarizar Documento',

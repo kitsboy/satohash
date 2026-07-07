@@ -948,6 +948,18 @@
     "supportProtocol": "Support-Protokoll",
     "bitcoinAddress": "Bitcoin-Adresse",
     "donationNote": "Ihr Beitrag treibt das souveräne Mesh voran und sichert Zensurresistenz und globale Zugänglichkeit für das Truth OS.",
+    "donation": {
+      "copy": "Adresse kopieren",
+      "copied": "Adresse kopiert!",
+      "thanks": "Danke für die Unterstützung souveräner Wahrheit."
+    },
+    "close": "Schließen",
+    "linkGroups": {
+      "product": "Produkt",
+      "protocol": "Protokoll",
+      "legal": "Rechtliches",
+      "connect": "Verbinden"
+    },
     "handshake": "Handshake: 1.2s",
     "protocolActive": "Protokoll aktiv",
     "supportMission": "Mission unterstützen",
@@ -969,6 +981,11 @@
       "cryptoNotice": "Krypto-Hinweis",
       "security": "Sicherheit",
       "integrations": "Integrationen",
+      "templates": "Vorlagen",
+      "comparison": "Vergleichen",
+      "widgets": "Widgets",
+      "identity": "NIP-05 Identität",
+      "contribute": "Mitwirken",
       "github": "GitHub"
     }
   }

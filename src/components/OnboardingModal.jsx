@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useState, useEffect, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { motion, AnimatePresence } from 'framer-motion'
 
@@ -32,10 +32,18 @@ export default function OnboardingModal({ onDone }) {
     }
   }
 
-  const skip = () => {
+  const skip = useCallback(() => {
     localStorage.setItem('satohash-onboarded', 'true')
     onDone()
-  }
+  }, [onDone])
+
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key === 'Escape') skip()
+    }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+  }, [skip])
 
   return (
     <div
@@ -57,7 +65,9 @@ export default function OnboardingModal({ onDone }) {
         >
           <div className="flex justify-end">
             <button
+              type="button"
               onClick={skip}
+              aria-label={t('onboardingPage.skip')}
               className="text-xs opacity-40 transition-opacity hover:opacity-80"
               style={{ color: 'var(--text-secondary)' }}
             >

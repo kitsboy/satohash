@@ -948,6 +948,18 @@
     "supportProtocol": "Itifaki ya msaada",
     "bitcoinAddress": "Anwani ya Bitcoin",
     "donationNote": "Mchango wako unachochea mtandao huru, ukihakikisha upinzani wa udhibiti na upatikanaji wa kimataifa kwa Truth OS.",
+    "donation": {
+      "copy": "Nakili anwani",
+      "copied": "Anwani imenakiliwa!",
+      "thanks": "Asante kwa kusaidia ukweli wa uhuru."
+    },
+    "close": "Funga",
+    "linkGroups": {
+      "product": "Bidhaa",
+      "protocol": "Itifaki",
+      "legal": "Kisheria",
+      "connect": "Unganisha"
+    },
     "handshake": "Handshake: 1.2s",
     "protocolActive": "Itifaki inafanya kazi",
     "supportMission": "Saidia dhamira",
@@ -969,6 +981,11 @@
       "cryptoNotice": "Taarifa ya crypto",
       "security": "Usalama",
       "integrations": "Miunganisho",
+      "templates": "Violezo",
+      "comparison": "Linganisha",
+      "widgets": "Vidigeto",
+      "identity": "Utambulisho wa NIP-05",
+      "contribute": "Changia",
       "github": "GitHub"
     }
   }

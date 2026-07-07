@@ -14,6 +14,7 @@ import {
   ArrowUpRight
 } from 'lucide-react'
 import { useState, useEffect } from 'react'
+import usePageMeta from '../hooks/usePageMeta'
 
 const FALLBACK_NODES = [
   {
@@ -92,6 +93,7 @@ const NodeCard = ({ city, country, status, latency, uptime, load }) => (
 )
 
 export default function Mesh() {
+  usePageMeta({ page: 'mesh' })
   const [activeRegion, setActiveRegion] = useState('Global')
   const [nodes, setNodes] = useState([])
   const [nodesLoading, setNodesLoading] = useState(true)

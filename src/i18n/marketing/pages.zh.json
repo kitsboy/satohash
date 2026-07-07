@@ -895,6 +895,18 @@
     "supportProtocol": "支持协议",
     "bitcoinAddress": "Bitcoin 地址",
     "donationNote": "您的贡献推动主权网格，确保 Truth OS 的审查抵抗和全球可访问性。",
+    "donation": {
+      "copy": "复制地址",
+      "copied": "地址已复制！",
+      "thanks": "感谢您支持主权真相。"
+    },
+    "close": "关闭",
+    "linkGroups": {
+      "product": "产品",
+      "protocol": "协议",
+      "legal": "法律",
+      "connect": "连接"
+    },
     "handshake": "Handshake：1.2s",
     "protocolActive": "协议运行中",
     "supportMission": "支持使命",
@@ -916,6 +928,11 @@
       "cryptoNotice": "加密声明",
       "security": "安全",
       "integrations": "集成",
+      "templates": "模板",
+      "comparison": "对比",
+      "widgets": "小部件",
+      "identity": "NIP-05 身份",
+      "contribute": "贡献",
       "github": "GitHub"
     }
   }

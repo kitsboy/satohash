@@ -14,10 +14,12 @@ import {
 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { toast } from 'sonner'
+import usePageMeta from '../hooks/usePageMeta'
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
 
 export default function BatchTimestamp() {
+  usePageMeta({ page: 'batch' })
   const [files, setFiles] = useState([])
   const [isProcessing, setIsProcessing] = useState(false)
   const [batchResult, setBatchResult] = useState(null)

@@ -11,6 +11,7 @@ import {
 } from 'lucide-react'
 import { useState } from 'react'
 import MerkleHeart from '../components/MerkleHeart'
+import usePageMeta from '../hooks/usePageMeta'
 
 const LEAF_DATA = {
   A: {
@@ -55,6 +56,7 @@ const PARENT_DATA = {
 const ROOT_HASH = '3f7a8b9c2d1e0f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a'
 
 export default function Explorer() {
+  usePageMeta({ page: 'explorer' })
   const [view, setView] = useState('chrono') // chrono, merkle, path
   const [selectedLeaf, setSelectedLeaf] = useState('A')
 
@@ -81,18 +83,24 @@ export default function Explorer() {
 
         <div className="flex self-start rounded-xl border border-[var(--border)] bg-[var(--bg-secondary)] p-1 sm:self-auto">
           <button
+            type="button"
+            aria-pressed={view === 'chrono'}
             onClick={() => setView('chrono')}
             className={`flex items-center gap-2 rounded-lg px-3 py-1.5 text-[9px] font-bold tracking-widest uppercase transition-all sm:px-4 sm:py-2 sm:text-[10px] ${view === 'chrono' ? 'bg-[var(--bg-primary)] text-[var(--text-primary)] shadow-lg' : 'text-[var(--text-secondary)] hover:text-white'}`}
           >
             <Clock size={12} className="sm:h-3.5 sm:w-3.5" /> Chrono
           </button>
           <button
+            type="button"
+            aria-pressed={view === 'merkle'}
             onClick={() => setView('merkle')}
             className={`flex items-center gap-2 rounded-lg px-3 py-1.5 text-[9px] font-bold tracking-widest uppercase transition-all sm:px-4 sm:py-2 sm:text-[10px] ${view === 'merkle' ? 'bg-[var(--bg-primary)] text-[var(--text-primary)] shadow-lg' : 'text-[var(--text-secondary)] hover:text-white'}`}
           >
             <TreePine size={12} className="sm:h-3.5 sm:w-3.5" /> Merkle Heart
           </button>
           <button
+            type="button"
+            aria-pressed={view === 'path'}
             onClick={() => setView('path')}
             className={`flex items-center gap-2 rounded-lg px-3 py-1.5 text-[9px] font-bold tracking-widest uppercase transition-all sm:px-4 sm:py-2 sm:text-[10px] ${view === 'path' ? 'bg-[var(--bg-primary)] text-[var(--text-primary)] shadow-lg' : 'text-[var(--text-secondary)] hover:text-white'}`}
           >

@@ -55,6 +55,9 @@ export default function PinModal({
     <AnimatePresence>
       {isOpen && (
         <motion.div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="pin-modal-title"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -93,6 +96,7 @@ export default function PinModal({
                   <KeyRound size={18} />
                 </div>
                 <h2
+                  id="pin-modal-title"
                   className="text-base font-black tracking-tight uppercase"
                   style={{ color: 'var(--text-primary)' }}
                 >

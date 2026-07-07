@@ -19,6 +19,7 @@ import { useNavigate } from 'react-router-dom'
 import { getBlockHeight } from '../utils/mempool'
 import { toast } from 'sonner'
 import { SkeletonCard } from '../components/Skeletons'
+import usePageMeta from '../hooks/usePageMeta'
 
 const TimelineStep = ({ step, label, time, description, status, icon: Icon }) => (
   <div className="relative pb-12 pl-12 last:pb-0">
@@ -56,6 +57,7 @@ const TimelineStep = ({ step, label, time, description, status, icon: Icon }) =>
 )
 
 export default function Atlas() {
+  usePageMeta({ page: 'atlas' })
   const [searchQuery, setSearchQuery] = useState('')
   const [proofCount, setProofCount] = useState(null)
   const [blockHeight, setBlockHeight] = useState(null)

@@ -1,4 +1,6 @@
 import { useNavigate } from 'react-router-dom'
+/* eslint-disable react/no-unescaped-entities -- legal prose */
+import usePageMeta from '../../hooks/usePageMeta'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import {
@@ -303,6 +305,7 @@ const SECTIONS = [
 
 /* ─── Component ──────────────────────────────────────────── */
 export default function TermsOfService() {
+  usePageMeta({ page: 'legalTerms' })
   const navigate = useNavigate()
 
   return (

@@ -1,20 +1,27 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useSocket } from '../hooks/useSocket'
 import { generatePDF } from '../utils/pdfGenerator'
-import { Download, Clock, FileText, Search, Zap } from 'lucide-react'
+import { Download, Clock, FileText, Search, Zap, RefreshCw, AlertCircle } from 'lucide-react'
 import { formatDistanceToNow } from 'date-fns'
 import { motion, AnimatePresence } from 'framer-motion'
 import ProofDNA from './ProofDNA'
+import { useI18n } from '../i18n'
+import { SkeletonList } from './Skeletons'
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
 
 const HistoryList = () => {
+  const { t } = useI18n()
   const [history, setHistory] = useState([])
   const [filter, setFilter] = useState('')
   const [statusFilter, setStatusFilter] = useState('all')
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
   const { lastEvent } = useSocket()
 
-  const fetchHistory = async () => {
+  const fetchHistory = useCallback(async () => {
+    setError(null)
+    setLoading(true)
     try {
       const npub = localStorage.getItem('satohash_npub') || ''
       const token = localStorage.getItem('satohash_token') || ''
@@ -24,51 +31,80 @@ const HistoryList = () => {
 
       const res = await fetch(`${API_URL}/api/history`, { headers })
       if (!res.ok) {
-        console.error('Failed to fetch history:', res.status)
-        return
+        throw new Error(`HTTP ${res.status}`)
       }
       const data = await res.json()
-      // API returns { stamps, pagination } — extract the stamps array
       setHistory(Array.isArray(data) ? data : (data.stamps ?? []))
-    } catch (error) {
-      console.error('Failed to fetch history:', error)
+    } catch (err) {
+      console.error('Failed to fetch history:', err)
+      setError(t('errors', 'loadFailed') || 'Failed to load history')
+    } finally {
+      setLoading(false)
     }
-  }
+  }, [t])
 
   useEffect(() => {
     fetchHistory()
-  }, [])
+  }, [fetchHistory])
 
   useEffect(() => {
     if (lastEvent) {
-      fetchHistory() // Refresh on new stamped or confirmed events
+      fetchHistory()
     }
-  }, [lastEvent])
+  }, [lastEvent, fetchHistory])
 
   const getConversationalStatus = (status) => {
     switch (status) {
       case 'confirmed':
-        return 'Confirmed on Bitcoin'
+        return t('vault', 'confirmed') || 'Confirmed on Bitcoin'
       case 'pending':
-        return 'Waiting for Bitcoin (~10 min)'
+        return t('vault', 'pending') || 'Waiting for Bitcoin'
       default:
-        return 'Unknown Status'
+        return status
     }
   }
 
   const filteredHistory = history.filter((item) => {
     const matchesSearch =
-      item.filename.toLowerCase().includes(filter.toLowerCase()) ||
-      item.hash.toLowerCase().includes(filter.toLowerCase())
+      item.filename?.toLowerCase().includes(filter.toLowerCase()) ||
+      item.hash?.toLowerCase().includes(filter.toLowerCase())
     const matchesStatus = statusFilter === 'all' || item.status === statusFilter
     return matchesSearch && matchesStatus
   })
 
+  if (loading && history.length === 0) {
+    return (
+      <div className="mt-8 space-y-4" role="status" aria-live="polite" aria-busy="true">
+        <SkeletonList count={4} />
+      </div>
+    )
+  }
+
   return (
     <div className="mt-8 space-y-6">
+      {error && (
+        <div
+          role="alert"
+          className="flex items-center justify-between gap-4 rounded-xl border border-[var(--accent-danger)]/30 bg-[var(--accent-danger)]/10 px-4 py-3"
+        >
+          <div className="flex items-center gap-2 text-sm text-[var(--accent-danger)]">
+            <AlertCircle size={16} />
+            {error}
+          </div>
+          <button
+            type="button"
+            onClick={fetchHistory}
+            className="flex min-h-[44px] items-center gap-2 rounded-lg px-3 text-xs font-bold uppercase"
+          >
+            <RefreshCw size={14} />
+            {t('common', 'retry') || 'Retry'}
+          </button>
+        </div>
+      )}
+
       <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
         <h2 className="flex items-center gap-2 text-xl font-bold text-white">
-          Recent Stamping History
+          {t('dashboard', 'recentHistory') || 'Recent Stamping History'}
           <span className="rounded-full border border-[var(--accent-active)]/30 bg-[var(--accent-active)]/20 px-2 py-0.5 text-xs text-[var(--accent-active)]">
             {history.length}
           </span>
@@ -76,10 +112,11 @@ const HistoryList = () => {
 
         <div className="flex items-center gap-2">
           <div className="flex items-center gap-2 rounded-xl border border-white/5 bg-white/5 px-4 py-2 ring-1 ring-white/5 transition-all focus-within:ring-indigo-500/50">
-            <Search size={16} className="text-white/20" />
+            <Search size={16} className="text-white/20" aria-hidden="true" />
             <input
-              type="text"
-              placeholder="Filter history..."
+              type="search"
+              aria-label={t('dashboard', 'filterHistory') || 'Filter history'}
+              placeholder={t('dashboard', 'filterHistory') || 'Filter history...'}
               className="bg-transparent text-xs font-medium text-white outline-none placeholder:text-white/20"
               value={filter}
               onChange={(e) => setFilter(e.target.value)}
@@ -88,11 +125,12 @@ const HistoryList = () => {
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
+            aria-label={t('dashboard', 'statusFilter') || 'Filter by status'}
             className="rounded-xl border border-white/5 bg-white/5 px-4 py-2 text-xs font-bold text-white/60 outline-none hover:bg-white/10"
           >
-            <option value="all">Any Status</option>
-            <option value="confirmed">Confirmed</option>
-            <option value="pending">Pending</option>
+            <option value="all">{t('vault', 'all') || 'Any Status'}</option>
+            <option value="confirmed">{t('vault', 'confirmed') || 'Confirmed'}</option>
+            <option value="pending">{t('vault', 'pending') || 'Pending'}</option>
           </select>
         </div>
       </div>
@@ -155,6 +193,8 @@ const HistoryList = () => {
                     <td className="px-6 py-4 text-right">
                       <div className="flex items-center justify-end gap-2">
                         <button
+                          type="button"
+                          aria-label={`Download certificate for ${item.filename}`}
                           onClick={() => generatePDF(item)}
                           className="inline-flex items-center gap-2 rounded-lg border border-[var(--accent-active)]/30 bg-[var(--accent-active)]/10 px-3 py-1.5 text-xs text-[var(--accent-active)] transition-all hover:bg-[var(--accent-active)] hover:text-white"
                         >
@@ -163,6 +203,7 @@ const HistoryList = () => {
                         </button>
                         <a
                           href={`${API_URL}/api/stamps/${item.id}?download=true`}
+                          aria-label={`Download OTS proof for ${item.filename}`}
                           className="inline-flex items-center gap-2 rounded-lg border border-white/5 bg-white/5 px-3 py-1.5 text-xs text-white/60 transition-all hover:bg-white/10"
                         >
                           <Download className="h-3.5 w-3.5" />
@@ -173,10 +214,10 @@ const HistoryList = () => {
                   </motion.tr>
                 ))}
               </AnimatePresence>
-              {filteredHistory.length === 0 && (
+              {filteredHistory.length === 0 && !loading && (
                 <tr>
                   <td colSpan="4" className="px-6 py-12 text-center text-sm text-white/20">
-                    No stamps found yet. Start by hashing a file!
+                    {t('dashboard', 'noStamps') || 'No stamps found yet. Start by hashing a file!'}
                   </td>
                 </tr>
               )}

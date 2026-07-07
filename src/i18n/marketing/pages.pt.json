@@ -951,6 +951,18 @@
     "supportProtocol": "Protocolo de suporte",
     "bitcoinAddress": "Endereço Bitcoin",
     "donationNote": "Sua contribuição alimenta a malha soberana, garantindo resistência à censura e acessibilidade global para o Truth OS.",
+    "donation": {
+      "copy": "Copiar endereço",
+      "copied": "Endereço copiado!",
+      "thanks": "Obrigado por apoiar a verdade soberana."
+    },
+    "close": "Fechar",
+    "linkGroups": {
+      "product": "Produto",
+      "protocol": "Protocolo",
+      "legal": "Legal",
+      "connect": "Conectar"
+    },
     "handshake": "Handshake: 1.2s",
     "protocolActive": "Protocolo ativo",
     "supportMission": "Apoiar a missão",
@@ -972,6 +984,11 @@
       "cryptoNotice": "Aviso cripto",
       "security": "Segurança",
       "integrations": "Integrações",
+      "templates": "Modelos",
+      "comparison": "Comparar",
+      "widgets": "Widgets",
+      "identity": "Identidade NIP-05",
+      "contribute": "Contribuir",
       "github": "GitHub"
     }
   }

@@ -19,6 +19,7 @@ import {
   ChevronRight
 } from 'lucide-react'
 import { toast } from 'sonner'
+import usePageMeta from '../hooks/usePageMeta'
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
 
@@ -44,6 +45,11 @@ const MOCK_ITEMS = [
 ]
 
 export default function ImageVault() {
+  usePageMeta({
+    page: 'vault',
+    title: 'Image Vault',
+    description: 'Browse and manage image proofs anchored to Bitcoin.'
+  })
   const [images, setImages] = useState(MOCK_ITEMS)
   const [isLoading, setIsLoading] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')

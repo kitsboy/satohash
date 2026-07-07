@@ -6,10 +6,12 @@ import { toast } from 'sonner'
 import { motion } from 'framer-motion'
 import { QRCodeSVG as QRCode } from 'qrcode.react'
 import { downloadCertificate } from '../utils/certificate'
+import usePageMeta from '../hooks/usePageMeta'
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
 
 export default function VerifyPublic() {
+  usePageMeta({ page: 'verify' })
   const { t } = useTranslation()
   const { id } = useParams()
   const [proof, setProof] = useState(null)

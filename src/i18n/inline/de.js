@@ -9,7 +9,12 @@ export default {
     developer: 'Entwickler-API',
     templates: 'Vorlagen',
     verify: 'Verifizieren',
-    trust: 'Vertrauenszentrum'
+    trust: 'Vertrauenszentrum',
+    explorer: 'Explorer',
+    batch: 'Batch-Stempel',
+    snapper: 'Web-Capture',
+    protocolStats: 'Protokoll-Statistiken',
+    more: 'Mehr'
   },
   stamp: {
     title: 'Dokument notarisieren',

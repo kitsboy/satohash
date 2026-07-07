@@ -31,6 +31,21 @@ export const ERROR_CODES = {
     code: 'STAMP_TIMEOUT',
     status: 504,
     message: 'OTS stamp timed out'
+  },
+  PAYMENT_REQUIRED: {
+    code: 'PAYMENT_REQUIRED',
+    status: 402,
+    message: 'Payment required'
+  },
+  FORBIDDEN: {
+    code: 'FORBIDDEN',
+    status: 403,
+    message: 'Forbidden'
+  },
+  SERVICE_UNAVAILABLE: {
+    code: 'SERVICE_UNAVAILABLE',
+    status: 503,
+    message: 'Service temporarily unavailable'
   }
 }
 

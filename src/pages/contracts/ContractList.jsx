@@ -27,11 +27,13 @@ import { useState, useEffect } from 'react'
 import { jsPDF } from 'jspdf'
 import JSZip from 'jszip'
 import { toast } from 'sonner'
+import usePageMeta from '../../hooks/usePageMeta'
 
 // TODO: fetch from /api/contracts/activity
 // TODO: fetch node integrity stat from /api/stats
 
 export default function ContractList() {
+  usePageMeta({ page: 'contracts' })
   const navigate = useNavigate()
 
   // --- ZUSTAND MIGRATION PREP ---

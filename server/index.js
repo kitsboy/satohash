@@ -31,6 +31,8 @@ import { addSignerToProof } from './collaboration.js'
 import Stripe from 'stripe'
 import adminRouter from './admin.js'
 import nftRouter from './routes/nft.js'
+import anchorRouter from './routes/anchor.js'
+import { parseHash, parseUuid } from './validators.js'
 import { startAlertDaemon } from './daemons/index.js'
 
 // New Productions Items 1-7
@@ -332,7 +334,7 @@ app.post('/api/stripe/webhook', express.raw({ type: 'application/json' }), async
 })
 
 app.use(express.static('dist'))
-app.use(express.json())
+app.use(express.json({ limit: '1mb' }))
 
 const upload = multer({
   storage: multer.memoryStorage(),
@@ -351,6 +353,7 @@ app.use('/api/lightning', lightningRoutes)
 app.use('/admin/', adminRouter) // Use dedicated admin router with throttling metrics
 app.use(authMiddleware)
 app.use('/api/nft', nftRouter)
+app.use('/api/anchor', anchorRouter)
 
 // API Docs
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs))
@@ -1177,7 +1180,9 @@ app.post('/api/revoke/:id', requireNpub, async (req, res, next) => {
  *     summary: Get a specific timestamp metadata or download the file.
  */
 app.get('/api/stamps/:id', (req, res) => {
-  const stamp = db.prepare('SELECT * FROM timestamps WHERE id = ?').get(req.params.id)
+  const id = parseUuid(req.params.id)
+  if (!id) return sendError(res, ERROR_CODES.VALIDATION_FAILED, { details: 'Invalid stamp ID' })
+  const stamp = db.prepare('SELECT * FROM timestamps WHERE id = ?').get(id)
   if (!stamp) return res.status(404).json({ error: 'Timestamp not found.' })
 
   if (stamp.status === 'confirmed') {
@@ -1734,7 +1739,8 @@ app.post('/api/webhooks/:id/test', async (req, res) => {
  */
 app.post('/api/mesh/verify', async (req, res, next) => {
   try {
-    const { hash } = req.body
+    const hash = parseHash(req.body?.hash)
+    if (!hash) return sendError(res, ERROR_CODES.VALIDATION_FAILED, { details: 'Invalid hash' })
     const stamp = db.prepare('SELECT * FROM timestamps WHERE hash = ?').get(hash)
 
     if (!stamp) {

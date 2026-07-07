@@ -15,7 +15,7 @@ export default function MobileBottomNav() {
     { name: t('nav', 'vault'), path: '/vault', icon: Database },
     { name: t('nav', 'stamp'), path: '/stamp', icon: Fingerprint },
     { name: t('nav', 'atlas'), path: '/atlas', icon: Globe },
-    { name: 'Blocks', path: '/explorer', icon: Search }
+    { name: t('nav', 'explorer') || 'Explorer', path: '/explorer', icon: Search }
   ]
 
   // "More" is active when we're on a route not in the primary list
@@ -88,15 +88,15 @@ export default function MobileBottomNav() {
               {[
                 { name: t('nav', 'dashboard'), path: '/dashboard' },
                 { name: t('nav', 'verify'), path: '/verify' },
-                { name: 'Batch Stamp', path: '/batch' },
+                { name: t('nav', 'batch') || 'Batch Stamp', path: '/batch' },
                 { name: t('nav', 'developer'), path: '/developer' },
                 { name: t('nav', 'contracts'), path: '/contracts' },
-                { name: 'Web Capture', path: '/snapper' },
+                { name: t('nav', 'snapper') || 'Web Capture', path: '/snapper' },
                 { name: t('nav', 'templates'), path: '/templates' },
                 { name: t('nav', 'settings'), path: '/settings' },
                 { name: t('nav', 'trust'), path: '/trust' },
                 { name: t('vault', 'title'), path: '/image-vault' },
-                { name: 'Protocol Stats', path: '/protocol-stats' }
+                { name: t('nav', 'protocolStats') || 'Protocol Stats', path: '/protocol-stats' }
               ].map((link) => (
                 <NavLink
                   key={link.path}
@@ -233,7 +233,7 @@ export default function MobileBottomNav() {
                 opacity: moreActive || moreOpen ? 1 : 0.7
               }}
             >
-              More
+              {t('nav', 'more') || 'More'}
             </span>
           </motion.div>
         </button>

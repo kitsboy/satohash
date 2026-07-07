@@ -99,6 +99,9 @@ export default function GlobalDropzone({ onFileProcessed }) {
         <button
           type="button"
           onClick={open}
+          aria-label={
+            isDarkVault ? 'Drop file to encrypt and anchor' : 'Drop file or browse to stamp'
+          }
           className={clsx(
             'group w-full rounded-2xl border-2 border-dashed px-6 py-8 text-center transition-all duration-200',
             isDragActive || dragActive
@@ -145,6 +148,9 @@ export default function GlobalDropzone({ onFileProcessed }) {
           </span>
           <button
             type="button"
+            role="switch"
+            aria-pressed={isDarkVault}
+            aria-label="Dark Vault encryption mode"
             onClick={(e) => {
               e.stopPropagation()
               setIsDarkVault((v) => !v)
@@ -210,6 +216,9 @@ export default function GlobalDropzone({ onFileProcessed }) {
       <AnimatePresence>
         {isProcessing && (
           <motion.div
+            role="status"
+            aria-live="polite"
+            aria-busy="true"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}

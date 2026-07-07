@@ -1,6 +1,8 @@
 import { useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
+/* eslint-disable react/no-unescaped-entities -- legal prose */
+import usePageMeta from '../../hooks/usePageMeta'
 import {
   ArrowLeft,
   EyeOff,
@@ -348,6 +350,7 @@ const SECTIONS = [
 
 /* ─── Component ──────────────────────────────────────────── */
 export default function PrivacyPolicy() {
+  usePageMeta({ page: 'legalPrivacy' })
   const navigate = useNavigate()
 
   return (

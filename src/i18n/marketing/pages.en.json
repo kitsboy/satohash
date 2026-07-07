@@ -945,6 +945,18 @@
     "supportProtocol": "Support Protocol",
     "bitcoinAddress": "Bitcoin Address",
     "donationNote": "Your contribution fuels the sovereign mesh, ensuring censorship resistance and global accessibility for the Truth OS.",
+    "donation": {
+      "copy": "Copy Address",
+      "copied": "Address copied!",
+      "thanks": "Thank you for supporting sovereign truth."
+    },
+    "close": "Close",
+    "linkGroups": {
+      "product": "Product",
+      "protocol": "Protocol",
+      "legal": "Legal",
+      "connect": "Connect"
+    },
     "handshake": "Handshake: 1.2s",
     "protocolActive": "Protocol Active",
     "supportMission": "Support the Mission",
@@ -966,6 +978,11 @@
       "cryptoNotice": "Crypto Notice",
       "security": "Security",
       "integrations": "Integrations",
+      "templates": "Templates",
+      "comparison": "Compare",
+      "widgets": "Widgets",
+      "identity": "NIP-05 Identity",
+      "contribute": "Contribute",
       "github": "GitHub"
     }
   }

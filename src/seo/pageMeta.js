@@ -678,6 +678,492 @@ export const pageMeta = {
       description: 'API 密钥、Webhook、REST 端点和代码示例，将比特币锚定存在证明集成到您的应用中。'
     }
   },
+  stamp: {
+    en: {
+      title: 'Stamp — Bitcoin Document Timestamping',
+      description:
+        'Hash and anchor any file to Bitcoin in under 60 seconds. Single file, time capsule, ZK-redact, or deposition modes — your file never leaves your device.'
+    },
+    es: {
+      title: 'Sellar — Sellado de Documentos en Bitcoin',
+      description:
+        'Hashea y ancla cualquier archivo en Bitcoin en menos de 60 segundos. Modos archivo único, cápsula, ZK-redact o deposición.'
+    },
+    fr: {
+      title: 'Tamponner — Horodatage Bitcoin',
+      description:
+        'Hachez et ancrez tout fichier sur Bitcoin en moins de 60 secondes. Modes fichier unique, capsule, ZK-redact ou déposition.'
+    },
+    de: {
+      title: 'Stempeln — Bitcoin-Dokumentenstempel',
+      description:
+        'Hashen und verankern Sie jede Datei in unter 60 Sekunden auf Bitcoin. Einzeldatei, Zeitkapsel, ZK-Redact oder Deposition.'
+    },
+    pt: {
+      title: 'Carimbar — Carimbo de Documentos Bitcoin',
+      description:
+        'Faça hash e ancore qualquer arquivo no Bitcoin em menos de 60 segundos. Modos arquivo único, cápsula, ZK-redact ou depoimento.'
+    },
+    sw: {
+      title: 'Weka Muhuri — Muhuri wa Hati kwenye Bitcoin',
+      description:
+        'Hash na fungia faili yoyote kwenye Bitcoin ndani ya sekunde 60. Hali za faili moja, kapsuli, ZK-redact au ushahidi.'
+    },
+    zh: {
+      title: '盖章 — 比特币文档时间戳',
+      description: '60秒内在比特币上哈希并锚定任意文件。单文件、时间胶囊、ZK脱敏或取证模式。'
+    }
+  },
+  vault: {
+    en: {
+      title: 'Proof Vault — Manage Bitcoin Anchors',
+      description:
+        'Browse, search, export, and revoke your Bitcoin-anchored proofs. Filter by status, type, and date.'
+    },
+    es: {
+      title: 'Bóveda de Pruebas — Gestión de Anclas Bitcoin',
+      description: 'Explore, busque, exporte y revoque sus pruebas ancladas en Bitcoin.'
+    },
+    fr: {
+      title: 'Coffre de Preuves — Gérer les Ancres Bitcoin',
+      description: 'Parcourez, recherchez, exportez et révoquez vos preuves ancrées sur Bitcoin.'
+    },
+    de: {
+      title: 'Beweis-Tresor — Bitcoin-Anker verwalten',
+      description: 'Durchsuchen, exportieren und widerrufen Sie Ihre Bitcoin-verankerten Beweise.'
+    },
+    pt: {
+      title: 'Cofre de Provas — Gerenciar Âncoras Bitcoin',
+      description: 'Navegue, pesquise, exporte e revogue suas provas ancoradas no Bitcoin.'
+    },
+    sw: {
+      title: 'Hifadhi ya Ushahidi — Simamia Vifungo vya Bitcoin',
+      description: 'Vinjari, tafuta, hamisha na batilisha ushahidi wako uliofungwa kwenye Bitcoin.'
+    },
+    zh: {
+      title: '证明保险库 — 管理比特币锚定',
+      description: '浏览、搜索、导出和撤销您的比特币锚定证明。'
+    }
+  },
+  dashboard: {
+    en: {
+      title: 'Dashboard — Satohash Command Center',
+      description:
+        'Your stamping overview: recent proofs, network status, quick actions, and protocol health at a glance.'
+    },
+    es: {
+      title: 'Panel — Centro de Control Satohash',
+      description: 'Resumen de sellado: pruebas recientes, estado de red y acciones rápidas.'
+    },
+    fr: {
+      title: 'Tableau de Bord — Centre de Commande Satohash',
+      description:
+        "Vue d'ensemble du tamponnage : preuves récentes, état du réseau et actions rapides."
+    },
+    de: {
+      title: 'Dashboard — Satohash Kommandozentrale',
+      description: 'Stempelübersicht: aktuelle Beweise, Netzwerkstatus und Schnellaktionen.'
+    },
+    pt: {
+      title: 'Painel — Centro de Comando Satohash',
+      description: 'Visão geral: provas recentes, status da rede e ações rápidas.'
+    },
+    sw: {
+      title: 'Dashibodi — Kituo cha Amri cha Satohash',
+      description:
+        'Muhtasari wa muhuri: ushahidi wa hivi karibuni, hali ya mtandao na vitendo vya haraka.'
+    },
+    zh: {
+      title: '仪表板 — Satohash 指挥中心',
+      description: '盖章概览：最近证明、网络状态和快捷操作。'
+    }
+  },
+  verify: {
+    en: {
+      title: 'Verify — Check Bitcoin Proof',
+      description:
+        'Verify any SHA-256 hash or .ots proof file against the Bitcoin blockchain. Independent, court-admissible validation.'
+    },
+    es: {
+      title: 'Verificar — Comprobar Prueba Bitcoin',
+      description:
+        'Verifique cualquier hash SHA-256 o archivo .ots contra la blockchain de Bitcoin.'
+    },
+    fr: {
+      title: 'Vérifier — Contrôler une Preuve Bitcoin',
+      description: 'Vérifiez tout hash SHA-256 ou fichier .ots contre la blockchain Bitcoin.'
+    },
+    de: {
+      title: 'Verifizieren — Bitcoin-Beweis prüfen',
+      description: 'Prüfen Sie jeden SHA-256-Hash oder .ots-Datei gegen die Bitcoin-Blockchain.'
+    },
+    pt: {
+      title: 'Verificar — Checar Prova Bitcoin',
+      description: 'Verifique qualquer hash SHA-256 ou arquivo .ots contra a blockchain Bitcoin.'
+    },
+    sw: {
+      title: 'Thibitisha — Angalia Ushahidi wa Bitcoin',
+      description:
+        'Thibitisha hash yoyote ya SHA-256 au faili ya .ots dhidi ya blockchain ya Bitcoin.'
+    },
+    zh: {
+      title: '验证 — 检查比特币证明',
+      description: '对照比特币区块链验证任何 SHA-256 哈希或 .ots 证明文件。'
+    }
+  },
+  batch: {
+    en: {
+      title: 'Batch Stamp — Up to 100 Files',
+      description:
+        'Stamp up to 100 documents in one session. Per-file progress, bulk export, and shared Merkle aggregation.'
+    },
+    es: {
+      title: 'Sello por Lotes — Hasta 100 Archivos',
+      description: 'Selle hasta 100 documentos en una sesión con progreso por archivo.'
+    },
+    fr: {
+      title: "Tamponnage par Lot — Jusqu'à 100 Fichiers",
+      description: "Tamponnez jusqu'à 100 documents en une session avec progression par fichier."
+    },
+    de: {
+      title: 'Batch-Stempel — Bis zu 100 Dateien',
+      description: 'Stempeln Sie bis zu 100 Dokumente in einer Sitzung mit Fortschritt pro Datei.'
+    },
+    pt: {
+      title: 'Carimbo em Lote — Até 100 Arquivos',
+      description: 'Carimbe até 100 documentos em uma sessão com progresso por arquivo.'
+    },
+    sw: {
+      title: 'Muhuri wa Kundi — Faili 100',
+      description: 'Weka muhuri hadi faili 100 katika kipindi kimoja na maendeleo kwa kila faili.'
+    },
+    zh: {
+      title: '批量盖章 — 最多100个文件',
+      description: '一次会话中盖章最多100个文档，显示每个文件的进度。'
+    }
+  },
+  settings: {
+    en: {
+      title: 'Settings — Profile & Security',
+      description:
+        'Manage Nostr identity, API keys, webhooks, mesh nodes, billing, and notification preferences.'
+    },
+    es: {
+      title: 'Configuración — Perfil y Seguridad',
+      description: 'Gestione identidad Nostr, claves API, webhooks y preferencias.'
+    },
+    fr: {
+      title: 'Paramètres — Profil et Sécurité',
+      description: 'Gérez identité Nostr, clés API, webhooks et préférences.'
+    },
+    de: {
+      title: 'Einstellungen — Profil & Sicherheit',
+      description: 'Verwalten Sie Nostr-Identität, API-Schlüssel, Webhooks und Einstellungen.'
+    },
+    pt: {
+      title: 'Configurações — Perfil e Segurança',
+      description: 'Gerencie identidade Nostr, chaves API, webhooks e preferências.'
+    },
+    sw: {
+      title: 'Mipangilio — Wasifu na Usalama',
+      description: 'Simamia utambulisho wa Nostr, funguo za API, webhooks na mapendeleo.'
+    },
+    zh: {
+      title: '设置 — 个人资料与安全',
+      description: '管理 Nostr 身份、API 密钥、Webhook 和通知偏好。'
+    }
+  },
+  explorer: {
+    en: {
+      title: 'Block Explorer — Bitcoin Proof Chain',
+      description:
+        'Explore stamped proofs chronologically, by Merkle tree, or verification path. Noir institutional chain intelligence.'
+    },
+    es: {
+      title: 'Explorador de Bloques — Cadena de Pruebas Bitcoin',
+      description:
+        'Explore pruebas selladas cronológicamente, por árbol Merkle o ruta de verificación.'
+    },
+    fr: {
+      title: 'Explorateur — Chaîne de Preuves Bitcoin',
+      description:
+        'Explorez les preuves tamponnées chronologiquement, par arbre Merkle ou chemin de vérification.'
+    },
+    de: {
+      title: 'Block-Explorer — Bitcoin-Beweiskette',
+      description:
+        'Erkunden Sie gestempelte Beweise chronologisch, per Merkle-Baum oder Verifizierungspfad.'
+    },
+    pt: {
+      title: 'Explorador — Cadeia de Provas Bitcoin',
+      description:
+        'Explore provas carimbadas cronologicamente, por árvore Merkle ou caminho de verificação.'
+    },
+    sw: {
+      title: 'Kichunguzi — Mnyororo wa Ushahidi wa Bitcoin',
+      description:
+        'Chunguza ushahidi uliofungwa kwa wakati, kwa mti wa Merkle au njia ya uthibitishaji.'
+    },
+    zh: {
+      title: '区块浏览器 — 比特币证明链',
+      description: '按时间、Merkle 树或验证路径探索已盖章证明。'
+    }
+  },
+  atlas: {
+    en: {
+      title: 'Atlas — Global Proof Map',
+      description:
+        'Geographic visualization of Bitcoin-anchored proofs worldwide. Jurisdiction intelligence and network coverage.'
+    },
+    es: {
+      title: 'Atlas — Mapa Global de Pruebas',
+      description: 'Visualización geográfica de pruebas ancladas en Bitcoin en todo el mundo.'
+    },
+    fr: {
+      title: 'Atlas — Carte Mondiale des Preuves',
+      description: 'Visualisation géographique des preuves ancrées sur Bitcoin dans le monde.'
+    },
+    de: {
+      title: 'Atlas — Globale Beweiskarte',
+      description: 'Geografische Visualisierung Bitcoin-verankerter Beweise weltweit.'
+    },
+    pt: {
+      title: 'Atlas — Mapa Global de Provas',
+      description: 'Visualização geográfica de provas ancoradas no Bitcoin mundialmente.'
+    },
+    sw: {
+      title: 'Atlasi — Ramani ya Ushahidi Duniani',
+      description: 'Uonyeshaji wa kijiografia wa ushahidi uliofungwa kwenye Bitcoin duniani kote.'
+    },
+    zh: { title: '地图集 — 全球证明地图', description: '全球比特币锚定证明的地理可视化。' }
+  },
+  contracts: {
+    en: {
+      title: 'Smart Contracts — Legal Templates',
+      description:
+        'Create, edit, and timestamp legal agreements. Nostr-signed contracts with Bitcoin proof of existence.'
+    },
+    es: {
+      title: 'Contratos Inteligentes — Plantillas Legales',
+      description: 'Cree, edite y selle acuerdos legales con prueba de existencia en Bitcoin.'
+    },
+    fr: {
+      title: 'Contrats — Modèles Juridiques',
+      description: 'Créez, modifiez et tamponnez des accords juridiques avec preuve Bitcoin.'
+    },
+    de: {
+      title: 'Verträge — Rechtsvorlagen',
+      description: 'Erstellen, bearbeiten und stempeln Sie Rechtsvereinbarungen mit Bitcoin-Beweis.'
+    },
+    pt: {
+      title: 'Contratos — Modelos Jurídicos',
+      description: 'Crie, edite e carimbe acordos legais com prova de existência no Bitcoin.'
+    },
+    sw: {
+      title: 'Mikataba — Violezo vya Kisheria',
+      description: 'Unda, hariri na weka muhuri wa makubaliano ya kisheria na ushahidi wa Bitcoin.'
+    },
+    zh: {
+      title: '智能合约 — 法律模板',
+      description: '创建、编辑和时间戳法律协议，附带比特币存在证明。'
+    }
+  },
+  snapper: {
+    en: {
+      title: 'Web Capture — Archive Any URL',
+      description:
+        'Capture and timestamp any web page as cryptographic proof. SHA-256 hash anchored to Bitcoin permanently.'
+    },
+    es: {
+      title: 'Captura Web — Archivar Cualquier URL',
+      description:
+        'Capture y selle cualquier página web como prueba criptográfica anclada en Bitcoin.'
+    },
+    fr: {
+      title: 'Capture Web — Archiver Toute URL',
+      description:
+        'Capturez et tamponnez toute page web comme preuve cryptographique ancrée sur Bitcoin.'
+    },
+    de: {
+      title: 'Web-Capture — Jede URL archivieren',
+      description: 'Erfassen und stempeln Sie jede Webseite als kryptografischen Bitcoin-Beweis.'
+    },
+    pt: {
+      title: 'Captura Web — Arquivar Qualquer URL',
+      description: 'Capture e carimbe qualquer página web como prova criptográfica no Bitcoin.'
+    },
+    sw: {
+      title: 'Nasa Wavuti — Hifadhi URL Yoyote',
+      description:
+        'Nasa na weka muhuri wa ukurasa wowote wa wavuti kama ushahidi wa kriptografia kwenye Bitcoin.'
+    },
+    zh: {
+      title: '网页捕获 — 归档任意 URL',
+      description: '捕获任意网页并加盖时间戳，作为永久锚定在比特币上的加密证明。'
+    }
+  },
+  mesh: {
+    en: {
+      title: 'Witness Mesh — Distributed Anchoring',
+      description:
+        'Peer-to-peer witness network for redundant Bitcoin proof anchoring. Node status and mesh verification.'
+    },
+    es: {
+      title: 'Malla de Testigos — Anclaje Distribuido',
+      description: 'Red de testigos P2P para anclaje redundante de pruebas Bitcoin.'
+    },
+    fr: {
+      title: 'Maillage de Témoins — Ancrage Distribué',
+      description: 'Réseau P2P de témoins pour ancrage redondant de preuves Bitcoin.'
+    },
+    de: {
+      title: 'Witness-Mesh — Verteiltes Verankern',
+      description: 'P2P-Zeugennetzwerk für redundante Bitcoin-Beweisverankerung.'
+    },
+    pt: {
+      title: 'Malha de Testemunhas — Ancoragem Distribuída',
+      description: 'Rede P2P de testemunhas para ancoragem redundante de provas Bitcoin.'
+    },
+    sw: {
+      title: 'Mtandao wa Mashahidi — Kufungia Kilichosambazwa',
+      description: 'Mtandao wa mashahidi wa P2P kwa kufungia ushahidi wa Bitcoin kwa njia ya ziada.'
+    },
+    zh: {
+      title: '见证网格 — 分布式锚定',
+      description: '点对点见证网络，实现冗余的比特币证明锚定。'
+    }
+  },
+  forum: {
+    en: {
+      title: 'Community Forum — Satohash Discussions',
+      description:
+        'Discuss proofs, legal use cases, API integrations, and protocol updates with the Satohash community.'
+    },
+    es: {
+      title: 'Foro Comunitario — Discusiones Satohash',
+      description:
+        'Discuta pruebas, casos legales, integraciones API y actualizaciones del protocolo.'
+    },
+    fr: {
+      title: 'Forum Communautaire — Discussions Satohash',
+      description:
+        'Discutez preuves, cas juridiques, intégrations API et mises à jour du protocole.'
+    },
+    de: {
+      title: 'Community-Forum — Satohash-Diskussionen',
+      description: 'Diskutieren Sie Beweise, Rechtsfälle, API-Integrationen und Protokoll-Updates.'
+    },
+    pt: {
+      title: 'Fórum da Comunidade — Discussões Satohash',
+      description: 'Discuta provas, casos legais, integrações API e atualizações do protocolo.'
+    },
+    sw: {
+      title: 'Jukwaa la Jamii — Majadiliano ya Satohash',
+      description:
+        'Jadili ushahidi, matumizi ya kisheria, ujumuishaji wa API na masasisho ya itifaki.'
+    },
+    zh: {
+      title: '社区论坛 — Satohash 讨论',
+      description: '与社区讨论证明、法律用例、API 集成和协议更新。'
+    }
+  },
+  protocolStats: {
+    en: {
+      title: 'Protocol Stats — Network Intelligence',
+      description:
+        'Live Satohash protocol metrics: total stamps, confirmations, mempool fees, and relay health.'
+    },
+    es: {
+      title: 'Estadísticas del Protocolo — Inteligencia de Red',
+      description: 'Métricas en vivo: sellos totales, confirmaciones, comisiones y salud de relays.'
+    },
+    fr: {
+      title: 'Stats Protocole — Intelligence Réseau',
+      description: 'Métriques en direct : tampons totaux, confirmations, frais et santé des relais.'
+    },
+    de: {
+      title: 'Protokoll-Statistiken — Netzwerk-Intelligenz',
+      description: 'Live-Metriken: Stempel, Bestätigungen, Gebühren und Relay-Gesundheit.'
+    },
+    pt: {
+      title: 'Estatísticas do Protocolo — Inteligência de Rede',
+      description: 'Métricas ao vivo: carimbos, confirmações, taxas e saúde dos relays.'
+    },
+    sw: {
+      title: 'Takwimu za Itifaki — Akili ya Mtandao',
+      description: 'Vipimo vya moja kwa moja: muhuri, uthibitishaji, ada na afya ya relays.'
+    },
+    zh: {
+      title: '协议统计 — 网络情报',
+      description: '实时指标：总盖章数、确认数、手续费和中继健康状态。'
+    }
+  },
+  legalPrivacy: {
+    en: {
+      title: 'Privacy Policy',
+      description:
+        'How Satohash handles your data. Zero-knowledge stamping — files never leave your device.'
+    },
+    es: {
+      title: 'Política de Privacidad',
+      description:
+        'Cómo Satohash maneja sus datos. Sellado zero-knowledge — los archivos nunca salen de su dispositivo.'
+    },
+    fr: {
+      title: 'Politique de Confidentialité',
+      description:
+        'Comment Satohash traite vos données. Tamponnage zéro connaissance — fichiers jamais envoyés.'
+    },
+    de: {
+      title: 'Datenschutzrichtlinie',
+      description:
+        'Wie Satohash Ihre Daten behandelt. Zero-Knowledge-Stempelung — Dateien verlassen nie Ihr Gerät.'
+    },
+    pt: {
+      title: 'Política de Privacidade',
+      description:
+        'Como o Satohash trata seus dados. Carimbo zero-conhecimento — arquivos nunca saem do dispositivo.'
+    },
+    sw: {
+      title: 'Sera ya Faragha',
+      description:
+        'Jinsi Satohash inavyoshughulikia data yako. Muhuri wa ujuzi wa sifuri — faili haziondoki kwenye kifaa chako.'
+    },
+    zh: {
+      title: '隐私政策',
+      description: 'Satohash 如何处理您的数据。零知识盖章 — 文件永不离开您的设备。'
+    }
+  },
+  legalTerms: {
+    en: {
+      title: 'Terms of Service',
+      description:
+        'Satohash terms of use, liability limits, and service agreement for Bitcoin document notarization.'
+    },
+    es: {
+      title: 'Términos de Servicio',
+      description: 'Términos de uso de Satohash, límites de responsabilidad y acuerdo de servicio.'
+    },
+    fr: {
+      title: "Conditions d'Utilisation",
+      description:
+        "Conditions d'utilisation Satohash, limites de responsabilité et accord de service."
+    },
+    de: {
+      title: 'Nutzungsbedingungen',
+      description: 'Satohash-Nutzungsbedingungen, Haftungsgrenzen und Servicevereinbarung.'
+    },
+    pt: {
+      title: 'Termos de Serviço',
+      description: 'Termos de uso do Satohash, limites de responsabilidade e acordo de serviço.'
+    },
+    sw: {
+      title: 'Masharti ya Huduma',
+      description:
+        'Masharti ya matumizi ya Satohash, mipaka ya uwajibikaji na makubaliano ya huduma.'
+    },
+    zh: { title: '服务条款', description: 'Satohash 使用条款、责任限制和比特币文档公证服务协议。' }
+  },
   notFound: {
     en: {
       title: 'Page Not Found',

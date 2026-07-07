@@ -25,8 +25,10 @@ import Tooltip from '../components/Tooltip'
 import { useSocket } from '../hooks/useSocket'
 import { useI18n } from '../i18n'
 import { downloadCertificate } from '../utils/certificate'
+import usePageMeta from '../hooks/usePageMeta'
 
 export default function Stamp() {
+  usePageMeta({ page: 'stamp' })
   const [stampMode, setStampMode] = useState('single') // single, capsule, redact, deposition
   const [isCapsuleMode, setIsCapsuleMode] = useState(false)
 

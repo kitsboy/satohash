@@ -3,8 +3,14 @@ import { Link } from 'react-router-dom'
 import { ArrowLeft, ShieldCheck } from 'lucide-react'
 import { motion } from 'framer-motion'
 import Button from '../../components/Button'
+import usePageMeta from '../../hooks/usePageMeta'
 
 export default function CryptoNotice() {
+  usePageMeta({
+    page: 'legalTerms',
+    title: 'Cryptocurrency Notice',
+    description: 'Satohash cryptocurrency and digital asset disclosure for institutional users.'
+  })
   const navigate = useNavigate()
 
   return (

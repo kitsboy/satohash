@@ -151,6 +151,60 @@ if (marketingRef) {
   }
 }
 
+// Landing JSON parity
+const landingLocales = [
+  'src/i18n/marketing/landing.en.json',
+  'src/i18n/marketing/landing.es.json',
+  'src/i18n/marketing/landing.fr.json',
+  'src/i18n/marketing/landing.de.json',
+  'src/i18n/marketing/landing.pt.json',
+  'src/i18n/marketing/landing.sw.json',
+  'src/i18n/marketing/landing.zh.json'
+]
+const landingLoaded = landingLocales.map(loadJsonKeys)
+const landingRef = landingLoaded.find((l) => l.path.includes('landing.en.json'))
+if (landingRef) {
+  console.log('\n🏠 Landing pages key check\n')
+  for (const locale of landingLoaded) {
+    if (locale.path === landingRef.path) continue
+    if (!fs.existsSync(path.join(root, locale.path))) continue
+    const missing = [...landingRef.keys].filter((k) => !locale.keys.has(k))
+    if (missing.length) {
+      failed = true
+      console.error(`❌ ${locale.path} — missing ${missing.length} keys`)
+    } else {
+      console.log(`✅ ${locale.path} — ${locale.keys.size} keys`)
+    }
+  }
+}
+
+// FAQ JSON parity
+const faqLocales = [
+  'src/i18n/marketing/faq.en.json',
+  'src/i18n/marketing/faq.es.json',
+  'src/i18n/marketing/faq.fr.json',
+  'src/i18n/marketing/faq.de.json',
+  'src/i18n/marketing/faq.pt.json',
+  'src/i18n/marketing/faq.sw.json',
+  'src/i18n/marketing/faq.zh.json'
+]
+const faqLoaded = faqLocales.map(loadJsonKeys)
+const faqRef = faqLoaded.find((l) => l.path.includes('faq.en.json'))
+if (faqRef) {
+  console.log('\n❓ FAQ key check\n')
+  for (const locale of faqLoaded) {
+    if (locale.path === faqRef.path) continue
+    if (!fs.existsSync(path.join(root, locale.path))) continue
+    const missing = [...faqRef.keys].filter((k) => !locale.keys.has(k))
+    if (missing.length) {
+      failed = true
+      console.error(`❌ ${locale.path} — missing ${missing.length} keys`)
+    } else {
+      console.log(`✅ ${locale.path} — ${locale.keys.size} keys`)
+    }
+  }
+}
+
 if (failed) {
   console.error('\n❌ i18n check failed')
   process.exit(1)

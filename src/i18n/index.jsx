@@ -26,7 +26,12 @@ export const translations = {
       developer: 'Developer API',
       templates: 'Templates',
       verify: 'Verify',
-      trust: 'Trust Center'
+      trust: 'Trust Center',
+      explorer: 'Explorer',
+      batch: 'Batch Stamp',
+      snapper: 'Web Capture',
+      protocolStats: 'Protocol Stats',
+      more: 'More'
     },
     stamp: {
       title: 'Notarize Document',
@@ -52,6 +57,7 @@ export const translations = {
     common: {
       loading: 'Loading…',
       error: 'Error',
+      retry: 'Retry',
       cancel: 'Cancel',
       save: 'Save',
       close: 'Close',

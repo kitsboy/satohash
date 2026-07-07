@@ -26,6 +26,9 @@ export default function Modal({ isOpen, onClose, title, children, actions }) {
     <AnimatePresence>
       {isOpen && (
         <motion.div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby={title ? 'modal-title' : undefined}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -63,6 +66,7 @@ export default function Modal({ isOpen, onClose, title, children, actions }) {
             {title && (
               <div className="px-6 pt-6 pb-0 sm:px-8 sm:pt-8">
                 <h2
+                  id="modal-title"
                   className="text-xl font-extrabold tracking-tight text-slate-900"
                   style={{ fontFamily: "'Space Grotesk', sans-serif" }}
                 >

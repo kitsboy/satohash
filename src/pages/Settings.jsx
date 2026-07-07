@@ -24,6 +24,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 import { useTheme } from '../components/ThemeProvider'
+import usePageMeta from '../hooks/usePageMeta'
 
 const SettingSection = ({ icon: Icon, title, description, children }) => (
   <motion.div
@@ -44,8 +45,12 @@ const SettingSection = ({ icon: Icon, title, description, children }) => (
   </motion.div>
 )
 
-const Toggle = ({ active, onToggle }) => (
+const Toggle = ({ active, onToggle, label }) => (
   <button
+    type="button"
+    role="switch"
+    aria-checked={active}
+    aria-label={label || 'Toggle setting'}
     onClick={onToggle}
     className={`relative h-6 w-11 rounded-full transition-all duration-300 ${active ? 'bg-[var(--accent-active)] shadow-[0_0_15px_var(--accent-active-glow)]' : 'bg-white/10'}`}
   >
@@ -57,6 +62,7 @@ const Toggle = ({ active, onToggle }) => (
 )
 
 export default function Settings() {
+  usePageMeta({ page: 'settings' })
   const navigate = useNavigate()
   const { theme, toggleTheme } = useTheme()
   const [activeTab, setActiveTab] = useState('profile')
