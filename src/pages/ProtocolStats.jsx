@@ -50,7 +50,7 @@ export default function ProtocolStats() {
       setStats((prev) => ({
         ...prev,
         unconfirmedTxs: mempool.count ?? mempool.mempoolSize ?? prev.unconfirmedTxs,
-        averageFee: fees.high ?? fees.fastestFee ?? mempool.averageFee ?? prev.averageFee
+        averageFee: fees?.high ?? fees?.fastestFee ?? mempool.averageFee ?? prev.averageFee
       }))
     }
 

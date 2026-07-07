@@ -85,13 +85,17 @@ export default function Landing() {
   const [copied, setCopied] = useState(false)
   const [proofCount, setProofCount] = useState(null)
   const [blockHeight, setBlockHeight] = useState(null)
-  const [networkStats, setNetworkStats] = useState({
-    blockHeight: 895441,
-    difficultyChange: 0.12,
-    difficultyProgress: 52.4,
-    remainingBlocks: 980,
-    fees: { high: 25, medium: 18, low: 12, minimum: 2 }
-  })
+  const defaultNetworkStats = useMemo(
+    () => ({
+      blockHeight: 895441,
+      difficultyChange: 0.12,
+      difficultyProgress: 52.4,
+      remainingBlocks: 980,
+      fees: { high: 25, medium: 18, low: 12, minimum: 2 }
+    }),
+    []
+  )
+  const [networkStats, setNetworkStats] = useState(defaultNetworkStats)
   const [pwaPrompt, setPwaPrompt] = useState(null)
   const [pwaDismissed, setPwaDismissed] = useState(
     () => localStorage.getItem('pwa-dismissed') === 'true'
@@ -104,15 +108,18 @@ export default function Landing() {
         .then((r) => r.json())
         .catch(() => []),
       getBitcoinNetworkStats()
-    ]).then(([stamps, statsResult]) => {
+    ]).then(([stamps, stats]) => {
       if (Array.isArray(stamps)) setProofCount(stamps.length)
-      const stats = statsResult?.data ?? statsResult
-      if (stats?.fees) {
-        setNetworkStats(stats)
-        setBlockHeight(stats.blockHeight)
+      if (!stats || typeof stats !== 'object') return
+      const merged = {
+        ...defaultNetworkStats,
+        ...stats,
+        fees: { ...defaultNetworkStats.fees, ...(stats.fees || {}) }
       }
+      setNetworkStats(merged)
+      if (merged.blockHeight) setBlockHeight(merged.blockHeight)
     })
-  }, [])
+  }, [defaultNetworkStats])
 
   useEffect(() => {
     const handler = (e) => {

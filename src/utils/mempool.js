@@ -100,15 +100,26 @@ export const getBlockHeight = async () => {
   return result.data
 }
 
-export const getBitcoinNetworkStats = async () => {
-  const fallback = {
-    blockHeight: 880000,
-    difficultyChange: 0.12,
-    difficultyProgress: 52.4,
-    remainingBlocks: 980,
-    fees: { high: 25, medium: 18, low: 12, minimum: 2 },
-    timestamp: Date.now()
+const NETWORK_STATS_FALLBACK = {
+  blockHeight: 880000,
+  difficultyChange: 0.12,
+  difficultyProgress: 52.4,
+  remainingBlocks: 980,
+  fees: { high: 25, medium: 18, low: 12, minimum: 2 },
+  timestamp: Date.now()
+}
+
+function normalizeNetworkFees(fees = {}) {
+  return {
+    high: fees.high ?? fees.fastestFee ?? NETWORK_STATS_FALLBACK.fees.high,
+    medium: fees.medium ?? fees.halfHourFee ?? NETWORK_STATS_FALLBACK.fees.medium,
+    low: fees.low ?? fees.hourFee ?? NETWORK_STATS_FALLBACK.fees.low,
+    minimum: fees.minimum ?? fees.minimumFee ?? NETWORK_STATS_FALLBACK.fees.minimum
   }
+}
+
+/** Returns { ok, source, error, data } — use getBitcoinNetworkStats() for flat stats in UI */
+export const getBitcoinNetworkStatsResult = async () => {
   try {
     const [heightRes, diffRes, feesRes] = await Promise.all([
       fetch(`${MEMPOOL_API_URL}/blocks/tip/height`, { signal: AbortSignal.timeout(5000) }),
@@ -116,10 +127,14 @@ export const getBitcoinNetworkStats = async () => {
       fetch(`${MEMPOOL_API_URL}/v1/fees/recommended`, { signal: AbortSignal.timeout(5000) })
     ])
 
-    const height = heightRes.ok ? await heightRes.json() : 880000
+    const height = heightRes.ok ? await heightRes.json() : NETWORK_STATS_FALLBACK.blockHeight
     const diff = diffRes.ok
       ? await diffRes.json()
-      : { progressPercent: 50, difficultyChange: 0, remainingBlocks: 1016 }
+      : {
+          progressPercent: NETWORK_STATS_FALLBACK.difficultyProgress,
+          difficultyChange: NETWORK_STATS_FALLBACK.difficultyChange,
+          remainingBlocks: NETWORK_STATS_FALLBACK.remainingBlocks
+        }
     const fees = feesRes.ok
       ? await feesRes.json()
       : { fastestFee: 25, halfHourFee: 18, hourFee: 12, minimumFee: 2 }
@@ -131,19 +146,35 @@ export const getBitcoinNetworkStats = async () => {
       error: allOk ? null : 'partial_fetch',
       data: {
         blockHeight: height,
-        difficultyChange: diff.difficultyChange,
-        difficultyProgress: diff.progressPercent,
-        remainingBlocks: diff.remainingBlocks,
-        fees: {
-          high: fees.fastestFee,
-          medium: fees.halfHourFee,
-          low: fees.hourFee,
-          minimum: fees.minimumFee
-        },
+        difficultyChange: diff.difficultyChange ?? NETWORK_STATS_FALLBACK.difficultyChange,
+        difficultyProgress: diff.progressPercent ?? NETWORK_STATS_FALLBACK.difficultyProgress,
+        remainingBlocks: diff.remainingBlocks ?? NETWORK_STATS_FALLBACK.remainingBlocks,
+        fees: normalizeNetworkFees({
+          high: fees?.fastestFee,
+          medium: fees?.halfHourFee,
+          low: fees?.hourFee,
+          minimum: fees?.minimumFee
+        }),
         timestamp: Date.now()
       }
     }
   } catch (e) {
-    return { ok: false, source: 'fallback', error: e?.message || 'offline', data: fallback }
+    return {
+      ok: false,
+      source: 'fallback',
+      error: e?.message || 'offline',
+      data: { ...NETWORK_STATS_FALLBACK, timestamp: Date.now() }
+    }
+  }
+}
+
+/** Flat stats for Landing and legacy callers — always includes fees.high */
+export const getBitcoinNetworkStats = async () => {
+  const result = await getBitcoinNetworkStatsResult()
+  const data = result?.data ?? {}
+  return {
+    ...NETWORK_STATS_FALLBACK,
+    ...data,
+    fees: normalizeNetworkFees(data.fees)
   }
 }
