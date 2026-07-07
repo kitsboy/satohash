@@ -13,6 +13,7 @@ export default function BlockchainPulse() {
   const [fees, setFees] = useState(null)
   const [loading, setLoading] = useState(true)
   const [entropy, setEntropy] = useState('00000000')
+  const [isDegraded, setIsDegraded] = useState(false)
 
   useEffect(() => {
     const fetchPulse = async () => {
@@ -21,8 +22,10 @@ export default function BlockchainPulse() {
         setStats(mempoolData)
         setFees(feeResults)
         setEntropy(entropyFromStats(mempoolData))
+        setIsDegraded(mempoolData.source === 'fallback' || feeResults.source === 'fallback')
       } catch (err) {
         console.error('Pulse fetch failed', err)
+        setIsDegraded(true)
       } finally {
         setLoading(false)
       }
@@ -33,8 +36,24 @@ export default function BlockchainPulse() {
     return () => clearInterval(interval)
   }, [])
 
+  const fastestFee = fees?.high ?? fees?.fastestFee
+  const mempoolCount = stats?.count ?? stats?.mempoolSize
+
   return (
     <div className="group relative overflow-hidden rounded-[2.5rem] border border-[var(--border)] bg-[var(--bg-secondary)] p-2 shadow-sm transition-all hover:border-[var(--border-bright)]">
+      {isDegraded && (
+        <div
+          className="mx-2 mt-2 rounded-xl border px-4 py-2 text-center text-[9px] font-black tracking-widest uppercase"
+          style={{
+            borderColor: 'color-mix(in srgb, var(--accent-pending) 30%, transparent)',
+            background: 'color-mix(in srgb, var(--accent-pending) 10%, transparent)',
+            color: 'var(--accent-pending)'
+          }}
+          role="status"
+        >
+          Degraded — showing cached mempool estimates
+        </div>
+      )}
       <div className="pointer-events-none absolute inset-0 opacity-[0.02]" />
       <div className="flex flex-col gap-1 p-6 md:flex-row md:items-center md:justify-between md:gap-8">
         {/* Network Status Label */}
@@ -59,12 +78,12 @@ export default function BlockchainPulse() {
         <div className="grid flex-1 grid-cols-2 gap-4 sm:grid-cols-4 md:gap-10">
           <StatBox
             label="Fastest Fee"
-            value={`${fees?.fastestFee || '52'} sat/vB`}
+            value={fastestFee != null ? `${fastestFee} sat/vB` : '—'}
             icon={<Zap size={12} />}
           />
           <StatBox
             label="Mempool"
-            value={`${stats?.count ? (stats.count / 1000).toFixed(0) : '124'}k txs`}
+            value={mempoolCount != null ? `${(mempoolCount / 1000).toFixed(0)}k txs` : '—'}
             icon={<Clock size={12} />}
           />
           <StatBox label="Nodes" value="1,400+" icon={<Globe size={12} />} />

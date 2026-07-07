@@ -19,9 +19,10 @@ const FeeAdvisor = () => {
     })
   }, [])
 
-  if (loading) return null
+  if (loading || !fees) return null
 
-  const isHigh = fees.fastestFee > 50
+  const fastestFee = fees.fastestFee ?? fees.high ?? 20
+  const isHigh = fastestFee > 50
 
   return (
     <div
@@ -52,8 +53,8 @@ const FeeAdvisor = () => {
           }}
         >
           {isHigh
-            ? `Current fee is ${fees.fastestFee} sat/vB. You may experience longer anchoring times.`
-            : `Current fee is ${fees.fastestFee} sat/vB. Your proof will likely be anchored in the next block.`}
+            ? `Current fee is ${fastestFee} sat/vB. You may experience longer anchoring times.`
+            : `Current fee is ${fastestFee} sat/vB. Your proof will likely be anchored in the next block.`}
         </div>
       </div>
     </div>

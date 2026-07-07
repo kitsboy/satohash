@@ -3,6 +3,8 @@
  * Enables automated micropayments for notarization services.
  */
 
+import { pseudoHash } from './id'
+
 export const parseNwcUrl = (url) => {
   try {
     const parsed = new URL(url.replace('nostr+walletconnect:', 'http:'))
@@ -12,22 +14,22 @@ export const parseNwcUrl = (url) => {
       secret: parsed.searchParams.get('secret'),
       lud16: parsed.searchParams.get('lud16')
     }
-  } catch (e) {
+  } catch {
     return null
   }
 }
 
-export const sendPaymentRequest = async (nwcUrl) => {
+/** Demo NWC settlement — deterministic preimage; production uses NIP-47 relay. */
+export const sendPaymentRequest = async (nwcUrl, invoiceRef = 'demo') => {
   const connection = parseNwcUrl(nwcUrl)
   if (!connection) throw new Error('Invalid NWC connection string.')
 
-  // This would typically involve signing a Nostr event (NIP-47)
-  // For this demonstration, we simulate the handshake
-  console.log(`[NWC] Sending payment request to ${connection.pubkey} on relay ${connection.relay}`)
-
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve({ preimage: 'fake_preimage_' + Math.random().toString(16).substring(2) })
+      resolve({
+        preimage: `demo_preimage_${pseudoHash(invoiceRef + connection.pubkey, 16)}`,
+        demo: true
+      })
     }, 1500)
   })
 }

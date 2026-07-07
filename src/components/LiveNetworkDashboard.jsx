@@ -32,6 +32,7 @@ export default function LiveNetworkDashboard() {
   const [stats, setStats] = useState(null)
   const [blockHeight, setBlockHeight] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [isDegraded, setIsDegraded] = useState(false)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -44,8 +45,10 @@ export default function LiveNetworkDashboard() {
         setFees(feeData)
         setStats(mempoolData)
         setBlockHeight(height)
+        setIsDegraded(feeData.source === 'fallback' || mempoolData.source === 'fallback')
       } catch (err) {
         console.error('Failed to fetch network data', err)
+        setIsDegraded(true)
       } finally {
         setLoading(false)
       }
@@ -56,8 +59,21 @@ export default function LiveNetworkDashboard() {
     return () => clearInterval(interval)
   }, [])
 
+  const fastestFee = fees?.high ?? fees?.fastestFee
+  const standardFee = fees?.medium ?? fees?.halfHourFee
+  const mempoolCount = stats?.count ?? stats?.mempoolSize
+
   return (
     <div className="relative flex h-full min-h-[400px] w-full items-center justify-center overflow-hidden rounded-3xl bg-[#0f172a] p-8 shadow-2xl">
+      {isDegraded && (
+        <div
+          className="absolute top-4 right-4 left-4 z-20 rounded-xl border px-4 py-2 text-center text-[9px] font-black tracking-widest text-amber-400 uppercase"
+          style={{ borderColor: 'rgba(245, 158, 11, 0.3)', background: 'rgba(245, 158, 11, 0.1)' }}
+          role="status"
+        >
+          Degraded — showing cached mempool estimates
+        </div>
+      )}
       {/* Animated Background Bubbles */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div style={{ top: '20%', left: '10%' }}>
@@ -93,7 +109,7 @@ export default function LiveNetworkDashboard() {
 
           <div>
             <h2 className="mb-2 flex items-baseline gap-2 text-5xl leading-none font-black text-white">
-              {fees?.fastestFee || '24'}
+              {fastestFee ?? '—'}
               <span className="text-lg font-bold tracking-widest text-slate-500 uppercase">
                 sat/vB
               </span>
@@ -104,14 +120,16 @@ export default function LiveNetworkDashboard() {
           <div className="grid grid-cols-2 gap-4">
             <div className="rounded-2xl border border-white/5 bg-white/5 p-4">
               <Zap size={20} className="mb-2 text-amber-400" />
-              <div className="text-xl font-bold text-white">{fees?.halfHourFee || '18'}</div>
+              <div className="text-xl font-bold text-white">{standardFee ?? '—'}</div>
               <div className="text-xs font-bold tracking-tight text-slate-500 uppercase">
                 Standard
               </div>
             </div>
             <div className="rounded-2xl border border-white/5 bg-white/5 p-4">
               <Database size={20} className="mb-2 text-emerald-400" />
-              <div className="text-xl font-bold text-white">#{blockHeight || '831,442'}</div>
+              <div className="text-xl font-bold text-white">
+                {blockHeight != null ? `#${blockHeight.toLocaleString()}` : '—'}
+              </div>
               <div className="text-xs font-bold tracking-tight text-slate-500 uppercase">
                 Block Tip Height
               </div>
@@ -164,7 +182,7 @@ export default function LiveNetworkDashboard() {
               Mempool Backlog
             </div>
             <div className="text-2xl font-black text-white">
-              {stats?.count ? (stats.count / 1000).toFixed(1) : '85.4'}k
+              {mempoolCount != null ? (mempoolCount / 1000).toFixed(1) : '—'}k
               <span className="ml-2 text-indigo-400">TX</span>
             </div>
           </div>

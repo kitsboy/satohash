@@ -16,23 +16,24 @@ import {
   RefreshCcw,
   Bell
 } from 'lucide-react'
-import { getBlockHeight } from '../utils/mempool'
+import { getBlockHeight, getMempoolStats, getFeeEstimates } from '../utils/mempool'
 import usePageMeta from '../hooks/usePageMeta'
+import { getApiUrl } from '../config/constants'
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+const API_URL = getApiUrl()
 
 export default function ProtocolStats() {
   usePageMeta({ page: 'protocolStats' })
   const [stats, setStats] = useState({
     network: 'Bitcoin Mainnet',
     height: 0,
-    unconfirmedTxs: 12450, // TODO: fetch from /api/stats
-    averageFee: 42, // TODO: fetch from /api/stats
-    totalAnchored: '1,245,672', // TODO: fetch from /api/stats
-    nodes: '18,450+', // TODO: fetch from /api/stats
-    uptime: '99.999%', // TODO: fetch from /api/stats
-    lastBlockTime: '8m 42s', // TODO: fetch from /api/stats
-    witnessQuorum: 'Active' // TODO: fetch from /api/stats
+    unconfirmedTxs: null,
+    averageFee: null,
+    totalAnchored: '—',
+    nodes: '—',
+    uptime: '—',
+    lastBlockTime: '—',
+    witnessQuorum: '—'
   })
   const [isAuditing, setIsAuditing] = useState(false)
   const [loading, setLoading] = useState(true)
@@ -41,7 +42,16 @@ export default function ProtocolStats() {
   useEffect(() => {
     const fetchHeight = async () => {
       const height = await getBlockHeight()
-      setStats((prev) => ({ ...prev, height: height || 845922 }))
+      setStats((prev) => ({ ...prev, height: height || 0 }))
+    }
+
+    const fetchMempoolFallback = async () => {
+      const [mempool, fees] = await Promise.all([getMempoolStats(), getFeeEstimates()])
+      setStats((prev) => ({
+        ...prev,
+        unconfirmedTxs: mempool.count ?? mempool.mempoolSize ?? prev.unconfirmedTxs,
+        averageFee: fees.high ?? fees.fastestFee ?? mempool.averageFee ?? prev.averageFee
+      }))
     }
 
     // Resolve loading once both height + stats calls settle
@@ -62,7 +72,10 @@ export default function ProtocolStats() {
             ...(data.witnessQuorum !== undefined && { witnessQuorum: data.witnessQuorum })
           }))
         })
-        .catch(() => setIsLive(false))
+        .catch(async () => {
+          setIsLive(false)
+          await fetchMempoolFallback()
+        })
     ]).finally(() => setLoading(false))
 
     const interval = setInterval(() => fetchHeight(), 30000)
@@ -208,7 +221,7 @@ export default function ProtocolStats() {
                 color: isLive ? 'var(--accent-success)' : 'var(--accent-pending)'
               }}
             >
-              {isLive ? 'Live feed' : 'Cached estimates'}
+              {isLive ? 'Live feed' : 'Cached'}
             </span>
           </div>
 
@@ -240,7 +253,7 @@ export default function ProtocolStats() {
           <VividStatCard
             icon={TrendingDown}
             label="Network Fee"
-            value={`${stats.averageFee} sat/vB`}
+            value={stats.averageFee != null ? `${stats.averageFee} sat/vB` : '—'}
             sub="ESTIMATED_NEXT_BLOCK"
             color="emerald"
           />
@@ -254,7 +267,7 @@ export default function ProtocolStats() {
           <VividStatCard
             icon={Zap}
             label="Mempool Health"
-            value={stats.unconfirmedTxs.toLocaleString()}
+            value={stats.unconfirmedTxs != null ? stats.unconfirmedTxs.toLocaleString() : '—'}
             sub="PENDING_WITNESS_TASKS"
             color="rose"
           />
