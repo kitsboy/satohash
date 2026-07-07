@@ -122,3 +122,35 @@ All notable changes to the Satahash project will be documented in this file.
 - GitHub: main branch fully pushed (14 builds ahead)
 - Cloudflare Pages: auto-deploy enabled
 - Deployment analysis captured in devops/satohash-deploy-options skill
+
+## [4.1.0-ELITE] - 2026-07-07 (Builds 14–36 — Docs, Templates, A11y, Social)
+
+### Builds 14–20 — Content & Templates
+- Branded 404 page, static Pitch docs, accessibility CSS (reduced motion, focus-visible, touch targets)
+- Sitemap + canonical URL fixed to satohash.io
+- TemplatesShowcase: public gallery (14 templates), filters, search, sort, recently viewed, preview modal
+- TemplateDetail page, skeleton loading, Coming Soon section
+- Kimi contact card: glowing border, NIP-05 verified badge, online status dot, training docs
+- GitHub issue templates (feature + docs), CHANGELOG entries
+
+### Builds 21–24 — New Pages
+- FAQ page (14 questions, search, categories)
+- Pricing page (Free/Premium/Enterprise, comparison table)
+- Comparison page (Satohash vs DocuSign vs Ethereum vs DIY OTS)
+- Documentation hub (22 docs, 5 categories, static DocViewer)
+- Security page (zero-knowledge, privacy, vulnerability disclosure)
+- Guides page (4 educational articles)
+- Glossary page (18 terms)
+- Integrations page (REST API, webhooks, WP, code samples)
+
+### Builds 25–36 — Social Sharing & Polish
+- usePageMeta hook: dynamic OG/Twitter tags on every page (12 page-specific)
+- BackToTop floating button
+- ContactKimiModal: Escape key, focus trap, aria labels
+- DocViewer: ToC sidebar, breadcrumbs, ratings, print, GitHub edit links
+- Template search autocomplete dropdown
+- UX CSS: card hover 3D lift, input focus ring, skeleton shimmer, button spinner
+- A11y: skip-to-content, sr-only, high-contrast, aria-expanded on FAQ
+- BreadcrumbList JSON-LD structured data
+- All 22 docs copied to public/docs/ for static serving
+- Privacy fix: removed /Users/cam/ paths from public docs

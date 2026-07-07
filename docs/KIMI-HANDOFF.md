@@ -138,3 +138,39 @@ See `KIMI-HANDOFF-satohash-2026-06-10.md` in repo root for the original comprehe
 - Last commit: 466bd88
 - Branch: main
 - Unpushed: 2 (a7641f8, 466bd88)
+
+
+## Handoff to Kimi — 2026-07-07
+
+**Machine:** M4 (Hermes)
+**Project:** satohash
+
+### Done (24 builds, 100+ enhancements)
+- [x] Documentation hub + viewer (ToC, breadcrumbs, ratings, print, GitHub links)
+- [x] New pages: FAQ, Pricing, Comparison, Security, Guides, Glossary, Integrations
+- [x] Templates: public gallery, 14 templates, search autocomplete, preview modal
+- [x] Kimi: contact modal (Email/NIP-05), glowing card, verified badge
+- [x] Social meta: usePageMeta hook, 12 pages with unique OG/Twitter tags
+- [x] A11y: skip-to-content, focus-visible, reduced motion, print, aria-expanded
+- [x] UX: BackToTop, card 3D lift, focus ring, skeleton, button spinner
+- [x] SEO: BreadcrumbList JSON-LD, sitemap 18 pages, canonical, robots.txt
+- [x] Privacy: removed local paths from public docs
+- [x] Footer: 8 new links to all new pages
+- [x] Build 36 deployed live at satohash.io
+
+### Decisions
+- All docs served statically from public/docs/ — no backend needed
+- usePageMeta hook handles dynamic social sharing per page
+- Backend deployment deferred — kanban card t_50bac963 tracks it
+
+### What's Next
+- Deploy Express backend to VPS (per kanban card)
+- Complete Phase III NIP-05 identity
+- Proof DNA Widgets
+- Mobile Signer Pro
+
+### Git State
+- Last commit: bfc5514
+- Branch: main
+- Build: 36
+- Status: fully pushed to origin/main
