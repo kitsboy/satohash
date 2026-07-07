@@ -1,4 +1,5 @@
 import { Navigate, useLocation } from 'react-router-dom'
+import PageErrorBoundary from './PageErrorBoundary'
 
 export default function ProtectedRoute({ children }) {
   const location = useLocation()
@@ -11,5 +12,5 @@ export default function ProtectedRoute({ children }) {
     return <Navigate to="/access" state={{ from: location }} replace />
   }
 
-  return children
+  return <PageErrorBoundary>{children}</PageErrorBoundary>
 }

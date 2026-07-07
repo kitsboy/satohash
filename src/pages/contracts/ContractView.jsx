@@ -28,6 +28,8 @@ import { clsx } from 'clsx'
 import usePageMeta from '../../hooks/usePageMeta'
 import { getVerifyUrl } from '../../config/constants'
 import { loadContracts, updateContract } from '../../utils/contractStorage'
+import ContractLifecycleBar from '../../components/ContractLifecycleBar'
+import { loadLogoDataUrl } from '../../utils/pdfHelpers'
 
 export default function ContractView() {
   usePageMeta({ page: 'contracts' })
@@ -53,7 +55,10 @@ export default function ContractView() {
       color: { dark: '#4f46e5', light: '#ffffff' }
     })
       .then((url) => setQrDataUrl(url))
-      .catch((err) => console.error('QR generation failed', err))
+      .catch((err) => {
+        console.error('QR generation failed', err)
+        toast.error('Could not generate verification QR')
+      })
   }, [contract])
 
   // Derive active signers from contract.signers if available, else use display mock
@@ -359,6 +364,7 @@ export default function ContractView() {
           style={{ background: 'var(--bg-secondary)' }}
         >
           <div className="mx-auto max-w-[850px]">
+            <ContractLifecycleBar contractId={contractId} status={contract.status} />
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}

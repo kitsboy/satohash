@@ -26,6 +26,7 @@ import { useSocket } from '../hooks/useSocket'
 import { SkeletonList } from '../components/Skeletons'
 import { useI18n } from '../i18n'
 import usePageMeta from '../hooks/usePageMeta'
+import { getApiUrl } from '../config/constants'
 import { useEscapeKey } from '../utils/a11y'
 
 const StatusBadge = ({ status }) => {
@@ -132,7 +133,7 @@ export default function Vault() {
 
   const refreshStamps = async () => {
     try {
-      const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+      const API = getApiUrl()
       const vaultNpub =
         localStorage.getItem('satohash_npub') || sessionStorage.getItem('satohash_npub')
       const res = await fetch(`${API}/api/history`, {
@@ -152,7 +153,7 @@ export default function Vault() {
   useEffect(() => {
     const fetchStamps = async () => {
       try {
-        const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+        const API = getApiUrl()
         const vaultNpub =
           localStorage.getItem('satohash_npub') || sessionStorage.getItem('satohash_npub')
         const res = await fetch(`${API}/api/history?page=1&limit=50`, {
@@ -210,7 +211,7 @@ export default function Vault() {
 
     for (const item of queue) {
       try {
-        const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+        const API = getApiUrl()
         const res = await fetch(`${API}/api/stamp`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -225,15 +226,23 @@ export default function Vault() {
         }
       } catch (err) {
         console.error('Offline sync failed for item:', item, err)
+        toast.error(`Sync failed: ${item.filename || item.hash?.slice(0, 8)}`, {
+          description: err?.message || 'Will retry when online'
+        })
       }
     }
 
+    const failed = queue.length - succeeded
     localStorage.removeItem('satohash_offline_queue')
     setOfflineQueue([])
     setIsSyncing(false)
-    toast.success(`⚡ Offline Queue Synced`, {
-      description: `Successfully anchored ${succeeded} queued files to the mainnet.`
-    })
+    if (failed > 0) {
+      toast.warning(`Synced ${succeeded}/${queue.length} — ${failed} failed`)
+    } else {
+      toast.success(`⚡ Offline Queue Synced`, {
+        description: `Successfully anchored ${succeeded} queued files to the mainnet.`
+      })
+    }
     refreshStamps()
   }
 
@@ -273,7 +282,7 @@ export default function Vault() {
   const loadMore = async () => {
     const nextPage = page + 1
     try {
-      const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+      const API = getApiUrl()
       const vaultNpub =
         localStorage.getItem('satohash_npub') || sessionStorage.getItem('satohash_npub')
       const res = await fetch(`${API}/api/history?page=${nextPage}&limit=50`, {
@@ -305,7 +314,7 @@ export default function Vault() {
     const timer = setTimeout(async () => {
       if (undone) return
       try {
-        const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+        const API = getApiUrl()
         const res = await fetch(`${API}/api/revoke/${item.id}`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -342,7 +351,7 @@ export default function Vault() {
     try {
       const JSZip = (await import('jszip')).default
       const zip = new JSZip()
-      const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+      const API = getApiUrl()
       let added = 0
 
       for (const item of items) {
@@ -661,7 +670,7 @@ export default function Vault() {
 
   const downloadOtsFile = async (item) => {
     try {
-      const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+      const API = getApiUrl()
       const res = await fetch(`${API}/api/stamps/${item.id}?download=true`)
       if (!res.ok) {
         toast.error('No OTS proof file available yet — proof is still pending')
@@ -686,7 +695,7 @@ export default function Vault() {
 
   const upgradeStamp = async (item) => {
     try {
-      const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+      const API = getApiUrl()
       toast.info('Checking Bitcoin status...', { duration: 2000 })
       const res = await fetch(`${API}/api/upgrade`, {
         method: 'POST',

@@ -19,6 +19,7 @@ import { sendPaymentRequest } from '../utils/nwc'
 import { toast } from 'sonner'
 import { QRCodeSVG } from 'qrcode.react'
 import usePageMeta from '../hooks/usePageMeta'
+import { getApiUrl } from '../config/constants'
 
 export default function Bolt12Offers() {
   usePageMeta({
@@ -40,7 +41,7 @@ export default function Bolt12Offers() {
       return
     }
     try {
-      const res = await fetch('/api/lightning/offer', {
+      const res = await fetch(`${getApiUrl()}/api/lightning/offer`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ planId: selectedPlan.id, amountSats: selectedPlan.price })
@@ -58,7 +59,7 @@ export default function Bolt12Offers() {
     if (invoiceId && !isPaid) {
       intervalId = setInterval(async () => {
         try {
-          const res = await fetch(`/api/lightning/status/${invoiceId}`)
+          const res = await fetch(`${getApiUrl()}/api/lightning/status/${invoiceId}`)
           const data = await res.json()
           if (data.status === 'paid') {
             setIsPaid(true)

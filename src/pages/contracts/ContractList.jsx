@@ -29,32 +29,24 @@ import JSZip from 'jszip'
 import { toast } from 'sonner'
 import usePageMeta from '../../hooks/usePageMeta'
 import { SkeletonList } from '../../components/Skeletons'
-import {
-  loadContracts,
-  saveContracts,
-  getContractStats,
-  getContractActivity
-} from '../../utils/contractStorage'
+import { getContractStats, getContractActivity } from '../../utils/contractStorage'
+import { useContractStore } from '../../store/contractStore'
 
 export default function ContractList() {
   usePageMeta({ page: 'contracts' })
   const navigate = useNavigate()
+  const contracts = useContractStore((s) => s.contracts)
+  const deleteContract = useContractStore((s) => s.deleteContract)
+  const refreshContracts = useContractStore((s) => s.refresh)
 
-  // --- ZUSTAND MIGRATION PREP ---
-  // Once npm install zustand is run, remove the local state and useEffect,
-  // and uncomment the line below:
-  // const { contracts, deleteContract } = useContractStore()
-  // ------------------------------
-
-  const [contracts, setContracts] = useState([])
   const [searchQuery, setSearchQuery] = useState('')
   const [filterStatus, setFilterStatus] = useState('all')
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    setContracts(loadContracts())
+    refreshContracts()
     setLoading(false)
-  }, [])
+  }, [refreshContracts])
 
   const filteredContracts = contracts.filter((c) => {
     const matchesSearch = c.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -67,9 +59,7 @@ export default function ContractList() {
     if (!confirm('Are you sure you want to delete this agreement? This action cannot be undone.'))
       return
 
-    const updatedContracts = contracts.filter((c) => c.id !== id)
-    setContracts(updatedContracts)
-    saveContracts(updatedContracts)
+    deleteContract(id)
   }
 
   const handleDownloadAll = async () => {

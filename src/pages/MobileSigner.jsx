@@ -1,4 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { toast } from 'sonner'
+import { clientId } from '../utils/id'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   Tablet,
@@ -16,10 +18,40 @@ import usePageMeta from '../hooks/usePageMeta'
 
 export default function MobileSigner() {
   usePageMeta({ page: 'mobileSigner' })
-  const [isPaired, setIsPaired] = useState(false)
-  const [pendingRequests, setPendingRequests] = useState([
-    { id: 'sig-8492', type: 'MULTI-SIG', doc: 'Institutional_Asset_Registry.pdf', time: '2m ago' }
-  ])
+  const [isPaired, setIsPaired] = useState(
+    () => localStorage.getItem('satohash_mobile_paired') === 'true'
+  )
+  const [pendingRequests, setPendingRequests] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem('satohash_mobile_pending') || '[]')
+    } catch {
+      return []
+    }
+  })
+
+  useEffect(() => {
+    if (!pendingRequests.length) {
+      setPendingRequests([
+        {
+          id: 'sig-8492',
+          type: 'MULTI-SIG',
+          doc: 'Institutional_Asset_Registry.pdf',
+          time: '2m ago',
+          demo: true
+        }
+      ])
+    }
+  }, [])
+
+  const handlePair = () => {
+    const deviceId = clientId('device')
+    localStorage.setItem('satohash_mobile_paired', 'true')
+    localStorage.setItem('satohash_mobile_device_id', deviceId)
+    setIsPaired(true)
+    toast.success('Demo device paired', {
+      description: 'Pairing saved locally until Mobile Signer Pro ships.'
+    })
+  }
 
   return (
     <div
@@ -158,8 +190,12 @@ export default function MobileSigner() {
                 </div>
 
                 <div className="space-y-3">
+                  <p className="text-center text-[10px] font-bold tracking-widest text-amber-500 uppercase">
+                    Demo pairing — production app in development
+                  </p>
                   <button
-                    onClick={() => setIsPaired(true)}
+                    type="button"
+                    onClick={handlePair}
                     className="btn-holographic w-full py-5 text-[10px]"
                   >
                     Simulate Device Pairing

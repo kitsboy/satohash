@@ -610,17 +610,52 @@ function SidebarContent({
             <h3 className="text-sm font-extrabold tracking-tight">Settings</h3>
           </div>
           <div className="space-y-4">
-            <div
-              className="rounded-2xl p-6 text-center"
-              style={{
-                background: 'var(--surface-raised)',
-                border: '1px solid var(--border)'
-              }}
+            <label
+              className="block text-[10px] font-bold tracking-widest uppercase"
+              style={{ color: 'var(--text-muted)' }}
             >
-              <p className="text-sm font-semibold" style={{ color: 'var(--text-secondary)' }}>
-                Document settings coming soon.
-              </p>
-            </div>
+              Body font size
+            </label>
+            <select
+              className="w-full rounded-xl border px-4 py-3 text-sm"
+              style={{ borderColor: 'var(--border)', background: 'var(--bg-primary)' }}
+              value={contract.metadata?.fontSize || 11}
+              onChange={(e) =>
+                setContract({
+                  ...contract,
+                  metadata: { ...contract.metadata, fontSize: Number(e.target.value) }
+                })
+              }
+            >
+              {[10, 11, 12, 14].map((n) => (
+                <option key={n} value={n}>
+                  {n}pt
+                </option>
+              ))}
+            </select>
+            <label
+              className="block text-[10px] font-bold tracking-widest uppercase"
+              style={{ color: 'var(--text-muted)' }}
+            >
+              Page margins (mm)
+            </label>
+            <input
+              type="number"
+              min={10}
+              max={40}
+              className="w-full rounded-xl border px-4 py-3 text-sm"
+              style={{ borderColor: 'var(--border)', background: 'var(--bg-primary)' }}
+              value={contract.metadata?.marginMm || 20}
+              onChange={(e) =>
+                setContract({
+                  ...contract,
+                  metadata: { ...contract.metadata, marginMm: Number(e.target.value) }
+                })
+              }
+            />
+            <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>
+              Settings apply to PDF export and are saved with this contract.
+            </p>
           </div>
         </div>
       )}
