@@ -1,13 +1,6 @@
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  useLocation,
-  Navigate,
-  Link
-} from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom'
 import React, { Suspense, useEffect, useState } from 'react'
-import { AnimatePresence } from 'framer-motion'
+import { AnimatePresence, useReducedMotion } from 'framer-motion'
 import AppShellNoir from './components/AppShellNoir'
 import LoadingScreen from './components/LoadingScreen'
 import OnboardingModal from './components/OnboardingModal'
@@ -525,6 +518,7 @@ function App() {
       !localStorage.getItem('satohash-onboarded')
     )
   })
+  const reduceMotion = useReducedMotion()
 
   // FIX 2 — Auto-refresh JWT if it exists and is near expiry
   useEffect(() => {
@@ -589,10 +583,14 @@ function App() {
               }}
             />
 
-            {/* First-run onboarding modal */}
-            <AnimatePresence>
-              {showOnboarding && <OnboardingModal onDone={() => setShowOnboarding(false)} />}
-            </AnimatePresence>
+            {/* First-run onboarding modal — skip motion when prefers-reduced-motion */}
+            {reduceMotion ? (
+              showOnboarding && <OnboardingModal onDone={() => setShowOnboarding(false)} />
+            ) : (
+              <AnimatePresence>
+                {showOnboarding && <OnboardingModal onDone={() => setShowOnboarding(false)} />}
+              </AnimatePresence>
+            )}
           </Router>
         </ToastProvider>
       </ThemeProvider>

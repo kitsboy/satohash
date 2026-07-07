@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, KeyRound } from 'lucide-react'
+import { useFocusTrap, useBodyScrollLock } from '../utils/a11y'
 
 /**
  * Mobile-first PIN entry modal for encrypting/restoring nsec keys.
@@ -17,6 +18,9 @@ export default function PinModal({
 }) {
   const [pin, setPin] = useState('')
   const inputRef = useRef(null)
+  const dialogRef = useRef(null)
+  useFocusTrap(dialogRef, isOpen)
+  useBodyScrollLock(isOpen)
 
   useEffect(() => {
     if (isOpen) {
@@ -32,17 +36,6 @@ export default function PinModal({
     window.addEventListener('keydown', handleEscape)
     return () => window.removeEventListener('keydown', handleEscape)
   }, [isOpen, onClose])
-
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = 'unset'
-    }
-    return () => {
-      document.body.style.overflow = 'unset'
-    }
-  }, [isOpen])
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -70,6 +63,7 @@ export default function PinModal({
           onClick={(e) => e.target === e.currentTarget && onClose()}
         >
           <motion.div
+            ref={dialogRef}
             initial={{ opacity: 0, y: 32 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 32 }}

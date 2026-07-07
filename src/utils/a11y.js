@@ -35,16 +35,39 @@ export function useBodyScrollLock(isLocked) {
   }, [isLocked])
 }
 
-/** Focus first focusable child when dialog opens */
+/** Focus trap: initial focus + Tab/Shift+Tab cycles within container */
 export function useFocusTrap(ref, isActive) {
   useEffect(() => {
     if (!isActive || !ref.current) return undefined
-    const focusable = ref.current.querySelectorAll(
-      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-    )
+    const container = ref.current
+    const getFocusable = () =>
+      Array.from(
+        container.querySelectorAll(
+          'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        )
+      )
+    const focusable = getFocusable()
     const first = focusable[0]
     if (first) first.focus()
-    return undefined
+
+    const onKeyDown = (e) => {
+      if (e.key !== 'Tab') return
+      const items = getFocusable()
+      if (items.length === 0) return
+      const f = items[0]
+      const l = items[items.length - 1]
+      if (e.shiftKey) {
+        if (document.activeElement === f) {
+          e.preventDefault()
+          l.focus()
+        }
+      } else if (document.activeElement === l) {
+        e.preventDefault()
+        f.focus()
+      }
+    }
+    container.addEventListener('keydown', onKeyDown)
+    return () => container.removeEventListener('keydown', onKeyDown)
   }, [isActive, ref])
 }
 

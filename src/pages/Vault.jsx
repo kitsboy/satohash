@@ -18,7 +18,7 @@ import {
   FileSpreadsheet,
   File
 } from 'lucide-react'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { useVirtualizer } from '@tanstack/react-virtual'
 import { toast } from 'sonner'
 import { downloadCertificate } from '../utils/certificate'
@@ -131,7 +131,7 @@ export default function Vault() {
       revocation_reason: s.revocation_reason || ''
     }))
 
-  const refreshStamps = async () => {
+  const refreshStamps = useCallback(async () => {
     try {
       const API = getApiUrl()
       const vaultNpub =
@@ -141,14 +141,13 @@ export default function Vault() {
       })
       if (res.ok) {
         const data = await res.json()
-        // API returns { stamps: [...], pagination: {...} }
         const rows = Array.isArray(data) ? data : (data.stamps ?? [])
         if (rows.length > 0 || Array.isArray(data)) setItems(mapStamps(rows))
       }
     } catch {
       toast.error(t('vault', 'loadMoreFailed') || 'Sync failed — showing cached proofs')
     }
-  }
+  }, [t])
 
   useEffect(() => {
     const fetchStamps = async () => {
@@ -203,7 +202,7 @@ export default function Vault() {
     }
   }
 
-  const syncOfflineQueue = async () => {
+  const syncOfflineQueue = useCallback(async () => {
     const queue = JSON.parse(localStorage.getItem('satohash_offline_queue') || '[]')
     if (queue.length === 0) return
     setIsSyncing(true)
@@ -244,7 +243,7 @@ export default function Vault() {
       })
     }
     refreshStamps()
-  }
+  }, [refreshStamps])
 
   useEffect(() => {
     loadOfflineQueue()
@@ -254,7 +253,7 @@ export default function Vault() {
     }
     window.addEventListener('online', handleOnline)
     return () => window.removeEventListener('online', handleOnline)
-  }, [])
+  }, [syncOfflineQueue])
 
   // Re-fetch the full list whenever a new stamp or confirmation arrives via Socket.io
   useEffect(() => {
@@ -277,7 +276,7 @@ export default function Vault() {
       })
       refreshStamps()
     }
-  }, [lastEvent])
+  }, [lastEvent, refreshStamps])
 
   const loadMore = async () => {
     const nextPage = page + 1

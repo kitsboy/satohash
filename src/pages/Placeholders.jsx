@@ -1,49 +1,10 @@
-import { ShieldCheck, FileText, ArrowRight, Plus, Camera, Clock } from 'lucide-react'
-import { useNavigate } from 'react-router-dom'
+import { ShieldCheck, FileText, ArrowRight, Plus } from 'lucide-react'
+import { useNavigate, Navigate } from 'react-router-dom'
 import usePageMetaOnboarding from '../hooks/usePageMetaOnboarding'
 
-// Legacy — /snapper now routes to WebCapture directly.
-// This export kept for backward compat with a coming-soon fallback UI.
+/** Legacy export — /snapper routes to WebCapture; redirect any stale imports. */
 export function Snapper() {
-  const navigate = useNavigate()
-
-  return (
-    <div className="mx-auto flex min-h-[60vh] max-w-lg flex-col items-center justify-center space-y-8 p-8 text-center">
-      <div
-        className="flex h-20 w-20 items-center justify-center rounded-3xl border"
-        style={{
-          borderColor: 'var(--border)',
-          background: 'var(--bg-secondary)',
-          color: 'var(--accent-active)'
-        }}
-      >
-        <Camera size={36} />
-      </div>
-      <div className="space-y-3">
-        <div
-          className="inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-[10px] font-black tracking-widest uppercase"
-          style={{
-            borderColor: 'color-mix(in srgb, var(--accent-pending) 30%, transparent)',
-            color: 'var(--accent-pending)'
-          }}
-        >
-          <Clock size={12} /> Coming Soon
-        </div>
-        <h1 className="text-3xl font-black tracking-tighter uppercase">Web Capture Snapper</h1>
-        <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-          Forensic web evidence capture with browser fingerprint metadata is rolling out shortly.
-          Use the live Snapper surface in the meantime.
-        </p>
-      </div>
-      <button
-        onClick={() => navigate('/snapper')}
-        className="flex items-center gap-2 rounded-xl px-8 py-4 text-xs font-black tracking-widest uppercase transition-all hover:opacity-90"
-        style={{ backgroundColor: 'var(--accent-gold)', color: '#141b25' }}
-      >
-        Open Web Capture <ArrowRight size={14} />
-      </button>
-    </div>
-  )
+  return <Navigate to="/web-capture" replace />
 }
 
 export function Certificates() {

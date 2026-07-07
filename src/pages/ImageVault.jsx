@@ -1,22 +1,16 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   Image as ImageIcon,
   Search,
-  Calendar,
-  Hash,
   ExternalLink,
   Download,
   Clock,
   Shield,
   LayoutGrid,
   List,
-  Filter,
   Activity,
-  Fingerprint,
-  Info,
-  FileText,
-  ChevronRight
+  Fingerprint
 } from 'lucide-react'
 import { toast } from 'sonner'
 import usePageMeta from '../hooks/usePageMeta'
@@ -57,7 +51,7 @@ export default function ImageVault() {
   const [searchQuery, setSearchQuery] = useState('')
   const [viewMode, setViewMode] = useState('grid') // grid, list
 
-  const fetchImages = async () => {
+  const fetchImages = useCallback(async () => {
     setIsLoading(true)
     setFetchError(null)
     try {
@@ -77,7 +71,7 @@ export default function ImageVault() {
     } finally {
       setIsLoading(false)
     }
-  }
+  }, [])
 
   useEffect(() => {
     const local = loadImageStamps()
@@ -86,7 +80,7 @@ export default function ImageVault() {
       setUsingCache(true)
     }
     fetchImages()
-  }, [])
+  }, [fetchImages])
 
   const filteredImages = images.filter(
     (img) =>
