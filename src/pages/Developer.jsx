@@ -316,6 +316,13 @@ export default function Developer() {
   ])
   const [apiKeys, setApiKeys] = useState(null)
   const [keysError, setKeysError] = useState(false)
+  const [apiUsage] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem('satohash_api_usage') || '{"calls":0,"stamps":0}')
+    } catch {
+      return { calls: 0, stamps: 0 }
+    }
+  })
 
   useEffect(() => {
     const msgs = [
@@ -378,6 +385,13 @@ export default function Developer() {
             Demo mode — API keys are simulated until the developer API is reachable.
           </div>
         )}
+        <div
+          className="flex flex-wrap gap-4 rounded-2xl border px-4 py-3 text-xs font-bold tracking-widest uppercase"
+          style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
+        >
+          <span>Local API calls: {apiUsage.calls ?? 0}</span>
+          <span>Stamps this browser: {apiUsage.stamps ?? 0}</span>
+        </div>
         {/* ── Header ── */}
         <header
           className="flex flex-col justify-between gap-6 border-b pb-10 lg:flex-row lg:items-end"

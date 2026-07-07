@@ -725,7 +725,25 @@ export default function ContractView() {
                         </div>
                       </div>
                     ))}
-                    <div className="mt-4 pt-4" style={{ borderTop: '1px solid var(--border)' }}>
+                    <div
+                      className="mt-4 space-y-2 pt-4"
+                      style={{ borderTop: '1px solid var(--border)' }}
+                    >
+                      <Button
+                        variant="ghost"
+                        fullWidth
+                        aria-label="Copy signing invite link"
+                        onClick={() => {
+                          const url = `${window.location.origin}/signatures/${contractId}`
+                          navigator.clipboard
+                            .writeText(url)
+                            .then(() =>
+                              toast.success('Signing invite copied', { description: url })
+                            )
+                        }}
+                      >
+                        Copy Signing Invite Link
+                      </Button>
                       <Button
                         variant="outline"
                         fullWidth
