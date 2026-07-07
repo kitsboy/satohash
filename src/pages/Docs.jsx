@@ -1,15 +1,14 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import {
   BookOpen,
   ArrowLeft,
   Search,
   FileText,
   Server,
-  Palette,
   Bookmark,
   Globe,
-  Shield,
   HelpCircle,
   TrendingUp,
   Archive,
@@ -21,131 +20,64 @@ import {
 import Footer from '../components/Footer'
 import usePageMeta from '../hooks/usePageMeta'
 
-const CATEGORIES = [
+const CATEGORY_CONFIG = [
   {
     id: 'getting-started',
-    label: 'Getting Started',
     icon: Zap,
-    docs: [
-      {
-        slug: 'quickstart',
-        title: 'Quick Start Guide',
-        desc: 'Stamp your first document in under 60 seconds.'
-      },
-      {
-        slug: 'mission',
-        title: 'Mission & Values',
-        desc: 'Why Satohash exists and what we stand for.'
-      },
-      {
-        slug: 'architecture',
-        title: 'Architecture Overview',
-        desc: 'Four-plane system: Proof, Identity, Settlement, Atlas.'
-      }
-    ]
+    docs: ['quickstart', 'mission', 'architecture']
   },
   {
     id: 'product',
-    label: 'Product & Business',
     icon: TrendingUp,
-    docs: [
-      { slug: 'pitch', title: 'Product Pitch', desc: 'The Sovereign Provenance Mesh story.' },
-      {
-        slug: 'executive-summary',
-        title: 'Executive Summary',
-        desc: 'Business one-pager for stakeholders.'
-      },
-      { slug: 'marketing', title: 'Marketing', desc: 'Positioning, channels, voice, and assets.' },
-      { slug: 'financials', title: 'Financials', desc: 'Costs, projections, and unit economics.' },
-      {
-        slug: 'improvements-log',
-        title: 'Improvements Log',
-        desc: 'Complete 100-item improvement tracker.'
-      }
-    ]
+    docs: ['pitch', 'executive-summary', 'marketing', 'financials', 'improvements-log']
   },
   {
     id: 'technical',
-    label: 'Technical',
     icon: Server,
     docs: [
-      {
-        slug: 'architecture',
-        title: 'Architecture',
-        desc: 'Deep dive into the four-plane model and proof lifecycle.'
-      },
-      {
-        slug: 'ots_setup',
-        title: 'OTS Setup Guide',
-        desc: 'Configure OpenTimestamps calendars and verification.'
-      },
-      {
-        slug: 'deploy-playbook',
-        title: 'Deploy Playbook',
-        desc: 'Production deployment guide for all environments.'
-      },
-      {
-        slug: 'design-context',
-        title: 'Design Context',
-        desc: 'Design system philosophy and decisions.'
-      },
-      {
-        slug: 'design-tokens',
-        title: 'Design Tokens',
-        desc: 'CSS custom properties, colors, typography.'
-      },
-      {
-        slug: 'rollback',
-        title: 'Rollback Guide',
-        desc: 'Safe rollback procedures for production.'
-      }
+      'architecture',
+      'ots_setup',
+      'deploy-playbook',
+      'design-context',
+      'design-tokens',
+      'rollback'
     ]
   },
   {
     id: 'seo',
-    label: 'SEO & Internationalization',
     icon: Globe,
-    docs: [
-      { slug: 'seo', title: 'SEO Overview', desc: 'Search optimization strategy and guidelines.' },
-      {
-        slug: 'i18n',
-        title: 'Internationalization',
-        desc: 'Multi-language support: EN, ES, FR, DE, PT, SW, ZH.'
-      },
-      { slug: 'seo-de', title: 'SEO — Deutsch', desc: 'German-language SEO strategy.' },
-      { slug: 'seo-es', title: 'SEO — Español', desc: 'Spanish-language SEO strategy.' },
-      { slug: 'seo-fr', title: 'SEO — Français', desc: 'French-language SEO strategy.' },
-      { slug: 'seo-pt', title: 'SEO — Português', desc: 'Portuguese-language SEO strategy.' },
-      { slug: 'seo-sw', title: 'SEO — Kiswahili', desc: 'Swahili-language SEO strategy.' },
-      { slug: 'seo-zh', title: 'SEO — 中文', desc: 'Chinese-language SEO strategy.' }
-    ]
+    docs: ['seo', 'i18n', 'seo-de', 'seo-es', 'seo-fr', 'seo-pt', 'seo-sw', 'seo-zh']
   },
   {
     id: 'operations',
-    label: 'Operations & Handoff',
     icon: Archive,
-    docs: [
-      {
-        slug: 'kimi-handoff',
-        title: 'Kimi Handoff Log',
-        desc: 'Session handoffs between agents and machines.'
-      },
-      {
-        slug: 'improvements-log',
-        title: 'Improvements Log',
-        desc: 'Full history of feature improvements.'
-      }
-    ]
+    docs: ['kimi-handoff', 'improvements-log']
   }
 ]
 
 export default function Docs() {
   usePageMeta({ page: 'docs' })
+  const { t } = useTranslation()
 
   const [search, setSearch] = useState('')
   const [activeCategory, setActiveCategory] = useState('all')
 
-  const allDocs = CATEGORIES.flatMap((c) => c.docs)
+  const categories = useMemo(
+    () =>
+      CATEGORY_CONFIG.map((cat) => ({
+        ...cat,
+        label: t(`docsPage.categories.${cat.id}`),
+        docs: cat.docs.map((slug) => ({
+          slug,
+          title: t(`docsPage.docs.${slug}.title`),
+          desc: t(`docsPage.docs.${slug}.desc`)
+        }))
+      })),
+    [t]
+  )
+
+  const allDocs = useMemo(() => categories.flatMap((c) => c.docs), [categories])
+
   const filteredDocs = search
     ? allDocs.filter(
         (d) =>
@@ -154,21 +86,20 @@ export default function Docs() {
       )
     : activeCategory === 'all'
       ? allDocs
-      : CATEGORIES.find((c) => c.id === activeCategory)?.docs || []
+      : categories.find((c) => c.id === activeCategory)?.docs || []
 
   return (
     <div className="min-h-screen bg-[var(--bg-primary)]">
-      {/* Header */}
       <header className="border-b border-[var(--border)] bg-[var(--bg-navbar)]/95 px-6 py-4 backdrop-blur-md">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4">
           <Link
             to="/"
             className="flex min-h-[44px] items-center gap-2 text-sm font-bold text-[var(--text-secondary)] hover:text-[var(--accent-gold)]"
           >
-            <ArrowLeft size={16} /> Satohash
+            <ArrowLeft size={16} /> {t('common.satohash')}
           </Link>
           <span className="text-[10px] font-bold tracking-[0.25em] text-[var(--accent-gold)] uppercase">
-            Documentation
+            {t('docsPage.nav')}
           </span>
           <a
             href="https://github.com/kitsboy/satohash"
@@ -176,21 +107,20 @@ export default function Docs() {
             rel="noopener noreferrer"
             className="flex min-h-[44px] items-center gap-2 text-xs font-bold text-[var(--text-secondary)] hover:text-[var(--accent-gold)]"
           >
-            <ExternalLink size={14} /> GitHub
+            <ExternalLink size={14} /> {t('common.github')}
           </a>
         </div>
       </header>
 
-      {/* Hero */}
       <section className="border-b border-[var(--border)] px-6 pt-20 pb-16">
         <div className="mx-auto max-w-4xl text-center">
           <BookOpen size={32} className="mx-auto mb-4 text-[var(--accent-gold)]" />
           <h1 className="mb-4 text-4xl font-black tracking-tight text-[var(--text-primary)] sm:text-5xl">
-            Satohash <span className="text-[var(--accent-gold)]">Documentation</span>
+            {t('docsPage.hero.title')}{' '}
+            <span className="text-[var(--accent-gold)]">{t('docsPage.hero.titleHighlight')}</span>
           </h1>
           <p className="mx-auto mb-8 max-w-2xl text-sm leading-relaxed text-[var(--text-secondary)]">
-            Everything you need to understand, use, and contribute to Satohash. Architecture,
-            deployment, business, SEO, and handoff docs — all in one place.
+            {t('docsPage.hero.subtitle')}
           </p>
           <div className="relative mx-auto max-w-lg">
             <Search
@@ -199,7 +129,7 @@ export default function Docs() {
             />
             <input
               type="text"
-              placeholder="Search documentation..."
+              placeholder={t('docsPage.hero.searchPlaceholder')}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="min-h-[48px] w-full rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] pr-4 pl-11 text-sm text-[var(--text-primary)] placeholder-[var(--text-tertiary)] transition-colors outline-none focus:border-[var(--accent-gold)]"
@@ -208,7 +138,6 @@ export default function Docs() {
         </div>
       </section>
 
-      {/* Category tabs */}
       <section className="sticky top-0 z-30 border-b border-[var(--border)] bg-[var(--bg-primary)]/95 backdrop-blur-md">
         <div className="mx-auto flex max-w-6xl items-center gap-2 overflow-x-auto px-6 py-3">
           <button
@@ -222,9 +151,9 @@ export default function Docs() {
                 : 'border border-[var(--border)] text-[var(--text-secondary)] hover:border-[var(--accent-gold)]'
             }`}
           >
-            All ({allDocs.length})
+            {t('docsPage.all')} ({allDocs.length})
           </button>
-          {CATEGORIES.map((cat) => {
+          {categories.map((cat) => {
             const Icon = cat.icon
             return (
               <button
@@ -246,24 +175,23 @@ export default function Docs() {
         </div>
       </section>
 
-      {/* Docs Grid */}
       <section className="mx-auto max-w-6xl px-6 py-12">
         {filteredDocs.length === 0 ? (
           <div className="py-20 text-center">
             <BookOpen size={48} className="mx-auto mb-4 text-[var(--text-tertiary)]" />
-            <p className="text-lg font-bold text-[var(--text-primary)]">No documentation found</p>
-            <p className="text-sm text-[var(--text-secondary)]">
-              Try different keywords or browse a category.
+            <p className="text-lg font-bold text-[var(--text-primary)]">
+              {t('docsPage.empty.title')}
             </p>
+            <p className="text-sm text-[var(--text-secondary)]">{t('docsPage.empty.subtitle')}</p>
           </div>
         ) : (
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {filteredDocs.map((doc, i) => {
-              const category = CATEGORIES.find((c) => c.docs.some((d) => d.slug === doc.slug))
+            {filteredDocs.map((doc) => {
+              const category = categories.find((c) => c.docs.some((d) => d.slug === doc.slug))
               const CatIcon = category?.icon || FileText
               return (
                 <Link
-                  key={i}
+                  key={`${doc.slug}-${category?.id}`}
                   to={`/docs/${doc.slug}`}
                   className="group rounded-2xl border border-[var(--border)] bg-[var(--surface-raised)] p-5 transition-all hover:border-[var(--accent-gold)] hover:shadow-[0_0_30px_var(--accent-gold-glow)]"
                 >
@@ -288,38 +216,37 @@ export default function Docs() {
         )}
       </section>
 
-      {/* Quick Links */}
       <section className="border-t border-[var(--border)] bg-[var(--bg-secondary)] px-6 py-12">
         <div className="mx-auto flex max-w-4xl flex-wrap items-center justify-center gap-6 text-xs font-bold tracking-wider uppercase">
           <Link
             to="/faq"
             className="flex items-center gap-2 text-[var(--text-secondary)] transition-colors hover:text-[var(--accent-gold)]"
           >
-            <HelpCircle size={14} /> FAQ
+            <HelpCircle size={14} /> {t('common.faq')}
           </Link>
           <Link
             to="/glossary"
             className="flex items-center gap-2 text-[var(--text-secondary)] transition-colors hover:text-[var(--accent-gold)]"
           >
-            <Bookmark size={14} /> Glossary
+            <Bookmark size={14} /> {t('common.glossary')}
           </Link>
           <Link
             to="/guides"
             className="flex items-center gap-2 text-[var(--text-secondary)] transition-colors hover:text-[var(--accent-gold)]"
           >
-            <BookOpen size={14} /> Guides
+            <BookOpen size={14} /> {t('common.guides')}
           </Link>
           <Link
             to="/developer"
             className="flex items-center gap-2 text-[var(--text-secondary)] transition-colors hover:text-[var(--accent-gold)]"
           >
-            <Settings size={14} /> Developer API
+            <Settings size={14} /> {t('docsPage.quickLinks.developerApi')}
           </Link>
           <Link
             to="/templates"
             className="flex items-center gap-2 text-[var(--text-secondary)] transition-colors hover:text-[var(--accent-gold)]"
           >
-            <FileText size={14} /> Templates
+            <FileText size={14} /> {t('docsPage.quickLinks.templates')}
           </Link>
           <a
             href="https://github.com/kitsboy/satohash"
@@ -327,7 +254,7 @@ export default function Docs() {
             rel="noopener noreferrer"
             className="flex items-center gap-2 text-[var(--text-secondary)] transition-colors hover:text-[var(--accent-gold)]"
           >
-            <Download size={14} /> Source Code
+            <Download size={14} /> {t('docsPage.quickLinks.sourceCode')}
           </a>
         </div>
       </section>

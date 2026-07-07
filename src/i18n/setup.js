@@ -13,13 +13,48 @@ import { buildTranslationBundle, marketingByLang } from './marketing/index.js'
 const initialLang = getInitialLang()
 
 const bundles = {
-  en: buildTranslationBundle(en, marketingByLang.en.landing, marketingByLang.en.faq),
-  es: buildTranslationBundle(es, marketingByLang.es.landing, marketingByLang.es.faq),
-  fr: buildTranslationBundle(fr, marketingByLang.fr.landing, marketingByLang.fr.faq),
-  de: buildTranslationBundle(de, marketingByLang.de.landing, marketingByLang.de.faq),
-  pt: buildTranslationBundle(pt, marketingByLang.pt.landing, marketingByLang.pt.faq),
-  sw: buildTranslationBundle(sw, marketingByLang.sw.landing, marketingByLang.sw.faq),
-  zh: buildTranslationBundle(zh, marketingByLang.zh.landing, marketingByLang.zh.faq)
+  en: buildTranslationBundle(
+    en,
+    marketingByLang.en.landing,
+    marketingByLang.en.faq,
+    marketingByLang.en.pages
+  ),
+  es: buildTranslationBundle(
+    es,
+    marketingByLang.es.landing,
+    marketingByLang.es.faq,
+    marketingByLang.es.pages
+  ),
+  fr: buildTranslationBundle(
+    fr,
+    marketingByLang.fr.landing,
+    marketingByLang.fr.faq,
+    marketingByLang.fr.pages
+  ),
+  de: buildTranslationBundle(
+    de,
+    marketingByLang.de.landing,
+    marketingByLang.de.faq,
+    marketingByLang.de.pages
+  ),
+  pt: buildTranslationBundle(
+    pt,
+    marketingByLang.pt.landing,
+    marketingByLang.pt.faq,
+    marketingByLang.pt.pages
+  ),
+  sw: buildTranslationBundle(
+    sw,
+    marketingByLang.sw.landing,
+    marketingByLang.sw.faq,
+    marketingByLang.sw.pages
+  ),
+  zh: buildTranslationBundle(
+    zh,
+    marketingByLang.zh.landing,
+    marketingByLang.zh.faq,
+    marketingByLang.zh.pages
+  )
 }
 
 i18n.use(initReactI18next).init({

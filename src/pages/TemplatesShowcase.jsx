@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import usePageMeta from '../hooks/usePageMeta'
 import {
   Heart,
@@ -64,6 +65,7 @@ function addRecentView(id) {
 
 export default function TemplatesShowcase() {
   usePageMeta({ page: 'templates' })
+  const { t } = useTranslation()
 
   const [manifest, setManifest] = useState(null)
   const [activeCategory, setActiveCategory] = useState('all')
@@ -118,8 +120,9 @@ export default function TemplatesShowcase() {
   }
 
   const activeCatLabel = manifest
-    ? manifest.categories.find((c) => c.id === activeCategory)?.label || 'Templates'
-    : 'Templates'
+    ? manifest.categories.find((c) => c.id === activeCategory)?.label ||
+      t('templatesPage.allCategory')
+    : t('templatesPage.allCategory')
 
   const recentTemplates = manifest
     ? recentViews.map((id) => manifest.templates.find((t) => t.id === id)).filter(Boolean)
@@ -149,15 +152,16 @@ export default function TemplatesShowcase() {
         <div className="relative mx-auto max-w-6xl">
           <div className="mx-auto max-w-3xl text-center">
             <p className="mb-3 text-[11px] font-bold tracking-[0.25em] text-[var(--accent-gold)] uppercase">
-              Satohash Template Library
+              {t('templatesPage.hero.eyebrow')}
             </p>
             <h1 className="mb-4 text-4xl font-black tracking-tight text-[var(--text-primary)] sm:text-5xl">
-              See What You Can <span className="text-[var(--accent-gold)]">Prove</span>
+              {t('templatesPage.hero.title')}{' '}
+              <span className="text-[var(--accent-gold)]">
+                {t('templatesPage.hero.titleHighlight')}
+              </span>
             </h1>
             <p className="mx-auto max-w-2xl text-[15px] leading-relaxed text-[var(--text-secondary)]">
-              Browse ready-made templates for the documents you need to timestamp. No keys, no
-              accounts, no commitment — just explore what Satohash can do. Every template generates
-              a Bitcoin-anchored proof of existence.
+              {t('templatesPage.hero.subtitle')}
             </p>
           </div>
         </div>
@@ -174,7 +178,7 @@ export default function TemplatesShowcase() {
             />
             <input
               type="text"
-              placeholder="Search templates..."
+              placeholder={t('templatesPage.searchPlaceholder')}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               onFocus={() => setShowSuggestions(true)}
@@ -227,9 +231,9 @@ export default function TemplatesShowcase() {
             onChange={(e) => setSortBy(e.target.value)}
             className="min-h-[44px] rounded-lg border border-[var(--border)] bg-[var(--bg-primary)] px-3 text-[11px] font-bold tracking-wider text-[var(--text-secondary)] uppercase outline-none focus:border-[var(--accent-gold)]"
           >
-            <option value="default">Default</option>
-            <option value="popular">Most Popular</option>
-            <option value="alpha">A-Z</option>
+            <option value="default">{t('templatesPage.sort.default')}</option>
+            <option value="popular">{t('templatesPage.sort.popular')}</option>
+            <option value="alpha">{t('templatesPage.sort.alpha')}</option>
           </select>
           {/* Categories - desktop */}
           <div className="hidden gap-2 sm:flex">
@@ -277,7 +281,7 @@ export default function TemplatesShowcase() {
           <div className="mb-3 flex items-center gap-2">
             <Clock size={13} className="text-[var(--accent-gold)]" />
             <p className="text-[10px] font-bold tracking-widest text-[var(--accent-gold)] uppercase">
-              Recently Viewed
+              {t('templatesPage.recentlyViewed')}
             </p>
           </div>
           <div className="mb-8 flex flex-wrap gap-3">
@@ -304,9 +308,11 @@ export default function TemplatesShowcase() {
         {filteredTemplates.length === 0 ? (
           <div className="flex flex-col items-center gap-4 py-20 text-center">
             <FileText size={40} className="text-[var(--text-tertiary)]" />
-            <p className="text-lg font-bold text-[var(--text-primary)]">No templates found</p>
+            <p className="text-lg font-bold text-[var(--text-primary)]">
+              {t('templatesPage.empty.title')}
+            </p>
             <p className="text-sm text-[var(--text-secondary)]">
-              Try a different search or category.
+              {t('templatesPage.empty.subtitle')}
             </p>
             <button
               onClick={() => {
@@ -316,7 +322,7 @@ export default function TemplatesShowcase() {
               }}
               className="min-h-[44px] rounded-lg border border-[var(--border)] px-4 py-2 text-xs font-bold tracking-wider text-[var(--text-primary)] uppercase"
             >
-              Reset Filters
+              {t('templatesPage.empty.reset')}
             </button>
           </div>
         ) : (
@@ -338,7 +344,9 @@ export default function TemplatesShowcase() {
                             : 'border border-[var(--accent-purple)]/30 bg-[var(--accent-purple)]/15 text-[var(--accent-purple)]'
                       }`}
                     >
-                      {template.badge}
+                      {t(`templatesPage.badges.${template.badge}`, {
+                        defaultValue: template.badge
+                      })}
                     </span>
                   )}
                   <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-[var(--accent-gold)]/10">
@@ -356,7 +364,7 @@ export default function TemplatesShowcase() {
                       onClick={() => addRecentView(template.id)}
                       className="inline-flex min-h-[36px] items-center gap-1.5 rounded-lg bg-[var(--accent-gold)]/10 px-3.5 py-1.5 text-[10px] font-bold tracking-wider text-[var(--accent-gold)] uppercase transition-all hover:bg-[var(--accent-gold)] hover:text-black"
                     >
-                      View Details <ArrowRight size={11} />
+                      {t('templatesPage.viewDetails')} <ArrowRight size={11} />
                     </Link>
                     <button
                       onClick={() => {
@@ -365,7 +373,7 @@ export default function TemplatesShowcase() {
                       }}
                       className="inline-flex min-h-[36px] items-center gap-1.5 rounded-lg border border-[var(--border)] px-3.5 py-1.5 text-[10px] font-bold tracking-wider text-[var(--text-secondary)] uppercase transition-all hover:border-[var(--accent-gold)] hover:text-[var(--text-primary)]"
                     >
-                      Quick Preview
+                      {t('templatesPage.quickPreview')}
                     </button>
                     <button
                       onClick={() => {
@@ -373,7 +381,7 @@ export default function TemplatesShowcase() {
                         navigator.clipboard?.writeText(url)
                       }}
                       className="ml-auto inline-flex h-[36px] w-[36px] items-center justify-center rounded-lg border border-[var(--border)] text-[var(--text-tertiary)] transition-all hover:border-[var(--accent-gold)] hover:text-[var(--accent-gold)]"
-                      title="Copy link"
+                      title={t('templatesPage.copyLink')}
                     >
                       <Share2 size={13} />
                     </button>
@@ -428,15 +436,17 @@ export default function TemplatesShowcase() {
                 <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-[var(--accent-purple)]/10">
                   <Sparkles size={26} className="text-[var(--accent-purple)]" />
                 </div>
-                <h3 className="mb-2 text-xl font-bold text-[var(--text-primary)]">Coming Soon</h3>
+                <h3 className="mb-2 text-xl font-bold text-[var(--text-primary)]">
+                  {t('templatesPage.comingSoon.title')}
+                </h3>
                 <p className="mb-5 text-sm leading-relaxed text-[var(--text-secondary)]">
-                  More templates, integrations, and features in development. Stay sovereign.
+                  {t('templatesPage.comingSoon.subtitle')}
                 </p>
                 <Link
                   to="/changelog"
                   className="inline-flex items-center gap-2 rounded-lg border border-[var(--accent-purple)]/30 px-5 py-2.5 text-[11px] font-bold tracking-wider text-[var(--accent-purple)] uppercase transition-all hover:bg-[var(--accent-purple)]/10"
                 >
-                  View Roadmap <ArrowRight size={14} />
+                  {t('templatesPage.comingSoon.cta')} <ArrowRight size={14} />
                 </Link>
               </div>
             </div>
@@ -484,20 +494,20 @@ export default function TemplatesShowcase() {
 
             <div className="mb-6 space-y-3">
               <p className="text-[10px] font-bold tracking-widest text-[var(--text-tertiary)] uppercase">
-                What you get:
+                {t('templatesPage.preview.whatYouGet')}
               </p>
               <div className="flex flex-wrap gap-2">
                 <span className="rounded-full border border-[var(--border)] px-3 py-1 text-[10px] font-bold text-[var(--text-secondary)]">
-                  Bitcoin-anchored proof
+                  {t('templatesPage.preview.tags.bitcoinProof')}
                 </span>
                 <span className="rounded-full border border-[var(--border)] px-3 py-1 text-[10px] font-bold text-[var(--text-secondary)]">
-                  Filled demo data
+                  {t('templatesPage.preview.tags.demoData')}
                 </span>
                 <span className="rounded-full border border-[var(--border)] px-3 py-1 text-[10px] font-bold text-[var(--text-secondary)]">
-                  PDF export
+                  {t('templatesPage.preview.tags.pdfExport')}
                 </span>
                 <span className="rounded-full border border-[var(--border)] px-3 py-1 text-[10px] font-bold text-[var(--text-secondary)]">
-                  Co-signer ready
+                  {t('templatesPage.preview.tags.coSigner')}
                 </span>
               </div>
             </div>
@@ -511,7 +521,8 @@ export default function TemplatesShowcase() {
                 }}
                 className="flex-1 rounded-xl bg-[var(--accent-gold)] py-3 text-center text-xs font-black tracking-wider text-black uppercase transition-all hover:bg-[var(--accent-gold)]/90"
               >
-                Try with Demo Data <ArrowRight size={13} className="ml-1 inline" />
+                {t('templatesPage.preview.tryDemo')}{' '}
+                <ArrowRight size={13} className="ml-1 inline" />
               </Link>
               <button
                 onClick={() => {
@@ -520,7 +531,7 @@ export default function TemplatesShowcase() {
                 }}
                 className="flex items-center gap-2 rounded-xl border border-[var(--border)] px-5 py-3 text-xs font-bold tracking-wider text-[var(--text-secondary)] uppercase transition-all hover:border-[var(--accent-gold)]"
               >
-                <Share2 size={14} /> Share
+                <Share2 size={14} /> {t('templatesPage.preview.share')}
               </button>
             </div>
           </div>
@@ -531,17 +542,16 @@ export default function TemplatesShowcase() {
       <section className="border-t border-[var(--border)] px-6 py-16">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="mb-3 text-2xl font-black text-[var(--text-primary)]">
-            Ready to Prove Something?
+            {t('templatesPage.cta.title')}
           </h2>
           <p className="mb-6 text-sm leading-relaxed text-[var(--text-secondary)]">
-            No account needed. No keys to set up. Just drop a file and get a Bitcoin-anchored proof
-            of existence in under 60 seconds.
+            {t('templatesPage.cta.subtitle')}
           </p>
           <Link
             to="/"
             className="inline-flex min-h-[48px] items-center gap-2.5 rounded-xl bg-[var(--accent-gold)] px-8 text-sm font-black tracking-wider text-black uppercase transition-all hover:bg-[var(--accent-gold)]/90 hover:shadow-[0_0_30px_var(--accent-gold-glow)]"
           >
-            Stamp a File — It&apos;s Free <ArrowRight size={16} />
+            {t('templatesPage.cta.button')} <ArrowRight size={16} />
           </Link>
         </div>
       </section>

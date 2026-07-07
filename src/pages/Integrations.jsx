@@ -1,4 +1,6 @@
+import { useMemo } from 'react'
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import {
   Code,
   Server,
@@ -59,54 +61,14 @@ function satohash_proof_shortcode($atts) {
 add_shortcode('satohash_proof', 'satohash_proof_shortcode');`
 }
 
-const SECTIONS = [
-  {
-    icon: Terminal,
-    title: 'REST API',
-    desc: 'Full REST API for creating and verifying proofs programmatically.',
-    features: [
-      'POST /api/v1/timestamp — Create a proof',
-      'GET /api/v1/verify/:id — Verify a proof',
-      'GET /api/v1/price — Current pricing',
-      'Rate-limited to 100 req/min for free tier'
-    ]
-  },
-  {
-    icon: Server,
-    title: 'Webhooks',
-    desc: 'Receive real-time notifications when proofs are confirmed on-chain.',
-    features: [
-      'Configurable webhook URLs',
-      'HMAC-SHA256 signature verification',
-      'Automatic retry with backoff',
-      'Supports JSON and form-encoded payloads'
-    ]
-  },
-  {
-    icon: Globe,
-    title: 'WordPress Integration',
-    desc: 'Embed Satohash proofs in any WordPress site with a simple shortcode.',
-    features: [
-      '[satohash_proof id="..."] shortcode',
-      'Customizable iframe dimensions',
-      'Works with any WordPress theme',
-      'No plugin required — paste the code'
-    ]
-  },
-  {
-    icon: Smartphone,
-    title: 'Mobile-Ready',
-    desc: 'Proof pages are fully responsive and work on any device.',
-    features: [
-      'Responsive verification pages',
-      'PWA installable on iOS/Android',
-      'QR code sharing for proofs',
-      'Deep link support'
-    ]
-  }
+const SECTION_IDS = [
+  { id: 'restApi', icon: Terminal },
+  { id: 'webhooks', icon: Server },
+  { id: 'wordpress', icon: Globe },
+  { id: 'mobile', icon: Smartphone }
 ]
 
-function CodeBlock({ label, code }) {
+function CodeBlock({ label, code, copyLabel, copiedLabel }) {
   const [copied, setCopied] = useState(false)
   return (
     <div className="overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--bg-primary)]">
@@ -123,7 +85,7 @@ function CodeBlock({ label, code }) {
           className="flex items-center gap-1.5 text-[10px] font-bold text-[var(--text-tertiary)] transition-colors hover:text-[var(--accent-gold)]"
         >
           {copied ? <Check size={12} /> : <Copy size={12} />}
-          {copied ? 'Copied!' : 'Copy'}
+          {copied ? copiedLabel : copyLabel}
         </button>
       </div>
       <pre className="overflow-x-auto p-4 font-mono text-[11px] leading-relaxed whitespace-pre text-[var(--text-secondary)]">
@@ -135,6 +97,16 @@ function CodeBlock({ label, code }) {
 
 export default function Integrations() {
   usePageMeta({ page: 'integrations' })
+  const { t } = useTranslation()
+
+  const sections = useMemo(
+    () =>
+      SECTION_IDS.map(({ id, icon }) => {
+        const data = t(`integrationsPage.sections.${id}`, { returnObjects: true })
+        return { id, icon, title: data.title, desc: data.desc, features: data.features }
+      }),
+    [t]
+  )
 
   return (
     <div className="min-h-screen bg-[var(--bg-primary)]">
@@ -144,10 +116,10 @@ export default function Integrations() {
             to="/docs"
             className="flex min-h-[44px] items-center gap-2 text-sm font-bold text-[var(--text-secondary)] hover:text-[var(--accent-gold)]"
           >
-            <ArrowLeft size={16} /> Docs
+            <ArrowLeft size={16} /> {t('common.docs')}
           </Link>
           <span className="text-[10px] font-bold tracking-[0.25em] text-[var(--accent-gold)] uppercase">
-            Integrations
+            {t('common.integrations')}
           </span>
         </div>
       </header>
@@ -156,23 +128,22 @@ export default function Integrations() {
         <div className="mx-auto max-w-3xl text-center">
           <Zap size={32} className="mx-auto mb-4 text-[var(--accent-gold)]" />
           <h1 className="mb-4 text-4xl font-black tracking-tight text-[var(--text-primary)] sm:text-5xl">
-            <span className="text-[var(--accent-gold)]">Integrate</span> Satohash
+            <span className="text-[var(--accent-gold)]">{t('integrationsPage.hero.title')}</span>{' '}
+            {t('integrationsPage.hero.titleHighlight')}
           </h1>
           <p className="mx-auto max-w-xl text-sm leading-relaxed text-[var(--text-secondary)]">
-            Add Bitcoin-anchored proof of existence to your apps, websites, and workflows. REST API,
-            webhooks, WordPress, and CLI — pick your path.
+            {t('integrationsPage.hero.subtitle')}
           </p>
         </div>
       </section>
 
-      {/* Integration Types */}
       <section className="mx-auto max-w-6xl px-6 py-12">
         <div className="grid gap-6 sm:grid-cols-2">
-          {SECTIONS.map((sec, i) => {
+          {sections.map((sec) => {
             const Icon = sec.icon
             return (
               <div
-                key={i}
+                key={sec.id}
                 className="rounded-2xl border border-[var(--border)] bg-[var(--surface-raised)] p-6 transition-all hover:border-[var(--accent-gold)]"
               >
                 <div className="mb-4 flex items-center gap-3">
@@ -201,60 +172,88 @@ export default function Integrations() {
         </div>
       </section>
 
-      {/* Code Examples */}
       <section className="border-t border-[var(--border)] bg-[var(--bg-secondary)] px-6 py-16">
         <div className="mx-auto max-w-4xl">
           <h2 className="mb-8 text-center text-2xl font-black text-[var(--text-primary)]">
-            Quick Start <span className="text-[var(--accent-gold)]">Code Samples</span>
+            {t('integrationsPage.codeSamples.title')}{' '}
+            <span className="text-[var(--accent-gold)]">
+              {t('integrationsPage.codeSamples.titleHighlight')}
+            </span>
           </h2>
           <div className="grid gap-6">
-            <CodeBlock label="cURL" code={SNIPPETS.curl} />
+            <CodeBlock
+              label={t('integrationsPage.codeSamples.labels.curl')}
+              code={SNIPPETS.curl}
+              copyLabel={t('common.copy')}
+              copiedLabel={t('common.copied')}
+            />
             <div className="grid gap-6 md:grid-cols-2">
-              <CodeBlock label="JavaScript" code={SNIPPETS.js} />
-              <CodeBlock label="Python" code={SNIPPETS.python} />
+              <CodeBlock
+                label={t('integrationsPage.codeSamples.labels.js')}
+                code={SNIPPETS.js}
+                copyLabel={t('common.copy')}
+                copiedLabel={t('common.copied')}
+              />
+              <CodeBlock
+                label={t('integrationsPage.codeSamples.labels.python')}
+                code={SNIPPETS.python}
+                copyLabel={t('common.copy')}
+                copiedLabel={t('common.copied')}
+              />
             </div>
             <div className="grid gap-6 md:grid-cols-2">
-              <CodeBlock label="CLI / Bash" code={SNIPPETS.bash} />
-              <CodeBlock label="WordPress" code={SNIPPETS.wordpress} />
+              <CodeBlock
+                label={t('integrationsPage.codeSamples.labels.bash')}
+                code={SNIPPETS.bash}
+                copyLabel={t('common.copy')}
+                copiedLabel={t('common.copied')}
+              />
+              <CodeBlock
+                label={t('integrationsPage.codeSamples.labels.wordpress')}
+                code={SNIPPETS.wordpress}
+                copyLabel={t('common.copy')}
+                copiedLabel={t('common.copied')}
+              />
             </div>
           </div>
         </div>
       </section>
 
-      {/* Proof DNA Widgets */}
       <section className="border-t border-[var(--border)] px-6 py-16">
         <div className="mx-auto flex max-w-4xl flex-col items-center text-center">
           <Fingerprint size={28} className="mb-4 text-[var(--accent-gold)]" />
           <h2 className="mb-3 text-2xl font-black text-[var(--text-primary)]">
-            Proof DNA <span className="text-[var(--accent-gold)]">Widgets</span>
+            {t('integrationsPage.widgets.title')}{' '}
+            <span className="text-[var(--accent-gold)]">
+              {t('integrationsPage.widgets.titleHighlight')}
+            </span>
           </h2>
           <p className="mb-6 max-w-lg text-sm text-[var(--text-secondary)]">
-            Embed verifiable badges on any website. Deterministic visuals from SHA-256 — one div,
-            one script.
+            {t('integrationsPage.widgets.subtitle')}
           </p>
           <Link
             to="/widgets"
             className="inline-flex min-h-[48px] items-center gap-2 rounded-xl border border-[var(--accent-gold)] px-8 text-sm font-black tracking-wider text-[var(--accent-gold)] uppercase hover:bg-[var(--accent-gold)]/10"
           >
-            Widget Gallery <Fingerprint size={16} />
+            {t('integrationsPage.widgets.cta')} <Fingerprint size={16} />
           </Link>
         </div>
       </section>
 
-      {/* Getting API Key */}
       <section className="px-6 py-12">
         <div className="mx-auto max-w-xl text-center">
           <Code size={24} className="mx-auto mb-4 text-[var(--accent-gold)]" />
-          <h2 className="mb-3 text-xl font-black text-[var(--text-primary)]">Get Your API Key</h2>
+          <h2 className="mb-3 text-xl font-black text-[var(--text-primary)]">
+            {t('integrationsPage.apiKey.title')}
+          </h2>
           <p className="mb-6 text-sm text-[var(--text-secondary)]">
-            Generate API keys from the developer dashboard. Each key has scoped permissions and can
-            be revoked independently.
+            {t('integrationsPage.apiKey.subtitle')}
           </p>
           <Link
             to="/developer"
             className="inline-flex min-h-[48px] items-center gap-2.5 rounded-xl bg-[var(--accent-gold)] px-8 text-sm font-black tracking-wider text-black uppercase transition-all hover:bg-[var(--accent-gold)]/90"
           >
-            Developer Dashboard <Terminal size={16} />
+            {t('integrationsPage.apiKey.cta')} <Terminal size={16} />
           </Link>
         </div>
       </section>

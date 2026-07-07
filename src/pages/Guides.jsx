@@ -1,40 +1,31 @@
+import { useMemo } from 'react'
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { BookOpen, ArrowRight, ArrowLeft, Shield, FileText, Zap, Globe } from 'lucide-react'
 import usePageMeta from '../hooks/usePageMeta'
 
-const GUIDES = [
-  {
-    id: 'what-is-cryptographic-proof',
-    icon: Shield,
-    title: 'What Is a Cryptographic Proof?',
-    desc: 'Understand how SHA-256 hashes, Merkle trees, and blockchain timestamps create mathematical certainty about when a document existed.',
-    readTime: '5 min'
-  },
-  {
-    id: 'how-opentimestamps-works',
-    icon: Zap,
-    title: 'How OpenTimestamps Works',
-    desc: 'The protocol that makes free Bitcoin timestamping possible. Learn about OTS calendars, Merkle trees, and block commitment.',
-    readTime: '7 min'
-  },
-  {
-    id: 'ots-vs-traditional-notary',
-    icon: FileText,
-    title: 'OTS vs Traditional Notarization',
-    desc: 'Compare cryptographic timestamping with conventional notary services, e-notary platforms, and blockchain alternatives.',
-    readTime: '4 min'
-  },
-  {
-    id: 'why-bitcoin-for-truth',
-    icon: Globe,
-    title: 'Why Bitcoin Is the Ultimate Truth Layer',
-    desc: 'Bitcoin is not just money — it is the most secure, decentralized timestamping network ever created. Here is why that matters for proof of existence.',
-    readTime: '6 min'
-  }
+const GUIDE_IDS = [
+  { id: 'what-is-cryptographic-proof', icon: Shield },
+  { id: 'how-opentimestamps-works', icon: Zap },
+  { id: 'ots-vs-traditional-notary', icon: FileText },
+  { id: 'why-bitcoin-for-truth', icon: Globe }
 ]
 
 export default function Guides() {
   usePageMeta({ page: 'guides' })
+  const { t } = useTranslation()
+
+  const guides = useMemo(
+    () =>
+      GUIDE_IDS.map(({ id, icon }) => ({
+        id,
+        icon,
+        title: t(`guidesPage.guides.${id}.title`),
+        desc: t(`guidesPage.guides.${id}.desc`),
+        readTime: t(`guidesPage.guides.${id}.readTime`)
+      })),
+    [t]
+  )
 
   return (
     <div className="min-h-screen bg-[var(--bg-primary)]">
@@ -44,10 +35,10 @@ export default function Guides() {
             to="/"
             className="flex min-h-[44px] items-center gap-2 text-sm font-bold text-[var(--text-secondary)] hover:text-[var(--accent-gold)]"
           >
-            <ArrowLeft size={16} /> Home
+            <ArrowLeft size={16} /> {t('common.home')}
           </Link>
           <p className="text-[10px] font-bold tracking-[0.25em] text-[var(--accent-gold)] uppercase">
-            Educational Guides
+            {t('guidesPage.nav.eyebrow')}
           </p>
         </div>
       </header>
@@ -56,18 +47,18 @@ export default function Guides() {
         <div className="mx-auto max-w-3xl text-center">
           <BookOpen size={28} className="mx-auto mb-4 text-[var(--accent-gold)]" />
           <h1 className="mb-4 text-4xl font-black tracking-tight text-[var(--text-primary)] sm:text-5xl">
-            Learn How <span className="text-[var(--accent-gold)]">Proof Works</span>
+            {t('guidesPage.hero.title')}{' '}
+            <span className="text-[var(--accent-gold)]">{t('guidesPage.hero.titleHighlight')}</span>
           </h1>
           <p className="mx-auto max-w-xl text-sm leading-relaxed text-[var(--text-secondary)]">
-            Understand the cryptography, protocols, and philosophy behind Bitcoin-anchored proof of
-            existence.
+            {t('guidesPage.hero.subtitle')}
           </p>
         </div>
       </section>
 
       <section className="mx-auto max-w-4xl px-6 py-16">
         <div className="grid gap-6 sm:grid-cols-2">
-          {GUIDES.map((guide) => {
+          {guides.map((guide) => {
             const Icon = guide.icon
             return (
               <div
@@ -87,10 +78,10 @@ export default function Guides() {
                 </p>
                 <div className="flex items-center justify-between">
                   <span className="text-[10px] text-[var(--text-tertiary)]">
-                    {guide.readTime} read
+                    {t('common.readTime', { time: guide.readTime })}
                   </span>
                   <span className="flex items-center gap-1 text-[10px] font-bold tracking-wider text-[var(--accent-gold)] uppercase">
-                    Read <ArrowRight size={11} />
+                    {t('common.read')} <ArrowRight size={11} />
                   </span>
                 </div>
               </div>
@@ -101,20 +92,21 @@ export default function Guides() {
 
       <section className="border-t border-[var(--border)] bg-[var(--bg-secondary)] px-6 py-16">
         <div className="mx-auto max-w-xl text-center">
-          <h2 className="mb-3 text-xl font-black text-[var(--text-primary)]">More Coming Soon</h2>
+          <h2 className="mb-3 text-xl font-black text-[var(--text-primary)]">
+            {t('guidesPage.comingSoon.title')}
+          </h2>
           <p className="mb-4 text-sm text-[var(--text-secondary)]">
-            Guides on NIP-05 identity, BOLT-12 Lightning, multi-party contracts, and advanced
-            verification techniques are in development.
+            {t('guidesPage.comingSoon.subtitle')}
           </p>
           <div className="flex flex-wrap justify-center gap-4 text-xs font-bold tracking-wider uppercase">
             <Link to="/faq" className="text-[var(--accent-gold)] hover:underline">
-              FAQ
+              {t('common.faq')}
             </Link>
             <Link to="/glossary" className="text-[var(--accent-gold)] hover:underline">
-              Glossary
+              {t('common.glossary')}
             </Link>
             <Link to="/comparison" className="text-[var(--accent-gold)] hover:underline">
-              Compare
+              {t('common.compare')}
             </Link>
           </div>
         </div>

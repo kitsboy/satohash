@@ -1,0 +1,780 @@
+{
+  "common": {
+    "home": "Nyumbani",
+    "satohash": "Satohash",
+    "pitch": "Pitch",
+    "docs": "Hati",
+    "integrations": "Miunganisho",
+    "trustCenter": "Kituo cha Uaminifu",
+    "copy": "Nakili",
+    "copied": "Imenakiliwa!",
+    "yes": "Ndiyo",
+    "dash": "—",
+    "read": "Soma",
+    "faq": "FAQ",
+    "glossary": "Kamusi",
+    "compare": "Linganisha",
+    "guides": "Miongozo",
+    "github": "GitHub",
+    "readTime": "{{time}} kusoma"
+  },
+  "pricingPage": {
+    "hero": {
+      "eyebrow": "Bei Rahisi",
+      "title": "Uthibitisho wa Kuwepo,",
+      "titleHighlight": "Kwa Kila Mtu",
+      "subtitle": "Anza bure. Panua unapohitaji zaidi. Hakuna kufungwa, hakuna ada zilizofichwa, hakuna akaunti inayohitajika kwa matumizi ya msingi."
+    },
+    "mostPopular": "Inayopendwa Zaidi",
+    "tiers": {
+      "free": {
+        "name": "Bure",
+        "price": "$0",
+        "period": "milele",
+        "desc": "Weka muhuri wa muda kwenye hati kwenye Bitcoin. Hakuna akaunti inayohitajika.",
+        "features": [
+          "Kuhesabu hash ya SHA-256 kwenye kivinjari chako",
+          "Kuunganisha kwenye kalenda ya OpenTimestamps",
+          "Faili za uthibitisho .ots zinazoweza kupakuliwa",
+          "Thibitisha uthibitisho wowote, popote",
+          "Kwa kivinjari — hakuna cha kusakinisha"
+        ],
+        "cta": "Weka Muhuri kwenye Faili"
+      },
+      "premium": {
+        "name": "Premium",
+        "price": "TBD",
+        "period": "kwa mwezi",
+        "desc": "Kuweka muhuri kwa wingi, malipo ya Lightning, na kuunganisha kwa kipaumbele.",
+        "features": [
+          "Kila kitu katika Bure, pamoja na:",
+          "Uunganisho wa malipo ya Lightning BOLT-12",
+          "Uwasilishaji wa kalenda wa kipaumbele",
+          "Kuweka muhuri kwa kundi (hadi faili 100)",
+          "Kusaini pamoja kwa mikataba ya pande nyingi",
+          "Uhamishaji wa PDF na uthibitisho uliojumuishwa"
+        ],
+        "cta": "Inakuja Hivi Karibuni"
+      },
+      "enterprise": {
+        "name": "Enterprise",
+        "price": "Maalum",
+        "period": "wasiliana nasi",
+        "desc": "Miundombinu maalum, SLA, na miunganisho maalum.",
+        "features": [
+          "Kila kitu katika Premium, pamoja na:",
+          "Nodi maalum ya kalenda ya OTS",
+          "Sehemu ya mwisho ya API ya kibinafsi",
+          "Miunganisho maalum ya webhook",
+          "Uzalishaji wa uthibitisho unaoungwa na SLA",
+          "Chaguo la usambazaji on-premise",
+          "Msaada wa kipaumbele + mhandisi maalum"
+        ],
+        "cta": "Wasiliana na Mauzo"
+      }
+    },
+    "comparison": {
+      "title": "Ulinganisho Kamili wa Vipengele",
+      "feature": "Kipengele",
+      "rows": {
+        "bitcoinAnchored": {
+          "label": "Uthibitisho unaounganishwa na Bitcoin",
+          "free": "yes",
+          "premium": "yes",
+          "enterprise": "yes"
+        },
+        "browserHashing": {
+          "label": "Kuhesabu hash kwa kivinjari",
+          "free": "yes",
+          "premium": "yes",
+          "enterprise": "yes"
+        },
+        "otsDownload": {
+          "label": "Upakuaji wa uthibitisho wa OTS",
+          "free": "yes",
+          "premium": "yes",
+          "enterprise": "yes"
+        },
+        "freeCalendar": {
+          "label": "Kuunganisha kalenda bure",
+          "free": "upTo10",
+          "premium": "unlimited",
+          "enterprise": "unlimited"
+        },
+        "multiParty": {
+          "label": "Kusaini kwa pande nyingi",
+          "free": "dash",
+          "premium": "yes",
+          "enterprise": "yes"
+        },
+        "bolt12": {
+          "label": "Malipo ya Lightning BOLT-12",
+          "free": "dash",
+          "premium": "yes",
+          "enterprise": "yes"
+        },
+        "apiAccess": {
+          "label": "Ufikiaji wa API",
+          "free": "dash",
+          "premium": "yes",
+          "enterprise": "yes"
+        },
+        "webhooks": {
+          "label": "Arifa za webhook",
+          "free": "dash",
+          "premium": "yes",
+          "enterprise": "yes"
+        },
+        "batchStamping": {
+          "label": "Kuweka muhuri kwa kundi",
+          "free": "dash",
+          "premium": "upTo100",
+          "enterprise": "unlimited"
+        },
+        "dedicatedCalendar": {
+          "label": "Kalenda maalum ya OTS",
+          "free": "dash",
+          "premium": "dash",
+          "enterprise": "yes"
+        },
+        "sla": {
+          "label": "Dhamana ya SLA",
+          "free": "dash",
+          "premium": "dash",
+          "enterprise": "sla99"
+        },
+        "onPremise": {
+          "label": "Usambazaji on-premise",
+          "free": "dash",
+          "premium": "dash",
+          "enterprise": "yes"
+        },
+        "prioritySupport": {
+          "label": "Msaada wa kipaumbele",
+          "free": "community",
+          "premium": "email",
+          "enterprise": "dedicated247"
+        }
+      },
+      "cellValues": {
+        "yes": "Ndiyo",
+        "dash": "—",
+        "unlimited": "Bila kikomo",
+        "upTo10": "Hadi 10/mwezi",
+        "upTo100": "Hadi 100",
+        "sla99": "99.9%",
+        "community": "Jumuiya",
+        "email": "Barua pepe",
+        "dedicated247": "Maalum 24/7"
+      }
+    },
+    "faqTeaser": {
+      "title": "Una Maswali Kuhusu Bei?",
+      "subtitle": "Angalia FAQ yetu kwa maswali ya kawaida au wasiliana nasi moja kwa moja.",
+      "viewFaq": "Angalia FAQ",
+      "contactSales": "Wasiliana na Mauzo"
+    },
+    "trust": {
+      "bitcoinSecured": "Imelindwa na Bitcoin",
+      "openSource": "Chanzo Wazi",
+      "noLockIn": "Hakuna Kufungwa na Muuzaji",
+      "zeroKnowledge": "Ujuzi wa Sifuri"
+    }
+  },
+  "comparisonPage": {
+    "hero": {
+      "eyebrow": "Ulinganisho wa Teknolojia",
+      "title": "Jinsi Satohash",
+      "titleHighlight": "Inavyolingana",
+      "subtitle": "Ulinganisho wa uaminifu kati ya njia mbadala kuu za kuweka muhuri wa muda wa hati na uthibitisho wa kuwepo.",
+      "feature": "Kipengele"
+    },
+    "columns": {
+      "satohash": "Satohash",
+      "docuSign": "DocuSign",
+      "eth": "Ethereum dApps",
+      "diyOTS": "DIY OpenTimestamps"
+    },
+    "rows": {
+      "zeroKnowledge": {
+        "label": "Ujuzi wa sifuri (faili haiondoki kwenye kifaa)",
+        "satohash": true,
+        "docuSign": false,
+        "eth": true,
+        "diyOTS": true
+      },
+      "bitcoinAnchored": {
+        "label": "Imeunganishwa na Bitcoin",
+        "satohash": true,
+        "docuSign": false,
+        "eth": false,
+        "diyOTS": true
+      },
+      "freeBasic": {
+        "label": "Bure kwa matumizi ya msingi",
+        "satohash": true,
+        "docuSign": false,
+        "eth": true,
+        "diyOTS": true
+      },
+      "noAccount": {
+        "label": "Hakuna akaunti inayohitajika",
+        "satohash": true,
+        "docuSign": false,
+        "eth": true,
+        "diyOTS": true
+      },
+      "noGas": {
+        "label": "Hakuna ada za gas / muamala",
+        "satohash": true,
+        "docuSign": false,
+        "eth": false,
+        "diyOTS": true
+      },
+      "uiNonDev": {
+        "label": "UI kwa wasio wataalamu wa programu",
+        "satohash": true,
+        "docuSign": true,
+        "eth": false,
+        "diyOTS": false
+      },
+      "multiParty": {
+        "label": "Kusaini pamoja kwa pande nyingi",
+        "satohash": true,
+        "docuSign": true,
+        "eth": true,
+        "diyOTS": false
+      },
+      "nip05": {
+        "label": "Utambulisho wa Nostr (NIP-05)",
+        "satohash": true,
+        "docuSign": false,
+        "eth": false,
+        "diyOTS": false
+      },
+      "bolt12": {
+        "label": "Malipo ya Lightning BOLT-12",
+        "satohash": true,
+        "docuSign": false,
+        "eth": false,
+        "diyOTS": false
+      },
+      "courtAdmissible": {
+        "label": "Muundo unaokubalika mahakamani",
+        "satohash": true,
+        "docuSign": true,
+        "eth": false,
+        "diyOTS": false
+      },
+      "survivesShutdown": {
+        "label": "Uthibitisho unadumu baada ya kampuni kufungwa",
+        "satohash": true,
+        "docuSign": false,
+        "eth": true,
+        "diyOTS": true
+      },
+      "snapper": {
+        "label": "Kiendelezi cha kivinjari (Snapper)",
+        "satohash": true,
+        "docuSign": false,
+        "eth": false,
+        "diyOTS": false
+      },
+      "apiWebhooks": {
+        "label": "API ya msanidi + webhooks",
+        "satohash": true,
+        "docuSign": true,
+        "eth": true,
+        "diyOTS": false
+      },
+      "monthlyCost": {
+        "label": "Gharama ya kila mwezi",
+        "satohash": "$0",
+        "docuSign": "$10-300",
+        "eth": "variableGas",
+        "diyOTS": "$0"
+      }
+    },
+    "cellValues": { "variableGas": "Gas inayobadilika" },
+    "download": {
+      "title": "Pakua Pitch Deck Kamili",
+      "subtitle": "PDF ya muhtasari wa uongozi na uchambuzi wa soko, uchunguzi wa kina wa teknolojia, na ramani ya barabara.",
+      "downloadPdf": "Pakua PDF",
+      "viewOnline": "Angalia Mtandaoni"
+    }
+  },
+  "guidesPage": {
+    "nav": { "eyebrow": "Miongozo ya Elimu" },
+    "hero": {
+      "title": "Jifunze Jinsi",
+      "titleHighlight": "Uthibitisho Unavyofanya Kazi",
+      "subtitle": "Elewa kriptografia, itifaki, na falsafa nyuma ya uthibitisho wa kuwepo unaounganishwa na Bitcoin."
+    },
+    "guides": {
+      "what-is-cryptographic-proof": {
+        "title": "Uthibitisho wa Kriptografia ni Nini?",
+        "desc": "Elewa jinsi hashes za SHA-256, miti ya Merkle, na mihuri ya muda ya blockchain zinavyounda uhakika wa kihisabati kuhusu wakati hati ilipokuwepo.",
+        "readTime": "dak 5"
+      },
+      "how-opentimestamps-works": {
+        "title": "Jinsi OpenTimestamps Inavyofanya Kazi",
+        "desc": "Itifaki inayofanya kuweka muhuri wa muda wa Bitcoin bure iwezekane. Jifunze kuhusu kalenda za OTS, miti ya Merkle, na kujumuisha kwenye kizuizi.",
+        "readTime": "dak 7"
+      },
+      "ots-vs-traditional-notary": {
+        "title": "OTS dhidi ya Uthibitishaji wa Jadi",
+        "desc": "Linganisha kuweka muhuri wa muda kwa kriptografia na huduma za notari za kawaida, majukwaa ya e-notary, na njia mbadala za blockchain.",
+        "readTime": "dak 4"
+      },
+      "why-bitcoin-for-truth": {
+        "title": "Kwa Nini Bitcoin ni Tabaka la Ukweli Bora",
+        "desc": "Bitcoin si pesa tu — ni mtandao wa kuweka muhuri wa muda salama zaidi, uliogatuliwa, uliowahi kuundwa. Hapa ndipo inavyomaanisha kwa uthibitisho wa kuwepo.",
+        "readTime": "dak 6"
+      }
+    },
+    "comingSoon": {
+      "title": "Zaidi Inakuja Hivi Karibuni",
+      "subtitle": "Miongozo kuhusu utambulisho wa NIP-05, Lightning BOLT-12, mikataba ya pande nyingi, na mbinu za hali ya juu za uthibitishaji ziko katika maendeleo."
+    }
+  },
+  "glossaryPage": {
+    "hero": {
+      "title": "Kamusi",
+      "titleHighlight": "ya Maneno",
+      "subtitle": "Dhana muhimu zimeelezwa kwa urahisi. Kutoka SHA-256 hadi Uthibitisho wa Ujuzi wa Sifuri.",
+      "searchPlaceholder": "Tafuta maneno..."
+    },
+    "empty": {
+      "title": "Hakuna maneno yaliyopatikana",
+      "subtitle": "Jaribu utafutaji tofauti."
+    },
+    "terms": {
+      "sha256": {
+        "term": "SHA-256",
+        "def": "Kazi ya hash ya kriptografia inayozalisha alama ya kidole ya hexadecimal ya biti 256 (herufi 64). Inatumika na Satohash kuunda kitambulisho cha kipekee kwa kila hati bila kufichua maudhui yake."
+      },
+      "ots": {
+        "term": "OpenTimestamps (OTS)",
+        "def": "Itifaki inayounda uthibitisho wa muhuri wa muda kwa kujumuisha hashes za hati kwenye miti ya Merkle, ambazo kisha zinaunganishwa kwenye blockchain ya Bitcoin kupitia muamala mmoja."
+      },
+      "merkleTree": {
+        "term": "Merkle Tree",
+        "def": "Muundo wa data ambapo kila nodi ya jani ni hash na kila nodi isiyo jani ni hash ya watoto wake. OTS inakusanya mihuri mingi ya muda kwenye mti mmoja wa Merkle kabla ya kuunganisha kwenye Bitcoin."
+      },
+      "otsFile": {
+        "term": "OTS File (.ots)",
+        "def": "Faili ya uthibitisho inayozalishwa na Satohash inayojumuisha taarifa za muhuri wa muda. Haifai bila hati ya asili lakini inaweza kuthibitishwa kwa uhuru kwa kutumia zana ya chanzo wazi ya ots."
+      },
+      "bitcoinBlockchain": {
+        "term": "Bitcoin Blockchain",
+        "def": "Leja ya umma iliyogatuliwa, isiyobadilika inayodumishwa na mtandao wa kimataifa wa wachimbaji. Satohash inaunganisha alama za kidole za uthibitisho kwenye vizuizi vya Bitcoin kwa kuweka muhuri wa muda wa kudumu."
+      },
+      "blockHeight": {
+        "term": "Block Height",
+        "def": "Nambari ya mfululizo ya kizuizi katika blockchain ya Bitcoin. Kizuizi kila kipya kinapewa urefu + 1. Urefu wa kizuizi wakati wa kuweka muhuri wa muda unatoa uthibitisho wa muda."
+      },
+      "nip05": {
+        "term": "NIP-05",
+        "def": "Nostr Improvement Proposal #05 — inaunganisha kitambulisho kinachosomeka na binadamu (kama user@domain.com) na ufunguo wa umma wa Nostr, ikitoa utambulisho unaoweza kuthibitishwa bila kushiriki funguo za umma za ghafi."
+      },
+      "nostr": {
+        "term": "Nostr",
+        "def": "Itifaki iliyogatuliwa, inayopinga udhibiti kwa mitandao ya kijamii na mawasiliano. Inatumika na Satohash kwa uthibitishaji wa utambulisho na mawasiliano ya wakala."
+      },
+      "bolt12": {
+        "term": "BOLT-12",
+        "def": "Pendekezo la Lightning Network kwa ofa zinazoweza kutumika tena, za kubofya mara moja. Inawezesha malipo ya mara kwa mara na ufikiaji wa kipimo bila kuzalisha ankara tena na tena."
+      },
+      "lightning": {
+        "term": "Lightning Network",
+        "def": "Itifaki ya malipo ya tabaka la pili juu ya Bitcoin inayowezesha miamala ya papo hapo, ada ndogo. Inatumika na Satohash kwa malipo ya premium."
+      },
+      "zeroKnowledge": {
+        "term": "Zero-Knowledge Proof",
+        "def": "Njia ya kuthibitisha ujuzi wa taarifa bila kufichua taarifa yenyewe. Katika Satohash, hati zako haziondoki kwenye kifaa chako — hashes zao pekee ndizo zinazoshirikiwa."
+      },
+      "foss": {
+        "term": "FOSS",
+        "def": "Free and Open Source Software. Satohash ina leseni ya MIT na msimbo kamili wa chanzo unapatikana hadharani kwenye GitHub."
+      },
+      "eidas": {
+        "term": "eIDAS",
+        "def": "Electronic Identification, Authentication and Trust Services — kanuni ya EU inayoweka viwango vya saini za kidijitali na kuweka muhuri wa muda. Uthibitisho wa Satohash unaendana na eIDAS."
+      },
+      "esign": {
+        "term": "ESIGN Act",
+        "def": "Sheria ya shirikisho la Marekani inayoweka uhalali wa kisheria wa saini za kidijitali na rekodi. Uthibitisho wa Satohash unatii mahitaji ya ESIGN."
+      },
+      "blockTime": {
+        "term": "Block Time",
+        "def": "Wastani wa muda kati ya vizuizi vya Bitcoin (takriban dakika 10). Muhuri wa muda wa kizuizi kinachojumuisha uthibitisho wako huamua wakati wa uthibitishaji."
+      },
+      "mempool": {
+        "term": "Mempool",
+        "def": "Hifadhi ya miamala ya Bitcoin isiyothibitishwa inayosubiri kujumuishwa kwenye kizuizi. Satohash inafuatilia mempool kwa ujuzi wa mtandao wa wakati halisi."
+      },
+      "l402": {
+        "term": "L402",
+        "def": "Kiwango cha itifaki cha uthibitishaji na kipimo cha API kwa kutumia Lightning Network. Inawezesha ufikiaji wa malipo kwa matumizi kwa vipengele vya premium."
+      },
+      "pwa": {
+        "term": "PWA",
+        "def": "Progressive Web App — programu ya wavuti inayoweza kusakinishwa kwenye kifaa na kufanya kazi nje ya mtandao. Satohash ni PWA na uhifadhi wa service worker."
+      }
+    }
+  },
+  "securityPage": {
+    "hero": {
+      "title": "Usalama",
+      "titleHighlight": "katika Satohash",
+      "subtitle": "Usanifu wa ujuzi wa sifuri, kuhesabu hash upande wa mteja, msimbo wa chanzo wazi. Hati zako haziondoki kwenye kifaa chako."
+    },
+    "sections": {
+      "zeroKnowledge": {
+        "title": "Usanifu wa Ujuzi wa Sifuri",
+        "body": "Hati zako zinahesabiwa hash kabisa kwenye kivinjari chako kwa kutumia Web Crypto API. Alama ya kidole ya SHA-256 pekee — mfuatano wa hexadecimal wa herufi 64 — ndiyo inayotumwa. Wala Satohash wala mtu mwingine hawawahi kuona maudhui ya faili yako ya asili.",
+        "items": [
+          "Kuhesabu hash ya SHA-256 upande wa mteja kupitia Web Crypto API",
+          "Hati hazipakiwi kwenye seva yoyote",
+          "Hakuna akaunti inayohitajika kwa kuweka muhuri wa msingi",
+          "Hakuna uhifadhi wa data wa maudhui ya faili"
+        ]
+      },
+      "privacy": {
+        "title": "Faragha kwa Muundo",
+        "body": "Satohash imejengwa kwa kanuni ya faragha kwanza. Hakuna vidakuzi vya ufuatiliaji, hakuna hati za uchanganuzi zinazotambua watumiaji, na hakuna uchimbaji wa data.",
+        "items": [
+          "Hakuna hati za uchanganuzi au ufuatiliaji",
+          "Hakuna vidakuzi kwa kazi zisizo muhimu",
+          "Hifadhi ya ndani tu kwa mapendeleo ya mtumiaji",
+          "Chanzo wazi — imethibitishwa na jumuiya"
+        ]
+      },
+      "infrastructure": {
+        "title": "Usalama wa Miundombinu",
+        "body": "Seva ya API ya Satohash inaendesha usanidi wa usalama wa kiwango cha uzalishaji ikiwa ni pamoja na vichwa vya Helmet.js, ukomo wa kiwango, sera za CORS, na uhifadhi wa hifadhidata uliosimbwa.",
+        "items": [
+          "Vichwa vya usalama vya Helmet.js (CSP, HSTS, XFO)",
+          "Ukomo wa kiwango kwenye sehemu zote za mwisho za API",
+          "CORS imezuiliwa kwa asili zilizoidhinishwa",
+          "Hifadhidata ya SQLite na hali ya WAL iliyosimbwa",
+          "Redis na uthibitishaji wa hiari"
+        ]
+      },
+      "auth": {
+        "title": "Uthibitishaji na Ufikiaji",
+        "body": "Ufikiaji wa msimamizi unahitaji tokeni za JWT zilizotiwa sahihi na siri ya upande wa seva. Funguo za API zinahesabiwa hash kabla ya kuhifadhiwa na zinaweza kubadilishwa kwa uhuru.",
+        "items": [
+          "Uthibitishaji wa msimamizi unaotegemea JWT (muda wa saa 24)",
+          "Funguo za API zenye upeo na ruhusa za kina",
+          "Majaribio ya kuingia yaliyopunguzwa kiwango",
+          "Tokeni za kikao zimehifadhiwa kwenye localStorage pekee"
+        ]
+      },
+      "openSource": {
+        "title": "Uhakikisho wa Chanzo Wazi",
+        "body": "Msimbo kamili wa chanzo wa Satohash unapatikana hadharani kwenye GitHub chini ya leseni ya MIT. Mtu yeyote anaweza kukagua, kufork, au kuendesha mwenyewe.",
+        "items": [
+          "Chanzo wazi chenye leseni ya MIT",
+          "Hifadhi ya umma ya GitHub",
+          "Ukaguzi wa msimbo wa jumuiya",
+          "Kuendesha mwenyewe kunasaidiwa kupitia Docker"
+        ]
+      }
+    },
+    "disclosure": {
+      "title": "Ufichuaji wa Udhaifu",
+      "subtitle": "Ukigundua udhaifu wa usalama, tafadhali uripoti kwa uwajibikaji. Tunajitolea kutambua kupokelewa ndani ya saa 48 na kutoa suluhisho ndani ya siku 7.",
+      "cta": "Ripoti Udhaifu"
+    }
+  },
+  "integrationsPage": {
+    "hero": {
+      "title": "Unganisha",
+      "titleHighlight": "Satohash",
+      "subtitle": "Ongeza uthibitisho wa kuwepo unaounganishwa na Bitcoin kwenye programu, tovuti, na mtiririko wa kazi zako. REST API, webhooks, WordPress, na CLI — chagua njia yako."
+    },
+    "sections": {
+      "restApi": {
+        "title": "REST API",
+        "desc": "REST API kamili kwa kuunda na kuthibitisha uthibitisho kwa programu.",
+        "features": [
+          "POST /api/v1/timestamp — Unda uthibitisho",
+          "GET /api/v1/verify/:id — Thibitisha uthibitisho",
+          "GET /api/v1/price — Bei ya sasa",
+          "Imepunguzwa kiwango hadi maombi 100/dak kwa kiwango cha bure"
+        ]
+      },
+      "webhooks": {
+        "title": "Webhooks",
+        "desc": "Pokea arifa za wakati halisi uthibitisho unapothibitishwa kwenye mnyororo.",
+        "features": [
+          "URL za webhook zinazoweza kusanidiwa",
+          "Uthibitishaji wa saini ya HMAC-SHA256",
+          "Jaribio la kiotomatiki na backoff",
+          "Inasaidia malipo ya JSON na form-encoded"
+        ]
+      },
+      "wordpress": {
+        "title": "Uunganisho wa WordPress",
+        "desc": "Jumuisha uthibitisho wa Satohash kwenye tovuti yoyote ya WordPress kwa shortcode rahisi.",
+        "features": [
+          "Shortcode ya [satohash_proof id=\"...\"]",
+          "Vipimo vya iframe vinavyoweza kubadilishwa",
+          "Inafanya kazi na mandhari yoyote ya WordPress",
+          "Hakuna programu-jalizi inayohitajika — bandika msimbo"
+        ]
+      },
+      "mobile": {
+        "title": "Tayari kwa Simu",
+        "desc": "Kurasa za uthibitisho zinajibu kikamilifu na zinafanya kazi kwenye kifaa chochote.",
+        "features": [
+          "Kurasa za uthibitishaji zinazojibu",
+          "PWA inayoweza kusakinishwa kwenye iOS/Android",
+          "Kushiriki kwa msimbo wa QR kwa uthibitisho",
+          "Msaada wa kiungo cha kina"
+        ]
+      }
+    },
+    "codeSamples": {
+      "title": "Anza Haraka",
+      "titleHighlight": "Mifano ya Msimbo",
+      "labels": {
+        "curl": "cURL",
+        "js": "JavaScript",
+        "python": "Python",
+        "bash": "CLI / Bash",
+        "wordpress": "WordPress"
+      }
+    },
+    "widgets": {
+      "title": "Proof DNA",
+      "titleHighlight": "Widgets",
+      "subtitle": "Jumuisha beji zinazoweza kuthibitishwa kwenye tovuti yoyote. Picha za kuamua kutoka SHA-256 — div moja, hati moja.",
+      "cta": "Galeri ya Widget"
+    },
+    "apiKey": {
+      "title": "Pata Funguo Yako ya API",
+      "subtitle": "Zalisha funguo za API kutoka dashibodi ya msanidi. Kila funguo ina ruhusa za upeo na inaweza kubatilishwa kwa uhuru.",
+      "cta": "Dashibodi ya Msanidi"
+    }
+  },
+  "widgetsPage": {
+    "nav": "Proof DNA Widgets",
+    "hero": {
+      "title": "Proof DNA",
+      "titleHighlight": "Widgets",
+      "subtitle": "Beji zinazoweza kujumuishwa na kuthibitishwa zinazozalishwa kwa kuamua kutoka hash yoyote ya SHA-256. Div moja, hati moja — onyesha ulimwengu hati yako imeunganishwa na Bitcoin."
+    },
+    "preview": {
+      "title": "Hakiki ya Moja kwa Moja",
+      "body": "Rangi na mifumo ya pete zinatokana na hash — hati ile ile, DNA ile ile, milele. Bofya widget iliyojumuishwa kufungua ukurasa wa uthibitishaji."
+    },
+    "embed": {
+      "title": "Msimbo wa Kujumuisha",
+      "basic": "Widget ya Msingi",
+      "badge": "Beji na Kiungo cha Uthibitishaji",
+      "attributesTitle": "Sifa za data",
+      "attrs": {
+        "hash": "data-hash — SHA-256 hex inayohitajika",
+        "size": "data-size — sm | md (chaguo-msingi md)",
+        "verify": "data-verify — URL inayofunguliwa unapobofya",
+        "label": "data-label — maandishi ya kichwa yanayoweza kufikiwa"
+      }
+    },
+    "nip05Cta": "Sanidi Utambulisho wa NIP-05"
+  },
+  "docsPage": {
+    "nav": "Nyaraka",
+    "hero": {
+      "title": "Satohash",
+      "titleHighlight": "Nyaraka",
+      "subtitle": "Kila kitu unachohitaji kuelewa, kutumia, na kuchangia Satohash. Usanifu, usambazaji, biashara, SEO, na hati za uhamishaji — zote mahali pamoja.",
+      "searchPlaceholder": "Tafuta nyaraka..."
+    },
+    "all": "Zote",
+    "empty": {
+      "title": "Hakuna nyaraka zilizopatikana",
+      "subtitle": "Jaribu maneno tofauti au vinjari kategoria."
+    },
+    "categories": {
+      "getting-started": "Kuanza",
+      "product": "Bidhaa na Biashara",
+      "technical": "Kiufundi",
+      "seo": "SEO na Utaifa",
+      "operations": "Uendeshaji na Uhamishaji"
+    },
+    "docs": {
+      "quickstart": {
+        "title": "Mwongozo wa Kuanza Haraka",
+        "desc": "Weka muhuri wa muda kwenye hati yako ya kwanza chini ya sekunde 60."
+      },
+      "mission": {
+        "title": "Dhamira na Maadili",
+        "desc": "Kwa nini Satohash ipo na tunasimama kwa nini."
+      },
+      "architecture": {
+        "title": "Muhtasari wa Usanifu",
+        "desc": "Mfumo wa ndege nne: Proof, Identity, Settlement, Atlas."
+      },
+      "pitch": { "title": "Pitch ya Bidhaa", "desc": "Hadithi ya Sovereign Provenance Mesh." },
+      "executive-summary": {
+        "title": "Muhtasari wa Uongozi",
+        "desc": "Ukurasa mmoja wa biashara kwa wadau."
+      },
+      "marketing": { "title": "Masoko", "desc": "Nafasi, njia, sauti, na mali." },
+      "financials": { "title": "Fedha", "desc": "Gharama, makadirio, na uchumi wa kitengo." },
+      "improvements-log": {
+        "title": "Kumbukumbu ya Maboresho",
+        "desc": "Kifuatiliaji kamili cha maboresho 100."
+      },
+      "ots_setup": {
+        "title": "Mwongozo wa Usanidi wa OTS",
+        "desc": "Sanidi kalenda za OpenTimestamps na uthibitishaji."
+      },
+      "deploy-playbook": {
+        "title": "Kitabu cha Usambazaji",
+        "desc": "Mwongozo wa usambazaji wa uzalishaji kwa mazingira yote."
+      },
+      "design-context": {
+        "title": "Muktadha wa Muundo",
+        "desc": "Falsafa na maamuzi ya mfumo wa muundo."
+      },
+      "design-tokens": {
+        "title": "Tokeni za Muundo",
+        "desc": "Sifa maalum za CSS, rangi, tipografia."
+      },
+      "rollback": {
+        "title": "Mwongozo wa Kurudisha Nyuma",
+        "desc": "Taratibu salama za kurudisha nyuma kwa uzalishaji."
+      },
+      "seo": {
+        "title": "Muhtasari wa SEO",
+        "desc": "Mkakati na miongozo ya uboreshaji wa utafutaji."
+      },
+      "i18n": { "title": "Utaifa", "desc": "Msaada wa lugha nyingi: EN, ES, FR, DE, PT, SW, ZH." },
+      "seo-de": { "title": "SEO — Deutsch", "desc": "Mkakati wa SEO wa Kijerumani." },
+      "seo-es": { "title": "SEO — Español", "desc": "Mkakati wa SEO wa Kihispania." },
+      "seo-fr": { "title": "SEO — Français", "desc": "Mkakati wa SEO wa Kifaransa." },
+      "seo-pt": { "title": "SEO — Português", "desc": "Mkakati wa SEO wa Kireno." },
+      "seo-sw": { "title": "SEO — Kiswahili", "desc": "Mkakati wa SEO wa Kiswahili." },
+      "seo-zh": { "title": "SEO — 中文", "desc": "Mkakati wa SEO wa Kichina." },
+      "kimi-handoff": {
+        "title": "Kumbukumbu ya Uhamishaji wa Kimi",
+        "desc": "Uhamishaji wa kikao kati ya mawakala na mashine."
+      }
+    },
+    "quickLinks": {
+      "developerApi": "API ya Msanidi",
+      "templates": "Violezo",
+      "sourceCode": "Msimbo wa Chanzo"
+    }
+  },
+  "notFoundPage": {
+    "title": "404",
+    "heading": "Ukurasa Haupatikani",
+    "subtitle": "Ukurasa huu haupo au umehamishwa. Itifaki haijaandika uthibitisho kwa njia hii.",
+    "goHome": "Rudi Nyumbani",
+    "browseTemplates": "Vinjari Violezo",
+    "status": "Hali ya Uthibitisho: Haupatikani"
+  },
+  "templatesPage": {
+    "hero": {
+      "eyebrow": "Maktaba ya Violezo vya Satohash",
+      "title": "Angalia Unachoweza",
+      "titleHighlight": "Kuthibitisha",
+      "subtitle": "Vinjari violezo tayari kwa hati unazohitaji kuweka muhuri wa muda. Hakuna funguo, hakuna akaunti, hakuna kujitolea — chunguza tu kile Satohash inaweza kufanya. Kiolezo kila kimoja kinazalisha uthibitisho wa kuwepo unaounganishwa na Bitcoin."
+    },
+    "searchPlaceholder": "Tafuta violezo...",
+    "sort": { "default": "Chaguo-msingi", "popular": "Inayopendwa Zaidi", "alpha": "A-Z" },
+    "allCategory": "Violezo",
+    "recentlyViewed": "Iliyotazamwa Hivi Karibuni",
+    "empty": {
+      "title": "Hakuna violezo vilivyopatikana",
+      "subtitle": "Jaribu utafutaji au kategoria tofauti.",
+      "reset": "Weka Upya Vichujio"
+    },
+    "badges": { "Popular": "Inayopendwa", "New": "Mpya", "Legal-Grade": "Kiwango cha Kisheria" },
+    "viewDetails": "Angalia Maelezo",
+    "quickPreview": "Hakiki ya Haraka",
+    "copyLink": "Nakili kiungo",
+    "comingSoon": {
+      "title": "Inakuja Hivi Karibuni",
+      "subtitle": "Violezo zaidi, miunganisho, na vipengele viko katika maendeleo. Endelea kuwa huru.",
+      "cta": "Angalia Ramani ya Barabara"
+    },
+    "preview": {
+      "whatYouGet": "Unachopata:",
+      "tags": {
+        "bitcoinProof": "Uthibitisho unaounganishwa na Bitcoin",
+        "demoData": "Data ya onyesho iliyojazwa",
+        "pdfExport": "Uhamishaji wa PDF",
+        "coSigner": "Tayari kwa msaini mwenza"
+      },
+      "tryDemo": "Jaribu na Data ya Onyesho",
+      "share": "Shiriki"
+    },
+    "cta": {
+      "title": "Tayari Kuthibitisha Kitu?",
+      "subtitle": "Hakuna akaunti inayohitajika. Hakuna funguo za kusanidi. Weka faili tu na upate uthibitisho wa kuwepo unaounganishwa na Bitcoin chini ya sekunde 60.",
+      "button": "Weka Muhuri kwenye Faili — Ni Bure"
+    }
+  },
+  "contributePage": {
+    "hero": {
+      "title": "Changia Satohash",
+      "subtitle": "Uthibitishaji wa Bitcoin wa chanzo wazi — ulijengwa na jumuiya, kwa ukweli huru."
+    },
+    "waysTitle": "Njia za Kuchangia",
+    "ways": {
+      "issues": {
+        "title": "Ripoti Matatizo",
+        "description": "Umegundua hitilafu au una wazo la kipengele? Fungua suala la GitHub na hatua za kurudia na tabia inayotarajiwa.",
+        "cta": "Fungua Masuala"
+      },
+      "prs": {
+        "title": "Wasilisha Pull Requests",
+        "description": "Rekebisha hitilafu, boresha hati, ongeza tafsiri, au imarisha usalama. Michango yote inakaribishwa — hakuna CLA inayohitajika.",
+        "cta": "Angalia PRs"
+      },
+      "docs": {
+        "title": "Boresha Nyaraka",
+        "description": "Saidia kuboresha hati za usanifu, mifano ya API, na miongozo ya kuanza katika folda ya docs/.",
+        "cta": "Vinjari Hati"
+      },
+      "translations": {
+        "title": "Ongeza Tafsiri",
+        "description": "Satohash inasaidia EN, ES, FR, DE, PT, SW, na ZH. Ongeza au boresha mistari katika src/i18n/translations/.",
+        "cta": "Faili za Tafsiri"
+      }
+    },
+    "devSetup": {
+      "title": "Usanidi wa Maendeleo",
+      "steps": [
+        "Fork na clone:",
+        "Sakinisha:",
+        "Endesha dev:",
+        "Lint na jaribu:",
+        "Tawi:",
+        "Fungua Pull Request na maelezo wazi na picha za skrini ikiwa UI inabadilika."
+      ]
+    },
+    "bounties": {
+      "title": "Zawadi na Maeneo ya Athari Kubwa",
+      "items": [
+        "Kuimarisha usalama wa seva na chanjo ya majaribio",
+        "Uaminifu wa daemon ya kuboresha OpenTimestamps",
+        "Uunganisho wa relay ya Nostr na uthibitishaji wa NIP-05",
+        "Ufikivu (ARIA, urambazaji wa kibodi) na UX ya simu",
+        "Mistari ya i18n kwa lugha mpya (pt, sw, ar)"
+      ],
+      "cta": "Masuala Yanayohitaji Msaada"
+    },
+    "why": {
+      "title": "Kwa Nini Kuchangia?",
+      "subtitle": "Satohash inaunganisha ukweli kwenye Bitcoin — haiwezi kuharibiwa, bila ruhusa, na bure. Msimbo wako unasaidia kulinda asili ya kidijitali katika enzi ya maudhui yanayozalishwa na AI na deepfakes.",
+      "github": "Hifadhi ya GitHub",
+      "apiDocs": "Hati za API"
+    }
+  }
+}

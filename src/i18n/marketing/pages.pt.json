@@ -1,0 +1,783 @@
+{
+  "common": {
+    "home": "Início",
+    "satohash": "Satohash",
+    "pitch": "Pitch",
+    "docs": "Documentação",
+    "integrations": "Integrações",
+    "trustCenter": "Central de confiança",
+    "copy": "Copiar",
+    "copied": "Copiado!",
+    "yes": "Sim",
+    "dash": "—",
+    "read": "Ler",
+    "faq": "FAQ",
+    "glossary": "Glossário",
+    "compare": "Comparar",
+    "guides": "Guias",
+    "github": "GitHub",
+    "readTime": "{{time}} de leitura"
+  },
+  "pricingPage": {
+    "hero": {
+      "eyebrow": "Preços simples",
+      "title": "Prova de existência,",
+      "titleHighlight": "para todos",
+      "subtitle": "Comece grátis. Escale quando precisar. Sem amarras, sem taxas ocultas, sem conta para o uso básico."
+    },
+    "mostPopular": "Mais popular",
+    "tiers": {
+      "free": {
+        "name": "Grátis",
+        "price": "$0",
+        "period": "para sempre",
+        "desc": "Carimbe documentos no Bitcoin. Sem conta necessária.",
+        "features": [
+          "Hashing SHA-256 no seu navegador",
+          "Ancoragem em calendário OpenTimestamps",
+          "Arquivos de prova .ots para download",
+          "Verifique qualquer prova, em qualquer lugar",
+          "Baseado no navegador — nada para instalar"
+        ],
+        "cta": "Carimbar um arquivo"
+      },
+      "premium": {
+        "name": "Premium",
+        "price": "TBD",
+        "period": "por mês",
+        "desc": "Carimbo em volume, pagamentos Lightning e ancoragem prioritária.",
+        "features": [
+          "Tudo do Grátis, mais:",
+          "Integração de pagamentos Lightning BOLT-12",
+          "Envio prioritário ao calendário",
+          "Carimbo em lote (até 100 arquivos)",
+          "Co-assinatura de contratos multiparte",
+          "Exportação em PDF com prova incorporada"
+        ],
+        "cta": "Em breve"
+      },
+      "enterprise": {
+        "name": "Enterprise",
+        "price": "Personalizado",
+        "period": "fale conosco",
+        "desc": "Infraestrutura dedicada, SLA e integrações personalizadas.",
+        "features": [
+          "Tudo do Premium, mais:",
+          "Nó de calendário OTS dedicado",
+          "Endpoint de API privado",
+          "Integrações webhook personalizadas",
+          "Geração de provas com SLA",
+          "Opção de implantação on-premise",
+          "Suporte prioritário + engenheiro dedicado"
+        ],
+        "cta": "Falar com vendas"
+      }
+    },
+    "comparison": {
+      "title": "Comparação completa de recursos",
+      "feature": "Recurso",
+      "rows": {
+        "bitcoinAnchored": {
+          "label": "Provas ancoradas em Bitcoin",
+          "free": "yes",
+          "premium": "yes",
+          "enterprise": "yes"
+        },
+        "browserHashing": {
+          "label": "Hashing no navegador",
+          "free": "yes",
+          "premium": "yes",
+          "enterprise": "yes"
+        },
+        "otsDownload": {
+          "label": "Download de prova OTS",
+          "free": "yes",
+          "premium": "yes",
+          "enterprise": "yes"
+        },
+        "freeCalendar": {
+          "label": "Ancoragem gratuita no calendário",
+          "free": "upTo10",
+          "premium": "unlimited",
+          "enterprise": "unlimited"
+        },
+        "multiParty": {
+          "label": "Assinatura multiparte",
+          "free": "dash",
+          "premium": "yes",
+          "enterprise": "yes"
+        },
+        "bolt12": {
+          "label": "Pagamentos Lightning BOLT-12",
+          "free": "dash",
+          "premium": "yes",
+          "enterprise": "yes"
+        },
+        "apiAccess": {
+          "label": "Acesso à API",
+          "free": "dash",
+          "premium": "yes",
+          "enterprise": "yes"
+        },
+        "webhooks": {
+          "label": "Notificações webhook",
+          "free": "dash",
+          "premium": "yes",
+          "enterprise": "yes"
+        },
+        "batchStamping": {
+          "label": "Carimbo em lote",
+          "free": "dash",
+          "premium": "upTo100",
+          "enterprise": "unlimited"
+        },
+        "dedicatedCalendar": {
+          "label": "Calendário OTS dedicado",
+          "free": "dash",
+          "premium": "dash",
+          "enterprise": "yes"
+        },
+        "sla": {
+          "label": "Garantia de SLA",
+          "free": "dash",
+          "premium": "dash",
+          "enterprise": "sla99"
+        },
+        "onPremise": {
+          "label": "Implantação on-premise",
+          "free": "dash",
+          "premium": "dash",
+          "enterprise": "yes"
+        },
+        "prioritySupport": {
+          "label": "Suporte prioritário",
+          "free": "community",
+          "premium": "email",
+          "enterprise": "dedicated247"
+        }
+      },
+      "cellValues": {
+        "yes": "Sim",
+        "dash": "—",
+        "unlimited": "Ilimitado",
+        "upTo10": "Até 10/mês",
+        "upTo100": "Até 100",
+        "sla99": "99,9%",
+        "community": "Comunidade",
+        "email": "E-mail",
+        "dedicated247": "Dedicado 24/7"
+      }
+    },
+    "faqTeaser": {
+      "title": "Tem dúvidas sobre preços?",
+      "subtitle": "Consulte nosso FAQ para perguntas comuns ou entre em contato diretamente.",
+      "viewFaq": "Ver FAQ",
+      "contactSales": "Falar com vendas"
+    },
+    "trust": {
+      "bitcoinSecured": "Protegido por Bitcoin",
+      "openSource": "Código aberto",
+      "noLockIn": "Sem dependência de fornecedor",
+      "zeroKnowledge": "Conhecimento zero"
+    }
+  },
+  "comparisonPage": {
+    "hero": {
+      "eyebrow": "Comparação de tecnologias",
+      "title": "Como o Satohash",
+      "titleHighlight": "se compara",
+      "subtitle": "Comparação honesta entre as principais alternativas para carimbo temporal de documentos e prova de existência.",
+      "feature": "Recurso"
+    },
+    "columns": {
+      "satohash": "Satohash",
+      "docuSign": "DocuSign",
+      "eth": "Ethereum dApps",
+      "diyOTS": "DIY OpenTimestamps"
+    },
+    "rows": {
+      "zeroKnowledge": {
+        "label": "Conhecimento zero (arquivo nunca sai do dispositivo)",
+        "satohash": true,
+        "docuSign": false,
+        "eth": true,
+        "diyOTS": true
+      },
+      "bitcoinAnchored": {
+        "label": "Ancorado em Bitcoin",
+        "satohash": true,
+        "docuSign": false,
+        "eth": false,
+        "diyOTS": true
+      },
+      "freeBasic": {
+        "label": "Grátis para uso básico",
+        "satohash": true,
+        "docuSign": false,
+        "eth": true,
+        "diyOTS": true
+      },
+      "noAccount": {
+        "label": "Sem conta necessária",
+        "satohash": true,
+        "docuSign": false,
+        "eth": true,
+        "diyOTS": true
+      },
+      "noGas": {
+        "label": "Sem taxas de gas / transação",
+        "satohash": true,
+        "docuSign": false,
+        "eth": false,
+        "diyOTS": true
+      },
+      "uiNonDev": {
+        "label": "Interface para não desenvolvedores",
+        "satohash": true,
+        "docuSign": true,
+        "eth": false,
+        "diyOTS": false
+      },
+      "multiParty": {
+        "label": "Co-assinatura multiparte",
+        "satohash": true,
+        "docuSign": true,
+        "eth": true,
+        "diyOTS": false
+      },
+      "nip05": {
+        "label": "Identidade Nostr (NIP-05)",
+        "satohash": true,
+        "docuSign": false,
+        "eth": false,
+        "diyOTS": false
+      },
+      "bolt12": {
+        "label": "Pagamentos Lightning BOLT-12",
+        "satohash": true,
+        "docuSign": false,
+        "eth": false,
+        "diyOTS": false
+      },
+      "courtAdmissible": {
+        "label": "Formato válido em tribunal",
+        "satohash": true,
+        "docuSign": true,
+        "eth": false,
+        "diyOTS": false
+      },
+      "survivesShutdown": {
+        "label": "Provas sobrevivem ao encerramento da empresa",
+        "satohash": true,
+        "docuSign": false,
+        "eth": true,
+        "diyOTS": true
+      },
+      "snapper": {
+        "label": "Extensão de navegador (Snapper)",
+        "satohash": true,
+        "docuSign": false,
+        "eth": false,
+        "diyOTS": false
+      },
+      "apiWebhooks": {
+        "label": "API para desenvolvedores + webhooks",
+        "satohash": true,
+        "docuSign": true,
+        "eth": true,
+        "diyOTS": false
+      },
+      "monthlyCost": {
+        "label": "Custo mensal",
+        "satohash": "$0",
+        "docuSign": "$10-300",
+        "eth": "variableGas",
+        "diyOTS": "$0"
+      }
+    },
+    "cellValues": { "variableGas": "Gas variável" },
+    "download": {
+      "title": "Baixar o pitch deck completo",
+      "subtitle": "Resumo executivo em PDF com análise de mercado, aprofundamento técnico e roadmap.",
+      "downloadPdf": "Baixar PDF",
+      "viewOnline": "Ver online"
+    }
+  },
+  "guidesPage": {
+    "nav": { "eyebrow": "Guias educacionais" },
+    "hero": {
+      "title": "Aprenda como",
+      "titleHighlight": "a prova funciona",
+      "subtitle": "Entenda a criptografia, os protocolos e a filosofia por trás da prova de existência ancorada em Bitcoin."
+    },
+    "guides": {
+      "what-is-cryptographic-proof": {
+        "title": "O que é uma prova criptográfica?",
+        "desc": "Entenda como hashes SHA-256, Merkle trees e carimbos temporais em blockchain criam certeza matemática sobre quando um documento existiu.",
+        "readTime": "5 min"
+      },
+      "how-opentimestamps-works": {
+        "title": "Como o OpenTimestamps funciona",
+        "desc": "O protocolo que torna possível o carimbo temporal gratuito em Bitcoin. Aprenda sobre calendários OTS, Merkle trees e compromisso em bloco.",
+        "readTime": "7 min"
+      },
+      "ots-vs-traditional-notary": {
+        "title": "OTS vs. notarização tradicional",
+        "desc": "Compare o carimbo temporal criptográfico com serviços notariais convencionais, plataformas de e-notário e alternativas em blockchain.",
+        "readTime": "4 min"
+      },
+      "why-bitcoin-for-truth": {
+        "title": "Por que o Bitcoin é a camada definitiva da verdade",
+        "desc": "O Bitcoin não é apenas dinheiro — é a rede de carimbo temporal mais segura e descentralizada já criada. Veja por que isso importa para a prova de existência.",
+        "readTime": "6 min"
+      }
+    },
+    "comingSoon": {
+      "title": "Mais em breve",
+      "subtitle": "Guias sobre identidade NIP-05, Lightning BOLT-12, contratos multiparte e técnicas avançadas de verificação estão em desenvolvimento."
+    }
+  },
+  "glossaryPage": {
+    "hero": {
+      "title": "Glossário",
+      "titleHighlight": "de termos",
+      "subtitle": "Conceitos-chave explicados de forma simples. De SHA-256 a Zero-Knowledge Proofs.",
+      "searchPlaceholder": "Buscar termos..."
+    },
+    "empty": {
+      "title": "Nenhum termo encontrado",
+      "subtitle": "Tente uma busca diferente."
+    },
+    "terms": {
+      "sha256": {
+        "term": "SHA-256",
+        "def": "Uma função hash criptográfica que produz uma impressão digital hexadecimal de 256 bits (64 caracteres). Usada pelo Satohash para criar um identificador único para cada documento sem expor seu conteúdo."
+      },
+      "ots": {
+        "term": "OpenTimestamps (OTS)",
+        "def": "Um protocolo que cria provas de carimbo temporal incorporando hashes de documentos em Merkle trees, que são então ancorados na blockchain Bitcoin por meio de uma única transação."
+      },
+      "merkleTree": {
+        "term": "Merkle Tree",
+        "def": "Uma estrutura de dados em que cada nó folha é um hash e cada nó não folha é o hash de seus filhos. O OTS agrega muitos carimbos temporais em uma Merkle tree antes de ancorar no Bitcoin."
+      },
+      "otsFile": {
+        "term": "OTS File (.ots)",
+        "def": "O arquivo de prova gerado pelo Satohash contendo as informações de carimbo temporal. É inútil sem o documento original, mas pode ser verificado de forma independente com a ferramenta open source ots."
+      },
+      "bitcoinBlockchain": {
+        "term": "Bitcoin Blockchain",
+        "def": "Um ledger público descentralizado e imutável mantido por uma rede global de mineradores. O Satohash ancora impressões digitais de prova em blocos Bitcoin para carimbo temporal permanente."
+      },
+      "blockHeight": {
+        "term": "Block Height",
+        "def": "O número sequencial de um bloco na blockchain Bitcoin. Cada novo bloco recebe altura + 1. A altura do bloco no momento do carimbo temporal fornece a prova temporal."
+      },
+      "nip05": {
+        "term": "NIP-05",
+        "def": "Nostr Improvement Proposal #05 — mapeia um identificador legível por humanos (como user@domain.com) para uma chave pública Nostr, permitindo identidade verificável sem compartilhar chaves públicas brutas."
+      },
+      "nostr": {
+        "term": "Nostr",
+        "def": "Um protocolo descentralizado e resistente à censura para redes sociais e comunicação. Usado pelo Satohash para verificação de identidade e comunicação entre agentes."
+      },
+      "bolt12": {
+        "term": "BOLT-12",
+        "def": "Uma proposta da Lightning Network para ofertas reutilizáveis com um clique. Permite pagamentos recorrentes e acesso medido sem geração repetida de faturas."
+      },
+      "lightning": {
+        "term": "Lightning Network",
+        "def": "Um protocolo de pagamento de segunda camada sobre o Bitcoin que permite transações instantâneas com taxas baixas. Usado pelo Satohash para cobrança premium."
+      },
+      "zeroKnowledge": {
+        "term": "Zero-Knowledge Proof",
+        "def": "Um método para provar conhecimento de informações sem revelar as informações em si. No Satohash, seus documentos nunca saem do dispositivo — apenas seus hashes são compartilhados."
+      },
+      "foss": {
+        "term": "FOSS",
+        "def": "Free and Open Source Software. O Satohash é licenciado sob MIT e o código-fonte completo está publicamente disponível no GitHub."
+      },
+      "eidas": {
+        "term": "eIDAS",
+        "def": "Electronic Identification, Authentication and Trust Services — um regulamento da UE que define padrões para assinaturas eletrônicas e carimbo temporal. As provas Satohash são compatíveis com eIDAS."
+      },
+      "esign": {
+        "term": "ESIGN Act",
+        "def": "A lei federal dos Estados Unidos que estabelece a validade legal de assinaturas e registros eletrônicos. As provas Satohash cumprem os requisitos da ESIGN."
+      },
+      "blockTime": {
+        "term": "Block Time",
+        "def": "O tempo médio entre blocos Bitcoin (aproximadamente 10 minutos). O carimbo temporal do bloco que contém sua prova determina o horário de notarização."
+      },
+      "mempool": {
+        "term": "Mempool",
+        "def": "O pool de transações Bitcoin não confirmadas aguardando inclusão em um bloco. O Satohash monitora o mempool para inteligência de rede em tempo real."
+      },
+      "l402": {
+        "term": "L402",
+        "def": "Um padrão de protocolo para autenticação e medição de API usando a Lightning Network. Permite acesso pay-per-use a recursos premium."
+      },
+      "pwa": {
+        "term": "PWA",
+        "def": "Progressive Web App — um aplicativo web que pode ser instalado em um dispositivo e funcionar offline. O Satohash é uma PWA com cache via service worker."
+      }
+    }
+  },
+  "securityPage": {
+    "hero": {
+      "title": "Segurança",
+      "titleHighlight": "no Satohash",
+      "subtitle": "Arquitetura de conhecimento zero, hashing no cliente, código open source. Seus documentos nunca saem do dispositivo."
+    },
+    "sections": {
+      "zeroKnowledge": {
+        "title": "Arquitetura de conhecimento zero",
+        "body": "Seus documentos são hasheados inteiramente no navegador usando a Web Crypto API. Apenas a impressão digital SHA-256 — uma string hexadecimal de 64 caracteres — é transmitida. Nem o Satohash nem terceiros veem o conteúdo original do arquivo.",
+        "items": [
+          "Hashing SHA-256 no cliente via Web Crypto API",
+          "Documentos nunca enviados para nenhum servidor",
+          "Sem conta necessária para carimbo básico",
+          "Sem retenção de dados do conteúdo dos arquivos"
+        ]
+      },
+      "privacy": {
+        "title": "Privacidade por design",
+        "body": "O Satohash é construído com o princípio de privacidade em primeiro lugar. Não há cookies de rastreamento, scripts de analytics que fazem fingerprint de usuários nem mineração de dados.",
+        "items": [
+          "Sem scripts de analytics ou rastreamento",
+          "Sem cookies para funções não essenciais",
+          "Armazenamento local apenas para preferências do usuário",
+          "Open source — verificado pela comunidade"
+        ]
+      },
+      "infrastructure": {
+        "title": "Segurança de infraestrutura",
+        "body": "O servidor de API do Satohash opera com configurações de segurança de nível de produção, incluindo headers Helmet.js, rate limiting, políticas CORS e armazenamento criptografado no banco de dados.",
+        "items": [
+          "Headers de segurança Helmet.js (CSP, HSTS, XFO)",
+          "Rate limiting em todos os endpoints da API",
+          "CORS restrito a origens autorizadas",
+          "Banco SQLite com modo WAL criptografado",
+          "Redis com autenticação opcional"
+        ]
+      },
+      "auth": {
+        "title": "Autenticação e acesso",
+        "body": "O acesso de administrador requer tokens JWT assinados com um segredo no servidor. As chaves de API são hasheadas antes do armazenamento e podem ser rotacionadas de forma independente.",
+        "items": [
+          "Autenticação de admin baseada em JWT (expira em 24h)",
+          "Chaves de API com escopo e permissões granulares",
+          "Tentativas de login com rate limiting",
+          "Tokens de sessão armazenados apenas no localStorage"
+        ]
+      },
+      "openSource": {
+        "title": "Garantia open source",
+        "body": "O código-fonte completo do Satohash está publicamente disponível no GitHub sob licença MIT. Qualquer pessoa pode auditar, fazer fork ou auto-hospedar.",
+        "items": [
+          "Open source com licença MIT",
+          "Repositório público no GitHub",
+          "Revisão de código pela comunidade",
+          "Auto-hospedagem suportada via Docker"
+        ]
+      }
+    },
+    "disclosure": {
+      "title": "Divulgação de vulnerabilidades",
+      "subtitle": "Se você descobrir uma vulnerabilidade de segurança, reporte de forma responsável. Comprometemo-nos a confirmar o recebimento em até 48 horas e publicar uma correção em até 7 dias.",
+      "cta": "Reportar vulnerabilidade"
+    }
+  },
+  "integrationsPage": {
+    "hero": {
+      "title": "Integre o",
+      "titleHighlight": "Satohash",
+      "subtitle": "Adicione prova de existência ancorada em Bitcoin aos seus apps, sites e fluxos de trabalho. REST API, webhooks, WordPress e CLI — escolha seu caminho."
+    },
+    "sections": {
+      "restApi": {
+        "title": "REST API",
+        "desc": "REST API completa para criar e verificar provas de forma programática.",
+        "features": [
+          "POST /api/v1/timestamp — Criar uma prova",
+          "GET /api/v1/verify/:id — Verificar uma prova",
+          "GET /api/v1/price — Preços atuais",
+          "Limitado a 100 req/min no plano grátis"
+        ]
+      },
+      "webhooks": {
+        "title": "Webhooks",
+        "desc": "Receba notificações em tempo real quando as provas forem confirmadas on-chain.",
+        "features": [
+          "URLs de webhook configuráveis",
+          "Verificação de assinatura HMAC-SHA256",
+          "Retry automático com backoff",
+          "Suporta payloads JSON e form-encoded"
+        ]
+      },
+      "wordpress": {
+        "title": "Integração WordPress",
+        "desc": "Incorpore provas Satohash em qualquer site WordPress com um shortcode simples.",
+        "features": [
+          "Shortcode [satohash_proof id=\"...\"]",
+          "Dimensões de iframe personalizáveis",
+          "Funciona com qualquer tema WordPress",
+          "Sem plugin necessário — cole o código"
+        ]
+      },
+      "mobile": {
+        "title": "Pronto para mobile",
+        "desc": "As páginas de prova são totalmente responsivas e funcionam em qualquer dispositivo.",
+        "features": [
+          "Páginas de verificação responsivas",
+          "PWA instalável em iOS/Android",
+          "Compartilhamento de provas via QR code",
+          "Suporte a deep links"
+        ]
+      }
+    },
+    "codeSamples": {
+      "title": "Início rápido",
+      "titleHighlight": "Exemplos de código",
+      "labels": {
+        "curl": "cURL",
+        "js": "JavaScript",
+        "python": "Python",
+        "bash": "CLI / Bash",
+        "wordpress": "WordPress"
+      }
+    },
+    "widgets": {
+      "title": "Proof DNA",
+      "titleHighlight": "Widgets",
+      "subtitle": "Incorpore badges verificáveis em qualquer site. Visuais determinísticos a partir de SHA-256 — uma div, um script.",
+      "cta": "Galeria de widgets"
+    },
+    "apiKey": {
+      "title": "Obtenha sua chave de API",
+      "subtitle": "Gere chaves de API no painel do desenvolvedor. Cada chave tem permissões com escopo e pode ser revogada de forma independente.",
+      "cta": "Painel do desenvolvedor"
+    }
+  },
+  "widgetsPage": {
+    "nav": "Proof DNA Widgets",
+    "hero": {
+      "title": "Proof DNA",
+      "titleHighlight": "Widgets",
+      "subtitle": "Badges incorporáveis e verificáveis gerados deterministicamente a partir de qualquer hash SHA-256. Uma div, um script — mostre ao mundo que seu documento está ancorado no Bitcoin."
+    },
+    "preview": {
+      "title": "Prévia ao vivo",
+      "body": "Cores e padrões de anel são derivados do hash — mesmo documento, mesmo DNA, para sempre. Clique em um widget incorporado para abrir a página de verificação."
+    },
+    "embed": {
+      "title": "Código de incorporação",
+      "basic": "Widget básico",
+      "badge": "Badge com link de verificação",
+      "attributesTitle": "Atributos de dados",
+      "attrs": {
+        "hash": "data-hash — SHA-256 hex obrigatório",
+        "size": "data-size — sm | md (padrão md)",
+        "verify": "data-verify — URL aberta ao clicar",
+        "label": "data-label — texto de título acessível"
+      }
+    },
+    "nip05Cta": "Configurar identidade NIP-05"
+  },
+  "docsPage": {
+    "nav": "Documentação",
+    "hero": {
+      "title": "Satohash",
+      "titleHighlight": "Documentação",
+      "subtitle": "Tudo o que você precisa para entender, usar e contribuir com o Satohash. Arquitetura, implantação, negócios, SEO e documentação de handoff — tudo em um só lugar.",
+      "searchPlaceholder": "Buscar na documentação..."
+    },
+    "all": "Todos",
+    "empty": {
+      "title": "Nenhuma documentação encontrada",
+      "subtitle": "Tente palavras-chave diferentes ou navegue por uma categoria."
+    },
+    "categories": {
+      "getting-started": "Primeiros passos",
+      "product": "Produto e negócios",
+      "technical": "Técnico",
+      "seo": "SEO e internacionalização",
+      "operations": "Operações e handoff"
+    },
+    "docs": {
+      "quickstart": {
+        "title": "Guia de início rápido",
+        "desc": "Carimbe seu primeiro documento em menos de 60 segundos."
+      },
+      "mission": {
+        "title": "Missão e valores",
+        "desc": "Por que o Satohash existe e o que defendemos."
+      },
+      "architecture": {
+        "title": "Visão geral da arquitetura",
+        "desc": "Sistema de quatro planos: Proof, Identity, Settlement, Atlas."
+      },
+      "pitch": { "title": "Pitch do produto", "desc": "A história do Sovereign Provenance Mesh." },
+      "executive-summary": {
+        "title": "Resumo executivo",
+        "desc": "One-pager de negócios para stakeholders."
+      },
+      "marketing": { "title": "Marketing", "desc": "Posicionamento, canais, tom de voz e ativos." },
+      "financials": { "title": "Finanças", "desc": "Custos, projeções e unit economics." },
+      "improvements-log": {
+        "title": "Log de melhorias",
+        "desc": "Rastreador completo de 100 melhorias."
+      },
+      "ots_setup": {
+        "title": "Guia de configuração OTS",
+        "desc": "Configure calendários OpenTimestamps e verificação."
+      },
+      "deploy-playbook": {
+        "title": "Playbook de implantação",
+        "desc": "Guia de implantação em produção para todos os ambientes."
+      },
+      "design-context": {
+        "title": "Contexto de design",
+        "desc": "Filosofia e decisões do design system."
+      },
+      "design-tokens": {
+        "title": "Design tokens",
+        "desc": "Propriedades CSS customizadas, cores, tipografia."
+      },
+      "rollback": {
+        "title": "Guia de rollback",
+        "desc": "Procedimentos seguros de rollback em produção."
+      },
+      "seo": {
+        "title": "Visão geral de SEO",
+        "desc": "Estratégia e diretrizes de otimização para busca."
+      },
+      "i18n": {
+        "title": "Internacionalização",
+        "desc": "Suporte multilíngue: EN, ES, FR, DE, PT, SW, ZH."
+      },
+      "seo-de": { "title": "SEO — Deutsch", "desc": "Estratégia de SEO em alemão." },
+      "seo-es": { "title": "SEO — Español", "desc": "Estratégia de SEO em espanhol." },
+      "seo-fr": { "title": "SEO — Français", "desc": "Estratégia de SEO em francês." },
+      "seo-pt": { "title": "SEO — Português", "desc": "Estratégia de SEO em português." },
+      "seo-sw": { "title": "SEO — Kiswahili", "desc": "Estratégia de SEO em suaíli." },
+      "seo-zh": { "title": "SEO — 中文", "desc": "Estratégia de SEO em chinês." },
+      "kimi-handoff": {
+        "title": "Log de handoff Kimi",
+        "desc": "Handoffs de sessão entre agentes e máquinas."
+      }
+    },
+    "quickLinks": {
+      "developerApi": "API para desenvolvedores",
+      "templates": "Modelos",
+      "sourceCode": "Código-fonte"
+    }
+  },
+  "notFoundPage": {
+    "title": "404",
+    "heading": "Página não encontrada",
+    "subtitle": "Esta página não existe ou foi movida. O protocolo não registrou uma prova para este caminho.",
+    "goHome": "Ir para o início",
+    "browseTemplates": "Explorar modelos",
+    "status": "Status da prova: Não encontrada"
+  },
+  "templatesPage": {
+    "hero": {
+      "eyebrow": "Biblioteca de modelos Satohash",
+      "title": "Veja o que você pode",
+      "titleHighlight": "provar",
+      "subtitle": "Explore modelos prontos para os documentos que você precisa carimbar temporalmente. Sem chaves, sem contas, sem compromisso — apenas explore o que o Satohash pode fazer. Cada modelo gera uma prova de existência ancorada em Bitcoin."
+    },
+    "searchPlaceholder": "Buscar modelos...",
+    "sort": { "default": "Padrão", "popular": "Mais popular", "alpha": "A-Z" },
+    "allCategory": "Modelos",
+    "recentlyViewed": "Vistos recentemente",
+    "empty": {
+      "title": "Nenhum modelo encontrado",
+      "subtitle": "Tente uma busca ou categoria diferente.",
+      "reset": "Redefinir filtros"
+    },
+    "badges": { "Popular": "Popular", "New": "Novo", "Legal-Grade": "Nível jurídico" },
+    "viewDetails": "Ver detalhes",
+    "quickPreview": "Prévia rápida",
+    "copyLink": "Copiar link",
+    "comingSoon": {
+      "title": "Em breve",
+      "subtitle": "Mais modelos, integrações e recursos em desenvolvimento. Mantenha-se soberano.",
+      "cta": "Ver roadmap"
+    },
+    "preview": {
+      "whatYouGet": "O que você recebe:",
+      "tags": {
+        "bitcoinProof": "Prova ancorada em Bitcoin",
+        "demoData": "Dados de demonstração preenchidos",
+        "pdfExport": "Exportação em PDF",
+        "coSigner": "Pronto para co-signatário"
+      },
+      "tryDemo": "Experimentar com dados de demonstração",
+      "share": "Compartilhar"
+    },
+    "cta": {
+      "title": "Pronto para provar algo?",
+      "subtitle": "Sem conta necessária. Sem chaves para configurar. Basta enviar um arquivo e obter uma prova de existência ancorada em Bitcoin em menos de 60 segundos.",
+      "button": "Carimbar um arquivo — É grátis"
+    }
+  },
+  "contributePage": {
+    "hero": {
+      "title": "Contribua com o Satohash",
+      "subtitle": "Notarização Bitcoin open source — construída pela comunidade, para verdade soberana."
+    },
+    "waysTitle": "Formas de contribuir",
+    "ways": {
+      "issues": {
+        "title": "Reportar issues",
+        "description": "Encontrou um bug ou tem uma ideia de recurso? Abra uma issue no GitHub com passos para reproduzir e comportamento esperado.",
+        "cta": "Abrir issues"
+      },
+      "prs": {
+        "title": "Enviar pull requests",
+        "description": "Corrija bugs, melhore a documentação, adicione traduções ou reforce a segurança. Todas as contribuições são bem-vindas — sem CLA necessário.",
+        "cta": "Ver PRs"
+      },
+      "docs": {
+        "title": "Melhorar a documentação",
+        "description": "Ajude a refinar docs de arquitetura, exemplos de API e guias de onboarding na pasta docs/.",
+        "cta": "Explorar docs"
+      },
+      "translations": {
+        "title": "Adicionar traduções",
+        "description": "O Satohash suporta EN, ES, FR, DE, PT, SW e ZH. Adicione ou melhore strings em src/i18n/translations/.",
+        "cta": "Arquivos de tradução"
+      }
+    },
+    "devSetup": {
+      "title": "Configuração de desenvolvimento",
+      "steps": [
+        "Fork e clone:",
+        "Instalar:",
+        "Executar dev:",
+        "Lint e testes:",
+        "Branch:",
+        "Abra um pull request com descrição clara e capturas de tela se houver mudanças na UI."
+      ]
+    },
+    "bounties": {
+      "title": "Bounties e áreas de alto impacto",
+      "items": [
+        "Reforço de segurança do servidor e cobertura de testes",
+        "Confiabilidade do daemon de upgrade OpenTimestamps",
+        "Integração com relay Nostr e verificação NIP-05",
+        "Acessibilidade (ARIA, navegação por teclado) e UX mobile",
+        "Strings i18n para novos locales (pt, sw, ar)"
+      ],
+      "cta": "Issues help wanted"
+    },
+    "why": {
+      "title": "Por que contribuir?",
+      "subtitle": "O Satohash ancora a verdade no Bitcoin — à prova de adulteração, sem permissão e gratuito. Seu código ajuda a defender a proveniência digital em uma era de conteúdo gerado por IA e deepfakes.",
+      "github": "Repositório GitHub",
+      "apiDocs": "Docs da API"
+    }
+  }
+}

@@ -1,0 +1,727 @@
+{
+  "common": {
+    "home": "首页",
+    "satohash": "Satohash",
+    "pitch": "Pitch",
+    "docs": "文档",
+    "integrations": "集成",
+    "trustCenter": "信任中心",
+    "copy": "复制",
+    "copied": "已复制！",
+    "yes": "是",
+    "dash": "—",
+    "read": "阅读",
+    "faq": "FAQ",
+    "glossary": "术语表",
+    "compare": "对比",
+    "guides": "指南",
+    "github": "GitHub",
+    "readTime": "{{time}} 阅读"
+  },
+  "pricingPage": {
+    "hero": {
+      "eyebrow": "简单定价",
+      "title": "存在证明，",
+      "titleHighlight": "人人可用",
+      "subtitle": "免费开始。需要时随时扩展。无锁定、无隐藏费用，基础使用无需账户。"
+    },
+    "mostPopular": "最受欢迎",
+    "tiers": {
+      "free": {
+        "name": "免费",
+        "price": "$0",
+        "period": "永久",
+        "desc": "在 Bitcoin 上为文档加盖时间戳。无需账户。",
+        "features": [
+          "在浏览器中进行 SHA-256 哈希",
+          "OpenTimestamps 日历锚定",
+          "可下载的 .ots 证明文件",
+          "随时随地验证任何证明",
+          "基于浏览器——无需安装"
+        ],
+        "cta": "为文件加盖时间戳"
+      },
+      "premium": {
+        "name": "Premium",
+        "price": "TBD",
+        "period": "每月",
+        "desc": "批量加盖时间戳、Lightning 支付和优先锚定。",
+        "features": [
+          "免费版全部功能，另加：",
+          "BOLT-12 Lightning 支付集成",
+          "优先日历提交",
+          "批量加盖时间戳（最多 100 个文件）",
+          "多方合同联署",
+          "嵌入证明的 PDF 导出"
+        ],
+        "cta": "即将推出"
+      },
+      "enterprise": {
+        "name": "Enterprise",
+        "price": "定制",
+        "period": "联系我们",
+        "desc": "专属基础设施、SLA 和定制集成。",
+        "features": [
+          "Premium 全部功能，另加：",
+          "专属 OTS 日历节点",
+          "私有 API 端点",
+          "定制 Webhook 集成",
+          "SLA 保障的证明生成",
+          "本地部署选项",
+          "优先支持 + 专属工程师"
+        ],
+        "cta": "联系销售"
+      }
+    },
+    "comparison": {
+      "title": "完整功能对比",
+      "feature": "功能",
+      "rows": {
+        "bitcoinAnchored": {
+          "label": "Bitcoin 锚定证明",
+          "free": "yes",
+          "premium": "yes",
+          "enterprise": "yes"
+        },
+        "browserHashing": {
+          "label": "基于浏览器的哈希",
+          "free": "yes",
+          "premium": "yes",
+          "enterprise": "yes"
+        },
+        "otsDownload": {
+          "label": "OTS 证明下载",
+          "free": "yes",
+          "premium": "yes",
+          "enterprise": "yes"
+        },
+        "freeCalendar": {
+          "label": "免费日历锚定",
+          "free": "upTo10",
+          "premium": "unlimited",
+          "enterprise": "unlimited"
+        },
+        "multiParty": {
+          "label": "多方签署",
+          "free": "dash",
+          "premium": "yes",
+          "enterprise": "yes"
+        },
+        "bolt12": {
+          "label": "BOLT-12 Lightning 支付",
+          "free": "dash",
+          "premium": "yes",
+          "enterprise": "yes"
+        },
+        "apiAccess": { "label": "API 访问", "free": "dash", "premium": "yes", "enterprise": "yes" },
+        "webhooks": {
+          "label": "Webhook 通知",
+          "free": "dash",
+          "premium": "yes",
+          "enterprise": "yes"
+        },
+        "batchStamping": {
+          "label": "批量加盖时间戳",
+          "free": "dash",
+          "premium": "upTo100",
+          "enterprise": "unlimited"
+        },
+        "dedicatedCalendar": {
+          "label": "专属 OTS 日历",
+          "free": "dash",
+          "premium": "dash",
+          "enterprise": "yes"
+        },
+        "sla": { "label": "SLA 保障", "free": "dash", "premium": "dash", "enterprise": "sla99" },
+        "onPremise": {
+          "label": "本地部署",
+          "free": "dash",
+          "premium": "dash",
+          "enterprise": "yes"
+        },
+        "prioritySupport": {
+          "label": "优先支持",
+          "free": "community",
+          "premium": "email",
+          "enterprise": "dedicated247"
+        }
+      },
+      "cellValues": {
+        "yes": "是",
+        "dash": "—",
+        "unlimited": "无限制",
+        "upTo10": "每月最多 10 次",
+        "upTo100": "最多 100 个",
+        "sla99": "99.9%",
+        "community": "社区",
+        "email": "邮件",
+        "dedicated247": "24/7 专属"
+      }
+    },
+    "faqTeaser": {
+      "title": "对定价有疑问？",
+      "subtitle": "查看我们的 FAQ 了解常见问题，或直接联系我们。",
+      "viewFaq": "查看 FAQ",
+      "contactSales": "联系销售"
+    },
+    "trust": {
+      "bitcoinSecured": "Bitcoin 保障",
+      "openSource": "开源",
+      "noLockIn": "无供应商锁定",
+      "zeroKnowledge": "零知识"
+    }
+  },
+  "comparisonPage": {
+    "hero": {
+      "eyebrow": "技术对比",
+      "title": "Satohash",
+      "titleHighlight": "综合表现",
+      "subtitle": "针对文档时间戳和存在证明主要替代方案的客观对比。",
+      "feature": "功能"
+    },
+    "columns": {
+      "satohash": "Satohash",
+      "docuSign": "DocuSign",
+      "eth": "Ethereum dApps",
+      "diyOTS": "DIY OpenTimestamps"
+    },
+    "rows": {
+      "zeroKnowledge": {
+        "label": "零知识（文件永不离开设备）",
+        "satohash": true,
+        "docuSign": false,
+        "eth": true,
+        "diyOTS": true
+      },
+      "bitcoinAnchored": {
+        "label": "Bitcoin 锚定",
+        "satohash": true,
+        "docuSign": false,
+        "eth": false,
+        "diyOTS": true
+      },
+      "freeBasic": {
+        "label": "基础使用免费",
+        "satohash": true,
+        "docuSign": false,
+        "eth": true,
+        "diyOTS": true
+      },
+      "noAccount": {
+        "label": "无需账户",
+        "satohash": true,
+        "docuSign": false,
+        "eth": true,
+        "diyOTS": true
+      },
+      "noGas": {
+        "label": "无 Gas / 交易费",
+        "satohash": true,
+        "docuSign": false,
+        "eth": false,
+        "diyOTS": true
+      },
+      "uiNonDev": {
+        "label": "面向非开发者的 UI",
+        "satohash": true,
+        "docuSign": true,
+        "eth": false,
+        "diyOTS": false
+      },
+      "multiParty": {
+        "label": "多方联署",
+        "satohash": true,
+        "docuSign": true,
+        "eth": true,
+        "diyOTS": false
+      },
+      "nip05": {
+        "label": "Nostr 身份（NIP-05）",
+        "satohash": true,
+        "docuSign": false,
+        "eth": false,
+        "diyOTS": false
+      },
+      "bolt12": {
+        "label": "BOLT-12 Lightning 支付",
+        "satohash": true,
+        "docuSign": false,
+        "eth": false,
+        "diyOTS": false
+      },
+      "courtAdmissible": {
+        "label": "法庭认可格式",
+        "satohash": true,
+        "docuSign": true,
+        "eth": false,
+        "diyOTS": false
+      },
+      "survivesShutdown": {
+        "label": "证明在公司关闭后仍有效",
+        "satohash": true,
+        "docuSign": false,
+        "eth": true,
+        "diyOTS": true
+      },
+      "snapper": {
+        "label": "浏览器扩展（Snapper）",
+        "satohash": true,
+        "docuSign": false,
+        "eth": false,
+        "diyOTS": false
+      },
+      "apiWebhooks": {
+        "label": "开发者 API + Webhook",
+        "satohash": true,
+        "docuSign": true,
+        "eth": true,
+        "diyOTS": false
+      },
+      "monthlyCost": {
+        "label": "月费",
+        "satohash": "$0",
+        "docuSign": "$10-300",
+        "eth": "variableGas",
+        "diyOTS": "$0"
+      }
+    },
+    "cellValues": { "variableGas": "Gas 费用不定" },
+    "download": {
+      "title": "下载完整 Pitch Deck",
+      "subtitle": "包含市场分析、技术深度解读和路线图的执行摘要 PDF。",
+      "downloadPdf": "下载 PDF",
+      "viewOnline": "在线查看"
+    }
+  },
+  "guidesPage": {
+    "nav": { "eyebrow": "教育指南" },
+    "hero": {
+      "title": "了解",
+      "titleHighlight": "证明如何运作",
+      "subtitle": "理解 Bitcoin 锚定存在证明背后的密码学、协议和理念。"
+    },
+    "guides": {
+      "what-is-cryptographic-proof": {
+        "title": "什么是加密证明？",
+        "desc": "了解 SHA-256 哈希、Merkle 树和区块链时间戳如何为文档存在时间提供数学确定性。",
+        "readTime": "5 分钟"
+      },
+      "how-opentimestamps-works": {
+        "title": "OpenTimestamps 如何运作",
+        "desc": "让免费 Bitcoin 时间戳成为可能的协议。了解 OTS 日历、Merkle 树和区块承诺。",
+        "readTime": "7 分钟"
+      },
+      "ots-vs-traditional-notary": {
+        "title": "OTS 与传统公证对比",
+        "desc": "将加密时间戳与传统公证服务、电子公证平台和区块链替代方案进行对比。",
+        "readTime": "4 分钟"
+      },
+      "why-bitcoin-for-truth": {
+        "title": "为什么 Bitcoin 是终极真相层",
+        "desc": "Bitcoin 不仅是货币——它是迄今最安全、最去中心化的时间戳网络。这对存在证明为何至关重要。",
+        "readTime": "6 分钟"
+      }
+    },
+    "comingSoon": {
+      "title": "更多内容即将推出",
+      "subtitle": "关于 NIP-05 身份、BOLT-12 Lightning、多方合同和高级验证技术的指南正在开发中。"
+    }
+  },
+  "glossaryPage": {
+    "hero": {
+      "title": "术语",
+      "titleHighlight": "表",
+      "subtitle": "关键概念简明解释。从 SHA-256 到零知识证明。",
+      "searchPlaceholder": "搜索术语..."
+    },
+    "empty": {
+      "title": "未找到术语",
+      "subtitle": "请尝试其他搜索词。"
+    },
+    "terms": {
+      "sha256": {
+        "term": "SHA-256",
+        "def": "一种密码学哈希函数，生成 256 位（64 字符）十六进制指纹。Satohash 用它为每份文档创建唯一标识符，而不暴露其内容。"
+      },
+      "ots": {
+        "term": "OpenTimestamps (OTS)",
+        "def": "一种通过将文档哈希嵌入 Merkle 树来创建时间戳证明的协议，随后通过单笔交易锚定到 Bitcoin 区块链。"
+      },
+      "merkleTree": {
+        "term": "Merkle Tree",
+        "def": "一种数据结构，每个叶节点是一个哈希，每个非叶节点是其子节点的哈希。OTS 在锚定到 Bitcoin 之前将多个时间戳聚合到一棵 Merkle 树中。"
+      },
+      "otsFile": {
+        "term": "OTS File (.ots)",
+        "def": "Satohash 生成的证明文件，包含时间戳信息。没有原始文档则毫无用处，但可使用开源 ots 工具独立验证。"
+      },
+      "bitcoinBlockchain": {
+        "term": "Bitcoin Blockchain",
+        "def": "由全球矿工网络维护的去中心化、不可篡改的公共账本。Satohash 将证明指纹锚定到 Bitcoin 区块以实现永久时间戳。"
+      },
+      "blockHeight": {
+        "term": "Block Height",
+        "def": "Bitcoin 区块链中区块的序号。每个新区块的高度为前一个区块高度 + 1。加盖时间戳时的区块高度提供时间证明。"
+      },
+      "nip05": {
+        "term": "NIP-05",
+        "def": "Nostr Improvement Proposal #05——将人类可读标识符（如 user@domain.com）映射到 Nostr 公钥，实现可验证身份而无需分享原始公钥。"
+      },
+      "nostr": {
+        "term": "Nostr",
+        "def": "一种去中心化、抗审查的社交与通信协议。Satohash 用它进行身份验证和代理通信。"
+      },
+      "bolt12": {
+        "term": "BOLT-12",
+        "def": "Lightning Network 的可重复使用、一键式报价提案。支持定期付款和按量访问，无需反复生成发票。"
+      },
+      "lightning": {
+        "term": "Lightning Network",
+        "def": "Bitcoin 之上的第二层支付协议，支持即时、低费用交易。Satohash 用它进行 Premium 计费。"
+      },
+      "zeroKnowledge": {
+        "term": "Zero-Knowledge Proof",
+        "def": "在不透露信息本身的情况下证明掌握该信息的方法。在 Satohash 中，您的文档永不离开设备——仅分享其哈希值。"
+      },
+      "foss": {
+        "term": "FOSS",
+        "def": "Free and Open Source Software（自由开源软件）。Satohash 采用 MIT 许可证，完整源代码在 GitHub 上公开。"
+      },
+      "eidas": {
+        "term": "eIDAS",
+        "def": "Electronic Identification, Authentication and Trust Services——欧盟关于电子签名和时间戳标准的法规。Satohash 证明与 eIDAS 兼容。"
+      },
+      "esign": {
+        "term": "ESIGN Act",
+        "def": "美国联邦法律，确立电子签名和记录的合法效力。Satohash 证明符合 ESIGN 要求。"
+      },
+      "blockTime": {
+        "term": "Block Time",
+        "def": "Bitcoin 区块之间的平均时间（约 10 分钟）。包含您证明的区块时间戳决定公证时间。"
+      },
+      "mempool": {
+        "term": "Mempool",
+        "def": "等待纳入区块的未确认 Bitcoin 交易池。Satohash 监控 Mempool 以获取实时网络情报。"
+      },
+      "l402": {
+        "term": "L402",
+        "def": "使用 Lightning Network 进行 API 认证和计量的协议标准。支持按次付费访问高级功能。"
+      },
+      "pwa": {
+        "term": "PWA",
+        "def": "Progressive Web App（渐进式 Web 应用）——可安装到设备并离线使用的 Web 应用。Satohash 是带有 Service Worker 缓存的 PWA。"
+      }
+    }
+  },
+  "securityPage": {
+    "hero": {
+      "title": "安全",
+      "titleHighlight": "在 Satohash",
+      "subtitle": "零知识架构、客户端哈希、开源代码。您的文档永不离开您的设备。"
+    },
+    "sections": {
+      "zeroKnowledge": {
+        "title": "零知识架构",
+        "body": "您的文档完全在浏览器中通过 Web Crypto API 进行哈希。仅传输 SHA-256 指纹——一个 64 字符的十六进制字符串。Satohash 和任何第三方都看不到您的原始文件内容。",
+        "items": [
+          "通过 Web Crypto API 进行客户端 SHA-256 哈希",
+          "文档永不上传到任何服务器",
+          "基础加盖时间戳无需账户",
+          "不保留文件内容数据"
+        ]
+      },
+      "privacy": {
+        "title": "隐私设计",
+        "body": "Satohash 以隐私优先为原则构建。无跟踪 Cookie、无指纹识别用户的分析脚本、无数据挖掘。",
+        "items": [
+          "无分析或跟踪脚本",
+          "非必要功能不使用 Cookie",
+          "仅本地存储用户偏好",
+          "开源——由社区验证"
+        ]
+      },
+      "infrastructure": {
+        "title": "基础设施安全",
+        "body": "Satohash API 服务器采用生产级安全配置，包括 Helmet.js 头、速率限制、CORS 策略和加密数据库存储。",
+        "items": [
+          "Helmet.js 安全头（CSP、HSTS、XFO）",
+          "所有 API 端点速率限制",
+          "CORS 限制为授权来源",
+          "SQLite 数据库加密 WAL 模式",
+          "Redis 可选身份验证"
+        ]
+      },
+      "auth": {
+        "title": "认证与访问",
+        "body": "管理员访问需要由服务端密钥签名的 JWT 令牌。API 密钥在存储前进行哈希，可独立轮换。",
+        "items": [
+          "基于 JWT 的管理员认证（24 小时过期）",
+          "具有细粒度权限的作用域 API 密钥",
+          "登录尝试速率限制",
+          "会话令牌仅存储在 localStorage"
+        ]
+      },
+      "openSource": {
+        "title": "开源保障",
+        "body": "Satohash 完整源代码在 GitHub 上以 MIT 许可证公开。任何人都可以审计、Fork 或自托管。",
+        "items": ["MIT 许可开源", "公开 GitHub 仓库", "社区代码审查", "支持通过 Docker 自托管"]
+      }
+    },
+    "disclosure": {
+      "title": "漏洞披露",
+      "subtitle": "如发现安全漏洞，请负责任地报告。我们承诺在 48 小时内确认收到，并在 7 天内发布修复。",
+      "cta": "报告漏洞"
+    }
+  },
+  "integrationsPage": {
+    "hero": {
+      "title": "集成",
+      "titleHighlight": "Satohash",
+      "subtitle": "为您的应用、网站和工作流添加 Bitcoin 锚定存在证明。REST API、Webhook、WordPress 和 CLI——选择您的路径。"
+    },
+    "sections": {
+      "restApi": {
+        "title": "REST API",
+        "desc": "完整的 REST API，用于以编程方式创建和验证证明。",
+        "features": [
+          "POST /api/v1/timestamp — 创建证明",
+          "GET /api/v1/verify/:id — 验证证明",
+          "GET /api/v1/price — 当前定价",
+          "免费版限制为 100 次请求/分钟"
+        ]
+      },
+      "webhooks": {
+        "title": "Webhooks",
+        "desc": "证明在链上确认时接收实时通知。",
+        "features": [
+          "可配置的 Webhook URL",
+          "HMAC-SHA256 签名验证",
+          "自动重试与退避",
+          "支持 JSON 和表单编码载荷"
+        ]
+      },
+      "wordpress": {
+        "title": "WordPress 集成",
+        "desc": "通过简单的短代码在任何 WordPress 站点嵌入 Satohash 证明。",
+        "features": [
+          "[satohash_proof id=\"...\"] 短代码",
+          "可自定义 iframe 尺寸",
+          "兼容任何 WordPress 主题",
+          "无需插件——粘贴代码即可"
+        ]
+      },
+      "mobile": {
+        "title": "移动端就绪",
+        "desc": "证明页面完全响应式，可在任何设备上使用。",
+        "features": ["响应式验证页面", "PWA 可安装到 iOS/Android", "证明 QR 码分享", "深度链接支持"]
+      }
+    },
+    "codeSamples": {
+      "title": "快速开始",
+      "titleHighlight": "代码示例",
+      "labels": {
+        "curl": "cURL",
+        "js": "JavaScript",
+        "python": "Python",
+        "bash": "CLI / Bash",
+        "wordpress": "WordPress"
+      }
+    },
+    "widgets": {
+      "title": "Proof DNA",
+      "titleHighlight": "Widgets",
+      "subtitle": "在任何网站嵌入可验证徽章。由 SHA-256 生成的确定性视觉——一个 div，一个脚本。",
+      "cta": "Widget 画廊"
+    },
+    "apiKey": {
+      "title": "获取 API 密钥",
+      "subtitle": "在开发者仪表板生成 API 密钥。每个密钥具有作用域权限，可独立撤销。",
+      "cta": "开发者仪表板"
+    }
+  },
+  "widgetsPage": {
+    "nav": "Proof DNA Widgets",
+    "hero": {
+      "title": "Proof DNA",
+      "titleHighlight": "Widgets",
+      "subtitle": "可从任意 SHA-256 哈希确定性生成的可嵌入、可验证徽章。一个 div，一个脚本——向世界展示您的文档已锚定到 Bitcoin。"
+    },
+    "preview": {
+      "title": "实时预览",
+      "body": "颜色和环形图案源自哈希——同一文档，同一 DNA，永久不变。点击嵌入的 Widget 打开验证页面。"
+    },
+    "embed": {
+      "title": "嵌入代码",
+      "basic": "基础 Widget",
+      "badge": "带验证链接的徽章",
+      "attributesTitle": "数据属性",
+      "attrs": {
+        "hash": "data-hash — 必填 SHA-256 十六进制",
+        "size": "data-size — sm | md（默认 md）",
+        "verify": "data-verify — 点击时打开的 URL",
+        "label": "data-label — 无障碍标题文本"
+      }
+    },
+    "nip05Cta": "设置 NIP-05 身份"
+  },
+  "docsPage": {
+    "nav": "文档",
+    "hero": {
+      "title": "Satohash",
+      "titleHighlight": "文档",
+      "subtitle": "理解、使用和贡献 Satohash 所需的一切。架构、部署、业务、SEO 和交接文档——尽在一处。",
+      "searchPlaceholder": "搜索文档..."
+    },
+    "all": "全部",
+    "empty": {
+      "title": "未找到文档",
+      "subtitle": "请尝试其他关键词或浏览分类。"
+    },
+    "categories": {
+      "getting-started": "入门",
+      "product": "产品与业务",
+      "technical": "技术",
+      "seo": "SEO 与国际化",
+      "operations": "运营与交接"
+    },
+    "docs": {
+      "quickstart": { "title": "快速入门指南", "desc": "60 秒内为您的第一份文档加盖时间戳。" },
+      "mission": { "title": "使命与价值观", "desc": "Satohash 为何存在，我们坚持什么。" },
+      "architecture": {
+        "title": "架构概览",
+        "desc": "四平面系统：Proof、Identity、Settlement、Atlas。"
+      },
+      "pitch": { "title": "产品 Pitch", "desc": "Sovereign Provenance Mesh 故事。" },
+      "executive-summary": { "title": "执行摘要", "desc": "面向利益相关者的业务一页纸。" },
+      "marketing": { "title": "营销", "desc": "定位、渠道、语调和资产。" },
+      "financials": { "title": "财务", "desc": "成本、预测和单位经济学。" },
+      "improvements-log": { "title": "改进日志", "desc": "完整的 100 项改进追踪器。" },
+      "ots_setup": { "title": "OTS 设置指南", "desc": "配置 OpenTimestamps 日历和验证。" },
+      "deploy-playbook": { "title": "部署手册", "desc": "适用于所有环境的生产部署指南。" },
+      "design-context": { "title": "设计背景", "desc": "设计系统理念与决策。" },
+      "design-tokens": { "title": "设计令牌", "desc": "CSS 自定义属性、颜色、排版。" },
+      "rollback": { "title": "回滚指南", "desc": "生产环境安全回滚流程。" },
+      "seo": { "title": "SEO 概览", "desc": "搜索优化策略与指南。" },
+      "i18n": { "title": "国际化", "desc": "多语言支持：EN、ES、FR、DE、PT、SW、ZH。" },
+      "seo-de": { "title": "SEO — Deutsch", "desc": "德语 SEO 策略。" },
+      "seo-es": { "title": "SEO — Español", "desc": "西班牙语 SEO 策略。" },
+      "seo-fr": { "title": "SEO — Français", "desc": "法语 SEO 策略。" },
+      "seo-pt": { "title": "SEO — Português", "desc": "葡萄牙语 SEO 策略。" },
+      "seo-sw": { "title": "SEO — Kiswahili", "desc": "斯瓦希里语 SEO 策略。" },
+      "seo-zh": { "title": "SEO — 中文", "desc": "中文 SEO 策略。" },
+      "kimi-handoff": { "title": "Kimi 交接日志", "desc": "代理与机器之间的会话交接。" }
+    },
+    "quickLinks": {
+      "developerApi": "开发者 API",
+      "templates": "模板",
+      "sourceCode": "源代码"
+    }
+  },
+  "notFoundPage": {
+    "title": "404",
+    "heading": "页面未找到",
+    "subtitle": "此页面不存在或已移动。协议未记录此路径的证明。",
+    "goHome": "返回首页",
+    "browseTemplates": "浏览模板",
+    "status": "证明状态：未找到"
+  },
+  "templatesPage": {
+    "hero": {
+      "eyebrow": "Satohash 模板库",
+      "title": "看看您能",
+      "titleHighlight": "证明什么",
+      "subtitle": "浏览为您需要加盖时间戳的文档准备的现成模板。无需密钥、无需账户、无需承诺——只需探索 Satohash 能做什么。每个模板都会生成 Bitcoin 锚定存在证明。"
+    },
+    "searchPlaceholder": "搜索模板...",
+    "sort": { "default": "默认", "popular": "最受欢迎", "alpha": "A-Z" },
+    "allCategory": "模板",
+    "recentlyViewed": "最近查看",
+    "empty": {
+      "title": "未找到模板",
+      "subtitle": "请尝试其他搜索词或分类。",
+      "reset": "重置筛选"
+    },
+    "badges": { "Popular": "热门", "New": "新", "Legal-Grade": "法律级" },
+    "viewDetails": "查看详情",
+    "quickPreview": "快速预览",
+    "copyLink": "复制链接",
+    "comingSoon": {
+      "title": "即将推出",
+      "subtitle": "更多模板、集成和功能正在开发中。保持主权。",
+      "cta": "查看路线图"
+    },
+    "preview": {
+      "whatYouGet": "您将获得：",
+      "tags": {
+        "bitcoinProof": "Bitcoin 锚定证明",
+        "demoData": "已填充演示数据",
+        "pdfExport": "PDF 导出",
+        "coSigner": "支持联署"
+      },
+      "tryDemo": "使用演示数据试用",
+      "share": "分享"
+    },
+    "cta": {
+      "title": "准备好证明点什么了吗？",
+      "subtitle": "无需账户。无需设置密钥。拖放文件，60 秒内获得 Bitcoin 锚定存在证明。",
+      "button": "为文件加盖时间戳——完全免费"
+    }
+  },
+  "contributePage": {
+    "hero": {
+      "title": "贡献 Satohash",
+      "subtitle": "开源 Bitcoin 公证——由社区构建，为主权真相服务。"
+    },
+    "waysTitle": "贡献方式",
+    "ways": {
+      "issues": {
+        "title": "报告问题",
+        "description": "发现 Bug 或有功能想法？在 GitHub 上提交 Issue，附上复现步骤和预期行为。",
+        "cta": "打开 Issues"
+      },
+      "prs": {
+        "title": "提交 Pull Request",
+        "description": "修复 Bug、改进文档、添加翻译或加强安全。欢迎所有贡献——无需 CLA。",
+        "cta": "查看 PR"
+      },
+      "docs": {
+        "title": "改进文档",
+        "description": "帮助完善 docs/ 文件夹中的架构文档、API 示例和入门指南。",
+        "cta": "浏览文档"
+      },
+      "translations": {
+        "title": "添加翻译",
+        "description": "Satohash 支持 EN、ES、FR、DE、PT、SW 和 ZH。在 src/i18n/translations/ 中添加或改进字符串。",
+        "cta": "翻译文件"
+      }
+    },
+    "devSetup": {
+      "title": "开发环境设置",
+      "steps": [
+        "Fork 并克隆：",
+        "安装：",
+        "运行开发服务器：",
+        "Lint 与测试：",
+        "分支：",
+        "提交 Pull Request，附上清晰描述；如有 UI 变更请附截图。"
+      ]
+    },
+    "bounties": {
+      "title": "赏金与高影响力领域",
+      "items": [
+        "服务器安全加固与测试覆盖率",
+        "OpenTimestamps 升级守护进程可靠性",
+        "Nostr 中继集成与 NIP-05 验证",
+        "无障碍（ARIA、键盘导航）与移动端 UX",
+        "新语言环境的 i18n 字符串（pt、sw、ar）"
+      ],
+      "cta": "求助 Issues"
+    },
+    "why": {
+      "title": "为何贡献？",
+      "subtitle": "Satohash 将真相锚定到 Bitcoin——防篡改、无需许可、免费。您的代码有助于在 AI 生成内容和深度伪造时代捍卫数字溯源。",
+      "github": "GitHub 仓库",
+      "apiDocs": "API 文档"
+    }
+  }
+}
