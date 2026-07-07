@@ -895,12 +895,10 @@ export default function Vault() {
             </span>
           </div>
           <h1 className="text-5xl leading-[0.85] font-black tracking-tighter uppercase md:text-7xl">
-            Evidence <br />
-            <span className="text-[var(--text-secondary)]">Workbench.</span>
+            {t('vault', 'titleHero')}
           </h1>
           <p className="max-w-xl text-lg leading-relaxed font-medium text-[var(--text-secondary)]">
-            Manage your absolute ledger. All assets are cryptographically anchored to the Bitcoin
-            mainnet with redundant multi-witness attestation.
+            {t('vault', 'subtitleHero')}
           </p>
         </div>
 
@@ -925,7 +923,7 @@ export default function Vault() {
             className="flex h-14 items-center justify-center gap-3 rounded-2xl border border-[var(--border-bright)] bg-white/5 px-8 text-[11px] font-black tracking-widest text-white uppercase shadow-xl transition-all hover:bg-white hover:text-black active:scale-[0.98]"
           >
             <FileText size={18} />
-            Generate Forensic Audit
+            {t('vault', 'forensicAudit')}
           </button>
 
           <button
@@ -949,7 +947,7 @@ export default function Vault() {
             className="flex h-14 items-center justify-center gap-2 rounded-2xl border border-[var(--border)] bg-transparent px-6 text-[10px] font-black tracking-widest uppercase transition-all hover:bg-[var(--surface-raised)]"
             style={{ color: 'var(--text-secondary)' }}
           >
-            Backup Vault
+            {t('vault', 'backupVault')}
           </button>
 
           <button
@@ -958,7 +956,7 @@ export default function Vault() {
             className="flex h-14 items-center justify-center gap-2 rounded-2xl border border-[var(--border)] bg-transparent px-6 text-[10px] font-black tracking-widest uppercase transition-all hover:bg-[var(--surface-raised)]"
             style={{ color: 'var(--text-secondary)' }}
           >
-            Import Vault
+            {t('vault', 'importVault')}
           </button>
         </div>
       </header>
@@ -1006,7 +1004,7 @@ export default function Vault() {
             disabled={isSyncing}
             className="rounded-xl bg-[var(--accent-pending)] px-5 py-3 text-[10px] font-black tracking-wider text-[#141b25] uppercase transition-all hover:scale-[1.02] disabled:opacity-50"
           >
-            {isSyncing ? 'Syncing...' : 'Sync Offline Queue'}
+            {isSyncing ? t('vault', 'syncing') : t('vault', 'syncOffline')}
           </button>
         </div>
       )}

@@ -30,6 +30,8 @@ export default {
   vault: {
     title: 'Hazina ya Uthibitisho',
     subtitle: 'Hati zako zilizofungwa',
+    titleHero: 'Jukwaa la Ushahidi',
+    subtitleHero: 'Simamia leja yako kamili. Mali zote zimefungwa kwa cryptography kwenye Bitcoin.',
     search: 'Tafuta kwenye hazina…',
     download: 'Pakua OTS',
     verify: 'Thibitisha',
@@ -39,7 +41,21 @@ export default {
     serverUnreachable:
       'Seva haipatikani — inaonyesha uthibitisho uliohifadhiwa kwenye kivinjari hiki.',
     loadMoreFailed:
-      'Imeshindwa kupakia uthibitisho zaidi. Angalia muunganisho wako na ujaribu tena.'
+      'Imeshindwa kupakia uthibitisho zaidi. Angalia muunganisho wako na ujaribu tena.',
+    syncOffline: 'Landanisha foleni ya nje ya mtandao',
+    syncing: 'Inalandanisha…',
+    backupVault: 'Hifadhi nakala ya hazina',
+    importVault: 'Ingiza hazina',
+    forensicAudit: 'Tengeneza ukaguzi wa forensiki'
+  },
+  snapper: {
+    heroTitle: 'Nasa na UWEKE MUHURI',
+    heroSubtitle: 'Nasa picha za forensiki zisizobadilika za kikoa chochote kabla ya kubadilishwa.',
+    targetLabel: 'Uingizaji wa kikoa lengwa',
+    urlPlaceholder: 'https://institutional-archive.org/legal-entry',
+    captureButton: 'Tekeleza snap ya forensiki',
+    capturing: 'Inaanzisha crawl…',
+    invalidUrl: 'Tafadhali weka URL halali'
   },
   common: {
     loading: 'Inapakia…',

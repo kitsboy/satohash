@@ -30,6 +30,9 @@ export default {
   vault: {
     title: 'Nachweistresor',
     subtitle: 'Ihre verankerten Dokumente',
+    titleHero: 'Beweis-Workbench',
+    subtitleHero:
+      'Verwalten Sie Ihr absolutes Ledger. Alle Assets sind kryptografisch auf Bitcoin verankert.',
     search: 'Tresor durchsuchen…',
     download: 'OTS herunterladen',
     verify: 'Verifizieren',
@@ -39,7 +42,22 @@ export default {
     serverUnreachable:
       'Server nicht erreichbar — zwischengespeicherte Nachweise aus diesem Browser.',
     loadMoreFailed:
-      'Weitere Nachweise konnten nicht geladen werden. Verbindung prüfen und erneut versuchen.'
+      'Weitere Nachweise konnten nicht geladen werden. Verbindung prüfen und erneut versuchen.',
+    syncOffline: 'Offline-Warteschlange synchronisieren',
+    syncing: 'Synchronisiere…',
+    backupVault: 'Tresor sichern',
+    importVault: 'Tresor importieren',
+    forensicAudit: 'Forensischen Audit erstellen'
+  },
+  snapper: {
+    heroTitle: 'Erfassen & STEMPELN',
+    heroSubtitle:
+      'Unveränderliche forensische Snapshots jeder Domain erfassen, bevor sie geändert werden.',
+    targetLabel: 'Ziel-Domain-Ingest',
+    urlPlaceholder: 'https://institutional-archive.org/legal-entry',
+    captureButton: 'Forensischen Snap ausführen',
+    capturing: 'Crawl wird initialisiert…',
+    invalidUrl: 'Bitte eine gültige URL eingeben'
   },
   common: {
     loading: 'Laden…',

@@ -24,6 +24,7 @@ import Button from '../components/Button'
 import MerkleExplorer from '../components/MerkleExplorer'
 import { toast } from 'sonner'
 import usePageMeta from '../hooks/usePageMeta'
+import useAppTranslation from '../hooks/useAppTranslation'
 import { getApiUrl } from '../config/constants'
 
 const processUrl = (raw) => {
@@ -39,6 +40,7 @@ const processUrl = (raw) => {
 
 export default function WebCapture() {
   usePageMeta({ page: 'snapper' })
+  const { t } = useAppTranslation()
   const [searchParams] = useSearchParams()
   const [url, setUrl] = useState('')
 
@@ -52,7 +54,7 @@ export default function WebCapture() {
   const handleCapture = async () => {
     const validUrl = processUrl(url)
     if (!validUrl) {
-      toast.error('Please enter a valid URL')
+      toast.error(t('snapper.invalidUrl'))
       return
     }
     setStatus('fetching')
@@ -130,15 +132,13 @@ export default function WebCapture() {
               className="mb-6 text-6xl leading-none font-black tracking-tighter uppercase italic md:text-8xl"
               style={{ color: 'var(--text-primary)' }}
             >
-              Snap <span style={{ color: 'var(--accent-active)' }}>&amp;</span> <br />{' '}
-              <span style={{ color: 'var(--accent-active)' }}>STAMP.</span>
+              {t('snapper.heroTitle')}
             </h1>
             <p
               className="max-w-xl font-sans text-lg leading-relaxed font-bold italic"
               style={{ color: 'var(--text-secondary)' }}
             >
-              Capture immutable forensic snapshots of any domain. Secure digital history before it
-              is altered, using the Bitcoin attestation mesh.
+              {t('snapper.heroSubtitle')}
             </p>
           </div>
 
@@ -192,7 +192,7 @@ export default function WebCapture() {
                     className="text-[10px] font-black tracking-[0.4em] uppercase italic"
                     style={{ color: 'var(--text-secondary)' }}
                   >
-                    Target Domain Ingest
+                    {t('snapper.targetLabel')}
                   </label>
                   <div className="group relative">
                     <div
@@ -204,7 +204,7 @@ export default function WebCapture() {
                     <input
                       type="url"
                       aria-label="URL to capture and anchor"
-                      placeholder="https://institutional-archive.org/legal-entry"
+                      placeholder={t('snapper.urlPlaceholder')}
                       value={url}
                       onChange={(e) => setUrl(e.target.value)}
                       onKeyDown={(e) => {
@@ -247,11 +247,11 @@ export default function WebCapture() {
                 >
                   {status === 'fetching' ? (
                     <>
-                      <Loader2 className="animate-spin" size={20} /> INITIALIZING_CRAWL_v4
+                      <Loader2 className="animate-spin" size={20} /> {t('snapper.capturing')}
                     </>
                   ) : (
                     <>
-                      EXECUTE_FORENSIC_SNAP <ChevronRight size={20} />
+                      {t('snapper.captureButton')} <ChevronRight size={20} />
                     </>
                   )}
                 </button>

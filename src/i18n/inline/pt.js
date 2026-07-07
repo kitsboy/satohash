@@ -30,6 +30,9 @@ export default {
   vault: {
     title: 'Cofre de Provas',
     subtitle: 'Os seus documentos ancorados',
+    titleHero: 'Bancada de Evidências',
+    subtitleHero:
+      'Gira o seu livro-razão absoluto. Todos os ativos estão ancorados criptograficamente no Bitcoin.',
     search: 'Pesquisar no cofre…',
     download: 'Transferir OTS',
     verify: 'Verificar',
@@ -37,7 +40,22 @@ export default {
     pending: 'Pendente',
     confirmed: 'Confirmado',
     serverUnreachable: 'Servidor inacessível — a mostrar provas em cache deste navegador.',
-    loadMoreFailed: 'Não foi possível carregar mais provas. Verifique a ligação e tente novamente.'
+    loadMoreFailed: 'Não foi possível carregar mais provas. Verifique a ligação e tente novamente.',
+    syncOffline: 'Sincronizar fila offline',
+    syncing: 'A sincronizar…',
+    backupVault: 'Backup do cofre',
+    importVault: 'Importar cofre',
+    forensicAudit: 'Gerar auditoria forense'
+  },
+  snapper: {
+    heroTitle: 'Capturar e CARIMBAR',
+    heroSubtitle:
+      'Capture instantâneos forenses imutáveis de qualquer domínio antes de ser alterado.',
+    targetLabel: 'Ingestão do domínio alvo',
+    urlPlaceholder: 'https://arquivo-institucional.org/entrada-legal',
+    captureButton: 'Executar captura forense',
+    capturing: 'A inicializar rastreio…',
+    invalidUrl: 'Introduza um URL válido'
   },
   common: {
     loading: 'A carregar…',

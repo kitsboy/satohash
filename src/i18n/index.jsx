@@ -47,6 +47,9 @@ export const translations = {
     vault: {
       title: 'Proof Vault',
       subtitle: 'Your anchored documents',
+      titleHero: 'Evidence Workbench',
+      subtitleHero:
+        'Manage your absolute ledger. All assets are cryptographically anchored to the Bitcoin mainnet.',
       search: 'Search vault…',
       download: 'Download OTS',
       verify: 'Verify',
@@ -54,7 +57,22 @@ export const translations = {
       pending: 'Pending',
       confirmed: 'Confirmed',
       serverUnreachable: 'Server unreachable — showing cached proofs from this browser.',
-      loadMoreFailed: 'Could not load more proofs. Check your connection and try again.'
+      loadMoreFailed: 'Could not load more proofs. Check your connection and try again.',
+      syncOffline: 'Sync Offline Queue',
+      syncing: 'Syncing…',
+      backupVault: 'Backup Vault',
+      importVault: 'Import Vault',
+      forensicAudit: 'Generate Forensic Audit'
+    },
+    snapper: {
+      heroTitle: 'Snap & STAMP',
+      heroSubtitle:
+        'Capture immutable forensic snapshots of any domain. Secure digital history before it is altered.',
+      targetLabel: 'Target Domain Ingest',
+      urlPlaceholder: 'https://institutional-archive.org/legal-entry',
+      captureButton: 'Execute Forensic Snap',
+      capturing: 'Initializing crawl…',
+      invalidUrl: 'Please enter a valid URL'
     },
     common: {
       loading: 'Loading…',
@@ -215,6 +233,9 @@ export const translations = {
     vault: {
       title: 'Bóveda de Pruebas',
       subtitle: 'Tus documentos anclados',
+      titleHero: 'Banco de Evidencia',
+      subtitleHero:
+        'Gestiona tu libro mayor. Todos los activos están anclados criptográficamente en Bitcoin.',
       search: 'Buscar…',
       download: 'Descargar OTS',
       verify: 'Verificar',
@@ -223,7 +244,22 @@ export const translations = {
       confirmed: 'Confirmado',
       serverUnreachable: 'Servidor no disponible — mostrando pruebas en caché de este navegador.',
       loadMoreFailed:
-        'No se pudieron cargar más pruebas. Comprueba tu conexión e inténtalo de nuevo.'
+        'No se pudieron cargar más pruebas. Comprueba tu conexión e inténtalo de nuevo.',
+      syncOffline: 'Sincronizar cola sin conexión',
+      syncing: 'Sincronizando…',
+      backupVault: 'Respaldar bóveda',
+      importVault: 'Importar bóveda',
+      forensicAudit: 'Generar auditoría forense'
+    },
+    snapper: {
+      heroTitle: 'Captura y SELLO',
+      heroSubtitle:
+        'Captura instantáneas forenses inmutables de cualquier dominio antes de que se alteren.',
+      targetLabel: 'Ingesta de dominio objetivo',
+      urlPlaceholder: 'https://archivo-institucional.org/entrada-legal',
+      captureButton: 'Ejecutar captura forense',
+      capturing: 'Inicializando rastreo…',
+      invalidUrl: 'Introduce una URL válida'
     },
     common: {
       loading: 'Cargando…',
@@ -384,6 +420,9 @@ export const translations = {
     vault: {
       title: 'Coffre de preuves',
       subtitle: 'Vos documents ancrés',
+      titleHero: 'Atelier de preuves',
+      subtitleHero:
+        'Gérez votre registre absolu. Tous les actifs sont ancrés cryptographiquement sur Bitcoin.',
       search: 'Rechercher…',
       download: 'Télécharger OTS',
       verify: 'Vérifier',
@@ -392,7 +431,22 @@ export const translations = {
       confirmed: 'Confirmé',
       serverUnreachable: 'Serveur inaccessible — affichage des preuves en cache de ce navigateur.',
       loadMoreFailed:
-        'Impossible de charger plus de preuves. Vérifiez votre connexion et réessayez.'
+        'Impossible de charger plus de preuves. Vérifiez votre connexion et réessayez.',
+      syncOffline: 'Synchroniser la file hors ligne',
+      syncing: 'Synchronisation…',
+      backupVault: 'Sauvegarder le coffre',
+      importVault: 'Importer le coffre',
+      forensicAudit: 'Générer un audit forensique'
+    },
+    snapper: {
+      heroTitle: 'Capture et TAMPON',
+      heroSubtitle:
+        'Capturez des instantanés forensiques immuables de tout domaine avant modification.',
+      targetLabel: 'Ingestion du domaine cible',
+      urlPlaceholder: 'https://archives-institutionnelles.org/entree-legale',
+      captureButton: 'Exécuter la capture forensique',
+      capturing: 'Initialisation du crawl…',
+      invalidUrl: 'Veuillez saisir une URL valide'
     },
     common: {
       loading: 'Chargement…',
@@ -555,6 +609,8 @@ export const translations = {
     vault: {
       title: '证明保险库',
       subtitle: '您的锚定文件',
+      titleHero: '证据工作台',
+      subtitleHero: '管理您的绝对账本。所有资产均通过密码学锚定在比特币主网。',
       search: '搜索…',
       download: '下载 OTS',
       verify: '验证',
@@ -562,7 +618,21 @@ export const translations = {
       pending: '待处理',
       confirmed: '已确认',
       serverUnreachable: '服务器不可达 — 显示此浏览器中的缓存证明。',
-      loadMoreFailed: '无法加载更多证明。请检查网络连接后重试。'
+      loadMoreFailed: '无法加载更多证明。请检查网络连接后重试。',
+      syncOffline: '同步离线队列',
+      syncing: '同步中…',
+      backupVault: '备份保险库',
+      importVault: '导入保险库',
+      forensicAudit: '生成取证审计'
+    },
+    snapper: {
+      heroTitle: '捕获并盖章',
+      heroSubtitle: '在任何域名被篡改前捕获不可变的取证快照。',
+      targetLabel: '目标域名摄取',
+      urlPlaceholder: 'https://institutional-archive.org/legal-entry',
+      captureButton: '执行取证捕获',
+      capturing: '正在初始化爬取…',
+      invalidUrl: '请输入有效的 URL'
     },
     common: {
       loading: '加载中…',
@@ -719,6 +789,8 @@ export const translations = {
     vault: {
       title: 'خزنة الأدلة',
       subtitle: 'مستنداتك المثبتة',
+      titleHero: 'منصة الأدلة',
+      subtitleHero: 'أدر سجلّك المطلق. جميع الأصول مثبتة تشفيرياً على شبكة Bitcoin.',
       search: 'بحث…',
       download: 'تنزيل OTS',
       verify: 'تحقق',
@@ -726,7 +798,21 @@ export const translations = {
       pending: 'معلّق',
       confirmed: 'مؤكد',
       serverUnreachable: 'الخادم غير متاح — عرض الأدلة المخزنة مؤقتاً في هذا المتصفح.',
-      loadMoreFailed: 'تعذر تحميل المزيد من الأدلة. تحقق من اتصالك وحاول مرة أخرى.'
+      loadMoreFailed: 'تعذر تحميل المزيد من الأدلة. تحقق من اتصالك وحاول مرة أخرى.',
+      syncOffline: 'مزامنة قائمة الانتظار دون اتصال',
+      syncing: 'جارٍ المزامنة…',
+      backupVault: 'نسخ الخزنة احتياطياً',
+      importVault: 'استيراد الخزنة',
+      forensicAudit: 'إنشاء تدقيق جنائي'
+    },
+    snapper: {
+      heroTitle: 'التقاط وختم',
+      heroSubtitle: 'التقط لقطات جنائية ثابتة لأي نطاق قبل تعديله.',
+      targetLabel: 'إدخال النطاق المستهدف',
+      urlPlaceholder: 'https://institutional-archive.org/legal-entry',
+      captureButton: 'تنفيذ الالتقاط الجنائي',
+      capturing: 'جارٍ تهيئة الزحف…',
+      invalidUrl: 'يرجى إدخال عنوان URL صالح'
     },
     common: {
       loading: 'جارٍ التحميل…',
