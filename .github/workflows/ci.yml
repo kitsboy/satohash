@@ -43,6 +43,10 @@ jobs:
     - name: Build Vite App
       run: npm run build
 
+    - name: Verify Landing bundle
+      if: matrix.node-version == 20
+      run: npm run build:verify
+
     - name: Install Playwright Browsers
       if: matrix.node-version == 20
       run: npx playwright install --with-deps

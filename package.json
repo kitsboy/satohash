@@ -7,6 +7,7 @@
     "server": "node server/index.js",
     "dev": "concurrently \"npm run server\" \"vite\"",
     "build": "vite build",
+    "build:verify": "node scripts/verify-landing-bundle.js",
     "preview": "vite preview",
     "production": "cross-env NODE_ENV=production vite build && cross-env NODE_ENV=production npm run server",
     "start:pm2": "pm2 start ecosystem.config.cjs --env production",

@@ -1,8 +1,11 @@
 import { test, expect } from '@playwright/test';
 
 test('landing page loads correctly', async ({ page }) => {
+  const errors = [];
+  page.on('pageerror', (err) => errors.push(err.message));
   await page.goto('/');
   await expect(page).toHaveTitle(/Satohash/i);
+  expect(errors).toEqual([]);
 });
 
 test('health check returns ok', async ({ request }) => {
