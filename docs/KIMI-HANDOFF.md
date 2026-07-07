@@ -242,6 +242,28 @@ See `KIMI-HANDOFF-satohash-2026-06-10.md` in repo root for the original comprehe
 
 ---
 
+## Handoff to Kimi — 2026-07-07 (Fix + Enhance Pass 2)
+
+**Machine:** M3 (Grok)
+**Project:** satohash
+
+### Done — 4 fix + 3 enhance commits (Builds 67–75)
+- [x] Fix 5–8: a11y focus-trap, PDF pipeline, i18n vault/snapper, axe CI + e2e
+- [x] Enhance 5–7: FeeAdvisor, SignerIdentityBadge, Proof DNA v3, vaultExport, DeepHealthBanner
+- [x] 51 unit tests; `npm run test:a11y-ci` for CI gate
+
+### Deferred (infrastructure / roadmap)
+- Express VPS deploy (forum, history, stamps need backend)
+- Mobile Signer Pro native app
+- Live BOLT-12 / Fedimint / SSO / SDK packages
+
+### Git State
+- Branch: main
+- Last commit: bd22e95 (Build 75)
+- Fully pushed to origin/main
+
+---
+
 ## Handoff to Kimi — 2026-07-07 (Fix + Enhance Pass)
 
 **Machine:** M3 (Grok)

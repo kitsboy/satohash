@@ -598,4 +598,22 @@
 - [x] Developer portal local API usage counters
 - [x] Audit + org team unit tests
 
+## Post-465 Fix Pass 2 (Builds 67–72)
+
+- [x] Focus-trap + reduced-motion gating (PinModal, ContactKimiModal, App.jsx)
+- [x] Vault/ImageVault useCallback deps; Snapper → /web-capture redirect
+- [x] PDF consolidation via `generateContractPdf` in pdfHelpers
+- [x] Settings mesh degraded label when API unreachable
+- [x] Vault/WebCapture i18n in all 7 locales (snapper namespace)
+- [x] axe-core CI (`test:a11y-ci`) + contract/vault e2e pipes
+- [x] 51 unit tests passing
+
+## Post-465 Enhance Pass 2 (Builds 73–75)
+
+- [x] `FeeAdvisor` — live mempool tiers on Stamp sidebar
+- [x] `SignerIdentityBadge` — NIP-05 badges on ContractView signers
+- [x] Proof DNA v3 white-label embed snippet on Widgets
+- [x] `vaultExport.js` — AES-GCM encrypted vault backup
+- [x] `DeepHealthBanner` — `/health?deep=true` observability strip
+
 *Safe Harbour · Part of the [Give A Bit](https://giveabit.io) family.*

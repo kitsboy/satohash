@@ -1,3 +1,3 @@
 # satohash — Last Updated 2026-07-07 by Grok (M3)
 
-**Build 65** — Post-465 fix + enhance pass: 8 commits (4 fix, 4 feat). getApiUrl rollout, mempool metadata, PageErrorBoundary, contractStore, Trust live health, audit export, ContractLifecycleBar, signing invites. 49 unit tests passing. See `docs/KIMI-HANDOFF.md`.
+**Build 75** — Post-465 pass 2: 7 commits (fix 5–8, enhance 5–7). Focus-trap, PDF consolidation, Vault/WebCapture i18n, axe CI, FeeAdvisor, encrypted vault export, DeepHealthBanner. 51 tests. See `docs/KIMI-HANDOFF.md`.
