@@ -104,9 +104,10 @@ export default function Landing() {
         .then((r) => r.json())
         .catch(() => []),
       getBitcoinNetworkStats()
-    ]).then(([stamps, stats]) => {
+    ]).then(([stamps, statsResult]) => {
       if (Array.isArray(stamps)) setProofCount(stamps.length)
-      if (stats) {
+      const stats = statsResult?.data ?? statsResult
+      if (stats?.fees) {
         setNetworkStats(stats)
         setBlockHeight(stats.blockHeight)
       }
@@ -622,7 +623,7 @@ export default function Landing() {
                   className="block font-mono text-xl font-black"
                   style={{ color: 'var(--accent-gold)' }}
                 >
-                  {networkStats.fees.high}{' '}
+                  {networkStats.fees?.high ?? '—'}{' '}
                   <span className="text-xs font-normal">{t('landingPage.telemetry.satPerVb')}</span>
                 </span>
               </div>
