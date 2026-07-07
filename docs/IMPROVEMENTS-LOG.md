@@ -271,4 +271,53 @@
 
 **Status: 225/225 complete ✅ (Batches 1–6)**
 
+---
+
+## Batch 7 — SEO, Server Validation & A11y (Items 226–265)
+
+**Completed:** 2026-07-07 (Build 52)
+
+- [x] 226. `pageMeta` — `nostrHealth` (7 locales)
+- [x] 227. `pageMeta` — `mobileSigner` (7 locales)
+- [x] 228. `pageMeta` — `verificationShield` (7 locales)
+- [x] 229. `pageMeta` — `templateDetail` (7 locales)
+- [x] 230. `snapperBodySchema` in `server/validators.js`
+- [x] 231. NostrHealth `usePageMeta`
+- [x] 232. MobileSigner `usePageMeta`
+- [x] 233. VerificationShield `usePageMeta`
+- [x] 234. TemplateDetail `usePageMeta`
+- [x] 235. ContractView `usePageMeta` + import fix
+- [x] 236. Vault server-unreachable banner (`role="alert"`)
+- [x] 237. Vault `loadMore` error toast
+- [x] 238. Vault search input `aria-label` + `type="search"`
+- [x] 239. TemplatesShowcase preview modal `role="dialog"` + `aria-labelledby`
+- [x] 240. TemplatesShowcase preview Escape dismiss
+- [x] 241. TemplatesShowcase activeDemo Escape dismiss
+- [x] 242. TemplatesShowcase search `aria-label`
+- [x] 243. TemplatesShowcase share copy toast + `aria-label`
+- [x] 244. WebCapture URL input `aria-label`
+- [x] 245. WebCapture Enter key submits capture
+- [x] 246. WebCapture capture button `type="button"` + `aria-label`
+- [x] 247. Forum npub gate on create thread
+- [x] 248. Forum npub gate on create post
+- [x] 249. `POST /api/webhooks/:id/test` — `requireNpub` + UUID validation
+- [x] 250. `POST /api/forum/threads/:id/posts` — thread UUID validation
+- [x] 251. `POST /api/capture/snapper` — Zod body validation
+- [x] 252. DonationModal uses shared `BTC_ADDRESS` constant
+- [x] 253. ImageVault search `aria-label` + `type="search"`
+- [x] 254. TemplateDetail dynamic meta title from template name
+- [x] 255. `validators.test.js` — snapperBodySchema tests (2)
+- [x] 256. Vault export/backup/import buttons `type="button"`
+- [x] 257. Vault tab list `role="tablist"` + `aria-selected`
+- [x] 258. Forum thread/post inputs `aria-label`
+- [x] 259. TemplatesShowcase preview close `type="button"` + `aria-label`
+- [x] 260. Forum reads npub from sessionStorage fallback
+- [x] 261. Production build passes after batch 7
+- [x] 262. Unit tests pass (33+)
+- [x] 263. Template demo e2e preserved
+- [x] 264. Batch 7 documented in this file
+- [x] 265. Ready for deploy — Build 52
+
+**Status: 265/265 complete ✅ (Batches 1–7)**
+
 *Safe Harbour · Part of the [Give A Bit](https://giveabit.io) family.*

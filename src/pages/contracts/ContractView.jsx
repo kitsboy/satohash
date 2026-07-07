@@ -25,10 +25,12 @@ import ProofExplorer from '../../components/ProofExplorer'
 import ZKRedactionTool from '../../components/ZKRedactionTool'
 import Card from '../../components/Card'
 import { clsx } from 'clsx'
+import usePageMeta from '../../hooks/usePageMeta'
 
 const GIVEABIT_VERIFY_BASE = 'https://satohash.giveabit.io/verify'
 
 export default function ContractView() {
+  usePageMeta({ page: 'contracts' })
   const navigate = useNavigate()
   const { contractId } = useParams()
   const [contract, setContract] = useState(null)

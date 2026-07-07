@@ -194,10 +194,17 @@ export default function WebCapture() {
                       <Globe size={22} />
                     </div>
                     <input
-                      type="text"
+                      type="url"
+                      aria-label="URL to capture and anchor"
                       placeholder="https://institutional-archive.org/legal-entry"
                       value={url}
                       onChange={(e) => setUrl(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' && status === 'idle' && url.trim()) {
+                          e.preventDefault()
+                          handleCapture()
+                        }
+                      }}
                       className="w-full rounded-[2.5rem] px-16 py-8 font-mono text-xs shadow-inner transition-all outline-none"
                       style={{
                         border: '2px solid var(--border)',
@@ -212,6 +219,8 @@ export default function WebCapture() {
                 </div>
 
                 <button
+                  type="button"
+                  aria-label="Capture URL screenshot"
                   onClick={handleCapture}
                   disabled={!url || status !== 'idle'}
                   className={`flex w-full items-center justify-center gap-4 rounded-[2rem] py-8 text-[12px] font-black tracking-[0.3em] uppercase transition-all ${

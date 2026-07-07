@@ -3,12 +3,14 @@ import { useParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ShieldCheck, Calendar, Hash, Globe, UserCheck, ShieldClose } from 'lucide-react'
 import ProofDNA from '../components/ProofDNA'
+import usePageMeta from '../hooks/usePageMeta'
 
 /**
  * Item 28: Holographic Verification Shield
  * "Public Proof-of-Existence Landing Page."
  */
 export default function PublicVerification() {
+  usePageMeta({ page: 'verificationShield' })
   const { id } = useParams()
   const [stamp, setStamp] = useState(null)
   const [loading, setLoading] = useState(true)

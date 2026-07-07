@@ -11,10 +11,12 @@ import {
 } from 'recharts'
 import { Wifi, AlertCircle } from 'lucide-react'
 import { toast } from 'sonner'
+import usePageMeta from '../hooks/usePageMeta'
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
 
 const NostrHealth = () => {
+  usePageMeta({ page: 'nostrHealth' })
   const [healthData, setHealthData] = useState([])
   const [uptime, setUptime] = useState('0%')
   const [loading, setLoading] = useState(true)

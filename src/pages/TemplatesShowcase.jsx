@@ -2,6 +2,8 @@ import { useState, useEffect, useCallback } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import usePageMeta from '../hooks/usePageMeta'
+import { useEscapeKey } from '../utils/a11y'
+import { toast } from 'sonner'
 import {
   Heart,
   Home,
@@ -85,6 +87,10 @@ export default function TemplatesShowcase() {
     setActiveDemo(null)
     document.body.style.overflow = ''
   }, [])
+
+  const closePreview = useCallback(() => setPreviewTemplate(null), [])
+  useEscapeKey(!!previewTemplate, closePreview)
+  useEscapeKey(!!activeDemo, closeDemo)
 
   const openDemo = useCallback(
     async (templateId) => {
@@ -253,7 +259,8 @@ export default function TemplatesShowcase() {
               className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-[var(--text-tertiary)]"
             />
             <input
-              type="text"
+              type="search"
+              aria-label={t('templatesPage.searchPlaceholder')}
               placeholder={t('templatesPage.searchPlaceholder')}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
@@ -263,6 +270,8 @@ export default function TemplatesShowcase() {
             />
             {searchQuery && (
               <button
+                type="button"
+                aria-label="Clear search"
                 onClick={() => {
                   setSearchQuery('')
                   setShowSuggestions(false)
@@ -539,15 +548,20 @@ export default function TemplatesShowcase() {
       {/* Template Preview Modal */}
       {previewTemplate && (
         <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="template-preview-title"
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
-          onClick={() => setPreviewTemplate(null)}
+          onClick={closePreview}
         >
           <div
             className="relative w-full max-w-lg rounded-2xl border border-[var(--border)] bg-[var(--surface-overlay)] p-6 shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             <button
-              onClick={() => setPreviewTemplate(null)}
+              type="button"
+              aria-label="Close preview"
+              onClick={closePreview}
               className="absolute top-4 right-4 flex h-8 w-8 items-center justify-center rounded-lg text-[var(--text-tertiary)] transition-colors hover:bg-[var(--surface-raised)] hover:text-[var(--text-primary)]"
             >
               <X size={16} />
@@ -561,7 +575,10 @@ export default function TemplatesShowcase() {
                 })()}
               </div>
               <div>
-                <h3 className="text-lg font-bold text-[var(--text-primary)]">
+                <h3
+                  id="template-preview-title"
+                  className="text-lg font-bold text-[var(--text-primary)]"
+                >
                   {previewTemplate.title}
                 </h3>
                 <p className="text-[10px] font-bold tracking-widest text-[var(--accent-gold)] uppercase">
@@ -625,9 +642,12 @@ export default function TemplatesShowcase() {
                 <ArrowRight size={13} className="ml-1 inline" />
               </button>
               <button
+                type="button"
+                aria-label="Copy template link"
                 onClick={() => {
                   const url = `${window.location.origin}/templates/${previewTemplate.id}`
                   navigator.clipboard?.writeText(url)
+                  toast.success('Template link copied')
                 }}
                 className="flex items-center gap-2 rounded-xl border border-[var(--border)] px-5 py-3 text-xs font-bold tracking-wider text-[var(--text-secondary)] uppercase transition-all hover:border-[var(--accent-gold)]"
               >

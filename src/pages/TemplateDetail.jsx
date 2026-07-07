@@ -1,12 +1,17 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { FileText } from 'lucide-react'
+import usePageMeta from '../hooks/usePageMeta'
 
 export default function TemplateDetail() {
+  const [template, setTemplate] = useState(null)
+  usePageMeta({
+    page: 'templateDetail',
+    title: template ? `${template.title} — Demo Preview` : undefined
+  })
   const { templateId } = useParams()
   const navigate = useNavigate()
   const [Editor, setEditor] = useState(null)
-  const [template, setTemplate] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
 
@@ -27,7 +32,6 @@ export default function TemplateDetail() {
         setTemplate(match)
         setEditor(() => mod.TemplateEditor)
         setLoading(false)
-        document.title = `${match.title} — Demo Preview — Satohash`
       })
       .catch(() => {
         if (!active) return

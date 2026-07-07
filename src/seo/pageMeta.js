@@ -1164,6 +1164,105 @@ export const pageMeta = {
     },
     zh: { title: '服务条款', description: 'Satohash 使用条款、责任限制和比特币文档公证服务协议。' }
   },
+  nostrHealth: {
+    en: {
+      title: 'Nostr Relay Health',
+      description: 'Live status of Satohash Nostr relays — uptime, latency, and publish health.'
+    },
+    es: {
+      title: 'Salud de Relés Nostr',
+      description: 'Estado en vivo de los relés Nostr de Satohash.'
+    },
+    fr: {
+      title: 'Santé des Relais Nostr',
+      description: 'État en direct des relais Nostr Satohash.'
+    },
+    de: { title: 'Nostr-Relay-Gesundheit', description: 'Live-Status der Satohash-Nostr-Relays.' },
+    pt: {
+      title: 'Saúde dos Relays Nostr',
+      description: 'Status ao vivo dos relays Nostr do Satohash.'
+    },
+    sw: {
+      title: 'Afya ya Relays za Nostr',
+      description: 'Hali ya moja kwa moja ya relays za Nostr za Satohash.'
+    },
+    zh: { title: 'Nostr 中继健康', description: 'Satohash Nostr 中继的实时状态。' }
+  },
+  mobileSigner: {
+    en: {
+      title: 'Mobile Signer — Remote Co-Signing',
+      description: 'Pair your phone as a secure co-signer for institutional document workflows.'
+    },
+    es: {
+      title: 'Firmante Móvil — Co-firma Remota',
+      description: 'Empareje su teléfono como co-firmante seguro.'
+    },
+    fr: {
+      title: 'Signataire Mobile — Co-signature',
+      description: 'Associez votre téléphone comme co-signataire sécurisé.'
+    },
+    de: {
+      title: 'Mobiler Signierer — Remote Co-Signing',
+      description: 'Telefon als sicherer Co-Signer koppeln.'
+    },
+    pt: {
+      title: 'Assinante Móvel — Co-assinatura',
+      description: 'Emparelhe o telefone como co-assinante seguro.'
+    },
+    sw: { title: 'Msaini wa Simu', description: 'Oanisha simu yako kama msaini wa pamoja salama.' },
+    zh: { title: '移动签名器', description: '将手机配对为安全的联合签名设备。' }
+  },
+  verificationShield: {
+    en: {
+      title: 'Verification Shield — Public Proof',
+      description: 'Holographic public proof-of-existence page with Bitcoin anchor details.'
+    },
+    es: {
+      title: 'Escudo de Verificación',
+      description: 'Página pública de prueba de existencia anclada en Bitcoin.'
+    },
+    fr: {
+      title: 'Bouclier de Vérification',
+      description: "Page publique de preuve d'existence ancrée sur Bitcoin."
+    },
+    de: {
+      title: 'Verifizierungsschild',
+      description: 'Öffentliche Existenznachweis-Seite mit Bitcoin-Anker.'
+    },
+    pt: {
+      title: 'Escudo de Verificação',
+      description: 'Página pública de prova de existência no Bitcoin.'
+    },
+    sw: {
+      title: 'Ngao ya Uthibitishaji',
+      description: 'Ukurasa wa umma wa ushahidi wa kuwepo uliofungwa kwenye Bitcoin.'
+    },
+    zh: { title: '验证盾', description: '比特币锚定存在证明的公开验证页面。' }
+  },
+  templateDetail: {
+    en: {
+      title: 'Template Preview — Demo Mode',
+      description: 'Preview a Satohash legal template with pre-filled demo data and Bitcoin export.'
+    },
+    es: {
+      title: 'Vista Previa de Plantilla',
+      description: 'Vista previa con datos de demostración y exportación Bitcoin.'
+    },
+    fr: {
+      title: 'Aperçu du Modèle',
+      description: 'Aperçu avec données de démo et export Bitcoin.'
+    },
+    de: { title: 'Vorlagen-Vorschau', description: 'Vorschau mit Demo-Daten und Bitcoin-Export.' },
+    pt: {
+      title: 'Pré-visualização do Modelo',
+      description: 'Pré-visualização com dados de demonstração.'
+    },
+    sw: {
+      title: 'Hakiki ya Kiolezo',
+      description: 'Hakiki na data ya onyesho na usafirishaji wa Bitcoin.'
+    },
+    zh: { title: '模板预览', description: '使用预填演示数据预览 Satohash 法律模板。' }
+  },
   notFound: {
     en: {
       title: 'Page Not Found',

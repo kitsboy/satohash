@@ -120,7 +120,8 @@ export default function ImageVault() {
                 style={{ color: 'var(--text-secondary)' }}
               />
               <input
-                type="text"
+                type="search"
+                aria-label="Filter images by hash or filename"
                 placeholder="FILTER_BY_HASH_OR_NAME..."
                 className="w-full rounded-2xl px-14 py-5 text-xs font-black tracking-widest uppercase italic shadow-sm transition-all outline-none"
                 style={{

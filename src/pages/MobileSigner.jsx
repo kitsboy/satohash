@@ -12,8 +12,10 @@ import {
   ChevronRight,
   Activity
 } from 'lucide-react'
+import usePageMeta from '../hooks/usePageMeta'
 
 export default function MobileSigner() {
+  usePageMeta({ page: 'mobileSigner' })
   const [isPaired, setIsPaired] = useState(false)
   const [pendingRequests, setPendingRequests] = useState([
     { id: 'sig-8492', type: 'MULTI-SIG', doc: 'Institutional_Asset_Registry.pdf', time: '2m ago' }
@@ -139,7 +141,7 @@ export default function MobileSigner() {
                             style={{
                               backgroundColor: [0, 1, 2, 19, 20, 21].some((x) => i % 20 === x)
                                 ? 'var(--accent-active)'
-                                : Math.random() > 0.7
+                                : (i * 7 + 13) % 10 > 6
                                   ? 'var(--border-bright)'
                                   : 'transparent'
                             }}

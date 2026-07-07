@@ -13,11 +13,23 @@ const glassCard = 'rounded-2xl border border-[var(--border)] bg-[var(--bg-second
 const btnHolographic =
   'bg-[var(--accent-active)] text-white px-4 py-2 rounded-lg font-medium hover:opacity-90 transition-all duration-200 shadow-lg inline-flex items-center'
 
+function getForumNpub() {
+  return localStorage.getItem('satohash_npub') || sessionStorage.getItem('satohash_npub')
+}
+
 function forumHeaders() {
   const headers = { 'Content-Type': 'application/json' }
-  const npub = localStorage.getItem('satohash_npub')
+  const npub = getForumNpub()
   if (npub) headers['x-npub'] = npub
   return headers
+}
+
+function requireForumNpub() {
+  if (!getForumNpub()) {
+    toast.error('Connect your Nostr identity in Settings before posting in the forum.')
+    return false
+  }
+  return true
 }
 
 const Forum = () => {
@@ -86,6 +98,7 @@ const Forum = () => {
   const createThread = async (e) => {
     e.preventDefault()
     if (!newThreadTitle.trim()) return
+    if (!requireForumNpub()) return
     setLoading(true)
     try {
       const res = await fetch(`${API_URL}/api/forum/threads`, {
@@ -111,6 +124,7 @@ const Forum = () => {
   const createPost = async (e) => {
     e.preventDefault()
     if (!newPostContent.trim() || !id) return
+    if (!requireForumNpub()) return
     setLoading(true)
     try {
       const res = await fetch(`${API_URL}/api/forum/threads/${id}/posts`, {
@@ -201,6 +215,7 @@ const Forum = () => {
             </div>
             <div>
               <textarea
+                aria-label={t('forum', 'writePost')}
                 placeholder={t('forum', 'writePost')}
                 value={newPostContent}
                 onChange={(e) => setNewPostContent(e.target.value)}
@@ -263,6 +278,7 @@ const Forum = () => {
           <div className="space-y-2">
             <input
               type="text"
+              aria-label={t('forum', 'threadTitle')}
               placeholder={t('forum', 'threadTitle')}
               value={newThreadTitle}
               onChange={(e) => setNewThreadTitle(e.target.value)}
@@ -276,6 +292,7 @@ const Forum = () => {
             <div className="flex space-x-2">
               <input
                 type="text"
+                aria-label={t('forum', 'yourName')}
                 placeholder={t('forum', 'yourName')}
                 value={newAuthor}
                 onChange={(e) => setNewAuthor(e.target.value)}

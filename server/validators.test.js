@@ -4,7 +4,8 @@ import {
   parseUuid,
   anchorBodySchema,
   npubSchema,
-  webhookEventsSchema
+  webhookEventsSchema,
+  snapperBodySchema
 } from './validators.js'
 
 describe('validators', () => {
@@ -44,5 +45,20 @@ describe('validators', () => {
   it('validates webhook events enum', () => {
     expect(webhookEventsSchema.safeParse(['confirmed', 'test']).success).toBe(true)
     expect(webhookEventsSchema.safeParse(['invalid']).success).toBe(false)
+  })
+
+  it('validates snapper body with hash and URL', () => {
+    const hash = 'c'.repeat(64)
+    const result = snapperBodySchema.safeParse({
+      hash,
+      url: 'https://example.com/page',
+      title: 'Example capture'
+    })
+    expect(result.success).toBe(true)
+  })
+
+  it('rejects snapper body with invalid URL', () => {
+    const hash = 'd'.repeat(64)
+    expect(snapperBodySchema.safeParse({ hash, url: 'not-a-url' }).success).toBe(false)
   })
 })

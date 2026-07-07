@@ -95,6 +95,7 @@ export default function Vault() {
   const [exportProgress, setExportProgress] = useState(0)
   const [items, setItems] = useState([])
   const [loading, setLoading] = useState(true)
+  const [serverUnreachable, setServerUnreachable] = useState(false)
   const [page, setPage] = useState(1)
   const [hasMore, setHasMore] = useState(false)
   const parentRef = useRef(null)
@@ -163,8 +164,12 @@ export default function Vault() {
           const rows = Array.isArray(data) ? data : (data.stamps ?? [])
           setItems(mapStamps(rows))
           setHasMore(data.pagination?.hasNext || false)
+          setServerUnreachable(false)
+        } else {
+          setServerUnreachable(true)
         }
       } catch (e) {
+        setServerUnreachable(true)
         // Fall back to localStorage stamps if server not running
         const local = JSON.parse(localStorage.getItem('satohash_stamps') || '[]')
         const mapped = local.map((s) => ({
@@ -282,7 +287,7 @@ export default function Vault() {
         setPage(nextPage)
       }
     } catch (_err) {
-      // Load more failed — keep current items
+      toast.error('Could not load more proofs. Check your connection and try again.')
     }
   }
 
@@ -898,7 +903,8 @@ export default function Vault() {
               className="absolute top-1/2 left-4 -translate-y-1/2 text-[var(--text-secondary)] transition-colors group-focus-within:text-[var(--accent-gold)]"
             />
             <input
-              type="text"
+              type="search"
+              aria-label={t('vault', 'search')}
               placeholder={t('vault', 'search')}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
@@ -906,6 +912,7 @@ export default function Vault() {
             />
           </div>
           <button
+            type="button"
             onClick={handleExport}
             className="flex h-14 items-center justify-center gap-3 rounded-2xl border border-[var(--border-bright)] bg-white/5 px-8 text-[11px] font-black tracking-widest text-white uppercase shadow-xl transition-all hover:bg-white hover:text-black active:scale-[0.98]"
           >
@@ -914,6 +921,7 @@ export default function Vault() {
           </button>
 
           <button
+            type="button"
             onClick={handleExportZip}
             disabled={exportingZip || items.length === 0}
             className="flex h-14 items-center justify-center gap-3 rounded-2xl border border-[var(--border-gold)] bg-[var(--accent-gold-subtle)] px-8 text-[11px] font-black tracking-widest uppercase transition-all hover:bg-[var(--accent-gold)] hover:text-[#141b25] active:scale-[0.98] disabled:opacity-50"
@@ -928,6 +936,7 @@ export default function Vault() {
           </button>
 
           <button
+            type="button"
             onClick={handleBackupVault}
             className="flex h-14 items-center justify-center gap-2 rounded-2xl border border-[var(--border)] bg-transparent px-6 text-[10px] font-black tracking-widest uppercase transition-all hover:bg-[var(--surface-raised)]"
             style={{ color: 'var(--text-secondary)' }}
@@ -936,6 +945,7 @@ export default function Vault() {
           </button>
 
           <button
+            type="button"
             onClick={handleImportVault}
             className="flex h-14 items-center justify-center gap-2 rounded-2xl border border-[var(--border)] bg-transparent px-6 text-[10px] font-black tracking-widest uppercase transition-all hover:bg-[var(--surface-raised)]"
             style={{ color: 'var(--text-secondary)' }}
@@ -944,6 +954,24 @@ export default function Vault() {
           </button>
         </div>
       </header>
+
+      {serverUnreachable && (
+        <div
+          role="alert"
+          className="flex items-center gap-3 rounded-2xl border p-4"
+          style={{
+            background: 'rgba(239, 68, 68, 0.06)',
+            borderColor: 'var(--accent-danger)',
+            color: 'var(--text-primary)'
+          }}
+        >
+          <Globe size={18} className="shrink-0 text-[var(--accent-danger)]" />
+          <p className="text-xs leading-relaxed">
+            Server unreachable — showing cached proofs from this browser. Start the API or check
+            your connection to sync the full vault.
+          </p>
+        </div>
+      )}
 
       {/* Offline sync banner if we have offline stamps */}
       {offlineQueue.length > 0 && (
@@ -976,10 +1004,17 @@ export default function Vault() {
       )}
 
       {/* Modern Tab System */}
-      <div className="scrollbar-hide flex gap-10 overflow-x-auto border-b border-[var(--border)]">
+      <div
+        role="tablist"
+        aria-label="Vault filter tabs"
+        className="scrollbar-hide flex gap-10 overflow-x-auto border-b border-[var(--border)]"
+      >
         {['all', 'capsules', 'files', 'snaps'].map((tab) => (
           <button
             key={tab}
+            type="button"
+            role="tab"
+            aria-selected={activeTab === tab}
             onClick={() => setActiveTab(tab)}
             className={`relative pb-6 text-[10px] font-black tracking-[0.3em] whitespace-nowrap uppercase transition-all ${activeTab === tab ? 'text-white' : 'text-[var(--text-secondary)] hover:text-white'}`}
           >

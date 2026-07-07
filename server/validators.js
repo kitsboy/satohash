@@ -34,3 +34,10 @@ export function parseUuid(value) {
   const result = uuidSchema.safeParse(value)
   return result.success ? result.data : null
 }
+
+export const snapperBodySchema = z.object({
+  hash: hashSchema,
+  url: z.string().url('Valid source URL required'),
+  title: z.string().max(500).optional(),
+  metadata: z.record(z.string(), z.union([z.string(), z.number(), z.boolean()])).optional()
+})

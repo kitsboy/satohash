@@ -32,7 +32,7 @@ import Stripe from 'stripe'
 import adminRouter from './admin.js'
 import nftRouter from './routes/nft.js'
 import anchorRouter from './routes/anchor.js'
-import { parseHash, parseUuid, webhookEventsSchema } from './validators.js'
+import { parseHash, parseUuid, webhookEventsSchema, snapperBodySchema } from './validators.js'
 import { startAlertDaemon } from './daemons/index.js'
 
 // New Productions Items 1-7
@@ -1105,10 +1105,14 @@ app.post('/api/capture/url', paywallMiddleware, async (req, res, next) => {
  */
 app.post('/api/capture/snapper', async (req, res, next) => {
   try {
-    const { hash, url, metadata, title } = req.body
+    const validation = snapperBodySchema.safeParse(req.body)
+    if (!validation.success) {
+      return sendError(res, ERROR_CODES.VALIDATION_FAILED, {
+        details: validation.error.issues.map((i) => i.message)
+      })
+    }
+    const { hash, url, metadata, title } = validation.data
     const auth = req.headers['x-snapper-key']
-
-    if (!hash || !url) return res.status(400).json({ error: 'Missing content hash or source URL.' })
     if (auth !== process.env.SNAPPER_KEY && process.env.NODE_ENV === 'production') {
       return res.status(401).json({ error: 'Invalid Snapper extension key.' })
     }
@@ -1700,9 +1704,11 @@ app.delete('/api/webhooks/:id', requireNpub, (req, res) => {
 })
 
 // POST /api/webhooks/:id/test — send a test ping and record delivery result
-app.post('/api/webhooks/:id/test', async (req, res) => {
+app.post('/api/webhooks/:id/test', requireNpub, async (req, res) => {
   try {
-    const hook = db.prepare('SELECT * FROM webhooks WHERE id = ?').get(req.params.id)
+    const id = parseUuid(req.params.id)
+    if (!id) return sendError(res, ERROR_CODES.VALIDATION_FAILED, { details: 'Invalid webhook ID' })
+    const hook = db.prepare('SELECT * FROM webhooks WHERE id = ?').get(id)
     if (!hook) return res.status(404).json({ error: 'Webhook not found' })
     const urlCheck = validateWebhookUrl(hook.url)
     if (!urlCheck.ok) return res.status(400).json({ error: urlCheck.error })
@@ -1976,6 +1982,9 @@ app.post('/api/forum/threads', requireNpub, (req, res) => {
 })
 
 app.post('/api/forum/threads/:id/posts', requireNpub, (req, res) => {
+  const threadId = parseUuid(req.params.id)
+  if (!threadId)
+    return sendError(res, ERROR_CODES.VALIDATION_FAILED, { details: 'Invalid thread ID' })
   const validation = forumPostSchema.safeParse(req.body)
   if (!validation.success) {
     return sendError(res, ERROR_CODES.VALIDATION_FAILED, {
@@ -1983,16 +1992,16 @@ app.post('/api/forum/threads/:id/posts', requireNpub, (req, res) => {
     })
   }
   const { content, author } = validation.data
-  const thread = db.prepare('SELECT id FROM forum_threads WHERE id = ?').get(req.params.id)
+  const thread = db.prepare('SELECT id FROM forum_threads WHERE id = ?').get(threadId)
   if (!thread) return sendError(res, ERROR_CODES.NOT_FOUND)
   const id = uuidv4()
   db.prepare('INSERT INTO forum_posts (id, thread_id, content, author) VALUES (?, ?, ?, ?)').run(
     id,
-    req.params.id,
+    threadId,
     content,
     author || 'Anonymous'
   )
-  db.prepare('UPDATE forum_threads SET post_count = post_count + 1 WHERE id = ?').run(req.params.id)
+  db.prepare('UPDATE forum_threads SET post_count = post_count + 1 WHERE id = ?').run(threadId)
   forumPostsCounter.inc()
   res.json({ post: db.prepare('SELECT * FROM forum_posts WHERE id = ?').get(id) })
 })

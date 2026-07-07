@@ -4,8 +4,7 @@ import { QRCodeSVG } from 'qrcode.react'
 import { Copy, Check, Heart, ShieldCheck } from 'lucide-react'
 import Modal from './Modal'
 import Button from './Button'
-
-const BTC_ADDRESS = 'bc1qhm5ndfjhqxdk3cx0pngyps4f5nnwdckulmge6c8keyf2pk0neqtshjn8ad'
+import { BTC_ADDRESS } from '../config/constants'
 
 export default function DonationModal({ isOpen, onClose }) {
   const { t } = useTranslation()
