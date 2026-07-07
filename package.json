@@ -17,6 +17,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
+    "test:template-demo": "PLAYWRIGHT_BASE_URL=http://localhost:3000 PLAYWRIGHT_SKIP_WEBSERVER=1 playwright test tests/e2e/template-demo.spec.js --workers=1 --reporter=line",
     "i18n:check": "node scripts/i18n-check.js",
     "deploy": "bash deploy.sh",
     "docs:sync": "node scripts/sync-docs.js",
@@ -120,6 +121,7 @@
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.12.1",
+    "@playwright/test": "^1.61.1",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@types/nprogress": "^0.2.3",
