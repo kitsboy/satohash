@@ -19,6 +19,7 @@ import {
 } from 'lucide-react'
 import { useState, useCallback, useEffect, useRef } from 'react'
 import { getTieredFeeEstimates } from '../utils/mempool.js'
+import FeeAdvisor from '../components/FeeAdvisor'
 import { addErrorBreadcrumb } from '../utils/errors.js'
 import { clientId } from '../utils/id'
 import { toast } from 'sonner'
@@ -1099,6 +1100,7 @@ export default function Stamp() {
 
         {/* ── Configuration Sidebar ──────────────── */}
         <div className="space-y-8">
+          <FeeAdvisor />
           {/* Web Capture shortcut */}
           <div className="space-y-3 rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] p-5">
             <div className="flex items-center gap-3">
@@ -1124,7 +1126,7 @@ export default function Stamp() {
               Capture and timestamp any webpage as proof it existed at this moment.
             </p>
             <a
-              href="/snapper"
+              href="/web-capture"
               className="flex items-center justify-center gap-2 rounded-xl border py-2.5 text-[10px] font-black tracking-widest uppercase transition-all hover:text-[var(--text-primary)]"
               style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
             >
