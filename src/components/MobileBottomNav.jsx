@@ -80,7 +80,7 @@ export default function MobileBottomNav() {
                     className="text-[9px] font-semibold tracking-wider"
                     style={{ color: 'var(--text-secondary)', opacity: 0.6 }}
                   >
-                    Not Connected
+                    {t('access', 'notConnected') || 'Not Connected'}
                   </span>
                 )}
               </div>

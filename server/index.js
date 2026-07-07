@@ -32,7 +32,7 @@ import Stripe from 'stripe'
 import adminRouter from './admin.js'
 import nftRouter from './routes/nft.js'
 import anchorRouter from './routes/anchor.js'
-import { parseHash, parseUuid } from './validators.js'
+import { parseHash, parseUuid, webhookEventsSchema } from './validators.js'
 import { startAlertDaemon } from './daemons/index.js'
 
 // New Productions Items 1-7
@@ -1052,10 +1052,17 @@ app.get('/api/vault/images', (req, res) => {
  *   post:
  *     summary: Notarize a URL (Browser Extension support).
  */
+const captureUrlSchema = z.object({ url: z.string().url('Valid URL required') })
+
 app.post('/api/capture/url', paywallMiddleware, async (req, res, next) => {
   try {
-    const { url } = req.body
-    if (!url) return res.status(400).json({ error: 'URL is required.' })
+    const parsed = captureUrlSchema.safeParse(req.body)
+    if (!parsed.success) {
+      return sendError(res, ERROR_CODES.VALIDATION_FAILED, {
+        details: parsed.error.issues.map((i) => i.message)
+      })
+    }
+    const { url } = parsed.data
 
     const captureData = {
       url,
@@ -1646,41 +1653,49 @@ app.post('/api/push/unsubscribe', (req, res) => {
 // ─── Webhook CRUD Endpoints ───────────────────────────────────────────────────
 
 // GET /api/webhooks — list all webhooks
-app.get('/api/webhooks', (req, res) => {
+app.get('/api/webhooks', requireNpub, (req, res) => {
   try {
     const rows = db
       .prepare('SELECT id, url, events, created_at FROM webhooks ORDER BY created_at DESC')
       .all()
     res.json({ webhooks: rows.map((r) => ({ ...r, events: JSON.parse(r.events || '[]') })) })
-  } catch (e) {
-    res.status(500).json({ error: e.message })
+  } catch {
+    return sendError(res, ERROR_CODES.INTERNAL_ERROR)
   }
 })
 
 // POST /api/webhooks — add webhook
 app.post('/api/webhooks', requireNpub, (req, res) => {
   const { url, events = ['confirmed', 'revoked'] } = req.body
-  if (!url) return res.status(400).json({ error: 'url required' })
+  if (!url) return sendError(res, ERROR_CODES.VALIDATION_FAILED, { details: 'url required' })
+  const eventsParsed = webhookEventsSchema.safeParse(events)
+  if (!eventsParsed.success) {
+    return sendError(res, ERROR_CODES.VALIDATION_FAILED, { details: 'Invalid webhook events' })
+  }
   const urlCheck = validateWebhookUrl(url)
-  if (!urlCheck.ok) return res.status(400).json({ error: urlCheck.error })
+  if (!urlCheck.ok) {
+    return sendError(res, ERROR_CODES.VALIDATION_FAILED, { details: urlCheck.error })
+  }
   try {
     const id = crypto.randomUUID()
     db.prepare(
       'INSERT INTO webhooks (id, url, events, created_at) VALUES (?, ?, ?, CURRENT_TIMESTAMP)'
-    ).run(id, urlCheck.url, JSON.stringify(events))
-    res.json({ webhook: { id, url, events } })
-  } catch (e) {
-    res.status(500).json({ error: e.message })
+    ).run(id, urlCheck.url, JSON.stringify(eventsParsed.data))
+    res.json({ webhook: { id, url, events: eventsParsed.data } })
+  } catch {
+    return sendError(res, ERROR_CODES.INTERNAL_ERROR)
   }
 })
 
 // DELETE /api/webhooks/:id
-app.delete('/api/webhooks/:id', (req, res) => {
+app.delete('/api/webhooks/:id', requireNpub, (req, res) => {
+  const id = parseUuid(req.params.id)
+  if (!id) return sendError(res, ERROR_CODES.VALIDATION_FAILED, { details: 'Invalid webhook ID' })
   try {
-    db.prepare('DELETE FROM webhooks WHERE id = ?').run(req.params.id)
+    db.prepare('DELETE FROM webhooks WHERE id = ?').run(id)
     res.json({ ok: true })
-  } catch (e) {
-    res.status(500).json({ error: e.message })
+  } catch {
+    return sendError(res, ERROR_CODES.INTERNAL_ERROR)
   }
 })
 
@@ -1922,11 +1937,14 @@ app.get('/api/forum/threads', (req, res) => {
 })
 
 app.get('/api/forum/threads/:id', (req, res) => {
-  const thread = db.prepare('SELECT * FROM forum_threads WHERE id = ?').get(req.params.id)
+  const threadId = parseUuid(req.params.id)
+  if (!threadId)
+    return sendError(res, ERROR_CODES.VALIDATION_FAILED, { details: 'Invalid thread ID' })
+  const thread = db.prepare('SELECT * FROM forum_threads WHERE id = ?').get(threadId)
   if (!thread) return res.status(404).json({ error: 'Thread not found' })
   const posts = db
     .prepare('SELECT * FROM forum_posts WHERE thread_id = ? ORDER BY created_at ASC')
-    .all(req.params.id)
+    .all(threadId)
   res.json({ thread, posts })
 })
 

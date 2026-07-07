@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useEscapeKey } from '../utils/a11y'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { useI18n } from '../i18n'
@@ -37,6 +38,7 @@ import usePageMeta from '../hooks/usePageMeta'
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
 
 function UpsellModal({ isOpen, onClose, onSubscribe }) {
+  useEscapeKey(isOpen, onClose)
   return (
     <AnimatePresence>
       {isOpen && (
@@ -944,6 +946,8 @@ export default function Dashboard() {
 function ActionBtn({ icon: Icon, label, onClick, secondary, amber }) {
   return (
     <button
+      type="button"
+      aria-label={label}
       onClick={onClick}
       className="flex w-full items-center justify-center gap-2 rounded-xl px-4 py-3 text-[10px] font-black tracking-wide uppercase transition-all hover:opacity-90"
       style={

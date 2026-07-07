@@ -32,8 +32,10 @@ import {
 import { toast } from 'sonner'
 import { Link } from 'react-router-dom'
 import PartnershipForm from '../components/PartnershipForm'
+import usePageMeta from '../hooks/usePageMeta'
 
 export default function DeveloperPortal() {
+  usePageMeta({ page: 'developer' })
   const [activeTab, setActiveTab] = useState('mesh')
   const [copied, setCopied] = useState(false)
 

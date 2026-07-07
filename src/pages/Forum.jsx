@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { Plus, Send, MessageSquare } from 'lucide-react'
+import { Plus, Send, MessageSquare, RefreshCw, AlertCircle } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { toast } from 'sonner'
 import { useI18n } from '../i18n'
@@ -13,6 +13,13 @@ const glassCard = 'rounded-2xl border border-[var(--border)] bg-[var(--bg-second
 const btnHolographic =
   'bg-[var(--accent-active)] text-white px-4 py-2 rounded-lg font-medium hover:opacity-90 transition-all duration-200 shadow-lg inline-flex items-center'
 
+function forumHeaders() {
+  const headers = { 'Content-Type': 'application/json' }
+  const npub = localStorage.getItem('satohash_npub')
+  if (npub) headers['x-npub'] = npub
+  return headers
+}
+
 const Forum = () => {
   usePageMeta({ page: 'forum' })
   const [threads, setThreads] = useState([])
@@ -22,109 +29,120 @@ const Forum = () => {
   const [newPostContent, setNewPostContent] = useState('')
   const [newPostAuthor, setNewPostAuthor] = useState('Anonymous')
   const [loading, setLoading] = useState(false)
+  const [fetchError, setFetchError] = useState(null)
   const navigate = useNavigate()
   const { id } = useParams()
   const { t } = useI18n()
 
-  const fetchThreads = async () => {
+  const fetchThreads = useCallback(async () => {
     setLoading(true)
+    setFetchError(null)
     try {
       const res = await fetch(`${API_URL}/api/forum/threads`)
-      if (res.ok) {
-        const data = await res.json()
-        setThreads(data)
-      }
+      if (!res.ok) throw new Error(`HTTP ${res.status}`)
+      const data = await res.json()
+      setThreads(data.threads ?? [])
     } catch (err) {
       console.error('Error fetching threads:', err)
-      toast.error('Failed to load forum threads.')
+      setFetchError(t('errors', 'loadFailed') || 'Failed to load forum threads')
+      toast.error(t('errors', 'loadFailed') || 'Failed to load forum threads.')
+    } finally {
+      setLoading(false)
     }
-    setLoading(false)
-  }
+  }, [t])
 
-  const fetchThread = async (threadId) => {
-    setLoading(true)
-    try {
-      const res = await fetch(`${API_URL}/api/forum/thread/${threadId}`)
-      if (res.ok) {
+  const fetchThread = useCallback(
+    async (threadId) => {
+      setLoading(true)
+      setFetchError(null)
+      try {
+        const res = await fetch(`${API_URL}/api/forum/threads/${threadId}`)
+        if (!res.ok) throw new Error(`HTTP ${res.status}`)
         const data = await res.json()
-        setSelectedThread(data)
+        setSelectedThread({ ...data.thread, posts: data.posts ?? [] })
+      } catch (err) {
+        console.error('Error fetching thread:', err)
+        setFetchError(t('errors', 'loadFailed') || 'Failed to load thread')
+        toast.error(t('errors', 'loadFailed') || 'Failed to load thread.')
+      } finally {
+        setLoading(false)
       }
-    } catch (err) {
-      console.error('Error fetching thread:', err)
-      toast.error('Failed to load thread.')
-    }
-    setLoading(false)
-  }
+    },
+    [t]
+  )
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     fetchThreads()
-  }, [])
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fetchThreads])
+
   useEffect(() => {
     if (id) {
       fetchThread(id)
     } else {
       setSelectedThread(null)
     }
-  }, [id])
+  }, [id, fetchThread])
 
   const createThread = async (e) => {
     e.preventDefault()
     if (!newThreadTitle.trim()) return
     setLoading(true)
     try {
-      const res = await fetch(`${API_URL}/api/forum/thread`, {
+      const res = await fetch(`${API_URL}/api/forum/threads`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: forumHeaders(),
         body: JSON.stringify({ title: newThreadTitle, author: newAuthor })
       })
-      if (res.ok) {
-        const newThread = await res.json()
-        setThreads([newThread, ...threads])
-        setNewThreadTitle('')
-        setNewAuthor('Anonymous')
-        navigate(`/forum/${newThread.id}`)
-      }
+      if (!res.ok) throw new Error(`HTTP ${res.status}`)
+      const data = await res.json()
+      const thread = data.thread ?? data
+      setThreads((prev) => [thread, ...prev])
+      setNewThreadTitle('')
+      setNewAuthor('Anonymous')
+      navigate(`/forum/${thread.id}`)
     } catch (err) {
       console.error('Error creating thread:', err)
-      toast.error('Failed to create thread.')
+      toast.error(t('errors', 'generic') || 'Failed to create thread.')
+    } finally {
+      setLoading(false)
     }
-    setLoading(false)
   }
 
   const createPost = async (e) => {
     e.preventDefault()
-    if (!newPostContent.trim()) return
+    if (!newPostContent.trim() || !id) return
     setLoading(true)
     try {
-      const res = await fetch(`${API_URL}/api/forum/thread/${id}/post`, {
+      const res = await fetch(`${API_URL}/api/forum/threads/${id}/posts`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: forumHeaders(),
         body: JSON.stringify({ content: newPostContent, author: newPostAuthor })
       })
-      if (res.ok) {
-        const newPost = await res.json()
-        if (selectedThread) {
-          setSelectedThread({ ...selectedThread, posts: [...selectedThread.posts, newPost] })
-        }
-        setNewPostContent('')
-        setNewPostAuthor('Anonymous')
+      if (!res.ok) throw new Error(`HTTP ${res.status}`)
+      const data = await res.json()
+      const post = data.post ?? data
+      if (selectedThread) {
+        setSelectedThread({ ...selectedThread, posts: [...(selectedThread.posts ?? []), post] })
       }
+      setNewPostContent('')
+      setNewPostAuthor('Anonymous')
     } catch (err) {
       console.error('Error creating post:', err)
-      toast.error('Failed to submit reply.')
+      toast.error(t('errors', 'generic') || 'Failed to submit reply.')
+    } finally {
+      setLoading(false)
     }
-    setLoading(false)
   }
 
-  if (loading)
+  if (loading && !selectedThread && threads.length === 0)
     return (
       <div
         className="flex h-64 items-center justify-center"
         style={{ color: 'var(--text-secondary)' }}
+        role="status"
+        aria-live="polite"
       >
-        Loading...
+        {t('common', 'loading')}
       </div>
     )
 
@@ -137,6 +155,7 @@ const Forum = () => {
           className={`${glassCard} p-6`}
         >
           <button
+            type="button"
             onClick={() => navigate('/forum')}
             className="mb-4 hover:underline"
             style={{ color: 'var(--accent-active)' }}
@@ -150,7 +169,7 @@ const Forum = () => {
             By {selectedThread.author} on {new Date(selectedThread.created_at).toLocaleDateString()}
           </p>
           <div className="mb-6 space-y-4">
-            {selectedThread.posts.map((post) => (
+            {(selectedThread.posts ?? []).map((post) => (
               <div
                 key={post.id}
                 className="rounded-lg p-4"
@@ -216,6 +235,27 @@ const Forum = () => {
         <p className="mb-6" style={{ color: 'var(--text-secondary)' }}>
           {t('forum', 'subtitle')}
         </p>
+
+        {fetchError && (
+          <div
+            role="alert"
+            className="mb-6 flex items-center justify-between gap-4 rounded-xl border border-[var(--accent-danger)]/30 bg-[var(--accent-danger)]/10 px-4 py-3"
+          >
+            <div className="flex items-center gap-2 text-sm text-[var(--accent-danger)]">
+              <AlertCircle size={16} />
+              {fetchError}
+            </div>
+            <button
+              type="button"
+              onClick={() => (id ? fetchThread(id) : fetchThreads())}
+              className="flex items-center gap-2 text-xs font-bold uppercase"
+            >
+              <RefreshCw size={14} />
+              {t('common', 'retry')}
+            </button>
+          </div>
+        )}
+
         <form onSubmit={createThread} className={`p-4 ${glassCard} mb-6`}>
           <h2 className="mb-3 text-xl font-semibold" style={{ color: 'var(--text-primary)' }}>
             {t('forum', 'newThread')}
@@ -269,6 +309,14 @@ const Forum = () => {
                 key={thread.id}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault()
+                    navigate(`/forum/${thread.id}`)
+                  }
+                }}
                 className={`${glassCard} hover:shadow-glow cursor-pointer p-4 transition-all`}
                 onClick={() => navigate(`/forum/${thread.id}`)}
               >

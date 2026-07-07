@@ -1,5 +1,11 @@
 import { describe, it, expect } from 'vitest'
-import { parseHash, parseUuid, anchorBodySchema, npubSchema } from './validators.js'
+import {
+  parseHash,
+  parseUuid,
+  anchorBodySchema,
+  npubSchema,
+  webhookEventsSchema
+} from './validators.js'
 
 describe('validators', () => {
   it('accepts valid SHA-256 hex', () => {
@@ -33,5 +39,10 @@ describe('validators', () => {
   it('validates npub format', () => {
     const npub = `npub1${'a'.repeat(58)}`
     expect(npubSchema.safeParse(npub).success).toBe(true)
+  })
+
+  it('validates webhook events enum', () => {
+    expect(webhookEventsSchema.safeParse(['confirmed', 'test']).success).toBe(true)
+    expect(webhookEventsSchema.safeParse(['invalid']).success).toBe(false)
   })
 })

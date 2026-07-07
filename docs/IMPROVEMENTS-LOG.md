@@ -237,4 +237,38 @@
 
 **Status: 200/200 complete ✅ (Batches 1–5)**
 
+---
+
+## Batch 6 — Fixes & Polish (Items 201–225)
+
+**Completed:** 2026-07-07 (Build 50)
+
+- [x] 201. Fix Forum API paths (`/api/forum/threads`, `/posts`) — was broken
+- [x] 202. Forum parses `{ threads }` / `{ thread, posts }` response shapes correctly
+- [x] 203. Forum sends `x-npub` header on create thread/post
+- [x] 204. Forum error banner with retry button
+- [x] 205. Forum thread cards keyboard-accessible (Enter/Space)
+- [x] 206. Vault revoke modal — dialog ARIA + Escape dismiss
+- [x] 207. Vault ActionBtn `aria-label` on icon-only buttons
+- [x] 208. Dashboard ActionBtn `aria-label`
+- [x] 209. Dashboard UpsellModal Escape key handler
+- [x] 210. Stamp mode selector `aria-pressed` on all 4 modes
+- [x] 211. Stamp deposition record/stop `aria-label`
+- [x] 212. Stamp fee fetch failure shows toast (not silent)
+- [x] 213. Navbar logo → accessible button with `aria-label`
+- [x] 214. Navbar mobile menu `aria-expanded`
+- [x] 215. Settings tabs `role="tablist"` + `aria-selected`
+- [x] 216. ImageVault grid/list toggles `aria-pressed`
+- [x] 217. BackToTop `type="button"`
+- [x] 218. App Router React v7 future flags (silences warnings)
+- [x] 219. DeveloperPortal `usePageMeta`
+- [x] 220. BOLT-12 Offers page `usePageMeta`
+- [x] 221. AdminThrottle `usePageMeta`
+- [x] 222. Webhooks GET/DELETE require `requireNpub` + UUID validation
+- [x] 223. Webhook POST events validated via `webhookEventsSchema`
+- [x] 224. `POST /api/capture/url` Zod URL validation
+- [x] 225. `server/routes/anchor.test.js` — 3 API contract tests
+
+**Status: 225/225 complete ✅ (Batches 1–6)**
+
 *Safe Harbour · Part of the [Give A Bit](https://giveabit.io) family.*

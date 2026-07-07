@@ -140,11 +140,13 @@ export default function ImageVault() {
                 active={viewMode === 'grid'}
                 onClick={() => setViewMode('grid')}
                 icon={LayoutGrid}
+                label="Grid view"
               />
               <ControlButton
                 active={viewMode === 'list'}
                 onClick={() => setViewMode('list')}
                 icon={List}
+                label="List view"
               />
             </div>
           </div>
@@ -340,9 +342,12 @@ function VaultItem({ image, viewMode, idx }) {
   )
 }
 
-function ControlButton({ active, onClick, icon: Icon }) {
+function ControlButton({ active, onClick, icon: Icon, label }) {
   return (
     <button
+      type="button"
+      aria-pressed={active}
+      aria-label={label}
       onClick={onClick}
       className="rounded-xl p-3 transition-all"
       style={

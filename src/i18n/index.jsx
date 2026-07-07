@@ -167,7 +167,8 @@ export const translations = {
       title: 'Welcome to Satohash',
       subtitle: 'The professional standard for Bitcoin-anchored document notarization',
       getStarted: 'Get Started',
-      learnMore: 'Learn More'
+      learnMore: 'Learn More',
+      notConnected: 'Not Connected'
     },
     errors: {
       generic: 'Something went wrong',

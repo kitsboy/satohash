@@ -26,6 +26,7 @@ import { useSocket } from '../hooks/useSocket'
 import { SkeletonList } from '../components/Skeletons'
 import { useI18n } from '../i18n'
 import usePageMeta from '../hooks/usePageMeta'
+import { useEscapeKey } from '../utils/a11y'
 
 const StatusBadge = ({ status }) => {
   const { t } = useI18n()
@@ -98,6 +99,11 @@ export default function Vault() {
   const [hasMore, setHasMore] = useState(false)
   const parentRef = useRef(null)
   const [revokeTarget, setRevokeTarget] = useState(null)
+  const closeRevoke = () => {
+    setRevokeTarget(null)
+    setRevokeReason('')
+  }
+  useEscapeKey(!!revokeTarget, closeRevoke)
   const [revokeReason, setRevokeReason] = useState('')
   const [revoking, setRevoking] = useState(false)
   const [exportingZip, setExportingZip] = useState(false)
@@ -800,17 +806,19 @@ export default function Vault() {
       <AnimatePresence>
         {revokeTarget && (
           <>
-            <motion.div
+            <motion.button
+              type="button"
+              aria-label="Close revoke dialog"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               className="fixed inset-0 z-[150] bg-black/70 backdrop-blur-sm"
-              onClick={() => {
-                setRevokeTarget(null)
-                setRevokeReason('')
-              }}
+              onClick={closeRevoke}
             />
             <motion.div
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="revoke-dialog-title"
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
@@ -820,7 +828,9 @@ export default function Vault() {
                 borderColor: 'color-mix(in srgb, var(--accent-danger) 40%, transparent)'
               }}
             >
-              <h3 className="text-xl font-black tracking-tight">Revoke Proof?</h3>
+              <h3 id="revoke-dialog-title" className="text-xl font-black tracking-tight">
+                Revoke Proof?
+              </h3>
               <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
                 This permanently marks <strong className="text-white">{revokeTarget.name}</strong>{' '}
                 as revoked. The Bitcoin anchor remains immutable — this only flags the record in
@@ -850,10 +860,8 @@ export default function Vault() {
                   )}
                 </button>
                 <button
-                  onClick={() => {
-                    setRevokeTarget(null)
-                    setRevokeReason('')
-                  }}
+                  type="button"
+                  onClick={closeRevoke}
                   className="h-12 flex-1 rounded-xl border text-xs font-black uppercase opacity-60 hover:opacity-100"
                   style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
                 >
@@ -1432,6 +1440,8 @@ export default function Vault() {
 function ActionBtn({ icon: Icon, label, onClick }) {
   return (
     <button
+      type="button"
+      aria-label={label}
       onClick={onClick}
       className="group/btn relative flex h-12 w-12 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-[var(--text-secondary)] transition-all hover:scale-110 hover:bg-white hover:text-black"
     >

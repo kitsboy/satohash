@@ -18,8 +18,14 @@ import {
 import { sendPaymentRequest } from '../utils/nwc'
 import { toast } from 'sonner'
 import { QRCodeSVG } from 'qrcode.react'
+import usePageMeta from '../hooks/usePageMeta'
 
 export default function Bolt12Offers() {
+  usePageMeta({
+    page: 'pricing',
+    title: 'BOLT-12 Offers',
+    description: 'Lightning BOLT-12 offers for Satohash Pro and institutional tiers.'
+  })
   const [isPaid, setIsPaid] = useState(false)
   const [nwcUrl, setNwcUrl] = useState('')
   const [isConnectingNwc, setIsConnectingNwc] = useState(false)

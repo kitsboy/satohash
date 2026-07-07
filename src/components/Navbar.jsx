@@ -36,7 +36,9 @@ export default function Navbar() {
       >
         <div className="layout-container flex w-full items-center justify-between">
           {/* Logo */}
-          <motion.div
+          <motion.button
+            type="button"
+            aria-label="Go to home"
             whileHover={{ scale: 1.02 }}
             transition={navSpring}
             onClick={() => navigate('/')}
@@ -62,7 +64,7 @@ export default function Navbar() {
               {APP_CONFIG.NAME}
             </span>
             <span className="pill-indigo hidden sm:inline-flex">v4.0</span>
-          </motion.div>
+          </motion.button>
 
           {/* Main Links */}
           <div className="hidden items-center gap-1 md:flex">
@@ -148,6 +150,7 @@ export default function Navbar() {
                 color: 'var(--text-base)'
               }}
               aria-label="Toggle mobile menu"
+              aria-expanded={isOpen}
             >
               {isOpen ? <X size={18} /> : <Menu size={18} />}
             </motion.button>

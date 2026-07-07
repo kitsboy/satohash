@@ -107,7 +107,7 @@ export default function Stamp() {
         addErrorBreadcrumb('fees.fetch', 'Fee estimates loaded', 'info')
       } catch (e) {
         addErrorBreadcrumb('fees.fetch', e.message, 'error')
-        console.error('Failed to load fees')
+        toast.error('Fee estimates unavailable', { description: 'Using default priority' })
       }
     }
     fetchFees()
@@ -465,6 +465,9 @@ export default function Stamp() {
           {/* Mode Selector */}
           <div className="mb-6 grid grid-cols-2 gap-3 md:grid-cols-4">
             <button
+              type="button"
+              aria-pressed={stampMode === 'single'}
+              aria-label="Single file stamp mode"
               onClick={() => {
                 setStampMode('single')
                 setIsCapsuleMode(false)
@@ -490,6 +493,9 @@ export default function Stamp() {
               </div>
             </button>
             <button
+              type="button"
+              aria-pressed={stampMode === 'capsule'}
+              aria-label="Time capsule stamp mode"
               onClick={() => {
                 setStampMode('capsule')
                 setIsCapsuleMode(true)
@@ -516,6 +522,9 @@ export default function Stamp() {
               </div>
             </button>
             <button
+              type="button"
+              aria-pressed={stampMode === 'redact'}
+              aria-label="ZK redact stamp mode"
               onClick={() => {
                 setStampMode('redact')
                 setIsCapsuleMode(false)
@@ -541,6 +550,9 @@ export default function Stamp() {
               </div>
             </button>
             <button
+              type="button"
+              aria-pressed={stampMode === 'deposition'}
+              aria-label="Deposition stamp mode"
               onClick={() => {
                 setStampMode('deposition')
                 setIsCapsuleMode(false)
@@ -676,6 +688,8 @@ export default function Stamp() {
                       <div className="flex justify-center gap-4">
                         {recordingState !== 'recording' ? (
                           <button
+                            type="button"
+                            aria-label="Start recording deposition"
                             onClick={startRecording}
                             className="flex h-16 w-16 items-center justify-center rounded-full bg-emerald-500 text-white shadow-[0_0_15px_rgba(16,185,129,0.3)] transition-all hover:scale-105"
                           >
@@ -683,6 +697,8 @@ export default function Stamp() {
                           </button>
                         ) : (
                           <button
+                            type="button"
+                            aria-label="Stop recording deposition"
                             onClick={stopRecording}
                             className="flex h-16 w-16 animate-pulse items-center justify-center rounded-full bg-red-500 text-white shadow-[0_0_15px_rgba(239,68,68,0.5)] transition-all hover:scale-105"
                           >

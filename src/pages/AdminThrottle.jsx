@@ -13,10 +13,15 @@ import {
 } from 'recharts'
 import { AlertCircle, Activity, Database, TrendingUp, ChevronRight } from 'lucide-react'
 import { toast } from 'sonner'
+import usePageMeta from '../hooks/usePageMeta'
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
 
 export default function AdminThrottle() {
+  usePageMeta({
+    title: 'Admin Throttle',
+    description: 'Satohash admin rate-limit and system metrics dashboard.'
+  })
   const [metrics, setMetrics] = useState(null)
   const [loading, setLoading] = useState(true)
   const [expanded, setExpanded] = useState({})

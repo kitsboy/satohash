@@ -478,10 +478,17 @@ export default function Settings() {
           </h1>
         </div>
 
-        <div className="scrollbar-hide flex shrink-0 overflow-x-auto rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] p-1 shadow-2xl lg:p-1.5">
+        <div
+          role="tablist"
+          aria-label="Settings sections"
+          className="scrollbar-hide flex shrink-0 overflow-x-auto rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] p-1 shadow-2xl lg:p-1.5"
+        >
           {['profile', 'security', 'billing'].map((tab) => (
             <button
               key={tab}
+              type="button"
+              role="tab"
+              aria-selected={activeTab === tab}
               onClick={() => setActiveTab(tab)}
               className={`rounded-xl px-3 py-2 text-[10px] font-black tracking-widest whitespace-nowrap uppercase transition-all sm:px-6 lg:px-4 lg:py-3 ${activeTab === tab ? 'border border-[var(--border-bright)] bg-[var(--bg-primary)] text-[var(--text-primary)] shadow-lg' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}
             >
