@@ -120,6 +120,37 @@ for (const lang of ['de', 'pt', 'sw']) {
   }
 }
 
+// Marketing pages JSON parity (pages.en.json reference)
+const marketingLocales = [
+  'src/i18n/marketing/pages.en.json',
+  'src/i18n/marketing/pages.es.json',
+  'src/i18n/marketing/pages.fr.json',
+  'src/i18n/marketing/pages.de.json',
+  'src/i18n/marketing/pages.pt.json',
+  'src/i18n/marketing/pages.sw.json',
+  'src/i18n/marketing/pages.zh.json'
+]
+
+const marketingLoaded = marketingLocales.map(loadJsonKeys)
+const marketingRef = marketingLoaded.find((l) => l.path.includes('pages.en.json'))
+
+if (marketingRef) {
+  console.log('\n📄 Marketing pages key check\n')
+  for (const locale of marketingLoaded) {
+    if (locale.path === marketingRef.path) continue
+    const missing = [...marketingRef.keys].filter((k) => !locale.keys.has(k))
+    if (missing.length) {
+      failed = true
+      console.error(`❌ ${locale.path}`)
+      console.error(
+        `   Missing (${missing.length}): ${missing.slice(0, 8).join(', ')}${missing.length > 8 ? '…' : ''}`
+      )
+    } else {
+      console.log(`✅ ${locale.path} — ${locale.keys.size} keys`)
+    }
+  }
+}
+
 if (failed) {
   console.error('\n❌ i18n check failed')
   process.exit(1)

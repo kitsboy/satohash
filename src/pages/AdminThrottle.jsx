@@ -41,12 +41,17 @@ export default function AdminThrottle() {
   }
 
   const simulateLoad = async () => {
+    const token = localStorage.getItem('satohash_token') || localStorage.getItem('adminKey')
+    if (!token) {
+      toast.error('Admin login required — sign in via Access with your admin key')
+      return
+    }
     try {
       const response = await fetch(`${API_URL}/admin/throttle/simulate`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('adminKey') || 'admin123'}`
+          Authorization: `Bearer ${token}`
         },
         body: JSON.stringify({ iterations: 500, type: 'public' })
       })

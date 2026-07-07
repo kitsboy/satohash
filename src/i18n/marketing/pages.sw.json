@@ -776,5 +776,200 @@
       "github": "Hifadhi ya GitHub",
       "apiDocs": "Hati za API"
     }
+  },
+  "appPage": {
+    "skipToContent": "Ruka hadi maudhui kuu",
+    "offlineBanner": "Nje ya mtandao — mabadiliko yatasawazishwa unapounganika tena"
+  },
+  "onboardingPage": {
+    "skip": "Ruka",
+    "stepOf": "Hatua {{current}} kati ya {{total}}",
+    "steps": {
+      "identity": {
+        "title": "Una utambulisho wa Bitcoin",
+        "body": "Jozi yako ya funguo za Nostr ni utambulisho wako huru. Hakuna barua pepe, hakuna nenosiri — uthibitisho wa kriptografia tu kwamba upo.",
+        "action": "Nimeelewa →"
+      },
+      "stamp": {
+        "title": "Weka faili yoyote kuweka muhuri",
+        "body": "Tunahesabu hash ya faili yako kwenye kivinjari chako — maudhui hayondoki kwenye kifaa chako. Alama ya kidole ya SHA-256 pekee ndiyo inayotumwa kwenye Bitcoin.",
+        "action": "Inaeleweka →"
+      },
+      "share": {
+        "title": "Shiriki uthibitisho wako na mtu yeyote",
+        "body": "Mara tu unapothibitishwa kwenye Bitcoin, uthibitisho wako ni wa kudumu na wa umma. Shiriki kiungo — mtu yeyote anaweza kuthibitisha bila akaunti.",
+        "action": "Twende →"
+      }
+    }
+  },
+  "accessPage": {
+    "hero": {
+      "title1": "Ufikiaji",
+      "title2": "Huru",
+      "titleHighlight": "Gateway.",
+      "subtitle": "Hakuna nenosiri. Hakuna wasuluhishi. Thibitisha utambulisho wako kupitia uthibitisho wa kriptografia na malipo ya asili ya Lightning."
+    },
+    "cards": {
+      "newIdentity": {
+        "title": "Utambulisho mpya",
+        "desc": "Zalisha jozi mpya ya funguo za Nostr. Ufunguo wako wa kibinafsi unabaki kwenye kifaa chako — hatuwiioni kamwe.",
+        "cta": "Zalisha jozi ya funguo",
+        "generating": "Inazalisha..."
+      },
+      "import": {
+        "title": "Ingiza nsec",
+        "desc": "Tayari una funguo la Nostr? Ingiza nsec yako ili kurejesha hifadhi yako na historia.",
+        "cta": "Ingiza funguo",
+        "placeholder": "nsec1...",
+        "restorePin": "Rejesha funguo lililohifadhiwa kwa PIN",
+        "submit": "Ingiza na ingia →",
+        "verifying": "Inathibitisha...",
+        "cancel": "← Ghairi"
+      },
+      "admin": {
+        "title": "Ufikiaji wa msimamizi",
+        "desc": "Kuingia kwa mwendeshaji kwa funguo la msimamizi. Hutoa JWT ya saa 24 kwa sehemu za mwisho zenye upendeleo.",
+        "cta": "Weka funguo la msimamizi",
+        "placeholder": "Nenosiri la msimamizi...",
+        "submit": "Ingia na endelea →",
+        "cancel": "← Ghairi"
+      }
+    },
+    "rememberMe": "Endelea kuingia kwenye kifaa hiki",
+    "privacy": "Ufunguo wako wa kibinafsi haiondoki kwenye kifaa hiki. Satohash hutumia kriptografia upande wa mteja pekee.",
+    "privacyLink": "Soma usanifu wetu wa faragha →",
+    "trust": {
+      "e2e": "Usimbaji fiche wa mwisho hadi mwisho",
+      "custody": "Uhifadhi huru",
+      "zk": "Uthibitishaji wa ujuzi wa sifuri"
+    },
+    "footer": "Kwa kuingia kwenye benchi ya kazi ya Satohash, unakubali kuwa shughuli zote za kriptografia zinafanyika kwenye kifaa chako na unadumisha uhuru kamili juu ya nyenzo zako za kibinafsi.",
+    "pin": {
+      "saveTitle": "Weka PIN",
+      "saveDesc": "Weka PIN ya tarakimu 4–6 ili kukumbuka funguo lako kwenye kifaa hiki (hiari).",
+      "saveSubmit": "Hifadhi funguo",
+      "restoreTitle": "Rejesha funguo",
+      "restoreDesc": "Weka PIN yako ili kurejesha funguo lako la nsec lililohifadhiwa.",
+      "restoreSubmit": "Rejesha"
+    },
+    "toasts": {
+      "generating": "Inazalisha utambulisho wa kriptografia...",
+      "identityCreated": "Utambulisho huru umeundwa",
+      "identityVerified": "Utambulisho umethibitishwa",
+      "welcomeBack": "Karibu tena. npub: {{npub}}...",
+      "keyGenFailed": "Uzalishaji wa funguo umeshindwa: {{error}}",
+      "invalidNsec": "Funguo batili — lazima lianze na nsec",
+      "invalidKey": "Funguo la nsec batili",
+      "keySaved": "Funguo limehifadhiwa! Weka PIN yako wakati ujao ili kulirejesha.",
+      "keyRestored": "Funguo limerejeshwa — bonyeza Ingiza na ingia ili kuendelea.",
+      "wrongPin": "PIN si sahihi au data ya funguo imeharibika.",
+      "passwordRequired": "Nenosiri linahitajika",
+      "loginFailed": "Kuingia kumeshindwa",
+      "adminGranted": "Ufikiaji wa msimamizi umeidhinishwa",
+      "adminSession": "JWT imehifadhiwa — kikao kinadumu saa 24",
+      "networkError": "Hitilafu ya mtandao: {{error}}"
+    }
+  },
+  "verifyPublicPage": {
+    "back": "← Satohash",
+    "notFound": "Uthibitisho haupatikani",
+    "returnHome": "Rudi Satohash",
+    "loadError": "Haikuweza kupakia uthibitisho — huenda haupo au seva haipatikani.",
+    "verified": "Uthibitisho umethibitishwa",
+    "pending": "Uthibitishaji unasubiri",
+    "bitcoinBlock": "Kizuizi cha Bitcoin",
+    "document": "Hati",
+    "unnamed": "Hati isiyo na jina",
+    "sha256": "Hash ya SHA-256",
+    "stamped": "Imewekwa muhuri",
+    "viewMempool": "Angalia kwenye mempool.space",
+    "scanToVerify": "Changanua kuthibitisha",
+    "copyLink": "Nakili kiungo",
+    "share": "Shiriki",
+    "copyHash": "Nakili hash",
+    "copyProof": "Nakili uthibitisho",
+    "downloadCert": "Pakua cheti cha PDF",
+    "footer": "Uthibitisho huu umeunganishwa kabisa kwenye blockchain ya Bitcoin na hauwezi kubadilishwa au kufutwa. Thibitisha kwa uhuru kwenye",
+    "toasts": {
+      "linkCopied": "Kiungo kimenakiliwa!",
+      "hashCopied": "Hash imenakiliwa!",
+      "proofCopied": "Uthibitisho umenakiliwa!"
+    },
+    "statusVerified": "✓ Imethibitishwa",
+    "statusPending": "⏳ Inasubiri"
+  },
+  "footerPage": {
+    "tagline": "Mfumo wa uendeshaji huru kwa ukweli wa kidijitali. Imeunganishwa kwenye mtandao wa Bitcoin, tunatoa leja ya kriptografia bora kwa asili ya taasisi na uthibitishaji wa uchunguzi wa kisheria.",
+    "legalFramework": "Mfumo wa kisheria",
+    "legal": {
+      "p1": "SATOHASH V5.0.0 NI ITIFAKI ILIYOGATULIWA. SHUGHULI ZOTE ZA KRIPTOGRAFIA ZINAFANYWA NDANI YA KIFAA. HATUHIFADHI NYENZO ZA KIBINAFSI AU DATA YA ASILI.",
+      "p2": "UTHIBITISHO ULIOZALISHWA UNAZIDI VIWANGO vya eIDAS NA ESIGN KWA KUTUMIA UTHIBITISHO WA BITCOIN USIOBADILIKA. KUKUBALIWA KWA KISHERIA KUNAWEZA KUTOFAUTIANA. WASILIANA NA MSHAURI WA KIBINAFSI.",
+      "copyright": "© 2026 GIVEABIT LTD. IMESAJILIWA SEYCHELLES. HAKI ZOTE ZIMEHIFADHIWA."
+    },
+    "careers": {
+      "title": "Kazi za uhuru",
+      "hiring": "Inaajiri sasa",
+      "applyNow": "Omba sasa"
+    },
+    "jobs": {
+      "l402": {
+        "title": "Mbunifu wa itifaki L402",
+        "desc": "Buni na utekeleze tabaka la malipo la Lightning la masafa ya juu. Lenga uunganisho wa BOLT-12 na uorchestration wa API wa kipimo."
+      },
+      "rust": {
+        "title": "Mhandisi wa uchunguzi Rust",
+        "desc": "Boresha vipengele vyetu vya kriptografia vya kiwango cha chini na injini ya shahidi ya OpenTimestamps. Utendaji na usalama ni mahitaji ya lazima."
+      },
+      "crypto": {
+        "title": "Kiongozi wa mifumo ya kriptografia",
+        "desc": "Ongoza maendeleo ya utekelezaji wa ZK-SHA256 na algoriti za hali ya juu za kupitia njia za Merkle kwa uthibitishaji wa kiwango cha mahakama."
+      },
+      "ux": {
+        "title": "Mbunifu wa UX wa taasisi",
+        "desc": "Endeleza mfumo wa muundo wa Modern Institutional. Tengeneza violesura vya msongamano wa juu na ucheleweshaji mdogo kwa konsoli za ujasusi huru."
+      },
+      "nostr": {
+        "title": "Mtaalamu wa utambulisho wa Nostr",
+        "desc": "Jenga daraja kati ya funguo huru na sifa inayosomeka na binadamu. Dhibiti NIP-05 na mtiririko wa kazi wa kusaini kilichogatuliwa."
+      },
+      "devops": {
+        "title": "DevOps wa nodi huru",
+        "desc": "Ratibu mtandao wetu wa kimataifa wa nodi za shahidi. Hakikisha upatikanaji wa 99.999% kwa Truth OS katika hali kali za mtandao."
+      },
+      "data": {
+        "title": "Mwanasayansi wa data ya blockchain",
+        "desc": "Buni injini ya utafutaji wa muda ya Atlas Plane. Chimba data ya kihistoria ya blockchain ili kuanzisha muktadha wa uchunguzi wa kisheria usio na kifani."
+      }
+    },
+    "communications": "Mawasiliano",
+    "emailTerminal": "Kituo cha barua pepe",
+    "nostrNip05": "Nostr NIP-05",
+    "atlasLinks": "Viungo vya Atlas",
+    "supportProtocol": "Itifaki ya msaada",
+    "bitcoinAddress": "Anwani ya Bitcoin",
+    "donationNote": "Mchango wako unachochea mtandao huru, ukihakikisha upinzani wa udhibiti na upatikanaji wa kimataifa kwa Truth OS.",
+    "handshake": "Handshake: 1.2s",
+    "protocolActive": "Itifaki inafanya kazi",
+    "supportMission": "Saidia dhamira",
+    "poweredBy": "Inaendeshwa na OpenTimestamps & Bitcoin",
+    "createdBy": "Imeundwa na",
+    "verifiedBuild": "Imethibitishwa",
+    "links": {
+      "about": "Kuhusu",
+      "pitch": "Pitch",
+      "trustCenter": "Kituo cha Uaminifu",
+      "documentation": "Nyaraka",
+      "status": "Hali",
+      "faq": "FAQ",
+      "pricing": "Bei",
+      "guides": "Miongozo",
+      "glossary": "Kamusi",
+      "privacy": "Faragha",
+      "terms": "Masharti",
+      "cryptoNotice": "Taarifa ya crypto",
+      "security": "Usalama",
+      "integrations": "Miunganisho",
+      "github": "GitHub"
+    }
   }
 }

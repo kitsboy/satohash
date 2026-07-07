@@ -723,5 +723,200 @@
       "github": "GitHub 仓库",
       "apiDocs": "API 文档"
     }
+  },
+  "appPage": {
+    "skipToContent": "跳转到主要内容",
+    "offlineBanner": "离线——重新连接后将同步更改"
+  },
+  "onboardingPage": {
+    "skip": "跳过",
+    "stepOf": "第 {{current}} 步，共 {{total}} 步",
+    "steps": {
+      "identity": {
+        "title": "您拥有 Bitcoin 身份",
+        "body": "您的 Nostr 密钥对是主权身份。无需邮箱、无需密码——只需加密证明您存在。",
+        "action": "明白了 →"
+      },
+      "stamp": {
+        "title": "拖放任意文件即可加盖时间戳",
+        "body": "我们在您的浏览器中对文件进行哈希——内容永不离开您的设备。仅将 SHA-256 指纹发送至 Bitcoin。",
+        "action": "有道理 →"
+      },
+      "share": {
+        "title": "与任何人分享您的证明",
+        "body": "一旦在 Bitcoin 上确认，您的证明即永久且公开。分享链接——任何人无需账户即可验证。",
+        "action": "开始吧 →"
+      }
+    }
+  },
+  "accessPage": {
+    "hero": {
+      "title1": "主权",
+      "title2": "访问",
+      "titleHighlight": "网关。",
+      "subtitle": "无密码。无中介。通过加密证明和 Lightning 原生结算建立您的身份。"
+    },
+    "cards": {
+      "newIdentity": {
+        "title": "新身份",
+        "desc": "生成新的 Nostr 密钥对。您的私钥保留在设备上——我们永远看不到。",
+        "cta": "生成密钥对",
+        "generating": "生成中..."
+      },
+      "import": {
+        "title": "导入 nsec",
+        "desc": "已有 Nostr 密钥？导入您的 nsec 以恢复保险库和历史记录。",
+        "cta": "导入密钥",
+        "placeholder": "nsec1...",
+        "restorePin": "使用 PIN 恢复已保存的密钥",
+        "submit": "导入并进入 →",
+        "verifying": "验证中...",
+        "cancel": "← 取消"
+      },
+      "admin": {
+        "title": "管理员访问",
+        "desc": "使用管理员密钥进行运维登录。为特权端点签发 24 小时 JWT。",
+        "cta": "输入管理员密钥",
+        "placeholder": "管理员密码...",
+        "submit": "登录并进入 →",
+        "cancel": "← 取消"
+      }
+    },
+    "rememberMe": "在此设备上保持登录",
+    "privacy": "您的私钥永不离开此设备。Satohash 仅使用客户端加密。",
+    "privacyLink": "阅读我们的隐私架构 →",
+    "trust": {
+      "e2e": "端到端加密",
+      "custody": "主权托管",
+      "zk": "零知识认证"
+    },
+    "footer": "进入 Satohash 工作台即表示您确认所有加密操作均在您的设备上进行，且您对私有材料保持绝对主权。",
+    "pin": {
+      "saveTitle": "设置 PIN",
+      "saveDesc": "设置 4–6 位 PIN 以在此设备上记住您的密钥（可选）。",
+      "saveSubmit": "保存密钥",
+      "restoreTitle": "恢复密钥",
+      "restoreDesc": "输入 PIN 以恢复已保存的 nsec 密钥。",
+      "restoreSubmit": "恢复"
+    },
+    "toasts": {
+      "generating": "正在生成加密身份...",
+      "identityCreated": "主权身份已创建",
+      "identityVerified": "身份已验证",
+      "welcomeBack": "欢迎回来。npub：{{npub}}...",
+      "keyGenFailed": "密钥生成失败：{{error}}",
+      "invalidNsec": "无效密钥——必须以 nsec 开头",
+      "invalidKey": "无效的 nsec 密钥",
+      "keySaved": "密钥已保存！下次输入 PIN 即可恢复。",
+      "keyRestored": "密钥已恢复——按导入并进入以继续。",
+      "wrongPin": "PIN 错误或密钥数据损坏。",
+      "passwordRequired": "需要密码",
+      "loginFailed": "登录失败",
+      "adminGranted": "管理员访问已授予",
+      "adminSession": "JWT 已存储——会话持续 24 小时",
+      "networkError": "网络错误：{{error}}"
+    }
+  },
+  "verifyPublicPage": {
+    "back": "← Satohash",
+    "notFound": "未找到证明",
+    "returnHome": "返回 Satohash",
+    "loadError": "无法加载证明——可能不存在或服务器不可用。",
+    "verified": "证明已验证",
+    "pending": "等待确认",
+    "bitcoinBlock": "Bitcoin 区块",
+    "document": "文档",
+    "unnamed": "未命名文档",
+    "sha256": "SHA-256 哈希",
+    "stamped": "已加盖时间戳",
+    "viewMempool": "在 mempool.space 查看",
+    "scanToVerify": "扫描以验证",
+    "copyLink": "复制链接",
+    "share": "分享",
+    "copyHash": "复制哈希",
+    "copyProof": "复制证明",
+    "downloadCert": "下载证书 PDF",
+    "footer": "此证明永久锚定在 Bitcoin 区块链上，无法更改或删除。请独立验证：",
+    "toasts": {
+      "linkCopied": "链接已复制！",
+      "hashCopied": "哈希已复制！",
+      "proofCopied": "证明已复制！"
+    },
+    "statusVerified": "✓ 已验证",
+    "statusPending": "⏳ 待确认"
+  },
+  "footerPage": {
+    "tagline": "数字真相的主权操作系统。锚定 Bitcoin 网络，我们为机构溯源和取证验证提供终极加密账本。",
+    "legalFramework": "法律框架",
+    "legal": {
+      "p1": "SATOHASH V5.0.0 是去中心化协议。所有加密操作均在本地执行。我们不托管私有材料或原始数据。",
+      "p2": "生成的证明通过不可变的 Bitcoin 认证超越 eIDAS 和 ESIGN 标准。法律可采性可能因地区而异。请咨询独立法律顾问。",
+      "copyright": "© 2026 GIVEABIT LTD. 注册于塞舌尔。保留所有权利。"
+    },
+    "careers": {
+      "title": "主权职业",
+      "hiring": "正在招聘",
+      "applyNow": "立即申请"
+    },
+    "jobs": {
+      "l402": {
+        "title": "L402 协议架构师",
+        "desc": "设计并实现高频 Lightning 结算层。专注于 BOLT-12 集成和计量 API 编排。"
+      },
+      "rust": {
+        "title": "取证 Rust 工程师",
+        "desc": "优化我们的底层加密原语和 OpenTimestamps 见证引擎。性能与安全是绝对要求。"
+      },
+      "crypto": {
+        "title": "密码学系统负责人",
+        "desc": "主导 ZK-SHA256 实现和高级 Merkle 路径遍历算法开发，实现法庭级验证。"
+      },
+      "ux": {
+        "title": "机构 UX 设计师",
+        "desc": "演进 Modern Institutional 设计系统。为主权情报控制台打造高密度、低延迟界面。"
+      },
+      "nostr": {
+        "title": "Nostr 身份专家",
+        "desc": "构建主权密钥与人类可读声誉之间的桥梁。精通 NIP-05 和去中心化签名工作流。"
+      },
+      "devops": {
+        "title": "主权节点 DevOps",
+        "desc": "编排全球见证节点网格。在极端网络条件下确保 Truth OS 99.999% 可用性。"
+      },
+      "data": {
+        "title": "区块链数据科学家",
+        "desc": "架构 Atlas Plane 的时间搜索引擎。挖掘历史区块链数据以建立前所未有的取证上下文。"
+      }
+    },
+    "communications": "通讯",
+    "emailTerminal": "邮件终端",
+    "nostrNip05": "Nostr NIP-05",
+    "atlasLinks": "Atlas 链接",
+    "supportProtocol": "支持协议",
+    "bitcoinAddress": "Bitcoin 地址",
+    "donationNote": "您的贡献推动主权网格，确保 Truth OS 的审查抵抗和全球可访问性。",
+    "handshake": "Handshake：1.2s",
+    "protocolActive": "协议运行中",
+    "supportMission": "支持使命",
+    "poweredBy": "由 OpenTimestamps 和 Bitcoin 驱动",
+    "createdBy": "创建者",
+    "verifiedBuild": "已验证",
+    "links": {
+      "about": "关于",
+      "pitch": "Pitch",
+      "trustCenter": "信任中心",
+      "documentation": "文档",
+      "status": "状态",
+      "faq": "FAQ",
+      "pricing": "定价",
+      "guides": "指南",
+      "glossary": "术语表",
+      "privacy": "隐私",
+      "terms": "条款",
+      "cryptoNotice": "加密声明",
+      "security": "安全",
+      "integrations": "集成",
+      "github": "GitHub"
+    }
   }
 }

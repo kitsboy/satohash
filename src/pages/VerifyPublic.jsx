@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { Copy, Share2, Hash, ExternalLink, XCircle, Download } from 'lucide-react'
 import { toast } from 'sonner'
 import { motion } from 'framer-motion'
@@ -9,6 +10,7 @@ import { downloadCertificate } from '../utils/certificate'
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
 
 export default function VerifyPublic() {
+  const { t } = useTranslation()
   const { id } = useParams()
   const [proof, setProof] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -23,7 +25,10 @@ export default function VerifyPublic() {
   useEffect(() => {
     if (!proof) return
     const filename = proof.filename || proof.original_filename || proof.label || 'Document'
-    const status = proof.status === 'confirmed' ? '✓ Verified' : '⏳ Pending'
+    const status =
+      proof.status === 'confirmed'
+        ? t('verifyPublicPage.statusVerified')
+        : t('verifyPublicPage.statusPending')
     document.title = `${status} — ${filename} | Satohash`
 
     // Update OG meta tags dynamically
@@ -58,7 +63,7 @@ export default function VerifyPublic() {
     return () => {
       document.title = 'Satohash'
     }
-  }, [proof])
+  }, [proof, t])
 
   const fetchProof = async (proofId) => {
     try {
@@ -68,7 +73,7 @@ export default function VerifyPublic() {
       setProof(data)
     } catch (err) {
       setError(err.message)
-      toast.error('Could not load proof — it may not exist or the server is unavailable.')
+      toast.error(t('verifyPublicPage.loadError'))
     } finally {
       setLoading(false)
     }
@@ -89,7 +94,7 @@ export default function VerifyPublic() {
           color: 'var(--accent-active)'
         }}
       >
-        ← Satohash
+        {t('verifyPublicPage.back')}
       </a>
 
       {/* Loading state */}
@@ -125,7 +130,7 @@ export default function VerifyPublic() {
             }}
           >
             <XCircle size={44} className="mx-auto" style={{ color: 'var(--accent-danger)' }} />
-            <h3 className="text-xl font-black tracking-tight">Proof Not Found</h3>
+            <h3 className="text-xl font-black tracking-tight">{t('verifyPublicPage.notFound')}</h3>
             <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
               {error}
             </p>
@@ -134,7 +139,7 @@ export default function VerifyPublic() {
               className="mt-2 inline-block text-xs font-black tracking-widest uppercase underline"
               style={{ color: 'var(--accent-active)' }}
             >
-              Return to Satohash
+              {t('verifyPublicPage.returnHome')}
             </a>
           </motion.div>
         </div>
@@ -156,11 +161,13 @@ export default function VerifyPublic() {
           >
             <div className="mb-2 text-4xl">{proof.status === 'confirmed' ? '✓' : '⏳'}</div>
             <h1 className="text-2xl font-black tracking-tight">
-              {proof.status === 'confirmed' ? 'Proof Verified' : 'Pending Confirmation'}
+              {proof.status === 'confirmed'
+                ? t('verifyPublicPage.verified')
+                : t('verifyPublicPage.pending')}
             </h1>
             {proof.bitcoin_block_height && (
               <p className="mt-2 font-mono text-sm opacity-80">
-                Bitcoin Block {proof.bitcoin_block_height.toLocaleString()}
+                {t('verifyPublicPage.bitcoinBlock')} {proof.bitcoin_block_height.toLocaleString()}
               </p>
             )}
             {proof.confirmed_at && (
@@ -182,17 +189,17 @@ export default function VerifyPublic() {
               className="text-xs font-black tracking-widest uppercase"
               style={{ color: 'var(--text-secondary)' }}
             >
-              Document
+              {t('verifyPublicPage.document')}
             </h2>
             <p className="truncate text-lg font-bold" style={{ color: 'var(--text-primary)' }}>
-              {proof.filename || proof.label || 'Unnamed document'}
+              {proof.filename || proof.label || t('verifyPublicPage.unnamed')}
             </p>
             <div>
               <p
                 className="mb-1 text-[10px] font-black tracking-widest uppercase"
                 style={{ color: 'var(--text-secondary)' }}
               >
-                SHA-256 Hash
+                {t('verifyPublicPage.sha256')}
               </p>
               <p className="font-mono text-xs break-all" style={{ color: 'var(--accent-active)' }}>
                 {proof.hash}
@@ -204,7 +211,7 @@ export default function VerifyPublic() {
                   className="text-[10px] font-black tracking-widest uppercase"
                   style={{ color: 'var(--text-secondary)' }}
                 >
-                  Stamped
+                  {t('verifyPublicPage.stamped')}
                 </p>
                 <p className="mt-0.5 text-sm font-bold" style={{ color: 'var(--text-primary)' }}>
                   {proof.created_at ? new Date(proof.created_at).toLocaleDateString() : '—'}
@@ -216,7 +223,7 @@ export default function VerifyPublic() {
                     className="text-[10px] font-black tracking-widest uppercase"
                     style={{ color: 'var(--text-secondary)' }}
                   >
-                    Bitcoin Block
+                    {t('verifyPublicPage.bitcoinBlock')}
                   </p>
                   <p
                     className="mt-0.5 text-sm font-bold"
@@ -238,7 +245,7 @@ export default function VerifyPublic() {
                 style={{ color: 'var(--accent-active)' }}
               >
                 <ExternalLink size={12} />
-                View on mempool.space
+                {t('verifyPublicPage.viewMempool')}
               </a>
             )}
           </motion.div>
@@ -255,7 +262,7 @@ export default function VerifyPublic() {
               className="text-xs font-black tracking-widest uppercase"
               style={{ color: 'var(--text-secondary)' }}
             >
-              Scan to Verify
+              {t('verifyPublicPage.scanToVerify')}
             </p>
             <div className="rounded-2xl bg-white p-4">
               <QRCode
@@ -283,7 +290,7 @@ export default function VerifyPublic() {
             <button
               onClick={() => {
                 navigator.clipboard.writeText(window.location.href)
-                toast.success('Link copied!')
+                toast.success(t('verifyPublicPage.toasts.linkCopied'))
               }}
               className="flex items-center justify-center gap-2 rounded-2xl py-4 text-xs font-black tracking-wider uppercase transition-all hover:opacity-80 active:scale-95"
               style={{
@@ -292,7 +299,7 @@ export default function VerifyPublic() {
                 border: '1px solid var(--border)'
               }}
             >
-              <Copy size={14} /> Copy Link
+              <Copy size={14} /> {t('verifyPublicPage.copyLink')}
             </button>
 
             {navigator.share ? (
@@ -303,13 +310,13 @@ export default function VerifyPublic() {
                 className="flex items-center justify-center gap-2 rounded-2xl py-4 text-xs font-black tracking-wider uppercase transition-all hover:opacity-80 active:scale-95"
                 style={{ background: 'var(--accent-pending)', color: '#141b25' }}
               >
-                <Share2 size={14} /> Share
+                <Share2 size={14} /> {t('verifyPublicPage.share')}
               </button>
             ) : (
               <button
                 onClick={() => {
                   navigator.clipboard.writeText(proof.hash)
-                  toast.success('Hash copied!')
+                  toast.success(t('verifyPublicPage.toasts.hashCopied'))
                 }}
                 className="flex items-center justify-center gap-2 rounded-2xl py-4 text-xs font-black tracking-wider uppercase transition-all hover:opacity-80 active:scale-95"
                 style={{
@@ -318,7 +325,7 @@ export default function VerifyPublic() {
                   border: '1px solid var(--border)'
                 }}
               >
-                <Hash size={14} /> Copy Hash
+                <Hash size={14} /> {t('verifyPublicPage.copyHash')}
               </button>
             )}
 
@@ -337,7 +344,7 @@ export default function VerifyPublic() {
                   .filter(Boolean)
                   .join('\n')
                 navigator.clipboard.writeText(proofText)
-                toast.success('Proof copied!')
+                toast.success(t('verifyPublicPage.toasts.proofCopied'))
               }}
               className="col-span-2 flex items-center justify-center gap-2 rounded-2xl py-4 text-xs font-black tracking-wider uppercase transition-all hover:opacity-80 active:scale-95"
               style={{
@@ -346,7 +353,7 @@ export default function VerifyPublic() {
                 border: '1px solid var(--border)'
               }}
             >
-              <Share2 size={14} /> Copy Proof
+              <Share2 size={14} /> {t('verifyPublicPage.copyProof')}
             </button>
 
             <button
@@ -363,14 +370,13 @@ export default function VerifyPublic() {
               className="col-span-2 flex items-center justify-center gap-2 rounded-2xl px-5 py-3 text-xs font-black uppercase transition-all hover:opacity-80"
               style={{ background: 'var(--accent-gold)', color: '#141b25' }}
             >
-              <Download size={14} /> Download Certificate PDF
+              <Download size={14} /> {t('verifyPublicPage.downloadCert')}
             </button>
           </motion.div>
 
           {/* Footer note */}
           <p className="text-center text-[10px]" style={{ color: 'var(--text-secondary)' }}>
-            This proof is permanently anchored in the Bitcoin blockchain and cannot be altered or
-            deleted. Verify independently at{' '}
+            {t('verifyPublicPage.footer')}{' '}
             <a
               href="https://opentimestamps.org"
               target="_blank"

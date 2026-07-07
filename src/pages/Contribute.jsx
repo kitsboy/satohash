@@ -11,6 +11,7 @@ import {
   TestTube
 } from 'lucide-react'
 import { motion } from 'framer-motion'
+import usePageMeta from '../hooks/usePageMeta'
 
 const glassCard = 'rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)]'
 const btnHolographic =
@@ -26,6 +27,7 @@ const WAY_HREFS = {
 }
 
 const Contribute = () => {
+  usePageMeta({ page: 'contribute' })
   const { t } = useTranslation()
 
   const ways = useMemo(

@@ -5,7 +5,7 @@ This roadmap tracks the evolution of Satohash from a standalone notary tool to a
 ## ✅ PHASE I: THE BASE CASE (COMPLETED)
 1.  **[x] Bitcoin Anchoring**: Core OpenTimestamps integration.
 2.  **[x] Multi-Party Signing**: Distributed signature flow for digital contracts.
-3.  **[x] Localization**: Support for EN, ES, FR, DE, ZH.
+3.  **[x] Localization**: Support for EN, ES, FR, DE, PT, SW, ZH (marketing pages + unified language picker).
 
 ## ✅ PHASE II: INSTITUTIONAL HARDENING (COMPLETED)
 4.  **[x] The Satohash Snapper**: "Snap & Stamp" web evidence capture tool.

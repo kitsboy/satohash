@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import Tooltip from '../../components/Tooltip'
+import usePageMeta from '../../hooks/usePageMeta'
 import {
   Shield,
   Lock,
@@ -102,6 +103,7 @@ const BITCOIN_FACTS = [
 
 /* ─── Component ──────────────────────────────────────────── */
 export default function TrustCenter() {
+  usePageMeta({ page: 'trust' })
   return (
     <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)]">
       {/* Ambient glows */}

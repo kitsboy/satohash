@@ -779,5 +779,200 @@
       "github": "Repositório GitHub",
       "apiDocs": "Docs da API"
     }
+  },
+  "appPage": {
+    "skipToContent": "Ir para o conteúdo principal",
+    "offlineBanner": "Offline — as alterações serão sincronizadas ao reconectar"
+  },
+  "onboardingPage": {
+    "skip": "Pular",
+    "stepOf": "Etapa {{current}} de {{total}}",
+    "steps": {
+      "identity": {
+        "title": "Você tem uma identidade Bitcoin",
+        "body": "Seu par de chaves Nostr é sua identidade soberana. Sem e-mail, sem senha — apenas prova criptográfica de que você existe.",
+        "action": "Entendi →"
+      },
+      "stamp": {
+        "title": "Solte qualquer arquivo para carimbar",
+        "body": "Fazemos o hash do seu arquivo no navegador — o conteúdo nunca sai do seu dispositivo. Apenas a impressão digital SHA-256 é enviada ao Bitcoin.",
+        "action": "Faz sentido →"
+      },
+      "share": {
+        "title": "Compartilhe sua prova com qualquer pessoa",
+        "body": "Uma vez confirmada no Bitcoin, sua prova é permanente e pública. Compartilhe o link — qualquer pessoa pode verificá-la sem conta.",
+        "action": "Vamos lá →"
+      }
+    }
+  },
+  "accessPage": {
+    "hero": {
+      "title1": "Acesso",
+      "title2": "Soberano",
+      "titleHighlight": "Gateway.",
+      "subtitle": "Sem senhas. Sem intermediários. Estabeleça sua identidade por prova criptográfica e liquidação nativa Lightning."
+    },
+    "cards": {
+      "newIdentity": {
+        "title": "Nova identidade",
+        "desc": "Gere um novo par de chaves Nostr. Sua chave privada permanece no seu dispositivo — nunca a vemos.",
+        "cta": "Gerar par de chaves",
+        "generating": "Gerando..."
+      },
+      "import": {
+        "title": "Importar nsec",
+        "desc": "Já tem uma chave Nostr? Importe seu nsec para restaurar seu cofre e histórico.",
+        "cta": "Importar chave",
+        "placeholder": "nsec1...",
+        "restorePin": "Restaurar chave salva com PIN",
+        "submit": "Importar e entrar →",
+        "verifying": "Verificando...",
+        "cancel": "← Cancelar"
+      },
+      "admin": {
+        "title": "Acesso de administrador",
+        "desc": "Login de operador com chave de admin. Emite um JWT de 24 horas para endpoints privilegiados.",
+        "cta": "Inserir chave de admin",
+        "placeholder": "Senha de admin...",
+        "submit": "Login e entrar →",
+        "cancel": "← Cancelar"
+      }
+    },
+    "rememberMe": "Manter sessão neste dispositivo",
+    "privacy": "Sua chave privada nunca sai deste dispositivo. O Satohash usa apenas criptografia no cliente.",
+    "privacyLink": "Leia nossa arquitetura de privacidade →",
+    "trust": {
+      "e2e": "Criptografia de ponta a ponta",
+      "custody": "Custódia soberana",
+      "zk": "Autenticação de conhecimento zero"
+    },
+    "footer": "Ao entrar na bancada de trabalho do Satohash, você reconhece que todas as operações criptográficas ocorrem no seu dispositivo e você mantém soberania absoluta sobre seu material privado.",
+    "pin": {
+      "saveTitle": "Definir PIN",
+      "saveDesc": "Defina um PIN de 4–6 dígitos para lembrar sua chave neste dispositivo (opcional).",
+      "saveSubmit": "Salvar chave",
+      "restoreTitle": "Restaurar chave",
+      "restoreDesc": "Digite seu PIN para restaurar sua chave nsec salva.",
+      "restoreSubmit": "Restaurar"
+    },
+    "toasts": {
+      "generating": "Gerando identidade criptográfica...",
+      "identityCreated": "Identidade soberana criada",
+      "identityVerified": "Identidade verificada",
+      "welcomeBack": "Bem-vindo de volta. npub: {{npub}}...",
+      "keyGenFailed": "Falha na geração da chave: {{error}}",
+      "invalidNsec": "Chave inválida — deve começar com nsec",
+      "invalidKey": "Chave nsec inválida",
+      "keySaved": "Chave salva! Digite seu PIN na próxima vez para restaurá-la.",
+      "keyRestored": "Chave restaurada — pressione Importar e entrar para continuar.",
+      "wrongPin": "PIN incorreto ou dados de chave corrompidos.",
+      "passwordRequired": "Senha obrigatória",
+      "loginFailed": "Falha no login",
+      "adminGranted": "Acesso de administrador concedido",
+      "adminSession": "JWT armazenado — sessão dura 24 h",
+      "networkError": "Erro de rede: {{error}}"
+    }
+  },
+  "verifyPublicPage": {
+    "back": "← Satohash",
+    "notFound": "Prova não encontrada",
+    "returnHome": "Voltar ao Satohash",
+    "loadError": "Não foi possível carregar a prova — ela pode não existir ou o servidor está indisponível.",
+    "verified": "Prova verificada",
+    "pending": "Confirmação pendente",
+    "bitcoinBlock": "Bloco Bitcoin",
+    "document": "Documento",
+    "unnamed": "Documento sem nome",
+    "sha256": "Hash SHA-256",
+    "stamped": "Carimbado",
+    "viewMempool": "Ver em mempool.space",
+    "scanToVerify": "Escanear para verificar",
+    "copyLink": "Copiar link",
+    "share": "Compartilhar",
+    "copyHash": "Copiar hash",
+    "copyProof": "Copiar prova",
+    "downloadCert": "Baixar certificado PDF",
+    "footer": "Esta prova está permanentemente ancorada na blockchain Bitcoin e não pode ser alterada ou excluída. Verifique de forma independente em",
+    "toasts": {
+      "linkCopied": "Link copiado!",
+      "hashCopied": "Hash copiado!",
+      "proofCopied": "Prova copiada!"
+    },
+    "statusVerified": "✓ Verificada",
+    "statusPending": "⏳ Pendente"
+  },
+  "footerPage": {
+    "tagline": "O sistema operacional soberano para a verdade digital. Ancorado à rede Bitcoin, fornecemos o registro criptográfico definitivo para proveniência institucional e verificação forense.",
+    "legalFramework": "Marco legal",
+    "legal": {
+      "p1": "SATOHASH V5.0.0 É UM PROTOCOLO DESCENTRALIZADO. TODAS AS OPERAÇÕES CRIPTOGRÁFICAS SÃO REALIZADAS LOCALMENTE. NÃO MANTEMOS CUSTÓDIA DE MATERIAL PRIVADO OU DADOS ORIGINAIS.",
+      "p2": "AS PROVAS GERADAS SUPERAM OS PADRÕES eIDAS E ESIGN AO APROVEITAR ATESTAÇÕES IMUTÁVEIS DO BITCOIN. A ADMISSIBILIDADE LEGAL PODE VARIAR. CONSULTE ACONSELHAMENTO INDEPENDENTE.",
+      "copyright": "© 2026 GIVEABIT LTD. REGISTRADA NAS SEYCHELLES. TODOS OS DIREITOS RESERVADOS."
+    },
+    "careers": {
+      "title": "Carreiras soberanas",
+      "hiring": "Contratando agora",
+      "applyNow": "Candidatar-se agora"
+    },
+    "jobs": {
+      "l402": {
+        "title": "Arquiteto de protocolo L402",
+        "desc": "Projetar e implementar a camada de liquidação Lightning de alta frequência. Foco em integração BOLT-12 e orquestração de API medida."
+      },
+      "rust": {
+        "title": "Engenheiro forense Rust",
+        "desc": "Otimizar nossas primitivas criptográficas de baixo nível e o motor de testemunha OpenTimestamps. Desempenho e segurança são requisitos absolutos."
+      },
+      "crypto": {
+        "title": "Líder de sistemas criptográficos",
+        "desc": "Liderar o desenvolvimento de implementações ZK-SHA256 e algoritmos avançados de travessia de caminhos Merkle para verificação de nível judicial."
+      },
+      "ux": {
+        "title": "Designer UX institucional",
+        "desc": "Evoluir o design system Modern Institutional. Criar interfaces de alta densidade e baixa latência para consoles de inteligência soberana."
+      },
+      "nostr": {
+        "title": "Especialista em identidade Nostr",
+        "desc": "Construir a ponte entre chaves soberanas e reputação legível por humanos. Dominar NIP-05 e fluxos de assinatura descentralizados."
+      },
+      "devops": {
+        "title": "DevOps de nós soberanos",
+        "desc": "Orquestrar nossa malha global de nós testemunha. Garantir 99.999% de disponibilidade para o Truth OS em condições extremas de rede."
+      },
+      "data": {
+        "title": "Cientista de dados blockchain",
+        "desc": "Arquitetar o motor de busca temporal do Atlas Plane. Minerar dados históricos de blockchain para estabelecer contexto forense sem precedentes."
+      }
+    },
+    "communications": "Comunicações",
+    "emailTerminal": "Terminal de e-mail",
+    "nostrNip05": "Nostr NIP-05",
+    "atlasLinks": "Links Atlas",
+    "supportProtocol": "Protocolo de suporte",
+    "bitcoinAddress": "Endereço Bitcoin",
+    "donationNote": "Sua contribuição alimenta a malha soberana, garantindo resistência à censura e acessibilidade global para o Truth OS.",
+    "handshake": "Handshake: 1.2s",
+    "protocolActive": "Protocolo ativo",
+    "supportMission": "Apoiar a missão",
+    "poweredBy": "Powered by OpenTimestamps & Bitcoin",
+    "createdBy": "Criado por",
+    "verifiedBuild": "Verificado",
+    "links": {
+      "about": "Sobre",
+      "pitch": "Pitch",
+      "trustCenter": "Central de confiança",
+      "documentation": "Documentação",
+      "status": "Status",
+      "faq": "FAQ",
+      "pricing": "Preços",
+      "guides": "Guias",
+      "glossary": "Glossário",
+      "privacy": "Privacidade",
+      "terms": "Termos",
+      "cryptoNotice": "Aviso cripto",
+      "security": "Segurança",
+      "integrations": "Integrações",
+      "github": "GitHub"
+    }
   }
 }

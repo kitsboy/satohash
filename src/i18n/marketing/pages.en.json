@@ -773,5 +773,200 @@
       "github": "GitHub Repo",
       "apiDocs": "API Docs"
     }
+  },
+  "appPage": {
+    "skipToContent": "Skip to main content",
+    "offlineBanner": "Offline — changes will sync when reconnected"
+  },
+  "onboardingPage": {
+    "skip": "Skip",
+    "stepOf": "Step {{current}} of {{total}}",
+    "steps": {
+      "identity": {
+        "title": "You have a Bitcoin identity",
+        "body": "Your Nostr keypair is your sovereign identity. No email, no password — just cryptographic proof that you exist.",
+        "action": "Got it →"
+      },
+      "stamp": {
+        "title": "Drop any file to stamp it",
+        "body": "We hash your file in your browser — the contents never leave your device. Only the SHA-256 fingerprint is sent to Bitcoin.",
+        "action": "Makes sense →"
+      },
+      "share": {
+        "title": "Share your proof with anyone",
+        "body": "Once confirmed in Bitcoin, your proof is permanent and public. Share the link — anyone can verify it without an account.",
+        "action": "Let's go →"
+      }
+    }
+  },
+  "accessPage": {
+    "hero": {
+      "title1": "Sovereign",
+      "title2": "Access",
+      "titleHighlight": "Gateway.",
+      "subtitle": "No passwords. No intermediaries. Establish your identity through cryptographic proof and Lightning-native settlement."
+    },
+    "cards": {
+      "newIdentity": {
+        "title": "New Identity",
+        "desc": "Generate a fresh Nostr keypair. Your private key stays on your device — we never see it.",
+        "cta": "Generate Keypair",
+        "generating": "Generating..."
+      },
+      "import": {
+        "title": "Import nsec",
+        "desc": "Already have a Nostr key? Import your nsec to restore your vault and history.",
+        "cta": "Import Key",
+        "placeholder": "nsec1...",
+        "restorePin": "Restore saved key with PIN",
+        "submit": "Import & Enter →",
+        "verifying": "Verifying...",
+        "cancel": "← Cancel"
+      },
+      "admin": {
+        "title": "Admin Access",
+        "desc": "Operator login with admin key. Issues a 24-hour JWT for privileged endpoints.",
+        "cta": "Enter Admin Key",
+        "placeholder": "Admin password...",
+        "submit": "Login & Enter →",
+        "cancel": "← Cancel"
+      }
+    },
+    "rememberMe": "Stay signed in on this device",
+    "privacy": "Your private key never leaves this device. Satohash uses client-side cryptography only.",
+    "privacyLink": "Read our privacy architecture →",
+    "trust": {
+      "e2e": "End-to-End Encryption",
+      "custody": "Sovereign Custody",
+      "zk": "Zero-Knowledge Auth"
+    },
+    "footer": "By entering the Satohash workbench, you acknowledge that all cryptographic operations occur on your device and you maintain absolute sovereignty over your private material.",
+    "pin": {
+      "saveTitle": "Set PIN",
+      "saveDesc": "Set a 4–6 digit PIN to remember your key on this device (optional).",
+      "saveSubmit": "Save Key",
+      "restoreTitle": "Restore Key",
+      "restoreDesc": "Enter your PIN to restore your saved nsec key.",
+      "restoreSubmit": "Restore"
+    },
+    "toasts": {
+      "generating": "Generating cryptographic identity...",
+      "identityCreated": "Sovereign Identity Created",
+      "identityVerified": "Identity Verified",
+      "welcomeBack": "Welcome back. npub: {{npub}}...",
+      "keyGenFailed": "Key generation failed: {{error}}",
+      "invalidNsec": "Invalid key — must start with nsec",
+      "invalidKey": "Invalid nsec key",
+      "keySaved": "Key saved! Enter your PIN next time to restore it.",
+      "keyRestored": "Key restored — press Import & Enter to continue.",
+      "wrongPin": "Wrong PIN or corrupted key data.",
+      "passwordRequired": "Password required",
+      "loginFailed": "Login failed",
+      "adminGranted": "Admin access granted",
+      "adminSession": "JWT stored — session lasts 24 h",
+      "networkError": "Network error: {{error}}"
+    }
+  },
+  "verifyPublicPage": {
+    "back": "← Satohash",
+    "notFound": "Proof Not Found",
+    "returnHome": "Return to Satohash",
+    "loadError": "Could not load proof — it may not exist or the server is unavailable.",
+    "verified": "Proof Verified",
+    "pending": "Pending Confirmation",
+    "bitcoinBlock": "Bitcoin Block",
+    "document": "Document",
+    "unnamed": "Unnamed document",
+    "sha256": "SHA-256 Hash",
+    "stamped": "Stamped",
+    "viewMempool": "View on mempool.space",
+    "scanToVerify": "Scan to Verify",
+    "copyLink": "Copy Link",
+    "share": "Share",
+    "copyHash": "Copy Hash",
+    "copyProof": "Copy Proof",
+    "downloadCert": "Download Certificate PDF",
+    "footer": "This proof is permanently anchored in the Bitcoin blockchain and cannot be altered or deleted. Verify independently at",
+    "toasts": {
+      "linkCopied": "Link copied!",
+      "hashCopied": "Hash copied!",
+      "proofCopied": "Proof copied!"
+    },
+    "statusVerified": "✓ Verified",
+    "statusPending": "⏳ Pending"
+  },
+  "footerPage": {
+    "tagline": "The sovereign operating system for digital truth. Anchored to the Bitcoin network, we provide the ultimate cryptographic ledger for institutional provenance and forensic verification.",
+    "legalFramework": "Legal Framework",
+    "legal": {
+      "p1": "SATOHASH V5.0.0 IS A DECENTRALIZED PROTOCOL. ALL CRYPTOGRAPHIC OPERATIONS ARE PERFORMED LOCALLY. WE DO NOT MAINTAIN CUSTODY OF PRIVATE MATERIAL OR ORIGINAL DATA.",
+      "p2": "PROOFS GENERATED EXCEED eIDAS AND ESIGN STANDARDS BY LEVERAGING IMMUTABLE BITCOIN ATTESTATIONS. LEGAL ADMISSIBILITY MAY VARY. CONSULT INDEPENDENT COUNSEL.",
+      "copyright": "© 2026 GIVEABIT LTD. REGISTERED IN THE SEYCHELLES. ALL RIGHTS RESERVED."
+    },
+    "careers": {
+      "title": "Sovereign Careers",
+      "hiring": "Hiring Now",
+      "applyNow": "Apply Now"
+    },
+    "jobs": {
+      "l402": {
+        "title": "L402 Protocol Architect",
+        "desc": "Design and implement the high-frequency Lightning settlement layer. Focus on BOLT-12 integration and metered API orchestration."
+      },
+      "rust": {
+        "title": "Forensic Rust Engineer",
+        "desc": "Optimize our low-level cryptographic primitives and OpenTimestamps witness engine. Performance and safety are absolute requirements."
+      },
+      "crypto": {
+        "title": "Cryptography Systems Lead",
+        "desc": "Lead the development of ZK-SHA256 implementations and advanced Merkle path traversal algorithms for courtroom-grade verification."
+      },
+      "ux": {
+        "title": "Institutional UX Designer",
+        "desc": "Evolve the Modern Institutional design system. Craft high-density, low-latency interfaces for sovereign intelligence consoles."
+      },
+      "nostr": {
+        "title": "Nostr Identity Specialist",
+        "desc": "Build the bridge between sovereign keys and human-readable reputation. Master NIP-05 and decentralized signing workflows."
+      },
+      "devops": {
+        "title": "Sovereign Node DevOps",
+        "desc": "Orchestrate our global mesh of witness nodes. Ensure 99.999% availability for the Truth OS under extreme network conditions."
+      },
+      "data": {
+        "title": "Blockchain Data Scientist",
+        "desc": "Architect the Atlas Plane's temporal search engine. Mine historical blockchain data to establish unprecedented forensic context."
+      }
+    },
+    "communications": "Communications",
+    "emailTerminal": "Email Terminal",
+    "nostrNip05": "Nostr NIP-05",
+    "atlasLinks": "Atlas Links",
+    "supportProtocol": "Support Protocol",
+    "bitcoinAddress": "Bitcoin Address",
+    "donationNote": "Your contribution fuels the sovereign mesh, ensuring censorship resistance and global accessibility for the Truth OS.",
+    "handshake": "Handshake: 1.2s",
+    "protocolActive": "Protocol Active",
+    "supportMission": "Support the Mission",
+    "poweredBy": "Powered by OpenTimestamps & Bitcoin",
+    "createdBy": "Created by",
+    "verifiedBuild": "Verified",
+    "links": {
+      "about": "About",
+      "pitch": "Pitch",
+      "trustCenter": "Trust Center",
+      "documentation": "Documentation",
+      "status": "Status",
+      "faq": "FAQ",
+      "pricing": "Pricing",
+      "guides": "Guides",
+      "glossary": "Glossary",
+      "privacy": "Privacy",
+      "terms": "Terms",
+      "cryptoNotice": "Crypto Notice",
+      "security": "Security",
+      "integrations": "Integrations",
+      "github": "GitHub"
+    }
   }
 }

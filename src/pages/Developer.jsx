@@ -1,4 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion'
+import usePageMeta from '../hooks/usePageMeta'
 import {
   Terminal,
   Key,
@@ -300,6 +301,7 @@ function PricingTier({ tier, price, unit, features, accent, recommended }) {
 // ─── MAIN EXPORT ─────────────────────────────────────────────────────────────
 
 export default function Developer() {
+  usePageMeta({ page: 'developer' })
   const [activeTab, setActiveTab] = useState('overview')
   const [codeLang, setCodeLang] = useState('curl')
   const [terminalOutput, setTerminalOutput] = useState([

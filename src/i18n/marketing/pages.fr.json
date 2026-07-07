@@ -779,5 +779,200 @@
       "github": "Dépôt GitHub",
       "apiDocs": "Documentation API"
     }
+  },
+  "appPage": {
+    "skipToContent": "Aller au contenu principal",
+    "offlineBanner": "Hors ligne — les modifications seront synchronisées à la reconnexion"
+  },
+  "onboardingPage": {
+    "skip": "Passer",
+    "stepOf": "Étape {{current}} sur {{total}}",
+    "steps": {
+      "identity": {
+        "title": "Vous avez une identité Bitcoin",
+        "body": "Votre paire de clés Nostr est votre identité souveraine. Pas d'e-mail, pas de mot de passe — juste une preuve cryptographique que vous existez.",
+        "action": "Compris →"
+      },
+      "stamp": {
+        "title": "Déposez n'importe quel fichier pour l'horodater",
+        "body": "Nous hachons votre fichier dans votre navigateur — le contenu ne quitte jamais votre appareil. Seule l'empreinte SHA-256 est envoyée à Bitcoin.",
+        "action": "C'est logique →"
+      },
+      "share": {
+        "title": "Partagez votre preuve avec n'importe qui",
+        "body": "Une fois confirmée sur Bitcoin, votre preuve est permanente et publique. Partagez le lien — n'importe qui peut la vérifier sans compte.",
+        "action": "C'est parti →"
+      }
+    }
+  },
+  "accessPage": {
+    "hero": {
+      "title1": "Accès",
+      "title2": "souverain",
+      "titleHighlight": "Gateway.",
+      "subtitle": "Pas de mots de passe. Pas d'intermédiaires. Établissez votre identité par preuve cryptographique et règlement natif Lightning."
+    },
+    "cards": {
+      "newIdentity": {
+        "title": "Nouvelle identité",
+        "desc": "Générez une nouvelle paire de clés Nostr. Votre clé privée reste sur votre appareil — nous ne la voyons jamais.",
+        "cta": "Générer une paire de clés",
+        "generating": "Génération..."
+      },
+      "import": {
+        "title": "Importer nsec",
+        "desc": "Vous avez déjà une clé Nostr ? Importez votre nsec pour restaurer votre coffre et votre historique.",
+        "cta": "Importer la clé",
+        "placeholder": "nsec1...",
+        "restorePin": "Restaurer la clé enregistrée avec le PIN",
+        "submit": "Importer et entrer →",
+        "verifying": "Vérification...",
+        "cancel": "← Annuler"
+      },
+      "admin": {
+        "title": "Accès administrateur",
+        "desc": "Connexion opérateur avec clé admin. Émet un JWT de 24 heures pour les endpoints privilégiés.",
+        "cta": "Saisir la clé admin",
+        "placeholder": "Mot de passe admin...",
+        "submit": "Connexion et entrée →",
+        "cancel": "← Annuler"
+      }
+    },
+    "rememberMe": "Rester connecté sur cet appareil",
+    "privacy": "Votre clé privée ne quitte jamais cet appareil. Satohash utilise uniquement la cryptographie côté client.",
+    "privacyLink": "Lire notre architecture de confidentialité →",
+    "trust": {
+      "e2e": "Chiffrement de bout en bout",
+      "custody": "Garde souveraine",
+      "zk": "Authentification à connaissance nulle"
+    },
+    "footer": "En entrant dans l'atelier Satohash, vous reconnaissez que toutes les opérations cryptographiques ont lieu sur votre appareil et que vous conservez une souveraineté absolue sur votre matériel privé.",
+    "pin": {
+      "saveTitle": "Définir le PIN",
+      "saveDesc": "Définissez un PIN de 4 à 6 chiffres pour mémoriser votre clé sur cet appareil (facultatif).",
+      "saveSubmit": "Enregistrer la clé",
+      "restoreTitle": "Restaurer la clé",
+      "restoreDesc": "Saisissez votre PIN pour restaurer votre clé nsec enregistrée.",
+      "restoreSubmit": "Restaurer"
+    },
+    "toasts": {
+      "generating": "Génération de l'identité cryptographique...",
+      "identityCreated": "Identité souveraine créée",
+      "identityVerified": "Identité vérifiée",
+      "welcomeBack": "Bon retour. npub : {{npub}}...",
+      "keyGenFailed": "Échec de la génération de clé : {{error}}",
+      "invalidNsec": "Clé invalide — doit commencer par nsec",
+      "invalidKey": "Clé nsec invalide",
+      "keySaved": "Clé enregistrée ! Saisissez votre PIN la prochaine fois pour la restaurer.",
+      "keyRestored": "Clé restaurée — appuyez sur Importer et entrer pour continuer.",
+      "wrongPin": "PIN incorrect ou données de clé corrompues.",
+      "passwordRequired": "Mot de passe requis",
+      "loginFailed": "Échec de la connexion",
+      "adminGranted": "Accès administrateur accordé",
+      "adminSession": "JWT stocké — session de 24 h",
+      "networkError": "Erreur réseau : {{error}}"
+    }
+  },
+  "verifyPublicPage": {
+    "back": "← Satohash",
+    "notFound": "Preuve introuvable",
+    "returnHome": "Retour à Satohash",
+    "loadError": "Impossible de charger la preuve — elle n'existe peut-être pas ou le serveur est indisponible.",
+    "verified": "Preuve vérifiée",
+    "pending": "Confirmation en attente",
+    "bitcoinBlock": "Bloc Bitcoin",
+    "document": "Document",
+    "unnamed": "Document sans nom",
+    "sha256": "Hachage SHA-256",
+    "stamped": "Horodaté",
+    "viewMempool": "Voir sur mempool.space",
+    "scanToVerify": "Scanner pour vérifier",
+    "copyLink": "Copier le lien",
+    "share": "Partager",
+    "copyHash": "Copier le hachage",
+    "copyProof": "Copier la preuve",
+    "downloadCert": "Télécharger le certificat PDF",
+    "footer": "Cette preuve est ancrée de façon permanente dans la blockchain Bitcoin et ne peut être modifiée ni supprimée. Vérifiez de manière indépendante sur",
+    "toasts": {
+      "linkCopied": "Lien copié !",
+      "hashCopied": "Hachage copié !",
+      "proofCopied": "Preuve copiée !"
+    },
+    "statusVerified": "✓ Vérifiée",
+    "statusPending": "⏳ En attente"
+  },
+  "footerPage": {
+    "tagline": "Le système d'exploitation souverain pour la vérité numérique. Ancré sur le réseau Bitcoin, nous fournissons le registre cryptographique ultime pour la provenance institutionnelle et la vérification forensique.",
+    "legalFramework": "Cadre juridique",
+    "legal": {
+      "p1": "SATOHASH V5.0.0 EST UN PROTOCOLE DÉCENTRALISÉ. TOUTES LES OPÉRATIONS CRYPTOGRAPHIQUES SONT EFFECTUÉES LOCALEMENT. NOUS NE CONSERVONS PAS LA GARDE DE MATÉRIEL PRIVÉ NI DE DONNÉES ORIGINALES.",
+      "p2": "LES PREUVES GÉNÉRÉES DÉPASSENT LES NORMES eIDAS ET ESIGN EN S'APPUYANT SUR DES ATTESTATIONS BITCOIN IMMUABLES. L'ADMISSIBILITÉ JURIDIQUE PEUT VARIER. CONSULTEZ UN CONSEIL INDÉPENDANT.",
+      "copyright": "© 2026 GIVEABIT LTD. ENREGISTRÉE AUX SEYCHELLES. TOUS DROITS RÉSERVÉS."
+    },
+    "careers": {
+      "title": "Carrières souveraines",
+      "hiring": "Recrutement en cours",
+      "applyNow": "Postuler maintenant"
+    },
+    "jobs": {
+      "l402": {
+        "title": "Architecte protocole L402",
+        "desc": "Concevoir et implémenter la couche de règlement Lightning haute fréquence. Focus sur l'intégration BOLT-12 et l'orchestration d'API mesurée."
+      },
+      "rust": {
+        "title": "Ingénieur forensique Rust",
+        "desc": "Optimiser nos primitives cryptographiques bas niveau et le moteur témoin OpenTimestamps. Performance et sécurité sont des exigences absolues."
+      },
+      "crypto": {
+        "title": "Responsable systèmes cryptographiques",
+        "desc": "Diriger le développement des implémentations ZK-SHA256 et des algorithmes avancés de parcours Merkle pour une vérification de niveau judiciaire."
+      },
+      "ux": {
+        "title": "Designer UX institutionnel",
+        "desc": "Faire évoluer le design system Modern Institutional. Concevoir des interfaces haute densité et faible latence pour les consoles d'intelligence souveraine."
+      },
+      "nostr": {
+        "title": "Spécialiste identité Nostr",
+        "desc": "Construire le pont entre clés souveraines et réputation lisible par l'humain. Maîtriser NIP-05 et les workflows de signature décentralisés."
+      },
+      "devops": {
+        "title": "DevOps nœuds souverains",
+        "desc": "Orchestrer notre maillage mondial de nœuds témoins. Garantir 99.999 % de disponibilité pour le Truth OS dans des conditions réseau extrêmes."
+      },
+      "data": {
+        "title": "Data scientist blockchain",
+        "desc": "Architecturer le moteur de recherche temporelle de l'Atlas Plane. Exploiter les données blockchain historiques pour établir un contexte forensique sans précédent."
+      }
+    },
+    "communications": "Communications",
+    "emailTerminal": "Terminal e-mail",
+    "nostrNip05": "Nostr NIP-05",
+    "atlasLinks": "Liens Atlas",
+    "supportProtocol": "Protocole de support",
+    "bitcoinAddress": "Adresse Bitcoin",
+    "donationNote": "Votre contribution alimente le maillage souverain, assurant la résistance à la censure et l'accessibilité mondiale pour le Truth OS.",
+    "handshake": "Handshake : 1.2s",
+    "protocolActive": "Protocole actif",
+    "supportMission": "Soutenir la mission",
+    "poweredBy": "Propulsé par OpenTimestamps et Bitcoin",
+    "createdBy": "Créé par",
+    "verifiedBuild": "Vérifié",
+    "links": {
+      "about": "À propos",
+      "pitch": "Pitch",
+      "trustCenter": "Centre de confiance",
+      "documentation": "Documentation",
+      "status": "Statut",
+      "faq": "FAQ",
+      "pricing": "Tarification",
+      "guides": "Guides",
+      "glossary": "Glossaire",
+      "privacy": "Confidentialité",
+      "terms": "Conditions",
+      "cryptoNotice": "Avis crypto",
+      "security": "Sécurité",
+      "integrations": "Intégrations",
+      "github": "GitHub"
+    }
   }
 }

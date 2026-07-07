@@ -2,9 +2,12 @@ import { motion } from 'framer-motion'
 import { Shield, Globe, Heart, Scale, BookOpen, Quote, Network, Binary, Cpu } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import LanguageSwitcher from '../components/LanguageSwitcher'
+import usePageMeta from '../hooks/usePageMeta'
 import KimiContact from '../components/KimiContact'
 
 export default function About() {
+  usePageMeta({ page: 'about' })
+
   return (
     <div
       className="relative min-h-screen overflow-hidden pb-32"

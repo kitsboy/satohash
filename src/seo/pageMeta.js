@@ -461,6 +461,223 @@ export const pageMeta = {
         '在任何网站嵌入可验证的 Proof DNA 徽章。一行 HTML + 组件脚本。从 SHA-256 哈希生成确定性视觉效果。'
     }
   },
+  about: {
+    en: {
+      title: 'About Satohash — Sovereign Proof Protocol',
+      description:
+        'The Satohash protocol whitepaper: Bitcoin-anchored proof of existence, zero-knowledge architecture, and institutional-grade digital truth.'
+    },
+    es: {
+      title: 'Acerca de Satohash — Protocolo de Prueba Soberana',
+      description:
+        'El whitepaper del protocolo Satohash: prueba de existencia anclada en Bitcoin, arquitectura de conocimiento cero y verdad digital institucional.'
+    },
+    fr: {
+      title: 'À propos de Satohash — Protocole de Preuve Souveraine',
+      description:
+        "Le livre blanc Satohash : preuve d'existence ancrée sur Bitcoin, architecture zéro connaissance et vérité numérique institutionnelle."
+    },
+    de: {
+      title: 'Über Satohash — Souveränes Proof-Protokoll',
+      description:
+        'Das Satohash-Whitepaper: Bitcoin-verankerter Existenznachweis, Zero-Knowledge-Architektur und institutionelle digitale Wahrheit.'
+    },
+    pt: {
+      title: 'Sobre Satohash — Protocolo de Prova Soberana',
+      description:
+        'O whitepaper do protocolo Satohash: prova de existência ancorada no Bitcoin, arquitetura zero-conhecimento e verdade digital institucional.'
+    },
+    sw: {
+      title: 'Kuhusu Satohash — Itifaki ya Ushahidi wa Uhuru',
+      description:
+        'Waraka mweupe wa Satohash: ushahidi wa kuwepo uliofungwa kwenye Bitcoin, usanifu wa ujuzi wa sifuri, na ukweli wa kidijitali wa kitaasisi.'
+    },
+    zh: {
+      title: '关于 Satohash — 主权证明协议',
+      description: 'Satohash 协议白皮书：比特币锚定存在证明、零知识架构和机构级数字真相。'
+    }
+  },
+  pitch: {
+    en: {
+      title: 'Satohash Pitch — Sovereign Provenance Mesh',
+      description:
+        'Executive pitch deck: market opportunity, technology stack, business model, and roadmap for Bitcoin document notarization.'
+    },
+    es: {
+      title: 'Pitch de Satohash — Malla de Procedencia Soberana',
+      description:
+        'Presentación ejecutiva: oportunidad de mercado, stack tecnológico, modelo de negocio y hoja de ruta para notarización en Bitcoin.'
+    },
+    fr: {
+      title: 'Pitch Satohash — Maillage de Provenance Souveraine',
+      description:
+        'Présentation exécutive : opportunité marché, stack technique, modèle économique et feuille de route pour la notarisation Bitcoin.'
+    },
+    de: {
+      title: 'Satohash Pitch — Souveränes Provenance-Mesh',
+      description:
+        'Executive Pitch: Marktchance, Technologie-Stack, Geschäftsmodell und Roadmap für Bitcoin-Notarisierung.'
+    },
+    pt: {
+      title: 'Pitch Satohash — Malha de Proveniência Soberana',
+      description:
+        'Apresentação executiva: oportunidade de mercado, stack tecnológico, modelo de negócio e roadmap para notarização Bitcoin.'
+    },
+    sw: {
+      title: 'Pitch ya Satohash — Wavu wa Asili ya Uhuru',
+      description:
+        'Deck ya uongozi: fursa ya soko, stack ya teknolojia, mfumo wa biashara na ramani ya barabara ya notari ya Bitcoin.'
+    },
+    zh: {
+      title: 'Satohash 推介 — 主权溯源网格',
+      description: '执行推介材料：市场机会、技术栈、商业模式和比特币文档公证路线图。'
+    }
+  },
+  trust: {
+    en: {
+      title: 'Trust Center — Security, Privacy & Compliance',
+      description:
+        'Satohash trust center: zero-knowledge guarantees, legal frameworks (eIDAS, ESIGN), open-source auditability, and data handling.'
+    },
+    es: {
+      title: 'Centro de Confianza — Seguridad, Privacidad y Cumplimiento',
+      description:
+        'Centro de confianza Satohash: garantías de conocimiento cero, marcos legales (eIDAS, ESIGN), código abierto auditable y manejo de datos.'
+    },
+    fr: {
+      title: 'Centre de Confiance — Sécurité, Confidentialité et Conformité',
+      description:
+        'Centre de confiance Satohash : garanties zéro connaissance, cadres juridiques (eIDAS, ESIGN), audit open source et traitement des données.'
+    },
+    de: {
+      title: 'Trust Center — Sicherheit, Datenschutz & Compliance',
+      description:
+        'Satohash Trust Center: Zero-Knowledge-Garantien, Rechtsrahmen (eIDAS, ESIGN), Open-Source-Auditierbarkeit und Datenverarbeitung.'
+    },
+    pt: {
+      title: 'Centro de Confiança — Segurança, Privacidade e Conformidade',
+      description:
+        'Centro de confiança Satohash: garantias zero-conhecimento, frameworks legais (eIDAS, ESIGN), código aberto auditável e tratamento de dados.'
+    },
+    sw: {
+      title: 'Kituo cha Uaminifu — Usalama, Faragha na Uzingatiaji',
+      description:
+        'Kituo cha uaminifu cha Satohash: dhamana za ujuzi wa sifuri, mifumo ya kisheria (eIDAS, ESIGN), ukaguzi wa chanzo huria na ushughulikiaji wa data.'
+    },
+    zh: {
+      title: '信任中心 — 安全、隐私与合规',
+      description:
+        'Satohash 信任中心：零知识保证、法律框架（eIDAS、ESIGN）、开源可审计性和数据处理。'
+    }
+  },
+  access: {
+    en: {
+      title: 'Sovereign Access Gateway — Nostr Identity Login',
+      description:
+        'Create or import a Nostr keypair. Zero-knowledge authentication — your private key never leaves your device.'
+    },
+    es: {
+      title: 'Puerta de Acceso Soberana — Identidad Nostr',
+      description:
+        'Cree o importe un par de claves Nostr. Autenticación de conocimiento cero — su clave privada nunca sale de su dispositivo.'
+    },
+    fr: {
+      title: "Passerelle d'Accès Souveraine — Identité Nostr",
+      description:
+        'Créez ou importez une paire de clés Nostr. Authentification zéro connaissance — votre clé privée ne quitte jamais votre appareil.'
+    },
+    de: {
+      title: 'Souveränes Zugangsportal — Nostr-Identitätslogin',
+      description:
+        'Erstellen oder importieren Sie ein Nostr-Schlüsselpaar. Zero-Knowledge-Authentifizierung — Ihr privater Schlüssel verlässt nie Ihr Gerät.'
+    },
+    pt: {
+      title: 'Portal de Acesso Soberano — Identidade Nostr',
+      description:
+        'Crie ou importe um par de chaves Nostr. Autenticação zero-conhecimento — sua chave privada nunca sai do seu dispositivo.'
+    },
+    sw: {
+      title: 'Lango la Ufikiaji wa Uhuru — Utambulisho wa Nostr',
+      description:
+        'Unda au leta jozi ya funguo za Nostr. Uthibitishaji wa ujuzi wa sifuri — ufunguo wako wa faragha haondoki kwenye kifaa chako.'
+    },
+    zh: {
+      title: '主权访问网关 — Nostr 身份登录',
+      description: '创建或导入 Nostr 密钥对。零知识认证 — 您的私钥永不离开设备。'
+    }
+  },
+  contribute: {
+    en: {
+      title: 'Contribute to Satohash — Open Source',
+      description:
+        'Join the Satohash community. Report issues, submit PRs, improve docs, and add translations. MIT-licensed, no CLA.'
+    },
+    es: {
+      title: 'Contribuir a Satohash — Código Abierto',
+      description:
+        'Únase a la comunidad Satohash. Reporte problemas, envíe PRs, mejore documentación y añada traducciones. Licencia MIT, sin CLA.'
+    },
+    fr: {
+      title: 'Contribuer à Satohash — Open Source',
+      description:
+        'Rejoignez la communauté Satohash. Signalez des bugs, soumettez des PR, améliorez la doc et ajoutez des traductions. Licence MIT, sans CLA.'
+    },
+    de: {
+      title: 'Zu Satohash beitragen — Open Source',
+      description:
+        'Werden Sie Teil der Satohash-Community. Issues melden, PRs einreichen, Docs verbessern und Übersetzungen hinzufügen. MIT-Lizenz, kein CLA.'
+    },
+    pt: {
+      title: 'Contribuir para Satohash — Código Aberto',
+      description:
+        'Junte-se à comunidade Satohash. Reporte problemas, envie PRs, melhore docs e adicione traduções. Licença MIT, sem CLA.'
+    },
+    sw: {
+      title: 'Changia Satohash — Chanzo Huria',
+      description:
+        'Jiunge na jamii ya Satohash. Ripoti matatizo, tuma PR, boresha hati na ongeza tafsiri. Leseni MIT, hakuna CLA.'
+    },
+    zh: {
+      title: '贡献 Satohash — 开源',
+      description: '加入 Satohash 社区。报告问题、提交 PR、改进文档、添加翻译。MIT 许可，无需 CLA。'
+    }
+  },
+  developer: {
+    en: {
+      title: 'Developer API — Satohash Integration',
+      description:
+        'API keys, webhooks, REST endpoints, and code samples for integrating Bitcoin-anchored proof of existence into your apps.'
+    },
+    es: {
+      title: 'API para Desarrolladores — Integración Satohash',
+      description:
+        'Claves API, webhooks, endpoints REST y ejemplos de código para integrar prueba de existencia anclada en Bitcoin.'
+    },
+    fr: {
+      title: 'API Développeur — Intégration Satohash',
+      description:
+        "Clés API, webhooks, endpoints REST et exemples de code pour intégrer la preuve d'existence ancrée sur Bitcoin."
+    },
+    de: {
+      title: 'Developer-API — Satohash-Integration',
+      description:
+        'API-Schlüssel, Webhooks, REST-Endpunkte und Codebeispiele für Bitcoin-verankerten Existenznachweis in Ihren Apps.'
+    },
+    pt: {
+      title: 'API do Desenvolvedor — Integração Satohash',
+      description:
+        'Chaves API, webhooks, endpoints REST e exemplos de código para integrar prova de existência ancorada no Bitcoin.'
+    },
+    sw: {
+      title: 'API ya Msanidi — Ujumuishaji wa Satohash',
+      description:
+        'Funguo za API, webhooks, endpoints za REST na mifano ya msimbo kwa kuunganisha ushahidi wa kuwepo uliofungwa kwenye Bitcoin.'
+    },
+    zh: {
+      title: '开发者 API — Satohash 集成',
+      description: 'API 密钥、Webhook、REST 端点和代码示例，将比特币锚定存在证明集成到您的应用中。'
+    }
+  },
   notFound: {
     en: {
       title: 'Page Not Found',

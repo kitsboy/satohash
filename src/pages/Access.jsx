@@ -13,11 +13,15 @@ import {
 } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
+import usePageMeta from '../hooks/usePageMeta'
 import { generateSecretKey, getPublicKey, nip19 } from 'nostr-tools'
 import PinModal from '../components/PinModal'
 
 export default function Access() {
+  usePageMeta({ page: 'access' })
+  const { t } = useTranslation()
   const [isVerifying, setIsVerifying] = useState(false)
   const [nsec, setNsec] = useState('')
   const [importMode, setImportMode] = useState(false)
@@ -52,7 +56,7 @@ export default function Access() {
       data: Array.from(new Uint8Array(encrypted))
     }
     localStorage.setItem('satohash_encrypted_nsec', JSON.stringify(stored))
-    toast.success('Key saved! Enter your PIN next time to restore it.')
+    toast.success(t('accessPage.toasts.keySaved'))
   }
 
   const saveWithPin = async (nsecValue) => {
@@ -98,9 +102,9 @@ export default function Access() {
       setImportMode(true)
       setShowPinRestore(false)
       setPinModalMode(null)
-      toast.success('Key restored — press Import & Enter to continue.')
+      toast.success(t('accessPage.toasts.keyRestored'))
     } catch {
-      toast.error('Wrong PIN or corrupted key data.')
+      toast.error(t('accessPage.toasts.wrongPin'))
     }
   }
 
@@ -119,7 +123,7 @@ export default function Access() {
   // Generate a brand new Nostr keypair
   const handleGenerateKey = () => {
     setIsVerifying(true)
-    toast.info('Generating cryptographic identity...')
+    toast.info(t('accessPage.toasts.generating'))
 
     setTimeout(async () => {
       try {
@@ -134,14 +138,16 @@ export default function Access() {
         storage.setItem('satohash_authed', 'true')
 
         setIsVerifying(false)
-        toast.success('Sovereign Identity Created', {
-          description: `npub: ${npubEncoded.substring(0, 20)}...`
+        toast.success(t('accessPage.toasts.identityCreated'), {
+          description: t('accessPage.toasts.welcomeBack', {
+            npub: npubEncoded.substring(0, 20)
+          })
         })
         await saveWithPin(nsecEncoded)
         navigate('/stamp')
       } catch (e) {
         setIsVerifying(false)
-        toast.error('Key generation failed: ' + e.message)
+        toast.error(t('accessPage.toasts.keyGenFailed', { error: e.message }))
       }
     }, 800)
   }
@@ -149,7 +155,7 @@ export default function Access() {
   // Import an existing nsec key
   const handleImportKey = () => {
     if (!nsec.trim().startsWith('nsec')) {
-      toast.error('Invalid key — must start with nsec')
+      toast.error(t('accessPage.toasts.invalidNsec'))
       return
     }
     setIsVerifying(true)
@@ -166,14 +172,16 @@ export default function Access() {
         storage.setItem('satohash_authed', 'true')
 
         setIsVerifying(false)
-        toast.success('Identity Verified', {
-          description: `Welcome back. npub: ${npubEncoded.substring(0, 20)}...`
+        toast.success(t('accessPage.toasts.identityVerified'), {
+          description: t('accessPage.toasts.welcomeBack', {
+            npub: npubEncoded.substring(0, 20)
+          })
         })
         await saveWithPin(nsec.trim())
         navigate('/stamp')
       } catch (e) {
         setIsVerifying(false)
-        toast.error('Invalid nsec key')
+        toast.error(t('accessPage.toasts.invalidKey'))
       }
     }, 600)
   }
@@ -181,7 +189,7 @@ export default function Access() {
   // Admin password login — POSTs to /api/auth/login and stores JWT
   const handleAdminLogin = async () => {
     if (!adminPassword.trim()) {
-      toast.error('Password required')
+      toast.error(t('accessPage.toasts.passwordRequired'))
       return
     }
     setAdminLoading(true)
@@ -193,16 +201,18 @@ export default function Access() {
       })
       const data = await res.json()
       if (!res.ok) {
-        toast.error(data.error || 'Login failed')
+        toast.error(data.error || t('accessPage.toasts.loginFailed'))
         setAdminLoading(false)
         return
       }
       storage.setItem('satohash_token', data.token)
       storage.setItem('satohash_authed', 'true')
-      toast.success('Admin access granted', { description: 'JWT stored — session lasts 24 h' })
+      toast.success(t('accessPage.toasts.adminGranted'), {
+        description: t('accessPage.toasts.adminSession')
+      })
       navigate('/stamp')
     } catch (err) {
-      toast.error('Network error: ' + err.message)
+      toast.error(t('accessPage.toasts.networkError', { error: err.message }))
     } finally {
       setAdminLoading(false)
     }
@@ -243,11 +253,13 @@ export default function Access() {
             </span>
           </Link>
           <h1 className="text-5xl leading-none font-black tracking-tighter uppercase md:text-7xl">
-            Sovereign <br /> Access <span className="text-[var(--text-secondary)]">Gateway.</span>
+            {t('accessPage.hero.title1')} <br /> {t('accessPage.hero.title2')}{' '}
+            <span className="text-[var(--text-secondary)]">
+              {t('accessPage.hero.titleHighlight')}
+            </span>
           </h1>
           <p className="mx-auto max-w-2xl text-lg font-medium text-[var(--text-secondary)] md:text-xl">
-            No passwords. No intermediaries. Establish your identity through cryptographic proof and
-            Lightning-native settlement.
+            {t('accessPage.hero.subtitle')}
           </p>
         </header>
 
@@ -293,11 +305,10 @@ export default function Access() {
             {/* Copy */}
             <div className="space-y-3">
               <h3 className="text-2xl font-bold tracking-tight text-[var(--text-primary)]">
-                New Identity
+                {t('accessPage.cards.newIdentity.title')}
               </h3>
               <p className="max-w-[240px] text-sm leading-relaxed font-medium text-[var(--text-secondary)]">
-                Generate a fresh Nostr keypair. Your private key stays on your device — we never see
-                it.
+                {t('accessPage.cards.newIdentity.desc')}
               </p>
             </div>
 
@@ -310,11 +321,12 @@ export default function Access() {
             >
               {isVerifying ? (
                 <>
-                  <Loader2 size={14} className="animate-spin" /> Generating...
+                  <Loader2 size={14} className="animate-spin" />{' '}
+                  {t('accessPage.cards.newIdentity.generating')}
                 </>
               ) : (
                 <>
-                  Generate Keypair <ChevronRight size={14} />
+                  {t('accessPage.cards.newIdentity.cta')} <ChevronRight size={14} />
                 </>
               )}
             </button>
@@ -341,10 +353,10 @@ export default function Access() {
             {/* Copy */}
             <div className="space-y-3">
               <h3 className="text-2xl font-bold tracking-tight text-[var(--text-primary)]">
-                Import nsec
+                {t('accessPage.cards.import.title')}
               </h3>
               <p className="max-w-[240px] text-sm leading-relaxed font-medium text-[var(--text-secondary)]">
-                Already have a Nostr key? Import your nsec to restore your vault and history.
+                {t('accessPage.cards.import.desc')}
               </p>
             </div>
 
@@ -354,7 +366,7 @@ export default function Access() {
                 onClick={() => setImportMode(true)}
                 className="flex h-14 w-full items-center justify-center gap-3 rounded-xl bg-[var(--text-primary)] text-[10px] font-bold tracking-widest text-[var(--bg-primary)] uppercase transition-all hover:scale-[1.02]"
               >
-                Import Key <ChevronRight size={14} />
+                {t('accessPage.cards.import.cta')} <ChevronRight size={14} />
               </button>
             ) : (
               <div className="w-full space-y-3">
@@ -367,7 +379,7 @@ export default function Access() {
                       background: 'color-mix(in srgb, var(--accent-gold) 12%, transparent)'
                     }}
                   >
-                    🔑 Restore saved key with PIN
+                    🔑 {t('accessPage.cards.import.restorePin')}
                   </button>
                 )}
                 <div className="relative">
@@ -375,7 +387,7 @@ export default function Access() {
                     type={keyVisible ? 'text' : 'password'}
                     value={nsec}
                     onChange={(e) => setNsec(e.target.value)}
-                    placeholder="nsec1..."
+                    placeholder={t('accessPage.cards.import.placeholder')}
                     className="h-12 w-full rounded-xl border bg-transparent px-4 pr-12 font-mono text-xs outline-none focus:border-[var(--accent-active)]"
                     style={{ borderColor: 'var(--border)', color: 'var(--text-primary)' }}
                     onKeyDown={(e) => e.key === 'Enter' && handleImportKey()}
@@ -398,10 +410,11 @@ export default function Access() {
                 >
                   {isVerifying ? (
                     <>
-                      <Loader2 size={14} className="animate-spin" /> Verifying...
+                      <Loader2 size={14} className="animate-spin" />{' '}
+                      {t('accessPage.cards.import.verifying')}
                     </>
                   ) : (
-                    'Import & Enter →'
+                    t('accessPage.cards.import.submit')
                   )}
                 </button>
                 <button
@@ -413,7 +426,7 @@ export default function Access() {
                   className="w-full text-center text-[10px] font-medium tracking-widest uppercase opacity-40 transition-opacity hover:opacity-70"
                   style={{ color: 'var(--text-secondary)' }}
                 >
-                  ← Cancel
+                  {t('accessPage.cards.import.cancel')}
                 </button>
               </div>
             )}
@@ -447,10 +460,10 @@ export default function Access() {
             {/* Copy */}
             <div className="space-y-3">
               <h3 className="text-2xl font-bold tracking-tight text-[var(--text-primary)]">
-                Admin Access
+                {t('accessPage.cards.admin.title')}
               </h3>
               <p className="max-w-[240px] text-sm leading-relaxed font-medium text-[var(--text-secondary)]">
-                Operator login with admin key. Issues a 24-hour JWT for privileged endpoints.
+                {t('accessPage.cards.admin.desc')}
               </p>
             </div>
 
@@ -461,7 +474,7 @@ export default function Access() {
                 className="flex h-14 w-full items-center justify-center gap-3 rounded-xl text-[10px] font-bold tracking-widest uppercase transition-all hover:scale-[1.02]"
                 style={{ backgroundColor: 'var(--accent-danger)', color: '#fff' }}
               >
-                Enter Admin Key <ChevronRight size={14} />
+                {t('accessPage.cards.admin.cta')} <ChevronRight size={14} />
               </button>
             ) : (
               <div className="w-full space-y-3">
@@ -469,7 +482,7 @@ export default function Access() {
                   type="password"
                   value={adminPassword}
                   onChange={(e) => setAdminPassword(e.target.value)}
-                  placeholder="Admin password..."
+                  placeholder={t('accessPage.cards.admin.placeholder')}
                   className="h-12 w-full rounded-xl border bg-transparent px-4 font-mono text-xs outline-none focus:border-[var(--accent-danger)]"
                   style={{ borderColor: 'var(--border)', color: 'var(--text-primary)' }}
                   onKeyDown={(e) => e.key === 'Enter' && handleAdminLogin()}
@@ -483,10 +496,11 @@ export default function Access() {
                 >
                   {adminLoading ? (
                     <>
-                      <Loader2 size={14} className="animate-spin" /> Verifying...
+                      <Loader2 size={14} className="animate-spin" />{' '}
+                      {t('accessPage.cards.import.verifying')}
                     </>
                   ) : (
-                    'Login & Enter →'
+                    t('accessPage.cards.admin.submit')
                   )}
                 </button>
                 <button
@@ -497,7 +511,7 @@ export default function Access() {
                   className="w-full text-center text-[10px] font-medium tracking-widest uppercase opacity-40 transition-opacity hover:opacity-70"
                   style={{ color: 'var(--text-secondary)' }}
                 >
-                  ← Cancel
+                  {t('accessPage.cards.admin.cancel')}
                 </button>
               </div>
             )}
@@ -518,16 +532,15 @@ export default function Access() {
             className="cursor-pointer text-sm font-semibold"
             style={{ color: 'var(--text-secondary)' }}
           >
-            Stay signed in on this device
+            {t('accessPage.rememberMe')}
           </label>
         </div>
 
-        {/* Privacy Disclaimer */}
         <p className="text-center text-xs" style={{ color: 'var(--text-muted)' }}>
-          🔐 Your private key never leaves this device. Satohash uses client-side cryptography only.
+          🔐 {t('accessPage.privacy')}
           <br />
           <a href="/trust" className="underline" style={{ color: 'var(--accent-gold)' }}>
-            Read our privacy architecture →
+            {t('accessPage.privacyLink')}
           </a>
         </p>
 
@@ -537,27 +550,26 @@ export default function Access() {
             <div className="flex items-center gap-2">
               <Lock size={14} className="text-[var(--accent-active)]" />
               <span className="text-[10px] font-black tracking-widest uppercase">
-                End-to-End Encryption
+                {t('accessPage.trust.e2e')}
               </span>
             </div>
             <div className="flex items-center gap-2">
               <Shield size={14} className="text-[var(--accent-active)]" />
               <span className="text-[10px] font-black tracking-widest uppercase">
-                Sovereign Custody
+                {t('accessPage.trust.custody')}
               </span>
             </div>
             <div className="flex items-center gap-2">
               <Cpu size={14} className="text-[var(--accent-active)]" />
               <span className="text-[10px] font-black tracking-widest uppercase">
-                Zero-Knowledge Auth
+                {t('accessPage.trust.zk')}
               </span>
             </div>
           </div>
 
           <div className="mx-auto max-w-2xl border-t border-[var(--border)] pt-8">
             <p className="font-mono text-[10px] leading-relaxed tracking-[0.2em] text-[var(--text-secondary)] uppercase">
-              By entering the Satohash workbench, you acknowledge that all cryptographic operations
-              occur on your device and you maintain absolute sovereignty over your private material.
+              {t('accessPage.footer')}
             </p>
           </div>
         </footer>
@@ -570,17 +582,17 @@ export default function Access() {
           setPendingNsec(null)
         }}
         onSubmit={handlePinSave}
-        title="Set PIN"
-        description="Set a 4–6 digit PIN to remember your key on this device (optional)."
-        submitLabel="Save Key"
+        title={t('accessPage.pin.saveTitle')}
+        description={t('accessPage.pin.saveDesc')}
+        submitLabel={t('accessPage.pin.saveSubmit')}
       />
       <PinModal
         isOpen={pinModalMode === 'restore'}
         onClose={() => setPinModalMode(null)}
         onSubmit={handlePinRestoreSubmit}
-        title="Restore Key"
-        description="Enter your PIN to restore your saved nsec key."
-        submitLabel="Restore"
+        title={t('accessPage.pin.restoreTitle')}
+        description={t('accessPage.pin.restoreDesc')}
+        submitLabel={t('accessPage.pin.restoreSubmit')}
       />
     </div>
   )

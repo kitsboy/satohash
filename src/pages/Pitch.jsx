@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { FileText, TrendingUp, Megaphone, Briefcase, ArrowLeft } from 'lucide-react'
 import KimiContact from '../components/KimiContact'
 import Footer from '../components/Footer'
+import usePageMeta from '../hooks/usePageMeta'
 
 const TABS = [
   { id: 'pitch', label: 'Pitch', icon: Briefcase },
@@ -41,6 +42,7 @@ function renderMarkdown(md) {
 }
 
 export default function Pitch() {
+  usePageMeta({ page: 'pitch' })
   const [tab, setTab] = useState('pitch')
   const [content, setContent] = useState('')
   const [meta, setMeta] = useState(null)
@@ -55,7 +57,11 @@ export default function Pitch() {
         setContent(text || '')
         setMeta({ updatedAt: null })
       })
-      .catch(() => setContent('# Document unavailable\n\nThe pitch content could not be loaded. Please try again later.'))
+      .catch(() =>
+        setContent(
+          '# Document unavailable\n\nThe pitch content could not be loaded. Please try again later.'
+        )
+      )
       .finally(() => setLoading(false))
   }, [tab, API])
 
