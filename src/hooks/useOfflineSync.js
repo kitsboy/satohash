@@ -5,6 +5,7 @@
  */
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { toast } from 'sonner'
+import { getApiUrl } from '../config/constants'
 
 const DB_NAME = 'satohash_offline'
 const STORE = 'stamp_queue'
@@ -58,7 +59,7 @@ export function useOfflineSync(apiBase) {
   const [isOnline, setIsOnline] = useState(() => navigator.onLine)
   const [queue, setQueue] = useState([])
   const flushing = useRef(false)
-  const API = apiBase || import.meta.env.VITE_API_URL || 'http://localhost:3001'
+  const API = apiBase || getApiUrl()
 
   useEffect(() => {
     dbGetAll()

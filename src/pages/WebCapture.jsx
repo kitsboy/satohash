@@ -24,6 +24,7 @@ import Button from '../components/Button'
 import MerkleExplorer from '../components/MerkleExplorer'
 import { toast } from 'sonner'
 import usePageMeta from '../hooks/usePageMeta'
+import { getApiUrl } from '../config/constants'
 
 const processUrl = (raw) => {
   let u = raw.trim()
@@ -56,7 +57,7 @@ export default function WebCapture() {
     }
     setStatus('fetching')
 
-    const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+    const API = getApiUrl()
     try {
       const res = await fetch(`${API}/api/capture/url`, {
         method: 'POST',
@@ -85,7 +86,7 @@ export default function WebCapture() {
     if (!captureData?.hash || captureData.hash === '—') return
     setStatus('anchoring')
 
-    const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+    const API = getApiUrl()
     try {
       const res = await fetch(`${API}/api/stamp`, {
         method: 'POST',

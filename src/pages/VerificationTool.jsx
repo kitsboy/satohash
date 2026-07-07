@@ -5,6 +5,7 @@ import { useSearchParams } from 'react-router-dom'
 import { jsPDF } from 'jspdf'
 import { toast } from 'sonner'
 import usePageMeta from '../hooks/usePageMeta'
+import { getApiUrl } from '../config/constants'
 
 const MerklePathNode = ({ level, hash, active }) => (
   <div className={`flex items-center gap-4 ${active ? 'opacity-100' : 'opacity-40'}`}>
@@ -81,7 +82,7 @@ export default function VerificationTool() {
     setVerifyData(null)
 
     try {
-      const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+      const API = getApiUrl()
       const res = await fetch(`${API}/api/stamps/${hash.trim()}`)
       if (res.ok) {
         const match = await res.json()
@@ -130,7 +131,7 @@ export default function VerificationTool() {
     setVerifyData(null)
 
     try {
-      const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+      const API = getApiUrl()
 
       if (otsFile) {
         // Verify .ots file

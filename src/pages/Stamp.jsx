@@ -27,6 +27,7 @@ import { useSocket } from '../hooks/useSocket'
 import { useI18n } from '../i18n'
 import { downloadCertificate } from '../utils/certificate'
 import usePageMeta from '../hooks/usePageMeta'
+import { getApiUrl } from '../config/constants'
 
 export default function Stamp() {
   usePageMeta({ page: 'stamp' })
@@ -275,7 +276,7 @@ export default function Stamp() {
       }
 
       // POST to real backend
-      const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+      const API = getApiUrl()
       // FIX 3d — include X-Npub header for user scoping if npub is stored locally
       const storedNpub =
         localStorage.getItem('satohash_npub') || sessionStorage.getItem('satohash_npub')
@@ -934,7 +935,7 @@ export default function Stamp() {
                     <div className="grid grid-cols-1 gap-3">
                       <div className="grid grid-cols-2 gap-3">
                         <a
-                          href={`${import.meta.env.VITE_API_URL || 'http://localhost:3001'}/api/stamps/${proofResult?.id}?download=true`}
+                          href={`${getApiUrl()}/api/stamps/${proofResult?.id}?download=true`}
                           className="flex items-center justify-center gap-2 rounded-xl py-3.5 text-xs font-black tracking-wider uppercase transition-all hover:opacity-90"
                           style={{ background: 'var(--accent-gold)', color: '#141b25' }}
                         >

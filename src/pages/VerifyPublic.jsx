@@ -7,8 +7,9 @@ import { motion } from 'framer-motion'
 import { QRCodeSVG as QRCode } from 'qrcode.react'
 import { downloadCertificate } from '../utils/certificate'
 import usePageMeta from '../hooks/usePageMeta'
+import { getApiUrl } from '../config/constants'
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+const API_URL = getApiUrl()
 
 export default function VerifyPublic() {
   usePageMeta({ page: 'verify' })
@@ -34,7 +35,7 @@ export default function VerifyPublic() {
     document.title = `${status} — ${filename} | Satohash`
 
     // Update OG meta tags dynamically
-    const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+    const API = getApiUrl()
     const ogImageUrl = `${API}/api/og/${proof.id}`
 
     const setMeta = (property, content) => {

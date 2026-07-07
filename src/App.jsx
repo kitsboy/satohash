@@ -23,6 +23,7 @@ import ErrorBoundary from './components/ErrorBoundary'
 import ProtectedRoute from './components/ProtectedRoute'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
+import { getApiUrl } from './config/constants'
 
 // Lazy loaded planes
 import VerifyPublic from './pages/VerifyPublic'
@@ -531,7 +532,7 @@ function App() {
     if (!token) return
     const refresh = async () => {
       try {
-        const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+        const API = getApiUrl()
         const res = await fetch(`${API}/api/auth/refresh`, {
           method: 'POST',
           headers: { Authorization: `Bearer ${token}` }

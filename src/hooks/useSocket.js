@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
 import { io } from 'socket.io-client'
 import { toast } from 'sonner'
+import { getApiUrl } from '../config/constants'
 
-const SOCKET_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+const SOCKET_URL = getApiUrl()
 
 export const useSocket = () => {
   const [socket, setSocket] = useState(null)

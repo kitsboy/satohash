@@ -23,7 +23,7 @@ import usePageMeta from '../hooks/usePageMeta'
 import LanguageSwitcher from '../components/LanguageSwitcher'
 import { ThemeToggle } from '../components/ThemeProvider'
 import { getBitcoinNetworkStats } from '../utils/mempool'
-import { BTC_ADDRESS } from '../config/constants'
+import { BTC_ADDRESS, getApiUrl } from '../config/constants'
 
 const fadeUp = {
   hidden: { opacity: 0, y: 32 },
@@ -98,7 +98,7 @@ export default function Landing() {
   )
 
   useEffect(() => {
-    const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+    const API = getApiUrl()
     Promise.all([
       fetch(`${API}/api/history`)
         .then((r) => r.json())

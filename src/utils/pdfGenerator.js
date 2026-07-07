@@ -1,5 +1,6 @@
 import { jsPDF } from 'jspdf'
 import QRCode from 'qrcode'
+import { getApiUrl } from '../config/constants'
 
 /**
  * Generates an institutional, courtroom-ready Affidavit of Attestation.
@@ -175,7 +176,7 @@ export const generatePDF = async (stampInfo, watermarkType = 'SATOHASH PROTOCOL 
 
 export const downloadOTSFile = (timestamp) => {
   if (!timestamp?.id) return
-  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+  const API_URL = getApiUrl()
   window.location.href = `${API_URL}/api/stamps/${timestamp.id}?download=true`
 }
 

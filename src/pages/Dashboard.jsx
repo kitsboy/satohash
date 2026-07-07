@@ -34,8 +34,9 @@ import { generatePDF } from '../utils/pdfGenerator'
 import { toast } from 'sonner'
 import BlockchainPulse from '../components/BlockchainPulse'
 import usePageMeta from '../hooks/usePageMeta'
+import { getApiUrl } from '../config/constants'
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+const API_URL = getApiUrl()
 
 function UpsellModal({ isOpen, onClose, onSubscribe }) {
   useEscapeKey(isOpen, onClose)

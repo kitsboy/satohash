@@ -1,4 +1,5 @@
 import { nip19, nip05 } from 'nostr-tools'
+import { getApiUrl } from '../config/constants'
 
 const RELAYS = [
   'wss://relay.damus.io',
@@ -52,8 +53,7 @@ export async function verifyLightningAddress(address) {
 
 /** Register a satohash.io NIP-05 name when the Express API is available. */
 export async function registerSatohashNip05(name, pubkeyHex, npub) {
-  const apiBase = import.meta.env.VITE_API_URL || ''
-  if (!apiBase) return null
+  const apiBase = getApiUrl()
   const res = await fetch(`${apiBase}/api/identity/nip05`, {
     method: 'POST',
     headers: {

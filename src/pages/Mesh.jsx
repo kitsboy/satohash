@@ -15,6 +15,7 @@ import {
 } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import usePageMeta from '../hooks/usePageMeta'
+import { getApiUrl } from '../config/constants'
 
 const FALLBACK_NODES = [
   {
@@ -99,7 +100,7 @@ export default function Mesh() {
   const [nodesLoading, setNodesLoading] = useState(true)
 
   useEffect(() => {
-    const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+    const API = getApiUrl()
     fetch(`${API}/api/mesh/nodes`)
       .then((res) => {
         if (res.ok) return res.json()

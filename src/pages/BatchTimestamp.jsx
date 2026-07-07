@@ -15,8 +15,9 @@ import {
 import { motion, AnimatePresence } from 'framer-motion'
 import { toast } from 'sonner'
 import usePageMeta from '../hooks/usePageMeta'
+import { getApiUrl } from '../config/constants'
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+const API_URL = getApiUrl()
 
 export default function BatchTimestamp() {
   usePageMeta({ page: 'batch' })
@@ -117,7 +118,7 @@ export default function BatchTimestamp() {
     setError(null)
     setProgress(0)
 
-    const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+    const API = getApiUrl()
 
     // Step 1: hash all files in browser (off-thread via Web Worker)
     const hashes = await calculateHashes()
@@ -250,7 +251,7 @@ export default function BatchTimestamp() {
 
   const downloadBatch = async () => {
     if (!batchResult?.results?.length) return
-    const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+    const API = getApiUrl()
     const zip = new JSZip()
     const manifest = []
 

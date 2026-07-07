@@ -20,6 +20,7 @@ import { getBlockHeight } from '../utils/mempool'
 import { toast } from 'sonner'
 import { SkeletonCard } from '../components/Skeletons'
 import usePageMeta from '../hooks/usePageMeta'
+import { getApiUrl } from '../config/constants'
 
 const TimelineStep = ({ step, label, time, description, status, icon: Icon }) => (
   <div className="relative pb-12 pl-12 last:pb-0">
@@ -67,7 +68,7 @@ export default function Atlas() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    const API = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+    const API = getApiUrl()
 
     const fetchHistory = fetch(`${API}/api/history`)
       .then((r) => {

@@ -19,11 +19,12 @@ import LanguageSwitcher from './LanguageSwitcher'
 import MempoolTicker from './MempoolTicker'
 import { useOfflineSync } from '../hooks/useOfflineSync'
 import { useNavigate, Link } from 'react-router-dom'
+import { getApiUrl } from '../config/constants'
 
 /**
  * AppShellNoir — flagship layout shell for Satohash v5.0.0-ELITE+.
  */
-const API = import.meta.env.VITE_API_URL ?? 'http://localhost:3001'
+const API = getApiUrl()
 
 export default function AppShellNoir({ children }) {
   const [isSearchOpen, setIsSearchOpen] = useState(false)
