@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { APP_CONFIG, HEALTH_CONFIG } from './constants'
+import { APP_CONFIG, HEALTH_CONFIG, getVerifyUrl } from './constants'
 
 describe('Global Application Configuration', () => {
   it('contains correctly shaped core configurations', () => {
@@ -29,7 +29,11 @@ describe('Deep health check constants', () => {
   })
 
   it('points to the canonical public verify URL', () => {
-    expect(HEALTH_CONFIG.PUBLIC_URL).toBe('https://satohash.giveabit.io')
-    expect(HEALTH_CONFIG.VERIFY_URL).toMatch(/^https:\/\/satohash\.giveabit\.io\/verify/)
+    expect(HEALTH_CONFIG.PUBLIC_URL).toBe('https://satohash.io')
+    expect(HEALTH_CONFIG.VERIFY_URL).toBe('https://satohash.io/verify')
+  })
+
+  it('resolves a verify URL ending in /verify', () => {
+    expect(getVerifyUrl()).toMatch(/\/verify$/)
   })
 })

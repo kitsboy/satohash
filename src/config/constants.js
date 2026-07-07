@@ -10,8 +10,16 @@ export const HEALTH_CONFIG = {
   DEEP_CHECK_PARAM: 'deep',
   DEEP_CHECK_VALUE: 'true',
   VALID_STATUSES: ['ok', 'degraded'],
-  PUBLIC_URL: 'https://satohash.giveabit.io',
-  VERIFY_URL: 'https://satohash.giveabit.io/verify'
+  PUBLIC_URL: 'https://satohash.io',
+  VERIFY_URL: 'https://satohash.io/verify'
+}
+
+/** Resolve the public verify page for QR codes and PDF footers. */
+export function getVerifyUrl() {
+  if (typeof window !== 'undefined' && window.location?.origin) {
+    return `${window.location.origin}/verify`
+  }
+  return HEALTH_CONFIG.VERIFY_URL
 }
 
 export const NAV_LINKS = [

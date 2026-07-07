@@ -1,6 +1,7 @@
 import { useState, useMemo, useEffect, useRef, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Tooltip from '../components/Tooltip'
+import { getVerifyUrl } from '../config/constants'
 import { useSearchParams } from 'react-router-dom'
 import { toast } from 'sonner'
 import { jsPDF } from 'jspdf'
@@ -1052,17 +1053,23 @@ const BADGE_STYLES = {
 
 // ─── PDF GENERATION ─────────────────────────────────────────────────────────────
 
-const VERIFY_URL = 'https://satohash.giveabit.io/verify'
+const BITCOIN_ORANGE = '#F7931A'
+const LOGO_ORANGE_OPACITY = 0.62
+const ORANGE_LOGO_STYLE = {
+  opacity: LOGO_ORANGE_OPACITY,
+  filter: 'sepia(1) saturate(5) hue-rotate(5deg) brightness(1.05)'
+}
 
 const generatePDF = async (template, data) => {
+  const verifyUrl = getVerifyUrl()
   const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' })
   const pageW = 210,
     pageH = 297,
     margin = 20,
     contentW = pageW - margin * 2
 
-  // ── Helper: load image as base64 ──────────────────────────────────────────
-  const loadImg = (src) =>
+  // ── Helper: load image as base64 (optional bitcoin-orange tint) ───────────
+  const loadImg = (src, { tint, tintOpacity = LOGO_ORANGE_OPACITY } = {}) =>
     new Promise((resolve) => {
       const img = new Image()
       img.crossOrigin = 'anonymous'
@@ -1072,6 +1079,14 @@ const generatePDF = async (template, data) => {
         canvas.height = img.naturalHeight
         const ctx = canvas.getContext('2d')
         ctx.drawImage(img, 0, 0)
+        if (tint) {
+          ctx.globalAlpha = tintOpacity
+          ctx.fillStyle = tint
+          ctx.globalCompositeOperation = 'source-atop'
+          ctx.fillRect(0, 0, canvas.width, canvas.height)
+          ctx.globalAlpha = 1
+          ctx.globalCompositeOperation = 'source-over'
+        }
         resolve({
           dataUrl: canvas.toDataURL('image/png'),
           w: img.naturalWidth,
@@ -1082,11 +1097,10 @@ const generatePDF = async (template, data) => {
       img.src = src
     })
 
-  // ── Pre-load logos & QR ───────────────────────────────────────────────────
-  const [satohashImg, giveabitImg, qrDataUrl] = await Promise.all([
-    loadImg('/logo.png'),
-    loadImg('/giveabit.png'),
-    QRCode.toDataURL(VERIFY_URL, { width: 200, margin: 1 })
+  // ── Pre-load logo & QR ────────────────────────────────────────────────────
+  const [satohashImg, qrDataUrl] = await Promise.all([
+    loadImg('/logo.png', { tint: BITCOIN_ORANGE }),
+    QRCode.toDataURL(verifyUrl, { width: 200, margin: 1, errorCorrectionLevel: 'M' })
   ])
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -1101,60 +1115,38 @@ const generatePDF = async (template, data) => {
   doc.setFillColor(13, 148, 136)
   doc.rect(pageW / 2, 0, pageW / 2, 4, 'F')
 
-  // ── Logos row ──────────────────────────────────────────────────────────────
-  const logoH = 9
-  // Satohash logo — left ("Powered by")
+  // ── Logo — top left only (faded bitcoin orange) ───────────────────────────
+  const logoH = 10
   if (satohashImg) {
     const aspect = satohashImg.w / satohashImg.h
     const logoW = logoH * aspect
-    doc.saveGraphicsState()
-    doc.setGState(new doc.GState({ opacity: 0.4 }))
     doc.addImage(satohashImg.dataUrl, 'PNG', margin, 10, logoW, logoH)
-    doc.restoreGraphicsState()
-    doc.setFontSize(6)
-    doc.setTextColor(148, 163, 184)
-    doc.setFont('helvetica', 'normal')
-    doc.text('Powered by', margin, 10 + logoH + 3)
   } else {
     doc.setFontSize(8)
-    doc.setTextColor(200, 200, 200)
+    doc.setTextColor(247, 147, 26)
     doc.setFont('helvetica', 'bold')
     doc.text('SATOHASH', margin, 16)
-  }
-
-  // Give A Bit logo — right ("Created by")
-  if (giveabitImg) {
-    const aspect = giveabitImg.w / giveabitImg.h
-    const logoW = logoH * aspect
-    doc.saveGraphicsState()
-    doc.setGState(new doc.GState({ opacity: 0.4 }))
-    doc.addImage(giveabitImg.dataUrl, 'PNG', pageW - margin - logoW, 10, logoW, logoH)
-    doc.restoreGraphicsState()
-    doc.setFontSize(6)
-    doc.setTextColor(148, 163, 184)
-    doc.setFont('helvetica', 'normal')
-    doc.text('Created by', pageW - margin, 10 + logoH + 3, { align: 'right' })
   }
 
   // ── Document title ─────────────────────────────────────────────────────────
   doc.setTextColor(15, 23, 42)
   doc.setFontSize(20)
   doc.setFont('helvetica', 'bold')
-  doc.text(template.title.toUpperCase(), margin, 36)
+  doc.text(template.title.toUpperCase(), margin, 32)
   doc.setFontSize(8)
   doc.setTextColor(100, 116, 139)
   doc.setFont('helvetica', 'normal')
   doc.text(
     `${template.category} • Bitcoin-Anchored • ${new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}`,
     margin,
-    42
+    38
   )
   doc.setDrawColor(240, 180, 41)
   doc.setLineWidth(0.5)
-  doc.line(margin, 46, pageW - margin, 46)
+  doc.line(margin, 42, pageW - margin, 42)
 
   // ── Fields ─────────────────────────────────────────────────────────────────
-  let y = 56
+  let y = 52
   template.fields.forEach((field) => {
     if (y > 262) {
       doc.addPage()
@@ -1183,7 +1175,7 @@ const generatePDF = async (template, data) => {
   doc.setTextColor(148, 163, 184)
   doc.setFont('helvetica', 'normal')
   doc.text('Generated via Satohash — Sovereign Notary Protocol', margin, pageH - 10)
-  doc.text(`Verify: ${VERIFY_URL}`, pageW - margin, pageH - 10, { align: 'right' })
+  doc.text(`Verify: ${verifyUrl}`, pageW - margin, pageH - 10, { align: 'right' })
 
   // ═══════════════════════════════════════════════════════════════════════════
   // PAGE 2 — Certificate of Authenticity
@@ -1208,24 +1200,6 @@ const generatePDF = async (template, data) => {
   doc.setFontSize(6)
   doc.setTextColor(147, 197, 253) // light blue
   doc.text('Bitcoin-Anchored • Cryptographically Verified • Tamper-Evident', margin, 23)
-
-  // Give A Bit logo in header top-right
-  if (giveabitImg) {
-    const hLogoH = 14
-    const aspect = giveabitImg.w / giveabitImg.h
-    const hLogoW = hLogoH * aspect
-    doc.saveGraphicsState()
-    doc.setGState(new doc.GState({ opacity: 0.85 }))
-    doc.addImage(
-      giveabitImg.dataUrl,
-      'PNG',
-      pageW - margin - hLogoW,
-      (headerH - hLogoH) / 2,
-      hLogoW,
-      hLogoH
-    )
-    doc.restoreGraphicsState()
-  }
 
   // ── Certificate body ───────────────────────────────────────────────────────
   let cy = headerH + 14
@@ -1267,7 +1241,7 @@ const generatePDF = async (template, data) => {
     { label: 'DOCUMENT HASH (SHA-256)', value: '[Computed client-side — hash pending anchor]' },
     { label: 'BITCOIN BLOCK HEIGHT', value: '[Pending — OTS upgrade in progress]' },
     { label: 'NOTARY PROTOCOL', value: 'Satohash v1 — OpenTimestamps (OTS) / Bitcoin' },
-    { label: 'VERIFY URL', value: VERIFY_URL }
+    { label: 'VERIFY URL', value: verifyUrl }
   ]
 
   const colW = contentW / 2 - 4
@@ -1309,6 +1283,7 @@ const generatePDF = async (template, data) => {
   doc.rect(qrX, cy, qrBoxSize, qrBoxSize + 10, 'S')
   if (qrDataUrl) {
     doc.addImage(qrDataUrl, 'PNG', qrX + 4, cy + 4, qrBoxSize - 8, qrBoxSize - 8)
+    doc.link(qrX, cy, qrBoxSize, qrBoxSize, { url: verifyUrl })
   }
   doc.setFontSize(6)
   doc.setTextColor(30, 58, 138)
@@ -1341,10 +1316,7 @@ const generatePDF = async (template, data) => {
     const sLogoH = 8
     const sAspect = satohashImg.w / satohashImg.h
     const sLogoW = sLogoH * sAspect
-    doc.saveGraphicsState()
-    doc.setGState(new doc.GState({ opacity: 0.5 }))
     doc.addImage(satohashImg.dataUrl, 'PNG', sealX + 32 - sLogoW / 2, cy + 36, sLogoW, sLogoH)
-    doc.restoreGraphicsState()
   }
   doc.setFontSize(6)
   doc.setTextColor(148, 163, 184)
@@ -1377,7 +1349,7 @@ const generatePDF = async (template, data) => {
   doc.setTextColor(148, 163, 184)
   doc.setFont('helvetica', 'normal')
   doc.text('Satohash — Sovereign Notary Protocol', margin, pageH - 10)
-  doc.text(`Verify this document at: ${VERIFY_URL}`, pageW - margin, pageH - 10, { align: 'right' })
+  doc.text(`Verify this document at: ${verifyUrl}`, pageW - margin, pageH - 10, { align: 'right' })
   // Gold footer bar
   doc.setFillColor(240, 180, 41)
   doc.rect(0, pageH - 4, pageW / 2, 4, 'F')
@@ -1497,29 +1469,21 @@ function PreviewModal({ template, data, onClose, onDownloadPDF, onEmail }) {
 
           {/* Document body — read-only */}
           <div className="p-6 md:p-12">
-            {/* Logos row */}
-            <div className="mb-8 flex items-start justify-between">
-              <div
-                className="flex flex-shrink-0 flex-col items-start"
-                style={{ opacity: 0.45, filter: 'grayscale(100%)' }}
-              >
+            {/* Header: Satohash logo only */}
+            <div className="mb-8 flex items-start gap-5">
+              <div className="flex shrink-0 flex-col items-start">
                 <img
                   src="/logo.png"
                   alt="Satohash"
-                  className="mb-0.5 h-7 w-auto"
+                  className="h-8 w-auto"
+                  style={ORANGE_LOGO_STYLE}
                   onError={(e) => {
                     e.target.style.display = 'none'
                   }}
                 />
-                <span
-                  className="text-[9px] font-semibold tracking-[0.15em] uppercase"
-                  style={{ color: '#94a3b8' }}
-                >
-                  Powered by
-                </span>
               </div>
 
-              <div className="mx-4 flex-1">
+              <div className="min-w-0 flex-1">
                 <h2
                   className="text-2xl font-black tracking-tight md:text-3xl"
                   style={{ color: '#0f172a' }}
@@ -1545,26 +1509,6 @@ function PreviewModal({ template, data, onClose, onDownloadPDF, onEmail }) {
                     })}
                   </span>
                 </div>
-              </div>
-
-              <div
-                className="flex flex-shrink-0 flex-col items-end"
-                style={{ opacity: 0.45, filter: 'grayscale(100%)' }}
-              >
-                <img
-                  src="/giveabit.png"
-                  alt="Give A Bit"
-                  className="mb-0.5 h-7 w-auto"
-                  onError={(e) => {
-                    e.target.style.display = 'none'
-                  }}
-                />
-                <span
-                  className="text-[9px] font-semibold tracking-[0.15em] uppercase"
-                  style={{ color: '#94a3b8' }}
-                >
-                  Created by
-                </span>
               </div>
             </div>
 
@@ -1954,7 +1898,8 @@ export function TemplateEditor({ template, onBack, demoMode = false }) {
   }, [template])
 
   useEffect(() => {
-    QRCode.toDataURL(VERIFY_URL, { width: 80, margin: 1 })
+    const verifyUrl = getVerifyUrl()
+    QRCode.toDataURL(verifyUrl, { width: 120, margin: 1, errorCorrectionLevel: 'M' })
       .then(setQrUrl)
       .catch(() => {})
   }, [])
@@ -1994,7 +1939,7 @@ export function TemplateEditor({ template, onBack, demoMode = false }) {
       `${fieldLines}\n\n` +
       `--- VERIFICATION ---\n\n` +
       `This document has been notarized via the Satohash Sovereign Notary Protocol.\n` +
-      `Verify at: ${VERIFY_URL}\n`
+      `Verify at: ${getVerifyUrl()}\n`
     window.location.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
   }
 
@@ -2101,31 +2046,21 @@ export function TemplateEditor({ template, onBack, demoMode = false }) {
             />
 
             <div className="p-4 md:p-8 lg:p-12">
-              {/* Logos row: Satohash left ("Powered by"), Give A Bit right ("Created by") */}
-              <div className="mb-8 flex items-start justify-between">
-                {/* Left: Satohash logo — "Powered by" */}
-                <div
-                  className="flex flex-shrink-0 flex-col items-start"
-                  style={{ opacity: 0.45, filter: 'grayscale(100%)' }}
-                >
+              {/* Header: Satohash logo (faded bitcoin orange) + title */}
+              <div className="mb-8 flex items-start gap-5">
+                <div className="flex shrink-0 flex-col items-start">
                   <img
                     src="/logo.png"
                     alt="Satohash"
-                    className="mb-0.5 h-7 w-auto"
+                    className="h-8 w-auto"
+                    style={ORANGE_LOGO_STYLE}
                     onError={(e) => {
                       e.target.style.display = 'none'
                     }}
                   />
-                  <span
-                    className="text-[9px] font-semibold tracking-[0.15em] uppercase"
-                    style={{ color: '#94a3b8' }}
-                  >
-                    Powered by
-                  </span>
                 </div>
 
-                {/* Centre: title + badge */}
-                <div className="mx-4 flex-1">
+                <div className="min-w-0 flex-1">
                   <h1
                     className="text-2xl font-black tracking-tight md:text-3xl"
                     style={{ color: darkDoc ? '#f8fafc' : '#0f172a' }}
@@ -2151,27 +2086,6 @@ export function TemplateEditor({ template, onBack, demoMode = false }) {
                       })}
                     </span>
                   </div>
-                </div>
-
-                {/* Right: Give A Bit logo — "Created by" */}
-                <div
-                  className="flex flex-shrink-0 flex-col items-end"
-                  style={{ opacity: 0.45, filter: 'grayscale(100%)' }}
-                >
-                  <img
-                    src="/giveabit.png"
-                    alt="Give A Bit"
-                    className="mb-0.5 h-7 w-auto"
-                    onError={(e) => {
-                      e.target.style.display = 'none'
-                    }}
-                  />
-                  <span
-                    className="text-[9px] font-semibold tracking-[0.15em] uppercase"
-                    style={{ color: '#94a3b8' }}
-                  >
-                    Created by
-                  </span>
                 </div>
               </div>
 
@@ -2285,14 +2199,23 @@ export function TemplateEditor({ template, onBack, demoMode = false }) {
                   </div>
                 </div>
 
-                {/* Right: inline QR code */}
+                {/* Right: inline QR code → verify page */}
                 <div className="flex flex-shrink-0 flex-col items-center gap-1">
                   {qrUrl ? (
-                    <img
-                      src={qrUrl}
-                      alt="Scan to verify"
-                      style={{ width: 56, height: 56, opacity: 0.6 }}
-                    />
+                    <a
+                      href={getVerifyUrl()}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      title="Open verification page"
+                      className="rounded transition-opacity hover:opacity-100"
+                      style={{ opacity: 0.85 }}
+                    >
+                      <img
+                        src={qrUrl}
+                        alt="Scan to verify at Satohash"
+                        style={{ width: 56, height: 56 }}
+                      />
+                    </a>
                   ) : (
                     <div
                       style={{
