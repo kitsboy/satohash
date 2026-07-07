@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { Home, Search } from 'lucide-react'
+import usePageMeta from '../hooks/usePageMeta'
 
 export default function NotFound() {
   usePageMeta({

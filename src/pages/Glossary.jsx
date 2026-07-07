@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { BookOpen, Search, ArrowLeft, X } from 'lucide-react'
+import usePageMeta from '../hooks/usePageMeta'
 
 const TERMS = [
   { term: 'SHA-256', def: 'A cryptographic hash function that produces a 256-bit (64 character) hexadecimal fingerprint. Used by Satohash to create a unique identifier for each document without exposing its contents.' },

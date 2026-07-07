@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from 'react'
 import { Link, useParams } from 'react-router-dom'
+import usePageMeta from '../hooks/usePageMeta'
 import {
   ArrowLeft, BookOpen, FileText, Printer, Github,
   ThumbsUp, ThumbsDown, ExternalLink, Menu, ChevronRight

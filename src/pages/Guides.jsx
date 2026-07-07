@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { BookOpen, ArrowRight, ArrowLeft, Shield, FileText, Zap, Globe } from 'lucide-react'
+import usePageMeta from '../hooks/usePageMeta'
 
 const GUIDES = [
   {

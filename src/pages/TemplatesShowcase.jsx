@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import usePageMeta from '../hooks/usePageMeta'
 import {
   Heart, Home, Stethoscope, Shield, Briefcase, Lightbulb,
   DollarSign, ScrollText, UserCheck, Building2, Handshake,
