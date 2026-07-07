@@ -1,5 +1,5 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.giveabit.io · **Version:** 4.1.0-ELITE (Build 75) · **Updated:** 2026-07-07
+> **Live:** https://satohash.giveabit.io · **Version:** 4.1.0-ELITE (Build 76) · **Updated:** 2026-07-07
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Satohash — FINANCIALS (Approximate)
@@ -107,6 +107,7 @@
 *Last updated: 2026-06-10 (handoff prep) | Contact: hello@giveabit.io*
 
 **Note for handoff**: These are planning approximations only. Recent work added production-grade Docker/PM2/PWA paths, richer client-side offline + Lightning components, and Nostr integration — all of which improve the reliability and perceived value of the paid tiers without materially changing the cost structure above. Gross margins remain excellent due to the near-zero marginal cost of OTS anchoring via public calendars.
+
 
 
 
