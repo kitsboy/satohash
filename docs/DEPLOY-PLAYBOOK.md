@@ -1,5 +1,5 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.giveabit.io · **Version:** 4.1.0-ELITE (Build 81) · **Updated:** 2026-07-07
+> **Live:** https://satohash.giveabit.io · **Version:** 4.1.0-ELITE (Build 83) · **Updated:** 2026-07-08
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Satohash Deploy Playbook
@@ -17,7 +17,7 @@ Satohash production is a **static React SPA** on Cloudflare Pages. There is **no
 | Frontend | Cloudflare Pages (`./dist`) | Vite on port 3000 |
 | `server/` Express API | **Not deployed** | `npm run dev` on port 3001 |
 
-Core stamping and verification run **in the browser** (Web Crypto + OpenTimestamps). That is intentional — smaller attack surface, files never leave the device.
+**Hashing** runs in the browser (file never uploaded). **OTS stamp/verify** currently requires the Express API — see `docs/DEPLOY-SERVER.md` (planning; not deployed yet).
 
 ## Deploy (M3 Terminal)
 
@@ -47,6 +47,10 @@ Auth: `npx wrangler login` (one-time in Terminal.app) **or** set `CLOUDFLARE_API
 2. **Deploy is not automatic** unless GitHub Actions has `CLOUDFLARE_API_TOKEN` set, or you run `./deploy.sh` locally
 3. Verify live bundle: `npm run build:verify` checks local build; production should not contain bare `.fees.high` in the Landing chunk
 
+## API server (future)
+
+When MVP needs live stamp/verify: deploy `server/` per **`docs/DEPLOY-SERVER.md`** → `api.satohash.io`. Frontend stays on Cloudflare; rebuild with `VITE_API_URL=https://api.satohash.io`.
+
 ## Rollback
 
 Cloudflare Dashboard → **Workers & Pages** → **satohash** → **Deployments** → **Rollback to this deployment**
@@ -68,5 +72,9 @@ Other projects on M3 deploy separately (e.g. **TadBuy** uses Supabase + its own 
 
 ---
 © 2026 Satohash
+
+
+
+
 
 

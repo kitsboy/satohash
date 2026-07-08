@@ -1,7 +1,7 @@
 {
   "version": "4.1.0-ELITE",
-  "build": 83,
-  "date": "2026-07-07",
+  "build": 84,
+  "date": "2026-07-08",
   "live": "https://satohash.giveabit.io",
   "github": "https://github.com/kitsboy/satohash",
   "docs": [
@@ -32,6 +32,10 @@
     {
       "slug": "deploy-playbook",
       "path": "docs/DEPLOY-PLAYBOOK.md"
+    },
+    {
+      "slug": "deploy-server",
+      "path": "docs/DEPLOY-SERVER.md"
     },
     {
       "slug": "rollback",

@@ -39,8 +39,13 @@ const DOC_FILES = [
   'docs/DESIGN-CONTEXT.md',
   'docs/DESIGN-TOKENS.md',
   'docs/DEPLOY-PLAYBOOK.md',
+  'docs/DEPLOY-SERVER.md',
   'docs/ROLLBACK.md',
 ];
+
+const PUBLIC_COPY = {
+  'docs/DEPLOY-SERVER.md': 'public/docs/deploy-server.md',
+};
 
 for (const rel of DOC_FILES) {
   const full = path.join(root, rel);
@@ -48,8 +53,15 @@ for (const rel of DOC_FILES) {
   let content = fs.readFileSync(full, 'utf-8');
   content = content.replace(/<!-- AUTO-GENERATED HEADER[\s\S]*?-->\n*/m, '');
   content = content.replace(/^> \*\*Live:\*\*[\s\S]*?Synced by.*\n\n/m, '');
-  fs.writeFileSync(full, HEADER + content.trimStart() + '\n');
+  const body = HEADER + content.trimStart() + '\n';
+  fs.writeFileSync(full, body);
   console.log(`Synced ${rel}`);
+  const publicDest = PUBLIC_COPY[rel];
+  if (publicDest) {
+    fs.mkdirSync(path.dirname(path.join(root, publicDest)), { recursive: true });
+    fs.writeFileSync(path.join(root, publicDest), body);
+    console.log(`Copied → ${publicDest}`);
+  }
 }
 
 // Write machine-readable manifest for pitch page API
