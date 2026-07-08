@@ -40,11 +40,13 @@ const DOC_FILES = [
   'docs/DESIGN-TOKENS.md',
   'docs/DEPLOY-PLAYBOOK.md',
   'docs/DEPLOY-SERVER.md',
+  'docs/MVP-READINESS.md',
   'docs/ROLLBACK.md',
 ];
 
 const PUBLIC_COPY = {
   'docs/DEPLOY-SERVER.md': 'public/docs/deploy-server.md',
+  'docs/MVP-READINESS.md': 'public/docs/mvp-readiness.md',
 };
 
 for (const rel of DOC_FILES) {

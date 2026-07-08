@@ -23,6 +23,7 @@ import {
 import HelpOverlay from './HelpOverlay'
 import { getBlockHeight } from '../utils/mempool'
 import { useI18n } from '../i18n'
+import { MVP_MODE, MVP_DEFERRED_PATHS } from '../config/mvp'
 
 // ─── "More" compact links (static — no translation needed) ───────────────────
 const MORE_ITEMS = [
@@ -93,10 +94,13 @@ export default function LeftRailNav() {
   const initials = npub.length > 8 ? npub.substring(4, 6).toUpperCase() : 'SH'
 
   // ─── Nav groups (built here so t() is in scope) ─────────────────────────
+  const filterMvp = (items) =>
+    MVP_MODE ? items.filter((item) => !MVP_DEFERRED_PATHS.includes(item.path)) : items
+
   const NAV_GROUPS = [
     {
       label: 'HOME',
-      items: [{ name: t('nav', 'dashboard'), path: '/dashboard', icon: Globe }]
+      items: filterMvp([{ name: t('nav', 'dashboard'), path: '/dashboard', icon: Globe }])
     },
     {
       label: 'NOTARIZE',
@@ -108,15 +112,15 @@ export default function LeftRailNav() {
     },
     {
       label: 'EXPLORE',
-      items: [{ name: t('nav', 'atlas'), path: '/atlas', icon: Globe }]
+      items: filterMvp([{ name: t('nav', 'atlas'), path: '/atlas', icon: Globe }])
     },
     {
       label: 'BUILD',
-      items: [
+      items: filterMvp([
         { name: t('nav', 'developer'), path: '/developer', icon: Terminal },
         { name: t('nav', 'contracts'), path: '/contracts', icon: FileText },
         { name: 'Forum', path: '/forum', icon: MessageSquare }
-      ]
+      ])
     },
     {
       label: 'SETTINGS',
@@ -125,7 +129,7 @@ export default function LeftRailNav() {
         { name: t('nav', 'trust'), path: '/trust', icon: Scale }
       ]
     }
-  ]
+  ].filter((group) => group.items.length > 0)
 
   useEffect(() => {
     const seen = localStorage.getItem('satohash_intro_seen')

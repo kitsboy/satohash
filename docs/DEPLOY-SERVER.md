@@ -1,5 +1,5 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.giveabit.io · **Version:** 4.1.0-ELITE (Build 83) · **Updated:** 2026-07-08
+> **Live:** https://satohash.giveabit.io · **Version:** 4.1.0-ELITE (Build 85) · **Updated:** 2026-07-08
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Satohash API Server Deploy Guide
@@ -139,11 +139,12 @@ VITE_API_URL=https://api.satohash.io npm run build
 - [ ] CORS on API allows satohash.io origin
 - [ ] Smoke: `curl https://api.satohash.io/health?deep=true`
 
-### MVP UX (code changes before or right after API deploy)
+### MVP UX (frontend — done in Build 85+)
 
-- [ ] Remove `ProtectedRoute` from `/stamp` and `/verify` (or make auth optional)
-- [ ] `DeepHealthBanner` — hide or show green when API reachable
-- [ ] Landing `proofCount` — remove hardcoded `847,293` fallback when API works
+- [x] `VITE_MVP_MODE` — `/stamp`, `/verify`, `/vault` public without `/access`
+- [x] `DeepHealthBanner` — silent until `VITE_API_URL` is set
+- [x] Landing `proofCount` — shows `—` until API returns real count
+- [ ] Rebuild frontend with `VITE_API_URL=https://api.satohash.io` after API live
 
 ---
 
@@ -236,6 +237,7 @@ pm2 save && pm2 startup
 
 | Date | Build | Change | Status |
 |------|-------|--------|--------|
+| 2026-07-07 | 85+ | Frontend MVP prep — see `docs/MVP-READINESS.md` | 🟡 API gate |
 | 2026-07-07 | 84 | Initial planning doc — no server provisioned | 📋 Planning |
 | | | API DNS `api.satohash.io` | Not created |
 | | | VPS | Not provisioned |
@@ -254,3 +256,8 @@ pm2 save && pm2 startup
 
 ---
 © 2026 Satohash · Give A Bit
+
+
+
+
+

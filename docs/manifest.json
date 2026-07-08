@@ -1,6 +1,6 @@
 {
   "version": "4.1.0-ELITE",
-  "build": 84,
+  "build": 85,
   "date": "2026-07-08",
   "live": "https://satohash.giveabit.io",
   "github": "https://github.com/kitsboy/satohash",
@@ -36,6 +36,10 @@
     {
       "slug": "deploy-server",
       "path": "docs/DEPLOY-SERVER.md"
+    },
+    {
+      "slug": "mvp-readiness",
+      "path": "docs/MVP-READINESS.md"
     },
     {
       "slug": "rollback",

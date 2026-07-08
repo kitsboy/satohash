@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Database, Fingerprint, Globe, Search, MoreHorizontal } from 'lucide-react'
+import { Database, Fingerprint, ShieldCheck, Search, MoreHorizontal } from 'lucide-react'
 import { useI18n } from '../i18n'
 
 // ─── MobileBottomNav ─────────────────────────────────────────────────────────
@@ -14,7 +14,7 @@ export default function MobileBottomNav() {
   const PRIMARY_LINKS = [
     { name: t('nav', 'vault'), path: '/vault', icon: Database },
     { name: t('nav', 'stamp'), path: '/stamp', icon: Fingerprint },
-    { name: t('nav', 'atlas'), path: '/atlas', icon: Globe },
+    { name: t('nav', 'verify'), path: '/verify', icon: ShieldCheck },
     { name: t('nav', 'explorer') || 'Explorer', path: '/explorer', icon: Search }
   ]
 

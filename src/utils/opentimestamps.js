@@ -1,5 +1,8 @@
-// OpenTimestamps integration using our backend to handle binary protocols safely
-const API_BASE = 'http://localhost:3001/api'
+import { getApiUrl } from '../config/constants'
+
+function apiBase() {
+  return `${getApiUrl().replace(/\/$/, '')}/api`
+}
 
 /**
  * Create a SHA256 hash of the document content
@@ -50,7 +53,7 @@ export const createHash = async (content) => {
  */
 export const createTimestamp = async (hashHex) => {
   try {
-    const response = await fetch(`${API_BASE}/stamp`, {
+    const response = await fetch(`${apiBase()}/stamp`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -85,7 +88,7 @@ export const verifyTimestamp = async (hashHex, otsFileBlob) => {
     const formData = new FormData()
     formData.append('otsFile', otsFileBlob)
 
-    const response = await fetch(`${API_BASE}/verify`, {
+    const response = await fetch(`${apiBase()}/verify`, {
       method: 'POST',
       body: formData
     })
@@ -114,7 +117,7 @@ export const upgradeTimestamp = async (otsFileBlob) => {
     const formData = new FormData()
     formData.append('otsFile', otsFileBlob)
 
-    const response = await fetch(`${API_BASE}/upgrade`, {
+    const response = await fetch(`${apiBase()}/upgrade`, {
       method: 'POST',
       body: formData
     })

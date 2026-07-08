@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react'
 import { Activity, AlertTriangle } from 'lucide-react'
 import { getApiUrl } from '../config/constants'
+import { shouldMonitorApiHealth } from '../config/mvp'
 
-/** Observability banner fed from /health?deep=true when degraded */
+/** Observability banner fed from /health?deep=true when API is expected */
 export default function DeepHealthBanner() {
   const [status, setStatus] = useState(null)
 
   useEffect(() => {
+    if (!shouldMonitorApiHealth()) return undefined
+
     const check = async () => {
       try {
         const res = await fetch(`${getApiUrl()}/health?deep=true`)
@@ -21,13 +24,15 @@ export default function DeepHealthBanner() {
           setStatus(null)
         }
       } catch {
-        setStatus({ ok: false, message: 'Backend unreachable — frontend-only mode' })
+        setStatus({ ok: false, message: 'API unreachable — stamp and verify need api.satohash.io' })
       }
     }
     check()
     const id = setInterval(check, 60000)
     return () => clearInterval(id)
   }, [])
+
+  if (!shouldMonitorApiHealth()) return null
 
   if (!status) return null
 

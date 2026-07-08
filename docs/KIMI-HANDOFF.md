@@ -315,3 +315,27 @@ See `KIMI-HANDOFF-satohash-2026-06-10.md` in repo root for the original comprehe
 ### Git State
 - See `git log -1` for latest SHA
 - Branch: main
+
+---
+
+## Handoff to Kimi — 2026-07-07 (MVP doorstep)
+
+**Machine:** M3 (Grok)
+**Project:** satohash
+
+### Done
+- [x] MVP frontend prep: public `/stamp` `/verify` `/vault` (`VITE_MVP_MODE`)
+- [x] API wiring: `opentimestamps.js` → `getApiUrl()`, `.env.production.example`
+- [x] `DeepHealthBanner` silent on static-only; warns when API configured
+- [x] Landing honest proof count; nav hides Forum/Contracts in MVP mode
+- [x] `docs/MVP-READINESS.md` — NIP-05 uses pubkey only, **no NSEC**
+- [x] 58 unit tests passing
+
+### NIP-05
+- `kimi@giveabit.io` → pubkey `076fbd67…f8d4` in `src/config/mvp.js`
+- NSEC not needed and must never be committed
+
+### What's Next
+- [ ] Deploy API per `docs/DEPLOY-SERVER.md`
+- [ ] `VITE_API_URL=https://api.satohash.io npm run build && ./deploy.sh`
+- [ ] End-to-end stamp → verify smoke on production

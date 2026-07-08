@@ -55,7 +55,8 @@ Satohash lets anyone prove a document existed at a specific time by locking a cr
 
 ### NIP-05 Identity
 Kimi's Nostr NIP-05 handle: **kimi@giveabit.io**
-This links a human-readable name to a cryptographic key for verifiable communication.
+Public pubkey hex: `076fbd672795bfba1f905084bbe05dcee4937aa1db995c2f87d616ea0f73f8d4` (see `src/config/mvp.js`).
+Resolved via giveabit.io `/.well-known/nostr.json`. **Never store or request NSEC** in repo or chat — signing stays on M4 only.
 
 ### Roadmap — Phase III Active
 - [/] NIP-05 Identity (in progress)

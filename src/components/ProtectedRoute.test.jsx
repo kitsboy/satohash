@@ -32,10 +32,28 @@ describe('ProtectedRoute', () => {
     sessionStorage.clear()
   })
 
-  it('redirects to /access when not authenticated', () => {
+  it('allows /stamp without auth in MVP mode', () => {
     renderAt('/stamp')
+    expect(screen.getByText('Stamp Page')).toBeInTheDocument()
+  })
+
+  it('redirects protected routes to /access when not authenticated', () => {
+    render(
+      <MemoryRouter initialEntries={['/settings']}>
+        <Routes>
+          <Route path="/access" element={<div>Access Page</div>} />
+          <Route
+            path="/settings"
+            element={
+              <ProtectedRoute>
+                <div>Settings Page</div>
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+      </MemoryRouter>
+    )
     expect(screen.getByText('Access Page')).toBeInTheDocument()
-    expect(screen.queryByText('Stamp Page')).not.toBeInTheDocument()
   })
 
   it('renders children when satohash_authed is set', () => {

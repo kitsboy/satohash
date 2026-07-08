@@ -686,7 +686,7 @@ export default function Landing() {
               <span>
                 📁{' '}
                 {t('landingPage.telemetry.proofsConfirmed', {
-                  count: proofCount !== null ? proofCount.toLocaleString() : '847,293'
+                  count: proofCount !== null ? proofCount.toLocaleString() : '—'
                 })}
               </span>
             </div>
