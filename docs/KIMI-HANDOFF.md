@@ -19,8 +19,9 @@ Session handoff log for Kimi (M4 HERMES). Append new entries at the top.
 - Mock data (Developer, Dashboard, etc.) kept for presentation
 
 **Git State:**
-- SHA: *(after push)*
+- SHA: `5f58b54`
 - Branch: main
+- Build: 86
 
 ---
 
