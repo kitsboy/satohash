@@ -19,7 +19,7 @@ Session handoff log for Kimi (M4 HERMES). Append new entries at the top.
 - Full 7-locale i18n sweep (items 71–98) deferred to follow-up — functional pipes prioritized
 
 **Git State:**
-- SHA: *(after commit)*
+- SHA: `9df9182`
 - Branch: main
 
 ---
