@@ -1,5 +1,5 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.giveabit.io · **Version:** 4.1.0-ELITE (Build 85) · **Updated:** 2026-07-08
+> **Live:** https://satohash.giveabit.io · **Version:** 4.1.0-ELITE (Build 87) · **Updated:** 2026-07-15
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Satohash: The Sovereign Provenance Mesh
@@ -152,3 +152,5 @@ In the spirit of Bitcoin, **F.O.S.S.** is the only way to build true trust infra
 
 ---
 **Diligence pack:** [docs/diligence/](./diligence/) (investor + architecture + ask)
+
+
