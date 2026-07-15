@@ -53,13 +53,14 @@ export async function verifyOtsStructurally(file, expectedHash) {
     }
   }
 
+  const size = bytes.length
   return {
     verified: true,
     hash: hash || null,
     mode: 'structural',
     message: hash
-      ? `OTS file loaded (${file.size} bytes) — structural check passed; Bitcoin attestation requires API or opentimestamps.org`
-      : `OTS file loaded (${file.size} bytes) — paste SHA-256 hash to pair with this proof`
+      ? `OTS file loaded (${size} bytes) — structural check passed; Bitcoin attestation requires API or opentimestamps.org`
+      : `OTS file loaded (${size} bytes) — paste SHA-256 hash to pair with this proof`
   }
 }
 

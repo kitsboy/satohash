@@ -14,7 +14,8 @@ export default function PinModal({
   description = 'Use a 4–6 digit PIN to secure your key on this device.',
   submitLabel = 'Confirm',
   minLength = 4,
-  maxLength = 6
+  maxLength = 6,
+  variant = 'pin' // 'pin' | 'passphrase'
 }) {
   const [pin, setPin] = useState('')
   const inputRef = useRef(null)
@@ -115,11 +116,17 @@ export default function PinModal({
               <input
                 ref={inputRef}
                 type="password"
-                inputMode="numeric"
-                pattern="[0-9]*"
+                inputMode={variant === 'passphrase' ? 'text' : 'numeric'}
+                pattern={variant === 'passphrase' ? undefined : '[0-9]*'}
                 maxLength={maxLength}
                 value={pin}
-                onChange={(e) => setPin(e.target.value.replace(/\D/g, '').slice(0, maxLength))}
+                onChange={(e) =>
+                  setPin(
+                    variant === 'passphrase'
+                      ? e.target.value.slice(0, maxLength)
+                      : e.target.value.replace(/\D/g, '').slice(0, maxLength)
+                  )
+                }
                 placeholder="••••••"
                 className="h-14 w-full rounded-2xl border px-4 text-center font-mono text-2xl tracking-[0.5em] outline-none focus:ring-2"
                 style={{

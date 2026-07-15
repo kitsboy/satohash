@@ -27,6 +27,8 @@ import { MVP_MODE, MVP_DEFERRED_PATHS } from '../config/mvp'
 
 // ─── "More" compact links (static — no translation needed) ───────────────────
 const MORE_ITEMS = [
+  { name: 'Government', path: '/government' },
+  { name: 'Evidence admissibility', path: '/evidence-admissibility' },
   { name: 'Protocol Stats', path: '/protocol-stats' },
   { name: 'Explorer', path: '/explorer' },
   { name: 'Offers', path: '/offers' }
@@ -251,7 +253,7 @@ export default function LeftRailNav() {
                 aria-current={undefined}
                 className={({ isActive }) =>
                   [
-                    'flex items-center rounded-md px-3 py-1.5 text-[11px] font-semibold tracking-tight transition-colors duration-150',
+                    'flex min-h-[44px] items-center rounded-md px-3 py-1.5 text-[11px] font-semibold tracking-tight transition-colors duration-150',
                     isActive
                       ? 'text-[var(--accent-gold)]'
                       : 'text-[var(--text-secondary)] hover:text-[var(--accent-gold)]'

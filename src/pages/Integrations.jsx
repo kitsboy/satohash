@@ -16,13 +16,17 @@ import {
 import { useState } from 'react'
 import Footer from '../components/Footer'
 import usePageMeta from '../hooks/usePageMeta'
+import { getPublicBaseUrl, getApiUrl } from '../config/constants'
 
-const SNIPPETS = {
-  curl: `curl -X POST https://api.satohash.io/api/v1/timestamp \\
+function buildSnippets() {
+  const base = getPublicBaseUrl()
+  const api = getApiUrl()
+  return {
+    curl: `curl -X POST ${api}/api/stamp \\
   -H "Content-Type: application/json" \\
   -H "X-API-Key: your_api_key_here" \\
   -d '{"hash": "5d41402abc4b2a76b9719d911017c592"}'`,
-  js: `import { SatohashClient } from '@satohash/client'
+    js: `import { SatohashClient } from '@satohash/client'
 
 const client = new SatohashClient({
   apiKey: 'your_api_key_here'
@@ -34,7 +38,7 @@ const proof = await client.timestamp({
 })
 console.log('Proof created:', proof.id)`,
 
-  python: `from satohash import SatohashClient
+    python: `from satohash import SatohashClient
 
 client = SatohashClient(
     api_key="your_api_key_here"
@@ -45,20 +49,21 @@ result = client.verify("proof_file.ots")
 print(f"Verified: {result.verified}")
 print(f"Timestamp: {result.timestamp}")`,
 
-  bash: `# Using the satohash CLI
+    bash: `# Using the satohash CLI
 satohash stamp document.pdf
 # Output: Proof created: abc123... (tx: 7a8b...)
 
 satohash verify proof.ots document.pdf
 # Output: ✓ Verified — Bitcoin block 891234`,
 
-  wordpress: `// WordPress shortcode: [satohash_proof id="abc123"]
+    wordpress: `// WordPress shortcode: [satohash_proof id="abc123"]
 function satohash_proof_shortcode($atts) {
     $id = $atts['id'];
-    return '<iframe src="https://satohash.io/verify/' .
+    return '<iframe src="${base}/verify/' .
            esc_attr($id) . '" width="100%" height="400"></iframe>';
 }
 add_shortcode('satohash_proof', 'satohash_proof_shortcode');`
+  }
 }
 
 const SECTION_IDS = [
@@ -107,6 +112,8 @@ export default function Integrations() {
       }),
     [t]
   )
+
+  const SNIPPETS = useMemo(() => buildSnippets(), [])
 
   return (
     <div className="min-h-screen bg-[var(--bg-primary)]">
@@ -207,10 +214,10 @@ export default function Integrations() {
 const hash = await sha256Hex(canonicalPayload)
 
 // Open Satohash stamp with pre-filled hash
-window.open(\`https://satohash.io/stamp?hash=\${hash}&source=motopass&label=Passport+application\`)
+window.open(\`${getPublicBaseUrl()}/stamp?hash=\${hash}&source=motopass&label=Passport+application\`)
 
 // Public verify page (works static-only for fingerprint)
-window.open(\`https://satohash.io/verify/\${hash}\`)`}
+window.open(\`${getPublicBaseUrl()}/verify/\${hash}\`)`}
               copyLabel={t('common.copy')}
               copiedLabel={t('common.copied')}
             />

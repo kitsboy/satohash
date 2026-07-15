@@ -9,6 +9,7 @@ import { getApiUrl } from '../config/constants'
 import { normalizeSha256 } from '../utils/hashUtils'
 import { findStampByHashOrId, localRecordToProof } from '../utils/vaultLocal'
 import { verifyOtsStructurally } from '../utils/otsBrowser'
+import { verifyOtsBrowser } from '../utils/otsClient'
 import { isStaticOnlyMode, STATIC_MODE_COPY } from '../utils/staticMode'
 import StaticModeBanner from '../components/StaticModeBanner'
 
@@ -144,9 +145,9 @@ export default function VerificationTool() {
     }
   }
 
-  // Support ?q=<hash> deep-link for hash lookup
+  // Support ?q= or ?hash= deep-link for hash lookup (Vault links ?hash=)
   useEffect(() => {
-    const q = searchParams.get('q')?.trim()
+    const q = (searchParams.get('q') || searchParams.get('hash') || '').trim()
     if (!q || autoVerifiedRef.current) return
     setHashInput(q)
     if (q.length === 64) {
@@ -172,6 +173,23 @@ export default function VerificationTool() {
       const hashForOts = normalizeSha256(hashInput)
 
       if (otsFile) {
+        if (hashForOts) {
+          try {
+            const full = await verifyOtsBrowser(otsFile, hashForOts)
+            if (full.verified) {
+              setResult('success')
+              setVerifyData({
+                verified: true,
+                details: 'Bitcoin attestation verified via browser OpenTimestamps.',
+                mode: 'browser-ots'
+              })
+              setVerifying(false)
+              return
+            }
+          } catch {
+            /* fall through to structural check */
+          }
+        }
         if (isStaticOnlyMode() || hashForOts || !hashInput.trim()) {
           const structural = await verifyOtsStructurally(otsFile, hashForOts || '')
           if (structural.verified || structural.mode === 'structural') {
@@ -250,7 +268,7 @@ export default function VerificationTool() {
             Courtroom-Grade Verification
           </span>
         </div>
-        <h1 className="text-5xl font-bold tracking-tighter text-[var(--text-primary)] uppercase">
+        <h1 className="text-3xl font-bold tracking-tighter text-[var(--text-primary)] uppercase sm:text-5xl">
           The Verification Shield
         </h1>
         <p className="mx-auto max-w-2xl font-medium text-[var(--text-secondary)]">

@@ -18,9 +18,10 @@ import ProtectedRoute from './components/ProtectedRoute'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import { getApiUrl } from './config/constants'
+import { isMarketingPublicPath } from './utils/publicRoutes'
 
 // Lazy loaded planes
-import VerifyPublic from './pages/VerifyPublic'
+const VerifyPublic = React.lazy(() => import('./pages/VerifyPublic'))
 const Vault = React.lazy(() => import('./pages/Vault'))
 const Stamp = React.lazy(() => import('./pages/Stamp'))
 const Verify = React.lazy(() => import('./pages/VerificationTool'))
@@ -105,25 +106,20 @@ const TimestampVerificationHelp = React.lazy(() => import('./pages/timestamp/Ver
 function AppContent() {
   const location = useLocation()
 
+  const reduceMotion =
+    typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
   useEffect(() => {
+    if (reduceMotion) return undefined
     NProgress.start()
     const timer = setTimeout(() => NProgress.done(), 500)
     return () => {
       clearTimeout(timer)
       NProgress.done()
     }
-  }, [location.pathname])
+  }, [location.pathname, reduceMotion])
 
-  const isPublic =
-    location.pathname === '/' ||
-    location.pathname === '/access' ||
-    location.pathname === '/about' ||
-    location.pathname === '/trust' ||
-    location.pathname === '/pitch' ||
-    location.pathname === '/contribute' ||
-    location.pathname === '/templates' ||
-    location.pathname.startsWith('/templates/') ||
-    location.pathname.startsWith('/legal/')
+  const isPublic = isMarketingPublicPath(location.pathname)
 
   const content = (
     <main id="main-content" tabIndex={-1}>
@@ -505,7 +501,8 @@ function AppContent() {
             <Route path="/web-capture" element={<Navigate to="/snapper" replace />} />
             <Route path="/audit-log" element={<Navigate to="/vault" replace />} />
             <Route path="/documentation" element={<Navigate to="/developer" replace />} />
-            <Route path="/status" element={<Navigate to="/atlas" replace />} />
+            <Route path="/status" element={<Navigate to="/trust" replace />} />
+            <Route path="/changelog" element={<Navigate to="/docs/improvements-log" replace />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>

@@ -32,7 +32,10 @@ import { exportEncryptedVault } from '../utils/vaultExport'
 import StaticModeBanner from '../components/StaticModeBanner'
 import { stampHashBrowser } from '../utils/otsClient'
 import { isApiExplicitlyConfigured } from '../config/mvp'
-import { getOfflineQueue } from '../utils/vaultLocal'
+import { getOfflineQueue, findStampByHashOrId, otsBase64ToBlob } from '../utils/vaultLocal'
+import { upgradeOtsBrowser } from '../utils/otsClient'
+import { isStaticOnlyMode } from '../utils/staticMode'
+import PinModal from '../components/PinModal'
 
 const StatusBadge = ({ status }) => {
   const { t } = useI18n()
@@ -113,6 +116,8 @@ export default function Vault() {
   useEscapeKey(!!revokeTarget, closeRevoke)
   const [revokeReason, setRevokeReason] = useState('')
   const [revoking, setRevoking] = useState(false)
+  const [passphraseModal, setPassphraseModal] = useState(null) // 'export' | 'import' | null
+  const [pendingImportData, setPendingImportData] = useState(null)
   const [exportingZip, setExportingZip] = useState(false)
   const [offlineQueue, setOfflineQueue] = useState([])
   const [isSyncing, setIsSyncing] = useState(false)
@@ -627,15 +632,19 @@ export default function Vault() {
     }, 2000)
   }
 
-  const handleBackupVault = async () => {
-    const password = prompt('Enter a passphrase (8+ chars) to encrypt your vault backup:')
-    if (!password) {
-      toast.error('Passphrase is required for secure backup.')
+  const handleBackupVault = () => {
+    setPassphraseModal('export')
+  }
+
+  const runVaultExport = async (password) => {
+    if (!password || password.length < 8) {
+      toast.error('Passphrase must be at least 8 characters.')
       return
     }
     try {
       const { count } = await exportEncryptedVault(password)
       toast.success(`Encrypted vault backup exported (${count} items)`)
+      setPassphraseModal(null)
     } catch (e) {
       toast.error('Export failed: ' + e.message)
     }
@@ -656,26 +665,10 @@ export default function Vault() {
             toast.error('Invalid backup format or version mismatch.')
             return
           }
-          const password = prompt('Enter the decryption password for this vault:')
-          if (!password) return
-
-          const rawBase64 = decodeURIComponent(escape(atob(data.payload)))
-          let decryptedStr = ''
-          for (let i = 0; i < rawBase64.length; i++) {
-            const charCode = rawBase64.charCodeAt(i) ^ password.charCodeAt(i % password.length)
-            decryptedStr += String.fromCharCode(charCode)
-          }
-
-          const stamps = JSON.parse(decryptedStr)
-          if (!Array.isArray(stamps)) throw new Error('Decryption mismatch')
-
-          localStorage.setItem('satohash_stamps', JSON.stringify(stamps))
-          toast.success('Forensic vault successfully restored!', {
-            description: `${stamps.length} timestamps loaded into active workbench.`
-          })
-          refreshStamps()
+          setPendingImportData(data)
+          setPassphraseModal('import')
         } catch (err) {
-          toast.error('Failed to decrypt vault. Please double-check password.')
+          toast.error('Failed to read backup file.')
         }
       }
       reader.readAsText(file)
@@ -683,8 +676,56 @@ export default function Vault() {
     input.click()
   }
 
+  const runVaultImport = (password) => {
+    if (!password || !pendingImportData) return
+    try {
+      const data = pendingImportData
+      const rawBase64 = decodeURIComponent(escape(atob(data.payload)))
+      let decryptedStr = ''
+      for (let i = 0; i < rawBase64.length; i++) {
+        const charCode = rawBase64.charCodeAt(i) ^ password.charCodeAt(i % password.length)
+        decryptedStr += String.fromCharCode(charCode)
+      }
+
+      const stamps = JSON.parse(decryptedStr)
+      if (!Array.isArray(stamps)) throw new Error('Decryption mismatch')
+
+      localStorage.setItem('satohash_stamps', JSON.stringify(stamps))
+      toast.success('Forensic vault successfully restored!', {
+        description: `${stamps.length} timestamps loaded into active workbench.`
+      })
+      refreshStamps()
+      setPassphraseModal(null)
+      setPendingImportData(null)
+    } catch (err) {
+      toast.error('Failed to decrypt vault. Please double-check password.')
+    }
+  }
+
   const downloadOtsFile = async (item) => {
     try {
+      const local = findStampByHashOrId(item.id || item.hash)
+      if (local?.otsFileBase64) {
+        const blob = otsBase64ToBlob(local.otsFileBase64)
+        const url = URL.createObjectURL(blob)
+        const a = document.createElement('a')
+        a.href = url
+        a.download = `satohash-${(item.hash || item.id).substring(0, 8)}.ots`
+        document.body.appendChild(a)
+        a.click()
+        document.body.removeChild(a)
+        URL.revokeObjectURL(url)
+        toast.success('OTS proof downloaded', {
+          description: 'Verify independently with opentimestamps.org'
+        })
+        return
+      }
+
+      if (isStaticOnlyMode()) {
+        toast.error('No local .ots file — stamp via browser calendars first')
+        return
+      }
+
       const API = getApiUrl()
       const res = await fetch(`${API}/api/stamps/${item.id}?download=true`)
       if (!res.ok) {
@@ -710,6 +751,38 @@ export default function Vault() {
 
   const upgradeStamp = async (item) => {
     try {
+      const local = findStampByHashOrId(item.id || item.hash)
+      if (local?.otsFileBase64 && (local.source === 'browser-ots' || local.hasOts)) {
+        toast.info('Checking public calendars...', { duration: 2000 })
+        const blob = otsBase64ToBlob(local.otsFileBase64)
+        const { changed, blob: upgraded } = await upgradeOtsBrowser(blob)
+        if (changed) {
+          const bytes = new Uint8Array(await upgraded.arrayBuffer())
+          let otsFileBase64 = null
+          try {
+            otsFileBase64 = btoa(String.fromCharCode(...bytes))
+          } catch {
+            /* skip */
+          }
+          const stamps = JSON.parse(localStorage.getItem('satohash_stamps') || '[]')
+          const idx = stamps.findIndex((s) => s.id === local.id)
+          if (idx >= 0) {
+            stamps[idx] = { ...stamps[idx], otsFileBase64, hasOts: true }
+            localStorage.setItem('satohash_stamps', JSON.stringify(stamps))
+          }
+          toast.success('OTS proof upgraded from public calendars')
+          refreshStamps()
+        } else {
+          toast.info("Still pending — Bitcoin calendars haven't confirmed yet", { duration: 4000 })
+        }
+        return
+      }
+
+      if (isStaticOnlyMode()) {
+        toast.info('No browser OTS proof to upgrade on this device')
+        return
+      }
+
       const API = getApiUrl()
       toast.info('Checking Bitcoin status...', { duration: 2000 })
       const res = await fetch(`${API}/api/upgrade`, {
@@ -1491,6 +1564,32 @@ export default function Vault() {
           </>
         )}
       </div>
+
+      <PinModal
+        isOpen={passphraseModal === 'export'}
+        onClose={() => setPassphraseModal(null)}
+        onSubmit={runVaultExport}
+        variant="passphrase"
+        minLength={8}
+        maxLength={128}
+        title="Encrypt vault backup"
+        description="Enter a passphrase (8+ characters) to encrypt your vault export."
+        submitLabel="Export"
+      />
+      <PinModal
+        isOpen={passphraseModal === 'import'}
+        onClose={() => {
+          setPassphraseModal(null)
+          setPendingImportData(null)
+        }}
+        onSubmit={runVaultImport}
+        variant="passphrase"
+        minLength={1}
+        maxLength={128}
+        title="Decrypt vault backup"
+        description="Enter the passphrase used when this backup was created."
+        submitLabel="Restore"
+      />
     </div>
   )
 }

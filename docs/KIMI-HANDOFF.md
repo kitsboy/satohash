@@ -4,6 +4,26 @@ Session handoff log for Kimi (M4 HERMES). Append new entries at the top.
 
 ---
 
+## Session — 2026-07-15 (Batch 1–10: Next 100 static-edge)
+
+**Done:**
+- Waves 1–2: P0 pipes (`publicRoutes.js`, `?hash=`/`?q=`, cosign/autostamp/label decode, `/snapper` redirect fix, Integrations/embed dynamic origin)
+- OTS/vault: local `.ots` download fallback, `upgradeOtsBrowser`, VerifyPublic static skip, `verifyOtsBrowser`, vault `upsertLocalStamp`, PinModal passphrase for backup
+- Mobile/shell: safe-area insets, reduced shell padding, offline chip on mobile, scroll-lock More menu, government nav links
+- MVP public: pricing/comparison/glossary/widgets/identity in `MVP_PUBLIC_PATHS`, Landing nav + Footer government links, Developer "Simulated" badge
+- Consumer: `proof-dna-v3.js`, templates Government & Travel category, expanded `sitemap.xml`, DistressedAsset inline URL input
+- Tests: e2e `?hash=` verify tool spec; 65 unit tests + build pass
+
+**Decisions:**
+- Mock demo data preserved (Developer MOCK_KEYS, Dashboard, etc.)
+- Full 7-locale i18n sweep (items 71–98) deferred to follow-up — functional pipes prioritized
+
+**Git State:**
+- SHA: *(after commit)*
+- Branch: main
+
+---
+
 ## Session — 2026-07-15
 
 **Done:**

@@ -22,7 +22,8 @@ export default function MotoPassVerify() {
       hashes.map((hash) => ({
         hash,
         verifyUrl: `${getVerifyUrl()}/${hash}`,
-        stampUrl: `${window.location.origin}/stamp?hash=${hash}&source=motopass&label=MotoPass+application`
+        verifyToolUrl: `${window.location.origin}/verify?hash=${hash}`,
+        stampUrl: `/stamp?hash=${hash}&source=motopass&label=MotoPass+application`
       }))
     )
   }
@@ -70,22 +71,28 @@ export default function MotoPassVerify() {
                 style={{ borderColor: 'var(--border)' }}
               >
                 <p className="font-mono text-[10px] break-all">{r.hash}</p>
-                <div className="mt-3 flex flex-wrap gap-2">
+                <div className="mt-3 flex flex-wrap gap-3">
                   <a
                     href={r.verifyUrl}
                     className="text-[10px] font-black uppercase underline"
                     style={{ color: 'var(--accent-active)' }}
                   >
-                    Verify on Satohash
+                    Public verify page
                   </a>
                   <a
-                    href={r.stampUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    href={r.verifyToolUrl}
                     className="text-[10px] font-black uppercase underline"
+                    style={{ color: 'var(--accent-gold)' }}
+                  >
+                    Verify tool (?hash=)
+                  </a>
+                  <Link
+                    to={r.stampUrl}
+                    className="text-[10px] font-black uppercase underline"
+                    style={{ color: 'var(--text-primary)' }}
                   >
                     Complete stamp
-                  </a>
+                  </Link>
                 </div>
               </li>
             ))}

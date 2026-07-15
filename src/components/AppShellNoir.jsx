@@ -390,7 +390,7 @@ export default function AppShellNoir({ children }) {
             <LanguageSwitcher />
             <button
               onClick={() => setIsSearchOpen(true)}
-              aria-label="Open navigation menu"
+              aria-label="Open search"
               className="flex h-10 w-10 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--surface-raised)]"
             >
               <Search size={17} style={{ color: 'var(--accent-gold)' }} />
@@ -399,7 +399,10 @@ export default function AppShellNoir({ children }) {
         </div>
 
         {/* ── Main Content Area ───────────────────────────────────────────── */}
-        <div className="flex min-h-screen w-full max-w-full flex-1 flex-col overflow-x-hidden pb-20 md:ml-64 md:pb-0">
+        <div
+          className="flex min-h-screen w-full max-w-full flex-1 flex-col overflow-x-hidden pb-[calc(5rem+env(safe-area-inset-bottom))] md:ml-64 md:pb-0"
+          style={{ paddingTop: 'env(safe-area-inset-top)' }}
+        >
           {/* Desktop Top Signal Bar + Mempool Ticker */}
           <div className="sticky top-0 z-40 hidden flex-col border-b border-[var(--border)] bg-[var(--bg-primary)]/90 backdrop-blur-md md:flex">
             <MempoolTicker />
@@ -438,11 +441,31 @@ export default function AppShellNoir({ children }) {
           </div>
 
           {/* Page content */}
-          <main className="animate-fade-in flex-1 p-4 pt-20 md:p-8 md:pt-8">{children}</main>
+          <main className="animate-fade-in flex-1 p-2 pt-16 md:p-4 md:pt-8">{children}</main>
         </div>
 
         {/* ── Mobile Bottom Nav ───────────────────────────────────────────── */}
-        <div className="fixed inset-x-4 bottom-4 z-50 h-16 overflow-visible rounded-2xl border border-[var(--border-bright)] bg-[var(--bg-secondary)]/90 shadow-[0_20px_50px_rgba(0,0,0,0.5)] backdrop-blur-xl md:hidden">
+        {/* Mobile offline / queue chip */}
+        <div className="fixed top-[max(1rem,env(safe-area-inset-top))] right-4 z-50 md:hidden">
+          {!isOnline && (
+            <span
+              className="flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[9px] font-black tracking-widest uppercase"
+              style={{
+                background: 'rgba(234,179,8,0.12)',
+                border: '1px solid rgba(234,179,8,0.3)',
+                color: '#eab308'
+              }}
+            >
+              <WifiOff size={10} />
+              {queueCount > 0 ? `${queueCount} queued` : 'Offline'}
+            </span>
+          )}
+        </div>
+
+        <div
+          className="fixed inset-x-4 z-50 h-16 overflow-visible rounded-2xl border border-[var(--border-bright)] bg-[var(--bg-secondary)]/90 shadow-[0_20px_50px_rgba(0,0,0,0.5)] backdrop-blur-xl md:hidden"
+          style={{ bottom: 'max(1rem, env(safe-area-inset-bottom))' }}
+        >
           <MobileBottomNav />
         </div>
 

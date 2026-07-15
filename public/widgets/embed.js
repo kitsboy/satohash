@@ -11,6 +11,8 @@
       source: data.source || 'embed',
       label: data.label || 'Embedded document'
     })
-    window.open(`https://satohash.io/stamp?${params}`, '_blank', 'noopener')
+    const origin =
+      (typeof window !== 'undefined' && window.location?.origin) || 'https://satohash.giveabit.io'
+    window.open(`${origin}/stamp?${params}`, '_blank', 'noopener')
   })
 })()

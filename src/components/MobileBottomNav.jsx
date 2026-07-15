@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useBodyScrollLock } from '../utils/a11y'
 import { NavLink, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Database, Fingerprint, ShieldCheck, Search, MoreHorizontal } from 'lucide-react'
@@ -21,6 +22,7 @@ export default function MobileBottomNav() {
   // "More" is active when we're on a route not in the primary list
   const primaryPaths = PRIMARY_LINKS.map((l) => l.path)
   const moreActive = !primaryPaths.some((p) => location.pathname.startsWith(p))
+  useBodyScrollLock(moreOpen)
 
   return (
     <>
@@ -46,8 +48,9 @@ export default function MobileBottomNav() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 12, scale: 0.95 }}
               transition={{ type: 'spring', stiffness: 380, damping: 28 }}
-              className="fixed right-4 bottom-[84px] z-50 w-52 overflow-hidden rounded-2xl border shadow-2xl"
+              className="fixed right-4 z-50 w-52 overflow-hidden rounded-2xl border shadow-2xl"
               style={{
+                bottom: 'calc(var(--mobile-nav-offset, 5.5rem) + env(safe-area-inset-bottom, 0px))',
                 background: 'var(--bg-secondary)',
                 borderColor: 'var(--border-bright)',
                 boxShadow: '0 20px 60px rgba(0,0,0,0.6)'
@@ -87,7 +90,8 @@ export default function MobileBottomNav() {
 
               {[
                 { name: t('nav', 'dashboard'), path: '/dashboard' },
-                { name: t('nav', 'verify'), path: '/verify' },
+                { name: 'Government', path: '/government' },
+                { name: 'Batch hash', path: '/batch-hash' },
                 { name: t('nav', 'batch') || 'Batch Stamp', path: '/batch' },
                 { name: t('nav', 'developer'), path: '/developer' },
                 { name: t('nav', 'contracts'), path: '/contracts' },

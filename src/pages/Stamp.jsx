@@ -37,6 +37,7 @@ import StaticModeBanner from '../components/StaticModeBanner'
 import ProofTimeline from '../components/ProofTimeline'
 import GiveABitBadge from '../components/GiveABitBadge'
 import { stampHashBrowser, downloadOtsBlob } from '../utils/otsClient'
+import { upsertLocalStamp } from '../utils/vaultLocal'
 
 export default function Stamp() {
   usePageMeta({ page: 'stamp' })
@@ -75,20 +76,6 @@ export default function Stamp() {
   const { t } = useI18n()
 
   const { lastEvent } = useSocket()
-
-  // MotoPass / family apps deep-link: /stamp?hash=<sha256>
-  useEffect(() => {
-    const prefill = normalizeSha256(searchParams.get('hash') || '')
-    if (!prefill) return
-    setHashValue(prefill)
-    setCaseLabel((prev) => prev || searchParams.get('label') || 'Linked document')
-    if (searchParams.get('source') === 'motopass') {
-      toast.info('MotoPass hash loaded', {
-        description:
-          'Upload the matching file to complete stamping, or save this fingerprint to your vault.'
-      })
-    }
-  }, [searchParams])
 
   useEffect(() => {
     if (lastEvent?.type === 'upgrade:status' && proofResult?.id) {
@@ -269,9 +256,7 @@ export default function Stamp() {
       hasOts: true,
       otsFileBase64
     }
-    const existing = JSON.parse(localStorage.getItem('satohash_stamps') || '[]')
-    existing.unshift(proof)
-    localStorage.setItem('satohash_stamps', JSON.stringify(existing.slice(0, 100)))
+    upsertLocalStamp(proof)
     setProofResult(proof)
     setStampingStatus('complete')
     downloadOtsBlob(otsBlob, `${label || 'proof'}.ots`)
@@ -281,6 +266,46 @@ export default function Stamp() {
     navigator.vibrate?.([50, 30, 100])
     return proof
   }, [])
+
+  const stampHashOnly = useCallback(
+    async (hash, label = 'Linked hash') => {
+      try {
+        setStampingStatus('anchoring')
+        const { blob } = await stampHashBrowser(hash)
+        await saveBrowserOtsProof(hash, label, 0, blob)
+      } catch (e) {
+        toast.error('Browser stamp failed', { description: e.message })
+        setStampingStatus('idle')
+      }
+    },
+    [saveBrowserOtsProof]
+  )
+
+  // MotoPass / family apps deep-link: /stamp?hash=<sha256>&label=&cosign=&autostamp=
+  useEffect(() => {
+    const prefill = normalizeSha256(searchParams.get('hash') || '')
+    const rawLabel = searchParams.get('label')
+    const label = rawLabel ? decodeURIComponent(rawLabel.replace(/\+/g, ' ')) : 'Linked document'
+
+    if (searchParams.get('cosign') === 'true') {
+      setMultiParty(true)
+      const npub = searchParams.get('npub')?.trim()
+      if (npub?.startsWith('npub1')) setCoSigners([npub])
+    }
+
+    if (!prefill) return
+    setHashValue(prefill)
+    setCaseLabel((prev) => prev || label)
+    if (searchParams.get('source') === 'motopass') {
+      toast.info('MotoPass hash loaded', {
+        description:
+          'Upload the matching file to complete stamping, or stamp hash via public calendars.'
+      })
+    }
+    if (searchParams.get('autostamp') === '1') {
+      stampHashOnly(prefill, label)
+    }
+  }, [searchParams, stampHashOnly])
 
   const startStamping = async () => {
     if (!files.length) return
@@ -478,7 +503,7 @@ export default function Stamp() {
     stampingStatus === 'hashing' ? '30%' : stampingStatus === 'anchoring' ? '70%' : '100%'
 
   return (
-    <div className="mx-auto max-w-6xl space-y-12 p-8 pb-20">
+    <div className="mx-auto max-w-6xl space-y-12 p-4 pb-24 md:p-8 md:pb-20">
       <StaticModeBanner />
       <GiveABitBadge />
       {normalizeSha256(hashValue) && files.length === 0 && stampingStatus === 'idle' && (
@@ -494,23 +519,14 @@ export default function Stamp() {
             type="button"
             className="mt-4 rounded-xl px-6 py-3 text-xs font-black uppercase"
             style={{ background: 'var(--accent-gold)', color: '#141b25' }}
-            onClick={async () => {
-              try {
-                setStampingStatus('anchoring')
-                const { blob } = await stampHashBrowser(hashValue)
-                await saveBrowserOtsProof(hashValue, caseLabel || 'Linked hash', 0, blob)
-              } catch (e) {
-                toast.error('Browser stamp failed', { description: e.message })
-                setStampingStatus('idle')
-              }
-            }}
+            onClick={() => stampHashOnly(hashValue, caseLabel || 'Linked hash')}
           >
             Stamp hash via public calendars
           </button>
         </div>
       )}
       {/* ── 3-Step Flow Banner ── */}
-      <div className="mb-8 grid grid-cols-3 gap-0 overflow-hidden rounded-2xl border border-[var(--border)]">
+      <div className="mb-8 grid grid-cols-1 gap-0 overflow-hidden rounded-2xl border border-[var(--border)] sm:grid-cols-3">
         {[
           {
             n: '1',
@@ -1242,7 +1258,7 @@ export default function Stamp() {
               Capture and timestamp any webpage as proof it existed at this moment.
             </p>
             <a
-              href="/web-capture"
+              href="/snapper"
               className="flex items-center justify-center gap-2 rounded-xl border py-2.5 text-[10px] font-black tracking-widest uppercase transition-all hover:text-[var(--text-primary)]"
               style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
             >

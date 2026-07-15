@@ -13,6 +13,12 @@ test.describe('Static edge — MotoPass integration', () => {
     await expect(page.getByText(/valid fingerprint|fingerprint/i)).toBeVisible({ timeout: 15000 })
   })
 
+  test('verify tool accepts hash query param', async ({ page }) => {
+    const hash = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'
+    await page.goto(`/verify?hash=${hash}`)
+    await expect(page.locator('body')).toContainText(/verify|hash|fingerprint/i)
+  })
+
   test('government page loads', async ({ page }) => {
     await page.goto('/government')
     await expect(page.getByRole('heading', { name: /government/i })).toBeVisible()

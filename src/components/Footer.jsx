@@ -36,7 +36,7 @@ const LINK_GROUPS = [
       { key: 'widgets', path: '/widgets' },
       { key: 'integrations', path: '/integrations' },
       { key: 'documentation', path: '/docs' },
-      { key: 'status', path: '/status' }
+      { key: 'status', path: '/trust' }
     ]
   },
   {
@@ -46,6 +46,13 @@ const LINK_GROUPS = [
       { key: 'pitch', path: '/pitch' },
       { key: 'trustCenter', path: '/trust' },
       { key: 'government', path: '/government', label: 'Government' },
+      { key: 'motopassVerify', path: '/motopass-verify', label: 'MotoPass verify' },
+      {
+        key: 'evidenceAdmissibility',
+        path: '/evidence-admissibility',
+        label: 'Evidence admissibility'
+      },
+      { key: 'chainOfCustody', path: '/chain-of-custody', label: 'Chain of custody' },
       { key: 'security', path: '/security' },
       { key: 'identity', path: '/identity' },
       { key: 'contribute', path: '/contribute' }

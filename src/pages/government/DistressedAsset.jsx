@@ -11,6 +11,7 @@ export default function DistressedAsset() {
   const [hash, setHash] = useState('')
   const [otsFile, setOtsFile] = useState(null)
   const [verifyResult, setVerifyResult] = useState(null)
+  const [hostedUrl, setHostedUrl] = useState('https://motopass.giveabit.io/proofs/example.ots')
 
   const hashListing = async () => {
     const h = await sha256HexFromObject(listing)
@@ -18,13 +19,8 @@ export default function DistressedAsset() {
   }
 
   const verifyHosted = async () => {
-    if (!otsFile || !hash) return
-    const hosted = prompt(
-      'Hosted .ots URL on motopass or CDN:',
-      'https://motopass.giveabit.io/proofs/example.ots'
-    )
-    if (!hosted) return
-    setVerifyResult(await compareOtsToHosted(otsFile, hosted, hash))
+    if (!otsFile || !hash || !hostedUrl.trim()) return
+    setVerifyResult(await compareOtsToHosted(otsFile, hostedUrl.trim(), hash))
   }
 
   return (
@@ -80,14 +76,24 @@ export default function DistressedAsset() {
           onChange={(e) => setOtsFile(e.target.files?.[0] || null)}
         />
         {otsFile && hash && (
-          <button
-            type="button"
-            onClick={verifyHosted}
-            className="rounded-xl border px-6 py-3 text-xs font-black uppercase"
-            style={{ borderColor: 'var(--border)' }}
-          >
-            Compare to hosted proof
-          </button>
+          <div className="space-y-3">
+            <input
+              type="url"
+              value={hostedUrl}
+              onChange={(e) => setHostedUrl(e.target.value)}
+              placeholder="Hosted .ots URL on motopass or CDN"
+              className="w-full rounded-xl border px-4 py-3 font-mono text-xs"
+              style={{ borderColor: 'var(--border)', background: 'var(--bg-secondary)' }}
+            />
+            <button
+              type="button"
+              onClick={verifyHosted}
+              className="rounded-xl border px-6 py-3 text-xs font-black uppercase"
+              style={{ borderColor: 'var(--border)' }}
+            >
+              Compare to hosted proof
+            </button>
+          </div>
         )}
         {verifyResult && (
           <p

@@ -29,6 +29,7 @@ import { toast } from 'sonner'
 import Tooltip from '../components/Tooltip'
 
 import { getApiUrl, getPublicBaseUrl } from '../config/constants'
+import { isApiExplicitlyConfigured } from '../config/mvp'
 
 const API_URL = getApiUrl()
 const BASE_URL = getPublicBaseUrl()
@@ -411,6 +412,17 @@ export default function Developer() {
                 style={{ color: 'var(--accent-active)' }}
               >
                 Developer API — {BASE_URL.replace(/^https?:\/\//, '')}
+                {!isApiExplicitlyConfigured() && (
+                  <span
+                    className="ml-2 rounded-full px-2 py-0.5 text-[8px] font-black uppercase"
+                    style={{
+                      background: 'color-mix(in srgb, var(--accent-pending) 20%, transparent)',
+                      color: 'var(--accent-pending)'
+                    }}
+                  >
+                    Simulated
+                  </span>
+                )}
               </span>
             </div>
             <h1

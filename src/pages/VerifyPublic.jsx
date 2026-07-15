@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Copy, Share2, Hash, ExternalLink, XCircle, Download } from 'lucide-react'
 import { toast } from 'sonner'
@@ -39,7 +39,9 @@ export default function VerifyPublic() {
 
     // Update OG meta tags dynamically
     const API = getApiUrl()
-    const ogImageUrl = `${API}/api/og/${proof.id}`
+    const ogImageUrl = isStaticOnlyMode()
+      ? `${window.location.origin}/og-image.svg`
+      : `${API}/api/og/${proof.hash || proof.id}`
 
     const setMeta = (property, content) => {
       let el =
@@ -92,6 +94,13 @@ export default function VerifyPublic() {
         }
       : null
 
+    if (isStaticOnlyMode()) {
+      if (hashOnly) setProof(hashOnly)
+      else setError('Proof not found in local vault')
+      setLoading(false)
+      return
+    }
+
     try {
       const API = getApiUrl()
       const response = await fetch(`${API}/api/stamps/${proofId}`)
@@ -122,9 +131,9 @@ export default function VerifyPublic() {
       style={{ background: 'var(--bg-primary)', color: 'var(--text-primary)' }}
     >
       {/* Minimal back-link nav */}
-      <a
-        href="/"
-        className="fixed top-4 left-4 z-50 flex items-center gap-2 rounded-full border px-4 py-2 text-[11px] font-black tracking-widest uppercase transition-all hover:opacity-80"
+      <Link
+        to="/"
+        className="fixed top-4 left-4 z-50 flex items-center gap-2 rounded-full border px-4 py-2 text-[11px] font-black tracking-widest uppercase transition-all hover:opacity-80 max-sm:top-[max(1rem,env(safe-area-inset-top))]"
         style={{
           borderColor: 'var(--border)',
           background: 'var(--bg-secondary)',
@@ -132,7 +141,7 @@ export default function VerifyPublic() {
         }}
       >
         {t('verifyPublicPage.back')}
-      </a>
+      </Link>
 
       {/* Loading state */}
       {loading && (
@@ -336,7 +345,7 @@ export default function VerifyPublic() {
             </p>
             <div className="rounded-2xl bg-white p-4">
               <QRCode
-                value={`${window.location.origin}/verify/${proof.id}`}
+                value={`${window.location.origin}/verify/${proof.hash || proof.id}`}
                 size={160}
                 level="M"
                 includeMargin={false}

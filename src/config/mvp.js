@@ -24,7 +24,13 @@ export const MVP_PUBLIC_PATHS = [
   '/batch-hash',
   '/chain-of-custody',
   '/evidence-admissibility',
-  '/distressed-asset'
+  '/distressed-asset',
+  '/pricing',
+  '/comparison',
+  '/glossary',
+  '/widgets',
+  '/identity',
+  '/changelog'
 ]
 
 /** Sub-paths allowed in MVP mode (e.g. /verify/:hash from MotoPass) */

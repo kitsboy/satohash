@@ -26,10 +26,17 @@ function loadOpenTimestamps() {
       if (window.OpenTimestamps) resolve(window.OpenTimestamps)
       else reject(new Error('OpenTimestamps bundle failed to initialize'))
     }
-    script.onerror = () => reject(new Error('Could not load OpenTimestamps browser bundle'))
+    script.onerror = () => {
+      loadPromise = null
+      reject(new Error('Could not load OpenTimestamps browser bundle'))
+    }
     document.head.appendChild(script)
   })
   return loadPromise
+}
+
+export function resetOtsLoader() {
+  loadPromise = null
 }
 
 function hexToBuffer(hex) {

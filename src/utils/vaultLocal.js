@@ -38,9 +38,44 @@ export function findStampByHashOrId(idOrHash) {
   )
 }
 
+const MAX_STAMPS = 500
+const MAX_QUEUE = 200
+
+function persist(key, arr, max) {
+  try {
+    localStorage.setItem(key, JSON.stringify(arr.slice(0, max)))
+    return true
+  } catch (e) {
+    if (e?.name === 'QuotaExceededError' && arr.length > 1) {
+      localStorage.setItem(key, JSON.stringify(arr.slice(0, Math.floor(max / 2))))
+      return true
+    }
+    return false
+  }
+}
+
+/** Upsert stamp record (newest first). */
+export function upsertLocalStamp(record, { max = MAX_STAMPS } = {}) {
+  const existing = getLocalStamps().filter((s) => s.id !== record.id)
+  return persist(STAMPS_KEY, [record, ...existing], max)
+}
+
+export function enqueueOffline(item, { max = MAX_QUEUE } = {}) {
+  const q = getOfflineQueue()
+  return persist(QUEUE_KEY, [...q, item], max)
+}
+
+export function otsBase64ToBlob(base64) {
+  const binary = atob(base64)
+  const bytes = new Uint8Array(binary.length)
+  for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i)
+  return new Blob([bytes], { type: 'application/octet-stream' })
+}
+
 /** Build a proof-shaped object for public verify UI from a local record. */
 export function localRecordToProof(record) {
   if (!record) return null
+  const hasOts = Boolean(record.hasOts || record.otsFileBase64)
   return {
     id: record.id || record.hash,
     hash: normalizeSha256(record.hash) || record.hash,
@@ -49,7 +84,11 @@ export function localRecordToProof(record) {
     created_at: record.created_at || record.createdAt,
     bitcoin_block_height: record.bitcoin_block_height || record.blockHeight || null,
     confirmed_at: record.confirmed_at || null,
-    source: 'local',
-    queued: record.status === 'pending' && String(record.id || '').startsWith('offline')
+    source: record.source || 'local',
+    hasOts,
+    otsFileBase64: record.otsFileBase64 || null,
+    queued:
+      record.queued === true ||
+      (record.status === 'pending' && !hasOts && record.source !== 'browser-ots')
   }
 }

@@ -4,6 +4,22 @@
   <url><loc>https://satohash.io/about</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
   <url><loc>https://satohash.io/pitch</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
   <url><loc>https://satohash.io/templates</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://satohash.io/templates/prenuptial-agreement</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://satohash.io/templates/real-estate-title-deed</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://satohash.io/templates/residential-lease-agreement</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://satohash.io/templates/commercial-lease-agreement</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://satohash.io/templates/mutual-nda</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://satohash.io/templates/ip-assignment-agreement</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://satohash.io/templates/partnership-agreement</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://satohash.io/templates/freelance-service-contract</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://satohash.io/templates/vehicle-sale-agreement</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://satohash.io/templates/personal-loan-agreement</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://satohash.io/templates/last-will-testament</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://satohash.io/templates/living-will-advance-directive</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://satohash.io/templates/employment-offer-letter</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://satohash.io/templates/employment-contract</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://satohash.io/templates/passport-attestation</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://satohash.io/templates/api-benefits</loc><priority>0.6</priority><changefreq>monthly</changefreq></url>
   <url><loc>https://satohash.io/faq</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
   <url><loc>https://satohash.io/pricing</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
   <url><loc>https://satohash.io/comparison</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
@@ -16,6 +32,10 @@
   <url><loc>https://satohash.io/trust</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
   <url><loc>https://satohash.io/government</loc><priority>0.9</priority><changefreq>weekly</changefreq></url>
   <url><loc>https://satohash.io/motopass-verify</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://satohash.io/batch-hash</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://satohash.io/chain-of-custody</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://satohash.io/evidence-admissibility</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://satohash.io/distressed-asset</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
   <url><loc>https://satohash.io/stamp</loc><priority>0.9</priority><changefreq>weekly</changefreq></url>
   <url><loc>https://satohash.io/verify</loc><priority>0.9</priority><changefreq>weekly</changefreq></url>
   <url><loc>https://satohash.io/vault</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>

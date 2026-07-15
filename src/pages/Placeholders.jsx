@@ -4,7 +4,7 @@ import usePageMetaOnboarding from '../hooks/usePageMetaOnboarding'
 
 /** Legacy export — /snapper routes to WebCapture; redirect any stale imports. */
 export function Snapper() {
-  return <Navigate to="/web-capture" replace />
+  return <Navigate to="/snapper" replace />
 }
 
 export function Certificates() {

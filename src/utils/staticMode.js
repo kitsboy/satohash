@@ -12,10 +12,10 @@ export function getDeploymentMode() {
 }
 
 export const STATIC_MODE_COPY = {
-  title: 'Static verification mode',
-  body: 'Hashing and local vault work in your browser. Bitcoin anchoring via OpenTimestamps requires api.satohash.io (not deployed yet).',
+  title: 'Browser verification mode',
+  body: 'Hashing, vault, and OpenTimestamps stamping run in your browser via public calendars. Optional api.satohash.io adds hosted sync, OG cards, and fleet analytics.',
   stampQueued:
-    'Hash fingerprint saved locally. Full .ots proof and Bitcoin attestation will sync when the API is live.',
+    'Hash saved locally. Browser OTS will retry on sync — or stamp now via public calendars.',
   verifyStructural:
-    'Structural .ots check passed. Independent Bitcoin confirmation needs the verification API or opentimestamps.org.'
+    'Structural .ots check passed. Full Bitcoin attestation: use browser verify or opentimestamps.org.'
 }

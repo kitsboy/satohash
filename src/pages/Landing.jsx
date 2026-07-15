@@ -51,6 +51,10 @@ export default function Landing() {
     () => [
       [t('landingPage.nav.features'), '#features'],
       [t('landingPage.nav.howItWorks'), '#how-it-works'],
+      [t('nav.templates') || 'Templates', '/templates'],
+      [t('nav.pricing') || 'Pricing', '/pricing'],
+      [t('nav.comparison') || 'Compare', '/comparison'],
+      ['Government', '/government'],
       [t('landingPage.nav.legal'), '/trust']
     ],
     [t]
@@ -221,9 +225,12 @@ export default function Landing() {
             <ThemeToggle />
             <LanguageSwitcher />
             <button
-              className="rounded-lg border p-2"
+              type="button"
+              className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg border p-2"
               style={{ borderColor: 'var(--border)' }}
               onClick={() => setNavOpen(!navOpen)}
+              aria-expanded={navOpen}
+              aria-label={navOpen ? 'Close menu' : 'Open menu'}
             >
               {navOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
