@@ -6,11 +6,36 @@
 export const MVP_MODE = import.meta.env.VITE_MVP_MODE !== 'false'
 
 /** Routes reachable without /access login when MVP_MODE is on */
-export const MVP_PUBLIC_PATHS = ['/stamp', '/verify', '/vault']
+export const MVP_PUBLIC_PATHS = [
+  '/stamp',
+  '/verify',
+  '/vault',
+  '/trust',
+  '/security',
+  '/integrations',
+  '/templates',
+  '/faq',
+  '/guides',
+  '/docs',
+  '/pitch',
+  '/about',
+  '/government',
+  '/motopass-verify',
+  '/batch-hash',
+  '/chain-of-custody',
+  '/evidence-admissibility',
+  '/distressed-asset'
+]
 
+/** Sub-paths allowed in MVP mode (e.g. /verify/:hash from MotoPass) */
 export function isMvpPublicPath(pathname = '') {
   if (!MVP_MODE) return false
-  return MVP_PUBLIC_PATHS.some((p) => pathname === p || (p !== '/' && pathname.startsWith(`${p}/`)))
+  if (MVP_PUBLIC_PATHS.some((p) => pathname === p || (p !== '/' && pathname.startsWith(`${p}/`)))) {
+    return true
+  }
+  // Public proof pages linked from Give A Bit family apps
+  if (/^\/verify\/[a-f0-9]{64}$/i.test(pathname)) return true
+  return false
 }
 
 /** True when build bakes in an external API (api.satohash.io) */

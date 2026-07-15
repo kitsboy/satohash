@@ -4,6 +4,26 @@ Session handoff log for Kimi (M4 HERMES). Append new entries at the top.
 
 ---
 
+## Session — 2026-07-15
+
+**Done:**
+- Static-edge hardening: browser OpenTimestamps via `public/vendor/ots.browser.js` (public calendars, no API)
+- MotoPass integration: `/stamp?hash=`, `/verify/{hash}`, embed.js postMessage bridge
+- Government suite: `/government`, `/motopass-verify`, `/batch-hash`, `/chain-of-custody`, `/evidence-admissibility`, `/distressed-asset`
+- Passport attestation template + utilities: `otsBrowser`, `vaultLocal`, `otsClient`, VC export, vault ZIP from local `.ots`
+- `security.txt`, sitemap, MVP-READINESS updated; mock demo data preserved per user request
+
+**Decisions:**
+- Browser OTS bundle excluded from PWA precache (4MB); lazy-loaded on stamp
+- Static-only builds skip API and stamp direct to alice/bob/finney calendars
+- Mock data (Developer, Dashboard, etc.) kept for presentation
+
+**Git State:**
+- SHA: *(after push)*
+- Branch: main
+
+---
+
 ## Handoff to Kimi — 2026-07-05
 
 **Machine:** M3 (Grok)

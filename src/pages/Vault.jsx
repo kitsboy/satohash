@@ -29,6 +29,10 @@ import usePageMeta from '../hooks/usePageMeta'
 import { getApiUrl } from '../config/constants'
 import { useEscapeKey } from '../utils/a11y'
 import { exportEncryptedVault } from '../utils/vaultExport'
+import StaticModeBanner from '../components/StaticModeBanner'
+import { stampHashBrowser } from '../utils/otsClient'
+import { isApiExplicitlyConfigured } from '../config/mvp'
+import { getOfflineQueue } from '../utils/vaultLocal'
 
 const StatusBadge = ({ status }) => {
   const { t } = useI18n()
@@ -204,24 +208,49 @@ export default function Vault() {
   }
 
   const syncOfflineQueue = useCallback(async () => {
-    const queue = JSON.parse(localStorage.getItem('satohash_offline_queue') || '[]')
+    const queue = getOfflineQueue()
     if (queue.length === 0) return
     setIsSyncing(true)
     let succeeded = 0
 
     for (const item of queue) {
       try {
-        const API = getApiUrl()
-        const res = await fetch(`${API}/api/stamp`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            hash: item.hash,
-            filename: item.filename,
-            customLabel: item.customLabel || ''
+        if (isApiExplicitlyConfigured()) {
+          const API = getApiUrl()
+          const res = await fetch(`${API}/api/stamp`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              hash: item.hash,
+              filename: item.filename,
+              customLabel: item.customLabel || ''
+            })
           })
-        })
-        if (res.ok) {
+          if (res.ok) {
+            succeeded++
+            continue
+          }
+        }
+        if (item.hash?.length === 64) {
+          const { blob } = await stampHashBrowser(item.hash)
+          const buf = await blob.arrayBuffer()
+          const bytes = new Uint8Array(buf)
+          let otsFileBase64 = null
+          try {
+            otsFileBase64 = btoa(String.fromCharCode(...bytes))
+          } catch {
+            /* skip */
+          }
+          const existing = JSON.parse(localStorage.getItem('satohash_stamps') || '[]')
+          existing.unshift({
+            ...item,
+            id: item.id || `ots-${item.hash.slice(0, 8)}`,
+            status: 'pending',
+            source: 'browser-ots',
+            hasOts: true,
+            otsFileBase64
+          })
+          localStorage.setItem('satohash_stamps', JSON.stringify(existing.slice(0, 500)))
           succeeded++
         }
       } catch (err) {
@@ -354,16 +383,27 @@ export default function Vault() {
       const API = getApiUrl()
       let added = 0
 
+      const localStamps = JSON.parse(localStorage.getItem('satohash_stamps') || '[]')
       for (const item of items) {
         try {
           const res = await fetch(`${API}/api/stamps/${item.id}?download=true`)
-          if (!res.ok) continue
-          const blob = await res.blob()
-          const safeName = (item.name || item.id).replace(/[^a-z0-9._-]/gi, '_')
-          zip.file(`${safeName}-${item.id.substring(0, 8)}.ots`, blob)
-          added++
+          if (res.ok) {
+            const blob = await res.blob()
+            const safeName = (item.name || item.id).replace(/[^a-z0-9._-]/gi, '_')
+            zip.file(`${safeName}-${item.id.substring(0, 8)}.ots`, blob)
+            added++
+            continue
+          }
         } catch {
-          // Skip proofs without downloadable OTS binaries
+          /* try local */
+        }
+        const local = localStamps.find((s) => s.id === item.id)
+        if (local?.otsFileBase64) {
+          const safeName = (item.name || item.id).replace(/[^a-z0-9._-]/gi, '_')
+          zip.file(`${safeName}-${item.id.substring(0, 8)}.ots`, local.otsFileBase64, {
+            base64: true
+          })
+          added++
         }
       }
 
@@ -732,6 +772,7 @@ export default function Vault() {
 
   return (
     <div className="mx-auto max-w-[90rem] space-y-12 p-8 pb-24">
+      <StaticModeBanner />
       {/* Export Modal Overlay */}
       <AnimatePresence>
         {isExporting && (

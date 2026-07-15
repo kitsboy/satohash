@@ -17,11 +17,11 @@ export function downloadCertificate(item) {
   doc.setFillColor(240, 180, 41)
   doc.rect(0, 0, pageW, 6, 'F')
 
-  // Watermark
+  const isPending = (item.status || 'pending') !== 'confirmed'
   doc.setTextColor(220, 220, 220)
-  doc.setFontSize(60)
+  doc.setFontSize(isPending ? 40 : 60)
   doc.setFont('helvetica', 'bold')
-  doc.text('SATOHASH', 105, 160, { align: 'center', angle: 45 })
+  doc.text(isPending ? 'PENDING OTS' : 'SATOHASH', 105, 160, { align: 'center', angle: 45 })
 
   // Title
   doc.setTextColor(15, 23, 42)

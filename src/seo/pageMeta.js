@@ -1263,6 +1263,47 @@ export const pageMeta = {
     },
     zh: { title: '模板预览', description: '使用预填演示数据预览 Satohash 法律模板。' }
   },
+  government: {
+    en: {
+      title: 'Government & Diplomatic Document Timestamping',
+      description:
+        'Zero-knowledge Bitcoin timestamps for passports, national IDs, and distressed sovereign assets. MotoPass integration.'
+    }
+  },
+  motopassVerify: {
+    en: {
+      title: 'Verify MotoPass Application Hash',
+      description:
+        'Validate SHA-256 fingerprints from motopass.giveabit.io and link to Satohash verification.'
+    }
+  },
+  batchHash: {
+    en: {
+      title: 'Batch Hash Registry',
+      description:
+        'Register hundreds of document fingerprints locally and export CSV for agency audit.'
+    }
+  },
+  chainOfCustody: {
+    en: {
+      title: 'Chain of Custody Timestamp',
+      description: 'Record holder, witness, and agency handoffs with Bitcoin-anchored hashes.'
+    }
+  },
+  evidenceAdmissibility: {
+    en: {
+      title: 'Evidence Admissibility Guide',
+      description:
+        'Jurisdiction matrix for hash-based evidence under UETA, eIDAS, UK, and cross-border law.'
+    }
+  },
+  distressedAsset: {
+    en: {
+      title: 'Distressed Asset Attestation',
+      description:
+        'Hash sovereign asset listings and verify hosted OpenTimestamps proofs from MotoPass.'
+    }
+  },
   notFound: {
     en: {
       title: 'Page Not Found',

@@ -1,0 +1,7 @@
+Contact: mailto:security@giveabit.io
+Contact: https://satohash.io/trust
+Expires: 2027-07-15T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://satohash.io/.well-known/security.txt
+Policy: https://satohash.io/security
+Acknowledgments: https://github.com/kitsboy/satohash/security/advisories

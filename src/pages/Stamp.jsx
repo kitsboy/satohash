@@ -18,6 +18,7 @@ import {
   FolderSync
 } from 'lucide-react'
 import { useState, useCallback, useEffect, useRef } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { getTieredFeeEstimates } from '../utils/mempool.js'
 import FeeAdvisor from '../components/FeeAdvisor'
 import { addErrorBreadcrumb } from '../utils/errors.js'
@@ -29,9 +30,17 @@ import { useI18n } from '../i18n'
 import { downloadCertificate } from '../utils/certificate'
 import usePageMeta from '../hooks/usePageMeta'
 import { getApiUrl } from '../config/constants'
+import { normalizeSha256 } from '../utils/hashUtils'
+import { isStaticOnlyMode, STATIC_MODE_COPY } from '../utils/staticMode'
+import { isApiExplicitlyConfigured } from '../config/mvp'
+import StaticModeBanner from '../components/StaticModeBanner'
+import ProofTimeline from '../components/ProofTimeline'
+import GiveABitBadge from '../components/GiveABitBadge'
+import { stampHashBrowser, downloadOtsBlob } from '../utils/otsClient'
 
 export default function Stamp() {
   usePageMeta({ page: 'stamp' })
+  const [searchParams] = useSearchParams()
   const [stampMode, setStampMode] = useState('single') // single, capsule, redact, deposition
   const [isCapsuleMode, setIsCapsuleMode] = useState(false)
 
@@ -66,6 +75,20 @@ export default function Stamp() {
   const { t } = useI18n()
 
   const { lastEvent } = useSocket()
+
+  // MotoPass / family apps deep-link: /stamp?hash=<sha256>
+  useEffect(() => {
+    const prefill = normalizeSha256(searchParams.get('hash') || '')
+    if (!prefill) return
+    setHashValue(prefill)
+    setCaseLabel((prev) => prev || searchParams.get('label') || 'Linked document')
+    if (searchParams.get('source') === 'motopass') {
+      toast.info('MotoPass hash loaded', {
+        description:
+          'Upload the matching file to complete stamping, or save this fingerprint to your vault.'
+      })
+    }
+  }, [searchParams])
 
   useEffect(() => {
     if (lastEvent?.type === 'upgrade:status' && proofResult?.id) {
@@ -226,6 +249,39 @@ export default function Stamp() {
     setCoSignerErrors(errs)
   }
 
+  const saveBrowserOtsProof = useCallback(async (hash, label, size, otsBlob) => {
+    const arrayBuffer = await otsBlob.arrayBuffer()
+    const bytes = new Uint8Array(arrayBuffer)
+    let otsFileBase64 = null
+    try {
+      otsFileBase64 = btoa(String.fromCharCode(...bytes))
+    } catch {
+      /* skip base64 for very large proofs */
+    }
+    const proof = {
+      id: clientId('ots'),
+      hash,
+      filename: label,
+      size,
+      status: 'pending',
+      created_at: new Date().toISOString(),
+      source: 'browser-ots',
+      hasOts: true,
+      otsFileBase64
+    }
+    const existing = JSON.parse(localStorage.getItem('satohash_stamps') || '[]')
+    existing.unshift(proof)
+    localStorage.setItem('satohash_stamps', JSON.stringify(existing.slice(0, 100)))
+    setProofResult(proof)
+    setStampingStatus('complete')
+    downloadOtsBlob(otsBlob, `${label || 'proof'}.ots`)
+    toast.success('OpenTimestamps proof created', {
+      description: 'Submitted to public calendars from your browser.'
+    })
+    navigator.vibrate?.([50, 30, 100])
+    return proof
+  }, [])
+
   const startStamping = async () => {
     if (!files.length) return
 
@@ -256,6 +312,12 @@ export default function Stamp() {
       setHashValue(hash)
 
       setStampingStatus('anchoring')
+
+      if (!isApiExplicitlyConfigured()) {
+        const { blob } = await stampHashBrowser(hash)
+        await saveBrowserOtsProof(hash, caseLabel || file.name, file.size, blob)
+        return
+      }
 
       // FIX 1 — Optional NIP-07 co-sign: attach user's signed Nostr event to the stamp request
       let nostr_signed_event = null
@@ -352,16 +414,32 @@ export default function Stamp() {
       existing.unshift({ ...data, filename: caseLabel || file.name, size: file.size })
       localStorage.setItem('satohash_stamps', JSON.stringify(existing.slice(0, 100)))
     } catch (err) {
+      const file = files[0]
+      const hash = hashValue
+      if (hash && hash.length === 64) {
+        try {
+          const { blob } = await stampHashBrowser(hash)
+          await saveBrowserOtsProof(
+            hash,
+            caseLabel || file?.name || 'document',
+            file?.size || 0,
+            blob
+          )
+          return
+        } catch (otsErr) {
+          console.warn('Browser OTS fallback failed', otsErr)
+        }
+      }
+
       if (
         !navigator.onLine ||
         err.message?.includes('Failed to fetch') ||
         err.message?.includes('server') ||
         err.message?.includes('running')
       ) {
-        const file = files[0]
         const queuedItem = {
           id: clientId('offline'),
-          filename: caseLabel || file.name,
+          filename: caseLabel || file?.name,
           hash: hashValue,
           created_at: new Date().toISOString(),
           status: 'pending',
@@ -372,8 +450,11 @@ export default function Stamp() {
         offlineQ.push(queuedItem)
         localStorage.setItem('satohash_offline_queue', JSON.stringify(offlineQ))
 
-        toast.warning('⚡ Stamp Queued Offline', {
-          description: 'Connection offline. Hash queued for synchronization.'
+        const queuedMsg = isStaticOnlyMode()
+          ? STATIC_MODE_COPY.stampQueued
+          : 'Connection offline. Hash queued for synchronization.'
+        toast.warning(isStaticOnlyMode() ? 'Hash saved — API pending' : '⚡ Stamp Queued Offline', {
+          description: queuedMsg
         })
 
         const existing = JSON.parse(localStorage.getItem('satohash_stamps') || '[]')
@@ -385,7 +466,7 @@ export default function Stamp() {
         return
       }
 
-      const msg = err.message || 'Failed to stamp. Is the server running?'
+      const msg = err.message || 'Failed to stamp. Try again or use browser calendars.'
       setError(msg)
       toast.error('Stamping failed', { description: msg })
       setStampingStatus('idle')
@@ -398,6 +479,36 @@ export default function Stamp() {
 
   return (
     <div className="mx-auto max-w-6xl space-y-12 p-8 pb-20">
+      <StaticModeBanner />
+      <GiveABitBadge />
+      {normalizeSha256(hashValue) && files.length === 0 && stampingStatus === 'idle' && (
+        <div
+          className="rounded-2xl border p-5"
+          style={{ borderColor: 'var(--border)', background: 'var(--surface-raised)' }}
+        >
+          <p className="text-xs font-bold" style={{ color: 'var(--text-secondary)' }}>
+            MotoPass / linked hash ready — stamp to OpenTimestamps without re-uploading a file.
+          </p>
+          <p className="mt-2 font-mono text-[10px] break-all">{hashValue}</p>
+          <button
+            type="button"
+            className="mt-4 rounded-xl px-6 py-3 text-xs font-black uppercase"
+            style={{ background: 'var(--accent-gold)', color: '#141b25' }}
+            onClick={async () => {
+              try {
+                setStampingStatus('anchoring')
+                const { blob } = await stampHashBrowser(hashValue)
+                await saveBrowserOtsProof(hashValue, caseLabel || 'Linked hash', 0, blob)
+              } catch (e) {
+                toast.error('Browser stamp failed', { description: e.message })
+                setStampingStatus('idle')
+              }
+            }}
+          >
+            Stamp hash via public calendars
+          </button>
+        </div>
+      )}
       {/* ── 3-Step Flow Banner ── */}
       <div className="mb-8 grid grid-cols-3 gap-0 overflow-hidden rounded-2xl border border-[var(--border)]">
         {[
@@ -848,6 +959,11 @@ export default function Stamp() {
                       >
                         <CheckCircle size={32} style={{ color: 'var(--accent-success)' }} />
                       </div>
+                      <ProofTimeline
+                        status={proofResult.status}
+                        hasOts={proofResult.hasOts || proofResult.source === 'browser-ots'}
+                        blockHeight={confirmedBlock}
+                      />
                       <h3
                         className="text-2xl font-black tracking-tight uppercase"
                         style={{ color: 'var(--text-primary)' }}

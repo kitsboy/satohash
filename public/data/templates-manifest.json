@@ -177,6 +177,15 @@
       "icon": "FileText"
     },
     {
+      "id": "passport-attestation",
+      "title": "Passport & ID Attestation",
+      "category": "family-law",
+      "badge": "Government-Grade",
+      "description": "Fingerprint passport or national ID metadata for MotoPass, cross-border programs, and distressed-asset trade — document never leaves the device.",
+      "icon": "Fingerprint",
+      "usageCount": 420
+    },
+    {
       "id": "api-benefits",
       "title": "Developer API",
       "description": "Integrate Satohash verification into your own apps, websites, and workflows.",

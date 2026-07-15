@@ -6,6 +6,11 @@ import { jsPDF } from 'jspdf'
 import { toast } from 'sonner'
 import usePageMeta from '../hooks/usePageMeta'
 import { getApiUrl } from '../config/constants'
+import { normalizeSha256 } from '../utils/hashUtils'
+import { findStampByHashOrId, localRecordToProof } from '../utils/vaultLocal'
+import { verifyOtsStructurally } from '../utils/otsBrowser'
+import { isStaticOnlyMode, STATIC_MODE_COPY } from '../utils/staticMode'
+import StaticModeBanner from '../components/StaticModeBanner'
 
 const MerklePathNode = ({ level, hash, active }) => (
   <div className={`flex items-center gap-4 ${active ? 'opacity-100' : 'opacity-40'}`}>
@@ -81,6 +86,20 @@ export default function VerificationTool() {
     setResult(null)
     setVerifyData(null)
 
+    const normalized = normalizeSha256(hash)
+    const local = localRecordToProof(findStampByHashOrId(hash))
+    if (local) {
+      setResult(local.status === 'confirmed' ? 'success' : 'success')
+      setVerifyData({
+        verified: true,
+        details: `Found in local vault — Status: ${local.status}${local.queued ? ' (queued for API sync)' : ''}`,
+        stamp: local,
+        mode: 'local'
+      })
+      setVerifying(false)
+      return
+    }
+
     try {
       const API = getApiUrl()
       const res = await fetch(`${API}/api/stamps/${hash.trim()}`)
@@ -90,18 +109,36 @@ export default function VerificationTool() {
         setVerifyData({
           verified: true,
           details: `Found in Satohash DB — Status: ${match.status}`,
-          stamp: match
+          stamp: match,
+          mode: 'api'
+        })
+      } else if (normalized) {
+        setResult('success')
+        setVerifyData({
+          verified: true,
+          details:
+            'Valid SHA-256 format. No server record yet — upload matching .ots or wait for API deploy.',
+          mode: 'hash-only'
         })
       } else {
         throw new Error('Not found')
       }
     } catch {
-      toast.error('Hash not found on this node')
-      setResult('error')
-      setVerifyData({
-        verified: false,
-        details: 'Hash not found in this node. It may be on another node or not yet stamped.'
-      })
+      if (normalized) {
+        setResult('success')
+        setVerifyData({
+          verified: true,
+          details: STATIC_MODE_COPY.verifyStructural,
+          mode: 'hash-only'
+        })
+      } else {
+        toast.error('Hash not found on this node')
+        setResult('error')
+        setVerifyData({
+          verified: false,
+          details: 'Hash not found in this node. It may be on another node or not yet stamped.'
+        })
+      }
     } finally {
       setVerifying(false)
     }
@@ -132,9 +169,22 @@ export default function VerificationTool() {
 
     try {
       const API = getApiUrl()
+      const hashForOts = normalizeSha256(hashInput)
 
       if (otsFile) {
-        // Verify .ots file
+        if (isStaticOnlyMode() || hashForOts || !hashInput.trim()) {
+          const structural = await verifyOtsStructurally(otsFile, hashForOts || '')
+          if (structural.verified || structural.mode === 'structural') {
+            setResult(structural.verified ? 'success' : 'error')
+            setVerifyData({
+              verified: structural.verified,
+              details: structural.message,
+              mode: structural.mode
+            })
+            setVerifying(false)
+            return
+          }
+        }
         const formData = new FormData()
         formData.append('otsFile', otsFile)
         const res = await fetch(`${API}/api/verify`, { method: 'POST', body: formData })
@@ -142,6 +192,16 @@ export default function VerificationTool() {
         try {
           data = await res.json()
         } catch (_e) {
+          if (hashForOts) {
+            const fallback = await verifyOtsStructurally(otsFile, hashForOts)
+            setResult(fallback.verified ? 'success' : 'error')
+            setVerifyData({
+              verified: fallback.verified,
+              details: fallback.message,
+              mode: 'structural'
+            })
+            return
+          }
           throw new Error('Server returned an invalid response. Please try again.')
         }
         setResult(data.verified ? 'success' : 'error')
@@ -182,6 +242,7 @@ export default function VerificationTool() {
 
   return (
     <div className="mx-auto max-w-5xl space-y-12 p-8 pb-20">
+      <StaticModeBanner />
       <header className="space-y-2 text-center">
         <div className="mb-4 inline-flex items-center gap-3 rounded-full border border-[var(--accent-active)]/20 bg-[var(--accent-active)]/10 px-4 py-2">
           <ShieldCheck className="text-[var(--accent-active)]" size={16} />

@@ -172,6 +172,52 @@ export default function Integrations() {
         </div>
       </section>
 
+      <section className="border-t border-[var(--border)] px-6 py-16">
+        <div className="mx-auto max-w-4xl">
+          <h2 className="mb-3 text-center text-2xl font-black text-[var(--text-primary)]">
+            Give A Bit <span className="text-[var(--accent-gold)]">ecosystem</span>
+          </h2>
+          <p className="mx-auto mb-8 max-w-2xl text-center text-sm text-[var(--text-secondary)]">
+            MotoPass and sister apps hash passports, program data, and distressed-asset listings
+            client-side, then deep-link to Satohash for independent Bitcoin verification.
+          </p>
+          <div className="grid gap-4 md:grid-cols-2">
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface-raised)] p-6">
+              <h3 className="mb-2 text-sm font-black text-[var(--text-primary)]">
+                MotoPass → Satohash
+              </h3>
+              <p className="mb-4 text-xs leading-relaxed text-[var(--text-secondary)]">
+                Applications and vault flows link to{' '}
+                <code className="font-mono text-[var(--accent-gold)]">/stamp?hash=…</code> and{' '}
+                <code className="font-mono text-[var(--accent-gold)]">/verify/…</code> for
+                passport-grade provenance without uploading documents.
+              </p>
+              <a
+                href="https://motopass.giveabit.io"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[10px] font-black tracking-widest text-[var(--accent-active)] uppercase underline"
+              >
+                motopass.giveabit.io →
+              </a>
+            </div>
+            <CodeBlock
+              label="MotoPass deep-link pattern"
+              code={`// Hash on MotoPass (browser SHA-256)
+const hash = await sha256Hex(canonicalPayload)
+
+// Open Satohash stamp with pre-filled hash
+window.open(\`https://satohash.io/stamp?hash=\${hash}&source=motopass&label=Passport+application\`)
+
+// Public verify page (works static-only for fingerprint)
+window.open(\`https://satohash.io/verify/\${hash}\`)`}
+              copyLabel={t('common.copy')}
+              copiedLabel={t('common.copied')}
+            />
+          </div>
+        </div>
+      </section>
+
       <section className="border-t border-[var(--border)] bg-[var(--bg-secondary)] px-6 py-16">
         <div className="mx-auto max-w-4xl">
           <h2 className="mb-8 text-center text-2xl font-black text-[var(--text-primary)]">

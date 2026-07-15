@@ -8,8 +8,11 @@ import { QRCodeSVG as QRCode } from 'qrcode.react'
 import { downloadCertificate } from '../utils/certificate'
 import usePageMeta from '../hooks/usePageMeta'
 import { getApiUrl } from '../config/constants'
-
-const API_URL = getApiUrl()
+import { isSha256Hex, normalizeSha256 } from '../utils/hashUtils'
+import { findStampByHashOrId, localRecordToProof } from '../utils/vaultLocal'
+import { isStaticOnlyMode, STATIC_MODE_COPY } from '../utils/staticMode'
+import ProofTimeline from '../components/ProofTimeline'
+import { downloadVerifiableCredential } from '../utils/verifiableCredential'
 
 export default function VerifyPublic() {
   usePageMeta({ page: 'verify' })
@@ -69,14 +72,45 @@ export default function VerifyPublic() {
   }, [proof, t])
 
   const fetchProof = async (proofId) => {
+    const local = localRecordToProof(findStampByHashOrId(proofId))
+    if (local) {
+      setProof(local)
+      setLoading(false)
+      return
+    }
+
+    const hashOnly = isSha256Hex(proofId)
+      ? {
+          id: proofId,
+          hash: normalizeSha256(proofId),
+          filename: 'Content hash',
+          status: 'pending',
+          created_at: null,
+          source: 'hash-only',
+          message:
+            'Valid SHA-256 fingerprint. Bitcoin attestation not found in local vault — API or .ots file required for full proof.'
+        }
+      : null
+
     try {
-      const response = await fetch(`${API_URL}/api/stamps/${proofId}`)
-      if (!response.ok) throw new Error('Proof not found')
+      const API = getApiUrl()
+      const response = await fetch(`${API}/api/stamps/${proofId}`)
+      if (!response.ok) {
+        if (hashOnly) {
+          setProof(hashOnly)
+          return
+        }
+        throw new Error('Proof not found')
+      }
       const data = await response.json()
-      setProof(data)
+      setProof({ ...data, source: 'api' })
     } catch (err) {
-      setError(err.message)
-      toast.error(t('verifyPublicPage.loadError'))
+      if (hashOnly) {
+        setProof(hashOnly)
+      } else {
+        setError(err.message)
+        toast.error(t('verifyPublicPage.loadError'))
+      }
     } finally {
       setLoading(false)
     }
@@ -151,6 +185,25 @@ export default function VerifyPublic() {
       {/* Proof certificate */}
       {!loading && proof && (
         <div className="mx-auto max-w-lg space-y-6 px-4 pt-20 pb-12">
+          {(proof.source === 'hash-only' || proof.source === 'local') && (
+            <div
+              className="rounded-2xl border px-4 py-3 text-[11px] leading-relaxed"
+              style={{
+                borderColor: 'color-mix(in srgb, var(--accent-gold) 25%, transparent)',
+                background: 'color-mix(in srgb, var(--accent-gold) 6%, transparent)',
+                color: 'var(--text-secondary)'
+              }}
+            >
+              {proof.source === 'hash-only'
+                ? proof.message
+                : proof.queued
+                  ? STATIC_MODE_COPY.stampQueued
+                  : 'Loaded from your local vault on this device.'}
+              {isStaticOnlyMode() && (
+                <span className="mt-1 block text-[10px] opacity-80">{STATIC_MODE_COPY.body}</span>
+              )}
+            </div>
+          )}
           {/* Status banner — big and clear */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -158,15 +211,23 @@ export default function VerifyPublic() {
             className="rounded-3xl p-8 text-center"
             style={{
               background:
-                proof.status === 'confirmed' ? 'var(--accent-success)' : 'var(--accent-pending)',
+                proof.source === 'hash-only'
+                  ? 'var(--accent-active)'
+                  : proof.status === 'confirmed'
+                    ? 'var(--accent-success)'
+                    : 'var(--accent-pending)',
               color: '#fff'
             }}
           >
-            <div className="mb-2 text-4xl">{proof.status === 'confirmed' ? '✓' : '⏳'}</div>
+            <div className="mb-2 text-4xl">
+              {proof.source === 'hash-only' ? '#' : proof.status === 'confirmed' ? '✓' : '⏳'}
+            </div>
             <h1 className="text-2xl font-black tracking-tight">
-              {proof.status === 'confirmed'
-                ? t('verifyPublicPage.verified')
-                : t('verifyPublicPage.pending')}
+              {proof.source === 'hash-only'
+                ? 'Valid fingerprint'
+                : proof.status === 'confirmed'
+                  ? t('verifyPublicPage.verified')
+                  : t('verifyPublicPage.pending')}
             </h1>
             {proof.bitcoin_block_height && (
               <p className="mt-2 font-mono text-sm opacity-80">
@@ -179,6 +240,12 @@ export default function VerifyPublic() {
               </p>
             )}
           </motion.div>
+
+          <ProofTimeline
+            status={proof.status}
+            hasOts={proof.hasOts || proof.source === 'browser-ots'}
+            blockHeight={proof.bitcoin_block_height}
+          />
 
           {/* File info card */}
           <motion.div
@@ -331,6 +398,14 @@ export default function VerifyPublic() {
                 <Hash size={14} /> {t('verifyPublicPage.copyHash')}
               </button>
             )}
+
+            <button
+              onClick={() => downloadVerifiableCredential(proof)}
+              className="col-span-2 flex items-center justify-center gap-2 rounded-2xl py-3 text-xs font-black tracking-wider uppercase"
+              style={{ border: '1px solid var(--border)', color: 'var(--accent-gold)' }}
+            >
+              Export W3C Verifiable Credential
+            </button>
 
             <button
               onClick={() => {

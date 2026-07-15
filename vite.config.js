@@ -22,6 +22,8 @@ export default defineConfig({
             registerType: 'autoUpdate',
             workbox: {
                 globPatterns: ['**/*.{js,css,html,ico,png,svg,webp}'],
+                globIgnores: ['**/vendor/ots.browser.js'],
+                maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
                 runtimeCaching: [
                     {
                         urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
@@ -80,7 +82,7 @@ export default defineConfig({
                     icons: ['lucide-react'],
                     three: ['three'],
                     crypto: ['bitcoinjs-lib', 'ethers', 'tiny-secp256k1'],
-                    utils: ['html2canvas', 'jspdf']
+                    utils: ['jspdf']
                 }
             }
         }

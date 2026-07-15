@@ -203,7 +203,47 @@ TRANSFEROR                          TRANSFEREE
 Date: ______________                Date: ______________`
 }
 
-// --- 8. CHILD TRAVEL CONSENT ---
+// --- 8. PASSPORT / IDENTITY ATTESTATION ---
+export const passportAttestationTemplate = {
+  name: 'Passport & Identity Document Attestation',
+  description:
+    'Record a sovereign fingerprint of passport or national ID metadata for cross-border programs (MotoPass, distressed-asset trade).',
+  content: `PASSPORT & IDENTITY DOCUMENT ATTESTATION
+
+This attestation records a cryptographic fingerprint of identity document metadata.
+The physical document is NEVER uploaded — only a SHA-256 hash is anchored to Bitcoin.
+
+1. DOCUMENT HOLDER
+Full Legal Name: [HOLDER_NAME]
+Date of Birth: [DOB]
+Nationality: [NATIONALITY]
+Passport / ID Number: [DOCUMENT_NUMBER]
+Issuing Authority: [ISSUING_AUTHORITY]
+Expiry Date: [EXPIRY_DATE]
+
+2. PURPOSE OF ATTESTATION
+Program / Agency: [PROGRAM_NAME]
+Jurisdiction: [JURISDICTION]
+Asset or entitlement linked: [LINKED_ASSET]
+
+3. DECLARATION
+I declare that the information above accurately describes the identity document in my possession.
+I understand this hash proves the document existed in this form at the time of stamping — not government endorsement.
+
+4. WITNESS (OPTIONAL)
+Witness Name: [WITNESS_NAME]
+Witness Capacity: [WITNESS_CAPACITY]
+
+DATE: [DATE]
+
+___________________________
+HOLDER SIGNATURE
+
+DISCLAIMER: Satohash provides evidence timestamps, not government authentication.
+Verify independently via OpenTimestamps and your jurisdiction's rules.`
+}
+
+// --- 9. CHILD TRAVEL CONSENT ---
 export const childTravelConsentTemplate = {
   name: 'Child Travel Consent',
   description: 'Provide written authorization for a minor to travel with one parent or a guardian.',
@@ -508,6 +548,7 @@ export const getTemplate = (id) => {
     prenup: prenupTemplate,
     property: propertyTemplate,
     powerOfAttorney: powerOfAttorneyTemplate,
+    'passport-attestation': passportAttestationTemplate,
     'child-travel': childTravelConsentTemplate,
     'bill-of-sale': billOfSaleTemplate,
     employment: employmentTemplate,

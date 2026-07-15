@@ -58,6 +58,12 @@ const Security = React.lazy(() => import('./pages/Security'))
 const Integrations = React.lazy(() => import('./pages/Integrations'))
 const Widgets = React.lazy(() => import('./pages/Widgets'))
 const Dashboard = React.lazy(() => import('./pages/Dashboard'))
+const GovernmentUse = React.lazy(() => import('./pages/government/GovernmentUse'))
+const MotoPassVerify = React.lazy(() => import('./pages/government/MotoPassVerify'))
+const BatchHashStamp = React.lazy(() => import('./pages/government/BatchHashStamp'))
+const ChainOfCustody = React.lazy(() => import('./pages/government/ChainOfCustody'))
+const EvidenceAdmissibility = React.lazy(() => import('./pages/government/EvidenceAdmissibility'))
+const DistressedAsset = React.lazy(() => import('./pages/government/DistressedAsset'))
 
 // Legal pages (public)
 const CryptoNotice = React.lazy(() => import('./pages/legal/CryptoNotice'))
@@ -263,6 +269,12 @@ function AppContent() {
             <Route path="/docs/:slug" element={<DocViewer />} />
             <Route path="/security" element={<Security />} />
             <Route path="/integrations" element={<Integrations />} />
+            <Route path="/government" element={<GovernmentUse />} />
+            <Route path="/motopass-verify" element={<MotoPassVerify />} />
+            <Route path="/batch-hash" element={<BatchHashStamp />} />
+            <Route path="/chain-of-custody" element={<ChainOfCustody />} />
+            <Route path="/evidence-admissibility" element={<EvidenceAdmissibility />} />
+            <Route path="/distressed-asset" element={<DistressedAsset />} />
             <Route path="/widgets" element={<Widgets />} />
             <Route path="/identity" element={<Identity />} />
             <Route

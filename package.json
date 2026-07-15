@@ -6,7 +6,8 @@
   "scripts": {
     "server": "node server/index.js",
     "dev": "concurrently \"npm run server\" \"vite\"",
-    "build": "vite build",
+    "build": "npm run build:ots && vite build",
+    "build:ots": "test -f public/vendor/ots.browser.js || npx browserify node_modules/opentimestamps/index.js -s OpenTimestamps -o public/vendor/ots.browser.js",
     "build:verify": "node scripts/verify-landing-bundle.js",
     "preview": "vite preview",
     "production": "cross-env NODE_ENV=production vite build && cross-env NODE_ENV=production npm run server",
@@ -145,6 +146,7 @@
     "prettier": "^3.8.1",
     "prettier-plugin-tailwindcss": "^0.7.2",
     "supertest": "^7.2.2",
+    "svgo": "^4.0.2",
     "vite": "^6.0.5",
     "vite-plugin-compression": "^0.5.1",
     "vite-plugin-image-optimizer": "^2.0.3",

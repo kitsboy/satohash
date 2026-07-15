@@ -30,6 +30,16 @@ Frontend only **verifies** NIP-05 (fetch public JSON, compare pubkey). Signing i
 [SKIP]  Bitcoin full node    Not required for MVP
 ```
 
+## Static-edge capabilities (no api.satohash.io)
+
+- [x] Browser OpenTimestamps stamping via public calendars (`public/vendor/ots.browser.js`)
+- [x] MotoPass deep-links: `/stamp?hash=…`, `/verify/{hash}`
+- [x] Local vault fallback, offline queue sync via browser OTS
+- [x] Structural `.ots` verify in browser
+- [x] Government pages: `/government`, `/motopass-verify`, `/batch-hash`, `/chain-of-custody`
+- [x] W3C Verifiable Credential export on verify page
+- [x] `security.txt` at `/.well-known/security.txt`
+
 ## Frontend checklist (done in code)
 
 - [x] `VITE_MVP_MODE` — `/stamp`, `/verify`, `/vault` public (no `/access` redirect)

@@ -45,6 +45,7 @@ const LINK_GROUPS = [
       { key: 'about', path: '/about' },
       { key: 'pitch', path: '/pitch' },
       { key: 'trustCenter', path: '/trust' },
+      { key: 'government', path: '/government', label: 'Government' },
       { key: 'security', path: '/security' },
       { key: 'identity', path: '/identity' },
       { key: 'contribute', path: '/contribute' }

@@ -10,7 +10,13 @@ describe('mvp config', () => {
 
   it('isMvpPublicPath allows stamp without login', () => {
     expect(isMvpPublicPath('/stamp')).toBe(true)
+    expect(isMvpPublicPath('/trust')).toBe(true)
     expect(isMvpPublicPath('/dashboard')).toBe(false)
+  })
+
+  it('isMvpPublicPath allows verify routes without login', () => {
+    expect(isMvpPublicPath(`/verify/${'e'.repeat(64)}`)).toBe(true)
+    expect(isMvpPublicPath('/verify')).toBe(true)
   })
 
   it('KIMI_NOSTR has pubkey hex only (no secret)', () => {
