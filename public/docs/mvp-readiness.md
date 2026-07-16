@@ -1,5 +1,5 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.giveabit.io · **Version:** 4.1.0-ELITE (Build 93) · **Updated:** 2026-07-16
+> **Live:** https://satohash.giveabit.io · **Version:** 4.1.0-ELITE (Build 94) · **Updated:** 2026-07-16
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Satohash MVP Readiness
@@ -37,6 +37,7 @@ Frontend only **verifies** NIP-05 (fetch public JSON, compare pubkey). Signing i
 - [x] Local vault fallback, offline queue sync via browser OTS
 - [x] Structural `.ots` verify in browser
 - [x] Government pages: `/government`, `/motopass-verify`, `/batch-hash`, `/chain-of-custody`
+- [x] Wave 2 polish: Stamp/Vault i18n, Widgets v3 white-label, Comparison mobile cards, lazy locale loading
 - [x] W3C Verifiable Credential export on verify page
 - [x] `security.txt` at `/.well-known/security.txt`
 
@@ -74,6 +75,7 @@ Frontend only **verifies** NIP-05 (fetch public JSON, compare pubkey). Signing i
 
 ---
 © 2026 Satohash
+
 
 
 

@@ -4,6 +4,24 @@ Session handoff log for Kimi (M4 HERMES). Append new entries at the top.
 
 ---
 
+## Session — 2026-07-15 (Static-Edge Wave 2: SE-101–200)
+
+**Done:**
+- Wave 2 polish: Stamp/Vault i18n, legal page headers, Comparison mobile/print, Widgets embed fix + v3 preview
+- Lazy i18n (`loadLocale.js`), proof-dna-v3 theme/domain, ChainOfCustody history export
+- Tests: 73 unit + e2e/a11y route extensions; coverage threshold 22%
+- `scripts/wave7-i18n-patch.js` — 7-locale keys for legal, stamp, vault, widgets
+
+**Decisions:**
+- English bundle eager-loaded; other locales lazy on language switch (smaller initial chunk)
+- Legal section bodies remain English prose; titles/disclaimers localized
+
+**Git State:**
+- SHA: `cf845dc`
+- Build: 94
+
+---
+
 ## Session — 2026-07-15 (Waves 6–10 complete)
 
 **Done:**

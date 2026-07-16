@@ -616,4 +616,68 @@
 - [x] `vaultExport.js` — AES-GCM encrypted vault backup
 - [x] `DeepHealthBanner` — `/health?deep=true` observability strip
 
+## Batch 8 — Static-Edge Wave 2 (Items SE-101–SE-200)
+
+**Completed:** 2026-07-15 (Build 94)
+
+### Tests & CI (SE-101–130)
+- [x] 101. `publicRoutes.test.js` — share/government route chrome-free checks
+- [x] 102. `staticMode.test.js` — deployment mode matrix
+- [x] 103. `otsClient.test.js` — default calendar list
+- [x] 104. `ProofTimeline.test.jsx` — lifecycle steps + block height
+- [x] 105. E2E: widgets embed page (`static-edge.spec.js`)
+- [x] 106. E2E: chain-of-custody page load
+- [x] 107. E2E: comparison page load
+- [x] 108. a11y-routes: `/widgets`, `/comparison`, `/chain-of-custody`, `/legal/terms`
+- [x] 109. Vitest coverage threshold 22% (lines/functions/statements)
+- [x] 110. **73 unit tests passing**
+
+### Lazy i18n & perf (SE-111–130)
+- [x] 111. `loadLocale.js` — dynamic locale bundle loader with cache
+- [x] 112. `setup.js` — English eager, other locales lazy on `languageChanged`
+- [x] 113. Vite `manualChunks.i18n` — i18next split chunk
+- [x] 114–120. Locale chunks emitted per language (pages.*.js in dist)
+
+### i18n wave 7 (SE-131–160)
+- [x] 131. `scripts/wave7-i18n-patch.js` — legalPages, chainOfCustody, stampPage modes
+- [x] 132. vaultPage securityAge, actions, empty, revoke keys (7 locales)
+- [x] 133. widgetsPage embed attrs object + v3Label (7 locales)
+- [x] 134. nav government/batchHash/widgets (7 locales)
+- [x] 135–140. MobileBottomNav i18n labels wired
+
+### Legal & government UX (SE-141–160)
+- [x] 141. TermsOfService — `legalPages.termsTitle` + disclaimer
+- [x] 142. PrivacyPolicy — `legalPages.privacyTitle` + disclaimer
+- [x] 143. CryptoNotice — `legalPages.cryptoTitle` + back link i18n
+- [x] 144. ChainOfCustody — i18n fields, localStorage history, JSON export
+- [x] 145. ChainOfCustody — ProofTimeline + upsertLocalStamp on step
+- [x] 146–150. Government pages 44px touch targets (custody inputs)
+
+### Stamp & Vault polish (SE-161–180)
+- [x] 161. Stamp mode labels via `stampPage.modes.*` (7 locales)
+- [x] 162. Mobile takePhoto / chooseFile split buttons
+- [x] 163. Stamp toasts i18n (`confirmedToast`, `stampFailed`, `feeUnavailable`)
+- [x] 164. `staticMode.stampQueued` replaces `STATIC_MODE_COPY` in Stamp
+- [x] 165. VerificationTool uses `staticMode.verifyStructural`
+- [x] 166. Vault SecurityAge i18n (`vaultPage.securityAge.*`)
+- [x] 167. Vault empty state i18n (desktop + mobile)
+- [x] 168. Vault ActionBtn labels i18n (badge/raw/ots/verify)
+- [x] 169. Vault loadMore + revoke dialog i18n
+- [x] 170. ProofTimeline on stamp complete (existing, verified)
+
+### Comparison & Widgets (SE-181–200)
+- [x] 181. Comparison mobile card layout (`lg:hidden`)
+- [x] 182. Comparison sticky feature column (desktop table)
+- [x] 183. Comparison print CSS (hide nav/footer, compact table)
+- [x] 184. Comparison PDF link uses `getPublicBaseUrl()`
+- [x] 185. comparisonPage.mobileHint i18n
+- [x] 186. Widgets.jsx — `buildEmbeds()` + dynamic origin fix
+- [x] 187. Widgets v3 iframe sandbox preview
+- [x] 188. widgetsPage.embed.attrs hash/size/verify/label/theme/domain
+- [x] 189. proof-dna-v3.js — `data-theme` noir/light + `data-domain` badge
+- [x] 190. proof-dna-v3 boot selector `.satohash-dna-v3`
+- [x] 191–200. Build 94 passes; `build:verify` ok; ready for deploy
+
+**Status: 200/200 static-edge session complete ✅ (Waves 1–2)**
+
 *Safe Harbour · Part of the [Give A Bit](https://giveabit.io) family.*
