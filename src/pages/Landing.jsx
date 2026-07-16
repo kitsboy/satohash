@@ -15,13 +15,11 @@ import {
   Award,
   X,
   Fingerprint,
-  Menu,
   ChevronRight
 } from 'lucide-react'
 import Footer from '../components/Footer'
 import usePageMeta from '../hooks/usePageMeta'
-import LanguageSwitcher from '../components/LanguageSwitcher'
-import { ThemeToggle } from '../components/ThemeProvider'
+import MarketingDesktopNav from '../components/MarketingDesktopNav'
 import { getBitcoinNetworkStats } from '../utils/mempool'
 import { BTC_ADDRESS, getApiUrl } from '../config/constants'
 
@@ -47,19 +45,6 @@ export default function Landing() {
   usePageMeta({ page: 'landing' })
   const { t } = useTranslation()
 
-  const navLinks = useMemo(
-    () => [
-      [t('landingPage.nav.features'), '#features'],
-      [t('landingPage.nav.howItWorks'), '#how-it-works'],
-      [t('nav.templates') || 'Templates', '/templates'],
-      [t('nav.pricing') || 'Pricing', '/pricing'],
-      [t('nav.comparison') || 'Compare', '/comparison'],
-      ['Government', '/government'],
-      [t('landingPage.nav.legal'), '/trust']
-    ],
-    [t]
-  )
-
   const featureCards = useMemo(
     () => [
       { icon: Lock, key: 'noServer', delay: 0 },
@@ -84,7 +69,6 @@ export default function Landing() {
     []
   )
 
-  const [navOpen, setNavOpen] = useState(false)
   const [donationOpen, setDonationOpen] = useState(false)
   const [copied, setCopied] = useState(false)
   const [proofCount, setProofCount] = useState(null)
@@ -157,145 +141,10 @@ export default function Landing() {
       className="min-h-screen"
       style={{ backgroundColor: 'var(--bg-primary)', color: 'var(--text-primary)' }}
     >
-      {/* ── NAVBAR ───────────────────────────────────────────────── */}
-      <nav
-        className="fixed inset-x-0 top-0 z-[100] border-b"
-        style={{
-          borderColor: 'var(--border)',
-          backgroundColor: 'var(--bg-navbar)',
-          backdropFilter: 'blur(20px)'
-        }}
-      >
-        <div className="layout-container flex h-16 items-center justify-between">
-          <Link to="/" className="flex items-center gap-2.5">
-            <img src="/logo.png" alt="Satohash" className="h-8 w-8 object-contain" />
-            <span
-              className="text-lg font-black tracking-tighter uppercase"
-              style={{ color: 'var(--accent-gold)' }}
-            >
-              Satohash
-            </span>
-          </Link>
-
-          <div className="hidden items-center gap-8 md:flex">
-            {navLinks.map(([label, href]) =>
-              href.startsWith('/') ? (
-                <Link
-                  key={label}
-                  to={href}
-                  className="text-sm font-semibold transition-colors hover:text-white"
-                  style={{ color: 'var(--text-secondary)' }}
-                >
-                  {label}
-                </Link>
-              ) : (
-                <a
-                  key={label}
-                  href={href}
-                  className="text-sm font-semibold transition-colors hover:text-white"
-                  style={{ color: 'var(--text-secondary)' }}
-                >
-                  {label}
-                </a>
-              )
-            )}
-          </div>
-
-          <div className="hidden items-center gap-3 md:flex">
-            <ThemeToggle />
-            <LanguageSwitcher />
-            <button
-              onClick={() => setDonationOpen(true)}
-              className="flex items-center gap-2 rounded-xl border px-4 py-2 text-sm font-bold transition-all hover:text-yellow-400"
-              style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
-            >
-              <img src="/Bitcoin120x120.png" alt="Bitcoin" className="h-4 w-4 object-contain" />
-              {t('landingPage.nav.donate')}
-            </button>
-            <Link
-              to="/stamp"
-              className="flex items-center gap-2 rounded-xl px-5 py-2 text-sm font-black transition-all hover:scale-105 hover:opacity-90"
-              style={{ backgroundColor: 'var(--accent-gold)', color: '#141b25' }}
-            >
-              {t('landingPage.nav.startFree')} <ArrowRight size={14} />
-            </Link>
-          </div>
-
-          <div className="flex items-center gap-2 md:hidden">
-            <ThemeToggle />
-            <LanguageSwitcher />
-            <button
-              type="button"
-              className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg border p-2"
-              style={{ borderColor: 'var(--border)' }}
-              onClick={() => setNavOpen(!navOpen)}
-              aria-expanded={navOpen}
-              aria-label={navOpen ? 'Close menu' : 'Open menu'}
-            >
-              {navOpen ? <X size={20} /> : <Menu size={20} />}
-            </button>
-          </div>
-        </div>
-
-        <AnimatePresence>
-          {navOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              className="border-t md:hidden"
-              style={{ borderColor: 'var(--border)', backgroundColor: 'var(--bg-secondary)' }}
-            >
-              <div className="layout-container flex flex-col gap-4 py-6">
-                {navLinks.map(([label, href]) =>
-                  href.startsWith('/') ? (
-                    <Link
-                      key={label}
-                      to={href}
-                      className="text-sm font-semibold"
-                      style={{ color: 'var(--text-secondary)' }}
-                      onClick={() => setNavOpen(false)}
-                    >
-                      {label}
-                    </Link>
-                  ) : (
-                    <a
-                      key={label}
-                      href={href}
-                      className="text-sm font-semibold"
-                      style={{ color: 'var(--text-secondary)' }}
-                      onClick={() => setNavOpen(false)}
-                    >
-                      {label}
-                    </a>
-                  )
-                )}
-                <button
-                  onClick={() => {
-                    setDonationOpen(true)
-                    setNavOpen(false)
-                  }}
-                  className="flex items-center justify-center gap-2 rounded-xl border py-3 text-sm font-bold"
-                  style={{ borderColor: 'var(--border-gold)', color: 'var(--accent-gold)' }}
-                >
-                  <img src="/Bitcoin120x120.png" alt="Bitcoin" className="h-4 w-4 object-contain" />
-                  {t('landingPage.nav.donate')}
-                </button>
-                <Link
-                  to="/stamp"
-                  className="rounded-xl py-3 text-center text-sm font-black"
-                  style={{ backgroundColor: 'var(--accent-gold)', color: '#141b25' }}
-                >
-                  {t('landingPage.nav.startFree')} →
-                </Link>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </nav>
+      <MarketingDesktopNav onDonate={() => setDonationOpen(true)} />
 
       {/* ── HERO ─────────────────────────────────────────────────── */}
-      <section className="relative flex min-h-screen items-center overflow-hidden pt-16">
+      <section className="relative flex min-h-screen items-center overflow-hidden pt-[4.25rem]">
         {/* Precision Cryptographic Blueprint Grid Background */}
         <div
           className="pointer-events-none absolute inset-0 overflow-hidden"

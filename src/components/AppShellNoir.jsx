@@ -11,11 +11,11 @@ import {
   BookOpen,
   WifiOff
 } from 'lucide-react'
-import LeftRailNav from './LeftRailNav'
-import TopSignalBar from './TopSignalBar'
+import DesktopAppNav from './DesktopAppNav'
+import LanguageSwitcher from './LanguageSwitcher'
 import MobileBottomNav from './MobileBottomNav'
 import KeyboardShortcutsOverlay from './KeyboardShortcutsOverlay'
-import LanguageSwitcher from './LanguageSwitcher'
+
 import MempoolTicker from './MempoolTicker'
 import { useOfflineSync } from '../hooks/useOfflineSync'
 import { useNavigate, Link } from 'react-router-dom'
@@ -363,15 +363,6 @@ export default function AppShellNoir({ children }) {
 
       {/* ── App content (hidden from AT when palette is open) ──────────── */}
       <div aria-hidden={isSearchOpen ? 'true' : undefined} className="contents">
-        {/* ── Desktop Left Rail ───────────────────────────────────────────── */}
-        <aside
-          aria-label="Main navigation"
-          className="fixed inset-y-0 left-0 z-50 hidden w-64 border-r border-[var(--border)] md:block"
-          style={{ background: 'var(--bg-secondary)' }}
-        >
-          <LeftRailNav />
-        </aside>
-
         {/* ── Mobile Header ──────────────────────────────────────────────── */}
         <div
           role="banner"
@@ -400,48 +391,33 @@ export default function AppShellNoir({ children }) {
 
         {/* ── Main Content Area ───────────────────────────────────────────── */}
         <div
-          className="flex min-h-screen w-full max-w-full flex-1 flex-col overflow-x-hidden pb-[calc(5rem+env(safe-area-inset-bottom))] md:ml-64 md:pb-0"
+          className="flex min-h-screen w-full max-w-full flex-1 flex-col overflow-x-hidden pb-[calc(5rem+env(safe-area-inset-bottom))] md:pb-0"
           style={{ paddingTop: 'env(safe-area-inset-top)' }}
         >
-          {/* Desktop Top Signal Bar + Mempool Ticker */}
-          <div className="sticky top-0 z-40 hidden flex-col border-b border-[var(--border)] bg-[var(--bg-primary)]/90 backdrop-blur-md md:flex">
+          {/* Desktop — centered top navigation */}
+          <div className="sticky top-0 z-40 hidden flex-col md:flex">
             <MempoolTicker />
-            <div className="flex h-12 items-center justify-between px-6">
-              <TopSignalBar />
-              <div className="ml-4 flex flex-shrink-0 items-center gap-3">
-                {!isOnline && (
-                  <span
-                    className="flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[9px] font-black tracking-widest uppercase"
-                    style={{
-                      background: 'rgba(234,179,8,0.12)',
-                      border: '1px solid rgba(234,179,8,0.3)',
-                      color: '#eab308'
-                    }}
-                  >
-                    <WifiOff size={10} />
-                    {queueCount > 0 ? `${queueCount} queued` : 'Offline'}
-                  </span>
-                )}
-                <LanguageSwitcher />
-                <button
-                  onClick={() => setIsSearchOpen(true)}
-                  className="group flex items-center gap-3 rounded-xl border border-[var(--border)] bg-[var(--bg-secondary)] px-4 py-1.5 transition-all hover:border-[var(--border-gold)]"
+            <DesktopAppNav onOpenSearch={() => setIsSearchOpen(true)} />
+            {!isOnline && (
+              <div
+                className="flex justify-center border-b border-[var(--border)] py-1.5"
+                style={{ background: 'rgba(234,179,8,0.06)' }}
+              >
+                <span
+                  className="flex items-center gap-1.5 text-[9px] font-black tracking-widest uppercase"
+                  style={{ color: '#eab308' }}
                 >
-                  <Search
-                    size={13}
-                    className="transition-colors group-hover:text-[var(--accent-gold)]"
-                    style={{ color: 'var(--text-secondary)' }}
-                  />
-                  <span className="text-[10px] font-black tracking-widest text-white/40 uppercase group-hover:text-[var(--accent-gold)]/60">
-                    ⌘K Search
-                  </span>
-                </button>
+                  <WifiOff size={10} />
+                  {queueCount > 0 ? `${queueCount} proofs queued — offline` : 'Offline mode'}
+                </span>
               </div>
-            </div>
+            )}
           </div>
 
           {/* Page content */}
-          <main className="animate-fade-in flex-1 p-2 pt-16 md:p-4 md:pt-8">{children}</main>
+          <main className="animate-fade-in flex-1 p-2 pt-16 md:p-6 md:pt-8 lg:px-8">
+            {children}
+          </main>
         </div>
 
         {/* ── Mobile Bottom Nav ───────────────────────────────────────────── */}
