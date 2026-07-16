@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 /* eslint-disable react/no-unescaped-entities -- legal prose */
+import { useTranslation } from 'react-i18next'
 import usePageMeta from '../../hooks/usePageMeta'
 import {
   ArrowLeft,
@@ -351,6 +352,7 @@ const SECTIONS = [
 /* ─── Component ──────────────────────────────────────────── */
 export default function PrivacyPolicy() {
   usePageMeta({ page: 'legalPrivacy' })
+  const { t } = useTranslation()
   const navigate = useNavigate()
 
   return (
@@ -401,8 +403,9 @@ export default function PrivacyPolicy() {
                     Satohash Inc. · Legal Document
                   </p>
                   <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 md:text-5xl">
-                    Privacy Policy
+                    {t('legalPages.privacyTitle')}
                   </h1>
+                  <p className="mt-3 text-sm text-slate-600">{t('legalPages.disclaimer')}</p>
                 </div>
                 <div className="flex shrink-0 flex-col items-end gap-1 text-right">
                   <span className="text-[10px] font-black tracking-[0.2em] text-slate-400 uppercase">

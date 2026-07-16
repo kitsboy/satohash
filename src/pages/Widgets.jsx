@@ -5,29 +5,33 @@ import { ArrowLeft, Copy, Check, Code, Fingerprint, ExternalLink } from 'lucide-
 import Footer from '../components/Footer'
 import ProofDNA from '../components/ProofDNA'
 import usePageMeta from '../hooks/usePageMeta'
+import { getPublicBaseUrl } from '../config/constants'
 
 const DEMO_HASH = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'
 
-const EMBED_BASIC = `<div class="satohash-dna" data-hash="${DEMO_HASH}"></div>
-<script src="https://satohash.io/widgets/proof-dna.js" async></script>`
-
-const EMBED_V3 = `<div
+function buildEmbeds() {
+  const base = getPublicBaseUrl()
+  return {
+    basic: `<div class="satohash-dna" data-hash="${DEMO_HASH}"></div>
+<script src="${base}/widgets/proof-dna.js" async></script>`,
+    v3: `<div
   class="satohash-dna-v3"
   data-hash="${DEMO_HASH}"
   data-theme="noir"
   data-domain="yourbrand.com"
-  data-verify="https://satohash.io/verify"
+  data-verify="${base}/verify/${DEMO_HASH}"
 ></div>
-<script src="https://satohash.io/widgets/proof-dna-v3.js" async></script>`
-
-const EMBED_BADGE = `<div
+<script src="${base}/widgets/proof-dna-v3.js" async></script>`,
+    badge: `<div
   class="satohash-dna"
   data-hash="${DEMO_HASH}"
   data-size="sm"
   data-label="Bitcoin Proof"
-  data-verify="https://satohash.io/verify"
+  data-verify="${base}/verify/${DEMO_HASH}"
 ></div>
-<script src="https://satohash.io/widgets/proof-dna.js" async></script>`
+<script src="${base}/widgets/proof-dna.js" async></script>`
+  }
+}
 
 function CopyBlock({ label, code, copyLabel, copiedLabel }) {
   const [copied, setCopied] = useState(false)
@@ -59,8 +63,9 @@ function CopyBlock({ label, code, copyLabel, copiedLabel }) {
 export default function Widgets() {
   usePageMeta({ page: 'widgets' })
   const { t } = useTranslation()
+  const embeds = buildEmbeds()
 
-  const attrKeys = ['hash', 'size', 'verify', 'label']
+  const attrKeys = ['hash', 'size', 'verify', 'label', 'theme', 'domain']
 
   return (
     <div className="min-h-screen bg-[var(--bg-primary)]">
@@ -113,22 +118,33 @@ export default function Widgets() {
             </h2>
             <CopyBlock
               label={t('widgetsPage.embed.basic')}
-              code={EMBED_BASIC}
+              code={embeds.basic}
               copyLabel={t('common.copy')}
               copiedLabel={t('common.copied')}
             />
             <CopyBlock
               label={t('widgetsPage.embed.badge')}
-              code={EMBED_BADGE}
+              code={embeds.badge}
               copyLabel={t('common.copy')}
               copiedLabel={t('common.copied')}
             />
             <CopyBlock
-              label="Proof DNA v3 (white-label)"
-              code={EMBED_V3}
+              label={t('widgetsPage.embed.v3Label')}
+              code={embeds.v3}
               copyLabel={t('common.copy')}
               copiedLabel={t('common.copied')}
             />
+            <div className="overflow-hidden rounded-xl border border-[var(--border)]">
+              <p className="border-b border-[var(--border)] bg-[var(--surface-raised)] px-4 py-2 text-[10px] font-bold tracking-widest text-[var(--accent-gold)] uppercase">
+                {t('widgetsPage.preview.v3Title')}
+              </p>
+              <iframe
+                title={t('widgetsPage.preview.v3Title')}
+                srcDoc={`<!DOCTYPE html><html><head><meta charset=utf-8><style>body{margin:0;padding:24px;background:#0a0a0b;display:flex;align-items:center;justify-content:center;min-height:120px}</style></head><body>${embeds.v3}</body></html>`}
+                className="h-40 w-full bg-[var(--bg-secondary)]"
+                sandbox="allow-scripts allow-popups"
+              />
+            </div>
             <div className="rounded-xl border border-[var(--border)] bg-[var(--surface-raised)] p-5 text-xs text-[var(--text-secondary)]">
               <p className="mb-3 font-bold text-[var(--text-primary)]">
                 {t('widgetsPage.embed.attributesTitle')}

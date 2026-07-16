@@ -31,7 +31,8 @@ import { downloadCertificate } from '../utils/certificate'
 import usePageMeta from '../hooks/usePageMeta'
 import { getApiUrl } from '../config/constants'
 import { normalizeSha256 } from '../utils/hashUtils'
-import { isStaticOnlyMode, STATIC_MODE_COPY } from '../utils/staticMode'
+import { useTranslation } from 'react-i18next'
+import { isStaticOnlyMode } from '../utils/staticMode'
 import { isApiExplicitlyConfigured } from '../config/mvp'
 import StaticModeBanner from '../components/StaticModeBanner'
 import ProofTimeline from '../components/ProofTimeline'
@@ -74,6 +75,7 @@ export default function Stamp() {
   const [upgradeStatus, setUpgradeStatus] = useState(null) // pending | upgrading | confirmed
   const [lightningInvoice, setLightningInvoice] = useState(null) // { payment_request, amount_msat, expires_at }
   const { t } = useI18n()
+  const { t: tp } = useTranslation()
 
   const { lastEvent } = useSocket()
 
@@ -96,7 +98,7 @@ export default function Stamp() {
         setIsConfirmed(true)
         setConfirmedBlock(blockHeight)
         // Actionable toast with mempool link
-        toast.success('⛓ Confirmed on Bitcoin!', {
+        toast.success(tp('stampPage.confirmedToast'), {
           description: blockHeight
             ? `Block ${blockHeight.toLocaleString()} — view on mempool.space`
             : 'Proof anchored to Bitcoin mainnet',
@@ -120,7 +122,7 @@ export default function Stamp() {
         addErrorBreadcrumb('fees.fetch', 'Fee estimates loaded', 'info')
       } catch (e) {
         addErrorBreadcrumb('fees.fetch', e.message, 'error')
-        toast.error('Fee estimates unavailable', { description: 'Using default priority' })
+        toast.error(tp('stampPage.feeUnavailable'), { description: 'Using default priority' })
       }
     }
     fetchFees()
@@ -475,7 +477,7 @@ export default function Stamp() {
         localStorage.setItem('satohash_offline_queue', JSON.stringify(offlineQ))
 
         const queuedMsg = isStaticOnlyMode()
-          ? STATIC_MODE_COPY.stampQueued
+          ? tp('staticMode.stampQueued')
           : 'Connection offline. Hash queued for synchronization.'
         toast.warning(isStaticOnlyMode() ? 'Hash saved — API pending' : '⚡ Stamp Queued Offline', {
           description: queuedMsg
@@ -492,7 +494,7 @@ export default function Stamp() {
 
       const msg = err.message || 'Failed to stamp. Try again or use browser calendars.'
       setError(msg)
-      toast.error('Stamping failed', { description: msg })
+      toast.error(tp('stampPage.stampFailed'), { description: msg })
       setStampingStatus('idle')
     }
   }
@@ -581,7 +583,7 @@ export default function Stamp() {
             <button
               type="button"
               aria-pressed={stampMode === 'single'}
-              aria-label="Single file stamp mode"
+              aria-label={tp('stampPage.modes.single')}
               onClick={() => {
                 setStampMode('single')
                 setIsCapsuleMode(false)
@@ -600,16 +602,16 @@ export default function Stamp() {
                   color: stampMode === 'single' ? 'var(--accent-gold)' : 'var(--text-primary)'
                 }}
               >
-                Single File
+                {tp('stampPage.modes.single')}
               </div>
               <div className="text-[10px] leading-snug" style={{ color: 'var(--text-secondary)' }}>
-                Timestamp one document or file.
+                {tp('stampPage.step1Desc')}
               </div>
             </button>
             <button
               type="button"
               aria-pressed={stampMode === 'capsule'}
-              aria-label="Time capsule stamp mode"
+              aria-label={tp('stampPage.modes.capsule')}
               onClick={() => {
                 setStampMode('capsule')
                 setIsCapsuleMode(true)
@@ -629,16 +631,16 @@ export default function Stamp() {
                   color: stampMode === 'capsule' ? 'var(--accent-gold)' : 'var(--text-primary)'
                 }}
               >
-                Time Capsule
+                {tp('stampPage.modes.capsule')}
               </div>
               <div className="text-[10px] leading-snug" style={{ color: 'var(--text-secondary)' }}>
-                Bundle multiple files into one proof.
+                {tp('stampPage.step1Desc')}
               </div>
             </button>
             <button
               type="button"
               aria-pressed={stampMode === 'redact'}
-              aria-label="ZK redact stamp mode"
+              aria-label={tp('stampPage.modes.redact')}
               onClick={() => {
                 setStampMode('redact')
                 setIsCapsuleMode(false)
@@ -657,16 +659,16 @@ export default function Stamp() {
                   color: stampMode === 'redact' ? 'var(--accent-gold)' : 'var(--text-primary)'
                 }}
               >
-                ZK-Redact
+                {tp('stampPage.modes.redact')}
               </div>
               <div className="text-[10px] leading-snug" style={{ color: 'var(--text-secondary)' }}>
-                Blackout private data before hashing.
+                {tp('stampPage.step2Desc')}
               </div>
             </button>
             <button
               type="button"
               aria-pressed={stampMode === 'deposition'}
-              aria-label="Deposition stamp mode"
+              aria-label={tp('stampPage.modes.deposition')}
               onClick={() => {
                 setStampMode('deposition')
                 setIsCapsuleMode(false)
@@ -686,7 +688,7 @@ export default function Stamp() {
                   color: stampMode === 'deposition' ? 'var(--accent-gold)' : 'var(--text-primary)'
                 }}
               >
-                Deposition
+                {tp('stampPage.modes.deposition')}
               </div>
               <div className="text-[10px] leading-snug" style={{ color: 'var(--text-secondary)' }}>
                 Record voice testimony client-side.
@@ -896,47 +898,52 @@ export default function Stamp() {
                           }
                         }}
                       />
-                      {/* Mobile file/camera picker — shown on touch devices */}
-                      <label
-                        className="flex cursor-pointer flex-col items-center gap-3 rounded-2xl border-2 border-dashed p-6 transition-all active:scale-95 sm:hidden"
-                        style={{
-                          borderColor: 'var(--border-bright)',
-                          background: 'var(--bg-secondary)'
-                        }}
-                      >
-                        <input
-                          type="file"
-                          className="hidden"
-                          accept="*/*"
-                          capture="environment"
-                          onChange={(e) => {
-                            if (e.target.files?.length) {
-                              const newFiles = Array.from(e.target.files)
-                              setFiles(isCapsuleMode ? [...files, ...newFiles] : [newFiles[0]])
-                            }
-                          }}
-                        />
-                        <div
-                          className="flex h-16 w-16 items-center justify-center rounded-2xl"
+                      <div className="flex flex-col gap-3 sm:hidden">
+                        <label
+                          className="flex min-h-[48px] cursor-pointer items-center justify-center gap-2 rounded-xl border-2 border-dashed px-4 py-3 font-bold"
                           style={{
-                            background: 'var(--accent-gold-subtle)',
+                            borderColor: 'var(--border-bright)',
                             color: 'var(--accent-gold)'
                           }}
                         >
-                          <Upload size={28} />
-                        </div>
-                        <div className="text-center">
-                          <p
-                            className="text-sm font-black"
-                            style={{ color: 'var(--text-primary)' }}
-                          >
-                            Tap to select file
-                          </p>
-                          <p className="mt-1 text-xs" style={{ color: 'var(--text-secondary)' }}>
-                            Camera, photos, or any file
-                          </p>
-                        </div>
-                      </label>
+                          <input
+                            type="file"
+                            className="hidden"
+                            accept="image/*"
+                            capture="environment"
+                            onChange={(e) => {
+                              if (e.target.files?.[0]) {
+                                setFiles(
+                                  isCapsuleMode
+                                    ? [...files, e.target.files[0]]
+                                    : [e.target.files[0]]
+                                )
+                              }
+                            }}
+                          />
+                          {tp('stampPage.takePhoto')}
+                        </label>
+                        <label
+                          className="flex min-h-[48px] cursor-pointer items-center justify-center gap-2 rounded-xl border px-4 py-3 text-sm font-bold"
+                          style={{ borderColor: 'var(--border)', color: 'var(--text-primary)' }}
+                        >
+                          <input
+                            type="file"
+                            className="hidden"
+                            accept="*/*"
+                            onChange={(e) => {
+                              if (e.target.files?.[0]) {
+                                setFiles(
+                                  isCapsuleMode
+                                    ? [...files, e.target.files[0]]
+                                    : [e.target.files[0]]
+                                )
+                              }
+                            }}
+                          />
+                          {tp('stampPage.chooseFile')}
+                        </label>
+                      </div>
                     </>
                   )}
                 </motion.div>

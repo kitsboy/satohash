@@ -303,7 +303,8 @@
       "subtitle": "Executive Summary als PDF mit Marktanalyse, Technologie-Deep-Dive und Roadmap.",
       "downloadPdf": "PDF herunterladen",
       "viewOnline": "Online ansehen"
-    }
+    },
+    "mobileHint": "Desliza para comparar columnas."
   },
   "guidesPage": {
     "nav": {
@@ -572,7 +573,8 @@
     },
     "preview": {
       "title": "Live-Vorschau",
-      "body": "Farben und Ringmuster stammen aus dem Hash — dasselbe Dokument, dieselbe DNA, für immer. Klicken Sie auf ein eingebettetes Widget, um die Verifizierungsseite zu öffnen."
+      "body": "Farben und Ringmuster stammen aus dem Hash — dasselbe Dokument, dieselbe DNA, für immer. Klicken Sie auf ein eingebettetes Widget, um die Verifizierungsseite zu öffnen.",
+      "v3Title": "v3 preview"
     },
     "embed": {
       "title": "Einbettungscode",
@@ -580,11 +582,14 @@
       "badge": "Badge mit Verifizierungslink",
       "attributesTitle": "Data-Attribute",
       "attrs": {
-        "hash": "data-hash — erforderlicher SHA-256-Hex",
-        "size": "data-size — sm | md (Standard md)",
-        "verify": "data-verify — URL beim Klick geöffnet",
-        "label": "data-label — barrierefreier Titeltext"
-      }
+        "hash": "data-hash",
+        "size": "data-size",
+        "verify": "data-verify",
+        "label": "data-label",
+        "theme": "data-theme",
+        "domain": "data-domain"
+      },
+      "v3Label": "Proof DNA v3"
     },
     "nip05Cta": "NIP-05-Identität einrichten"
   },
@@ -1105,5 +1110,61 @@
     "register": "Registrieren",
     "exportCsv": "CSV exportieren",
     "importCsv": "CSV importieren"
+  },
+  "legalPages": {
+    "termsTitle": "Nutzungsbedingungen",
+    "privacyTitle": "Datenschutz",
+    "cryptoTitle": "Krypto-Hinweis",
+    "disclaimer": "Keine Rechtsberatung.",
+    "lastUpdated": "Zuletzt aktualisiert",
+    "backLegal": "← Rechtliches"
+  },
+  "chainOfCustodyPage": {
+    "title": "Chain of Custody",
+    "subtitle": "Übergaben mit Bitcoin-Hashes erfassen.",
+    "fields": {
+      "holder": "Inhaber",
+      "witness": "Zeuge",
+      "agency": "Behörde"
+    },
+    "recordStep": "Schritt erfassen",
+    "exportJson": "Exportieren",
+    "history": "Verlauf"
+  },
+  "stampPage": {
+    "modes": {
+      "single": "Einzeldatei",
+      "capsule": "Kapsel",
+      "redact": "ZK-Redact",
+      "deposition": "Deposition"
+    },
+    "takePhoto": "Foto aufnehmen",
+    "chooseFile": "Datei wählen",
+    "confirmedToast": "Auf Bitcoin bestätigt!",
+    "stampFailed": "Stempeln fehlgeschlagen",
+    "feeUnavailable": "Gebühren nicht verfügbar"
+  },
+  "vaultPage": {
+    "securityAge": {
+      "motion": "In Bewegung",
+      "operational": "Betrieb",
+      "archival": "Archiv"
+    },
+    "loadMore": "Mehr laden",
+    "actions": {
+      "badge": "Badge",
+      "raw": "Raw",
+      "ots": "OTS",
+      "verify": "Prüfen"
+    },
+    "empty": {
+      "title": "Keine Nachweise",
+      "body": "Dokument stempeln."
+    }
+  },
+  "nav": {
+    "government": "Behörden",
+    "batchHash": "Batch-Hash",
+    "widgets": "Widgets"
   }
 }

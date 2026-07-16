@@ -11,7 +11,11 @@ const PUBLIC_ROUTES = [
   '/stamp',
   '/security',
   '/trust',
-  '/verify'
+  '/verify',
+  '/widgets',
+  '/comparison',
+  '/chain-of-custody',
+  '/legal/terms'
 ]
 
 test.describe('axe-core a11y smoke', () => {

@@ -303,7 +303,8 @@
       "subtitle": "PDF ejecutivo con análisis de mercado, profundización técnica y hoja de ruta.",
       "downloadPdf": "Descargar PDF",
       "viewOnline": "Ver en línea"
-    }
+    },
+    "mobileHint": "Desliza para comparar columnas."
   },
   "guidesPage": {
     "nav": {
@@ -572,7 +573,8 @@
     },
     "preview": {
       "title": "Vista previa en vivo",
-      "body": "Los colores y patrones del anillo se derivan del hash — mismo documento, mismo ADN, para siempre. Haz clic en un widget incrustado para abrir la página de verificación."
+      "body": "Los colores y patrones del anillo se derivan del hash — mismo documento, mismo ADN, para siempre. Haz clic en un widget incrustado para abrir la página de verificación.",
+      "v3Title": "v3 preview"
     },
     "embed": {
       "title": "Código de incrustación",
@@ -580,11 +582,14 @@
       "badge": "Insignia con enlace de verificación",
       "attributesTitle": "Atributos data",
       "attrs": {
-        "hash": "data-hash — SHA-256 hex obligatorio",
-        "size": "data-size — sm | md (predeterminado md)",
-        "verify": "data-verify — URL abierta al hacer clic",
-        "label": "data-label — texto del título accesible"
-      }
+        "hash": "data-hash",
+        "size": "data-size",
+        "verify": "data-verify",
+        "label": "data-label",
+        "theme": "data-theme",
+        "domain": "data-domain"
+      },
+      "v3Label": "Proof DNA v3"
     },
     "nip05Cta": "Configurar identidad NIP-05"
   },
@@ -1105,5 +1110,61 @@
     "register": "Registrar hashes",
     "exportCsv": "Exportar CSV",
     "importCsv": "Importar CSV"
+  },
+  "legalPages": {
+    "termsTitle": "Términos de Servicio",
+    "privacyTitle": "Política de Privacidad",
+    "cryptoTitle": "Aviso de Criptomonedas",
+    "disclaimer": "No es asesoramiento legal.",
+    "lastUpdated": "Última actualización",
+    "backLegal": "← Legal"
+  },
+  "chainOfCustodyPage": {
+    "title": "Cadena de custodia",
+    "subtitle": "Registre entregas con hashes anclados a Bitcoin.",
+    "fields": {
+      "holder": "Titular",
+      "witness": "Testigo",
+      "agency": "Agencia receptora"
+    },
+    "recordStep": "Registrar paso",
+    "exportJson": "Exportar registro",
+    "history": "Historial"
+  },
+  "stampPage": {
+    "modes": {
+      "single": "Archivo único",
+      "capsule": "Cápsula",
+      "redact": "ZK-Redact",
+      "deposition": "Deposición"
+    },
+    "takePhoto": "Tomar foto",
+    "chooseFile": "Elegir archivo",
+    "confirmedToast": "¡Confirmado en Bitcoin!",
+    "stampFailed": "Sellado fallido",
+    "feeUnavailable": "Tarifas no disponibles"
+  },
+  "vaultPage": {
+    "securityAge": {
+      "motion": "En movimiento",
+      "operational": "Operacional",
+      "archival": "Archivo"
+    },
+    "loadMore": "Cargar más",
+    "actions": {
+      "badge": "Insignia",
+      "raw": "Raw",
+      "ots": "OTS",
+      "verify": "Verificar"
+    },
+    "empty": {
+      "title": "Sin pruebas",
+      "body": "Selle un documento para verlo aquí."
+    }
+  },
+  "nav": {
+    "government": "Gobierno",
+    "batchHash": "Hash por lotes",
+    "widgets": "Widgets"
   }
 }

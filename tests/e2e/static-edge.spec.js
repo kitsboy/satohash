@@ -31,4 +31,19 @@ test.describe('Static edge — MotoPass integration', () => {
     await page.goto('/government')
     await expect(page.getByRole('heading', { name: /government/i })).toBeVisible()
   })
+
+  test('widgets page shows embed code', async ({ page }) => {
+    await page.goto('/widgets')
+    await expect(page.locator('body')).toContainText(/embed|Proof DNA/i)
+  })
+
+  test('chain of custody page loads', async ({ page }) => {
+    await page.goto('/chain-of-custody')
+    await expect(page.locator('body')).toContainText(/custody|holder/i)
+  })
+
+  test('comparison page loads', async ({ page }) => {
+    await page.goto('/comparison')
+    await expect(page.getByRole('heading', { name: /stacks up|comparison/i })).toBeVisible()
+  })
 })

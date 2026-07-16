@@ -303,7 +303,8 @@
       "subtitle": "包含市场分析、技术深度解读和路线图的执行摘要 PDF。",
       "downloadPdf": "下载 PDF",
       "viewOnline": "在线查看"
-    }
+    },
+    "mobileHint": "Desliza para comparar columnas."
   },
   "guidesPage": {
     "nav": {
@@ -562,7 +563,8 @@
     },
     "preview": {
       "title": "实时预览",
-      "body": "颜色和环形图案源自哈希——同一文档，同一 DNA，永久不变。点击嵌入的 Widget 打开验证页面。"
+      "body": "颜色和环形图案源自哈希——同一文档，同一 DNA，永久不变。点击嵌入的 Widget 打开验证页面。",
+      "v3Title": "v3 preview"
     },
     "embed": {
       "title": "嵌入代码",
@@ -570,11 +572,14 @@
       "badge": "带验证链接的徽章",
       "attributesTitle": "数据属性",
       "attrs": {
-        "hash": "data-hash — 必填 SHA-256 十六进制",
-        "size": "data-size — sm | md（默认 md）",
-        "verify": "data-verify — 点击时打开的 URL",
-        "label": "data-label — 无障碍标题文本"
-      }
+        "hash": "data-hash",
+        "size": "data-size",
+        "verify": "data-verify",
+        "label": "data-label",
+        "theme": "data-theme",
+        "domain": "data-domain"
+      },
+      "v3Label": "Proof DNA v3"
     },
     "nip05Cta": "设置 NIP-05 身份"
   },
@@ -1095,5 +1100,61 @@
     "register": "登记哈希",
     "exportCsv": "导出 CSV",
     "importCsv": "导入 CSV"
+  },
+  "legalPages": {
+    "termsTitle": "服务条款",
+    "privacyTitle": "隐私政策",
+    "cryptoTitle": "加密货币声明",
+    "disclaimer": "非法律建议。",
+    "lastUpdated": "最后更新",
+    "backLegal": "← 法律"
+  },
+  "chainOfCustodyPage": {
+    "title": "保管链",
+    "subtitle": "用比特币锚定哈希记录交接。",
+    "fields": {
+      "holder": "持有人",
+      "witness": "见证人",
+      "agency": "接收机构"
+    },
+    "recordStep": "记录步骤",
+    "exportJson": "导出日志",
+    "history": "历史记录"
+  },
+  "stampPage": {
+    "modes": {
+      "single": "单文件",
+      "capsule": "胶囊",
+      "redact": "ZK-脱敏",
+      "deposition": "证词"
+    },
+    "takePhoto": "拍照",
+    "chooseFile": "选择文件",
+    "confirmedToast": "已在比特币上确认！",
+    "stampFailed": "盖章失败",
+    "feeUnavailable": "费用不可用"
+  },
+  "vaultPage": {
+    "securityAge": {
+      "motion": "进行中",
+      "operational": "运行中",
+      "archival": "归档"
+    },
+    "loadMore": "加载更多",
+    "actions": {
+      "badge": "徽章",
+      "raw": "原始",
+      "ots": "OTS",
+      "verify": "验证"
+    },
+    "empty": {
+      "title": "暂无证明",
+      "body": "盖章文档后将显示在此。"
+    }
+  },
+  "nav": {
+    "government": "政府",
+    "batchHash": "批量哈希",
+    "widgets": "小组件"
   }
 }

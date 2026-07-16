@@ -3,10 +3,12 @@ import { Link } from 'react-router-dom'
 import { ArrowLeft, ShieldCheck } from 'lucide-react'
 import { motion } from 'framer-motion'
 import Button from '../../components/Button'
+import { useTranslation } from 'react-i18next'
 import usePageMeta from '../../hooks/usePageMeta'
 
 export default function CryptoNotice() {
   usePageMeta({ page: 'legalCrypto' })
+  const { t } = useTranslation()
   const navigate = useNavigate()
 
   return (
@@ -19,13 +21,13 @@ export default function CryptoNotice() {
             onClick={() => navigate(-1)}
             className="flex items-center gap-1.5"
           >
-            <ArrowLeft size={18} /> Back
+            <ArrowLeft size={18} /> {t('legalPages.backLegal')}
           </Button>
           <Link
             to="/trust"
             className="text-[11px] font-black tracking-[0.25em] text-[var(--text-secondary)] uppercase transition-colors hover:text-[var(--accent-active)]"
           >
-            ← Back to Trust Center
+            {t('legalPages.backLegal')}
           </Link>
         </div>
 
@@ -37,8 +39,9 @@ export default function CryptoNotice() {
         >
           <div className="absolute top-0 right-0 left-0 h-2 bg-gradient-to-r from-indigo-500 via-purple-500 to-rose-500" />
           <h1 className="mb-4 text-4xl font-black tracking-tighter text-slate-900 md:text-5xl">
-            Crypto Compliance Notice
+            {t('legalPages.cryptoTitle')}
           </h1>
+          <p className="mb-6 text-sm text-slate-600">{t('legalPages.disclaimer')}</p>
           <p className="mb-16 text-xs font-bold tracking-widest text-slate-400 uppercase">
             Last updated: {new Date().toLocaleDateString()}
           </p>

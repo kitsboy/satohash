@@ -24,6 +24,7 @@ import { toast } from 'sonner'
 import { downloadCertificate } from '../utils/certificate'
 import { useSocket } from '../hooks/useSocket'
 import { SkeletonList } from '../components/Skeletons'
+import { useTranslation } from 'react-i18next'
 import { useI18n } from '../i18n'
 import usePageMeta from '../hooks/usePageMeta'
 import { getApiUrl } from '../config/constants'
@@ -75,10 +76,16 @@ const getFileTypeIcon = (filename, type) => {
 }
 
 const SecurityAge = ({ confirmations }) => {
+  const { t: tv } = useTranslation()
   const getLevel = (c) => {
-    if (c < 6) return { label: 'In Motion', color: 'text-[var(--accent-pending)]' }
-    if (c < 1000) return { label: 'Operational', color: 'text-[var(--accent-success)]' }
-    return { label: 'Archival', color: 'text-[var(--accent-gold)]' }
+    if (c < 6)
+      return { label: tv('vaultPage.securityAge.motion'), color: 'text-[var(--accent-pending)]' }
+    if (c < 1000)
+      return {
+        label: tv('vaultPage.securityAge.operational'),
+        color: 'text-[var(--accent-success)]'
+      }
+    return { label: tv('vaultPage.securityAge.archival'), color: 'text-[var(--accent-gold)]' }
   }
   const level = getLevel(confirmations)
   return (
@@ -95,6 +102,7 @@ const SecurityAge = ({ confirmations }) => {
 
 export default function Vault() {
   usePageMeta({ page: 'vault' })
+  const { t: tv } = useTranslation()
   const [searchQuery, setSearchQuery] = useState('')
   const [activeTab, setActiveTab] = useState('all')
   const [typeFilter, setTypeFilter] = useState('All')
@@ -932,12 +940,11 @@ export default function Vault() {
               }}
             >
               <h3 id="revoke-dialog-title" className="text-xl font-black tracking-tight">
-                Revoke Proof?
+                {tv('vaultPage.revoke.title')}
               </h3>
               <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                This permanently marks <strong className="text-white">{revokeTarget.name}</strong>{' '}
-                as revoked. The Bitcoin anchor remains immutable — this only flags the record in
-                Satohash.
+                {tv('vaultPage.revoke.body')}{' '}
+                <strong className="text-white">{revokeTarget.name}</strong>
               </p>
               <textarea
                 value={revokeReason}
@@ -1229,14 +1236,13 @@ export default function Vault() {
                           className="text-xl font-black tracking-tight uppercase"
                           style={{ color: 'var(--text-primary)' }}
                         >
-                          Your vault is empty
+                          {tv('vaultPage.empty.title')}
                         </h3>
                         <p
                           className="max-w-sm text-sm leading-relaxed"
                           style={{ color: 'var(--text-secondary)' }}
                         >
-                          You haven&apos;t stamped anything yet. Drop a file on the Stamp page to
-                          create your first Bitcoin-backed proof of existence.
+                          {tv('vaultPage.empty.body')}
                         </p>
                       </div>
                       <a
@@ -1315,7 +1321,7 @@ export default function Vault() {
                         <div className="flex translate-x-4 justify-end gap-3 opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100">
                           <ActionBtn
                             icon={Stamp}
-                            label="Badge"
+                            label={tv('vaultPage.actions.badge')}
                             onClick={() => {
                               navigator.clipboard.writeText(
                                 window.location.origin + '/verify/' + item.id
@@ -1327,12 +1333,12 @@ export default function Vault() {
                           />
                           <ActionBtn
                             icon={Download}
-                            label="Raw"
+                            label={tv('vaultPage.actions.raw')}
                             onClick={() => downloadCertificate(item)}
                           />
                           <ActionBtn
                             icon={FileDown}
-                            label=".ots"
+                            label={tv('vaultPage.actions.ots')}
                             onClick={() => downloadOtsFile(item)}
                           />
                           {item.status === 'pending' && (
@@ -1344,7 +1350,7 @@ export default function Vault() {
                           )}
                           <ActionBtn
                             icon={Globe}
-                            label="Verify"
+                            label={tv('vaultPage.actions.verify')}
                             onClick={() => {
                               window.location.href = '/verify?hash=' + item.fullHash
                             }}
@@ -1370,7 +1376,7 @@ export default function Vault() {
               onClick={loadMore}
               className="flex items-center gap-2 rounded-xl border border-[var(--border)] bg-white/5 px-8 py-3 text-xs font-black tracking-widest text-[var(--text-secondary)] uppercase transition-all hover:bg-white hover:text-black"
             >
-              Load more stamps
+              {tv('vaultPage.loadMore')}
             </button>
           </div>
         )}
@@ -1392,14 +1398,13 @@ export default function Vault() {
                 className="text-xl font-black tracking-tight uppercase"
                 style={{ color: 'var(--text-primary)' }}
               >
-                Your vault is empty
+                {tv('vaultPage.empty.title')}
               </h3>
               <p
                 className="max-w-sm text-sm leading-relaxed"
                 style={{ color: 'var(--text-secondary)' }}
               >
-                You haven&apos;t stamped anything yet. Drop a file on the Stamp page to create your
-                first Bitcoin-backed proof of existence.
+                {tv('vaultPage.empty.body')}
               </p>
             </div>
             <a
@@ -1502,7 +1507,7 @@ export default function Vault() {
                           <div className="mt-4 flex justify-end gap-2">
                             <ActionBtn
                               icon={Stamp}
-                              label="Badge"
+                              label={tv('vaultPage.actions.badge')}
                               onClick={() => {
                                 navigator.clipboard.writeText(
                                   window.location.origin + '/verify/' + item.id
@@ -1514,12 +1519,12 @@ export default function Vault() {
                             />
                             <ActionBtn
                               icon={Download}
-                              label="Raw"
+                              label={tv('vaultPage.actions.raw')}
                               onClick={() => downloadCertificate(item)}
                             />
                             <ActionBtn
                               icon={FileDown}
-                              label=".ots"
+                              label={tv('vaultPage.actions.ots')}
                               onClick={() => downloadOtsFile(item)}
                             />
                             {item.status === 'pending' && (
@@ -1531,7 +1536,7 @@ export default function Vault() {
                             )}
                             <ActionBtn
                               icon={Globe}
-                              label="Verify"
+                              label={tv('vaultPage.actions.verify')}
                               onClick={() => {
                                 window.location.href = '/verify?hash=' + item.fullHash
                               }}

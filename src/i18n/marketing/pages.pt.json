@@ -303,7 +303,8 @@
       "subtitle": "Resumo executivo em PDF com análise de mercado, aprofundamento técnico e roadmap.",
       "downloadPdf": "Baixar PDF",
       "viewOnline": "Ver online"
-    }
+    },
+    "mobileHint": "Desliza para comparar columnas."
   },
   "guidesPage": {
     "nav": {
@@ -572,7 +573,8 @@
     },
     "preview": {
       "title": "Prévia ao vivo",
-      "body": "Cores e padrões de anel são derivados do hash — mesmo documento, mesmo DNA, para sempre. Clique em um widget incorporado para abrir a página de verificação."
+      "body": "Cores e padrões de anel são derivados do hash — mesmo documento, mesmo DNA, para sempre. Clique em um widget incorporado para abrir a página de verificação.",
+      "v3Title": "v3 preview"
     },
     "embed": {
       "title": "Código de incorporação",
@@ -580,11 +582,14 @@
       "badge": "Badge com link de verificação",
       "attributesTitle": "Atributos de dados",
       "attrs": {
-        "hash": "data-hash — SHA-256 hex obrigatório",
-        "size": "data-size — sm | md (padrão md)",
-        "verify": "data-verify — URL aberta ao clicar",
-        "label": "data-label — texto de título acessível"
-      }
+        "hash": "data-hash",
+        "size": "data-size",
+        "verify": "data-verify",
+        "label": "data-label",
+        "theme": "data-theme",
+        "domain": "data-domain"
+      },
+      "v3Label": "Proof DNA v3"
     },
     "nip05Cta": "Configurar identidade NIP-05"
   },
@@ -1105,5 +1110,61 @@
     "register": "Registrar",
     "exportCsv": "Exportar CSV",
     "importCsv": "Importar CSV"
+  },
+  "legalPages": {
+    "termsTitle": "Termos de Serviço",
+    "privacyTitle": "Política de Privacidade",
+    "cryptoTitle": "Aviso de Criptomoeda",
+    "disclaimer": "Não é aconselhamento jurídico.",
+    "lastUpdated": "Última atualização",
+    "backLegal": "← Legal"
+  },
+  "chainOfCustodyPage": {
+    "title": "Cadeia de custódia",
+    "subtitle": "Registre handoffs com hashes Bitcoin.",
+    "fields": {
+      "holder": "Titular",
+      "witness": "Testemunha",
+      "agency": "Agência"
+    },
+    "recordStep": "Registrar passo",
+    "exportJson": "Exportar",
+    "history": "Histórico"
+  },
+  "stampPage": {
+    "modes": {
+      "single": "Arquivo único",
+      "capsule": "Cápsula",
+      "redact": "ZK-Redact",
+      "deposition": "Deposição"
+    },
+    "takePhoto": "Tirar foto",
+    "chooseFile": "Escolher arquivo",
+    "confirmedToast": "Confirmado no Bitcoin!",
+    "stampFailed": "Falha ao carimbar",
+    "feeUnavailable": "Taxas indisponíveis"
+  },
+  "vaultPage": {
+    "securityAge": {
+      "motion": "Em movimento",
+      "operational": "Operacional",
+      "archival": "Arquivo"
+    },
+    "loadMore": "Carregar mais",
+    "actions": {
+      "badge": "Badge",
+      "raw": "Raw",
+      "ots": "OTS",
+      "verify": "Verificar"
+    },
+    "empty": {
+      "title": "Sem provas",
+      "body": "Carimbe um documento."
+    }
+  },
+  "nav": {
+    "government": "Governo",
+    "batchHash": "Hash em lote",
+    "widgets": "Widgets"
   }
 }

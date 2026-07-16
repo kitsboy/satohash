@@ -182,6 +182,7 @@
     }
   },
   "comparisonPage": {
+    "mobileHint": "Swipe to compare columns on small screens.",
     "hero": {
       "eyebrow": "Technology Comparison",
       "title": "How Satohash",
@@ -572,7 +573,8 @@
     },
     "preview": {
       "title": "Live Preview",
-      "body": "Colors and ring patterns are derived from the hash — same document, same DNA, forever. Click an embedded widget to open the verification page."
+      "body": "Colors and ring patterns are derived from the hash — same document, same DNA, forever. Click an embedded widget to open the verification page.",
+      "v3Title": "v3 white-label preview"
     },
     "embed": {
       "title": "Embed Code",
@@ -580,11 +582,14 @@
       "badge": "Badge with Verify Link",
       "attributesTitle": "Data attributes",
       "attrs": {
-        "hash": "data-hash — required SHA-256 hex",
-        "size": "data-size — sm | md (default md)",
-        "verify": "data-verify — URL opened on click",
-        "label": "data-label — accessible title text"
-      }
+        "hash": "data-hash — 64-char SHA-256 hex (required)",
+        "size": "data-size — sm | md",
+        "verify": "data-verify — custom verification URL",
+        "label": "data-label — accessible badge title",
+        "theme": "data-theme — noir | light (v3 only)",
+        "domain": "data-domain — white-label partner domain (v3)"
+      },
+      "v3Label": "Proof DNA v3 (white-label)"
     },
     "nip05Cta": "Set Up NIP-05 Identity"
   },
@@ -1061,7 +1066,16 @@
     "step3Label": "Bitcoin Timestamps It",
     "step3Desc": "The fingerprint is permanently written to the blockchain.",
     "takePhoto": "Take photo",
-    "chooseFile": "Choose file"
+    "chooseFile": "Choose file",
+    "modes": {
+      "single": "Single file",
+      "capsule": "Capsule",
+      "redact": "ZK-Redact",
+      "deposition": "Deposition"
+    },
+    "confirmedToast": "Confirmed on Bitcoin!",
+    "stampFailed": "Stamping failed",
+    "feeUnavailable": "Fee estimates unavailable"
   },
   "trustPage": {
     "backSecurity": "← Security overview",
@@ -1125,8 +1139,16 @@
     "importCsv": "Import CSV"
   },
   "chainOfCustodyPage": {
-    "title": "Chain of custody timestamp",
-    "subtitle": "Record holder, witness, and agency handoffs with Bitcoin-anchored hashes."
+    "title": "Chain of custody",
+    "subtitle": "Record holder, witness, and agency handoffs with Bitcoin-anchored hashes.",
+    "fields": {
+      "holder": "Holder name",
+      "witness": "Witness",
+      "agency": "Receiving agency"
+    },
+    "recordStep": "Record custody step",
+    "exportJson": "Export custody log",
+    "history": "Custody history"
   },
   "evidenceAdmissibilityPage": {
     "title": "Evidence admissibility guide",
@@ -1147,6 +1169,38 @@
   "legalPages": {
     "privacyTitle": "Privacy Policy",
     "termsTitle": "Terms of Service",
-    "cryptoTitle": "Cryptocurrency Notice"
+    "cryptoTitle": "Cryptocurrency Notice",
+    "disclaimer": "Not legal advice. Consult qualified counsel in your jurisdiction.",
+    "lastUpdated": "Last updated",
+    "backLegal": "← Legal"
+  },
+  "vaultPage": {
+    "securityAge": {
+      "motion": "In Motion",
+      "operational": "Operational",
+      "archival": "Archival"
+    },
+    "loadMore": "Load more stamps",
+    "actions": {
+      "badge": "Badge",
+      "raw": "Raw",
+      "ots": "OTS",
+      "verify": "Verify"
+    },
+    "empty": {
+      "title": "No proofs yet",
+      "body": "Stamp a document to see it here."
+    },
+    "revoke": {
+      "title": "Revoke proof",
+      "body": "This permanently marks the record as revoked. The Bitcoin anchor remains immutable.",
+      "confirm": "Confirm revoke",
+      "cancel": "Cancel"
+    }
+  },
+  "nav": {
+    "government": "Government",
+    "batchHash": "Batch hash",
+    "widgets": "Widgets"
   }
 }

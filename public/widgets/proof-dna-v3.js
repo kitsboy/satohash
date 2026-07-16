@@ -9,12 +9,20 @@
 (function () {
   const SIZES = { sm: 48, md: 64 }
 
+  const THEMES = {
+    noir: { bg: 'rgba(255,255,255,0.05)', mark: 'rgba(255,255,255,0.35)' },
+    light: { bg: 'rgba(0,0,0,0.04)', mark: 'rgba(0,0,0,0.25)' }
+  }
+
   function initWidget(widget) {
     const hash = widget.getAttribute('data-hash')
     if (!hash || hash.length < 18) return
 
     const sizeKey = widget.getAttribute('data-size') || 'md'
     const px = SIZES[sizeKey] || SIZES.md
+    const themeKey = (widget.getAttribute('data-theme') || 'noir').toLowerCase()
+    const theme = THEMES[themeKey] || THEMES.noir
+    const domain = widget.getAttribute('data-domain') || ''
     const origin =
       (typeof window !== 'undefined' && window.location?.origin) || 'https://satohash.giveabit.io'
     const verifyUrl =
@@ -50,7 +58,7 @@
       'inset:4px',
       'border-radius:12px',
       `border:1px solid ${colors[2]}44`,
-      'background:rgba(255,255,255,0.05)',
+      `background:${theme.bg}`,
       'pointer-events:none'
     ].join(';')
     widget.appendChild(layer)
@@ -63,10 +71,27 @@
       'right:8px',
       'font-size:10px',
       'font-weight:900',
-      'color:rgba(255,255,255,0.35)',
+      `color:${theme.mark}`,
       'pointer-events:none'
     ].join(';')
     widget.appendChild(mark)
+
+    if (domain) {
+      const badge = document.createElement('span')
+      badge.textContent = domain.replace(/^https?:\/\//, '').slice(0, 18)
+      badge.style.cssText = [
+        'position:absolute',
+        'top:6px',
+        'left:8px',
+        'font-size:8px',
+        'font-weight:800',
+        'letter-spacing:0.05em',
+        `color:${theme.mark}`,
+        'pointer-events:none',
+        'text-transform:uppercase'
+      ].join(';')
+      widget.appendChild(badge)
+    }
 
     widget.addEventListener('mouseenter', () => { widget.style.transform = 'scale(1.08)' })
     widget.addEventListener('mouseleave', () => { widget.style.transform = 'scale(1)' })
@@ -74,7 +99,7 @@
   }
 
   function boot() {
-    document.querySelectorAll('.satohash-dna:not([data-satohash-init])').forEach((el) => {
+    document.querySelectorAll('.satohash-dna-v3:not([data-satohash-init])').forEach((el) => {
       el.setAttribute('data-satohash-init', '1')
       initWidget(el)
     })

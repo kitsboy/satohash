@@ -10,7 +10,8 @@ import { normalizeSha256 } from '../utils/hashUtils'
 import { findStampByHashOrId, localRecordToProof } from '../utils/vaultLocal'
 import { verifyOtsStructurally } from '../utils/otsBrowser'
 import { verifyOtsBrowser } from '../utils/otsClient'
-import { isStaticOnlyMode, STATIC_MODE_COPY } from '../utils/staticMode'
+import { useTranslation } from 'react-i18next'
+import { isStaticOnlyMode } from '../utils/staticMode'
 import StaticModeBanner from '../components/StaticModeBanner'
 
 const MerklePathNode = ({ level, hash, active }) => (
@@ -34,6 +35,7 @@ const MerklePathNode = ({ level, hash, active }) => (
 
 export default function VerificationTool() {
   usePageMeta({ page: 'verify' })
+  const { t: tv } = useTranslation()
   const [searchParams] = useSearchParams()
   const [verifying, setVerifying] = useState(false)
   const [result, setResult] = useState(null) // null, 'success', 'error'
@@ -129,7 +131,7 @@ export default function VerificationTool() {
         setResult('success')
         setVerifyData({
           verified: true,
-          details: STATIC_MODE_COPY.verifyStructural,
+          details: tv('staticMode.verifyStructural'),
           mode: 'hash-only'
         })
       } else {

@@ -303,7 +303,8 @@
       "subtitle": "PDF ya muhtasari wa uongozi na uchambuzi wa soko, uchunguzi wa kina wa teknolojia, na ramani ya barabara.",
       "downloadPdf": "Pakua PDF",
       "viewOnline": "Angalia Mtandaoni"
-    }
+    },
+    "mobileHint": "Desliza para comparar columnas."
   },
   "guidesPage": {
     "nav": {
@@ -572,7 +573,8 @@
     },
     "preview": {
       "title": "Hakiki ya Moja kwa Moja",
-      "body": "Rangi na mifumo ya pete zinatokana na hash — hati ile ile, DNA ile ile, milele. Bofya widget iliyojumuishwa kufungua ukurasa wa uthibitishaji."
+      "body": "Rangi na mifumo ya pete zinatokana na hash — hati ile ile, DNA ile ile, milele. Bofya widget iliyojumuishwa kufungua ukurasa wa uthibitishaji.",
+      "v3Title": "v3 preview"
     },
     "embed": {
       "title": "Msimbo wa Kujumuisha",
@@ -580,11 +582,14 @@
       "badge": "Beji na Kiungo cha Uthibitishaji",
       "attributesTitle": "Sifa za data",
       "attrs": {
-        "hash": "data-hash — SHA-256 hex inayohitajika",
-        "size": "data-size — sm | md (chaguo-msingi md)",
-        "verify": "data-verify — URL inayofunguliwa unapobofya",
-        "label": "data-label — maandishi ya kichwa yanayoweza kufikiwa"
-      }
+        "hash": "data-hash",
+        "size": "data-size",
+        "verify": "data-verify",
+        "label": "data-label",
+        "theme": "data-theme",
+        "domain": "data-domain"
+      },
+      "v3Label": "Proof DNA v3"
     },
     "nip05Cta": "Sanidi Utambulisho wa NIP-05"
   },
@@ -1105,5 +1110,61 @@
     "register": "Sajili",
     "exportCsv": "Hamisha CSV",
     "importCsv": "Ingiza CSV"
+  },
+  "legalPages": {
+    "termsTitle": "Masharti ya Huduma",
+    "privacyTitle": "Sera ya Faragha",
+    "cryptoTitle": "Taarifa ya Crypto",
+    "disclaimer": "Si ushauri wa kisheria.",
+    "lastUpdated": "Imesasishwa",
+    "backLegal": "← Kisheria"
+  },
+  "chainOfCustodyPage": {
+    "title": "Mnyororo wa usimamizi",
+    "subtitle": "Rekodi uhamisho na hashes za Bitcoin.",
+    "fields": {
+      "holder": "Mmiliki",
+      "witness": "Shahidi",
+      "agency": "Wakala"
+    },
+    "recordStep": "Rekodi hatua",
+    "exportJson": "Hamisha",
+    "history": "Historia"
+  },
+  "stampPage": {
+    "modes": {
+      "single": "Faili moja",
+      "capsule": "Kapsuli",
+      "redact": "ZK-Redact",
+      "deposition": "Ushahidi"
+    },
+    "takePhoto": "Piga picha",
+    "chooseFile": "Chagua faili",
+    "confirmedToast": "Imethibitishwa kwenye Bitcoin!",
+    "stampFailed": "Imeshindwa",
+    "feeUnavailable": "Ada hazipatikani"
+  },
+  "vaultPage": {
+    "securityAge": {
+      "motion": "Inaendelea",
+      "operational": "Inafanya kazi",
+      "archival": "Hifadhi"
+    },
+    "loadMore": "Pakia zaidi",
+    "actions": {
+      "badge": "Beji",
+      "raw": "Raw",
+      "ots": "OTS",
+      "verify": "Thibitisha"
+    },
+    "empty": {
+      "title": "Hakuna uthibitisho",
+      "body": "Weka muhuri wa hati."
+    }
+  },
+  "nav": {
+    "government": "Serikali",
+    "batchHash": "Batch hash",
+    "widgets": "Widgets"
   }
 }

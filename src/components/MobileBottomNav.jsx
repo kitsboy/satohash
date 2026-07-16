@@ -90,8 +90,9 @@ export default function MobileBottomNav() {
 
               {[
                 { name: t('nav', 'dashboard'), path: '/dashboard' },
-                { name: 'Government', path: '/government' },
-                { name: 'Batch hash', path: '/batch-hash' },
+                { name: t('nav.government') || 'Government', path: '/government' },
+                { name: t('nav.batchHash') || 'Batch hash', path: '/batch-hash' },
+                { name: t('nav.widgets') || 'Widgets', path: '/widgets' },
                 { name: t('nav', 'batch') || 'Batch Stamp', path: '/batch' },
                 { name: t('nav', 'developer'), path: '/developer' },
                 { name: t('nav', 'contracts'), path: '/contracts' },

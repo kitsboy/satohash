@@ -303,7 +303,8 @@
       "subtitle": "PDF exécutif avec analyse de marché, approfondissement technique et feuille de route.",
       "downloadPdf": "Télécharger le PDF",
       "viewOnline": "Voir en ligne"
-    }
+    },
+    "mobileHint": "Desliza para comparar columnas."
   },
   "guidesPage": {
     "nav": {
@@ -572,7 +573,8 @@
     },
     "preview": {
       "title": "Aperçu en direct",
-      "body": "Les couleurs et motifs de l'anneau sont dérivés du hachage — même document, même ADN, pour toujours. Cliquez sur un widget intégré pour ouvrir la page de vérification."
+      "body": "Les couleurs et motifs de l'anneau sont dérivés du hachage — même document, même ADN, pour toujours. Cliquez sur un widget intégré pour ouvrir la page de vérification.",
+      "v3Title": "v3 preview"
     },
     "embed": {
       "title": "Code d'intégration",
@@ -580,11 +582,14 @@
       "badge": "Badge avec lien de vérification",
       "attributesTitle": "Attributs data",
       "attrs": {
-        "hash": "data-hash — SHA-256 hex requis",
-        "size": "data-size — sm | md (par défaut md)",
-        "verify": "data-verify — URL ouverte au clic",
-        "label": "data-label — texte de titre accessible"
-      }
+        "hash": "data-hash",
+        "size": "data-size",
+        "verify": "data-verify",
+        "label": "data-label",
+        "theme": "data-theme",
+        "domain": "data-domain"
+      },
+      "v3Label": "Proof DNA v3"
     },
     "nip05Cta": "Configurer l'identité NIP-05"
   },
@@ -1105,5 +1110,61 @@
     "register": "Enregistrer",
     "exportCsv": "Exporter CSV",
     "importCsv": "Importer CSV"
+  },
+  "legalPages": {
+    "termsTitle": "Conditions d'Utilisation",
+    "privacyTitle": "Politique de Confidentialité",
+    "cryptoTitle": "Avis Cryptomonnaie",
+    "disclaimer": "Pas un conseil juridique.",
+    "lastUpdated": "Dernière mise à jour",
+    "backLegal": "← Légal"
+  },
+  "chainOfCustodyPage": {
+    "title": "Chaîne de custody",
+    "subtitle": "Enregistrez les transferts avec hashes Bitcoin.",
+    "fields": {
+      "holder": "Détenteur",
+      "witness": "Témoin",
+      "agency": "Agence"
+    },
+    "recordStep": "Enregistrer",
+    "exportJson": "Exporter",
+    "history": "Historique"
+  },
+  "stampPage": {
+    "modes": {
+      "single": "Fichier unique",
+      "capsule": "Capsule",
+      "redact": "ZK-Redact",
+      "deposition": "Déposition"
+    },
+    "takePhoto": "Prendre photo",
+    "chooseFile": "Choisir fichier",
+    "confirmedToast": "Confirmé sur Bitcoin !",
+    "stampFailed": "Échec",
+    "feeUnavailable": "Frais indisponibles"
+  },
+  "vaultPage": {
+    "securityAge": {
+      "motion": "En cours",
+      "operational": "Opérationnel",
+      "archival": "Archivage"
+    },
+    "loadMore": "Charger plus",
+    "actions": {
+      "badge": "Badge",
+      "raw": "Raw",
+      "ots": "OTS",
+      "verify": "Vérifier"
+    },
+    "empty": {
+      "title": "Aucune preuve",
+      "body": "Tamponnez un document."
+    }
+  },
+  "nav": {
+    "government": "Gouvernement",
+    "batchHash": "Hash par lots",
+    "widgets": "Widgets"
   }
 }
