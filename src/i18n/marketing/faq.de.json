@@ -11,7 +11,8 @@
     "basics": "Grundlagen",
     "technical": "Technisch",
     "legal": "Rechtliches",
-    "usage": "Nutzung"
+    "usage": "Nutzung",
+    "institutional": "Institutionell"
   },
   "items": [
     {
@@ -97,6 +98,30 @@
       "category": "usage",
       "q": "Was ist der Satohash Snapper?",
       "a": "Der Satohash Snapper ist eine Browser-Erweiterung, die Webseiten-Beweise erfasst. Machen Sie einen Schnappschuss einer beliebigen Webseite, und die Erweiterung stempelt ihren Hash und Metadaten in Bitcoin für einen verifizierbaren Nachweis ihres Zustands in diesem Moment."
+    },
+    {
+      "id": "procurement",
+      "category": "institutional",
+      "q": "Beschaffung für Behörden?",
+      "a": "Statische SPA, Browser-Hashing, keine Dokumentenhaltung."
+    },
+    {
+      "id": "dataResidency",
+      "category": "institutional",
+      "q": "Datenresidenz?",
+      "a": "Dateien verlassen das Gerät nicht. Nur Hashes und .ots."
+    },
+    {
+      "id": "airGap",
+      "category": "institutional",
+      "q": "Air-Gap?",
+      "a": "Ja, offline hashen und Browser-OTS-Kalender."
+    },
+    {
+      "id": "chainOfCustody",
+      "category": "institutional",
+      "q": "Chain of Custody?",
+      "a": "/chain-of-custody für Übergaben mit Bitcoin-Hashes."
     }
   ],
   "empty": {

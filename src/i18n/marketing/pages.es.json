@@ -295,7 +295,9 @@
         "diyOTS": "$0"
       }
     },
-    "cellValues": { "variableGas": "Gas variable" },
+    "cellValues": {
+      "variableGas": "Gas variable"
+    },
     "download": {
       "title": "Descarga el pitch deck completo",
       "subtitle": "PDF ejecutivo con análisis de mercado, profundización técnica y hoja de ruta.",
@@ -304,7 +306,9 @@
     }
   },
   "guidesPage": {
-    "nav": { "eyebrow": "Guías educativas" },
+    "nav": {
+      "eyebrow": "Guías educativas"
+    },
     "hero": {
       "title": "Aprende cómo",
       "titleHighlight": "funciona la prueba",
@@ -625,8 +629,14 @@
         "title": "Resumen ejecutivo",
         "desc": "One-pager de negocio para stakeholders."
       },
-      "marketing": { "title": "Marketing", "desc": "Posicionamiento, canales, tono y activos." },
-      "financials": { "title": "Finanzas", "desc": "Costes, proyecciones y unit economics." },
+      "marketing": {
+        "title": "Marketing",
+        "desc": "Posicionamiento, canales, tono y activos."
+      },
+      "financials": {
+        "title": "Finanzas",
+        "desc": "Costes, proyecciones y unit economics."
+      },
       "improvements-log": {
         "title": "Registro de mejoras",
         "desc": "Seguimiento completo de 100 mejoras."
@@ -659,12 +669,30 @@
         "title": "Internacionalización",
         "desc": "Soporte multilingüe: EN, ES, FR, DE, PT, SW, ZH."
       },
-      "seo-de": { "title": "SEO — Deutsch", "desc": "Estrategia SEO en alemán." },
-      "seo-es": { "title": "SEO — Español", "desc": "Estrategia SEO en español." },
-      "seo-fr": { "title": "SEO — Français", "desc": "Estrategia SEO en francés." },
-      "seo-pt": { "title": "SEO — Português", "desc": "Estrategia SEO en portugués." },
-      "seo-sw": { "title": "SEO — Kiswahili", "desc": "Estrategia SEO en suajili." },
-      "seo-zh": { "title": "SEO — 中文", "desc": "Estrategia SEO en chino." },
+      "seo-de": {
+        "title": "SEO — Deutsch",
+        "desc": "Estrategia SEO en alemán."
+      },
+      "seo-es": {
+        "title": "SEO — Español",
+        "desc": "Estrategia SEO en español."
+      },
+      "seo-fr": {
+        "title": "SEO — Français",
+        "desc": "Estrategia SEO en francés."
+      },
+      "seo-pt": {
+        "title": "SEO — Português",
+        "desc": "Estrategia SEO en portugués."
+      },
+      "seo-sw": {
+        "title": "SEO — Kiswahili",
+        "desc": "Estrategia SEO en suajili."
+      },
+      "seo-zh": {
+        "title": "SEO — 中文",
+        "desc": "Estrategia SEO en chino."
+      },
       "kimi-handoff": {
         "title": "Registro de traspaso Kimi",
         "desc": "Traspasos de sesión entre agentes y máquinas."
@@ -692,7 +720,11 @@
       "subtitle": "Explora plantillas listas para los documentos que necesitas sellar. Sin claves, sin cuentas, sin compromiso — solo descubre lo que Satohash puede hacer. Cada plantilla genera una prueba de existencia anclada en Bitcoin."
     },
     "searchPlaceholder": "Buscar plantillas...",
-    "sort": { "default": "Predeterminado", "popular": "Más popular", "alpha": "A-Z" },
+    "sort": {
+      "default": "Predeterminado",
+      "popular": "Más popular",
+      "alpha": "A-Z"
+    },
     "allCategory": "Plantillas",
     "recentlyViewed": "Vistos recientemente",
     "empty": {
@@ -700,7 +732,11 @@
       "subtitle": "Prueba con otra búsqueda o categoría.",
       "reset": "Restablecer filtros"
     },
-    "badges": { "Popular": "Popular", "New": "Nuevo", "Legal-Grade": "Grado legal" },
+    "badges": {
+      "Popular": "Popular",
+      "New": "Nuevo",
+      "Legal-Grade": "Grado legal"
+    },
     "viewDetails": "Ver detalles",
     "quickPreview": "Vista previa rápida",
     "copyLink": "Copiar enlace",
@@ -994,5 +1030,80 @@
       "contribute": "Contribuir",
       "github": "GitHub"
     }
+  },
+  "staticMode": {
+    "title": "Modo de verificación en navegador",
+    "body": "El hash, la bóveda y el sellado OpenTimestamps se ejecutan en su navegador mediante calendarios públicos.",
+    "trustLink": "Confianza y cumplimiento →",
+    "stampQueued": "Hash guardado localmente. OTS del navegador reintentará al sincronizar.",
+    "verifyStructural": "Comprobación estructural .ots aprobada. Atestación Bitcoin completa: use verificación en navegador u opentimestamps.org."
+  },
+  "proofTimeline": {
+    "hashed": "Hasheado localmente",
+    "submitted": "Enviado al calendario",
+    "pending": "Bloque Bitcoin pendiente",
+    "confirmed": "Confirmado en cadena",
+    "ariaLabel": "Ciclo de vida de la prueba"
+  },
+  "trustPage": {
+    "backSecurity": "← Resumen de seguridad",
+    "heroTitle": "Centro de Confianza",
+    "heroSubtitle": "Arquitectura de conocimiento cero, auditoría de código abierto y compatibilidad legal global.",
+    "complianceTitle": "Marco legal y regulatorio",
+    "securityLink": "Profundidad de seguridad →",
+    "procurementTitle": "Adquisiciones y diligencia",
+    "procurementBody": "Descargue el pitch ejecutivo y la guía de integración MotoPass para revisión de proveedores.",
+    "procurementCta": "Ver paquete de diligencia",
+    "printGuide": "Guía de verificación para funcionarios"
+  },
+  "governmentPage": {
+    "backTrust": "← Centro de Confianza",
+    "backGovernment": "← Uso gubernamental",
+    "learnMore": "Saber más",
+    "readyStamp": "¿Listo para sellar?",
+    "readyStampDesc": "Use plantillas de pasaporte o registro por lotes.",
+    "stampNow": "Sellar ahora",
+    "batchHash": "Registro por lotes",
+    "procurementTitle": "Resumen de adquisiciones",
+    "procurementBody": "Hashing air-gap, residencia de datos en navegador, cadena de custodia y enlaces MotoPass."
+  },
+  "governmentUse": {
+    "title": "Uso Gubernamental y Diplomático",
+    "titleHighlight": "Diplomático",
+    "subtitle": "Sellos de conocimiento cero para pasaportes, identidades y activos en distress. Los documentos nunca salen del dispositivo.",
+    "passport": {
+      "title": "Pasaportes y viajes",
+      "body": "MotoPass hashea solicitudes en el cliente; Satohash ancla huellas en Bitcoin sin biometría."
+    },
+    "distressed": {
+      "title": "Activos soberanos en distress",
+      "body": "Listados con hashes de contenido y pruebas .ots opcionales."
+    },
+    "custody": {
+      "title": "Cadena de custodia",
+      "body": "Flujo titular → testigo → agencia con registros sellados."
+    },
+    "admissibility": {
+      "title": "Admisibilidad de pruebas",
+      "body": "Matriz jurisdiccional (UETA, eIDAS, UK, Seychelles)."
+    }
+  },
+  "motopassVerifyPage": {
+    "title": "Verificar hash de solicitud MotoPass",
+    "subtitle": "Pegue hashes SHA-256 de motopass.giveabit.io.",
+    "placeholder": "Un hash hex de 64 caracteres por línea…",
+    "validate": "Validar hashes",
+    "publicVerify": "Página pública",
+    "verifyTool": "Herramienta (?hash=)",
+    "completeStamp": "Completar sello",
+    "toastNeedHash": "Pegue al menos un hash SHA-256 válido"
+  },
+  "batchHashPage": {
+    "title": "Registro por lotes",
+    "subtitle": "Registre cientos de huellas localmente. Exporte CSV para auditoría.",
+    "placeholder": "Un SHA-256 por línea…",
+    "register": "Registrar hashes",
+    "exportCsv": "Exportar CSV",
+    "importCsv": "Importar CSV"
   }
 }

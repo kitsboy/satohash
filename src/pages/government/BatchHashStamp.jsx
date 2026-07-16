@@ -1,21 +1,36 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 import Footer from '../../components/Footer'
 import usePageMeta from '../../hooks/usePageMeta'
 import { parseHashLines } from '../../utils/hashUtils'
 import { clientId } from '../../utils/id'
+import { upsertLocalStamp } from '../../utils/vaultLocal'
 import StaticModeBanner from '../../components/StaticModeBanner'
+
+function parseCsvHashes(text) {
+  const lines = text.split(/\r?\n/).filter(Boolean)
+  if (!lines.length) return []
+  const start = lines[0].toLowerCase().includes('hash') ? 1 : 0
+  const hashes = []
+  for (let i = start; i < lines.length; i++) {
+    const col = lines[i].split(',')[0]?.trim()
+    if (col && /^[a-f0-9]{64}$/i.test(col)) hashes.push(col.toLowerCase())
+  }
+  return hashes
+}
 
 export default function BatchHashStamp() {
   usePageMeta({ page: 'batchHash' })
+  const { t } = useTranslation()
   const [input, setInput] = useState('')
   const [rows, setRows] = useState([])
+  const fileRef = useRef(null)
 
-  const process = () => {
-    const hashes = parseHashLines(input)
+  const saveHashes = (hashes) => {
     if (!hashes.length) {
-      toast.error('No valid hashes found')
+      toast.error(t('motopassVerifyPage.toastNeedHash'))
       return
     }
     const stamped = hashes.map((hash) => ({
@@ -26,10 +41,25 @@ export default function BatchHashStamp() {
       created_at: new Date().toISOString(),
       source: 'batch-hash'
     }))
-    const existing = JSON.parse(localStorage.getItem('satohash_stamps') || '[]')
-    localStorage.setItem('satohash_stamps', JSON.stringify([...stamped, ...existing].slice(0, 500)))
+    stamped.forEach((r) => upsertLocalStamp(r))
     setRows(stamped)
     toast.success(`${stamped.length} hashes saved to vault`)
+  }
+
+  const process = () => saveHashes(parseHashLines(input))
+
+  const importCsv = (file) => {
+    const reader = new FileReader()
+    reader.onload = (e) => {
+      const hashes = parseCsvHashes(String(e.target.result || ''))
+      if (!hashes.length) {
+        toast.error('No valid hashes in CSV')
+        return
+      }
+      setInput(hashes.join('\n'))
+      saveHashes(hashes)
+    }
+    reader.readAsText(file)
   }
 
   const exportCsv = () => {
@@ -54,15 +84,14 @@ export default function BatchHashStamp() {
           className="text-sm font-bold"
           style={{ color: 'var(--text-secondary)' }}
         >
-          ← Government use
+          {t('governmentPage.backGovernment')}
         </Link>
       </header>
       <div className="mx-auto max-w-3xl space-y-6 px-6 py-12">
         <StaticModeBanner compact />
-        <h1 className="text-3xl font-black">Batch hash registry</h1>
+        <h1 className="text-3xl font-black">{t('batchHashPage.title')}</h1>
         <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-          Register hundreds of passport or asset fingerprints locally. Export CSV for agency audit;
-          stamp individually from vault when ready.
+          {t('batchHashPage.subtitle')}
         </p>
         <textarea
           value={input}
@@ -70,17 +99,36 @@ export default function BatchHashStamp() {
           rows={8}
           className="w-full rounded-2xl border p-4 font-mono text-xs"
           style={{ borderColor: 'var(--border)', background: 'var(--bg-secondary)' }}
-          placeholder="One SHA-256 per line…"
+          placeholder={t('batchHashPage.placeholder')}
         />
-        <div className="flex gap-3">
+        <div className="flex flex-wrap gap-3">
           <button
             type="button"
             onClick={process}
             className="rounded-xl px-6 py-3 text-xs font-black uppercase"
             style={{ background: 'var(--accent-gold)', color: '#141b25' }}
           >
-            Save to vault
+            {t('batchHashPage.register')}
           </button>
+          <button
+            type="button"
+            onClick={() => fileRef.current?.click()}
+            className="rounded-xl border px-6 py-3 text-xs font-black uppercase"
+            style={{ borderColor: 'var(--border)' }}
+          >
+            {t('batchHashPage.importCsv')}
+          </button>
+          <input
+            ref={fileRef}
+            type="file"
+            accept=".csv,text/csv"
+            className="hidden"
+            onChange={(e) => {
+              const f = e.target.files?.[0]
+              if (f) importCsv(f)
+              e.target.value = ''
+            }}
+          />
           {rows.length > 0 && (
             <button
               type="button"
@@ -88,7 +136,7 @@ export default function BatchHashStamp() {
               className="rounded-xl border px-6 py-3 text-xs font-black uppercase"
               style={{ borderColor: 'var(--border)' }}
             >
-              Export CSV
+              {t('batchHashPage.exportCsv')}
             </button>
           )}
         </div>

@@ -295,7 +295,9 @@
         "diyOTS": "$0"
       }
     },
-    "cellValues": { "variableGas": "Variable gas" },
+    "cellValues": {
+      "variableGas": "Variable gas"
+    },
     "download": {
       "title": "Download the Full Pitch Deck",
       "subtitle": "Executive summary PDF with market analysis, technology deep-dive, and roadmap.",
@@ -304,7 +306,9 @@
     }
   },
   "guidesPage": {
-    "nav": { "eyebrow": "Educational Guides" },
+    "nav": {
+      "eyebrow": "Educational Guides"
+    },
     "hero": {
       "title": "Learn How",
       "titleHighlight": "Proof Works",
@@ -617,13 +621,22 @@
         "title": "Architecture Overview",
         "desc": "Four-plane system: Proof, Identity, Settlement, Atlas."
       },
-      "pitch": { "title": "Product Pitch", "desc": "The Sovereign Provenance Mesh story." },
+      "pitch": {
+        "title": "Product Pitch",
+        "desc": "The Sovereign Provenance Mesh story."
+      },
       "executive-summary": {
         "title": "Executive Summary",
         "desc": "Business one-pager for stakeholders."
       },
-      "marketing": { "title": "Marketing", "desc": "Positioning, channels, voice, and assets." },
-      "financials": { "title": "Financials", "desc": "Costs, projections, and unit economics." },
+      "marketing": {
+        "title": "Marketing",
+        "desc": "Positioning, channels, voice, and assets."
+      },
+      "financials": {
+        "title": "Financials",
+        "desc": "Costs, projections, and unit economics."
+      },
       "improvements-log": {
         "title": "Improvements Log",
         "desc": "Complete 100-item improvement tracker."
@@ -644,18 +657,42 @@
         "title": "Design Tokens",
         "desc": "CSS custom properties, colors, typography."
       },
-      "rollback": { "title": "Rollback Guide", "desc": "Safe rollback procedures for production." },
-      "seo": { "title": "SEO Overview", "desc": "Search optimization strategy and guidelines." },
+      "rollback": {
+        "title": "Rollback Guide",
+        "desc": "Safe rollback procedures for production."
+      },
+      "seo": {
+        "title": "SEO Overview",
+        "desc": "Search optimization strategy and guidelines."
+      },
       "i18n": {
         "title": "Internationalization",
         "desc": "Multi-language support: EN, ES, FR, DE, PT, SW, ZH."
       },
-      "seo-de": { "title": "SEO — Deutsch", "desc": "German-language SEO strategy." },
-      "seo-es": { "title": "SEO — Español", "desc": "Spanish-language SEO strategy." },
-      "seo-fr": { "title": "SEO — Français", "desc": "French-language SEO strategy." },
-      "seo-pt": { "title": "SEO — Português", "desc": "Portuguese-language SEO strategy." },
-      "seo-sw": { "title": "SEO — Kiswahili", "desc": "Swahili-language SEO strategy." },
-      "seo-zh": { "title": "SEO — 中文", "desc": "Chinese-language SEO strategy." },
+      "seo-de": {
+        "title": "SEO — Deutsch",
+        "desc": "German-language SEO strategy."
+      },
+      "seo-es": {
+        "title": "SEO — Español",
+        "desc": "Spanish-language SEO strategy."
+      },
+      "seo-fr": {
+        "title": "SEO — Français",
+        "desc": "French-language SEO strategy."
+      },
+      "seo-pt": {
+        "title": "SEO — Português",
+        "desc": "Portuguese-language SEO strategy."
+      },
+      "seo-sw": {
+        "title": "SEO — Kiswahili",
+        "desc": "Swahili-language SEO strategy."
+      },
+      "seo-zh": {
+        "title": "SEO — 中文",
+        "desc": "Chinese-language SEO strategy."
+      },
       "kimi-handoff": {
         "title": "Kimi Handoff Log",
         "desc": "Session handoffs between agents and machines."
@@ -683,7 +720,11 @@
       "subtitle": "Browse ready-made templates for the documents you need to timestamp. No keys, no accounts, no commitment — just explore what Satohash can do. Every template generates a Bitcoin-anchored proof of existence."
     },
     "searchPlaceholder": "Search templates...",
-    "sort": { "default": "Default", "popular": "Most Popular", "alpha": "A-Z" },
+    "sort": {
+      "default": "Default",
+      "popular": "Most Popular",
+      "alpha": "A-Z"
+    },
     "allCategory": "Templates",
     "recentlyViewed": "Recently Viewed",
     "empty": {
@@ -691,7 +732,11 @@
       "subtitle": "Try a different search or category.",
       "reset": "Reset Filters"
     },
-    "badges": { "Popular": "Popular", "New": "New", "Legal-Grade": "Legal-Grade" },
+    "badges": {
+      "Popular": "Popular",
+      "New": "New",
+      "Legal-Grade": "Legal-Grade"
+    },
     "viewDetails": "View Details",
     "quickPreview": "Quick Preview",
     "copyLink": "Copy link",
@@ -893,7 +938,11 @@
       "proofCopied": "Proof copied!"
     },
     "statusVerified": "✓ Verified",
-    "statusPending": "⏳ Pending"
+    "statusPending": "⏳ Pending",
+    "validFingerprint": "Valid fingerprint",
+    "hashOnlyMessage": "Valid SHA-256 fingerprint. Bitcoin attestation not found in local vault — API or .ots file required for full proof.",
+    "localVault": "Loaded from your local vault on this device.",
+    "exportVc": "Export verifiable credential"
   },
   "footerPage": {
     "tagline": "The sovereign operating system for digital truth. Anchored to the Bitcoin network, we provide the ultimate cryptographic ledger for institutional provenance and forensic verification.",
@@ -985,5 +1034,119 @@
       "contribute": "Contribute",
       "github": "GitHub"
     }
+  },
+  "staticMode": {
+    "title": "Browser verification mode",
+    "body": "Hashing, vault, and OpenTimestamps stamping run in your browser via public calendars. Optional api.satohash.io adds hosted sync, OG cards, and fleet analytics.",
+    "trustLink": "Trust & compliance →",
+    "stampQueued": "Hash saved locally. Browser OTS will retry on sync — or stamp now via public calendars.",
+    "verifyStructural": "Structural .ots check passed. Full Bitcoin attestation: use browser verify or opentimestamps.org."
+  },
+  "proofTimeline": {
+    "hashed": "Hashed locally",
+    "submitted": "Submitted to calendar",
+    "pending": "Pending Bitcoin block",
+    "confirmed": "Confirmed on-chain",
+    "ariaLabel": "Proof lifecycle"
+  },
+  "stampPage": {
+    "motopassLoaded": "MotoPass hash loaded",
+    "motopassDesc": "Upload the matching file to complete stamping, or stamp hash via public calendars.",
+    "linkedHashReady": "MotoPass / linked hash ready — stamp to OpenTimestamps without re-uploading a file.",
+    "stampHashBtn": "Stamp hash via public calendars",
+    "step1Label": "Drop Your File",
+    "step1Desc": "Any format. Stays on your device — never uploaded.",
+    "step2Label": "We Hash It Locally",
+    "step2Desc": "A unique SHA-256 fingerprint is computed in your browser.",
+    "step3Label": "Bitcoin Timestamps It",
+    "step3Desc": "The fingerprint is permanently written to the blockchain.",
+    "takePhoto": "Take photo",
+    "chooseFile": "Choose file"
+  },
+  "trustPage": {
+    "backSecurity": "← Security overview",
+    "heroTitle": "Trust Center",
+    "heroSubtitle": "Zero-knowledge architecture, open-source auditability, and global legal compatibility for institutional provenance.",
+    "complianceTitle": "Legal & Regulatory Framework",
+    "securityLink": "Security deep-dive →",
+    "procurementTitle": "Procurement & diligence",
+    "procurementBody": "Download the executive pitch, security overview, and MotoPass integration guide for vendor review.",
+    "procurementCta": "View diligence pack",
+    "printGuide": "Print verification guide for officials"
+  },
+  "governmentPage": {
+    "backTrust": "← Trust Center",
+    "backGovernment": "← Government use",
+    "learnMore": "Learn more",
+    "readyStamp": "Ready to stamp?",
+    "readyStampDesc": "Use passport attestation templates or batch-hash an entire program roster.",
+    "stampNow": "Stamp now",
+    "batchHash": "Batch hash registry",
+    "procurementTitle": "Procurement one-pager",
+    "procurementBody": "Air-gapped hashing, data residency in-browser, chain-of-custody workflows, and MotoPass deep-links for passport programs."
+  },
+  "governmentUse": {
+    "title": "Government & Diplomatic Use",
+    "titleHighlight": "Diplomatic Use",
+    "subtitle": "Zero-knowledge timestamps for passports, national IDs, land titles, and distressed-asset programs. Documents never leave the device — only SHA-256 fingerprints reach OpenTimestamps calendars.",
+    "passport": {
+      "title": "Passport & travel programs",
+      "body": "MotoPass hashes application payloads client-side; Satohash anchors fingerprints to Bitcoin without uploading biometrics."
+    },
+    "distressed": {
+      "title": "Distressed sovereign assets",
+      "body": "Listings carry content hashes and optional .ots proofs for cross-border trade transparency."
+    },
+    "custody": {
+      "title": "Chain of custody",
+      "body": "Holder → witness → agency workflow with timestamped handoff records."
+    },
+    "admissibility": {
+      "title": "Evidence admissibility",
+      "body": "Jurisdiction matrix for hash-based evidence (UETA, eIDAS, UK, Seychelles)."
+    }
+  },
+  "motopassVerifyPage": {
+    "title": "Verify MotoPass application hash",
+    "subtitle": "Paste SHA-256 hashes from motopass.giveabit.io applications. Satohash validates format and links to independent verification.",
+    "placeholder": "One 64-character hex hash per line…",
+    "validate": "Validate hashes",
+    "publicVerify": "Public verify page",
+    "verifyTool": "Verify tool (?hash=)",
+    "completeStamp": "Complete stamp",
+    "toastNeedHash": "Paste at least one valid SHA-256 hash"
+  },
+  "batchHashPage": {
+    "title": "Batch hash registry",
+    "subtitle": "Register hundreds of passport or asset fingerprints locally. Export CSV for agency audit; stamp individually from vault when ready.",
+    "placeholder": "One SHA-256 per line…",
+    "register": "Register hashes",
+    "exportCsv": "Export CSV",
+    "importCsv": "Import CSV"
+  },
+  "chainOfCustodyPage": {
+    "title": "Chain of custody timestamp",
+    "subtitle": "Record holder, witness, and agency handoffs with Bitcoin-anchored hashes."
+  },
+  "evidenceAdmissibilityPage": {
+    "title": "Evidence admissibility guide",
+    "subtitle": "Jurisdiction matrix for hash-based evidence under UETA, eIDAS, UK, and cross-border law."
+  },
+  "distressedAssetPage": {
+    "title": "Distressed asset attestation",
+    "subtitle": "Hash listing metadata for sovereign asset trades. Pair with hosted .ots from MotoPass distressed listings.",
+    "stampListing": "Stamp listing hash",
+    "compareHosted": "Compare to hosted proof",
+    "hostedPlaceholder": "Hosted .ots URL on motopass or CDN"
+  },
+  "templateDetailPage": {
+    "notFound": "Template not found",
+    "loadError": "Could not load template",
+    "demoBadge": "Demo data"
+  },
+  "legalPages": {
+    "privacyTitle": "Privacy Policy",
+    "termsTitle": "Terms of Service",
+    "cryptoTitle": "Cryptocurrency Notice"
   }
 }

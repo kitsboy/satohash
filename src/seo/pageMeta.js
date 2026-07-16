@@ -353,38 +353,38 @@ export const pageMeta = {
   },
   templates: {
     en: {
-      title: 'Notary Templates — 14 Free Bitcoin-Ready Forms',
+      title: 'Notary Templates — 16 Free Bitcoin-Ready Forms',
       description:
-        'Browse 14 legal templates: NDAs, wills, leases, employment contracts. Pre-fill and anchor to Bitcoin instantly.'
+        'Browse 16 legal templates: NDAs, wills, leases, passport attestation, employment contracts. Pre-fill and anchor to Bitcoin instantly.'
     },
     es: {
-      title: 'Plantillas Notariales — 14 Formularios Gratis',
+      title: 'Plantillas Notariales — 16 Formularios Gratis',
       description:
-        'Explore 14 plantillas legales: NDAs, testamentos, arrendamientos, contratos laborales. Anclar a Bitcoin al instante.'
+        'Explore 16 plantillas legales: NDAs, testamentos, pasaportes, arrendamientos. Anclar a Bitcoin al instante.'
     },
     fr: {
-      title: 'Modèles Notariaux — 14 Formulaires Gratuits',
+      title: 'Modèles Notariaux — 16 Formulaires Gratuits',
       description:
-        'Parcourez 14 modèles juridiques : NDA, testaments, baux, contrats de travail. Ancrez sur Bitcoin instantanément.'
+        'Parcourez 16 modèles juridiques : NDA, testaments, passeports, baux. Ancrez sur Bitcoin instantanément.'
     },
     de: {
-      title: 'Notarvorlagen — 14 Kostenlose Bitcoin-Formulare',
+      title: 'Notarvorlagen — 16 Kostenlose Bitcoin-Formulare',
       description:
-        '14 Rechtsvorlagen: NDAs, Testamente, Mietverträge, Arbeitsverträge. Sofort auf Bitcoin verankern.'
+        '16 Rechtsvorlagen: NDAs, Testamente, Pässe, Mietverträge. Sofort auf Bitcoin verankern.'
     },
     pt: {
-      title: 'Modelos Notariais — 14 Formulários Gratuitos',
+      title: 'Modelos Notariais — 16 Formulários Gratuitos',
       description:
-        'Navegue 14 modelos legais: NDAs, testamentos, arrendamentos, contratos de trabalho. Ancore no Bitcoin instantaneamente.'
+        'Navegue 16 modelos legais: NDAs, testamentos, passaportes, arrendamentos. Ancore no Bitcoin instantaneamente.'
     },
     sw: {
-      title: 'Violezo vya Notari — Fomu 14 za Bure',
+      title: 'Violezo vya Notari — Fomu 16 za Bure',
       description:
-        'Vinjari violezo 14 vya kisheria: NDAs, matakwa, kukodisha, mikataba ya kazi. Funga kwenye Bitcoin mara moja.'
+        'Vinjari violezo 16 vya kisheria: NDAs, pasipoti, matakwa, kukodisha. Funga kwenye Bitcoin mara moja.'
     },
     zh: {
-      title: '公证模板 — 14 个免费表格',
-      description: '浏览 14 个法律模板：保密协议、遗嘱、租赁、雇佣合同。即时锚定到比特币。'
+      title: '公证模板 — 16 个免费表格',
+      description: '浏览 16 个法律模板：保密协议、护照证明、遗嘱、租赁。即时锚定到比特币。'
     }
   },
   identity: {
@@ -1268,6 +1268,35 @@ export const pageMeta = {
       title: 'Government & Diplomatic Document Timestamping',
       description:
         'Zero-knowledge Bitcoin timestamps for passports, national IDs, and distressed sovereign assets. MotoPass integration.'
+    },
+    es: {
+      title: 'Sellado Gubernamental y Diplomático',
+      description:
+        'Sellos Bitcoin de conocimiento cero para pasaportes, identidades y activos soberanos. Integración MotoPass.'
+    },
+    fr: {
+      title: 'Horodatage Gouvernemental et Diplomatique',
+      description:
+        'Horodatages zéro connaissance pour passeports et actifs souverains. Intégration MotoPass.'
+    },
+    de: {
+      title: 'Behördliche & Diplomatische Zeitstempel',
+      description:
+        'Zero-Knowledge-Bitcoin-Zeitstempel für Pässe und Staatsanlagen. MotoPass-Integration.'
+    },
+    pt: {
+      title: 'Carimbo Governamental e Diplomático',
+      description:
+        'Carimbos Bitcoin zero-conhecimento para passaportes e ativos soberanos. Integração MotoPass.'
+    },
+    sw: {
+      title: 'Muhuri wa Serikali na Kidiplomasia',
+      description:
+        'Mihuri ya Bitcoin ya ujuzi wa sifuri kwa pasipoti na mali za serikali. MotoPass.'
+    },
+    zh: {
+      title: '政府与外交文件时间戳',
+      description: '护照和主权资产的零知识比特币时间戳。MotoPass 集成。'
     }
   },
   motopassVerify: {
@@ -1275,6 +1304,30 @@ export const pageMeta = {
       title: 'Verify MotoPass Application Hash',
       description:
         'Validate SHA-256 fingerprints from motopass.giveabit.io and link to Satohash verification.'
+    },
+    es: {
+      title: 'Verificar Hash de Solicitud MotoPass',
+      description: 'Valide huellas SHA-256 de motopass.giveabit.io.'
+    },
+    fr: {
+      title: 'Vérifier Hash MotoPass',
+      description: 'Validez les empreintes SHA-256 de motopass.giveabit.io.'
+    },
+    de: {
+      title: 'MotoPass-Antrags-Hash prüfen',
+      description: 'SHA-256-Fingerabdrücke von motopass.giveabit.io validieren.'
+    },
+    pt: {
+      title: 'Verificar Hash MotoPass',
+      description: 'Valide fingerprints SHA-256 de motopass.giveabit.io.'
+    },
+    sw: {
+      title: 'Thibitisha Hash ya MotoPass',
+      description: 'Thibitisha fingerprints SHA-256 kutoka motopass.giveabit.io.'
+    },
+    zh: {
+      title: '验证 MotoPass 申请哈希',
+      description: '验证 motopass.giveabit.io 的 SHA-256 指纹。'
     }
   },
   batchHash: {
@@ -1282,26 +1335,138 @@ export const pageMeta = {
       title: 'Batch Hash Registry',
       description:
         'Register hundreds of document fingerprints locally and export CSV for agency audit.'
-    }
+    },
+    es: {
+      title: 'Registro por Lotes',
+      description: 'Registre cientos de huellas localmente y exporte CSV.'
+    },
+    fr: {
+      title: 'Registre par Lots',
+      description: 'Enregistrez des centaines de fingerprints et exportez CSV.'
+    },
+    de: {
+      title: 'Batch-Hash-Register',
+      description: 'Hunderte Fingerabdrücke lokal registrieren und CSV exportieren.'
+    },
+    pt: {
+      title: 'Registro em Lote',
+      description: 'Registre centenas de fingerprints e exporte CSV.'
+    },
+    sw: {
+      title: 'Rejista ya Batch Hash',
+      description: 'Sajili mamia ya fingerprints na hamisha CSV.'
+    },
+    zh: { title: '批量哈希登记', description: '本地登记数百个指纹并导出 CSV。' }
   },
   chainOfCustody: {
     en: {
       title: 'Chain of Custody Timestamp',
       description: 'Record holder, witness, and agency handoffs with Bitcoin-anchored hashes.'
-    }
+    },
+    es: {
+      title: 'Cadena de Custodia',
+      description: 'Registre entregas con hashes anclados a Bitcoin.'
+    },
+    fr: {
+      title: 'Chaîne de Custody',
+      description: 'Enregistrez les transferts avec hashes Bitcoin.'
+    },
+    de: {
+      title: 'Chain of Custody',
+      description: 'Übergaben mit Bitcoin-verankerten Hashes erfassen.'
+    },
+    pt: {
+      title: 'Cadeia de Custódia',
+      description: 'Registre handoffs com hashes ancorados no Bitcoin.'
+    },
+    sw: {
+      title: 'Mnyororo wa Usimamizi',
+      description: 'Rekodi uhamisho na hashes zilizofungwa kwenye Bitcoin.'
+    },
+    zh: { title: '保管链时间戳', description: '用比特币锚定哈希记录交接。' }
   },
   evidenceAdmissibility: {
     en: {
       title: 'Evidence Admissibility Guide',
       description:
         'Jurisdiction matrix for hash-based evidence under UETA, eIDAS, UK, and cross-border law.'
-    }
+    },
+    es: {
+      title: 'Guía de Admisibilidad',
+      description: 'Matriz jurisdiccional UETA, eIDAS, UK y derecho transfronterizo.'
+    },
+    fr: {
+      title: "Guide d'Admissibilité",
+      description: 'Matrice juridictionnelle UETA, eIDAS, UK.'
+    },
+    de: {
+      title: 'Beweisadmissibilität',
+      description: 'Jurisdiktionsmatrix UETA, eIDAS, UK und grenzüberschreitendes Recht.'
+    },
+    pt: { title: 'Guia de Admissibilidade', description: 'Matriz jurisdicional UETA, eIDAS, UK.' },
+    sw: {
+      title: 'Mwongozo wa Ukubalike',
+      description: 'Matrix ya UETA, eIDAS, UK na sheria za mipaka.'
+    },
+    zh: { title: '证据可采性指南', description: 'UETA、eIDAS、英国及跨境法律司法管辖区矩阵。' }
   },
   distressedAsset: {
     en: {
       title: 'Distressed Asset Attestation',
       description:
         'Hash sovereign asset listings and verify hosted OpenTimestamps proofs from MotoPass.'
+    },
+    es: {
+      title: 'Atestación de Activos',
+      description: 'Hashee listados soberanos y verifique .ots alojados de MotoPass.'
+    },
+    fr: {
+      title: "Attestation d'Actifs",
+      description: 'Hashez les listings souverains et vérifiez les .ots MotoPass.'
+    },
+    de: {
+      title: 'Distressed-Asset-Bescheinigung',
+      description: 'Hashen Sie Listings und verifizieren Sie gehostete MotoPass-.ots.'
+    },
+    pt: {
+      title: 'Atestação de Ativos',
+      description: 'Hash listagens soberanas e verifique .ots hospedados MotoPass.'
+    },
+    sw: {
+      title: 'Uthibitisho wa Mali',
+      description: 'Hash orodha za serikali na thibitisha .ots za MotoPass.'
+    },
+    zh: { title: '困境资产证明', description: '哈希主权资产列表并验证 MotoPass 托管的 .ots。' }
+  },
+  legalCrypto: {
+    en: {
+      title: 'Cryptocurrency & Blockchain Notice',
+      description:
+        'How Satohash uses Bitcoin and OpenTimestamps — no custody, no wallet required for basic stamping.'
+    },
+    es: {
+      title: 'Aviso de Criptomonedas',
+      description: 'Uso de Bitcoin y OpenTimestamps sin custodia de fondos.'
+    },
+    fr: {
+      title: 'Avis Cryptomonnaie',
+      description: 'Bitcoin et OpenTimestamps sans garde de portefeuille.'
+    },
+    de: {
+      title: 'Kryptowährungs-Hinweis',
+      description: 'Bitcoin und OpenTimestamps ohne Wallet-Pflicht.'
+    },
+    pt: {
+      title: 'Aviso de Criptomoeda',
+      description: 'Bitcoin e OpenTimestamps sem custódia de carteira.'
+    },
+    sw: {
+      title: 'Taarifa ya Crypto',
+      description: 'Bitcoin na OpenTimestamps bila uhifadhi wa pochi.'
+    },
+    zh: {
+      title: '加密货币声明',
+      description: 'Satohash 如何使用比特币和 OpenTimestamps，无需托管钱包。'
     }
   },
   notFound: {

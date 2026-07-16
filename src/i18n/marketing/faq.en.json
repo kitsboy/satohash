@@ -11,7 +11,8 @@
     "basics": "Basics",
     "technical": "Technical",
     "legal": "Legal",
-    "usage": "Usage"
+    "usage": "Usage",
+    "institutional": "Institutional"
   },
   "items": [
     {
@@ -97,6 +98,30 @@
       "category": "usage",
       "q": "What is the Satohash Snapper?",
       "a": "The Satohash Snapper is a browser extension that captures web page evidence. Take a snapshot of any webpage, and the extension stamps its hash and metadata to Bitcoin for verifiable proof of its state at that moment."
+    },
+    {
+      "id": "procurement",
+      "category": "institutional",
+      "q": "How do we procure Satohash for government use?",
+      "a": "Satohash runs as a static SPA on Cloudflare Pages with browser-only hashing. No document custody. Review our Trust Center, security overview, and MotoPass integration guide for diligence."
+    },
+    {
+      "id": "dataResidency",
+      "category": "institutional",
+      "q": "Where is data stored?",
+      "a": "Document bytes never leave the user device. Only SHA-256 hashes and optional .ots proofs are stored in localStorage or your API when deployed."
+    },
+    {
+      "id": "airGap",
+      "category": "institutional",
+      "q": "Can we use Satohash air-gapped?",
+      "a": "Yes. Hash files offline, transfer hashes via QR or CSV, and stamp via browser OTS calendars without api.satohash.io."
+    },
+    {
+      "id": "chainOfCustody",
+      "category": "institutional",
+      "q": "Does Satohash support chain of custody?",
+      "a": "Use /chain-of-custody to record holder, witness, and agency handoffs with Bitcoin-anchored hashes."
     }
   ],
   "empty": {

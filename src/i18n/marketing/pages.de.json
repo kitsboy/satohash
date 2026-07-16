@@ -295,7 +295,9 @@
         "diyOTS": "$0"
       }
     },
-    "cellValues": { "variableGas": "Variable Gasgebühren" },
+    "cellValues": {
+      "variableGas": "Variable Gasgebühren"
+    },
     "download": {
       "title": "Vollständiges Pitch Deck herunterladen",
       "subtitle": "Executive Summary als PDF mit Marktanalyse, Technologie-Deep-Dive und Roadmap.",
@@ -304,7 +306,9 @@
     }
   },
   "guidesPage": {
-    "nav": { "eyebrow": "Bildungsleitfäden" },
+    "nav": {
+      "eyebrow": "Bildungsleitfäden"
+    },
     "hero": {
       "title": "Verstehen Sie, wie",
       "titleHighlight": "Nachweise funktionieren",
@@ -617,13 +621,22 @@
         "title": "Architektur-Übersicht",
         "desc": "Vier-Ebenen-System: Proof, Identity, Settlement, Atlas."
       },
-      "pitch": { "title": "Produkt-Pitch", "desc": "Die Sovereign Provenance Mesh Story." },
+      "pitch": {
+        "title": "Produkt-Pitch",
+        "desc": "Die Sovereign Provenance Mesh Story."
+      },
       "executive-summary": {
         "title": "Executive Summary",
         "desc": "Business-One-Pager für Stakeholder."
       },
-      "marketing": { "title": "Marketing", "desc": "Positionierung, Kanäle, Voice und Assets." },
-      "financials": { "title": "Finanzen", "desc": "Kosten, Prognosen und Unit Economics." },
+      "marketing": {
+        "title": "Marketing",
+        "desc": "Positionierung, Kanäle, Voice und Assets."
+      },
+      "financials": {
+        "title": "Finanzen",
+        "desc": "Kosten, Prognosen und Unit Economics."
+      },
       "improvements-log": {
         "title": "Improvements Log",
         "desc": "Vollständiger 100-Punkte-Improvement-Tracker."
@@ -648,17 +661,38 @@
         "title": "Rollback-Anleitung",
         "desc": "Sichere Rollback-Verfahren für die Produktion."
       },
-      "seo": { "title": "SEO-Übersicht", "desc": "Suchoptimierungsstrategie und Richtlinien." },
+      "seo": {
+        "title": "SEO-Übersicht",
+        "desc": "Suchoptimierungsstrategie und Richtlinien."
+      },
       "i18n": {
         "title": "Internationalisierung",
         "desc": "Mehrsprachige Unterstützung: EN, ES, FR, DE, PT, SW, ZH."
       },
-      "seo-de": { "title": "SEO — Deutsch", "desc": "Deutschsprachige SEO-Strategie." },
-      "seo-es": { "title": "SEO — Español", "desc": "Spanischsprachige SEO-Strategie." },
-      "seo-fr": { "title": "SEO — Français", "desc": "Französischsprachige SEO-Strategie." },
-      "seo-pt": { "title": "SEO — Português", "desc": "Portugiesischsprachige SEO-Strategie." },
-      "seo-sw": { "title": "SEO — Kiswahili", "desc": "Swahili-Sprachige SEO-Strategie." },
-      "seo-zh": { "title": "SEO — 中文", "desc": "Chinesischsprachige SEO-Strategie." },
+      "seo-de": {
+        "title": "SEO — Deutsch",
+        "desc": "Deutschsprachige SEO-Strategie."
+      },
+      "seo-es": {
+        "title": "SEO — Español",
+        "desc": "Spanischsprachige SEO-Strategie."
+      },
+      "seo-fr": {
+        "title": "SEO — Français",
+        "desc": "Französischsprachige SEO-Strategie."
+      },
+      "seo-pt": {
+        "title": "SEO — Português",
+        "desc": "Portugiesischsprachige SEO-Strategie."
+      },
+      "seo-sw": {
+        "title": "SEO — Kiswahili",
+        "desc": "Swahili-Sprachige SEO-Strategie."
+      },
+      "seo-zh": {
+        "title": "SEO — 中文",
+        "desc": "Chinesischsprachige SEO-Strategie."
+      },
       "kimi-handoff": {
         "title": "Kimi Handoff Log",
         "desc": "Session-Handoffs zwischen Agenten und Maschinen."
@@ -686,7 +720,11 @@
       "subtitle": "Durchsuchen Sie fertige Vorlagen für die Dokumente, die Sie zeitstempeln müssen. Keine Keys, keine Konten, keine Verpflichtung — erkunden Sie einfach, was Satohash kann. Jede Vorlage erzeugt einen Bitcoin-verankerten Existenznachweis."
     },
     "searchPlaceholder": "Vorlagen suchen...",
-    "sort": { "default": "Standard", "popular": "Am beliebtesten", "alpha": "A-Z" },
+    "sort": {
+      "default": "Standard",
+      "popular": "Am beliebtesten",
+      "alpha": "A-Z"
+    },
     "allCategory": "Vorlagen",
     "recentlyViewed": "Zuletzt angesehen",
     "empty": {
@@ -694,7 +732,11 @@
       "subtitle": "Versuchen Sie eine andere Suche oder Kategorie.",
       "reset": "Filter zurücksetzen"
     },
-    "badges": { "Popular": "Beliebt", "New": "Neu", "Legal-Grade": "Rechtskonform" },
+    "badges": {
+      "Popular": "Beliebt",
+      "New": "Neu",
+      "Legal-Grade": "Rechtskonform"
+    },
     "viewDetails": "Details ansehen",
     "quickPreview": "Schnellvorschau",
     "copyLink": "Link kopieren",
@@ -988,5 +1030,80 @@
       "contribute": "Mitwirken",
       "github": "GitHub"
     }
+  },
+  "staticMode": {
+    "title": "Browser-Verifizierungsmodus",
+    "body": "Hashing, Tresor und OTS-Stempelung laufen im Browser über öffentliche Kalender.",
+    "trustLink": "Vertrauen & Compliance →",
+    "stampQueued": "Hash lokal gespeichert.",
+    "verifyStructural": "Strukturelle .ots-Prüfung bestanden."
+  },
+  "proofTimeline": {
+    "hashed": "Lokal gehasht",
+    "submitted": "An Kalender gesendet",
+    "pending": "Bitcoin-Block ausstehend",
+    "confirmed": "On-Chain bestätigt",
+    "ariaLabel": "Proof-Lebenszyklus"
+  },
+  "trustPage": {
+    "backSecurity": "← Sicherheitsübersicht",
+    "heroTitle": "Trust Center",
+    "heroSubtitle": "Zero-Knowledge-Architektur und globale Rechtskompatibilität.",
+    "complianceTitle": "Rechtsrahmen",
+    "securityLink": "Sicherheit im Detail →",
+    "procurementTitle": "Beschaffung",
+    "procurementBody": "Executive Pitch und MotoPass-Leitfaden herunterladen.",
+    "procurementCta": "Diligence-Paket",
+    "printGuide": "Verifizierungsleitfaden für Beamte"
+  },
+  "governmentPage": {
+    "backTrust": "← Trust Center",
+    "backGovernment": "← Behörden",
+    "learnMore": "Mehr erfahren",
+    "readyStamp": "Bereit zum Stempeln?",
+    "readyStampDesc": "Passvorlagen oder Batch-Hash nutzen.",
+    "stampNow": "Jetzt stempeln",
+    "batchHash": "Batch-Register",
+    "procurementTitle": "Beschaffungsübersicht",
+    "procurementBody": "Air-Gap-Hashing, Daten im Browser, MotoPass-Deep-Links."
+  },
+  "governmentUse": {
+    "title": "Behörden & Diplomatischer Einsatz",
+    "titleHighlight": "Diplomatisch",
+    "subtitle": "Zero-Knowledge-Zeitstempel für Pässe und Staatsanlagen.",
+    "passport": {
+      "title": "Reisepässe & Programme",
+      "body": "MotoPass hasht clientseitig; Satohash verankert auf Bitcoin."
+    },
+    "distressed": {
+      "title": "Distressed Assets",
+      "body": "Listings mit Content-Hashes und .ots."
+    },
+    "custody": {
+      "title": "Chain of Custody",
+      "body": "Inhaber → Zeuge → Behörde."
+    },
+    "admissibility": {
+      "title": "Beweisadmissibilität",
+      "body": "Matrix UETA, eIDAS, UK, Seychelles."
+    }
+  },
+  "motopassVerifyPage": {
+    "title": "MotoPass-Hash prüfen",
+    "subtitle": "SHA-256-Hashes von motopass.giveabit.io einfügen.",
+    "placeholder": "Ein 64-Zeichen-Hex pro Zeile…",
+    "validate": "Hashes prüfen",
+    "publicVerify": "Öffentliche Seite",
+    "verifyTool": "Tool (?hash=)",
+    "completeStamp": "Stempel abschließen",
+    "toastNeedHash": "Mindestens einen gültigen Hash einfügen"
+  },
+  "batchHashPage": {
+    "title": "Batch-Hash-Register",
+    "subtitle": "Hunderte Fingerabdrücke lokal registrieren.",
+    "placeholder": "Ein SHA-256 pro Zeile…",
+    "register": "Registrieren",
+    "exportCsv": "CSV exportieren",
+    "importCsv": "CSV importieren"
   }
 }

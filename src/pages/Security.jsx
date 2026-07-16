@@ -40,12 +40,20 @@ export default function Security() {
     <div className="min-h-screen bg-[var(--bg-primary)]">
       <header className="border-b border-[var(--border)] bg-[var(--bg-navbar)]/95 px-6 py-4 backdrop-blur-md">
         <div className="mx-auto flex max-w-4xl items-center gap-4">
-          <Link
-            to="/trust"
-            className="flex min-h-[44px] items-center gap-2 text-sm font-bold text-[var(--text-secondary)] hover:text-[var(--accent-gold)]"
-          >
-            <ArrowLeft size={16} /> {t('common.trustCenter')}
-          </Link>
+          <div className="flex flex-wrap items-center gap-4">
+            <Link
+              to="/trust"
+              className="flex min-h-[44px] items-center gap-2 text-sm font-bold text-[var(--text-secondary)] hover:text-[var(--accent-gold)]"
+            >
+              <ArrowLeft size={16} /> {t('common.trustCenter')}
+            </Link>
+            <Link
+              to="/government"
+              className="text-sm font-bold text-[var(--text-secondary)] hover:text-[var(--accent-gold)]"
+            >
+              Government →
+            </Link>
+          </div>
         </div>
       </header>
 

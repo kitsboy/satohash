@@ -1,9 +1,7 @@
-const STEPS = [
-  { key: 'hashed', label: 'Hashed locally', icon: '🔒' },
-  { key: 'submitted', label: 'Submitted to calendar', icon: '📡' },
-  { key: 'pending', label: 'Pending Bitcoin block', icon: '⏳' },
-  { key: 'confirmed', label: 'Confirmed on-chain', icon: '✓' }
-]
+import { useTranslation } from 'react-i18next'
+
+const STEP_KEYS = ['hashed', 'submitted', 'pending', 'confirmed']
+const STEP_ICONS = ['🔒', '📡', '⏳', '✓']
 
 function stepIndex(status, hasOts) {
   if (status === 'confirmed') return 3
@@ -13,12 +11,13 @@ function stepIndex(status, hasOts) {
 }
 
 export default function ProofTimeline({ status = 'pending', hasOts = false, blockHeight }) {
+  const { t } = useTranslation()
   const active = stepIndex(status, hasOts)
   return (
-    <ol className="grid grid-cols-2 gap-3 sm:grid-cols-4" aria-label="Proof lifecycle">
-      {STEPS.map((step, i) => (
+    <ol className="grid grid-cols-2 gap-3 sm:grid-cols-4" aria-label={t('proofTimeline.ariaLabel')}>
+      {STEP_KEYS.map((key, i) => (
         <li
-          key={step.key}
+          key={key}
           className="rounded-xl border px-3 py-3 text-center"
           style={{
             borderColor: i <= active ? 'var(--accent-gold)' : 'var(--border)',
@@ -29,14 +28,14 @@ export default function ProofTimeline({ status = 'pending', hasOts = false, bloc
             opacity: i <= active ? 1 : 0.5
           }}
         >
-          <div className="text-lg">{step.icon}</div>
+          <div className="text-lg">{STEP_ICONS[i]}</div>
           <p
             className="mt-1 text-[9px] font-black tracking-widest uppercase"
             style={{ color: 'var(--text-secondary)' }}
           >
-            {step.label}
+            {t(`proofTimeline.${key}`)}
           </p>
-          {step.key === 'confirmed' && blockHeight && i <= active && (
+          {key === 'confirmed' && blockHeight && i <= active && (
             <p className="mt-1 font-mono text-[10px]" style={{ color: 'var(--accent-success)' }}>
               #{blockHeight}
             </p>

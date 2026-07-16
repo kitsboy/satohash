@@ -295,7 +295,9 @@
         "diyOTS": "$0"
       }
     },
-    "cellValues": { "variableGas": "Gas inayobadilika" },
+    "cellValues": {
+      "variableGas": "Gas inayobadilika"
+    },
     "download": {
       "title": "Pakua Pitch Deck Kamili",
       "subtitle": "PDF ya muhtasari wa uongozi na uchambuzi wa soko, uchunguzi wa kina wa teknolojia, na ramani ya barabara.",
@@ -304,7 +306,9 @@
     }
   },
   "guidesPage": {
-    "nav": { "eyebrow": "Miongozo ya Elimu" },
+    "nav": {
+      "eyebrow": "Miongozo ya Elimu"
+    },
     "hero": {
       "title": "Jifunze Jinsi",
       "titleHighlight": "Uthibitisho Unavyofanya Kazi",
@@ -617,13 +621,22 @@
         "title": "Muhtasari wa Usanifu",
         "desc": "Mfumo wa ndege nne: Proof, Identity, Settlement, Atlas."
       },
-      "pitch": { "title": "Pitch ya Bidhaa", "desc": "Hadithi ya Sovereign Provenance Mesh." },
+      "pitch": {
+        "title": "Pitch ya Bidhaa",
+        "desc": "Hadithi ya Sovereign Provenance Mesh."
+      },
       "executive-summary": {
         "title": "Muhtasari wa Uongozi",
         "desc": "Ukurasa mmoja wa biashara kwa wadau."
       },
-      "marketing": { "title": "Masoko", "desc": "Nafasi, njia, sauti, na mali." },
-      "financials": { "title": "Fedha", "desc": "Gharama, makadirio, na uchumi wa kitengo." },
+      "marketing": {
+        "title": "Masoko",
+        "desc": "Nafasi, njia, sauti, na mali."
+      },
+      "financials": {
+        "title": "Fedha",
+        "desc": "Gharama, makadirio, na uchumi wa kitengo."
+      },
       "improvements-log": {
         "title": "Kumbukumbu ya Maboresho",
         "desc": "Kifuatiliaji kamili cha maboresho 100."
@@ -652,13 +665,34 @@
         "title": "Muhtasari wa SEO",
         "desc": "Mkakati na miongozo ya uboreshaji wa utafutaji."
       },
-      "i18n": { "title": "Utaifa", "desc": "Msaada wa lugha nyingi: EN, ES, FR, DE, PT, SW, ZH." },
-      "seo-de": { "title": "SEO — Deutsch", "desc": "Mkakati wa SEO wa Kijerumani." },
-      "seo-es": { "title": "SEO — Español", "desc": "Mkakati wa SEO wa Kihispania." },
-      "seo-fr": { "title": "SEO — Français", "desc": "Mkakati wa SEO wa Kifaransa." },
-      "seo-pt": { "title": "SEO — Português", "desc": "Mkakati wa SEO wa Kireno." },
-      "seo-sw": { "title": "SEO — Kiswahili", "desc": "Mkakati wa SEO wa Kiswahili." },
-      "seo-zh": { "title": "SEO — 中文", "desc": "Mkakati wa SEO wa Kichina." },
+      "i18n": {
+        "title": "Utaifa",
+        "desc": "Msaada wa lugha nyingi: EN, ES, FR, DE, PT, SW, ZH."
+      },
+      "seo-de": {
+        "title": "SEO — Deutsch",
+        "desc": "Mkakati wa SEO wa Kijerumani."
+      },
+      "seo-es": {
+        "title": "SEO — Español",
+        "desc": "Mkakati wa SEO wa Kihispania."
+      },
+      "seo-fr": {
+        "title": "SEO — Français",
+        "desc": "Mkakati wa SEO wa Kifaransa."
+      },
+      "seo-pt": {
+        "title": "SEO — Português",
+        "desc": "Mkakati wa SEO wa Kireno."
+      },
+      "seo-sw": {
+        "title": "SEO — Kiswahili",
+        "desc": "Mkakati wa SEO wa Kiswahili."
+      },
+      "seo-zh": {
+        "title": "SEO — 中文",
+        "desc": "Mkakati wa SEO wa Kichina."
+      },
       "kimi-handoff": {
         "title": "Kumbukumbu ya Uhamishaji wa Kimi",
         "desc": "Uhamishaji wa kikao kati ya mawakala na mashine."
@@ -686,7 +720,11 @@
       "subtitle": "Vinjari violezo tayari kwa hati unazohitaji kuweka muhuri wa muda. Hakuna funguo, hakuna akaunti, hakuna kujitolea — chunguza tu kile Satohash inaweza kufanya. Kiolezo kila kimoja kinazalisha uthibitisho wa kuwepo unaounganishwa na Bitcoin."
     },
     "searchPlaceholder": "Tafuta violezo...",
-    "sort": { "default": "Chaguo-msingi", "popular": "Inayopendwa Zaidi", "alpha": "A-Z" },
+    "sort": {
+      "default": "Chaguo-msingi",
+      "popular": "Inayopendwa Zaidi",
+      "alpha": "A-Z"
+    },
     "allCategory": "Violezo",
     "recentlyViewed": "Iliyotazamwa Hivi Karibuni",
     "empty": {
@@ -694,7 +732,11 @@
       "subtitle": "Jaribu utafutaji au kategoria tofauti.",
       "reset": "Weka Upya Vichujio"
     },
-    "badges": { "Popular": "Inayopendwa", "New": "Mpya", "Legal-Grade": "Kiwango cha Kisheria" },
+    "badges": {
+      "Popular": "Inayopendwa",
+      "New": "Mpya",
+      "Legal-Grade": "Kiwango cha Kisheria"
+    },
     "viewDetails": "Angalia Maelezo",
     "quickPreview": "Hakiki ya Haraka",
     "copyLink": "Nakili kiungo",
@@ -988,5 +1030,80 @@
       "contribute": "Changia",
       "github": "GitHub"
     }
+  },
+  "staticMode": {
+    "title": "Hali ya uthibitishaji kwenye kivinjari",
+    "body": "Hashing, vault na OTS hufanyika kwenye kivinjari kupitia kalenda za umma.",
+    "trustLink": "Uaminifu na utii →",
+    "stampQueued": "Hash imehifadhiwa ndani.",
+    "verifyStructural": "Ukaguzi wa muundo wa .ots umepita."
+  },
+  "proofTimeline": {
+    "hashed": "Ime-hash ndani",
+    "submitted": "Imewasilishwa kwenye kalenda",
+    "pending": "Block ya Bitcoin inasubiri",
+    "confirmed": "Imethibitishwa on-chain",
+    "ariaLabel": "Mzunguko wa uthibitisho"
+  },
+  "trustPage": {
+    "backSecurity": "← Muhtasari wa usalama",
+    "heroTitle": "Kituo cha Uaminifu",
+    "heroSubtitle": "Usanifu wa ujuzi wa sifuri na utangamano wa kisheria.",
+    "complianceTitle": "Mfumo wa kisheria",
+    "securityLink": "Usalama kwa kina →",
+    "procurementTitle": "Ununuzi",
+    "procurementBody": "Pakua pitch na mwongozo wa MotoPass.",
+    "procurementCta": "Kifurushi cha diligence",
+    "printGuide": "Mwongozo wa wakuu wa mpaka"
+  },
+  "governmentPage": {
+    "backTrust": "← Kituo cha Uaminifu",
+    "backGovernment": "← Matumizi ya serikali",
+    "learnMore": "Jifunze zaidi",
+    "readyStamp": "Tayari kuhifadhi?",
+    "readyStampDesc": "Violezo vya pasipoti au batch hash.",
+    "stampNow": "Hifadhi sasa",
+    "batchHash": "Rejista ya batch",
+    "procurementTitle": "Muhtasari wa ununuzi",
+    "procurementBody": "Hashing air-gap, data kwenye kivinjari, MotoPass."
+  },
+  "governmentUse": {
+    "title": "Matumizi ya Serikali na Kidiplomasia",
+    "titleHighlight": "Kidiplomasia",
+    "subtitle": "Muhuri wa ujuzi wa sifuri kwa pasipoti na mali za serikali.",
+    "passport": {
+      "title": "Pasipoti na safari",
+      "body": "MotoPass ina-hash upande wa mteja; Satohash inafunga kwenye Bitcoin."
+    },
+    "distressed": {
+      "title": "Mali distressed",
+      "body": "Orodha zenye hashes na .ots."
+    },
+    "custody": {
+      "title": "Mnyororo wa usimamizi",
+      "body": "Mmiliki → shahidi → wakala."
+    },
+    "admissibility": {
+      "title": "Ukubalike wa ushahidi",
+      "body": "Matrix UETA, eIDAS, UK, Seychelles."
+    }
+  },
+  "motopassVerifyPage": {
+    "title": "Thibitisha hash ya MotoPass",
+    "subtitle": "Bandika hashes SHA-256 kutoka motopass.giveabit.io.",
+    "placeholder": "Hash hex moja kwa kila mstari…",
+    "validate": "Thibitisha",
+    "publicVerify": "Ukurasa wa umma",
+    "verifyTool": "Zana (?hash=)",
+    "completeStamp": "Kamilisha",
+    "toastNeedHash": "Bandika angalau hash moja halali"
+  },
+  "batchHashPage": {
+    "title": "Rejista ya batch hash",
+    "subtitle": "Sajili mamia ya fingerprints ndani.",
+    "placeholder": "SHA-256 moja kwa mstari…",
+    "register": "Sajili",
+    "exportCsv": "Hamisha CSV",
+    "importCsv": "Ingiza CSV"
   }
 }

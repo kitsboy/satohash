@@ -113,7 +113,12 @@
           "premium": "yes",
           "enterprise": "yes"
         },
-        "apiAccess": { "label": "API 访问", "free": "dash", "premium": "yes", "enterprise": "yes" },
+        "apiAccess": {
+          "label": "API 访问",
+          "free": "dash",
+          "premium": "yes",
+          "enterprise": "yes"
+        },
         "webhooks": {
           "label": "Webhook 通知",
           "free": "dash",
@@ -132,7 +137,12 @@
           "premium": "dash",
           "enterprise": "yes"
         },
-        "sla": { "label": "SLA 保障", "free": "dash", "premium": "dash", "enterprise": "sla99" },
+        "sla": {
+          "label": "SLA 保障",
+          "free": "dash",
+          "premium": "dash",
+          "enterprise": "sla99"
+        },
         "onPremise": {
           "label": "本地部署",
           "free": "dash",
@@ -285,7 +295,9 @@
         "diyOTS": "$0"
       }
     },
-    "cellValues": { "variableGas": "Gas 费用不定" },
+    "cellValues": {
+      "variableGas": "Gas 费用不定"
+    },
     "download": {
       "title": "下载完整 Pitch Deck",
       "subtitle": "包含市场分析、技术深度解读和路线图的执行摘要 PDF。",
@@ -294,7 +306,9 @@
     }
   },
   "guidesPage": {
-    "nav": { "eyebrow": "教育指南" },
+    "nav": {
+      "eyebrow": "教育指南"
+    },
     "hero": {
       "title": "了解",
       "titleHighlight": "证明如何运作",
@@ -585,31 +599,94 @@
       "operations": "运营与交接"
     },
     "docs": {
-      "quickstart": { "title": "快速入门指南", "desc": "60 秒内为您的第一份文档加盖时间戳。" },
-      "mission": { "title": "使命与价值观", "desc": "Satohash 为何存在，我们坚持什么。" },
+      "quickstart": {
+        "title": "快速入门指南",
+        "desc": "60 秒内为您的第一份文档加盖时间戳。"
+      },
+      "mission": {
+        "title": "使命与价值观",
+        "desc": "Satohash 为何存在，我们坚持什么。"
+      },
       "architecture": {
         "title": "架构概览",
         "desc": "四平面系统：Proof、Identity、Settlement、Atlas。"
       },
-      "pitch": { "title": "产品 Pitch", "desc": "Sovereign Provenance Mesh 故事。" },
-      "executive-summary": { "title": "执行摘要", "desc": "面向利益相关者的业务一页纸。" },
-      "marketing": { "title": "营销", "desc": "定位、渠道、语调和资产。" },
-      "financials": { "title": "财务", "desc": "成本、预测和单位经济学。" },
-      "improvements-log": { "title": "改进日志", "desc": "完整的 100 项改进追踪器。" },
-      "ots_setup": { "title": "OTS 设置指南", "desc": "配置 OpenTimestamps 日历和验证。" },
-      "deploy-playbook": { "title": "部署手册", "desc": "适用于所有环境的生产部署指南。" },
-      "design-context": { "title": "设计背景", "desc": "设计系统理念与决策。" },
-      "design-tokens": { "title": "设计令牌", "desc": "CSS 自定义属性、颜色、排版。" },
-      "rollback": { "title": "回滚指南", "desc": "生产环境安全回滚流程。" },
-      "seo": { "title": "SEO 概览", "desc": "搜索优化策略与指南。" },
-      "i18n": { "title": "国际化", "desc": "多语言支持：EN、ES、FR、DE、PT、SW、ZH。" },
-      "seo-de": { "title": "SEO — Deutsch", "desc": "德语 SEO 策略。" },
-      "seo-es": { "title": "SEO — Español", "desc": "西班牙语 SEO 策略。" },
-      "seo-fr": { "title": "SEO — Français", "desc": "法语 SEO 策略。" },
-      "seo-pt": { "title": "SEO — Português", "desc": "葡萄牙语 SEO 策略。" },
-      "seo-sw": { "title": "SEO — Kiswahili", "desc": "斯瓦希里语 SEO 策略。" },
-      "seo-zh": { "title": "SEO — 中文", "desc": "中文 SEO 策略。" },
-      "kimi-handoff": { "title": "Kimi 交接日志", "desc": "代理与机器之间的会话交接。" }
+      "pitch": {
+        "title": "产品 Pitch",
+        "desc": "Sovereign Provenance Mesh 故事。"
+      },
+      "executive-summary": {
+        "title": "执行摘要",
+        "desc": "面向利益相关者的业务一页纸。"
+      },
+      "marketing": {
+        "title": "营销",
+        "desc": "定位、渠道、语调和资产。"
+      },
+      "financials": {
+        "title": "财务",
+        "desc": "成本、预测和单位经济学。"
+      },
+      "improvements-log": {
+        "title": "改进日志",
+        "desc": "完整的 100 项改进追踪器。"
+      },
+      "ots_setup": {
+        "title": "OTS 设置指南",
+        "desc": "配置 OpenTimestamps 日历和验证。"
+      },
+      "deploy-playbook": {
+        "title": "部署手册",
+        "desc": "适用于所有环境的生产部署指南。"
+      },
+      "design-context": {
+        "title": "设计背景",
+        "desc": "设计系统理念与决策。"
+      },
+      "design-tokens": {
+        "title": "设计令牌",
+        "desc": "CSS 自定义属性、颜色、排版。"
+      },
+      "rollback": {
+        "title": "回滚指南",
+        "desc": "生产环境安全回滚流程。"
+      },
+      "seo": {
+        "title": "SEO 概览",
+        "desc": "搜索优化策略与指南。"
+      },
+      "i18n": {
+        "title": "国际化",
+        "desc": "多语言支持：EN、ES、FR、DE、PT、SW、ZH。"
+      },
+      "seo-de": {
+        "title": "SEO — Deutsch",
+        "desc": "德语 SEO 策略。"
+      },
+      "seo-es": {
+        "title": "SEO — Español",
+        "desc": "西班牙语 SEO 策略。"
+      },
+      "seo-fr": {
+        "title": "SEO — Français",
+        "desc": "法语 SEO 策略。"
+      },
+      "seo-pt": {
+        "title": "SEO — Português",
+        "desc": "葡萄牙语 SEO 策略。"
+      },
+      "seo-sw": {
+        "title": "SEO — Kiswahili",
+        "desc": "斯瓦希里语 SEO 策略。"
+      },
+      "seo-zh": {
+        "title": "SEO — 中文",
+        "desc": "中文 SEO 策略。"
+      },
+      "kimi-handoff": {
+        "title": "Kimi 交接日志",
+        "desc": "代理与机器之间的会话交接。"
+      }
     },
     "quickLinks": {
       "developerApi": "开发者 API",
@@ -633,7 +710,11 @@
       "subtitle": "浏览为您需要加盖时间戳的文档准备的现成模板。无需密钥、无需账户、无需承诺——只需探索 Satohash 能做什么。每个模板都会生成 Bitcoin 锚定存在证明。"
     },
     "searchPlaceholder": "搜索模板...",
-    "sort": { "default": "默认", "popular": "最受欢迎", "alpha": "A-Z" },
+    "sort": {
+      "default": "默认",
+      "popular": "最受欢迎",
+      "alpha": "A-Z"
+    },
     "allCategory": "模板",
     "recentlyViewed": "最近查看",
     "empty": {
@@ -641,7 +722,11 @@
       "subtitle": "请尝试其他搜索词或分类。",
       "reset": "重置筛选"
     },
-    "badges": { "Popular": "热门", "New": "新", "Legal-Grade": "法律级" },
+    "badges": {
+      "Popular": "热门",
+      "New": "新",
+      "Legal-Grade": "法律级"
+    },
     "viewDetails": "查看详情",
     "quickPreview": "快速预览",
     "copyLink": "复制链接",
@@ -935,5 +1020,80 @@
       "contribute": "贡献",
       "github": "GitHub"
     }
+  },
+  "staticMode": {
+    "title": "浏览器验证模式",
+    "body": "哈希、保险库和 OTS 盖章通过公共日历在浏览器中运行。",
+    "trustLink": "信任与合规 →",
+    "stampQueued": "哈希已本地保存。",
+    "verifyStructural": "结构性 .ots 检查通过。"
+  },
+  "proofTimeline": {
+    "hashed": "本地哈希",
+    "submitted": "已提交日历",
+    "pending": "等待比特币区块",
+    "confirmed": "链上确认",
+    "ariaLabel": "证明生命周期"
+  },
+  "trustPage": {
+    "backSecurity": "← 安全概览",
+    "heroTitle": "信任中心",
+    "heroSubtitle": "零知识架构与全球法律兼容性。",
+    "complianceTitle": "法律与监管框架",
+    "securityLink": "安全深度解读 →",
+    "procurementTitle": "采购与尽职调查",
+    "procurementBody": "下载执行推介和 MotoPass 集成指南。",
+    "procurementCta": "查看尽职调查包",
+    "printGuide": "边境官员验证指南"
+  },
+  "governmentPage": {
+    "backTrust": "← 信任中心",
+    "backGovernment": "← 政府用途",
+    "learnMore": "了解更多",
+    "readyStamp": "准备盖章？",
+    "readyStampDesc": "使用护照模板或批量哈希。",
+    "stampNow": "立即盖章",
+    "batchHash": "批量哈希登记",
+    "procurementTitle": "采购一页纸",
+    "procurementBody": "气隙哈希、浏览器内数据驻留、MotoPass 深度链接。"
+  },
+  "governmentUse": {
+    "title": "政府与外交用途",
+    "titleHighlight": "外交用途",
+    "subtitle": "护照和主权资产的零知识时间戳。文件永不离开设备。",
+    "passport": {
+      "title": "护照与旅行项目",
+      "body": "MotoPass 客户端哈希；Satohash 锚定到比特币。"
+    },
+    "distressed": {
+      "title": "困境资产",
+      "body": "列表含内容哈希和 .ots 证明。"
+    },
+    "custody": {
+      "title": "保管链",
+      "body": "持有人 → 见证人 → 机构。"
+    },
+    "admissibility": {
+      "title": "证据可采性",
+      "body": "UETA、eIDAS、英国、塞舌尔矩阵。"
+    }
+  },
+  "motopassVerifyPage": {
+    "title": "验证 MotoPass 申请哈希",
+    "subtitle": "粘贴 motopass.giveabit.io 的 SHA-256 哈希。",
+    "placeholder": "每行一个 64 字符十六进制哈希…",
+    "validate": "验证哈希",
+    "publicVerify": "公开验证页",
+    "verifyTool": "工具 (?hash=)",
+    "completeStamp": "完成盖章",
+    "toastNeedHash": "请粘贴至少一个有效哈希"
+  },
+  "batchHashPage": {
+    "title": "批量哈希登记",
+    "subtitle": "本地登记数百个指纹。导出 CSV 供审计。",
+    "placeholder": "每行一个 SHA-256…",
+    "register": "登记哈希",
+    "exportCsv": "导出 CSV",
+    "importCsv": "导入 CSV"
   }
 }

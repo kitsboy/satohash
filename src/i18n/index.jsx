@@ -1000,8 +1000,12 @@ export function I18nProvider({ children }) {
     return () => window.removeEventListener('popstate', onPopState)
   }, [applyLang])
 
-  const t = (section, key) =>
-    translations[lang]?.[section]?.[key] ?? translations.en?.[section]?.[key] ?? key
+  const t = (section, key) => {
+    const i18nKey = `${section}.${key}`
+    const fromI18n = i18n.t(i18nKey, { defaultValue: '' })
+    if (fromI18n && fromI18n !== i18nKey) return fromI18n
+    return translations[lang]?.[section]?.[key] ?? translations.en?.[section]?.[key] ?? key
+  }
 
   const dir = getLanguageMeta(lang).dir
 

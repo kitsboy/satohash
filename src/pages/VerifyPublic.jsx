@@ -10,7 +10,7 @@ import usePageMeta from '../hooks/usePageMeta'
 import { getApiUrl } from '../config/constants'
 import { isSha256Hex, normalizeSha256 } from '../utils/hashUtils'
 import { findStampByHashOrId, localRecordToProof } from '../utils/vaultLocal'
-import { isStaticOnlyMode, STATIC_MODE_COPY } from '../utils/staticMode'
+import { isStaticOnlyMode } from '../utils/staticMode'
 import ProofTimeline from '../components/ProofTimeline'
 import { downloadVerifiableCredential } from '../utils/verifiableCredential'
 
@@ -127,7 +127,7 @@ export default function VerifyPublic() {
 
   return (
     <div
-      className="min-h-screen pb-8"
+      className="verify-public-page min-h-screen pb-8 print:bg-white print:text-black"
       style={{ background: 'var(--bg-primary)', color: 'var(--text-primary)' }}
     >
       {/* Minimal back-link nav */}
@@ -206,10 +206,10 @@ export default function VerifyPublic() {
               {proof.source === 'hash-only'
                 ? proof.message
                 : proof.queued
-                  ? STATIC_MODE_COPY.stampQueued
-                  : 'Loaded from your local vault on this device.'}
+                  ? t('staticMode.stampQueued')
+                  : t('verifyPublicPage.localVault')}
               {isStaticOnlyMode() && (
-                <span className="mt-1 block text-[10px] opacity-80">{STATIC_MODE_COPY.body}</span>
+                <span className="mt-1 block text-[10px] opacity-80">{t('staticMode.body')}</span>
               )}
             </div>
           )}
@@ -233,7 +233,7 @@ export default function VerifyPublic() {
             </div>
             <h1 className="text-2xl font-black tracking-tight">
               {proof.source === 'hash-only'
-                ? 'Valid fingerprint'
+                ? t('verifyPublicPage.validFingerprint')
                 : proof.status === 'confirmed'
                   ? t('verifyPublicPage.verified')
                   : t('verifyPublicPage.pending')}
@@ -364,7 +364,7 @@ export default function VerifyPublic() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="grid grid-cols-2 gap-3"
+            className="grid grid-cols-1 gap-3 sm:grid-cols-2"
           >
             <button
               onClick={() => {

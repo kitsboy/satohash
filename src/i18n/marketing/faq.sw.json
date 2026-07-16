@@ -11,7 +11,8 @@
     "basics": "Misingi",
     "technical": "Kiufundi",
     "legal": "Kisheria",
-    "usage": "Matumizi"
+    "usage": "Matumizi",
+    "institutional": "Taasisi"
   },
   "items": [
     {
@@ -97,6 +98,30 @@
       "category": "usage",
       "q": "Satohash Snapper ni nini?",
       "a": "Satohash Snapper ni kiendelezi cha kivinjari kinachonasa ushahidi wa kurasa za wavuti. Piga picha ya ukurasa wowote, na kiendelezi kinaweka muhuri wa hash na metadata yake kwenye Bitcoin kwa uthibitisho unaoweza kuthibitishwa wa hali yake wakati huo."
+    },
+    {
+      "id": "procurement",
+      "category": "institutional",
+      "q": "Ununuzi kwa serikali?",
+      "a": "SPA tuli, hashing kwenye kivinjari, hakuna uhifadhi wa hati."
+    },
+    {
+      "id": "dataResidency",
+      "category": "institutional",
+      "q": "Data iko wapi?",
+      "a": "Faili haziondoki kwenye kifaa."
+    },
+    {
+      "id": "airGap",
+      "category": "institutional",
+      "q": "Air-gap?",
+      "a": "Ndiyo, hash nje ya mtandao na kalenda OTS."
+    },
+    {
+      "id": "chainOfCustody",
+      "category": "institutional",
+      "q": "Mnyororo wa usimamizi?",
+      "a": "Tumia /chain-of-custody kwa uhamisho."
     }
   ],
   "empty": {

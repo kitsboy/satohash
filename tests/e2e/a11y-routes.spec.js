@@ -1,7 +1,18 @@
 import { test, expect } from '@playwright/test'
 import AxeBuilder from '@axe-core/playwright'
 
-const PUBLIC_ROUTES = ['/', '/faq', '/templates', '/pricing', '/access']
+const PUBLIC_ROUTES = [
+  '/',
+  '/faq',
+  '/templates',
+  '/pricing',
+  '/access',
+  '/government',
+  '/stamp',
+  '/security',
+  '/trust',
+  '/verify'
+]
 
 test.describe('axe-core a11y smoke', () => {
   for (const path of PUBLIC_ROUTES) {

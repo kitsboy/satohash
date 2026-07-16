@@ -959,3 +959,16 @@
     min-height: 44px;
   }
 }
+
+@media print {
+  .verify-public-page {
+    padding-top: 0 !important;
+    background: white !important;
+    color: black !important;
+  }
+  .verify-public-page nav,
+  .verify-public-page footer,
+  .print\\:hidden {
+    display: none !important;
+  }
+}

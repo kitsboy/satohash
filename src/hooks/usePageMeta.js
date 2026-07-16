@@ -69,5 +69,56 @@ export default function usePageMeta({ page, title, description, image, url }) {
       setLink('alternate', `${base}${path}?lang=${code}`, HREFLANG[code])
     })
     setLink('alternate', `${base}${path}`, 'x-default')
+
+    // Per-route JSON-LD (supplements index.html @graph)
+    const schemaId = 'satohash-route-schema'
+    let schemaEl = document.getElementById(schemaId)
+    if (!schemaEl) {
+      schemaEl = document.createElement('script')
+      schemaEl.id = schemaId
+      schemaEl.type = 'application/ld+json'
+      document.head.appendChild(schemaEl)
+    }
+    const graph = [
+      {
+        '@type': 'WebPage',
+        '@id': `${pageUrl}#webpage`,
+        url: pageUrl,
+        name: fullTitle,
+        description: desc,
+        isPartOf: { '@id': 'https://satohash.io/#website' }
+      }
+    ]
+    if (page === 'pricing') {
+      graph.push({
+        '@type': 'Product',
+        name: 'Satohash Pro',
+        description: desc,
+        offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' }
+      })
+    }
+    if (page === 'faq') {
+      graph.push({
+        '@type': 'FAQPage',
+        mainEntity: [
+          {
+            '@type': 'Question',
+            name: 'How does Satohash work?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'Satohash hashes documents locally and anchors fingerprints to Bitcoin via OpenTimestamps.'
+            }
+          }
+        ]
+      })
+    }
+    schemaEl.textContent = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@graph': graph
+    })
+
+    return () => {
+      schemaEl?.remove()
+    }
   }, [resolvedTitle, resolvedDescription, image, url, lang, page])
 }

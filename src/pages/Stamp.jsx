@@ -297,9 +297,8 @@ export default function Stamp() {
     setHashValue(prefill)
     setCaseLabel((prev) => prev || label)
     if (searchParams.get('source') === 'motopass') {
-      toast.info('MotoPass hash loaded', {
-        description:
-          'Upload the matching file to complete stamping, or stamp hash via public calendars.'
+      toast.info(t('stampPage.motopassLoaded'), {
+        description: t('stampPage.motopassDesc')
       })
     }
     if (searchParams.get('autostamp') === '1') {
@@ -512,7 +511,7 @@ export default function Stamp() {
           style={{ borderColor: 'var(--border)', background: 'var(--surface-raised)' }}
         >
           <p className="text-xs font-bold" style={{ color: 'var(--text-secondary)' }}>
-            MotoPass / linked hash ready — stamp to OpenTimestamps without re-uploading a file.
+            {t('stampPage.linkedHashReady')}
           </p>
           <p className="mt-2 font-mono text-[10px] break-all">{hashValue}</p>
           <button
@@ -521,31 +520,16 @@ export default function Stamp() {
             style={{ background: 'var(--accent-gold)', color: '#141b25' }}
             onClick={() => stampHashOnly(hashValue, caseLabel || 'Linked hash')}
           >
-            Stamp hash via public calendars
+            {t('stampPage.stampHashBtn')}
           </button>
         </div>
       )}
       {/* ── 3-Step Flow Banner ── */}
       <div className="mb-8 grid grid-cols-1 gap-0 overflow-hidden rounded-2xl border border-[var(--border)] sm:grid-cols-3">
         {[
-          {
-            n: '1',
-            icon: '📄',
-            label: 'Drop Your File',
-            desc: 'Any format. Stays on your device — never uploaded.'
-          },
-          {
-            n: '2',
-            icon: '🔒',
-            label: 'We Hash It Locally',
-            desc: 'A unique SHA-256 fingerprint is computed in your browser.'
-          },
-          {
-            n: '3',
-            icon: '₿',
-            label: 'Bitcoin Timestamps It',
-            desc: 'The fingerprint is permanently written to the blockchain.'
-          }
+          { n: '1', icon: '📄', label: t('stampPage.step1Label'), desc: t('stampPage.step1Desc') },
+          { n: '2', icon: '🔒', label: t('stampPage.step2Label'), desc: t('stampPage.step2Desc') },
+          { n: '3', icon: '₿', label: t('stampPage.step3Label'), desc: t('stampPage.step3Desc') }
         ].map((step, i) => (
           <div
             key={step.n}

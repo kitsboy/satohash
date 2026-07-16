@@ -19,6 +19,14 @@ test.describe('Static edge — MotoPass integration', () => {
     await expect(page.locator('body')).toContainText(/verify|hash|fingerprint/i)
   })
 
+  test('stamp autostamp query accepted', async ({ page }) => {
+    const hash = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'
+    await page.goto(`/stamp?hash=${hash}&autostamp=1&source=motopass`)
+    await expect(page.locator('body')).toContainText(/stamp|calendar|OpenTimestamps|anchoring/i, {
+      timeout: 20000
+    })
+  })
+
   test('government page loads', async ({ page }) => {
     await page.goto('/government')
     await expect(page.getByRole('heading', { name: /government/i })).toBeVisible()

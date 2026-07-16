@@ -11,7 +11,8 @@
     "basics": "Bases",
     "technical": "Technique",
     "legal": "Juridique",
-    "usage": "Utilisation"
+    "usage": "Utilisation",
+    "institutional": "Institutionnel"
   },
   "items": [
     {
@@ -97,6 +98,30 @@
       "category": "usage",
       "q": "Qu'est-ce que le Satohash Snapper ?",
       "a": "Le Satohash Snapper est une extension de navigateur qui capture des preuves de pages web. Prenez un instantané de n'importe quelle page, et l'extension horodate son hachage et ses métadonnées sur Bitcoin pour une preuve vérifiable de son état à ce moment."
+    },
+    {
+      "id": "procurement",
+      "category": "institutional",
+      "q": "Comment acquérir Satohash ?",
+      "a": "SPA statique, hachage navigateur, pas de garde de documents."
+    },
+    {
+      "id": "dataResidency",
+      "category": "institutional",
+      "q": "Où sont les données ?",
+      "a": "Les fichiers restent sur l'appareil. Seuls les hashes et .ots."
+    },
+    {
+      "id": "airGap",
+      "category": "institutional",
+      "q": "Usage air-gap ?",
+      "a": "Oui, hachage hors ligne et calendriers OTS navigateur."
+    },
+    {
+      "id": "chainOfCustody",
+      "category": "institutional",
+      "q": "Chaîne de custody ?",
+      "a": "Utilisez /chain-of-custody pour les transferts horodatés."
     }
   ],
   "empty": {

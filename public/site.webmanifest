@@ -9,5 +9,10 @@
   "icons": [
     { "src": "/logo.png", "sizes": "192x192", "type": "image/png" },
     { "src": "/logo.png", "sizes": "512x512", "type": "image/png" }
+  ],
+  "shortcuts": [
+    { "name": "Stamp", "short_name": "Stamp", "url": "/stamp", "icons": [{ "src": "/logo.png", "sizes": "96x96" }] },
+    { "name": "Verify", "short_name": "Verify", "url": "/verify", "icons": [{ "src": "/logo.png", "sizes": "96x96" }] },
+    { "name": "Vault", "short_name": "Vault", "url": "/vault", "icons": [{ "src": "/logo.png", "sizes": "96x96" }] }
   ]
 }

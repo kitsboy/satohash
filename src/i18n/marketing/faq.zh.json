@@ -11,7 +11,8 @@
     "basics": "基础",
     "technical": "技术",
     "legal": "法律",
-    "usage": "使用"
+    "usage": "使用",
+    "institutional": "机构"
   },
   "items": [
     {
@@ -97,6 +98,30 @@
       "category": "usage",
       "q": "什么是 Satohash Snapper？",
       "a": "Satohash Snapper 是一款浏览器扩展，用于捕获网页证据。对任意网页截图，扩展会将其哈希和元数据加盖时间戳到 Bitcoin，以可验证地证明该时刻的页面状态。"
+    },
+    {
+      "id": "procurement",
+      "category": "institutional",
+      "q": "政府如何采购？",
+      "a": "静态 SPA，浏览器哈希，无文档托管。"
+    },
+    {
+      "id": "dataResidency",
+      "category": "institutional",
+      "q": "数据存储在哪？",
+      "a": "文件不离开设备，仅哈希和 .ots。"
+    },
+    {
+      "id": "airGap",
+      "category": "institutional",
+      "q": "可气隙使用？",
+      "a": "可以，离线哈希后通过浏览器 OTS 日历盖章。"
+    },
+    {
+      "id": "chainOfCustody",
+      "category": "institutional",
+      "q": "保管链？",
+      "a": "使用 /chain-of-custody 记录交接。"
     }
   ],
   "empty": {

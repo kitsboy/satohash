@@ -6,11 +6,7 @@ import Button from '../../components/Button'
 import usePageMeta from '../../hooks/usePageMeta'
 
 export default function CryptoNotice() {
-  usePageMeta({
-    page: 'legalTerms',
-    title: 'Cryptocurrency Notice',
-    description: 'Satohash cryptocurrency and digital asset disclosure for institutional users.'
-  })
+  usePageMeta({ page: 'legalCrypto' })
   const navigate = useNavigate()
 
   return (

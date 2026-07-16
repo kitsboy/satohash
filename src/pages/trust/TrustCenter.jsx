@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
+import { useTranslation } from 'react-i18next'
 import { getApiUrl } from '../../config/constants'
 import { Link } from 'react-router-dom'
 import Tooltip from '../../components/Tooltip'
@@ -106,6 +107,7 @@ const BITCOIN_FACTS = [
 /* ─── Component ──────────────────────────────────────────── */
 export default function TrustCenter() {
   usePageMeta({ page: 'trust' })
+  const { t } = useTranslation()
   const [health, setHealth] = useState({ status: 'checking', blockHeight: null })
 
   useEffect(() => {
@@ -171,9 +173,37 @@ export default function TrustCenter() {
             transition={{ delay: 0.35, duration: 0.6 }}
             className="mx-auto mb-10 max-w-2xl text-lg leading-relaxed text-[var(--text-secondary)] md:text-xl"
           >
-            Satohash uses cryptographic proof — not contracts or promises — to guarantee document
-            integrity. Here&apos;s exactly how it works and what it means for you legally.
+            {t('trustPage.heroSubtitle')}
           </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4 }}
+            className="mb-8 flex flex-wrap justify-center gap-4"
+          >
+            <Link
+              to="/security"
+              className="text-xs font-black tracking-widest uppercase underline"
+              style={{ color: 'var(--accent-active)' }}
+            >
+              {t('trustPage.securityLink')}
+            </Link>
+            <Link
+              to="/docs/executive-summary"
+              className="text-xs font-black tracking-widest uppercase underline"
+              style={{ color: 'var(--accent-gold)' }}
+            >
+              {t('trustPage.procurementCta')}
+            </Link>
+            <Link
+              to="/motopass-verify"
+              className="text-xs font-black tracking-widest uppercase underline print:hidden"
+              style={{ color: 'var(--text-secondary)' }}
+            >
+              {t('trustPage.printGuide')}
+            </Link>
+          </motion.div>
 
           {/* Pills */}
           <motion.div

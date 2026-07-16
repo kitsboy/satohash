@@ -1,9 +1,11 @@
 import { Info } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import { isStaticOnlyMode, STATIC_MODE_COPY } from '../utils/staticMode'
+import { useTranslation } from 'react-i18next'
+import { isStaticOnlyMode } from '../utils/staticMode'
 
 /** Shown on stamp/verify/vault when production build has no VITE_API_URL. */
 export default function StaticModeBanner({ compact = false }) {
+  const { t } = useTranslation()
   if (!isStaticOnlyMode()) return null
 
   if (compact) {
@@ -17,8 +19,8 @@ export default function StaticModeBanner({ compact = false }) {
         }}
         role="status"
       >
-        <strong style={{ color: 'var(--accent-gold)' }}>{STATIC_MODE_COPY.title}.</strong>{' '}
-        {STATIC_MODE_COPY.body}
+        <strong style={{ color: 'var(--accent-gold)' }}>{t('staticMode.title')}.</strong>{' '}
+        {t('staticMode.body')}
       </p>
     )
   }
@@ -39,13 +41,13 @@ export default function StaticModeBanner({ compact = false }) {
             className="text-xs font-black tracking-widest uppercase"
             style={{ color: 'var(--accent-gold)' }}
           >
-            {STATIC_MODE_COPY.title}
+            {t('staticMode.title')}
           </p>
           <p
             className="mt-1 text-[11px] leading-relaxed"
             style={{ color: 'var(--text-secondary)' }}
           >
-            {STATIC_MODE_COPY.body}
+            {t('staticMode.body')}
           </p>
         </div>
       </div>
@@ -54,7 +56,7 @@ export default function StaticModeBanner({ compact = false }) {
         className="shrink-0 text-[10px] font-black tracking-widest uppercase underline"
         style={{ color: 'var(--accent-active)' }}
       >
-        Trust & compliance →
+        {t('staticMode.trustLink')}
       </Link>
     </div>
   )

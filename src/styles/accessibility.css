@@ -22,15 +22,12 @@
   outline: none;
 }
 
-/* ─── MIN TOUCH TARGET SIZE ──────────────────────────── */
-button,
-a,
-input,
-select,
-textarea,
-[role="button"],
-[role="tab"],
-[role="link"] {
+/* ─── MIN TOUCH TARGET SIZE (buttons & nav only) ─────── */
+button:not(.small):not(.no-min-touch),
+[role='button']:not(.small),
+nav a,
+[role='navigation'] a,
+.mobile-nav-item {
   min-height: 44px;
   min-width: 44px;
 }
@@ -38,8 +35,8 @@ textarea,
 /* Exception for inline links and small elements */
 button.small,
 a.small,
-[role="button"].small,
-[role="link"].small {
+[role='button'].small,
+[role='link'].small {
   min-height: unset;
   min-width: unset;
 }
@@ -58,8 +55,12 @@ a.small,
 }
 
 @keyframes skeleton-shimmer {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
 }
 
 /* ─── SCROLLBAR STYLING ──────────────────────────────── */
@@ -83,8 +84,15 @@ a.small,
 
 /* ─── PRINT STYLES ───────────────────────────────────── */
 @media print {
-  nav, footer, .no-print { display: none !important; }
-  body { background: white !important; color: black !important; }
+  nav,
+  footer,
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background: white !important;
+    color: black !important;
+  }
 }
 
 /* ─── SKIP TO CONTENT ──────────────────────────────── */
@@ -107,7 +115,9 @@ a.small,
 
 /* ─── TOUCH FEEDBACK ───────────────────────────────── */
 @media (hover: hover) {
-  a:active, button:active, [role="button"]:active {
+  a:active,
+  button:active,
+  [role='button']:active {
     transform: scale(0.97);
     transition: transform 0.1s;
   }
@@ -115,14 +125,20 @@ a.small,
 
 /* ─── REDUCED MOTION OVERRIDE ──────────────────────── */
 @media (prefers-reduced-motion: reduce) {
-  .animate-pulse { animation: none !important; }
+  .animate-pulse {
+    animation: none !important;
+  }
 }
 
 /* ─── A11Y REFINEMENTS ────────────────────────────── */
 
 /* Focus indicator on all interactive elements */
-a:focus-visible, button:focus-visible, input:focus-visible,
-select:focus-visible, textarea:focus-visible, [tabindex]:focus-visible {
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
   outline: 2px solid var(--accent-gold) !important;
   outline-offset: 2px;
 }
@@ -161,7 +177,9 @@ select:focus-visible, textarea:focus-visible, [tabindex]:focus-visible {
 
 /* Reduced motion - disable all unnecessary animations */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
@@ -179,9 +197,21 @@ select:focus-visible, textarea:focus-visible, [tabindex]:focus-visible {
 
 /* Print - hide nav, footer, no-print elements */
 @media print {
-  nav, footer, header, .no-print, .skip-link { display: none !important; }
-  body { background: white !important; color: black !important; }
-  a { color: #0366d6 !important; text-decoration: underline !important; }
+  nav,
+  footer,
+  header,
+  .no-print,
+  .skip-link {
+    display: none !important;
+  }
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  a {
+    color: #0366d6 !important;
+    text-decoration: underline !important;
+  }
 }
 
 /* ─── TOAST POSITIONING ──────────────────────────── */
@@ -191,7 +221,9 @@ select:focus-visible, textarea:focus-visible, [tabindex]:focus-visible {
 
 /* ─── CARD HOVER 3D LIFT ─────────────────────────── */
 .hover-lift {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 .hover-lift:hover {
   transform: translateY(-2px) scale(1.01);
@@ -199,11 +231,15 @@ select:focus-visible, textarea:focus-visible, [tabindex]:focus-visible {
 }
 
 /* ─── INPUT FOCUS RING ───────────────────────────── */
-input:focus, select:focus, textarea:focus {
+input:focus,
+select:focus,
+textarea:focus {
   outline: none;
   border-color: var(--accent-gold);
   box-shadow: 0 0 0 3px rgba(240, 180, 41, 0.15);
-  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+  transition:
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
 }
 
 /* ─── SKELETON SHIMMER ───────────────────────────── */
@@ -218,8 +254,12 @@ input:focus, select:focus, textarea:focus {
   animation: shimmer 1.8s ease-in-out infinite;
 }
 @keyframes shimmer {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
 }
 
 /* ─── BUTTON LOADING SPINNER ─────────────────────── */
@@ -241,8 +281,12 @@ input:focus, select:focus, textarea:focus {
   animation: btn-spin 0.6s linear infinite;
 }
 @keyframes btn-spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* ─── MODAL ESCAPE / FOCUS ───────────────────────── */
-.modal-overlay[aria-hidden='true'] { display: none; }
+.modal-overlay[aria-hidden='true'] {
+  display: none;
+}

@@ -295,7 +295,9 @@
         "diyOTS": "$0"
       }
     },
-    "cellValues": { "variableGas": "Gas variável" },
+    "cellValues": {
+      "variableGas": "Gas variável"
+    },
     "download": {
       "title": "Baixar o pitch deck completo",
       "subtitle": "Resumo executivo em PDF com análise de mercado, aprofundamento técnico e roadmap.",
@@ -304,7 +306,9 @@
     }
   },
   "guidesPage": {
-    "nav": { "eyebrow": "Guias educacionais" },
+    "nav": {
+      "eyebrow": "Guias educacionais"
+    },
     "hero": {
       "title": "Aprenda como",
       "titleHighlight": "a prova funciona",
@@ -617,13 +621,22 @@
         "title": "Visão geral da arquitetura",
         "desc": "Sistema de quatro planos: Proof, Identity, Settlement, Atlas."
       },
-      "pitch": { "title": "Pitch do produto", "desc": "A história do Sovereign Provenance Mesh." },
+      "pitch": {
+        "title": "Pitch do produto",
+        "desc": "A história do Sovereign Provenance Mesh."
+      },
       "executive-summary": {
         "title": "Resumo executivo",
         "desc": "One-pager de negócios para stakeholders."
       },
-      "marketing": { "title": "Marketing", "desc": "Posicionamento, canais, tom de voz e ativos." },
-      "financials": { "title": "Finanças", "desc": "Custos, projeções e unit economics." },
+      "marketing": {
+        "title": "Marketing",
+        "desc": "Posicionamento, canais, tom de voz e ativos."
+      },
+      "financials": {
+        "title": "Finanças",
+        "desc": "Custos, projeções e unit economics."
+      },
       "improvements-log": {
         "title": "Log de melhorias",
         "desc": "Rastreador completo de 100 melhorias."
@@ -656,12 +669,30 @@
         "title": "Internacionalização",
         "desc": "Suporte multilíngue: EN, ES, FR, DE, PT, SW, ZH."
       },
-      "seo-de": { "title": "SEO — Deutsch", "desc": "Estratégia de SEO em alemão." },
-      "seo-es": { "title": "SEO — Español", "desc": "Estratégia de SEO em espanhol." },
-      "seo-fr": { "title": "SEO — Français", "desc": "Estratégia de SEO em francês." },
-      "seo-pt": { "title": "SEO — Português", "desc": "Estratégia de SEO em português." },
-      "seo-sw": { "title": "SEO — Kiswahili", "desc": "Estratégia de SEO em suaíli." },
-      "seo-zh": { "title": "SEO — 中文", "desc": "Estratégia de SEO em chinês." },
+      "seo-de": {
+        "title": "SEO — Deutsch",
+        "desc": "Estratégia de SEO em alemão."
+      },
+      "seo-es": {
+        "title": "SEO — Español",
+        "desc": "Estratégia de SEO em espanhol."
+      },
+      "seo-fr": {
+        "title": "SEO — Français",
+        "desc": "Estratégia de SEO em francês."
+      },
+      "seo-pt": {
+        "title": "SEO — Português",
+        "desc": "Estratégia de SEO em português."
+      },
+      "seo-sw": {
+        "title": "SEO — Kiswahili",
+        "desc": "Estratégia de SEO em suaíli."
+      },
+      "seo-zh": {
+        "title": "SEO — 中文",
+        "desc": "Estratégia de SEO em chinês."
+      },
       "kimi-handoff": {
         "title": "Log de handoff Kimi",
         "desc": "Handoffs de sessão entre agentes e máquinas."
@@ -689,7 +720,11 @@
       "subtitle": "Explore modelos prontos para os documentos que você precisa carimbar temporalmente. Sem chaves, sem contas, sem compromisso — apenas explore o que o Satohash pode fazer. Cada modelo gera uma prova de existência ancorada em Bitcoin."
     },
     "searchPlaceholder": "Buscar modelos...",
-    "sort": { "default": "Padrão", "popular": "Mais popular", "alpha": "A-Z" },
+    "sort": {
+      "default": "Padrão",
+      "popular": "Mais popular",
+      "alpha": "A-Z"
+    },
     "allCategory": "Modelos",
     "recentlyViewed": "Vistos recentemente",
     "empty": {
@@ -697,7 +732,11 @@
       "subtitle": "Tente uma busca ou categoria diferente.",
       "reset": "Redefinir filtros"
     },
-    "badges": { "Popular": "Popular", "New": "Novo", "Legal-Grade": "Nível jurídico" },
+    "badges": {
+      "Popular": "Popular",
+      "New": "Novo",
+      "Legal-Grade": "Nível jurídico"
+    },
     "viewDetails": "Ver detalhes",
     "quickPreview": "Prévia rápida",
     "copyLink": "Copiar link",
@@ -991,5 +1030,80 @@
       "contribute": "Contribuir",
       "github": "GitHub"
     }
+  },
+  "staticMode": {
+    "title": "Modo de verificação no navegador",
+    "body": "Hash, cofre e carimbo OTS via calendários públicos no seu navegador.",
+    "trustLink": "Confiança e conformidade →",
+    "stampQueued": "Hash salvo localmente.",
+    "verifyStructural": "Verificação estrutural .ots aprovada."
+  },
+  "proofTimeline": {
+    "hashed": "Hash local",
+    "submitted": "Enviado ao calendário",
+    "pending": "Bloco Bitcoin pendente",
+    "confirmed": "Confirmado on-chain",
+    "ariaLabel": "Ciclo de vida da prova"
+  },
+  "trustPage": {
+    "backSecurity": "← Visão de segurança",
+    "heroTitle": "Centro de Confiança",
+    "heroSubtitle": "Arquitetura zero-conhecimento e compatibilidade legal global.",
+    "complianceTitle": "Marco legal",
+    "securityLink": "Segurança em detalhe →",
+    "procurementTitle": "Aquisições",
+    "procurementBody": "Baixe o pitch executivo e guia MotoPass.",
+    "procurementCta": "Pacote de diligência",
+    "printGuide": "Guia para agentes"
+  },
+  "governmentPage": {
+    "backTrust": "← Centro de Confiança",
+    "backGovernment": "← Uso governamental",
+    "learnMore": "Saiba mais",
+    "readyStamp": "Pronto para carimbar?",
+    "readyStampDesc": "Modelos de passaporte ou registro em lote.",
+    "stampNow": "Carimbar agora",
+    "batchHash": "Registro em lote",
+    "procurementTitle": "Resumo de aquisições",
+    "procurementBody": "Hashing air-gap, dados no navegador, MotoPass."
+  },
+  "governmentUse": {
+    "title": "Uso Governamental e Diplomático",
+    "titleHighlight": "Diplomático",
+    "subtitle": "Carimbos zero-conhecimento para passaportes e ativos soberanos.",
+    "passport": {
+      "title": "Passaportes e viagens",
+      "body": "MotoPass faz hash no cliente; Satohash ancora no Bitcoin."
+    },
+    "distressed": {
+      "title": "Ativos distressed",
+      "body": "Listagens com hashes e .ots."
+    },
+    "custody": {
+      "title": "Cadeia de custódia",
+      "body": "Titular → testemunha → agência."
+    },
+    "admissibility": {
+      "title": "Admissibilidade",
+      "body": "Matriz UETA, eIDAS, UK, Seychelles."
+    }
+  },
+  "motopassVerifyPage": {
+    "title": "Verificar hash MotoPass",
+    "subtitle": "Cole hashes SHA-256 de motopass.giveabit.io.",
+    "placeholder": "Um hash hex por linha…",
+    "validate": "Validar",
+    "publicVerify": "Página pública",
+    "verifyTool": "Ferramenta (?hash=)",
+    "completeStamp": "Completar",
+    "toastNeedHash": "Cole pelo menos um hash válido"
+  },
+  "batchHashPage": {
+    "title": "Registro em lote",
+    "subtitle": "Registre centenas de fingerprints localmente.",
+    "placeholder": "Um SHA-256 por linha…",
+    "register": "Registrar",
+    "exportCsv": "Exportar CSV",
+    "importCsv": "Importar CSV"
   }
 }
