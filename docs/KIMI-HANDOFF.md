@@ -4,6 +4,57 @@ Session handoff log for Kimi (M4 HERMES). Append new entries at the top.
 
 ---
 
+## Session — 2026-07-15 (Nav overhaul + Templates crash fix)
+
+**Done:**
+- Desktop nav v2: removed fixed `LeftRailNav` sidebar; added centered 3-column grid (`DesktopNavLayout`)
+- `DesktopAppNav` — 4 primary tabs (Stamp, Vault, Verify, Templates) + More dropdown; search + language + account menu on right
+- `MarketingDesktopNav` — landing/marketing nav with compact `LanguageSwitcher`
+- Production fix: `/templates` crash — `TemplatesShowcase` guarded `(section.features ?? [])` for government `specialSections` without features array
+- Builds 98–100 pushed to `origin/main`
+
+**Decisions:**
+- Desktop nav uses grid layout (left | center | right) — no absolute overlap with shell chrome
+- Fewer primary tabs; secondary routes live under More dropdown
+- Government template cards in manifest may lack `features`; UI shows badge + View Details CTA instead of feature list
+
+**Still open:**
+- `npm run i18n:check` — 28 missing marketing keys in non-EN locales (stampPage/verifyPublicPage); pre-existing
+- Government template IDs in manifest `specialSections` may not exist in `NotaryTemplates.TEMPLATES` — `openDemo` falls back to `/templates/:id`
+
+**Git State:**
+- SHA: `a138e0d`
+- Build: 100
+- Unpushed: none
+
+---
+
+## Latest Session Summary (from 2026-07-15 goodbye)
+
+**Chat Topic:** Complete static-edge wave 2 (SE-101–200), overhaul broken desktop navigation, fix production `/templates` crash, sync all docs for handoff.
+
+**Key Things We Did:**
+- Lazy i18n, Stamp/Vault/legal polish, Widgets v3, Comparison mobile/print, 73 unit tests (wave 2)
+- Replaced sidebar nav with premium centered desktop nav (app + marketing shells)
+- Fixed `TemplatesShowcase` `.map()` crash on government special sections
+- Docs sync, IMPROVEMENTS-LOG, MVP-READINESS, KIMI-HANDOFF updated
+
+**What We Finished:**
+- 200/200 static-edge items (waves 1–2)
+- Desktop navigation fits shell without overlap
+- `/templates` production crash resolved (Build 100)
+
+**What We Are Still Aiming to Finish:**
+- Fill 28 missing i18n keys in de/es/fr/pt/sw/zh/ar
+- API deploy per `docs/DEPLOY-SERVER.md` (MVP gate)
+- Wire government manifest template IDs to `NotaryTemplates` or stub demos
+
+**Update / Status:** As of Build 100 (`a138e0d`), satohash frontend is static-edge complete with polished desktop nav. Site live at https://satohash.giveabit.io. Kimi hand-off current; do not sync to M4 until instructed.
+
+**Next for Kimi:** Integrate this summary into MASTER-BRAIN / Kanban / Obsidian. Note nav architecture change (no LeftRailNav on md+). Use giveabit-project-handoff skill for future sessions.
+
+---
+
 ## Session — 2026-07-15 (Static-Edge Wave 2: SE-101–200)
 
 **Done:**

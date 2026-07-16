@@ -1,11 +1,11 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.giveabit.io · **Version:** 4.1.0-ELITE (Build 95) · **Updated:** 2026-07-16
+> **Live:** https://satohash.giveabit.io · **Version:** 4.1.0-ELITE (Build 100) · **Updated:** 2026-07-16
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Satohash MVP Readiness
 
 > **Status:** Frontend at the doorstep — API deploy is the remaining gate  
-> **Updated:** 2026-07-07 · Build 85+
+> **Updated:** 2026-07-15 · Build 100
 
 ## MVP definition
 
@@ -38,6 +38,8 @@ Frontend only **verifies** NIP-05 (fetch public JSON, compare pubkey). Signing i
 - [x] Structural `.ots` verify in browser
 - [x] Government pages: `/government`, `/motopass-verify`, `/batch-hash`, `/chain-of-custody`
 - [x] Wave 2 polish: Stamp/Vault i18n, Widgets v3 white-label, Comparison mobile cards, lazy locale loading
+- [x] Desktop nav v2: centered grid tabs (Stamp/Vault/Verify/Templates + More), no sidebar overlap
+- [x] Templates showcase: government special sections render without features-array crash
 - [x] W3C Verifiable Credential export on verify page
 - [x] `security.txt` at `/.well-known/security.txt`
 
@@ -49,6 +51,7 @@ Frontend only **verifies** NIP-05 (fetch public JSON, compare pubkey). Signing i
 - [x] `DeepHealthBanner` — silent on static-only; warns when API configured but down
 - [x] Landing proof count — `—` instead of fake `847,293`
 - [x] Nav — Forum/Contracts hidden in MVP mode
+- [x] Desktop nav — `DesktopAppNav` + `MarketingDesktopNav` (Build 98–99)
 - [x] Mobile nav — Verify in primary tab bar
 - [x] `KIMI_NOSTR` pubkey documented (no secrets)
 
@@ -71,10 +74,19 @@ Frontend only **verifies** NIP-05 (fetch public JSON, compare pubkey). Signing i
 
 | Date | Build | Change |
 |------|-------|--------|
+| 2026-07-15 | 100 | Templates crash fix — guard `specialSections.features` |
+| 2026-07-15 | 98–99 | Desktop nav v2 — centered grid, compact primary tabs |
+| 2026-07-15 | 94–95 | Static-edge wave 2 — lazy i18n, Stamp/Vault polish, 73 tests |
 | 2026-07-07 | 85+ | MVP frontend prep — public routes, API wiring, NIP-05 clarity |
 
 ---
 © 2026 Satohash
+
+
+
+
+
+
 
 
 

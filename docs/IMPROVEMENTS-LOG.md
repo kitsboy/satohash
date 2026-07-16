@@ -680,4 +680,20 @@
 
 **Status: 200/200 static-edge session complete ✅ (Waves 1–2)**
 
+## Post-Wave 2 — Desktop Nav & Production Fix (Builds 98–100)
+
+**Completed:** 2026-07-15 (Build 100)
+
+### Desktop navigation overhaul (Builds 98–99)
+- [x] Removed fixed `LeftRailNav` sidebar from `AppShellNoir` on md+ breakpoints
+- [x] `DesktopNavLayout` — 3-column CSS grid (brand | center tabs | actions), no absolute overlap
+- [x] `DesktopAppNav` — Stamp, Vault, Verify, Templates + More dropdown; search + language + account menu
+- [x] `MarketingDesktopNav` — Features, Templates, Pricing, Trust + More; compact `LanguageSwitcher`
+- [x] Nav v2 compact pass — fewer primary links, centered tabs fit shell row
+
+### Templates production fix (Build 100)
+- [x] `TemplatesShowcase` — guard `(section.features ?? [])` and `(manifest?.specialSections ?? [])`
+- [x] Government special sections without features — badge/usage + View Details CTA
+- [x] Icons: Fingerprint, Globe, Scale, FileCheck for government cards
+
 *Safe Harbour · Part of the [Give A Bit](https://giveabit.io) family.*
