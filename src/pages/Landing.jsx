@@ -144,7 +144,7 @@ export default function Landing() {
       <MarketingDesktopNav onDonate={() => setDonationOpen(true)} />
 
       {/* ── HERO ─────────────────────────────────────────────────── */}
-      <section className="relative flex min-h-screen items-center overflow-hidden pt-[4.25rem]">
+      <section className="relative flex min-h-screen items-center overflow-hidden pt-14">
         {/* Precision Cryptographic Blueprint Grid Background */}
         <div
           className="pointer-events-none absolute inset-0 overflow-hidden"

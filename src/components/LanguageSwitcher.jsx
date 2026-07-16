@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useI18n, languages } from '../i18n'
 
-export default function LanguageSwitcher() {
+export default function LanguageSwitcher({ compact = false }) {
   const { lang, setLang } = useI18n()
   const [open, setOpen] = useState(false)
   const ref = useRef(null)
@@ -25,10 +25,14 @@ export default function LanguageSwitcher() {
         aria-label="Select language"
         aria-haspopup="listbox"
         aria-expanded={open}
-        className="flex h-8 items-center gap-2 rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] px-3 text-[10px] font-black tracking-widest text-[var(--text-secondary)] uppercase transition-all hover:border-[var(--border-bright)] hover:text-[var(--text-primary)]"
+        className={
+          compact
+            ? 'flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--bg-primary)] text-base transition-all hover:border-[var(--border-bright)]'
+            : 'flex h-8 items-center gap-2 rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] px-3 text-[10px] font-black tracking-widest text-[var(--text-secondary)] uppercase transition-all hover:border-[var(--border-bright)] hover:text-[var(--text-primary)]'
+        }
       >
-        <span className="text-sm leading-none">{current.flag}</span>
-        <span>{current.code.toUpperCase()}</span>
+        <span className="leading-none">{current.flag}</span>
+        {!compact && <span>{current.code.toUpperCase()}</span>}
       </button>
 
       {/* Dropdown */}
