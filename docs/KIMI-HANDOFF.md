@@ -4,6 +4,21 @@ Session handoff log for Kimi (M4 HERMES). Append new entries at the top.
 
 ---
 
+## Session — 2026-07-15 (Waves 6–10 complete)
+
+**Done:**
+- Full 7-locale i18n: trustPage, government pages, staticMode, proofTimeline, stampPage, motopassVerify, batchHash, institutional FAQ
+- Government templates (+4), batch CSV import, evidence admissibility mobile cards, print CSS on verify page
+- pageMeta: 16 templates, government/legalCrypto all locales, per-route JSON-LD in usePageMeta
+- PWA shortcuts in manifest; removed duplicate public/sw.js; dynamic Sentry; build runs build:verify
+- pitch.{locale}.md files; a11y routes expanded; autostamp e2e; test:coverage script
+
+**Git State:**
+- SHA: `93e98cb`
+- Build: 92
+
+---
+
 ## Session — 2026-07-15 (Batch 1–10: Next 100 static-edge)
 
 **Done:**
