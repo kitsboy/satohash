@@ -17,8 +17,8 @@ Session handoff log for Kimi (M4 HERMES). Append new entries at the top.
 - Legal section bodies remain English prose; titles/disclaimers localized
 
 **Git State:**
-- SHA: `cf845dc`
-- Build: 94
+- SHA: `868acbd`
+- Build: 95
 
 ---
 
