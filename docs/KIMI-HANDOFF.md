@@ -23,8 +23,8 @@ Session handoff log for Kimi (M4 HERMES). Append new entries at the top.
 - Government template IDs in manifest `specialSections` may not exist in `NotaryTemplates.TEMPLATES` — `openDemo` falls back to `/templates/:id`
 
 **Git State:**
-- SHA: `7696c92` (handoff docs); code fix `a138e0d`
-- Build: 101
+- SHA: `835abda` (handoff docs); code fix `a138e0d`
+- Build: 102
 - Unpushed: none
 
 ---
