@@ -26,7 +26,11 @@ import {
   Share2,
   Star,
   Code,
-  Sparkles
+  Sparkles,
+  Fingerprint,
+  Globe,
+  Scale,
+  FileCheck
 } from 'lucide-react'
 
 const ICON_MAP = {
@@ -46,7 +50,11 @@ const ICON_MAP = {
   Zap,
   Star,
   Code,
-  Sparkles
+  Sparkles,
+  Fingerprint,
+  Globe,
+  Scale,
+  FileCheck
 }
 
 const BADGE_ORDER = { Popular: 0, New: 1, 'Legal-Grade': 2 }
@@ -488,8 +496,9 @@ export default function TemplatesShowcase() {
       <section className="border-t border-[var(--border)] bg-[var(--bg-secondary)]">
         <div className="mx-auto max-w-6xl px-6 py-16">
           <div className="grid gap-8 md:grid-cols-3">
-            {manifest?.specialSections.map((section) => {
+            {(manifest?.specialSections ?? []).map((section) => {
               const Icon = ICON_MAP[section.icon] || FileText
+              const features = section.features ?? []
               return (
                 <div
                   key={section.id}
@@ -500,23 +509,47 @@ export default function TemplatesShowcase() {
                     <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-[var(--accent-gold)]/10">
                       <Icon size={26} className="text-[var(--accent-gold)]" />
                     </div>
+                    {section.badge && (
+                      <span className="mb-2 inline-block rounded-full border border-[var(--accent-gold)]/30 bg-[var(--accent-gold)]/10 px-2.5 py-0.5 text-[9px] font-black tracking-widest text-[var(--accent-gold)] uppercase">
+                        {section.badge}
+                      </span>
+                    )}
                     <h3 className="mb-2 text-xl font-bold text-[var(--text-primary)]">
                       {section.title}
                     </h3>
                     <p className="mb-5 text-sm leading-relaxed text-[var(--text-secondary)]">
                       {section.description}
                     </p>
-                    <ul className="mb-6 space-y-2.5">
-                      {section.features.map((feat, i) => (
-                        <li
-                          key={i}
-                          className="flex items-start gap-2.5 text-xs text-[var(--text-secondary)]"
+                    {features.length > 0 ? (
+                      <ul className="mb-6 space-y-2.5">
+                        {features.map((feat, i) => (
+                          <li
+                            key={i}
+                            className="flex items-start gap-2.5 text-xs text-[var(--text-secondary)]"
+                          >
+                            <span className="mt-0.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--accent-gold)]" />
+                            {feat}
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <div className="mb-6 flex flex-wrap items-center gap-3">
+                        {section.usageCount != null && (
+                          <span className="text-[10px] font-bold tracking-wider text-[var(--text-tertiary)] uppercase">
+                            {section.usageCount.toLocaleString()} uses
+                          </span>
+                        )}
+                        <button
+                          type="button"
+                          onClick={() => openDemo(section.id)}
+                          disabled={openingDemoId === section.id}
+                          className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--accent-gold)]/40 px-4 py-2 text-[10px] font-bold tracking-wider text-[var(--accent-gold)] uppercase transition-all hover:bg-[var(--accent-gold)]/10 disabled:opacity-50"
                         >
-                          <span className="mt-0.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--accent-gold)]" />
-                          {feat}
-                        </li>
-                      ))}
-                    </ul>
+                          {t('templatesPage.viewDetails')}
+                          <ArrowRight size={12} />
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </div>
               )
