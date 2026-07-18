@@ -740,7 +740,9 @@
     "badges": {
       "Popular": "Beliebt",
       "New": "Neu",
-      "Legal-Grade": "Rechtskonform"
+      "Legal-Grade": "Rechtskonform",
+      "Government-Grade": "Behörden-Niveau",
+      "Compliance": "Compliance"
     },
     "viewDetails": "Details ansehen",
     "quickPreview": "Schnellvorschau",
@@ -765,7 +767,11 @@
       "title": "Bereit, etwas zu beweisen?",
       "subtitle": "Kein Konto nötig. Keine Keys einzurichten. Einfach eine Datei ablegen und in unter 60 Sekunden einen Bitcoin-verankerten Existenznachweis erhalten.",
       "button": "Datei stempeln — Kostenlos"
-    }
+    },
+    "createOwnHint": "Wählen Sie unten eine Vorlage oder öffnen Sie eine, um Felder und Demo-Daten anzupassen.",
+    "browseAll": "Vorlagen durchsuchen",
+    "viewApi": "Developer öffnen",
+    "startCustom": "Durchsuchen & anpassen"
   },
   "contributePage": {
     "hero": {
@@ -943,7 +949,11 @@
       "proofCopied": "Nachweis kopiert!"
     },
     "statusVerified": "✓ Verifiziert",
-    "statusPending": "⏳ Ausstehend"
+    "statusPending": "⏳ Ausstehend",
+    "validFingerprint": "Gültiger Fingerabdruck",
+    "hashOnlyMessage": "Gültiger SHA-256-Fingerabdruck. Keine Bitcoin-Attestierung im lokalen Tresor — API oder .ots-Datei für den vollständigen Nachweis erforderlich.",
+    "localVault": "Aus Ihrem lokalen Tresor auf diesem Gerät geladen.",
+    "exportVc": "Verifizierbare Credential exportieren"
   },
   "footerPage": {
     "tagline": "Das souveräne Betriebssystem für digitale Wahrheit. Verankert im Bitcoin-Netzwerk bieten wir das ultimative kryptografische Ledger für institutionelle Herkunft und forensische Verifizierung.",
@@ -1142,7 +1152,17 @@
     "chooseFile": "Datei wählen",
     "confirmedToast": "Auf Bitcoin bestätigt!",
     "stampFailed": "Stempeln fehlgeschlagen",
-    "feeUnavailable": "Gebühren nicht verfügbar"
+    "feeUnavailable": "Gebühren nicht verfügbar",
+    "motopassLoaded": "MotoPass-Hash geladen",
+    "motopassDesc": "Laden Sie die passende Datei hoch, um den Stempel abzuschließen, oder stempeln Sie den Hash über öffentliche Kalender.",
+    "linkedHashReady": "MotoPass- / verknüpfter Hash bereit — mit OpenTimestamps stempeln, ohne die Datei erneut hochzuladen.",
+    "stampHashBtn": "Hash über öffentliche Kalender stempeln",
+    "step1Label": "Datei ablegen",
+    "step1Desc": "Jedes Format. Bleibt auf Ihrem Gerät — wird nie hochgeladen.",
+    "step2Label": "Wir hashen lokal",
+    "step2Desc": "Ein eindeutiger SHA-256-Fingerabdruck wird im Browser berechnet.",
+    "step3Label": "Bitcoin zeitstempelt ihn",
+    "step3Desc": "Der Fingerabdruck wird dauerhaft in die Blockchain geschrieben."
   },
   "vaultPage": {
     "securityAge": {
@@ -1160,11 +1180,33 @@
     "empty": {
       "title": "Keine Nachweise",
       "body": "Dokument stempeln."
+    },
+    "revoke": {
+      "title": "Nachweis widerrufen",
+      "body": "Dies markiert den Eintrag dauerhaft als widerrufen. Der Bitcoin-Anker bleibt unveränderlich.",
+      "confirm": "Widerruf bestätigen",
+      "cancel": "Abbrechen"
     }
   },
   "nav": {
     "government": "Behörden",
     "batchHash": "Batch-Hash",
     "widgets": "Widgets"
+  },
+  "evidenceAdmissibilityPage": {
+    "title": "Leitfaden zur Beweiszulässigkeit",
+    "subtitle": "Jurisdiktionsmatrix für hash-basierte Beweise unter UETA, eIDAS, UK und grenzüberschreitendem Recht."
+  },
+  "distressedAssetPage": {
+    "title": "Attestierung notleidender Vermögenswerte",
+    "subtitle": "Hashe Listing-Metadaten für souveräne Asset-Trades. Kombiniere mit gehosteten .ots von MotoPass-Listings.",
+    "stampListing": "Listing-Hash stempeln",
+    "compareHosted": "Mit gehostetem Nachweis vergleichen",
+    "hostedPlaceholder": "Gehostete .ots-URL auf motopass oder CDN"
+  },
+  "templateDetailPage": {
+    "notFound": "Vorlage nicht gefunden",
+    "loadError": "Vorlage konnte nicht geladen werden",
+    "demoBadge": "Demo-Daten"
   }
 }

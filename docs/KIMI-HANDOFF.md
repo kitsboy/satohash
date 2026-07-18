@@ -4,6 +4,36 @@ Session handoff log for Kimi (M4 HERMES). Append new entries at the top.
 
 ---
 
+## Session — 2026-07-18 (i18n + government templates + API smoke)
+
+**Done:**
+- Filled 28 missing marketing i18n keys (stampPage/verifyPublicPage/evidence/distressed/templateDetail/vault.revoke) for de/es/fr/pt/sw/zh — `npm run i18n:check` clean
+- Wired government manifest IDs into `NotaryTemplates.TEMPLATES`: passport-attestation, national-id-attestation, diplomatic-note, beneficial-ownership, apostille-companion
+- Added same IDs to `public/data/templates-manifest.json` grid + CATEGORY/badge styles
+- TemplatesShowcase: CTA routes for make-your-own → grid scroll, api-benefits → /developer; always show action buttons on special sections
+- Local API smoke: `scripts/api-local-smoke.sh` + `npm run api:smoke`; rebuilt better-sqlite3 for Node 22; health 200 + stamp 402 (paywall) locally
+- `.ai_docs/` kebab-case knowledge layer + GROK-SESSION-PROTOCOL Step 1 for `.ai_docs/`
+- Unit tests: 77 passing (4 new governmentTemplates tests); Build 103 production build OK
+
+**Decisions:**
+- VPS/public `api.satohash.io` still needs human provider account + DNS — not deployable from this session
+- Deep health smoke is best-effort (Redis may be down); basic `/health` is the gate
+- Government templates use demo-safe IDs only (no real passport numbers)
+
+**Still open:**
+- Provision VPS + deploy Express per docs/DEPLOY-SERVER.md
+- Rebuild frontend with `VITE_API_URL` after API live
+- Cross-project API integration (Katoa, MotoPass)
+
+**Git State:**
+- SHA: 
+- Build: 103
+- Branch: main
+- Unpushed: none (after push)
+
+---
+
+
 ## Session — 2026-07-15 (Nav overhaul + Templates crash fix)
 
 **Done:**

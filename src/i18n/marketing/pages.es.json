@@ -740,7 +740,9 @@
     "badges": {
       "Popular": "Popular",
       "New": "Nuevo",
-      "Legal-Grade": "Grado legal"
+      "Legal-Grade": "Grado legal",
+      "Government-Grade": "Nivel gobierno",
+      "Compliance": "Cumplimiento"
     },
     "viewDetails": "Ver detalles",
     "quickPreview": "Vista previa rápida",
@@ -765,7 +767,11 @@
       "title": "¿Listo para probar algo?",
       "subtitle": "Sin cuenta. Sin claves que configurar. Solo suelta un archivo y obtén una prueba de existencia anclada en Bitcoin en menos de 60 segundos.",
       "button": "Sellar un archivo — Es gratis"
-    }
+    },
+    "createOwnHint": "Elige cualquier plantilla abajo, o ábrela para personalizar campos y datos de demo.",
+    "browseAll": "Explorar plantillas",
+    "viewApi": "Abrir Developer",
+    "startCustom": "Explorar y personalizar"
   },
   "contributePage": {
     "hero": {
@@ -943,7 +949,11 @@
       "proofCopied": "¡Prueba copiada!"
     },
     "statusVerified": "✓ Verificada",
-    "statusPending": "⏳ Pendiente"
+    "statusPending": "⏳ Pendiente",
+    "validFingerprint": "Huella válida",
+    "hashOnlyMessage": "Huella SHA-256 válida. No hay atestación de Bitcoin en la bóveda local: se necesita API o archivo .ots para la prueba completa.",
+    "localVault": "Cargado desde la bóveda local de este dispositivo.",
+    "exportVc": "Exportar credencial verificable"
   },
   "footerPage": {
     "tagline": "El sistema operativo soberano para la verdad digital. Anclado a la red Bitcoin, proporcionamos el registro criptográfico definitivo para la procedencia institucional y la verificación forense.",
@@ -1142,7 +1152,17 @@
     "chooseFile": "Elegir archivo",
     "confirmedToast": "¡Confirmado en Bitcoin!",
     "stampFailed": "Sellado fallido",
-    "feeUnavailable": "Tarifas no disponibles"
+    "feeUnavailable": "Tarifas no disponibles",
+    "motopassLoaded": "Hash de MotoPass cargado",
+    "motopassDesc": "Sube el archivo correspondiente para completar el sellado, o sella el hash vía calendarios públicos.",
+    "linkedHashReady": "Hash de MotoPass / vinculado listo: sella en OpenTimestamps sin volver a subir un archivo.",
+    "stampHashBtn": "Sellar hash vía calendarios públicos",
+    "step1Label": "Suelta tu archivo",
+    "step1Desc": "Cualquier formato. Se queda en tu dispositivo — nunca se sube.",
+    "step2Label": "Lo hasheamos localmente",
+    "step2Desc": "Se calcula una huella SHA-256 única en tu navegador.",
+    "step3Label": "Bitcoin lo marca en el tiempo",
+    "step3Desc": "La huella se escribe de forma permanente en la blockchain."
   },
   "vaultPage": {
     "securityAge": {
@@ -1160,11 +1180,33 @@
     "empty": {
       "title": "Sin pruebas",
       "body": "Selle un documento para verlo aquí."
+    },
+    "revoke": {
+      "title": "Revocar prueba",
+      "body": "Esto marca el registro como revocado de forma permanente. El ancla de Bitcoin permanece inmutable.",
+      "confirm": "Confirmar revocación",
+      "cancel": "Cancelar"
     }
   },
   "nav": {
     "government": "Gobierno",
     "batchHash": "Hash por lotes",
     "widgets": "Widgets"
+  },
+  "evidenceAdmissibilityPage": {
+    "title": "Guía de admisibilidad de pruebas",
+    "subtitle": "Matriz de jurisdicciones para pruebas basadas en hash bajo UETA, eIDAS, Reino Unido y derecho transfronterizo."
+  },
+  "distressedAssetPage": {
+    "title": "Atestación de activos en dificultades",
+    "subtitle": "Hashea metadatos de listados para operaciones soberanas. Combínalo con .ots alojados de listados MotoPass.",
+    "stampListing": "Sellar hash del listado",
+    "compareHosted": "Comparar con prueba alojada",
+    "hostedPlaceholder": "URL de .ots alojado en motopass o CDN"
+  },
+  "templateDetailPage": {
+    "notFound": "Plantilla no encontrada",
+    "loadError": "No se pudo cargar la plantilla",
+    "demoBadge": "Datos de demostración"
   }
 }

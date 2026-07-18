@@ -740,7 +740,9 @@
     "badges": {
       "Popular": "Popular",
       "New": "Novo",
-      "Legal-Grade": "Nível jurídico"
+      "Legal-Grade": "Nível jurídico",
+      "Government-Grade": "Nível governo",
+      "Compliance": "Conformidade"
     },
     "viewDetails": "Ver detalhes",
     "quickPreview": "Prévia rápida",
@@ -765,7 +767,11 @@
       "title": "Pronto para provar algo?",
       "subtitle": "Sem conta necessária. Sem chaves para configurar. Basta enviar um arquivo e obter uma prova de existência ancorada em Bitcoin em menos de 60 segundos.",
       "button": "Carimbar um arquivo — É grátis"
-    }
+    },
+    "createOwnHint": "Escolha qualquer modelo abaixo, ou abra um para personalizar campos e dados de demonstração.",
+    "browseAll": "Explorar modelos",
+    "viewApi": "Abrir Developer",
+    "startCustom": "Explorar e personalizar"
   },
   "contributePage": {
     "hero": {
@@ -943,7 +949,11 @@
       "proofCopied": "Prova copiada!"
     },
     "statusVerified": "✓ Verificada",
-    "statusPending": "⏳ Pendente"
+    "statusPending": "⏳ Pendente",
+    "validFingerprint": "Impressão digital válida",
+    "hashOnlyMessage": "Impressão SHA-256 válida. Atestação Bitcoin não encontrada no cofre local — API ou arquivo .ots necessário para a prova completa.",
+    "localVault": "Carregado do seu cofre local neste dispositivo.",
+    "exportVc": "Exportar credencial verificável"
   },
   "footerPage": {
     "tagline": "O sistema operacional soberano para a verdade digital. Ancorado à rede Bitcoin, fornecemos o registro criptográfico definitivo para proveniência institucional e verificação forense.",
@@ -1142,7 +1152,17 @@
     "chooseFile": "Escolher arquivo",
     "confirmedToast": "Confirmado no Bitcoin!",
     "stampFailed": "Falha ao carimbar",
-    "feeUnavailable": "Taxas indisponíveis"
+    "feeUnavailable": "Taxas indisponíveis",
+    "motopassLoaded": "Hash MotoPass carregado",
+    "motopassDesc": "Envie o arquivo correspondente para concluir o carimbo, ou carimbe o hash via calendários públicos.",
+    "linkedHashReady": "Hash MotoPass / vinculado pronto — carimbe no OpenTimestamps sem reenviar o arquivo.",
+    "stampHashBtn": "Carimbar hash via calendários públicos",
+    "step1Label": "Solte seu arquivo",
+    "step1Desc": "Qualquer formato. Fica no seu dispositivo — nunca é enviado.",
+    "step2Label": "Hasheamos localmente",
+    "step2Desc": "Uma impressão SHA-256 única é calculada no seu navegador.",
+    "step3Label": "O Bitcoin carimba no tempo",
+    "step3Desc": "A impressão é gravada permanentemente na blockchain."
   },
   "vaultPage": {
     "securityAge": {
@@ -1160,11 +1180,33 @@
     "empty": {
       "title": "Sem provas",
       "body": "Carimbe um documento."
+    },
+    "revoke": {
+      "title": "Revogar prova",
+      "body": "Isto marca o registro como revogado permanentemente. A âncora Bitcoin permanece imutável.",
+      "confirm": "Confirmar revogação",
+      "cancel": "Cancelar"
     }
   },
   "nav": {
     "government": "Governo",
     "batchHash": "Hash em lote",
     "widgets": "Widgets"
+  },
+  "evidenceAdmissibilityPage": {
+    "title": "Guia de admissibilidade de provas",
+    "subtitle": "Matriz de jurisdições para provas baseadas em hash sob UETA, eIDAS, Reino Unido e direito transfronteiriço."
+  },
+  "distressedAssetPage": {
+    "title": "Atestação de ativos em dificuldade",
+    "subtitle": "Hasheie metadados de listagens para operações soberanas. Combine com .ots hospedados de listagens MotoPass.",
+    "stampListing": "Carimbar hash da listagem",
+    "compareHosted": "Comparar com prova hospedada",
+    "hostedPlaceholder": "URL de .ots hospedado em motopass ou CDN"
+  },
+  "templateDetailPage": {
+    "notFound": "Modelo não encontrado",
+    "loadError": "Não foi possível carregar o modelo",
+    "demoBadge": "Dados de demonstração"
   }
 }

@@ -730,7 +730,9 @@
     "badges": {
       "Popular": "热门",
       "New": "新",
-      "Legal-Grade": "法律级"
+      "Legal-Grade": "法律级",
+      "Government-Grade": "政府级",
+      "Compliance": "合规"
     },
     "viewDetails": "查看详情",
     "quickPreview": "快速预览",
@@ -755,7 +757,11 @@
       "title": "准备好证明点什么了吗？",
       "subtitle": "无需账户。无需设置密钥。拖放文件，60 秒内获得 Bitcoin 锚定存在证明。",
       "button": "为文件加盖时间戳——完全免费"
-    }
+    },
+    "createOwnHint": "在下方选择任意模板，或打开一个以自定义字段和演示数据。",
+    "browseAll": "浏览模板",
+    "viewApi": "打开开发者",
+    "startCustom": "浏览并自定义"
   },
   "contributePage": {
     "hero": {
@@ -933,7 +939,11 @@
       "proofCopied": "证明已复制！"
     },
     "statusVerified": "✓ 已验证",
-    "statusPending": "⏳ 待确认"
+    "statusPending": "⏳ 待确认",
+    "validFingerprint": "有效指纹",
+    "hashOnlyMessage": "有效的 SHA-256 指纹。本地保险库中未找到比特币证明 — 完整证明需要 API 或 .ots 文件。",
+    "localVault": "已从此设备的本地保险库加载。",
+    "exportVc": "导出可验证凭证"
   },
   "footerPage": {
     "tagline": "数字真相的主权操作系统。锚定 Bitcoin 网络，我们为机构溯源和取证验证提供终极加密账本。",
@@ -1132,7 +1142,17 @@
     "chooseFile": "选择文件",
     "confirmedToast": "已在比特币上确认！",
     "stampFailed": "盖章失败",
-    "feeUnavailable": "费用不可用"
+    "feeUnavailable": "费用不可用",
+    "motopassLoaded": "已加载 MotoPass 哈希",
+    "motopassDesc": "上传匹配文件以完成盖章，或通过公共日历盖章哈希。",
+    "linkedHashReady": "MotoPass / 关联哈希已就绪 — 无需重新上传文件即可盖章到 OpenTimestamps。",
+    "stampHashBtn": "通过公共日历盖章哈希",
+    "step1Label": "拖放您的文件",
+    "step1Desc": "任意格式。留在您的设备上 — 永不上传。",
+    "step2Label": "我们在本地计算哈希",
+    "step2Desc": "在浏览器中计算唯一的 SHA-256 指纹。",
+    "step3Label": "比特币为其打时间戳",
+    "step3Desc": "指纹被永久写入区块链。"
   },
   "vaultPage": {
     "securityAge": {
@@ -1150,11 +1170,33 @@
     "empty": {
       "title": "暂无证明",
       "body": "盖章文档后将显示在此。"
+    },
+    "revoke": {
+      "title": "撤销证明",
+      "body": "这将永久将该记录标记为已撤销。比特币锚点保持不可变。",
+      "confirm": "确认撤销",
+      "cancel": "取消"
     }
   },
   "nav": {
     "government": "政府",
     "batchHash": "批量哈希",
     "widgets": "小组件"
+  },
+  "evidenceAdmissibilityPage": {
+    "title": "证据可采性指南",
+    "subtitle": "在 UETA、eIDAS、英国及跨境法律下基于哈希的证据管辖矩阵。"
+  },
+  "distressedAssetPage": {
+    "title": "困境资产证明",
+    "subtitle": "为主权资产交易哈希列表元数据。可与 MotoPass 托管的 .ots 配对。",
+    "stampListing": "盖章列表哈希",
+    "compareHosted": "与托管证明比对",
+    "hostedPlaceholder": "motopass 或 CDN 上的托管 .ots URL"
+  },
+  "templateDetailPage": {
+    "notFound": "未找到模板",
+    "loadError": "无法加载模板",
+    "demoBadge": "演示数据"
   }
 }

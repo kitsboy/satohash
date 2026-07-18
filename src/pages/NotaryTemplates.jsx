@@ -45,7 +45,11 @@ import {
   AlertTriangle,
   History,
   ChevronDown,
-  RotateCcw
+  RotateCcw,
+  Fingerprint,
+  Globe,
+  Scale,
+  FileCheck
 } from 'lucide-react'
 
 // ─── TEMPLATES DATA ────────────────────────────────────────────────────────────
@@ -1018,6 +1022,190 @@ export const TEMPLATES = [
       contact: 'legal@meridiansoftware.com / (617) 555-0188',
       letter_date: 'December 5, 2025'
     }
+  },
+  // ── GOVERNMENT & TRAVEL (manifest specialSections) ────────────────────────────
+  {
+    id: 'passport-attestation',
+    title: 'Passport & ID Attestation',
+    category: 'Government & Travel',
+    badge: 'Government-Grade',
+    icon: Fingerprint,
+    description:
+      'Fingerprint passport or national ID metadata for MotoPass, cross-border programs, and distressed-asset trade — document never leaves the device.',
+    fields: [
+      { id: 'holder_name', label: 'Full Legal Name', type: 'text' },
+      { id: 'holder_dob', label: 'Date of Birth', type: 'text' },
+      { id: 'nationality', label: 'Nationality', type: 'text' },
+      { id: 'document_type', label: 'Document Type', type: 'text' },
+      { id: 'document_number', label: 'Passport / ID Number', type: 'text' },
+      { id: 'issuing_authority', label: 'Issuing Authority', type: 'text' },
+      { id: 'issue_date', label: 'Issue Date', type: 'text' },
+      { id: 'expiry_date', label: 'Expiry Date', type: 'text' },
+      { id: 'program_name', label: 'Program / Agency Purpose', type: 'text' },
+      { id: 'jurisdiction', label: 'Jurisdiction', type: 'text' },
+      { id: 'linked_asset', label: 'Linked Asset or Entitlement', type: 'textarea' },
+      { id: 'witness_name', label: 'Witness Name (optional)', type: 'text' },
+      { id: 'witness_capacity', label: 'Witness Capacity', type: 'text' },
+      { id: 'attestation_date', label: 'Attestation Date', type: 'text' }
+    ],
+    demoData: {
+      holder_name: 'Amina Elise Okonkwo',
+      holder_dob: '12 April 1990',
+      nationality: 'Nigerian',
+      document_type: 'Passport',
+      document_number: 'A01234567 (demo — do not use real IDs)',
+      issuing_authority: 'Nigeria Immigration Service',
+      issue_date: '15 March 2022',
+      expiry_date: '14 March 2032',
+      program_name: 'MotoPass cross-border mobility attestation',
+      jurisdiction: 'Federal Republic of Nigeria / receiving state TBD',
+      linked_asset: 'Distressed-asset listing ref. MP-DA-4421 (metadata hash only).',
+      witness_name: 'Optional — leave blank for self-attestation',
+      witness_capacity: 'N/A',
+      attestation_date: '18 July 2026'
+    }
+  },
+  {
+    id: 'national-id-attestation',
+    title: 'National ID Attestation',
+    category: 'Government & Travel',
+    badge: 'Government-Grade',
+    icon: Shield,
+    description:
+      'Hash national ID metadata for border programs without uploading biometrics or full identity documents.',
+    fields: [
+      { id: 'holder_name', label: 'Full Legal Name', type: 'text' },
+      { id: 'holder_dob', label: 'Date of Birth', type: 'text' },
+      { id: 'nationality', label: 'Nationality / Citizenship', type: 'text' },
+      { id: 'id_type', label: 'ID Document Type', type: 'text' },
+      { id: 'id_number', label: 'National ID Number', type: 'text' },
+      { id: 'issuing_authority', label: 'Issuing Authority', type: 'text' },
+      { id: 'issue_date', label: 'Issue Date', type: 'text' },
+      { id: 'expiry_date', label: 'Expiry Date (if any)', type: 'text' },
+      { id: 'program_name', label: 'Program / Agency', type: 'text' },
+      { id: 'purpose', label: 'Purpose of Attestation', type: 'textarea' },
+      { id: 'attestation_date', label: 'Attestation Date', type: 'text' }
+    ],
+    demoData: {
+      holder_name: 'Carlos Miguel Rivera',
+      holder_dob: '3 September 1985',
+      nationality: 'Mexican',
+      id_type: 'INE / National Voter ID (demo)',
+      id_number: 'DEMO-INE-884421 (not a real ID)',
+      issuing_authority: 'Instituto Nacional Electoral',
+      issue_date: '10 January 2021',
+      expiry_date: '10 January 2031',
+      program_name: 'Border mobility / eligibility check',
+      purpose:
+        'Prove existence of ID metadata at attestation time without uploading biometrics or full document scans.',
+      attestation_date: '18 July 2026'
+    }
+  },
+  {
+    id: 'diplomatic-note',
+    title: 'Diplomatic Note',
+    category: 'Government & Travel',
+    badge: 'Government-Grade',
+    icon: Globe,
+    description:
+      'Timestamp diplomatic correspondence and official notes with independent Bitcoin-anchored proof.',
+    fields: [
+      { id: 'note_reference', label: 'Note / Reference Number', type: 'text' },
+      { id: 'sending_mission', label: 'Sending Mission / Ministry', type: 'text' },
+      { id: 'receiving_mission', label: 'Receiving Mission / Ministry', type: 'text' },
+      { id: 'note_type', label: 'Note Type', type: 'text' },
+      { id: 'subject', label: 'Subject Line', type: 'text' },
+      { id: 'summary', label: 'Summary of Contents', type: 'textarea' },
+      { id: 'classification', label: 'Classification / Handling', type: 'text' },
+      { id: 'signatory', label: 'Signatory Name & Title', type: 'text' },
+      { id: 'place', label: 'Place of Issuance', type: 'text' },
+      { id: 'note_date', label: 'Date of Note', type: 'text' }
+    ],
+    demoData: {
+      note_reference: 'NV-2026-0142 (demo)',
+      sending_mission: 'Embassy of the Republic of Exemplia',
+      receiving_mission: 'Ministry of Foreign Affairs, Host State',
+      note_type: 'Note Verbale',
+      subject: 'Request for courtesy facilitation — cultural exchange delegation',
+      summary:
+        'The Embassy presents its compliments and requests facilitation for a six-person cultural delegation arriving 1–8 August 2026. No classified annexes. Demo text only.',
+      classification: 'Unclassified / For official use',
+      signatory: 'H.E. Liora V. Santos, Ambassador',
+      place: 'Capital City',
+      note_date: '18 July 2026'
+    }
+  },
+  {
+    id: 'beneficial-ownership',
+    title: 'Beneficial Ownership Declaration',
+    category: 'Government & Travel',
+    badge: 'Compliance',
+    icon: Scale,
+    description:
+      'Anchor ultimate beneficial owner (UBO) declarations for AML and cross-border asset programs.',
+    fields: [
+      { id: 'entity_name', label: 'Legal Entity Name', type: 'text' },
+      { id: 'entity_type', label: 'Entity Type', type: 'text' },
+      { id: 'registration_number', label: 'Registration / Company Number', type: 'text' },
+      { id: 'jurisdiction', label: 'Jurisdiction of Incorporation', type: 'text' },
+      { id: 'registered_address', label: 'Registered Address', type: 'text' },
+      { id: 'ubo_name', label: 'Ultimate Beneficial Owner Name', type: 'text' },
+      { id: 'ubo_nationality', label: 'UBO Nationality', type: 'text' },
+      { id: 'ownership_pct', label: 'Ownership Percentage', type: 'text' },
+      { id: 'control_description', label: 'Nature of Control', type: 'textarea' },
+      { id: 'pep_status', label: 'PEP Status', type: 'text' },
+      { id: 'declaring_officer', label: 'Declaring Officer Name & Title', type: 'text' },
+      { id: 'declaration_date', label: 'Declaration Date', type: 'text' }
+    ],
+    demoData: {
+      entity_name: 'Harborline Holdings Ltd. (demo)',
+      entity_type: 'Private limited company',
+      registration_number: 'HC-442198 (demo)',
+      jurisdiction: 'Republic of Exemplia',
+      registered_address: '14 Commerce Quay, Capital City',
+      ubo_name: 'Nadia R. Ellison',
+      ubo_nationality: 'Canadian',
+      ownership_pct: '62% voting shares',
+      control_description:
+        'Direct ownership of ordinary shares conferring majority voting rights. No nominee arrangements in this demo record.',
+      pep_status: 'Not a politically exposed person (self-declared demo)',
+      declaring_officer: 'James K. Okoye, Company Secretary',
+      declaration_date: '18 July 2026'
+    }
+  },
+  {
+    id: 'apostille-companion',
+    title: 'Apostille Companion Hash',
+    category: 'Government & Travel',
+    badge: 'Legal-Grade',
+    icon: FileCheck,
+    description:
+      'Pair Hague apostille workflows with an independent SHA-256 fingerprint of the underlying public document.',
+    fields: [
+      { id: 'document_title', label: 'Underlying Document Title', type: 'text' },
+      { id: 'document_type', label: 'Document Type', type: 'text' },
+      { id: 'issuing_authority', label: 'Issuing Authority of Document', type: 'text' },
+      { id: 'document_date', label: 'Document Date', type: 'text' },
+      { id: 'apostille_country', label: 'Apostille Country (Hague)', type: 'text' },
+      { id: 'apostille_number', label: 'Apostille Number (if issued)', type: 'text' },
+      { id: 'competent_authority', label: 'Competent Authority', type: 'text' },
+      { id: 'hash_purpose', label: 'Purpose of Companion Hash', type: 'textarea' },
+      { id: 'requestor_name', label: 'Requestor Name', type: 'text' },
+      { id: 'companion_date', label: 'Companion Record Date', type: 'text' }
+    ],
+    demoData: {
+      document_title: 'Certificate of Good Standing — Harborline Holdings Ltd. (demo)',
+      document_type: 'Corporate public document',
+      issuing_authority: 'Companies Registry, Republic of Exemplia',
+      document_date: '1 June 2026',
+      apostille_country: 'Republic of Exemplia (Hague Convention party — demo)',
+      apostille_number: 'AP-2026-8891 (if already issued; else pending)',
+      competent_authority: 'Ministry of Foreign Affairs — Apostille Unit',
+      hash_purpose:
+        'Independent SHA-256 fingerprint of the public document bytes prior to or alongside apostille, for cross-border verification without relying solely on paper seals.',
+      requestor_name: 'Counsel for Harborline Holdings Ltd.',
+      companion_date: '18 July 2026'
+    }
   }
 ]
 
@@ -1032,7 +1220,8 @@ const CATEGORIES = [
   'Financial',
   'Estate',
   'HR',
-  'Commercial'
+  'Commercial',
+  'Government & Travel'
 ]
 
 const CATEGORY_COLORS = {
@@ -1043,13 +1232,20 @@ const CATEGORY_COLORS = {
   Financial: { bg: 'rgba(240,180,41,0.12)', text: '#F0B429', border: 'rgba(240,180,41,0.3)' },
   Estate: { bg: 'rgba(251,146,60,0.12)', text: '#fb923c', border: 'rgba(251,146,60,0.3)' },
   HR: { bg: 'rgba(163,230,53,0.12)', text: '#a3e635', border: 'rgba(163,230,53,0.3)' },
-  Commercial: { bg: 'rgba(232,121,249,0.12)', text: '#e879f9', border: 'rgba(232,121,249,0.3)' }
+  Commercial: { bg: 'rgba(232,121,249,0.12)', text: '#e879f9', border: 'rgba(232,121,249,0.3)' },
+  'Government & Travel': {
+    bg: 'rgba(56,189,248,0.12)',
+    text: '#38bdf8',
+    border: 'rgba(56,189,248,0.3)'
+  }
 }
 
 const BADGE_STYLES = {
   Popular: 'bg-amber-400/20 text-amber-300 border border-amber-400/30',
   'Legal-Grade': 'bg-emerald-400/20 text-emerald-300 border border-emerald-400/30',
-  New: 'bg-sky-400/20 text-sky-300 border border-sky-400/30'
+  New: 'bg-sky-400/20 text-sky-300 border border-sky-400/30',
+  'Government-Grade': 'bg-sky-400/20 text-sky-300 border border-sky-400/30',
+  Compliance: 'bg-violet-400/20 text-violet-300 border border-violet-400/30'
 }
 
 // ─── PDF GENERATION ─────────────────────────────────────────────────────────────

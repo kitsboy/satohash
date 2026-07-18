@@ -740,7 +740,9 @@
     "badges": {
       "Popular": "Popular",
       "New": "New",
-      "Legal-Grade": "Legal-Grade"
+      "Legal-Grade": "Legal-Grade",
+      "Government-Grade": "Government-Grade",
+      "Compliance": "Compliance"
     },
     "viewDetails": "View Details",
     "quickPreview": "Quick Preview",
@@ -765,7 +767,11 @@
       "title": "Ready to Prove Something?",
       "subtitle": "No account needed. No keys to set up. Just drop a file and get a Bitcoin-anchored proof of existence in under 60 seconds.",
       "button": "Stamp a File — It's Free"
-    }
+    },
+    "createOwnHint": "Pick any template below, or open one to customize fields and demo data.",
+    "browseAll": "Browse Templates",
+    "viewApi": "Open Developer",
+    "startCustom": "Browse & Customize"
   },
   "contributePage": {
     "hero": {

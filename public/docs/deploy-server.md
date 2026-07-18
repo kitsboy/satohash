@@ -1,5 +1,5 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.giveabit.io · **Version:** 4.1.0-ELITE (Build 102) · **Updated:** 2026-07-16
+> **Live:** https://satohash.giveabit.io · **Version:** 4.1.0-ELITE (Build 103) · **Updated:** 2026-07-18
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Satohash API Server Deploy Guide
@@ -91,6 +91,19 @@ Caddy auto-provisions Let's Encrypt certs per subdomain.
 **Bitcoin node:** skip for MVP. Set `OTS_CALENDARS` to public alice/bob/finney (already in `.env.example`).
 
 ---
+
+## Local smoke (before any VPS)
+
+Run Express locally and verify core routes exist:
+
+```bash
+npm run server          # terminal 1 — http://127.0.0.1:3001
+npm run api:smoke       # terminal 2 — GET /health + POST /api/stamp reachable
+```
+
+- [x] Smoke script checked in: `scripts/api-local-smoke.sh` (`npm run api:smoke`)
+- [ ] Local `npm run server` returns healthy on your machine
+- [ ] VPS still required for public `api.satohash.io` (no credentials in this repo)
 
 ## Pre-flight checklist
 
@@ -256,6 +269,7 @@ pm2 save && pm2 startup
 
 ---
 © 2026 Satohash · Give A Bit
+
 
 
 

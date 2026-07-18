@@ -1,5 +1,5 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.giveabit.io · **Version:** 4.1.0-ELITE (Build 102) · **Updated:** 2026-07-16
+> **Live:** https://satohash.giveabit.io · **Version:** 4.1.0-ELITE (Build 103) · **Updated:** 2026-07-18
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Satohash MVP Readiness
@@ -40,6 +40,9 @@ Frontend only **verifies** NIP-05 (fetch public JSON, compare pubkey). Signing i
 - [x] Wave 2 polish: Stamp/Vault i18n, Widgets v3 white-label, Comparison mobile cards, lazy locale loading
 - [x] Desktop nav v2: centered grid tabs (Stamp/Vault/Verify/Templates + More), no sidebar overlap
 - [x] Templates showcase: government special sections render without features-array crash
+- [x] Government templates wired: passport, national ID, diplomatic note, UBO, apostille companion
+- [x] Marketing i18n: 28 missing stamp/verify/evidence keys filled for de/es/fr/pt/sw/zh
+- [x] Local API smoke: `npm run api:smoke` (requires `npm run server`)
 - [x] W3C Verifiable Credential export on verify page
 - [x] `security.txt` at `/.well-known/security.txt`
 
@@ -74,6 +77,7 @@ Frontend only **verifies** NIP-05 (fetch public JSON, compare pubkey). Signing i
 
 | Date | Build | Change |
 |------|-------|--------|
+| 2026-07-18 | 103+ | i18n 28 keys; government templates in TEMPLATES + manifest; api:smoke |
 | 2026-07-15 | 100 | Templates crash fix — guard `specialSections.features` |
 | 2026-07-15 | 98–99 | Desktop nav v2 — centered grid, compact primary tabs |
 | 2026-07-15 | 94–95 | Static-edge wave 2 — lazy i18n, Stamp/Vault polish, 73 tests |
@@ -81,6 +85,7 @@ Frontend only **verifies** NIP-05 (fetch public JSON, compare pubkey). Signing i
 
 ---
 © 2026 Satohash
+
 
 
 

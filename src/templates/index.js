@@ -539,6 +539,60 @@ export const deleteCustomTemplate = (id) => {
   return true
 }
 
+/** Lightweight prose stubs for government IDs (full field editors live in NotaryTemplates). */
+export const nationalIdAttestationTemplate = {
+  name: 'National ID Attestation',
+  description: 'Hash national ID metadata for border programs without uploading biometrics.',
+  content: `NATIONAL ID ATTESTATION
+
+Holder: [HOLDER_NAME]
+ID Type: [ID_TYPE]
+ID Number: [ID_NUMBER]
+Issuing Authority: [ISSUING_AUTHORITY]
+Program: [PROGRAM_NAME]
+Date: [DATE]
+
+DISCLAIMER: Metadata fingerprint only — not government authentication.`
+}
+
+export const diplomaticNoteTemplate = {
+  name: 'Diplomatic Note',
+  description: 'Timestamp diplomatic correspondence with Bitcoin-anchored proof.',
+  content: `DIPLOMATIC NOTE
+
+Reference: [NOTE_REFERENCE]
+From: [SENDING_MISSION]
+To: [RECEIVING_MISSION]
+Subject: [SUBJECT]
+Date: [NOTE_DATE]
+
+[SUMMARY]`
+}
+
+export const beneficialOwnershipTemplate = {
+  name: 'Beneficial Ownership Declaration',
+  description: 'Anchor UBO declarations for AML and cross-border asset programs.',
+  content: `BENEFICIAL OWNERSHIP DECLARATION
+
+Entity: [ENTITY_NAME]
+Registration: [REGISTRATION_NUMBER]
+UBO: [UBO_NAME]
+Ownership: [OWNERSHIP_PCT]
+Date: [DECLARATION_DATE]`
+}
+
+export const apostilleCompanionTemplate = {
+  name: 'Apostille Companion Hash',
+  description: 'Pair Hague apostille workflows with an independent SHA-256 fingerprint.',
+  content: `APOSTILLE COMPANION HASH
+
+Document: [DOCUMENT_TITLE]
+Type: [DOCUMENT_TYPE]
+Apostille Country: [APOSTILLE_COUNTRY]
+Apostille Number: [APOSTILLE_NUMBER]
+Date: [COMPANION_DATE]`
+}
+
 export const getTemplate = (id) => {
   const templates = {
     nda: ndaTemplate,
@@ -549,6 +603,10 @@ export const getTemplate = (id) => {
     property: propertyTemplate,
     powerOfAttorney: powerOfAttorneyTemplate,
     'passport-attestation': passportAttestationTemplate,
+    'national-id-attestation': nationalIdAttestationTemplate,
+    'diplomatic-note': diplomaticNoteTemplate,
+    'beneficial-ownership': beneficialOwnershipTemplate,
+    'apostille-companion': apostilleCompanionTemplate,
     'child-travel': childTravelConsentTemplate,
     'bill-of-sale': billOfSaleTemplate,
     employment: employmentTemplate,

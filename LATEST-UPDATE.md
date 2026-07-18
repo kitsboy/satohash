@@ -1,3 +1,3 @@
-# satohash — Last Updated 2026-07-15 by Grok
-Brief: Goodbye handoff — nav v2, templates fix, wave 2 docs synced (Build 102)
-Commit: 835abda (Build 102)
+# satohash — Last Updated 2026-07-18 by Grok
+Brief: i18n 28 keys, government templates wired, api:smoke, .ai_docs kebab rename (Build 103)
+Commit: def53bf (Build 103)

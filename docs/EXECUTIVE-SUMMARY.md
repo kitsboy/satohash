@@ -1,5 +1,5 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.giveabit.io · **Version:** 4.1.0-ELITE (Build 102) · **Updated:** 2026-07-16
+> **Live:** https://satohash.giveabit.io · **Version:** 4.1.0-ELITE (Build 103) · **Updated:** 2026-07-18
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Satohash — Executive Summary
@@ -245,6 +245,7 @@ See `SOURCE-OF-TRUTH.md` and `KIMI-HANDOFF-satohash-2026-06-10.md` (generated al
 
 ---
 **Diligence pack:** [docs/diligence/](./diligence/) (investor + architecture + ask)
+
 
 
 

@@ -102,6 +102,26 @@ export default function TemplatesShowcase() {
 
   const openDemo = useCallback(
     async (templateId) => {
+      // CTA special sections (not full editor templates)
+      const SECTION_ROUTES = {
+        'make-your-own': '/templates',
+        'api-benefits': '/developer'
+      }
+      if (SECTION_ROUTES[templateId]) {
+        if (templateId === 'make-your-own') {
+          toast.message(
+            t('templatesPage.createOwnHint', {
+              defaultValue:
+                'Pick any template below, or open one to customize fields and demo data.'
+            })
+          )
+          document.getElementById('templates-grid')?.scrollIntoView({ behavior: 'smooth' })
+          return
+        }
+        navigate(SECTION_ROUTES[templateId])
+        return
+      }
+
       setOpeningDemoId(templateId)
       setPreviewTemplate(null)
       addRecentView(templateId)
@@ -120,7 +140,7 @@ export default function TemplatesShowcase() {
         setOpeningDemoId(null)
       }
     },
-    [navigate]
+    [navigate, t]
   )
 
   useEffect(() => {
@@ -398,7 +418,7 @@ export default function TemplatesShowcase() {
       )}
 
       {/* Template Grid */}
-      <section className="mx-auto max-w-6xl px-6 py-8">
+      <section id="templates-grid" className="mx-auto max-w-6xl px-6 py-8">
         {filteredTemplates.length === 0 ? (
           <div className="flex flex-col items-center gap-4 py-20 text-center">
             <FileText size={40} className="text-[var(--text-tertiary)]" />
@@ -520,7 +540,7 @@ export default function TemplatesShowcase() {
                     <p className="mb-5 text-sm leading-relaxed text-[var(--text-secondary)]">
                       {section.description}
                     </p>
-                    {features.length > 0 ? (
+                    {features.length > 0 && (
                       <ul className="mb-6 space-y-2.5">
                         {features.map((feat, i) => (
                           <li
@@ -532,24 +552,27 @@ export default function TemplatesShowcase() {
                           </li>
                         ))}
                       </ul>
-                    ) : (
-                      <div className="mb-6 flex flex-wrap items-center gap-3">
-                        {section.usageCount != null && (
-                          <span className="text-[10px] font-bold tracking-wider text-[var(--text-tertiary)] uppercase">
-                            {section.usageCount.toLocaleString()} uses
-                          </span>
-                        )}
-                        <button
-                          type="button"
-                          onClick={() => openDemo(section.id)}
-                          disabled={openingDemoId === section.id}
-                          className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--accent-gold)]/40 px-4 py-2 text-[10px] font-bold tracking-wider text-[var(--accent-gold)] uppercase transition-all hover:bg-[var(--accent-gold)]/10 disabled:opacity-50"
-                        >
-                          {t('templatesPage.viewDetails')}
-                          <ArrowRight size={12} />
-                        </button>
-                      </div>
                     )}
+                    <div className="mb-0 flex flex-wrap items-center gap-3">
+                      {section.usageCount != null && features.length === 0 && (
+                        <span className="text-[10px] font-bold tracking-wider text-[var(--text-tertiary)] uppercase">
+                          {section.usageCount.toLocaleString()} uses
+                        </span>
+                      )}
+                      <button
+                        type="button"
+                        onClick={() => openDemo(section.id)}
+                        disabled={openingDemoId === section.id}
+                        className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--accent-gold)]/40 px-4 py-2 text-[10px] font-bold tracking-wider text-[var(--accent-gold)] uppercase transition-all hover:bg-[var(--accent-gold)]/10 disabled:opacity-50"
+                      >
+                        {section.id === 'api-benefits'
+                          ? t('templatesPage.viewApi', { defaultValue: 'Open Developer' })
+                          : section.id === 'make-your-own'
+                            ? t('templatesPage.startCustom', { defaultValue: 'Browse & Customize' })
+                            : t('templatesPage.viewDetails')}
+                        <ArrowRight size={12} />
+                      </button>
+                    </div>
                   </div>
                 </div>
               )

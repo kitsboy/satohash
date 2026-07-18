@@ -740,7 +740,9 @@
     "badges": {
       "Popular": "Populaire",
       "New": "Nouveau",
-      "Legal-Grade": "Qualité juridique"
+      "Legal-Grade": "Qualité juridique",
+      "Government-Grade": "Niveau gouvernement",
+      "Compliance": "Conformité"
     },
     "viewDetails": "Voir les détails",
     "quickPreview": "Aperçu rapide",
@@ -765,7 +767,11 @@
       "title": "Prêt à prouver quelque chose ?",
       "subtitle": "Aucun compte requis. Aucune clé à configurer. Déposez simplement un fichier et obtenez une preuve d'existence ancrée sur Bitcoin en moins de 60 secondes.",
       "button": "Horodater un fichier — C'est gratuit"
-    }
+    },
+    "createOwnHint": "Choisissez un modèle ci-dessous, ou ouvrez-en un pour personnaliser les champs et les données de démo.",
+    "browseAll": "Parcourir les modèles",
+    "viewApi": "Ouvrir Developer",
+    "startCustom": "Parcourir et personnaliser"
   },
   "contributePage": {
     "hero": {
@@ -943,7 +949,11 @@
       "proofCopied": "Preuve copiée !"
     },
     "statusVerified": "✓ Vérifiée",
-    "statusPending": "⏳ En attente"
+    "statusPending": "⏳ En attente",
+    "validFingerprint": "Empreinte valide",
+    "hashOnlyMessage": "Empreinte SHA-256 valide. Aucune attestation Bitcoin dans le coffre local — API ou fichier .ots requis pour la preuve complète.",
+    "localVault": "Chargé depuis votre coffre local sur cet appareil.",
+    "exportVc": "Exporter la credential vérifiable"
   },
   "footerPage": {
     "tagline": "Le système d'exploitation souverain pour la vérité numérique. Ancré sur le réseau Bitcoin, nous fournissons le registre cryptographique ultime pour la provenance institutionnelle et la vérification forensique.",
@@ -1142,7 +1152,17 @@
     "chooseFile": "Choisir fichier",
     "confirmedToast": "Confirmé sur Bitcoin !",
     "stampFailed": "Échec",
-    "feeUnavailable": "Frais indisponibles"
+    "feeUnavailable": "Frais indisponibles",
+    "motopassLoaded": "Hash MotoPass chargé",
+    "motopassDesc": "Téléversez le fichier correspondant pour terminer le tampon, ou tamponnez le hash via les calendriers publics.",
+    "linkedHashReady": "Hash MotoPass / lié prêt — tamponnez vers OpenTimestamps sans re-téléverser un fichier.",
+    "stampHashBtn": "Tamponner le hash via calendriers publics",
+    "step1Label": "Déposez votre fichier",
+    "step1Desc": "Tout format. Reste sur votre appareil — jamais téléversé.",
+    "step2Label": "Nous le hachons localement",
+    "step2Desc": "Une empreinte SHA-256 unique est calculée dans votre navigateur.",
+    "step3Label": "Bitcoin l’horodate",
+    "step3Desc": "L’empreinte est écrite de façon permanente sur la blockchain."
   },
   "vaultPage": {
     "securityAge": {
@@ -1160,11 +1180,33 @@
     "empty": {
       "title": "Aucune preuve",
       "body": "Tamponnez un document."
+    },
+    "revoke": {
+      "title": "Révoquer la preuve",
+      "body": "Cela marque définitivement l’enregistrement comme révoqué. L’ancre Bitcoin reste immuable.",
+      "confirm": "Confirmer la révocation",
+      "cancel": "Annuler"
     }
   },
   "nav": {
     "government": "Gouvernement",
     "batchHash": "Hash par lots",
     "widgets": "Widgets"
+  },
+  "evidenceAdmissibilityPage": {
+    "title": "Guide d’admissibilité des preuves",
+    "subtitle": "Matrice juridictionnelle pour les preuves basées sur hash sous UETA, eIDAS, Royaume-Uni et droit transfrontalier."
+  },
+  "distressedAssetPage": {
+    "title": "Attestation d’actifs en difficulté",
+    "subtitle": "Hashez les métadonnées d’annonces pour des échanges souverains. Associez aux .ots hébergés des listes MotoPass.",
+    "stampListing": "Tamponner le hash de l’annonce",
+    "compareHosted": "Comparer à la preuve hébergée",
+    "hostedPlaceholder": "URL .ots hébergée sur motopass ou CDN"
+  },
+  "templateDetailPage": {
+    "notFound": "Modèle introuvable",
+    "loadError": "Impossible de charger le modèle",
+    "demoBadge": "Données de démo"
   }
 }

@@ -28,7 +28,8 @@
     "deploy": "bash deploy.sh",
     "docs:sync": "node scripts/sync-docs.js",
     "prepare": "husky",
-    "version:bump": "node scripts/increment-build.js"
+    "version:bump": "node scripts/increment-build.js",
+    "api:smoke": "bash scripts/api-local-smoke.sh"
   },
   "lint-staged": {
     "src/**/*.{js,jsx}": [

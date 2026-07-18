@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { FileText } from 'lucide-react'
 import usePageMeta from '../hooks/usePageMeta'
 
 export default function TemplateDetail() {
+  const { t } = useTranslation()
   const [template, setTemplate] = useState(null)
   usePageMeta({
     page: 'templateDetail',
@@ -56,15 +58,19 @@ export default function TemplateDetail() {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center gap-4 bg-[var(--bg-primary)] px-6">
         <FileText size={48} className="text-[var(--text-tertiary)]" />
-        <h1 className="text-2xl font-black text-[var(--text-primary)]">Template Not Found</h1>
+        <h1 className="text-2xl font-black text-[var(--text-primary)]">
+          {t('templateDetailPage.notFound', { defaultValue: 'Template not found' })}
+        </h1>
         <p className="text-sm text-[var(--text-secondary)]">
-          This template doesn&apos;t exist or has been removed.
+          {t('templateDetailPage.loadError', {
+            defaultValue: "This template doesn't exist or could not be loaded."
+          })}
         </p>
         <Link
           to="/templates"
           className="rounded-xl bg-[var(--accent-gold)] px-6 py-3 text-xs font-black tracking-wider text-black uppercase"
         >
-          Browse Templates
+          {t('templatesPage.browseAll', { defaultValue: 'Browse Templates' })}
         </Link>
       </div>
     )

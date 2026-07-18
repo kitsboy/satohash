@@ -740,7 +740,9 @@
     "badges": {
       "Popular": "Inayopendwa",
       "New": "Mpya",
-      "Legal-Grade": "Kiwango cha Kisheria"
+      "Legal-Grade": "Kiwango cha Kisheria",
+      "Government-Grade": "Kiwango cha serikali",
+      "Compliance": "Uzingatiaji"
     },
     "viewDetails": "Angalia Maelezo",
     "quickPreview": "Hakiki ya Haraka",
@@ -765,7 +767,11 @@
       "title": "Tayari Kuthibitisha Kitu?",
       "subtitle": "Hakuna akaunti inayohitajika. Hakuna funguo za kusanidi. Weka faili tu na upate uthibitisho wa kuwepo unaounganishwa na Bitcoin chini ya sekunde 60.",
       "button": "Weka Muhuri kwenye Faili — Ni Bure"
-    }
+    },
+    "createOwnHint": "Chagua kiolezo chochote hapa chini, au fungua kimoja kubinafsisha sehemu na data ya onyesho.",
+    "browseAll": "Vinjari violezo",
+    "viewApi": "Fungua Developer",
+    "startCustom": "Vinjari na binafsisha"
   },
   "contributePage": {
     "hero": {
@@ -943,7 +949,11 @@
       "proofCopied": "Uthibitisho umenakiliwa!"
     },
     "statusVerified": "✓ Imethibitishwa",
-    "statusPending": "⏳ Inasubiri"
+    "statusPending": "⏳ Inasubiri",
+    "validFingerprint": "Alama halali",
+    "hashOnlyMessage": "Alama halali ya SHA-256. Uthibitisho wa Bitcoin haupo kwenye vault ya ndani — API au faili .ots inahitajika kwa uthibitisho kamili.",
+    "localVault": "Imepakuliwa kutoka vault yako ya ndani kwenye kifaa hiki.",
+    "exportVc": "Hamisha cheti kinachoweza kuthibitishwa"
   },
   "footerPage": {
     "tagline": "Mfumo wa uendeshaji huru kwa ukweli wa kidijitali. Imeunganishwa kwenye mtandao wa Bitcoin, tunatoa leja ya kriptografia bora kwa asili ya taasisi na uthibitishaji wa uchunguzi wa kisheria.",
@@ -1142,7 +1152,17 @@
     "chooseFile": "Chagua faili",
     "confirmedToast": "Imethibitishwa kwenye Bitcoin!",
     "stampFailed": "Imeshindwa",
-    "feeUnavailable": "Ada hazipatikani"
+    "feeUnavailable": "Ada hazipatikani",
+    "motopassLoaded": "Hash ya MotoPass imepakiwa",
+    "motopassDesc": "Pakia faili inayolingana kukamilisha muhuri, au weka muhuri wa hash kupitia kalenda za umma.",
+    "linkedHashReady": "Hash ya MotoPass / iliyounganishwa iko tayari — weka muhuri kwenye OpenTimestamps bila kupakia faili tena.",
+    "stampHashBtn": "Weka muhuri wa hash kupitia kalenda za umma",
+    "step1Label": "Dondosha faili yako",
+    "step1Desc": "Aina yoyote. Inabaki kwenye kifaa chako — haipandishwi kamwe.",
+    "step2Label": "Tunahesabu hash ndani",
+    "step2Desc": "Alama ya kipekee ya SHA-256 inahesabiwa kwenye kivinjari chako.",
+    "step3Label": "Bitcoin inaweka muhuri wa muda",
+    "step3Desc": "Alama inaandikwa kabisa kwenye blockchain."
   },
   "vaultPage": {
     "securityAge": {
@@ -1160,11 +1180,33 @@
     "empty": {
       "title": "Hakuna uthibitisho",
       "body": "Weka muhuri wa hati."
+    },
+    "revoke": {
+      "title": "Batilisha uthibitisho",
+      "body": "Hii inaweka alama ya rekodi kama imebatilishwa kabisa. Nanga ya Bitcoin inabakia isiyobadilika.",
+      "confirm": "Thibitisha kubatilisha",
+      "cancel": "Ghairi"
     }
   },
   "nav": {
     "government": "Serikali",
     "batchHash": "Batch hash",
     "widgets": "Widgets"
+  },
+  "evidenceAdmissibilityPage": {
+    "title": "Mwongozo wa kukubalika kwa ushahidi",
+    "subtitle": "Jedwali la mamlaka kwa ushahidi wa hash chini ya UETA, eIDAS, Uingereza, na sheria za kuvuka mipaka."
+  },
+  "distressedAssetPage": {
+    "title": "Uthibitisho wa mali yenye shida",
+    "subtitle": "Hash metadata ya orodha kwa biashara huru. Unganisha na .ots zilizohifadhiwa kutoka orodha za MotoPass.",
+    "stampListing": "Weka muhuri wa hash ya orodha",
+    "compareHosted": "Linganisha na uthibitisho uliohifadhiwa",
+    "hostedPlaceholder": "URL ya .ots iliyohifadhiwa kwenye motopass au CDN"
+  },
+  "templateDetailPage": {
+    "notFound": "Kiolezo hakijapatikana",
+    "loadError": "Haikuweza kupakia kiolezo",
+    "demoBadge": "Data ya onyesho"
   }
 }

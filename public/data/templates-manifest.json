@@ -164,6 +164,51 @@
       "description": "Comprehensive employment agreement with duties, compensation, benefits, and restrictive covenants.",
       "icon": "Briefcase",
       "usageCount": 1120
+    },
+    {
+      "id": "passport-attestation",
+      "title": "Passport & ID Attestation",
+      "category": "government-travel",
+      "badge": "Government-Grade",
+      "description": "Fingerprint passport or national ID metadata for MotoPass and cross-border programs — document never leaves the device.",
+      "icon": "Fingerprint",
+      "usageCount": 420
+    },
+    {
+      "id": "national-id-attestation",
+      "title": "National ID Attestation",
+      "category": "government-travel",
+      "badge": "Government-Grade",
+      "description": "Hash national ID metadata for border programs without uploading biometrics.",
+      "icon": "Shield",
+      "usageCount": 180
+    },
+    {
+      "id": "diplomatic-note",
+      "title": "Diplomatic Note",
+      "category": "government-travel",
+      "badge": "Government-Grade",
+      "description": "Timestamp diplomatic correspondence and official notes with Bitcoin proof.",
+      "icon": "Globe",
+      "usageCount": 95
+    },
+    {
+      "id": "beneficial-ownership",
+      "title": "Beneficial Ownership Declaration",
+      "category": "government-travel",
+      "badge": "Compliance",
+      "description": "Anchor UBO declarations for AML and cross-border asset programs.",
+      "icon": "Scale",
+      "usageCount": 210
+    },
+    {
+      "id": "apostille-companion",
+      "title": "Apostille Companion Hash",
+      "category": "government-travel",
+      "badge": "Legal-Grade",
+      "description": "Pair Hague apostille workflows with independent SHA-256 fingerprints.",
+      "icon": "FileCheck",
+      "usageCount": 140
     }
   ],
   "specialSections": [
