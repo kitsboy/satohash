@@ -26,7 +26,7 @@ Session handoff log for Kimi (M4 HERMES). Append new entries at the top.
 - Cross-project API integration (Katoa, MotoPass)
 
 **Git State:**
-- SHA: 
+- SHA: `00c64a87b7138a80cd0b1683912e78aabdc1af79`
 - Build: 105
 - Branch: main
 - Unpushed: none (after push)
