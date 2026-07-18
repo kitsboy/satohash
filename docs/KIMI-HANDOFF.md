@@ -13,7 +13,7 @@ Session handoff log for Kimi (M4 HERMES). Append new entries at the top.
 - TemplatesShowcase: CTA routes for make-your-own → grid scroll, api-benefits → /developer; always show action buttons on special sections
 - Local API smoke: `scripts/api-local-smoke.sh` + `npm run api:smoke`; rebuilt better-sqlite3 for Node 22; health 200 + stamp 402 (paywall) locally
 - `.ai_docs/` kebab-case knowledge layer + GROK-SESSION-PROTOCOL Step 1 for `.ai_docs/`
-- Unit tests: 77 passing (4 new governmentTemplates tests); Build 103 production build OK
+- Unit tests: 77 passing (4 new governmentTemplates tests); Build 105 production path OK (hooks bumped 103→105)
 
 **Decisions:**
 - VPS/public `api.satohash.io` still needs human provider account + DNS — not deployable from this session
@@ -27,7 +27,7 @@ Session handoff log for Kimi (M4 HERMES). Append new entries at the top.
 
 **Git State:**
 - SHA: 
-- Build: 103
+- Build: 105
 - Branch: main
 - Unpushed: none (after push)
 
