@@ -4,6 +4,30 @@ Session handoff log for Kimi (M4 HERMES). Append new entries at the top.
 
 ---
 
+## Latest Session Summary (from 2026-07-18 goodbye)
+
+**Chat Topic:** Clear open satohash debt (i18n, government templates, API smoke) and document how Cam supplies CF/VPS credentials without secrets in chat.
+
+**Finished in this session:**
+- 28 marketing i18n keys filled (de/es/fr/pt/sw/zh); i18n:check clean
+- Government templates in TEMPLATES + manifest (passport, national-id, diplomatic-note, beneficial-ownership, apostille-companion)
+- TemplatesShowcase CTAs for make-your-own and api-benefits
+- npm run api:smoke; local API health OK; better-sqlite3 rebuilt for Node 22
+- .ai_docs kebab knowledge layer; 77 unit tests; main pushed (0e08263, Build 107)
+
+**Still to do:**
+- Cloudflare deploy of latest main (wrangler login or GitHub CF secrets)
+- VPS + DNS for api.satohash.io per docs/DEPLOY-SERVER.md
+- Frontend rebuild with VITE_API_URL after API live
+- Cross-project API (Katoa, MotoPass)
+
+**Update / Status:** Code-side open items from 2026-07-15 are done. Hosted deploy and public API blocked only on Cam account/credentials (no secrets in chat). Static browser OTS still works.
+
+**Next for Kimi:** Integrate into MASTER-BRAIN / Kanban / Obsidian. Note government template architecture and api:smoke. Do not sync to M4 until instructed.
+
+---
+
+
 ## Session — 2026-07-18 (i18n + government templates + API smoke)
 
 **Done:**
@@ -26,8 +50,8 @@ Session handoff log for Kimi (M4 HERMES). Append new entries at the top.
 - Cross-project API integration (Katoa, MotoPass)
 
 **Git State:**
-- SHA: `00c64a87b7138a80cd0b1683912e78aabdc1af79`
-- Build: 105
+- SHA: `0e08263ca664985a99f7bee2ce68a3fb0650c6f8`
+- Build: 107
 - Branch: main
 - Unpushed: none (after push)
 

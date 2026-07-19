@@ -1,3 +1,3 @@
 # satohash — Last Updated 2026-07-18 by Grok
-Brief: i18n 28 keys, government templates, api:smoke, .ai_docs (Build 106)
-Commit: 00c64a8 (Build 106)
+Brief: Goodbye — i18n, government templates, api:smoke done; CF/VPS still need Cam credentials (Build 107)
+Commit: 0e08263 (Build 107)
