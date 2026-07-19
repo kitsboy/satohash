@@ -6,7 +6,7 @@
 
 ## CANONICAL RULES SOURCE
 
-Your canonical rules come from **MASTER-BRAIN.md** on M4 (`~/MASTER-BRAIN/MASTER-BRAIN.md`).
+Your canonical rules come from **MASTER-BRAIN.md** on THOR (`~/MASTER-BRAIN/MASTER-BRAIN.md`).
 Do NOT create new canonical files, duplicate rules, or invent new workflows outside this protocol.
 
 **If it is not in MASTER-BRAIN.md, it is not a rule.**
@@ -16,10 +16,10 @@ Do NOT create new canonical files, duplicate rules, or invent new workflows outs
 ## Your Role
 
 You are the **M3 coding agent** (via Grok). You edit code, run builds, and push to GitHub.
-Kimi (on M4) handles orchestration, docs, automation, and the Obsidian vault.
+Kimi (on THOR) handles orchestration, docs, automation, and the Obsidian vault.
 
 **M3 root:** `/Users/cam/projects/` — open this folder as workspace.
-**M4 domain** (`~/MASTER-BRAIN/`, Obsidian, `.hermes/`): DO NOT touch from M3.
+**THOR domain** (`~/MASTER-BRAIN/`, Obsidian, `.hermes/`): DO NOT touch from M3.
 
 **M3 is code only.** No new canonical files in `~/projects/`.
 
@@ -29,19 +29,7 @@ Kimi (on M4) handles orchestration, docs, automation, and the Obsidian vault.
 
 Before you say goodbye, run ALL of these steps:
 
-### Step 1 — Update `.ai_docs/` (AI Knowledge Layer)
-
-Before writing the handoff, update the agent knowledge files in `.ai_docs/`:
-
-- **`.ai_docs/current-status.md`** — bump version, add recent milestones, update known issues (ALWAYS update)
-- **`.ai_docs/context-map.md`** — if directory structure, stack, or architecture changed
-- **`.ai_docs/sop-workflow.md`** — if toolchain, build, or deploy commands changed
-- **`.ai_docs/ecosystem-links.md`** — if new cross-project integrations were added
-- **`.ai_docs/project-summary.md`** — if the project purpose or core features changed
-
-**Rule:** Every session updates `.ai_docs/current-status.md`. Other files update on change.
-
-### Step 2 — Write Handoff to `docs/KIMI-HANDOFF.md`
+### Step 1 — Write Handoff to `docs/KIMI-HANDOFF.md`
 
 Append a new section to `docs/KIMI-HANDOFF.md` in the current project with:
 
@@ -59,7 +47,7 @@ Append a new section to `docs/KIMI-HANDOFF.md` in the current project with:
 - Unpushed: `git log --oneline origin/main..HEAD`
 ```
 
-### Step 3 — Verify Git
+### Step 2 — Verify Git
 
 ```bash
 cd ~/projects/<project>
@@ -69,7 +57,7 @@ git log --oneline origin/main..HEAD
 
 If unpushed commits, push: `git push origin main`
 
-### Step 4 — Write `LATEST-UPDATE.md`
+### Step 3 — Write `LATEST-UPDATE.md`
 
 ```markdown
 # <project> — Last Updated YYYY-MM-DD by Grok
@@ -83,22 +71,21 @@ Commit: <sha>
 
 | Project | Handoff |
 |---------|---------|
-| stranded | `~/projects/stranded/docs/KIMI-HANDOFF.md` |
+| openstrata | `~/projects/openstrata/docs/KIMI-HANDOFF.md` |
+| btcminiscript | `~/projects/btcminiscript/docs/KIMI-HANDOFF.md` |
 | giveabit | `~/projects/giveabit/docs/KIMI-HANDOFF.md` |
 | satohash | `~/projects/satohash/docs/KIMI-HANDOFF.md` |
+| stranded | `~/projects/stranded/docs/KIMI-HANDOFF.md` |
 | tadbuy | `~/projects/tadbuy/docs/KIMI-HANDOFF.md` |
 | motopass | `~/projects/motopass/docs/KIMI-HANDOFF.md` |
 | sherpacarta | `~/projects/sherpacarta/docs/KIMI-HANDOFF.md` |
 | katoa | `~/projects/katoa/docs/KIMI-HANDOFF.md` |
-| openstrata | `~/projects/openstrata/docs/KIMI-HANDOFF.md` |
-| camtaylor | `~/projects/camtaylor/docs/KIMI-HANDOFF.md` |
-| lindala | `~/projects/lindala/docs/KIMI-HANDOFF.md` |
-| btcminiscript | `~/projects/btcminiscript/docs/KIMI-HANDOFF.md` |
 
 ---
 
 ## Protocol Purpose
 
-This ensures Kimi sees what you did via handoff files synced via Tailscale. Without it, Kimi stays blind to M3 work.
+This ensures Kimi sees what you did via handoff files synced via GitHub push.
+Without it, Kimi stays blind to M3 work.
 
 *Safe Harbour · Part of the [Give A Bit](https://giveabit.io) family.*
