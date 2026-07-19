@@ -518,3 +518,25 @@ See `KIMI-HANDOFF-satohash-2026-06-10.md` in repo root for the original comprehe
 - [ ] Deploy API per `docs/DEPLOY-SERVER.md`
 - [ ] `VITE_API_URL=https://api.satohash.io npm run build && ./deploy.sh`
 - [ ] End-to-end stamp → verify smoke on production
+
+
+## THOR Ops — 2026-07-19
+
+### Merged ✅
+- tailwind-merge 3.4→3.6
+- knex 3.2.5→3.2.10
+- postcss 8.5.6→8.5.15
+- three.js 0.183→0.184
+- actions/checkout 4→7
+- GROK-SESSION-PROTOCOL updated (M4→THOR)
+
+### Needs You 🔧
+- tailwindcss 4.1→4.3 — merge conflict
+- actions/setup-node 4→6 — merge conflict
+- eslint 8→10 — major, review
+- vitest 3.2→4.1 — major, review
+- @vitejs/plugin-react 4→6 — major, review
+- @anthropic-ai/sdk 0.93→0.98 — review
+
+### Branches
+- feat/frontend-ux-audit, feature/header-btc, feature/settings-polish — pending merge
