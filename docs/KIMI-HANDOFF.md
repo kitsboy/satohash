@@ -1,3 +1,22 @@
+## Session — 2026-07-20 — v5.0.0-ELITE Sovereignty Ascension (Grok)
+
+**Done (code):**
+- Version → `5.0.0-ELITE`
+- Phase 1 API nuclear: `server/routes/v5-api.js` + prune jobs + health/ui
+- Phase 2+ cathedral routes in `src/pages/v5/V5Pages.jsx` + Landing particles
+- CLI `packages/satohash-cli`, client v2 helpers, `CHANGELOG-v5.md`
+- Skipped only pre-existing (verify, download=true, pino, correlation)
+
+**Kimi THOR next:**
+1. `git pull` satohash main on VPS
+2. `docker compose -f docker-compose.vps.yml up -d --build`
+3. Smoke: `curl https://api.satohash.io/api/public/stats` and `/api/openapi.json`
+4. No Caddy rewrite required unless paths blocked (shouldn't be)
+
+**Not in scope:** VPS secrets, Caddyfile system path, HQ metrics (Cam other repo)
+
+---
+
 ## M3 — SPA rebuild + smoke + suite clients — 2026-07-20 (Grok)
 
 **Do not duplicate VPS work** — THOR API already LIVE (Kimi).

@@ -123,12 +123,59 @@ export function createSatohashClient(opts = {}) {
     return `${siteBase}/stamp?hash=${hash}`
   }
 
+  async function getStats() {
+    try {
+      const res = await fetch(`${apiBase}/api/public/stats`, { signal: AbortSignal.timeout(8000) })
+      return { ok: res.ok, status: res.status, data: await res.json().catch(() => ({})) }
+    } catch (e) {
+      return { ok: false, error: e.message }
+    }
+  }
+
+  async function getRecent() {
+    try {
+      const res = await fetch(`${apiBase}/api/stamps/recent`, { signal: AbortSignal.timeout(8000) })
+      return { ok: res.ok, status: res.status, data: await res.json().catch(() => ({})) }
+    } catch (e) {
+      return { ok: false, error: e.message }
+    }
+  }
+
+  async function getProofPackage(id) {
+    try {
+      const res = await fetch(`${apiBase}/api/stamps/${encodeURIComponent(id)}/proof-package`, {
+        signal: AbortSignal.timeout(10000)
+      })
+      return { ok: res.ok, status: res.status, data: await res.json().catch(() => ({})) }
+    } catch (e) {
+      return { ok: false, error: e.message }
+    }
+  }
+
+  async function batchStamp(items) {
+    try {
+      const res = await fetch(`${apiBase}/api/stamps/batch`, {
+        method: 'POST',
+        headers: headers(),
+        body: JSON.stringify({ items }),
+        signal: AbortSignal.timeout(120000)
+      })
+      return { ok: res.ok, status: res.status, data: await res.json().catch(() => ({})) }
+    } catch (e) {
+      return { ok: false, error: e.message }
+    }
+  }
+
   return {
     apiBase,
     siteBase,
     clientId,
     getApiHealth,
     getPublicStatus,
+    getStats,
+    getRecent,
+    getProofPackage,
+    batchStamp,
     stampHash,
     getStamp,
     verifyUrl,

@@ -1,7 +1,7 @@
 {
   "name": "satohash",
   "private": true,
-  "version": "4.1.0-ELITE",
+  "version": "5.0.0-ELITE",
   "type": "module",
   "scripts": {
     "server": "node server/index.js",

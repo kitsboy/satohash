@@ -22,6 +22,7 @@ import usePageMeta from '../hooks/usePageMeta'
 import MarketingDesktopNav from '../components/MarketingDesktopNav'
 import { getBitcoinNetworkStats } from '../utils/mempool'
 import { BTC_ADDRESS, getApiUrl } from '../config/constants'
+import { ParticleStampCanvas } from './v5/V5Pages'
 
 const fadeUp = {
   hidden: { opacity: 0, y: 32 },
@@ -145,6 +146,10 @@ export default function Landing() {
 
       {/* ── HERO ─────────────────────────────────────────────────── */}
       <section className="relative flex min-h-screen items-center overflow-hidden pt-14">
+        {/* v5 particle network — gold confirmed / blue pending stamps */}
+        <div className="pointer-events-none absolute inset-0 opacity-40">
+          <ParticleStampCanvas />
+        </div>
         {/* Precision Cryptographic Blueprint Grid Background */}
         <div
           className="pointer-events-none absolute inset-0 overflow-hidden"

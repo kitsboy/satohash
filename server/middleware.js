@@ -11,6 +11,7 @@ import * as Sentry from '@sentry/node'
 export const correlationIdMiddleware = (req, res, next) => {
   req.id = req.get('X-Request-Id') || uuidv4()
   res.setHeader('X-Request-Id', req.id)
+  res.setHeader('X-Satohash-Request-Id', req.id)
   next()
 }
 

@@ -1,0 +1,10 @@
+{
+  "name": "@satohash/cli",
+  "version": "5.0.0",
+  "type": "module",
+  "bin": {
+    "satohash": "./bin/satohash.js"
+  },
+  "description": "CLI for Satohash OpenTimestamps API",
+  "license": "MIT"
+}

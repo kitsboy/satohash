@@ -87,6 +87,53 @@ const Contribute = React.lazy(() => import('./pages/Contribute'))
 const VerificationShield = React.lazy(() => import('./pages/VerificationShield'))
 const SignatureFlow = React.lazy(() => import('./pages/signatures/SignatureFlow'))
 
+// v5.0.0-ELITE sovereignty surfaces
+const V5ProofOfExistence = React.lazy(() =>
+  import('./pages/v5/V5Pages').then((m) => ({ default: m.ProofOfExistencePage }))
+)
+const V5Network = React.lazy(() =>
+  import('./pages/v5/V5Pages').then((m) => ({ default: m.NetworkPage }))
+)
+const V5BatchVerify = React.lazy(() =>
+  import('./pages/v5/V5Pages').then((m) => ({ default: m.BatchVerifyPage }))
+)
+const V5LiveFeed = React.lazy(() =>
+  import('./pages/v5/V5Pages').then((m) => ({ default: m.StampLiveFeedPage }))
+)
+const V5Compare = React.lazy(() =>
+  import('./pages/v5/V5Pages').then((m) => ({ default: m.CompareProofsPage }))
+)
+const V5Playground = React.lazy(() =>
+  import('./pages/v5/V5Pages').then((m) => ({ default: m.DeveloperPlaygroundPage }))
+)
+const V5Bitcoin = React.lazy(() =>
+  import('./pages/v5/V5Pages').then((m) => ({ default: m.BitcoinExplainPage }))
+)
+const V5Block = React.lazy(() =>
+  import('./pages/v5/V5Pages').then((m) => ({ default: m.BlockPage }))
+)
+const V5CrossChain = React.lazy(() =>
+  import('./pages/v5/V5Pages').then((m) => ({ default: m.CrossChainVerifyPage }))
+)
+const V5AiHub = React.lazy(() =>
+  import('./pages/v5/V5Pages').then((m) => ({ default: m.AiHubPage }))
+)
+const V5ProofWall = React.lazy(() =>
+  import('./pages/v5/V5Pages').then((m) => ({ default: m.ProofWallPage }))
+)
+const V5Leaderboard = React.lazy(() =>
+  import('./pages/v5/V5Pages').then((m) => ({ default: m.LeaderboardPage }))
+)
+const V5Widget = React.lazy(() =>
+  import('./pages/v5/V5Pages').then((m) => ({ default: m.ProofWidgetPage }))
+)
+const V5Report = React.lazy(() =>
+  import('./pages/v5/V5Pages').then((m) => ({ default: m.StampReportPage }))
+)
+const V5WizardPro = React.lazy(() =>
+  import('./pages/v5/V5Pages').then((m) => ({ default: m.StampWizardProPage }))
+)
+
 // Onboarding flow (protected)
 const OnboardingWelcome = React.lazy(() => import('./pages/onboarding/Welcome'))
 const OnboardingHowItWorks = React.lazy(() => import('./pages/onboarding/HowItWorks'))
@@ -273,6 +320,32 @@ function AppContent() {
             <Route path="/distressed-asset" element={<DistressedAsset />} />
             <Route path="/widgets" element={<Widgets />} />
             <Route path="/identity" element={<Identity />} />
+            {/* v5.0.0-ELITE public surfaces */}
+            <Route path="/proof-of-existence" element={<V5ProofOfExistence />} />
+            <Route path="/network" element={<V5Network />} />
+            <Route path="/verify/batch" element={<V5BatchVerify />} />
+            <Route path="/stamp/live-feed" element={<V5LiveFeed />} />
+            <Route path="/compare" element={<V5Compare />} />
+            <Route path="/developer/playground" element={<V5Playground />} />
+            <Route path="/bitcoin" element={<V5Bitcoin />} />
+            <Route path="/block/:height" element={<V5Block />} />
+            <Route path="/verify/cross-chain" element={<V5CrossChain />} />
+            <Route path="/ai" element={<V5AiHub />} />
+            <Route path="/ai-notary" element={<V5AiHub />} />
+            <Route path="/community/proof-wall" element={<V5ProofWall />} />
+            <Route path="/community/leaderboard" element={<V5Leaderboard />} />
+            <Route path="/widget/proof/:hash" element={<V5Widget />} />
+            <Route path="/stamp/:id/report" element={<V5Report />} />
+            <Route path="/stamp/wizard-pro" element={<V5WizardPro />} />
+            <Route path="/stamp/drag-and-drop" element={<Navigate to="/stamp" replace />} />
+            <Route path="/mobile-scanner" element={<Navigate to="/stamp" replace />} />
+            <Route path="/history/timeline" element={<Navigate to="/vault" replace />} />
+            <Route path="/dashboard/metrics" element={<Navigate to="/protocol-stats" replace />} />
+            <Route
+              path="/community/feed"
+              element={<Navigate to="/community/proof-wall" replace />}
+            />
+            <Route path="/verify/social" element={<Navigate to="/proof-of-existence" replace />} />
             <Route
               path="/settings"
               element={
