@@ -15,3 +15,6 @@ Before every session, read **GROK-SESSION-PROTOCOL.md** in this directory.
 
 **Orchestration = VPS Kimi. Code = M3. No Umbrel. No M4 coding.**  
 **Never commit secrets.** Status messages only in handoffs.
+
+## Latest Kimi mega-handoff (2026-07-20)
+Read **`docs/KIMI-HANDOFF.md`** (top) and **`docs/KIMI-HANDOFF-2026-07-20-MEGA.md`** before coding. THOR=ops, M3=code, HQ gate+metrics live, less-chat for Cam status.
