@@ -1,36 +1,49 @@
-# Satohash — Standard Operating Procedure (SOP)
+# Satohash — SOP / Workflow
 
-Updated: 2026-07-16
+**Updated:** 2026-07-20
 
 ## Architecture
-Dual-server: Express API (port 3001) + Vite dev server (port 3000, proxies /api and /socket.io to 3001)
-Stack: React 18 + Vite 6 + Tailwind CSS 4 (frontend), Express 5 + better-sqlite3 + Redis (backend)
+- **Dev:** Express API `:3001` + Vite `:3000` (`npm run dev`)  
+- **Prod SPA:** Cloudflare Pages (`./deploy.sh` or Actions Deploy)  
+- **Prod API:** VPS Docker (`docker-compose.vps.yml`) → `api.satohash.io`  
 
-## Quick Start
+## Quick start (M3)
+```bash
 npm install
 cp .env.example .env
-npm run dev          Frontend + API backend (concurrent)
+npm run dev
+npm test
+npm run api:smoke   # needs npm run server
+```
 
-## Build
-npm run build        Vite production build
+## Deploy SPA
+```bash
+# Prefer auto: push main (needs CF secrets + healthy Actions)
+git push origin main
+# Backup if Actions queued:
+./deploy.sh   # wrangler login once on M3
+```
 
-## Test
-npm test             Vitest (73 unit tests, 22% coverage threshold)
-npm run test:e2e     Playwright e2e
+## Deploy API (VPS / Kimi)
+```bash
+# On VPS — see docs/KIMI-VPS-RUNBOOK.md
+cp .env.vps.example .env   # fill secrets on server
+bash scripts/vps-deploy-api.sh
+```
 
-## Deploy
-Frontend auto-deploys from GitHub main to Cloudflare Pages (satohash)
-API server: deploy per docs/DEPLOY-SERVER.md (requires Express hosting)
+## Family stamp
+- Server: `FAMILY_API_KEYS`  
+- Client: `X-Satohash-Key` + `X-Satohash-Client`  
+- Contract: `docs/FAMILY-API.md`  
 
-## Agent Protocol
-1. Read GROK-SESSION-PROTOCOL.md
-2. Read .ai_docs/project-summary.md and current-status.md
-3. Work on the project
-4. Update .ai_docs/current-status.md and docs/KIMI-HANDOFF.md
-5. Push to origin main
+## Agent protocol
+1. Read `GROK-SESSION-PROTOCOL.md`  
+2. Read `.ai_docs/current-status.md` + `docs/KIMI-VPS-RUNBOOK.md` if ops  
+3. Work; never commit secrets  
+4. Update `.ai_docs/current-status.md` + top of `docs/KIMI-HANDOFF.md`  
+5. Push `origin main`  
 
-## Known Constraints
-- 28 missing i18n keys in non-EN locales (pre-existing)
-- API server not deployed — frontend works standalone for stamp/verify
-- Government template IDs may need stub demo wiring
-
+## Constraints
+- API public only after VPS DNS+TLS  
+- Deep health may degrade without Redis/calendars  
+- OTS create does not require LND  

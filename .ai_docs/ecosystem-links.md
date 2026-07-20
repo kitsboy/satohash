@@ -1,26 +1,42 @@
 # Ecosystem Links — Satohash
 
-**Last Updated:** 2026-07-16
+**Last Updated:** 2026-07-20
 
-## Role in Ecosystem
-Satohash is the shared TIMESTAMPING BACKBONE for all Give A Bit projects. Any project can use Satohash to create verifiable proof of document existence at a point in time.
+## Role
+Satohash is the shared **PROOF / TIMESTAMP backbone** for Give A Bit. Products stay compartmentalized; they call the API; they do not re-implement OTS.
 
-## Connections to Other Projects
-| Project | Relationship |
-|---------|-------------|
-| GiveABit (parent) | Hosted at satohash.giveabit.io; shares Nostr NIP-05 + Cloudflare Pages |
-| Katoa | PLANNED: timestamp exploration data, route logs, and geographic records |
-| MotoPass | PLANNED: Vault uses OTS verify; future API calls for stamping compare reports |
-| Sherpacarta | PLANNED: timestamp navigation and mapping data |
-| Stranded | PLANNED: timestamp site analysis reports and data exports |
-| Tadbuy | PLANNED: timestamp marketplace transactions and seller verification |
+## Planes
+| Plane | Tech | Host |
+|-------|------|------|
+| Proof create | OpenTimestamps calendars | Public internet |
+| Proof API | Express + SQLite + Redis | VPS Docker |
+| Proof UX | React SPA | Cloudflare Pages |
+| Settlement | LND + LNbits | VPS |
+| Identity | NIP-05 namespace | giveabit.io |
+| Ops glass | HQ control panel | kitsboy/HQ |
 
-## Shared Infrastructure
-- Cloudflare Pages (satohash-specific project)
-- Nostr NIP-05 at giveabit.io/.well-known/nostr.json
-- GitHub kitsboy organization
-- Express API backend (planned deployment)
+## Product clients (X-Satohash-Client)
 
-## Give A Bit Ecosystem
-See MASTER-BRAIN/docs/GIVE-A-BIT-ECOSYSTEM.md for the full ecosystem overview.
+| Project | Status |
+|---------|--------|
+| giveabit | Client on main |
+| motopass | Client + Verify UI |
+| katoa | Client + Settings UI |
+| stranded | Client lib |
+| sherpacarta | Client lib |
+| tadbuy | Planned |
+| openstrata | Planned |
+| camtaylor | Planned |
+| lindala | Planned |
+| HQ | Health poll only |
 
+## Shared infra
+- GitHub: kitsboy/*  
+- CF Pages: per-project  
+- VPS: Kimi orchestration + satohash-api + node/LNbits  
+- Family free: `FAMILY_API_KEYS` / `X-Satohash-Key`  
+
+## Docs for agents
+- `docs/KIMI-VPS-RUNBOOK.md`  
+- `docs/FAMILY-API.md`  
+- `docs/MASTER-BRAIN-INGEST.md`  

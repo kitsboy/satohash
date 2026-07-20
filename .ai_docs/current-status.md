@@ -1,24 +1,42 @@
 # Current Status — Satohash
 
-**Version:** Build 111+ (v4.1.0-ELITE) — bump on next commit
-**Last Updated:** 2026-07-20
-**Domain:** satohash.io / satohash.giveabit.io
-**API (target):** https://api.satohash.io (VPS package ready; DNS/host pending Kimi)
+**Version:** v4.1.0-ELITE (Build 113 area; bump each commit)  
+**Last Updated:** 2026-07-20  
+**Frontend:** https://satohash.io · https://satohash.giveabit.io  
+**API target:** https://api.satohash.io (**VPS package ready — host bring-up = Kimi**)
 
-## Recent Milestones
-- Family free-tier API keys + `/api/public/status` + VPS docker package + satohash-client
-- CF GitHub secrets + local wrangler deploy Build 111 live
-- Static-edge complete; government templates; i18n; 77 unit tests
+## Truth
+- **Code:** M3 Grok · GitHub kitsboy/satohash  
+- **Orchestration:** Kimi on **VPS** (not Umbrel, not M4 app coding)  
+- **Static:** Cloudflare Pages (secrets `CLOUDFLARE_API_TOKEN` + `CLOUDFLARE_ACCOUNT_ID` in GH Actions)  
+- **API:** Docker on VPS (`docker-compose.vps.yml`)  
+- **Money:** LNbits/LND on VPS  
+- **OTS create:** public calendars  
+- **Node:** optional pruned bitcoind for verify  
 
-## Architecture (current truth)
-- **Static:** Cloudflare Pages
-- **API:** VPS Docker (not Umbrel, not M4)
-- **Orchestration:** Kimi on VPS
-- **Money:** LNbits/LND on VPS
-- **Proof create:** public OTS calendars
-- **Proof verify independence:** optional pruned bitcoind RPC
+## Recent milestones
+- Family free tier + `/api/public/status` + satohash-client package  
+- Suite thin clients: motopass, katoa, giveabit, stranded, sherpacarta  
+- HQ proof-plane heartbeat UI  
+- CF secrets + local wrangler deploy when Actions queued  
+- Operator bible: `docs/KIMI-VPS-RUNBOOK.md` + `docs/MASTER-BRAIN-INGEST.md`
 
-## Next Steps
-- Kimi: bring up api.satohash.io on VPS
-- Family apps: thin clients (agents shipping in parallel)
-- HQ: heartbeat poll /health + /api/public/status
+## Known issues
+- `api.satohash.io` not public until Kimi runs VPS runbook  
+- GitHub Actions may queue during GH outages — use `./deploy.sh` for SPA  
+- SPA `VITE_API_URL` still points at production API only after rebuild post-DNS  
+
+## Next (ordered)
+1. Kimi: `docs/KIMI-VPS-RUNBOOK.md` §2 complete  
+2. M3: `VITE_API_URL=https://api.satohash.io` build + deploy  
+3. Smoke family stamp (motopass)  
+4. Remaining clients: tadbuy, openstrata, camtaylor, lindala  
+
+## Agent entrypoints
+| File | Who |
+|------|-----|
+| `docs/KIMI-VPS-RUNBOOK.md` | Kimi VPS |
+| `docs/KIMI-HANDOFF.md` | Session log |
+| `docs/FAMILY-API.md` | API contract |
+| `docs/MASTER-BRAIN-INGEST.md` | Vault paste |
+| `.ai_docs/*` | Any LLM quick context |

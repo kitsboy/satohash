@@ -1,6 +1,7 @@
 # Satohash Family API — shared proof plane
 
-**Status:** Client packages + family free-tier middleware shipped; **public `api.satohash.io` goes live when VPS runs `docker-compose.vps.yml`.**
+**Status:** Client packages + family free-tier middleware shipped; **public `api.satohash.io` goes live when VPS runs `docker-compose.vps.yml`.**  
+**Kimi operator bible:** [`KIMI-VPS-RUNBOOK.md`](./KIMI-VPS-RUNBOOK.md) · **Vault paste:** [`MASTER-BRAIN-INGEST.md`](./MASTER-BRAIN-INGEST.md)
 
 ## Architecture
 

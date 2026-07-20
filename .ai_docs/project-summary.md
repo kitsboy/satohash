@@ -1,38 +1,28 @@
 # Project Summary — Satohash
 
-**What:** Institutional-grade digital notary and Bitcoin timestamping platform using OpenTimestamps.
-**Domain:** satohash.giveabit.io
-**Version:** Build 102 (v4.1.0-ELITE)
-**Last Updated:** 2026-07-16
+**What:** Institutional-grade digital notary and Bitcoin timestamping (OpenTimestamps).  
+**Domains:** satohash.io · satohash.giveabit.io · api.satohash.io (API)  
+**Version:** 4.1.0-ELITE  
+**Updated:** 2026-07-20  
 
-## One-Liner
-Satohash lets anyone prove a document existed at a specific time by locking a cryptographic fingerprint into the Bitcoin blockchain — files never leave your device, proofs are permanent and free, verifiable even if Satohash disappears.
+## One-liner
+Prove a document existed at a point in time by anchoring its hash to Bitcoin — file never leaves the device for hash; suite API stores proof metadata for family apps.
 
-## Core Features
-- OpenTimestamps anchoring: SHA-256 hash -> Bitcoin block
-- Zero-knowledge: documents never leave browser (Web Crypto API)
-- Four-Plane Architecture: Proof, Identity (Nostr), Settlement (Lightning), Atlas (chain intelligence)
-- Multi-party contracts with co-signing
-- Notary templates for government, legal, and enterprise use cases
-- Static-edge complete: 200/200 items, 7-locale i18n, PWA
-- Widgets v3 embed for third-party sites
-- Satohash Snapper browser extension for web evidence capture
-- Government template suite with institutional features
-- eIDAS + ESIGN compliant for court admissibility
+## Stack
+React 18 + Vite 6 + Tailwind · Express 5 + better-sqlite3 + Redis · OTS calendars · optional bitcoind · LND/LNbits for money  
 
-## Target Audience
-- Legal professionals and notaries
-- Government agencies needing verifiable records
-- Developers wanting blockchain timestamping APIs
-- Bitcoin sovereignty advocates
+## Role in Give A Bit
+Shared **proof plane**. Free internal family stamps; public API with rate limit / Lightning later.
 
-## Tech Stack
-React 18 + Vite 6 + Tailwind CSS 4 (frontend) | Express 5 + better-sqlite3 + Redis (backend/API)
+## Who does what
+| Role | Machine |
+|------|---------|
+| Grok coding | M3 |
+| Kimi orchestration + VPS services | VPS |
+| Cam secrets / accounts | Human |
 
-## Integration With Other Projects
-Satohash timestamping is designed to be consumed by ALL Give A Bit projects:
-- Katoa: planned timestamping for map/exploration data
-- MotoPass: planned timestamping for vault seals and compare reports
-- Sherpacarta: planned timestamping for navigation/route data
-- Stranded: planned timestamping for site data reports
-
+## Entry docs for any LLM
+1. `.ai_docs/current-status.md`  
+2. `docs/KIMI-VPS-RUNBOOK.md`  
+3. `docs/KIMI-HANDOFF.md`  
+4. `docs/FAMILY-API.md`  

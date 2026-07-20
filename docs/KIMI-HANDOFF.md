@@ -1,6 +1,37 @@
 # KIMI-HANDOFF — Satohash
 
-Session handoff log for Kimi (**VPS orchestration**). Append new entries at the top.
+Session handoff log for Kimi (**VPS orchestration**). Append new entries at the top.  
+**Primary operator doc:** [`KIMI-VPS-RUNBOOK.md`](./KIMI-VPS-RUNBOOK.md)  
+**MASTER-BRAIN paste:** [`MASTER-BRAIN-INGEST.md`](./MASTER-BRAIN-INGEST.md)
+
+---
+
+## Session — 2026-07-20 (Full knowledge pack for Kimi + any LLM)
+
+**Done (M3 docs):**
+- `docs/KIMI-VPS-RUNBOOK.md` — full VPS checklist, DNS, TLS, family keys, smoke, failures
+- `docs/MASTER-BRAIN-INGEST.md` — paste block for vault/Kanban (no secrets)
+- Refreshed entire `.ai_docs/*` (status, ecosystem, SOP, summary, context-map, kimi-training)
+- Prior same day: family API, docker VPS package, suite clients, CF secrets, SPA Build 111 live
+
+**REQUESTS FOR KIMI (do these — you can push handoff updates via Cam/Grok or PR):**
+
+| # | Action | Done when |
+|---|--------|-----------|
+| 1 | Read `docs/KIMI-VPS-RUNBOOK.md` end-to-end | — |
+| 2 | Ingest paste from `docs/MASTER-BRAIN-INGEST.md` into MASTER-BRAIN/Kanban | Vault updated |
+| 3 | On VPS: `git pull` satohash main; `.env` from `.env.vps.example` | Secrets on server only |
+| 4 | `bash scripts/vps-deploy-api.sh` | Local `curl :3001/health` = 200 |
+| 5 | DNS + TLS `api.satohash.io` | Public health 200 |
+| 6 | Confirm `/api/public/status` | HQ can heartbeat |
+| 7 | Append LIVE report to this file (no secret values) | Suite unblocked |
+| 8 | Optional: `BITCOIN_RPC_URL` to pruned node | deep health bitcoin ok |
+
+**Data transfer rules:** status/SHA/URL only in git & MASTER-BRAIN; keys only in VPS env / password manager.
+
+**M3 will do after your LIVE report:** SPA rebuild with `VITE_API_URL`, family stamp smoke, more clients.
+
+**Git (docs pack):** push with this session.
 
 ---
 
@@ -14,18 +45,11 @@ Session handoff log for Kimi (**VPS orchestration**). Append new entries at the 
 - Docs: `docs/FAMILY-API.md`; CF secrets + local Pages deploy (Build 111) earlier same day
 - Parallel suite agents: motopass, katoa, giveabit, HQ, stranded, sherpacarta thin clients
 
-**Kimi VPS next (you):**
-1. On VPS: pull satohash, copy `.env.vps.example` → `.env`, set `FAMILY_API_KEYS` + secrets
-2. `bash scripts/vps-deploy-api.sh`
-3. DNS `api.satohash.io` → VPS; TLS (Caddy)
-4. Distribute family key to app env (`VITE_SATOHASH_KEY`) via private vault only — never git
-5. Confirm `curl https://api.satohash.io/health` and `/api/public/status`
+**Kimi VPS next (you):** see runbook + table above (authoritative).
 
 **Decisions:**
 - No Umbrel / no M4 coding. Orchestration = VPS Kimi. Code = M3.
 - OTS create = public calendars; node = optional verify; LND = settlement only.
-
-**Git:** push after multi-agent merge.
 
 ---
 
