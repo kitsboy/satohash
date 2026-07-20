@@ -112,9 +112,34 @@ export const searchRateLimiter = rateLimit({
   }
 })
 
+/**
+ * Family free tier: X-Satohash-Key must match one entry in FAMILY_API_KEYS
+ * (comma-separated secrets in server env — never commit real keys).
+ * Give A Bit suite apps use this for free internal stamping.
+ */
+export function isFamilyApiKey(headerVal) {
+  if (!headerVal || typeof headerVal !== 'string') return false
+  const raw = process.env.FAMILY_API_KEYS || process.env.FAMILY_API_KEY || ''
+  if (!raw.trim()) return false
+  const allowed = raw
+    .split(',')
+    .map((s) => s.trim())
+    .filter(Boolean)
+  return allowed.includes(headerVal.trim())
+}
+
 export const paywallMiddleware = (req, res, next) => {
-  // Allow bypassing paywall via env var for testing, but default to true in PROD
+  // Allow bypassing paywall via env var for testing / MVP open stamp
   if (process.env.REQUIRE_LIGHTNING === 'false') {
+    return next()
+  }
+
+  // Family free tier (motopass, katoa, giveabit, …) — free for us, metered later for public
+  const familyKey = req.headers['x-satohash-key'] || req.headers['x-family-key']
+  if (isFamilyApiKey(familyKey)) {
+    req.satohashFamily = true
+    req.satohashClient = req.headers['x-satohash-client'] || 'family'
+    logger.info(`🏠 [FAMILY] Free stamp tier for client=${req.satohashClient} ip=${req.ip}`)
     return next()
   }
 
@@ -126,7 +151,8 @@ export const paywallMiddleware = (req, res, next) => {
     return res.status(402).json({
       error: 'Payment Required',
       message:
-        'Please complete the Lightning Network BOLT-12 micro-settlement to access this endpoint.'
+        'Please complete the Lightning Network BOLT-12 micro-settlement to access this endpoint.',
+      family: 'Set X-Satohash-Key for Give A Bit family free tier (server FAMILY_API_KEYS).'
     })
   }
 

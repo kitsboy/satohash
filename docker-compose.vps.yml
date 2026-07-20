@@ -1,0 +1,47 @@
+# Satohash API on VPS (Kimi orchestration host)
+# Static SPA stays on Cloudflare Pages — this stack is proof API only.
+#
+# Usage (on VPS, after clone or rsync of this repo):
+#   cp .env.vps.example .env   # fill secrets on server only
+#   docker compose -f docker-compose.vps.yml up -d --build
+#
+# DNS: api.satohash.io → VPS IP (Cloudflare DNS only / grey cloud if TLS via Caddy)
+# Put Caddy/nginx in front for HTTPS, or add a caddy service later.
+
+version: '3.9'
+
+services:
+  satohash-api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    restart: unless-stopped
+    ports:
+      - '3001:3001'
+    env_file:
+      - .env
+    environment:
+      NODE_ENV: production
+      PORT: '3001'
+      REDIS_URL: redis://redis:6379
+    volumes:
+      - satohash_data:/app/data
+    depends_on:
+      - redis
+    healthcheck:
+      test: ['CMD', 'wget', '-qO-', 'http://127.0.0.1:3001/health']
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    volumes:
+      - satohash_redis:/data
+
+volumes:
+  satohash_data:
+  satohash_redis:

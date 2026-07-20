@@ -1,6 +1,31 @@
 # KIMI-HANDOFF — Satohash
 
-Session handoff log for Kimi (M4 HERMES). Append new entries at the top.
+Session handoff log for Kimi (**VPS orchestration**). Append new entries at the top.
+
+---
+
+## Session — 2026-07-20 (Family API + VPS package + suite clients)
+
+**Done (M3):**
+- Family free tier: `X-Satohash-Key` + `FAMILY_API_KEYS` in paywall middleware
+- `GET /api/public/status` for HQ heartbeat; deep health optional `BITCOIN_RPC_URL`
+- VPS package: `docker-compose.vps.yml`, `Dockerfile.api`, `.env.vps.example`, `scripts/vps-deploy-api.sh`
+- Client package: `packages/satohash-client/`
+- Docs: `docs/FAMILY-API.md`; CF secrets + local Pages deploy (Build 111) earlier same day
+- Parallel suite agents: motopass, katoa, giveabit, HQ, stranded, sherpacarta thin clients
+
+**Kimi VPS next (you):**
+1. On VPS: pull satohash, copy `.env.vps.example` → `.env`, set `FAMILY_API_KEYS` + secrets
+2. `bash scripts/vps-deploy-api.sh`
+3. DNS `api.satohash.io` → VPS; TLS (Caddy)
+4. Distribute family key to app env (`VITE_SATOHASH_KEY`) via private vault only — never git
+5. Confirm `curl https://api.satohash.io/health` and `/api/public/status`
+
+**Decisions:**
+- No Umbrel / no M4 coding. Orchestration = VPS Kimi. Code = M3.
+- OTS create = public calendars; node = optional verify; LND = settlement only.
+
+**Git:** push after multi-agent merge.
 
 ---
 

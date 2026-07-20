@@ -1,12 +1,13 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.giveabit.io · **Version:** 4.1.0-ELITE (Build 106) · **Updated:** 2026-07-18
+> **Live:** https://satohash.giveabit.io · **Version:** 4.1.0-ELITE (Build 111) · **Updated:** 2026-07-20
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Satohash API Server Deploy Guide
 
-> **Status:** 📋 Planning only — **nothing plugged in yet**  
-> **Purpose:** Reference for deploying `server/` (Express API) when MVP needs stamp/verify  
-> **Frontend stays:** Cloudflare Pages → https://satohash.io (unchanged)
+> **Status:** 🟢 **Packaged for VPS** — `docker-compose.vps.yml` + `scripts/vps-deploy-api.sh` + family free tier (`FAMILY_API_KEYS`). Public DNS/`api.satohash.io` still needs host bring-up by Kimi/VPS.  
+> **Purpose:** Deploy `server/` (Express API) for suite stamp/verify  
+> **Frontend stays:** Cloudflare Pages → https://satohash.io (unchanged)  
+> **See also:** `docs/FAMILY-API.md`
 
 ---
 
@@ -269,6 +270,8 @@ pm2 save && pm2 startup
 
 ---
 © 2026 Satohash · Give A Bit
+
+
 
 
 

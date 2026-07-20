@@ -607,7 +607,9 @@ app.get('/health', async (req, res) => {
 
   // Basic checks
   details.uptime = process.uptime()
-  details.version = '3.0.0-PRO'
+  details.version = process.env.npm_package_version || '4.1.0-ELITE'
+  details.service = 'satohash-api'
+  details.plane = 'proof'
   details.timestamp = new Date().toISOString()
 
   if (!deep) {
@@ -677,8 +679,48 @@ app.get('/health', async (req, res) => {
     status = 'degraded'
   }
 
-  // Lightning (mock, since no LND)
-  details.lightning = { status: 'mock_healthy', note: 'BOLT-12 integration pending' }
+  // Lightning — LND on VPS (optional). Not required for OTS create.
+  details.lightning = {
+    status: process.env.LND_REST_URL || process.env.LND_GRPC_HOST ? 'configured' : 'optional',
+    note: 'Settlement plane on VPS LND/LNbits — not used for OTS hashing'
+  }
+
+  // Optional pruned Bitcoin node (verify independence) — BITCOIN_RPC_URL
+  if (process.env.BITCOIN_RPC_URL) {
+    try {
+      const rpcRes = await fetch(process.env.BITCOIN_RPC_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(process.env.BITCOIN_RPC_AUTH
+            ? { Authorization: `Basic ${process.env.BITCOIN_RPC_AUTH}` }
+            : {})
+        },
+        body: JSON.stringify({
+          jsonrpc: '1.0',
+          id: 'satohash-health',
+          method: 'getblockcount',
+          params: []
+        }),
+        signal: AbortSignal.timeout(4000)
+      })
+      const rpcJson = await rpcRes.json().catch(() => ({}))
+      details.bitcoin = {
+        status: rpcRes.ok && rpcJson.result != null ? 'healthy' : 'degraded',
+        block_height: rpcJson.result ?? null,
+        pruned: true,
+        note: 'VPS pruned full node — verify independence'
+      }
+    } catch (e) {
+      details.bitcoin = { status: 'unhealthy', note: e.message }
+      status = 'degraded'
+    }
+  } else {
+    details.bitcoin = {
+      status: 'not_configured',
+      note: 'Set BITCOIN_RPC_URL for node-backed verify; public mempool still used for fees'
+    }
+  }
 
   // Metrics summary
   details.metrics = {
@@ -687,6 +729,44 @@ app.get('/health', async (req, res) => {
   }
 
   res.json({ status, details })
+})
+
+/**
+ * Public suite heartbeat for HQ / Kimi / family apps (no secrets).
+ * GET /api/public/status
+ */
+app.get('/api/public/status', async (req, res) => {
+  let stampsApprox = null
+  try {
+    const row = db.prepare('SELECT COUNT(*) AS n FROM timestamps').get()
+    stampsApprox = row?.n ?? null
+  } catch (_e) {
+    /* db may be empty on first boot */
+  }
+  res.json({
+    ok: true,
+    service: 'satohash-api',
+    plane: 'proof',
+    role: 'Give A Bit shared OpenTimestamps backbone',
+    frontend: 'https://satohash.io',
+    api: process.env.PUBLIC_API_URL || 'https://api.satohash.io',
+    family_free_tier: Boolean(process.env.FAMILY_API_KEYS || process.env.FAMILY_API_KEY),
+    require_lightning: process.env.REQUIRE_LIGHTNING !== 'false',
+    stamps_stored: stampsApprox,
+    timestamp: new Date().toISOString(),
+    clients_expected: [
+      'giveabit',
+      'motopass',
+      'katoa',
+      'sherpacarta',
+      'stranded',
+      'tadbuy',
+      'openstrata',
+      'camtaylor',
+      'lindala',
+      'hq'
+    ]
+  })
 })
 
 // Metrics Endpoint (Internal/Admin only)
