@@ -299,7 +299,10 @@ const corsOptions = {
     'X-Snapper-Key',
     'X-L402-Token',
     'X-Ots-Upgraded',
-    'X-Npub'
+    'X-Npub',
+    'X-Satohash-Key',
+    'X-Satohash-Client',
+    'X-Family-Key'
   ],
   exposedHeaders: ['Content-Disposition', 'X-Ots-Upgraded']
 }
