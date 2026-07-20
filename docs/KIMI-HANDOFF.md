@@ -14,11 +14,11 @@
 - Deeper v5 product polish (AI notary full, vault v2, full i18n)
 - HQ metrics continues in HQ repo (Cam)
 
-**Update / Status:** Proof plane operational. main @ `0b75496` (footer). API THOR healthy. No secrets in handoff.
+**Update / Status:** Proof plane operational. main @ `2e9189d` (goodbye handoff on origin). Footer live on SPA. API THOR healthy. No secrets in handoff.
 
 **Next for Kimi:** Integrate goodbye summary into MASTER-BRAIN/Kanban if not already. No infra redo. Optional MagicDNS note for local resolvers.
 
-**Git:** SHA `0b7549647ab93812886558f39842e723ec05748f` · Build 119 · main synced · Unpushed: none (after goodbye docs push)
+**Git:** SHA `2e9189d` · Build 120 · main synced · Unpushed: none
 
 ---
 
