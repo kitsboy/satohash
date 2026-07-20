@@ -52,9 +52,16 @@
 ## Next (ordered)
 1. ~~Kimi: runbook §2 complete~~ ✅ **DONE**
 2. ~~DNS: A + AAAA records~~ ✅ **DONE**
-3. ~~v5 API container rebuilt on THOR~~ ✅ **DONE**
-4. ~~/metrics.json live~~ ✅ **DONE**
-5. ~~LNbits CORS configured~~ ✅ **DONE**
+3. ~~SPA rebuild with VITE_API_URL~~ ✅ **DONE (Grok)**
+4. **v5.0.0-ELITE: The Sovereignty Ascension** — 100 major upgrades (see `V5-ASCENSION-PROTOCOL.md`)
+   - API Apocalypse (items 1–20) — public stats, batch, web capture, DID, SSE
+   - Frontend Cathedral (items 21–40) — particle hero, proof explorer, QR scanner, pro wizard
+   - Bitcoin Thunder (items 41–55) — LNURL/BOLT12, Bitcoin SSE, merkle verify, HD wallet
+   - Cross-Chain Supremacy (items 56–65) — Ethereum, Polygon, IPFS, Filecoin, Nostr fix
+   - AI Notary (items 66–75) — summarize, fraud detect, semantic search, NL stamping
+   - Social Proof (items 76–85) — proof wall, leaderboard, reactions, badges
+   - Dev Ecosystem (items 86–95) — OpenAPI, npm SDK, CLI, WebSocket, webhooks
+   - Polish & Ship (items 96–100) — Build 214, i18n sweep, docs refresh
 6. **M3: SPA deploy (`./deploy.sh`) to expose v5 pages**
 7. **HQ: consume `/api/public/stats`, `/api/public/network`, `/api/stamps/recent`**
 8. **Nova: cron `thor-node.json` from bitcoind/lnd**
