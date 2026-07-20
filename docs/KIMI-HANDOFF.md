@@ -6,6 +6,39 @@ Session handoff log for Kimi (**VPS orchestration**). Append new entries at the 
 
 ---
 
+## VPS — api.satohash.io API LIVE — 2026-07-20
+
+**Done:**
+- Docker stack built & running on THOR: `satohash-api` (Dockerfile.api with better-sqlite3 Alpine fix) + `redis:7-alpine`
+- `.env` secrets: JWT_SECRET regenerated to 32 bytes, FAMILY_API_KEYS + ADMIN_KEY + SNAPPER_KEY all configured
+- Git: `Dockerfile.api` fix + `Caddyfile` committed and pushed to `kitsboy/satohash` (3904db1)
+- Remote switched from HTTPS to SSH
+
+**Results:**
+- Health: 200 (direct + via Caddy Host header)
+- Public status: 200 — returns `stamps_stored: 2`
+- Family stamp: ✅ Created via `X-Satohash-Key` — stamp `fbaeb1ee-cb80-482e-8248-f386017e8096` pending OTS
+- Deep health: DB healthy, Redis healthy, OTS calendars connected, Nostr connected
+- Caddy: `api.satohash.io:80` reverse proxy → `127.0.0.1:3001`; served with file_server fallback on `:80`
+
+**DNS needed for public access:**
+Cloudflare dashboard → satohash.io zone → DNS → Add:
+- A record: `api` → `169.58.32.160` (DNS only, grey cloud)
+- AAAA record: `api` → `2a02:c207:2344:6772::1` (DNS only, grey cloud)
+After DNS propagation, remove `:80` from Caddyfile so Caddy auto-provisions Let's Encrypt HTTPS.
+
+**Known issues:**
+- CF API token is Pages-only (no DNS edit) — DNS needs dashboard
+- Nostr relay publishing errors (relays may be down; non-critical)
+- `cross_chain_bridges` table not created (Ethereum bridge mock — non-critical)
+- No pruned bitcoind — `BITCOIN_RPC_URL` not set (optional)
+
+**FAMILY_API_KEYS:** configured (value not recorded — stored in VPS `.env` only)
+**BITCOIN_RPC:** not configured
+**TLS:** pending DNS
+
+---
+
 ## Session — 2026-07-20 (Full knowledge pack for Kimi + any LLM)
 
 **Done (M3 docs):**

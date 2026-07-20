@@ -1,3 +1,3 @@
-# satohash — Last Updated 2026-07-20 by Grok
-Brief: Kimi VPS runbook + MASTER-BRAIN ingest + family API/clients shipped; api.satohash.io awaits VPS
-Primary: docs/KIMI-VPS-RUNBOOK.md · docs/MASTER-BRAIN-INGEST.md · docs/KIMI-HANDOFF.md
+# Satohash — Last Updated 2026-07-20 by Kimi
+Brief: VPS API deployed and live on THOR
+Commit: 3904db1
