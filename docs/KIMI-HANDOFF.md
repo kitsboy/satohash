@@ -4,6 +4,39 @@ Session handoff log for Kimi (M4 HERMES). Append new entries at the top.
 
 ---
 
+## Session — 2026-07-20 (Cloudflare GitHub secrets wired)
+
+**Done:**
+- Cam created Cloudflare API token (Pages Edit) + copied Account ID — **values never in chat/repo**
+- GitHub Actions secrets on `kitsboy/satohash` now present:
+  - `CLOUDFLARE_API_TOKEN` (updated ~2026-07-20T00:08Z)
+  - `CLOUDFLARE_ACCOUNT_ID` (updated ~2026-07-20T00:12Z)
+- Confirmed via `gh secret list` (names only; secret values never readable)
+- Triggered Deploy workflow: https://github.com/kitsboy/satohash/actions/runs/29709204174
+- `.ai_docs/current-status.md` updated — CF secret blocker removed
+
+**Decisions:**
+- Secrets live only in GitHub Actions secret vault + Cam password manager
+- Do **not** put token/Account ID in KIMI-HANDOFF, git, or chat
+- Deploy path: push `main` → Actions `Deploy` → wrangler Pages project `satohash`
+- Optional local path: `wrangler login` + `./deploy.sh` on M3 (not required if Actions green)
+
+**Still open:**
+- Confirm deploy run succeeds; live https://satohash.io matches latest main
+- VPS + DNS for `api.satohash.io` per docs/DEPLOY-SERVER.md
+- Frontend rebuild with `VITE_API_URL` after API live
+- Cross-project API (Katoa, MotoPass)
+- HERMES/VPS GitHub PAT: store on M4 only; handoff notes existence, never value
+
+**Git State:**
+- SHA: `b9b50e68372e1d6f8b23617d6dab722f3a44892c`
+- Branch: main (synced with origin at session check)
+- Secrets: present (names only)
+
+**Next for Kimi:** Mark CF frontend deploy path as unblocked in MASTER-BRAIN/Kanban. Do not store secret values. Wait for deploy run result before calling production fully current.
+
+---
+
 ## Latest Session Summary (from 2026-07-18 goodbye)
 
 **Chat Topic:** Clear open satohash debt (i18n, government templates, API smoke) and document how Cam supplies CF/VPS credentials without secrets in chat.
