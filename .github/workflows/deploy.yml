@@ -1,5 +1,7 @@
 name: Deploy
 
+# Auto-deploy on every push to main (no dashboard button required).
+# Manual re-run still available: Actions → Deploy → Run workflow
 on:
   push:
     branches: [main]
@@ -9,27 +11,33 @@ jobs:
   deploy_cloudflare:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
+    # Job-level env so secrets are visible to steps (step-level if: env.* cannot see step env)
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: npm
+      - name: Require Cloudflare secrets
+        run: |
+          if [ -z "${CLOUDFLARE_API_TOKEN:-}" ]; then
+            echo "::error::CLOUDFLARE_API_TOKEN not set in repo Actions secrets."
+            echo "Add CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID under Settings → Secrets and variables → Actions."
+            exit 1
+          fi
+          if [ -z "${CLOUDFLARE_ACCOUNT_ID:-}" ]; then
+            echo "::error::CLOUDFLARE_ACCOUNT_ID not set in repo Actions secrets."
+            exit 1
+          fi
+          echo "Cloudflare secrets present (values never logged)."
       - run: npm ci
       - run: npm run build
       - run: npm run build:verify
       - name: Deploy to Cloudflare Pages
-        if: env.CLOUDFLARE_API_TOKEN != ''
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: npx wrangler pages deploy ./dist --project-name=satohash
-      - name: Fail deploy (no CF token)
-        if: env.CLOUDFLARE_API_TOKEN == ''
-        run: |
-          echo "::error::CLOUDFLARE_API_TOKEN not set — build verified but production deploy skipped."
-          echo "Add CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID to repo secrets, then re-run this workflow."
-          exit 1
 
   smoke:
     needs: deploy_cloudflare
