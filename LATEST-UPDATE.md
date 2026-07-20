@@ -1,3 +1,3 @@
-# Satohash — Last Updated 2026-07-20 by Kimi
-Brief: VPS API deployed and live on THOR
-Commit: 3904db1
+# satohash — Last Updated 2026-07-20 by Grok
+Brief: API LIVE on THOR; SPA rebuilt with VITE_API_URL; M3 stamp smoke OK
+API: https://api.satohash.io · SPA: https://satohash.io (api URL baked in)

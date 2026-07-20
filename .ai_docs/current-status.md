@@ -33,9 +33,11 @@
 ## Next (ordered)
 1. ~~Kimi: runbook §2 complete~~ ✅ **DONE**
 2. ~~DNS: A + AAAA records~~ ✅ **DONE**
-3. **M3: `VITE_API_URL=https://api.satohash.io` build + deploy frontend**
-4. Smoke family stamp (motopass)
-5. Remaining clients: tadbuy, openstrata, camtaylor, lindala
+3. ~~M3: SPA `VITE_API_URL` build + deploy~~ ✅ **DONE** (live bundle has api.satohash.io)
+4. ~~M3 API smoke stamp~~ ✅ **DONE**
+5. ~~Remaining thin clients~~ ✅ tadbuy + openstrata shipped (full suite)
+6. HQ green when local DNS/MagicDNS resolves hostname
+7. Optional: BITCOIN_RPC on THOR
 
 ## Agent entrypoints
 | File | Who |
