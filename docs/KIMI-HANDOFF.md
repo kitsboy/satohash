@@ -1,3 +1,14 @@
+# KIMI HANDOFF — 2026-07-20 ops clean (THOR)
+
+## What Kimi did
+- Moved root `SESSION-SUMMARY-*.md` → `docs/archive/`
+- Vault/ops path unify on THOR (Folder-Map, 08-Research, lowercase M3 slugs)
+- No code changes this pass
+
+## For Grok
+- Keep writing handoffs under `docs/KIMI-HANDOFF.md`
+- Do not put session dumps at repo root
+
 ## Latest Session Summary (from 2026-07-20 goodbye)
 
 **Chat Topic:** End-to-end satohash proof plane — CF secrets, THOR API live, suite clients, v5.0.0-ELITE, knowledge pack, footer balance + live SPA deploy.
