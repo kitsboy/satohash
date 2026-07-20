@@ -26,10 +26,10 @@
 - Open stamp smoke: POST `/api/stamp` → id `823f1cd8-…` status pending (M3 client `m3-smoke`)
 - GET `/api/stamps/:id` 200
 - SPA: `.env.production` with `VITE_API_URL=https://api.satohash.io` (gitignored) + `./deploy.sh`
-- Live satohash.io bundle contains `api.satohash.io` (index-Dy-ChjPp.js)
+- Live satohash.io bundle contains `api.satohash.io` (index-DyChjPp.js)
 - Thin clients complete: motopass, katoa, giveabit, stranded, sherpacarta, camtaylor, lindala, **tadbuy**, **openstrata**
 
-**DNS note (M3):** Cloudflare/1.1.1.1 resolves `api.satohash.io` → `169.58.32.160`. Local Tailscale MagicDNS (`100.100.100.100`) may still fail hostname — use public DNS or wait for MagicDNS; **not a VPS bug**.
+**DNS note (M3):** Cloudflare/1.1.1.1 resolves `api.satohash.io` → `169.58.32.160`. Local Tailscale MagicDNS may still fail hostname — use public DNS or wait for MagicDNS; **not a VPS bug**.
 
 **Still optional:**
 - HQ green when browser DNS resolves (refresh HQ)
@@ -40,22 +40,48 @@
 
 ---
 
-## VPS — api.satohash.io LIVE — 2026-07-20
+## VPS — v5 rebuild + metrics + LNbits CORS — 2026-07-20 (Kimi)
+
+**Done (VPS):**
+- `git pull origin main` (fast-forward, 21 files, 2470 insertions — v5 routes)
+- `docker compose up -d --build` — container rebuilt with v5 API
+- v5 endpoints confirmed: `/api/public/stats` ✅, `/api/openapi.json` ✅, `/api/public/network` ✅, `/api/public/version` ✅, `/api/stamps/recent` ✅
+- All existing endpoints still healthy: health 200, public/status 200, metrics.json 200
+- `.ai_docs/current-status.md` — merged Grok's v5 highlights + Kimi metrics/CORS info (self-evolving)
+- `docs/KIMI-HANDOFF.md` — this entry (merged clean)
+- `docs/MASTER-BRAIN-INGEST.md` — updated paste block with metrics endpoint
+
+**Metrics endpoint (from prior session):**
+- `GET /metrics.json` — `gab.product-metrics.v1`, queries real DB, `raw.demo: false`
+- CORS: `https://hq.giveabit.io` allowed via env
+
+**LNbits CORS (from prior session):**
+- Caddy `:5103` → LNbits `:5102` with CORS headers
+- Tailscale serve `:5101` → Caddy `:5103`
+
+**Secrets configured (never recorded):**
+- FAMILY_API_KEYS ✅ | ADMIN_KEY ✅ | JWT_SECRET ✅ | SNAPPER_KEY ✅
+
+**Still open:**
+- DNS fully propagates (Cloudflare A+AAAA set, TTL auto)
+- HQ green when browser DNS resolves for Cam
+
+---
+
+## VPS — api.satohash.io LIVE — 2026-07-20 (Prior session)
 
 **Done:**
-- Docker stack built & running on THOR: `satohash-api` (Dockerfile.api with better-sqlite3 Alpine fix) + `redis:7-alpine`
-- `.env` secrets: JWT_SECRET regenerated to 32 bytes, FAMILY_API_KEYS + ADMIN_KEY + SNAPPER_KEY all configured
-- Git: `Dockerfile.api` fix + `Caddyfile` committed and pushed to `kitsboy/satohash` (3904db1, c089791)
+- Docker stack built & running on THOR: `satohash-api` + `redis:7-alpine`
+- `.env` secrets: JWT_SECRET, FAMILY_API_KEYS, ADMIN_KEY, SNAPPER_KEY configured
 - Remote switched from HTTPS to SSH
 
 **Results:**
-- Health: 200 (direct + via Caddy)
-- Public status: 200 — returns `stamps_stored: 2+`
+- Health: 200 ✅
+- Public status: 200 — `stamps_stored: 2+`, family_free: true
 - Family stamp: ✅ Created via `X-Satohash-Key`
-- Deep health: DB healthy, Redis healthy, OTS calendars connected, Nostr connected
-- `GET /metrics.json` — gab.product-metrics.v1 ✅
+- Deep health: DB, Redis, OTS calendars, Nostr — all green
 
-**DNS + TLS (FINAL):**
+**DNS + TLS:**
 - A record: `api.satohash.io` → `169.58.32.160` ✅
 - AAAA record: `api.satohash.io` → `2a02:c207:2344:6772::1` ✅
 - UFW ports 80+443 opened
@@ -63,6 +89,4 @@
 - Tailscale Funnel turned off (was on port 443)
 - Caddy reverse proxy `api.satohash.io:443` → `127.0.0.1:3001`
 
-**FAMILY_API_KEYS:** configured (value not recorded — stored in VPS `.env` only)
 **BITCOIN_RPC:** not configured (optional)
-**TLS:** ✅ Let's Encrypt (expires 2026-10-18)

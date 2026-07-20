@@ -10,6 +10,7 @@ Satohash is the shared **PROOF / TIMESTAMP backbone** for Give A Bit. Products s
 |-------|------|------|
 | Proof create | OpenTimestamps calendars | Public internet |
 | Proof API | Express + SQLite + Redis | VPS Docker |
+| Metrics API | GET /metrics.json (gab.product-metrics.v1) | VPS Docker |
 | Proof UX | React SPA | Cloudflare Pages |
 | Settlement | LND + LNbits | VPS |
 | Identity | NIP-05 namespace | giveabit.io |
