@@ -1,3 +1,27 @@
+## Latest Session Summary (from 2026-07-20 goodbye)
+
+**Chat Topic:** End-to-end satohash proof plane — CF secrets, THOR API live, suite clients, v5.0.0-ELITE, knowledge pack, footer balance + live SPA deploy.
+
+**Finished in this session:**
+- Cloudflare Actions secrets + deploy workflow fix; wrangler SPA deploys when Actions stalled
+- api.satohash.io LIVE (Kimi THOR); M3 SPA with `VITE_API_URL`; stamp smoke
+- Thin clients suite-wide; v5 API + cathedral routes + CLI (`ac91235`…)
+- Knowledge merge `db593e9` (metrics/CORS + v5); footer fix `0b75496` **deployed live** to satohash.io
+- SESSION-SUMMARY-2026-07-20-goodbye.md
+
+**Still to do:**
+- Optional MagicDNS / BITCOIN_RPC / paywall-on + family key in private SPA env
+- Deeper v5 product polish (AI notary full, vault v2, full i18n)
+- HQ metrics continues in HQ repo (Cam)
+
+**Update / Status:** Proof plane operational. main @ `0b75496` (footer). API THOR healthy. No secrets in handoff.
+
+**Next for Kimi:** Integrate goodbye summary into MASTER-BRAIN/Kanban if not already. No infra redo. Optional MagicDNS note for local resolvers.
+
+**Git:** SHA `0b7549647ab93812886558f39842e723ec05748f` · Build 119 · main synced · Unpushed: none (after goodbye docs push)
+
+---
+
 ## Session — 2026-07-20 — v5.0.0-ELITE Sovereignty Ascension (Grok)
 
 **Done (code):**
