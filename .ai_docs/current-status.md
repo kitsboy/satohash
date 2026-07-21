@@ -1,10 +1,10 @@
 # Current Status — Satohash
 
 **Version:** **5.0.0-ELITE** (Sovereignty Ascension)  
-**Last Updated:** 2026-07-20 (goodbye)  
-**Frontend:** https://satohash.io ✅ footer balance deployed  
-**API:** https://api.satohash.io ✅ LIVE (THOR)  
-**Git tip (session end):** `0b75496` footer · knowledge `db593e9`
+**Last Updated:** 2026-07-21 (goodbye — Umami)  
+**Frontend:** https://satohash.io ✅ Umami script in SPA (`6b99ecb`)  
+**API:** https://api.satohash.io ✅ LIVE (THOR) + `/metrics.json`  
+**Git tip (session end):** `6b99ecb` Umami · Build 122
 
 ## Planes
 - Proof API on VPS Docker + Caddy TLS  
