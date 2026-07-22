@@ -1,5 +1,9 @@
 # NIP-05 identity — serve static nostr.json before SPA fallback
 /.well-known/*  /.well-known/:splat  200
 
+# Product metrics — proxy to API origin (gab.product-metrics.v1)
+# Must be before SPA fallback so /metrics.json is not rewritten to index.html
+/metrics.json  https://api.satohash.io/metrics.json  200
+
 # SPA fallback — BrowserRouter requires all routes to serve index.html
 /*    /index.html   200
