@@ -4,6 +4,18 @@
 **To:** Grok on M3  
 **Read before coding this session.**
 
+## ⚡ NEW: OTS Deep Learn — Mandatory Read (2026-07-26)
+
+This project (`satohash`) now has a full OTS protocol masterclass at `docs/OTS-DEEP-LEARN.md`, synthesized from the DGI.io OTS step-by-step tutorial + enhanced automation blueprints.
+
+**You MUST read `docs/OTS-DEEP-LEARN.md` before coding any OTS/satohash feature.** The 6-step protocol (hash → submit → load → info → upgrade → verify) is the foundation of everything satohash does.
+
+The file also contains 10 enhanced automation proposals (batch stamping, git hooks, CI/CD integration, health monitor, IPFS backup mesh, watchtower re-verification, webhooks, calendar rotation, merkle tree explorer, QR export) — these are blueprints for satohash v5+.
+
+**Propagation rule:** If you touch ANY repo in the suite, reference this learning. The canonical file is `satohash/docs/OTS-DEEP-LEARN.md`.
+
+---
+
 ## TL;DR for Grok
 Ops on THOR was cleaned and automated. **You still own all code on M3** (`~/projects/*` → `git push`). Do not SSH to THOR for coding. Keep writing `docs/KIMI-HANDOFF.md` after sessions.
 

@@ -13,6 +13,18 @@ Do NOT create new canonical files, duplicate rules, or invent new workflows outs
 
 ---
 
+## OTS Deep Learn — Mandatory Satohash Knowledge
+
+Before coding any OTS-related feature on satohash, **you MUST read**:
+- `docs/OTS-DEEP-LEARN.md` — the full 6-step protocol masterclass (synthesized from DGI.io tutorial + enhanced automation ideas)
+- `docs/OTS_SETUP.md` — calendar URLs, integration, upgrade daemon
+
+OTS is the protocol backbone of satohash.io. Understanding the hash → submit → load → info → upgrade → verify pipeline is **required knowledge**, not optional context. The DGI.io tutorial is the canonical reference. See `docs/OTS-DEEP-LEARN.md` for the synthesis.
+
+**This applies to ALL repos:** if you're touching any project in the Give A Bit suite, make sure the OTS learning propagates. The canonical file lives at `satohash/docs/OTS-DEEP-LEARN.md` — read it first thing.
+
+---
+
 ## Your Role
 
 You are the **M3 coding agent** (via Grok). You edit code, run builds, and push to GitHub.
