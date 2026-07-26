@@ -12,9 +12,11 @@
 - GROK-SESSION-PROTOCOL.md updated to mandate reading OTS-DEEP-LEARN.md first
 
 **For Grok next session:**
+- ⚡ **Git pull first:** `cd ~/Projects/satohash && git pull` (sync latest from GitHub — M3 or M4 may have pushed)
 - Read `docs/OTS-DEEP-LEARN.md` before any OTS/satohash coding
 - The verification checklist at the bottom is your entry gate
 - Enhanced automation ideas (sections A–J) are blueprints for satohash v5+
+- ⚡ **Git save before leaving:** `git add -A && git commit -m "save" && git push`
 
 ---
 
