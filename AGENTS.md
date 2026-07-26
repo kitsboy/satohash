@@ -13,7 +13,7 @@ Before every session, read **GROK-SESSION-PROTOCOL.md** in this directory.
 | **Session log** | `docs/KIMI-HANDOFF.md` (top entry) |
 | **Grok coding** | Protocol + `.ai_docs/*` + code |
 
-**Orchestration = VPS Kimi. Code = M3. No Umbrel. No M4 coding.**  
+**Orchestration = VPS Kimi. Code = M3 or M4. No Umbrel. No M3→M4 conflicts.**  
 **Never commit secrets.** Status messages only in handoffs.
 
 ## Latest Kimi mega-handoff (2026-07-20)

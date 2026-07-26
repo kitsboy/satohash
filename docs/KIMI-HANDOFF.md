@@ -1,4 +1,8 @@
-### 2026-07-26 — OTS Deep Learn: DGI tutorial ingested + automation enhancements
+#### 2026-07-26 — M4 back in game
+
+**Machine update:** M4 rebuilt as travel coding machine (M3 duplicate). Sync via git only — no rsync. See MASTER-BRAIN/01-Architecture/MACHINE-ECOSYSTEM.md
+
+## 2026-07-26 — OTS Deep Learn: DGI tutorial ingested + automation enhancements
 
 **What was learned:**
 - DGI.io OTS step-by-step tutorial fully ingested → `docs/OTS-DEEP-LEARN.md`
