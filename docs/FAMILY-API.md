@@ -1,7 +1,30 @@
 # Satohash Family API — shared proof plane
 
-**Status:** Client packages + family free-tier middleware shipped; **public `api.satohash.io` goes live when VPS runs `docker-compose.vps.yml`.**  
+**Status:** SPA deep-link + live API plane.  
 **Kimi operator bible:** [`KIMI-VPS-RUNBOOK.md`](./KIMI-VPS-RUNBOOK.md) · **Vault paste:** [`MASTER-BRAIN-INGEST.md`](./MASTER-BRAIN-INGEST.md)
+
+## Deep-link contract (family → SPA)
+
+Canonical stamp entry for Sherpa, MotoPass, Katoa, etc.:
+
+```
+https://satohash.io/stamp?hash=<64hex>&ref=<productId>[&label=][&campaign=][&filename=]
+```
+
+| Param | Required | Notes |
+|-------|----------|--------|
+| `hash` | yes | 64 hex SHA-256 |
+| `ref` or `source` | recommended | e.g. `sherpacarta`, `motopass`, `katoa` → SPA sends `X-Satohash-Client` |
+| `label` / `filename` / `campaign` | optional | Display + attribution |
+
+Also accepted (client redirect to `/stamp`):
+
+```
+https://satohash.io/?hash=<64hex>&ref=<productId>
+https://satohash.giveabit.io/stamp?hash=…&ref=…
+```
+
+After stamp: share `https://satohash.io/verify/<stamp-id>` (UUID) or `/verify/<hash>`.
 
 ## Architecture
 

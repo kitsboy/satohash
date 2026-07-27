@@ -19,7 +19,13 @@ cd "$PROJECT_DIR"
 echo "📦 Installing dependencies..."
 npm ci
 
-echo "🔨 Building..."
+# Public SPA env (no secrets). CF Pages has no /api/* — always target THOR API.
+export VITE_API_URL="${VITE_API_URL:-https://api.satohash.io}"
+export VITE_MVP_MODE="${VITE_MVP_MODE:-true}"
+export VITE_APP_NAME="${VITE_APP_NAME:-Satohash}"
+export VITE_MEMPOOL_API_URL="${VITE_MEMPOOL_API_URL:-https://mempool.space/api}"
+
+echo "🔨 Building (VITE_API_URL=$VITE_API_URL)..."
 npm run build
 
 echo "🔍 Verifying Landing bundle..."

@@ -269,8 +269,8 @@ export default function Stamp() {
     setProofResult(proof)
     setStampingStatus('complete')
     downloadOtsBlob(otsBlob, `${label || 'proof'}.ots`)
-    toast.success('OpenTimestamps proof created', {
-      description: 'Submitted to public calendars from your browser.'
+    toast.success('Local OTS proof (browser calendars)', {
+      description: 'No hosted stamp id — shareable /verify/:id needs the API plane.'
     })
     navigator.vibrate?.([50, 30, 100])
     return proof
@@ -450,23 +450,28 @@ export default function Stamp() {
         localStorage.setItem('satohash_stamps', JSON.stringify(existing.slice(0, 100)))
         upsertLocalStamp(proof)
 
-        toast.success('Stamp created on Bitcoin (OpenTimestamps)', {
-          description: `ID ${String(proof.id).slice(0, 8)}… — share verify link`
-        })
-
-        if (proof.status !== 'confirmed') {
-          startStatusPoll(proof.id)
-        } else {
+        // Never claim "Bitcoin confirmed" until status is confirmed
+        if (proof.status === 'confirmed') {
           setIsConfirmed(true)
           if (proof.bitcoin_block_height) setConfirmedBlock(proof.bitcoin_block_height)
+          toast.success('Stamp confirmed on Bitcoin', {
+            description: `ID ${String(proof.id).slice(0, 8)}… — share verify link`
+          })
+        } else {
+          toast.success('Stamp submitted — pending Bitcoin confirmation', {
+            description: `ID ${String(proof.id).slice(0, 8)}… · status: ${proof.status}`
+          })
+          startStatusPoll(proof.id)
         }
       } catch (err) {
         // API down / network — browser calendar fallback (no durable API id)
         console.warn('API stamp failed, trying browser OTS', err)
         try {
           await stampHashBrowserOnly(hex, label)
-          toast.warning('Used browser calendars (API unavailable)', {
-            description: err.message || 'Proof has no hosted stamp id until API sync'
+          toast.warning('Browser calendars only — no hosted stamp id', {
+            description:
+              err.message ||
+              'API unavailable. Local .ots only; verify URL needs a durable API stamp id.'
           })
         } catch (otsErr) {
           const msg = err.message || otsErr.message || 'Failed to stamp'
@@ -649,18 +654,36 @@ export default function Stamp() {
       }
 
       const data = await res.json()
-      setProofResult({ ...data, filename: caseLabel || file.name })
+      if (!data?.id) {
+        throw new Error('API returned no stamp id — not treating as success')
+      }
+      const proof = {
+        ...data,
+        filename: caseLabel || file.name,
+        status: data.status || 'pending',
+        size: file.size
+      }
+      setProofResult(proof)
       setStampingStatus('complete')
-      setUpgradeStatus(data.status || 'pending')
-      // Haptic feedback on mobile
+      setUpgradeStatus(proof.status)
       navigator.vibrate?.([50, 30, 100])
 
-      // Save to localStorage for vault
       const existing = JSON.parse(localStorage.getItem('satohash_stamps') || '[]')
-      existing.unshift({ ...data, filename: caseLabel || file.name, size: file.size })
+      existing.unshift(proof)
       localStorage.setItem('satohash_stamps', JSON.stringify(existing.slice(0, 100)))
-      if (data?.id && data.status !== 'confirmed') {
-        startStatusPoll(data.id)
+      upsertLocalStamp(proof)
+
+      if (proof.status === 'confirmed') {
+        setIsConfirmed(true)
+        if (proof.bitcoin_block_height) setConfirmedBlock(proof.bitcoin_block_height)
+        toast.success('Stamp confirmed on Bitcoin', {
+          description: `ID ${String(proof.id).slice(0, 8)}…`
+        })
+      } else {
+        toast.success('Stamp submitted — pending Bitcoin confirmation', {
+          description: `ID ${String(proof.id).slice(0, 8)}… · status: ${proof.status}`
+        })
+        startStatusPoll(proof.id)
       }
     } catch (err) {
       const file = files[0]
@@ -1351,11 +1374,18 @@ export default function Stamp() {
                         className="text-2xl font-black tracking-tight uppercase"
                         style={{ color: 'var(--text-primary)' }}
                       >
-                        Proof Created
+                        {proofResult?.status === 'confirmed'
+                          ? 'Proof confirmed'
+                          : proofResult?.id && !String(proofResult.id).startsWith('ots-')
+                            ? 'Stamp received'
+                            : 'Local proof only'}
                       </h3>
                       <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-                        Your file&apos;s fingerprint has been submitted to the Bitcoin blockchain
-                        via OpenTimestamps.
+                        {proofResult?.status === 'confirmed'
+                          ? 'Fingerprint is anchored on Bitcoin via OpenTimestamps.'
+                          : proofResult?.id && proofResult?.source !== 'browser-ots'
+                            ? `Durable stamp id ${String(proofResult.id).slice(0, 8)}… · status: ${proofResult.status || 'pending'}. Not confirmed on Bitcoin until status becomes confirmed.`
+                            : 'Browser calendars only — no hosted stamp id. Retry when API is reachable for a shareable verify link.'}
                       </p>
                     </div>
 

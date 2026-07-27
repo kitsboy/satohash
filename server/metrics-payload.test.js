@@ -44,6 +44,7 @@ describe('metrics-payload for HQ', () => {
     expect(p.kpis.find((k) => k.key === 'stamps_total')?.value).toBe(2)
     expect(p.raw.directory.productId).toBe('satohash')
     expect(p.raw.demo).toBe(false)
+    expect(p.health.uptimePct24h).toBeNull()
     const byClient = p.segments.find((s) => s.id === 'by_client')
     const sherpa = byClient.rows.find((r) => r.id === 'sherpacarta')
     const moto = byClient.rows.find((r) => r.id === 'motopass')

@@ -44,13 +44,27 @@ export function isMvpPublicPath(pathname = '') {
   return false
 }
 
-/** True when build bakes in an external API (api.satohash.io) */
+/**
+ * True when SPA should use the real API plane (not browser-only OTS).
+ * Production hosts always target api.satohash.io even if VITE_API_URL was
+ * missing at build time (GHA previously forgot the env).
+ */
 export function isApiExplicitlyConfigured() {
   const url = import.meta.env.VITE_API_URL
-  return Boolean(url && String(url).trim())
+  if (url && String(url).trim()) return true
+  if (typeof window !== 'undefined' && window.location?.hostname) {
+    const host = window.location.hostname.toLowerCase()
+    return (
+      host === 'satohash.io' ||
+      host === 'www.satohash.io' ||
+      host === 'satohash.giveabit.io' ||
+      host === 'www.satohash.giveabit.io'
+    )
+  }
+  return false
 }
 
-/** Show health banner only when we expect an API (dev or VITE_API_URL set) */
+/** Show health banner only when we expect an API (dev or production SPA / VITE_API_URL) */
 export function shouldMonitorApiHealth() {
   return import.meta.env.DEV || isApiExplicitlyConfigured()
 }

@@ -1,3 +1,38 @@
+## Session — 2026-07-27 (Grok M3 — stamp UX root-cause + honest metrics)
+
+**Root cause (Cam “not fully working”):**  
+Production SPA build had **no `VITE_API_URL`**, so `getApiUrl()` used same-origin (`satohash.io`). `POST /api/stamp` never hit THOR → browser OTS fallback **without durable stamp id**.
+
+**Shipped (SPA + build path):**
+- Runtime host fallback: `satohash.io` / `satohash.giveabit.io` → `https://api.satohash.io`
+- GHA `deploy.yml` + `deploy.sh` set `VITE_API_URL=https://api.satohash.io`
+- `isApiExplicitlyConfigured()` true on production SPA hosts
+- Honest UX: no “Bitcoin confirmed” until status=confirmed; require real API `id`
+- Metrics: stop inventing `uptimePct24h: 99.9` (null until measured)
+- SPA `public/metrics.json` refreshed from live API (`raw.demo: false`)
+- Family deep-link contract documented in `docs/FAMILY-API.md`
+
+**Already in place (prior):** `/stamp?hash=&ref=` card, home `/?hash=` redirect, poll, `/verify/:id`, `X-Satohash-Client`, metrics payload with client segments (needs Docker).
+
+**Still needs THOR / Kimi:**
+1. **Docker rebuild** `satohash-api` so live `/metrics.json` includes `raw.directory` + stores `client_id` (live GET stamp still returns `client_id: null`)
+2. Confirm `REQUIRE_LIGHTNING=false` (or family keys) for suite free stamp
+3. Dual-host smoke after CF deploy
+
+**Env names for Cam/Kimi (values stay on THOR/Vault only):**
+- `REQUIRE_LIGHTNING`, `FAMILY_API_KEYS`, `CORS_ORIGIN`, DB path via compose volume
+- SPA public only: `VITE_API_URL` (now in GHA — not a secret)
+
+**Acceptance after CF deploy:**
+```
+https://satohash.io/stamp?hash=9da88734e32d3d2f931c187016d18cfbb0f7404ca90479ed4d6718c49289ee1b&ref=sherpacarta
+```
+→ Stamp CTA → real API id → `/verify/{id}` cold-load.
+
+**Git:** push this commit; GHA Deploy rebuilds SPA.
+
+---
+
 ## Session — 2026-07-27 (Grok — Sherpa URLs + HQ feed + tidy)
 
 **Done:**

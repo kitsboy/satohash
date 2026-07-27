@@ -1,10 +1,10 @@
 # Current Status — Satohash
 
 **Version:** **5.0.0-ELITE** (Sovereignty Ascension)  
-**Last Updated:** 2026-07-27 (HQ feed + Sherpa stamp URLs + docs tidy — Grok M3)  
-**Frontend:** https://satohash.io ✅ SPA deep-link live (`/stamp?hash=&ref=`)  
-**API:** https://api.satohash.io ✅ LIVE (THOR) + `/metrics.json`  
-**Git tip:** `fd5e661` metrics feed · SPA `69b9daf` · **Kimi:** Docker rebuild for live directory/client_id
+**Last Updated:** 2026-07-27 (SPA API URL fix — stamp handoff)  
+**Frontend:** https://satohash.io — deep-link + **must deploy** so POST hits api.satohash.io  
+**API:** https://api.satohash.io ✅ LIVE · **Kimi:** Docker rebuild for client_id + raw.directory  
+**Git tip:** pending push (VITE_API_URL + host fallback)
 
 ## Planes
 - Proof API on VPS Docker + Caddy TLS  

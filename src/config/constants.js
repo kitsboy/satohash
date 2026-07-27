@@ -22,11 +22,29 @@ export function getVerifyUrl() {
   return HEALTH_CONFIG.VERIFY_URL
 }
 
-/** API base for client fetches — defaults to same-origin in production builds. */
+/** Public proof API (THOR). SPA on CF Pages must never same-origin /api/*. */
+export const PUBLIC_API_URL = 'https://api.satohash.io'
+
+/** Hostnames that always target PUBLIC_API_URL when VITE_API_URL is unset. */
+export const PRODUCTION_SPA_HOSTS = new Set([
+  'satohash.io',
+  'www.satohash.io',
+  'satohash.giveabit.io',
+  'www.satohash.giveabit.io'
+])
+
+/**
+ * API base for client fetches.
+ * Priority: VITE_API_URL → production SPA hosts → same-origin → localhost dev.
+ */
 export function getApiUrl() {
-  if (import.meta.env.VITE_API_URL) return import.meta.env.VITE_API_URL
-  if (typeof window !== 'undefined' && window.location?.origin) {
-    return window.location.origin
+  const fromEnv = import.meta.env.VITE_API_URL
+  if (fromEnv && String(fromEnv).trim()) return String(fromEnv).replace(/\/$/, '')
+
+  if (typeof window !== 'undefined' && window.location?.hostname) {
+    const host = window.location.hostname.toLowerCase()
+    if (PRODUCTION_SPA_HOSTS.has(host)) return PUBLIC_API_URL
+    if (window.location.origin) return window.location.origin
   }
   return 'http://localhost:3001'
 }

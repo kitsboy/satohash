@@ -281,7 +281,8 @@ export function buildMetricsPayload(db, opts = {}) {
       status: healthStatus,
       message: healthMessage,
       latencyMs,
-      uptimePct24h: 99.9,
+      // Do not invent uptime % — HQ prefers null over fake 99.9
+      uptimePct24h: null,
       dependencies: [
         {
           id: 'opentimestamps-calendars',

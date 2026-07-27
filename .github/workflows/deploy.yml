@@ -34,7 +34,14 @@ jobs:
           fi
           echo "Cloudflare secrets present (values never logged)."
       - run: npm ci
-      - run: npm run build
+      # Public build-time env only (no secrets). Ensures SPA posts to API plane.
+      - name: Build SPA
+        env:
+          VITE_API_URL: https://api.satohash.io
+          VITE_MVP_MODE: 'true'
+          VITE_APP_NAME: Satohash
+          VITE_MEMPOOL_API_URL: https://mempool.space/api
+        run: npm run build
       - run: npm run build:verify
       - name: Deploy to Cloudflare Pages
         run: npx wrangler pages deploy ./dist --project-name=satohash

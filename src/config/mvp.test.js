@@ -17,6 +17,7 @@ describe('mvp config', () => {
   it('isMvpPublicPath allows verify routes without login', () => {
     expect(isMvpPublicPath(`/verify/${'e'.repeat(64)}`)).toBe(true)
     expect(isMvpPublicPath('/verify')).toBe(true)
+    expect(isMvpPublicPath('/verify/d37567ba-d328-459f-ac69-c9bbeda12718')).toBe(true)
   })
 
   it('KIMI_NOSTR has pubkey hex only (no secret)', () => {

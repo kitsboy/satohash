@@ -41,4 +41,11 @@ describe('Deep health check constants', () => {
     expect(getApiUrl()).toBeTypeOf('string')
     expect(getPublicBaseUrl()).toBeTypeOf('string')
   })
+
+  it('exports public API constant for production SPA', async () => {
+    const mod = await import('./constants')
+    expect(mod.PUBLIC_API_URL).toBe('https://api.satohash.io')
+    expect(mod.PRODUCTION_SPA_HOSTS.has('satohash.io')).toBe(true)
+    expect(mod.PRODUCTION_SPA_HOSTS.has('satohash.giveabit.io')).toBe(true)
+  })
 })
