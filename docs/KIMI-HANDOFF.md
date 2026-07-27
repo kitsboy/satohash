@@ -21,7 +21,8 @@ https://satohash.io/stamp?hash=9da88734e32d3d2f931c187016d18cfbb0f7404ca90479ed4
 https://satohash.io/?hash=9da88734e32d3d2f931c187016d18cfbb0f7404ca90479ed4d6718c49289ee1b&ref=sherpacarta
 ```
 
-**Git State:** uncommitted SPA changes on main (not pushed) — commit + CF Pages deploy needed for Cam-visible fix.
+**Git State:** SHA `69b9daf` pushed · GHA Deploy #136 ✅ success · CF Pages live  
+**Smoke:** `POST /api/stamp` → id `6004b6a6-…` pending; health 200; metrics green
 
 **Spec:** `docs/KIMI-REQUEST-SATOHASH.md`
 
