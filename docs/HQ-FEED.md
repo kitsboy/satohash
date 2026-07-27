@@ -57,3 +57,9 @@ Home `/?hash=` redirects to `/stamp`.
 ## Do not put in metrics
 
 - API keys, LNbits secrets, nsec, PII, file contents, full user lists
+- Invented uptime percentages or synthetic growth curves
+- Demo series when real stamps exist (`raw.demo` must be `false`)
+
+## Learn (2026-07-27)
+
+See **`docs/LEARN-STAMP-FAMILY.md`**. SPA on CF Pages must call **API origin** for stamps; family clients send `X-Satohash-Client` / `ref` so `by_client` segments light up after THOR Docker rebuild.

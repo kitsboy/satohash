@@ -3,7 +3,23 @@
 > **Source:** DGI step-by-step tutorial (https://www.dgi.io/ots-tutorial/)  
 > **Synthesized by:** Kimi on THOR · 2026-07-26  
 > **Domain:** satohash.io — Bitcoin-anchored timestamping  
-> **Audience:** Grok (M3 coding) + Kimi (THOR ops) — read before every session
+> **Audience:** Grok (M3 coding) + Kimi (THOR ops) — read before every session  
+> **Also read:** `docs/LEARN-STAMP-FAMILY.md` (2026-07-27 family handoff + SPA/API plane)
+
+---
+
+## Family product path (suite)
+
+1. **Hash locally** (browser or client) — never upload the file  
+2. Open or POST:
+   - Deep-link: `https://satohash.io/stamp?hash=<64hex>&ref=<productId>`
+   - API: `POST https://api.satohash.io/api/stamp` + `X-Satohash-Client`
+3. Receive durable **`id`** + `status` (`pending` then `confirmed`)  
+4. Share `https://satohash.io/verify/<id>`  
+5. Download `.ots` / proof package when ready  
+
+**Do not** claim Bitcoin confirmation until OTS upgrade → bitcoin anchor sets `status=confirmed`.  
+**SPA must call the API host** (`api.satohash.io`), never CF Pages same-origin `/api/*`.
 
 ---
 

@@ -1,3 +1,19 @@
+## Session — 2026-07-27 (Grok M3 — /learn + Sherpa prompt + docs)
+
+**Done:**
+- `docs/LEARN-STAMP-FAMILY.md` — canonical lessons (SPA API plane, deep-link, honest metrics)
+- `docs/OTS-DEEP-LEARN.md` — family path section
+- `docs/MASTER-BRAIN-INGEST.md` — updated paste block (2026-07-27)
+- `docs/KIMI-REQUEST-SATOHASH.md` — resolution log
+- `.ai_docs/current-status.md` refreshed
+- Sherpa: `docs/GROK-PROMPT-STAMP-HANDOFF.md` — paste-ready list for Grok in sherpacarta
+
+**Tell Cam for Sherpa session:** open that prompt file or paste the task block.
+
+**Still open:** THOR Docker rebuild; Sherpa live CF after audit; GHA SPA deploy verification.
+
+---
+
 ## Session — 2026-07-27 (Grok M3 — stamp UX root-cause + honest metrics)
 
 **Root cause (Cam “not fully working”):**  

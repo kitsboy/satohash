@@ -2,12 +2,17 @@
 
 **From:** Grok (M3) · SherpaCarta session 2026-07-27  
 **To:** Kimi (THOR) + next Grok pass on `~/projects/satohash`  
-**Priority:** High — Cam: *“Satohash is not fully working; upgrade further”*  
-**Context:** Cam clicked **Stamp it** on Sherpa and landed on a weak handoff:
+**Priority:** High → **mostly closed on satohash `main` (2026-07-27)**  
+**Context (original):** Cam clicked **Stamp it** on Sherpa and landed on a weak handoff:
 
 `https://satohash.io/?ref=sherpacarta&hash=9da88734e32d3d2f931c187016d18cfbb0f7404ca90479ed4d6718c49289ee1b`
 
-API health was OK (`api.satohash.io` v4.1.0-ELITE). The **UX + deep-link + stamp completion path** is the gap.
+**Resolution log:**
+1. SPA deep-link + home redirect + verify poll — shipped  
+2. **Root cause:** production SPA missing `VITE_API_URL` → same-origin stamp → browser OTS, no durable id — **fixed** (`cee9227`)  
+3. Still open: THOR Docker for live `client_id` + `raw.directory`; Sherpa full URL audit / CF deploy of sc-bundle  
+
+See `docs/LEARN-STAMP-FAMILY.md` + Sherpa `docs/GROK-PROMPT-STAMP-HANDOFF.md`.
 
 ---
 
@@ -165,6 +170,6 @@ Also later on Sherpa: one host preference (pick **canonical** `https://satohash.
 
 ## One-line for Cam / pulse
 
-**Satohash:** deep-link stamp handoff incomplete (home ignores hash); need full `/stamp?hash=&ref=` + verify lifecycle + host parity so Sherpa “Stamp it” actually completes on Bitcoin.
+**Satohash (updated):** SPA deep-link + API URL plane fixed on main — GHA deploys SPA to call `api.satohash.io`. Next: THOR Docker rebuild (client_id) + Sherpa audit/deploy. Learn: `docs/LEARN-STAMP-FAMILY.md`.
 
-— Grok · M3 · 2026-07-27 · Sherpa SHA `71ef9b1` (context)
+— Grok · M3 · 2026-07-27

@@ -9,72 +9,45 @@
 ## Paste block (structured)
 
 ```markdown
-### Satohash proof plane (2026-07-20 — v5 Sovereignty Ascension)
+### Satohash proof plane (2026-07-27 — stamp family handoff learn)
 
 **Role:** Shared OpenTimestamps backbone for all Give A Bit products.
-**Version:** **5.0.0-ELITE** (Sovereignty Ascension)
-**Frontend:** https://satohash.io · Cloudflare Pages project `satohash`
-**API target:** https://api.satohash.io · VPS Docker (`docker-compose.vps.yml`)
-**API status:** LIVE — health 200 ✅, TLS via Let's Encrypt (auto), v5 API deployed
-**Metrics:** `GET /metrics.json` — `gab.product-metrics.v1` live from API origin
-**Repo:** kitsboy/satohash · code on M3; orchestration on VPS (Kimi)
+**Version:** **5.0.0-ELITE**
+**Frontend:** https://satohash.io · https://satohash.giveabit.io · CF Pages `satohash`
+**API:** https://api.satohash.io · THOR Docker + Caddy TLS
+**Metrics:** `GET /metrics.json` — `gab.product-metrics.v1` · HQ prefers API origin over SPA mirror
+**Repo:** kitsboy/satohash · code M3 · ops Kimi/THOR
 
-**Planes:**
-- Proof create → public OTS calendars (alice/bob/finney)
-- Proof verify independence → optional VPS pruned bitcoind (`BITCOIN_RPC_URL`)
-- Settlement → VPS LND + LNbits (not used for OTS hash)
-- Identity → giveabit.io NIP-05 (kimi@giveabit.io …)
+**CRITICAL LESSON (2026-07-27):**
+- CF Pages has no `/api/*`. SPA must use `VITE_API_URL=https://api.satohash.io` (GHA + runtime host fallback).
+- Without that, stamps fall back to browser OTS with **no durable id** → Cam “not fully working”.
+- Canonical family deep-link: `/stamp?hash=<64hex>&ref=<productId>`
+- Home `/?hash=&ref=` redirects to `/stamp`
+- Honest UX: pending ≠ confirmed; require real API stamp `id`
+- Metrics: real DB only; `raw.demo: false` when stamps exist; never invent uptime/growth curves
+- Attribution: `X-Satohash-Client` / `ref` → `timestamps.client_id` → HQ segments
+
+**Deep-link contract:**
+https://satohash.io/stamp?hash=<64hex>&ref=sherpacarta|motopass|katoa|…
 
 **Family free tier:**
-- Server env: FAMILY_API_KEYS (comma-separated)
-- Client header: X-Satohash-Key + X-Satohash-Client: <project>
-- Public without key: 402 if REQUIRE_LIGHTNING≠false
+- Server: FAMILY_API_KEYS, REQUIRE_LIGHTNING=false (or true + paywall)
+- Client: X-Satohash-Client (+ optional X-Satohash-Key)
 
-**v5 new public endpoints:**
-- `GET /api/public/stats` — 24h stats + calendar health
-- `GET /api/public/network` — Bitcoin network data (mempool.space)
-- `GET /api/public/uptime|calendar-status|version|did|bitcoin|lightning`
-- `GET /api/stamps/recent` — recent stamps (public)
-- `GET /api/stamps/:hash/by-hash` — lookup by hash
-- `GET /api/openapi.json` — OpenAPI 3.0.3 spec
-- `GET /api/events/stamps`, `GET /api/events/bitcoin` — SSE streams
-- `POST /api/stamps/batch`, `POST /api/stamp/multihash|webcapture|cosign|ethereum`
-- `POST /api/verify/json`, `POST /api/webhooks/register`
-
-**Existing endpoints:**
-- `GET /health` — liveness (deep with `?deep=true`)
-- `GET /api/public/status` — HQ heartbeat
-- `GET /metrics.json` — `gab.product-metrics.v1` product metrics
-- `GET /metrics` — Prometheus (admin-only)
-- `POST /api/stamp` — create OTS stamp
-- `GET /api/stamps/:id` — retrieve stamp
-
-**Infrastructure:**
-- Docker stack: `satohash-api` (Node 20 Alpine, pm2) + `redis:7-alpine`
-- Caddy reverse proxy: HTTPS auto, `api.satohash.io → 127.0.0.1:3001`
-- LNbits: CORS proxy via Caddy `:5103 → :5102`, Tailscale serve `:5101 → :5103`
-- Secrets: `.env` file on VPS only — FAMILY_API_KEYS, ADMIN_KEY, JWT_SECRET, SNAPPER_KEY
-
-**Clients shipped on main:**
-motopass, katoa, giveabit, stranded, sherpacarta, tadbuy, openstrata, camtaylor, lindala
-HQ: health bar + proof-plane card + live metrics via `/metrics.json`
+**Endpoints (public):**
+- GET /health, /metrics.json, /api/public/status|stats|directory|network|version
+- POST /api/stamp · GET /api/stamps/:id · GET /api/stamps/:hash/by-hash · /api/stamps/recent
 
 **Kanban:**
-- [x] VPS: docker up satohash-api (v5 rebuilt)
-- [x] DNS+TLS api.satohash.io
-- [x] v5 API deployed on THOR (git pull + rebuild)
-- [x] FAMILY_API_KEYS set (vault only)
-- [x] Health 200 public
-- [x] /metrics.json live (gab.product-metrics.v1)
-- [x] LNbits CORS proxy configured (Caddy :5103)
-- [x] SPA deployed with VITE_API_URL (Grok M3)
-- [x] All thin clients shipped (tadbuy, openstrata, camtaylor, lindala complete)
-- [ ] DNS fully propagated (Cloudflare A+AAAA set)
-- [ ] HQ green when browser DNS resolves
-- [ ] BITCOIN_RPC on THOR (optional)
+- [x] SPA deep-link + verify lifecycle
+- [x] SPA production API URL fix (VITE_API_URL + host fallback)
+- [x] Metrics code: client segments + directory (repo)
+- [ ] THOR Docker rebuild so live stores client_id + raw.directory
+- [ ] Sherpa/other family: audit all stamp URLs still use /stamp?hash=&ref=
+- [ ] Dual-host smoke + family free confirmed
 
-**Retired:** Umbrel as home stack; M4 as coding machine.
-**Orchestration:** Kimi on VPS/THOR. Coding: Grok on M3.
+**Docs learn:** satohash/docs/LEARN-STAMP-FAMILY.md · Sherpa prompt: sherpacarta/docs/GROK-PROMPT-STAMP-HANDOFF.md
+**Orchestration:** Kimi THOR. Coding: Grok M3.
 ```
 
 ---

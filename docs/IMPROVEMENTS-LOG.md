@@ -697,3 +697,19 @@
 - [x] Icons: Fingerprint, Globe, Scale, FileCheck for government cards
 
 *Safe Harbour · Part of the [Give A Bit](https://giveabit.io) family.*
+
+
+---
+
+## Batch — Family stamp handoff learn (2026-07-27)
+
+- [x] Root-cause: production SPA without VITE_API_URL → same-origin /api miss
+- [x] Runtime PRODUCTION_SPA_HOSTS → api.satohash.io
+- [x] GHA deploy.yml + deploy.sh bake VITE_API_URL
+- [x] Honest stamp UX (pending vs confirmed; require id)
+- [x] Metrics: null uptimePct24h; no demo poison
+- [x] docs/LEARN-STAMP-FAMILY.md + MASTER-BRAIN ingest refresh
+- [x] Sherpa paste prompt: GROK-PROMPT-STAMP-HANDOFF.md (sibling repo)
+- [ ] THOR Docker rebuild (client_id live)
+- [ ] Live GHA SPA verify bundle contains API base
+- [ ] Full family client audit (motopass, katoa, …)

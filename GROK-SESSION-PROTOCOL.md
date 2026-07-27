@@ -18,10 +18,14 @@ Do NOT create new canonical files, duplicate rules, or invent new workflows outs
 Before coding any OTS-related feature on satohash, **you MUST read**:
 - `docs/OTS-DEEP-LEARN.md` — the full 6-step protocol masterclass (synthesized from DGI.io tutorial + enhanced automation ideas)
 - `docs/OTS_SETUP.md` — calendar URLs, integration, upgrade daemon
+- `docs/LEARN-STAMP-FAMILY.md` — **2026-07-27 lessons**: SPA must call `api.satohash.io`, deep-link `/stamp?hash=&ref=`, no fake success, metrics honesty
 
 OTS is the protocol backbone of satohash.io. Understanding the hash → submit → load → info → upgrade → verify pipeline is **required knowledge**, not optional context. The DGI.io tutorial is the canonical reference. See `docs/OTS-DEEP-LEARN.md` for the synthesis.
 
-**This applies to ALL repos:** if you're touching any project in the Give A Bit suite, make sure the OTS learning propagates. The canonical file lives at `satohash/docs/OTS-DEEP-LEARN.md` — read it first thing.
+**This applies to ALL repos:** if you're touching any project in the Give A Bit suite, make sure the OTS learning propagates. Canonical files:
+- `satohash/docs/OTS-DEEP-LEARN.md`
+- `satohash/docs/LEARN-STAMP-FAMILY.md`
+- Family clients: open `/stamp?hash=&ref=` only; never same-origin API from CF Pages SPA
 
 ---
 
