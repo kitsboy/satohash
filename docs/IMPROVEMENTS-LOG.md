@@ -713,3 +713,5 @@
 - [ ] THOR Docker rebuild (client_id live)
 - [ ] Live GHA SPA verify bundle contains API base
 - [ ] Full family client audit (motopass, katoa, …)
+- [ ] Kimi: LNbits wallet `satohash` + L1 bc1 + LUD-16 (HQ Vault keys)
+- [ ] Grok: publish L1/L2 on SPA after public handback

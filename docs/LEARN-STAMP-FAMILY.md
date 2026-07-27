@@ -128,8 +128,20 @@ Content-Type: application/json
 
 ---
 
+## Lesson 7 — Product Bitcoin receive (donations / tips)
+
+- **Do not** leave Satohash UI on a shared suite address long-term  
+- Kimi provisions LNbits wallet **`satohash`**, public **bc1** + **LUD-16/LNURL-pay**  
+- Keys only in **HQ Vault** (`hq.giveabit.io`)  
+- Grok publishes public fields only after handback  
+- Spec: `docs/KIMI-REQUEST-BITCOIN-WALLETS.md`  
+- Placeholders: `src/config/constants.js` → `BTC_ADDRESS`, `LN_ADDRESS`, `LNURL_PAY`  
+
+---
+
 ## Propagate
 
 - Family apps: use this contract only  
 - MASTER-BRAIN: see `docs/MASTER-BRAIN-INGEST.md` paste block (updated)  
 - Sherpa Grok prompt: `sherpacarta/docs/GROK-PROMPT-STAMP-HANDOFF.md`  
+- Kimi wallets: `docs/KIMI-REQUEST-BITCOIN-WALLETS.md`  

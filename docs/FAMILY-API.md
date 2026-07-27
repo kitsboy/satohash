@@ -92,6 +92,12 @@ bash scripts/vps-deploy-api.sh
 
 See `packages/satohash-client/` — copy into motopass, katoa, giveabit, etc.
 
+## Donations / tips (not stamp paywall)
+
+Product support addresses are **not** the same as family free-tier stamp keys.  
+Kimi provisions LNbits wallet **`satohash`** + public on-chain + LUD-16; secrets stay in HQ Vault.  
+See **[KIMI-REQUEST-BITCOIN-WALLETS.md](./KIMI-REQUEST-BITCOIN-WALLETS.md)**. Grok wires SPA only after public handback.
+
 ## HQ
 
 See **[HQ-FEED.md](./HQ-FEED.md)** for the full inventory.

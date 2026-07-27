@@ -63,3 +63,8 @@ Home `/?hash=` redirects to `/stamp`.
 ## Learn (2026-07-27)
 
 See **`docs/LEARN-STAMP-FAMILY.md`**. SPA on CF Pages must call **API origin** for stamps; family clients send `X-Satohash-Client` / `ref` so `by_client` segments light up after THOR Docker rebuild.
+
+## Product wallets (HQ Vault)
+
+Satohash **donations/tips** (L1 + L2) are requested from Kimi via **`docs/KIMI-REQUEST-BITCOIN-WALLETS.md`**.  
+Invoice/admin keys live in **HQ Vault only**. Public bc1 + LUD-16 go to SPA after handback. Not part of metrics.json.

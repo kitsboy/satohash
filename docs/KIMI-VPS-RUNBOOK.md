@@ -3,9 +3,18 @@
 **Audience:** Kimi (VPS orchestrator) and any LLM/agent operating the Give A Bit stack  
 **Code home:** M3 `~/projects/satohash` → GitHub `kitsboy/satohash`  
 **Orchestration home:** **VPS** (not Umbrel, not M4)  
-**Updated:** 2026-07-20  
+**Updated:** 2026-07-27  
 
 This is the **executable** handoff. Copy relevant bullets into MASTER-BRAIN / Kanban after sync.
+
+### Open requests (read full specs)
+
+| Spec | Action |
+|------|--------|
+| `docs/KIMI-REQUEST-BITCOIN-WALLETS.md` | LNbits wallet **`satohash`**, public on-chain + LUD-16, keys → HQ Vault, public handback to Grok |
+| `docs/KIMI-REQUEST-SATOHASH.md` | Stamp plane status + Docker rebuild for `client_id` / metrics directory |
+| `docs/LEARN-STAMP-FAMILY.md` | Why SPA must call `api.satohash.io` (not CF same-origin) |
+| `docs/KIMI-HANDOFF.md` | Top entry = latest Grok session |
 
 ---
 
