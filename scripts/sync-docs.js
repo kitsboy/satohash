@@ -55,7 +55,8 @@ for (const rel of DOC_FILES) {
   let content = fs.readFileSync(full, 'utf-8');
   content = content.replace(/<!-- AUTO-GENERATED HEADER[\s\S]*?-->\n*/m, '');
   content = content.replace(/^> \*\*Live:\*\*[\s\S]*?Synced by.*\n\n/m, '');
-  const body = HEADER + content.trimStart() + '\n';
+  // trim both ends so repeated syncs don't pile blank lines at EOF
+  const body = HEADER + content.trim() + '\n';
   fs.writeFileSync(full, body);
   console.log(`Synced ${rel}`);
   const publicDest = PUBLIC_COPY[rel];

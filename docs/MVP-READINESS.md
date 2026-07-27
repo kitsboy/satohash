@@ -1,5 +1,5 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.giveabit.io · **Version:** 4.1.0-ELITE (Build 113) · **Updated:** 2026-07-20
+> **Live:** https://satohash.giveabit.io · **Version:** 5.0.0-ELITE (Build 133) · **Updated:** 2026-07-27
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Satohash MVP Readiness
@@ -88,32 +88,3 @@ Frontend only **verifies** NIP-05 (fetch public JSON, compare pubkey). Signing i
 
 ---
 © 2026 Satohash
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

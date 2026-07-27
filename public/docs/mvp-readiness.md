@@ -1,11 +1,11 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.giveabit.io · **Version:** 4.1.0-ELITE (Build 106) · **Updated:** 2026-07-18
+> **Live:** https://satohash.giveabit.io · **Version:** 5.0.0-ELITE (Build 133) · **Updated:** 2026-07-27
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Satohash MVP Readiness
 
-> **Status:** Frontend at the doorstep — API deploy is the remaining gate  
-> **Updated:** 2026-07-15 · Build 100
+> **Status:** Frontend live · API **packaged for VPS** — Kimi runbook is the remaining gate  
+> **Updated:** 2026-07-20 · See `docs/KIMI-VPS-RUNBOOK.md`
 
 ## MVP definition
 
@@ -17,17 +17,18 @@ A stranger can open satohash.io, stamp a file, download `.ots` proof, and verify
 |------|---------------|-------|
 | **Public key (hex / npub)** | ✅ Already have | `076fbd67…f8d4` in `src/config/mvp.js` and `public/.well-known/nostr.json` |
 | **NIP-05 `kimi@giveabit.io`** | ✅ Public lookup | Resolved from **giveabit.io** `/.well-known/nostr.json` — not satohash.io |
-| **NSEC (private key)** | ❌ **Never** | Never commit, never paste to Grok, never put in frontend. Kimi signs on M4 only. |
+| **NSEC (private key)** | ❌ **Never** | Never commit, never paste to Grok, never put in frontend. Kimi signs on VPS/agent host only. |
 
 Frontend only **verifies** NIP-05 (fetch public JSON, compare pubkey). Signing is optional via browser extension (NIP-07).
 
 ## Architecture at MVP doorstep
 
 ```
-[LIVE]  satohash.io          Cloudflare Pages — static SPA (Build 85+)
+[LIVE]  satohash.io          Cloudflare Pages — static SPA (Build 111+)
 [READY] Frontend             MVP_MODE, public /stamp /verify /vault
-[WAIT]  api.satohash.io      Express API — see docs/DEPLOY-SERVER.md
-[SKIP]  Bitcoin full node    Not required for MVP
+[READY] VPS package          docker-compose.vps.yml + FAMILY_API_KEYS
+[WAIT]  api.satohash.io      Kimi executes docs/KIMI-VPS-RUNBOOK.md
+[OPT]   Bitcoin pruned node  Verify independence (not required for create)
 ```
 
 ## Static-edge capabilities (no api.satohash.io)
@@ -58,12 +59,14 @@ Frontend only **verifies** NIP-05 (fetch public JSON, compare pubkey). Signing i
 - [x] Mobile nav — Verify in primary tab bar
 - [x] `KIMI_NOSTR` pubkey documented (no secrets)
 
-## API checklist (when VPS ready)
+## API checklist (Kimi VPS + M3)
 
-- [ ] Deploy `server/` per `docs/DEPLOY-SERVER.md`
-- [ ] `VITE_API_URL=https://api.satohash.io npm run build && ./deploy.sh`
-- [ ] Smoke: stamp → download `.ots` → verify on `/verify/:id`
-- [ ] CORS allows `https://satohash.io`
+- [ ] Kimi: `docs/KIMI-VPS-RUNBOOK.md` §2 (docker, DNS, TLS, family keys)
+- [ ] Public `GET https://api.satohash.io/health` = 200
+- [ ] Public `GET https://api.satohash.io/api/public/status` = 200
+- [ ] M3: `VITE_API_URL=https://api.satohash.io npm run build && ./deploy.sh`
+- [ ] Smoke: family stamp from motopass + SPA stamp/verify
+- [ ] CORS allows suite origins (see `.env.vps.example`)
 
 ## Timeline
 
@@ -85,28 +88,3 @@ Frontend only **verifies** NIP-05 (fetch public JSON, compare pubkey). Signing i
 
 ---
 © 2026 Satohash
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
