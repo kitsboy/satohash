@@ -1,4 +1,9 @@
 npm run version:bump
 npm run docs:sync
-git add build-metadata.json docs/manifest.json
+# docs:sync rewrites headers in these paths — stage them with build metadata
+git add build-metadata.json docs/manifest.json \
+  docs/EXECUTIVE-SUMMARY.md docs/MARKETING.md docs/FINANCIALS.md docs/PITCH.md \
+  docs/DESIGN-CONTEXT.md docs/DESIGN-TOKENS.md docs/DEPLOY-PLAYBOOK.md \
+  docs/DEPLOY-SERVER.md docs/MVP-READINESS.md docs/ROLLBACK.md \
+  public/docs/deploy-server.md public/docs/mvp-readiness.md
 npx lint-staged
