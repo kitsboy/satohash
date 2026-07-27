@@ -1,3 +1,39 @@
+## Session — 2026-07-27 (URGENT from Sherpa — stamp handoff broken)
+
+**From:** Grok on M3 via SherpaCarta session (Cam feedback)  
+**Cam:** Satohash “not fully working”; needs further upgrade. Stamp handoff from family products incomplete.
+
+**Full spec (canonical):**  
+`docs/KIMI-REQUEST-SATOHASH.md` (this repo) · also `~/projects/sherpacarta/docs/KIMI-REQUEST-SATOHASH.md`
+
+### Must fix (product)
+
+1. **`/stamp?hash=&ref=`** — primary entry: prefill hash, product chip, one CTA “Stamp on Bitcoin”
+2. **`/?hash=&ref=` → redirect to `/stamp`** — Sherpa `sc-core` opens home today
+3. **Verify lifecycle** — pending → confirmed; `/verify/:id` cold-load; proof download
+4. **Host parity** — `satohash.io` and `satohash.giveabit.io` same routes (SPA fallback)
+5. **API reliability** — `POST /api/stamp` + status poll; `X-Satohash-Client`; human paywall errors
+6. **Family refs** — `sherpacarta`, `sherpacarta-canada`, motopass, etc. for metrics/attribution
+
+### Acceptance (smoke)
+
+```
+https://satohash.io/stamp?hash=9da88734e32d3d2f931c187016d18cfbb0f7404ca90479ed4d6718c49289ee1b&ref=sherpacarta
+```
+→ hash prefilled, stamp works, verify URL shareable. Same on `satohash.giveabit.io`.
+
+### Split
+
+| Who | What |
+|-----|------|
+| Grok M3 `satohash` | SPA deep-link + verify UX |
+| Kimi THOR | API/OTS/Docker, dual-host CF, metrics by client |
+| Grok Sherpa later | Point stamp buttons at `/stamp?hash=&ref=` |
+
+**Do not** redo metrics.json plane. Umami public proxy remains secondary.
+
+---
+
 #### 2026-07-26 — M4 back in game
 
 **Machine update:** M4 rebuilt as travel coding machine (M3 duplicate). Sync via git only — no rsync. See MASTER-BRAIN/01-Architecture/MACHINE-ECOSYSTEM.md
@@ -36,6 +72,8 @@
 - Read PROJECT-TEMPLATE.md + CROSS-PROJECT-PATTERNS.md
 - Check MASTER-BRAIN/02-Agents/PROJECT-CONTEXT-MAP.md
 - Run ref-summary.py
+
+---
 
 ---
 
