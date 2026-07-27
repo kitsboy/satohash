@@ -1,7 +1,7 @@
 # satohash — Last Updated 2026-07-27 by Grok
 
 Brief: SPA stamps → api.satohash.io; honest UX/metrics; Kimi L1+L2 wallet request; goodbye  
-Commit: `0d1c720`  
+Commit: `bcf5f47` (handoff archive) · code `cee9227` (API URL fix) · wallets request `3eab2d9`  
 API: https://api.satohash.io  
 SPA: https://satohash.io · VITE_API_URL + host fallback  
 Kimi open: Docker rebuild (client_id) · docs/KIMI-REQUEST-BITCOIN-WALLETS.md  
