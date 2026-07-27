@@ -2,9 +2,26 @@ import { finalizeEvent, getPublicKey, generateSecretKey } from 'nostr-tools/pure
 import { Relay, nip05 } from 'nostr-tools'
 import logger from './logger.js'
 
+// WebSocket polyfill for Node <21 (Docker node:20-alpine uses undici)
+if (typeof globalThis.WebSocket === 'undefined') {
+  try {
+    const { WebSocket } = await import('undici')
+    globalThis.WebSocket = WebSocket
+    logger.info('WebSocket polyfill loaded from undici')
+  } catch (_e) {
+    logger.warn('undici WebSocket not available — Nostr WebSocket connections will fail')
+  }
+}
+
 const RELAYS = ['wss://relay.damus.io', 'wss://nos.lol', 'wss://relay.snort.social']
 
-const BOT_SK = process.env.NOSTR_SECRET_KEY || generateSecretKey() // Use persistent key in prod
+const BOT_SK = (() => {
+  const envKey = process.env.NOSTR_SECRET_KEY
+  if (envKey && /^[0-9a-f]{64}$/i.test(envKey)) {
+    return new Uint8Array(Buffer.from(envKey, 'hex'))
+  }
+  return generateSecretKey()
+})()
 const BOT_PK = getPublicKey(BOT_SK)
 
 /**

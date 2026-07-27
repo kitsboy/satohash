@@ -675,31 +675,25 @@ app.get('/health', async (req, res) => {
     details.redis = { status: 'disabled' }
   }
 
-  // OTS Calendar check (alice is the canonical free public calendar)
-  try {
-    const otsResp = await fetch('https://alice.btc.calendar.opentimestamps.org', {
-      signal: AbortSignal.timeout(3000)
-    })
-    details.ots = {
-      status: otsResp.ok ? 'healthy' : 'degraded',
-      calendars: [
-        'alice.btc.calendar.opentimestamps.org',
-        'bob.btc.calendar.opentimestamps.org',
-        'finney.calendar.eternitywall.com'
-      ],
-      note: 'Free public calendars — no API key required'
-    }
-  } catch (e) {
-    details.ots = {
-      status: 'unhealthy',
-      calendars: [
-        'alice.btc.calendar.opentimestamps.org',
-        'bob.btc.calendar.opentimestamps.org',
-        'finney.calendar.eternitywall.com'
-      ],
-      note: 'Free public calendars — no API key required'
-    }
-    status = 'degraded'
+  // OTS Calendar check — test all 3 public calendars independently
+  const calendarUrls = [
+    'https://alice.btc.calendar.opentimestamps.org',
+    'https://bob.btc.calendar.opentimestamps.org',
+    'https://finney.calendar.eternitywall.com'
+  ]
+  const calendarResults = await Promise.allSettled(
+    calendarUrls.map(url =>
+      fetch(url, { signal: AbortSignal.timeout(3000) })
+        .then(r => ({ url, status: r.ok ? 'healthy' : 'degraded' }))
+        .catch(() => ({ url, status: 'unhealthy' }))
+    )
+  )
+  const calendarStatuses = calendarResults.map(r => r.value || { url: 'unknown', status: 'error' })
+  const calendarsHealthy = calendarStatuses.filter(c => c.status === 'healthy').length
+  details.ots = {
+    status: calendarsHealthy >= 2 ? 'healthy' : calendarsHealthy === 1 ? 'degraded' : 'unhealthy',
+    calendars: calendarStatuses,
+    note: 'Free public calendars — no API key required. At least 2 of 3 required for healthy status.'
   }
 
   // Nostr relay check
