@@ -1,8 +1,6 @@
 # satohash — Last Updated 2026-07-27 by Grok
 
-Brief: SPA stamp deep-link + verify lifecycle live on CF Pages (Build 130)  
-Commit: `69b9daf` · GHA Deploy #136 success  
-API: https://api.satohash.io (v4.1.0-ELITE health ok; POST stamp 200)  
-SPA: https://satohash.io · https://satohash.giveabit.io  
-Smoke: stamp id `6004b6a6-…` pending; `/stamp?hash=&ref=` + home redirect shipped  
-
+Brief: HQ metrics feed enriched (client_id, directory); Sherpa stamp URLs fixed; SPA deep-link already live  
+Commit: `fd5e661` (metrics) · prior SPA `69b9daf`  
+Sherpa: `b2584ae` · HQ: `fc9c704`  
+**Kimi:** rebuild satohash-api Docker on THOR so `/metrics.json` raw.directory + client_id go live  
