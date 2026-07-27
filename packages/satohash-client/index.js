@@ -119,8 +119,24 @@ export function createSatohashClient(opts = {}) {
     return `${siteBase}/verify/${hashOrId}`
   }
 
-  function stampGuideUrl(hash) {
-    return `${siteBase}/stamp?hash=${hash}`
+  /**
+   * Canonical stamp deep-link for SPA (and family apps).
+   * @param {string} hash
+   * @param {{ ref?: string, label?: string, campaign?: string, filename?: string }} [opts]
+   */
+  function stampGuideUrl(hash, opts = {}) {
+    const hex = String(hash || '')
+      .toLowerCase()
+      .replace(/^0x/, '')
+    if (!/^[a-f0-9]{64}$/.test(hex)) return `${siteBase}/stamp`
+    const q = new URLSearchParams({ hash: hex })
+    const ref = opts.ref || (clientId !== 'unknown' ? clientId : '')
+    if (ref) q.set('ref', ref)
+    if (opts.source) q.set('source', opts.source)
+    if (opts.label) q.set('label', opts.label)
+    if (opts.campaign) q.set('campaign', opts.campaign)
+    if (opts.filename) q.set('filename', opts.filename)
+    return `${siteBase}/stamp?${q.toString()}`
   }
 
   async function getStats() {

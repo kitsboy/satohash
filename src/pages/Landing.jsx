@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Link } from 'react-router-dom'
+import { Link, Navigate, useSearchParams } from 'react-router-dom'
 import { QRCodeSVG } from 'qrcode.react'
 import {
   Lock,
@@ -23,6 +23,7 @@ import MarketingDesktopNav from '../components/MarketingDesktopNav'
 import { getBitcoinNetworkStats } from '../utils/mempool'
 import { BTC_ADDRESS, getApiUrl } from '../config/constants'
 import { ParticleStampCanvas } from './v5/V5Pages'
+import { buildStampPathFromSearch } from '../utils/stampDeepLink'
 
 const fadeUp = {
   hidden: { opacity: 0, y: 32 },
@@ -45,6 +46,10 @@ const USE_CASE_EMOJI = {
 export default function Landing() {
   usePageMeta({ page: 'landing' })
   const { t } = useTranslation()
+  const [searchParams] = useSearchParams()
+
+  // Family handoff: /?hash=&ref= → /stamp?hash=&ref= (Sherpa sc-core opens home today)
+  const stampRedirect = useMemo(() => buildStampPathFromSearch(searchParams), [searchParams])
 
   const featureCards = useMemo(
     () => [
@@ -135,6 +140,10 @@ export default function Landing() {
     navigator.clipboard.writeText(BTC_ADDRESS)
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
+  }
+
+  if (stampRedirect) {
+    return <Navigate to={stampRedirect} replace />
   }
 
   return (

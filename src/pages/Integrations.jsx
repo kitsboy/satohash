@@ -209,15 +209,19 @@ export default function Integrations() {
               </a>
             </div>
             <CodeBlock
-              label="MotoPass deep-link pattern"
-              code={`// Hash on MotoPass (browser SHA-256)
+              label="Family deep-link (canonical)"
+              code={`// Hash client-side (browser SHA-256) — never upload the file
 const hash = await sha256Hex(canonicalPayload)
 
-// Open Satohash stamp with pre-filled hash
-window.open(\`${getPublicBaseUrl()}/stamp?hash=\${hash}&source=motopass&label=Passport+application\`)
+// Canonical stamp entry (prefer this for all family apps)
+window.open(\`${getPublicBaseUrl()}/stamp?hash=\${hash}&ref=motopass&label=Passport+application\`)
 
-// Public verify page (works static-only for fingerprint)
-window.open(\`${getPublicBaseUrl()}/verify/\${hash}\`)`}
+// Also accepted: homepage redirects to /stamp
+// ${getPublicBaseUrl()}/?hash=\${hash}&ref=sherpacarta
+
+// After stamp: shareable verify (id preferred; hash also works)
+window.open(\`${getPublicBaseUrl()}/verify/\${stampId}\`)
+// Header on API: X-Satohash-Client: sherpacarta | motopass | …`}
               copyLabel={t('common.copy')}
               copiedLabel={t('common.copied')}
             />

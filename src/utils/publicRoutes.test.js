@@ -17,4 +17,8 @@ describe('publicRoutes', () => {
     expect(isMarketingPublicPath('/dashboard')).toBe(false)
     expect(isMarketingPublicPath('/settings')).toBe(false)
   })
+
+  it('treats /stamp as chrome-free for family deep-links', () => {
+    expect(isMarketingPublicPath('/stamp')).toBe(true)
+  })
 })

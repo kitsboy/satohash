@@ -1,10 +1,10 @@
 # Current Status — Satohash
 
 **Version:** **5.0.0-ELITE** (Sovereignty Ascension)  
-**Last Updated:** 2026-07-21 (goodbye — Umami)  
-**Frontend:** https://satohash.io ✅ Umami script in SPA (`6b99ecb`)  
+**Last Updated:** 2026-07-26 (stamp deep-link + verify lifecycle — Grok M3)  
+**Frontend:** https://satohash.io — SPA deep-link fix local (deploy pending)  
 **API:** https://api.satohash.io ✅ LIVE (THOR) + `/metrics.json`  
-**Git tip (session end):** `6b99ecb` Umami · Build 122
+**Git tip:** `f971761` + uncommitted stamp deep-link work
 
 ## Planes
 - Proof API on VPS Docker + Caddy TLS  

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Copy, Share2, Hash, ExternalLink, XCircle, Download } from 'lucide-react'
@@ -14,6 +14,8 @@ import { isStaticOnlyMode } from '../utils/staticMode'
 import ProofTimeline from '../components/ProofTimeline'
 import { downloadVerifiableCredential } from '../utils/verifiableCredential'
 
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
+
 export default function VerifyPublic() {
   usePageMeta({ page: 'verify' })
   const { t } = useTranslation()
@@ -21,12 +23,134 @@ export default function VerifyPublic() {
   const [proof, setProof] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const pollRef = useRef(null)
+
+  const stopPoll = useCallback(() => {
+    if (pollRef.current) {
+      clearInterval(pollRef.current)
+      pollRef.current = null
+    }
+  }, [])
+
+  const fetchProof = useCallback(
+    async (proofId, { silent = false } = {}) => {
+      if (!silent) {
+        setLoading(true)
+        setError(null)
+      }
+
+      const hashOnly = isSha256Hex(proofId)
+        ? {
+            id: proofId,
+            hash: normalizeSha256(proofId),
+            filename: 'Content hash',
+            status: 'pending',
+            created_at: null,
+            source: 'hash-only',
+            message:
+              'Valid SHA-256 fingerprint. Bitcoin attestation not found in local vault — API or .ots file required for full proof.'
+          }
+        : null
+
+      const local = localRecordToProof(findStampByHashOrId(proofId))
+
+      if (isStaticOnlyMode()) {
+        if (local) setProof(local)
+        else if (hashOnly) setProof(hashOnly)
+        else setError('Proof not found in local vault')
+        if (!silent) setLoading(false)
+        return
+      }
+
+      try {
+        const API = getApiUrl()
+        let data = null
+
+        // UUID stamp id → GET /api/stamps/:id
+        if (UUID_RE.test(proofId)) {
+          const response = await fetch(`${API}/api/stamps/${encodeURIComponent(proofId)}`)
+          if (response.ok) {
+            data = await response.json()
+          }
+        }
+
+        // SHA-256 → GET /api/stamps/:hash/by-hash (latest stamp for hash)
+        if (!data && isSha256Hex(proofId)) {
+          const hex = normalizeSha256(proofId)
+          const byHash = await fetch(`${API}/api/stamps/${hex}/by-hash`)
+          if (byHash.ok) {
+            const body = await byHash.json()
+            const row = Array.isArray(body.stamps) ? body.stamps[0] : body
+            if (row) {
+              data = {
+                id: row.id,
+                hash: row.hash || hex,
+                filename: row.filename || row.original_filename || 'Document',
+                status: row.status || 'pending',
+                created_at: row.created_at,
+                confirmed_at: row.confirmed_at,
+                bitcoin_block_height: row.bitcoin_block_height,
+                ipfs_cid: row.ipfs_cid
+              }
+            }
+          }
+        }
+
+        // Non-UUID non-hash id (legacy) — try direct fetch
+        if (!data && !isSha256Hex(proofId) && !UUID_RE.test(proofId)) {
+          const response = await fetch(`${API}/api/stamps/${encodeURIComponent(proofId)}`)
+          if (response.ok) data = await response.json()
+        }
+
+        if (data) {
+          setProof({ ...data, source: 'api' })
+          return
+        }
+
+        // Prefer local vault if API has no record yet
+        if (local) {
+          setProof(local)
+          return
+        }
+        if (hashOnly) {
+          setProof(hashOnly)
+          return
+        }
+        throw new Error('Proof not found')
+      } catch (err) {
+        if (local) {
+          setProof(local)
+        } else if (hashOnly) {
+          setProof(hashOnly)
+        } else {
+          setError(err.message)
+          if (!silent) toast.error(t('verifyPublicPage.loadError'))
+        }
+      } finally {
+        if (!silent) setLoading(false)
+      }
+    },
+    [t]
+  )
 
   useEffect(() => {
-    if (id) {
-      fetchProof(id)
-    }
-  }, [id])
+    if (id) fetchProof(id)
+    return () => stopPoll()
+  }, [id, fetchProof, stopPoll])
+
+  // Poll pending API stamps until confirmed (or terminal fail)
+  useEffect(() => {
+    stopPoll()
+    if (!proof?.id || proof.source !== 'api') return
+    if (proof.status === 'confirmed' || proof.status === 'failed') return
+    if (isStaticOnlyMode()) return
+
+    pollRef.current = setInterval(() => {
+      fetchProof(proof.id, { silent: true })
+    }, 10000)
+
+    return () => stopPoll()
+  }, [proof?.id, proof?.status, proof?.source, fetchProof, stopPoll])
 
   useEffect(() => {
     if (!proof) return
@@ -72,58 +196,6 @@ export default function VerifyPublic() {
       document.title = 'Satohash'
     }
   }, [proof, t])
-
-  const fetchProof = async (proofId) => {
-    const local = localRecordToProof(findStampByHashOrId(proofId))
-    if (local) {
-      setProof(local)
-      setLoading(false)
-      return
-    }
-
-    const hashOnly = isSha256Hex(proofId)
-      ? {
-          id: proofId,
-          hash: normalizeSha256(proofId),
-          filename: 'Content hash',
-          status: 'pending',
-          created_at: null,
-          source: 'hash-only',
-          message:
-            'Valid SHA-256 fingerprint. Bitcoin attestation not found in local vault — API or .ots file required for full proof.'
-        }
-      : null
-
-    if (isStaticOnlyMode()) {
-      if (hashOnly) setProof(hashOnly)
-      else setError('Proof not found in local vault')
-      setLoading(false)
-      return
-    }
-
-    try {
-      const API = getApiUrl()
-      const response = await fetch(`${API}/api/stamps/${proofId}`)
-      if (!response.ok) {
-        if (hashOnly) {
-          setProof(hashOnly)
-          return
-        }
-        throw new Error('Proof not found')
-      }
-      const data = await response.json()
-      setProof({ ...data, source: 'api' })
-    } catch (err) {
-      if (hashOnly) {
-        setProof(hashOnly)
-      } else {
-        setError(err.message)
-        toast.error(t('verifyPublicPage.loadError'))
-      }
-    } finally {
-      setLoading(false)
-    }
-  }
 
   return (
     <div

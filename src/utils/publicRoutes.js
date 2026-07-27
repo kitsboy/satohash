@@ -27,8 +27,12 @@ const MARKETING_PREFIXES = [
   '/changelog'
 ]
 
+/** Exact paths that are chrome-free (do not match sub-routes like /stamp/wizard-pro) */
+const MARKETING_EXACT = ['/stamp']
+
 export function isMarketingPublicPath(pathname = '') {
   if (!pathname) return false
+  if (MARKETING_EXACT.includes(pathname)) return true
   if (/^\/verify\/[a-f0-9]{64}$/i.test(pathname)) return true
   if (pathname.startsWith('/verify/') && pathname.length > 8) return true
   return MARKETING_PREFIXES.some((p) => {

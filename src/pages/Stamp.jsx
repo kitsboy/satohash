@@ -17,8 +17,8 @@ import {
   RefreshCw,
   FolderSync
 } from 'lucide-react'
-import { useState, useCallback, useEffect, useRef } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useState, useCallback, useEffect, useRef, useMemo } from 'react'
+import { Link, useSearchParams } from 'react-router-dom'
 import { getTieredFeeEstimates } from '../utils/mempool.js'
 import FeeAdvisor from '../components/FeeAdvisor'
 import { addErrorBreadcrumb } from '../utils/errors.js'
@@ -39,12 +39,19 @@ import ProofTimeline from '../components/ProofTimeline'
 import GiveABitBadge from '../components/GiveABitBadge'
 import { stampHashBrowser, downloadOtsBlob } from '../utils/otsClient'
 import { upsertLocalStamp } from '../utils/vaultLocal'
+import { parseStampDeepLink } from '../utils/stampDeepLink'
 
 export default function Stamp() {
   usePageMeta({ page: 'stamp' })
   const [searchParams] = useSearchParams()
+  const deepLink = useMemo(() => parseStampDeepLink(searchParams), [searchParams])
   const [stampMode, setStampMode] = useState('single') // single, capsule, redact, deposition
   const [isCapsuleMode, setIsCapsuleMode] = useState(false)
+  const [deepLinkClientId, setDeepLinkClientId] = useState('spa')
+  const [hashFromDeepLink, setHashFromDeepLink] = useState(false)
+  const [hashInvalidMsg, setHashInvalidMsg] = useState('')
+  const deepLinkHandled = useRef(false)
+  const pollRef = useRef(null)
 
   // ZK-Redact states
   const [redactText, setRedactText] = useState('')
@@ -269,7 +276,8 @@ export default function Stamp() {
     return proof
   }, [])
 
-  const stampHashOnly = useCallback(
+  /** Browser-only OTS fallback (no API id). */
+  const stampHashBrowserOnly = useCallback(
     async (hash, label = 'Linked hash') => {
       try {
         setStampingStatus('anchoring')
@@ -283,30 +291,240 @@ export default function Stamp() {
     [saveBrowserOtsProof]
   )
 
-  // MotoPass / family apps deep-link: /stamp?hash=<sha256>&label=&cosign=&autostamp=
-  useEffect(() => {
-    const prefill = normalizeSha256(searchParams.get('hash') || '')
-    const rawLabel = searchParams.get('label')
-    const label = rawLabel ? decodeURIComponent(rawLabel.replace(/\+/g, ' ')) : 'Linked document'
+  const stopStatusPoll = useCallback(() => {
+    if (pollRef.current) {
+      clearInterval(pollRef.current)
+      pollRef.current = null
+    }
+  }, [])
 
-    if (searchParams.get('cosign') === 'true') {
+  const startStatusPoll = useCallback(
+    (stampId) => {
+      if (!stampId || !isApiExplicitlyConfigured()) return
+      stopStatusPoll()
+      const API = getApiUrl()
+      pollRef.current = setInterval(async () => {
+        try {
+          const res = await fetch(`${API}/api/stamps/${encodeURIComponent(stampId)}`)
+          if (!res.ok) return
+          const data = await res.json()
+          setProofResult((prev) => (prev ? { ...prev, ...data } : data))
+          if (data.status === 'confirmed') {
+            setIsConfirmed(true)
+            if (data.bitcoin_block_height) setConfirmedBlock(data.bitcoin_block_height)
+            setUpgradeStatus('confirmed')
+            stopStatusPoll()
+            toast.success(tp('stampPage.confirmedToast'), {
+              description: data.bitcoin_block_height
+                ? `Block ${data.bitcoin_block_height.toLocaleString()}`
+                : 'Proof anchored to Bitcoin mainnet'
+            })
+          } else if (data.status === 'failed') {
+            setUpgradeStatus('failed')
+            stopStatusPoll()
+          } else {
+            setUpgradeStatus(data.status || 'pending')
+          }
+        } catch {
+          /* transient network — keep polling */
+        }
+      }, 8000)
+    },
+    [stopStatusPoll, tp]
+  )
+
+  useEffect(() => () => stopStatusPoll(), [stopStatusPoll])
+
+  /**
+   * Primary path for deep-linked hashes: POST /api/stamp with X-Satohash-Client,
+   * then poll until confirmed. Falls back to browser OTS calendars when API is down.
+   */
+  const stampLinkedHash = useCallback(
+    async (hash, label = 'Linked document', client = 'spa') => {
+      const hex = normalizeSha256(hash)
+      if (!hex) {
+        setError('Invalid SHA-256 hash — must be exactly 64 hexadecimal characters')
+        return
+      }
+      setError('')
+      setProofResult(null)
+      setIsConfirmed(false)
+      setConfirmedBlock(null)
+      setUpgradeStatus(null)
+      setStampingStatus('anchoring')
+
+      if (!isApiExplicitlyConfigured()) {
+        await stampHashBrowserOnly(hex, label)
+        return
+      }
+
+      try {
+        const API = getApiUrl()
+        const storedNpub =
+          localStorage.getItem('satohash_npub') || sessionStorage.getItem('satohash_npub')
+        const res = await fetch(`${API}/api/stamp`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Satohash-Client': client || 'spa',
+            ...(storedNpub ? { 'X-Npub': storedNpub } : {})
+          },
+          body: JSON.stringify({
+            hash: hex,
+            filename: label || 'Linked document'
+          })
+        })
+
+        if (res.status === 429) {
+          setStampingStatus('idle')
+          let countdown = 15
+          setError(`Too many requests — try again in ${countdown}s`)
+          const timer = setInterval(() => {
+            countdown--
+            if (countdown <= 0) {
+              clearInterval(timer)
+              setError('')
+            } else {
+              setError(`Too many requests — try again in ${countdown}s`)
+            }
+          }, 1000)
+          return
+        }
+
+        if (res.status === 402) {
+          let invoiceData = null
+          try {
+            invoiceData = await res.json()
+          } catch {
+            /* ignore */
+          }
+          const invoice =
+            invoiceData?.invoice || invoiceData?.payment_request || invoiceData?.www_authenticate
+          if (invoice) {
+            setLightningInvoice({
+              payment_request: invoice,
+              amount_msat: invoiceData?.amount_msat || 1000,
+              expires_at: invoiceData?.expires_at || Date.now() + 600000
+            })
+          } else {
+            toast.error('Lightning payment required to stamp', {
+              description:
+                'Family free tier may need X-Satohash-Key, or set REQUIRE_LIGHTNING=false'
+            })
+          }
+          setStampingStatus('idle')
+          setError('Payment required — complete Lightning invoice or retry later')
+          return
+        }
+
+        if (!res.ok) {
+          let errMsg = 'Stamping failed'
+          try {
+            const err = await res.json()
+            errMsg = err.message || err.error || errMsg
+          } catch {
+            /* ignore */
+          }
+          throw new Error(errMsg)
+        }
+
+        const data = await res.json()
+        if (!data?.id) {
+          throw new Error('API returned no stamp id')
+        }
+        const proof = {
+          ...data,
+          hash: data.hash || hex,
+          filename: data.filename || label,
+          status: data.status || 'pending',
+          client: client || 'spa'
+        }
+        setProofResult(proof)
+        setHashValue(hex)
+        setStampingStatus('complete')
+        setUpgradeStatus(proof.status)
+        navigator.vibrate?.([50, 30, 100])
+
+        const existing = JSON.parse(localStorage.getItem('satohash_stamps') || '[]')
+        existing.unshift(proof)
+        localStorage.setItem('satohash_stamps', JSON.stringify(existing.slice(0, 100)))
+        upsertLocalStamp(proof)
+
+        toast.success('Stamp created on Bitcoin (OpenTimestamps)', {
+          description: `ID ${String(proof.id).slice(0, 8)}… — share verify link`
+        })
+
+        if (proof.status !== 'confirmed') {
+          startStatusPoll(proof.id)
+        } else {
+          setIsConfirmed(true)
+          if (proof.bitcoin_block_height) setConfirmedBlock(proof.bitcoin_block_height)
+        }
+      } catch (err) {
+        // API down / network — browser calendar fallback (no durable API id)
+        console.warn('API stamp failed, trying browser OTS', err)
+        try {
+          await stampHashBrowserOnly(hex, label)
+          toast.warning('Used browser calendars (API unavailable)', {
+            description: err.message || 'Proof has no hosted stamp id until API sync'
+          })
+        } catch (otsErr) {
+          const msg = err.message || otsErr.message || 'Failed to stamp'
+          setError(msg)
+          toast.error(tp('stampPage.stampFailed'), { description: msg })
+          setStampingStatus('idle')
+        }
+      }
+    },
+    [stampHashBrowserOnly, startStatusPoll, tp]
+  )
+
+  // Family / MotoPass deep-link: /stamp?hash=&ref=&label=&filename=&campaign=&autostamp=
+  useEffect(() => {
+    if (deepLink.cosign) {
       setMultiParty(true)
-      const npub = searchParams.get('npub')?.trim()
-      if (npub?.startsWith('npub1')) setCoSigners([npub])
+      if (deepLink.npub?.startsWith('npub1')) setCoSigners([deepLink.npub])
     }
 
-    if (!prefill) return
-    setHashValue(prefill)
-    setCaseLabel((prev) => prev || label)
-    if (searchParams.get('source') === 'motopass') {
+    if (deepLink.hashInvalid) {
+      setHashInvalidMsg(
+        'Invalid SHA-256 hash — expected exactly 64 hexadecimal characters (a–f, 0–9).'
+      )
+      setHashFromDeepLink(false)
+      setHashValue('')
+      return
+    }
+
+    if (!deepLink.hash) {
+      setHashInvalidMsg('')
+      return
+    }
+
+    setHashInvalidMsg('')
+    setHashValue(deepLink.hash)
+    setHashFromDeepLink(true)
+    setDeepLinkClientId(deepLink.clientId)
+    setCaseLabel((prev) => prev || deepLink.displayLabel)
+
+    // One-shot UX for this hash (avoid toast spam when callbacks re-identity)
+    const handleKey = `${deepLink.hash}:${deepLink.clientId}:${deepLink.autostamp}`
+    if (deepLinkHandled.current === handleKey) return
+    deepLinkHandled.current = handleKey
+
+    if (deepLink.product?.id === 'motopass' || deepLink.source === 'motopass') {
       toast.info(t('stampPage.motopassLoaded'), {
         description: t('stampPage.motopassDesc')
       })
+    } else if (deepLink.product) {
+      toast.info(deepLink.product.chip, {
+        description: 'Hash prefilled — stamp on Bitcoin in one click'
+      })
     }
-    if (searchParams.get('autostamp') === '1') {
-      stampHashOnly(prefill, label)
+
+    if (deepLink.autostamp) {
+      stampLinkedHash(deepLink.hash, deepLink.displayLabel, deepLink.clientId)
     }
-  }, [searchParams, stampHashOnly])
+  }, [deepLink, stampLinkedHash, t])
 
   const startStamping = async () => {
     if (!files.length) return
@@ -373,6 +591,7 @@ export default function Stamp() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'X-Satohash-Client': deepLinkClientId || deepLink.clientId || 'spa',
           ...(storedNpub ? { 'X-Npub': storedNpub } : {})
         },
         body: JSON.stringify({
@@ -430,8 +649,9 @@ export default function Stamp() {
       }
 
       const data = await res.json()
-      setProofResult(data)
+      setProofResult({ ...data, filename: caseLabel || file.name })
       setStampingStatus('complete')
+      setUpgradeStatus(data.status || 'pending')
       // Haptic feedback on mobile
       navigator.vibrate?.([50, 30, 100])
 
@@ -439,6 +659,9 @@ export default function Stamp() {
       const existing = JSON.parse(localStorage.getItem('satohash_stamps') || '[]')
       existing.unshift({ ...data, filename: caseLabel || file.name, size: file.size })
       localStorage.setItem('satohash_stamps', JSON.stringify(existing.slice(0, 100)))
+      if (data?.id && data.status !== 'confirmed') {
+        startStatusPoll(data.id)
+      }
     } catch (err) {
       const file = files[0]
       const hash = hashValue
@@ -505,27 +728,180 @@ export default function Stamp() {
 
   return (
     <div className="mx-auto max-w-6xl space-y-12 p-4 pb-24 md:p-8 md:pb-20">
+      {/* Minimal chrome when /stamp is rendered without AppShell (family deep-links) */}
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <Link
+          to="/"
+          className="text-[11px] font-black tracking-widest uppercase transition-opacity hover:opacity-80"
+          style={{ color: 'var(--accent-gold)' }}
+        >
+          ← Satohash
+        </Link>
+        <div className="flex gap-3">
+          <Link
+            to="/verify"
+            className="text-[11px] font-bold tracking-widest uppercase"
+            style={{ color: 'var(--text-secondary)' }}
+          >
+            Verify
+          </Link>
+          <Link
+            to="/vault"
+            className="text-[11px] font-bold tracking-widest uppercase"
+            style={{ color: 'var(--text-secondary)' }}
+          >
+            Vault
+          </Link>
+        </div>
+      </div>
       <StaticModeBanner />
       <GiveABitBadge />
-      {normalizeSha256(hashValue) && files.length === 0 && stampingStatus === 'idle' && (
+
+      {/* Invalid deep-link hash */}
+      {hashInvalidMsg && (
         <div
           className="rounded-2xl border p-5"
-          style={{ borderColor: 'var(--border)', background: 'var(--surface-raised)' }}
+          style={{
+            borderColor: 'var(--accent-danger)',
+            background: 'rgba(239,68,68,0.08)',
+            color: 'var(--accent-danger)'
+          }}
         >
-          <p className="text-xs font-bold" style={{ color: 'var(--text-secondary)' }}>
-            {t('stampPage.linkedHashReady')}
-          </p>
-          <p className="mt-2 font-mono text-[10px] break-all">{hashValue}</p>
-          <button
-            type="button"
-            className="mt-4 rounded-xl px-6 py-3 text-xs font-black uppercase"
-            style={{ background: 'var(--accent-gold)', color: '#141b25' }}
-            onClick={() => stampHashOnly(hashValue, caseLabel || 'Linked hash')}
-          >
-            {t('stampPage.stampHashBtn')}
-          </button>
+          <p className="text-sm font-bold">Invalid stamp link</p>
+          <p className="mt-1 text-xs opacity-90">{hashInvalidMsg}</p>
+          {deepLink.rawHash && (
+            <p className="mt-2 font-mono text-[10px] break-all opacity-70">{deepLink.rawHash}</p>
+          )}
         </div>
       )}
+
+      {/* Family deep-link card: prefilled hash + one CTA */}
+      {normalizeSha256(hashValue) &&
+        files.length === 0 &&
+        stampingStatus === 'idle' &&
+        !proofResult && (
+          <div
+            className="rounded-2xl border p-6 shadow-lg"
+            style={{
+              borderColor: 'var(--accent-gold)',
+              background: 'var(--surface-raised)',
+              boxShadow: '0 0 0 1px color-mix(in srgb, var(--accent-gold) 20%, transparent)'
+            }}
+          >
+            <div className="mb-4 flex flex-wrap items-center gap-2">
+              {deepLink.product && (
+                <span
+                  className="rounded-full px-3 py-1 text-[10px] font-black tracking-widest uppercase"
+                  style={{
+                    background: 'rgba(240,180,41,0.15)',
+                    color: 'var(--accent-gold)',
+                    border: '1px solid rgba(240,180,41,0.35)'
+                  }}
+                >
+                  {deepLink.product.chip}
+                </span>
+              )}
+              {deepLink.campaign && (
+                <span
+                  className="rounded-full px-3 py-1 text-[10px] font-bold"
+                  style={{
+                    background: 'var(--bg-secondary)',
+                    color: 'var(--text-secondary)',
+                    border: '1px solid var(--border)'
+                  }}
+                >
+                  {deepLink.campaign}
+                </span>
+              )}
+              {hashFromDeepLink && (
+                <span
+                  className="rounded-full px-3 py-1 text-[10px] font-bold"
+                  style={{ color: 'var(--text-muted)' }}
+                >
+                  Deep link
+                </span>
+              )}
+            </div>
+            <h2
+              className="text-lg font-black tracking-tight"
+              style={{ color: 'var(--text-primary)' }}
+            >
+              Stamp on Bitcoin
+            </h2>
+            <p className="mt-1 text-sm" style={{ color: 'var(--text-secondary)' }}>
+              {t('stampPage.linkedHashReady')}
+            </p>
+            {(caseLabel || deepLink.displayLabel) && (
+              <p className="mt-3 text-xs font-bold" style={{ color: 'var(--text-primary)' }}>
+                {caseLabel || deepLink.displayLabel}
+              </p>
+            )}
+            <div
+              className="mt-3 rounded-xl border p-3"
+              style={{ borderColor: 'var(--border)', background: 'var(--bg-primary)' }}
+            >
+              <p
+                className="text-[9px] font-black tracking-widest uppercase"
+                style={{ color: 'var(--text-secondary)' }}
+              >
+                SHA-256
+              </p>
+              <p
+                className="mt-1 font-mono text-[11px] break-all select-all"
+                style={{ color: 'var(--text-primary)' }}
+              >
+                {hashValue}
+              </p>
+            </div>
+            <button
+              type="button"
+              className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl px-6 py-4 text-sm font-black tracking-wider uppercase transition-all hover:scale-[1.01] active:scale-[0.99]"
+              style={{ background: 'var(--accent-gold)', color: '#141b25' }}
+              onClick={() =>
+                stampLinkedHash(
+                  hashValue,
+                  caseLabel || deepLink.displayLabel || 'Linked document',
+                  deepLinkClientId || deepLink.clientId
+                )
+              }
+            >
+              <ShieldCheck size={18} /> Stamp on Bitcoin
+            </button>
+            <div className="mt-3 flex flex-wrap gap-2">
+              <button
+                type="button"
+                className="rounded-xl border px-4 py-2 text-[10px] font-black uppercase"
+                style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
+                onClick={() => {
+                  navigator.clipboard.writeText(hashValue)
+                  toast.success('Hash copied')
+                }}
+              >
+                Copy hash
+              </button>
+              <Link
+                to={`/verify/${hashValue}`}
+                className="rounded-xl border px-4 py-2 text-[10px] font-black uppercase"
+                style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
+              >
+                Check existing proof
+              </Link>
+              <button
+                type="button"
+                className="rounded-xl border px-4 py-2 text-[10px] font-black uppercase"
+                style={{ borderColor: 'var(--border)', color: 'var(--text-muted)' }}
+                onClick={() =>
+                  stampHashBrowserOnly(
+                    hashValue,
+                    caseLabel || deepLink.displayLabel || 'Linked hash'
+                  )
+                }
+              >
+                Browser calendars only
+              </button>
+            </div>
+          </div>
+        )}
       {/* ── 3-Step Flow Banner ── */}
       <div className="mb-8 grid grid-cols-1 gap-0 overflow-hidden rounded-2xl border border-[var(--border)] sm:grid-cols-3">
         {[
@@ -1058,13 +1434,24 @@ export default function Stamp() {
                     {/* 3 CTA buttons */}
                     <div className="grid grid-cols-1 gap-3">
                       <div className="grid grid-cols-2 gap-3">
-                        <a
-                          href={`${getApiUrl()}/api/stamps/${proofResult?.id}?download=true`}
-                          className="flex items-center justify-center gap-2 rounded-xl py-3.5 text-xs font-black tracking-wider uppercase transition-all hover:opacity-90"
-                          style={{ background: 'var(--accent-gold)', color: '#141b25' }}
-                        >
-                          ⬇ OTS Proof
-                        </a>
+                        {proofResult?.id &&
+                        proofResult?.source !== 'browser-ots' &&
+                        !String(proofResult.id).startsWith('ots-') ? (
+                          <a
+                            href={`${getApiUrl()}/api/stamps/${proofResult.id}?download=true`}
+                            className="flex items-center justify-center gap-2 rounded-xl py-3.5 text-xs font-black tracking-wider uppercase transition-all hover:opacity-90"
+                            style={{ background: 'var(--accent-gold)', color: '#141b25' }}
+                          >
+                            ⬇ OTS Proof
+                          </a>
+                        ) : (
+                          <span
+                            className="flex items-center justify-center gap-2 rounded-xl py-3.5 text-xs font-black tracking-wider uppercase opacity-50"
+                            style={{ background: 'var(--border)', color: 'var(--text-secondary)' }}
+                          >
+                            ⬇ OTS (local)
+                          </span>
+                        )}
                         <button
                           onClick={() =>
                             downloadCertificate({
@@ -1082,6 +1469,18 @@ export default function Stamp() {
                           📜 Certificate
                         </button>
                       </div>
+                      {proofResult?.id && (
+                        <Link
+                          to={`/verify/${proofResult.id}`}
+                          className="flex items-center justify-center gap-2 rounded-xl py-3.5 text-xs font-black tracking-wider uppercase transition-all hover:opacity-90"
+                          style={{
+                            background: 'var(--accent-success)',
+                            color: '#0a0f0c'
+                          }}
+                        >
+                          Open verify page →
+                        </Link>
+                      )}
                       <div className="grid grid-cols-2 gap-3">
                         <button
                           onClick={() => (window.location.href = '/vault')}
@@ -1096,9 +1495,12 @@ export default function Stamp() {
                         </button>
                         <button
                           onClick={() => {
-                            navigator.clipboard.writeText(
-                              window.location.origin + '/verify/' + proofResult?.id
-                            )
+                            const path = proofResult?.id
+                              ? `/verify/${proofResult.id}`
+                              : proofResult?.hash
+                                ? `/verify/${proofResult.hash}`
+                                : '/verify'
+                            navigator.clipboard.writeText(window.location.origin + path)
                             toast.success('Share link copied!')
                           }}
                           className="flex items-center justify-center gap-2 rounded-xl border py-3 text-xs font-black uppercase transition-all hover:text-[var(--text-primary)]"

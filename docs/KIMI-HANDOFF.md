@@ -1,3 +1,32 @@
+## Session — 2026-07-26 (Grok M3 — stamp deep-link + verify lifecycle)
+
+**Done (SPA):**
+- Home `/?hash=&ref=…` → client redirect to `/stamp?…` (`Landing.jsx` + `buildStampPathFromSearch`)
+- `/stamp?hash=&ref=` deep-link card: product chip, label, one **Stamp on Bitcoin** CTA
+- `POST /api/stamp` with `X-Satohash-Client` from `ref`/`source`; human 402/429 errors; browser OTS fallback
+- Status poll after stamp until confirmed; verify CTA + share link
+- `VerifyPublic`: UUID + by-hash API lookup; poll pending → confirmed
+- Util: `src/utils/stampDeepLink.js` (+ tests); Integrations docs show canonical deep-link
+- `/stamp` chrome-free marketing path (exact only — not `/stamp/*` wizards)
+- Client helper `stampGuideUrl(hash, { ref, label, … })` updated
+
+**Still open (Kimi / Sherpa):**
+- THOR: API/OTS reliability, dual-host CF parity smoke, metrics attribution by client
+- Sherpa: point `sc-core` / Canada stamp buttons at `/stamp?hash=&ref=` (home still works via redirect)
+- Umami public proxy secondary
+
+**Acceptance smoke after deploy:**
+```
+https://satohash.io/stamp?hash=9da88734e32d3d2f931c187016d18cfbb0f7404ca90479ed4d6718c49289ee1b&ref=sherpacarta
+https://satohash.io/?hash=9da88734e32d3d2f931c187016d18cfbb0f7404ca90479ed4d6718c49289ee1b&ref=sherpacarta
+```
+
+**Git State:** uncommitted SPA changes on main (not pushed) — commit + CF Pages deploy needed for Cam-visible fix.
+
+**Spec:** `docs/KIMI-REQUEST-SATOHASH.md`
+
+---
+
 ## Session — 2026-07-27 (URGENT from Sherpa — stamp handoff broken)
 
 **From:** Grok on M3 via SherpaCarta session (Cam feedback)  
@@ -8,12 +37,12 @@
 
 ### Must fix (product)
 
-1. **`/stamp?hash=&ref=`** — primary entry: prefill hash, product chip, one CTA “Stamp on Bitcoin”
-2. **`/?hash=&ref=` → redirect to `/stamp`** — Sherpa `sc-core` opens home today
-3. **Verify lifecycle** — pending → confirmed; `/verify/:id` cold-load; proof download
-4. **Host parity** — `satohash.io` and `satohash.giveabit.io` same routes (SPA fallback)
-5. **API reliability** — `POST /api/stamp` + status poll; `X-Satohash-Client`; human paywall errors
-6. **Family refs** — `sherpacarta`, `sherpacarta-canada`, motopass, etc. for metrics/attribution
+1. **`/stamp?hash=&ref=`** — primary entry: prefill hash, product chip, one CTA “Stamp on Bitcoin” ✅ SPA
+2. **`/?hash=&ref=` → redirect to `/stamp`** — Sherpa `sc-core` opens home today ✅ SPA
+3. **Verify lifecycle** — pending → confirmed; `/verify/:id` cold-load; proof download ✅ SPA poll
+4. **Host parity** — `satohash.io` and `satohash.giveabit.io` same routes (SPA fallback) — CF/Kimi
+5. **API reliability** — `POST /api/stamp` + status poll; `X-Satohash-Client`; human paywall errors — SPA client + Kimi API
+6. **Family refs** — `sherpacarta`, `sherpacarta-canada`, motopass, etc. for metrics/attribution ✅ SPA header
 
 ### Acceptance (smoke)
 
@@ -26,7 +55,7 @@ https://satohash.io/stamp?hash=9da88734e32d3d2f931c187016d18cfbb0f7404ca90479ed4
 
 | Who | What |
 |-----|------|
-| Grok M3 `satohash` | SPA deep-link + verify UX |
+| Grok M3 `satohash` | SPA deep-link + verify UX ✅ implemented (deploy pending) |
 | Kimi THOR | API/OTS/Docker, dual-host CF, metrics by client |
 | Grok Sherpa later | Point stamp buttons at `/stamp?hash=&ref=` |
 

@@ -1063,8 +1063,11 @@
   "stampPage": {
     "motopassLoaded": "MotoPass hash loaded",
     "motopassDesc": "Upload the matching file to complete stamping, or stamp hash via public calendars.",
-    "linkedHashReady": "MotoPass / linked hash ready — stamp to OpenTimestamps without re-uploading a file.",
-    "stampHashBtn": "Stamp hash via public calendars",
+    "linkedHashReady": "Hash prefilled from a family app — one click stamps it on Bitcoin via OpenTimestamps. Your file never leaves the origin product.",
+    "stampHashBtn": "Stamp on Bitcoin",
+    "stampOnBitcoin": "Stamp on Bitcoin",
+    "openVerify": "Open verify page",
+    "invalidHash": "Invalid SHA-256 hash — expected exactly 64 hexadecimal characters.",
     "step1Label": "Drop Your File",
     "step1Desc": "Any format. Stays on your device — never uploaded.",
     "step2Label": "We Hash It Locally",
