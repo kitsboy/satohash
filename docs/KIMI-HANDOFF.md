@@ -1,3 +1,12 @@
+## Session — 2026-07-27 (pointer — full Kimi list on HQ)
+
+**Cam + full Kimi priority list:** `kitsboy/HQ` → `docs/KIMI-HANDOFF.md` **MASTER LIST** (top).
+
+This repo: stamp family / API metrics largely **done**. Optional later: `client_id` segments for HQ charts.  
+Kimi P0 is **sherpacarta LNURL** (not satohash SPA). Nova: LNbits HTTPS harden.
+
+---
+
 ## Session — 2026-07-27 (Grok M3 — GOODBYE)
 
 **Chat:** Stamp family handoff fix + learn docs + Kimi Bitcoin wallet request + full handoff.
