@@ -48,6 +48,12 @@ https://satohash.io/stamp?hash=<64hex>&ref=sherpacarta|motopass|katoa|…
 
 **Docs learn:** satohash/docs/LEARN-STAMP-FAMILY.md · Sherpa prompt: sherpacarta/docs/GROK-PROMPT-STAMP-HANDOFF.md
 **Orchestration:** Kimi THOR. Coding: Grok M3.
+
+**Bitcoin treasury request (Kimi — open):**
+- LNbits wallet `satohash` · public on-chain bc1 · LUD-16/LNURL-pay
+- Keys only in HQ Vault (hq.giveabit.io)
+- Handback public receive to Grok → then SPA Landing/constants
+- Spec: satohash/docs/KIMI-REQUEST-BITCOIN-WALLETS.md
 ```
 
 ---

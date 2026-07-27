@@ -146,15 +146,28 @@ Also later on Sherpa: one host preference (pick **canonical** `https://satohash.
 - Do **not** put invoice keys / nsec / PATs in git  
 - Prefer fixing **SPA deep-link + verify** first (highest Cam-visible pain), then template gallery, then metrics attribution  
 
+### Bitcoin donations / tips (NEW — 2026-07-27)
+
+**Full request:** [`KIMI-REQUEST-BITCOIN-WALLETS.md`](./KIMI-REQUEST-BITCOIN-WALLETS.md)
+
+| # | Kimi action (Satohash) |
+|---|------------------------|
+| 1 | LNbits wallet **`satohash`** (isolated product wallet) |
+| 2 | Public **on-chain** receive (`bc1…`) for that wallet |
+| 3 | Public **L2**: LNURL-pay + LUD-16 (e.g. `satohash@giveabit.io`) |
+| 4 | Invoice/admin keys → **HQ Vault only** (hq.giveabit.io) — never git |
+| 5 | Handback public details to Grok/Cam (address + lud16 + smoke) |
+| 6 | Grok wires SPA **only after** handback |
+
 ---
 
 ## Suggested split
 
 | Owner | Work |
 |-------|------|
-| **Grok (M3)** `satohash` repo | SPA routes `/stamp` query handling, home→stamp redirect, verify polish, Integrations docs match reality |
+| **Grok (M3)** `satohash` repo | SPA routes `/stamp` query handling, home→stamp redirect, verify polish, Integrations docs match reality; **after wallet handback:** publish L1/L2 on site |
 | **Grok (M3)** `sherpacarta` | After Satohash ships: unify stamp URLs to `/stamp?hash=&ref=`; optional in-app `stampHash()` |
-| **Kimi (THOR)** | API stamp reliability, OTS backend, paywall messages, metrics attribution, CF/DNS for both hosts, Umami proxy when ready |
+| **Kimi (THOR)** | API stamp reliability, OTS backend, paywall messages, metrics attribution, CF/DNS for both hosts, Umami proxy when ready; **Satohash LNbits wallet + on-chain + LUD-16 + HQ Vault + public handback** |
 
 ---
 

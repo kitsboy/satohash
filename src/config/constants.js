@@ -81,4 +81,16 @@ export const FOOTER_EXTRA_LINKS = [
   { name: 'About', path: '/about', internal: true }
 ]
 
+/**
+ * Public receive only — never put LNbits invoice/admin keys here.
+ * TODO(Kimi handback): replace with Satohash-dedicated on-chain + LUD-16 from
+ * docs/KIMI-REQUEST-BITCOIN-WALLETS.md (HQ Vault holds secrets).
+ * Current value is a temporary shared suite address until product wallet is provisioned.
+ */
 export const BTC_ADDRESS = 'bc1qhm5ndfjhqxdk3cx0pngyps4f5nnwdckulmge6c8keyf2pk0neqtshjn8ad'
+
+/** Lightning Address (LUD-16) — set after Kimi public handback; empty until then. */
+export const LN_ADDRESS = ''
+
+/** Optional LNURL-pay string — set after Kimi public handback. */
+export const LNURL_PAY = ''

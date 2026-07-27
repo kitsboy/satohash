@@ -29,9 +29,12 @@
 ## Next (ordered)
 1. **CF GHA Deploy** this SPA push (verify bundle has api.satohash.io as API base)  
 2. **Kimi THOR:** rebuild `satohash-api` → live `client_id` + `raw.directory`  
-3. **Grok Sherpa:** audit all stamp URLs + redeploy sc-bundle (see Sherpa prompt)  
-4. Smoke family path end-to-end from sherpacarta.org  
-5. Remaining clients: motopass, tadbuy, openstrata, camtaylor, lindala (same deep-link contract)  
+3. **Kimi THOR:** Satohash Bitcoin L1+L2 wallet — see `docs/KIMI-REQUEST-BITCOIN-WALLETS.md`  
+   - LNbits wallet `satohash` · on-chain bc1 · LUD-16/LNURL-pay  
+   - Keys → HQ Vault only · public handback → Grok publishes on site  
+4. **Grok Sherpa:** audit all stamp URLs + redeploy sc-bundle (see Sherpa prompt)  
+5. Smoke family path end-to-end from sherpacarta.org  
+6. Remaining clients: motopass, tadbuy, openstrata, camtaylor, lindala (same deep-link contract)  
 
 ## Agent entrypoints
 | File | Who |

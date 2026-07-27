@@ -1,3 +1,23 @@
+## Session — 2026-07-27 (Grok M3 — Kimi: Satohash Bitcoin wallets)
+
+**Request for Kimi (full):** `docs/KIMI-REQUEST-BITCOIN-WALLETS.md`
+
+### Kimi checklist (Satohash — not Sherpa)
+
+1. **LNbits** — create/confirm wallet labeled **`satohash`** (product-isolated).
+2. **On-chain (L1)** — public **bc1…** receive for that wallet; document mempool link.
+3. **Lightning (L2)** — enable public **LNURL-pay** + prefer **LUD-16** e.g. `satohash@giveabit.io`.
+4. **HQ Vault only** — invoice/admin/read keys, wallet id, any seed material → https://hq.giveabit.io vault (never git, never chat).
+5. **Handback to Grok/Cam** — public only: `on_chain_address`, `lud16`, optional `lnurl_pay`, smoke notes (template in the request doc).
+6. **Grok publishes after handback** — `src/config/constants.js`, Landing donation, DesktopAppNav QR, Contribute; optional `public/data/wallets.json`.
+
+**Current SPA:** `BTC_ADDRESS` in constants is a **shared suite address** — replace with Satohash-dedicated receive after handback.  
+**Do not** paste invoice keys into this file.
+
+**Still open (ops):** THOR Docker rebuild for `client_id` + metrics directory; SPA GHA deploy verify.
+
+---
+
 ## Session — 2026-07-27 (Grok M3 — /learn + Sherpa prompt + docs)
 
 **Done:**
