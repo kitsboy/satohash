@@ -48,6 +48,7 @@ import {
 } from './middleware.js'
 import { ERROR_CODES, sendError } from './errors.js'
 import authMiddleware from './authMiddleware.js'
+import { buildMetricsPayload, buildPublicDirectory } from './metrics-payload.js'
 import redis from './cache.js'
 import { performBackup } from './backup.js'
 import nodemailer from 'nodemailer'
@@ -774,6 +775,7 @@ app.get('/api/public/status', async (req, res) => {
   } catch (_e) {
     /* db may be empty on first boot */
   }
+  const directory = buildPublicDirectory()
   res.json({
     ok: true,
     service: 'satohash-api',
@@ -785,18 +787,12 @@ app.get('/api/public/status', async (req, res) => {
     require_lightning: process.env.REQUIRE_LIGHTNING !== 'false',
     stamps_stored: stampsApprox,
     timestamp: new Date().toISOString(),
-    clients_expected: [
-      'giveabit',
-      'motopass',
-      'katoa',
-      'sherpacarta',
-      'stranded',
-      'tadbuy',
-      'openstrata',
-      'camtaylor',
-      'lindala',
-      'hq'
-    ]
+    clients_expected: directory.clientsExpected,
+    metrics_url: 'https://api.satohash.io/metrics.json',
+    directory_url: 'https://api.satohash.io/api/public/directory',
+    deep_links: directory.deepLinks,
+    hosts: directory.hosts,
+    hq: 'https://hq.giveabit.io'
   })
 })
 
@@ -807,337 +803,37 @@ app.get('/metrics', requireBearerAdmin, async (req, res) => {
 })
 
 // Product Metrics JSON — gab.product-metrics.v1 (for HQ)
+// Rich envelope: KPIs, series, segments by client_id, directory, offers
 app.get('/metrics.json', async (req, res) => {
-  const now = new Date()
-  let stampsTotal = 0
-  let stamps24h = 0
-  let pending = 0
-  let confirmed = 0
-  let failed = 0
-
+  res.setHeader('Cache-Control', 'public, max-age=30, stale-while-revalidate=60')
+  res.setHeader('Access-Control-Allow-Origin', '*')
   try {
-    stampsTotal = db.prepare('SELECT COUNT(*) AS n FROM timestamps').get()?.n || 0
-    stamps24h =
-      db
-        .prepare(
-          "SELECT COUNT(*) AS n FROM timestamps WHERE created_at >= datetime('now', '-1 day')"
-        )
-        .get()?.n || 0
-    pending =
-      db.prepare("SELECT COUNT(*) AS n FROM timestamps WHERE status = 'pending'").get()?.n || 0
-    confirmed =
-      db.prepare("SELECT COUNT(*) AS n FROM timestamps WHERE status = 'confirmed'").get()?.n || 0
-    failed =
-      db.prepare("SELECT COUNT(*) AS n FROM timestamps WHERE status = 'failed'").get()?.n || 0
-  } catch (_e) {
-    /* DB may be empty */
+    const payload = buildMetricsPayload(db, {
+      version: process.env.npm_package_version || '5.0.0-ELITE',
+      uptimeSec: Math.floor(process.uptime())
+    })
+    res.json(payload)
+  } catch (err) {
+    logger.warn(`metrics.json build failed: ${err.message}`)
+    res.status(500).json({
+      schema: 'gab.product-metrics.v1',
+      productId: 'satohash',
+      updatedAt: new Date().toISOString(),
+      health: { status: 'red', message: 'Metrics assembly failed' },
+      kpis: []
+    })
   }
+})
 
-  const totalAttempted = confirmed + failed
-  const confirmRate =
-    totalAttempted > 0 ? Number(((confirmed / totalAttempted) * 100).toFixed(1)) : 94.1
-
-  const payload = {
-    schema: 'gab.product-metrics.v1',
-    productId: 'satohash',
-    name: 'Satohash',
-    updatedAt: now.toISOString(),
-    window: {
-      label: '7d',
-      from: new Date(now.getTime() - 7 * 86400000).toISOString(),
-      to: now.toISOString()
-    },
-    health: {
-      status: 'green',
-      message: 'API healthy — uses demo time series until real stamp history accumulates',
-      latencyMs: 42,
-      uptimePct24h: 99.9,
-      dependencies: [
-        {
-          id: 'opentimestamps-calendars',
-          status: 'green',
-          detail: 'Calendar attestations available'
-        },
-        { id: 'bitcoin-anchor', status: 'amber', detail: 'Confirmations lag mempool — normal' },
-        { id: 'api.satohash.io', status: 'green', detail: 'API serving locally' },
-        { id: 'nostr-relays', status: 'green', detail: 'Identity / NIP surfaces OK' }
-      ]
-    },
-    kpis: [
-      {
-        key: 'stamps_total',
-        label: 'Stamps (all time)',
-        value: stampsTotal,
-        unit: 'proofs',
-        format: 'number',
-        priority: 1,
-        hint: 'Total OpenTimestamps receipts issued through Satohash plane.'
-      },
-      {
-        key: 'stamps_24h',
-        label: 'Stamps 24h',
-        value: stamps24h,
-        unit: 'proofs',
-        delta: 0,
-        deltaUnit: '%',
-        format: 'number',
-        priority: 1,
-        hint: 'Daily stamping velocity.'
-      },
-      {
-        key: 'pending',
-        label: 'Pending confirm',
-        value: pending,
-        unit: 'proofs',
-        format: 'number',
-        priority: 2,
-        hint: 'Waiting on calendar → Bitcoin confirmation.'
-      },
-      {
-        key: 'confirmed',
-        label: 'Confirmed 7d',
-        value: confirmed,
-        unit: 'proofs',
-        format: 'number',
-        priority: 2,
-        hint: 'Fully Bitcoin-anchored proofs in window.'
-      },
-      {
-        key: 'confirm_rate',
-        label: 'Confirm rate',
-        value: confirmRate,
-        unit: '%',
-        format: 'percent',
-        priority: 1,
-        hint: 'confirmed / (confirmed+failed) in window. Target ≥ 95%.'
-      },
-      {
-        key: 'family_free',
-        label: 'Family free stamps',
-        value: 0,
-        unit: 'proofs',
-        format: 'number',
-        priority: 3,
-        hint: 'Internal suite usage — tracked via client_id after launch.'
-      },
-      {
-        key: 'api_clients',
-        label: 'Active API clients',
-        value: 0,
-        unit: 'clients',
-        format: 'number',
-        priority: 3,
-        hint: 'Distinct client_id consumers of the proof plane.'
-      },
-      {
-        key: 'p50_ms',
-        label: 'Stamp p50',
-        value: 820,
-        unit: 'ms',
-        format: 'duration',
-        priority: 4,
-        hint: 'Median stamp API latency.'
-      },
-      {
-        key: 'p95_ms',
-        label: 'Stamp p95',
-        value: 2400,
-        unit: 'ms',
-        format: 'duration',
-        priority: 4,
-        hint: 'Tail latency.'
-      },
-      {
-        key: 'fee_sat_vb',
-        label: 'Mempool fee hint',
-        value: 4,
-        unit: 'sat/vB',
-        format: 'number',
-        priority: 5,
-        hint: 'Context for anchoring cost narrative.'
-      }
-    ],
-    series: [
-      {
-        key: 'stamps_daily',
-        label: 'Stamps / day',
-        unit: 'proofs',
-        color: '#8a5a00',
-        points: Array.from({ length: 15 }, (_, i) => ({
-          t: new Date(now.getTime() - (14 - i) * 86400000).toISOString(),
-          v:
-            stampsTotal > 0
-              ? Math.max(1, Math.round(stampsTotal / 30 + (Math.random() - 0.5) * 10))
-              : 175 + Math.round((Math.random() - 0.5) * 20)
-        }))
-      },
-      {
-        key: 'confirmed_daily',
-        label: 'Confirmed / day',
-        unit: 'proofs',
-        color: '#1f6b3a',
-        points: Array.from({ length: 15 }, (_, i) => ({
-          t: new Date(now.getTime() - (14 - i) * 86400000).toISOString(),
-          v:
-            stampsTotal > 0
-              ? Math.max(1, Math.round(stampsTotal / 35 + (Math.random() - 0.5) * 8))
-              : 150 + Math.round((Math.random() - 0.5) * 20)
-        }))
-      },
-      {
-        key: 'pending_depth',
-        label: 'Pending depth',
-        unit: 'proofs',
-        color: '#c45f00',
-        points: Array.from({ length: 15 }, (_, i) => ({
-          t: new Date(now.getTime() - (14 - i) * 86400000).toISOString(),
-          v:
-            pending > 0
-              ? Math.max(0, pending - 3 + Math.round(Math.random() * 6))
-              : 42 + Math.round((Math.random() - 0.5) * 15)
-        }))
-      },
-      {
-        key: 'family_share',
-        label: 'Family free %',
-        unit: '%',
-        color: '#1a5f7a',
-        points: Array.from({ length: 15 }, (_, i) => ({
-          t: new Date(now.getTime() - (14 - i) * 86400000).toISOString(),
-          v: 22 + Math.round((Math.random() - 0.5) * 6)
-        }))
-      }
-    ],
-    funnels: [
-      {
-        id: 'stamp_journey',
-        label: 'Stamp journey',
-        steps: [
-          {
-            id: 'hash_local',
-            label: 'Local hash',
-            count: stamps24h > 0 ? stamps24h + 24 : 210,
-            hint: 'File never leaves device'
-          },
-          { id: 'submit', label: 'Submit stamp', count: Math.max(0, stamps24h), hint: 'API or UI' },
-          {
-            id: 'calendar',
-            label: 'Calendar attested',
-            count: Math.max(0, stamps24h - 10),
-            hint: 'OTS calendars'
-          },
-          {
-            id: 'bitcoin',
-            label: 'Bitcoin confirmed',
-            count: Math.max(0, (stamps24h * confirmRate) / 100),
-            hint: 'On-chain anchor'
-          },
-          {
-            id: 'verify',
-            label: 'User verified',
-            count: stampsTotal > 0 ? Math.round(stampsTotal * 0.5) : 94,
-            hint: 'Return verify flow'
-          }
-        ]
-      }
-    ],
-    segments: [
-      {
-        id: 'by_client',
-        label: 'By suite client_id (family free)',
-        rows: [
-          { id: 'motopass', label: 'MotoPass', value: 0, meta: { offer: 'passport/docs proofs' } },
-          { id: 'katoa', label: 'Katoa', value: 0, meta: { offer: 'creator attestations' } },
-          { id: 'giveabit', label: 'Give A Bit', value: 0, meta: { offer: 'education demos' } },
-          { id: 'sherpacarta', label: 'SherpaCarta', value: 0, meta: { offer: 'governance docs' } },
-          {
-            id: 'public',
-            label: 'Public / other',
-            value: Math.max(0, stampsTotal),
-            meta: { offer: 'open stamping' }
-          }
-        ]
-      }
-    ],
-    offers: [
-      {
-        id: 'ots_stamp',
-        title: 'OpenTimestamps stamp API',
-        for: ['motopass', 'katoa', 'giveabit', 'sherpacarta', 'tadbuy', 'stranded', 'openstrata'],
-        status: 'internal',
-        endpoint: 'POST /api/stamp',
-        hint: 'Family free internal; public rate limits planned'
-      },
-      {
-        id: 'ots_verify',
-        title: 'Proof verify',
-        for: ['*'],
-        status: 'ga',
-        endpoint: 'GET /verify/:id',
-        hint: 'Court-admissible narrative'
-      },
-      {
-        id: 'public_status',
-        title: 'Public status',
-        for: ['hq'],
-        status: 'beta',
-        endpoint: 'GET /api/public/status',
-        hint: 'Wire live into HQ when API up'
-      },
-      {
-        id: 'metrics_v1',
-        title: 'Product metrics v1',
-        for: ['hq'],
-        status: 'live',
-        endpoint: 'GET /metrics.json',
-        hint: 'Published by satohash API origin'
-      }
-    ],
-    education: [
-      {
-        id: 'mold_velocity',
-        title: 'Mold stamps/day into capacity',
-        body: 'Show 7d average × 30 as "monthly proof capacity" for diligence packs.',
-        action: 'Add monthly projection KPI when live API lands',
-        severity: 'plan'
-      },
-      {
-        id: 'mold_confirm',
-        title: 'Confirm rate is trust',
-        body: 'If confirm_rate < 95%, lead with calendar redundancy.',
-        action: 'Alert HQ when confirm_rate drops below 92%',
-        severity: 'risk'
-      },
-      {
-        id: 'mold_family',
-        title: 'Family free = suite moat',
-        body: 'Segment chart proves Satohash is infrastructure, not a silo.',
-        action: 'Pitch mode callout: "Shared OTS backbone"',
-        severity: 'opportunity'
-      },
-      {
-        id: 'mold_latency',
-        title: 'SLA table from p50/p95',
-        body: 'Publish internal SLOs: p50 < 1s, p95 < 3s for stamp accept.',
-        action: 'Export SLO table into diligence pack',
-        severity: 'info'
-      }
-    ],
-    links: [
-      { label: 'Satohash live', url: 'https://satohash.io' },
-      { label: 'API', url: 'https://api.satohash.io' },
-      { label: 'Schema', url: '/schemas/product-metrics.v1.schema.json' }
-    ],
-    raw: {
-      demo: stampsTotal === 0,
-      note:
-        stampsTotal === 0
-          ? 'Live endpoint with demo time series until real stamps accumulate.'
-          : 'Live metrics from satohash API'
-    }
-  }
-
-  res.json(payload)
+/** HQ-friendly public directory (also nested under metrics raw.directory) */
+app.get('/api/public/directory', (req, res) => {
+  res.setHeader('Cache-Control', 'public, max-age=120')
+  res.setHeader('Access-Control-Allow-Origin', '*')
+  res.json({
+    ok: true,
+    updatedAt: new Date().toISOString(),
+    ...buildPublicDirectory()
+  })
 })
 
 // Admin Stats Dashboard API
@@ -1278,6 +974,17 @@ app.post('/api/stamp', stampRateLimit, paywallMiddleware, async (req, res, next)
     const { hash, filename, email, nostr_pubkey } = validation.data
     // FIX 3a — extract npub from header or body for user scoping
     const userNpub = req.headers['x-npub'] || req.body.npub || null
+    // HQ attribution — always store X-Satohash-Client when present
+    const clientId = String(
+      req.satohashClient ||
+        req.headers['x-satohash-client'] ||
+        req.body.client_id ||
+        req.body.clientId ||
+        'public'
+    )
+      .trim()
+      .toLowerCase()
+      .slice(0, 64)
     const hashBuffer = Buffer.from(hash, 'hex')
     const opSHA256 = new OpenTimestamps.Ops.OpSHA256()
     const detached = OpenTimestamps.DetachedTimestampFile.fromHash(opSHA256, hashBuffer)
@@ -1316,9 +1023,21 @@ app.post('/api/stamp', stampRateLimit, paywallMiddleware, async (req, res, next)
       .digest('hex')
       .substring(0, 44)}`
 
-    db.prepare(
-      'INSERT INTO timestamps (id, hash, original_filename, ots_binary, merkle_root) VALUES (?, ?, ?, ?, ?)'
-    ).run(id, hash, filename, Buffer.from(otsBinary), ipfsCid)
+    try {
+      db.prepare(
+        'INSERT INTO timestamps (id, hash, original_filename, ots_binary, merkle_root, client_id) VALUES (?, ?, ?, ?, ?, ?)'
+      ).run(id, hash, filename, Buffer.from(otsBinary), ipfsCid, clientId || 'public')
+    } catch {
+      // Older DBs without client_id column
+      db.prepare(
+        'INSERT INTO timestamps (id, hash, original_filename, ots_binary, merkle_root) VALUES (?, ?, ?, ?, ?)'
+      ).run(id, hash, filename, Buffer.from(otsBinary), ipfsCid)
+      try {
+        db.prepare('UPDATE timestamps SET client_id = ? WHERE id = ?').run(clientId || 'public', id)
+      } catch {
+        /* column may not exist yet — v5-api ALTER adds it */
+      }
+    }
 
     // Background tasks
     publishTimestampToNostr(hash, filename, id).catch(() => {})
@@ -1383,10 +1102,12 @@ app.post('/api/stamp', stampRateLimit, paywallMiddleware, async (req, res, next)
       filename,
       status: 'pending',
       ipfs_cid: ipfsCid,
+      client_id: clientId || 'public',
       created_at: new Date().toISOString(),
-      email_sent: !!email
+      email_sent: !!email,
+      verify_url: `${process.env.VERIFY_BASE_URL || 'https://satohash.io'}/verify/${id}`
     })
-    io.emit('ots:stamped', { id, hash, filename, ipfs_cid: ipfsCid })
+    io.emit('ots:stamped', { id, hash, filename, ipfs_cid: ipfsCid, client_id: clientId })
 
     // Propagate to mesh with IPFS CID
     import('./mesh.js').then(({ default: mesh }) => {

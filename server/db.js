@@ -1,19 +1,19 @@
-import Database from 'better-sqlite3';
-import logger from './logger.js';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import Database from 'better-sqlite3'
+import logger from './logger.js'
+import path from 'path'
+import { fileURLToPath } from 'url'
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const dbPath = path.resolve(__dirname, '../data/satohash.db');
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
+const dbPath = path.resolve(__dirname, '../data/satohash.db')
 
 // Ensure data directory exists
-import fs from 'fs';
+import fs from 'fs'
 if (!fs.existsSync(path.dirname(dbPath))) {
-  fs.mkdirSync(path.dirname(dbPath), { recursive: true });
+  fs.mkdirSync(path.dirname(dbPath), { recursive: true })
 }
 
-const db = new Database(dbPath);
-db.pragma('journal_mode = WAL'); // Performance refinement
+const db = new Database(dbPath)
+db.pragma('journal_mode = WAL') // Performance refinement
 
 // Initialize Schema
 db.exec(`
@@ -35,6 +35,28 @@ db.exec(`
 
   CREATE INDEX IF NOT EXISTS idx_hash ON timestamps(hash);
   CREATE INDEX IF NOT EXISTS idx_status ON timestamps(status);
+  CREATE INDEX IF NOT EXISTS idx_created_at ON timestamps(created_at);
+`)
+
+// Optional columns for HQ attribution + multi-user (idempotent)
+try {
+  db.exec(`ALTER TABLE timestamps ADD COLUMN client_id TEXT`)
+} catch {
+  /* exists */
+}
+try {
+  db.exec(`CREATE INDEX IF NOT EXISTS idx_client_id ON timestamps(client_id)`)
+} catch {
+  /* ok */
+}
+try {
+  db.exec(`ALTER TABLE timestamps ADD COLUMN user_npub TEXT`)
+} catch {
+  /* exists */
+}
+
+db.exec(`
+  /* keep rest of schema in same transaction style */
 
   CREATE TABLE IF NOT EXISTS git_stamps (
     id TEXT PRIMARY KEY,
@@ -86,8 +108,8 @@ db.exec(`
     created_at DATETIME DEFAULT (datetime('now')),
     last_triggered DATETIME
   );
-`);
+`)
 
-logger.info(`🗄️ Database initialized at ${dbPath}`);
+logger.info(`🗄️ Database initialized at ${dbPath}`)
 
-export default db;
+export default db

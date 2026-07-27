@@ -31,6 +31,8 @@ Client:
 POST /api/stamp
 X-Satohash-Key: <family key>
 X-Satohash-Client: motopass
+# Required for HQ segments (timestamps.client_id). Examples:
+#   sherpacarta | sherpacarta-canada | motopass | katoa | spa | cli
 Content-Type: application/json
 
 {"hash":"<64 hex>","filename":"seal.json"}
@@ -46,7 +48,10 @@ Without family key → **402** if `REQUIRE_LIGHTNING` is not `false`.
 |--------|------|------|
 | GET | `/health` | public |
 | GET | `/health?deep=true` | public (best-effort deps) |
+| GET | `/metrics.json` | public (HQ product metrics v1) |
 | GET | `/api/public/status` | public (HQ heartbeat) |
+| GET | `/api/public/directory` | public (hosts, endpoints, clients) |
+| GET | `/api/stamps/recent` | public |
 | POST | `/api/stamp` | family key / L402 / open |
 | GET | `/api/stamps/:id` | public |
 
@@ -66,4 +71,14 @@ See `packages/satohash-client/` — copy into motopass, katoa, giveabit, etc.
 
 ## HQ
 
-Poll `https://api.satohash.io/health` and `/api/public/status` for the proof-plane heartbeat.
+See **[HQ-FEED.md](./HQ-FEED.md)** for the full inventory.
+
+| Poll | URL |
+|------|-----|
+| Metrics envelope | `https://api.satohash.io/metrics.json` |
+| Heartbeat | `https://api.satohash.io/api/public/status` |
+| Directory | `https://api.satohash.io/api/public/directory` |
+| Health | `https://api.satohash.io/health` |
+| Recent stamps | `https://api.satohash.io/api/stamps/recent` |
+
+Glass: https://hq.giveabit.io

@@ -1,3 +1,19 @@
+## Session — 2026-07-27 (Grok — Sherpa URLs + HQ feed + tidy)
+
+**Done:**
+- **Sherpa:** stamp deep-links → `https://satohash.io/stamp?hash=&ref=` (charter + Canada + helpers); sc-bundle rebuilt
+- **HQ feed:** `server/metrics-payload.js` — real client segments, DB series, `raw.directory`, richer KPIs
+- **API:** store `client_id` from `X-Satohash-Client` on `POST /api/stamp`; `GET /api/public/directory`; paywall always captures client
+- **Docs:** `docs/HQ-FEED.md`, `docs/REPO-LAYOUT.md`; indexes on created_at/client_id
+- **HQ repo:** tools.json + handoffs.json feeds; metrics/satohash.json shape refreshed
+- **Tidy:** metrics extracted from index.js; `test_ots.cjs` → `scripts/`; no reckless folder moves
+
+**Deploy note:** API changes need **THOR Docker rebuild** for live metrics.directory + client_id. SPA already live from prior deploy.
+
+**Git:** push satohash + sherpacarta + HQ as separate commits.
+
+---
+
 ## Session — 2026-07-26 (Grok M3 — stamp deep-link + verify lifecycle)
 
 **Done (SPA):**

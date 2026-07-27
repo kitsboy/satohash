@@ -130,6 +130,12 @@ export function isFamilyApiKey(headerVal) {
 }
 
 export const paywallMiddleware = (req, res, next) => {
+  // Always capture client id for HQ attribution (even when free tier is open)
+  const headerClient = req.headers['x-satohash-client']
+  if (headerClient && typeof headerClient === 'string') {
+    req.satohashClient = headerClient.trim().toLowerCase().slice(0, 64)
+  }
+
   // Allow bypassing paywall via env var for testing / MVP open stamp
   if (process.env.REQUIRE_LIGHTNING === 'false') {
     return next()
@@ -139,7 +145,7 @@ export const paywallMiddleware = (req, res, next) => {
   const familyKey = req.headers['x-satohash-key'] || req.headers['x-family-key']
   if (isFamilyApiKey(familyKey)) {
     req.satohashFamily = true
-    req.satohashClient = req.headers['x-satohash-client'] || 'family'
+    req.satohashClient = req.satohashClient || 'family'
     logger.info(`🏠 [FAMILY] Free stamp tier for client=${req.satohashClient} ip=${req.ip}`)
     return next()
   }
