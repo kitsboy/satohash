@@ -50,7 +50,7 @@
 
 ### Git State
 
-- SHA: (see LATEST-UPDATE after this goodbye commit)
+- SHA:  ()
 - Branch: `main` → push origin
 - Unpushed before this goodbye: none (prior `3eab2d9` pushed)
 
