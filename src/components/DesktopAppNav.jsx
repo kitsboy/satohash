@@ -64,25 +64,47 @@ export default function DesktopAppNav({ onOpenSearch }) {
 
   return (
     <header
-      className="hidden border-b border-[var(--border)] md:block"
+      className="hidden border-b md:block"
       style={{
-        background: 'color-mix(in srgb, var(--bg-navbar) 92%, transparent)',
-        backdropFilter: 'blur(20px)'
+        borderColor: 'color-mix(in srgb, var(--border) 85%, transparent)',
+        background: 'color-mix(in srgb, var(--bg-navbar) 94%, transparent)',
+        backdropFilter: 'blur(22px) saturate(1.15)',
+        boxShadow: '0 1px 0 rgba(240,180,41,0.04), 0 8px 32px rgba(0,0,0,0.12)'
       }}
     >
       <DesktopNavLayout
         left={
-          <Link to="/" className="group flex min-w-0 items-center gap-2.5">
-            <img
-              src="/logo.png"
-              alt=""
-              className="h-8 w-8 shrink-0 object-contain transition-transform group-hover:scale-105"
-            />
-            <span
-              className="truncate text-sm font-black tracking-[0.18em] uppercase"
-              style={{ color: 'var(--accent-gold)' }}
-            >
-              Satohash
+          <Link
+            to="/"
+            className="group flex min-w-0 items-center gap-2.5 rounded-lg py-1 pr-2 transition-colors hover:bg-white/[0.04]"
+          >
+            <span className="relative flex h-8 w-8 shrink-0 items-center justify-center">
+              <span
+                aria-hidden
+                className="absolute inset-0 rounded-lg opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                style={{
+                  boxShadow: '0 0 0 1px rgba(240,180,41,0.35), 0 0 16px rgba(240,180,41,0.15)'
+                }}
+              />
+              <img
+                src="/logo.png"
+                alt=""
+                className="relative h-8 w-8 object-contain transition-transform duration-300 group-hover:scale-105"
+              />
+            </span>
+            <span className="flex min-w-0 flex-col leading-none">
+              <span
+                className="truncate text-sm font-black tracking-[0.16em] uppercase transition-colors duration-200 group-hover:text-[var(--accent-gold)]"
+                style={{ color: 'var(--accent-gold)' }}
+              >
+                Satohash
+              </span>
+              <span
+                className="mt-0.5 hidden text-[9px] font-semibold tracking-[0.14em] uppercase opacity-60 sm:inline"
+                style={{ color: 'var(--text-muted)' }}
+              >
+                v5.0.0-ELITE
+              </span>
             </span>
           </Link>
         }
@@ -126,7 +148,7 @@ export default function DesktopAppNav({ onOpenSearch }) {
               type="button"
               onClick={onOpenSearch}
               aria-label="Search"
-              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border transition-colors hover:border-[var(--border-gold)] hover:text-[var(--accent-gold)]"
+              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border transition-all duration-200 hover:-translate-y-px hover:border-[var(--border-gold)] hover:bg-[rgba(240,180,41,0.08)] hover:text-[var(--accent-gold)] hover:shadow-[0_4px_14px_rgba(0,0,0,0.2)] active:translate-y-0"
               style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
             >
               <Search size={15} />
@@ -144,7 +166,7 @@ export default function DesktopAppNav({ onOpenSearch }) {
                 aria-expanded={userOpen}
                 aria-haspopup="menu"
                 aria-label="Account menu"
-                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 text-[10px] font-black"
+                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 text-[10px] font-black transition-all duration-200 hover:-translate-y-px hover:scale-105 hover:shadow-[0_0_0_3px_rgba(240,180,41,0.15),0_6px_16px_rgba(0,0,0,0.25)] active:translate-y-0 active:scale-100"
                 style={{
                   borderColor: 'var(--border-gold)',
                   background: 'rgba(240,180,41,0.08)',

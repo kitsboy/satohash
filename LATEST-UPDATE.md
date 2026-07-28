@@ -1,9 +1,7 @@
 # satohash — Last Updated 2026-07-28 by Grok
 
-Brief: Umami collect live; suite tags verified; AI Notary hub + vault v2 import fix; docs/metrics clean  
-Commit: `ab042de`  
-API: https://api.satohash.io · SPA: https://satohash.io · Analytics: https://analytics.giveabit.io  
-Prior: SPA stamps → api.satohash.io; honest UX/metrics; Kimi L1+L2 wallet request  
-Ops left: optional THOR API rebuild for /health version string; paywall + BITCOIN_RPC still Cam/Kimi switches  
-Handoff: docs/KIMI-HANDOFF.md (top)  
-Archive: docs/archive/SESSION-SUMMARY-2026-07-28-whatsup.md  
+Brief: Professional header/nav hover polish; full Kimi POWER BRIEF for API rebuild + HQ metrics  
+Commit: `864aca2`  
+API: https://api.satohash.io · SPA: https://satohash.io · HQ: https://hq.giveabit.io · Analytics: https://analytics.giveabit.io  
+Kimi open: THOR API rebuild (health still 4.1.0), HQ feed = api.satohash.io/metrics.json  
+Handoff: docs/KIMI-HANDOFF.md (top) · Paste: docs/KIMI-POWER-PROMPT-SATOHASH.md  

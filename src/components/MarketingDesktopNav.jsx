@@ -47,31 +47,53 @@ export default function MarketingDesktopNav({ onDonate }) {
 
   return (
     <nav
-      className="fixed inset-x-0 top-0 z-[100] transition-shadow duration-300"
+      className="fixed inset-x-0 top-0 z-[100] transition-all duration-300"
       style={{
         paddingTop: 'env(safe-area-inset-top)',
-        borderBottom: scrolled ? '1px solid var(--border)' : '1px solid transparent',
+        borderBottom: scrolled
+          ? '1px solid color-mix(in srgb, var(--border) 90%, transparent)'
+          : '1px solid transparent',
         background: scrolled
           ? 'color-mix(in srgb, var(--bg-navbar) 96%, transparent)'
-          : 'color-mix(in srgb, var(--bg-navbar) 80%, transparent)',
-        backdropFilter: 'blur(20px)',
-        boxShadow: scrolled ? '0 4px 24px rgba(0,0,0,0.12)' : 'none'
+          : 'color-mix(in srgb, var(--bg-navbar) 78%, transparent)',
+        backdropFilter: scrolled ? 'blur(22px) saturate(1.15)' : 'blur(16px)',
+        boxShadow: scrolled ? '0 1px 0 rgba(240,180,41,0.05), 0 10px 36px rgba(0,0,0,0.18)' : 'none'
       }}
     >
       <div className="layout-container hidden md:block">
         <DesktopNavLayout
           left={
-            <Link to="/" className="group flex min-w-0 items-center gap-2.5">
-              <img
-                src="/logo.png"
-                alt="Satohash"
-                className="h-8 w-8 shrink-0 object-contain transition-transform group-hover:scale-105"
-              />
-              <span
-                className="truncate text-sm font-black tracking-[0.16em] uppercase"
-                style={{ color: 'var(--accent-gold)' }}
-              >
-                Satohash
+            <Link
+              to="/"
+              className="group flex min-w-0 items-center gap-2.5 rounded-lg py-1 pr-2 transition-colors hover:bg-white/[0.04]"
+            >
+              <span className="relative flex h-8 w-8 shrink-0 items-center justify-center">
+                <span
+                  aria-hidden
+                  className="absolute inset-0 rounded-lg opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                  style={{
+                    boxShadow: '0 0 0 1px rgba(240,180,41,0.35), 0 0 16px rgba(240,180,41,0.15)'
+                  }}
+                />
+                <img
+                  src="/logo.png"
+                  alt="Satohash"
+                  className="relative h-8 w-8 object-contain transition-transform duration-300 group-hover:scale-105"
+                />
+              </span>
+              <span className="flex min-w-0 flex-col leading-none">
+                <span
+                  className="truncate text-sm font-black tracking-[0.16em] uppercase"
+                  style={{ color: 'var(--accent-gold)' }}
+                >
+                  Satohash
+                </span>
+                <span
+                  className="mt-0.5 text-[9px] font-semibold tracking-[0.12em] uppercase opacity-55"
+                  style={{ color: 'var(--text-muted)' }}
+                >
+                  Bitcoin notary
+                </span>
               </span>
             </Link>
           }
@@ -125,18 +147,21 @@ export default function MarketingDesktopNav({ onDonate }) {
               <button
                 type="button"
                 onClick={onDonate}
-                className="hidden h-9 items-center rounded-lg border px-3 text-[11px] font-bold uppercase transition-colors hover:border-[var(--border-gold)] lg:flex"
+                className="hidden h-9 items-center rounded-lg border px-3 text-[11px] font-bold uppercase transition-all duration-200 hover:-translate-y-px hover:border-[var(--border-gold)] hover:bg-[rgba(240,180,41,0.08)] hover:text-[var(--accent-gold)] lg:flex"
                 style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
               >
                 {t('landingPage.nav.donate')}
               </button>
               <Link
                 to="/stamp"
-                className="flex h-9 shrink-0 items-center gap-1.5 rounded-lg px-4 text-[11px] font-black tracking-wide uppercase transition-opacity hover:opacity-90"
+                className="group/cta flex h-9 shrink-0 items-center gap-1.5 rounded-lg px-4 text-[11px] font-black tracking-wide uppercase transition-all duration-200 hover:-translate-y-px hover:shadow-[0_6px_20px_rgba(240,180,41,0.35)] active:translate-y-0"
                 style={{ background: 'var(--accent-gold)', color: '#141b25' }}
               >
                 {t('landingPage.nav.startFree')}
-                <ArrowRight size={13} />
+                <ArrowRight
+                  size={13}
+                  className="transition-transform duration-200 group-hover/cta:translate-x-0.5"
+                />
               </Link>
             </>
           }
@@ -145,8 +170,12 @@ export default function MarketingDesktopNav({ onDonate }) {
 
       {/* Mobile header */}
       <div className="layout-container flex h-14 items-center justify-between md:hidden">
-        <Link to="/" className="flex items-center gap-2">
-          <img src="/logo.png" alt="" className="h-7 w-7 object-contain" />
+        <Link to="/" className="group flex items-center gap-2 rounded-lg py-1 pr-1">
+          <img
+            src="/logo.png"
+            alt=""
+            className="h-7 w-7 object-contain transition-transform duration-200 group-hover:scale-105"
+          />
           <span
             className="text-sm font-black tracking-widest uppercase"
             style={{ color: 'var(--accent-gold)' }}
@@ -159,7 +188,7 @@ export default function MarketingDesktopNav({ onDonate }) {
           <LanguageSwitcher />
           <button
             type="button"
-            className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg border"
+            className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg border transition-all duration-200 hover:border-[var(--border-gold)] hover:bg-white/[0.04]"
             style={{ borderColor: 'var(--border)' }}
             onClick={() => setNavOpen(!navOpen)}
             aria-expanded={navOpen}
@@ -185,7 +214,7 @@ export default function MarketingDesktopNav({ onDonate }) {
                   <a
                     key={link.href}
                     href={link.href}
-                    className="min-h-[44px] rounded-lg px-3 py-3 text-sm font-semibold"
+                    className="min-h-[44px] rounded-lg px-3 py-3 text-sm font-semibold transition-colors duration-150 hover:bg-white/[0.05] hover:text-[var(--text-primary)]"
                     style={{ color: 'var(--text-secondary)' }}
                     onClick={() => setNavOpen(false)}
                   >
@@ -195,8 +224,10 @@ export default function MarketingDesktopNav({ onDonate }) {
                   <Link
                     key={link.href}
                     to={link.href}
-                    className="min-h-[44px] rounded-lg px-3 py-3 text-sm font-semibold"
-                    style={{ color: 'var(--text-secondary)' }}
+                    className="min-h-[44px] rounded-lg px-3 py-3 text-sm font-semibold transition-colors duration-150 hover:bg-white/[0.05] hover:text-[var(--text-primary)]"
+                    style={{
+                      color: isActive(link.href) ? 'var(--accent-gold)' : 'var(--text-secondary)'
+                    }}
                     onClick={() => setNavOpen(false)}
                   >
                     {link.label}

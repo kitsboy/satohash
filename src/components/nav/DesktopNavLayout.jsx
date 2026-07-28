@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 
 /**
  * Three-zone header grid — center nav never overlaps left/right columns.
+ * Institutional Noir: quiet chrome, gold active, refined hover.
  */
 export default function DesktopNavLayout({ left, center, right, className = '' }) {
   return (
@@ -15,29 +16,55 @@ export default function DesktopNavLayout({ left, center, right, className = '' }
   )
 }
 
+const tabBase =
+  'group relative whitespace-nowrap rounded-md px-3 py-2 text-[12px] font-semibold tracking-[0.04em] uppercase transition-all duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-navbar)]'
+
 export function NavTab({ to, href, children, active, onClick }) {
   const className = [
-    'relative whitespace-nowrap px-3 py-2 text-[13px] font-semibold tracking-tight transition-colors duration-200',
+    tabBase,
     active
       ? 'text-[var(--accent-gold)]'
-      : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+      : 'text-[var(--text-secondary)] hover:bg-white/[0.06] hover:text-[var(--text-primary)]'
   ].join(' ')
 
-  const underline = active && (
-    <span
-      className="absolute right-3 bottom-0 left-3 h-[2px] rounded-full"
-      style={{
-        background: 'var(--accent-gold)',
-        boxShadow: '0 0 8px rgba(240,180,41,0.45)'
-      }}
-    />
+  const chrome = (
+    <>
+      {/* Hover wash */}
+      <span
+        aria-hidden
+        className="pointer-events-none absolute inset-0 rounded-md opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+        style={{
+          background: active
+            ? 'linear-gradient(180deg, rgba(240,180,41,0.10) 0%, rgba(240,180,41,0.02) 100%)'
+            : 'linear-gradient(180deg, rgba(255,255,255,0.06) 0%, transparent 100%)'
+        }}
+      />
+      <span className="relative z-[1]">{children}</span>
+      {/* Active underline */}
+      {active && (
+        <span
+          aria-hidden
+          className="absolute right-2.5 bottom-0.5 left-2.5 h-[2px] rounded-full"
+          style={{
+            background: 'var(--accent-gold)',
+            boxShadow: '0 0 10px rgba(240,180,41,0.5)'
+          }}
+        />
+      )}
+      {/* Hover underline (inactive only) */}
+      {!active && (
+        <span
+          aria-hidden
+          className="absolute right-3 bottom-0.5 left-3 h-px origin-center scale-x-0 rounded-full bg-[var(--text-muted)] transition-transform duration-200 group-hover:scale-x-100"
+        />
+      )}
+    </>
   )
 
   if (href) {
     return (
       <a href={href} className={className} onClick={onClick}>
-        {children}
-        {underline}
+        {chrome}
       </a>
     )
   }
@@ -49,8 +76,7 @@ export function NavTab({ to, href, children, active, onClick }) {
       onClick={onClick}
       aria-current={active ? 'page' : undefined}
     >
-      {children}
-      {underline}
+      {chrome}
     </Link>
   )
 }
@@ -64,22 +90,48 @@ export function NavMoreMenu({ label, open, onToggle, onClose, active, children }
         aria-expanded={open}
         aria-haspopup="menu"
         className={[
-          'relative flex items-center gap-1 px-3 py-2 text-[13px] font-semibold tracking-tight transition-colors',
+          tabBase,
+          'inline-flex items-center gap-1.5',
           active || open
             ? 'text-[var(--accent-gold)]'
-            : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+            : 'text-[var(--text-secondary)] hover:bg-white/[0.06] hover:text-[var(--text-primary)]'
         ].join(' ')}
       >
-        {label}
+        <span
+          aria-hidden
+          className="pointer-events-none absolute inset-0 rounded-md opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+          style={{
+            background:
+              active || open
+                ? 'linear-gradient(180deg, rgba(240,180,41,0.10) 0%, rgba(240,180,41,0.02) 100%)'
+                : 'linear-gradient(180deg, rgba(255,255,255,0.06) 0%, transparent 100%)'
+          }}
+        />
+        <span className="relative z-[1]">{label}</span>
         <svg
+          className="relative z-[1]"
           width="10"
           height="10"
           viewBox="0 0 10 10"
-          fill="currentColor"
-          style={{ transform: open ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }}
+          fill="none"
+          aria-hidden
+          style={{
+            transform: open ? 'rotate(180deg)' : 'none',
+            transition: 'transform 0.2s ease'
+          }}
         >
           <path d="M2 4l3 3 3-3" stroke="currentColor" strokeWidth="1.5" fill="none" />
         </svg>
+        {(active || open) && (
+          <span
+            aria-hidden
+            className="absolute right-2.5 bottom-0.5 left-2.5 h-[2px] rounded-full"
+            style={{
+              background: 'var(--accent-gold)',
+              boxShadow: '0 0 10px rgba(240,180,41,0.45)'
+            }}
+          />
+        )}
       </button>
       {open && (
         <>
@@ -91,8 +143,13 @@ export function NavMoreMenu({ label, open, onToggle, onClose, active, children }
           />
           <div
             role="menu"
-            className="absolute top-full right-0 z-50 mt-1 min-w-[11rem] overflow-hidden rounded-xl border py-1 shadow-xl"
-            style={{ borderColor: 'var(--border-bright)', background: 'var(--bg-secondary)' }}
+            className="absolute top-full right-0 z-50 mt-2 min-w-[12.5rem] overflow-hidden rounded-xl border py-1.5 shadow-2xl"
+            style={{
+              borderColor: 'var(--border-bright)',
+              background: 'color-mix(in srgb, var(--bg-secondary) 96%, transparent)',
+              backdropFilter: 'blur(16px)',
+              boxShadow: '0 12px 40px rgba(0,0,0,0.35), 0 0 0 1px rgba(240,180,41,0.06)'
+            }}
           >
             {children}
           </div>
@@ -104,22 +161,37 @@ export function NavMoreMenu({ label, open, onToggle, onClose, active, children }
 
 export function NavMenuLink({ to, href, children, active, onClick }) {
   const cls = [
-    'block px-4 py-2.5 text-[12px] font-semibold transition-colors',
+    'group/item relative block px-4 py-2.5 text-[12px] font-semibold tracking-wide transition-all duration-150',
     active
-      ? 'text-[var(--accent-gold)]'
-      : 'text-[var(--text-secondary)] hover:bg-white/5 hover:text-[var(--text-primary)]'
+      ? 'bg-[rgba(240,180,41,0.08)] text-[var(--accent-gold)]'
+      : 'text-[var(--text-secondary)] hover:bg-white/[0.06] hover:pl-5 hover:text-[var(--text-primary)]'
   ].join(' ')
+
+  const body = (
+    <>
+      <span
+        aria-hidden
+        className={[
+          'absolute top-1/2 left-0 h-4 w-0.5 -translate-y-1/2 rounded-r transition-all duration-150',
+          active
+            ? 'bg-[var(--accent-gold)] opacity-100'
+            : 'bg-[var(--accent-gold)] opacity-0 group-hover/item:opacity-70'
+        ].join(' ')}
+      />
+      {children}
+    </>
+  )
 
   if (href) {
     return (
       <a href={href} role="menuitem" className={cls} onClick={onClick}>
-        {children}
+        {body}
       </a>
     )
   }
   return (
     <Link to={to} role="menuitem" className={cls} onClick={onClick}>
-      {children}
+      {body}
     </Link>
   )
 }

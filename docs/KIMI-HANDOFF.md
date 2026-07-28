@@ -1,27 +1,78 @@
-## Latest Session Summary (from 2026-07-28 whatsup closeout)
+## POWER BRIEF — Kimi ops (2026-07-28) — make Satohash fully operational + HQ green
 
-**Chat Topic:** Confirm Umami live hits + suite tags + v5 polish slice + dirty tree.
+**From:** Grok on M3 · **To:** Kimi on THOR  
+**Cam intent:** Solve remaining ops so Satohash is clean operational + metrics feed **https://hq.giveabit.io** (not hw).  
+**Code is already on GitHub main** — your job is THOR pull/rebuild, smoke, HQ wiring. **No secrets in git.**
 
-**Finished in this session:**
-- Umami smoke: `GET https://analytics.giveabit.io/script.js` 200; `POST /api/send` 200 (satohash website id) — proxy live
-- Live suite Umami tags verified on giveabit, katoa, tadbuy, motopass, HQ, sherpacarta, stranded, openstrata, satohash
-- AI Notary hub (`/ai` via V5Pages): interactive template suggest, compliance scan, proof search against API
-- Vault v2 fix: import now decrypts AES-GCM-PBKDF2 export (was broken legacy XOR / 4.1.0-only check)
-- Health default version string → 5.0.0-ELITE; template suggest JSON parse hardened
-- Dirty tree cleaned: `docs:sync`, refreshed `public/metrics.json` from API, package-lock version pin
-- No secrets committed (`.env.production` remains local)
+### Live facts (verified 2026-07-28)
+| Check | Result |
+|-------|--------|
+| `GET https://api.satohash.io/health` | 200 — but `details.version` still **`4.1.0-ELITE`** (old container / missing `npm_package_version`) |
+| `GET https://api.satohash.io/api/public/version` | `5.0.0-ELITE` (build often 0 — rebuild to stamp real build/commit) |
+| `GET https://api.satohash.io/metrics.json` | 200 · schema `gab.product-metrics.v1` · **canonical for HQ** |
+| `GET https://satohash.io/metrics.json` | 200 static mirror (may lag) — **do not treat as SoT** |
+| `GET https://analytics.giveabit.io/script.js` | 200 · CF Worker → Umami on THOR |
+| `POST https://analytics.giveabit.io/api/send` | 200 · collection works |
+| Suite Umami tags | Live on giveabit, katoa, tadbuy, motopass, HQ, sherpacarta, stranded, openstrata, satohash |
+| Git main | Synced from M3; feature `ab042de` + later docs; nav polish may land after this brief |
 
-**Still to do (ops / product switches — not flipped without Cam):**
-- Kimi: pull + rebuild satohash API container so live `/health` stops reporting 4.1.0 fallback when `npm_package_version` unset
-- Optional: `REQUIRE_LIGHTNING=true` paywall when Cam wants paid stamps (keep free tier until then)
-- Optional: `BITCOIN_RPC_URL` on THOR for node-backed verify
-- BTC Miniscript: no public SPA entry — skip Umami tag
+### Do this now (ordered)
+1. **API rebuild on THOR**
+   ```bash
+   cd ~/projects/satohash   # or your THOR path
+   git pull origin main
+   docker compose -f docker-compose.vps.yml up -d --build
+   ```
+2. **Smoke after rebuild**
+   ```bash
+   curl -sS https://api.satohash.io/health | jq .
+   curl -sS https://api.satohash.io/api/public/version | jq .
+   curl -sS https://api.satohash.io/metrics.json | jq '{schema,productId,health,updatedAt}'
+   curl -sS -X POST https://api.satohash.io/api/stamp -H 'Content-Type: application/json' \
+     -H 'X-Satohash-Client: kimi-smoke' -d '{"hash":"'"$(openssl rand -hex 32)"'","filename":"kimi-smoke.txt"}' | jq .
+   ```
+   Expect health version **5.0.0-ELITE** (not 4.1.0).
+3. **HQ metrics (hq.giveabit.io)**
+   - Satohash feed **must** be `https://api.satohash.io/metrics.json` (not satohash.io SPA mirror, not localhost).
+   - In HQ `projects.json` / status matrix: productId `satohash`, schema `gab.product-metrics.v1`.
+   - CORS already allows `https://hq.giveabit.io` when `CORS_ORIGIN` set on API — confirm env on THOR.
+   - Refresh HQ status job / hard-refresh glass until satohash cell is **green**.
+4. **Umami** — proxy **already live** at `analytics.giveabit.io`. Do **not** re-point products at raw THOR IP:3002. Admin UI stays Tailscale/localhost.
+5. **Optional (Cam switches — leave free tier unless Cam says paywall)**
+   - `REQUIRE_LIGHTNING=false` stays for family free stamps.
+   - Optional `BITCOIN_RPC_URL` if pruned node ready.
+   - Prior wallet request still open: L1 + Lightning for real paywall when Cam wants it (`docs/KIMI-REQUEST-BITCOIN-WALLETS.md` if present).
+6. **Master-brain / kanban**
+   - Mark: Umami suite + collect ✅ · metrics API ✅ · API version string needs rebuild ⬜ · HQ pipe to api.satohash.io ⬜ until you confirm green.
 
-**Update / Status:** Analytics plane green. Suite tags present on live sites. SPA AI hub + vault backup round-trip fixed. i18n:check still all green. Metrics static mirror refreshed. No secrets in handoff.
+### Do NOT
+- SSH code from M3 or invent new deploy paths  
+- Commit `.env` / keys / macaroons  
+- Rebuild Umami reverse proxy if already on analytics.giveabit.io  
+- Point HQ at SPA static metrics only  
 
-**Next for Kimi:** Note Umami proxy already works (no redo). Optional API image rebuild for version string. Integrate this summary into MASTER-BRAIN/Kanban. Continue wallet request from prior handoff if open.
+### M3/Grok owns (not you)
+- SPA/header UI polish, vault/AI hub code, CF Pages pushes  
+- After you rebuild API, Cam/Grok can browser-smoke SPA  
 
-**Git:** tip after push · main · Unpushed: none after push
+---
+
+## Latest Session Summary (from 2026-07-28 whatsup + nav polish)
+
+**Chat Topic:** Umami smoke, suite tags, v5 polish, dirty tree; then professional header/nav; full Kimi ops brief for HQ.
+
+**Finished (Grok/M3):**
+- Umami + suite tags verified live
+- AI Notary hub interactive; vault AES-GCM import fix
+- Header/nav Institutional Noir hover polish (DesktopNavLayout + marketing + app nav)
+- This POWER BRIEF written for Kimi (paste-ready also in chat)
+
+**Still Kimi:**
+- THOR `git pull` + API Docker rebuild
+- HQ green on `api.satohash.io/metrics.json`
+- Optional wallets / BITCOIN_RPC / paywall (Cam gate)
+
+**Git:** main synced after push · no secrets
 
 **Archive:** `docs/archive/SESSION-SUMMARY-2026-07-28-whatsup.md`
 
@@ -34,11 +85,13 @@
 - AI Notary hub interactive polish
 - Vault encrypted import/export parity (v2)
 - docs:sync + metrics mirror + version hygiene
+- Professional header/nav hover system
+- Full Kimi POWER BRIEF (HQ metrics + API rebuild)
 
 **Decisions:**
-- Leave `REQUIRE_LIGHTNING=false` (family free tier) until Cam explicitly enables paywall
-- BITCOIN_RPC remains THOR-only optional env
-- Do not invent Umami tags for btcminiscript (docs/lib, no SPA)
+- Leave `REQUIRE_LIGHTNING=false` until Cam enables paywall
+- BITCOIN_RPC THOR-only optional
+- HQ SoT for satohash metrics = **api.satohash.io/metrics.json**
 
 **Git State:**
 - See tip after commit/push
