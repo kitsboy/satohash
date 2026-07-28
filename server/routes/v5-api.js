@@ -422,15 +422,20 @@ router.get('/public/bitcoin', async (req, res) => {
     const { bitcoinRpcHealth, isBitcoinRpcConfigured } = await import('../lib/bitcoin-rpc.js')
     if (isBitcoinRpcConfigured()) {
       const h = await bitcoinRpcHealth()
-      if (h.status === 'healthy') {
+      if (h.status === 'healthy' || h.status === 'syncing') {
         return res.json({
           source: 'bitcoind',
+          status: h.status,
           block_height: h.block_height,
+          headers: h.headers,
+          ibd: h.ibd,
+          progress_pct: h.progress_pct,
           peers: h.peers,
           mempool_count: h.mempool_count,
           chain: h.chain,
           pruned: h.pruned,
-          ready_to_verify: true,
+          ready_to_verify: Boolean(h.ready_to_verify),
+          note: h.note,
           timestamp: new Date().toISOString()
         })
       }

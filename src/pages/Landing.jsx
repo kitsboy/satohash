@@ -20,6 +20,7 @@ import {
 import Footer from '../components/Footer'
 import usePageMeta from '../hooks/usePageMeta'
 import MarketingDesktopNav from '../components/MarketingDesktopNav'
+import OtsVerifyPanel from '../components/OtsVerifyPanel'
 import { getBitcoinNetworkStats } from '../utils/mempool'
 import { BTC_ADDRESS, getApiUrl } from '../config/constants'
 import { ParticleStampCanvas } from './v5/V5Pages'
@@ -392,6 +393,16 @@ export default function Landing() {
             >
               {t('landingPage.hero.ctaTemplates')} <ArrowRight size={16} />
             </Link>
+            <a
+              href="#verify-ots"
+              className="flex w-full items-center justify-center gap-2 rounded-2xl border px-8 py-4 text-base font-bold transition-all hover:text-white sm:w-auto"
+              style={{
+                borderColor: 'var(--border-gold, var(--accent-gold))',
+                color: 'var(--accent-gold)'
+              }}
+            >
+              Confirm .ots <ChevronRight size={16} />
+            </a>
           </motion.div>
 
           {/* Social proof + template link */}
@@ -710,6 +721,36 @@ export default function Landing() {
             <p className="mt-1 text-xs" style={{ color: 'var(--text-secondary)' }}>
               {t('landingPage.howItWorks.privacyBody')}
             </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ── VERIFY .OTS ──────────────────────────────────────────── */}
+      <section id="verify-ots" className="py-20" style={{ backgroundColor: 'var(--bg-secondary)' }}>
+        <div className="layout-container max-w-5xl">
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="mb-10 text-center"
+          >
+            <h2 className="font-display text-3xl font-black tracking-tighter md:text-4xl">
+              Already have a proof? <span className="gold-text">Confirm it here</span>
+            </h2>
+            <p className="mx-auto mt-3 max-w-xl text-sm" style={{ color: 'var(--text-secondary)' }}>
+              Independent recovery paths if Satohash is offline, calendars are slow, or you only
+              have a hash, .ots file, or vault backup.
+            </p>
+          </motion.div>
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            custom={0.1}
+          >
+            <OtsVerifyPanel />
           </motion.div>
         </div>
       </section>

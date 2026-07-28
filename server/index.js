@@ -1040,11 +1040,17 @@ app.get('/health', async (req, res) => {
     details.lightning = { status: 'optional', error: e.message }
   }
 
-  // Bitcoin Core RPC (own node) — ready when env set
+  // Bitcoin Core RPC (own node) — IBD = syncing (not degraded); true RPC fail = degraded
   try {
     const { bitcoinRpcHealth } = await import('./lib/bitcoin-rpc.js')
     details.bitcoin = await bitcoinRpcHealth()
-    if (details.bitcoin.configured && details.bitcoin.status === 'unhealthy') status = 'degraded'
+    if (details.bitcoin.configured && details.bitcoin.status === 'unhealthy') {
+      status = 'degraded'
+      details.bitcoin.degrades_api = true
+    } else if (details.bitcoin.status === 'syncing') {
+      // Own node catching up — public plane still healthy via OTS calendars + mempool
+      details.bitcoin.degrades_api = false
+    }
   } catch (e) {
     details.bitcoin = { status: 'error', note: e.message }
   }
