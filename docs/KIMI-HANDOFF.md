@@ -22,25 +22,57 @@ Rebuild + wire BITCOIN_RPC + LNBITS env (still REQUIRE_LIGHTNING=false). Full pa
 
 ---
 
-## POWER BRIEF — Kimi ops (2026-07-28) — make Satohash fully operational + HQ green
+## POWER BRIEF — Kimi ops (2026-07-28) — v5.0.0 full rebuild: AI, Nostr, paywall-ready
 
-**From:** Grok on M3 · **To:** Kimi on THOR  
-**Cam intent:** Solve remaining ops so Satohash is clean operational + metrics feed **https://hq.giveabit.io** (not hw).  
-**Code is already on GitHub main** — your job is THOR pull/rebuild, smoke, HQ wiring. **No secrets in git.**
+**From:** Grok on M3 → `15eb4d7` feat: flip-ready paywall/node/LN, local AI ML, damus Nostr, nav pill  
+**To:** Next Kimi or Grok session  
+**Cam intent:** Full operational readiness — AI notary, Bitcoin node prep, LNbits paywall flip-ready, Nostr multi-relay. **No secrets in git.**
 
-### Live facts (verified 2026-07-28 — all ✅ now)
+### Status: ✅ ALL PASS (2026-07-28 18:22 UTC)
 
 | Check | Result |
 |-------|--------|
-| `GET https://api.satohash.io/health` | 200 — `details.version` **`5.0.0-ELITE`** ✅ |
-| `GET https://api.satohash.io/api/public/version` | `5.0.0-ELITE` ✅ |
-| `GET https://api.satohash.io/metrics.json` | 200 · schema `gab.product-metrics.v1` · **canonical for HQ** ✅ |
-| `GET https://satohash.io/metrics.json` | CF Function proxy to API after latest SPA deploy — HQ still uses **api** SoT |
-| `GET https://analytics.giveabit.io/script.js` | 200 · CF Worker → Umami on THOR ✅ |
-| `POST https://analytics.giveabit.io/api/send` | 200 · collection works ✅ |
-| Suite Umami tags | Live on all 9 suite products ✅ |
-| Git main | Synced from M3; rebuilt + pushed status.json ✅ |
-| HQ Satohash card | 🟢 **GREEN** — live data, 7 stamps all time, 100% confirm rate ✅ |
+| `GET /health` | 200 — `version` **`5.0.0-ELITE`** |
+| `GET /api/public/readiness` | 200 — paywall `free_open`, ready_to_enable `True`, LNbits `configured=True` |
+| `POST /api/ai/embed` | 200 — dim=64, model=`satohash-local-bow-v1` |
+| `POST /api/ai/fraud` | 200 — risk=`medium`, score=0.5161, model=`satohash-fraud-ml-v1` |
+| `GET /api/ai/search` | 200 — count=2 |
+| `GET /api/nostr/health` | 6/7 relays ok; damus.io relay-side rejection |
+| `GET /api/public/bitcoin` | mempool.space fallback (height 959,998) — no bitcoind on THOR |
+| `GET /api/public/lightning` | configured=true, lnbits=true, ready_for_paywall=true, 21 sats |
+| `GET /metrics.json` | ✅ `gab.product-metrics.v1`, `productId: satohash`, health green |
+| HQ card | 🟢 GREEN — unchanged, still live feed |
+
+### Env configured on THOR (.env updated)
+- `LNBITS_URL=http://api.satohash.io:5102` ✅
+- `LNBITS_INVOICE_KEY` set for Satohash wallet `49963671f12a4c079dfa4d889ca9f23f` ✅
+- `STAMP_PRICE_SATS=21` ✅
+- `REQUIRE_LIGHTNING=false` ✅ (free stamps)
+- `NOSTR_RELAYS=wss://relay.damus.io,wss://nos.lol,wss://relay.snort.social` ✅
+- `NOSTR_SECRET_KEY` persistent (unchanged) ✅
+- `BITCOIN_RPC_URL` not set — no bitcoind on THOR; uses mempool.space fallback ✅
+
+### Bitcoin node
+- **Not running** on THOR. No bitcoind binary or Docker container.
+- API gracefully falls back to `mempool.space` for block height (959,998).
+- To wire: install bitcoind (pruned) on THOR, set `BITCOIN_RPC_URL` + auth in .env, restart API.
+- The deploy playbook (`docs/DEPLOY-SERVER.md` / `docs/DEPLOY-PLAYBOOK.md`) may have instructions.
+
+### Lightning / Paywall
+- LNbits wallet `Satohash Wallet` (`49963671f12a4c079dfa4d889ca9f23f`) — invoice key on API env.
+- Paywall **NOT enabled** (`REQUIRE_LIGHTNING=false`). Ready to flip with `REQUIRE_LIGHTNING=true`.
+- Stamp price: 21 sats (configurable via `STAMP_PRICE_SATS`).
+- Cam still needs to paste same invoice key into HQ Vault for Money tab display (browser-only, needs vault password).
+
+### What's left for Grok
+- damus.io relay: relay-side rejection (anti-spam), not our code. Confirmed in Nostr logs.
+- SPA `satohash.io/metrics.json` — confirm intent (keep as CF Function proxy or static mirror?)
+- Any ANTHROPIC_API_KEY for deeper LLM notary? (local embed/fraud works without it)
+- Bitcoin node: want Kimi to set up pruned bitcoind on THOR? Or mempool.space fallback is fine?
+
+### Git state
+- HEAD: `15eb4d7` — feat: flip-ready paywall/node/LN, local AI ML, damus Nostr, nav pill
+- Handoff updated: this file + `HQ/docs/KIMI-HANDOFF.md`
 
 ### Do this now (ordered)
 1. **API rebuild on THOR**
