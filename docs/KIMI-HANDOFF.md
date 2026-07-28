@@ -52,11 +52,14 @@ Rebuild + wire BITCOIN_RPC + LNBITS env (still REQUIRE_LIGHTNING=false). Full pa
 - `NOSTR_SECRET_KEY` persistent (unchanged) ✅
 - `BITCOIN_RPC_URL` not set — no bitcoind on THOR; uses mempool.space fallback ✅
 
-### Bitcoin node
-- **Not running** on THOR. No bitcoind binary or Docker container.
-- API gracefully falls back to `mempool.space` for block height (959,998).
-- To wire: install bitcoind (pruned) on THOR, set `BITCOIN_RPC_URL` + auth in .env, restart API.
-- The deploy playbook (`docs/DEPLOY-SERVER.md` / `docs/DEPLOY-PLAYBOOK.md`) may have instructions.
+### Bitcoin node — PRUNED BITCOIND INSTALLING ✅
+- **Installed:** Bitcoin Core v28.1 on THOR
+- **Config:** Pruned to 10,000 MB (~10GB), RPC on 127.0.0.1:8332
+- **API env:** BITCOIN_RPC_URL + USER/PASS wired (never committed)
+- **Status:** Pre-syncing headers (170k/960k — ~18%, will take ~2h for IBD)
+- **Endpoint:** `/api/public/bitcoin` still shows `mempool.space` until IBD completes; then switches to `bitcoind` source
+- **Disk:** 358GB free (before IBD); enough for pruned node + room to spare
+- **Blockers:** None — sync happening in background
 
 ### Lightning / Paywall
 - LNbits wallet `Satohash Wallet` (`49963671f12a4c079dfa4d889ca9f23f`) — invoice key on API env.
