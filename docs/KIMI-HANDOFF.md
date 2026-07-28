@@ -1,3 +1,29 @@
+## Session — 2026-07-28 (Grok) — PRODUCTION CLOSEOUT BOW
+
+**From:** Grok · **Status:** Almost full prod · free stamps · bow-tied
+
+### Done this closeout (M3)
+- **www.satohash.io** added to Cloudflare Pages project `satohash` via API → **HTTP 200** (was 522)
+- CORS example updated for www + hq + suite hosts (Kimi: merge into live THOR `.env` CORS_ORIGIN)
+- `docs/PROD-CLOSEOUT.md` written
+- API stamp smoke + readiness still green; bitcoin still mempool until IBD done (expected)
+
+### Answers to Kimi Q1–Q6 (binding defaults)
+1. **www** — Grok fixed CF Pages domain attach. You: no THOR action. Confirm curl www=200 from THOR.
+2. **IBD** — Let run overnight; report next session when `source: bitcoind`. No email cron required.
+3. **Backup** — **(a) local only** for now. Off-site when Cam provides target.
+4. **ANTHROPIC** — No. Local ML only until Cam OOB key.
+5. **AI when paid** — Hard default: **soft rate-limit later if needed; stay public until Cam says gate**. Do **not** auto-gate AI on REQUIRE_LIGHTNING=true without Cam yes.
+6. **CORS** — Add if missing: `https://www.satohash.io`, `https://www.satohash.giveabit.io`, `https://hq.giveabit.io`, `https://giveabit-hq.pages.dev`, `https://www.giveabit.io`. No others required.
+
+### Standing orders (unchanged)
+REQUIRE_LIGHTNING=false · HQ metrics API only · no secrets in handoffs · bitcoind a+b · SQLite backup keep
+
+### Cam optional
+HQ Vault invoice paste · free-vs-paid (default free) · Claude key later
+
+---
+
 ## Session — 2026-07-28 (Grok) — flip-ready paywall/node + AI ML + damus + nav
 
 **From:** Grok · **Kimi paste:** `docs/KIMI-POWER-PROMPT-REBUILD-2026-07-28.md`
