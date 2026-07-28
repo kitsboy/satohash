@@ -533,36 +533,228 @@ export function CrossChainVerifyPage() {
   )
 }
 
-/** 73 / 76 / 79 simplified community + AI hub */
+/** 73 / 76 / 79 AI Notary hub — live against API (key stays server-side) */
 export function AiHubPage() {
+  const [templateId, setTemplateId] = useState('nda')
+  const [templateContent, setTemplateContent] = useState('')
+  const [suggestOut, setSuggestOut] = useState(null)
+  const [suggestErr, setSuggestErr] = useState(null)
+  const [suggestLoading, setSuggestLoading] = useState(false)
+
+  const [doc, setDoc] = useState('')
+  const [standard, setStandard] = useState('GDPR')
+  const [complianceOut, setComplianceOut] = useState(null)
+  const [complianceErr, setComplianceErr] = useState(null)
+  const [complianceLoading, setComplianceLoading] = useState(false)
+
+  const [searchQ, setSearchQ] = useState('')
+  const [searchHits, setSearchHits] = useState([])
+  const [searchLoading, setSearchLoading] = useState(false)
+  const [searchErr, setSearchErr] = useState(null)
+
+  const runSuggest = async () => {
+    setSuggestLoading(true)
+    setSuggestErr(null)
+    setSuggestOut(null)
+    try {
+      const res = await fetch(`${API()}/api/templates/suggest`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          templateId: templateId.trim() || 'nda',
+          content: templateContent,
+          fields: {}
+        })
+      })
+      const j = await res.json()
+      if (!res.ok) throw new Error(j.error || res.statusText)
+      setSuggestOut(j)
+    } catch (e) {
+      setSuggestErr(e.message || String(e))
+    } finally {
+      setSuggestLoading(false)
+    }
+  }
+
+  const runCompliance = async () => {
+    setComplianceLoading(true)
+    setComplianceErr(null)
+    setComplianceOut(null)
+    try {
+      const res = await fetch(`${API()}/api/compliance-check`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ document: doc, standard })
+      })
+      const j = await res.json()
+      if (!res.ok) throw new Error(j.error || res.statusText)
+      setComplianceOut(j)
+    } catch (e) {
+      setComplianceErr(e.message || String(e))
+    } finally {
+      setComplianceLoading(false)
+    }
+  }
+
+  const runSearch = async () => {
+    setSearchLoading(true)
+    setSearchErr(null)
+    setSearchHits([])
+    try {
+      const q = searchQ.trim().toLowerCase()
+      if (!q) throw new Error('Enter a hash fragment, id, or filename keyword')
+      // Prefer exact-by-hash when query looks like sha256; else scan recent list client-side
+      if (/^[a-f0-9]{64}$/.test(q)) {
+        const res = await fetch(`${API()}/api/stamps/${q}/by-hash`)
+        const j = await res.json()
+        if (!res.ok) throw new Error(j.error || res.statusText)
+        setSearchHits(j.stamps || (j.id ? [j] : []))
+      } else {
+        const res = await fetch(`${API()}/api/stamps/recent?limit=100`)
+        const j = await res.json()
+        if (!res.ok) throw new Error(j.error || res.statusText)
+        const stamps = j.stamps || []
+        setSearchHits(
+          stamps.filter((s) => {
+            const blob =
+              `${s.id || ''} ${s.hash || ''} ${s.filename || ''} ${s.client || ''} ${s.ai_summary || ''}`.toLowerCase()
+            return blob.includes(q)
+          })
+        )
+      }
+    } catch (e) {
+      setSearchErr(e.message || String(e))
+    } finally {
+      setSearchLoading(false)
+    }
+  }
+
   return (
     <Shell
       title="AI Notary"
-      subtitle="AI features use optional ANTHROPIC_API_KEY on the API host — never in the SPA."
+      subtitle="Calls the proof API only. Anthropic keys stay on the API host — never in this SPA."
     >
-      <div className="grid gap-3 sm:grid-cols-2">
+      <div className="grid gap-4">
         <Card>
-          <h3 className="font-semibold">Content summary</h3>
+          <h3 className="font-semibold">Template suggestions</h3>
           <p className="mt-1 text-sm opacity-70">
-            When stamping URLs, the API can store a short summary (server-side).
+            POST /api/templates/suggest — fills notary placeholders (mock or Claude when key set).
           </p>
+          <div className="mt-3 grid gap-2 sm:grid-cols-[140px_1fr]">
+            <input
+              className="rounded border border-white/15 bg-black/40 px-3 py-2 font-mono text-sm"
+              value={templateId}
+              onChange={(e) => setTemplateId(e.target.value)}
+              placeholder="templateId"
+            />
+            <textarea
+              className="min-h-[72px] rounded border border-white/15 bg-black/40 px-3 py-2 text-sm"
+              value={templateContent}
+              onChange={(e) => setTemplateContent(e.target.value)}
+              placeholder="Optional draft content / fields context"
+            />
+          </div>
+          <button
+            type="button"
+            onClick={runSuggest}
+            disabled={suggestLoading}
+            className="mt-3 rounded bg-amber-600 px-4 py-2 text-sm font-semibold text-black disabled:opacity-50"
+          >
+            {suggestLoading ? 'Suggesting…' : 'Suggest fields'}
+          </button>
+          {suggestErr && <p className="mt-2 text-sm text-red-400">{suggestErr}</p>}
+          {suggestOut && (
+            <pre className="mt-3 max-h-64 overflow-auto rounded bg-black/50 p-3 text-xs">
+              {JSON.stringify(suggestOut, null, 2)}
+            </pre>
+          )}
         </Card>
+
         <Card>
-          <h3 className="font-semibold">Fraud / diff analysis</h3>
+          <h3 className="font-semibold">Compliance scan</h3>
           <p className="mt-1 text-sm opacity-70">
-            Upload two document versions via API for natural-language change reports.
+            POST /api/compliance-check — GDPR/SOX flags (requires ANTHROPIC_API_KEY on API).
           </p>
+          <div className="mt-3 flex flex-wrap gap-2">
+            <select
+              className="rounded border border-white/15 bg-black/40 px-3 py-2 text-sm"
+              value={standard}
+              onChange={(e) => setStandard(e.target.value)}
+            >
+              <option value="GDPR">GDPR</option>
+              <option value="SOX">SOX</option>
+            </select>
+          </div>
+          <textarea
+            className="mt-2 min-h-[100px] w-full rounded border border-white/15 bg-black/40 px-3 py-2 text-sm"
+            value={doc}
+            onChange={(e) => setDoc(e.target.value)}
+            placeholder="Paste document text to scan…"
+          />
+          <button
+            type="button"
+            onClick={runCompliance}
+            disabled={complianceLoading || !doc.trim()}
+            className="mt-3 rounded bg-amber-600 px-4 py-2 text-sm font-semibold text-black disabled:opacity-50"
+          >
+            {complianceLoading ? 'Scanning…' : 'Scan document'}
+          </button>
+          {complianceErr && <p className="mt-2 text-sm text-red-400">{complianceErr}</p>}
+          {complianceOut && (
+            <pre className="mt-3 max-h-64 overflow-auto rounded bg-black/50 p-3 text-xs">
+              {JSON.stringify(complianceOut, null, 2)}
+            </pre>
+          )}
         </Card>
+
         <Card>
-          <h3 className="font-semibold">Semantic search</h3>
+          <h3 className="font-semibold">Proof search</h3>
           <p className="mt-1 text-sm opacity-70">
-            Search stamps by AI summary text once populated.
+            Full SHA-256 → by-hash. Otherwise filters recent stamps by id/hash/filename/ai_summary.
           </p>
+          <div className="mt-3 flex gap-2">
+            <input
+              className="flex-1 rounded border border-white/15 bg-black/40 px-3 py-2 font-mono text-sm"
+              value={searchQ}
+              onChange={(e) => setSearchQ(e.target.value)}
+              placeholder="hash, id fragment, or filename"
+            />
+            <button
+              type="button"
+              onClick={runSearch}
+              disabled={searchLoading}
+              className="rounded bg-amber-600 px-4 py-2 text-sm font-semibold text-black disabled:opacity-50"
+            >
+              {searchLoading ? '…' : 'Search'}
+            </button>
+          </div>
+          {searchErr && <p className="mt-2 text-sm text-red-400">{searchErr}</p>}
+          {searchHits.length > 0 && (
+            <ul className="mt-3 space-y-2 font-mono text-xs">
+              {searchHits.slice(0, 20).map((s) => (
+                <li key={s.id || s.hash} className="rounded border border-white/10 px-3 py-2">
+                  <div className="opacity-50">{s.created_at || s.status}</div>
+                  <div className="truncate">{s.hash || s.id}</div>
+                  {s.filename && <div className="opacity-70">{s.filename}</div>}
+                </li>
+              ))}
+            </ul>
+          )}
+          {!searchLoading && searchHits.length === 0 && searchQ && !searchErr && (
+            <p className="mt-2 text-sm opacity-60">No matches in recent window.</p>
+          )}
         </Card>
-        <Card>
-          <h3 className="font-semibold">Templates</h3>
-          <p className="mt-1 text-sm opacity-70">
-            Generate notary template JSON from a plain-language prompt.
+
+        <Card className="text-sm opacity-70">
+          <p>
+            <strong className="text-[var(--ink,#e8e6e1)]">Ops notes:</strong> paywall (
+            <code className="text-xs">REQUIRE_LIGHTNING</code>) and{' '}
+            <code className="text-xs">BITCOIN_RPC_URL</code> are THOR env — leave free-tier off
+            until Cam flips the switch. Vault v2 (export/import, forensic, revoke) lives at{' '}
+            <Link to="/vault" className="text-amber-500/90 hover:text-amber-400">
+              /vault
+            </Link>
+            .
           </p>
         </Card>
       </div>

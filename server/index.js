@@ -586,16 +586,24 @@ app.post('/api/templates/suggest', async (req, res) => {
       })
       responseText = response.content[0].text
     } else {
-      // Mock response
+      // Mock response (flat map of placeholder → value)
       responseText =
-        '{"suggestions": {"[DATE]": "Current date", "[PARTY_A_NAME]": "Your Name", "[PURPOSE]": "Business collaboration"}}'
+        '{"[DATE]": "Current date", "[PARTY_A_NAME]": "Your Name", "[PURPOSE]": "Business collaboration"}'
     }
     // Extract JSON from response
     const jsonMatch = responseText.match(/\{[\s\S]*\}/)
     let suggestions = {}
     if (jsonMatch) {
       try {
-        suggestions = JSON.parse(jsonMatch[0])
+        const parsed = JSON.parse(jsonMatch[0])
+        // Accept either flat map or { suggestions: {...} }
+        suggestions =
+          parsed &&
+          typeof parsed === 'object' &&
+          parsed.suggestions &&
+          typeof parsed.suggestions === 'object'
+            ? parsed.suggestions
+            : parsed
       } catch (parseErr) {
         logger.warn('Failed to parse AI JSON response:', parseErr)
       }
@@ -639,7 +647,7 @@ app.get('/health', async (req, res) => {
 
   // Basic checks
   details.uptime = process.uptime()
-  details.version = process.env.npm_package_version || '4.1.0-ELITE'
+  details.version = process.env.npm_package_version || '5.0.0-ELITE'
   details.service = 'satohash-api'
   details.plane = 'proof'
   details.timestamp = new Date().toISOString()

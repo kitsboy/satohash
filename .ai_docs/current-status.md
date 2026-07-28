@@ -1,10 +1,11 @@
 # Current Status — Satohash
 
 **Version:** **5.0.0-ELITE** (Sovereignty Ascension)  
-**Last Updated:** 2026-07-27 (goodbye — stamp plane + Kimi wallet request)  
-**Frontend:** https://satohash.io · https://satohash.giveabit.io  
-**API:** https://api.satohash.io ✅ LIVE  
-**Git tip:** see `LATEST-UPDATE.md` (SPA API URL fix + wallet request docs)
+**Last Updated:** 2026-07-28 (Umami smoke + suite verify + AI hub + vault v2)  
+**Frontend:** https://satohash.io · https://satohash.giveabit.io ✅ Umami → analytics.giveabit.io  
+**API:** https://api.satohash.io ✅ LIVE (THOR) + `/metrics.json`  
+**Analytics:** ✅ collect POST 200 (suite tags live on major products)  
+**Git tip:** see `LATEST-UPDATE.md`
 
 ## Planes
 - Proof API: THOR Docker + Caddy TLS  

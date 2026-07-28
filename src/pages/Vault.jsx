@@ -29,7 +29,11 @@ import { useI18n } from '../i18n'
 import usePageMeta from '../hooks/usePageMeta'
 import { getApiUrl } from '../config/constants'
 import { useEscapeKey } from '../utils/a11y'
-import { exportEncryptedVault } from '../utils/vaultExport'
+import {
+  exportEncryptedVault,
+  importEncryptedVault,
+  isEncryptedVaultBundle
+} from '../utils/vaultExport'
 import StaticModeBanner from '../components/StaticModeBanner'
 import { stampHashBrowser } from '../utils/otsClient'
 import { isApiExplicitlyConfigured } from '../config/mvp'
@@ -669,8 +673,8 @@ export default function Vault() {
       reader.onload = (evt) => {
         try {
           const data = JSON.parse(evt.target.result)
-          if (data.version !== '4.1.0-ELITE' || !data.payload) {
-            toast.error('Invalid backup format or version mismatch.')
+          if (!isEncryptedVaultBundle(data)) {
+            toast.error('Invalid backup format — expected satohash encrypted vault JSON.')
             return
           }
           setPendingImportData(data)
@@ -684,29 +688,18 @@ export default function Vault() {
     input.click()
   }
 
-  const runVaultImport = (password) => {
+  const runVaultImport = async (password) => {
     if (!password || !pendingImportData) return
     try {
-      const data = pendingImportData
-      const rawBase64 = decodeURIComponent(escape(atob(data.payload)))
-      let decryptedStr = ''
-      for (let i = 0; i < rawBase64.length; i++) {
-        const charCode = rawBase64.charCodeAt(i) ^ password.charCodeAt(i % password.length)
-        decryptedStr += String.fromCharCode(charCode)
-      }
-
-      const stamps = JSON.parse(decryptedStr)
-      if (!Array.isArray(stamps)) throw new Error('Decryption mismatch')
-
-      localStorage.setItem('satohash_stamps', JSON.stringify(stamps))
+      const result = await importEncryptedVault(pendingImportData, password)
       toast.success('Forensic vault successfully restored!', {
-        description: `${stamps.length} timestamps loaded into active workbench.`
+        description: `${result.stamps} stamps, ${result.contracts} contracts, ${result.queue} queue items.`
       })
       refreshStamps()
       setPassphraseModal(null)
       setPendingImportData(null)
     } catch (err) {
-      toast.error('Failed to decrypt vault. Please double-check password.')
+      toast.error(err.message || 'Failed to decrypt vault. Please double-check password.')
     }
   }
 

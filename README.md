@@ -1,4 +1,4 @@
-# Satohash v4.1.0-ELITE
+# Satohash v5.0.0-ELITE
 
 [![Version](https://img.shields.io/badge/version-4.1.0--ELITE-indigo.svg)](https://github.com/kitsboy/satohash)
 [![License](https://img.shields.io/badge/license-MIT-black.svg)](LICENSE)
