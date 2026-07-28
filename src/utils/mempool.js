@@ -146,8 +146,13 @@ export const getBitcoinNetworkStatsResult = async () => {
       error: allOk ? null : 'partial_fetch',
       data: {
         blockHeight: height,
-        difficultyChange: diff.difficultyChange ?? NETWORK_STATS_FALLBACK.difficultyChange,
-        difficultyProgress: diff.progressPercent ?? NETWORK_STATS_FALLBACK.difficultyProgress,
+        // Round for UI pills (raw mempool floats overflow cards)
+        difficultyChange: Number(
+          (diff.difficultyChange ?? NETWORK_STATS_FALLBACK.difficultyChange).toFixed(4)
+        ),
+        difficultyProgress: Number(
+          (diff.progressPercent ?? NETWORK_STATS_FALLBACK.difficultyProgress).toFixed(2)
+        ),
         remainingBlocks: diff.remainingBlocks ?? NETWORK_STATS_FALLBACK.remainingBlocks,
         fees: normalizeNetworkFees({
           high: fees?.fastestFee,

@@ -479,81 +479,102 @@ export default function Landing() {
               </a>
             </div>
 
-            <div className="grid grid-cols-2 gap-4 text-left sm:grid-cols-4">
+            <div className="grid grid-cols-2 gap-3 text-left sm:grid-cols-4 sm:gap-4">
               {/* Block Height */}
               <div
-                className="rounded-2xl p-4"
+                className="min-w-0 overflow-hidden rounded-2xl p-3 sm:p-4"
                 style={{ backgroundColor: 'rgba(255, 255, 255, 0.02)' }}
               >
                 <span
-                  className="mb-1 block text-[10px] font-bold tracking-wider uppercase"
+                  className="mb-1 block truncate text-[9px] font-bold tracking-wider uppercase sm:text-[10px]"
                   style={{ color: 'var(--text-muted)' }}
                 >
                   {t('landingPage.telemetry.tipHeight')}
                 </span>
-                <span className="block font-mono text-xl font-black text-white">
-                  #{blockHeight ? blockHeight.toLocaleString() : '895,441'}
+                <span className="block truncate font-mono text-base font-black text-white sm:text-lg md:text-xl">
+                  #{blockHeight ? Number(blockHeight).toLocaleString() : '895,441'}
                 </span>
               </div>
 
               {/* Recommended Fees */}
               <div
-                className="rounded-2xl p-4"
+                className="min-w-0 overflow-hidden rounded-2xl p-3 sm:p-4"
                 style={{ backgroundColor: 'rgba(255, 255, 255, 0.02)' }}
               >
                 <span
-                  className="mb-1 block text-[10px] font-bold tracking-wider uppercase"
+                  className="mb-1 block truncate text-[9px] font-bold tracking-wider uppercase sm:text-[10px]"
                   style={{ color: 'var(--text-muted)' }}
                 >
                   {t('landingPage.telemetry.fastestFee')}
                 </span>
                 <span
-                  className="block font-mono text-xl font-black"
+                  className="flex min-w-0 flex-wrap items-baseline gap-x-1 font-mono text-base font-black sm:text-lg md:text-xl"
                   style={{ color: 'var(--accent-gold)' }}
                 >
-                  {networkStats.fees?.high ?? '—'}{' '}
-                  <span className="text-xs font-normal">{t('landingPage.telemetry.satPerVb')}</span>
+                  <span className="truncate">{networkStats.fees?.high ?? '—'}</span>
+                  <span className="shrink-0 text-[10px] font-normal opacity-80 sm:text-xs">
+                    {t('landingPage.telemetry.satPerVb')}
+                  </span>
                 </span>
               </div>
 
-              {/* Difficulty Adjust */}
+              {/* Difficulty Adjust — clamp long floats */}
               <div
-                className="rounded-2xl p-4"
+                className="min-w-0 overflow-hidden rounded-2xl p-3 sm:p-4"
                 style={{ backgroundColor: 'rgba(255, 255, 255, 0.02)' }}
               >
                 <span
-                  className="mb-1 block text-[10px] font-bold tracking-wider uppercase"
+                  className="mb-1 block truncate text-[9px] font-bold tracking-wider uppercase sm:text-[10px]"
                   style={{ color: 'var(--text-muted)' }}
                 >
                   {t('landingPage.telemetry.difficultyAdjust')}
                 </span>
-                <span className="block font-mono text-xl font-black text-white">
-                  {networkStats.difficultyChange > 0 ? '+' : ''}
-                  {networkStats.difficultyChange}%
+                <span
+                  className="block truncate font-mono text-base font-black sm:text-lg md:text-xl"
+                  style={{
+                    color:
+                      Number(networkStats.difficultyChange) > 0
+                        ? 'var(--accent-success, #4ade80)'
+                        : Number(networkStats.difficultyChange) < 0
+                          ? 'var(--accent-pending, #fbbf24)'
+                          : 'white'
+                  }}
+                  title={`${networkStats.difficultyChange}%`}
+                >
+                  {(() => {
+                    const n = Number(networkStats.difficultyChange)
+                    if (!Number.isFinite(n)) return '—'
+                    const sign = n > 0 ? '+' : ''
+                    return `${sign}${n.toFixed(2)}%`
+                  })()}
                 </span>
               </div>
 
-              {/* Difficulty Progress */}
+              {/* Epoch Progress — value above bar so they never collide */}
               <div
-                className="rounded-2xl p-4"
+                className="min-w-0 overflow-hidden rounded-2xl p-3 sm:p-4"
                 style={{ backgroundColor: 'rgba(255, 255, 255, 0.02)' }}
               >
                 <span
-                  className="mb-1 block text-[10px] font-bold tracking-wider uppercase"
+                  className="mb-1 block truncate text-[9px] font-bold tracking-wider uppercase sm:text-[10px]"
                   style={{ color: 'var(--text-muted)' }}
                 >
                   {t('landingPage.telemetry.epochProgress')}
                 </span>
-                <div className="mt-1 flex items-center gap-2">
-                  <span className="font-mono text-sm font-black text-white">
-                    {networkStats.difficultyProgress}%
-                  </span>
-                  <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-800">
-                    <div
-                      className="h-1.5 rounded-full bg-sky-400"
-                      style={{ width: `${networkStats.difficultyProgress}%` }}
-                    ></div>
-                  </div>
+                <span className="mb-1.5 block font-mono text-base font-black text-white sm:text-lg md:text-xl">
+                  {(() => {
+                    const n = Number(networkStats.difficultyProgress)
+                    if (!Number.isFinite(n)) return '—'
+                    return `${Math.min(100, Math.max(0, n)).toFixed(1)}%`
+                  })()}
+                </span>
+                <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-800">
+                  <div
+                    className="h-1.5 max-w-full rounded-full bg-sky-400 transition-[width] duration-500"
+                    style={{
+                      width: `${Math.min(100, Math.max(0, Number(networkStats.difficultyProgress) || 0))}%`
+                    }}
+                  />
                 </div>
               </div>
             </div>
