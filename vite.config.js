@@ -18,9 +18,16 @@ export default defineConfig({
         wasm(),
         topLevelAwait(),
         react(),
-        VitePWA({ 
+        VitePWA({
             registerType: 'autoUpdate',
             workbox: {
+                // Drop old precache entries after deploys (prevents stale chunk → HTML → Unexpected token '<')
+                cleanupOutdatedCaches: true,
+                clientsClaim: true,
+                skipWaiting: true,
+                // Never treat /assets/* as SPA navigations
+                navigateFallback: 'index.html',
+                navigateFallbackDenylist: [/^\/assets\//, /^\/api\//, /^\/metrics\.json$/, /^\/vendor\//, /^\/sw\.js$/],
                 globPatterns: ['**/*.{js,css,html,ico,png,svg,webp}'],
                 globIgnores: ['**/vendor/ots.browser.js'],
                 maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
@@ -37,6 +44,17 @@ export default defineConfig({
                             cacheableResponse: {
                                 statuses: [0, 200]
                             }
+                        }
+                    },
+                    {
+                        // Network-first for app shell so deploys win over SW cache
+                        urlPattern: ({ request, url }) =>
+                            request.mode === 'navigate' || url.pathname === '/' || url.pathname === '/index.html',
+                        handler: 'NetworkFirst',
+                        options: {
+                            cacheName: 'html-shell',
+                            networkTimeoutSeconds: 5,
+                            expiration: { maxEntries: 4, maxAgeSeconds: 60 * 60 * 24 }
                         }
                     }
                 ]

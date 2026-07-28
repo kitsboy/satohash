@@ -6,5 +6,10 @@
 # Do NOT add a /metrics.json redirect here.
 # Canonical SoT for HQ: https://api.satohash.io/metrics.json
 
+# Missing hashed assets must NOT fall through to index.html (that causes
+# "Unexpected token '<'" when a stale tab requests an old chunk name).
+# Existing /assets/* files are still served as static first by Pages.
+/assets/*  /404  404
+
 # SPA fallback — BrowserRouter requires all routes to serve index.html
 /*    /index.html   200

@@ -1,10 +1,20 @@
-# satohash.giveabit.io — Cloudflare Pages _headers
+# satohash.io — Cloudflare Pages _headers
 /*
   X-Frame-Options: DENY
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=()
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+
+# Always revalidate shell so deploys beat stale HTML / SW mismatches
+/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/index.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+/sw.js
+  Cache-Control: public, max-age=0, must-revalidate
 
 /metrics.json
   Content-Type: application/json; charset=utf-8

@@ -1,11 +1,45 @@
 import React from 'react'
 import { motion } from 'framer-motion'
-import { AlertCircle, RefreshCw, ShieldAlert } from 'lucide-react'
+import { RefreshCw, ShieldAlert } from 'lucide-react'
+
+/** True when a deploy left the browser with a stale chunk (HTML served as JS). */
+function isStaleChunkError(error) {
+  const msg = String(error?.message || error || '')
+  return (
+    msg.includes("Unexpected token '<'") ||
+    msg.includes('Failed to fetch dynamically imported module') ||
+    msg.includes('Importing a module script failed') ||
+    msg.includes('error loading dynamically imported module') ||
+    /Loading chunk [\d]+ failed/i.test(msg)
+  )
+}
+
+async function hardResetClient() {
+  try {
+    if ('caches' in window) {
+      const keys = await caches.keys()
+      await Promise.all(keys.map((k) => caches.delete(k)))
+    }
+  } catch {
+    /* ignore */
+  }
+  try {
+    if ('serviceWorker' in navigator) {
+      const regs = await navigator.serviceWorker.getRegistrations()
+      await Promise.all(regs.map((r) => r.unregister()))
+    }
+  } catch {
+    /* ignore */
+  }
+  const url = new URL(window.location.href)
+  url.searchParams.set('_sw', String(Date.now()))
+  window.location.replace(url.pathname + url.search + url.hash)
+}
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { hasError: false, error: null }
+    this.state = { hasError: false, error: null, autoResetting: false }
   }
 
   static getDerivedStateFromError(error) {
@@ -14,13 +48,19 @@ class ErrorBoundary extends React.Component {
 
   componentDidCatch(error, errorInfo) {
     console.error('Critical Satohash UI Error:', error, errorInfo)
+    // Auto-heal stale PWA/chunk mismatch once per session
+    if (isStaleChunkError(error) && !sessionStorage.getItem('satohash_sw_reset')) {
+      sessionStorage.setItem('satohash_sw_reset', '1')
+      this.setState({ autoResetting: true })
+      hardResetClient()
+    }
   }
 
   render() {
     if (this.state.hasError) {
+      const stale = isStaleChunkError(this.state.error)
       return (
         <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#05070a] px-6 text-white">
-          {/* Animated Background Orbs */}
           <div className="absolute top-1/4 -left-20 h-96 w-96 animate-pulse rounded-full bg-[var(--accent-active)]/10 blur-[120px]" />
           <div className="absolute -right-20 bottom-1/4 h-96 w-96 animate-pulse rounded-full bg-rose-600/10 blur-[120px]" />
 
@@ -33,31 +73,37 @@ class ErrorBoundary extends React.Component {
               <ShieldAlert size={48} strokeWidth={1.5} />
             </div>
 
-            <h1 className="mb-4 text-3xl font-black tracking-tighter">System Desync</h1>
+            <h1 className="mb-4 text-3xl font-black tracking-tighter">
+              {stale ? 'Update required' : 'System Desync'}
+            </h1>
             <p className="mb-10 leading-relaxed font-medium text-white/40">
-              The interface encountered an unexpected interruption. Your cryptographic anchors and
-              Bitcoin proofs remain active and secure in the protocol layer.
+              {this.state.autoResetting
+                ? 'Clearing an outdated offline cache and reloading…'
+                : stale
+                  ? 'Your browser held an old app shell after a deploy. Clear cache / hard refresh, or use the button below to reset the offline worker.'
+                  : 'The interface encountered an unexpected interruption. Your cryptographic anchors and Bitcoin proofs remain active and secure in the protocol layer.'}
             </p>
 
             <div className="mb-10 rounded-2xl border border-white/5 bg-black/40 p-5 text-left">
               <p className="mb-2 text-[10px] font-black tracking-widest text-rose-500/60 uppercase">
                 Internal Fault Report
               </p>
-              <code className="block truncate font-mono text-xs text-white/30">
+              <code className="block font-mono text-xs break-all text-white/30">
                 {this.state.error?.message || 'Render level interruption'}
               </code>
             </div>
 
             <button
-              onClick={() => window.location.reload()}
+              type="button"
+              onClick={() => hardResetClient()}
               className="active:scale-0.98 flex w-full items-center justify-center gap-3 rounded-2xl bg-indigo-600 py-4.5 text-sm font-black text-white shadow-xl shadow-indigo-600/20 transition-all hover:scale-[1.02] hover:bg-indigo-500"
             >
               <RefreshCw size={18} className="animate-spin-slow" />
-              RE-INITIALIZE INTERFACE
+              {stale ? 'CLEAR CACHE & RELOAD' : 'RE-INITIALIZE INTERFACE'}
             </button>
 
-            {/* Copy error to clipboard */}
             <button
+              type="button"
               onClick={() => {
                 const errorText = `Satohash Error Report\n\nError: ${this.state.error?.message}\nStack: ${this.state.error?.stack}\nTime: ${new Date().toISOString()}\nURL: ${window.location.href}`
                 navigator.clipboard.writeText(errorText).then(() => {
@@ -70,12 +116,11 @@ class ErrorBoundary extends React.Component {
               Copy Error Details
             </button>
 
-            {/* Go home without full reload */}
             <button
+              type="button"
               onClick={() => {
                 this.setState({ hasError: false, error: null })
-                window.history.pushState({}, '', '/')
-                window.location.reload()
+                hardResetClient()
               }}
               className="mt-2 flex w-full items-center justify-center gap-2 rounded-2xl border py-3 text-xs font-bold transition-all hover:opacity-80"
               style={{ borderColor: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.4)' }}
