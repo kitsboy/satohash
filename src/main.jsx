@@ -28,10 +28,18 @@ if (import.meta.env.VITE_SENTRY_DSN) {
 // Vite PWA handles service worker registration; wire updates to UpdatePrompt
 if (import.meta.env.PROD) {
   import('virtual:pwa-register').then(({ registerSW }) => {
-    registerSW({
+    const updateSW = registerSW({
       immediate: true,
       onNeedRefresh() {
-        window.dispatchEvent(new CustomEvent('sw-update-available'))
+        // Auto-apply new shell after deploys (avoids stale chunk HTML-as-JS)
+        try {
+          updateSW?.(true)
+        } catch {
+          window.dispatchEvent(new CustomEvent('sw-update-available'))
+        }
+      },
+      onOfflineReady() {
+        /* no-op */
       }
     })
   })

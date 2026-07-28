@@ -208,6 +208,55 @@
   </head>
   <body>
     <div id="root"></div>
+    <!-- Stale SW recovery: after deploy, old chunks can resolve to index.html and throw Unexpected token '<' -->
+    <script>
+      (function () {
+        if (!('serviceWorker' in navigator)) return
+        function resetClient() {
+          if (sessionStorage.getItem('satohash_boot_reset')) return
+          sessionStorage.setItem('satohash_boot_reset', '1')
+          var jobs = []
+          if (window.caches) {
+            jobs.push(
+              caches.keys().then(function (keys) {
+                return Promise.all(keys.map(function (k) { return caches.delete(k) }))
+              })
+            )
+          }
+          jobs.push(
+            navigator.serviceWorker.getRegistrations().then(function (regs) {
+              return Promise.all(regs.map(function (r) { return r.unregister() }))
+            })
+          )
+          Promise.all(jobs).finally(function () {
+            var u = new URL(location.href)
+            u.searchParams.set('_fresh', String(Date.now()))
+            location.replace(u.pathname + u.search + u.hash)
+          })
+        }
+        window.addEventListener(
+          'error',
+          function (e) {
+            var msg = String((e && (e.message || (e.error && e.error.message))) || '')
+            if (
+              msg.indexOf("Unexpected token '<'") !== -1 ||
+              msg.indexOf('Failed to fetch dynamically imported module') !== -1 ||
+              msg.indexOf('Importing a module script failed') !== -1
+            ) {
+              resetClient()
+            }
+          },
+          true
+        )
+        window.addEventListener('unhandledrejection', function (e) {
+          var msg = String((e && e.reason && (e.reason.message || e.reason)) || '')
+          if (msg.indexOf("Unexpected token '<'") !== -1 || msg.indexOf('dynamically imported module') !== -1) {
+            resetClient()
+          }
+        })
+      })()
+    </script>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
+
