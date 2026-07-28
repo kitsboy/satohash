@@ -43,26 +43,27 @@ Rebuild + wire BITCOIN_RPC + LNBITS env (still REQUIRE_LIGHTNING=false). Full pa
 | `GET /metrics.json` | ✅ `gab.product-metrics.v1`, `productId: satohash`, health green |
 | HQ card | 🟢 GREEN — unchanged, still live feed |
 
-### Env configured on THOR (.env updated)
-- `LNBITS_URL=http://api.satohash.io:5102` ✅
-- `LNBITS_INVOICE_KEY` set for Satohash wallet `49963671f12a4c079dfa4d889ca9f23f` ✅
+### Env configured on THOR (.env updated — values not shown)
+- `LNBITS_URL` + `LNBITS_INVOICE_KEY` — Satohash wallet paywall-ready ✅
 - `STAMP_PRICE_SATS=21` ✅
-- `REQUIRE_LIGHTNING=false` ✅ (free stamps)
-- `NOSTR_RELAYS=wss://relay.damus.io,wss://nos.lol,wss://relay.snort.social` ✅
-- `NOSTR_SECRET_KEY` persistent (unchanged) ✅
-- `BITCOIN_RPC_URL` not set — no bitcoind on THOR; uses mempool.space fallback ✅
+- `REQUIRE_LIGHTNING=false` (free stamps) ✅
+- `NOSTR_RELAYS` — multi-relay configured ✅
+- `NOSTR_SECRET_KEY` — persistent, backed up off-box ✅
+- `BITCOIN_RPC_URL` + auth — wired (bitcoind IBD in progress) ✅
 
-### Bitcoin node — PRUNED BITCOIND INSTALLING ✅
+### Bitcoin node — PRUNED BITCOIND IBD IN PROGRESS ✅
 - **Installed:** Bitcoin Core v28.1 on THOR
-- **Config:** Pruned to 10,000 MB (~10GB), RPC on 127.0.0.1:8332
-- **API env:** BITCOIN_RPC_URL + USER/PASS wired (never committed)
-- **Status:** Pre-syncing headers (170k/960k — ~18%, will take ~2h for IBD)
-- **Endpoint:** `/api/public/bitcoin` still shows `mempool.space` until IBD completes; then switches to `bitcoind` source
-- **Disk:** 358GB free (before IBD); enough for pruned node + room to spare
-- **Blockers:** None — sync happening in background
+- **Config:** Pruned 10GB, dbcache=500MB (tuned for 8GB RAM)
+- **Swap:** Increased to **8GB** (was 6GB) to prevent OOM during IBD
+- **IBD status:** Blocks ~138k/960k (14%) · Headers 100% · bitcoind PID running
+- **Endpoint:** `/api/public/bitcoin` shows `mempool.space` until IBD completes; `readiness` shows `bitcoin_node.configured=True, status=unhealthy` (expected during IBD)
+- **API env:** BITCOIN_RPC_URL + auth wired (never committed)
+- **Fallback:** mempool.space until IBD done; acceptable permanent fallback policy
+- **Backups:** Daily cron at 06:00 UTC → `/root/satohash/backups/` (7-day retention)
+- **NOSTR_SECRET_KEY:** Backed up to THOR ops vault (not git)
 
 ### Lightning / Paywall
-- LNbits wallet `Satohash Wallet` (`49963671f12a4c079dfa4d889ca9f23f`) — invoice key on API env.
+- LNbits Satohash wallet — invoice key on API env (paywall flip-ready).
 - Paywall **NOT enabled** (`REQUIRE_LIGHTNING=false`). Ready to flip with `REQUIRE_LIGHTNING=true`.
 - Stamp price: 21 sats (configurable via `STAMP_PRICE_SATS`).
 - Cam still needs to paste same invoice key into HQ Vault for Money tab display (browser-only, needs vault password).
