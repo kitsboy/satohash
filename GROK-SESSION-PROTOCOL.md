@@ -115,3 +115,9 @@ Without it, Kimi stays blind to M3 work.
 - HQ glass: https://hq.giveabit.io (gate + Vault). Satohash API: https://api.satohash.io
 - Cam less-chat: status via OPS pulse/HQ — you still push handoffs after code.
 - Default handoff path: append to `docs/KIMI-HANDOFF.md` then `git push`.
+
+## Two-machine rule (ongoing — see `docs/OPS-TWO-MACHINE.md`)
+
+- **SPA-only** (`src/`, `functions/`, Pages): push main → CF Actions deploys.
+- **API/server** (`server/`): push main **and** tell Kimi to rebuild Docker on THOR or API stays stale.
+- Never “fix” two-machine by merging roles — secrets stay on THOR.

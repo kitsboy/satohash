@@ -1,10 +1,10 @@
 # NIP-05 identity — serve static nostr.json before SPA fallback
 /.well-known/*  /.well-known/:splat  200
 
-# Product metrics: public/metrics.json is copied into dist at build
-# (scripts/fetch-metrics-json.js). Static assets beat the SPA fallback.
-# Do NOT add a /metrics.json redirect here — it would override the file.
-# Live source of truth remains https://api.satohash.io/metrics.json
+# Product metrics: CF Pages Function functions/metrics.json.js proxies
+# /metrics.json → api.satohash.io (dist static copy is stripped at build).
+# Do NOT add a /metrics.json redirect here.
+# Canonical SoT for HQ: https://api.satohash.io/metrics.json
 
 # SPA fallback — BrowserRouter requires all routes to serve index.html
 /*    /index.html   200

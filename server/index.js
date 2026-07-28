@@ -500,7 +500,7 @@ app.get('/api/nostr/health', async (req, res) => {
   }
 })
 
-// AI Compliance Checker (Item 11)
+// AI Compliance Checker (Item 11) — mock fallback when no Anthropic key
 app.post('/api/compliance-check', async (req, res) => {
   try {
     const complianceSchema = z.object({
@@ -514,50 +514,256 @@ app.post('/api/compliance-check', async (req, res) => {
     }
 
     const { document, standard } = validation.data
+    let flags = []
+    let model = 'mock'
 
-    if (!anthropicClient) {
-      return res.status(503).json({ error: 'AI service unavailable' })
-    }
+    if (anthropicClient) {
+      const prompt = `Scan the following document for potential compliance issues related to ${standard}:
 
-    const prompt = `Scan the following document for potential compliance issues related to ${standard}:
-
-Document: ${document.substring(0, 2000)}... (truncated for prompt)
+Document: ${document.substring(0, 2000)}
 
 Identify and flag any sections that may violate or require attention under ${standard} standards. Focus on sensitive data (e.g., PII for GDPR, financial controls for SOX). Output as JSON: {"flags": [{"issue": "description", "location": "text snippet", "severity": "low/medium/high", "recommendation": "fix suggestion"}]} Keep it concise.`
 
-    const response = await anthropicClient.messages.create({
-      model: 'claude-haiku-4-5',
-      max_tokens: 1000,
-      messages: [{ role: 'user', content: prompt }]
-    })
+      const response = await anthropicClient.messages.create({
+        model: 'claude-haiku-4-5',
+        max_tokens: 1000,
+        messages: [{ role: 'user', content: prompt }]
+      })
 
-    const responseText = response.content[0].text
-    let flags = []
-    try {
-      const jsonMatch = responseText.match(/\{[\s\S]*\}/)
-      if (jsonMatch) {
-        flags = JSON.parse(jsonMatch[0]).flags || []
+      const responseText = response.content[0].text
+      model = 'claude-haiku-4-5'
+      try {
+        const jsonMatch = responseText.match(/\{[\s\S]*\}/)
+        if (jsonMatch) {
+          flags = JSON.parse(jsonMatch[0]).flags || []
+        }
+      } catch (parseErr) {
+        logger.warn('Failed to parse compliance JSON:', parseErr)
+        flags = [
+          { issue: 'Parsing error', severity: 'medium', recommendation: 'Manual review needed' }
+        ]
       }
-    } catch (parseErr) {
-      logger.warn('Failed to parse compliance JSON:', parseErr)
-      flags = [
-        { issue: 'Parsing error', severity: 'medium', recommendation: 'Manual review needed' }
-      ]
+    } else {
+      // Heuristic mock — always available without API key
+      const lower = document.toLowerCase()
+      if (/\b\d{3}-\d{2}-\d{4}\b/.test(document) || lower.includes('ssn')) {
+        flags.push({
+          issue: 'Possible SSN / national ID pattern',
+          location: 'document body',
+          severity: 'high',
+          recommendation: 'Redact identifiers before stamping or sharing'
+        })
+      }
+      if (lower.includes('email') || /@/.test(document)) {
+        flags.push({
+          issue: 'Email addresses may be PII under GDPR',
+          location: 'document body',
+          severity: 'medium',
+          recommendation: 'Confirm lawful basis before processing'
+        })
+      }
+      if (flags.length === 0) {
+        flags.push({
+          issue: 'No heuristic red flags (mock scan)',
+          location: 'n/a',
+          severity: 'low',
+          recommendation: 'Enable ANTHROPIC_API_KEY on API for deeper analysis'
+        })
+      }
     }
 
-    // Emit real-time alert if high severity
     if (flags.some((f) => f.severity === 'high')) {
-      io.emit('compliance:alert', { documentSnippet: document.substring(0, 100) + '...', flags })
+      io.emit('compliance:alert', {
+        documentSnippet: document.substring(0, 100) + '...',
+        flags
+      })
     }
 
-    res.json({ standard, flags, scannedAt: new Date().toISOString(), model: 'claude-haiku-4-5' })
+    res.json({ standard, flags, scannedAt: new Date().toISOString(), model })
   } catch (err) {
     logger.error('Compliance check error: %o', err)
-    if (err.message.includes('rate limit')) {
+    if (err.message?.includes('rate limit')) {
       res.status(429).json({ error: 'AI rate limited, try later' })
     } else {
       res.status(500).json({ error: 'Compliance check failed. Please try again.' })
     }
+  }
+})
+
+// ─── AI Notary suite ───────────────────────────────────────
+async function runClaudeOrMock(prompt, mockJson, maxTokens = 800) {
+  if (anthropicClient) {
+    const response = await anthropicClient.messages.create({
+      model: 'claude-haiku-4-5',
+      max_tokens: maxTokens,
+      messages: [{ role: 'user', content: prompt }]
+    })
+    return { text: response.content[0].text, model: 'claude-haiku-4-5' }
+  }
+  return { text: JSON.stringify(mockJson), model: 'mock' }
+}
+
+function parseJsonObject(text) {
+  const jsonMatch = text.match(/\{[\s\S]*\}/)
+  if (!jsonMatch) return null
+  try {
+    return JSON.parse(jsonMatch[0])
+  } catch {
+    return null
+  }
+}
+
+/** POST /api/ai/summarize — short notary summary of text or stamp context */
+app.post('/api/ai/summarize', async (req, res) => {
+  try {
+    const text = typeof req.body?.text === 'string' ? req.body.text.trim() : ''
+    const stampId = typeof req.body?.stampId === 'string' ? req.body.stampId.trim() : ''
+    if (!text && !stampId) {
+      return res.status(400).json({ error: 'text or stampId required' })
+    }
+
+    let source = text
+    let stamp = null
+    if (stampId) {
+      try {
+        stamp = db
+          .prepare(
+            `SELECT id, hash, status, original_filename, created_at, ai_summary FROM timestamps WHERE id = ?`
+          )
+          .get(stampId)
+      } catch {
+        stamp = db
+          .prepare(
+            `SELECT id, hash, status, original_filename, created_at FROM timestamps WHERE id = ?`
+          )
+          .get(stampId)
+      }
+      if (!stamp) return res.status(404).json({ error: 'stamp not found' })
+      if (!source) {
+        source = `Stamp ${stamp.id} hash=${stamp.hash} file=${stamp.original_filename || 'n/a'} status=${stamp.status}`
+      }
+    }
+
+    const prompt = `Write a concise notary-style summary (2-4 sentences) of the following material for a proof-of-existence record. Output JSON only: {"summary":"...","keywords":["a","b"]}.\n\nMaterial:\n${source.slice(0, 4000)}`
+    const mock = {
+      summary: `Proof material (${source.slice(0, 80)}…). Summary generated without AI key.`,
+      keywords: ['satohash', 'ots', 'proof']
+    }
+    const { text: raw, model } = await runClaudeOrMock(prompt, mock)
+    const parsed = parseJsonObject(raw) || mock
+    const summary = parsed.summary || mock.summary
+    const keywords = Array.isArray(parsed.keywords) ? parsed.keywords : mock.keywords
+
+    if (stampId && stamp) {
+      try {
+        db.prepare(`UPDATE timestamps SET ai_summary = ? WHERE id = ?`).run(summary, stampId)
+      } catch (e) {
+        logger.warn('ai_summary column update skipped: %s', e.message)
+      }
+    }
+
+    res.json({
+      summary,
+      keywords,
+      model,
+      stampId: stampId || null,
+      stored: Boolean(stampId && stamp)
+    })
+  } catch (err) {
+    logger.error('AI summarize error: %o', err)
+    res.status(500).json({ error: 'Summarize failed' })
+  }
+})
+
+/** POST /api/ai/diff — natural-language change report between two texts */
+app.post('/api/ai/diff', async (req, res) => {
+  try {
+    const a = typeof req.body?.a === 'string' ? req.body.a : ''
+    const b = typeof req.body?.b === 'string' ? req.body.b : ''
+    if (!a.trim() || !b.trim()) {
+      return res.status(400).json({ error: 'a and b (document texts) required' })
+    }
+    const prompt = `Compare document A and document B for a notary/fraud context. Output JSON only: {"changes":[{"type":"added|removed|modified","detail":"..."}],"risk":"low|medium|high","summary":"..."}.\n\nA:\n${a.slice(0, 2500)}\n\nB:\n${b.slice(0, 2500)}`
+    const mock = {
+      changes: [
+        {
+          type: 'modified',
+          detail:
+            a.length === b.length
+              ? 'Similar length; full AI diff needs ANTHROPIC_API_KEY'
+              : `Length delta ${b.length - a.length} characters`
+        }
+      ],
+      risk: a === b ? 'low' : 'medium',
+      summary:
+        a === b
+          ? 'Documents appear identical (mock).'
+          : 'Documents differ; enable API AI key for detailed analysis.'
+    }
+    const { text: raw, model } = await runClaudeOrMock(prompt, mock, 1000)
+    const parsed = parseJsonObject(raw) || mock
+    res.json({
+      changes: parsed.changes || mock.changes,
+      risk: parsed.risk || mock.risk,
+      summary: parsed.summary || mock.summary,
+      model
+    })
+  } catch (err) {
+    logger.error('AI diff error: %o', err)
+    res.status(500).json({ error: 'Diff failed' })
+  }
+})
+
+/** GET /api/ai/search?q= — search stamps by ai_summary / filename / hash / id */
+app.get('/api/ai/search', (req, res) => {
+  try {
+    const q = String(req.query.q || '')
+      .trim()
+      .toLowerCase()
+    if (!q || q.length < 2) {
+      return res.status(400).json({ error: 'q query param required (min 2 chars)' })
+    }
+    const limit = Math.min(50, Math.max(1, parseInt(req.query.limit, 10) || 20))
+    let rows = []
+    try {
+      rows = db
+        .prepare(
+          `SELECT id, hash, status, original_filename, created_at, client_id, ai_summary
+           FROM timestamps
+           ORDER BY created_at DESC
+           LIMIT 500`
+        )
+        .all()
+    } catch {
+      rows = db
+        .prepare(
+          `SELECT id, hash, status, original_filename, created_at, client_id
+           FROM timestamps
+           ORDER BY created_at DESC
+           LIMIT 500`
+        )
+        .all()
+    }
+    const hits = rows
+      .filter((r) => {
+        const blob =
+          `${r.id} ${r.hash} ${r.original_filename || ''} ${r.client_id || ''} ${r.ai_summary || ''}`.toLowerCase()
+        return blob.includes(q)
+      })
+      .slice(0, limit)
+      .map((r) => ({
+        id: r.id,
+        hash: r.hash,
+        status: r.status,
+        filename: r.original_filename,
+        created_at: r.created_at,
+        client: r.client_id || null,
+        ai_summary: r.ai_summary || null
+      }))
+    res.json({ q, count: hits.length, stamps: hits })
+  } catch (err) {
+    logger.error('AI search error: %o', err)
+    res.status(500).json({ error: 'Search failed' })
   }
 })
 
@@ -690,14 +896,16 @@ app.get('/health', async (req, res) => {
     'https://finney.calendar.eternitywall.com'
   ]
   const calendarResults = await Promise.allSettled(
-    calendarUrls.map(url =>
+    calendarUrls.map((url) =>
       fetch(url, { signal: AbortSignal.timeout(3000) })
-        .then(r => ({ url, status: r.ok ? 'healthy' : 'degraded' }))
+        .then((r) => ({ url, status: r.ok ? 'healthy' : 'degraded' }))
         .catch(() => ({ url, status: 'unhealthy' }))
     )
   )
-  const calendarStatuses = calendarResults.map(r => r.value || { url: 'unknown', status: 'error' })
-  const calendarsHealthy = calendarStatuses.filter(c => c.status === 'healthy').length
+  const calendarStatuses = calendarResults.map(
+    (r) => r.value || { url: 'unknown', status: 'error' }
+  )
+  const calendarsHealthy = calendarStatuses.filter((c) => c.status === 'healthy').length
   details.ots = {
     status: calendarsHealthy >= 2 ? 'healthy' : calendarsHealthy === 1 ? 'degraded' : 'unhealthy',
     calendars: calendarStatuses,

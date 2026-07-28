@@ -533,7 +533,7 @@ export function CrossChainVerifyPage() {
   )
 }
 
-/** 73 / 76 / 79 AI Notary hub — live against API (key stays server-side) */
+/** AI Notary hub — summarize, diff, search, compliance, templates (keys server-side) */
 export function AiHubPage() {
   const [templateId, setTemplateId] = useState('nda')
   const [templateContent, setTemplateContent] = useState('')
@@ -551,6 +551,18 @@ export function AiHubPage() {
   const [searchHits, setSearchHits] = useState([])
   const [searchLoading, setSearchLoading] = useState(false)
   const [searchErr, setSearchErr] = useState(null)
+
+  const [sumText, setSumText] = useState('')
+  const [sumStampId, setSumStampId] = useState('')
+  const [sumOut, setSumOut] = useState(null)
+  const [sumErr, setSumErr] = useState(null)
+  const [sumLoading, setSumLoading] = useState(false)
+
+  const [diffA, setDiffA] = useState('')
+  const [diffB, setDiffB] = useState('')
+  const [diffOut, setDiffOut] = useState(null)
+  const [diffErr, setDiffErr] = useState(null)
+  const [diffLoading, setDiffLoading] = useState(false)
 
   const runSuggest = async () => {
     setSuggestLoading(true)
@@ -601,26 +613,18 @@ export function AiHubPage() {
     setSearchErr(null)
     setSearchHits([])
     try {
-      const q = searchQ.trim().toLowerCase()
-      if (!q) throw new Error('Enter a hash fragment, id, or filename keyword')
-      // Prefer exact-by-hash when query looks like sha256; else scan recent list client-side
-      if (/^[a-f0-9]{64}$/.test(q)) {
-        const res = await fetch(`${API()}/api/stamps/${q}/by-hash`)
+      const q = searchQ.trim()
+      if (!q) throw new Error('Enter a hash fragment, id, or keyword')
+      if (/^[a-f0-9]{64}$/i.test(q)) {
+        const res = await fetch(`${API()}/api/stamps/${q.toLowerCase()}/by-hash`)
         const j = await res.json()
         if (!res.ok) throw new Error(j.error || res.statusText)
         setSearchHits(j.stamps || (j.id ? [j] : []))
       } else {
-        const res = await fetch(`${API()}/api/stamps/recent?limit=100`)
+        const res = await fetch(`${API()}/api/ai/search?q=${encodeURIComponent(q)}&limit=30`)
         const j = await res.json()
         if (!res.ok) throw new Error(j.error || res.statusText)
-        const stamps = j.stamps || []
-        setSearchHits(
-          stamps.filter((s) => {
-            const blob =
-              `${s.id || ''} ${s.hash || ''} ${s.filename || ''} ${s.client || ''} ${s.ai_summary || ''}`.toLowerCase()
-            return blob.includes(q)
-          })
-        )
+        setSearchHits(j.stamps || [])
       }
     } catch (e) {
       setSearchErr(e.message || String(e))
@@ -629,12 +633,123 @@ export function AiHubPage() {
     }
   }
 
+  const runSummarize = async () => {
+    setSumLoading(true)
+    setSumErr(null)
+    setSumOut(null)
+    try {
+      const res = await fetch(`${API()}/api/ai/summarize`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          text: sumText,
+          stampId: sumStampId.trim() || undefined
+        })
+      })
+      const j = await res.json()
+      if (!res.ok) throw new Error(j.error || res.statusText)
+      setSumOut(j)
+    } catch (e) {
+      setSumErr(e.message || String(e))
+    } finally {
+      setSumLoading(false)
+    }
+  }
+
+  const runDiff = async () => {
+    setDiffLoading(true)
+    setDiffErr(null)
+    setDiffOut(null)
+    try {
+      const res = await fetch(`${API()}/api/ai/diff`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ a: diffA, b: diffB })
+      })
+      const j = await res.json()
+      if (!res.ok) throw new Error(j.error || res.statusText)
+      setDiffOut(j)
+    } catch (e) {
+      setDiffErr(e.message || String(e))
+    } finally {
+      setDiffLoading(false)
+    }
+  }
+
   return (
     <Shell
       title="AI Notary"
-      subtitle="Calls the proof API only. Anthropic keys stay on the API host — never in this SPA."
+      subtitle="Summarize, compare, search, and scan — Anthropic keys stay on the API host, never in this SPA. Works with mock heuristics when no key is set."
     >
       <div className="grid gap-4">
+        <Card>
+          <h3 className="font-semibold">Content summary</h3>
+          <p className="mt-1 text-sm opacity-70">
+            POST /api/ai/summarize — optional stampId stores ai_summary on the stamp row.
+          </p>
+          <input
+            className="mt-3 w-full rounded border border-white/15 bg-black/40 px-3 py-2 font-mono text-sm"
+            value={sumStampId}
+            onChange={(e) => setSumStampId(e.target.value)}
+            placeholder="Optional stamp id to attach summary"
+          />
+          <textarea
+            className="mt-2 min-h-[88px] w-full rounded border border-white/15 bg-black/40 px-3 py-2 text-sm"
+            value={sumText}
+            onChange={(e) => setSumText(e.target.value)}
+            placeholder="Paste text to summarize (or leave blank if stampId has metadata)…"
+          />
+          <button
+            type="button"
+            onClick={runSummarize}
+            disabled={sumLoading || (!sumText.trim() && !sumStampId.trim())}
+            className="mt-3 rounded bg-amber-600 px-4 py-2 text-sm font-semibold text-black disabled:opacity-50"
+          >
+            {sumLoading ? 'Summarizing…' : 'Summarize'}
+          </button>
+          {sumErr && <p className="mt-2 text-sm text-red-400">{sumErr}</p>}
+          {sumOut && (
+            <pre className="mt-3 max-h-64 overflow-auto rounded bg-black/50 p-3 text-xs">
+              {JSON.stringify(sumOut, null, 2)}
+            </pre>
+          )}
+        </Card>
+
+        <Card>
+          <h3 className="font-semibold">Fraud / document diff</h3>
+          <p className="mt-1 text-sm opacity-70">
+            POST /api/ai/diff — natural-language change report between two versions.
+          </p>
+          <div className="mt-3 grid gap-2 sm:grid-cols-2">
+            <textarea
+              className="min-h-[100px] rounded border border-white/15 bg-black/40 px-3 py-2 text-sm"
+              value={diffA}
+              onChange={(e) => setDiffA(e.target.value)}
+              placeholder="Document A (original)…"
+            />
+            <textarea
+              className="min-h-[100px] rounded border border-white/15 bg-black/40 px-3 py-2 text-sm"
+              value={diffB}
+              onChange={(e) => setDiffB(e.target.value)}
+              placeholder="Document B (revised)…"
+            />
+          </div>
+          <button
+            type="button"
+            onClick={runDiff}
+            disabled={diffLoading || !diffA.trim() || !diffB.trim()}
+            className="mt-3 rounded bg-amber-600 px-4 py-2 text-sm font-semibold text-black disabled:opacity-50"
+          >
+            {diffLoading ? 'Comparing…' : 'Compare versions'}
+          </button>
+          {diffErr && <p className="mt-2 text-sm text-red-400">{diffErr}</p>}
+          {diffOut && (
+            <pre className="mt-3 max-h-64 overflow-auto rounded bg-black/50 p-3 text-xs">
+              {JSON.stringify(diffOut, null, 2)}
+            </pre>
+          )}
+        </Card>
+
         <Card>
           <h3 className="font-semibold">Template suggestions</h3>
           <p className="mt-1 text-sm opacity-70">
@@ -673,7 +788,7 @@ export function AiHubPage() {
         <Card>
           <h3 className="font-semibold">Compliance scan</h3>
           <p className="mt-1 text-sm opacity-70">
-            POST /api/compliance-check — GDPR/SOX flags (requires ANTHROPIC_API_KEY on API).
+            POST /api/compliance-check — GDPR/SOX flags (Claude when key set; heuristics otherwise).
           </p>
           <div className="mt-3 flex flex-wrap gap-2">
             <select
@@ -708,16 +823,17 @@ export function AiHubPage() {
         </Card>
 
         <Card>
-          <h3 className="font-semibold">Proof search</h3>
+          <h3 className="font-semibold">Semantic / proof search</h3>
           <p className="mt-1 text-sm opacity-70">
-            Full SHA-256 → by-hash. Otherwise filters recent stamps by id/hash/filename/ai_summary.
+            GET /api/ai/search — matches id, hash, filename, client, and ai_summary. Full SHA-256
+            uses by-hash.
           </p>
           <div className="mt-3 flex gap-2">
             <input
               className="flex-1 rounded border border-white/15 bg-black/40 px-3 py-2 font-mono text-sm"
               value={searchQ}
               onChange={(e) => setSearchQ(e.target.value)}
-              placeholder="hash, id fragment, or filename"
+              placeholder="keyword, id, or full sha256"
             />
             <button
               type="button"
@@ -736,12 +852,15 @@ export function AiHubPage() {
                   <div className="opacity-50">{s.created_at || s.status}</div>
                   <div className="truncate">{s.hash || s.id}</div>
                   {s.filename && <div className="opacity-70">{s.filename}</div>}
+                  {s.ai_summary && (
+                    <div className="mt-1 text-[11px] normal-case opacity-60">{s.ai_summary}</div>
+                  )}
                 </li>
               ))}
             </ul>
           )}
           {!searchLoading && searchHits.length === 0 && searchQ && !searchErr && (
-            <p className="mt-2 text-sm opacity-60">No matches in recent window.</p>
+            <p className="mt-2 text-sm opacity-60">No matches.</p>
           )}
         </Card>
 
@@ -750,11 +869,11 @@ export function AiHubPage() {
             <strong className="text-[var(--ink,#e8e6e1)]">Ops notes:</strong> paywall (
             <code className="text-xs">REQUIRE_LIGHTNING</code>) and{' '}
             <code className="text-xs">BITCOIN_RPC_URL</code> are THOR env — leave free-tier off
-            until Cam flips the switch. Vault v2 (export/import, forensic, revoke) lives at{' '}
+            until Cam flips the switch. Vault v2 lives at{' '}
             <Link to="/vault" className="text-amber-500/90 hover:text-amber-400">
               /vault
             </Link>
-            .
+            . After API deploy, Kimi must rebuild Docker for new /api/ai/* routes.
           </p>
         </Card>
       </div>

@@ -6,9 +6,10 @@
   "scripts": {
     "server": "node server/index.js",
     "dev": "concurrently \"npm run server\" \"vite\"",
-    "build": "npm run build:metrics && npm run build:ots && vite build && npm run build:verify",
+    "build": "npm run build:metrics && npm run build:ots && vite build && npm run build:strip-metrics && npm run build:verify",
     "test:coverage": "vitest run --coverage",
     "build:metrics": "node scripts/fetch-metrics-json.js",
+    "build:strip-metrics": "node scripts/strip-dist-metrics.js",
     "build:ots": "test -f public/vendor/ots.browser.js || npx browserify node_modules/opentimestamps/index.js -s OpenTimestamps -o public/vendor/ots.browser.js",
     "build:verify": "node scripts/verify-landing-bundle.js",
     "preview": "vite preview",

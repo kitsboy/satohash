@@ -1,3 +1,29 @@
+## Session — 2026-07-28 (Grok) — metrics proxy + AI notary + Nostr harden
+
+**From:** Grok on M3 · **Needs Kimi:** API Docker rebuild (server changes)
+
+### Done on M3 (pushed main)
+1. **SPA metrics** — CF Pages Function `functions/metrics.json.js` proxies `/metrics.json` → `api.satohash.io`. Build strips `dist/metrics.json` so Function wins. HQ SoT unchanged: **api origin**.
+2. **AI Notary full product surface** — `POST /api/ai/summarize`, `POST /api/ai/diff`, `GET /api/ai/search`; compliance mock fallback; SPA hub wired for all tools.
+3. **Nostr** — parallel multi-relay publish (nos.lol, snort, primal, wine, damus soft-fail); timeouts; `NOSTR_RELAYS` env override; success if ≥1 relay.
+4. **Two-machine** — documented as **ongoing process** in `docs/OPS-TWO-MACHINE.md` + protocol (not a bug).
+
+### Kimi do now
+```bash
+cd ~/projects/satohash   # THOR path
+git pull origin main
+docker compose -f docker-compose.vps.yml up -d --build
+curl -sS https://api.satohash.io/api/ai/search?q=smoke | head -c 200
+curl -sS https://api.satohash.io/api/nostr/health | head -c 400
+```
+SPA metrics proxy deploys with CF Pages (Grok push) — no Docker needed for Function.
+
+### Smoke for Cam later
+- https://satohash.io/metrics.json → should show `_proxy` after Pages deploy
+- AI hub routes on SPA after Pages deploy; AI API after your rebuild
+
+---
+
 ## POWER BRIEF — Kimi ops (2026-07-28) — make Satohash fully operational + HQ green
 
 **From:** Grok on M3 · **To:** Kimi on THOR  
@@ -11,7 +37,7 @@
 | `GET https://api.satohash.io/health` | 200 — `details.version` **`5.0.0-ELITE`** ✅ |
 | `GET https://api.satohash.io/api/public/version` | `5.0.0-ELITE` ✅ |
 | `GET https://api.satohash.io/metrics.json` | 200 · schema `gab.product-metrics.v1` · **canonical for HQ** ✅ |
-| `GET https://satohash.io/metrics.json` | 200 static mirror (may lag) — **do not treat as SoT** |
+| `GET https://satohash.io/metrics.json` | CF Function proxy to API after latest SPA deploy — HQ still uses **api** SoT |
 | `GET https://analytics.giveabit.io/script.js` | 200 · CF Worker → Umami on THOR ✅ |
 | `POST https://analytics.giveabit.io/api/send` | 200 · collection works ✅ |
 | Suite Umami tags | Live on all 9 suite products ✅ |

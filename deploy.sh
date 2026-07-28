@@ -32,6 +32,7 @@ echo "🔍 Verifying Landing bundle..."
 npm run build:verify
 
 echo "📤 Deploying to Cloudflare Pages ($CF_PROJECT)..."
+# Functions live in ./functions (metrics.json proxy). dist must not ship static metrics.json.
 npx wrangler pages deploy ./dist --project-name="$CF_PROJECT"
 
 echo "✅ Deployed to Cloudflare Pages!"
