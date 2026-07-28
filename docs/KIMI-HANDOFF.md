@@ -1,26 +1,24 @@
-## Session — 2026-07-28 (Grok) — metrics proxy + AI notary + Nostr harden
+## Session — 2026-07-28 (Grok) — flip-ready paywall/node + AI ML + damus + nav
 
-**From:** Grok on M3 · **Needs Kimi:** API Docker rebuild (server changes)
+**From:** Grok · **Kimi paste:** `docs/KIMI-POWER-PROMPT-REBUILD-2026-07-28.md`
 
-### Done on M3 (pushed main)
-1. **SPA metrics** — CF Pages Function `functions/metrics.json.js` proxies `/metrics.json` → `api.satohash.io`. Build strips `dist/metrics.json` so Function wins. HQ SoT unchanged: **api origin**.
-2. **AI Notary full product surface** — `POST /api/ai/summarize`, `POST /api/ai/diff`, `GET /api/ai/search`; compliance mock fallback; SPA hub wired for all tools.
-3. **Nostr** — parallel multi-relay publish (nos.lol, snort, primal, wine, damus soft-fail); timeouts; `NOSTR_RELAYS` env override; success if ≥1 relay.
-4. **Two-machine** — documented as **ongoing process** in `docs/OPS-TWO-MACHINE.md` + protocol (not a bug).
+### Code shipped (main)
+- Paywall: free default; when REQUIRE_LIGHTNING=true issues LNbits invoices (family keys still free)
+- `GET /api/public/readiness` — full flip checklist
+- Bitcoin RPC lib + health/public bitcoin own-node path
+- LNbits wallet/invoice helpers; lightning balance live when env set
+- AI: local embeddings + fraud ML + semantic search; /api/ai/embed, /api/ai/fraud
+- Nostr: kind 1 + 1063, damus retries, more relays
+- Nav: pill center rail, fuller hover chrome
+- CF Functions: /metrics.json + /api/metrics proxy (SPA domain)
 
-### Kimi do now
-```bash
-cd ~/projects/satohash   # THOR path
-git pull origin main
-docker compose -f docker-compose.vps.yml up -d --build
-curl -sS https://api.satohash.io/api/ai/search?q=smoke | head -c 200
-curl -sS https://api.satohash.io/api/nostr/health | head -c 400
-```
-SPA metrics proxy deploys with CF Pages (Grok push) — no Docker needed for Function.
+### Cam intent
+- Keep free stamps now
+- Everything ready to turn on (node, LN, paywall) at a moment’s notice
+- Deeper AI running (local ML now; Claude if key)
 
-### Smoke for Cam later
-- https://satohash.io/metrics.json → should show `_proxy` after Pages deploy
-- AI hub routes on SPA after Pages deploy; AI API after your rebuild
+### Kimi
+Rebuild + wire BITCOIN_RPC + LNBITS env (still REQUIRE_LIGHTNING=false). Full paste prompt in docs/KIMI-POWER-PROMPT-REBUILD-2026-07-28.md
 
 ---
 

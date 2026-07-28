@@ -564,6 +564,10 @@ export function AiHubPage() {
   const [diffErr, setDiffErr] = useState(null)
   const [diffLoading, setDiffLoading] = useState(false)
 
+  const [fraudOut, setFraudOut] = useState(null)
+  const [fraudErr, setFraudErr] = useState(null)
+  const [fraudLoading, setFraudLoading] = useState(false)
+
   const runSuggest = async () => {
     setSuggestLoading(true)
     setSuggestErr(null)
@@ -676,6 +680,26 @@ export function AiHubPage() {
     }
   }
 
+  const runFraud = async () => {
+    setFraudLoading(true)
+    setFraudErr(null)
+    setFraudOut(null)
+    try {
+      const res = await fetch(`${API()}/api/ai/fraud`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ a: diffA, b: diffB, llm: false })
+      })
+      const j = await res.json()
+      if (!res.ok) throw new Error(j.error || res.statusText)
+      setFraudOut(j)
+    } catch (e) {
+      setFraudErr(e.message || String(e))
+    } finally {
+      setFraudLoading(false)
+    }
+  }
+
   return (
     <Shell
       title="AI Notary"
@@ -734,18 +758,34 @@ export function AiHubPage() {
               placeholder="Document B (revised)…"
             />
           </div>
-          <button
-            type="button"
-            onClick={runDiff}
-            disabled={diffLoading || !diffA.trim() || !diffB.trim()}
-            className="mt-3 rounded bg-amber-600 px-4 py-2 text-sm font-semibold text-black disabled:opacity-50"
-          >
-            {diffLoading ? 'Comparing…' : 'Compare versions'}
-          </button>
+          <div className="mt-3 flex flex-wrap gap-2">
+            <button
+              type="button"
+              onClick={runDiff}
+              disabled={diffLoading || !diffA.trim() || !diffB.trim()}
+              className="rounded bg-amber-600 px-4 py-2 text-sm font-semibold text-black disabled:opacity-50"
+            >
+              {diffLoading ? 'Comparing…' : 'NL compare'}
+            </button>
+            <button
+              type="button"
+              onClick={runFraud}
+              disabled={fraudLoading || !diffA.trim() || !diffB.trim()}
+              className="rounded border border-amber-600/50 px-4 py-2 text-sm font-semibold text-amber-500 disabled:opacity-50"
+            >
+              {fraudLoading ? 'Scoring…' : 'Fraud ML score'}
+            </button>
+          </div>
           {diffErr && <p className="mt-2 text-sm text-red-400">{diffErr}</p>}
+          {fraudErr && <p className="mt-2 text-sm text-red-400">{fraudErr}</p>}
           {diffOut && (
-            <pre className="mt-3 max-h-64 overflow-auto rounded bg-black/50 p-3 text-xs">
+            <pre className="mt-3 max-h-48 overflow-auto rounded bg-black/50 p-3 text-xs">
               {JSON.stringify(diffOut, null, 2)}
+            </pre>
+          )}
+          {fraudOut && (
+            <pre className="mt-2 max-h-48 overflow-auto rounded bg-black/50 p-3 text-xs">
+              {JSON.stringify(fraudOut, null, 2)}
             </pre>
           )}
         </Card>

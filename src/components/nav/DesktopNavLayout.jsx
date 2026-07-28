@@ -7,17 +7,28 @@ import { Link } from 'react-router-dom'
 export default function DesktopNavLayout({ left, center, right, className = '' }) {
   return (
     <div
-      className={`grid h-14 w-full grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-4 px-4 sm:px-6 lg:px-8 ${className}`}
+      className={`grid h-15 w-full grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-3 px-4 sm:h-16 sm:gap-5 sm:px-6 lg:px-8 ${className}`}
+      style={{ minHeight: '3.75rem' }}
     >
       <div className="flex min-w-0 items-center justify-start overflow-hidden">{left}</div>
-      <div className="flex shrink-0 items-center justify-center">{center}</div>
-      <div className="flex min-w-0 items-center justify-end gap-1.5 overflow-hidden">{right}</div>
+      <div
+        className="flex shrink-0 items-center justify-center rounded-full px-1 py-0.5"
+        style={{
+          background: 'color-mix(in srgb, var(--bg-secondary) 55%, transparent)',
+          boxShadow: 'inset 0 0 0 1px color-mix(in srgb, var(--border) 70%, transparent)'
+        }}
+      >
+        {center}
+      </div>
+      <div className="flex min-w-0 items-center justify-end gap-1.5 overflow-hidden sm:gap-2">
+        {right}
+      </div>
     </div>
   )
 }
 
 const tabBase =
-  'group relative whitespace-nowrap rounded-md px-3 py-2 text-[12px] font-semibold tracking-[0.04em] uppercase transition-all duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-navbar)]'
+  'group relative whitespace-nowrap rounded-full px-3.5 py-2 text-[11px] font-semibold tracking-[0.06em] uppercase transition-all duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-navbar)]'
 
 export function NavTab({ to, href, children, active, onClick }) {
   const className = [

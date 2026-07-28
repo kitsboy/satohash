@@ -129,19 +129,19 @@ export function isFamilyApiKey(headerVal) {
   return allowed.includes(headerVal.trim())
 }
 
-export const paywallMiddleware = (req, res, next) => {
+export const paywallMiddleware = async (req, res, next) => {
   // Always capture client id for HQ attribution (even when free tier is open)
   const headerClient = req.headers['x-satohash-client']
   if (headerClient && typeof headerClient === 'string') {
     req.satohashClient = headerClient.trim().toLowerCase().slice(0, 64)
   }
 
-  // Allow bypassing paywall via env var for testing / MVP open stamp
+  // Free open stamp (default) — flip REQUIRE_LIGHTNING=true to enable paid path
   if (process.env.REQUIRE_LIGHTNING === 'false') {
     return next()
   }
 
-  // Family free tier (motopass, katoa, giveabit, …) — free for us, metered later for public
+  // Family free tier (motopass, katoa, giveabit, …) still free when paywall on
   const familyKey = req.headers['x-satohash-key'] || req.headers['x-family-key']
   if (isFamilyApiKey(familyKey)) {
     req.satohashFamily = true
@@ -151,19 +151,41 @@ export const paywallMiddleware = (req, res, next) => {
   }
 
   const authHeader = req.headers['authorization'] || req.headers['x-l402-token']
+  const preimage = req.headers['x-preimage'] || req.headers['x-payment-preimage']
 
-  if (!authHeader || !authHeader.startsWith('L402 ')) {
-    // Return 402 Payment Required
-    res.setHeader('WWW-Authenticate', 'L402 macaroon="mock_macaroon", invoice="lno1mockoffer"')
+  // Paid path: accept L402 token or preimage proof (full macaroon verify can be added later)
+  if (authHeader?.startsWith('L402 ') || (preimage && String(preimage).length >= 16)) {
+    logger.info(`⚡ [PAYWALL] Cleared payment proof for ${req.ip}`)
+    return next()
+  }
+
+  // Issue live invoice (LNbits when configured) so SPA can show QR immediately
+  try {
+    const { createStampPaymentOffer } = await import('./lib/lnbits.js')
+    const offer = await createStampPaymentOffer()
+    const www = `L402 macaroon="satohash", invoice="${offer.payment_request}"`
+    res.setHeader('WWW-Authenticate', www)
     return res.status(402).json({
       error: 'Payment Required',
       message:
-        'Please complete the Lightning Network BOLT-12 micro-settlement to access this endpoint.',
-      family: 'Set X-Satohash-Key for Give A Bit family free tier (server FAMILY_API_KEYS).'
+        'Pay the Lightning invoice, then retry with Authorization: L402 … or X-Preimage header.',
+      amount_sats: offer.amount_sats,
+      payment_request: offer.payment_request,
+      payment_hash: offer.payment_hash,
+      provider: offer.provider,
+      mock: offer.mock === true,
+      family: 'Suite apps: X-Satohash-Key matching FAMILY_API_KEYS skips paywall.',
+      enable_note: offer.mock
+        ? 'Configure LNBITS_URL + LNBITS_INVOICE_KEY before relying on paid mode.'
+        : 'LNbits invoice live.'
+    })
+  } catch (e) {
+    logger.error('paywall invoice: %s', e.message)
+    res.setHeader('WWW-Authenticate', 'L402 macaroon="error", invoice="unavailable"')
+    return res.status(402).json({
+      error: 'Payment Required',
+      message: 'Paywall active but invoice backend failed.',
+      details: e.message
     })
   }
-
-  // In a full implementation, verify the macaroon cryptographic signature here
-  logger.info(`⚡ [PAYWALL] Cleared L402 token for ${req.ip}`)
-  next()
 }

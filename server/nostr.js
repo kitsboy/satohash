@@ -13,13 +13,15 @@ if (typeof globalThis.WebSocket === 'undefined') {
   }
 }
 
-/** Default relay set — damus often anti-spams bots; keep but soft-fail */
+/** Default relay set — damus first with kind-1 + retries for higher acceptance */
 const DEFAULT_RELAYS = [
+  'wss://relay.damus.io',
   'wss://nos.lol',
   'wss://relay.snort.social',
   'wss://relay.primal.net',
   'wss://nostr.wine',
-  'wss://relay.damus.io' // optional / flaky for bots
+  'wss://relay.nostr.band',
+  'wss://offchain.pub'
 ]
 
 function configuredRelays() {
@@ -56,71 +58,97 @@ function withTimeout(promise, ms, label) {
 }
 
 /**
- * Publish to one relay with connect + publish timeouts. Soft-fails.
+ * Publish to one relay with connect + publish timeouts.
+ * Damus gets retries + kind-1 fallback (kind 1063 often rejected as spam).
  */
-async function publishToRelay(url, event) {
-  let relay
-  try {
-    relay = await withTimeout(Relay.connect(url), CONNECT_TIMEOUT_MS, `connect ${url}`)
-    await withTimeout(relay.publish(event), PUBLISH_TIMEOUT_MS, `publish ${url}`)
-    logger.info(`🟣 Nostr event published to ${url}`)
-    return { url, status: 'ok' }
-  } catch (err) {
-    // damus often rejects bots — warn only
-    const soft = url.includes('damus.io')
-    if (soft) {
-      logger.warn(`Nostr soft-fail ${url}: ${err.message}`)
-    } else {
-      logger.error(`❌ Nostr publish error on ${url}: %s`, err.message)
-    }
-    return { url, status: 'error', error: err.message, soft }
-  } finally {
+async function publishToRelay(url, event, { retries = 1 } = {}) {
+  const isDamus = url.includes('damus.io')
+  const attempts = isDamus ? Math.max(retries, 3) : retries
+  let lastErr = ''
+  for (let i = 0; i < attempts; i++) {
+    let relay
     try {
-      relay?.close()
-    } catch {
-      /* ignore */
+      if (i > 0) await new Promise((r) => setTimeout(r, 400 * i))
+      relay = await withTimeout(Relay.connect(url), CONNECT_TIMEOUT_MS, `connect ${url}`)
+      await withTimeout(relay.publish(event), PUBLISH_TIMEOUT_MS, `publish ${url}`)
+      logger.info(`🟣 Nostr event published to ${url} (attempt ${i + 1})`)
+      return { url, status: 'ok', attempts: i + 1 }
+    } catch (err) {
+      lastErr = err.message
+      if (!isDamus) {
+        logger.error(`❌ Nostr publish error on ${url}: %s`, err.message)
+        break
+      }
+      logger.warn(`Nostr damus attempt ${i + 1}/${attempts}: ${err.message}`)
+    } finally {
+      try {
+        relay?.close()
+      } catch {
+        /* ignore */
+      }
     }
   }
+  return { url, status: 'error', error: lastErr, soft: isDamus }
 }
 
 /**
- * Publishes a "Satohash Timestamp Event" to Nostr (parallel, multi-relay).
- * Succeeds if ≥1 relay accepts. Returns { ok, published, failed, eventId }.
+ * Publishes proof to Nostr: kind 1 (broad relay acceptance) + kind 1063 (NIP-94).
+ * Succeeds if ≥1 relay accepts any event. Damus prioritized with retries.
  */
 export const publishTimestampToNostr = async (hash, filename, id) => {
   try {
-    const eventTemplate = {
-      kind: 1063, // NIP-94 File Metadata
-      created_at: Math.floor(Date.now() / 1000),
-      tags: [
-        ['t', 'satohash'],
-        ['hash', hash],
-        ['filename', filename],
-        ['ots_id', id],
-        ['url', `https://satohash.io/verify/${id}`],
-        ['alt', `Satohash proof ${hash.slice(0, 16)}…`]
-      ],
-      content: `🔒 Cryptographic Proof-of-Existence\nFile: ${filename}\nHash: ${hash}\nVerified with Satohash Protocol.`
-    }
+    const created_at = Math.floor(Date.now() / 1000)
+    const content = `🔒 Satohash proof-of-existence\nFile: ${filename}\nHash: ${hash}\nVerify: https://satohash.io/verify/${id}`
+    const commonTags = [
+      ['t', 'satohash'],
+      ['t', 'opentimestamps'],
+      ['hash', hash],
+      ['filename', String(filename).slice(0, 200)],
+      ['ots_id', id],
+      ['r', `https://satohash.io/verify/${id}`],
+      ['alt', `Satohash OTS ${hash.slice(0, 16)}`]
+    ]
 
-    const event = finalizeEvent(eventTemplate, BOT_SK)
-    const results = await Promise.all(RELAYS.map((url) => publishToRelay(url, event)))
+    // Kind 1 text note — accepted by more relays including damus
+    const note = finalizeEvent({ kind: 1, created_at, tags: commonTags, content }, BOT_SK)
+    // Kind 1063 NIP-94 file metadata (secondary)
+    const fileMeta = finalizeEvent(
+      {
+        kind: 1063,
+        created_at: created_at + 1,
+        tags: [...commonTags, ['url', `https://satohash.io/verify/${id}`]],
+        content
+      },
+      BOT_SK
+    )
+
+    const results = await Promise.all(
+      RELAYS.map(async (url) => {
+        const r1 = await publishToRelay(url, note, { retries: 2 })
+        if (r1.status === 'ok') return { ...r1, kind: 1 }
+        const r2 = await publishToRelay(url, fileMeta, { retries: 1 })
+        return { ...r2, kind: 1063 }
+      })
+    )
     const published = results.filter((r) => r.status === 'ok')
     const failed = results.filter((r) => r.status !== 'ok')
+    const damusOk = published.some((r) => r.url.includes('damus'))
 
     if (published.length === 0) {
       logger.warn('Nostr: no relays accepted event (all failed)')
     } else {
       logger.info(
-        `Nostr: published to ${published.length}/${RELAYS.length} relays (event ${event.id?.slice(0, 12)}…)`
+        `Nostr: ${published.length}/${RELAYS.length} relays ok; damus=${damusOk ? 'green' : 'down'}`
       )
     }
 
     return {
       ok: published.length > 0,
-      eventId: event.id,
+      damus_ok: damusOk,
+      eventId: note.id,
+      eventId1063: fileMeta.id,
       pubkey: BOT_PK,
-      published: published.map((r) => r.url),
+      published: published.map((r) => ({ url: r.url, kind: r.kind })),
       failed: failed.map((r) => ({ url: r.url, error: r.error, soft: r.soft })),
       relays: RELAYS
     }

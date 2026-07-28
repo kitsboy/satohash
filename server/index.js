@@ -714,12 +714,11 @@ app.post('/api/ai/diff', async (req, res) => {
   }
 })
 
-/** GET /api/ai/search?q= — search stamps by ai_summary / filename / hash / id */
-app.get('/api/ai/search', (req, res) => {
+/** GET /api/ai/search?q= — lexical + local embedding semantic rank */
+app.get('/api/ai/search', async (req, res) => {
   try {
-    const q = String(req.query.q || '')
-      .trim()
-      .toLowerCase()
+    const { embedText, cosineSimilarity, semanticRank } = await import('./ai-ml.js')
+    const q = String(req.query.q || '').trim()
     if (!q || q.length < 2) {
       return res.status(400).json({ error: 'q query param required (min 2 chars)' })
     }
@@ -744,26 +743,122 @@ app.get('/api/ai/search', (req, res) => {
         )
         .all()
     }
-    const hits = rows
-      .filter((r) => {
-        const blob =
-          `${r.id} ${r.hash} ${r.original_filename || ''} ${r.client_id || ''} ${r.ai_summary || ''}`.toLowerCase()
-        return blob.includes(q)
-      })
+    const qLower = q.toLowerCase()
+    const lexical = rows.filter((r) => {
+      const blob =
+        `${r.id} ${r.hash} ${r.original_filename || ''} ${r.client_id || ''} ${r.ai_summary || ''}`.toLowerCase()
+      return blob.includes(qLower)
+    })
+    const ranked = semanticRank(
+      q,
+      rows,
+      (r) => `${r.original_filename || ''} ${r.ai_summary || ''} ${r.hash || ''}`
+    )
+      .filter((x) => x.score > 0.05)
       .slice(0, limit)
-      .map((r) => ({
+
+    const byId = new Map()
+    for (const r of lexical) {
+      byId.set(r.id, {
         id: r.id,
         hash: r.hash,
         status: r.status,
         filename: r.original_filename,
         created_at: r.created_at,
         client: r.client_id || null,
-        ai_summary: r.ai_summary || null
-      }))
-    res.json({ q, count: hits.length, stamps: hits })
+        ai_summary: r.ai_summary || null,
+        match: 'lexical',
+        score: 1
+      })
+    }
+    for (const { item: r, score } of ranked) {
+      if (byId.has(r.id)) {
+        byId.get(r.id).match = 'lexical+semantic'
+        byId.get(r.id).score = Math.max(byId.get(r.id).score, score)
+      } else {
+        byId.set(r.id, {
+          id: r.id,
+          hash: r.hash,
+          status: r.status,
+          filename: r.original_filename,
+          created_at: r.created_at,
+          client: r.client_id || null,
+          ai_summary: r.ai_summary || null,
+          match: 'semantic',
+          score: Number(score.toFixed(4))
+        })
+      }
+    }
+    const stamps = [...byId.values()].sort((a, b) => b.score - a.score).slice(0, limit)
+    res.json({
+      q,
+      count: stamps.length,
+      stamps,
+      embedding: { dim: embedText(q).length, model: 'satohash-local-bow-v1' }
+    })
   } catch (err) {
     logger.error('AI search error: %o', err)
     res.status(500).json({ error: 'Search failed' })
+  }
+})
+
+/** POST /api/ai/embed — local embedding vector */
+app.post('/api/ai/embed', async (req, res) => {
+  try {
+    const { embedText } = await import('./ai-ml.js')
+    const text = typeof req.body?.text === 'string' ? req.body.text : ''
+    if (!text.trim()) return res.status(400).json({ error: 'text required' })
+    const vector = embedText(text)
+    res.json({ model: 'satohash-local-bow-v1', dim: vector.length, vector })
+  } catch (err) {
+    res.status(500).json({ error: err.message })
+  }
+})
+
+/** POST /api/ai/fraud — local fraud/change ML (+ optional LLM note) */
+app.post('/api/ai/fraud', async (req, res) => {
+  try {
+    const { fraudScore } = await import('./ai-ml.js')
+    const a = typeof req.body?.a === 'string' ? req.body.a : ''
+    const b = typeof req.body?.b === 'string' ? req.body.b : ''
+    if (!a.trim() || !b.trim()) {
+      return res.status(400).json({ error: 'a and b required' })
+    }
+    const ml = fraudScore(a, b)
+    let llm = null
+    if (anthropicClient && req.body?.llm === true) {
+      try {
+        const response = await anthropicClient.messages.create({
+          model: 'claude-haiku-4-5',
+          max_tokens: 400,
+          messages: [
+            {
+              role: 'user',
+              content: `Brief fraud risk note (2 sentences) for notary docs. Risk=${ml.risk}. Features=${JSON.stringify(ml.features)}`
+            }
+          ]
+        })
+        llm = response.content[0].text
+      } catch (e) {
+        logger.warn('fraud llm: %s', e.message)
+      }
+    }
+    res.json({ ...ml, llm })
+  } catch (err) {
+    logger.error('fraud: %o', err)
+    res.status(500).json({ error: 'Fraud score failed' })
+  }
+})
+
+/** GET /api/public/readiness — full flip-ready status for Cam/Kimi */
+app.get('/api/public/readiness', async (req, res) => {
+  try {
+    const { buildReadinessReport } = await import('./lib/readiness.js')
+    const report = await buildReadinessReport()
+    res.json(report)
+  } catch (err) {
+    logger.error('readiness: %o', err)
+    res.status(500).json({ error: err.message })
   }
 })
 
@@ -912,56 +1007,58 @@ app.get('/health', async (req, res) => {
     note: 'Free public calendars — no API key required. At least 2 of 3 required for healthy status.'
   }
 
-  // Nostr relay check
+  // Nostr — real relay websocket pings (not HTTP to damus homepage)
   try {
-    const nostrResp = await fetch('https://relay.damus.io', { signal: AbortSignal.timeout(3000) })
-    details.nostr = { status: nostrResp.ok ? 'healthy' : 'degraded' }
+    const relays = await pingRelays()
+    const ok = relays.filter((r) => r.status === 'ok').length
+    const damus = relays.find((r) => r.url?.includes('damus'))
+    details.nostr = {
+      status: ok >= 1 ? 'healthy' : 'unhealthy',
+      ok_count: ok,
+      total: relays.length,
+      damus: damus?.status || 'unknown',
+      relays
+    }
+    if (ok < 1) status = 'degraded'
   } catch (e) {
-    details.nostr = { status: 'unhealthy' }
+    details.nostr = { status: 'unhealthy', error: e.message }
     status = 'degraded'
   }
 
-  // Lightning — LND on VPS (optional). Not required for OTS create.
-  details.lightning = {
-    status: process.env.LND_REST_URL || process.env.LND_GRPC_HOST ? 'configured' : 'optional',
-    note: 'Settlement plane on VPS LND/LNbits — not used for OTS hashing'
+  // Lightning — LND / LNbits (optional for free tier; required for paid flip)
+  try {
+    const { lnbitsWalletInfo, isLndConfigured, isLnbitsConfigured } =
+      await import('./lib/lnbits.js')
+    const lnq = await lnbitsWalletInfo()
+    details.lightning = {
+      status: isLnbitsConfigured() || isLndConfigured() ? lnq.status || 'configured' : 'optional',
+      lnbits: lnq,
+      lnd: isLndConfigured(),
+      note: 'Settlement plane — not required for OTS while REQUIRE_LIGHTNING=false'
+    }
+  } catch (e) {
+    details.lightning = { status: 'optional', error: e.message }
   }
 
-  // Optional pruned Bitcoin node (verify independence) — BITCOIN_RPC_URL
-  if (process.env.BITCOIN_RPC_URL) {
-    try {
-      const rpcRes = await fetch(process.env.BITCOIN_RPC_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          ...(process.env.BITCOIN_RPC_AUTH
-            ? { Authorization: `Basic ${process.env.BITCOIN_RPC_AUTH}` }
-            : {})
-        },
-        body: JSON.stringify({
-          jsonrpc: '1.0',
-          id: 'satohash-health',
-          method: 'getblockcount',
-          params: []
-        }),
-        signal: AbortSignal.timeout(4000)
-      })
-      const rpcJson = await rpcRes.json().catch(() => ({}))
-      details.bitcoin = {
-        status: rpcRes.ok && rpcJson.result != null ? 'healthy' : 'degraded',
-        block_height: rpcJson.result ?? null,
-        pruned: true,
-        note: 'VPS pruned full node — verify independence'
-      }
-    } catch (e) {
-      details.bitcoin = { status: 'unhealthy', note: e.message }
-      status = 'degraded'
-    }
-  } else {
-    details.bitcoin = {
-      status: 'not_configured',
-      note: 'Set BITCOIN_RPC_URL for node-backed verify; public mempool still used for fees'
-    }
+  // Bitcoin Core RPC (own node) — ready when env set
+  try {
+    const { bitcoinRpcHealth } = await import('./lib/bitcoin-rpc.js')
+    details.bitcoin = await bitcoinRpcHealth()
+    if (details.bitcoin.configured && details.bitcoin.status === 'unhealthy') status = 'degraded'
+  } catch (e) {
+    details.bitcoin = { status: 'error', note: e.message }
+  }
+
+  details.paywall = {
+    require_lightning: process.env.REQUIRE_LIGHTNING !== 'false',
+    mode: process.env.REQUIRE_LIGHTNING === 'false' ? 'free_open' : 'paid',
+    stamp_price_sats: parseInt(process.env.STAMP_PRICE_SATS || '21', 10) || 21
+  }
+
+  details.ai = {
+    anthropic: Boolean(process.env.ANTHROPIC_API_KEY),
+    local_embeddings: true,
+    local_fraud_ml: true
   }
 
   // Metrics summary

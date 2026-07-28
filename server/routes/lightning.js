@@ -163,10 +163,34 @@ router.post('/offer', async (req, res) => {
 
 /**
  * GET /api/lightning/balance
- * Returns the node's Lightning channel balance (stub — real LND not wired).
+ * LNbits wallet when configured; else mock stub.
  */
-router.get('/balance', (req, res) => {
-  res.json({ balance: 0, sats: 0, currency: 'BTC', mock: true })
+router.get('/balance', async (req, res) => {
+  try {
+    const { lnbitsWalletInfo, isLnbitsConfigured } = await import('../lib/lnbits.js')
+    if (isLnbitsConfigured()) {
+      const w = await lnbitsWalletInfo()
+      return res.json({
+        balance: w.balance_sats ?? 0,
+        sats: w.balance_sats ?? 0,
+        balance_msat: w.balance_msat,
+        currency: 'BTC',
+        mock: false,
+        provider: 'lnbits',
+        name: w.name,
+        status: w.status
+      })
+    }
+    res.json({
+      balance: 0,
+      sats: 0,
+      currency: 'BTC',
+      mock: true,
+      note: 'Set LNBITS_URL + LNBITS_INVOICE_KEY for live balance'
+    })
+  } catch (e) {
+    res.status(500).json({ error: e.message })
+  }
 })
 
 /**

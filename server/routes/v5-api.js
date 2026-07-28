@@ -418,36 +418,25 @@ router.get('/public/did', (req, res) => {
 // ─── 41. GET /api/public/bitcoin ──────────────────────────
 router.get('/public/bitcoin', async (req, res) => {
   publicCache(res)
-  if (process.env.BITCOIN_RPC_URL) {
-    try {
-      const rpc = async (method, params = []) => {
-        const r = await fetch(process.env.BITCOIN_RPC_URL, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            ...(process.env.BITCOIN_RPC_AUTH
-              ? { Authorization: `Basic ${process.env.BITCOIN_RPC_AUTH}` }
-              : {})
-          },
-          body: JSON.stringify({ jsonrpc: '1.0', id: 'v5', method, params }),
-          signal: AbortSignal.timeout(5000)
+  try {
+    const { bitcoinRpcHealth, isBitcoinRpcConfigured } = await import('../lib/bitcoin-rpc.js')
+    if (isBitcoinRpcConfigured()) {
+      const h = await bitcoinRpcHealth()
+      if (h.status === 'healthy') {
+        return res.json({
+          source: 'bitcoind',
+          block_height: h.block_height,
+          peers: h.peers,
+          mempool_count: h.mempool_count,
+          chain: h.chain,
+          pruned: h.pruned,
+          ready_to_verify: true,
+          timestamp: new Date().toISOString()
         })
-        return r.json()
       }
-      const height = await rpc('getblockcount')
-      const info = await rpc('getnetworkinfo')
-      const mem = await rpc('getmempoolinfo')
-      return res.json({
-        source: 'bitcoind',
-        block_height: height.result,
-        peers: info.result?.connections,
-        mempool_count: mem.result?.size,
-        chain: 'main',
-        timestamp: new Date().toISOString()
-      })
-    } catch (e) {
-      logger.warn('bitcoin rpc: %s', e.message)
     }
+  } catch (e) {
+    logger.warn('bitcoin rpc: %s', e.message)
   }
   // fallback mempool.space
   try {
@@ -460,6 +449,8 @@ router.get('/public/bitcoin', async (req, res) => {
       block_height: height,
       peers: null,
       mempool_count: null,
+      ready_to_verify: false,
+      note: 'Set BITCOIN_RPC_URL on THOR for own-node source',
       timestamp: new Date().toISOString()
     })
   } catch (e) {
@@ -470,20 +461,32 @@ router.get('/public/bitcoin', async (req, res) => {
 // ─── 45. GET /api/public/lightning ────────────────────────
 router.get('/public/lightning', async (req, res) => {
   publicCache(res)
-  if (!process.env.LND_REST_URL && !process.env.LNBITS_URL) {
-    return res.json({
-      configured: false,
-      status: 'optional',
-      note: 'Set LND_REST_URL or LNBITS_URL for live lightning plane'
+  try {
+    const { isLnbitsConfigured, isLndConfigured, lnbitsWalletInfo, paywallStampPriceSats } =
+      await import('../lib/lnbits.js')
+    const configured = isLnbitsConfigured() || isLndConfigured()
+    if (!configured) {
+      return res.json({
+        configured: false,
+        status: 'optional',
+        ready_for_paywall: false,
+        stamp_price_sats: paywallStampPriceSats(),
+        note: 'Set LNBITS_URL + LNBITS_INVOICE_KEY (or LND) then flip REQUIRE_LIGHTNING=true'
+      })
+    }
+    const w = isLnbitsConfigured() ? await lnbitsWalletInfo() : { status: 'configured' }
+    res.json({
+      configured: true,
+      status: w.status || 'configured',
+      lnd: isLndConfigured(),
+      lnbits: isLnbitsConfigured(),
+      ready_for_paywall: true,
+      stamp_price_sats: paywallStampPriceSats(),
+      note: 'Balances withheld from public endpoint; HQ Vault holds invoice key for display'
     })
+  } catch (e) {
+    res.status(500).json({ error: e.message })
   }
-  res.json({
-    configured: true,
-    status: 'configured',
-    lnd: Boolean(process.env.LND_REST_URL),
-    lnbits: Boolean(process.env.LNBITS_URL),
-    note: 'Balances withheld from public endpoint'
-  })
 })
 
 // ─── 5. GET /api/stamps/recent (before :id routes) ────────
