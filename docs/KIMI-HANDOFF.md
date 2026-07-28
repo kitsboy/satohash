@@ -4,17 +4,19 @@
 **Cam intent:** Solve remaining ops so Satohash is clean operational + metrics feed **https://hq.giveabit.io** (not hw).  
 **Code is already on GitHub main** — your job is THOR pull/rebuild, smoke, HQ wiring. **No secrets in git.**
 
-### Live facts (verified 2026-07-28)
+### Live facts (verified 2026-07-28 — all ✅ now)
+
 | Check | Result |
 |-------|--------|
-| `GET https://api.satohash.io/health` | 200 — but `details.version` still **`4.1.0-ELITE`** (old container / missing `npm_package_version`) |
-| `GET https://api.satohash.io/api/public/version` | `5.0.0-ELITE` (build often 0 — rebuild to stamp real build/commit) |
-| `GET https://api.satohash.io/metrics.json` | 200 · schema `gab.product-metrics.v1` · **canonical for HQ** |
+| `GET https://api.satohash.io/health` | 200 — `details.version` **`5.0.0-ELITE`** ✅ |
+| `GET https://api.satohash.io/api/public/version` | `5.0.0-ELITE` ✅ |
+| `GET https://api.satohash.io/metrics.json` | 200 · schema `gab.product-metrics.v1` · **canonical for HQ** ✅ |
 | `GET https://satohash.io/metrics.json` | 200 static mirror (may lag) — **do not treat as SoT** |
-| `GET https://analytics.giveabit.io/script.js` | 200 · CF Worker → Umami on THOR |
-| `POST https://analytics.giveabit.io/api/send` | 200 · collection works |
-| Suite Umami tags | Live on giveabit, katoa, tadbuy, motopass, HQ, sherpacarta, stranded, openstrata, satohash |
-| Git main | Synced from M3; feature `ab042de` + later docs; nav polish may land after this brief |
+| `GET https://analytics.giveabit.io/script.js` | 200 · CF Worker → Umami on THOR ✅ |
+| `POST https://analytics.giveabit.io/api/send` | 200 · collection works ✅ |
+| Suite Umami tags | Live on all 9 suite products ✅ |
+| Git main | Synced from M3; rebuilt + pushed status.json ✅ |
+| HQ Satohash card | 🟢 **GREEN** — live data, 7 stamps all time, 100% confirm rate ✅ |
 
 ### Do this now (ordered)
 1. **API rebuild on THOR**
