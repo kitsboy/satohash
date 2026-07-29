@@ -56,6 +56,7 @@ const Guides = React.lazy(() => import('./pages/Guides'))
 const Glossary = React.lazy(() => import('./pages/Glossary'))
 const Docs = React.lazy(() => import('./pages/Docs'))
 const DocViewer = React.lazy(() => import('./pages/DocViewer'))
+const ExecutiveSummary = React.lazy(() => import('./pages/ExecutiveSummary'))
 const Security = React.lazy(() => import('./pages/Security'))
 const Integrations = React.lazy(() => import('./pages/Integrations'))
 const Widgets = React.lazy(() => import('./pages/Widgets'))
@@ -310,6 +311,7 @@ function AppContent() {
             <Route path="/guides" element={<Guides />} />
             <Route path="/glossary" element={<Glossary />} />
             <Route path="/docs" element={<Docs />} />
+            <Route path="/docs/executive-summary" element={<ExecutiveSummary />} />
             <Route path="/docs/:slug" element={<DocViewer />} />
             <Route path="/security" element={<Security />} />
             <Route path="/integrations" element={<Integrations />} />

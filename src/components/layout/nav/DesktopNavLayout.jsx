@@ -7,15 +7,17 @@ import { Link } from 'react-router-dom'
 export default function DesktopNavLayout({ left, center, right, className = '' }) {
   return (
     <div
-      className={`grid h-15 w-full grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-3 px-4 sm:h-16 sm:gap-5 sm:px-6 lg:px-8 ${className}`}
-      style={{ minHeight: '3.75rem' }}
+      className={`grid w-full grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-3 px-4 sm:gap-5 sm:px-6 lg:px-8 ${className}`}
+      style={{ minHeight: '4rem', height: '4rem' }}
     >
       <div className="flex min-w-0 items-center justify-start overflow-hidden">{left}</div>
       <div
-        className="flex shrink-0 items-center justify-center rounded-full px-1 py-0.5"
+        className="flex shrink-0 items-center justify-center rounded-2xl px-1.5 py-1"
         style={{
-          background: 'color-mix(in srgb, var(--bg-secondary) 55%, transparent)',
-          boxShadow: 'inset 0 0 0 1px color-mix(in srgb, var(--border) 70%, transparent)'
+          background:
+            'linear-gradient(180deg, color-mix(in srgb, var(--bg-secondary) 70%, transparent), color-mix(in srgb, var(--bg-primary) 40%, transparent))',
+          boxShadow:
+            'inset 0 0 0 1px color-mix(in srgb, var(--border) 80%, transparent), 0 1px 0 rgba(240,180,41,0.06)'
         }}
       >
         {center}
@@ -28,7 +30,7 @@ export default function DesktopNavLayout({ left, center, right, className = '' }
 }
 
 const tabBase =
-  'group relative whitespace-nowrap rounded-full px-3.5 py-2 text-[11px] font-semibold tracking-[0.06em] uppercase transition-all duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-navbar)]'
+  'group relative whitespace-nowrap rounded-xl px-3.5 py-2.5 text-[11px] font-bold tracking-[0.07em] uppercase transition-all duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-navbar)]'
 
 export function NavTab({ to, href, children, active, onClick }) {
   const className = [
