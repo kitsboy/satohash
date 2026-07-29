@@ -1,24 +1,13 @@
-# Satohash 1‑minute explainer assets
+# Satohash explainer assets
 
 | File | Role |
 |------|------|
-| `01-stamp-hero.jpg` … `06-cta-split.jpg` | Visual beats |
-| `kimi-teacher.jpg` | Talent / PIP |
-| **`satohash-explainer-music.mp3`** | 60s dark ambient under VO (320kbps, ~−21 dB peak) |
-| `bgm-ambient.wav` | Earlier draft pad (legacy) |
-| `SCRIPT.md` | Full Kimi VO script + timing |
-| `satohash-explainer-preview.mp4` | Graphics + music only (no VO yet) |
-| `vo-complete.mp3` | **Drop here** when Kimi copies from THOR |
+| `01-…`–`06-…` + `kimi-teacher.jpg` | Visual beats |
+| `satohash-explainer-music.mp3` | Ambient BGM (loop under VO) |
+| **`vo-complete.mp3`** | Full VO (~79.8s) — drives `/watch` clock |
+| `vo-section-1/2/3.mp3` | Optional scene stems |
+| `satohash-explainer-with-vo.mp4` | Slides + music + VO mix |
+| `SCRIPT.md` | Timing board |
 
-## Live player
-
-https://satohash.io/watch
-
-- Music plays under slides automatically  
-- If `vo-complete.mp3` is present, it is used as the real voiceover  
-- Otherwise “VO preview” uses browser TTS  
-
-## Kimi / THOR VO
-
-Source on THOR: `/root/satohash/docs/media/video/vo-complete.mp3`  
-Copy into this folder as `vo-complete.mp3`, commit, push — player picks it up automatically.
+**Player:** https://satohash.io/watch  
+Slides follow `vo-complete.mp3` currentTime; CTA holds to end (~80s).
