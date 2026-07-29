@@ -1,3 +1,28 @@
+## Session — 2026-07-29 (Grok) — EXPLAINER VO + DOCS CLOSEOUT /goodbye
+
+**From:** Grok · **Status:** Prod SPA + explainer complete · free stamps · handoffs updated
+
+### Done
+- `/watch` explainer: graphics + `satohash-explainer-music.mp3` + **`vo-complete.mp3` (~80s)** VO-driven slides
+- Eager `/watch` + executive-summary (no lazy chunk desync)
+- Landing free/fees + exec summary charts + formal brief + nav mobile drawer
+- Docs: AGENTS, deploy, architecture, handoff-log, MASTER-BRAIN-INGEST, current-status, LATEST-UPDATE
+- Server routes split + components folders (prior in same mega-thread)
+
+### Paths for Kimi
+- Media: `public/media/video/` (VO, music, frames, `satohash-explainer-with-vo.mp4`)
+- Player: https://satohash.io/watch
+- MASTER-BRAIN paste: `docs/MASTER-BRAIN-INGEST.md`
+- Status: `.ai_docs/current-status.md`
+
+### Kimi open
+- IBD → bitcoind · metrics client_id · optional homepage CTA → /watch · wallets when Cam flips
+
+### Standing
+REQUIRE_LIGHTNING=false · no secrets · HQ metrics API SoT · purge apex satohash.io if HTML-as-JS returns
+
+---
+
 ## Session — 2026-07-28 (Grok) — PRODUCTION CLOSEOUT BOW
 
 **From:** Grok · **Status:** Almost full prod · free stamps · bow-tied

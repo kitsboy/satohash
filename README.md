@@ -7,21 +7,22 @@
 
 **Institutional-Grade Digital Notary & Cryptographic Settlement Mesh.** Satohash is a high-fidelity, zero-knowledge platform for verifiable document provenance, multi-party contract signatures, forensic web capture, and automated cryptographic evidence gathering — anchored immutably to the Bitcoin blockchain via OpenTimestamps. Built as Free and Open Source (F.O.S.S.) Bitcoin software by [Give A Bit](https://giveabit.io).
 
-> **Handoff note (2026-06-10):** The local filesystem at `/Users/cam/projects/satohash` is the most current source of truth. A recent attempt to push to GitHub did not fully land. All handoff artifacts (EXECUTIVE_SUMMARY, MARKETING, FINANCIALS, PRODUCT_PITCH, new ARCHITECTURE + handoff prompt files) live in this working tree.
-
-For the deep business case, four-plane architecture, and sovereign positioning, start with the handoff package in `docs/` (especially [docs/EXECUTIVE_SUMMARY.md](docs/EXECUTIVE_SUMMARY.md) and [docs/PRODUCT_PITCH.md](docs/PRODUCT_PITCH.md)). A full documentation index is at [docs/DOCS_INDEX.md](docs/DOCS_INDEX.md).
+> **Agents:** start at **[AGENTS.md](AGENTS.md)** · status **[.ai_docs/current-status.md](.ai_docs/current-status.md)** · handoff **[docs/handoff-log.md](docs/handoff-log.md)** · MASTER-BRAIN paste **[docs/MASTER-BRAIN-INGEST.md](docs/MASTER-BRAIN-INGEST.md)**.  
+> **Live:** https://satohash.io · API https://api.satohash.io · free stamps · `REQUIRE_LIGHTNING=false`.
 
 ### 📖 Documentation & Pitch
 
 | Resource | Path |
 |----------|------|
-| **Live pitch deck** | [/pitch](/pitch) (in-app route) |
-| Executive summary | [docs/EXECUTIVE-SUMMARY.md](docs/EXECUTIVE-SUMMARY.md) |
-| Product pitch | [docs/PITCH.md](docs/PITCH.md) |
-| Architecture | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) |
-| Quickstart | [docs/QUICKSTART.md](docs/QUICKSTART.md) |
+| **60s–80s explainer** | [/watch](https://satohash.io/watch) · media `public/media/video/` |
+| **Exec summary (UI)** | [/docs/executive-summary](https://satohash.io/docs/executive-summary) |
+| **Live pitch deck** | [/pitch](https://satohash.io/pitch) |
+| Executive summary (md) | [docs/marketing/EXECUTIVE-SUMMARY.md](docs/marketing/EXECUTIVE-SUMMARY.md) |
+| Product pitch | [docs/marketing/PITCH.md](docs/marketing/PITCH.md) |
+| Architecture | [docs/architecture.md](docs/architecture.md) |
 | Deploy (canonical) | [docs/deploy.md](docs/deploy.md) |
-| Improvement log | [docs/IMPROVEMENTS-LOG.md](docs/IMPROVEMENTS-LOG.md) |
+| Explainer music/VO | [docs/EXPLAINER-MUSIC-AND-VO.md](docs/EXPLAINER-MUSIC-AND-VO.md) |
+| Quickstart | [docs/QUICKSTART.md](docs/QUICKSTART.md) |
 
 ---
 

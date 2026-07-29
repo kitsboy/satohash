@@ -24,6 +24,19 @@ Canonical short ops pointer. Detailed procedures remain in:
 2. Purge **satohash.io** zone cache (not giveabit) if edge poison
 3. Prefer single deploy path (GH Actions)
 
+## Explainer / media
+
+| Item | Path |
+|------|------|
+| Player | https://satohash.io/watch |
+| VO | `public/media/video/vo-complete.mp3` (~80s) |
+| Music | `public/media/video/satohash-explainer-music.mp3` |
+| Mix MP4 | `public/media/video/satohash-explainer-with-vo.mp4` |
+| Ops notes | `docs/EXPLAINER-MUSIC-AND-VO.md` |
+
+If `/watch` shows System Desync: hard reset + purge **satohash.io** zone; marketing routes are eager-loaded.
+
 ## Handoffs
 
-Newest session notes: `docs/handoff-log.md` (also append `docs/KIMI-HANDOFF.md` until fully migrated).
+Newest session notes: `docs/handoff-log.md` (also append `docs/KIMI-HANDOFF.md` until fully migrated).  
+MASTER-BRAIN paste: `docs/MASTER-BRAIN-INGEST.md`.

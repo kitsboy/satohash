@@ -12,22 +12,15 @@
 
 Live player loads this under the slideshow at `/watch`.
 
-## Voiceover (THOR → M3)
+## Voiceover (live on GitHub)
 
 | Asset | Status |
 |-------|--------|
-| `vo-complete.mp3` | Generate on THOR; **copy to** `public/media/video/vo-complete.mp3` |
-| Sections | `vo-section-{1,2,3}.mp3` optional intermediates |
+| `vo-complete.mp3` | ✅ ~79.8s — **drives `/watch` clock** |
+| `vo-section-1/2/3.mp3` | ✅ Optional stems (~26 / 30 / 23s) |
 
-```bash
-# From a machine that can reach THOR:
-scp root@THOR:/root/satohash/docs/media/video/vo-complete.mp3 \
-  ~/projects/satohash/public/media/video/vo-complete.mp3
-cd ~/projects/satohash && git add public/media/video/vo-complete.mp3 && git commit -m "media: add explainer VO" && git push
-```
-
-If VO is ~79s, either trim to 60s on THOR or we stretch slideshow timings to match.
-
+Slide board stretched to ~80s with longer CTA (see `public/media/video/SCRIPT.md`).  
+No re-record required unless Cam wants a tighter 55s cut.
 ## Preview video (no VO)
 
 `public/media/video/satohash-explainer-preview.mp4` — graphics + music only.

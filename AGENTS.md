@@ -10,6 +10,8 @@
 | **API / family clients** | `docs/FAMILY-API.md` |
 | **OTS / stamp work** | `docs/OTS-DEEP-LEARN.md` + `docs/LEARN-STAMP-FAMILY.md` |
 | **Session log** | `docs/handoff-log.md` (newest first; legacy: `docs/KIMI-HANDOFF.md`) |
+| **Explainer /video** | `/watch` · assets `public/media/video/` · `docs/EXPLAINER-MUSIC-AND-VO.md` |
+| **MASTER-BRAIN paste** | `docs/MASTER-BRAIN-INGEST.md` |
 
 ## Non-negotiables
 
@@ -30,6 +32,8 @@
 | API | THOR Docker → api.satohash.io |
 | Metrics SoT | `https://api.satohash.io/metrics.json` (SPA `/metrics.json` is CF Function proxy) |
 | HQ | hq.giveabit.io |
+| Explainer | `/watch` · VO `vo-complete.mp3` · music `satohash-explainer-music.mp3` |
+| SPA assets | Vite `assetsDir: 'b'` → public `/b/*` (do not revert to long-cache `/assets/*` poison) |
 
 ## End of session (Grok)
 

@@ -15,6 +15,8 @@ Track moves/merges so agents don’t chase ghosts.
 | 2026-07-28 | Root `archive/` folded | `archive/*` | `docs/archive/legacy-root/` |
 | 2026-07-28 | Server route split | `server/index.js` inline handlers | `server/routes/{auth,ai,stamps,…}.js` + `server/lib/*` |
 | 2026-07-28 | Components restructure | flat `src/components/*` | `layout/ shared/ ui/ stamps/ dashboard/ forms/ marketing/` |
+| 2026-07-29 | Explainer media plane | Grok graphics + music + Kimi VO | `public/media/video/*` · `/watch` |
+| 2026-07-29 | Doc/status closeout | — | current-status, handoff-log, MASTER-BRAIN-INGEST, LATEST-UPDATE |
 
 ## Left alone (still intentional)
 
