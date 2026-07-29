@@ -873,6 +873,13 @@ export default function Landing() {
             >
               {t('landingPage.freeModel.ctaPricing')}
             </Link>
+            <Link
+              to="/watch"
+              className="inline-flex items-center gap-2 rounded-2xl border px-6 py-3.5 text-sm font-bold transition-colors hover:border-[var(--accent-gold)]"
+              style={{ borderColor: 'rgba(240,180,41,0.4)', color: 'var(--accent-gold)' }}
+            >
+              Watch 60s explainer
+            </Link>
           </motion.div>
         </div>
       </section>

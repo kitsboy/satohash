@@ -53,6 +53,7 @@ export default function MarketingDesktopNav({ onDonate }) {
       { label: t('nav.comparison') || 'Compare', href: '/comparison', icon: GitCompare },
       { label: 'Government', href: '/government', icon: Building2 },
       { label: 'Exec summary', href: '/docs/executive-summary', icon: BookOpen },
+      { label: '60s explainer', href: '/watch', icon: Fingerprint },
       { label: 'Docs', href: '/docs', icon: BookOpen }
     ],
     [t]
