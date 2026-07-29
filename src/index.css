@@ -3,6 +3,9 @@
 
 @layer base {
   :root {
+    /* cache-bust token so CF edge cannot keep a poisoned HTML-as-CSS object */
+    --satohash-css-build: 2026-07-29-css2;
+
     /* ── Mobile-first breakpoints (reference) ─────────────── */
     --bp-sm: 640px;
     --bp-md: 768px;
