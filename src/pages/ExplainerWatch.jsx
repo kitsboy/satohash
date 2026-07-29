@@ -6,12 +6,20 @@ import MarketingDesktopNav from '../components/layout/MarketingDesktopNav'
 import Footer from '../components/layout/Footer'
 import usePageMeta from '../hooks/usePageMeta'
 
+/**
+ * Timings stretched to ~80s to match vo-complete.mp3 (~79.8s).
+ * Extra air on batch/verify and longer CTA (satohash.io plate).
+ * Section files (optional mix):
+ *   vo-section-1 ~26s → hook+stamp+flow start
+ *   vo-section-2 ~30s → flow/batch
+ *   vo-section-3 ~23s → verify+anchor+cta
+ */
 const BEATS = [
   {
     id: 'kimi',
     src: '/media/video/kimi-teacher.jpg',
     start: 0,
-    end: 3,
+    end: 5,
     title: 'Hook',
     line: 'If it matters… stamp it onto Bitcoin.',
     overlay: null
@@ -19,8 +27,8 @@ const BEATS = [
   {
     id: 'hero',
     src: '/media/video/01-stamp-hero.jpg',
-    start: 3,
-    end: 10,
+    start: 5,
+    end: 14,
     title: 'Stamp',
     line: 'Permanent proof of existence—without trusting a company forever.',
     overlay: 'Proof, not promises'
@@ -28,8 +36,8 @@ const BEATS = [
   {
     id: 'flow',
     src: '/media/video/02-single-stamp-flow.jpg',
-    start: 10,
-    end: 25,
+    start: 14,
+    end: 32,
     title: 'How it works',
     line: 'Hash locally. Three calendars. Anchored in Bitcoin.',
     overlay: 'File → Hash → Calendar → Bitcoin'
@@ -37,8 +45,8 @@ const BEATS = [
   {
     id: 'batch',
     src: '/media/video/03-batch-stamp.jpg',
-    start: 25,
-    end: 40,
+    start: 32,
+    end: 50,
     title: 'Batch',
     line: 'Whole folders. One cryptographic commitment. Free today.',
     overlay: 'Batch stamp'
@@ -46,8 +54,8 @@ const BEATS = [
   {
     id: 'verify',
     src: '/media/video/04-verify-check.jpg',
-    start: 40,
-    end: 47,
+    start: 50,
+    end: 60,
     title: 'Verify',
     line: 'Trust, but verify—with open tools.',
     overlay: 'Independently verifiable'
@@ -55,8 +63,8 @@ const BEATS = [
   {
     id: 'anchor',
     src: '/media/video/05-bitcoin-anchor.jpg',
-    start: 47,
-    end: 52,
+    start: 60,
+    end: 68,
     title: 'Anchor',
     line: 'When Bitcoin confirms, the proof is locked in.',
     overlay: 'Permanent'
@@ -64,72 +72,93 @@ const BEATS = [
   {
     id: 'cta',
     src: '/media/video/06-cta-split.jpg',
-    start: 52,
-    end: 60,
+    start: 68,
+    end: 80,
     title: 'CTA',
     line: 'satohash.io — Free. Sovereign. Private.',
     overlay: 'Start free · No account'
   }
 ]
 
-const TOTAL = 60
+const FALLBACK_TOTAL = 80
 
-function beatAt(t) {
+function beatAt(time, total) {
+  const t = Math.min(time, total - 0.001)
   return BEATS.find((b) => t >= b.start && t < b.end) || BEATS[BEATS.length - 1]
+}
+
+function fmt(s) {
+  const m = Math.floor(s / 60)
+  const sec = Math.floor(s % 60)
+  return `${m}:${sec.toString().padStart(2, '0')}`
 }
 
 export default function ExplainerWatch() {
   usePageMeta({
-    title: '60‑second explainer — Satohash',
+    title: 'Explainer — Satohash',
     description:
       'Watch how Satohash stamps files onto Bitcoin with OpenTimestamps. Free. Sovereign. Private.'
   })
 
   const [playing, setPlaying] = useState(false)
   const [t, setT] = useState(0)
+  const [total, setTotal] = useState(FALLBACK_TOTAL)
   const [muted, setMuted] = useState(false)
-  const [voOn, setVoOn] = useState(false)
+  const [voOn, setVoOn] = useState(true)
   const [bgmReady, setBgmReady] = useState(false)
+  const [hasRealVo, setHasRealVo] = useState(false)
   const rafRef = useRef(null)
   const lastRef = useRef(null)
   const audioRef = useRef(null)
-  const spokenBeatRef = useRef(null)
-
-  const beat = useMemo(() => beatAt(t), [t])
-  const progress = Math.min(100, (t / TOTAL) * 100)
-
   const voRef = useRef(null)
-  const [hasRealVo, setHasRealVo] = useState(false)
+  const spokenBeatRef = useRef(null)
+  const totalRef = useRef(FALLBACK_TOTAL)
 
-  // BGM — production track under VO (~-18dB headroom baked in)
+  const beat = useMemo(() => beatAt(t, total), [t, total])
+  const progress = Math.min(100, (t / total) * 100)
+
+  // BGM + recorded VO
   useEffect(() => {
     const a = new Audio('/media/video/satohash-explainer-music.mp3')
     a.loop = true
-    a.volume = muted ? 0 : 0.28
+    a.volume = muted ? 0 : 0.26
     a.preload = 'auto'
     audioRef.current = a
     a.addEventListener('canplaythrough', () => setBgmReady(true), { once: true })
 
-    // Optional recorded VO from THOR (drop as vo-complete.mp3)
     const vo = new Audio('/media/video/vo-complete.mp3')
     vo.preload = 'auto'
     vo.volume = muted ? 0 : 0.95
     voRef.current = vo
-    vo.addEventListener(
-      'canplaythrough',
-      () => {
+
+    const onMeta = () => {
+      if (Number.isFinite(vo.duration) && vo.duration > 1) {
+        const d = Math.ceil(vo.duration * 10) / 10
+        setTotal(d)
+        totalRef.current = d
         setHasRealVo(true)
-        setVoOn(true) // prefer real VO when present
-      },
-      { once: true }
-    )
+        setVoOn(true)
+      }
+    }
+    vo.addEventListener('loadedmetadata', onMeta)
+    vo.addEventListener('canplaythrough', onMeta, { once: true })
     vo.addEventListener(
       'error',
       () => {
         setHasRealVo(false)
+        setTotal(FALLBACK_TOTAL)
+        totalRef.current = FALLBACK_TOTAL
       },
       { once: true }
     )
+    vo.addEventListener('ended', () => {
+      setPlaying(false)
+      setT(totalRef.current)
+      if (audioRef.current) {
+        audioRef.current.pause()
+        audioRef.current.currentTime = 0
+      }
+    })
 
     return () => {
       a.pause()
@@ -137,33 +166,72 @@ export default function ExplainerWatch() {
       vo.pause()
       vo.src = ''
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- init once
   }, [])
 
   useEffect(() => {
-    if (audioRef.current) audioRef.current.volume = muted ? 0 : 0.28
+    if (audioRef.current) audioRef.current.volume = muted ? 0 : 0.26
     if (voRef.current) voRef.current.volume = muted ? 0 : 0.95
   }, [muted])
 
-  // Real recorded VO sync (when file exists)
+  // Drive clock from real VO when available
   useEffect(() => {
     const vo = voRef.current
-    if (!vo || !hasRealVo) return
-    if (playing && voOn) {
-      // keep VO time roughly aligned with slideshow clock
-      if (Math.abs(vo.currentTime - t) > 0.45) {
-        try {
-          vo.currentTime = Math.min(t, vo.duration || t)
-        } catch {
-          /* ignore seek race */
-        }
+    if (!playing) {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current)
+      if (audioRef.current) audioRef.current.pause()
+      if (vo) vo.pause()
+      if (typeof window !== 'undefined' && window.speechSynthesis) {
+        window.speechSynthesis.cancel()
       }
-      vo.play().catch(() => {})
-    } else {
-      vo.pause()
+      return undefined
     }
-  }, [playing, voOn, hasRealVo, t])
 
-  // Browser TTS only as preview when no real VO
+    lastRef.current = null
+    if (audioRef.current && bgmReady) {
+      audioRef.current.play().catch(() => {})
+    }
+
+    if (hasRealVo && voOn && vo) {
+      vo.play().catch(() => {})
+      const poll = () => {
+        if (vo && !vo.paused) {
+          setT(vo.currentTime || 0)
+        }
+        rafRef.current = requestAnimationFrame(poll)
+      }
+      rafRef.current = requestAnimationFrame(poll)
+      return () => {
+        if (rafRef.current) cancelAnimationFrame(rafRef.current)
+      }
+    }
+
+    // Fallback: free-run clock (no real VO)
+    const tick = (now) => {
+      if (!lastRef.current) lastRef.current = now
+      const dt = (now - lastRef.current) / 1000
+      lastRef.current = now
+      setT((prev) => {
+        const next = prev + dt
+        if (next >= totalRef.current) {
+          setPlaying(false)
+          if (audioRef.current) {
+            audioRef.current.pause()
+            audioRef.current.currentTime = 0
+          }
+          return totalRef.current
+        }
+        return next
+      })
+      rafRef.current = requestAnimationFrame(tick)
+    }
+    rafRef.current = requestAnimationFrame(tick)
+    return () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current)
+    }
+  }, [playing, bgmReady, hasRealVo, voOn])
+
+  // Browser TTS only when no real VO file
   useEffect(() => {
     if (hasRealVo) return
     if (!playing || !voOn || typeof window === 'undefined' || !window.speechSynthesis) return
@@ -182,56 +250,8 @@ export default function ExplainerWatch() {
     window.speechSynthesis.speak(u)
   }, [beat, playing, voOn, muted, hasRealVo])
 
-  useEffect(() => {
-    if (!playing) {
-      if (rafRef.current) cancelAnimationFrame(rafRef.current)
-      if (audioRef.current) audioRef.current.pause()
-      if (voRef.current) voRef.current.pause()
-      if (typeof window !== 'undefined' && window.speechSynthesis) {
-        window.speechSynthesis.cancel()
-      }
-      return undefined
-    }
-
-    lastRef.current = null
-    if (audioRef.current && bgmReady) {
-      audioRef.current.play().catch(() => {})
-    }
-
-    const tick = (now) => {
-      if (!lastRef.current) lastRef.current = now
-      const dt = (now - lastRef.current) / 1000
-      lastRef.current = now
-      setT((prev) => {
-        const next = prev + dt
-        if (next >= TOTAL) {
-          setPlaying(false)
-          if (audioRef.current) {
-            audioRef.current.pause()
-            audioRef.current.currentTime = 0
-          }
-          if (voRef.current) {
-            voRef.current.pause()
-            voRef.current.currentTime = 0
-          }
-          if (typeof window !== 'undefined' && window.speechSynthesis) {
-            window.speechSynthesis.cancel()
-          }
-          return TOTAL
-        }
-        return next
-      })
-      rafRef.current = requestAnimationFrame(tick)
-    }
-
-    rafRef.current = requestAnimationFrame(tick)
-    return () => {
-      if (rafRef.current) cancelAnimationFrame(rafRef.current)
-    }
-  }, [playing, bgmReady])
-
   const toggle = () => {
-    if (t >= TOTAL) {
+    if (t >= total - 0.15) {
       setT(0)
       spokenBeatRef.current = null
       if (audioRef.current) audioRef.current.currentTime = 0
@@ -258,15 +278,13 @@ export default function ExplainerWatch() {
   const seekBeat = (b) => {
     setT(b.start + 0.01)
     spokenBeatRef.current = null
-    if (playing && audioRef.current) {
-      // keep playing
+    if (voRef.current && hasRealVo) {
+      try {
+        voRef.current.currentTime = b.start
+      } catch {
+        /* ignore */
+      }
     }
-  }
-
-  const fmt = (s) => {
-    const m = Math.floor(s / 60)
-    const sec = Math.floor(s % 60)
-    return `${m}:${sec.toString().padStart(2, '0')}`
   }
 
   return (
@@ -279,17 +297,18 @@ export default function ExplainerWatch() {
             className="mb-2 text-[10px] font-black tracking-[0.25em] uppercase"
             style={{ color: 'var(--accent-gold)' }}
           >
-            60‑second explainer
+            {hasRealVo ? `~${Math.round(total)}s explainer · live VO` : 'Explainer'}
           </p>
           <h1 className="font-display text-2xl font-black tracking-tight sm:text-4xl">
             Stamp it onto <span className="gold-text">Bitcoin</span>
           </h1>
           <p className="mx-auto mt-2 max-w-lg text-sm" style={{ color: 'var(--text-secondary)' }}>
-            Teacher Kimi’s script · production graphics · low ambient score under the VO
+            {hasRealVo
+              ? 'Recorded voiceover + ambient score under the picture'
+              : 'Ambient score ready · drop vo-complete.mp3 for full VO'}
           </p>
         </div>
 
-        {/* Stage */}
         <div
           className="relative overflow-hidden rounded-2xl border shadow-2xl sm:rounded-3xl"
           style={{
@@ -311,7 +330,6 @@ export default function ExplainerWatch() {
             />
           </AnimatePresence>
 
-          {/* Gradients for text legibility */}
           <div
             className="pointer-events-none absolute inset-0"
             style={{
@@ -320,7 +338,6 @@ export default function ExplainerWatch() {
             }}
           />
 
-          {/* Kimi PIP on CTA */}
           {beat.id === 'cta' && (
             <img
               src="/media/video/kimi-teacher.jpg"
@@ -330,7 +347,6 @@ export default function ExplainerWatch() {
             />
           )}
 
-          {/* Overlay copy */}
           <div className="absolute inset-x-0 bottom-0 p-4 sm:p-8">
             {beat.overlay && (
               <p
@@ -344,11 +360,10 @@ export default function ExplainerWatch() {
               {beat.line}
             </p>
             <p className="mt-2 text-[11px] font-medium text-white/60 sm:text-xs">
-              {beat.title} · {fmt(beat.start)}–{fmt(beat.end)}
+              {beat.title} · {fmt(beat.start)}–{fmt(Math.min(beat.end, total))}
             </p>
           </div>
 
-          {/* Play affordance when paused at start */}
           {!playing && t < 0.2 && (
             <button
               type="button"
@@ -366,7 +381,6 @@ export default function ExplainerWatch() {
           )}
         </div>
 
-        {/* Progress */}
         <div className="mt-4">
           <div
             className="h-1.5 overflow-hidden rounded-full"
@@ -385,11 +399,10 @@ export default function ExplainerWatch() {
             style={{ color: 'var(--text-secondary)' }}
           >
             <span>{fmt(t)}</span>
-            <span>{fmt(TOTAL)}</span>
+            <span>{fmt(total)}</span>
           </div>
         </div>
 
-        {/* Controls */}
         <div className="mt-4 flex flex-wrap items-center justify-center gap-2 sm:gap-3">
           <button
             type="button"
@@ -398,7 +411,7 @@ export default function ExplainerWatch() {
             style={{ background: 'var(--accent-gold)', color: '#141b25' }}
           >
             {playing ? <Pause size={18} /> : <Play size={18} />}
-            {playing ? 'Pause' : t >= TOTAL ? 'Play again' : 'Play'}
+            {playing ? 'Pause' : t >= total - 0.2 ? 'Play again' : 'Play'}
           </button>
           <button
             type="button"
@@ -424,20 +437,19 @@ export default function ExplainerWatch() {
               setVoOn((v) => !v)
               spokenBeatRef.current = null
               if (window.speechSynthesis) window.speechSynthesis.cancel()
+              if (voRef.current && !voOn === false) {
+                /* toggled off next render */
+              }
             }}
             className="inline-flex min-h-[48px] items-center gap-2 rounded-2xl border px-4 text-sm font-bold"
             style={{
               borderColor: voOn ? 'var(--accent-gold)' : 'var(--border)',
               color: voOn ? 'var(--accent-gold)' : 'var(--text-primary)'
             }}
-            title={
-              hasRealVo
-                ? 'Recorded voiceover (vo-complete.mp3)'
-                : 'Browser voice preview — drop vo-complete.mp3 for real Kimi VO'
-            }
+            title={hasRealVo ? 'Recorded VO (vo-complete.mp3)' : 'Browser TTS preview'}
           >
             {voOn ? <Mic size={16} /> : <MicOff size={16} />}
-            {hasRealVo ? (voOn ? 'VO on' : 'VO off') : voOn ? 'VO preview on' : 'VO preview'}
+            {hasRealVo ? (voOn ? 'VO on' : 'VO off') : voOn ? 'TTS on' : 'TTS off'}
           </button>
           <Link
             to="/stamp"
@@ -448,7 +460,6 @@ export default function ExplainerWatch() {
           </Link>
         </div>
 
-        {/* Beat strip */}
         <div className="mt-8 grid grid-cols-2 gap-2 sm:grid-cols-4 lg:grid-cols-7">
           {BEATS.map((b) => {
             const active = beat.id === b.id
@@ -484,17 +495,18 @@ export default function ExplainerWatch() {
           })}
         </div>
 
-        {/* Script panel */}
         <section
           className="mt-10 rounded-2xl border p-5 sm:p-8"
           style={{ borderColor: 'var(--border)', background: 'var(--surface-raised)' }}
         >
           <h2 className="font-display text-lg font-black sm:text-xl">
-            Full script <span className="gold-text">(Kimi VO)</span>
+            Script board <span className="gold-text">(aligned to VO)</span>
           </h2>
           <p className="mt-1 text-xs" style={{ color: 'var(--text-secondary)' }}>
-            We only had a timing outline earlier—this is the production read. Also in{' '}
-            <code className="text-[var(--accent-gold)]">public/media/video/SCRIPT.md</code>
+            {hasRealVo
+              ? `vo-complete.mp3 loaded (${total.toFixed(1)}s). Slides follow the voice clock; CTA holds through the end.`
+              : 'Waiting for vo-complete.mp3 — timings use ~80s stretch layout.'}{' '}
+            Sections also available: vo-section-1/2/3.mp3
           </p>
           <ol className="mt-6 space-y-4">
             {BEATS.map((b) => (
