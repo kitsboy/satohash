@@ -2,33 +2,30 @@
 
 **This file lives in every repo's ref/ directory.** Every time you open this project, read ref/GROK-BOOT.md first.
 
-## Required: Add analytics + metrics to this project
+## Also read (Satohash-specific)
 
-Before making any code changes, do this:
+1. `ref/AGENTS.md` + `docs/KIMI-HANDOFF.md` (top)
+2. `docs/FAMILY-API.md`
+3. `.ai_docs/current-status.md`
 
-**Step 1 — Umami tracking script**
+## Current state (2026-07-28)
 
-Add this to the site's <head>:
-<script defer src="//THOR_IP:3002/script.js" data-website-id="[WEBSITE_ID]"></script>
+- **API:** v5.0.0-ELITE on THOR Docker — fully operational
+- **SPA:** satohash.io + www.satohash.io (CF Pages, both 🟢 200)
+- **AI:** local embed + fraud ML live (no ANTHROPIC_KEY needed)
+- **Bitcoin node:** Bitcoin Core v28.1 pruned, IBD ~48% (overnight sync)
+- **Paywall:** REQUIRE_LIGHTNING=false (free stamps). LNbits invoice key wired — flip-ready.
+- **Nostr:** Multi-relay publish on stamp (2/3 relays ok, damus.io flaky)
+- **Explain video:** /watch page live with music + Kimi VO
+- **HQ:** 🟢 Green on `api.satohash.io/metrics.json`
 
-The website ID for this project is in docs/UMAMI-DEPLOYMENT.md (HQ repo) or ask Kimi on THOR.
+## Hard rules
 
-**Step 2 — /metrics.json endpoint**
-
-Create public/metrics.json with the gab.product-metrics.v1 schema.
-The full spec of every metric this project CAN expose is in:
-https://hq.giveabit.io/docs/ALL-SITE-METRICS.md (HQ Docs tab)
-
-**Step 3 — Push ref/ docs to this repo**
-
-After adding metrics, update or create ref/AGENTS.md and ref/GROK-BOOT.md.
-Commit + push.
-
-## Why this matters
-
-THOR's HQ pulls analytics + metrics from every product. Without these two files
-(Umami script + /metrics.json), this product shows demo data on the ops glass.
-With them, it shows live data — visitors, campaigns, sats, stamps.
+- No secrets in git (nsec, invoice keys, `.env`, PATs)
+- API lives only on `api.satohash.io` — SPA calls via `VITE_API_URL`
+- HQ SoT = `api.satohash.io/metrics.json` (not the SPA mirror)
+- M3/M4 = code + push; THOR/Kimi = Docker/node/bitcoind/LN/backups
+- www.satohash.io: if 522, check CF Pages custom domain (not THOR)
 
 ## Need help?
-Ask Kimi on THOR (via Hermes).
+Ask Kimi on THOR (via Hermes) for Docker, bitcoind, LNbits. Code stays on M3/M4.
