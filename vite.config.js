@@ -41,46 +41,15 @@ export default defineConfig({
                 }
             }
         },
+        // EMERGENCY: self-destroying SW kills every old registration on next visit.
+        // Stops System Desync (HTML served as JS via stale SW). Re-enable full PWA later.
         VitePWA({
             registerType: 'autoUpdate',
+            selfDestroying: true,
             workbox: {
-                // Drop old precache entries after deploys (prevents stale chunk → HTML → Unexpected token '<')
                 cleanupOutdatedCaches: true,
                 clientsClaim: true,
-                skipWaiting: true,
-                // Never treat /assets/* as SPA navigations
-                navigateFallback: 'index.html',
-                navigateFallbackDenylist: [/^\/assets\//, /^\/api\//, /^\/metrics\.json$/, /^\/vendor\//, /^\/sw\.js$/],
-                globPatterns: ['**/*.{js,css,html,ico,png,svg,webp}'],
-                globIgnores: ['**/vendor/ots.browser.js'],
-                maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
-                runtimeCaching: [
-                    {
-                        urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
-                        handler: 'CacheFirst',
-                        options: {
-                            cacheName: 'google-fonts-cache',
-                            expiration: {
-                                maxEntries: 10,
-                                maxAgeSeconds: 60 * 60 * 24 * 365
-                            },
-                            cacheableResponse: {
-                                statuses: [0, 200]
-                            }
-                        }
-                    },
-                    {
-                        // Network-first for app shell so deploys win over SW cache
-                        urlPattern: ({ request, url }) =>
-                            request.mode === 'navigate' || url.pathname === '/' || url.pathname === '/index.html',
-                        handler: 'NetworkFirst',
-                        options: {
-                            cacheName: 'html-shell',
-                            networkTimeoutSeconds: 5,
-                            expiration: { maxEntries: 4, maxAgeSeconds: 60 * 60 * 24 }
-                        }
-                    }
-                ]
+                skipWaiting: true
             }
         }),
         ViteImageOptimizer({
