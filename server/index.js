@@ -2487,12 +2487,14 @@ app.post('/api/forum/threads/:id/posts', requireNpub, (req, res) => {
 
 // Self-evolving docs API — serves markdown from docs/
 const DOC_SLUGS = {
-  'executive-summary': 'docs/EXECUTIVE-SUMMARY.md',
-  marketing: 'docs/MARKETING.md',
-  financials: 'docs/FINANCIALS.md',
-  pitch: 'docs/PITCH.md',
+  'executive-summary': 'docs/marketing/EXECUTIVE-SUMMARY.md',
+  marketing: 'docs/marketing/MARKETING.md',
+  financials: 'docs/marketing/FINANCIALS.md',
+  pitch: 'docs/marketing/PITCH.md',
   'design-tokens': 'docs/DESIGN-TOKENS.md',
-  'design-context': 'docs/DESIGN-CONTEXT.md'
+  'design-context': 'docs/DESIGN-CONTEXT.md',
+  deploy: 'docs/deploy.md',
+  architecture: 'docs/architecture.md'
 }
 
 app.get('/api/docs/manifest', (req, res) => {

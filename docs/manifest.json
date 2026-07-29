@@ -1,25 +1,25 @@
 {
   "version": "5.0.0-ELITE",
-  "build": 168,
+  "build": 169,
   "date": "2026-07-29",
   "live": "https://satohash.giveabit.io",
   "github": "https://github.com/kitsboy/satohash",
   "docs": [
     {
       "slug": "executive-summary",
-      "path": "docs/EXECUTIVE-SUMMARY.md"
+      "path": "docs/marketing/EXECUTIVE-SUMMARY.md"
     },
     {
       "slug": "marketing",
-      "path": "docs/MARKETING.md"
+      "path": "docs/marketing/MARKETING.md"
     },
     {
       "slug": "financials",
-      "path": "docs/FINANCIALS.md"
+      "path": "docs/marketing/FINANCIALS.md"
     },
     {
       "slug": "pitch",
-      "path": "docs/PITCH.md"
+      "path": "docs/marketing/PITCH.md"
     },
     {
       "slug": "design-context",
@@ -28,6 +28,10 @@
     {
       "slug": "design-tokens",
       "path": "docs/DESIGN-TOKENS.md"
+    },
+    {
+      "slug": "deploy",
+      "path": "docs/deploy.md"
     },
     {
       "slug": "deploy-playbook",
@@ -44,6 +48,10 @@
     {
       "slug": "rollback",
       "path": "docs/ROLLBACK.md"
+    },
+    {
+      "slug": "architecture",
+      "path": "docs/architecture.md"
     }
   ]
 }

@@ -32,16 +32,18 @@ const HEADER = `<!-- AUTO-GENERATED HEADER — do not edit manually -->
 `;
 
 const DOC_FILES = [
-  'docs/EXECUTIVE-SUMMARY.md',
-  'docs/MARKETING.md',
-  'docs/FINANCIALS.md',
-  'docs/PITCH.md',
+  'docs/marketing/EXECUTIVE-SUMMARY.md',
+  'docs/marketing/MARKETING.md',
+  'docs/marketing/FINANCIALS.md',
+  'docs/marketing/PITCH.md',
   'docs/DESIGN-CONTEXT.md',
   'docs/DESIGN-TOKENS.md',
+  'docs/deploy.md',
   'docs/DEPLOY-PLAYBOOK.md',
   'docs/DEPLOY-SERVER.md',
   'docs/MVP-READINESS.md',
   'docs/ROLLBACK.md',
+  'docs/architecture.md',
 ];
 
 const PUBLIC_COPY = {
