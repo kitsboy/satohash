@@ -207,6 +207,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
   </head>
   <body>
+    <!-- Critical shell so a late CSS fetch never looks "unstyled white" -->
+    <style>
+      html, body { margin: 0; min-height: 100%; background: #141b25; color: #f1f5f9;
+        font-family: "Plus Jakarta Sans", system-ui, -apple-system, Segoe UI, sans-serif; }
+      #root { min-height: 100vh; }
+    </style>
     <div id="root"></div>
     <!-- Stale SW recovery: after deploy, old chunks can resolve to index.html and throw Unexpected token '<' -->
     <script>

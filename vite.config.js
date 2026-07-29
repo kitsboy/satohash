@@ -18,6 +18,29 @@ export default defineConfig({
         wasm(),
         topLevelAwait(),
         react(),
+        // Put CSS <link> before module <script> so the cascade isn't delayed (FOUC / "missing CSS")
+        {
+            name: 'stylesheet-before-modules',
+            transformIndexHtml: {
+                order: 'post',
+                handler(html) {
+                    const links = []
+                    let out = html.replace(
+                        /<link[^>]+rel=["']stylesheet["'][^>]*>\s*/gi,
+                        (m) => {
+                            links.push(m.trim())
+                            return ''
+                        }
+                    )
+                    if (!links.length) return html
+                    // Insert just before the first module script
+                    return out.replace(
+                        /<script[^>]+type=["']module["'][^>]*>/,
+                        `${links.join('\n    ')}\n    $&`
+                    )
+                }
+            }
+        },
         VitePWA({
             registerType: 'autoUpdate',
             workbox: {
