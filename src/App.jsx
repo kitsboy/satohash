@@ -37,8 +37,11 @@ const Nodes = React.lazy(() => import('./pages/Mesh'))
 const Explorer = React.lazy(() => import('./pages/Explorer'))
 const Settings = React.lazy(() => import('./pages/Settings'))
 const Access = React.lazy(() => import('./pages/Access'))
-// Eager: home must not depend on a separate chunk (stale SW / partial deploys caused HTML-as-JS)
+// Eager: marketing-critical routes must not use dynamic import (partial deploys +
+// circular index↔chunk imports caused "Failed to fetch dynamically imported module")
 import Landing from './pages/Landing'
+import ExplainerWatch from './pages/ExplainerWatch'
+import ExecutiveSummary from './pages/ExecutiveSummary'
 const Trust = React.lazy(() => import('./pages/trust/TrustCenter'))
 const About = React.lazy(() => import('./pages/About'))
 const Pitch = React.lazy(() => import('./pages/Pitch'))
@@ -56,8 +59,6 @@ const Guides = React.lazy(() => import('./pages/Guides'))
 const Glossary = React.lazy(() => import('./pages/Glossary'))
 const Docs = React.lazy(() => import('./pages/Docs'))
 const DocViewer = React.lazy(() => import('./pages/DocViewer'))
-const ExecutiveSummary = React.lazy(() => import('./pages/ExecutiveSummary'))
-const ExplainerWatch = React.lazy(() => import('./pages/ExplainerWatch'))
 const Security = React.lazy(() => import('./pages/Security'))
 const Integrations = React.lazy(() => import('./pages/Integrations'))
 const Widgets = React.lazy(() => import('./pages/Widgets'))
