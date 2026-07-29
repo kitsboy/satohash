@@ -746,6 +746,137 @@ export default function Landing() {
         </div>
       </section>
 
+      {/* ── FREE MODEL + FUTURE PRICING ───────────────────────────── */}
+      <section
+        id="free-and-fees"
+        className="py-24"
+        style={{ backgroundColor: 'var(--bg-secondary)' }}
+      >
+        <div className="layout-container max-w-5xl">
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="mb-10 text-center"
+          >
+            <p
+              className="mb-3 text-[11px] font-bold tracking-[0.25em] uppercase"
+              style={{ color: 'var(--accent-gold)' }}
+            >
+              {t('landingPage.freeModel.eyebrow')}
+            </p>
+            <h2 className="font-display text-3xl font-black tracking-tighter md:text-4xl">
+              {t('landingPage.freeModel.titleLine1')}{' '}
+              <span className="gold-text">{t('landingPage.freeModel.titleHighlight')}</span>
+            </h2>
+            <p
+              className="mx-auto mt-5 max-w-2xl text-base leading-relaxed"
+              style={{ color: 'var(--text-primary)' }}
+            >
+              {t('landingPage.freeModel.explainer')}
+            </p>
+            <p className="mx-auto mt-3 max-w-xl text-sm" style={{ color: 'var(--text-secondary)' }}>
+              {t('landingPage.freeModel.chainNote')}
+            </p>
+          </motion.div>
+
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            custom={0.1}
+            className="mb-8 text-center"
+          >
+            <p
+              className="mb-2 text-[11px] font-bold tracking-[0.2em] uppercase"
+              style={{ color: 'var(--text-muted, var(--text-secondary))' }}
+            >
+              {t('landingPage.freeModel.futureEyebrow')}
+            </p>
+            <h3 className="font-display text-xl font-black tracking-tight md:text-2xl">
+              {t('landingPage.freeModel.futureTitle')}
+            </h3>
+            <p className="mx-auto mt-2 max-w-xl text-sm" style={{ color: 'var(--text-secondary)' }}>
+              {t('landingPage.freeModel.futureSubtitle')}
+            </p>
+          </motion.div>
+
+          <div className="grid gap-5 md:grid-cols-3">
+            {[
+              { id: 'free', live: true },
+              { id: 'sats', live: false },
+              { id: 'pro', live: false }
+            ].map(({ id, live }, i) => (
+              <motion.div
+                key={id}
+                variants={fadeUp}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                custom={0.12 + i * 0.08}
+                className="relative rounded-2xl border p-6 text-left"
+                style={{
+                  borderColor: live ? 'var(--accent-gold)' : 'var(--border)',
+                  backgroundColor: 'var(--surface-raised)'
+                }}
+              >
+                <span
+                  className="absolute -top-2.5 right-4 rounded-full px-2.5 py-0.5 text-[10px] font-black tracking-wider uppercase"
+                  style={{
+                    backgroundColor: live ? 'var(--accent-gold)' : 'var(--bg-primary)',
+                    color: live ? '#141b25' : 'var(--text-secondary)',
+                    border: live ? 'none' : '1px solid var(--border)'
+                  }}
+                >
+                  {t(`landingPage.freeModel.tiers.${id}.badge`)}
+                </span>
+                <p className="text-sm font-bold" style={{ color: 'var(--text-secondary)' }}>
+                  {t(`landingPage.freeModel.tiers.${id}.name`)}
+                </p>
+                <p className="font-display mt-2 text-3xl font-black tracking-tight">
+                  {t(`landingPage.freeModel.tiers.${id}.price`)}
+                </p>
+                <p className="mt-1 text-xs font-medium" style={{ color: 'var(--text-secondary)' }}>
+                  {t(`landingPage.freeModel.tiers.${id}.period`)}
+                </p>
+                <p
+                  className="mt-4 text-sm leading-relaxed"
+                  style={{ color: 'var(--text-secondary)' }}
+                >
+                  {t(`landingPage.freeModel.tiers.${id}.desc`)}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            custom={0.35}
+            className="mt-10 flex flex-wrap items-center justify-center gap-4"
+          >
+            <Link
+              to="/stamp"
+              className="inline-flex items-center gap-2 rounded-2xl px-8 py-4 text-base font-black transition-all hover:scale-105"
+              style={{ backgroundColor: 'var(--accent-gold)', color: '#141b25' }}
+            >
+              {t('landingPage.freeModel.ctaStamp')} <ArrowRight size={16} />
+            </Link>
+            <Link
+              to="/pricing"
+              className="inline-flex items-center gap-2 rounded-2xl border px-6 py-3.5 text-sm font-bold transition-colors hover:border-[var(--accent-gold)]"
+              style={{ borderColor: 'var(--border)', color: 'var(--text-primary)' }}
+            >
+              {t('landingPage.freeModel.ctaPricing')}
+            </Link>
+          </motion.div>
+        </div>
+      </section>
+
       {/* ── VERIFY .OTS ──────────────────────────────────────────── */}
       <section id="verify-ots" className="py-20" style={{ backgroundColor: 'var(--bg-secondary)' }}>
         <div className="layout-container max-w-5xl">

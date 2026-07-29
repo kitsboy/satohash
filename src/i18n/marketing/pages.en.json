@@ -20,55 +20,55 @@
   },
   "pricingPage": {
     "hero": {
-      "eyebrow": "Simple Pricing",
+      "eyebrow": "Free today · Future Lightning sketch",
       "title": "Proof of Existence,",
       "titleHighlight": "For Everyone",
-      "subtitle": "Start free. Scale when you need more. No lock-in, no hidden fees, no account required for basic use."
+      "subtitle": "We free-timestamp a fingerprint of your file using OpenTimestamps on Bitcoin. You don’t pay miners or us today; when we charge later, you’ll pay a small Lightning fee to us, and the proof still anchors to Bitcoin. Tiers below mix what is live with a simple sketch of how fees may look later."
     },
-    "mostPopular": "Most Popular",
+    "mostPopular": "Future sketch",
     "tiers": {
       "free": {
         "name": "Free",
-        "price": "$0",
-        "period": "forever",
-        "desc": "Stamp documents on Bitcoin. No account required.",
+        "price": "0 sats",
+        "period": "live now",
+        "desc": "Stamp & verify with OpenTimestamps. No account. No Lightning invoice. Bitcoin-anchored proofs.",
         "features": [
           "SHA-256 hashing in your browser",
           "OpenTimestamps calendar anchoring",
           "Downloadable .ots proof files",
           "Verify any proof, anywhere",
-          "Browser-based — nothing to install"
+          "Browser-based — nothing to install",
+          "You don’t pay miners or us today"
         ],
         "cta": "Stamp a File"
       },
       "premium": {
-        "name": "Premium",
-        "price": "TBD",
-        "period": "per month",
-        "desc": "Volume stamping, Lightning payments, and priority anchoring.",
+        "name": "Pay-per-stamp",
+        "price": "21 sats",
+        "period": "per stamp · maybe later",
+        "desc": "Not live yet. Sketch for when we flip REQUIRE_LIGHTNING: pay us a small Lightning fee; proof still anchors to Bitcoin via OTS.",
         "features": [
-          "Everything in Free, plus:",
-          "BOLT-12 Lightning payment integration",
-          "Priority calendar submission",
-          "Batch stamping (up to 100 files)",
-          "Multi-party contract co-signing",
-          "PDF export with embedded proof"
+          "Everything in Free, plus (planned):",
+          "Lightning invoice through us (LNbits)",
+          "Covers product/hosting — not a different chain",
+          "Same .ots proof format",
+          "Batch stamping path",
+          "Priority calendar submission (planned)"
         ],
         "cta": "Coming Soon"
       },
       "enterprise": {
-        "name": "Enterprise",
-        "price": "Custom",
-        "period": "contact us",
-        "desc": "Dedicated infrastructure, SLA, and custom integrations.",
+        "name": "Pro pack",
+        "price": "2,100 sats",
+        "period": "pack · maybe later",
+        "desc": "Not live yet. Sketch for builders: bulk stamps / API-friendly pack. Payment is Lightning to us; proofs stay Bitcoin + OTS.",
         "features": [
-          "Everything in Premium, plus:",
-          "Dedicated OTS calendar node",
-          "Private API endpoint",
-          "Custom webhook integrations",
-          "SLA-backed proof generation",
-          "On-premise deployment option",
-          "Priority support + dedicated engineer"
+          "Everything in Pay-per-stamp, plus (planned):",
+          "Bulk stamp credits",
+          "API-friendly volume",
+          "Optional dedicated calendar path",
+          "SLA / priority support options",
+          "Contact for custom institutional"
         ],
         "cta": "Contact Sales"
       }

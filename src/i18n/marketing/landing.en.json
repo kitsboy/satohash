@@ -104,6 +104,41 @@
       }
     }
   },
+  "freeModel": {
+    "eyebrow": "Free today · Bitcoin forever",
+    "titleLine1": "How free stamping",
+    "titleHighlight": "actually works",
+    "explainer": "We free-timestamp a fingerprint of your file using OpenTimestamps on Bitcoin. You don’t pay miners or us today; when we charge later, you’ll pay a small Lightning fee to us, and the proof still anchors to Bitcoin.",
+    "chainNote": "Chain: Bitcoin only (via OpenTimestamps). Your file stays on your device — we only handle the hash.",
+    "futureEyebrow": "Maybe in the future",
+    "futureTitle": "Simple prices we’re sketching (not live yet)",
+    "futureSubtitle": "Same proofs, same Bitcoin anchor. Later we may flip on Lightning so a small fee pays us for hosting — not a different blockchain.",
+    "tiers": {
+      "free": {
+        "name": "Free",
+        "price": "0 sats",
+        "period": "today",
+        "desc": "Stamp & verify with OpenTimestamps. No account. No Lightning invoice.",
+        "badge": "Live now"
+      },
+      "sats": {
+        "name": "Pay-per-stamp",
+        "price": "21 sats",
+        "period": "per stamp (planned)",
+        "desc": "Optional Lightning tip-through-us when we flip the paywall. Covers product costs; proof still OTS on Bitcoin.",
+        "badge": "Future"
+      },
+      "pro": {
+        "name": "Pro pack",
+        "price": "2,100 sats",
+        "period": "pack (planned)",
+        "desc": "Bulk stamps / API-friendly pack for builders. Still Bitcoin-anchored proofs — payment is Lightning to us.",
+        "badge": "Future"
+      }
+    },
+    "ctaStamp": "Stamp free now",
+    "ctaPricing": "See full pricing page"
+  },
   "finalCta": {
     "titleLine1": "Every Document Has a Story.",
     "titleHighlight": "Make Yours Undeniable.",
