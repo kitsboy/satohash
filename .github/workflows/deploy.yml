@@ -55,9 +55,18 @@ jobs:
         run: |
           set -euo pipefail
           # Bundles are under /b/* (not /assets/*) after apex edge poison
-          INDEX=$(curl -sf "https://satohash.io/?nocache=$RANDOM" | grep -oE '(b|assets)/index-[^"]+\.js' | head -1)
+          # Wait briefly for CF custom-domain propagation after deploy
+          sleep 15
+          INDEX=""
+          for i in 1 2 3 4 5; do
+            INDEX=$(curl -sf "https://satohash.io/?nocache=$RANDOM$i" | grep -oE '(b|assets)/index-[^"]+\.js' | head -1 || true)
+            if [ -n "$INDEX" ]; then break; fi
+            sleep 5
+          done
           test -n "$INDEX"
-          BODY=$(curl -sf "https://satohash.io/${INDEX}?nocache=$RANDOM" | head -c 80)
+          # Use byte-range instead of head|pipefail (curl exit 23)
+          curl -sf -r 0-120 "https://satohash.io/${INDEX}?nocache=$RANDOM" -o /tmp/main-head.bin
+          BODY=$(cat /tmp/main-head.bin)
           echo "ref=${INDEX} head=${BODY}"
           if echo "$BODY" | grep -qiE '<!doctype|<html'; then
             echo "::error::Production main JS is HTML (edge poison / SPA fallback) — Unexpected token '<'"
@@ -68,4 +77,4 @@ jobs:
             exit 1
           fi
           echo "Production main JS ok"
-      - run: curl -sf https://satohash.giveabit.io/ -o /dev/null || echo "giveabit.io smoke skipped"
+      - run: curl -sf https://www.satohash.io/ -o /dev/null || echo "www smoke skipped"
