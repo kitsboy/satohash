@@ -12,12 +12,12 @@ import {
   Database,
   Search
 } from 'lucide-react'
-import Button from '../../components/Button'
-import Card from '../../components/Card'
+import Button from '../../components/ui/Button'
+import Card from '../../components/ui/Card'
 import { calculateHash } from '../../utils/crypto'
-import MerkleExplorer from '../../components/MerkleExplorer'
+import MerkleExplorer from '../../components/stamps/MerkleExplorer'
 import { Binary } from 'lucide-react'
-import OnboardingProgressBar from '../../components/OnboardingProgressBar'
+import OnboardingProgressBar from '../../components/shared/OnboardingProgressBar'
 import usePageMetaOnboarding from '../../hooks/usePageMetaOnboarding'
 import { clientId, pseudoHash } from '../../utils/id'
 import { buildMerkleTree } from '../../utils/merkle'

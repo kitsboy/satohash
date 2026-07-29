@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Check, X as XIcon, ArrowLeft, FileText, Download, ExternalLink } from 'lucide-react'
-import Footer from '../components/Footer'
+import Footer from '../components/layout/Footer'
 import usePageMeta from '../hooks/usePageMeta'
 import { getPublicBaseUrl } from '../config/constants'
 

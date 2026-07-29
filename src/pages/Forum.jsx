@@ -4,7 +4,7 @@ import { Plus, Send, MessageSquare, RefreshCw, AlertCircle } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { toast } from 'sonner'
 import { useI18n } from '../i18n'
-import EmptyState from '../components/EmptyState'
+import EmptyState from '../components/ui/EmptyState'
 import usePageMeta from '../hooks/usePageMeta'
 import { getApiUrl } from '../config/constants'
 

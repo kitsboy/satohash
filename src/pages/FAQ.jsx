@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ChevronDown, Search, ArrowLeft, HelpCircle, BookOpen, Mail } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import Footer from '../components/Footer'
+import Footer from '../components/layout/Footer'
 import usePageMeta from '../hooks/usePageMeta'
 
 const CATEGORY_ORDER = ['all', 'basics', 'technical', 'legal', 'usage']

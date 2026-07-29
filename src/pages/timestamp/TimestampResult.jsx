@@ -16,13 +16,13 @@ import {
   QrCode
 } from 'lucide-react'
 import { QRCodeSVG } from 'qrcode.react'
-import Button from '../../components/Button'
-import StatusPill from '../../components/StatusPill'
-import Card from '../../components/Card'
+import Button from '../../components/ui/Button'
+import StatusPill from '../../components/ui/StatusPill'
+import Card from '../../components/ui/Card'
 import { downloadProofPackage, downloadOTSFile } from '../../utils/pdfGenerator'
 import { getBlockHeight } from '../../utils/mempool'
 import { getMerkleProof } from '../../utils/merkle'
-import MerkleExplorer from '../../components/MerkleExplorer'
+import MerkleExplorer from '../../components/stamps/MerkleExplorer'
 import usePageMetaOnboarding from '../../hooks/usePageMetaOnboarding'
 
 export default function TimestampResult() {

@@ -14,7 +14,7 @@ import {
   Shield,
   TrendingUp
 } from 'lucide-react'
-import Footer from '../components/Footer'
+import Footer from '../components/layout/Footer'
 import usePageMeta from '../hooks/usePageMeta'
 
 const TIER_IDS = ['free', 'premium', 'enterprise']

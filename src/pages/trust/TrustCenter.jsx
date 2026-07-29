@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 import { getApiUrl } from '../../config/constants'
 import { Link } from 'react-router-dom'
-import Tooltip from '../../components/Tooltip'
+import Tooltip from '../../components/ui/Tooltip'
 import usePageMeta from '../../hooks/usePageMeta'
 import {
   Shield,

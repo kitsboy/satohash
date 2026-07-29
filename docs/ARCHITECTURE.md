@@ -1,5 +1,5 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.giveabit.io · **Version:** 5.0.0-ELITE (Build 171) · **Updated:** 2026-07-29
+> **Live:** https://satohash.giveabit.io · **Version:** 5.0.0-ELITE (Build 174) · **Updated:** 2026-07-29
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Architecture & repo map
@@ -45,13 +45,15 @@ api.satohash.io (Express on THOR)
     _headers
     docs/                   # synced subset for SPA DocViewer
   src/
-    pages/                  # route screens (still mostly flat + feature folders)
-    components/             # UI (flat; cleanup pending)
+    pages/                  # route screens (feature folders: contracts/, government/, …)
+    components/
+      layout/ shared/ ui/ stamps/ dashboard/ forms/ marketing/
     utils/, hooks/, config/, i18n/
   server/
-    index.js                # bootstrap + many inline routes (split pending)
-    routes/                 # anchor, lightning, nft, v5-api (+ more over time)
-    db.js, migrations/      # out of scope for casual cleanup
+    index.js                # thin bootstrap (~466 lines) + middleware + mounts
+    routes/                 # domain registers: auth, ai, stamps, mesh, forum, …
+    lib/                    # ai-helpers, ots-helpers
+    db.js, migrations/      # do not casually rewrite
   functions/                # CF Pages Functions
   docs/
     architecture.md         # this file

@@ -23,7 +23,7 @@ import { useVirtualizer } from '@tanstack/react-virtual'
 import { toast } from 'sonner'
 import { downloadCertificate } from '../utils/certificate'
 import { useSocket } from '../hooks/useSocket'
-import { SkeletonList } from '../components/Skeletons'
+import { SkeletonList } from '../components/ui/Skeletons'
 import { useTranslation } from 'react-i18next'
 import { useI18n } from '../i18n'
 import usePageMeta from '../hooks/usePageMeta'
@@ -34,13 +34,13 @@ import {
   importEncryptedVault,
   isEncryptedVaultBundle
 } from '../utils/vaultExport'
-import StaticModeBanner from '../components/StaticModeBanner'
+import StaticModeBanner from '../components/shared/StaticModeBanner'
 import { stampHashBrowser } from '../utils/otsClient'
 import { isApiExplicitlyConfigured } from '../config/mvp'
 import { getOfflineQueue, findStampByHashOrId, otsBase64ToBlob } from '../utils/vaultLocal'
 import { upgradeOtsBrowser } from '../utils/otsClient'
 import { isStaticOnlyMode } from '../utils/staticMode'
-import PinModal from '../components/PinModal'
+import PinModal from '../components/forms/PinModal'
 
 const StatusBadge = ({ status }) => {
   const { t } = useI18n()

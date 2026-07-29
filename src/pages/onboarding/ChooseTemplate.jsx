@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import OnboardingProgressBar from '../../components/OnboardingProgressBar'
+import OnboardingProgressBar from '../../components/shared/OnboardingProgressBar'
 import usePageMetaOnboarding from '../../hooks/usePageMetaOnboarding'
 import { setOnboardingStep } from '../../utils/onboardingFlow'
 import {

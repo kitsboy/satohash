@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom'
 import { Shield, Fingerprint, ArrowRight } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import Footer from '../../components/Footer'
+import Footer from '../../components/layout/Footer'
 import usePageMeta from '../../hooks/usePageMeta'
-import GiveABitBadge from '../../components/GiveABitBadge'
+import GiveABitBadge from '../../components/marketing/GiveABitBadge'
 
 const USE_CASE_KEYS = [
   { key: 'passport', link: '/motopass-verify' },

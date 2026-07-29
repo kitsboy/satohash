@@ -20,8 +20,8 @@ import {
   FileText,
   Fingerprint
 } from 'lucide-react'
-import Button from '../components/Button'
-import MerkleExplorer from '../components/MerkleExplorer'
+import Button from '../components/ui/Button'
+import MerkleExplorer from '../components/stamps/MerkleExplorer'
 import { toast } from 'sonner'
 import usePageMeta from '../hooks/usePageMeta'
 import useAppTranslation from '../hooks/useAppTranslation'

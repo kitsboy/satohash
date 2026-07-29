@@ -17,7 +17,7 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 import usePageMeta from '../hooks/usePageMeta'
 import { generateSecretKey, getPublicKey, nip19 } from 'nostr-tools'
-import PinModal from '../components/PinModal'
+import PinModal from '../components/forms/PinModal'
 
 export default function Access() {
   usePageMeta({ page: 'access' })

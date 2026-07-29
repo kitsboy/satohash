@@ -22,10 +22,10 @@ import {
   Activity,
   Fingerprint
 } from 'lucide-react'
-import Button from '../../components/Button'
-import Card from '../../components/Card'
-import LanguagePicker from '../../components/LanguagePicker'
-import OnboardingProgressBar from '../../components/OnboardingProgressBar'
+import Button from '../../components/ui/Button'
+import Card from '../../components/ui/Card'
+import LanguagePicker from '../../components/forms/LanguagePicker'
+import OnboardingProgressBar from '../../components/shared/OnboardingProgressBar'
 import usePageMetaOnboarding from '../../hooks/usePageMetaOnboarding'
 import {
   setOnboardingStep,

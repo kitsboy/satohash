@@ -3,11 +3,11 @@ import { useEscapeKey } from '../utils/a11y'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { useI18n } from '../i18n'
-import GlobalDropzone from '../components/GlobalDropzone'
-import HistoryList from '../components/HistoryList'
-import Merkle3D from '../components/Merkle3D'
-import VoiceStamp from '../components/VoiceStamp'
-import Tooltip from '../components/Tooltip'
+import GlobalDropzone from '../components/stamps/GlobalDropzone'
+import HistoryList from '../components/stamps/HistoryList'
+import Merkle3D from '../components/stamps/Merkle3D'
+import VoiceStamp from '../components/stamps/VoiceStamp'
+import Tooltip from '../components/ui/Tooltip'
 import {
   Download,
   FileCheck,
@@ -32,7 +32,7 @@ import {
 } from 'lucide-react'
 import { generatePDF } from '../utils/pdfGenerator'
 import { toast } from 'sonner'
-import BlockchainPulse from '../components/BlockchainPulse'
+import BlockchainPulse from '../components/dashboard/BlockchainPulse'
 import usePageMeta from '../hooks/usePageMeta'
 import { getApiUrl } from '../config/constants'
 

@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { CheckCircle, Globe, AlertCircle } from 'lucide-react'
-import Button from '../../components/Button'
-import Card from '../../components/Card'
+import Button from '../../components/ui/Button'
+import Card from '../../components/ui/Card'
 import usePageMetaOnboarding from '../../hooks/usePageMetaOnboarding'
 
 export default function VerificationHelp() {

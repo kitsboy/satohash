@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import Footer from '../../components/Footer'
+import Footer from '../../components/layout/Footer'
 import usePageMeta from '../../hooks/usePageMeta'
 import { sha256HexFromObject } from '../../utils/canonicalJson'
 import { compareOtsToHosted } from '../../utils/otsBrowser'

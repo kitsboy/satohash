@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { FileText, TrendingUp, Megaphone, Briefcase, ArrowLeft } from 'lucide-react'
-import KimiContact from '../components/KimiContact'
-import Footer from '../components/Footer'
+import KimiContact from '../components/forms/KimiContact'
+import Footer from '../components/layout/Footer'
 import usePageMeta from '../hooks/usePageMeta'
 
 const TABS = [

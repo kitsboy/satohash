@@ -18,7 +18,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { getBlockHeight } from '../utils/mempool'
 import { toast } from 'sonner'
-import { SkeletonCard } from '../components/Skeletons'
+import { SkeletonCard } from '../components/ui/Skeletons'
 import usePageMeta from '../hooks/usePageMeta'
 import { getApiUrl } from '../config/constants'
 

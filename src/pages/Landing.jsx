@@ -17,10 +17,10 @@ import {
   Fingerprint,
   ChevronRight
 } from 'lucide-react'
-import Footer from '../components/Footer'
+import Footer from '../components/layout/Footer'
 import usePageMeta from '../hooks/usePageMeta'
-import MarketingDesktopNav from '../components/MarketingDesktopNav'
-import OtsVerifyPanel from '../components/OtsVerifyPanel'
+import MarketingDesktopNav from '../components/layout/MarketingDesktopNav'
+import OtsVerifyPanel from '../components/stamps/OtsVerifyPanel'
 import { getBitcoinNetworkStats } from '../utils/mempool'
 import { BTC_ADDRESS, getApiUrl } from '../config/constants'
 import { ParticleStampCanvas } from './v5/V5Pages'

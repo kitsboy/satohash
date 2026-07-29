@@ -1,9 +1,9 @@
 import { motion } from 'framer-motion'
 import { Shield, Globe, Heart, Scale, BookOpen, Quote, Network, Binary, Cpu } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import LanguageSwitcher from '../components/LanguageSwitcher'
+import LanguageSwitcher from '../components/forms/LanguageSwitcher'
 import usePageMeta from '../hooks/usePageMeta'
-import KimiContact from '../components/KimiContact'
+import KimiContact from '../components/forms/KimiContact'
 
 export default function About() {
   usePageMeta({ page: 'about' })

@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect, useRef, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import Tooltip from '../components/Tooltip'
+import Tooltip from '../components/ui/Tooltip'
 import { getVerifyUrl } from '../config/constants'
 import usePageMetaOnboarding from '../hooks/usePageMetaOnboarding'
 import { useSearchParams } from 'react-router-dom'

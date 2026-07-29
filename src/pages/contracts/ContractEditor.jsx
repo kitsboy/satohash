@@ -14,7 +14,7 @@ import {
   Sun
 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
-import Button from '../../components/Button'
+import Button from '../../components/ui/Button'
 import { getTemplate } from '../../templates'
 import { generateSHA256Hash } from '../../utils/crypto'
 import usePageMetaOnboarding from '../../hooks/usePageMetaOnboarding'

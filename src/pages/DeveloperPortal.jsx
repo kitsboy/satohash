@@ -31,7 +31,7 @@ import {
 } from 'lucide-react'
 import { toast } from 'sonner'
 import { Link } from 'react-router-dom'
-import PartnershipForm from '../components/PartnershipForm'
+import PartnershipForm from '../components/forms/PartnershipForm'
 import usePageMeta from '../hooks/usePageMeta'
 
 export default function DeveloperPortal() {

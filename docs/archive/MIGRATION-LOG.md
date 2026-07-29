@@ -11,15 +11,19 @@ Track moves/merges so agents don’t chase ghosts.
 | 2026-07-28 | Created handoff log | KIMI-HANDOFF style | `docs/handoff-log.md` |
 | 2026-07-28 | Landing free/fees section | — | product (not a move) |
 
-## Not done yet (intentional)
+| 2026-07-28 | Deleted obsolete root/docs annexes | PROTOCOL, GROK-SESSION, LAYOUT, REBUILD, V5, DESIGN, DILIGENCE, DEPLOY-PLAYBOOK, DEPLOYMENT, REPO-LAYOUT, CHANGELOG-v5 | deleted / merged |
+| 2026-07-28 | Root `archive/` folded | `archive/*` | `docs/archive/legacy-root/` |
+| 2026-07-28 | Server route split | `server/index.js` inline handlers | `server/routes/{auth,ai,stamps,…}.js` + `server/lib/*` |
+| 2026-07-28 | Components restructure | flat `src/components/*` | `layout/ shared/ ui/ stamps/ dashboard/ forms/ marketing/` |
 
-| Item | Why parked |
-|------|------------|
-| Delete root `PROTOCOL.md`, `V5-ASCENSION-PROTOCOL.md`, etc. | Need Cam OK; still linked from old sessions |
-| Move all marketing SEO into `docs/marketing/` | Update `scripts/sync-docs.js` + DocViewer links first |
-| Merge `archive/` + `docs/archive/` | Overlap audit |
-| Split `server/index.js` | High risk to live API paths; separate PR |
-| Restructure `src/components` | Import blast radius; separate PR |
+## Left alone (still intentional)
+
+| Item | Why |
+|------|-----|
+| `server/db.js`, `migrations/`, `data/` | Out of scope; data safety |
+| `public/_redirects`, `/metrics.json` | HQ + SPA contracts |
+| Full pages tree regroup | Already partially folded (`contracts/`, `government/`, …); further moves optional |
+| `docs/DEPLOY-SERVER.md`, `docs/KIMI-VPS-RUNBOOK.md` | Live ops detail still referenced from `deploy.md` / `ops-runbook.md` |
 
 ## Version
 

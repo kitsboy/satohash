@@ -10,7 +10,7 @@ import {
   ShieldCheck
 } from 'lucide-react'
 import { useState } from 'react'
-import MerkleHeart from '../components/MerkleHeart'
+import MerkleHeart from '../components/stamps/MerkleHeart'
 import usePageMeta from '../hooks/usePageMeta'
 
 const LEAF_DATA = {

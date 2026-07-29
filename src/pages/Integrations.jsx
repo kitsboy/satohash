@@ -14,7 +14,7 @@ import {
   Fingerprint
 } from 'lucide-react'
 import { useState } from 'react'
-import Footer from '../components/Footer'
+import Footer from '../components/layout/Footer'
 import usePageMeta from '../hooks/usePageMeta'
 import { getPublicBaseUrl, getApiUrl } from '../config/constants'
 

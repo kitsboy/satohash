@@ -2,11 +2,11 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
-import Footer from '../../components/Footer'
+import Footer from '../../components/layout/Footer'
 import usePageMeta from '../../hooks/usePageMeta'
 import { parseHashLines } from '../../utils/hashUtils'
 import { getVerifyUrl } from '../../config/constants'
-import StaticModeBanner from '../../components/StaticModeBanner'
+import StaticModeBanner from '../../components/shared/StaticModeBanner'
 
 export default function MotoPassVerify() {
   usePageMeta({ page: 'motopassVerify' })

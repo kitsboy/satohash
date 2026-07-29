@@ -22,9 +22,9 @@ import {
   FileSignature,
   PenTool
 } from 'lucide-react'
-import Card from '../../components/Card'
-import Button from '../../components/Button'
-import OnboardingProgressBar from '../../components/OnboardingProgressBar'
+import Card from '../../components/ui/Card'
+import Button from '../../components/ui/Button'
+import OnboardingProgressBar from '../../components/shared/OnboardingProgressBar'
 import usePageMetaOnboarding from '../../hooks/usePageMetaOnboarding'
 
 const categories = [

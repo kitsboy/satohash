@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ShieldCheck, Calendar, Hash, Globe, UserCheck, ShieldClose } from 'lucide-react'
 import { toast } from 'sonner'
-import ProofDNA from '../components/ProofDNA'
+import ProofDNA from '../components/stamps/ProofDNA'
 import usePageMeta from '../hooks/usePageMeta'
 import { getApiUrl } from '../config/constants'
 

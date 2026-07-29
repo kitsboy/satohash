@@ -26,7 +26,7 @@ import {
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
-import Tooltip from '../components/Tooltip'
+import Tooltip from '../components/ui/Tooltip'
 
 import { getApiUrl, getPublicBaseUrl } from '../config/constants'
 import { isApiExplicitlyConfigured } from '../config/mvp'

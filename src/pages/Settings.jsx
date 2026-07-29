@@ -23,7 +23,7 @@ import {
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
-import { useTheme } from '../components/ThemeProvider'
+import { useTheme } from '../components/shared/ThemeProvider'
 import usePageMeta from '../hooks/usePageMeta'
 import { downloadAuditLog } from '../utils/auditExport'
 import { inviteTeamMember } from '../utils/orgTeam'

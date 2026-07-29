@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import { ArrowLeft, ShieldCheck } from 'lucide-react'
 import { motion } from 'framer-motion'
-import Button from '../../components/Button'
+import Button from '../../components/ui/Button'
 import { useTranslation } from 'react-i18next'
 import usePageMeta from '../../hooks/usePageMeta'
 

@@ -12,7 +12,7 @@ import { verifyOtsStructurally } from '../utils/otsBrowser'
 import { verifyOtsBrowser } from '../utils/otsClient'
 import { useTranslation } from 'react-i18next'
 import { isStaticOnlyMode } from '../utils/staticMode'
-import StaticModeBanner from '../components/StaticModeBanner'
+import StaticModeBanner from '../components/shared/StaticModeBanner'
 
 const MerklePathNode = ({ level, hash, active }) => (
   <div className={`flex items-center gap-4 ${active ? 'opacity-100' : 'opacity-40'}`}>
