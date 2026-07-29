@@ -257,6 +257,209 @@ export default function ExecutiveSummary() {
         </div>
       </section>
 
+      {/* ── EXECUTIVE BRIEF (formal prose) ───────────────────── */}
+      <section
+        className="border-t py-12 sm:py-16"
+        style={{ borderColor: 'var(--border)', background: 'var(--bg-primary)' }}
+        aria-labelledby="exec-brief-heading"
+      >
+        <div className="layout-container max-w-3xl px-4 sm:px-6">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fade}
+            className="mb-8 text-center sm:mb-10"
+          >
+            <p
+              className="mb-2 text-[10px] font-black tracking-[0.28em] uppercase sm:text-[11px]"
+              style={{ color: 'var(--accent-gold)' }}
+            >
+              For leadership · counsel · compliance
+            </p>
+            <h2
+              id="exec-brief-heading"
+              className="font-display text-2xl font-black tracking-tight sm:text-3xl"
+            >
+              Executive <span className="gold-text">brief</span>
+            </h2>
+            <div
+              className="mx-auto mt-4 h-px w-16"
+              style={{
+                background: 'linear-gradient(90deg, transparent, var(--accent-gold), transparent)'
+              }}
+            />
+          </motion.div>
+
+          <div className="space-y-8 sm:space-y-10">
+            {[
+              {
+                label: '01 — What we do',
+                title: 'What we do',
+                body: (
+                  <>
+                    <p>
+                      Satohash provides{' '}
+                      <strong style={{ color: 'var(--text-primary)' }}>
+                        independent, cryptographic proof of existence
+                      </strong>{' '}
+                      for any digital file—contracts, photographs, source code, AI model outputs,
+                      web captures, or audit packages. We do not store or review the underlying
+                      content. Instead, we enable organizations and individuals to bind a
+                      mathematical fingerprint of that content to the Bitcoin blockchain via the
+                      open OpenTimestamps protocol, producing a portable proof that third parties
+                      can verify without trusting Satohash as a custodian of truth.
+                    </p>
+                    <p className="mt-4">
+                      In practical terms: when a document, delivery package, or digital artifact
+                      must later withstand scrutiny—from counterparties, regulators, courts, or
+                      internal audit—Satohash supplies a durable, non-repudiable record that the
+                      artifact existed in a specific form at a specific time. The service is
+                      designed for everyday use at the edge of work (legal, creative, investigative,
+                      and operational), not as a one-off novelty.
+                    </p>
+                  </>
+                )
+              },
+              {
+                label: '02 — How it works',
+                title: 'How it works',
+                body: (
+                  <>
+                    <p>
+                      The process is deliberately simple and privacy-preserving. First, the user’s
+                      browser (or approved client) computes a{' '}
+                      <strong style={{ color: 'var(--text-primary)' }}>SHA-256 hash</strong> of the
+                      file using standard web cryptography; the original bytes need never leave the
+                      device. Second, only that 64-character hash is submitted to OpenTimestamps
+                      calendars, which aggregate many hashes into a Merkle tree and periodically
+                      commit the root into a Bitcoin transaction. Third, once a Bitcoin block
+                      confirms that commitment, the resulting{' '}
+                      <strong style={{ color: 'var(--text-primary)' }}>.ots proof</strong> can be
+                      downloaded, archived, and independently verified with open-source tools and
+                      public chain data.
+                    </p>
+                    <p className="mt-4">
+                      Today, stamping is offered at no charge to the user. The economic model for
+                      Bitcoin network fees is absorbed at the calendar and protocol layer through
+                      batching; Satohash’s product cost is hosting and operations. When commercial
+                      tiers are introduced, settlement is expected via Lightning to Satohash—not a
+                      change of ledger. The proof remains anchored to Bitcoin either way.
+                    </p>
+                  </>
+                )
+              },
+              {
+                label: '03 — Truth',
+                title: 'Why this matters for truth',
+                body: (
+                  <>
+                    <p>
+                      In an environment of generative media, deepfakes, disputed emails, and
+                      rewritten “sources of record,” the hardest question is often not <em>what</em>{' '}
+                      someone claims, but <em>when</em> a specific digital state first existed and
+                      whether it has been altered since. Institutional trust—brand statements,
+                      screenshots, and “our system says so”—is increasingly insufficient for
+                      adversarial settings. Cryptographic timestamping does not decide guilt or
+                      innocence; it restores a shared, machine-checkable baseline of{' '}
+                      <strong style={{ color: 'var(--text-primary)' }}>temporal truth</strong>: this
+                      exact fingerprint was committed to a public, high-cost-to-rewrite ledger at
+                      this block height.
+                    </p>
+                    <p className="mt-4">
+                      That baseline is essential for free expression, journalism, intellectual
+                      property priority, and civil process. Without it, history is negotiable. With
+                      it, parties may still disagree on meaning—but not on whether the bytes were
+                      present in the past. Satohash exists to make that property of Bitcoin
+                      available to non-specialists as a daily instrument of integrity.
+                    </p>
+                  </>
+                )
+              },
+              {
+                label: '04 — Enterprises',
+                title: 'For companies and institutional metrics',
+                body: (
+                  <>
+                    <p>
+                      Enterprises adopt Satohash where audit trails, vendor disputes, regulatory
+                      examinations, and multi-party workflows demand evidence that is portable
+                      outside any single SaaS silo. Typical patterns include stamping executed
+                      agreements and board materials at signature; sealing software releases and
+                      configuration snapshots for change-control; anchoring investigative exports
+                      and customer communications; and instrumenting APIs so automated systems emit
+                      proofs as first-class artifacts. Because verification does not require ongoing
+                      access to Satohash infrastructure, the organization retains resilience if
+                      vendors change—or if Satohash itself is unavailable.
+                    </p>
+                    <p className="mt-4">
+                      From a metrics perspective, leadership can treat proof coverage as an
+                      operational KPI: percentage of high-risk documents stamped within SLA; median
+                      time from document finalization to confirmed Bitcoin anchor; share of disputes
+                      closed with a verifiable .ots package; and family-product attribution of stamp
+                      volume by business unit or client system. These indicators align legal
+                      readiness with engineering practice—turning “we keep records” into “we can
+                      prove, independently, what existed when.”
+                    </p>
+                  </>
+                )
+              }
+            ].map((block, i) => (
+              <motion.article
+                key={block.label}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: '-40px' }}
+                variants={fade}
+                custom={i}
+                className="relative rounded-2xl border px-5 py-6 sm:px-8 sm:py-8"
+                style={{
+                  borderColor: 'var(--border)',
+                  background:
+                    'linear-gradient(165deg, color-mix(in srgb, var(--surface-raised) 100%, transparent) 0%, color-mix(in srgb, var(--bg-secondary) 80%, transparent) 100%)',
+                  boxShadow: 'inset 0 1px 0 rgba(240,180,41,0.06)'
+                }}
+              >
+                <div
+                  className="absolute top-0 bottom-0 left-0 w-[3px] rounded-l-2xl"
+                  style={{
+                    background: 'linear-gradient(180deg, var(--accent-gold), transparent 85%)'
+                  }}
+                  aria-hidden
+                />
+                <p
+                  className="mb-2 pl-1 text-[10px] font-black tracking-[0.22em] uppercase sm:text-[11px]"
+                  style={{ color: 'var(--accent-gold)' }}
+                >
+                  {block.label}
+                </p>
+                <h3 className="font-display mb-4 pl-1 text-lg font-black tracking-tight sm:text-xl">
+                  {block.title}
+                </h3>
+                <div
+                  className="pl-1 text-[15px] leading-[1.75] sm:text-base sm:leading-[1.8]"
+                  style={{
+                    color: 'var(--text-secondary)',
+                    fontFamily: 'var(--font-body, ui-sans-serif, system-ui, sans-serif)',
+                    textAlign: 'left',
+                    maxWidth: '42rem'
+                  }}
+                >
+                  {block.body}
+                </div>
+              </motion.article>
+            ))}
+          </div>
+
+          <p
+            className="mt-8 text-center text-[11px] font-medium tracking-wide sm:text-xs"
+            style={{ color: 'var(--text-muted, var(--text-secondary))' }}
+          >
+            Confidential product overview · Satohash by Give A Bit · Not legal advice
+          </p>
+        </div>
+      </section>
+
       {/* ── WHY EVERY DAY ────────────────────────────────────── */}
       <section
         className="border-t py-12 sm:py-16"
