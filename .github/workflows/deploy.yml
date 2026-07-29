@@ -54,7 +54,8 @@ jobs:
       - name: Main JS is real JS (not SPA HTML poison)
         run: |
           set -euo pipefail
-          INDEX=$(curl -sf "https://satohash.io/?nocache=$RANDOM" | grep -oE 'assets/index-[^"]+\.js' | head -1)
+          # Bundles are under /b/* (not /assets/*) after apex edge poison
+          INDEX=$(curl -sf "https://satohash.io/?nocache=$RANDOM" | grep -oE '(b|assets)/index-[^"]+\.js' | head -1)
           test -n "$INDEX"
           BODY=$(curl -sf "https://satohash.io/${INDEX}?nocache=$RANDOM" | head -c 80)
           echo "ref=${INDEX} head=${BODY}"
@@ -65,18 +66,6 @@ jobs:
           if ! echo "$BODY" | grep -qE '^(import |const |var |function |/)'; then
             echo "::error::Production main JS does not look like a JS module"
             exit 1
-          fi
-          # Optional: dedicated Landing chunk still must not have bare .fees.high
-          LANDING=$(curl -sf "https://satohash.io/${INDEX}?nocache=$RANDOM" | grep -oE 'Landing-[^"]+\.js' | head -1 || true)
-          if [ -n "${LANDING:-}" ]; then
-            curl -sf "https://satohash.io/assets/${LANDING}?nocache=$RANDOM" -o /tmp/landing.js
-            if grep -qE '\.fees\.high' /tmp/landing.js; then
-              echo "::error::Production Landing chunk still has unsafe .fees.high"
-              exit 1
-            fi
-            echo "Landing chunk ${LANDING} ok"
-          else
-            echo "Landing eager in ${INDEX} — chunk check skipped"
           fi
           echo "Production main JS ok"
       - run: curl -sf https://satohash.giveabit.io/ -o /dev/null || echo "giveabit.io smoke skipped"

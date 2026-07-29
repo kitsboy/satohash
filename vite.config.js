@@ -82,6 +82,9 @@ export default defineConfig({
     },
     build: {
         outDir: 'dist',
+        // Avoid /assets/* — satohash.io apex edge has poisoned HTML-as-JS under that
+        // prefix (SPA fallback + old immutable Cache-Control). New prefix bypasses HIT.
+        assetsDir: 'b',
         sourcemap: false,
         chunkSizeWarningLimit: 800,
         rollupOptions: {

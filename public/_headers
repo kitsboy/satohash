@@ -21,14 +21,18 @@
   Cache-Control: public, max-age=60, must-revalidate
   Access-Control-Allow-Origin: *
 
-# CRITICAL: do NOT force Content-Type or multi-year immutable on /assets/*.
-# When SPA fallback (/* → index.html) races a missing chunk, CF can cache the
-# HTML body under the asset URL. Forced application/javascript + immutable
-# then poisons the edge for a year → "Unexpected token '<'" / System Desync.
-# Let Pages set Content-Type from the real file; keep max-age short enough
-# that a bad HIT expires without a dashboard purge.
-/assets/*.css
+# CRITICAL: do NOT force Content-Type or multi-year immutable on hashed bundles.
+# SPA fallback (/* → index.html) + long immutable cache poisoned satohash.io apex
+# under /assets/* → "Unexpected token '<'". Bundles now live under /b/*.
+/b/*.css
   Cache-Control: public, max-age=3600, must-revalidate
 
-/assets/*.js
+/b/*.js
   Cache-Control: public, max-age=3600, must-revalidate
+
+# Legacy /assets/* paths — short TTL only (do not re-poison the edge)
+/assets/*.css
+  Cache-Control: public, max-age=60, must-revalidate
+
+/assets/*.js
+  Cache-Control: public, max-age=60, must-revalidate

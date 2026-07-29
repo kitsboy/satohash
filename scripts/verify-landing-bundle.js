@@ -10,10 +10,12 @@
 import fs from 'fs'
 import path from 'path'
 
-const assetsDir = path.join(process.cwd(), 'dist', 'assets')
+// Vite assetsDir is `b` (was `assets`) — see vite.config.js
+const candidates = ['b', 'assets'].map((d) => path.join(process.cwd(), 'dist', d))
+const assetsDir = candidates.find((d) => fs.existsSync(d))
 
-if (!fs.existsSync(assetsDir)) {
-  console.error('verify-landing-bundle: dist/assets missing — run npm run build first')
+if (!assetsDir) {
+  console.error('verify-landing-bundle: dist/b (or dist/assets) missing — run npm run build first')
   process.exit(1)
 }
 
