@@ -2,25 +2,23 @@
 
 | File | Role |
 |------|------|
-| `01-stamp-hero.jpg` | Seal impact hook |
-| `02-single-stamp-flow.jpg` | File → Hash → Calendar → BTC |
-| `03-batch-stamp.jpg` | Batch / many docs |
-| `04-verify-check.jpg` | Verify badge |
-| `05-bitcoin-anchor.jpg` | Permanent chain lock |
-| `06-cta-split.jpg` | CTA split background |
-| `kimi-teacher.jpg` | Teacher Kimi talent |
-| `bgm-ambient.wav` | Low dark ambient under VO |
-| `SCRIPT.md` | Full Kimi voice script + timing |
+| `01-stamp-hero.jpg` … `06-cta-split.jpg` | Visual beats |
+| `kimi-teacher.jpg` | Talent / PIP |
+| **`satohash-explainer-music.mp3`** | 60s dark ambient under VO (320kbps, ~−21 dB peak) |
+| `bgm-ambient.wav` | Earlier draft pad (legacy) |
+| `SCRIPT.md` | Full Kimi VO script + timing |
+| `satohash-explainer-preview.mp4` | Graphics + music only (no VO yet) |
+| `vo-complete.mp3` | **Drop here** when Kimi copies from THOR |
 
 ## Live player
 
-**https://satohash.io/watch** (also `/explainer`)
+https://satohash.io/watch
 
-## Public URLs
+- Music plays under slides automatically  
+- If `vo-complete.mp3` is present, it is used as the real voiceover  
+- Otherwise “VO preview” uses browser TTS  
 
-```
-/media/video/01-stamp-hero.jpg
-…
-/media/video/kimi-teacher.jpg
-/media/video/bgm-ambient.wav
-```
+## Kimi / THOR VO
+
+Source on THOR: `/root/satohash/docs/media/video/vo-complete.mp3`  
+Copy into this folder as `vo-complete.mp3`, commit, push — player picks it up automatically.

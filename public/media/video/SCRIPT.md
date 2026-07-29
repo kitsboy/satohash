@@ -2,7 +2,7 @@
 
 **Talent:** Teacher Kimi (British, clear, warm, confident)  
 **Runtime:** ~60 seconds  
-**Music:** `bgm-ambient.wav` — low dark pad under VO (keep BGM ~−18 to −22 dB under voice)
+**Music:** `satohash-explainer-music.mp3` — low dark pad under VO (keep BGM ~−18 to −22 dB under voice)
 
 ---
 

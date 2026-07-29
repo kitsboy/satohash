@@ -98,27 +98,74 @@ export default function ExplainerWatch() {
   const beat = useMemo(() => beatAt(t), [t])
   const progress = Math.min(100, (t / TOTAL) * 100)
 
-  // BGM
+  const voRef = useRef(null)
+  const [hasRealVo, setHasRealVo] = useState(false)
+
+  // BGM — production track under VO (~-18dB headroom baked in)
   useEffect(() => {
-    const a = new Audio('/media/video/bgm-ambient.wav')
+    const a = new Audio('/media/video/satohash-explainer-music.mp3')
     a.loop = true
-    a.volume = muted ? 0 : 0.22
+    a.volume = muted ? 0 : 0.28
     a.preload = 'auto'
     audioRef.current = a
     a.addEventListener('canplaythrough', () => setBgmReady(true), { once: true })
+
+    // Optional recorded VO from THOR (drop as vo-complete.mp3)
+    const vo = new Audio('/media/video/vo-complete.mp3')
+    vo.preload = 'auto'
+    vo.volume = muted ? 0 : 0.95
+    voRef.current = vo
+    vo.addEventListener(
+      'canplaythrough',
+      () => {
+        setHasRealVo(true)
+        setVoOn(true) // prefer real VO when present
+      },
+      { once: true }
+    )
+    vo.addEventListener(
+      'error',
+      () => {
+        setHasRealVo(false)
+      },
+      { once: true }
+    )
+
     return () => {
       a.pause()
       a.src = ''
+      vo.pause()
+      vo.src = ''
     }
   }, [])
 
   useEffect(() => {
-    if (!audioRef.current) return
-    audioRef.current.volume = muted ? 0 : 0.22
+    if (audioRef.current) audioRef.current.volume = muted ? 0 : 0.28
+    if (voRef.current) voRef.current.volume = muted ? 0 : 0.95
   }, [muted])
 
-  // Optional browser VO (preview until real Kimi track)
+  // Real recorded VO sync (when file exists)
   useEffect(() => {
+    const vo = voRef.current
+    if (!vo || !hasRealVo) return
+    if (playing && voOn) {
+      // keep VO time roughly aligned with slideshow clock
+      if (Math.abs(vo.currentTime - t) > 0.45) {
+        try {
+          vo.currentTime = Math.min(t, vo.duration || t)
+        } catch {
+          /* ignore seek race */
+        }
+      }
+      vo.play().catch(() => {})
+    } else {
+      vo.pause()
+    }
+  }, [playing, voOn, hasRealVo, t])
+
+  // Browser TTS only as preview when no real VO
+  useEffect(() => {
+    if (hasRealVo) return
     if (!playing || !voOn || typeof window === 'undefined' || !window.speechSynthesis) return
     if (spokenBeatRef.current === beat.id) return
     spokenBeatRef.current = beat.id
@@ -133,12 +180,13 @@ export default function ExplainerWatch() {
       voices.find((v) => /^en/i.test(v.lang))
     if (en) u.voice = en
     window.speechSynthesis.speak(u)
-  }, [beat, playing, voOn, muted])
+  }, [beat, playing, voOn, muted, hasRealVo])
 
   useEffect(() => {
     if (!playing) {
       if (rafRef.current) cancelAnimationFrame(rafRef.current)
       if (audioRef.current) audioRef.current.pause()
+      if (voRef.current) voRef.current.pause()
       if (typeof window !== 'undefined' && window.speechSynthesis) {
         window.speechSynthesis.cancel()
       }
@@ -162,6 +210,10 @@ export default function ExplainerWatch() {
             audioRef.current.pause()
             audioRef.current.currentTime = 0
           }
+          if (voRef.current) {
+            voRef.current.pause()
+            voRef.current.currentTime = 0
+          }
           if (typeof window !== 'undefined' && window.speechSynthesis) {
             window.speechSynthesis.cancel()
           }
@@ -183,6 +235,7 @@ export default function ExplainerWatch() {
       setT(0)
       spokenBeatRef.current = null
       if (audioRef.current) audioRef.current.currentTime = 0
+      if (voRef.current) voRef.current.currentTime = 0
     }
     setPlaying((p) => !p)
   }
@@ -194,6 +247,10 @@ export default function ExplainerWatch() {
     if (audioRef.current) {
       audioRef.current.pause()
       audioRef.current.currentTime = 0
+    }
+    if (voRef.current) {
+      voRef.current.pause()
+      voRef.current.currentTime = 0
     }
     if (window.speechSynthesis) window.speechSynthesis.cancel()
   }
@@ -373,10 +430,14 @@ export default function ExplainerWatch() {
               borderColor: voOn ? 'var(--accent-gold)' : 'var(--border)',
               color: voOn ? 'var(--accent-gold)' : 'var(--text-primary)'
             }}
-            title="Browser voice preview (until real Kimi VO is recorded)"
+            title={
+              hasRealVo
+                ? 'Recorded voiceover (vo-complete.mp3)'
+                : 'Browser voice preview — drop vo-complete.mp3 for real Kimi VO'
+            }
           >
             {voOn ? <Mic size={16} /> : <MicOff size={16} />}
-            {voOn ? 'VO preview on' : 'VO preview'}
+            {hasRealVo ? (voOn ? 'VO on' : 'VO off') : voOn ? 'VO preview on' : 'VO preview'}
           </button>
           <Link
             to="/stamp"
