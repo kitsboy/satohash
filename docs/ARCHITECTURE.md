@@ -1,5 +1,5 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.giveabit.io · **Version:** 5.0.0-ELITE (Build 174) · **Updated:** 2026-07-29
+> **Live:** https://satohash.giveabit.io · **Version:** 5.0.0-ELITE (Build 188) · **Updated:** 2026-07-29
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Architecture & repo map
@@ -24,11 +24,14 @@ api.satohash.io (Express on THOR)
 
 | Concern | Location |
 |---------|----------|
-| Landing / stamp / verify UI | `src/pages/`, `src/components/` |
-| API | `server/index.js` + `server/routes/*` |
+| Landing / stamp / verify UI | `src/pages/`, `src/components/{layout,stamps,ui,…}/` |
+| Explainer | `/watch` · `src/pages/ExplainerWatch.jsx` · `public/media/video/` |
+| Exec summary | `/docs/executive-summary` · `src/pages/ExecutiveSummary.jsx` |
+| API | `server/index.js` (thin) + `server/routes/*` + `server/lib/*` |
 | Pages Functions | `functions/` (`/metrics.json` proxy) |
 | Family contract | `docs/FAMILY-API.md` |
 | OTS deep dive | `docs/OTS-DEEP-LEARN.md` |
+| Agent / deploy | `AGENTS.md` · `docs/deploy.md` · `docs/handoff-log.md` |
 
 ---
 
@@ -78,6 +81,8 @@ api.satohash.io (Express on THOR)
 | `GET /metrics.json` | HQ |
 | `GET /health` | Ops |
 | SPA `/stamp?hash=&ref=` | Family deep-link |
+| SPA `/watch` | Explainer (eager-loaded; VO-driven) |
+| `public/media/video/*` | Explainer frames, music, VO, MP4 |
 
 ---
 
