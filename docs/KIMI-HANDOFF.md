@@ -73,7 +73,22 @@ Rebuild + wire BITCOIN_RPC + LNBITS env (still REQUIRE_LIGHTNING=false). Full pa
 
 ---
 
-## POWER BRIEF — Kimi ops (2026-07-28) — v5.0.0 full rebuild: AI, Nostr, paywall-ready
+## Session — 2026-07-28 (Kimi) — Explain video + bitcoind RPC fix + final housekeeping
+
+**From:** Kimi on THOR · **To:** Next agent
+
+### Done this session
+- **Bitcoind RPC fix** — Changed bind from `127.0.0.1` to `0.0.0.0` so Docker API container can reach it via `172.19.0.1`. Health endpoint now shows `status: syncing` during IBD instead of `unhealthy`.
+- **IBD syncing logic live** — Pulled Grok's latest code, rebuilt API. `/api/public/bitcoin` now shows `source: bitcoind` with syncing status + progress % during IBD.
+- **Explain video VO generated** — 3-section British female voiceover for `/watch` pushed to GitHub as `public/media/video/vo-*.mp3`. Combined 79s track + individual scene sections.
+- **Explainer production script** — `docs/EXPLAINER-SCRIPT-PRODUCTION.md` with full timing, scene notes, music/SFX specs.
+- **Ref docs updated** — `ref/AGENTS.md` and `ref/GROK-BOOT.md` reflect v5.0.0-ELITE live state.
+
+### Standing state
+- API: v5.0.0-ELITE · IBD: 48% (blocks ~461k/960k) · source: bitcoind (syncing)
+- REQUIRE_LIGHTNING=false · LNbits wired · Swap 8GB · SQLite backup daily 06:00
+- www.satohash.io: 200 (Grok CF fix) · CORS updated with www/hq variants
+- /watch explainer live with music by Grok + VO by Kimi
 
 **From:** Grok on M3 → `15eb4d7` feat: flip-ready paywall/node/LN, local AI ML, damus Nostr, nav pill  
 **To:** Next Kimi or Grok session  
