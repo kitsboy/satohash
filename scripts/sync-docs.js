@@ -39,7 +39,6 @@ const DOC_FILES = [
   'docs/DESIGN-CONTEXT.md',
   'docs/DESIGN-TOKENS.md',
   'docs/deploy.md',
-  'docs/DEPLOY-PLAYBOOK.md',
   'docs/DEPLOY-SERVER.md',
   'docs/MVP-READINESS.md',
   'docs/ROLLBACK.md',

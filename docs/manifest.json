@@ -1,6 +1,6 @@
 {
   "version": "5.0.0-ELITE",
-  "build": 170,
+  "build": 172,
   "date": "2026-07-29",
   "live": "https://satohash.giveabit.io",
   "github": "https://github.com/kitsboy/satohash",
@@ -32,10 +32,6 @@
     {
       "slug": "deploy",
       "path": "docs/deploy.md"
-    },
-    {
-      "slug": "deploy-playbook",
-      "path": "docs/DEPLOY-PLAYBOOK.md"
     },
     {
       "slug": "deploy-server",

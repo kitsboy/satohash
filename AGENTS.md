@@ -51,6 +51,4 @@ docs/
   archive/          — old handoffs & superseded notes
 ```
 
-Legacy root files (`GROK-SESSION-PROTOCOL.md`, `PROTOCOL.md`, `V5-ASCENSION-PROTOCOL.md`, `REBUILD_PROMPT.md`, `LAYOUT.md`) are **stubs or archive** — prefer this file + `docs/*`.
-
 Full cleanup / migration notes: `docs/archive/MIGRATION-LOG.md`.

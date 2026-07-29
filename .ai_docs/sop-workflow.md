@@ -37,7 +37,7 @@ bash scripts/vps-deploy-api.sh
 - Contract: `docs/FAMILY-API.md`  
 
 ## Agent protocol
-1. Read `GROK-SESSION-PROTOCOL.md`  
+1. Read `AGENTS.md`  
 2. Read `.ai_docs/current-status.md` + `docs/KIMI-VPS-RUNBOOK.md` if ops  
 3. Work; never commit secrets  
 4. Update `.ai_docs/current-status.md` + top of `docs/KIMI-HANDOFF.md`  

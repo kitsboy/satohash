@@ -24,3 +24,8 @@ Track moves/merges so agents don’t chase ghosts.
 ## Version
 
 `package.json` is SoT (`5.0.0-ELITE`). Old `v4.0.0-ELITE` strings in archive docs are historical only.
+
+| 2026-07-28 | Deleted root stubs | PROTOCOL, GROK-SESSION-PROTOCOL, LAYOUT, REBUILD_PROMPT, V5-ASCENSION, DESIGN, DILIGENCE | (deleted; AGENTS.md is SoT) |
+| 2026-07-28 | Deleted deploy annexes | DEPLOY-PLAYBOOK, DEPLOYMENT, REPO-LAYOUT | superseded by docs/deploy.md + architecture.md |
+| 2026-07-28 | Merged CHANGELOG-v5 | CHANGELOG-v5.md | CHANGELOG.md then deleted |
+| 2026-07-28 | Merged root archive/ | archive/* | docs/archive/legacy-root/ |

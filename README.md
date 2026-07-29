@@ -20,7 +20,7 @@ For the deep business case, four-plane architecture, and sovereign positioning, 
 | Product pitch | [docs/PITCH.md](docs/PITCH.md) |
 | Architecture | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) |
 | Quickstart | [docs/QUICKSTART.md](docs/QUICKSTART.md) |
-| Deploy playbook | [docs/DEPLOY-PLAYBOOK.md](docs/DEPLOY-PLAYBOOK.md) |
+| Deploy (canonical) | [docs/deploy.md](docs/deploy.md) |
 | Improvement log | [docs/IMPROVEMENTS-LOG.md](docs/IMPROVEMENTS-LOG.md) |
 
 ---

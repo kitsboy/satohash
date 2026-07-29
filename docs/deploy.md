@@ -1,5 +1,5 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.giveabit.io · **Version:** 5.0.0-ELITE (Build 169) · **Updated:** 2026-07-29
+> **Live:** https://satohash.giveabit.io · **Version:** 5.0.0-ELITE (Build 172) · **Updated:** 2026-07-29
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Deploy — canonical
@@ -52,7 +52,7 @@ npx wrangler pages deploy ./dist --project-name=satohash
 
 **Purge:** zone **satohash.io** → Caching → Purge Everything if edge serves HTML as JS.
 
-Annex: `docs/DEPLOY-PLAYBOOK.md`, `docs/ROLLBACK.md`.
+Annex: `docs/ROLLBACK.md`.
 
 ---
 
@@ -67,7 +67,7 @@ API lives on THOR, not CF Pages.
 # OTS_CALENDARS=... public calendars
 ```
 
-Annex: `docs/DEPLOY-SERVER.md`, `docs/KIMI-VPS-RUNBOOK.md`, `docs/ops-runbook.md`.
+Annex: `docs/KIMI-VPS-RUNBOOK.md`, `docs/ops-runbook.md` (Docker packaging detail: `docs/DEPLOY-SERVER.md` if present).
 
 ---
 
