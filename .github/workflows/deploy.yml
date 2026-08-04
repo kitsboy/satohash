@@ -54,27 +54,44 @@ jobs:
       - name: Main JS is real JS (not SPA HTML poison)
         run: |
           set -euo pipefail
-          # Bundles are under /b/* (not /assets/*) after apex edge poison
-          # Wait briefly for CF custom-domain propagation after deploy
-          sleep 15
+          # Bundles live under /b/* (not long-cache /assets/*). After Pages deploy,
+          # custom-domain edge can briefly serve stale index.html or SPA-fallback HTML
+          # for a missing/old chunk — retry before failing the run.
+          UA='Mozilla/5.0 (compatible; Satohash-Smoke/1.0)'
+          sleep 20
           INDEX=""
-          for i in 1 2 3 4 5; do
-            INDEX=$(curl -sf "https://satohash.io/?nocache=$RANDOM$i" | grep -oE '(b|assets)/index-[^"]+\.js' | head -1 || true)
-            if [ -n "$INDEX" ]; then break; fi
-            sleep 5
+          BODY=""
+          for i in 1 2 3 4 5 6 7 8; do
+            INDEX=$(curl -sfA "$UA" "https://satohash.io/?nocache=${RANDOM}${i}" \
+              | grep -oE 'b/index-[^"]+\.js' | head -1 || true)
+            if [ -z "$INDEX" ]; then
+              echo "attempt $i: no index script in HTML yet"
+              sleep 8
+              continue
+            fi
+            # Byte-range only (avoid curl 23 on large bundles)
+            if ! curl -sfA "$UA" -r 0-160 "https://satohash.io/${INDEX}?nocache=${RANDOM}${i}" \
+              -o /tmp/main-head.bin; then
+              echo "attempt $i: JS fetch failed for ${INDEX}"
+              sleep 8
+              continue
+            fi
+            BODY=$(cat /tmp/main-head.bin)
+            echo "attempt $i: ref=${INDEX} head=$(echo "$BODY" | tr '\n' ' ' | cut -c1-100)"
+            if echo "$BODY" | grep -qiE '<!doctype|<html'; then
+              echo "attempt $i: HTML-as-JS (stale edge) — retrying"
+              sleep 10
+              continue
+            fi
+            if echo "$BODY" | grep -qE '^(import |const |var |function |/)'; then
+              echo "Production main JS ok (${INDEX})"
+              exit 0
+            fi
+            echo "attempt $i: unexpected JS head — retrying"
+            sleep 8
           done
-          test -n "$INDEX"
-          # Use byte-range instead of head|pipefail (curl exit 23)
-          curl -sf -r 0-120 "https://satohash.io/${INDEX}?nocache=$RANDOM" -o /tmp/main-head.bin
-          BODY=$(cat /tmp/main-head.bin)
-          echo "ref=${INDEX} head=${BODY}"
-          if echo "$BODY" | grep -qiE '<!doctype|<html'; then
-            echo "::error::Production main JS is HTML (edge poison / SPA fallback) — Unexpected token '<'"
-            exit 1
-          fi
-          if ! echo "$BODY" | grep -qE '^(import |const |var |function |/)'; then
-            echo "::error::Production main JS does not look like a JS module"
-            exit 1
-          fi
-          echo "Production main JS ok"
+          echo "::error::Production main JS still HTML or missing after retries — edge poison / SPA fallback"
+          echo "last_ref=${INDEX:-none}"
+          echo "last_head=${BODY:-empty}"
+          exit 1
       - run: curl -sf https://www.satohash.io/ -o /dev/null || echo "www smoke skipped"
