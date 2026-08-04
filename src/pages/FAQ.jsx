@@ -86,13 +86,20 @@ export default function FAQ() {
         </div>
       </section>
 
-      <section className="border-b border-[var(--border)] bg-[var(--bg-secondary)]/50 px-6 py-4">
-        <div className="mx-auto flex max-w-4xl flex-wrap items-center justify-center gap-2">
+      <section className="border-b border-[var(--border)] bg-[var(--bg-secondary)]/50 px-4 py-4 sm:px-6">
+        <div
+          role="tablist"
+          aria-label="FAQ categories"
+          className="templates-category-scroll mx-auto flex max-w-4xl gap-2 overflow-x-auto overscroll-x-contain pb-1 sm:flex-wrap sm:justify-center sm:overflow-visible"
+        >
           {categories.map((cat) => (
             <button
               key={cat.id}
+              type="button"
+              role="tab"
+              aria-selected={activeCategory === cat.id}
               onClick={() => setActiveCategory(cat.id)}
-              className={`min-h-[36px] rounded-lg px-4 py-1.5 text-[11px] font-bold tracking-wider uppercase transition-all ${
+              className={`inline-flex min-h-[44px] shrink-0 items-center rounded-full px-4 py-2 text-[11px] font-bold tracking-wider whitespace-nowrap uppercase transition-all focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]/50 focus-visible:outline-none ${
                 activeCategory === cat.id
                   ? 'bg-[var(--accent-gold)] text-black'
                   : 'border border-[var(--border)] text-[var(--text-secondary)] hover:border-[var(--accent-gold)] hover:text-[var(--text-primary)]'

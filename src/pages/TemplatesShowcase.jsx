@@ -83,6 +83,7 @@ export default function TemplatesShowcase() {
   const [activeCategory, setActiveCategory] = useState('all')
   const [searchQuery, setSearchQuery] = useState('')
   const [loading, setLoading] = useState(true)
+  const [loadError, setLoadError] = useState(false)
   const [previewTemplate, setPreviewTemplate] = useState(null)
   const [sortBy, setSortBy] = useState('default')
   const [showSuggestions, setShowSuggestions] = useState(false)
@@ -187,22 +188,45 @@ export default function TemplatesShowcase() {
   }, [])
 
   useEffect(() => {
+    let cancelled = false
+    setLoadError(false)
     fetch('/data/templates-manifest.json')
-      .then((r) => r.json())
+      .then((r) => {
+        if (!r.ok) throw new Error(`manifest ${r.status}`)
+        return r.json()
+      })
       .then((d) => {
+        if (cancelled) return
         setManifest(d)
         setLoading(false)
       })
-      .catch(() => setLoading(false))
+      .catch(() => {
+        if (cancelled) return
+        setLoadError(true)
+        setLoading(false)
+      })
+    return () => {
+      cancelled = true
+    }
   }, [])
 
   const categoryCounts = {}
   if (manifest) {
-    categoryCounts['all'] = manifest.templates.length
+    categoryCounts.all = manifest.templates.length
     manifest.categories.forEach((cat) => {
-      categoryCounts[cat.id] = manifest.templates.filter((t) => t.category === cat.id).length
+      if (cat.id === 'all') {
+        categoryCounts.all = manifest.templates.length
+        return
+      }
+      categoryCounts[cat.id] = manifest.templates.filter((tpl) => tpl.category === cat.id).length
     })
   }
+
+  // Visible categories: always show "all"; hide empty buckets so the chip bar stays tight
+  const visibleCategories = (manifest?.categories || []).filter((cat) => {
+    if (cat.id === 'all') return true
+    return (categoryCounts[cat.id] || 0) > 0
+  })
 
   let filteredTemplates = manifest ? [...manifest.templates] : []
 
@@ -243,11 +267,63 @@ export default function TemplatesShowcase() {
       <div className="min-h-screen bg-[var(--bg-primary)]">
         <div className="mx-auto max-w-6xl px-6 pt-24 pb-12">
           <div className="skeleton mx-auto mb-12 h-10 w-64" />
-          <div className="skeleton mx-auto mb-16 h-6 w-96" />
+          <div className="skeleton mx-auto mb-8 h-6 w-96 max-w-full" />
+          <div className="skeleton mb-6 h-12 w-full rounded-xl" />
+          <div className="skeleton mb-8 h-11 w-full rounded-xl" />
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {[1, 2, 3, 4, 5, 6].map((i) => (
               <div key={i} className="skeleton h-52 rounded-2xl" />
             ))}
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  if (loadError || !manifest) {
+    return (
+      <div className="min-h-screen bg-[var(--bg-primary)]">
+        <div className="mx-auto flex max-w-lg flex-col items-center px-6 pt-32 pb-20 text-center">
+          <FileText size={40} className="mb-4 text-[var(--text-tertiary)]" />
+          <h1 className="mb-2 text-2xl font-black text-[var(--text-primary)]">
+            {t('templatesPage.loadError.title', { defaultValue: 'Templates unavailable' })}
+          </h1>
+          <p className="mb-6 text-sm text-[var(--text-secondary)]">
+            {t('templatesPage.loadError.subtitle', {
+              defaultValue:
+                'We could not load the template catalog. Stamp a file directly, or retry.'
+            })}
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            <button
+              type="button"
+              onClick={() => {
+                setLoading(true)
+                setLoadError(false)
+                fetch('/data/templates-manifest.json')
+                  .then((r) => {
+                    if (!r.ok) throw new Error(`manifest ${r.status}`)
+                    return r.json()
+                  })
+                  .then((d) => {
+                    setManifest(d)
+                    setLoading(false)
+                  })
+                  .catch(() => {
+                    setLoadError(true)
+                    setLoading(false)
+                  })
+              }}
+              className="min-h-[48px] rounded-xl bg-[var(--accent-gold)] px-5 text-xs font-black tracking-wider text-black uppercase"
+            >
+              {t('templatesPage.loadError.retry', { defaultValue: 'Retry' })}
+            </button>
+            <Link
+              to="/stamp"
+              className="inline-flex min-h-[48px] items-center rounded-xl border border-[var(--border)] px-5 text-xs font-bold tracking-wider text-[var(--text-primary)] uppercase"
+            >
+              {t('nav.stamp', { defaultValue: 'Stamp' })}
+            </Link>
           </div>
         </div>
       </div>
@@ -277,115 +353,158 @@ export default function TemplatesShowcase() {
         </div>
       </section>
 
-      {/* Search & Filters */}
-      <section className="sticky top-0 z-30 border-b border-[var(--border)] bg-[var(--bg-primary)]/95 backdrop-blur-md">
-        <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-3 px-6 py-4">
-          {/* Search */}
-          <div className="relative min-w-[200px] flex-1">
-            <Search
-              size={14}
-              className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-[var(--text-tertiary)]"
-            />
-            <input
-              type="search"
-              aria-label={t('templatesPage.searchPlaceholder')}
-              placeholder={t('templatesPage.searchPlaceholder')}
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              onFocus={() => setShowSuggestions(true)}
-              onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
-              className="min-h-[44px] w-full rounded-lg border border-[var(--border)] bg-[var(--bg-primary)] py-2.5 pr-3 pl-9 text-sm text-[var(--text-primary)] placeholder-[var(--text-tertiary)] transition-colors outline-none focus:border-[var(--accent-gold)]"
-            />
-            {searchQuery && (
-              <button
-                type="button"
-                aria-label="Clear search"
-                onClick={() => {
-                  setSearchQuery('')
-                  setShowSuggestions(false)
-                }}
-                className="absolute top-1/2 right-3 -translate-y-1/2 text-[var(--text-tertiary)] hover:text-[var(--text-primary)]"
-              >
-                <X size={14} />
-              </button>
-            )}
-            {/* Search autocomplete */}
-            {showSuggestions && searchQuery && manifest && (
-              <div className="absolute top-full right-0 left-0 z-50 mt-1 max-h-60 overflow-y-auto rounded-xl border border-[var(--border)] bg-[var(--surface-overlay)] shadow-2xl">
-                {manifest.templates
-                  .filter((t) => t.title.toLowerCase().includes(searchQuery.toLowerCase()))
-                  .slice(0, 6)
-                  .map((t) => {
-                    const Icon = ICON_MAP[t.icon] || FileText
-                    return (
-                      <button
-                        type="button"
-                        key={t.id}
-                        onClick={() => {
-                          setSearchQuery('')
-                          setShowSuggestions(false)
-                          openDemo(t.id)
-                        }}
-                        className="flex w-full items-center gap-3 px-4 py-3 text-left text-xs text-[var(--text-secondary)] transition-colors hover:bg-[var(--surface-raised)] hover:text-[var(--text-primary)]"
-                      >
-                        <Icon size={14} className="text-[var(--accent-gold)]" />
-                        <span className="font-bold">{t.title}</span>
-                        <span className="ml-auto text-[10px] text-[var(--text-tertiary)] uppercase">
-                          {t.category}
-                        </span>
-                      </button>
-                    )
-                  })}
-              </div>
-            )}
+      {/* Search & Filters — two rows so category chips never run off-screen */}
+      <section
+        className="sticky top-0 z-30 border-b border-[var(--border)] bg-[var(--bg-primary)]/95 backdrop-blur-md"
+        style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}
+      >
+        <div className="mx-auto max-w-6xl space-y-3 px-4 py-3 sm:px-6 sm:py-4">
+          {/* Row 1: search + sort */}
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+            <div className="relative min-w-0 flex-1">
+              <Search
+                size={14}
+                className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-[var(--text-tertiary)]"
+              />
+              <input
+                type="search"
+                aria-label={t('templatesPage.searchPlaceholder')}
+                placeholder={t('templatesPage.searchPlaceholder')}
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onFocus={() => setShowSuggestions(true)}
+                onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
+                className="min-h-[48px] w-full rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] py-2.5 pr-10 pl-9 text-sm text-[var(--text-primary)] placeholder-[var(--text-tertiary)] transition-colors outline-none focus:border-[var(--accent-gold)] focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]/35"
+              />
+              {searchQuery && (
+                <button
+                  type="button"
+                  aria-label="Clear search"
+                  onClick={() => {
+                    setSearchQuery('')
+                    setShowSuggestions(false)
+                  }}
+                  className="absolute top-1/2 right-2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-lg text-[var(--text-tertiary)] hover:bg-[var(--surface-raised)] hover:text-[var(--text-primary)]"
+                >
+                  <X size={14} />
+                </button>
+              )}
+              {showSuggestions && searchQuery && (
+                <div className="absolute top-full right-0 left-0 z-50 mt-1 max-h-60 overflow-y-auto rounded-xl border border-[var(--border)] bg-[var(--surface-overlay)] shadow-2xl">
+                  {manifest.templates
+                    .filter((tpl) => tpl.title.toLowerCase().includes(searchQuery.toLowerCase()))
+                    .slice(0, 6)
+                    .map((tpl) => {
+                      const Icon = ICON_MAP[tpl.icon] || FileText
+                      return (
+                        <button
+                          type="button"
+                          key={tpl.id}
+                          onClick={() => {
+                            setSearchQuery('')
+                            setShowSuggestions(false)
+                            openDemo(tpl.id)
+                          }}
+                          className="flex min-h-[48px] w-full items-center gap-3 px-4 py-3 text-left text-xs text-[var(--text-secondary)] transition-colors hover:bg-[var(--surface-raised)] hover:text-[var(--text-primary)]"
+                        >
+                          <Icon size={14} className="shrink-0 text-[var(--accent-gold)]" />
+                          <span className="min-w-0 truncate font-bold">{tpl.title}</span>
+                          <span className="ml-auto shrink-0 text-[10px] text-[var(--text-tertiary)] uppercase">
+                            {tpl.category}
+                          </span>
+                        </button>
+                      )
+                    })}
+                </div>
+              )}
+            </div>
+            <label className="sr-only" htmlFor="templates-sort">
+              {t('templatesPage.sort.default')}
+            </label>
+            <select
+              id="templates-sort"
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+              className="min-h-[48px] shrink-0 rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] px-3 text-[11px] font-bold tracking-wider text-[var(--text-secondary)] uppercase outline-none focus:border-[var(--accent-gold)] focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]/35 sm:w-auto"
+            >
+              <option value="default">{t('templatesPage.sort.default')}</option>
+              <option value="popular">{t('templatesPage.sort.popular')}</option>
+              <option value="alpha">{t('templatesPage.sort.alpha')}</option>
+            </select>
           </div>
-          {/* Sort */}
-          <select
-            value={sortBy}
-            onChange={(e) => setSortBy(e.target.value)}
-            className="min-h-[44px] rounded-lg border border-[var(--border)] bg-[var(--bg-primary)] px-3 text-[11px] font-bold tracking-wider text-[var(--text-secondary)] uppercase outline-none focus:border-[var(--accent-gold)]"
-          >
-            <option value="default">{t('templatesPage.sort.default')}</option>
-            <option value="popular">{t('templatesPage.sort.popular')}</option>
-            <option value="alpha">{t('templatesPage.sort.alpha')}</option>
-          </select>
-          {/* Categories - desktop */}
-          <div className="hidden gap-2 sm:flex">
-            {manifest?.categories.map((cat) => (
-              <button
-                key={cat.id}
-                onClick={() => setActiveCategory(cat.id)}
-                className={`min-h-[44px] rounded-lg px-4 py-2 text-[11px] font-bold tracking-wider whitespace-nowrap uppercase transition-all ${
-                  activeCategory === cat.id
-                    ? 'bg-[var(--accent-gold)] text-black'
-                    : 'border border-[var(--border)] text-[var(--text-secondary)] hover:border-[var(--accent-gold)] hover:text-[var(--text-primary)]'
-                }`}
-              >
-                {cat.label}
-                {categoryCounts[cat.id] > 0 && (
-                  <span
-                    className={`ml-1.5 inline-flex h-4 min-w-[16px] items-center justify-center rounded-full px-1 text-[9px] font-black ${
-                      activeCategory === cat.id ? 'text-black/60' : 'text-[var(--text-tertiary)]'
+
+          {/* Row 2: full-width category chips — scroll horizontally, never overflow page */}
+          <div className="relative">
+            <div
+              role="tablist"
+              aria-label={t('templatesPage.categoriesAria', {
+                defaultValue: 'Filter templates by category'
+              })}
+              className="templates-category-scroll flex gap-2 overflow-x-auto overscroll-x-contain pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            >
+              {visibleCategories.map((cat) => {
+                const selected = activeCategory === cat.id
+                const count = cat.id === 'all' ? categoryCounts.all : categoryCounts[cat.id] || 0
+                return (
+                  <button
+                    key={cat.id}
+                    type="button"
+                    role="tab"
+                    aria-selected={selected}
+                    id={`template-cat-${cat.id}`}
+                    onClick={() => setActiveCategory(cat.id)}
+                    className={`inline-flex min-h-[44px] shrink-0 snap-start items-center gap-1.5 rounded-full px-3.5 py-2 text-[11px] font-bold tracking-wide whitespace-nowrap transition-all focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]/50 focus-visible:outline-none ${
+                      selected
+                        ? 'bg-[var(--accent-gold)] text-black shadow-[0_0_20px_var(--accent-gold-glow)]'
+                        : 'border border-[var(--border)] bg-[var(--surface-raised)]/60 text-[var(--text-secondary)] hover:border-[var(--accent-gold)]/50 hover:text-[var(--text-primary)]'
                     }`}
                   >
-                    {categoryCounts[cat.id]}
-                  </span>
-                )}
-              </button>
-            ))}
+                    <span>{cat.label}</span>
+                    <span
+                      className={`inline-flex h-5 min-w-[1.25rem] items-center justify-center rounded-full px-1.5 text-[10px] font-black tabular-nums ${
+                        selected
+                          ? 'bg-black/15 text-black/70'
+                          : 'bg-[var(--bg-primary)] text-[var(--text-tertiary)]'
+                      }`}
+                    >
+                      {count}
+                    </span>
+                  </button>
+                )
+              })}
+            </div>
+            {/* Edge fades hint overflow without clipping focus rings */}
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-y-0 left-0 w-6 bg-gradient-to-r from-[var(--bg-primary)] to-transparent sm:w-8"
+            />
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-[var(--bg-primary)] to-transparent sm:w-10"
+            />
           </div>
-          {/* Mobile category */}
-          <select
-            value={activeCategory}
-            onChange={(e) => setActiveCategory(e.target.value)}
-            className="min-h-[44px] rounded-lg border border-[var(--border)] bg-[var(--bg-primary)] px-3 py-2.5 text-[11px] font-bold tracking-wider text-[var(--text-primary)] uppercase outline-none focus:border-[var(--accent-gold)] sm:hidden"
-          >
-            {manifest?.categories.map((cat) => (
-              <option key={cat.id} value={cat.id}>
-                {cat.label} ({categoryCounts[cat.id] || 0})
-              </option>
-            ))}
-          </select>
+
+          {/* Active filter summary */}
+          {(activeCategory !== 'all' || searchQuery) && (
+            <div className="flex flex-wrap items-center gap-2 text-[11px] text-[var(--text-tertiary)]">
+              <span>
+                {filteredTemplates.length}{' '}
+                {t('templatesPage.results', { defaultValue: 'result(s)' })}
+                {activeCategory !== 'all' ? ` · ${activeCatLabel}` : ''}
+              </span>
+              <button
+                type="button"
+                onClick={() => {
+                  setSearchQuery('')
+                  setActiveCategory('all')
+                  setSortBy('default')
+                }}
+                className="min-h-[32px] rounded-lg px-2 font-bold tracking-wider text-[var(--accent-gold)] uppercase hover:underline"
+              >
+                {t('templatesPage.empty.reset')}
+              </button>
+            </div>
+          )}
         </div>
       </section>
 
@@ -478,7 +597,7 @@ export default function TemplatesShowcase() {
                       onClick={() => openDemo(template.id)}
                       onMouseEnter={() => import('./NotaryTemplates').catch(() => {})}
                       disabled={openingDemoId === template.id}
-                      className="inline-flex min-h-[36px] items-center gap-1.5 rounded-lg bg-[var(--accent-gold)] px-3.5 py-1.5 text-[10px] font-bold tracking-wider text-black uppercase transition-all hover:bg-[var(--accent-gold)]/90 disabled:opacity-70"
+                      className="inline-flex min-h-[44px] items-center gap-1.5 rounded-lg bg-[var(--accent-gold)] px-3.5 py-2 text-[10px] font-bold tracking-wider text-black uppercase transition-all hover:bg-[var(--accent-gold)]/90 disabled:opacity-70"
                     >
                       {openingDemoId === template.id
                         ? t('common.loading', { defaultValue: 'Loading…' })
@@ -486,21 +605,31 @@ export default function TemplatesShowcase() {
                       <ArrowRight size={11} />
                     </button>
                     <button
+                      type="button"
                       onClick={() => {
                         setPreviewTemplate(template)
                         addRecentView(template.id)
                       }}
-                      className="inline-flex min-h-[36px] items-center gap-1.5 rounded-lg border border-[var(--border)] px-3.5 py-1.5 text-[10px] font-bold tracking-wider text-[var(--text-secondary)] uppercase transition-all hover:border-[var(--accent-gold)] hover:text-[var(--text-primary)]"
+                      className="inline-flex min-h-[44px] items-center gap-1.5 rounded-lg border border-[var(--border)] px-3.5 py-2 text-[10px] font-bold tracking-wider text-[var(--text-secondary)] uppercase transition-all hover:border-[var(--accent-gold)] hover:text-[var(--text-primary)]"
                     >
                       {t('templatesPage.quickPreview')}
                     </button>
                     <button
-                      onClick={() => {
+                      type="button"
+                      onClick={async () => {
                         const url = `${window.location.origin}/templates/${template.id}`
-                        navigator.clipboard?.writeText(url)
+                        try {
+                          await navigator.clipboard?.writeText(url)
+                          toast.success(
+                            t('templatesPage.linkCopied', { defaultValue: 'Link copied' })
+                          )
+                        } catch {
+                          toast.message(url)
+                        }
                       }}
-                      className="ml-auto inline-flex h-[36px] w-[36px] items-center justify-center rounded-lg border border-[var(--border)] text-[var(--text-tertiary)] transition-all hover:border-[var(--accent-gold)] hover:text-[var(--accent-gold)]"
+                      className="ml-auto inline-flex h-11 min-h-[44px] w-11 min-w-[44px] items-center justify-center rounded-lg border border-[var(--border)] text-[var(--text-tertiary)] transition-all hover:border-[var(--accent-gold)] hover:text-[var(--accent-gold)]"
                       title={t('templatesPage.copyLink')}
+                      aria-label={t('templatesPage.copyLink')}
                     >
                       <Share2 size={13} />
                     </button>

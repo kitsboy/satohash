@@ -29,12 +29,7 @@ export default function MarketingDesktopNav({ onDonate }) {
 
   const primary = useMemo(
     () => [
-      {
-        label: t('landingPage.nav.features') || 'Features',
-        href: '/#features',
-        hash: true,
-        icon: LayoutGrid
-      },
+      { label: t('nav.stamp') || 'Stamp', href: '/stamp', icon: Fingerprint },
       { label: t('nav.templates') || 'Templates', href: '/templates', icon: FileText },
       { label: t('nav.pricing') || 'Pricing', href: '/pricing', icon: BadgeDollarSign },
       { label: t('landingPage.nav.legal') || 'Trust', href: '/trust', icon: Scale }
@@ -45,15 +40,21 @@ export default function MarketingDesktopNav({ onDonate }) {
   const more = useMemo(
     () => [
       {
+        label: t('landingPage.nav.features') || 'Features',
+        href: '/#features',
+        hash: true,
+        icon: LayoutGrid
+      },
+      {
         label: t('landingPage.nav.howItWorks') || 'How it works',
         href: '/#how-it-works',
         hash: true,
         icon: HelpCircle
       },
+      { label: '60s explainer', href: '/watch', icon: Fingerprint },
       { label: t('nav.comparison') || 'Compare', href: '/comparison', icon: GitCompare },
       { label: 'Government', href: '/government', icon: Building2 },
       { label: 'Exec summary', href: '/docs/executive-summary', icon: BookOpen },
-      { label: '60s explainer', href: '/watch', icon: Fingerprint },
       { label: 'Docs', href: '/docs', icon: BookOpen }
     ],
     [t]

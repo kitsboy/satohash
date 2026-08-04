@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { Home, Search } from 'lucide-react'
+import { Home, Search, Fingerprint, ShieldCheck } from 'lucide-react'
 import usePageMeta from '../hooks/usePageMeta'
 
 export default function NotFound() {
@@ -29,16 +29,28 @@ export default function NotFound() {
           {t('notFoundPage.subtitle')}
         </p>
 
-        <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
+        <div className="flex flex-col items-center justify-center gap-3 sm:flex-row sm:flex-wrap">
+          <Link
+            to="/stamp"
+            className="inline-flex min-h-[48px] min-w-[44px] items-center gap-2.5 rounded-xl bg-[var(--accent-gold)] px-6 text-sm font-black tracking-wider text-black uppercase transition-all hover:bg-[var(--accent-gold)]/90 hover:shadow-[0_0_30px_var(--accent-gold-glow)]"
+          >
+            <Fingerprint size={16} /> {t('nav.stamp', { defaultValue: 'Stamp' })}
+          </Link>
+          <Link
+            to="/verify"
+            className="inline-flex min-h-[48px] min-w-[44px] items-center gap-2.5 rounded-xl border border-[var(--border)] px-6 text-sm font-bold tracking-wider text-[var(--text-secondary)] uppercase transition-all hover:border-[var(--accent-gold)] hover:text-[var(--text-primary)]"
+          >
+            <ShieldCheck size={16} /> {t('nav.verify', { defaultValue: 'Verify' })}
+          </Link>
           <Link
             to="/"
-            className="inline-flex min-h-[44px] min-w-[44px] items-center gap-2.5 rounded-xl bg-[var(--accent-gold)] px-6 text-sm font-black tracking-wider text-black uppercase transition-all hover:bg-[var(--accent-gold)]/90 hover:shadow-[0_0_30px_var(--accent-gold-glow)]"
+            className="inline-flex min-h-[48px] min-w-[44px] items-center gap-2.5 rounded-xl border border-[var(--border)] px-6 text-sm font-bold tracking-wider text-[var(--text-secondary)] uppercase transition-all hover:border-[var(--accent-gold)] hover:text-[var(--text-primary)]"
           >
             <Home size={16} /> {t('notFoundPage.goHome')}
           </Link>
           <Link
             to="/templates"
-            className="inline-flex min-h-[44px] min-w-[44px] items-center gap-2.5 rounded-xl border border-[var(--border)] px-6 text-sm font-bold tracking-wider text-[var(--text-secondary)] uppercase transition-all hover:border-[var(--accent-gold)] hover:text-[var(--text-primary)]"
+            className="inline-flex min-h-[48px] min-w-[44px] items-center gap-2.5 rounded-xl border border-[var(--border)] px-6 text-sm font-bold tracking-wider text-[var(--text-secondary)] uppercase transition-all hover:border-[var(--accent-gold)] hover:text-[var(--text-primary)]"
           >
             <Search size={16} /> {t('notFoundPage.browseTemplates')}
           </Link>

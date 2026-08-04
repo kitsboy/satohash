@@ -16,7 +16,10 @@ const LINK_GROUPS = [
   {
     id: 'product',
     links: [
+      { key: 'stamp', path: '/stamp', label: 'Stamp' },
+      { key: 'verify', path: '/verify', label: 'Verify' },
       { key: 'templates', path: '/templates' },
+      { key: 'watch', path: '/watch', label: 'Explainer' },
       { key: 'pricing', path: '/pricing' },
       { key: 'faq', path: '/faq' },
       { key: 'guides', path: '/guides' },

@@ -4,6 +4,54 @@ Append a new `## Session — YYYY-MM-DD` at the **top** after each session.
 
 ---
 
+## Session — 2026-08-04 (Kimi) — OPS TRUTH · bitcoind restored
+
+**From:** Kimi THOR · **Status:** Free stamps green · **source: bitcoind** syncing · paywall OFF
+
+### Facts (authoritative)
+- Bitcoind was **OOM-killed 2026-07-28**, dead ~6 days; IBD stuck **~20.2%** @ block 508,207  
+- **Restored:** systemd unit (datadir **`/root/.bitcoin`**, not package `/var/lib/bitcoin`); enabled on boot  
+- Public `GET /api/public/bitcoin` → **`source: bitcoind`**, IBD true, ~85 blk/min, **ETA ~4 days**  
+- API `5.0.0-ELITE` · `REQUIRE_LIGHTNING=false` · LNbits ready · stamp smoke OK  
+- Metrics: **client_id + raw.directory LIVE** — close open ops item  
+- HQ SoT still `https://api.satohash.io/metrics.json`  
+- Domains satohash.io / www / watch / templates **200**
+
+### Grok follow-up
+- Tables written to `docs/KIMI-HANDOFF.md`, this log, `.ai_docs/current-status.md`, `LATEST-UPDATE.md`, MVP checklist  
+
+### Cam
+- Nothing · do not flip paywall  
+
+---
+
+## Session — 2026-08-03 (Grok) — MVP menus + templates bar + checklist
+
+**From:** Grok (M3) · **Status:** SPA deployed (CF Pages) · free stamps · templates filter fixed
+
+### Done
+- **`/templates` category chips:** two-row sticky bar; horizontal scroll + edge fades; no page overflow; `role=tablist`; hide empty cats; manifest error + retry
+- **Menus:** marketing primary = Stamp/Templates/Pricing/Trust; mobile bottom = Vault/Stamp/Verify/**Templates** (Explorer in More); footer Stamp/Verify/Watch
+- **Landing hero:** Watch 60s CTA; 48px targets
+- **404:** Stamp / Verify / Home / Templates escapes
+- **Stamp:** 100MB soft size guard with clear error
+- **FAQ:** scrollable/wrapping category chips
+- **Tests:** `templates-manifest.test.js`, e2e `templates-filters.spec.js`, `npm run mvp:smoke`
+- **Docs:** `docs/MVP-CHECKLIST.md` (100 items status)
+- **Live smoke:** health + metrics green; free stamp OK (`client_id` returned)
+- **Deploy:** wrangler Pages `satohash` → https://0bb26c14.satohash.pages.dev (apex satohash.io)
+
+### Still open (Kimi/ops)
+- bitcoind IBD → `source: bitcoind`
+- Confirm metrics directory fields if needed
+- Paywall only when Cam flips
+- Full Playwright e2e stamp path on CI optional
+
+### Git
+- Local dirty tree with SPA/menu/MVP fixes; commit when Cam wants
+
+---
+
 ## Session — 2026-07-29 (Grok) — EXPLAINER + DOCS CLOSEOUT
 
 **From:** Grok (M3) · **Status:** Product + media green · free stamps · bow

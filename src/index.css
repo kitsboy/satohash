@@ -1,6 +1,14 @@
 /* Fonts load via <link> in index.html — never @import here (blocks entire CSS cascade). */
 @import 'tailwindcss';
 
+/* Templates category chip strip: horizontal scroll without page-level overflow */
+.templates-category-scroll {
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+  padding-inline: 2px;
+}
+
 @layer base {
   :root {
     /* cache-bust token so CF edge cannot keep a poisoned HTML-as-CSS object */

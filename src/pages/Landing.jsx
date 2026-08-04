@@ -381,24 +381,35 @@ export default function Landing() {
           >
             <Link
               to="/stamp"
-              className="flex w-full items-center justify-center gap-2 rounded-2xl px-8 py-4 text-base font-black transition-all hover:scale-105 hover:opacity-90 sm:w-auto"
+              className="flex min-h-[48px] w-full items-center justify-center gap-2 rounded-2xl px-8 py-4 text-base font-black transition-all hover:scale-105 hover:opacity-90 sm:w-auto"
               style={{ backgroundColor: 'var(--accent-gold)', color: '#141b25' }}
             >
               {t('landingPage.hero.ctaStamp')} <ArrowRight size={16} />
             </Link>
             <Link
+              to="/watch"
+              className="flex min-h-[48px] w-full items-center justify-center gap-2 rounded-2xl border px-8 py-4 text-base font-bold transition-all hover:text-white sm:w-auto"
+              style={{
+                borderColor: 'var(--border-gold, var(--accent-gold))',
+                color: 'var(--accent-gold)'
+              }}
+            >
+              {t('landingPage.hero.ctaWatch', { defaultValue: 'Watch 60s explainer' })}{' '}
+              <ArrowRight size={16} />
+            </Link>
+            <Link
               to="/templates"
-              className="flex w-full items-center justify-center gap-2 rounded-2xl border px-8 py-4 text-base font-bold transition-all hover:text-white sm:w-auto"
+              className="flex min-h-[48px] w-full items-center justify-center gap-2 rounded-2xl border px-8 py-4 text-base font-bold transition-all hover:text-white sm:w-auto"
               style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
             >
               {t('landingPage.hero.ctaTemplates')} <ArrowRight size={16} />
             </Link>
             <a
               href="#verify-ots"
-              className="flex w-full items-center justify-center gap-2 rounded-2xl border px-8 py-4 text-base font-bold transition-all hover:text-white sm:w-auto"
+              className="flex min-h-[48px] w-full items-center justify-center gap-2 rounded-2xl border px-8 py-4 text-base font-bold transition-all hover:text-white sm:w-auto"
               style={{
-                borderColor: 'var(--border-gold, var(--accent-gold))',
-                color: 'var(--accent-gold)'
+                borderColor: 'var(--border)',
+                color: 'var(--text-secondary)'
               }}
             >
               Confirm .ots <ChevronRight size={16} />

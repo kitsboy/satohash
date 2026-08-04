@@ -2,11 +2,11 @@
   "schema": "gab.product-metrics.v1",
   "productId": "satohash",
   "name": "Satohash",
-  "updatedAt": "2026-07-29T01:06:16.055Z",
+  "updatedAt": "2026-08-04T02:21:06.855Z",
   "window": {
     "label": "7d",
-    "from": "2026-07-22T01:06:16.055Z",
-    "to": "2026-07-29T01:06:16.055Z"
+    "from": "2026-07-28T02:21:06.855Z",
+    "to": "2026-08-04T02:21:06.855Z"
   },
   "health": {
     "status": "green",
@@ -32,7 +32,7 @@
       {
         "id": "client-attribution",
         "status": "green",
-        "detail": "3 distinct X-Satohash-Client id(s)"
+        "detail": "4 distinct X-Satohash-Client id(s)"
       }
     ]
   },
@@ -40,7 +40,7 @@
     {
       "key": "stamps_total",
       "label": "Stamps (all time)",
-      "value": 9,
+      "value": 10,
       "unit": "proofs",
       "format": "number",
       "priority": 1,
@@ -49,7 +49,7 @@
     {
       "key": "stamps_24h",
       "label": "Stamps 24h",
-      "value": 3,
+      "value": 1,
       "unit": "proofs",
       "delta": 0,
       "deltaUnit": "%",
@@ -60,7 +60,7 @@
     {
       "key": "stamps_7d",
       "label": "Stamps 7d",
-      "value": 6,
+      "value": 4,
       "unit": "proofs",
       "format": "number",
       "priority": 2,
@@ -69,7 +69,7 @@
     {
       "key": "monthly_capacity",
       "label": "Monthly capacity (est.)",
-      "value": 26,
+      "value": 17,
       "unit": "proofs",
       "format": "number",
       "priority": 2,
@@ -87,7 +87,7 @@
     {
       "key": "confirmed",
       "label": "Confirmed (all time)",
-      "value": 8,
+      "value": 9,
       "unit": "proofs",
       "format": "number",
       "priority": 2,
@@ -96,7 +96,7 @@
     {
       "key": "confirmed_7d",
       "label": "Confirmed 7d",
-      "value": 5,
+      "value": 3,
       "unit": "proofs",
       "format": "number",
       "priority": 2,
@@ -123,7 +123,7 @@
     {
       "key": "api_clients",
       "label": "Active API clients",
-      "value": 3,
+      "value": 4,
       "unit": "clients",
       "format": "number",
       "priority": 3,
@@ -174,30 +174,6 @@
       "color": "#8a5a00",
       "points": [
         {
-          "t": "2026-07-15T12:00:00.000Z",
-          "v": 0
-        },
-        {
-          "t": "2026-07-16T12:00:00.000Z",
-          "v": 0
-        },
-        {
-          "t": "2026-07-17T12:00:00.000Z",
-          "v": 0
-        },
-        {
-          "t": "2026-07-18T12:00:00.000Z",
-          "v": 0
-        },
-        {
-          "t": "2026-07-19T12:00:00.000Z",
-          "v": 0
-        },
-        {
-          "t": "2026-07-20T12:00:00.000Z",
-          "v": 3
-        },
-        {
           "t": "2026-07-21T12:00:00.000Z",
           "v": 0
         },
@@ -232,6 +208,30 @@
         {
           "t": "2026-07-29T12:00:00.000Z",
           "v": 0
+        },
+        {
+          "t": "2026-07-30T12:00:00.000Z",
+          "v": 0
+        },
+        {
+          "t": "2026-07-31T12:00:00.000Z",
+          "v": 0
+        },
+        {
+          "t": "2026-08-01T12:00:00.000Z",
+          "v": 0
+        },
+        {
+          "t": "2026-08-02T12:00:00.000Z",
+          "v": 0
+        },
+        {
+          "t": "2026-08-03T12:00:00.000Z",
+          "v": 0
+        },
+        {
+          "t": "2026-08-04T12:00:00.000Z",
+          "v": 1
         }
       ]
     },
@@ -242,30 +242,6 @@
       "color": "#1f6b3a",
       "points": [
         {
-          "t": "2026-07-15T12:00:00.000Z",
-          "v": 0
-        },
-        {
-          "t": "2026-07-16T12:00:00.000Z",
-          "v": 0
-        },
-        {
-          "t": "2026-07-17T12:00:00.000Z",
-          "v": 0
-        },
-        {
-          "t": "2026-07-18T12:00:00.000Z",
-          "v": 0
-        },
-        {
-          "t": "2026-07-19T12:00:00.000Z",
-          "v": 0
-        },
-        {
-          "t": "2026-07-20T12:00:00.000Z",
-          "v": 3
-        },
-        {
           "t": "2026-07-21T12:00:00.000Z",
           "v": 0
         },
@@ -295,10 +271,34 @@
         },
         {
           "t": "2026-07-28T12:00:00.000Z",
-          "v": 2
+          "v": 3
         },
         {
           "t": "2026-07-29T12:00:00.000Z",
+          "v": 0
+        },
+        {
+          "t": "2026-07-30T12:00:00.000Z",
+          "v": 0
+        },
+        {
+          "t": "2026-07-31T12:00:00.000Z",
+          "v": 0
+        },
+        {
+          "t": "2026-08-01T12:00:00.000Z",
+          "v": 0
+        },
+        {
+          "t": "2026-08-02T12:00:00.000Z",
+          "v": 0
+        },
+        {
+          "t": "2026-08-03T12:00:00.000Z",
+          "v": 0
+        },
+        {
+          "t": "2026-08-04T12:00:00.000Z",
           "v": 0
         }
       ]
@@ -310,30 +310,6 @@
       "color": "#c45f00",
       "points": [
         {
-          "t": "2026-07-15T12:00:00.000Z",
-          "v": 0
-        },
-        {
-          "t": "2026-07-16T12:00:00.000Z",
-          "v": 0
-        },
-        {
-          "t": "2026-07-17T12:00:00.000Z",
-          "v": 0
-        },
-        {
-          "t": "2026-07-18T12:00:00.000Z",
-          "v": 0
-        },
-        {
-          "t": "2026-07-19T12:00:00.000Z",
-          "v": 0
-        },
-        {
-          "t": "2026-07-20T12:00:00.000Z",
-          "v": 0
-        },
-        {
           "t": "2026-07-21T12:00:00.000Z",
           "v": 0
         },
@@ -363,11 +339,35 @@
         },
         {
           "t": "2026-07-28T12:00:00.000Z",
-          "v": 1
+          "v": 0
         },
         {
           "t": "2026-07-29T12:00:00.000Z",
           "v": 0
+        },
+        {
+          "t": "2026-07-30T12:00:00.000Z",
+          "v": 0
+        },
+        {
+          "t": "2026-07-31T12:00:00.000Z",
+          "v": 0
+        },
+        {
+          "t": "2026-08-01T12:00:00.000Z",
+          "v": 0
+        },
+        {
+          "t": "2026-08-02T12:00:00.000Z",
+          "v": 0
+        },
+        {
+          "t": "2026-08-03T12:00:00.000Z",
+          "v": 0
+        },
+        {
+          "t": "2026-08-04T12:00:00.000Z",
+          "v": 1
         }
       ]
     },
@@ -378,30 +378,6 @@
       "color": "#1a5f7a",
       "points": [
         {
-          "t": "2026-07-15T12:00:00.000Z",
-          "v": 0
-        },
-        {
-          "t": "2026-07-16T12:00:00.000Z",
-          "v": 0
-        },
-        {
-          "t": "2026-07-17T12:00:00.000Z",
-          "v": 0
-        },
-        {
-          "t": "2026-07-18T12:00:00.000Z",
-          "v": 0
-        },
-        {
-          "t": "2026-07-19T12:00:00.000Z",
-          "v": 0
-        },
-        {
-          "t": "2026-07-20T12:00:00.000Z",
-          "v": 0
-        },
-        {
           "t": "2026-07-21T12:00:00.000Z",
           "v": 0
         },
@@ -435,6 +411,30 @@
         },
         {
           "t": "2026-07-29T12:00:00.000Z",
+          "v": 0
+        },
+        {
+          "t": "2026-07-30T12:00:00.000Z",
+          "v": 0
+        },
+        {
+          "t": "2026-07-31T12:00:00.000Z",
+          "v": 0
+        },
+        {
+          "t": "2026-08-01T12:00:00.000Z",
+          "v": 0
+        },
+        {
+          "t": "2026-08-02T12:00:00.000Z",
+          "v": 0
+        },
+        {
+          "t": "2026-08-03T12:00:00.000Z",
+          "v": 0
+        },
+        {
+          "t": "2026-08-04T12:00:00.000Z",
           "v": 0
         }
       ]
@@ -448,25 +448,25 @@
         {
           "id": "hash_local",
           "label": "Local hash",
-          "count": 9,
+          "count": 10,
           "hint": "File never leaves device"
         },
         {
           "id": "submit",
           "label": "Submit stamp",
-          "count": 3,
+          "count": 1,
           "hint": "API or SPA"
         },
         {
           "id": "calendar",
           "label": "Calendar attested",
-          "count": 9,
+          "count": 10,
           "hint": "OTS calendars accepted"
         },
         {
           "id": "bitcoin",
           "label": "Bitcoin confirmed",
-          "count": 8,
+          "count": 9,
           "hint": "On-chain anchor"
         },
         {
@@ -497,6 +497,14 @@
           "value": 1,
           "meta": {
             "offer": "direct web stamps"
+          }
+        },
+        {
+          "id": "mvp-smoke",
+          "label": "mvp-smoke",
+          "value": 1,
+          "meta": {
+            "offer": "attributed client"
           }
         },
         {
@@ -612,7 +620,7 @@
         {
           "id": "confirmed",
           "label": "Confirmed",
-          "value": 8,
+          "value": 9,
           "meta": {
             "offer": "Bitcoin anchored"
           }
@@ -781,7 +789,7 @@
     "seriesFromDb": true,
     "note": "Live metrics from satohash API DB",
     "version": "5.0.0-ELITE",
-    "uptimeSec": 5087,
+    "uptimeSec": 527978,
     "requireLightning": false,
     "familyFreeTier": true,
     "directory": {
@@ -915,21 +923,21 @@
       ]
     },
     "counts": {
-      "stampsTotal": 9,
-      "stamps24h": 3,
-      "stamps7d": 6,
+      "stampsTotal": 10,
+      "stamps24h": 1,
+      "stamps7d": 4,
       "pending": 1,
-      "confirmed": 8,
-      "confirmed7d": 5,
+      "confirmed": 9,
+      "confirmed7d": 3,
       "failed": 0,
       "failed7d": 0,
       "familyFree": 0,
-      "distinctClients": 3
+      "distinctClients": 4
     }
   },
   "_staticMirror": {
     "source": "https://api.satohash.io/metrics.json",
-    "mirroredAt": "2026-07-29T01:06:16.126Z",
+    "mirroredAt": "2026-08-04T02:21:06.926Z",
     "attempt": 1,
     "note": "Local/preview fallback only. Production satohash.io/metrics.json is proxied by CF Pages Function → api.satohash.io. HQ SoT: https://api.satohash.io/metrics.json",
     "canonical": "https://api.satohash.io/metrics.json"

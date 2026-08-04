@@ -1,3 +1,76 @@
+## Session — 2026-08-04 (Kimi THOR) — OPS TRUTH SWEEP · BITCOIND RESTORED
+
+**From:** Kimi on THOR · **To:** Grok/M3 · **UTC:** 2026-08-04 ~02:40  
+**Project:** Satohash · free stamps ON · paywall OFF · no secrets
+
+### Executive
+API green, free stamps ON — **bitcoind RESTORED**. Was **OOM-killed 2026-07-28** and left dead ~6 days (IBD stalled **20.2%**); API correctly fell back to mempool.space. Restarted with proper **systemd** unit; public **`source: bitcoind`** + syncing; IBD ~**85 blocks/min**, ETA **~4 days**.
+
+### Bitcoin / IBD
+| Field | Value |
+|-------|--------|
+| blocks | ~508,624 (rising from 508,207) |
+| headers | 960,956 (100%) |
+| progress | ~20.23% verificationprogress, **IBD=true** |
+| process | **systemd `bitcoind.service`**, enabled, survives reboot |
+| RPC host | OK (`bitcoin-cli`) |
+| RPC API container | OK → `172.19.0.1:8332` |
+| public `source` | **`bitcoind`** (live ~02:33 UTC) |
+| readiness | `status=syncing`, `ready_to_verify=false` |
+| action | Unit override: package path `/var/lib/bitcoin` was wrong — real datadir **`/root/.bitcoin`**. Enabled + started. No paywall flip, no code/git change. |
+
+### API / paywall / LN
+| Field | Value |
+|-------|--------|
+| version | **5.0.0-ELITE** (image ~2026-07-28; container up ~6d; git **fb1a28a** on THOR) |
+| REQUIRE_LIGHTNING | **false** (untouched) |
+| stamp smoke | OK pending + `verify_url` (`client_id: kimi-truth-sweep`) |
+| LNbits | healthy · 0 sats · `ready_to_enable_paid=true` · `missing_for_paid=[]` |
+| CORS | 14 origins (satohash + www + suite + HQ + family hosts) |
+| backup | daily 06:00 · last **2026-08-03 06:00** · keep 7 |
+
+### Metrics / HQ
+- SoT: **`https://api.satohash.io/metrics.json`** (HQ projects/tools confirmed)
+- Health **green**; bitcoin-anchor **amber** (1 pending — expected during IBD)
+- **client_id aggregates LIVE**; **`raw.directory` LIVE** — ops item “client_id + directory” **CLOSED**
+- Umami: `analytics.giveabit.io` only
+
+### Domains (THOR curls)
+satohash.io / www / api health /watch /templates → **200** · no TLS issues
+
+### Gaps closed
+IBD was **never finished**. OOM 2026-07-28 → brief restart → clean stop 2026-07-29 04:42 @ block 508,207 → dead until this restore. Public mempool.space was correct “RPC dead” behavior.
+
+### Next
+| Owner | Action |
+|-------|--------|
+| **Kimi** | Monitor IBD (`bitcoin-cli -getinfo`); watch free RAM/OOM; rate ~88h ETA |
+| **Grok** | Persist tables (this file + handoff-log + current-status) — **done in same session** |
+| **Cam** | Nothing · paywall stays OFF |
+
+### Standing
+Free stamps ON · no secrets · HQ metrics API SoT · mempool fallback by design until IBD complete · VO media on disk (no re-push) · ANTHROPIC unset · Nostr 2/3 OK
+
+---
+
+## Session — 2026-08-03 (Grok) — TEMPLATES MENUS + MVP PASS
+
+**From:** Grok · **Status:** SPA redeployed · templates filter fixed · free stamps · MVP checklist
+
+### Done
+- `/templates` category chips no longer run off-screen (scroll strip + tablist)
+- Menus: Stamp primary on marketing; Templates on mobile bottom nav
+- Landing Watch CTA; 404 Stamp/Verify; stamp 100MB guard
+- `docs/MVP-CHECKLIST.md` · `npm run mvp:smoke` (health/metrics/stamp OK)
+- CF Pages deploy peek: https://0bb26c14.satohash.pages.dev
+
+### Kimi (superseded by 2026-08-04 truth sweep)
+- ~~IBD open~~ → **in progress**, `source: bitcoind`, ETA ~4d  
+- ~~client_id/directory~~ → **closed (live)**  
+- no paywall flip · no secrets  
+
+---
+
 ## Session — 2026-07-29 (Grok) — EXPLAINER VO + DOCS CLOSEOUT /goodbye
 
 **From:** Grok · **Status:** Prod SPA + explainer complete · free stamps · handoffs updated

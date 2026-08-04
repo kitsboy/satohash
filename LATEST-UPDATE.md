@@ -1,14 +1,11 @@
-# satohash — Last Updated 2026-07-29 by Grok
+# satohash — Last Updated 2026-08-04 (Kimi ops + Grok persist)
 
-**Brief:** Explainer complete (graphics + music + Kimi VO on `/watch`); SPA reliability (`/b/*`, eager watch); docs cleanup + handoffs refreshed.  
+**Brief:** Bitcoind **restored** on THOR — public `source: bitcoind`, IBD ~20% syncing, ETA ~4d. Free stamps ON. Metrics client_id + directory **closed**. SPA menus/templates pass still on M3 (may need commit).
 
-**Commit tip:** `fb08e33` (or later on `main`)  
-**API:** green · SPA: satohash.io · free stamps · `REQUIRE_LIGHTNING=false`  
+**API:** 5.0.0-ELITE green · `REQUIRE_LIGHTNING=false`  
+**Bitcoin:** bitcoind systemd enabled · datadir `/root/.bitcoin` · was OOM-dead 6d  
+**HQ SoT:** https://api.satohash.io/metrics.json  
 
-**Key URLs**
-- https://satohash.io/watch — explainer player (VO-driven ~80s)  
-- https://satohash.io/docs/executive-summary  
-- https://satohash.io/#free-and-fees  
-- Media: `public/media/video/` (vo-complete.mp3, music, frames, with-vo MP4)  
+**Detail:** top of `docs/KIMI-HANDOFF.md` · `docs/handoff-log.md` · `.ai_docs/current-status.md`  
 
-**Kimi next:** IBD finish report; optional homepage CTA polish; wallets when Cam flips paywall.  
+**Kimi next:** monitor IBD + RAM. **Cam:** nothing (no paywall). **Grok:** commit SPA when Cam wants.  

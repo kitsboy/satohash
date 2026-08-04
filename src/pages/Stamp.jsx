@@ -549,6 +549,18 @@ export default function Stamp() {
 
       // Real SHA-256 hashing in browser - file NEVER leaves device
       const file = files[0]
+      // Soft cap: warn + block multi-hundred-MB blobs that freeze low-end devices
+      const MAX_STAMP_BYTES = 100 * 1024 * 1024
+      if (file.size > MAX_STAMP_BYTES) {
+        setStampingStatus('idle')
+        setError(
+          `File is ${(file.size / (1024 * 1024)).toFixed(0)} MB — max ${MAX_STAMP_BYTES / (1024 * 1024)} MB for browser stamp. Hash offline and paste the SHA-256.`
+        )
+        toast.error('File too large for browser stamp', {
+          description: 'Use a smaller file or stamp a precomputed SHA-256 hash'
+        })
+        return
+      }
       const arrayBuffer = await file.arrayBuffer()
       // Off-thread hashing via Web Worker to avoid freezing UI on large files
       const { wrap } = await import('comlink')

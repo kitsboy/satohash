@@ -31,7 +31,8 @@
     "docs:sync": "node scripts/sync-docs.js",
     "prepare": "husky",
     "version:bump": "node scripts/increment-build.js",
-    "api:smoke": "bash scripts/api-local-smoke.sh"
+    "api:smoke": "bash scripts/api-local-smoke.sh",
+    "mvp:smoke": "bash scripts/mvp-smoke.sh"
   },
   "lint-staged": {
     "src/**/*.{js,jsx}": [
