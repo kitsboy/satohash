@@ -12,7 +12,10 @@ export default function LangUrlSync() {
     const fromUrl = new URLSearchParams(location.search).get('lang')
     if (!fromUrl) return
     const code = normalizeLang(fromUrl)
-    if (code !== lang) setLang(code)
+    if (code !== lang) {
+      // setLang is async (loads locale bundle first)
+      void setLang(code)
+    }
   }, [location.search, lang, setLang])
 
   return null

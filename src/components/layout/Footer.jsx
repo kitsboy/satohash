@@ -77,7 +77,7 @@ const LINK_GROUPS = [
 ]
 
 const linkClass =
-  'group flex min-h-[40px] items-center gap-1.5 text-[13px] font-medium leading-snug text-[var(--text-secondary)] transition-colors hover:text-[var(--accent-active)]'
+  'group flex min-h-[40px] items-center gap-1.5 rounded-md px-0.5 text-[13px] font-medium leading-snug text-[var(--text-secondary)] transition-colors hover:text-[var(--accent-gold)]'
 
 function FooterLink({ link, label }) {
   if (link.external) {
@@ -250,25 +250,38 @@ export default function Footer() {
         role="contentinfo"
         className="relative border-t border-[var(--border)] bg-[var(--bg-secondary)]"
       >
+        {/* Elite quiet wash + hairline gold edge */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_0%,rgba(240,180,41,0.05),transparent_60%)]"
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_40%_at_50%_0%,rgba(240,180,41,0.07),transparent_55%)]"
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 top-0 h-px"
+          style={{
+            background: 'linear-gradient(90deg, transparent, rgba(240,180,41,0.35), transparent)'
+          }}
         />
 
         <div className="relative z-10 mx-auto max-w-6xl px-5 sm:px-8">
-          {/* ── Row 1: Brand strip (full width, even) ── */}
+          {/* ── Row 1: Brand strip ── */}
           <div className="flex flex-col gap-6 border-b border-[var(--border)] py-12 sm:flex-row sm:items-start sm:justify-between sm:gap-10">
             <div className="max-w-md space-y-4">
-              <Link to="/" className="inline-flex items-center gap-3">
+              <Link to="/" className="group inline-flex items-center gap-3">
                 <img
                   src="/logo.png"
                   alt=""
-                  className="h-9 w-9 object-contain"
+                  className="h-9 w-9 object-contain transition-transform duration-200 group-hover:scale-105"
                   width={36}
                   height={36}
                 />
-                <span className="text-xl font-bold tracking-tight text-[var(--text-primary)]">
-                  Satohash
+                <span className="flex flex-col leading-none">
+                  <span className="text-xl font-bold tracking-tight text-[var(--text-primary)]">
+                    Satohash
+                  </span>
+                  <span className="mt-1 text-[9px] font-semibold tracking-[0.16em] text-[var(--text-tertiary)] uppercase">
+                    Bitcoin proof · Free stamps
+                  </span>
                 </span>
               </Link>
               <p className="text-sm leading-relaxed text-[var(--text-secondary)]">
@@ -282,9 +295,9 @@ export default function Footer() {
             <div className="flex w-full max-w-sm flex-col gap-3 sm:items-end">
               <a
                 href="mailto:hello@giveabit.io"
-                className="flex min-h-[44px] w-full items-center gap-3 rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] px-4 py-3 transition-colors hover:border-[var(--accent-active)] sm:w-[280px]"
+                className="flex min-h-[44px] w-full items-center gap-3 rounded-xl border border-[var(--border)] bg-[var(--bg-primary)]/80 px-4 py-3 transition-all hover:border-[var(--accent-gold)]/50 hover:shadow-[0_0_24px_rgba(240,180,41,0.08)] sm:w-[280px]"
               >
-                <Mail size={16} className="shrink-0 text-[var(--accent-active)]" />
+                <Mail size={16} className="shrink-0 text-[var(--accent-gold)]" />
                 <div className="min-w-0 text-left">
                   <p className="text-[10px] font-semibold tracking-wide text-[var(--text-tertiary)] uppercase">
                     {t('footerPage.emailTerminal')}
@@ -296,9 +309,9 @@ export default function Footer() {
               </a>
               <a
                 href="nostr:kimi@giveabit.io"
-                className="flex min-h-[44px] w-full items-center gap-3 rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] px-4 py-3 transition-colors hover:border-[var(--accent-active)] sm:w-[280px]"
+                className="flex min-h-[44px] w-full items-center gap-3 rounded-xl border border-[var(--border)] bg-[var(--bg-primary)]/80 px-4 py-3 transition-all hover:border-[var(--accent-gold)]/50 sm:w-[280px]"
               >
-                <span className="flex h-4 w-4 shrink-0 items-center justify-center text-[10px] font-bold text-[var(--accent-active)]">
+                <span className="flex h-4 w-4 shrink-0 items-center justify-center text-[10px] font-bold text-[var(--accent-gold)]">
                   ✦
                 </span>
                 <div className="min-w-0 text-left">
@@ -323,7 +336,12 @@ export default function Footer() {
           >
             {LINK_GROUPS.map((group) => (
               <div key={group.id} className="min-w-0">
-                <h3 className="mb-4 text-[11px] font-bold tracking-[0.14em] text-[var(--text-primary)] uppercase">
+                <h3 className="mb-4 flex items-center gap-2 text-[11px] font-bold tracking-[0.14em] text-[var(--text-primary)] uppercase">
+                  <span
+                    className="h-px w-3 shrink-0 rounded-full"
+                    style={{ background: 'var(--accent-gold)' }}
+                    aria-hidden
+                  />
                   {groupTitle(group)}
                 </h3>
                 <ul className="flex flex-col gap-0.5">
@@ -331,7 +349,12 @@ export default function Footer() {
                     <li key={link.key}>
                       <FooterLink
                         link={link}
-                        label={link.label || t(`footerPage.links.${link.key}`)}
+                        label={
+                          link.label ||
+                          t(`footerPage.links.${link.key}`, {
+                            defaultValue: link.key
+                          })
+                        }
                       />
                     </li>
                   ))}
@@ -340,21 +363,21 @@ export default function Footer() {
             ))}
           </nav>
 
-          {/* ── Row 3: Careers — compact uniform chips (not a tall scroll stack) ── */}
+          {/* ── Row 3: Careers ── */}
           <div className="border-b border-[var(--border)] py-10">
             <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
               <div className="flex items-center gap-3">
                 <h3 className="text-[11px] font-bold tracking-[0.14em] text-[var(--text-primary)] uppercase">
                   {t('footerPage.careers.title')}
                 </h3>
-                <span className="rounded-full border border-[var(--accent-active)]/25 bg-[var(--accent-active)]/10 px-2.5 py-0.5 text-[10px] font-bold tracking-wide text-[var(--accent-active)] uppercase">
+                <span className="rounded-full border border-[var(--accent-gold)]/25 bg-[var(--accent-gold)]/10 px-2.5 py-0.5 text-[10px] font-bold tracking-wide text-[var(--accent-gold)] uppercase">
                   {t('footerPage.careers.hiring')}
                 </span>
               </div>
               <button
                 type="button"
                 onClick={() => setJobsOpen((o) => !o)}
-                className="text-xs font-semibold text-[var(--text-secondary)] underline-offset-2 hover:text-[var(--accent-active)] hover:underline md:hidden"
+                className="text-xs font-semibold text-[var(--text-secondary)] underline-offset-2 hover:text-[var(--accent-gold)] hover:underline md:hidden"
               >
                 {jobsOpen
                   ? t('common.close', { defaultValue: 'Hide' })
@@ -362,21 +385,20 @@ export default function Footer() {
               </button>
             </div>
 
-            {/* Desktop: even 4-col grid of equal-height job tiles */}
             <div className="hidden gap-3 md:grid md:grid-cols-2 lg:grid-cols-4">
               {jobs.map((job) => (
                 <a
                   key={job.id}
                   href={`mailto:hello@giveabit.io?subject=${encodeURIComponent(`Application for ${job.title}`)}`}
-                  className="group flex min-h-[112px] flex-col justify-between rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] p-4 transition-colors hover:border-[var(--accent-active)]"
+                  className="group flex min-h-[112px] flex-col justify-between rounded-xl border border-[var(--border)] bg-[var(--bg-primary)]/70 p-4 transition-all hover:border-[var(--accent-gold)]/45 hover:shadow-[0_0_28px_rgba(240,180,41,0.06)]"
                 >
                   <div className="flex items-start justify-between gap-2">
-                    <h4 className="text-sm leading-snug font-semibold text-[var(--text-primary)] group-hover:text-[var(--accent-active)]">
+                    <h4 className="text-sm leading-snug font-semibold text-[var(--text-primary)] group-hover:text-[var(--accent-gold)]">
                       {job.title}
                     </h4>
                     <ArrowUpRight
                       size={14}
-                      className="mt-0.5 shrink-0 text-[var(--text-tertiary)] group-hover:text-[var(--accent-active)]"
+                      className="mt-0.5 shrink-0 text-[var(--text-tertiary)] group-hover:text-[var(--accent-gold)]"
                     />
                   </div>
                   <p className="mt-2 line-clamp-2 text-xs leading-relaxed text-[var(--text-secondary)]">
@@ -386,13 +408,12 @@ export default function Footer() {
               ))}
             </div>
 
-            {/* Mobile: collapsible list, same tile style */}
             <div className={`grid gap-3 md:hidden ${jobsOpen ? 'grid' : 'hidden'}`}>
               {jobs.map((job) => (
                 <a
                   key={job.id}
                   href={`mailto:hello@giveabit.io?subject=${encodeURIComponent(`Application for ${job.title}`)}`}
-                  className="flex min-h-[88px] flex-col justify-between rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] p-4"
+                  className="flex min-h-[88px] flex-col justify-between rounded-xl border border-[var(--border)] bg-[var(--bg-primary)]/70 p-4"
                 >
                   <h4 className="text-sm font-semibold text-[var(--text-primary)]">{job.title}</h4>
                   <p className="mt-1 line-clamp-2 text-xs text-[var(--text-secondary)]">
@@ -408,11 +429,11 @@ export default function Footer() {
             )}
           </div>
 
-          {/* ── Row 4: Bottom bar — single height, even alignment ── */}
+          {/* ── Row 4: Bottom bar ── */}
           <div className="flex flex-col items-stretch justify-between gap-5 py-8 sm:flex-row sm:items-center">
             <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[11px] text-[var(--text-secondary)]">
               <span className="inline-flex items-center gap-1.5">
-                <span className="h-1.5 w-1.5 rounded-full bg-[var(--accent-success)]" />
+                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[var(--accent-success)]" />
                 {t('footerPage.protocolActive')}
               </span>
               <span className="hidden text-[var(--border-bright)] sm:inline" aria-hidden>
@@ -431,19 +452,26 @@ export default function Footer() {
               <button
                 type="button"
                 onClick={() => setShowDonation(true)}
-                className="inline-flex min-h-[40px] items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--bg-primary)] px-4 text-[11px] font-semibold tracking-wide text-[var(--text-primary)] transition-colors hover:border-[var(--accent-active)]"
+                className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--bg-primary)]/80 px-4 text-[11px] font-semibold tracking-wide text-[var(--text-primary)] transition-all hover:border-[var(--accent-gold)]/50"
               >
-                <Heart size={12} className="text-[var(--accent-active)]" />
+                <Heart size={12} className="text-[var(--accent-gold)]" />
                 {t('footerPage.supportMission')}
               </button>
               <a
                 href="https://giveabit.io"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex min-h-[40px] items-center gap-2 rounded-full border border-transparent px-2 text-[11px] font-semibold tracking-wide text-[var(--text-secondary)] opacity-80 transition-opacity hover:opacity-100"
+                className="group inline-flex min-h-[44px] items-center gap-2.5 rounded-full border border-[var(--border)] bg-[var(--bg-primary)]/60 px-3 py-1.5 text-[11px] font-semibold tracking-wide text-[var(--text-secondary)] transition-all hover:border-[var(--accent-gold)]/40 hover:text-[var(--text-primary)]"
               >
                 <span>{t('footerPage.createdBy')}</span>
-                <img src="/giveabit.png" alt="Give A Bit" className="h-4 w-auto object-contain" />
+                {/* +40% vs previous h-4 (16px) → 22.4px */}
+                <img
+                  src="/giveabit.png"
+                  alt="Give A Bit"
+                  className="h-[22px] w-auto object-contain opacity-90 transition-opacity group-hover:opacity-100 sm:h-6"
+                  width={45}
+                  height={22}
+                />
               </a>
             </div>
           </div>

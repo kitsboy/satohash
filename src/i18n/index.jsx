@@ -955,50 +955,61 @@ export const I18nContext = createContext({
 export function I18nProvider({ children }) {
   const [lang, setLangState] = useState(getInitialLang)
 
-  const applyLang = useCallback((rawCode) => {
-    const code = normalizeLang(rawCode)
-    setLangState(code)
-    localStorage.setItem(STORAGE_KEY, code)
-    syncLangToUrl(code)
+  const applyDom = useCallback((code) => {
     const meta = getLanguageMeta(code)
     document.documentElement.lang = code === 'zh' ? 'zh-Hans' : code
     document.documentElement.dir = meta.dir
-    if (normalizeLang(i18n.language) !== code) {
-      i18n.changeLanguage(code)
-    }
-    return code
+    syncLangToUrl(code)
   }, [])
 
-  const setLang = useCallback((code) => applyLang(code), [applyLang])
+  /** Load locale bundle first, then switch i18next + React state. */
+  const setLang = useCallback(
+    async (rawCode) => {
+      const code = normalizeLang(rawCode)
+      try {
+        const { switchAppLanguage } = await import('./setup.js')
+        await switchAppLanguage(code)
+      } catch {
+        // setup already init'd; still try changeLanguage
+        try {
+          await i18n.changeLanguage(code)
+        } catch {
+          /* ignore */
+        }
+      }
+      setLangState(code)
+      localStorage.setItem(STORAGE_KEY, code)
+      applyDom(code)
+      return code
+    },
+    [applyDom]
+  )
 
   // Boot: align i18next + DOM with resolved initial language
   useEffect(() => {
-    applyLang(getInitialLang())
-  }, [applyLang])
+    setLang(getInitialLang())
+  }, [setLang])
 
-  // Keep React state in sync when i18next changes (e.g. onboarding LanguagePicker)
+  // Keep React state in sync when i18next changes elsewhere
   useEffect(() => {
     const onChange = (lng) => {
       const code = normalizeLang(lng)
       setLangState((prev) => (prev === code ? prev : code))
-      syncLangToUrl(code)
-      const meta = getLanguageMeta(code)
-      document.documentElement.lang = code === 'zh' ? 'zh-Hans' : code
-      document.documentElement.dir = meta.dir
+      applyDom(code)
     }
     i18n.on('languageChanged', onChange)
     return () => i18n.off('languageChanged', onChange)
-  }, [])
+  }, [applyDom])
 
   // React to ?lang= changes (back/forward, shared links)
   useEffect(() => {
     const onPopState = () => {
       const fromUrl = new URLSearchParams(window.location.search).get('lang')
-      if (fromUrl) applyLang(fromUrl)
+      if (fromUrl) setLang(fromUrl)
     }
     window.addEventListener('popstate', onPopState)
     return () => window.removeEventListener('popstate', onPopState)
-  }, [applyLang])
+  }, [setLang])
 
   const t = (section, key) => {
     const i18nKey = `${section}.${key}`
