@@ -7,31 +7,18 @@ import { Link } from 'react-router-dom'
 export default function DesktopNavLayout({ left, center, right, className = '' }) {
   return (
     <div
-      className={`grid w-full grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-3 px-4 sm:gap-5 sm:px-6 lg:px-8 ${className}`}
+      className={`grid w-full grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-2 px-4 sm:gap-4 sm:px-5 lg:px-6 ${className}`}
       style={{ minHeight: '4rem', height: '4rem' }}
     >
       <div className="flex min-w-0 items-center justify-start overflow-hidden">{left}</div>
-      <div
-        className="flex shrink-0 items-center justify-center rounded-2xl px-1.5 py-1"
-        style={{
-          background:
-            'linear-gradient(180deg, color-mix(in srgb, var(--bg-secondary) 70%, transparent), color-mix(in srgb, var(--bg-primary) 40%, transparent))',
-          boxShadow:
-            'inset 0 0 0 1px color-mix(in srgb, var(--border) 80%, transparent), 0 1px 0 rgba(240,180,41,0.06)'
-        }}
-      >
-        {center}
-      </div>
-      {/* overflow-visible so language/account menus are not clipped */}
-      <div className="flex min-w-0 items-center justify-end gap-1.5 overflow-visible sm:gap-2">
-        {right}
-      </div>
+      <div className="flex shrink-0 items-center justify-center">{center}</div>
+      <div className="flex min-w-0 items-center justify-end overflow-visible">{right}</div>
     </div>
   )
 }
 
 const tabBase =
-  'group relative whitespace-nowrap rounded-xl px-3.5 py-2.5 text-[11px] font-bold tracking-[0.07em] uppercase transition-all duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-navbar)]'
+  'group relative whitespace-nowrap rounded-lg px-3 py-2 text-[11px] font-bold tracking-[0.06em] uppercase transition-colors duration-150 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]/40'
 
 export function NavTab({ to, href, children, active, onClick }) {
   const className = [

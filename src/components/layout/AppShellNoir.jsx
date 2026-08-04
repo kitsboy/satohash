@@ -382,7 +382,7 @@ export default function AppShellNoir({ children }) {
             </span>
           </Link>
           <div className="flex shrink-0 items-center gap-1.5">
-            <LanguageSwitcher compact showAllFlags={false} />
+            <LanguageSwitcher compact />
             <button
               type="button"
               onClick={() => setIsSearchOpen(true)}
