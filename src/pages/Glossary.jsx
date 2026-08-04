@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { BookOpen, Search, ArrowLeft } from 'lucide-react'
+import { BookOpen, Search } from 'lucide-react'
 import usePageMeta from '../hooks/usePageMeta'
 
 const TERM_IDS = [
@@ -49,21 +49,10 @@ export default function Glossary() {
 
   return (
     <div className="min-h-screen bg-[var(--bg-primary)]">
-      <header className="border-b border-[var(--border)] bg-[var(--bg-navbar)]/95 px-6 py-4 backdrop-blur-md">
-        <div className="mx-auto flex max-w-4xl items-center gap-4">
-          <Link
-            to="/"
-            className="flex min-h-[44px] items-center gap-2 text-sm font-bold text-[var(--text-secondary)] hover:text-[var(--accent-gold)]"
-          >
-            <ArrowLeft size={16} /> {t('common.home')}
-          </Link>
-        </div>
-      </header>
-
-      <section className="border-b border-[var(--border)] px-6 pt-20 pb-16">
+      <section className="border-b border-[var(--border)] px-4 pt-8 pb-12 sm:px-6 sm:pt-12 sm:pb-16">
         <div className="mx-auto max-w-3xl text-center">
           <BookOpen size={28} className="mx-auto mb-4 text-[var(--accent-gold)]" />
-          <h1 className="mb-4 text-4xl font-black tracking-tight text-[var(--text-primary)] sm:text-5xl">
+          <h1 className="mb-4 text-3xl font-black tracking-tight text-[var(--text-primary)] sm:text-5xl">
             <span className="text-[var(--accent-gold)]">{t('glossaryPage.hero.title')}</span>{' '}
             {t('glossaryPage.hero.titleHighlight')}
           </h1>

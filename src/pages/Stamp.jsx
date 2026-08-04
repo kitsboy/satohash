@@ -762,30 +762,36 @@ export default function Stamp() {
     stampingStatus === 'hashing' ? '30%' : stampingStatus === 'anchoring' ? '70%' : '100%'
 
   return (
-    <div className="mx-auto max-w-6xl space-y-12 p-4 pb-24 md:p-8 md:pb-20">
-      {/* Minimal chrome when /stamp is rendered without AppShell (family deep-links) */}
+    <div className="mx-auto max-w-6xl space-y-8 p-4 pb-28 sm:space-y-12 sm:pb-24 md:p-8 md:pb-20">
+      {/* Secondary trail — primary chrome is MarketingShell on mobile */}
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <Link
-          to="/"
-          className="text-[11px] font-black tracking-widest uppercase transition-opacity hover:opacity-80"
+        <p
+          className="text-[11px] font-black tracking-widest uppercase"
           style={{ color: 'var(--accent-gold)' }}
         >
-          ← Satohash
-        </Link>
-        <div className="flex gap-3">
+          Free stamp
+        </p>
+        <div className="flex flex-wrap gap-2 sm:gap-3">
           <Link
             to="/verify"
-            className="text-[11px] font-bold tracking-widest uppercase"
+            className="inline-flex min-h-[40px] items-center rounded-lg border border-[var(--border)] px-3 text-[11px] font-bold tracking-widest uppercase"
             style={{ color: 'var(--text-secondary)' }}
           >
             Verify
           </Link>
           <Link
             to="/vault"
-            className="text-[11px] font-bold tracking-widest uppercase"
+            className="inline-flex min-h-[40px] items-center rounded-lg border border-[var(--border)] px-3 text-[11px] font-bold tracking-widest uppercase"
             style={{ color: 'var(--text-secondary)' }}
           >
             Vault
+          </Link>
+          <Link
+            to="/watch"
+            className="inline-flex min-h-[40px] items-center rounded-lg border border-[var(--border)] px-3 text-[11px] font-bold tracking-widest uppercase"
+            style={{ color: 'var(--text-secondary)' }}
+          >
+            Watch
           </Link>
         </div>
       </div>

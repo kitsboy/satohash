@@ -377,18 +377,18 @@ export default function Landing() {
             initial="hidden"
             animate="visible"
             custom={0.4}
-            className="mb-6 flex flex-col items-center gap-4 sm:flex-row sm:justify-center"
+            className="mb-6 flex w-full max-w-md flex-col items-stretch gap-3 sm:max-w-none sm:flex-row sm:flex-wrap sm:items-center sm:justify-center sm:gap-4"
           >
             <Link
               to="/stamp"
-              className="flex min-h-[48px] w-full items-center justify-center gap-2 rounded-2xl px-8 py-4 text-base font-black transition-all hover:scale-105 hover:opacity-90 sm:w-auto"
+              className="flex min-h-[48px] w-full items-center justify-center gap-2 rounded-2xl px-6 py-3.5 text-base font-black transition-all hover:opacity-90 sm:w-auto sm:px-8 sm:py-4"
               style={{ backgroundColor: 'var(--accent-gold)', color: '#141b25' }}
             >
               {t('landingPage.hero.ctaStamp')} <ArrowRight size={16} />
             </Link>
             <Link
               to="/watch"
-              className="flex min-h-[48px] w-full items-center justify-center gap-2 rounded-2xl border px-8 py-4 text-base font-bold transition-all hover:text-white sm:w-auto"
+              className="flex min-h-[48px] w-full items-center justify-center gap-2 rounded-2xl border px-6 py-3.5 text-base font-bold transition-all hover:text-white sm:w-auto sm:px-8 sm:py-4"
               style={{
                 borderColor: 'var(--border-gold, var(--accent-gold))',
                 color: 'var(--accent-gold)'
@@ -399,14 +399,14 @@ export default function Landing() {
             </Link>
             <Link
               to="/templates"
-              className="flex min-h-[48px] w-full items-center justify-center gap-2 rounded-2xl border px-8 py-4 text-base font-bold transition-all hover:text-white sm:w-auto"
+              className="flex min-h-[48px] w-full items-center justify-center gap-2 rounded-2xl border px-6 py-3.5 text-sm font-bold transition-all hover:text-white sm:w-auto sm:px-8 sm:py-4 sm:text-base"
               style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
             >
               {t('landingPage.hero.ctaTemplates')} <ArrowRight size={16} />
             </Link>
             <a
               href="#verify-ots"
-              className="flex min-h-[48px] w-full items-center justify-center gap-2 rounded-2xl border px-8 py-4 text-base font-bold transition-all hover:text-white sm:w-auto"
+              className="flex min-h-[48px] w-full items-center justify-center gap-2 rounded-2xl border px-6 py-3.5 text-sm font-bold transition-all hover:text-white sm:w-auto sm:px-8 sm:py-4 sm:text-base"
               style={{
                 borderColor: 'var(--border)',
                 color: 'var(--text-secondary)'

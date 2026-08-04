@@ -117,24 +117,13 @@ export default function Integrations() {
 
   return (
     <div className="min-h-screen bg-[var(--bg-primary)]">
-      <header className="border-b border-[var(--border)] bg-[var(--bg-navbar)]/95 px-6 py-4 backdrop-blur-md">
-        <div className="mx-auto flex max-w-6xl items-center gap-4">
-          <Link
-            to="/docs"
-            className="flex min-h-[44px] items-center gap-2 text-sm font-bold text-[var(--text-secondary)] hover:text-[var(--accent-gold)]"
-          >
-            <ArrowLeft size={16} /> {t('common.docs')}
-          </Link>
-          <span className="text-[10px] font-bold tracking-[0.25em] text-[var(--accent-gold)] uppercase">
-            {t('common.integrations')}
-          </span>
-        </div>
-      </header>
-
-      <section className="border-b border-[var(--border)] px-6 pt-20 pb-16">
+      <section className="border-b border-[var(--border)] px-4 pt-8 pb-12 sm:px-6 sm:pt-12 sm:pb-16">
         <div className="mx-auto max-w-3xl text-center">
+          <p className="mb-2 text-[10px] font-bold tracking-[0.25em] text-[var(--accent-gold)] uppercase">
+            {t('common.integrations')}
+          </p>
           <Zap size={32} className="mx-auto mb-4 text-[var(--accent-gold)]" />
-          <h1 className="mb-4 text-4xl font-black tracking-tight text-[var(--text-primary)] sm:text-5xl">
+          <h1 className="mb-4 text-3xl font-black tracking-tight text-[var(--text-primary)] sm:text-5xl">
             <span className="text-[var(--accent-gold)]">{t('integrationsPage.hero.title')}</span>{' '}
             {t('integrationsPage.hero.titleHighlight')}
           </h1>
@@ -144,7 +133,7 @@ export default function Integrations() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-6 py-12">
+      <section className="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-12">
         <div className="grid gap-6 sm:grid-cols-2">
           {sections.map((sec) => {
             const Icon = sec.icon

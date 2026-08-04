@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { ArrowLeft, Copy, Check, Code, Fingerprint, ExternalLink } from 'lucide-react'
+import { Copy, Check, Code, Fingerprint, ExternalLink } from 'lucide-react'
 import Footer from '../components/layout/Footer'
 import ProofDNA from '../components/stamps/ProofDNA'
 import usePageMeta from '../hooks/usePageMeta'
@@ -69,24 +69,13 @@ export default function Widgets() {
 
   return (
     <div className="min-h-screen bg-[var(--bg-primary)]">
-      <header className="border-b border-[var(--border)] bg-[var(--bg-navbar)]/95 px-6 py-4 backdrop-blur-md">
-        <div className="mx-auto flex max-w-6xl items-center gap-4">
-          <Link
-            to="/integrations"
-            className="flex min-h-[44px] items-center gap-2 text-sm font-bold text-[var(--text-secondary)] hover:text-[var(--accent-gold)]"
-          >
-            <ArrowLeft size={16} /> {t('common.integrations')}
-          </Link>
-          <span className="text-[10px] font-bold tracking-[0.25em] text-[var(--accent-gold)] uppercase">
-            {t('widgetsPage.nav')}
-          </span>
-        </div>
-      </header>
-
-      <section className="border-b border-[var(--border)] px-6 pt-20 pb-16">
+      <section className="border-b border-[var(--border)] px-4 pt-8 pb-12 sm:px-6 sm:pt-12 sm:pb-16">
         <div className="mx-auto max-w-3xl text-center">
           <Fingerprint size={32} className="mx-auto mb-4 text-[var(--accent-gold)]" />
-          <h1 className="mb-4 text-4xl font-black tracking-tight text-[var(--text-primary)] sm:text-5xl">
+          <p className="mb-2 text-[10px] font-bold tracking-[0.25em] text-[var(--accent-gold)] uppercase">
+            {t('widgetsPage.nav')}
+          </p>
+          <h1 className="mb-4 text-3xl font-black tracking-tight text-[var(--text-primary)] sm:text-5xl">
             <span className="text-[var(--accent-gold)]">{t('widgetsPage.hero.title')}</span>{' '}
             {t('widgetsPage.hero.titleHighlight')}
           </h1>
@@ -96,7 +85,7 @@ export default function Widgets() {
         </div>
       </section>
 
-      <section className="px-6 py-16">
+      <section className="px-4 py-10 sm:px-6 sm:py-16">
         <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-2">
           <div className="space-y-8">
             <h2 className="text-xl font-black tracking-tight text-[var(--text-primary)] uppercase">

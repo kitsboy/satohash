@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'r
 import React, { Suspense, useEffect, useState } from 'react'
 import { AnimatePresence, useReducedMotion } from 'framer-motion'
 import AppShellNoir from './components/layout/AppShellNoir'
+import MarketingShell from './components/layout/MarketingShell'
 import LoadingScreen from './components/ui/LoadingScreen'
 import OnboardingModal from './components/shared/OnboardingModal'
 import { Toaster } from 'sonner'
@@ -18,7 +19,7 @@ import ProtectedRoute from './components/shared/ProtectedRoute'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import { getApiUrl } from './config/constants'
-import { isMarketingPublicPath } from './utils/publicRoutes'
+import { isMarketingPublicPath, needsMarketingShell } from './utils/publicRoutes'
 
 // Lazy loaded planes
 const VerifyPublic = React.lazy(() => import('./pages/VerifyPublic'))
@@ -590,7 +591,13 @@ function AppContent() {
     </main>
   )
 
-  if (isPublic) return content
+  // Marketing routes: no AppShell bottom bar. Many lacked any mobile nav — shell fixes that.
+  if (isPublic) {
+    if (needsMarketingShell(location.pathname)) {
+      return <MarketingShell>{content}</MarketingShell>
+    }
+    return content
+  }
   return <AppShellNoir>{content}</AppShellNoir>
 }
 

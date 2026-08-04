@@ -90,38 +90,27 @@ export default function Docs() {
 
   return (
     <div className="min-h-screen bg-[var(--bg-primary)]">
-      <header className="border-b border-[var(--border)] bg-[var(--bg-navbar)]/95 px-6 py-4 backdrop-blur-md">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4">
-          <Link
-            to="/"
-            className="flex min-h-[44px] items-center gap-2 text-sm font-bold text-[var(--text-secondary)] hover:text-[var(--accent-gold)]"
-          >
-            <ArrowLeft size={16} /> {t('common.satohash')}
-          </Link>
-          <span className="text-[10px] font-bold tracking-[0.25em] text-[var(--accent-gold)] uppercase">
+      <section className="border-b border-[var(--border)] px-4 pt-8 pb-12 sm:px-6 sm:pt-12 sm:pb-16">
+        <div className="mx-auto max-w-4xl text-center">
+          <p className="mb-2 text-[10px] font-bold tracking-[0.25em] text-[var(--accent-gold)] uppercase">
             {t('docsPage.nav')}
-          </span>
+          </p>
+          <BookOpen size={32} className="mx-auto mb-4 text-[var(--accent-gold)]" />
+          <h1 className="mb-4 text-3xl font-black tracking-tight text-[var(--text-primary)] sm:text-5xl">
+            {t('docsPage.hero.title')}{' '}
+            <span className="text-[var(--accent-gold)]">{t('docsPage.hero.titleHighlight')}</span>
+          </h1>
+          <p className="mx-auto mb-6 max-w-2xl text-sm leading-relaxed text-[var(--text-secondary)]">
+            {t('docsPage.hero.subtitle')}
+          </p>
           <a
             href="https://github.com/kitsboy/satohash"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex min-h-[44px] items-center gap-2 text-xs font-bold text-[var(--text-secondary)] hover:text-[var(--accent-gold)]"
+            className="mb-8 inline-flex min-h-[44px] items-center gap-2 text-xs font-bold text-[var(--text-secondary)] hover:text-[var(--accent-gold)]"
           >
             <ExternalLink size={14} /> {t('common.github')}
           </a>
-        </div>
-      </header>
-
-      <section className="border-b border-[var(--border)] px-6 pt-20 pb-16">
-        <div className="mx-auto max-w-4xl text-center">
-          <BookOpen size={32} className="mx-auto mb-4 text-[var(--accent-gold)]" />
-          <h1 className="mb-4 text-4xl font-black tracking-tight text-[var(--text-primary)] sm:text-5xl">
-            {t('docsPage.hero.title')}{' '}
-            <span className="text-[var(--accent-gold)]">{t('docsPage.hero.titleHighlight')}</span>
-          </h1>
-          <p className="mx-auto mb-8 max-w-2xl text-sm leading-relaxed text-[var(--text-secondary)]">
-            {t('docsPage.hero.subtitle')}
-          </p>
           <div className="relative mx-auto max-w-lg">
             <Search
               size={16}
@@ -138,14 +127,15 @@ export default function Docs() {
         </div>
       </section>
 
-      <section className="sticky top-0 z-30 border-b border-[var(--border)] bg-[var(--bg-primary)]/95 backdrop-blur-md">
-        <div className="mx-auto flex max-w-6xl items-center gap-2 overflow-x-auto px-6 py-3">
+      <section className="sticky top-[calc(3.5rem+env(safe-area-inset-top,0px))] z-30 border-b border-[var(--border)] bg-[var(--bg-primary)]/95 backdrop-blur-md md:top-16">
+        <div className="templates-category-scroll mx-auto flex max-w-6xl items-center gap-2 overflow-x-auto px-4 py-3 sm:px-6">
           <button
+            type="button"
             onClick={() => {
               setActiveCategory('all')
               setSearch('')
             }}
-            className={`min-h-[36px] shrink-0 rounded-lg px-4 py-1.5 text-[11px] font-bold tracking-wider uppercase transition-all ${
+            className={`min-h-[44px] shrink-0 rounded-full px-4 py-2 text-[11px] font-bold tracking-wider uppercase transition-all ${
               activeCategory === 'all' && !search
                 ? 'bg-[var(--accent-gold)] text-black'
                 : 'border border-[var(--border)] text-[var(--text-secondary)] hover:border-[var(--accent-gold)]'

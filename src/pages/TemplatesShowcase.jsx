@@ -265,14 +265,14 @@ export default function TemplatesShowcase() {
   if (loading) {
     return (
       <div className="min-h-screen bg-[var(--bg-primary)]">
-        <div className="mx-auto max-w-6xl px-6 pt-24 pb-12">
-          <div className="skeleton mx-auto mb-12 h-10 w-64" />
-          <div className="skeleton mx-auto mb-8 h-6 w-96 max-w-full" />
-          <div className="skeleton mb-6 h-12 w-full rounded-xl" />
-          <div className="skeleton mb-8 h-11 w-full rounded-xl" />
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mx-auto max-w-6xl px-4 pt-8 pb-12 sm:px-6">
+          <div className="skeleton mx-auto mb-8 h-10 w-48 max-w-full sm:w-64" />
+          <div className="skeleton mx-auto mb-6 h-6 w-full max-w-md" />
+          <div className="skeleton mb-4 h-12 w-full rounded-xl" />
+          <div className="skeleton mb-6 h-11 w-full rounded-xl" />
+          <div className="grid gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
             {[1, 2, 3, 4, 5, 6].map((i) => (
-              <div key={i} className="skeleton h-52 rounded-2xl" />
+              <div key={i} className="skeleton h-48 rounded-2xl sm:h-52" />
             ))}
           </div>
         </div>
@@ -333,7 +333,7 @@ export default function TemplatesShowcase() {
   return (
     <div className="min-h-screen bg-[var(--bg-primary)]">
       {/* Hero */}
-      <section className="relative overflow-hidden border-b border-[var(--border)] px-6 pt-24 pb-16">
+      <section className="relative overflow-hidden border-b border-[var(--border)] px-4 pt-8 pb-12 sm:px-6 sm:pt-12 sm:pb-16">
         <div className="absolute inset-0 bg-gradient-to-b from-[var(--accent-gold)]/5 to-transparent" />
         <div className="relative mx-auto max-w-6xl">
           <div className="mx-auto max-w-3xl text-center">
@@ -354,10 +354,7 @@ export default function TemplatesShowcase() {
       </section>
 
       {/* Search & Filters — two rows so category chips never run off-screen */}
-      <section
-        className="sticky top-0 z-30 border-b border-[var(--border)] bg-[var(--bg-primary)]/95 backdrop-blur-md"
-        style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}
-      >
+      <section className="sticky top-[calc(3.5rem+env(safe-area-inset-top,0px))] z-30 border-b border-[var(--border)] bg-[var(--bg-primary)]/95 backdrop-blur-md md:top-16">
         <div className="mx-auto max-w-6xl space-y-3 px-4 py-3 sm:px-6 sm:py-4">
           {/* Row 1: search + sort */}
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center">

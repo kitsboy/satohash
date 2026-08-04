@@ -1,7 +1,7 @@
 import { useState, useMemo, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { ChevronDown, Search, ArrowLeft, HelpCircle, BookOpen, Mail } from 'lucide-react'
+import { ChevronDown, Search, HelpCircle, BookOpen, Mail } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import Footer from '../components/layout/Footer'
 import usePageMeta from '../hooks/usePageMeta'
@@ -46,18 +46,7 @@ export default function FAQ() {
 
   return (
     <div className="min-h-screen bg-[var(--bg-primary)]">
-      <header className="border-b border-[var(--border)] bg-[var(--bg-navbar)]/95 px-6 py-4 backdrop-blur-md">
-        <div className="mx-auto flex max-w-4xl items-center gap-4">
-          <Link
-            to="/"
-            className="flex min-h-[44px] items-center gap-2 text-sm font-bold text-[var(--text-secondary)] hover:text-[var(--accent-gold)]"
-          >
-            <ArrowLeft size={16} /> Satohash
-          </Link>
-        </div>
-      </header>
-
-      <section className="border-b border-[var(--border)] px-6 pt-20 pb-16">
+      <section className="border-b border-[var(--border)] px-4 pt-8 pb-12 sm:px-6 sm:pt-12 sm:pb-16">
         <div className="mx-auto max-w-3xl text-center">
           <p className="mb-3 text-[11px] font-bold tracking-[0.25em] text-[var(--accent-gold)] uppercase">
             {t('faqPage.hero.eyebrow')}

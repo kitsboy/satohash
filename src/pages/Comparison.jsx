@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { Check, X as XIcon, ArrowLeft, FileText, Download, ExternalLink } from 'lucide-react'
+import { Check, X as XIcon, FileText, Download, ExternalLink } from 'lucide-react'
 import Footer from '../components/layout/Footer'
 import usePageMeta from '../hooks/usePageMeta'
 import { getPublicBaseUrl } from '../config/constants'
@@ -74,23 +74,12 @@ export default function Comparison() {
           .comparison-table td { padding: 6px !important; }
         }
       `}</style>
-      <header className="border-b border-[var(--border)] bg-[var(--bg-navbar)]/95 px-6 py-4 backdrop-blur-md">
-        <div className="mx-auto flex max-w-6xl items-center gap-4">
-          <Link
-            to="/pitch"
-            className="flex min-h-[44px] items-center gap-2 text-sm font-bold text-[var(--text-secondary)] hover:text-[var(--accent-gold)]"
-          >
-            <ArrowLeft size={16} /> {t('common.pitch')}
-          </Link>
-        </div>
-      </header>
-
-      <section className="border-b border-[var(--border)] px-6 pt-20 pb-16">
+      <section className="border-b border-[var(--border)] px-4 pt-8 pb-12 sm:px-6 sm:pt-12 sm:pb-16">
         <div className="mx-auto max-w-4xl">
           <p className="mb-3 text-[11px] font-bold tracking-[0.25em] text-[var(--accent-gold)] uppercase">
             {t('comparisonPage.hero.eyebrow')}
           </p>
-          <h1 className="mb-4 text-4xl font-black tracking-tight text-[var(--text-primary)] sm:text-5xl">
+          <h1 className="mb-4 text-3xl font-black tracking-tight text-[var(--text-primary)] sm:text-5xl">
             {t('comparisonPage.hero.title')}{' '}
             <span className="text-[var(--accent-gold)]">
               {t('comparisonPage.hero.titleHighlight')}

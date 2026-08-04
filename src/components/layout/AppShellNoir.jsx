@@ -366,23 +366,28 @@ export default function AppShellNoir({ children }) {
         {/* ── Mobile Header ──────────────────────────────────────────────── */}
         <div
           role="banner"
-          className="fixed inset-x-0 top-0 z-[100] flex h-16 items-center justify-between border-b border-[var(--border)] bg-[var(--bg-primary)]/80 px-6 backdrop-blur-xl md:hidden"
+          className="fixed inset-x-0 top-0 z-[100] flex h-14 items-center justify-between border-b border-[var(--border)] bg-[var(--bg-primary)]/90 px-3 backdrop-blur-xl sm:px-4 md:hidden"
+          style={{
+            paddingTop: 'env(safe-area-inset-top, 0px)',
+            height: 'calc(3.5rem + env(safe-area-inset-top, 0px))'
+          }}
         >
-          <Link to="/" className="flex items-center gap-3">
-            <img src="/logo.png" alt="Satohash" className="h-8 w-8 object-contain" />
+          <Link to="/" className="flex min-w-0 items-center gap-2">
+            <img src="/logo.png" alt="" className="h-8 w-8 shrink-0 object-contain" />
             <span
-              className="text-lg font-black tracking-[0.12em] uppercase"
+              className="truncate text-sm font-black tracking-[0.12em] uppercase"
               style={{ color: 'var(--accent-gold)' }}
             >
               SATOHASH
             </span>
           </Link>
-          <div className="flex items-center gap-2">
-            <LanguageSwitcher />
+          <div className="flex shrink-0 items-center gap-1.5">
+            <LanguageSwitcher compact />
             <button
+              type="button"
               onClick={() => setIsSearchOpen(true)}
               aria-label="Open search"
-              className="flex h-10 w-10 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--surface-raised)]"
+              className="flex h-11 w-11 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--surface-raised)]"
             >
               <Search size={17} style={{ color: 'var(--accent-gold)' }} />
             </button>
@@ -390,10 +395,7 @@ export default function AppShellNoir({ children }) {
         </div>
 
         {/* ── Main Content Area ───────────────────────────────────────────── */}
-        <div
-          className="flex min-h-screen w-full max-w-full flex-1 flex-col overflow-x-hidden pb-[calc(5rem+env(safe-area-inset-bottom))] md:pb-0"
-          style={{ paddingTop: 'env(safe-area-inset-top)' }}
-        >
+        <div className="flex min-h-screen w-full max-w-full flex-1 flex-col overflow-x-hidden pb-[calc(5.5rem+env(safe-area-inset-bottom,0px))] md:pb-0">
           {/* Desktop — centered top navigation */}
           <div className="sticky top-0 z-40 hidden flex-col md:flex">
             <MempoolTicker />
@@ -414,18 +416,17 @@ export default function AppShellNoir({ children }) {
             )}
           </div>
 
-          {/* Page content */}
-          <main className="animate-fade-in flex-1 p-2 pt-16 md:p-6 md:pt-8 lg:px-8">
+          {/* Page content — clear fixed mobile header (3.5rem + safe area) */}
+          <main className="animate-fade-in flex-1 p-3 pt-[calc(3.5rem+env(safe-area-inset-top,0px)+0.75rem)] md:p-6 md:pt-8 lg:px-8">
             {children}
           </main>
         </div>
 
         {/* ── Mobile Bottom Nav ───────────────────────────────────────────── */}
-        {/* Mobile offline / queue chip */}
-        <div className="fixed top-[max(1rem,env(safe-area-inset-top))] right-4 z-50 md:hidden">
+        <div className="pointer-events-none fixed top-[max(0.75rem,env(safe-area-inset-top))] right-3 z-[90] md:hidden">
           {!isOnline && (
             <span
-              className="flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[9px] font-black tracking-widest uppercase"
+              className="pointer-events-auto flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[9px] font-black tracking-widest uppercase"
               style={{
                 background: 'rgba(234,179,8,0.12)',
                 border: '1px solid rgba(234,179,8,0.3)',
@@ -439,8 +440,11 @@ export default function AppShellNoir({ children }) {
         </div>
 
         <div
-          className="fixed inset-x-4 z-50 h-16 overflow-visible rounded-2xl border border-[var(--border-bright)] bg-[var(--bg-secondary)]/90 shadow-[0_20px_50px_rgba(0,0,0,0.5)] backdrop-blur-xl md:hidden"
-          style={{ bottom: 'max(1rem, env(safe-area-inset-bottom))' }}
+          className="mobile-bottom-nav fixed inset-x-3 z-50 h-[3.75rem] overflow-visible rounded-2xl border border-[var(--border-bright)] bg-[var(--bg-secondary)]/95 shadow-[0_20px_50px_rgba(0,0,0,0.5)] backdrop-blur-xl md:hidden"
+          style={{
+            bottom: 'max(0.75rem, env(safe-area-inset-bottom, 0px))',
+            paddingBottom: 0
+          }}
         >
           <MobileBottomNav />
         </div>

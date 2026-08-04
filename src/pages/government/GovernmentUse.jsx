@@ -21,23 +21,13 @@ export default function GovernmentUse() {
       className="min-h-screen"
       style={{ background: 'var(--bg-primary)', color: 'var(--text-primary)' }}
     >
-      <header className="border-b px-6 py-4" style={{ borderColor: 'var(--border)' }}>
-        <div className="mx-auto flex max-w-5xl items-center gap-4">
-          <Link
-            to="/trust"
-            className="text-sm font-bold"
-            style={{ color: 'var(--text-secondary)' }}
-          >
-            {t('governmentPage.backTrust')}
-          </Link>
-        </div>
-      </header>
-
-      <section className="mx-auto max-w-5xl px-6 pt-16 pb-12 text-center">
+      <section className="mx-auto max-w-5xl px-4 pt-8 pb-10 text-center sm:px-6 sm:pt-12 sm:pb-12">
         <Shield size={36} className="mx-auto mb-4" style={{ color: 'var(--accent-gold)' }} />
-        <h1 className="text-4xl font-black tracking-tight sm:text-5xl">
-          {t('governmentUse.title')} &{' '}
-          <span style={{ color: 'var(--accent-gold)' }}>{t('governmentUse.titleHighlight')}</span>
+        <h1 className="text-3xl font-black tracking-tight sm:text-5xl">
+          {t('governmentUse.title', { defaultValue: 'Government' })}{' '}
+          <span style={{ color: 'var(--accent-gold)' }}>
+            {t('governmentUse.titleHighlight', { defaultValue: '& Diplomatic Use' })}
+          </span>
         </h1>
         <p
           className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed"

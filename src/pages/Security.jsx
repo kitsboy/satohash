@@ -1,17 +1,7 @@
 import { useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import {
-  Shield,
-  Lock,
-  Eye,
-  Server,
-  ArrowLeft,
-  CheckCircle,
-  FileText,
-  Github,
-  Key
-} from 'lucide-react'
+import { Shield, Lock, Eye, Server, CheckCircle, FileText, Github, Key } from 'lucide-react'
 import Footer from '../components/layout/Footer'
 import usePageMeta from '../hooks/usePageMeta'
 
@@ -38,39 +28,26 @@ export default function Security() {
 
   return (
     <div className="min-h-screen bg-[var(--bg-primary)]">
-      <header className="border-b border-[var(--border)] bg-[var(--bg-navbar)]/95 px-6 py-4 backdrop-blur-md">
-        <div className="mx-auto flex max-w-4xl items-center gap-4">
-          <div className="flex flex-wrap items-center gap-4">
-            <Link
-              to="/trust"
-              className="flex min-h-[44px] items-center gap-2 text-sm font-bold text-[var(--text-secondary)] hover:text-[var(--accent-gold)]"
-            >
-              <ArrowLeft size={16} /> {t('common.trustCenter')}
-            </Link>
-            <Link
-              to="/government"
-              className="text-sm font-bold text-[var(--text-secondary)] hover:text-[var(--accent-gold)]"
-            >
-              Government →
-            </Link>
-          </div>
-        </div>
-      </header>
-
-      <section className="border-b border-[var(--border)] px-6 pt-20 pb-16">
+      <section className="border-b border-[var(--border)] px-4 pt-8 pb-12 sm:px-6 sm:pt-12 sm:pb-16">
         <div className="mx-auto max-w-3xl text-center">
           <Shield size={32} className="mx-auto mb-4 text-[var(--accent-gold)]" />
-          <h1 className="mb-4 text-4xl font-black tracking-tight text-[var(--text-primary)] sm:text-5xl">
+          <h1 className="mb-4 text-3xl font-black tracking-tight text-[var(--text-primary)] sm:text-5xl">
             <span className="text-[var(--accent-gold)]">{t('securityPage.hero.title')}</span>{' '}
             {t('securityPage.hero.titleHighlight')}
           </h1>
           <p className="mx-auto max-w-xl text-sm leading-relaxed text-[var(--text-secondary)]">
             {t('securityPage.hero.subtitle')}
           </p>
+          <Link
+            to="/government"
+            className="mt-4 inline-flex min-h-[44px] items-center text-sm font-bold text-[var(--accent-gold)]"
+          >
+            Government →
+          </Link>
         </div>
       </section>
 
-      <section className="mx-auto max-w-4xl px-6 py-16">
+      <section className="mx-auto max-w-4xl px-4 py-10 sm:px-6 sm:py-16">
         <div className="grid gap-8">
           {sections.map((section) => {
             const Icon = section.icon

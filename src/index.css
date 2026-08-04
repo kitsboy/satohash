@@ -962,11 +962,29 @@
     padding-right: 1rem;
   }
 
-  /* Touch-friendly tap targets */
-  button,
-  a,
-  [role='button'] {
+  /*
+   * Touch targets: only chrome / primary controls.
+   * Do NOT force min-height on every <a> (breaks inline prose + dense filters).
+   */
+  button:not(.icon-btn):not([class*='h-']):not([class*='size-']),
+  [role='button']:not(.icon-btn),
+  nav a,
+  .touch-target {
     min-height: 44px;
+  }
+
+  /* Prevent horizontal page scroll from wide children */
+  img,
+  video,
+  canvas,
+  svg {
+    max-width: 100%;
+  }
+
+  pre,
+  code {
+    max-width: 100%;
+    overflow-x: auto;
   }
 }
 

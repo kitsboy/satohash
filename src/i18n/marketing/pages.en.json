@@ -1109,7 +1109,7 @@
     "procurementBody": "Air-gapped hashing, data residency in-browser, chain-of-custody workflows, and MotoPass deep-links for passport programs."
   },
   "governmentUse": {
-    "title": "Government & Diplomatic Use",
+    "title": "Government &",
     "titleHighlight": "Diplomatic Use",
     "subtitle": "Zero-knowledge timestamps for passports, national IDs, land titles, and distressed-asset programs. Documents never leave the device — only SHA-256 fingerprints reach OpenTimestamps calendars.",
     "passport": {

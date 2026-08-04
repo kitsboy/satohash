@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { FileText, TrendingUp, Megaphone, Briefcase, ArrowLeft } from 'lucide-react'
+import { FileText, TrendingUp, Megaphone, Briefcase } from 'lucide-react'
 import KimiContact from '../components/forms/KimiContact'
 import Footer from '../components/layout/Footer'
 import usePageMeta from '../hooks/usePageMeta'
@@ -73,21 +73,10 @@ export default function Pitch() {
 
   return (
     <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)]">
-      <header className="sticky top-0 z-50 border-b border-[var(--border)] bg-[var(--bg-navbar)] px-4 py-3 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-4xl items-center justify-between gap-4">
-          <Link
-            to="/"
-            className="flex min-h-[44px] min-w-[44px] items-center gap-2 text-sm font-bold text-[var(--text-secondary)] hover:text-[var(--accent-gold)]"
-          >
-            <ArrowLeft size={16} /> Satohash
-          </Link>
-          <span className="text-xs font-bold tracking-widest text-[var(--accent-gold)] uppercase">
-            Investor & Partner Hub
-          </span>
-        </div>
-      </header>
-
       <main className="mx-auto max-w-4xl px-4 py-6 sm:py-10">
+        <p className="mb-4 text-center text-[10px] font-bold tracking-[0.2em] text-[var(--accent-gold)] uppercase">
+          Investor & Partner Hub
+        </p>
         <nav
           className="mb-8 flex gap-2 overflow-x-auto pb-2"
           role="tablist"

@@ -261,7 +261,7 @@ export default function VerificationTool() {
   }
 
   return (
-    <div className="mx-auto max-w-5xl space-y-12 p-8 pb-20">
+    <div className="mx-auto max-w-5xl space-y-8 p-4 pb-28 sm:space-y-12 sm:p-6 sm:pb-20 md:p-8">
       <StaticModeBanner />
       <header className="space-y-2 text-center">
         <div className="mb-4 inline-flex items-center gap-3 rounded-full border border-[var(--accent-active)]/20 bg-[var(--accent-active)]/10 px-4 py-2">
