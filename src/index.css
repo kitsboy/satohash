@@ -9,6 +9,11 @@
   padding-inline: 2px;
 }
 
+/* DeepHealthBanner height — set by JS when the IBD/status strip is visible */
+:root {
+  --satohash-health-banner-h: 0px;
+}
+
 @layer base {
   :root {
     /* cache-bust token so CF edge cannot keep a poisoned HTML-as-CSS object */

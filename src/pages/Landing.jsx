@@ -155,7 +155,7 @@ export default function Landing() {
       <MarketingDesktopNav onDonate={() => setDonationOpen(true)} />
 
       {/* ── HERO ─────────────────────────────────────────────────── */}
-      <section className="relative flex min-h-screen items-center overflow-hidden pt-14">
+      <section className="relative flex min-h-screen items-center overflow-hidden pt-[calc(3.5rem+var(--satohash-health-banner-h,0px))] md:pt-[calc(4rem+var(--satohash-health-banner-h,0px))]">
         {/* v5 particle network — gold confirmed / blue pending stamps */}
         <div className="pointer-events-none absolute inset-0 opacity-40">
           <ParticleStampCanvas />

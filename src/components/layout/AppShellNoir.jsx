@@ -417,7 +417,7 @@ export default function AppShellNoir({ children }) {
           </div>
 
           {/* Page content — clear fixed mobile header (3.5rem + safe area) */}
-          <main className="animate-fade-in flex-1 p-3 pt-[calc(3.5rem+env(safe-area-inset-top,0px)+0.75rem)] md:p-6 md:pt-8 lg:px-8">
+          <main className="animate-fade-in flex-1 p-3 pt-[calc(3.5rem+env(safe-area-inset-top,0px)+var(--satohash-health-banner-h,0px)+0.75rem)] md:p-6 md:pt-[calc(2rem+var(--satohash-health-banner-h,0px))] lg:px-8">
             {children}
           </main>
         </div>

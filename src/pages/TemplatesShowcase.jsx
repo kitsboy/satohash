@@ -354,7 +354,7 @@ export default function TemplatesShowcase() {
       </section>
 
       {/* Search & Filters — two rows so category chips never run off-screen */}
-      <section className="sticky top-[calc(3.5rem+env(safe-area-inset-top,0px))] z-30 border-b border-[var(--border)] bg-[var(--bg-primary)]/95 backdrop-blur-md md:top-16">
+      <section className="sticky top-[calc(3.5rem+env(safe-area-inset-top,0px)+var(--satohash-health-banner-h,0px))] z-30 border-b border-[var(--border)] bg-[var(--bg-primary)]/95 backdrop-blur-md md:top-[calc(4rem+var(--satohash-health-banner-h,0px))]">
         <div className="mx-auto max-w-6xl space-y-3 px-4 py-3 sm:px-6 sm:py-4">
           {/* Row 1: search + sort */}
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center">

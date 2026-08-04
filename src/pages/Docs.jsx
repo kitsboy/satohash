@@ -126,7 +126,7 @@ export default function Docs() {
         </div>
       </section>
 
-      <section className="sticky top-[calc(3.5rem+env(safe-area-inset-top,0px))] z-30 border-b border-[var(--border)] bg-[var(--bg-primary)]/95 backdrop-blur-md md:top-16">
+      <section className="sticky top-[calc(3.5rem+env(safe-area-inset-top,0px)+var(--satohash-health-banner-h,0px))] z-30 border-b border-[var(--border)] bg-[var(--bg-primary)]/95 backdrop-blur-md md:top-[calc(4rem+var(--satohash-health-banner-h,0px))]">
         <div className="mx-auto max-w-6xl px-4 py-3 sm:px-6">
           <div
             role="tablist"

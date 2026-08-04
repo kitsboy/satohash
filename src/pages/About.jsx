@@ -101,7 +101,10 @@ export default function About() {
       style={{ backgroundColor: 'var(--bg-primary)', color: 'var(--text-primary)' }}
     >
       {/* Hero */}
-      <section className="relative border-b px-4 pt-10 pb-14 sm:px-6 sm:pt-14 sm:pb-20" style={{ borderColor: 'var(--border)' }}>
+      <section
+        className="relative border-b px-4 pt-10 pb-14 sm:px-6 sm:pb-20 sm:pt-[calc(3.5rem+var(--satohash-health-banner-h,0px))] md:pt-[calc(4rem+var(--satohash-health-banner-h,0px)+1rem)]"
+        style={{ borderColor: 'var(--border)' }}
+      >
         <div
           className="pointer-events-none absolute inset-0 opacity-40"
           style={{

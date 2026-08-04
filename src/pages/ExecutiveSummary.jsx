@@ -160,7 +160,7 @@ export default function ExecutiveSummary() {
 
       {/* ── HERO ─────────────────────────────────────────────── */}
       <section
-        className="relative overflow-hidden pt-[calc(3.5rem+env(safe-area-inset-top))] md:pt-20"
+        className="relative overflow-hidden pt-[calc(3.5rem+env(safe-area-inset-top,0px)+var(--satohash-health-banner-h,0px))] md:pt-[calc(5rem+var(--satohash-health-banner-h,0px))]"
         style={{
           background:
             'radial-gradient(ellipse 90% 70% at 50% -10%, rgba(240,180,41,0.16), transparent 55%), var(--bg-primary)'

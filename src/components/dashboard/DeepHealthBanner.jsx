@@ -1,14 +1,27 @@
-import { useEffect, useState } from 'react'
-import { Activity, AlertTriangle, Info } from 'lucide-react'
+import { useEffect, useState, useRef, useLayoutEffect } from 'react'
+import { Activity, AlertTriangle, Info, X } from 'lucide-react'
 import { getApiUrl } from '../../config/constants'
 import { shouldMonitorApiHealth } from '../../config/mvp'
 
+const CSS_VAR = '--satohash-health-banner-h'
+const DISMISS_KEY = 'satohash_health_banner_dismissed'
+
 /**
- * Observability banner from /health?deep=true.
- * Bitcoin IBD ("syncing") is informational, not a red outage — OTS still works.
+ * Observability strip from /health?deep=true.
+ * Fixed *below* the main nav (not under it). Sets --satohash-health-banner-h so
+ * MarketingShell / AppShell / page heroes can clear the strip.
+ * Bitcoin IBD ("syncing") is informational — OTS still works.
  */
 export default function DeepHealthBanner() {
   const [status, setStatus] = useState(null)
+  const [dismissed, setDismissed] = useState(() => {
+    try {
+      return sessionStorage.getItem(DISMISS_KEY) === '1'
+    } catch {
+      return false
+    }
+  })
+  const barRef = useRef(null)
 
   useEffect(() => {
     if (!shouldMonitorApiHealth()) return undefined
@@ -29,7 +42,6 @@ export default function DeepHealthBanner() {
         const ots = data.details?.ots
         const db = data.details?.db
 
-        // Critical path failures
         if (db?.status === 'unhealthy' || ots?.status === 'unhealthy') {
           setStatus({
             level: 'error',
@@ -41,7 +53,6 @@ export default function DeepHealthBanner() {
           return
         }
 
-        // Own node Initial Block Download — expected while bitcoind syncs
         if (btc?.status === 'syncing') {
           const pct =
             btc.progress_pct != null
@@ -56,7 +67,6 @@ export default function DeepHealthBanner() {
           return
         }
 
-        // True RPC fail when configured
         if (btc?.configured && btc.status === 'unhealthy') {
           setStatus({
             level: 'warn',
@@ -93,24 +103,48 @@ export default function DeepHealthBanner() {
     return () => clearInterval(id)
   }, [])
 
-  if (!shouldMonitorApiHealth() || !status) return null
+  const visible = shouldMonitorApiHealth() && status && !dismissed
+
+  // Publish height so page chrome can offset content
+  useLayoutEffect(() => {
+    const root = document.documentElement
+    if (!visible || !barRef.current) {
+      root.style.setProperty(CSS_VAR, '0px')
+      return undefined
+    }
+    const apply = () => {
+      const h = barRef.current?.offsetHeight ?? 0
+      root.style.setProperty(CSS_VAR, `${h}px`)
+    }
+    apply()
+    const ro = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(apply) : null
+    ro?.observe(barRef.current)
+    window.addEventListener('resize', apply)
+    return () => {
+      ro?.disconnect()
+      window.removeEventListener('resize', apply)
+      root.style.setProperty(CSS_VAR, '0px')
+    }
+  }, [visible, status?.message, status?.level])
+
+  if (!visible) return null
 
   const styles =
     status.level === 'error'
       ? {
           borderColor: 'color-mix(in srgb, var(--accent-danger, #ef4444) 30%, transparent)',
-          background: 'color-mix(in srgb, var(--accent-danger, #ef4444) 10%, transparent)',
+          background: 'color-mix(in srgb, var(--accent-danger, #ef4444) 12%, var(--bg-secondary))',
           color: 'var(--accent-danger, #f87171)'
         }
       : status.level === 'info'
         ? {
-            borderColor: 'color-mix(in srgb, var(--accent-gold) 25%, transparent)',
-            background: 'color-mix(in srgb, var(--accent-gold) 8%, transparent)',
+            borderColor: 'color-mix(in srgb, var(--accent-gold) 30%, transparent)',
+            background: 'color-mix(in srgb, var(--accent-gold) 10%, var(--bg-secondary))',
             color: 'var(--accent-gold)'
           }
         : {
             borderColor: 'color-mix(in srgb, var(--accent-pending) 30%, transparent)',
-            background: 'color-mix(in srgb, var(--accent-pending) 8%, transparent)',
+            background: 'color-mix(in srgb, var(--accent-pending) 10%, var(--bg-secondary))',
             color: 'var(--accent-pending)'
           }
 
@@ -118,13 +152,31 @@ export default function DeepHealthBanner() {
 
   return (
     <div
-      className="flex items-center justify-center gap-2 border-b px-4 py-2 text-center text-[10px] font-bold tracking-wide normal-case sm:text-[11px]"
-      style={styles}
+      ref={barRef}
       role="status"
+      data-deep-health-banner
+      className="fixed inset-x-0 top-[calc(3.5rem+env(safe-area-inset-top,0px))] z-[95] flex items-center justify-center gap-2 border-b px-3 py-2 pr-10 text-center text-[10px] font-bold tracking-wide normal-case shadow-[0_4px_20px_rgba(0,0,0,0.25)] sm:gap-2.5 sm:px-4 sm:pr-12 sm:text-[11px] md:top-16"
+      style={styles}
     >
-      <Icon size={12} className="shrink-0" />
-      <span>{status.message}</span>
-      <Activity size={12} className="shrink-0 opacity-60" />
+      <Icon size={12} className="shrink-0" aria-hidden />
+      <span className="min-w-0 max-w-[min(100%,42rem)] leading-snug">{status.message}</span>
+      <Activity size={12} className="hidden shrink-0 opacity-60 sm:inline" aria-hidden />
+      <button
+        type="button"
+        aria-label="Dismiss status banner"
+        onClick={() => {
+          setDismissed(true)
+          try {
+            sessionStorage.setItem(DISMISS_KEY, '1')
+          } catch {
+            /* ignore */
+          }
+        }}
+        className="absolute top-1/2 right-2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-lg opacity-70 transition-opacity hover:opacity-100 sm:right-3"
+        style={{ color: 'inherit' }}
+      >
+        <X size={14} />
+      </button>
     </div>
   )
 }

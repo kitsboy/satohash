@@ -291,7 +291,7 @@ export default function ExplainerWatch() {
     <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)]">
       <MarketingDesktopNav />
 
-      <main className="layout-container max-w-5xl px-4 pt-[calc(4.5rem+env(safe-area-inset-top))] pb-16 sm:px-6 sm:pt-24">
+      <main className="layout-container max-w-5xl px-4 pt-[calc(4.5rem+env(safe-area-inset-top,0px)+var(--satohash-health-banner-h,0px))] pb-16 sm:px-6 sm:pt-[calc(6rem+var(--satohash-health-banner-h,0px))]">
         <div className="mb-6 text-center sm:mb-8">
           <p
             className="mb-2 text-[10px] font-black tracking-[0.25em] uppercase"
