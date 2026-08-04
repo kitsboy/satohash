@@ -967,10 +967,11 @@ export function I18nProvider({ children }) {
     async (rawCode) => {
       const code = normalizeLang(rawCode)
       try {
+        // Static path — setup already loaded with I18nProvider
         const { switchAppLanguage } = await import('./setup.js')
         await switchAppLanguage(code)
-      } catch {
-        // setup already init'd; still try changeLanguage
+      } catch (err) {
+        console.warn('[i18n] switchAppLanguage failed, falling back', err)
         try {
           await i18n.changeLanguage(code)
         } catch {
@@ -980,6 +981,14 @@ export function I18nProvider({ children }) {
       setLangState(code)
       localStorage.setItem(STORAGE_KEY, code)
       applyDom(code)
+      // Force react-i18next subscribers if language string already matched
+      if (normalizeLang(i18n.language) === code) {
+        try {
+          await i18n.changeLanguage(code)
+        } catch {
+          /* ignore */
+        }
+      }
       return code
     },
     [applyDom]

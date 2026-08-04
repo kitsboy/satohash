@@ -154,7 +154,7 @@ export default function DesktopAppNav({ onOpenSearch }) {
               <Search size={15} />
             </button>
 
-            <LanguageSwitcher compact />
+            <LanguageSwitcher compact showAllFlags />
 
             <div className="relative">
               <button

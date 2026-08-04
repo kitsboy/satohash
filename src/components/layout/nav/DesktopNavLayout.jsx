@@ -22,7 +22,8 @@ export default function DesktopNavLayout({ left, center, right, className = '' }
       >
         {center}
       </div>
-      <div className="flex min-w-0 items-center justify-end gap-1.5 overflow-hidden sm:gap-2">
+      {/* overflow-visible so language/account menus are not clipped */}
+      <div className="flex min-w-0 items-center justify-end gap-1.5 overflow-visible sm:gap-2">
         {right}
       </div>
     </div>

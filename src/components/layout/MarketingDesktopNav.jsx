@@ -213,7 +213,8 @@ export default function MarketingDesktopNav({ onDonate }) {
           right={
             <>
               <ThemeToggle className="!h-10 !min-h-10 !w-10 !min-w-10 !rounded-xl" />
-              <LanguageSwitcher compact />
+              {/* Full flag strip on desktop; compact+all flags on smaller desktop */}
+              <LanguageSwitcher compact={false} showAllFlags />
               <button
                 type="button"
                 onClick={onDonate}
@@ -278,6 +279,7 @@ export default function MarketingDesktopNav({ onDonate }) {
           >
             Stamp
           </Link>
+          <LanguageSwitcher compact showAllFlags={false} />
           <ThemeToggle className="!h-10 !min-h-10 !w-10 !min-w-10 !rounded-xl" />
           <button
             type="button"
@@ -393,8 +395,15 @@ export default function MarketingDesktopNav({ onDonate }) {
                 })}
               </div>
               <div className="space-y-2 border-t p-3" style={{ borderColor: 'var(--border)' }}>
-                <div className="flex items-center justify-between gap-2 px-1 pb-1">
-                  <LanguageSwitcher />
+                <div className="px-1 pb-2">
+                  <p
+                    className="mb-2 text-[10px] font-black tracking-[0.18em] uppercase"
+                    style={{ color: 'var(--text-tertiary)' }}
+                  >
+                    Language
+                  </p>
+                  {/* All 7 locales with flags — full list for mobile drawer */}
+                  <LanguageSwitcher compact={false} showAllFlags />
                 </div>
                 {onDonate && (
                   <button

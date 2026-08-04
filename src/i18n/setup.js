@@ -45,6 +45,20 @@ if (initialLang !== 'en') {
   await switchAppLanguage(initialLang)
 }
 
+// Warm remaining locale chunks so header flag switches feel instant
+if (typeof window !== 'undefined') {
+  const warm = () => {
+    LANG_CODES.filter((c) => c !== 'en').forEach((c) => {
+      ensureLocaleLoaded(c).catch(() => {})
+    })
+  }
+  if ('requestIdleCallback' in window) {
+    window.requestIdleCallback(warm, { timeout: 4000 })
+  } else {
+    setTimeout(warm, 1500)
+  }
+}
+
 i18n.on('languageChanged', (lng) => {
   const code = normalizeLang(lng)
   localStorage.setItem(STORAGE_KEY, code)
