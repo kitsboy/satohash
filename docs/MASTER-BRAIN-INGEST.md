@@ -6,6 +6,23 @@
 
 ---
 
+## Paste block (2026-08-04 — Kimi truth sweep: bitcoind restored)
+
+```markdown
+### Satohash own-node bitcoin restored (2026-08-04 — Kimi truth sweep)
+
+**bitcoind:** Bitcoin Core v28.1, pruned 10GB, datadir /root/.bitcoin.
+Systemd override unit /etc/systemd/system/bitcoind.service (Debian package unit points at /var/lib/bitcoin — WRONG datadir), Type=forking User=root, ENABLED.
+RPC 0.0.0.0:8332; API container reaches via bridge 172.19.0.1 (creds match, verified HTTP 200).
+**History:** OOM-killed 2026-07-28 22:12, down ~6 days (IBD stalled at 20.2%, block 508,207). Restored 2026-08-04.
+**Now:** source=bitcoind live; readiness status=syncing; headers 960,956 (100%); IBD ~85 blk/min → ETA ~4 days.
+**Fallback:** mempool.space during IBD — correct design, not an outage. Free stamps + OTS calendars unaffected.
+**Paywall:** REQUIRE_LIGHTNING=false — free stamps ON. LNbits Satohash Wallet ready (0 sats), missing_for_paid empty.
+**Health surface:** /api/public/readiness → .planes.bitcoin_node (NOT /health — no bitcoin key in 5.0.0-ELITE).
+```
+
+---
+
 ## Paste block (structured)
 
 ```markdown

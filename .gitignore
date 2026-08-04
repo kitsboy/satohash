@@ -12,3 +12,7 @@ data/*.db-wal
 data/*.db
 data/backups/
 .aider*
+
+# Runtime artifacts / secrets — never commit
+backups/
+bitcoin.conf

@@ -116,3 +116,10 @@ Satohash provides cryptographic evidence and specialized tooling. It does **not*
 Full disclosure for technical & financial partners: **[docs/diligence/](./docs/diligence/)**  
 Portfolio map: [Family of 8](https://github.com/kitsboy/giveabit/blob/main/docs/diligence/PORTFOLIO-FAMILY-OF-8.md)
 
+
+**Uniformity note (added 2026-08-03 via Hermes/Kimi):** 
+Read AGENTS.md first. Handoff protocol: cat docs/KIMI-HANDOFF.md (latest) + KIMI-GROK-HANDOFF.md or equiv. 
+Plausible: https://github.com/plausible/analytics (light self-evolving analytics). 
+Full structure: ~/MASTER-BRAIN/01-Architecture/STRUCTURE-MAP.md + PROJECT-TEMPLATE.md. 
+M4: Tailscale + Hermes Desktop to THOR + git push only.
+
