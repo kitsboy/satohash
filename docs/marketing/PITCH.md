@@ -1,5 +1,5 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.giveabit.io · **Version:** 5.0.0-ELITE (Build 192) · **Updated:** 2026-08-04
+> **Live:** https://satohash.giveabit.io · **Version:** 5.0.0-ELITE (Build 194) · **Updated:** 2026-08-04
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Satohash: The Sovereign Provenance Mesh
@@ -87,6 +87,18 @@ In the spirit of Bitcoin, **F.O.S.S.** is the only way to build true trust infra
 *   **Freelance IP Protection**: Hash design briefs, illustrations, or copy before delivering to clients to secure proof of creation.
 *   **AI Output Attestation**: Capture and timestamp large language model outputs immediately upon generation to prove provenance and combat future copyright claims.
 *   **Git Codebase Notarization**: Secure your codebase release states with one-click git tag timestamping, generating permanent build audit trails.
+
+---
+
+## 🏛 Government, diplomacy & migration programs
+
+Agencies modernizing registries, travel documents, or tenders need **proof of “what existed when”** without uploading sensitive files to a new vendor cloud.
+
+**Satohash public-sector posture:** hash-only evidence · batch & custody chains · air-gapped friendly · free open path today (Lightning paywall off until operators choose).
+
+**Quiet R&D (not a launch):** Give A Bit experiments with migration helpers. **MotoPass** is a humble early pattern — client-side hashing of passport-style packets + Satohash deep-link (`/stamp?hash=…&ref=…`) so biometrics never hit the proof API. Workshop concept, not a campaign. See the site **Government** page for solutions, ideas, and illustrative charts.
+
+**Partner first steps:** free sample stamp → deep-link from portals → batch hash cutovers → executive summary + security before procurement language.
 
 
 

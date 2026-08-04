@@ -29,10 +29,26 @@ export default function MarketingDesktopNav({ onDonate }) {
 
   const primary = useMemo(
     () => [
-      { label: t('nav.stamp') || 'Stamp', href: '/stamp', icon: Fingerprint },
-      { label: t('nav.templates') || 'Templates', href: '/templates', icon: FileText },
-      { label: t('nav.pricing') || 'Pricing', href: '/pricing', icon: BadgeDollarSign },
-      { label: t('landingPage.nav.legal') || 'Trust', href: '/trust', icon: Scale }
+      {
+        label: t('nav.stamp', { defaultValue: 'Stamp' }),
+        href: '/stamp',
+        icon: Fingerprint
+      },
+      {
+        label: t('nav.templates', { defaultValue: 'Templates' }),
+        href: '/templates',
+        icon: FileText
+      },
+      {
+        label: t('nav.pricing', { defaultValue: 'Pricing' }),
+        href: '/pricing',
+        icon: BadgeDollarSign
+      },
+      {
+        label: t('landingPage.nav.legal', { defaultValue: 'Trust' }),
+        href: '/trust',
+        icon: Scale
+      }
     ],
     [t]
   )
@@ -40,19 +56,23 @@ export default function MarketingDesktopNav({ onDonate }) {
   const more = useMemo(
     () => [
       {
-        label: t('landingPage.nav.features') || 'Features',
+        label: t('landingPage.nav.features', { defaultValue: 'Features' }),
         href: '/#features',
         hash: true,
         icon: LayoutGrid
       },
       {
-        label: t('landingPage.nav.howItWorks') || 'How it works',
+        label: t('landingPage.nav.howItWorks', { defaultValue: 'How it works' }),
         href: '/#how-it-works',
         hash: true,
         icon: HelpCircle
       },
       { label: '60s explainer', href: '/watch', icon: Fingerprint },
-      { label: t('nav.comparison') || 'Compare', href: '/comparison', icon: GitCompare },
+      {
+        label: t('nav.comparison', { defaultValue: 'Compare' }),
+        href: '/comparison',
+        icon: GitCompare
+      },
       { label: 'Government', href: '/government', icon: Building2 },
       { label: 'Exec summary', href: '/docs/executive-summary', icon: BookOpen },
       { label: 'Docs', href: '/docs', icon: BookOpen }
@@ -245,8 +265,16 @@ export default function MarketingDesktopNav({ onDonate }) {
         <div className="flex shrink-0 items-center gap-1.5">
           <Link
             to="/stamp"
-            className="flex h-9 items-center rounded-lg px-2.5 text-[10px] font-black tracking-wide uppercase sm:px-3 sm:text-[11px]"
+            className="touch-target relative z-[110] flex h-11 min-h-[44px] items-center rounded-lg px-3 text-[11px] font-black tracking-wide uppercase"
             style={{ background: 'var(--accent-gold)', color: '#141b25' }}
+            onClick={() => {
+              setNavOpen(false)
+              try {
+                window.scrollTo(0, 0)
+              } catch {
+                /* ignore */
+              }
+            }}
           >
             Stamp
           </Link>

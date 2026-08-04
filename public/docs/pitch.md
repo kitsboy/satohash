@@ -88,6 +88,27 @@ In the spirit of Bitcoin, **F.O.S.S.** is the only way to build true trust infra
 *   **AI Output Attestation**: Capture and timestamp large language model outputs immediately upon generation to prove provenance and combat future copyright claims.
 *   **Git Codebase Notarization**: Secure your codebase release states with one-click git tag timestamping, generating permanent build audit trails.
 
+---
+
+## 🏛 Government, diplomacy & migration programs
+
+Agencies and programs that modernize registries, travel documents, or tender systems need **proof of “what existed when”** without uploading sensitive files to a new vendor cloud.
+
+**Satohash for the public sector (practical posture):**
+*   **Hash-only evidence** — SHA-256 in the browser; OpenTimestamps calendars; Bitcoin as the long-term anchor.
+*   **Batch & custody** — folder stamps and sequential handoff proofs for chain-of-custody narratives.
+*   **Air-gapped friendly** — hash offline; only fingerprints and `.ots` proofs travel.
+*   **Free open path today** — strangers can stamp without accounts; Lightning paywall stays off until operators choose fees.
+
+**Quiet R&D (not a product launch):** Across the Give A Bit family we explore small migration helpers. One early pattern is **MotoPass** — client-side hashing of passport-style application packets, then a deep-link into Satohash (`/stamp?hash=…&ref=…`) so biometrics never hit the proof API. Treat it as a humble concept for workshops, not a campaign. Details live under [Government use](/government) on the site.
+
+**Solid first steps for partners:**
+1. Stamp a sample packet free on satohash.io and keep the `.ots` with the archive.
+2. Wire deep-links from existing portals (see Integrations).
+3. Use batch hash for cutover folders; verify with open tools.
+4. Read the executive summary and security pages before procurement language.
+
+---
 
 
 

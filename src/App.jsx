@@ -12,6 +12,7 @@ import usePageMeta from './hooks/usePageMeta'
 import { I18nProvider } from './i18n'
 import LangUrlSync from './components/shared/LangUrlSync'
 import SkipToContent from './components/layout/SkipToContent'
+import ScrollToTop from './components/shared/ScrollToTop'
 import OfflineBanner from './components/shared/OfflineBanner'
 import DeepHealthBanner from './components/dashboard/DeepHealthBanner'
 import ErrorBoundary from './components/shared/ErrorBoundary'
@@ -202,22 +203,9 @@ function AppContent() {
                 </ProtectedRoute>
               }
             />
-            <Route
-              path="/stamp"
-              element={
-                <ProtectedRoute>
-                  <Stamp />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/verify"
-              element={
-                <ProtectedRoute>
-                  <Verify />
-                </ProtectedRoute>
-              }
-            />
+            {/* Core product — always public (MVP free path); no auth gate */}
+            <Route path="/stamp" element={<Stamp />} />
+            <Route path="/verify" element={<Verify />} />
             <Route
               path="/contracts"
               element={
@@ -661,6 +649,7 @@ function App() {
       <ThemeProvider>
         <ToastProvider>
           <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+            <ScrollToTop />
             <LangUrlSync />
             <SkipToContent />
             {isOffline && <OfflineBanner />}

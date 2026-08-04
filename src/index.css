@@ -964,12 +964,14 @@
 
   /*
    * Touch targets: only chrome / primary controls.
-   * Do NOT force min-height on every <a> (breaks inline prose + dense filters).
+   * Do NOT force min-height on every <a> or every nav a (desktop primary
+   * links stay in DOM with hidden parents — min-height made ghost hit-targets).
    */
   button:not(.icon-btn):not([class*='h-']):not([class*='size-']),
   [role='button']:not(.icon-btn),
-  nav a,
-  .touch-target {
+  .touch-target,
+  .mobile-bottom-nav a,
+  .mobile-bottom-nav button {
     min-height: 44px;
   }
 

@@ -1661,10 +1661,16 @@ export default function Stamp() {
               </div>
               {stampingStatus === 'idle' && (
                 <button
+                  type="button"
                   onClick={startStamping}
-                  className="flex h-14 w-full items-center justify-center gap-3 rounded-xl bg-[var(--text-primary)] font-bold tracking-widest text-[var(--bg-primary)] uppercase transition-all hover:scale-[1.01]"
+                  className="relative z-20 flex h-14 min-h-[52px] w-full items-center justify-center gap-3 rounded-xl font-black tracking-widest uppercase shadow-lg transition-all hover:opacity-95 active:scale-[0.99]"
+                  style={{
+                    background: 'var(--accent-gold)',
+                    color: '#141b25',
+                    boxShadow: '0 8px 28px var(--accent-gold-glow)'
+                  }}
                 >
-                  {t('stamp', 'stamp')} <ChevronRight size={18} />
+                  {t('stamp', 'stamp') || 'Stamp on Bitcoin'} <ChevronRight size={18} />
                 </button>
               )}
             </div>
