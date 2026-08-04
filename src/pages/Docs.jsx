@@ -3,17 +3,16 @@ import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import {
   BookOpen,
-  ArrowLeft,
   Search,
   FileText,
   Server,
-  Bookmark,
   Globe,
-  HelpCircle,
   TrendingUp,
   Archive,
   ExternalLink,
   Zap,
+  HelpCircle,
+  Bookmark,
   Settings,
   Download
 } from 'lucide-react'
@@ -128,40 +127,52 @@ export default function Docs() {
       </section>
 
       <section className="sticky top-[calc(3.5rem+env(safe-area-inset-top,0px))] z-30 border-b border-[var(--border)] bg-[var(--bg-primary)]/95 backdrop-blur-md md:top-16">
-        <div className="templates-category-scroll mx-auto flex max-w-6xl items-center gap-2 overflow-x-auto px-4 py-3 sm:px-6">
-          <button
-            type="button"
-            onClick={() => {
-              setActiveCategory('all')
-              setSearch('')
-            }}
-            className={`min-h-[44px] shrink-0 rounded-full px-4 py-2 text-[11px] font-bold tracking-wider uppercase transition-all ${
-              activeCategory === 'all' && !search
-                ? 'bg-[var(--accent-gold)] text-black'
-                : 'border border-[var(--border)] text-[var(--text-secondary)] hover:border-[var(--accent-gold)]'
-            }`}
+        <div className="mx-auto max-w-6xl px-4 py-3 sm:px-6">
+          <div
+            role="tablist"
+            aria-label="Document categories"
+            className="templates-category-scroll flex flex-wrap items-center justify-center gap-2 sm:gap-2.5"
           >
-            {t('docsPage.all')} ({allDocs.length})
-          </button>
-          {categories.map((cat) => {
-            const Icon = cat.icon
-            return (
-              <button
-                key={cat.id}
-                onClick={() => {
-                  setActiveCategory(cat.id)
-                  setSearch('')
-                }}
-                className={`flex min-h-[36px] shrink-0 items-center gap-1.5 rounded-lg px-4 py-1.5 text-[11px] font-bold tracking-wider uppercase transition-all ${
-                  activeCategory === cat.id && !search
-                    ? 'bg-[var(--accent-gold)] text-black'
-                    : 'border border-[var(--border)] text-[var(--text-secondary)] hover:border-[var(--accent-gold)]'
-                }`}
-              >
-                <Icon size={13} /> {cat.label}
-              </button>
-            )
-          })}
+            <button
+              type="button"
+              role="tab"
+              aria-selected={activeCategory === 'all' && !search}
+              onClick={() => {
+                setActiveCategory('all')
+                setSearch('')
+              }}
+              className={`inline-flex min-h-[44px] shrink-0 items-center rounded-full px-4 py-2 text-[11px] font-bold tracking-wider uppercase transition-all ${
+                activeCategory === 'all' && !search
+                  ? 'bg-[var(--accent-gold)] text-black shadow-[0_0_20px_var(--accent-gold-glow)]'
+                  : 'border border-[var(--border)] text-[var(--text-secondary)] hover:border-[var(--accent-gold)] hover:text-[var(--text-primary)]'
+              }`}
+            >
+              {t('docsPage.all')} ({allDocs.length})
+            </button>
+            {categories.map((cat) => {
+              const Icon = cat.icon
+              const selected = activeCategory === cat.id && !search
+              return (
+                <button
+                  key={cat.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={selected}
+                  onClick={() => {
+                    setActiveCategory(cat.id)
+                    setSearch('')
+                  }}
+                  className={`inline-flex min-h-[44px] shrink-0 items-center gap-1.5 rounded-full px-4 py-2 text-[11px] font-bold tracking-wider uppercase transition-all ${
+                    selected
+                      ? 'bg-[var(--accent-gold)] text-black shadow-[0_0_20px_var(--accent-gold-glow)]'
+                      : 'border border-[var(--border)] text-[var(--text-secondary)] hover:border-[var(--accent-gold)] hover:text-[var(--text-primary)]'
+                  }`}
+                >
+                  <Icon size={13} /> {cat.label}
+                </button>
+              )
+            })}
+          </div>
         </div>
       </section>
 
