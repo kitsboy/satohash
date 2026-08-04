@@ -356,7 +356,7 @@ export default function PrivacyPolicy() {
   const navigate = useNavigate()
 
   return (
-    <div className="min-h-screen bg-[var(--bg-primary)] pt-32 pb-32 text-[var(--text-primary)]">
+    <div className="min-h-screen bg-[var(--bg-primary)] px-4 pt-8 pb-16 text-[var(--text-primary)] sm:px-6 sm:pt-10">
       {/* Ambient glow */}
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
         <div className="absolute top-0 left-1/3 h-[400px] w-[400px] rounded-full bg-[var(--accent-success)] opacity-[0.04] blur-[130px]" />

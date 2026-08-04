@@ -26,7 +26,10 @@ const MARKETING_PREFIXES = [
   '/distressed-asset',
   '/changelog',
   '/watch',
-  '/explainer'
+  '/explainer',
+  '/network',
+  '/proof-of-existence',
+  '/bitcoin'
 ]
 
 /** Exact paths chrome-free of AppShell (family deep-links + core tools). */

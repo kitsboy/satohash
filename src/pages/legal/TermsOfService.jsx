@@ -1,11 +1,9 @@
-import { useNavigate } from 'react-router-dom'
 /* eslint-disable react/no-unescaped-entities -- legal prose */
 import { useTranslation } from 'react-i18next'
 import usePageMeta from '../../hooks/usePageMeta'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import {
-  ArrowLeft,
   Shield,
   FileText,
   CheckCircle,
@@ -19,6 +17,7 @@ import {
   Scale,
   Gavel
 } from 'lucide-react'
+import Footer from '../../components/layout/Footer'
 
 /* ─── Animation ──────────────────────────────────────────── */
 const fadeUp = {
@@ -308,36 +307,46 @@ const SECTIONS = [
 export default function TermsOfService() {
   usePageMeta({ page: 'legalTerms' })
   const { t } = useTranslation()
-  const navigate = useNavigate()
 
   return (
-    <div className="min-h-screen bg-[var(--bg-primary)] pt-32 pb-32 text-[var(--text-primary)]">
-      {/* Ambient glow */}
+    <div className="min-h-screen bg-[var(--bg-primary)] pb-16 text-[var(--text-primary)]">
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
-        <div className="absolute top-0 right-1/3 h-[400px] w-[400px] rounded-full bg-[var(--accent-active)] opacity-[0.04] blur-[130px]" />
+        <div className="absolute top-0 right-1/3 h-[400px] w-[400px] rounded-full bg-[var(--accent-gold)] opacity-[0.04] blur-[130px]" />
       </div>
 
-      <div className="layout-container relative z-10 max-w-4xl">
-        {/* Back */}
-        <motion.div
-          initial={{ opacity: 0, x: -16 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.4 }}
-          className="mb-10 flex items-center gap-4"
+      <div className="layout-container relative z-10 max-w-4xl px-4 pt-8 sm:px-6 sm:pt-10">
+        <nav
+          aria-label="Legal navigation"
+          className="mb-8 flex flex-wrap items-center gap-x-3 gap-y-2 text-[11px] font-bold tracking-wide uppercase"
         >
-          <button
-            onClick={() => navigate(-1)}
-            className="flex items-center gap-2 text-[11px] font-black tracking-[0.25em] text-[var(--text-secondary)] uppercase transition-colors hover:text-[var(--text-primary)]"
-          >
-            <ArrowLeft size={14} /> Back
-          </button>
-          <Link
-            to="/trust"
-            className="text-[11px] font-black tracking-[0.25em] text-[var(--text-secondary)] uppercase transition-colors hover:text-[var(--accent-active)]"
-          >
-            ← Back to Trust Center
+          <Link to="/trust" className="text-[var(--text-secondary)] hover:text-[var(--accent-gold)]">
+            Trust center
           </Link>
-        </motion.div>
+          <span className="text-[var(--border-bright)]" aria-hidden>
+            ·
+          </span>
+          <Link
+            to="/legal/privacy"
+            className="text-[var(--text-secondary)] hover:text-[var(--accent-gold)]"
+          >
+            Privacy
+          </Link>
+          <span className="text-[var(--border-bright)]" aria-hidden>
+            ·
+          </span>
+          <Link
+            to="/legal/crypto-notice"
+            className="text-[var(--text-secondary)] hover:text-[var(--accent-gold)]"
+          >
+            Crypto notice
+          </Link>
+          <span className="text-[var(--border-bright)]" aria-hidden>
+            ·
+          </span>
+          <Link to="/stamp" className="text-[var(--accent-gold)] hover:underline">
+            Free stamp
+          </Link>
+        </nav>
 
         {/* Document paper */}
         <motion.div
@@ -477,6 +486,7 @@ export default function TermsOfService() {
           </div>
         </motion.div>
       </div>
+      <Footer />
     </div>
   )
 }

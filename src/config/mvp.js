@@ -30,7 +30,12 @@ export const MVP_PUBLIC_PATHS = [
   '/glossary',
   '/widgets',
   '/identity',
-  '/changelog'
+  '/changelog',
+  '/network',
+  '/proof-of-existence',
+  '/legal/terms',
+  '/legal/privacy',
+  '/legal/crypto-notice'
 ]
 
 /** Sub-paths allowed in MVP mode (e.g. /verify/:hash from MotoPass) */

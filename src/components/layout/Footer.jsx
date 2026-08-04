@@ -99,7 +99,17 @@ function FooterLink({ link, label }) {
     )
   }
   return (
-    <Link to={link.path} className={linkClass}>
+    <Link
+      to={link.path}
+      className={linkClass}
+      onClick={() => {
+        try {
+          window.scrollTo(0, 0)
+        } catch {
+          /* ignore */
+        }
+      }}
+    >
       <span className="truncate">{label}</span>
     </Link>
   )

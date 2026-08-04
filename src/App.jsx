@@ -66,16 +66,18 @@ const Integrations = React.lazy(() => import('./pages/Integrations'))
 const Widgets = React.lazy(() => import('./pages/Widgets'))
 const Dashboard = React.lazy(() => import('./pages/Dashboard'))
 const GovernmentUse = React.lazy(() => import('./pages/government/GovernmentUse'))
-const MotoPassVerify = React.lazy(() => import('./pages/government/MotoPassVerify'))
 const BatchHashStamp = React.lazy(() => import('./pages/government/BatchHashStamp'))
 const ChainOfCustody = React.lazy(() => import('./pages/government/ChainOfCustody'))
 const EvidenceAdmissibility = React.lazy(() => import('./pages/government/EvidenceAdmissibility'))
 const DistressedAsset = React.lazy(() => import('./pages/government/DistressedAsset'))
 
 // Legal pages (public)
-const CryptoNotice = React.lazy(() => import('./pages/legal/CryptoNotice'))
-const PrivacyPolicy = React.lazy(() => import('./pages/legal/PrivacyPolicy'))
-const TermsOfService = React.lazy(() => import('./pages/legal/TermsOfService'))
+// Legal + critical public pages: eager so footer links never hang on lazy chunk miss
+import CryptoNotice from './pages/legal/CryptoNotice'
+import PrivacyPolicy from './pages/legal/PrivacyPolicy'
+import TermsOfService from './pages/legal/TermsOfService'
+import Network from './pages/Network'
+import MotoPassVerify from './pages/government/MotoPassVerify'
 
 // Contracts sub-pages (protected)
 const ContractView = React.lazy(() => import('./pages/contracts/ContractView'))
@@ -97,9 +99,7 @@ const SignatureFlow = React.lazy(() => import('./pages/signatures/SignatureFlow'
 const V5ProofOfExistence = React.lazy(() =>
   import('./pages/v5/V5Pages').then((m) => ({ default: m.ProofOfExistencePage }))
 )
-const V5Network = React.lazy(() =>
-  import('./pages/v5/V5Pages').then((m) => ({ default: m.NetworkPage }))
-)
+
 const V5BatchVerify = React.lazy(() =>
   import('./pages/v5/V5Pages').then((m) => ({ default: m.BatchVerifyPage }))
 )
@@ -318,7 +318,7 @@ function AppContent() {
             <Route path="/identity" element={<Identity />} />
             {/* v5.0.0-ELITE public surfaces */}
             <Route path="/proof-of-existence" element={<V5ProofOfExistence />} />
-            <Route path="/network" element={<V5Network />} />
+            <Route path="/network" element={<Network />} />
             <Route path="/verify/batch" element={<V5BatchVerify />} />
             <Route path="/stamp/live-feed" element={<V5LiveFeed />} />
             <Route path="/compare" element={<V5Compare />} />

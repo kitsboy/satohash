@@ -47,4 +47,12 @@ describe('publicRoutes', () => {
     expect(isMarketingPublicPath('/verify')).toBe(true)
     expect(needsMarketingShell('/verify')).toBe(true)
   })
+
+  it('network and legal routes are marketing public with shell', () => {
+    expect(isMarketingPublicPath('/network')).toBe(true)
+    expect(needsMarketingShell('/network')).toBe(true)
+    expect(isMarketingPublicPath('/legal/terms')).toBe(true)
+    expect(isMarketingPublicPath('/legal/crypto-notice')).toBe(true)
+    expect(isMarketingPublicPath('/motopass-verify')).toBe(true)
+  })
 })
