@@ -1,60 +1,54 @@
 # Current Status — Satohash
 
 **Version:** **5.0.0-ELITE**  
-**Last Updated:** 2026-08-04 (Kimi ops truth + Grok handoff persist)  
-**Frontend:** https://satohash.io · www · giveabit · CF Pages project `satohash`  
-**API:** https://api.satohash.io ✅ LIVE (THOR) — **HQ metrics SoT**  
-**Analytics:** ✅ Umami analytics.giveabit.io  
+**Last Updated:** 2026-08-04 (Grok goodbye — mobile/nav/i18n/pages mega-session)  
+**Frontend:** https://satohash.io · www · CF Pages `satohash`  
+**API:** https://api.satohash.io ✅ LIVE (THOR) — HQ metrics SoT  
+**Analytics:** Umami analytics.giveabit.io (CORS noise possible)  
 **HQ:** https://hq.giveabit.io  
-**Git tip (THOR):** `fb1a28a` · branch `main` (M3 may be ahead with SPA/menu uncommitted)
+**Git tip:** `db1e493` · `main` synced origin (at closeout)
 
 ## Planes
-- Proof API: THOR Docker + Caddy TLS  
-- SPA: Cloudflare Pages → **must** call `https://api.satohash.io`  
-- Metrics: HQ → API; SPA `/metrics.json` → CF Function proxy  
-- Family free stamp: `REQUIRE_LIGHTNING=false` until paywall  
-- Code M3 · Ops Kimi/THOR · `docs/OPS-TWO-MACHINE.md`  
-- Bundles under **`/b/*`** (not `/assets/*`) — avoids apex edge HTML-as-JS poison  
+- Proof API: THOR Docker + Caddy  
+- SPA: CF Pages → **must** call `https://api.satohash.io`  
+- Free stamps: `REQUIRE_LIGHTNING=false`  
+- Code M3 · Ops Kimi/THOR  
+- Bundles `/b/*`
 
-## Bitcoin node (THOR) — 2026-08-04 truth
+## Bitcoin (THOR) — live
 | Field | Value |
 |-------|--------|
-| Public source | **`bitcoind`** (restored ~02:33 UTC) |
-| Status | **IBD syncing** (~20% progress; headers complete) |
+| Public source | **bitcoind** |
+| Status | **IBD syncing** ~25% (height rising; headers complete) |
 | ready_to_verify | false until IBD done |
-| Process | systemd `bitcoind.service` **enabled** (datadir `/root/.bitcoin`) |
-| History | OOM-killed 2026-07-28 → dead ~6d → restarted 2026-08-04 |
-| ETA | ~3.7–4 days at ~85 blk/min (order-of-magnitude) |
-| Fallback | mempool.space still available by design if RPC dies |
+| Process | systemd enabled · datadir `/root/.bitcoin` |
+| Fallback | OTS calendars + mempool by design during IBD |
 
-## Live product surfaces
-| Path | What |
-|------|------|
-| `/` | Landing — free model `#free-and-fees`, verify `#verify-ots` |
-| `/watch` · `/explainer` | Explainer — VO + music |
-| `/templates` | Category chip strip fixed (scroll, no overflow) |
-| `/stamp` | Free stamp (API) |
-| `/pricing` | Free / 21 sats / Pro sketch |
+## Product surfaces
+| Path | Notes |
+|------|--------|
+| `/` | Landing + marketing nav |
+| `/stamp` · `/verify` | Free core loop · public routes |
+| `/templates` | Category chips scroll/centered filters |
+| `/watch` | Explainer (marketing public, no app bottom dock) |
+| `/government` | Solutions + charts + humble Motopass concept |
+| `/network` | Live calendars / bitcoin / stamps dashboard |
+| Nav | Stamp · Verify · Templates · Pricing · More |
+| Language | Elite dropdown · en es fr de pt sw zh |
 
-## Metrics / HQ
-- SoT: `https://api.satohash.io/metrics.json`  
-- **client_id aggregates** ✅ live  
-- **`raw.directory`** ✅ live  
-- Health green; bitcoin-anchor may stay **amber** during IBD (pending confirmations)
+## This mega-session (done)
+- [x] Mobile MarketingShell · scroll-to-top · health banner under nav  
+- [x] Language switcher reliability + clean UI  
+- [x] Marketing/desktop nav redesign  
+- [x] Government / evidence / about / legal / network / motopass / pitch / footer  
+- [x] Eager-load critical public pages for link stability  
+- [x] Docs/handoff/session summary closeout  
 
-## Recent product (M3)
-- [x] Templates category bar + menus MVP polish + CF Pages deploy  
-- [x] MVP checklist `docs/MVP-CHECKLIST.md` · `npm run mvp:smoke`  
-
-## Ops status (Kimi/THOR)
-- [x] **source: bitcoind** public (syncing, not finished IBD)  
-- [x] client_id + directory on metrics  
-- [ ] IBD **complete** → `ready_to_verify=true` / confirmed path (~4d)  
-- [ ] LNbits / wallets / paywall **only when Cam flips**  
-- [ ] Watch free RAM — OOM risk was real (node ~1GB RSS)  
-
-## Standing non-negotiables
-REQUIRE_LIGHTNING=false · no secrets in git · HQ metrics API only · free stamps for strangers  
+## Ops still open
+- [ ] IBD complete → ready_to_verify  
+- [ ] Paywall only when Cam flips  
+- [ ] Optional Socket.IO CORS / Umami header fixes  
+- [ ] Store apps: PWA → Capacitor later (not started)  
 
 ## Agent entry
-**`AGENTS.md`** · status **this file** · log **`docs/handoff-log.md`** · Kimi detail **`docs/KIMI-HANDOFF.md`** · MVP **`docs/MVP-CHECKLIST.md`**
+**AGENTS.md** · this file · `docs/handoff-log.md` · `docs/KIMI-HANDOFF.md` · `docs/MVP-CHECKLIST.md` · goodbye summary under `docs/archive/`

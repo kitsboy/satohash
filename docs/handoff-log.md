@@ -4,6 +4,31 @@ Append a new `## Session — YYYY-MM-DD` at the **top** after each session.
 
 ---
 
+## Session — 2026-08-04 (Grok) — MOBILE MVP · NAV · i18n · PAGES · /goodbye
+
+**From:** Grok (M3) · **Status:** SPA redeployed repeatedly · free stamps · main pushed  
+**Git tip:** `db1e493` (nav redesign) · branch `main` ≈ origin
+
+### Finished
+- Templates chips overflow fixed; docs chips **centered**
+- MarketingShell for public pages; `/watch` not double-chromed
+- ScrollToTop; stamp public + gold CTA; health banner under nav
+- Language: 7 locales, elite dropdown (not flag strip clutter); locale preload
+- Marketing nav: Stamp · Verify · Templates · Pricing · More + mobile drawer
+- Pages: government, evidence, about, network, legal, motopass-verify, pitch, footer
+- Kimi bitcoind truth persisted earlier same day (IBD ~25%, source bitcoind)
+
+### Still open
+- IBD complete (Kimi) · paywall off · optional store apps later · API socket CORS if needed
+
+### Do not
+- Flip REQUIRE_LIGHTNING · commit secrets · change live `/api/*` paths without Cam
+
+### Recovery
+`docs/archive/SESSION-SUMMARY-2026-08-04-goodbye.md` · `/whatsup`
+
+---
+
 ## Session — 2026-08-04 (Kimi) — OPS TRUTH · bitcoind restored
 
 **From:** Kimi THOR · **Status:** Free stamps green · **source: bitcoind** syncing · paywall OFF

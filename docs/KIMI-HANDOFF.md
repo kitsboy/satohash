@@ -1,3 +1,30 @@
+## Session — 2026-08-04 (Grok) — MOBILE / NAV / i18n CLOSEOUT /goodbye
+
+**From:** Grok M3 · **To:** Kimi / next Grok · **Status:** SPA polish shipped · free stamps · no paywall flip
+
+### Product (SPA — Cam/Grok owns)
+- Nav redesign: Stamp · Verify · Templates · Pricing · More; elite language menu (7 langs)
+- Mobile shell, scroll-to-top, health banner under fixed header
+- Enhanced: government, evidence, about, network, legal, motopass-verify, pitch, footer
+- Git `main` tip ~`db1e493` · CF Pages live satohash.io
+
+### Ops standing (your plane)
+- Free stamps ON · REQUIRE_LIGHTNING=false
+- bitcoind **syncing** source:bitcoind · IBD ~25% (rising) · ETA multi-day
+- Monitor IBD + RAM OOM risk · systemd unit datadir `/root/.bitcoin`
+- HQ metrics SoT: `https://api.satohash.io/metrics.json`
+- Optional later: Socket.IO CORS multi-value if SPA sockets fail
+
+### Kimi next
+1. Daily IBD check until `ready_to_verify` / IBD false  
+2. Do not flip paywall  
+3. No secrets in handoffs  
+
+### Session summary file
+`docs/archive/SESSION-SUMMARY-2026-08-04-goodbye.md`
+
+---
+
 ## Session — 2026-08-04 (Kimi THOR) — OPS TRUTH SWEEP · BITCOIND RESTORED
 
 **From:** Kimi on THOR · **To:** Grok/M3 · **UTC:** 2026-08-04 ~02:40  

@@ -2,16 +2,16 @@
   "schema": "gab.product-metrics.v1",
   "productId": "satohash",
   "name": "Satohash",
-  "updatedAt": "2026-08-04T04:00:58.742Z",
+  "updatedAt": "2026-08-04T05:34:13.815Z",
   "window": {
     "label": "7d",
-    "from": "2026-07-28T04:00:58.742Z",
-    "to": "2026-08-04T04:00:58.742Z"
+    "from": "2026-07-28T05:34:13.815Z",
+    "to": "2026-08-04T05:34:13.815Z"
   },
   "health": {
     "status": "green",
     "message": "API healthy — live stamp aggregates for HQ",
-    "latencyMs": 1,
+    "latencyMs": 0,
     "uptimePct24h": null,
     "dependencies": [
       {
@@ -21,8 +21,8 @@
       },
       {
         "id": "bitcoin-anchor",
-        "status": "amber",
-        "detail": "2 pending Bitcoin confirmation(s)"
+        "status": "green",
+        "detail": "No pending anchors"
       },
       {
         "id": "api.satohash.io",
@@ -78,7 +78,7 @@
     {
       "key": "pending",
       "label": "Pending confirm",
-      "value": 2,
+      "value": 0,
       "unit": "proofs",
       "format": "number",
       "priority": 2,
@@ -87,7 +87,7 @@
     {
       "key": "confirmed",
       "label": "Confirmed (all time)",
-      "value": 9,
+      "value": 11,
       "unit": "proofs",
       "format": "number",
       "priority": 2,
@@ -96,7 +96,7 @@
     {
       "key": "confirmed_7d",
       "label": "Confirmed 7d",
-      "value": 3,
+      "value": 5,
       "unit": "proofs",
       "format": "number",
       "priority": 2,
@@ -150,7 +150,7 @@
     {
       "key": "p50_ms",
       "label": "Metrics build p50",
-      "value": 1,
+      "value": 0,
       "unit": "ms",
       "format": "duration",
       "priority": 5,
@@ -299,7 +299,7 @@
         },
         {
           "t": "2026-08-04T12:00:00.000Z",
-          "v": 0
+          "v": 2
         }
       ]
     },
@@ -367,7 +367,7 @@
         },
         {
           "t": "2026-08-04T12:00:00.000Z",
-          "v": 2
+          "v": 0
         }
       ]
     },
@@ -466,13 +466,13 @@
         {
           "id": "bitcoin",
           "label": "Bitcoin confirmed",
-          "count": 9,
+          "count": 11,
           "hint": "On-chain anchor"
         },
         {
           "id": "pending_queue",
           "label": "Still pending",
-          "count": 2,
+          "count": 0,
           "hint": "Upgrade daemon queue"
         }
       ]
@@ -620,7 +620,7 @@
         {
           "id": "pending",
           "label": "Pending",
-          "value": 2,
+          "value": 0,
           "meta": {
             "offer": "awaiting BTC"
           }
@@ -628,7 +628,7 @@
         {
           "id": "confirmed",
           "label": "Confirmed",
-          "value": 9,
+          "value": 11,
           "meta": {
             "offer": "Bitcoin anchored"
           }
@@ -797,7 +797,7 @@
     "seriesFromDb": true,
     "note": "Live metrics from satohash API DB",
     "version": "5.0.0-ELITE",
-    "uptimeSec": 533970,
+    "uptimeSec": 539565,
     "requireLightning": false,
     "familyFreeTier": true,
     "directory": {
@@ -934,9 +934,9 @@
       "stampsTotal": 11,
       "stamps24h": 2,
       "stamps7d": 5,
-      "pending": 2,
-      "confirmed": 9,
-      "confirmed7d": 3,
+      "pending": 0,
+      "confirmed": 11,
+      "confirmed7d": 5,
       "failed": 0,
       "failed7d": 0,
       "familyFree": 0,
@@ -945,7 +945,7 @@
   },
   "_staticMirror": {
     "source": "https://api.satohash.io/metrics.json",
-    "mirroredAt": "2026-08-04T04:00:58.796Z",
+    "mirroredAt": "2026-08-04T05:34:13.874Z",
     "attempt": 1,
     "note": "Local/preview fallback only. Production satohash.io/metrics.json is proxied by CF Pages Function → api.satohash.io. HQ SoT: https://api.satohash.io/metrics.json",
     "canonical": "https://api.satohash.io/metrics.json"

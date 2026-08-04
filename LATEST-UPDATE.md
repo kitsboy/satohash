@@ -1,11 +1,14 @@
-# satohash — Last Updated 2026-08-04 (Kimi ops + Grok persist)
+# satohash — Last Updated 2026-08-04 (Grok goodbye)
 
-**Brief:** Bitcoind **restored** on THOR — public `source: bitcoind`, IBD ~20% syncing, ETA ~4d. Free stamps ON. Metrics client_id + directory **closed**. SPA menus/templates pass still on M3 (may need commit).
+**Brief:** Mobile MVP + full nav/language redesign + page polish shipped to CF Pages; bitcoind IBD ~25% source:bitcoind; free stamps ON.
 
+**Git tip:** `db1e493` on `main`  
 **API:** 5.0.0-ELITE green · `REQUIRE_LIGHTNING=false`  
-**Bitcoin:** bitcoind systemd enabled · datadir `/root/.bitcoin` · was OOM-dead 6d  
-**HQ SoT:** https://api.satohash.io/metrics.json  
+**SPA:** satohash.io · peek deploys via wrangler throughout session  
 
-**Detail:** top of `docs/KIMI-HANDOFF.md` · `docs/handoff-log.md` · `.ai_docs/current-status.md`  
+**Key URLs**
+- https://satohash.io/stamp · /templates · /government · /network · /watch  
+- Status: `.ai_docs/current-status.md` · log: `docs/handoff-log.md`  
+- Session: `docs/archive/SESSION-SUMMARY-2026-08-04-goodbye.md`  
 
-**Kimi next:** monitor IBD + RAM. **Cam:** nothing (no paywall). **Grok:** commit SPA when Cam wants.  
+**Kimi:** monitor IBD; no paywall. **Cam:** `/whatsup` to resume.  
