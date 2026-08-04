@@ -2,16 +2,16 @@
   "schema": "gab.product-metrics.v1",
   "productId": "satohash",
   "name": "Satohash",
-  "updatedAt": "2026-08-04T02:21:06.855Z",
+  "updatedAt": "2026-08-04T03:43:13.274Z",
   "window": {
     "label": "7d",
-    "from": "2026-07-28T02:21:06.855Z",
-    "to": "2026-08-04T02:21:06.855Z"
+    "from": "2026-07-28T03:43:13.274Z",
+    "to": "2026-08-04T03:43:13.274Z"
   },
   "health": {
     "status": "green",
     "message": "API healthy — live stamp aggregates for HQ",
-    "latencyMs": 6,
+    "latencyMs": 0,
     "uptimePct24h": null,
     "dependencies": [
       {
@@ -22,7 +22,7 @@
       {
         "id": "bitcoin-anchor",
         "status": "amber",
-        "detail": "1 pending Bitcoin confirmation(s)"
+        "detail": "2 pending Bitcoin confirmation(s)"
       },
       {
         "id": "api.satohash.io",
@@ -32,7 +32,7 @@
       {
         "id": "client-attribution",
         "status": "green",
-        "detail": "4 distinct X-Satohash-Client id(s)"
+        "detail": "5 distinct X-Satohash-Client id(s)"
       }
     ]
   },
@@ -40,7 +40,7 @@
     {
       "key": "stamps_total",
       "label": "Stamps (all time)",
-      "value": 10,
+      "value": 11,
       "unit": "proofs",
       "format": "number",
       "priority": 1,
@@ -49,7 +49,7 @@
     {
       "key": "stamps_24h",
       "label": "Stamps 24h",
-      "value": 1,
+      "value": 2,
       "unit": "proofs",
       "delta": 0,
       "deltaUnit": "%",
@@ -60,7 +60,7 @@
     {
       "key": "stamps_7d",
       "label": "Stamps 7d",
-      "value": 4,
+      "value": 5,
       "unit": "proofs",
       "format": "number",
       "priority": 2,
@@ -69,7 +69,7 @@
     {
       "key": "monthly_capacity",
       "label": "Monthly capacity (est.)",
-      "value": 17,
+      "value": 21,
       "unit": "proofs",
       "format": "number",
       "priority": 2,
@@ -78,7 +78,7 @@
     {
       "key": "pending",
       "label": "Pending confirm",
-      "value": 1,
+      "value": 2,
       "unit": "proofs",
       "format": "number",
       "priority": 2,
@@ -123,7 +123,7 @@
     {
       "key": "api_clients",
       "label": "Active API clients",
-      "value": 4,
+      "value": 5,
       "unit": "clients",
       "format": "number",
       "priority": 3,
@@ -150,7 +150,7 @@
     {
       "key": "p50_ms",
       "label": "Metrics build p50",
-      "value": 6,
+      "value": 0,
       "unit": "ms",
       "format": "duration",
       "priority": 5,
@@ -231,7 +231,7 @@
         },
         {
           "t": "2026-08-04T12:00:00.000Z",
-          "v": 1
+          "v": 2
         }
       ]
     },
@@ -367,7 +367,7 @@
         },
         {
           "t": "2026-08-04T12:00:00.000Z",
-          "v": 1
+          "v": 2
         }
       ]
     },
@@ -448,19 +448,19 @@
         {
           "id": "hash_local",
           "label": "Local hash",
-          "count": 10,
+          "count": 11,
           "hint": "File never leaves device"
         },
         {
           "id": "submit",
           "label": "Submit stamp",
-          "count": 1,
+          "count": 2,
           "hint": "API or SPA"
         },
         {
           "id": "calendar",
           "label": "Calendar attested",
-          "count": 10,
+          "count": 11,
           "hint": "OTS calendars accepted"
         },
         {
@@ -472,7 +472,7 @@
         {
           "id": "pending_queue",
           "label": "Still pending",
-          "count": 1,
+          "count": 2,
           "hint": "Upgrade daemon queue"
         }
       ]
@@ -502,6 +502,14 @@
         {
           "id": "mvp-smoke",
           "label": "mvp-smoke",
+          "value": 1,
+          "meta": {
+            "offer": "attributed client"
+          }
+        },
+        {
+          "id": "kimi-truth-sweep",
+          "label": "kimi-truth-sweep",
           "value": 1,
           "meta": {
             "offer": "attributed client"
@@ -612,7 +620,7 @@
         {
           "id": "pending",
           "label": "Pending",
-          "value": 1,
+          "value": 2,
           "meta": {
             "offer": "awaiting BTC"
           }
@@ -789,7 +797,7 @@
     "seriesFromDb": true,
     "note": "Live metrics from satohash API DB",
     "version": "5.0.0-ELITE",
-    "uptimeSec": 527978,
+    "uptimeSec": 532905,
     "requireLightning": false,
     "familyFreeTier": true,
     "directory": {
@@ -923,21 +931,21 @@
       ]
     },
     "counts": {
-      "stampsTotal": 10,
-      "stamps24h": 1,
-      "stamps7d": 4,
-      "pending": 1,
+      "stampsTotal": 11,
+      "stamps24h": 2,
+      "stamps7d": 5,
+      "pending": 2,
       "confirmed": 9,
       "confirmed7d": 3,
       "failed": 0,
       "failed7d": 0,
       "familyFree": 0,
-      "distinctClients": 4
+      "distinctClients": 5
     }
   },
   "_staticMirror": {
     "source": "https://api.satohash.io/metrics.json",
-    "mirroredAt": "2026-08-04T02:21:06.926Z",
+    "mirroredAt": "2026-08-04T03:43:13.267Z",
     "attempt": 1,
     "note": "Local/preview fallback only. Production satohash.io/metrics.json is proxied by CF Pages Function → api.satohash.io. HQ SoT: https://api.satohash.io/metrics.json",
     "canonical": "https://api.satohash.io/metrics.json"
