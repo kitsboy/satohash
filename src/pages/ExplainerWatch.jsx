@@ -6,7 +6,8 @@ import Footer from '../components/layout/Footer'
 import usePageMeta from '../hooks/usePageMeta'
 
 /** 10s Kimi teaser — longer educational cut coming later. */
-const VIDEO_SRC = '/media/video/satohash-explainer-with-vo.mp4'
+// Query busts CF/browser cache when same path is overwritten (old ~80s file shared the name).
+const VIDEO_SRC = '/media/video/satohash-explainer-with-vo.mp4?v=10s-kimi-20260804'
 const POSTER_SRC = '/media/video/kimi-teacher.jpg'
 const VIDEO_SECONDS = 10
 
