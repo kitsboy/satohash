@@ -102,7 +102,7 @@ export default function About() {
     >
       {/* Hero */}
       <section
-        className="relative border-b px-4 pt-10 pb-14 sm:px-6 sm:pb-20 sm:pt-[calc(3.5rem+var(--satohash-health-banner-h,0px))] md:pt-[calc(4rem+var(--satohash-health-banner-h,0px)+1rem)]"
+        className="relative border-b px-4 pt-10 pb-14 sm:px-6 sm:pt-[calc(3.5rem+var(--satohash-health-banner-h,0px))] sm:pb-20 md:pt-[calc(4rem+var(--satohash-health-banner-h,0px)+1rem)]"
         style={{ borderColor: 'var(--border)' }}
       >
         <div
@@ -176,7 +176,7 @@ export default function About() {
               className="inline-flex min-h-[48px] items-center rounded-xl border px-6 py-3 text-xs font-black tracking-wider uppercase"
               style={{ borderColor: 'var(--border)', color: 'var(--text-primary)' }}
             >
-              60s explainer
+              10s explainer
             </Link>
             <Link
               to="/government"
@@ -202,7 +202,10 @@ export default function About() {
             “Truth should not depend on a company staying online. Anchor digital history to the most
             secure computer network humans run: Bitcoin.”
           </p>
-          <div className="mt-6 h-0.5 w-16 rounded-full" style={{ background: 'var(--accent-gold)' }} />
+          <div
+            className="mt-6 h-0.5 w-16 rounded-full"
+            style={{ background: 'var(--accent-gold)' }}
+          />
           <p
             className="mt-4 text-[11px] font-bold tracking-widest uppercase"
             style={{ color: 'var(--text-tertiary)' }}
@@ -244,7 +247,10 @@ export default function About() {
                   <Icon size={20} />
                 </div>
                 <h3 className="text-base font-black">{p.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                <p
+                  className="mt-2 text-sm leading-relaxed"
+                  style={{ color: 'var(--text-secondary)' }}
+                >
                   {p.body}
                 </p>
               </motion.div>
@@ -284,7 +290,10 @@ export default function About() {
                   </span>
                 </div>
                 <h2 className="text-2xl font-black tracking-tight sm:text-3xl">{ch.title}</h2>
-                <div className="mt-5 space-y-4 text-sm leading-relaxed sm:text-[15px]" style={{ color: 'var(--text-secondary)' }}>
+                <div
+                  className="mt-5 space-y-4 text-sm leading-relaxed sm:text-[15px]"
+                  style={{ color: 'var(--text-secondary)' }}
+                >
                   {ch.body.map((para) => (
                     <p key={para.slice(0, 40)}>{para}</p>
                   ))}
@@ -301,7 +310,9 @@ export default function About() {
         style={{ borderColor: 'var(--border)', background: 'var(--bg-secondary)' }}
       >
         <div className="mx-auto max-w-4xl">
-          <h2 className="mb-6 text-center text-lg font-black sm:text-xl">The stack in plain language</h2>
+          <h2 className="mb-6 text-center text-lg font-black sm:text-xl">
+            The stack in plain language
+          </h2>
           <div className="grid gap-3 sm:grid-cols-4">
             {[
               { n: '1', t: 'Hash', d: 'SHA-256 on device' },

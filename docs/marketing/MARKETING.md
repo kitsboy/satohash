@@ -1,5 +1,5 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.giveabit.io · **Version:** 5.0.0-ELITE (Build 196) · **Updated:** 2026-08-04
+> **Live:** https://satohash.giveabit.io · **Version:** 5.0.0-ELITE (Build 197) · **Updated:** 2026-08-05
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Satohash — Marketing Strategy

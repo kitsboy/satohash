@@ -1,6 +1,18 @@
 # Explainer: music + voiceover
 
-## Music (done on M3)
+## Live on `/watch` (2026-08-04)
+
+| Spec | Value |
+|------|--------|
+| File | `public/media/video/satohash-explainer-with-vo.mp4` |
+| Length | **~10.0 s** (Kimi teaser) |
+| Format | H.264 1280×720 + AAC stereo (VO baked in) |
+| Player | Native `<video>` on `/watch` |
+| CTA copy | “Watch 10s explainer” on landing / about |
+
+Longer educational cut planned later (Cam has full script offline).
+
+## Music (archive / future long cut)
 
 | Spec | Value |
 |------|--------|
@@ -10,24 +22,22 @@
 | Peak | ~−21 dB (headroom for VO) |
 | Style | Dark ambient, soft pulse, no drums 0–10s, arp/pad after 0:10, lift ~0:45, fade last 3s |
 
-Live player loads this under the slideshow at `/watch`.
-
-## Voiceover (live on GitHub)
+## Voiceover (legacy stems — not driving `/watch` while teaser is primary)
 
 | Asset | Status |
 |-------|--------|
-| `vo-complete.mp3` | ✅ ~79.8s — **drives `/watch` clock** |
-| `vo-section-1/2/3.mp3` | ✅ Optional stems (~26 / 30 / 23s) |
+| `vo-complete.mp3` | ~79.8s — previous interactive clock |
+| `vo-section-1/2/3.mp3` | Optional stems (~26 / 30 / 23s) |
 
-Slide board stretched to ~80s with longer CTA (see `public/media/video/SCRIPT.md`).  
-No re-record required unless Cam wants a tighter 55s cut.
+See `public/media/video/SCRIPT.md` for the 10s teaser board.
+
 ## Preview video (no VO)
 
-`public/media/video/satohash-explainer-preview.mp4` — graphics + music only.
+`public/media/video/satohash-explainer-preview.mp4` — graphics + music only (legacy).
 
-## Final polish path
+## Next polish path (long cut)
 
-1. Drop `vo-complete.mp3` (quality check British female voice).  
-2. If wrong voice: ElevenLabs Rachel/Bella on `SCRIPT.md` text, replace file.  
-3. HyperFrames or re-run ffmpeg mix: VO + music + graphics for public cut.  
-4. Homepage CTA → `/watch` or final MP4.
+1. Produce 30s+ MP4 when ready (Cam/Grok Desktop).  
+2. Drop in as new primary file or dual-length player.  
+3. Update landing CTA length label.  
+4. Optional: HyperFrames mix of stills + VO + music.
