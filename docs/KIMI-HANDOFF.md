@@ -1,3 +1,31 @@
+## Session — 2026-08-05 (Grok) — 10s EXPLAINER TEASER · /watch · /goodbye
+
+**From:** Grok M3 · **To:** Kimi / next Grok · **Status:** 10s Kimi teaser live on `/watch` · free stamps · no paywall flip
+
+### Product (SPA — Cam/Grok owns)
+- `/watch` = native video of **`satohash-explainer-with-vo.mp4` (~10s)** + VO baked in  
+- URL cache-bust: `?v=10s-kimi-20260804` (old ~80s file shared the path; CF edge cached it)  
+- Landing/About: “Watch **10s** explainer” (not 60s)  
+- Longer educational cut **later** (Cam has full script offline)  
+- Git tip ~`af2268a` · CF Pages live satohash.io  
+
+### Ops standing (your plane)
+- Free stamps ON · REQUIRE_LIGHTNING=false  
+- bitcoind **syncing** source:bitcoind · IBD (multi-day) — monitor as before  
+- HQ metrics SoT: `https://api.satohash.io/metrics.json`  
+- No API/paywall changes this session  
+
+### Kimi next
+1. Daily IBD check until `ready_to_verify` / IBD false  
+2. Do not flip paywall  
+3. No secrets in handoffs  
+4. Optional: hard-refresh `/watch` after deploys if media looks stale  
+
+### Session summary file
+`docs/archive/SESSION-SUMMARY-2026-08-05-goodbye.md`
+
+---
+
 ## Session — 2026-08-04 (Grok) — MOBILE / NAV / i18n CLOSEOUT /goodbye
 
 **From:** Grok M3 · **To:** Kimi / next Grok · **Status:** SPA polish shipped · free stamps · no paywall flip

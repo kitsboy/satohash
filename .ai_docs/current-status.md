@@ -1,12 +1,12 @@
 # Current Status — Satohash
 
 **Version:** **5.0.0-ELITE**  
-**Last Updated:** 2026-08-04 (Grok mobile/nav closeout + Kimi truth sweep — bitcoind restored)  
-**Frontend:** https://satohash.io · www · giveabit · CF Pages `satohash`  
-**API:** https://api.satohash.io ✅ LIVE (THOR) — **HQ metrics SoT**  
-**Analytics:** ✅ Umami analytics.giveabit.io (CORS noise possible)  
+**Last Updated:** 2026-08-05 (Grok goodbye — 10s Kimi teaser on `/watch`)  
+**Frontend:** https://satohash.io · www · CF Pages `satohash`  
+**API:** https://api.satohash.io ✅ LIVE (THOR) — HQ metrics SoT  
+**Analytics:** Umami analytics.giveabit.io (CORS noise possible)  
 **HQ:** https://hq.giveabit.io  
-**Git tip:** `9bbacf1` · `main` (Kimi truth-sweep push, after Grok closeout)
+**Git tip:** `af2268a` (+ session closeout) · `main` synced origin
 
 ## Planes
 - Proof API: THOR Docker + Caddy  
@@ -18,44 +18,37 @@
 ## Bitcoin (THOR) — live
 | Field | Value |
 |-------|--------|
-| Public source | **bitcoind** (restored 2026-08-04 04:32 CEST — was OOM-killed 2026-07-28 22:12, down ~6 days) |
-| Status | **IBD syncing** — 20.2% at restore, rising ~85 blk/min; headers 960,956 (100%) |
-| ETA | ~4 days to block 960,954 at current rate |
+| Public source | **bitcoind** |
+| Status | **IBD syncing** (multi-day; headers complete) |
 | ready_to_verify | false until IBD done |
-| Process | systemd enabled (`/etc/systemd/system/bitcoind.service`) · datadir `/root/.bitcoin` (prune 10GB) |
-| RPC | 0.0.0.0:8332 · container reachable via 172.19.0.1 (verified HTTP 200) |
+| Process | systemd enabled · datadir `/root/.bitcoin` |
 | Fallback | OTS calendars + mempool by design during IBD |
 
 ## Product surfaces
 | Path | Notes |
 |------|--------|
-| `/` | Landing + marketing nav |
+| `/` | Landing + marketing nav · CTA “Watch **10s** explainer” |
 | `/stamp` · `/verify` | Free core loop · public routes |
 | `/templates` | Category chips scroll/centered filters |
-| `/watch` | Explainer (marketing public, no app bottom dock) |
+| `/watch` | **10s Kimi teaser** native video (`satohash-explainer-with-vo.mp4?v=10s-kimi-20260804`) |
 | `/government` | Solutions + charts + humble Motopass concept |
 | `/network` | Live calendars / bitcoin / stamps dashboard |
 | Nav | Stamp · Verify · Templates · Pricing · More |
 | Language | Elite dropdown · en es fr de pt sw zh |
 
-## This mega-session (done)
-- [x] Mobile MarketingShell · scroll-to-top · health banner under nav  
-- [x] Language switcher reliability + clean UI  
-- [x] Marketing/desktop nav redesign  
-- [x] Government / evidence / about / legal / network / motopass / pitch / footer  
-- [x] Eager-load critical public pages for link stability  
-- [x] Docs/handoff/session summary closeout (Grok)  
-- [x] **bitcoind restored** (Kimi truth sweep): OOM-killed Jul 28 → new systemd override unit → public source bitcoind + syncing; full procedure in skill `satohash-v5-ascension`
+## This session (2026-08-05)
+- [x] 10s explainer script + review of Cam’s MP4  
+- [x] `/watch` player swap to native video  
+- [x] CTA 60s → 10s  
+- [x] Edge cache fix (query bust + media TTL + redeploy)  
+- [x] Handoff / session summary closeout  
 
 ## Ops still open
-- [ ] IBD complete → ready_to_verify (ETA ~4d; keep mempool fallback)
-- [ ] Paywall only when Cam flips (`missing_for_paid` empty — flip-ready)
-- [ ] Top-level `directory` key on metrics (data live under `raw.directory`; client-attribution live — 4 ids)
+- [ ] Longer educational MP4 (~30s+) when Cam ready  
+- [ ] IBD complete → ready_to_verify  
+- [ ] Paywall only when Cam flips  
 - [ ] Optional Socket.IO CORS / Umami header fixes  
-- [ ] Optional: rotate creds in root-level `bitcoin.conf` template (gitignored 2026-08-04)
 - [ ] Store apps: PWA → Capacitor later (not started)  
-- [ ] LNbits / on-chain wallets when Cam requests paywall flip
-- [ ] Optional: ElevenLabs re-VO if British quality not accepted
 
 ## Agent entry
 **AGENTS.md** · this file · `docs/handoff-log.md` · `docs/KIMI-HANDOFF.md` · `docs/MVP-CHECKLIST.md` · goodbye summary under `docs/archive/`

@@ -4,6 +4,33 @@ Append a new `## Session — YYYY-MM-DD` at the **top** after each session.
 
 ---
 
+## Session — 2026-08-05 (Grok) — 10s KIMI TEASER · /watch · CACHE FIX · /goodbye
+
+**From:** Grok (M3) · **Status:** 10s explainer live on `/watch` · CF Pages · main pushed  
+**Git tip:** `af2268a` (+ closeout) · branch `main` ≈ origin
+
+### Finished
+- Educational 30s script + scene image prompts (Cam kept offline for longer cut later)
+- Reviewed new MP4: ~10s H.264 1280×720 + baked VO (product-true)
+- Path **A**: teaser only; longer video later
+- `/watch` → native `<video>` of `satohash-explainer-with-vo.mp4` (not slideshow+`vo-complete.mp3`)
+- Landing/About CTA: “Watch **10s** explainer”
+- Live fix: edge still served old ~80s file under same path → cache-bust `?v=10s-kimi-20260804` + `/media/video/*` TTL + Wrangler redeploy
+- Media docs teaser-first
+
+### Still open
+- Longer ~30s+ cut when Cam ready · IBD complete (Kimi) · paywall off · optional store apps
+- Untracked local `satohash-explainer-with-vo2.mp4` (old long mix backup)
+
+### Do not
+- Flip REQUIRE_LIGHTNING · commit secrets · change live `/api/*` paths without Cam  
+- Claim “60s explainer” until longer MP4 ships
+
+### Recovery
+`docs/archive/SESSION-SUMMARY-2026-08-05-goodbye.md` · `/whatsup`
+
+---
+
 ## Session — 2026-08-04 (Grok) — MOBILE MVP · NAV · i18n · PAGES · /goodbye
 
 **From:** Grok (M3) · **Status:** SPA redeployed repeatedly · free stamps · main pushed  
