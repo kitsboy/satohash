@@ -1019,7 +1019,11 @@ export default function Landing() {
       {/* ── LEGAL LINKS ──────────────────────────────────────────── */}
       <div
         className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 py-4 text-xs"
-        style={{ color: '#94a3b8', borderTop: '1px solid var(--border)' }}
+        style={{
+          color: 'var(--text-muted)',
+          background: 'var(--bg-primary)',
+          borderTop: '1px solid var(--border)'
+        }}
       >
         <Link to="/legal/terms" className="transition-opacity hover:opacity-70">
           {t('landingPage.legal.terms')}
