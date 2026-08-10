@@ -1,0 +1,9 @@
+# Satohash
+
+Bitcoin document notarization via OpenTimestamps — free, sovereign, verifiable proof of existence. NIP-05 identity, badges, and a 7-language platform.
+
+- [Satohash](https://satohash.io/)
+- [API](https://api.satohash.io/metrics.json)
+- [Tools](https://satohash.io/tools)
+- [Guide](https://satohash.io/guide)
+- [GitHub](https://github.com/kitsboy/satohash)

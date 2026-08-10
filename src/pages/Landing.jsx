@@ -99,12 +99,15 @@ export default function Landing() {
   useEffect(() => {
     const API = getApiUrl()
     Promise.all([
-      fetch(`${API}/api/history`)
+      // /api/history requires x-npub (401 otherwise); public metrics.json
+      // carries the same stamp counts without auth.
+      fetch(`${API}/metrics.json`)
         .then((r) => r.json())
-        .catch(() => []),
+        .then((d) => d?.raw?.counts ?? null)
+        .catch(() => null),
       getBitcoinNetworkStats()
-    ]).then(([stamps, stats]) => {
-      if (Array.isArray(stamps)) setProofCount(stamps.length)
+    ]).then(([counts, stats]) => {
+      if (counts && typeof counts.stampsTotal === 'number') setProofCount(counts.stampsTotal)
       if (!stats || typeof stats !== 'object') return
       const merged = {
         ...defaultNetworkStats,
@@ -430,7 +433,7 @@ export default function Landing() {
                 {[
                   { initials: 'AK', bg: '#6366f1' },
                   { initials: 'SM', bg: '#0d9488' },
-                  { initials: 'JL', bg: '#f59e0b' },
+                  { initials: 'JL', bg: '#b45309' },
                   { initials: 'PR', bg: '#ec4899' },
                   { initials: 'DW', bg: '#3b82f6' }
                 ].map(({ initials, bg }) => (
