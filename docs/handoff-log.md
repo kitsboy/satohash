@@ -1,3 +1,8 @@
+## 2026-08-10 — Kimi: Lighthouse sweep (satohash.io)
+- Fixed: 401 console error (api/history requires x-npub → Landing uses public metrics.json raw.counts.stampsTotal)
+- Fixed: badge avatar contrast (white text on 600/700 color shades), footer legal link opacity, KimiContact label-in-name, sourcemaps, llms.txt
+- Baseline: perf 37 / a11y 96 / BP 96 / SEO 100 → after: perf 42 / a11y 96 / BP 100 / SEO 100, CLS 0. TBT 1.5s→1.0s (vendor bundle parse — next big lever is vendor chunk splitting).
+
 # Handoff log (newest first)
 
 Append a new `## Session — YYYY-MM-DD` at the **top** after each session.
