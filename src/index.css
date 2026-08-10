@@ -181,7 +181,15 @@
     box-shadow:
       0 4px 12px rgba(0, 0, 0, 0.3),
       0 0 0 1px rgba(255, 255, 255, 0.03) inset;
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    transition:
+      transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+      background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+      color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+      fill 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+      stroke 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .glass-card:hover {
@@ -212,7 +220,15 @@
     letter-spacing: 0.08em;
     color: #0d1117;
     text-transform: uppercase;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition:
+      transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      fill 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      stroke 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     border-radius: var(--radius-button);
     background: linear-gradient(135deg, #f0b429 0%, #d97706 100%);
     box-shadow:
@@ -252,7 +268,15 @@
     font-weight: 800;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition:
+      transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      fill 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      stroke 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     border-radius: var(--radius-button);
     background: var(--bg-subtle);
     border: 1px solid var(--border);
@@ -276,7 +300,15 @@
     justify-content: center;
     padding: 2rem;
     text-align: center;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition:
+      transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      fill 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      stroke 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     border-radius: var(--radius-card);
     background: var(--bg-subtle);
     border: 1px solid var(--border);
@@ -303,7 +335,15 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    transition:
+      transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+      background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+      color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+      fill 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+      stroke 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     background: var(--accent-gold-subtle);
     border: 1px solid var(--border-gold);
     color: var(--accent-gold);
@@ -319,7 +359,15 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    transition:
+      transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+      background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+      color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+      fill 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+      stroke 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     background: rgba(34, 211, 165, 0.07);
     border: 1px solid rgba(34, 211, 165, 0.2);
     color: var(--success);
@@ -335,7 +383,15 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    transition:
+      transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+      background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+      color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+      fill 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+      stroke 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     background: rgba(240, 180, 41, 0.07);
     border: 1px solid rgba(240, 180, 41, 0.2);
     color: var(--warning);
@@ -348,7 +404,15 @@
     font-size: 0.875rem;
     font-weight: 500;
     outline: none;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition:
+      transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      fill 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      stroke 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     border-radius: var(--radius-button);
     background: var(--bg-subtle);
     border: 1.5px solid var(--border);
@@ -564,7 +628,15 @@
     border-radius: var(--radius-card);
     background: var(--bg-card);
     border: 1px solid var(--border);
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    transition:
+      transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+      background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+      color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+      fill 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+      stroke 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .step-card:hover {
@@ -610,7 +682,15 @@
   }
 
   .surface-card-hover {
-    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    transition:
+      transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+      background-color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+      color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+      fill 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+      stroke 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .surface-card-hover:hover {
     border-color: var(--border-gold);
