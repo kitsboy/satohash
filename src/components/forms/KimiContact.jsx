@@ -10,7 +10,6 @@ export default function KimiContact({ compact = false }) {
       <a
         href="mailto:kimi@giveabit.io"
         className="group flex items-center gap-3 rounded-xl border border-[var(--border)] bg-[var(--surface-raised)] p-3 transition-all hover:border-[var(--accent-gold)] hover:shadow-[0_0_20px_var(--accent-gold-glow)]"
-        aria-label="Kimi — Orchestration agent. Contact"
       >
         <div className="relative shrink-0">
           <img

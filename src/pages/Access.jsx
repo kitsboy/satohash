@@ -423,7 +423,7 @@ export default function Access() {
                     setNsec('')
                     setKeyVisible(false)
                   }}
-                  className="w-full text-center text-[10px] font-medium tracking-widest uppercase opacity-40 transition-opacity hover:opacity-70"
+                  className="w-full text-center text-[10px] font-medium tracking-widest uppercase opacity-70 transition-opacity hover:opacity-100"
                   style={{ color: 'var(--text-secondary)' }}
                 >
                   {t('accessPage.cards.import.cancel')}
@@ -508,7 +508,7 @@ export default function Access() {
                     setAdminMode(false)
                     setAdminPassword('')
                   }}
-                  className="w-full text-center text-[10px] font-medium tracking-widest uppercase opacity-40 transition-opacity hover:opacity-70"
+                  className="w-full text-center text-[10px] font-medium tracking-widest uppercase opacity-70 transition-opacity hover:opacity-100"
                   style={{ color: 'var(--text-secondary)' }}
                 >
                   {t('accessPage.cards.admin.cancel')}

@@ -431,11 +431,11 @@ export default function Landing() {
             <div className="flex items-center gap-3">
               <div className="flex -space-x-2">
                 {[
-                  { initials: 'AK', bg: '#6366f1' },
-                  { initials: 'SM', bg: '#0d9488' },
+                  { initials: 'AK', bg: '#4f46e5' },
+                  { initials: 'SM', bg: '#0f766e' },
                   { initials: 'JL', bg: '#b45309' },
-                  { initials: 'PR', bg: '#ec4899' },
-                  { initials: 'DW', bg: '#3b82f6' }
+                  { initials: 'PR', bg: '#db2777' },
+                  { initials: 'DW', bg: '#2563eb' }
                 ].map(({ initials, bg }) => (
                   <div
                     key={initials}
