@@ -2,11 +2,11 @@
   "schema": "gab.product-metrics.v1",
   "productId": "satohash",
   "name": "Satohash",
-  "updatedAt": "2026-08-10T18:59:02.680Z",
+  "updatedAt": "2026-08-10T19:09:57.790Z",
   "window": {
     "label": "7d",
-    "from": "2026-08-03T18:59:02.680Z",
-    "to": "2026-08-10T18:59:02.680Z"
+    "from": "2026-08-03T19:09:57.790Z",
+    "to": "2026-08-10T19:09:57.790Z"
   },
   "health": {
     "status": "green",
@@ -797,7 +797,7 @@
     "seriesFromDb": true,
     "note": "Live metrics from satohash API DB",
     "version": "5.0.0-ELITE",
-    "uptimeSec": 1106254,
+    "uptimeSec": 1106909,
     "requireLightning": false,
     "familyFreeTier": true,
     "directory": {
@@ -945,7 +945,7 @@
   },
   "_staticMirror": {
     "source": "https://api.satohash.io/metrics.json",
-    "mirroredAt": "2026-08-10T18:59:02.703Z",
+    "mirroredAt": "2026-08-10T19:09:57.876Z",
     "attempt": 1,
     "note": "Local/preview fallback only. Production satohash.io/metrics.json is proxied by CF Pages Function → api.satohash.io. HQ SoT: https://api.satohash.io/metrics.json",
     "canonical": "https://api.satohash.io/metrics.json"
