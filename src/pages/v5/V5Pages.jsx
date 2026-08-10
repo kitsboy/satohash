@@ -1038,7 +1038,15 @@ export function ParticleStampCanvas({ className = '' }) {
       conf: Math.random() > 0.55
     }))
     let raf
-    const draw = () => {
+    let last = 0
+    let active = true
+    // Throttle to ~30fps and pause when the canvas is offscreen or the tab is
+    // hidden — an unthrottled rAF loop keeps the main thread perpetually busy
+    // (Lighthouse TBT killer).
+    const draw = (t) => {
+      raf = requestAnimationFrame(draw)
+      if (!active || t - last < 33) return
+      last = t
       ctx.clearRect(0, 0, w, h)
       for (const p of parts) {
         p.x += p.vx
@@ -1064,10 +1072,21 @@ export function ParticleStampCanvas({ className = '' }) {
           }
         }
       }
-      raf = requestAnimationFrame(draw)
     }
-    draw()
-    return () => cancelAnimationFrame(raf)
+    const io = new IntersectionObserver(([entry]) => {
+      active = entry.isIntersecting && !document.hidden
+    })
+    io.observe(canvas)
+    const onVis = () => {
+      active = !document.hidden
+    }
+    document.addEventListener('visibilitychange', onVis)
+    draw(0)
+    return () => {
+      cancelAnimationFrame(raf)
+      io.disconnect()
+      document.removeEventListener('visibilitychange', onVis)
+    }
   }, [])
   return <canvas ref={ref} className={`h-full w-full ${className}`} aria-hidden />
 }
