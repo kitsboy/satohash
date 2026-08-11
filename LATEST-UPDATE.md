@@ -1,5 +1,5 @@
 # satohash — Last Updated 2026-08-10 by Grok
 
-Brief: Mobile Top 12 — sticky stamp CTA, camera/gallery, share+QR, /stamp/done, deep-link banner, status pill, ELI-5 verify, PWA icons, e2e + lh gate, proof package.
+Brief: Goodbye — Mobile Top 12 live on CF Pages; IBD complete (docs); free stamps ON; tip 5fea2a3.
 
-Commit: (pending push)
+Commit: `5fea2a3c3cfa512c83a1513857a3370c1b668dff`

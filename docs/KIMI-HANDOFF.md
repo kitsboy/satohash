@@ -1,3 +1,28 @@
+## Session — 2026-08-10 (Grok) — GOODBYE · Mobile Top 12 live
+
+**From:** Grok M3 · **To:** Kimi / next Grok · **Status:** Mobile Top 12 **on CF Pages** · IBD **done** · free stamps ON
+
+### Done
+- IBD status docs corrected (your tip numbers) + pushed
+- Mobile Top 12 code + GHA Deploy #223 success (smoke green)
+- Tip `5fea2a3` · live satohash.io/stamp · /stamp/done · /verify ELI-5
+
+### Ops standing
+- Free stamps · REQUIRE_LIGHTNING=false · **do not flip**
+- bitcoind at tip · source bitcoind · no IBD monitoring as open work
+- Watch RAM/OOM only
+- HQ metrics: api.satohash.io/metrics.json
+
+### Kimi next
+1. No paywall flip  
+2. bitcoind health/RAM only  
+3. Optional: hard-refresh SPA after deploys if edge stale  
+
+### Next Grok (suggested)
+Full stamp e2e vs API · CI lh mobile · vault polish · family deep-link matrix · Umami funnel · longer explainer when Cam ready
+
+---
+
 ## Session — 2026-08-10 (Grok) — IBD COMPLETE (Kimi confirm via Cam)
 
 **From:** Cam + Kimi THOR truth · **To:** all agents · **Status:** **IBD DONE** · free stamps ON · no paywall flip

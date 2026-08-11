@@ -1,12 +1,12 @@
 # Current Status — Satohash
 
 **Version:** **5.0.0-ELITE**  
-**Last Updated:** 2026-08-10 (Kimi confirm — **IBD complete**)  
+**Last Updated:** 2026-08-10 (Grok goodbye — **Mobile Top 12 live** + IBD done)  
 **Frontend:** https://satohash.io · www · CF Pages `satohash`  
 **API:** https://api.satohash.io ✅ LIVE (THOR) — HQ metrics SoT  
 **Analytics:** Umami analytics.giveabit.io (CORS noise possible)  
 **HQ:** https://hq.giveabit.io  
-**Git tip:** `3c80c67` · `main` synced origin
+**Git tip:** `5fea2a3` · `main` synced origin
 
 ## Planes
 - Proof API: THOR Docker + Caddy  
@@ -44,17 +44,19 @@
 | Nav | Stamp · Verify · Templates · Pricing · More |
 | Language | Elite dropdown · en es fr de pt sw zh |
 
-## Recent product (through 2026-08-11 tip)
+## Recent product (through 2026-08-10 tip `5fea2a3`)
 - [x] 10s explainer on `/watch` + cache-bust  
 - [x] Mobile / nav / i18n closeout  
 - [x] Landing lighthouse perf + a11y contrast  
 - [x] **IBD complete — own-node at tip** (Kimi 2026-08-10)  
+- [x] **Mobile Top 12** — sticky stamp, /stamp/done, share+QR, package, ELI-5, PWA icons (live)  
 
 ## Ops still open
 - [ ] Longer educational MP4 (~30s+) when Cam ready  
 - [x] ~~IBD complete → ready_to_verify~~ **DONE**  
+- [ ] Full e2e stamp→verify vs live API · CI lh mobile gate  
 - [ ] Paywall only when Cam flips  
-- [ ] Optional Socket.IO CORS / Umami header fixes  
+- [ ] Optional Socket.IO CORS / Umami funnel events  
 - [ ] Store apps: PWA → Capacitor later (not started)  
 - [ ] Watch bitcoind RAM/OOM (history 2026-07-28)  
 
