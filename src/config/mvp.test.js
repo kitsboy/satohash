@@ -4,12 +4,14 @@ import { isMvpPublicPath, MVP_PUBLIC_PATHS, KIMI_NOSTR, shouldMonitorApiHealth }
 describe('mvp config', () => {
   it('MVP_PUBLIC_PATHS includes core notary routes', () => {
     expect(MVP_PUBLIC_PATHS).toContain('/stamp')
+    expect(MVP_PUBLIC_PATHS).toContain('/stamp/done')
     expect(MVP_PUBLIC_PATHS).toContain('/verify')
     expect(MVP_PUBLIC_PATHS).toContain('/vault')
   })
 
   it('isMvpPublicPath allows stamp without login', () => {
     expect(isMvpPublicPath('/stamp')).toBe(true)
+    expect(isMvpPublicPath('/stamp/done')).toBe(true)
     expect(isMvpPublicPath('/trust')).toBe(true)
     expect(isMvpPublicPath('/dashboard')).toBe(false)
   })

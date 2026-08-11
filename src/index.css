@@ -12,6 +12,31 @@
 /* DeepHealthBanner height — set by JS when the IBD/status strip is visible */
 :root {
   --satohash-health-banner-h: 0px;
+  --stamp-sticky-h: calc(4.75rem + env(safe-area-inset-bottom, 0px));
+}
+
+/* Stamp sticky CTA: clear home indicator; avoid layout jump when keyboard opens */
+.stamp-sticky-bar {
+  /* visualViewport polyfill not required — fixed + safe-area is enough for most devices */
+  padding-bottom: max(0.75rem, env(safe-area-inset-bottom, 0px));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stamp-page *,
+  .verify-public-page * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Inputs: 16px min on mobile avoids iOS zoom on focus */
+@media (max-width: 767px) {
+  .stamp-page input,
+  .stamp-page textarea,
+  .stamp-page select {
+    font-size: 16px;
+  }
 }
 
 @layer base {

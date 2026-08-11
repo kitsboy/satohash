@@ -32,7 +32,9 @@
     "prepare": "husky",
     "version:bump": "node scripts/increment-build.js",
     "api:smoke": "bash scripts/api-local-smoke.sh",
-    "mvp:smoke": "bash scripts/mvp-smoke.sh"
+    "mvp:smoke": "bash scripts/mvp-smoke.sh",
+    "test:e2e:mobile": "playwright test tests/e2e/mobile-stamp-loop.spec.js --workers=1 --reporter=line",
+    "lh:mobile": "node scripts/lighthouse-mobile-gate.mjs"
   },
   "lint-staged": {
     "src/**/*.{js,jsx}": [

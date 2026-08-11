@@ -1,3 +1,23 @@
+## Session — 2026-08-10 (Grok) — MOBILE TOP 12 SHIP
+
+**From:** Grok M3 · **Status:** Mobile top-12 sprint coded · free stamps ON · IBD done (standing)
+
+### Shipped
+- `/stamp/done` success route (Back does not re-submit)
+- Sticky stamp CTA, modes collapse, camera/gallery/file pickers
+- Share + QR + proof ZIP package; giant status pill
+- Family deep-link banner polish
+- Verify ELI-5; EmptyState + package on public verify errors
+- PWA start_url `/stamp` + maskable icons; empty-state art
+- E2E `mobile-stamp-loop` · `npm run lh:mobile`
+- Doc: `docs/MOBILE-TOP12.md`
+
+### Standing
+- Free stamps · REQUIRE_LIGHTNING=false · bitcoind at tip
+- SPA → api.satohash.io
+
+---
+
 ## Session — 2026-08-10 (Grok) — IBD COMPLETE (Kimi confirm)
 
 **From:** Cam relayed Kimi ops truth · **To:** all agents  

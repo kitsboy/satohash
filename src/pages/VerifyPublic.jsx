@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { Copy, Share2, Hash, ExternalLink, XCircle, Download } from 'lucide-react'
+import { Copy, Share2, Hash, ExternalLink, Download } from 'lucide-react'
 import { toast } from 'sonner'
 import { motion } from 'framer-motion'
 import { QRCodeSVG as QRCode } from 'qrcode.react'
@@ -12,7 +12,11 @@ import { isSha256Hex, normalizeSha256 } from '../utils/hashUtils'
 import { findStampByHashOrId, localRecordToProof } from '../utils/vaultLocal'
 import { isStaticOnlyMode } from '../utils/staticMode'
 import ProofTimeline from '../components/stamps/ProofTimeline'
+import ProofStatusPill from '../components/stamps/ProofStatusPill'
+import EmptyState from '../components/ui/EmptyState'
 import { downloadVerifiableCredential } from '../utils/verifiableCredential'
+import { shareProofLink } from '../utils/shareProof'
+import { exportProofBundle } from '../utils/proofPackage'
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
 
@@ -237,35 +241,58 @@ export default function VerifyPublic() {
 
       {/* Error state */}
       {!loading && error && (
-        <div className="flex min-h-screen items-center justify-center px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="w-full max-w-sm space-y-4 rounded-2xl border p-10 text-center"
-            style={{
-              borderColor: 'color-mix(in srgb, var(--accent-danger) 25%, transparent)',
-              background: 'color-mix(in srgb, var(--accent-danger) 8%, transparent)'
-            }}
-          >
-            <XCircle size={44} className="mx-auto" style={{ color: 'var(--accent-danger)' }} />
-            <h3 className="text-xl font-black tracking-tight">{t('verifyPublicPage.notFound')}</h3>
-            <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-              {error}
-            </p>
-            <a
-              href="/"
-              className="mt-2 inline-block text-xs font-black tracking-widest uppercase underline"
-              style={{ color: 'var(--accent-active)' }}
-            >
-              {t('verifyPublicPage.returnHome')}
-            </a>
-          </motion.div>
+        <div className="flex min-h-screen items-center justify-center px-4 pb-[env(safe-area-inset-bottom)]">
+          <EmptyState
+            imageSrc="/media/ui/empty-proof.jpg"
+            icon="🔍"
+            title={t('verifyPublicPage.notFound')}
+            description={error}
+            actionLabel="Stamp a file"
+            actionTo="/stamp"
+            secondaryLabel={t('verifyPublicPage.returnHome')}
+            secondaryTo="/"
+          />
         </div>
       )}
 
       {/* Proof certificate */}
       {!loading && proof && (
-        <div className="mx-auto max-w-lg space-y-6 px-4 pt-20 pb-12">
+        <div className="mx-auto max-w-lg space-y-6 px-4 pt-20 pb-[calc(3rem+env(safe-area-inset-bottom,0px))]">
+          <ProofStatusPill
+            status={proof.status}
+            blockHeight={proof.bitcoin_block_height}
+            upgradeStatus={proof.status}
+          />
+          <div className="grid grid-cols-2 gap-3">
+            <button
+              type="button"
+              onClick={async () => {
+                const r = await shareProofLink(proof)
+                if (r === 'shared') toast.success('Shared')
+                else if (r === 'copied') toast.success('Link copied')
+                else toast.error('Share failed')
+              }}
+              className="flex min-h-[48px] items-center justify-center gap-2 rounded-xl text-xs font-black tracking-wider uppercase"
+              style={{ background: 'var(--accent-gold)', color: '#141b25' }}
+            >
+              <Share2 size={16} /> Share
+            </button>
+            <button
+              type="button"
+              onClick={async () => {
+                try {
+                  await exportProofBundle(proof, { certificate: true })
+                  toast.success('Proof package ready')
+                } catch (e) {
+                  toast.error(e.message || 'Package failed')
+                }
+              }}
+              className="flex min-h-[48px] items-center justify-center gap-2 rounded-xl border text-xs font-black tracking-wider uppercase"
+              style={{ borderColor: 'var(--border)', color: 'var(--text-primary)' }}
+            >
+              <Download size={16} /> Package
+            </button>
+          </div>
           {(proof.source === 'hash-only' || proof.source === 'local') && (
             <div
               className="rounded-2xl border px-4 py-3 text-[11px] leading-relaxed"

@@ -10,15 +10,11 @@ import {
   Database,
   Plus,
   Lock,
-  CheckCircle,
-  EyeOff,
   Video,
-  Mic,
-  RefreshCw,
-  FolderSync
+  Mic
 } from 'lucide-react'
 import { useState, useCallback, useEffect, useRef, useMemo } from 'react'
-import { Link, useSearchParams } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { getTieredFeeEstimates } from '../utils/mempool.js'
 import FeeAdvisor from '../components/stamps/FeeAdvisor'
 import { addErrorBreadcrumb } from '../utils/errors.js'
@@ -27,7 +23,6 @@ import { toast } from 'sonner'
 import Tooltip from '../components/ui/Tooltip'
 import { useSocket } from '../hooks/useSocket'
 import { useI18n } from '../i18n'
-import { downloadCertificate } from '../utils/certificate'
 import usePageMeta from '../hooks/usePageMeta'
 import { getApiUrl } from '../config/constants'
 import { normalizeSha256 } from '../utils/hashUtils'
@@ -35,17 +30,22 @@ import { useTranslation } from 'react-i18next'
 import { isStaticOnlyMode } from '../utils/staticMode'
 import { isApiExplicitlyConfigured } from '../config/mvp'
 import StaticModeBanner from '../components/shared/StaticModeBanner'
-import ProofTimeline from '../components/stamps/ProofTimeline'
 import GiveABitBadge from '../components/marketing/GiveABitBadge'
 import { stampHashBrowser, downloadOtsBlob } from '../utils/otsClient'
 import { upsertLocalStamp } from '../utils/vaultLocal'
 import { parseStampDeepLink } from '../utils/stampDeepLink'
+import StampStickyBar from '../components/stamps/StampStickyBar'
+import StampSuccessActions from '../components/stamps/StampSuccessActions'
+import { persistLastProof } from '../utils/lastProof'
+import { requestWakeLock, releaseWakeLock } from '../utils/wakeLock'
 
 export default function Stamp() {
   usePageMeta({ page: 'stamp' })
+  const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const deepLink = useMemo(() => parseStampDeepLink(searchParams), [searchParams])
   const [stampMode, setStampMode] = useState('single') // single, capsule, redact, deposition
+  const [showAdvancedModes, setShowAdvancedModes] = useState(false)
   const [isCapsuleMode, setIsCapsuleMode] = useState(false)
   const [deepLinkClientId, setDeepLinkClientId] = useState('spa')
   const [hashFromDeepLink, setHashFromDeepLink] = useState(false)
@@ -273,8 +273,22 @@ export default function Stamp() {
       description: 'No hosted stamp id — shareable /verify/:id needs the API plane.'
     })
     navigator.vibrate?.([50, 30, 100])
+    persistLastProof(proof)
     return proof
   }, [])
+
+  /** Persist proof and open dedicated success route (avoids double-submit on Back). */
+  const goToDone = useCallback(
+    (proof) => {
+      if (!proof) return
+      persistLastProof(proof)
+      const q = new URLSearchParams()
+      if (proof.id && !String(proof.id).startsWith('ots-')) q.set('id', proof.id)
+      else if (proof.hash) q.set('hash', proof.hash)
+      navigate(`/stamp/done?${q.toString()}`, { replace: true })
+    },
+    [navigate]
+  )
 
   /** Browser-only OTS fallback (no API id). */
   const stampHashBrowserOnly = useCallback(
@@ -282,13 +296,14 @@ export default function Stamp() {
       try {
         setStampingStatus('anchoring')
         const { blob } = await stampHashBrowser(hash)
-        await saveBrowserOtsProof(hash, label, 0, blob)
+        const localProof = await saveBrowserOtsProof(hash, label, 0, blob)
+        goToDone(localProof)
       } catch (e) {
         toast.error('Browser stamp failed', { description: e.message })
         setStampingStatus('idle')
       }
     },
-    [saveBrowserOtsProof]
+    [saveBrowserOtsProof, goToDone]
   )
 
   const stopStatusPoll = useCallback(() => {
@@ -463,6 +478,7 @@ export default function Stamp() {
           })
           startStatusPoll(proof.id)
         }
+        goToDone(proof)
       } catch (err) {
         // API down / network — browser calendar fallback (no durable API id)
         console.warn('API stamp failed, trying browser OTS', err)
@@ -481,7 +497,7 @@ export default function Stamp() {
         }
       }
     },
-    [stampHashBrowserOnly, startStatusPoll, tp]
+    [stampHashBrowserOnly, startStatusPoll, tp, goToDone]
   )
 
   // Family / MotoPass deep-link: /stamp?hash=&ref=&label=&filename=&campaign=&autostamp=
@@ -543,6 +559,7 @@ export default function Stamp() {
 
     setError('')
     setProofResult(null)
+    await requestWakeLock()
 
     try {
       setStampingStatus('hashing')
@@ -553,6 +570,7 @@ export default function Stamp() {
       const MAX_STAMP_BYTES = 100 * 1024 * 1024
       if (file.size > MAX_STAMP_BYTES) {
         setStampingStatus('idle')
+        await releaseWakeLock()
         setError(
           `File is ${(file.size / (1024 * 1024)).toFixed(0)} MB — max ${MAX_STAMP_BYTES / (1024 * 1024)} MB for browser stamp. Hash offline and paste the SHA-256.`
         )
@@ -576,7 +594,9 @@ export default function Stamp() {
 
       if (!isApiExplicitlyConfigured()) {
         const { blob } = await stampHashBrowser(hash)
-        await saveBrowserOtsProof(hash, caseLabel || file.name, file.size, blob)
+        const localProof = await saveBrowserOtsProof(hash, caseLabel || file.name, file.size, blob)
+        await releaseWakeLock()
+        goToDone(localProof)
         return
       }
 
@@ -697,18 +717,22 @@ export default function Stamp() {
         })
         startStatusPoll(proof.id)
       }
+      await releaseWakeLock()
+      goToDone(proof)
     } catch (err) {
       const file = files[0]
       const hash = hashValue
       if (hash && hash.length === 64) {
         try {
           const { blob } = await stampHashBrowser(hash)
-          await saveBrowserOtsProof(
+          const localProof = await saveBrowserOtsProof(
             hash,
             caseLabel || file?.name || 'document',
             file?.size || 0,
             blob
           )
+          await releaseWakeLock()
+          goToDone(localProof)
           return
         } catch (otsErr) {
           console.warn('Browser OTS fallback failed', otsErr)
@@ -747,6 +771,8 @@ export default function Stamp() {
 
         setProofResult(queuedItem)
         setStampingStatus('complete')
+        await releaseWakeLock()
+        goToDone(queuedItem)
         return
       }
 
@@ -754,6 +780,7 @@ export default function Stamp() {
       setError(msg)
       toast.error(tp('stampPage.stampFailed'), { description: msg })
       setStampingStatus('idle')
+      await releaseWakeLock()
     }
   }
 
@@ -761,8 +788,12 @@ export default function Stamp() {
   const progressPercent =
     stampingStatus === 'hashing' ? '30%' : stampingStatus === 'anchoring' ? '70%' : '100%'
 
+  const canStampFile = files.length > 0 && stampingStatus === 'idle'
+  const canStampHash =
+    !!normalizeSha256(hashValue) && files.length === 0 && stampingStatus === 'idle' && !proofResult
+
   return (
-    <div className="mx-auto max-w-6xl space-y-8 p-4 pb-28 sm:space-y-12 sm:pb-24 md:p-8 md:pb-20">
+    <div className="stamp-page mx-auto max-w-6xl space-y-8 p-4 pb-[calc(8.5rem+env(safe-area-inset-bottom,0px))] sm:space-y-12 sm:pb-24 md:p-8 md:pb-20">
       {/* Secondary trail — primary chrome is MarketingShell on mobile */}
       <div className="flex flex-wrap items-center justify-between gap-3">
         <p
@@ -822,13 +853,45 @@ export default function Stamp() {
         stampingStatus === 'idle' &&
         !proofResult && (
           <div
-            className="rounded-2xl border p-6 shadow-lg"
+            className="rounded-2xl border p-5 shadow-lg sm:p-6"
+            data-testid="deep-link-banner"
             style={{
               borderColor: 'var(--accent-gold)',
               background: 'var(--surface-raised)',
               boxShadow: '0 0 0 1px color-mix(in srgb, var(--accent-gold) 20%, transparent)'
             }}
           >
+            <div className="mb-3 flex items-start gap-3">
+              <img
+                src="/media/ui/empty-proof.jpg"
+                alt=""
+                width={56}
+                height={56}
+                className="h-14 w-14 flex-shrink-0 rounded-xl object-cover"
+                style={{ border: '1px solid var(--border)' }}
+              />
+              <div className="min-w-0 flex-1 space-y-1">
+                <p
+                  className="text-[10px] font-black tracking-widest uppercase"
+                  style={{ color: 'var(--accent-gold)' }}
+                >
+                  Family handoff
+                </p>
+                <h2
+                  className="text-lg font-black tracking-tight"
+                  style={{ color: 'var(--text-primary)' }}
+                >
+                  {deepLink.product
+                    ? `Stamp for ${deepLink.product.chip || deepLink.product.id}`
+                    : 'Hash ready to stamp'}
+                </h2>
+                <p className="text-xs leading-snug" style={{ color: 'var(--text-secondary)' }}>
+                  {deepLink.displayLabel
+                    ? `“${deepLink.displayLabel}” — only the fingerprint is sent; file stays on device.`
+                    : 'Only the SHA-256 fingerprint is submitted. One tap anchors via OpenTimestamps → Bitcoin.'}
+                </p>
+              </div>
+            </div>
             <div className="mb-4 flex flex-wrap items-center gap-2">
               {deepLink.product && (
                 <span
@@ -863,22 +926,8 @@ export default function Stamp() {
                 </span>
               )}
             </div>
-            <h2
-              className="text-lg font-black tracking-tight"
-              style={{ color: 'var(--text-primary)' }}
-            >
-              Stamp on Bitcoin
-            </h2>
-            <p className="mt-1 text-sm" style={{ color: 'var(--text-secondary)' }}>
-              {t('stampPage.linkedHashReady')}
-            </p>
-            {(caseLabel || deepLink.displayLabel) && (
-              <p className="mt-3 text-xs font-bold" style={{ color: 'var(--text-primary)' }}>
-                {caseLabel || deepLink.displayLabel}
-              </p>
-            )}
             <div
-              className="mt-3 rounded-xl border p-3"
+              className="mt-1 rounded-xl border p-3"
               style={{ borderColor: 'var(--border)', background: 'var(--bg-primary)' }}
             >
               <p
@@ -995,122 +1044,170 @@ export default function Stamp() {
       <div className="grid grid-cols-1 gap-12 lg:grid-cols-3">
         {/* ── Main Dropzone ─────────────────────── */}
         <div className="space-y-8 lg:col-span-2">
-          {/* Mode Selector */}
-          <div className="mb-6 grid grid-cols-2 gap-3 md:grid-cols-4">
-            <button
-              type="button"
-              aria-pressed={stampMode === 'single'}
-              aria-label={tp('stampPage.modes.single')}
-              onClick={() => {
-                setStampMode('single')
-                setIsCapsuleMode(false)
-                setFiles([])
-              }}
-              className="rounded-2xl border p-4 text-left transition-all"
-              style={{
-                borderColor: stampMode === 'single' ? 'var(--accent-gold)' : 'var(--border)',
-                background: stampMode === 'single' ? 'rgba(240,180,41,0.06)' : 'var(--bg-secondary)'
-              }}
-            >
-              <div className="mb-1 text-lg">📄</div>
-              <div
-                className="mb-1 text-xs font-black tracking-widest uppercase"
+          {/* Mode selector — single first; advanced collapsed on mobile */}
+          <div className="mb-6 space-y-3">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-4">
+              <button
+                type="button"
+                aria-pressed={stampMode === 'single'}
+                aria-label={tp('stampPage.modes.single')}
+                data-testid="mode-single"
+                onClick={() => {
+                  setStampMode('single')
+                  setIsCapsuleMode(false)
+                  setFiles([])
+                }}
+                className="rounded-2xl border p-4 text-left transition-all"
                 style={{
-                  color: stampMode === 'single' ? 'var(--accent-gold)' : 'var(--text-primary)'
+                  borderColor: stampMode === 'single' ? 'var(--accent-gold)' : 'var(--border)',
+                  background:
+                    stampMode === 'single' ? 'rgba(240,180,41,0.06)' : 'var(--bg-secondary)'
                 }}
               >
-                {tp('stampPage.modes.single')}
-              </div>
-              <div className="text-[10px] leading-snug" style={{ color: 'var(--text-secondary)' }}>
-                {tp('stampPage.step1Desc')}
-              </div>
-            </button>
-            <button
-              type="button"
-              aria-pressed={stampMode === 'capsule'}
-              aria-label={tp('stampPage.modes.capsule')}
-              onClick={() => {
-                setStampMode('capsule')
-                setIsCapsuleMode(true)
-                setFiles([])
-              }}
-              className="rounded-2xl border p-4 text-left transition-all"
-              style={{
-                borderColor: stampMode === 'capsule' ? 'var(--accent-gold)' : 'var(--border)',
-                background:
-                  stampMode === 'capsule' ? 'rgba(240,180,41,0.06)' : 'var(--bg-secondary)'
-              }}
-            >
-              <div className="mb-1 text-lg">📦</div>
-              <div
-                className="mb-1 text-xs font-black tracking-widest uppercase"
-                style={{
-                  color: stampMode === 'capsule' ? 'var(--accent-gold)' : 'var(--text-primary)'
-                }}
+                <div className="mb-1 text-lg">📄</div>
+                <div
+                  className="mb-1 text-xs font-black tracking-widest uppercase"
+                  style={{
+                    color: stampMode === 'single' ? 'var(--accent-gold)' : 'var(--text-primary)'
+                  }}
+                >
+                  {tp('stampPage.modes.single')}
+                </div>
+                <div
+                  className="text-[10px] leading-snug"
+                  style={{ color: 'var(--text-secondary)' }}
+                >
+                  File · photo · or hash — one thumb path
+                </div>
+              </button>
+              {(showAdvancedModes || stampMode !== 'single') && (
+                <>
+                  <button
+                    type="button"
+                    aria-pressed={stampMode === 'capsule'}
+                    aria-label={tp('stampPage.modes.capsule')}
+                    onClick={() => {
+                      setStampMode('capsule')
+                      setIsCapsuleMode(true)
+                      setFiles([])
+                      setShowAdvancedModes(true)
+                    }}
+                    className="rounded-2xl border p-4 text-left transition-all"
+                    style={{
+                      borderColor: stampMode === 'capsule' ? 'var(--accent-gold)' : 'var(--border)',
+                      background:
+                        stampMode === 'capsule' ? 'rgba(240,180,41,0.06)' : 'var(--bg-secondary)'
+                    }}
+                  >
+                    <div className="mb-1 text-lg">📦</div>
+                    <div
+                      className="mb-1 text-xs font-black tracking-widest uppercase"
+                      style={{
+                        color:
+                          stampMode === 'capsule' ? 'var(--accent-gold)' : 'var(--text-primary)'
+                      }}
+                    >
+                      {tp('stampPage.modes.capsule')}
+                    </div>
+                    <div
+                      className="text-[10px] leading-snug"
+                      style={{ color: 'var(--text-secondary)' }}
+                    >
+                      Multi-file evidence bundle
+                    </div>
+                  </button>
+                  <button
+                    type="button"
+                    aria-pressed={stampMode === 'redact'}
+                    aria-label={tp('stampPage.modes.redact')}
+                    onClick={() => {
+                      setStampMode('redact')
+                      setIsCapsuleMode(false)
+                      setFiles([])
+                      setShowAdvancedModes(true)
+                    }}
+                    className="rounded-2xl border p-4 text-left transition-all"
+                    style={{
+                      borderColor: stampMode === 'redact' ? 'var(--accent-gold)' : 'var(--border)',
+                      background:
+                        stampMode === 'redact' ? 'rgba(240,180,41,0.06)' : 'var(--bg-secondary)'
+                    }}
+                  >
+                    <div className="mb-1 text-lg">🔒</div>
+                    <div
+                      className="mb-1 text-xs font-black tracking-widest uppercase"
+                      style={{
+                        color: stampMode === 'redact' ? 'var(--accent-gold)' : 'var(--text-primary)'
+                      }}
+                    >
+                      {tp('stampPage.modes.redact')}
+                    </div>
+                    <div
+                      className="text-[10px] leading-snug"
+                      style={{ color: 'var(--text-secondary)' }}
+                    >
+                      Redact then stamp
+                    </div>
+                  </button>
+                  <button
+                    type="button"
+                    aria-pressed={stampMode === 'deposition'}
+                    aria-label={tp('stampPage.modes.deposition')}
+                    onClick={() => {
+                      setStampMode('deposition')
+                      setIsCapsuleMode(false)
+                      setFiles([])
+                      setShowAdvancedModes(true)
+                    }}
+                    className="rounded-2xl border p-4 text-left transition-all"
+                    style={{
+                      borderColor:
+                        stampMode === 'deposition' ? 'var(--accent-gold)' : 'var(--border)',
+                      background:
+                        stampMode === 'deposition' ? 'rgba(240,180,41,0.06)' : 'var(--bg-secondary)'
+                    }}
+                  >
+                    <div className="mb-1 text-lg">🎙</div>
+                    <div
+                      className="mb-1 text-xs font-black tracking-widest uppercase"
+                      style={{
+                        color:
+                          stampMode === 'deposition' ? 'var(--accent-gold)' : 'var(--text-primary)'
+                      }}
+                    >
+                      {tp('stampPage.modes.deposition')}
+                    </div>
+                    <div
+                      className="text-[10px] leading-snug"
+                      style={{ color: 'var(--text-secondary)' }}
+                    >
+                      Voice deposition
+                    </div>
+                  </button>
+                </>
+              )}
+            </div>
+            {!showAdvancedModes && stampMode === 'single' && (
+              <button
+                type="button"
+                data-testid="more-options"
+                onClick={() => setShowAdvancedModes(true)}
+                className="min-h-[44px] w-full rounded-xl border text-xs font-black tracking-widest uppercase md:hidden"
+                style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
               >
-                {tp('stampPage.modes.capsule')}
-              </div>
-              <div className="text-[10px] leading-snug" style={{ color: 'var(--text-secondary)' }}>
-                {tp('stampPage.step1Desc')}
-              </div>
-            </button>
-            <button
-              type="button"
-              aria-pressed={stampMode === 'redact'}
-              aria-label={tp('stampPage.modes.redact')}
-              onClick={() => {
-                setStampMode('redact')
-                setIsCapsuleMode(false)
-                setFiles([])
-              }}
-              className="rounded-2xl border p-4 text-left transition-all"
-              style={{
-                borderColor: stampMode === 'redact' ? 'var(--accent-gold)' : 'var(--border)',
-                background: stampMode === 'redact' ? 'rgba(240,180,41,0.06)' : 'var(--bg-secondary)'
-              }}
-            >
-              <div className="mb-1 text-lg">🔒</div>
-              <div
-                className="mb-1 text-xs font-black tracking-widest uppercase"
-                style={{
-                  color: stampMode === 'redact' ? 'var(--accent-gold)' : 'var(--text-primary)'
-                }}
+                More options (capsule · redact · voice)
+              </button>
+            )}
+            {!showAdvancedModes && (
+              <button
+                type="button"
+                onClick={() => setShowAdvancedModes(true)}
+                className="hidden min-h-[40px] rounded-xl border px-4 text-[10px] font-black tracking-widest uppercase md:inline-flex"
+                style={{ borderColor: 'var(--border)', color: 'var(--text-muted)' }}
               >
-                {tp('stampPage.modes.redact')}
-              </div>
-              <div className="text-[10px] leading-snug" style={{ color: 'var(--text-secondary)' }}>
-                {tp('stampPage.step2Desc')}
-              </div>
-            </button>
-            <button
-              type="button"
-              aria-pressed={stampMode === 'deposition'}
-              aria-label={tp('stampPage.modes.deposition')}
-              onClick={() => {
-                setStampMode('deposition')
-                setIsCapsuleMode(false)
-                setFiles([])
-              }}
-              className="rounded-2xl border p-4 text-left transition-all"
-              style={{
-                borderColor: stampMode === 'deposition' ? 'var(--accent-gold)' : 'var(--border)',
-                background:
-                  stampMode === 'deposition' ? 'rgba(240,180,41,0.06)' : 'var(--bg-secondary)'
-              }}
-            >
-              <div className="mb-1 text-lg">🎙</div>
-              <div
-                className="mb-1 text-xs font-black tracking-widest uppercase"
-                style={{
-                  color: stampMode === 'deposition' ? 'var(--accent-gold)' : 'var(--text-primary)'
-                }}
-              >
-                {tp('stampPage.modes.deposition')}
-              </div>
-              <div className="text-[10px] leading-snug" style={{ color: 'var(--text-secondary)' }}>
-                Record voice testimony client-side.
-              </div>
-            </button>
+                Show advanced modes
+              </button>
+            )}
           </div>
 
           <motion.div
@@ -1127,7 +1224,7 @@ export default function Stamp() {
               borderColor: isDragging ? 'var(--accent-gold)' : 'var(--border)',
               backgroundColor: isDragging ? 'var(--surface-raised)' : 'transparent'
             }}
-            className={`group relative flex h-[460px] flex-col items-center justify-center overflow-hidden rounded-[2.5rem] border-2 border-dashed p-12 text-center transition-colors ${
+            className={`group relative flex min-h-[320px] flex-col items-center justify-center overflow-hidden rounded-[2.5rem] border-2 border-dashed p-6 text-center transition-colors sm:min-h-[400px] sm:p-12 md:h-[460px] ${
               (stampMode === 'single' || stampMode === 'capsule') && stampingStatus === 'idle'
                 ? 'cursor-pointer'
                 : ''
@@ -1300,13 +1397,14 @@ export default function Stamp() {
                     </>
                   )}
 
-                  {/* Mobile file input */}
+                  {/* Camera / gallery / file pickers — always visible for single/capsule */}
                   {(stampMode === 'single' || stampMode === 'capsule') && (
                     <>
                       <input
                         type="file"
                         id="file-input"
                         className="hidden"
+                        data-testid="file-input"
                         onChange={(e) => {
                           if (e.target.files?.[0]) {
                             setFiles(
@@ -1315,9 +1413,12 @@ export default function Stamp() {
                           }
                         }}
                       />
-                      <div className="flex flex-col gap-3 sm:hidden">
+                      <div
+                        className="z-10 flex w-full max-w-sm flex-col gap-3"
+                        onClick={(e) => e.stopPropagation()}
+                      >
                         <label
-                          className="flex min-h-[48px] cursor-pointer items-center justify-center gap-2 rounded-xl border-2 border-dashed px-4 py-3 font-bold"
+                          className="flex min-h-[52px] cursor-pointer items-center justify-center gap-2 rounded-xl border-2 border-dashed px-4 py-3 font-bold"
                           style={{
                             borderColor: 'var(--border-bright)',
                             color: 'var(--accent-gold)'
@@ -1328,6 +1429,7 @@ export default function Stamp() {
                             className="hidden"
                             accept="image/*"
                             capture="environment"
+                            data-testid="camera-input"
                             onChange={(e) => {
                               if (e.target.files?.[0]) {
                                 setFiles(
@@ -1338,16 +1440,38 @@ export default function Stamp() {
                               }
                             }}
                           />
-                          {tp('stampPage.takePhoto')}
+                          📷 {tp('stampPage.takePhoto') || 'Take photo'}
                         </label>
                         <label
-                          className="flex min-h-[48px] cursor-pointer items-center justify-center gap-2 rounded-xl border px-4 py-3 text-sm font-bold"
+                          className="flex min-h-[52px] cursor-pointer items-center justify-center gap-2 rounded-xl border px-4 py-3 text-sm font-bold"
+                          style={{ borderColor: 'var(--border)', color: 'var(--text-primary)' }}
+                        >
+                          <input
+                            type="file"
+                            className="hidden"
+                            accept="image/*"
+                            data-testid="gallery-input"
+                            onChange={(e) => {
+                              if (e.target.files?.[0]) {
+                                setFiles(
+                                  isCapsuleMode
+                                    ? [...files, e.target.files[0]]
+                                    : [e.target.files[0]]
+                                )
+                              }
+                            }}
+                          />
+                          🖼 Photos / gallery
+                        </label>
+                        <label
+                          className="flex min-h-[52px] cursor-pointer items-center justify-center gap-2 rounded-xl border px-4 py-3 text-sm font-bold"
                           style={{ borderColor: 'var(--border)', color: 'var(--text-primary)' }}
                         >
                           <input
                             type="file"
                             className="hidden"
                             accept="*/*"
+                            data-testid="choose-file-input"
                             onChange={(e) => {
                               if (e.target.files?.[0]) {
                                 setFiles(
@@ -1358,7 +1482,7 @@ export default function Stamp() {
                               }
                             }}
                           />
-                          {tp('stampPage.chooseFile')}
+                          📁 {tp('stampPage.chooseFile') || 'Choose file'}
                         </label>
                       </div>
                     </>
@@ -1371,209 +1495,24 @@ export default function Stamp() {
                   animate={{ opacity: 1, y: 0 }}
                   className="w-full max-w-md space-y-5"
                 >
-                  <div className="w-full max-w-lg space-y-6">
-                    {/* Success header */}
-                    <div className="space-y-2 text-center">
-                      <div
-                        className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full"
-                        style={{
-                          background: 'rgba(34,211,165,0.12)',
-                          border: '2px solid var(--accent-success)'
-                        }}
-                      >
-                        <CheckCircle size={32} style={{ color: 'var(--accent-success)' }} />
-                      </div>
-                      <ProofTimeline
-                        status={proofResult.status}
-                        hasOts={proofResult.hasOts || proofResult.source === 'browser-ots'}
-                        blockHeight={confirmedBlock}
-                      />
-                      <h3
-                        className="text-2xl font-black tracking-tight uppercase"
-                        style={{ color: 'var(--text-primary)' }}
-                      >
-                        {proofResult?.status === 'confirmed'
-                          ? 'Proof confirmed'
-                          : proofResult?.id && !String(proofResult.id).startsWith('ots-')
-                            ? 'Stamp received'
-                            : 'Local proof only'}
-                      </h3>
-                      <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-                        {proofResult?.status === 'confirmed'
-                          ? 'Fingerprint is anchored on Bitcoin via OpenTimestamps.'
-                          : proofResult?.id && proofResult?.source !== 'browser-ots'
-                            ? `Durable stamp id ${String(proofResult.id).slice(0, 8)}… · status: ${proofResult.status || 'pending'}. Not confirmed on Bitcoin until status becomes confirmed.`
-                            : 'Browser calendars only — no hosted stamp id. Retry when API is reachable for a shareable verify link.'}
-                      </p>
-                    </div>
-
-                    {/* Status pill */}
-                    {isConfirmed ? (
-                      <div
-                        className="flex items-center justify-center gap-2 rounded-xl px-4 py-3"
-                        style={{
-                          background: 'rgba(34,211,165,0.08)',
-                          border: '1px solid rgba(34,211,165,0.25)'
-                        }}
-                      >
-                        <CheckCircle size={16} style={{ color: 'var(--accent-success)' }} />
-                        <span
-                          className="text-sm font-black"
-                          style={{ color: 'var(--accent-success)' }}
-                        >
-                          Confirmed in Bitcoin Block {confirmedBlock?.toLocaleString()}
-                        </span>
-                      </div>
-                    ) : (
-                      <div
-                        className="flex flex-col items-center gap-2 rounded-xl px-4 py-3"
-                        style={{
-                          background: 'rgba(240,180,41,0.08)',
-                          border: '1px solid rgba(240,180,41,0.25)'
-                        }}
-                      >
-                        <div className="flex items-center justify-center gap-2">
-                          <Activity
-                            size={16}
-                            className={
-                              upgradeStatus === 'upgrading' ? 'animate-spin' : 'animate-pulse'
-                            }
-                            style={{ color: 'var(--accent-gold)' }}
-                          />
-                          <span
-                            className="text-sm font-bold"
-                            style={{ color: 'var(--accent-gold)' }}
-                          >
-                            {upgradeStatus === 'upgrading'
-                              ? 'OTS upgrade in progress…'
-                              : 'Pending Bitcoin confirmation (~10 min)'}
-                          </span>
-                        </div>
-                        {upgradeStatus && (
-                          <span
-                            className="text-[10px] font-black tracking-widest uppercase"
-                            style={{ color: 'var(--text-muted)' }}
-                          >
-                            Live status: {upgradeStatus}
-                          </span>
-                        )}
-                      </div>
-                    )}
-
-                    {/* Hash */}
-                    <div
-                      className="space-y-1 rounded-xl border p-4"
-                      style={{ borderColor: 'var(--border)', background: 'var(--bg-primary)' }}
-                    >
-                      <p
-                        className="text-[9px] font-black tracking-widest uppercase"
-                        style={{ color: 'var(--text-secondary)' }}
-                      >
-                        SHA-256 Fingerprint
-                      </p>
-                      <p
-                        className="font-mono text-xs break-all select-all"
-                        style={{ color: 'var(--text-primary)' }}
-                      >
-                        {proofResult?.hash}
-                      </p>
-                    </div>
-
-                    {/* 3 CTA buttons */}
-                    <div className="grid grid-cols-1 gap-3">
-                      <div className="grid grid-cols-2 gap-3">
-                        {proofResult?.id &&
-                        proofResult?.source !== 'browser-ots' &&
-                        !String(proofResult.id).startsWith('ots-') ? (
-                          <a
-                            href={`${getApiUrl()}/api/stamps/${proofResult.id}?download=true`}
-                            className="flex items-center justify-center gap-2 rounded-xl py-3.5 text-xs font-black tracking-wider uppercase transition-all hover:opacity-90"
-                            style={{ background: 'var(--accent-gold)', color: '#141b25' }}
-                          >
-                            ⬇ OTS Proof
-                          </a>
-                        ) : (
-                          <span
-                            className="flex items-center justify-center gap-2 rounded-xl py-3.5 text-xs font-black tracking-wider uppercase opacity-50"
-                            style={{ background: 'var(--border)', color: 'var(--text-secondary)' }}
-                          >
-                            ⬇ OTS (local)
-                          </span>
-                        )}
-                        <button
-                          onClick={() =>
-                            downloadCertificate({
-                              id: proofResult?.id || 'pending',
-                              name: files[0]?.name || proofResult?.filename || 'Document',
-                              fullHash: proofResult?.hash,
-                              hash: proofResult?.hash,
-                              date: new Date().toISOString().split('T')[0],
-                              status: isConfirmed ? 'confirmed' : 'pending'
-                            })
-                          }
-                          className="flex items-center justify-center gap-2 rounded-xl py-3.5 text-xs font-black tracking-wider uppercase transition-all hover:opacity-90"
-                          style={{ background: 'var(--accent-active)', color: '#fff' }}
-                        >
-                          📜 Certificate
-                        </button>
-                      </div>
-                      {proofResult?.id && (
-                        <Link
-                          to={`/verify/${proofResult.id}`}
-                          className="flex items-center justify-center gap-2 rounded-xl py-3.5 text-xs font-black tracking-wider uppercase transition-all hover:opacity-90"
-                          style={{
-                            background: 'var(--accent-success)',
-                            color: '#0a0f0c'
-                          }}
-                        >
-                          Open verify page →
-                        </Link>
-                      )}
-                      <div className="grid grid-cols-2 gap-3">
-                        <button
-                          onClick={() => (window.location.href = '/vault')}
-                          className="flex items-center justify-center gap-2 rounded-xl border py-3 text-xs font-black uppercase transition-all hover:text-[var(--text-primary)]"
-                          style={{
-                            borderColor: 'var(--accent-active)',
-                            color: 'var(--accent-active)',
-                            background: 'rgba(59,130,246,0.06)'
-                          }}
-                        >
-                          View in Vault →
-                        </button>
-                        <button
-                          onClick={() => {
-                            const path = proofResult?.id
-                              ? `/verify/${proofResult.id}`
-                              : proofResult?.hash
-                                ? `/verify/${proofResult.hash}`
-                                : '/verify'
-                            navigator.clipboard.writeText(window.location.origin + path)
-                            toast.success('Share link copied!')
-                          }}
-                          className="flex items-center justify-center gap-2 rounded-xl border py-3 text-xs font-black uppercase transition-all hover:text-[var(--text-primary)]"
-                          style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
-                        >
-                          🔗 Copy Share Link
-                        </button>
-                      </div>
-                      <button
-                        onClick={() => {
-                          setStampingStatus('idle')
-                          setFiles([])
-                          setProofResult(null)
-                          setHashValue('')
-                          setIsConfirmed(false)
-                          setConfirmedBlock(null)
-                          setUpgradeStatus(null)
-                        }}
-                        className="rounded-xl border py-3 text-xs font-bold uppercase transition-all hover:text-[var(--text-primary)]"
-                        style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
-                      >
-                        + Stamp Another File
-                      </button>
-                    </div>
-                  </div>
+                  <p className="text-center text-xs" style={{ color: 'var(--text-muted)' }}>
+                    Opening success screen…
+                  </p>
+                  <StampSuccessActions
+                    proof={proofResult}
+                    isConfirmed={isConfirmed}
+                    confirmedBlock={confirmedBlock}
+                    upgradeStatus={upgradeStatus}
+                    onStampAnother={() => {
+                      setStampingStatus('idle')
+                      setFiles([])
+                      setProofResult(null)
+                      setHashValue('')
+                      setIsConfirmed(false)
+                      setConfirmedBlock(null)
+                      setUpgradeStatus(null)
+                    }}
+                  />
                 </motion.div>
               ) : (
                 <motion.div
@@ -1662,8 +1601,9 @@ export default function Stamp() {
               {stampingStatus === 'idle' && (
                 <button
                   type="button"
+                  data-testid="stamp-file-button"
                   onClick={startStamping}
-                  className="relative z-20 flex h-14 min-h-[52px] w-full items-center justify-center gap-3 rounded-xl font-black tracking-widest uppercase shadow-lg transition-all hover:opacity-95 active:scale-[0.99]"
+                  className="relative z-20 hidden h-14 min-h-[52px] w-full items-center justify-center gap-3 rounded-xl font-black tracking-widest uppercase shadow-lg transition-all hover:opacity-95 active:scale-[0.99] md:flex"
                   style={{
                     background: 'var(--accent-gold)',
                     color: '#141b25',
@@ -1676,6 +1616,30 @@ export default function Stamp() {
             </div>
           )}
         </div>
+
+        <StampStickyBar
+          visible={canStampFile || canStampHash}
+          label={
+            stampingStatus === 'hashing'
+              ? 'Hashing…'
+              : stampingStatus === 'anchoring'
+                ? 'Anchoring…'
+                : canStampHash
+                  ? 'Stamp hash on Bitcoin'
+                  : t('stamp', 'stamp') || 'Stamp on Bitcoin'
+          }
+          disabled={stampingStatus !== 'idle'}
+          onClick={() => {
+            if (canStampFile) startStamping()
+            else if (canStampHash) {
+              stampLinkedHash(
+                hashValue,
+                caseLabel || deepLink.displayLabel || 'Linked document',
+                deepLinkClientId || deepLink.clientId
+              )
+            }
+          }}
+        />
 
         {/* ── Configuration Sidebar ──────────────── */}
         <div className="space-y-8">

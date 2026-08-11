@@ -26,6 +26,7 @@ import { isMarketingPublicPath, needsMarketingShell } from './utils/publicRoutes
 const VerifyPublic = React.lazy(() => import('./pages/VerifyPublic'))
 const Vault = React.lazy(() => import('./pages/Vault'))
 const Stamp = React.lazy(() => import('./pages/Stamp'))
+const StampDone = React.lazy(() => import('./pages/StampDone'))
 const Verify = React.lazy(() => import('./pages/VerificationTool'))
 const Contracts = React.lazy(() => import('./pages/contracts/ContractList'))
 const WebCapture = React.lazy(() => import('./pages/WebCapture'))
@@ -205,6 +206,7 @@ function AppContent() {
             />
             {/* Core product — always public (MVP free path); no auth gate */}
             <Route path="/stamp" element={<Stamp />} />
+            <Route path="/stamp/done" element={<StampDone />} />
             <Route path="/verify" element={<Verify />} />
             <Route
               path="/contracts"

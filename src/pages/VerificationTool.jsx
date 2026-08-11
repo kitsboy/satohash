@@ -13,6 +13,7 @@ import { verifyOtsBrowser } from '../utils/otsClient'
 import { useTranslation } from 'react-i18next'
 import { isStaticOnlyMode } from '../utils/staticMode'
 import StaticModeBanner from '../components/shared/StaticModeBanner'
+import VerifyEli5 from '../components/stamps/VerifyEli5'
 
 const MerklePathNode = ({ level, hash, active }) => (
   <div className={`flex items-center gap-4 ${active ? 'opacity-100' : 'opacity-40'}`}>
@@ -261,7 +262,7 @@ export default function VerificationTool() {
   }
 
   return (
-    <div className="mx-auto max-w-5xl space-y-8 p-4 pb-28 sm:space-y-12 sm:p-6 sm:pb-20 md:p-8">
+    <div className="mx-auto max-w-5xl space-y-8 p-4 pb-[calc(7rem+env(safe-area-inset-bottom,0px))] sm:space-y-12 sm:p-6 sm:pb-20 md:p-8">
       <StaticModeBanner />
       <header className="space-y-2 text-center">
         <div className="mb-4 inline-flex items-center gap-3 rounded-full border border-[var(--accent-active)]/20 bg-[var(--accent-active)]/10 px-4 py-2">
@@ -278,6 +279,8 @@ export default function VerificationTool() {
           and traverses the Merkle path directly to the Bitcoin blockchain.
         </p>
       </header>
+
+      <VerifyEli5 className="mx-auto max-w-2xl" />
 
       {/* Input Selector */}
       <div

@@ -33,7 +33,7 @@ const MARKETING_PREFIXES = [
 ]
 
 /** Exact paths chrome-free of AppShell (family deep-links + core tools). */
-const MARKETING_EXACT = ['/stamp', '/verify']
+const MARKETING_EXACT = ['/stamp', '/stamp/done', '/verify']
 
 /**
  * Pages that already render MarketingDesktopNav themselves.
