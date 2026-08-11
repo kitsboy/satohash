@@ -6,19 +6,32 @@
 
 ---
 
-## Paste block (2026-08-04 — Kimi truth sweep: bitcoind restored)
+## Paste block (2026-08-10 — IBD COMPLETE)
 
 ```markdown
-### Satohash own-node bitcoin restored (2026-08-04 — Kimi truth sweep)
+### Satohash own-node bitcoin — IBD COMPLETE (2026-08-10 — Kimi confirm)
 
 **bitcoind:** Bitcoin Core v28.1, pruned 10GB, datadir /root/.bitcoin.
-Systemd override unit /etc/systemd/system/bitcoind.service (Debian package unit points at /var/lib/bitcoin — WRONG datadir), Type=forking User=root, ENABLED.
-RPC 0.0.0.0:8332; API container reaches via bridge 172.19.0.1 (creds match, verified HTTP 200).
-**History:** OOM-killed 2026-07-28 22:12, down ~6 days (IBD stalled at 20.2%, block 508,207). Restored 2026-08-04.
-**Now:** source=bitcoind live; readiness status=syncing; headers 960,956 (100%); IBD ~85 blk/min → ETA ~4 days.
-**Fallback:** mempool.space during IBD — correct design, not an outage. Free stamps + OTS calendars unaffected.
-**Paywall:** REQUIRE_LIGHTNING=false — free stamps ON. LNbits Satohash Wallet ready (0 sats), missing_for_paid empty.
-**Health surface:** /api/public/readiness → .planes.bitcoin_node (NOT /health — no bitcoin key in 5.0.0-ELITE).
+Systemd override unit /etc/systemd/system/bitcoind.service (Debian package unit points at /var/lib/bitcoin — WRONG datadir), ENABLED.
+RPC 0.0.0.0:8332; API via bridge 172.19.0.1.
+**History:** OOM 2026-07-28 → dead ~6d @ 508,207 → restored 2026-08-04 → IBD finished ~2026-08-08.
+**Now (authoritative):** blocks at tip (e.g. 961,960/961,960); verification ~100%; initialblockdownload=false;
+source=bitcoind; API height matches tip; local mempool live; deep health green. mempool.space fallback NOT in path.
+**Suite:** satohash + katoa fees + tadbuy/motopass tickers + stranded stats can use local node.
+**Paywall:** REQUIRE_LIGHTNING=false — free stamps ON.
+**Health surface:** /api/public/readiness → .planes.bitcoin_node
+```
+
+---
+
+## Paste block (2026-08-04 — historical: bitcoind restored mid-IBD)
+
+```markdown
+### Satohash own-node bitcoin restored (2026-08-04 — Kimi truth sweep) — HISTORICAL
+
+**bitcoind:** Bitcoin Core v28.1, pruned 10GB, datadir /root/.bitcoin.
+**Then:** source=bitcoind live; status=syncing; IBD ~20% @ ~508k; ETA ~4 days.
+**Superseded:** IBD completed ~2026-08-08 — see 2026-08-10 paste block above.
 ```
 
 ---
@@ -78,9 +91,9 @@ RPC 0.0.0.0:8332; API container reaches via bridge 172.19.0.1 (creds match, veri
 - [x] Edge poison mitigation (/b/*, eager marketing routes)
 - [x] Landing free/fees + exec summary + /watch explainer+VO
 - [x] Docs consolidation + route/component structure
-- [ ] THOR: IBD finish → bitcoind health source
-- [ ] THOR: client_id + directory live on metrics if gap remains
-- [ ] Optional homepage CTA → /watch
+- [x] THOR: IBD finish → bitcoind at tip · source bitcoind (2026-08-08/10)
+- [x] THOR: client_id + directory live on metrics
+- [x] Homepage CTA → /watch (10s teaser)
 - [ ] Wallets/paywall when Cam flips
 
 **Orchestration:** Kimi THOR. Coding: Grok M3.

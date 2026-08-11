@@ -1,12 +1,12 @@
 # Current Status — Satohash
 
 **Version:** **5.0.0-ELITE**  
-**Last Updated:** 2026-08-05 (Grok goodbye — 10s Kimi teaser on `/watch`)  
+**Last Updated:** 2026-08-10 (Kimi confirm — **IBD complete**)  
 **Frontend:** https://satohash.io · www · CF Pages `satohash`  
 **API:** https://api.satohash.io ✅ LIVE (THOR) — HQ metrics SoT  
 **Analytics:** Umami analytics.giveabit.io (CORS noise possible)  
 **HQ:** https://hq.giveabit.io  
-**Git tip:** `af2268a` (+ session closeout) · `main` synced origin
+**Git tip:** `3c80c67` · `main` synced origin
 
 ## Planes
 - Proof API: THOR Docker + Caddy  
@@ -15,14 +15,22 @@
 - Code M3 · Ops Kimi/THOR  
 - Bundles `/b/*`
 
-## Bitcoin (THOR) — live
+## Bitcoin (THOR) — live (IBD DONE)
+
 | Field | Value |
 |-------|--------|
-| Public source | **bitcoind** |
-| Status | **IBD syncing** (multi-day; headers complete) |
-| ready_to_verify | false until IBD done |
-| Process | systemd enabled · datadir `/root/.bitcoin` |
-| Fallback | OTS calendars + mempool by design during IBD |
+| Public source | **bitcoind** (not mempool.space fallback) |
+| Blocks | **961,960 / 961,960** (= chain tip) |
+| Verification | **~100%** (0.999996) |
+| initialblockdownload | **false** |
+| Pruned | 10 GB target · active · healthy |
+| Service | systemd `bitcoind` active · load calm (~2.0) |
+| Mempool | local node live |
+| Deep health | green · deps 200 |
+| ready_to_verify | **true** (own-node path) |
+| History | Restored Aug 4 @ ~508k → finished ~Aug 8 → tip since |
+
+**Story:** During IBD the API correctly used mempool.space fallback. That path is **off** now — chain height + mempool come from the local node. Suite products (satohash, katoa fees, tadbuy/motopass tickers, stranded stats) can lean on own-node.
 
 ## Product surfaces
 | Path | Notes |
@@ -36,19 +44,19 @@
 | Nav | Stamp · Verify · Templates · Pricing · More |
 | Language | Elite dropdown · en es fr de pt sw zh |
 
-## This session (2026-08-05)
-- [x] 10s explainer script + review of Cam’s MP4  
-- [x] `/watch` player swap to native video  
-- [x] CTA 60s → 10s  
-- [x] Edge cache fix (query bust + media TTL + redeploy)  
-- [x] Handoff / session summary closeout  
+## Recent product (through 2026-08-11 tip)
+- [x] 10s explainer on `/watch` + cache-bust  
+- [x] Mobile / nav / i18n closeout  
+- [x] Landing lighthouse perf + a11y contrast  
+- [x] **IBD complete — own-node at tip** (Kimi 2026-08-10)  
 
 ## Ops still open
 - [ ] Longer educational MP4 (~30s+) when Cam ready  
-- [ ] IBD complete → ready_to_verify  
+- [x] ~~IBD complete → ready_to_verify~~ **DONE**  
 - [ ] Paywall only when Cam flips  
 - [ ] Optional Socket.IO CORS / Umami header fixes  
 - [ ] Store apps: PWA → Capacitor later (not started)  
+- [ ] Watch bitcoind RAM/OOM (history 2026-07-28)  
 
 ## Agent entry
 **AGENTS.md** · this file · `docs/handoff-log.md` · `docs/KIMI-HANDOFF.md` · `docs/MVP-CHECKLIST.md` · goodbye summary under `docs/archive/`

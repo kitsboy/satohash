@@ -2,7 +2,7 @@
 
 **Definition:** A stranger opens satohash.io, stamps a file, downloads `.ots`, verifies it — no account wall, no broken chrome, no edge poison.
 
-**Last agent pass:** 2026-08-04 (Kimi ops truth + Grok persist) — bitcoind restored `source: bitcoind` IBD; client_id/directory closed.
+**Last agent pass:** 2026-08-10 (Kimi) — **IBD complete**, bitcoind at tip, `source: bitcoind`, local mempool; free stamps still ON.
 
 Legend: ✅ done in product/code · 🟡 partial / ops · ⬜ deferred / Cam flip
 
@@ -102,7 +102,7 @@ Legend: ✅ done in product/code · 🟡 partial / ops · ⬜ deferred / Cam fli
 |---|------|--------|
 | 66 | THOR one-command deploy | ✅ runbook |
 | 67 | SQLite backup cron | ✅ Kimi |
-| 68 | Bitcoind IBD → source bitcoind | ✅ **source: bitcoind** live; IBD ~20% syncing ETA ~4d (not finished verify) |
+| 68 | Bitcoind IBD → source bitcoind | ✅ **IBD done** (~Aug 8); tip; `ibd=false`; source bitcoind; local mempool |
 | 69 | Metrics client_id/directory | ✅ live (`client_id` + `raw.directory`) |
 | 70 | LNbits ready, paywall off | ✅ |
 | 71 | No secrets in git | ✅ |
@@ -153,11 +153,10 @@ Legend: ✅ done in product/code · 🟡 partial / ops · ⬜ deferred / Cam fli
 
 ## Agent run order (next session)
 
-1. Kimi: monitor IBD + RAM until IBD complete / `ready_to_verify` (~4d)  
+1. Kimi: keep bitcoind healthy (RAM/OOM watch) — **IBD is done**, do not re-open  
 2. Browser-check `/templates` after any new SPA deploy  
 3. Optional: full Playwright stamp e2e against API  
-4. Commit M3 SPA/menu tree when Cam wants  
-5. **Do not** flip `REQUIRE_LIGHTNING` without Cam  
+4. **Do not** flip `REQUIRE_LIGHTNING` without Cam  
 
 ---
 © 2026 Satohash · Give A Bit

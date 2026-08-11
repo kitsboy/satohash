@@ -1,6 +1,43 @@
+## Session — 2026-08-10 (Grok) — IBD COMPLETE (Kimi confirm via Cam)
+
+**From:** Cam + Kimi THOR truth · **To:** all agents · **Status:** **IBD DONE** · free stamps ON · no paywall flip
+
+### Bitcoin — DONE (do not re-report as “in progress”)
+
+| Check | Value |
+|-------|--------|
+| blocks | **961,960 / 961,960** (= chain tip) |
+| Verification | 100% (0.999996) |
+| initialblockdownload | **false** |
+| Pruned | 10 GB target · active · healthy |
+| Service | bitcoind active · load ~2.0 |
+| API source | **bitcoind** (mempool.space fallback **not in path**) |
+| API height / ibd | 961,960 ✓ · **false** |
+| Mempool | local node live |
+| Deep health | green · all deps 200 |
+
+**Story:** IBD resumed Aug 4 @ ~508k (~85 blk/min, ETA ~4d) → finished ~Aug 8; tip since. API reads chain + mempool from local node. Suite (satohash, katoa, tadbuy/motopass, stranded) can lean on own-node.
+
+### Standing (unchanged product)
+- Free stamps ON · `REQUIRE_LIGHTNING=false` · SPA → `api.satohash.io`
+- HQ metrics SoT: `https://api.satohash.io/metrics.json`
+- Git tip (pre this doc commit): `3c80c67`
+
+### Next
+1. **Do not** list IBD as open / multi-day  
+2. Do not flip paywall  
+3. Watch RAM/OOM on bitcoind (2026-07-28 history)  
+4. No secrets in handoffs  
+
+### Files refreshed this session
+`.ai_docs/current-status.md` · `docs/handoff-log.md` · `LATEST-UPDATE.md` · `docs/ops-runbook.md` · `docs/MASTER-BRAIN-INGEST.md` · MVP checklist · ref boot notes
+
+---
+
 ## Session — 2026-08-05 (Grok) — 10s EXPLAINER TEASER · /watch · /goodbye
 
-**From:** Grok M3 · **To:** Kimi / next Grok · **Status:** 10s Kimi teaser live on `/watch` · free stamps · no paywall flip
+**From:** Grok M3 · **To:** Kimi / next Grok · **Status:** 10s Kimi teaser live on `/watch` · free stamps · no paywall flip  
+**Note (2026-08-10):** Ops lines below that say “IBD multi-day” are **historical** — IBD finished ~Aug 8.
 
 ### Product (SPA — Cam/Grok owns)
 - `/watch` = native video of **`satohash-explainer-with-vo.mp4` (~10s)** + VO baked in  
@@ -9,14 +46,14 @@
 - Longer educational cut **later** (Cam has full script offline)  
 - Git tip ~`af2268a` · CF Pages live satohash.io  
 
-### Ops standing (your plane)
+### Ops standing (your plane) — as of 2026-08-05 (stale re IBD)
 - Free stamps ON · REQUIRE_LIGHTNING=false  
-- bitcoind **syncing** source:bitcoind · IBD (multi-day) — monitor as before  
+- ~~bitcoind **syncing** · IBD multi-day~~ → **DONE 2026-08-08** (see top entry)  
 - HQ metrics SoT: `https://api.satohash.io/metrics.json`  
 - No API/paywall changes this session  
 
-### Kimi next
-1. Daily IBD check until `ready_to_verify` / IBD false  
+### Kimi next (as of then)
+1. ~~Daily IBD check~~ **closed**  
 2. Do not flip paywall  
 3. No secrets in handoffs  
 4. Optional: hard-refresh `/watch` after deploys if media looks stale  

@@ -8,15 +8,15 @@
 2. `docs/FAMILY-API.md`
 3. `.ai_docs/current-status.md`
 
-## Current state (2026-07-28)
+## Current state (2026-08-10)
 
 - **API:** v5.0.0-ELITE on THOR Docker — fully operational
 - **SPA:** satohash.io + www.satohash.io (CF Pages, both 🟢 200)
 - **AI:** local embed + fraud ML live (no ANTHROPIC_KEY needed)
-- **Bitcoin node:** Bitcoin Core v28.1 pruned, IBD ~48% (overnight sync)
+- **Bitcoin node:** Bitcoin Core v28.1 pruned — **IBD complete** (~Aug 8); at tip; `source: bitcoind`; local mempool
 - **Paywall:** REQUIRE_LIGHTNING=false (free stamps). LNbits invoice key wired — flip-ready.
 - **Nostr:** Multi-relay publish on stamp (2/3 relays ok, damus.io flaky)
-- **Explain video:** /watch page live with music + Kimi VO
+- **Explain video:** /watch ~10s Kimi teaser (primary)
 - **HQ:** 🟢 Green on `api.satohash.io/metrics.json`
 
 ## Hard rules

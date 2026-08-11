@@ -19,7 +19,7 @@
 | SPA | CF Pages → satohash.io / www / pages.dev | 🟢 Live |
 | API | THOR Docker → api.satohash.io | 🟢 v5.0.0-ELITE |
 | AI | Embed, fraud, search, compliance, templates | 🟢 All live |
-| Bitcoin node | Bitcoin Core v28.1 pruned (THOR) | 🟡 IBD in progress (~48%) |
+| Bitcoin node | Bitcoin Core v28.1 pruned (THOR) | 🟢 **IBD done** · at tip · source bitcoind |
 | LNbits paywall | Wired, flip-ready (still free, REQUIRE_LIGHTNING=false) | 🟢 Ready (off) |
 | Nostr | Multi-relay publish on stamp | 🟢 Good enough |
 | Metrics SoT | `api.satohash.io/metrics.json` only | 🟢 Live |

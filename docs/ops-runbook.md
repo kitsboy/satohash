@@ -37,13 +37,15 @@ Canonical short ops pointer. Detailed procedures remain in:
 
 If `/watch` shows stale video: hard refresh; check MP4 duration ~10s not ~80s. Marketing routes are eager-loaded.
 
-## Bitcoin own-node (bitcoind) — 2026-08-04 truth
+## Bitcoin own-node (bitcoind) — 2026-08-10 truth (**IBD COMPLETE**)
 
 - Node: Bitcoin Core v28.1, pruned 10GB, datadir **`/root/.bitcoin`** (NOT package default `/var/lib/bitcoin`)
 - Unit: `/etc/systemd/system/bitcoind.service` (override, **enabled**). Restart: `systemctl start bitcoind`
 - Verify host: `bitcoin-cli -getinfo` · container: `docker exec satohash-satohash-api-1 node -e '<fetch repro>'` (no curl in container) → expect HTTP 200
 - Health surface: `/api/public/readiness` → `.planes.bitcoin_node` (`/health` has NO bitcoin key in this build)
-- `status:"syncing"` during IBD = healthy · `source:"bitcoind"` auto-appears when RPC reachable · mempool.space fallback by design until IBD done
+- **IBD finished ~2026-08-08.** At tip (e.g. 961,960/961,960) · `initialblockdownload=false` · verification ~100% · `source: bitcoind` · local mempool live · deep health green
+- mempool.space is **fallback only** if RPC dies — not the normal path while node is at tip
+- If you ever see `status:"syncing"` again after a reindex/re-IBD, treat as healthy progress (not an outage); OTS calendars still work
 - OOM history 2026-07-28 (killed bitcoind) — watch `free -h`; node ~1GB RSS; 7.8G RAM / 8G swap on THOR
 - API logs may show "fetch failed"/HTTP 500/timeout right after node start (startup flap) — re-check after 3-5 min
 

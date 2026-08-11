@@ -1,5 +1,5 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.giveabit.io · **Version:** 5.0.0-ELITE (Build 213) · **Updated:** 2026-08-11
+> **Live:** https://satohash.giveabit.io · **Version:** 5.0.0-ELITE (Build 214) · **Updated:** 2026-08-11
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Satohash: The Sovereign Provenance Mesh
