@@ -49,10 +49,18 @@ class ErrorBoundary extends React.Component {
   componentDidCatch(error, errorInfo) {
     console.error('Critical Satohash UI Error:', error, errorInfo)
     // Auto-heal stale PWA/chunk mismatch once per session
-    if (isStaleChunkError(error) && !sessionStorage.getItem('satohash_sw_reset')) {
-      sessionStorage.setItem('satohash_sw_reset', '1')
-      this.setState({ autoResetting: true })
-      hardResetClient()
+    if (isStaleChunkError(error)) {
+      try {
+        const last = Number(sessionStorage.getItem('satohash_chunk_reset_at') || 0)
+        if (Date.now() - last > 15000) {
+          sessionStorage.setItem('satohash_chunk_reset_at', String(Date.now()))
+          this.setState({ autoResetting: true })
+          hardResetClient()
+        }
+      } catch {
+        this.setState({ autoResetting: true })
+        hardResetClient()
+      }
     }
   }
 

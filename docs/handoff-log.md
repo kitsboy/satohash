@@ -1,3 +1,9 @@
+## Session — 2026-08-17 (Grok 4.6) — STALE VERIFY CHUNK
+
+Cam hit `Failed to fetch dynamically imported module: VerificationTool-DvVO52Jg.js` on `/stamp` after a deploy race. Core loop (Stamp / StampDone / Verify / VerifyPublic) is now eager. Lazy routes use `lazyWithReload`. Boot reset no longer requires a service worker (Pixel Chrome).
+
+---
+
 ## Session — 2026-08-17 (Grok 4.6) — PIXEL + IPHONE HARDENING
 
 Cam uses Pixel 10 Pro; friends use iPhone. Camera/mic allowed on-origin. Android Share embeds `/p/<hash>` in text. iMessage OG uses JPEG (not SVG). iOS will not treat the hash as a phone number. Playwright: `--project=pixel` + webkit.

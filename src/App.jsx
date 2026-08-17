@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom'
-import React, { Suspense, useEffect, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { AnimatePresence, useReducedMotion } from 'framer-motion'
 import AppShellNoir from './components/layout/AppShellNoir'
 import MarketingShell from './components/layout/MarketingShell'
@@ -23,58 +23,62 @@ import 'nprogress/nprogress.css'
 import { getApiUrl } from './config/constants'
 import { isMarketingPublicPath, needsMarketingShell } from './utils/publicRoutes'
 
-// Lazy loaded planes
-const VerifyPublic = React.lazy(() => import('./pages/VerifyPublic'))
-const Vault = React.lazy(() => import('./pages/Vault'))
-const Stamp = React.lazy(() => import('./pages/Stamp'))
-const StampDone = React.lazy(() => import('./pages/StampDone'))
-const Verify = React.lazy(() => import('./pages/VerificationTool'))
-const Contracts = React.lazy(() => import('./pages/contracts/ContractList'))
-const WebCapture = React.lazy(() => import('./pages/WebCapture'))
-const Certificates = React.lazy(() =>
+import { lazyWithReload } from './utils/lazyWithReload'
+import Stamp from './pages/Stamp'
+import StampDone from './pages/StampDone'
+import Verify from './pages/VerificationTool'
+import VerifyPublic from './pages/VerifyPublic'
+
+// Non-core planes stay lazy; retry+reload if a deploy invalidated the chunk
+const Vault = lazyWithReload(() => import('./pages/Vault'))
+const Contracts = lazyWithReload(() => import('./pages/contracts/ContractList'))
+const WebCapture = lazyWithReload(() => import('./pages/WebCapture'))
+const Certificates = lazyWithReload(() =>
   import('./pages/Placeholders').then((m) => ({ default: m.Certificates }))
 )
-const ImageVault = React.lazy(() => import('./pages/ImageVault'))
-const Developer = React.lazy(() => import('./pages/Developer'))
-const Atlas = React.lazy(() => import('./pages/Atlas'))
-const Nodes = React.lazy(() => import('./pages/Mesh'))
-const Explorer = React.lazy(() => import('./pages/Explorer'))
-const Settings = React.lazy(() => import('./pages/Settings'))
-const Access = React.lazy(() => import('./pages/Access'))
+const ImageVault = lazyWithReload(() => import('./pages/ImageVault'))
+const Developer = lazyWithReload(() => import('./pages/Developer'))
+const Atlas = lazyWithReload(() => import('./pages/Atlas'))
+const Nodes = lazyWithReload(() => import('./pages/Mesh'))
+const Explorer = lazyWithReload(() => import('./pages/Explorer'))
+const Settings = lazyWithReload(() => import('./pages/Settings'))
+const Access = lazyWithReload(() => import('./pages/Access'))
 // Eager: marketing-critical routes must not use dynamic import (partial deploys +
 // circular index↔chunk imports caused "Failed to fetch dynamically imported module")
 import Landing from './pages/Landing'
 import ExplainerWatch from './pages/ExplainerWatch'
 import ExecutiveSummary from './pages/ExecutiveSummary'
-const StatusPublic = React.lazy(() => import('./pages/StatusPublic'))
-const Counsel = React.lazy(() => import('./pages/Counsel'))
-const ProofCardPublic = React.lazy(() => import('./pages/ProofCardPublic'))
-const Trust = React.lazy(() => import('./pages/trust/TrustCenter'))
-const About = React.lazy(() => import('./pages/About'))
-const Pitch = React.lazy(() => import('./pages/Pitch'))
-const Admin = React.lazy(() => import('./pages/Admin'))
-const NostrHealth = React.lazy(() => import('./pages/NostrHealth'))
+const StatusPublic = lazyWithReload(() => import('./pages/StatusPublic'))
+const Counsel = lazyWithReload(() => import('./pages/Counsel'))
+const ProofCardPublic = lazyWithReload(() => import('./pages/ProofCardPublic'))
+const Trust = lazyWithReload(() => import('./pages/trust/TrustCenter'))
+const About = lazyWithReload(() => import('./pages/About'))
+const Pitch = lazyWithReload(() => import('./pages/Pitch'))
+const Admin = lazyWithReload(() => import('./pages/Admin'))
+const NostrHealth = lazyWithReload(() => import('./pages/NostrHealth'))
 
-const NotaryTemplates = React.lazy(() => import('./pages/NotaryTemplates'))
-const TemplatesShowcase = React.lazy(() => import('./pages/TemplatesShowcase'))
-const NotFound = React.lazy(() => import('./pages/NotFound'))
-const TemplateDetail = React.lazy(() => import('./pages/TemplateDetail'))
-const FAQ = React.lazy(() => import('./pages/FAQ'))
-const Pricing = React.lazy(() => import('./pages/Pricing'))
-const Comparison = React.lazy(() => import('./pages/Comparison'))
-const Guides = React.lazy(() => import('./pages/Guides'))
-const Glossary = React.lazy(() => import('./pages/Glossary'))
-const Docs = React.lazy(() => import('./pages/Docs'))
-const DocViewer = React.lazy(() => import('./pages/DocViewer'))
-const Security = React.lazy(() => import('./pages/Security'))
-const Integrations = React.lazy(() => import('./pages/Integrations'))
-const Widgets = React.lazy(() => import('./pages/Widgets'))
-const Dashboard = React.lazy(() => import('./pages/Dashboard'))
-const GovernmentUse = React.lazy(() => import('./pages/government/GovernmentUse'))
-const BatchHashStamp = React.lazy(() => import('./pages/government/BatchHashStamp'))
-const ChainOfCustody = React.lazy(() => import('./pages/government/ChainOfCustody'))
-const EvidenceAdmissibility = React.lazy(() => import('./pages/government/EvidenceAdmissibility'))
-const DistressedAsset = React.lazy(() => import('./pages/government/DistressedAsset'))
+const NotaryTemplates = lazyWithReload(() => import('./pages/NotaryTemplates'))
+const TemplatesShowcase = lazyWithReload(() => import('./pages/TemplatesShowcase'))
+const NotFound = lazyWithReload(() => import('./pages/NotFound'))
+const TemplateDetail = lazyWithReload(() => import('./pages/TemplateDetail'))
+const FAQ = lazyWithReload(() => import('./pages/FAQ'))
+const Pricing = lazyWithReload(() => import('./pages/Pricing'))
+const Comparison = lazyWithReload(() => import('./pages/Comparison'))
+const Guides = lazyWithReload(() => import('./pages/Guides'))
+const Glossary = lazyWithReload(() => import('./pages/Glossary'))
+const Docs = lazyWithReload(() => import('./pages/Docs'))
+const DocViewer = lazyWithReload(() => import('./pages/DocViewer'))
+const Security = lazyWithReload(() => import('./pages/Security'))
+const Integrations = lazyWithReload(() => import('./pages/Integrations'))
+const Widgets = lazyWithReload(() => import('./pages/Widgets'))
+const Dashboard = lazyWithReload(() => import('./pages/Dashboard'))
+const GovernmentUse = lazyWithReload(() => import('./pages/government/GovernmentUse'))
+const BatchHashStamp = lazyWithReload(() => import('./pages/government/BatchHashStamp'))
+const ChainOfCustody = lazyWithReload(() => import('./pages/government/ChainOfCustody'))
+const EvidenceAdmissibility = lazyWithReload(
+  () => import('./pages/government/EvidenceAdmissibility')
+)
+const DistressedAsset = lazyWithReload(() => import('./pages/government/DistressedAsset'))
 
 // Legal pages (public)
 // Legal + critical public pages: eager so footer links never hang on lazy chunk miss
@@ -85,81 +89,83 @@ import Network from './pages/Network'
 import MotoPassVerify from './pages/government/MotoPassVerify'
 
 // Contracts sub-pages (protected)
-const ContractView = React.lazy(() => import('./pages/contracts/ContractView'))
-const ContractEditor = React.lazy(() => import('./pages/contracts/ContractEditor'))
+const ContractView = lazyWithReload(() => import('./pages/contracts/ContractView'))
+const ContractEditor = lazyWithReload(() => import('./pages/contracts/ContractEditor'))
 
 // Orphaned protected pages
-const ProtocolStats = React.lazy(() => import('./pages/ProtocolStats'))
-const Offers = React.lazy(() => import('./pages/Offers'))
-const Forum = React.lazy(() => import('./pages/Forum'))
-const Identity = React.lazy(() => import('./pages/Identity'))
-const MobileSigner = React.lazy(() => import('./pages/MobileSigner'))
-const BatchTimestamp = React.lazy(() => import('./pages/BatchTimestamp'))
-const AdminThrottle = React.lazy(() => import('./pages/AdminThrottle'))
-const Contribute = React.lazy(() => import('./pages/Contribute'))
-const VerificationShield = React.lazy(() => import('./pages/VerificationShield'))
-const SignatureFlow = React.lazy(() => import('./pages/signatures/SignatureFlow'))
+const ProtocolStats = lazyWithReload(() => import('./pages/ProtocolStats'))
+const Offers = lazyWithReload(() => import('./pages/Offers'))
+const Forum = lazyWithReload(() => import('./pages/Forum'))
+const Identity = lazyWithReload(() => import('./pages/Identity'))
+const MobileSigner = lazyWithReload(() => import('./pages/MobileSigner'))
+const BatchTimestamp = lazyWithReload(() => import('./pages/BatchTimestamp'))
+const AdminThrottle = lazyWithReload(() => import('./pages/AdminThrottle'))
+const Contribute = lazyWithReload(() => import('./pages/Contribute'))
+const VerificationShield = lazyWithReload(() => import('./pages/VerificationShield'))
+const SignatureFlow = lazyWithReload(() => import('./pages/signatures/SignatureFlow'))
 
 // v5.0.0-ELITE sovereignty surfaces
-const V5ProofOfExistence = React.lazy(() =>
+const V5ProofOfExistence = lazyWithReload(() =>
   import('./pages/v5/V5Pages').then((m) => ({ default: m.ProofOfExistencePage }))
 )
 
-const V5BatchVerify = React.lazy(() =>
+const V5BatchVerify = lazyWithReload(() =>
   import('./pages/v5/V5Pages').then((m) => ({ default: m.BatchVerifyPage }))
 )
-const V5LiveFeed = React.lazy(() =>
+const V5LiveFeed = lazyWithReload(() =>
   import('./pages/v5/V5Pages').then((m) => ({ default: m.StampLiveFeedPage }))
 )
-const V5Compare = React.lazy(() =>
+const V5Compare = lazyWithReload(() =>
   import('./pages/v5/V5Pages').then((m) => ({ default: m.CompareProofsPage }))
 )
-const V5Playground = React.lazy(() =>
+const V5Playground = lazyWithReload(() =>
   import('./pages/v5/V5Pages').then((m) => ({ default: m.DeveloperPlaygroundPage }))
 )
-const V5Bitcoin = React.lazy(() =>
+const V5Bitcoin = lazyWithReload(() =>
   import('./pages/v5/V5Pages').then((m) => ({ default: m.BitcoinExplainPage }))
 )
-const V5Block = React.lazy(() =>
+const V5Block = lazyWithReload(() =>
   import('./pages/v5/V5Pages').then((m) => ({ default: m.BlockPage }))
 )
-const V5CrossChain = React.lazy(() =>
+const V5CrossChain = lazyWithReload(() =>
   import('./pages/v5/V5Pages').then((m) => ({ default: m.CrossChainVerifyPage }))
 )
-const V5AiHub = React.lazy(() =>
+const V5AiHub = lazyWithReload(() =>
   import('./pages/v5/V5Pages').then((m) => ({ default: m.AiHubPage }))
 )
-const V5ProofWall = React.lazy(() =>
+const V5ProofWall = lazyWithReload(() =>
   import('./pages/v5/V5Pages').then((m) => ({ default: m.ProofWallPage }))
 )
-const V5Leaderboard = React.lazy(() =>
+const V5Leaderboard = lazyWithReload(() =>
   import('./pages/v5/V5Pages').then((m) => ({ default: m.LeaderboardPage }))
 )
-const V5Widget = React.lazy(() =>
+const V5Widget = lazyWithReload(() =>
   import('./pages/v5/V5Pages').then((m) => ({ default: m.ProofWidgetPage }))
 )
-const V5Report = React.lazy(() =>
+const V5Report = lazyWithReload(() =>
   import('./pages/v5/V5Pages').then((m) => ({ default: m.StampReportPage }))
 )
-const V5WizardPro = React.lazy(() =>
+const V5WizardPro = lazyWithReload(() =>
   import('./pages/v5/V5Pages').then((m) => ({ default: m.StampWizardProPage }))
 )
 
 // Onboarding flow (protected)
-const OnboardingWelcome = React.lazy(() => import('./pages/onboarding/Welcome'))
-const OnboardingHowItWorks = React.lazy(() => import('./pages/onboarding/HowItWorks'))
-const OnboardingChooseTemplate = React.lazy(() => import('./pages/onboarding/ChooseTemplate'))
-const OnboardingAccountCreation = React.lazy(() => import('./pages/onboarding/AccountCreation'))
-const OnboardingValueConfirmation = React.lazy(() => import('./pages/onboarding/ValueConfirmation'))
-const OnboardingBatchProof = React.lazy(() => import('./pages/onboarding/BatchProof'))
-const OnboardingTemplateLibrary = React.lazy(() => import('./pages/onboarding/TemplateLibrary'))
+const OnboardingWelcome = lazyWithReload(() => import('./pages/onboarding/Welcome'))
+const OnboardingHowItWorks = lazyWithReload(() => import('./pages/onboarding/HowItWorks'))
+const OnboardingChooseTemplate = lazyWithReload(() => import('./pages/onboarding/ChooseTemplate'))
+const OnboardingAccountCreation = lazyWithReload(() => import('./pages/onboarding/AccountCreation'))
+const OnboardingValueConfirmation = lazyWithReload(
+  () => import('./pages/onboarding/ValueConfirmation')
+)
+const OnboardingBatchProof = lazyWithReload(() => import('./pages/onboarding/BatchProof'))
+const OnboardingTemplateLibrary = lazyWithReload(() => import('./pages/onboarding/TemplateLibrary'))
 
 // Timestamp wizard (protected)
-const TimestampFinalReview = React.lazy(() => import('./pages/timestamp/FinalReview'))
-const TimestampExplanation = React.lazy(() => import('./pages/timestamp/TimestampExplanation'))
-const TimestampProgress = React.lazy(() => import('./pages/timestamp/TimestampProgress'))
-const TimestampResult = React.lazy(() => import('./pages/timestamp/TimestampResult'))
-const TimestampVerificationHelp = React.lazy(() => import('./pages/timestamp/VerificationHelp'))
+const TimestampFinalReview = lazyWithReload(() => import('./pages/timestamp/FinalReview'))
+const TimestampExplanation = lazyWithReload(() => import('./pages/timestamp/TimestampExplanation'))
+const TimestampProgress = lazyWithReload(() => import('./pages/timestamp/TimestampProgress'))
+const TimestampResult = lazyWithReload(() => import('./pages/timestamp/TimestampResult'))
+const TimestampVerificationHelp = lazyWithReload(() => import('./pages/timestamp/VerificationHelp'))
 
 function AppContent() {
   const location = useLocation()

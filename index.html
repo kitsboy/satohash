@@ -257,10 +257,12 @@
     <!-- Stale SW recovery: after deploy, old chunks can resolve to index.html and throw Unexpected token '<' -->
     <script>
       (function () {
-        if (!('serviceWorker' in navigator)) return
         function resetClient() {
-          if (sessionStorage.getItem('satohash_boot_reset')) return
-          sessionStorage.setItem('satohash_boot_reset', '1')
+          try {
+            var last = Number(sessionStorage.getItem('satohash_chunk_reset_at') || 0)
+            if (Date.now() - last < 15000) return
+            sessionStorage.setItem('satohash_chunk_reset_at', String(Date.now()))
+          } catch (e) {}
           var jobs = []
           if (window.caches) {
             jobs.push(
@@ -269,11 +271,13 @@
               })
             )
           }
-          jobs.push(
-            navigator.serviceWorker.getRegistrations().then(function (regs) {
-              return Promise.all(regs.map(function (r) { return r.unregister() }))
-            })
-          )
+          if ('serviceWorker' in navigator) {
+            jobs.push(
+              navigator.serviceWorker.getRegistrations().then(function (regs) {
+                return Promise.all(regs.map(function (r) { return r.unregister() }))
+              })
+            )
+          }
           Promise.all(jobs).finally(function () {
             var u = new URL(location.href)
             u.searchParams.set('_fresh', String(Date.now()))
