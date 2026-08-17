@@ -123,8 +123,8 @@ export default function Network() {
             <div>
               <h1 className="text-3xl font-black tracking-tight sm:text-4xl">Network status</h1>
               <p className="mt-2 max-w-xl text-sm" style={{ color: 'var(--text-secondary)' }}>
-                Live view of the proof plane: stamps, OpenTimestamps calendars, and Bitcoin node
-                health. Free stamping works even while the own-node IBD is syncing.
+                Live view of the proof plane: stamps, OpenTimestamps calendars, family clients, and
+                the own Bitcoin node (at tip). Free stamps. Paywall off.
               </p>
             </div>
             <button
@@ -235,7 +235,11 @@ export default function Network() {
               <Zap size={16} style={{ color: 'var(--accent-gold)' }} />
               <h2 className="text-sm font-black">Recent stamps</h2>
             </div>
-            {recent.length === 0 ? (
+            {loading && recent.length === 0 ? (
+              <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>
+                Loading recent stamps…
+              </p>
+            ) : recent.length === 0 ? (
               <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>
                 No recent public samples — try a free stamp yourself.
               </p>
@@ -269,7 +273,11 @@ export default function Network() {
 
       <section className="mx-auto max-w-5xl px-4 pb-10 sm:px-6" data-testid="family-clients">
         <h2 className="mb-3 text-sm font-black">Family clients (X-Satohash-Client)</h2>
-        {family.length === 0 ? (
+        {loading && family.length === 0 ? (
+          <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>
+            Loading family clients…
+          </p>
+        ) : family.length === 0 ? (
           <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>
             No attributed family stamps yet. Deep-link with <code>?ref=motopass</code> or the client
             header.

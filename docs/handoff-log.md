@@ -4,6 +4,13 @@ Rebuilt the THOR `satohash-api` Docker image from `main @ 820207e` (Grok's paste
 
 ---
 
+## Session — 2026-08-17 (Grok 4.6) — /NETWORK PICKUP (Kimi live)
+
+Verified live `metrics.json`: last10=10, familyClients=17-row list, requireLightning=false.  
+https://satohash.io/network shows bitcoind tip, 3/3 calendars, recent confirmed stamps, family tiles (spa 4, public 6, kimi/e2e rows). Loading copy no longer flashes “no family stamps”.
+
+---
+
 ## Session — 2026-08-17 (Grok 4.6) — AUDIT FIX + KIMI REBUILD PASTE
 
 Safe `npm audit fix` (no --force): 63 → 22 vulns. Remaining need breaking OTS/`request` upgrades — leave them.  
