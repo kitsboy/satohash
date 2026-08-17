@@ -1,3 +1,14 @@
+## Session — 2026-08-17 (Grok 4.6) — STAMP CARD + SMOKE + CSP-RO
+
+Cam: `/stamp` card clipped top/bottom; “i” pills on titles. Dropzone now grows (`overflow-visible`, no fixed 460px). Info dots sit on their own row.
+
+Deploy smoke fail-closed: `scripts/pages-smoke.sh` (JS, JPEG OG, www, `/stamp`, `/verify`, `/p/<hash>`).  
+Pages `_headers`: `Content-Security-Policy-Report-Only` (does not block).
+
+CI still `disabled_manually` — Cam: GitHub Enable workflow only.
+
+---
+
 ## Session — 2026-08-17 (Grok 4.6) — CF ELI-16 + LEFTOVER BATCHES
 
 Cam asked: batches + commit/push + “shall I log into CF and look for SATOHASH?”

@@ -21,14 +21,19 @@ Look for **`satohash`** (Pages) and **`satohash.io`** (Websites / DNS).
 
 ---
 
-## The one GitHub click that _is_ useful
+## The one GitHub click that _is_ useful (ELI-16)
 
 Cloudflare: stay out.  
-GitHub: if you want tests to run on every push, open
+GitHub: this is a light switch for **tests**, not the website.
 
-https://github.com/kitsboy/satohash/actions/workflows/ci.yml
+1. Open this link while logged into GitHub as **kitsboy**:  
+   https://github.com/kitsboy/satohash/actions/workflows/ci.yml
+2. If you see a yellow/orange banner **“This workflow was disabled”**, click the green **Enable workflow** button on that banner.
+3. Done. Close the tab. Do **not** click Run, do **not** edit YAML, do **not** open Settings.
 
-and click **Enable workflow**. It is currently `disabled_manually`. Deploy already runs without this.
+If there is **no** banner and you already see a list of old runs, it is already on — leave it.
+
+Deploy (the live site) already runs without this. Enabling CI only turns the test suite back on so a bad stamp loop cannot ship unnoticed.
 
 ## Shall I log in to Cloudflare now?
 

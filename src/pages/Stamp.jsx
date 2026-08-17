@@ -1269,7 +1269,7 @@ export default function Stamp() {
               borderColor: isDragging ? 'var(--accent-gold)' : 'var(--border)',
               backgroundColor: isDragging ? 'var(--surface-raised)' : 'transparent'
             }}
-            className={`vault-ring group relative flex min-h-[320px] flex-col items-center justify-center overflow-hidden rounded-[2.5rem] border-2 border-dashed p-6 text-center transition-colors sm:min-h-[400px] sm:p-12 md:h-[460px] ${
+            className={`vault-ring group relative flex min-h-[28rem] flex-col items-center justify-start overflow-visible rounded-[2.5rem] border-2 border-dashed px-5 pt-10 pb-8 text-center transition-colors sm:min-h-[32rem] sm:justify-center sm:px-10 sm:pt-12 sm:pb-10 md:min-h-[36rem] ${
               (stampMode === 'single' || stampMode === 'capsule') && stampingStatus === 'idle'
                 ? 'cursor-pointer'
                 : ''
@@ -1285,7 +1285,7 @@ export default function Stamp() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
-                  className="flex h-full w-full flex-col items-center justify-center space-y-6"
+                  className="flex w-full flex-col items-center justify-start space-y-5 sm:justify-center sm:space-y-6"
                 >
                   {stampMode === 'redact' ? (
                     <div
@@ -1412,33 +1412,35 @@ export default function Stamp() {
                     </div>
                   ) : (
                     <>
-                      <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-3xl border border-[var(--border)] bg-[var(--surface-raised)] text-[var(--accent-gold)] shadow-2xl">
+                      <div className="mx-auto flex h-16 w-16 shrink-0 items-center justify-center rounded-3xl border border-[var(--border)] bg-[var(--surface-raised)] text-[var(--accent-gold)] shadow-2xl sm:h-20 sm:w-20">
                         {isCapsuleMode ? <FileArchive size={32} /> : <Upload size={32} />}
                       </div>
-                      <div className="space-y-2">
-                        <h3 className="flex items-center justify-center gap-2 text-2xl font-bold tracking-tight">
+                      <div className="w-full max-w-md space-y-3 px-1">
+                        <h3 className="px-2 text-xl font-bold tracking-tight text-balance sm:text-2xl">
                           {isCapsuleMode ? 'Assemble Evidence Capsule' : t('stamp', 'title')}
+                        </h3>
+                        <p className="px-2 font-medium text-balance text-[var(--text-secondary)]">
+                          {isCapsuleMode
+                            ? 'Drop multiple files to create a signed evidence bundle anchored as a single proof.'
+                            : t('stamp', 'dropzone')}
+                        </p>
+                        <p className="px-2 text-[10px] font-bold tracking-widest text-balance text-[var(--text-muted)] uppercase">
+                          Anchored via OpenTimestamps → Bitcoin
+                        </p>
+                        <div className="flex flex-wrap items-center justify-center gap-2 pt-1">
                           <Tooltip
                             title="Step 1 — Drop Your File"
                             content="Drag any document here or click to browse. Your file stays on your device — only a SHA-256 hash is sent to the server."
                           />
-                        </h3>
-                        <p className="mx-auto flex max-w-sm items-center justify-center gap-1 font-medium text-[var(--text-secondary)]">
-                          {isCapsuleMode
-                            ? 'Drop multiple files to create a signed evidence bundle anchored as a single proof.'
-                            : t('stamp', 'dropzone')}
                           <Tooltip
                             title="Step 2 — Local Hashing"
                             content="Satohash computes a unique SHA-256 fingerprint in your browser using a Web Worker. The original file never leaves your machine."
                           />
-                        </p>
-                        <p className="mx-auto flex max-w-sm items-center justify-center gap-1 text-[10px] font-bold tracking-widest text-[var(--text-muted)] uppercase">
-                          Anchored via OpenTimestamps → Bitcoin
                           <Tooltip
                             title="Step 3 — Bitcoin Timestamp"
                             content="The hash is submitted to public OTS calendars and permanently committed to the Bitcoin blockchain. Download your .ots proof when complete."
                           />
-                        </p>
+                        </div>
                       </div>
                     </>
                   )}

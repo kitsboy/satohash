@@ -56,59 +56,6 @@ jobs:
     if: needs.deploy_cloudflare.result == 'success'
     runs-on: ubuntu-latest
     steps:
-      - name: Main JS is real JS (not SPA HTML poison)
-        run: |
-          set -euo pipefail
-          # Bundles live under /b/* (not long-cache /assets/*). After Pages deploy,
-          # custom-domain edge can briefly serve stale index.html or SPA-fallback HTML
-          # for a missing/old chunk — retry before failing the run.
-          UA='Mozilla/5.0 (compatible; Satohash-Smoke/1.0)'
-          sleep 20
-          INDEX=""
-          BODY=""
-          for i in 1 2 3 4 5 6 7 8; do
-            INDEX=$(curl -sfA "$UA" "https://satohash.io/?nocache=${RANDOM}${i}" \
-              | grep -oE 'b/index-[^"]+\.js' | head -1 || true)
-            if [ -z "$INDEX" ]; then
-              echo "attempt $i: no index script in HTML yet"
-              sleep 8
-              continue
-            fi
-            # Byte-range only (avoid curl 23 on large bundles)
-            if ! curl -sfA "$UA" -r 0-160 "https://satohash.io/${INDEX}?nocache=${RANDOM}${i}" \
-              -o /tmp/main-head.bin; then
-              echo "attempt $i: JS fetch failed for ${INDEX}"
-              sleep 8
-              continue
-            fi
-            BODY=$(cat /tmp/main-head.bin)
-            echo "attempt $i: ref=${INDEX} head=$(echo "$BODY" | tr '\n' ' ' | cut -c1-100)"
-            if echo "$BODY" | grep -qiE '<!doctype|<html'; then
-              echo "attempt $i: HTML-as-JS (stale edge) — retrying"
-              sleep 10
-              continue
-            fi
-            if echo "$BODY" | grep -qE '^(import |const |var |function |/)'; then
-              echo "Production main JS ok (${INDEX})"
-              exit 0
-            fi
-            echo "attempt $i: unexpected JS head — retrying"
-            sleep 8
-          done
-          echo "::error::Production main JS still HTML or missing after retries — edge poison / SPA fallback"
-          echo "last_ref=${INDEX:-none}"
-          echo "last_head=${BODY:-empty}"
-          exit 1
-      - run: curl -sf https://www.satohash.io/ -o /dev/null || echo "www smoke skipped"
-      - name: Zero-JS proof card (Function, not SPA shell only)
-        run: |
-          set -euo pipefail
-          HASH='e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'
-          BODY=$(curl -sS -m 20 "https://satohash.io/p/${HASH}?nocache=${RANDOM}")
-          echo "$BODY" | grep -qi 'zero-JS proof card\|Zero-JS proof card\|Interactive verify\|Confirmed on Bitcoin\|Pending is not confirmed' || {
-            echo "::warning::/p/:hash did not look like a proof card (Function may not have flushed)"
-            exit 0
-          }
-          if echo "$BODY" | grep -q 'id="root"' && ! echo "$BODY" | grep -qi 'zero-JS'; then
-            echo "::warning::/p/:hash looks like SPA shell — Function not winning yet"
-          fi
+      - uses: actions/checkout@v7
+      - name: Production pages smoke
+        run: bash scripts/pages-smoke.sh
