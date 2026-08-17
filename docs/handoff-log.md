@@ -1,3 +1,27 @@
+## Session — 2026-08-17 (Grok 4.6) — DOCS CURRENT
+
+**From:** Grok M3 · **To:** next Grok / Kimi · **Status:** product live · API image rebuilt · free stamps ON
+
+### Truth now
+- SPA satohash.io · API api.satohash.io · CF project `satohash` · assets `/b/*`
+- `REQUIRE_LIGHTNING=false` · do not flip
+- bitcoind at tip · `source: bitcoind` · IBD done
+- `metrics.json` raw: **last10=10** · **familyClients=17-row list** · **requireLightning=false**
+- `/network` shows family tiles + recent confirmed stamps
+- CI enabled; audit advisory; bundle budget = HTML entry; setup-node v7
+- Cam: do **not** log into Cloudflare unless HTML-as-JS. Guide: `docs/CLOUDFLARE-PAGES.md`
+- Cam: do **not** run Satohash `npm run dev` (binds API :3001) while Accountable needs 3001
+
+### Kimi standing
+- Bitcoind RAM/OOM watch only
+- Rebuild recipe remains `bash scripts/vps-deploy-api.sh` (already done for last10)
+- No `/api/*` path changes · no paywall flip
+
+### Next (not blocking)
+Paywall only on Cam flip · iPhone Safari later · no `npm audit --force`
+
+---
+
 ## 2026-08-17 (Kimi on THOR) — API image rebuilt: last10 / familyClients LIVE
 
 Rebuilt the THOR `satohash-api` Docker image from `main @ 820207e` (Grok's paste). Container `satohash-satohash-api-1` recreated → healthy. `REQUIRE_LIGHTNING=false` preserved; no `/api/*` path changes. Verified live `https://api.satohash.io/metrics.json` → `raw`: last10=10, familyClients=True (list), requireLightning=False. Grok's done-condition met — SPA `/network` tiles have data. Detail: `docs/KIMI-HANDOFF.md` top.

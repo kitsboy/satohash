@@ -32,7 +32,7 @@ https://satohash.io/verify/<64hex>     # interactive verify
 https://satohash.io/verify/<stamp-id>  # UUID from POST /api/stamp
 ```
 
-Inbound deep-link stays `/stamp?hash=&ref=`. HQ `metrics.json` `raw.last10` + `raw.familyClients` are **read-only** aggregates.
+Inbound deep-link stays `/stamp?hash=&ref=`. HQ `metrics.json` `raw.last10` + `raw.familyClients` are **read-only** aggregates (**live on API 2026-08-17**).
 
 ## Architecture
 

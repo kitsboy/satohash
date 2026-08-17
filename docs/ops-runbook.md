@@ -49,23 +49,15 @@ If `/watch` shows stale video: hard refresh; check MP4 duration ~10s not ~80s. M
 - OOM history 2026-07-28 (killed bitcoind) — watch `free -h`; node ~1GB RSS; 7.8G RAM / 8G swap on THOR
 - API logs may show "fetch failed"/HTTP 500/timeout right after node start (startup flap) — re-check after 3-5 min
 
-## Kimi — API image rebuild (open)
+## Kimi — API image rebuild (**DONE 2026-08-17**)
 
-SPA already reads `raw.last10` + `raw.familyClients` on `/network`. Live `https://api.satohash.io/metrics.json` may still omit those keys until THOR runs a **Docker rebuild from current `main`**.
+Live `https://api.satohash.io/metrics.json` **has** `raw.last10` (10) and `raw.familyClients` (list). `/network` tiles are live. Recipe if a future rebuild is needed: `bash scripts/vps-deploy-api.sh` after `git pull` on THOR. Keep `REQUIRE_LIGHTNING=false`. Do **not** change `/api/*` paths.
 
-```bash
-# on THOR — do not flip REQUIRE_LIGHTNING
-git pull
-# then the usual image rebuild from docs/KIMI-VPS-RUNBOOK.md / scripts/vps-deploy-api.sh
-```
-
-Confirm after rebuild:
+Confirm (should already pass):
 
 ```bash
-curl -sS https://api.satohash.io/metrics.json | python3 -c 'import json,sys; d=json.load(sys.stdin); print("last10", bool(d.get("raw",{}).get("last10"))); print("familyClients", bool(d.get("raw",{}).get("familyClients")))'
+curl -sS https://api.satohash.io/metrics.json | python3 -c 'import json,sys; d=json.load(sys.stdin); r=d.get("raw") or {}; print("last10", len(r.get("last10") or [])); print("familyClients", bool(r.get("familyClients"))); print("requireLightning", r.get("requireLightning"))'
 ```
-
-Do **not** change live `/api/*` paths. Free stamps stay `REQUIRE_LIGHTNING=false`.
 
 ## Handoffs
 

@@ -31,9 +31,7 @@ GitHub: this is a light switch for **tests**, not the website.
 2. If you see a yellow/orange banner **“This workflow was disabled”**, click the green **Enable workflow** button on that banner.
 3. Done. Close the tab. Do **not** edit YAML. Do **not** open Settings. After the next push, **Run workflow** is safe — tests only, not a site deploy.
 
-If there is **no** banner and you already see a list of old runs, it is already on — leave it.
-
-**“Stale for months”** is normal. The switch was off since May. It does not mean the website is stale. After this push you will also see **Run workflow** (a play button) on that page — that runs tests only, not a site deploy.
+**Status 2026-08-17:** Cam **enabled** CI. The workflow is **on**. You do **not** need to click Enable again. Red runs are test report cards, not a down site. **Run workflow** = tests only, not a deploy. Ignore Dependabot rows unless Grok says merge.
 
 Deploy (the live site) already runs without this. Enabling CI only turns the test suite back on so a bad stamp loop cannot ship unnoticed.
 

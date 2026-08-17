@@ -48,9 +48,9 @@ Repo: **https://github.com/kitsboy/satohash** branch `main`
 | `packages/satohash-client/` | Shared JS client for family apps |
 | `server/middleware.js` | `FAMILY_API_KEYS` + `X-Satohash-Key` |
 | `GET /health` | Liveness |
-| `GET /metrics.json` | HQ SoT — must include `raw.last10` + `raw.familyClients` after rebuild |
+| `GET /metrics.json` | HQ SoT — includes `raw.last10` + `raw.familyClients` (**live 2026-08-17**) |
 
-**Open (2026-08-17):** rebuild/redeploy the API image from current `main` so live `metrics.json` grows `raw.last10` and `raw.familyClients`. Do not change `/api/*` paths. Keep `REQUIRE_LIGHTNING=false`.
+**Done (2026-08-17):** API image rebuilt from `main`. Live `metrics.json` has `raw.last10` and `raw.familyClients`. Do not change `/api/*` paths. Keep `REQUIRE_LIGHTNING=false`. Future rebuild: `bash scripts/vps-deploy-api.sh`.
 | `GET /api/public/status` | HQ / suite heartbeat (no secrets) |
 | `POST /api/stamp` | Create OTS (family key or paywall or open) |
 

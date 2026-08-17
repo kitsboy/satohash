@@ -1,74 +1,98 @@
 # Current Status — Satohash
 
-**Version:** **5.0.0-ELITE**  
-**Last Updated:** 2026-08-17 (Grok 4.6 — leftover batches + CF guide)  
-**Frontend:** https://satohash.io · www · CF Pages `satohash`  
-**API:** https://api.satohash.io ✅ LIVE (THOR) — HQ metrics SoT  
-**Analytics:** Umami analytics.giveabit.io (CORS noise possible)  
+**Version:** **5.0.0-ELITE** (Build ~240)  
+**Last Updated:** 2026-08-17 (Grok 4.6 — docs current after Kimi API rebuild)  
+**Frontend:** https://satohash.io · www · CF Pages project **`satohash`**  
+**API:** https://api.satohash.io ✅ LIVE (THOR Docker, image rebuilt 2026-08-17)  
+**Metrics SoT:** `https://api.satohash.io/metrics.json` (`raw.last10` + `raw.familyClients` **live**)  
 **HQ:** https://hq.giveabit.io  
-**Git tip:** see `main` after this session push
+**Git:** `main` — see tip after this docs push  
+**Analytics:** Umami analytics.giveabit.io (CORS noise possible)
 
 ## Planes
-- Proof API: THOR Docker + Caddy  
-- SPA: CF Pages → **must** call `https://api.satohash.io`  
-- Free stamps: `REQUIRE_LIGHTNING=false`  
-- Code M3 · Ops Kimi/THOR  
-- Bundles `/b/*`
 
-## Bitcoin (THOR) — live (IBD DONE)
+| Plane | Where | Notes |
+|-------|--------|--------|
+| SPA | CF Pages → satohash.io | Must call `https://api.satohash.io` — never same-origin `/api/*` |
+| API | THOR Docker + Caddy | `satohash-satohash-api-1` healthy after Kimi rebuild |
+| Metrics | API `/metrics.json` | SPA `/metrics.json` is CF Function proxy |
+| Bitcoin | THOR bitcoind | Own node **at tip** · `source: bitcoind` · IBD **done** |
+| Explainer | `/watch` | **10s** Kimi teaser |
+| Bundles | `/b/*` | Do not revert to long-cache `/assets/*` |
+
+**Code = M3 / Grok. Ops = Kimi / THOR.** No Umbrel. Do not fight M4 for coding.
+
+## Non-negotiables (standing)
+
+1. Never commit secrets.  
+2. Do not change live `/api/*` paths without an explicit Cam request.  
+3. Do not break `public/_redirects` or `GET /metrics.json`.  
+4. Do not rename package name or `VITE_API_URL`.  
+5. **Free stamps:** `REQUIRE_LIGHTNING=false`. Proofs = OTS → Bitcoin.  
+6. SPA → `https://api.satohash.io` only.  
+7. Version SoT: `package.json` (`5.0.0-ELITE`).
+
+## Bitcoin (THOR)
 
 | Field | Value |
 |-------|--------|
-| Public source | **bitcoind** (not mempool.space fallback) |
-| Blocks | **at tip** (live readiness; was 962,885 on 2026-08-17) |
+| Public source | **bitcoind** (mempool.space is fallback only) |
+| Blocks | **at tip** (e.g. 962,903 on 2026-08-17) |
 | Verification | **~100%** |
 | initialblockdownload | **false** |
-| Pruned | 10 GB target · active · healthy |
-| Service | systemd `bitcoind` active |
+| Pruned | 10 GB · healthy |
+| Service | systemd `bitcoind` enabled |
 | Mempool | local node live |
-| Deep health | green · deps 200 |
-| ready_to_verify | **true** (own-node path) |
-
-**Story:** During IBD the API correctly used mempool.space fallback. That path is **off** now — chain height + mempool come from the local node.
+| ready_to_verify | **true** |
 
 ## Product surfaces
+
 | Path | Notes |
 |------|--------|
-| `/` | Landing + marketing nav · live node chip · CTA “Watch **10s** explainer” |
-| `/stamp` · `/verify` | Free core loop · public routes · `LiveNodeChip` |
-| `/stamp/done` | Success route (no double-submit) · hash → verify |
-| `/templates` | Category chips scroll/centered filters |
-| `/watch` | **10s Kimi teaser** native video |
-| `/government` | Solutions + charts + humble Motopass concept |
-| `/network` | Live calendars / bitcoin / stamps dashboard |
-| Nav | Stamp · Verify · Templates · Pricing · More |
-| Language | Elite dropdown · en es fr de pt sw zh |
+| `/` | Landing · live node chip · Watch 10s |
+| `/stamp` | Free stamp · STEP 1–3 copy live · card no longer clips |
+| `/stamp/done` | Success · share `/p/<hash>` |
+| `/verify` | Public verify |
+| `/p/<hash>` | Zero-JS Function proof card (iMessage JPEG OG) |
+| `/network` | Live calendars, bitcoind tip, recent stamps, **family tiles** |
+| `/status` · `/counsel` | Public status · counsel one-pager |
+| `/watch` | 10s teaser |
+| Language | en es fr de pt sw zh |
 
-## Recent product (through 2026-08-17)
-- [x] 10s explainer on `/watch` + cache-bust  
-- [x] Mobile / nav / i18n closeout  
-- [x] Landing lighthouse perf + a11y contrast  
-- [x] **IBD complete — own-node at tip**  
-- [x] **Mobile Top 12** — sticky stamp, /stamp/done, share+QR, package, ELI-5, PWA icons  
-- [x] **Mobile overflow** — tooltips, language menu, More nav stay on-screen  
-- [x] **Public docs** — 5.0.0-ELITE truth + `/docs` facelift  
-- [x] **Live e2e** landing → stamp → API → verify (`tests/e2e/live-stamp-verify.spec.js` + `npm run test:live-api`)  
-- [x] **CI Lighthouse** isolated job `lighthouse_preview` (`FAIL_HARD=1`) — does not skip `live_loop`  
-- [x] Weekly live LH is **soft** (artifact only)  
-- [x] **WebKit / Safari chrome QA** (`safari-chrome.spec.js`)  
-- [x] **Visual polish** — sheen CTAs, vault rings, theme-aware HUD, live node jewelry  
+## Metrics (verified live 2026-08-17)
+
+| Key | Value |
+|-----|--------|
+| `raw.requireLightning` | **false** |
+| `raw.last10` | **10** rows |
+| `raw.familyClients` | **17** rows (list; zeros for unused family ids) |
+| Family with counts | public 6 · spa 4 · kimi/e2e/mvp smoke 1 each |
+| Sherpa / MotoPass / Katoa | **0** attributed stamps (honest) |
+
+## Recent closeout (2026-08-17)
+
+- [x] Zero-JS `/p/<hash>` card + JPEG OG  
+- [x] Stale-chunk harden (`lazyWithReload` + boot reset)  
+- [x] Lean landing (no V5 barrel) · serialized Pages deploys  
+- [x] Cam CF guide — `docs/CLOUDFLARE-PAGES.md` (do **not** log in unless broken)  
+- [x] CI workflow **enabled** (was `disabled_manually`) · `workflow_dispatch` · Node 22  
+- [x] `npm audit` is **advisory** in CI (does not skip tests)  
+- [x] Bundle budget = HTML entry only (not every `index-*.js`)  
+- [x] Safe `npm audit fix` 63 → 22 (no `--force`; leftover is OTS/`request`)  
+- [x] **Kimi rebuilt API image** — last10 + familyClients live  
+- [x] `/network` verified against live data  
 
 ## Ops still open
-- [x] 50-item upgrade batch (loop, trust, UX, CI, growth) + SEO  
-- [x] `/status` · `/counsel` · `/p/:hash` zero-JS card  
-- [x] Umami funnel events · family client tile on `/network`  
-- [x] Capacitor scaffold only (`docs/STORE-APPS.md`)  
-- [x] `npm run watch:node` for bitcoind readiness  
+
 - [ ] Paywall only when Cam flips (`docs/PAYWALL-STAGING.md`)  
-- [ ] Physical iPhone Safari (WebKit e2e expanded)
-- [x] Cam: enable GH workflow `ci.yml` (2026-08-17) — next push runs tests
-- [x] Kimi: rebuild API image — DONE 2026-08-17 → last10 (10) + familyClients live on `metrics.json` raw
-- [x] Cam Cloudflare guide — `docs/CLOUDFLARE-PAGES.md` (do not log in unless broken)  
+- [ ] Physical iPhone Safari (friends share `/p/<hash>`)  
+- [ ] Remaining 22 npm advisories need breaking OTS upgrades — do not `--force`  
+- [ ] Dependabot PRs — ignore unless Grok merges (setup-node v7 already on main)  
+
+## Local ports (M3 / Cam)
+
+Satohash Vite may use **3002**. **Do not** `npm run dev` (API defaults to **3001**) while Accountable needs 3001 in another session. Live SPA always talks to `api.satohash.io`.
 
 ## Agent entry
-**AGENTS.md** · this file · `docs/handoff-log.md` · `docs/KIMI-HANDOFF.md` · `docs/MVP-CHECKLIST.md` · goodbye summary under `docs/archive/`
+
+**AGENTS.md** · this file · `docs/handoff-log.md` · `docs/KIMI-HANDOFF.md` · `docs/ops-runbook.md` · `docs/CLOUDFLARE-PAGES.md` · `docs/MASTER-BRAIN-INGEST.md`

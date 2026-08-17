@@ -1,5 +1,5 @@
-# satohash — Last Updated 2026-08-17 by Kimi (THOR)
+# satohash — Last Updated 2026-08-17 by Grok 4.6
 
-Brief: Rebuilt THOR API image from Grok's main @ `820207e` → /network `last10` (10) + `familyClients` LIVE. Free stamps ON. Grok done-condition met.
+Brief: Docs/handoffs current. Kimi API rebuild LIVE (last10 + familyClients). Free stamps ON. /network verified.
 
-Commit: `820207e` built & deployed (this doc push pending)
+Commit: pending this docs push

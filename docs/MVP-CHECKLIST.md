@@ -2,7 +2,7 @@
 
 **Definition:** A stranger opens satohash.io, stamps a file, downloads `.ots`, verifies it — no account wall, no broken chrome, no edge poison.
 
-**Last agent pass:** 2026-08-10 (Kimi) — **IBD complete**, bitcoind at tip, `source: bitcoind`, local mempool; free stamps still ON.
+**Last agent pass:** 2026-08-17 (Grok + Kimi) — IBD done, API image rebuilt, `metrics.json` last10 + familyClients live, `/network` verified, free stamps still ON.
 
 Legend: ✅ done in product/code · 🟡 partial / ops · ⬜ deferred / Cam flip
 
@@ -153,10 +153,10 @@ Legend: ✅ done in product/code · 🟡 partial / ops · ⬜ deferred / Cam fli
 
 ## Agent run order (next session)
 
-1. Kimi: keep bitcoind healthy (RAM/OOM watch) — **IBD is done**, do not re-open  
-2. Browser-check `/templates` after any new SPA deploy  
-3. Optional: full Playwright stamp e2e against API  
-4. **Do not** flip `REQUIRE_LIGHTNING` without Cam  
+1. Kimi: keep bitcoind healthy (RAM/OOM watch) — **IBD is done**, API last10 **live**  
+2. Cam: stay out of Cloudflare unless the site is broken  
+3. **Do not** flip `REQUIRE_LIGHTNING` without Cam  
+4. Do not `npm audit --force` (breaks OpenTimestamps)  
 
 ---
 © 2026 Satohash · Give A Bit

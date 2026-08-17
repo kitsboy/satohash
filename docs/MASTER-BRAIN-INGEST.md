@@ -6,6 +6,22 @@
 
 ---
 
+## Paste block (2026-08-17 — API metrics last10 LIVE)
+
+```markdown
+### Satohash API image + /network (2026-08-17 — Kimi rebuild, Grok verified)
+
+**API:** THOR Docker `satohash-satohash-api-1` rebuilt from GitHub `main`.
+**metrics.json raw:** last10=10 · familyClients=list · requireLightning=false.
+**SPA /network:** calendars 3/3 · bitcoind at tip · family tiles live.
+**Paywall:** REQUIRE_LIGHTNING=false — do not flip.
+**Paths:** do not change live /api/*.
+**Rebuild recipe:** bash scripts/vps-deploy-api.sh (THOR checkout).
+**Cam/CF:** do not log into Cloudflare unless HTML-as-JS — docs/CLOUDFLARE-PAGES.md.
+```
+
+---
+
 ## Paste block (2026-08-10 — IBD COMPLETE)
 
 ```markdown
