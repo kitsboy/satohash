@@ -2,4 +2,4 @@
 
 Brief: Goodbye — mobile tooltips/nav stay on-screen; public docs at 5.0.0-ELITE; free stamps ON.
 
-Commit: `9d83f15` (headers) · feature `67dce46`
+Commit: `7458296` (goodbye) · feature `67dce46`
