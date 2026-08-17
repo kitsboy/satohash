@@ -1,3 +1,9 @@
+## Session — 2026-08-17 (Grok 4.6) — STAMP STEPS + CI DISPATCH
+
+Empty STEP 1–3 on `/stamp` was the wrong `t()` (useI18n vs i18next). Copy + icons restored. `ci.yml` has `workflow_dispatch` + concurrency. Cam enabled the workflow; first push after enable will actually run it (may be red — last May run failed).
+
+---
+
 ## Session — 2026-08-17 (Grok 4.6) — STAMP CARD + SMOKE + CSP-RO
 
 Cam: `/stamp` card clipped top/bottom; “i” pills on titles. Dropzone now grows (`overflow-visible`, no fixed 460px). Info dots sit on their own row.

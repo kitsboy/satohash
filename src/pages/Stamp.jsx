@@ -542,8 +542,8 @@ export default function Stamp() {
     deepLinkHandled.current = handleKey
 
     if (deepLink.product?.id === 'motopass' || deepLink.source === 'motopass') {
-      toast.info(t('stampPage.motopassLoaded'), {
-        description: t('stampPage.motopassDesc')
+      toast.info(tp('stampPage.motopassLoaded'), {
+        description: tp('stampPage.motopassDesc')
       })
     } else if (deepLink.product) {
       toast.info(deepLink.product.chip, {
@@ -1040,16 +1040,31 @@ export default function Stamp() {
       {/* ── 3-Step Flow Banner ── */}
       <div className="mb-8 grid grid-cols-1 gap-0 overflow-hidden rounded-2xl border border-[var(--border)] sm:grid-cols-3">
         {[
-          { n: '1', icon: '📄', label: t('stampPage.step1Label'), desc: t('stampPage.step1Desc') },
-          { n: '2', icon: '🔒', label: t('stampPage.step2Label'), desc: t('stampPage.step2Desc') },
-          { n: '3', icon: '₿', label: t('stampPage.step3Label'), desc: t('stampPage.step3Desc') }
+          {
+            n: '1',
+            icon: '📄',
+            label: tp('stampPage.step1Label'),
+            desc: tp('stampPage.step1Desc')
+          },
+          {
+            n: '2',
+            icon: '🔒',
+            label: tp('stampPage.step2Label'),
+            desc: tp('stampPage.step2Desc')
+          },
+          {
+            n: '3',
+            icon: '₿',
+            label: tp('stampPage.step3Label'),
+            desc: tp('stampPage.step3Desc')
+          }
         ].map((step, i) => (
           <div
             key={step.n}
-            className="flex flex-col gap-2 p-5"
+            className={`flex flex-col gap-2 p-5 ${i < 2 ? 'border-b sm:border-r sm:border-b-0' : ''}`}
             style={{
               background: i === 1 ? 'var(--surface-raised)' : 'var(--bg-secondary)',
-              borderRight: i < 2 ? '1px solid var(--border)' : 'none'
+              borderColor: 'var(--border)'
             }}
           >
             <div className="flex items-center gap-2">
@@ -1061,6 +1076,9 @@ export default function Stamp() {
               </span>
               <span className="text-[10px] font-black tracking-widest text-[var(--text-secondary)] uppercase">
                 Step {step.n}
+              </span>
+              <span aria-hidden className="ml-auto text-sm">
+                {step.icon}
               </span>
             </div>
             <p

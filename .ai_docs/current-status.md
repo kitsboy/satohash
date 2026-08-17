@@ -66,7 +66,7 @@
 - [x] `npm run watch:node` for bitcoind readiness  
 - [ ] Paywall only when Cam flips (`docs/PAYWALL-STAGING.md`)  
 - [ ] Physical iPhone Safari (WebKit e2e expanded)
-- [ ] Cam: enable GH workflow `ci.yml` (Actions UI) — still `disabled_manually`
+- [x] Cam: enable GH workflow `ci.yml` (2026-08-17) — next push runs tests
 - [ ] Kimi: rebuild API image so `metrics.json` has `raw.last10` + `raw.familyClients`
 - [x] Cam Cloudflare guide — `docs/CLOUDFLARE-PAGES.md` (do not log in unless broken)  
 
