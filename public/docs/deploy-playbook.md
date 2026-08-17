@@ -1,5 +1,5 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 239) · **Updated:** 2026-08-17
+> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 244) · **Updated:** 2026-08-17
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Deploy — canonical
@@ -54,7 +54,9 @@ npx wrangler pages deploy ./dist --project-name=satohash
 
 Cam-facing walkthrough (when to log in, what to click, what not to touch): `docs/CLOUDFLARE-PAGES.md`.
 
-**CSP:** Pages `_headers` ships `Content-Security-Policy-Report-Only` (does not block). Review browser console / CF reports before flipping to enforcing.
+**CSP:** Pages `_headers` ships enforcing `Content-Security-Policy` (2026-08-17). If a third-party fetch is blocked, check the console before widening `connect-src`.
+
+**One deploy path:** GitHub Actions **Deploy** only. Never click **Retry deployment** in the Cloudflare Pages UI while Actions is running.
 
 **Smoke:** `.github/workflows/deploy.yml` → `scripts/pages-smoke.sh` (JS-is-JS, JPEG OG, www, `/stamp`, `/verify`, `/p/<hash>` Function card).
 
