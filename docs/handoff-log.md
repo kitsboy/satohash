@@ -1,3 +1,36 @@
+## Session — 2026-08-16 (Grok) — GOODBYE
+
+**From:** Grok M3 · **To:** Kimi / next Grok · **Status:** Mobile overflow + public docs **pushed** · free stamps ON · no paywall flip
+
+### Done this session
+1. **git pull** — already current (`46d7a39`)
+2. **Mobile overflow** — tooltips, language menu, More nav, help overlay, hover flyouts clamped to viewport (portal + flip-above)
+3. **Public docs refresh** — killed v4 / 2025 / template mission / clone-only quickstart; 5.0.0-ELITE truth (satohash.io, free stamps, own node, Lightning later)
+4. **Facelift** — `/docs`, DocViewer, guides, glossary, FAQ, pitch, trust, legal
+5. **Pushed** `67dce46` + `9d83f15` (build 218 header stamp)
+
+### Standing (do not re-open)
+- Free stamps · `REQUIRE_LIGHTNING=false`
+- bitcoind **at tip** · `source: bitcoind` · IBD **done**
+- SPA → `https://api.satohash.io` only
+- Metrics SoT: `https://api.satohash.io/metrics.json`
+
+### Next (suggested — not started)
+- Full e2e landing→stamp→API→verify against live API
+- CI Lighthouse mobile soft gate
+- Real-device Safari QA (language menu + tooltips)
+- Longer explainer when Cam ready
+- **Do not** flip paywall
+
+### Git
+- Tip: `9d83f15` · feature `67dce46` · `main` = origin
+- Deploy: GHA #226 in progress — https://github.com/kitsboy/satohash/actions/runs/31993941498
+
+### Docs
+- `docs/handoff-log.md` · `.ai_docs/current-status.md` · `public/docs/*`
+
+---
+
 ## Session — 2026-08-16 (Grok) — MOBILE OVERFLOW + PUBLIC DOCS
 
 **From:** Grok M3 · **To:** Kimi / next Grok · **Status:** Tooltips/nav clamped · public docs refreshed to 5.0.0-ELITE · free stamps ON · no paywall flip

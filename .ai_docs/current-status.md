@@ -1,12 +1,12 @@
 # Current Status — Satohash
 
 **Version:** **5.0.0-ELITE**  
-**Last Updated:** 2026-08-16 (Grok — mobile overflow + public docs refresh)  
+**Last Updated:** 2026-08-16 (Grok goodbye — mobile overflow + public docs)  
 **Frontend:** https://satohash.io · www · CF Pages `satohash`  
 **API:** https://api.satohash.io ✅ LIVE (THOR) — HQ metrics SoT  
 **Analytics:** Umami analytics.giveabit.io (CORS noise possible)  
 **HQ:** https://hq.giveabit.io  
-**Git tip:** `5fea2a3` · `main` synced origin
+**Git tip:** `9d83f15` · `main` synced origin
 
 ## Planes
 - Proof API: THOR Docker + Caddy  
@@ -44,12 +44,14 @@
 | Nav | Stamp · Verify · Templates · Pricing · More |
 | Language | Elite dropdown · en es fr de pt sw zh |
 
-## Recent product (through 2026-08-10 tip `5fea2a3`)
+## Recent product (through 2026-08-16 tip `9d83f15`)
 - [x] 10s explainer on `/watch` + cache-bust  
 - [x] Mobile / nav / i18n closeout  
 - [x] Landing lighthouse perf + a11y contrast  
 - [x] **IBD complete — own-node at tip** (Kimi 2026-08-10)  
 - [x] **Mobile Top 12** — sticky stamp, /stamp/done, share+QR, package, ELI-5, PWA icons (live)  
+- [x] **Mobile overflow** — tooltips, language menu, More nav stay on-screen  
+- [x] **Public docs** — 5.0.0-ELITE truth + `/docs` facelift  
 
 ## Ops still open
 - [ ] Longer educational MP4 (~30s+) when Cam ready  
