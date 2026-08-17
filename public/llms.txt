@@ -1,9 +1,13 @@
 # Satohash
 
-Bitcoin document notarization via OpenTimestamps — free, sovereign, verifiable proof of existence. NIP-05 identity, badges, and a 7-language platform.
+> Bitcoin-anchored proof of existence via OpenTimestamps. Free. File never leaves the device.
 
-- [Satohash](https://satohash.io/)
-- [API](https://api.satohash.io/metrics.json)
-- [Tools](https://satohash.io/tools)
-- [Guide](https://satohash.io/guide)
-- [GitHub](https://github.com/kitsboy/satohash)
+- Stamp: https://satohash.io/stamp
+- Verify: https://satohash.io/verify
+- Docs: https://satohash.io/docs
+- Counsel: https://satohash.io/counsel
+- Status: https://satohash.io/status
+- API: https://api.satohash.io
+- Family stamp: https://satohash.io/stamp?hash=<64hex>&ref=<productId>
+
+Pending means calendars have the hash. Confirmed means a Bitcoin block includes it.

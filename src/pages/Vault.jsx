@@ -180,15 +180,38 @@ export default function Vault() {
         const res = await fetch(`${API}/api/history?page=1&limit=50`, {
           headers: vaultNpub ? { 'X-Npub': vaultNpub } : {}
         })
+        const local = JSON.parse(localStorage.getItem('satohash_stamps') || '[]')
+        const mappedLocal = Array.isArray(local)
+          ? local.map((s) => ({
+              id: s.id,
+              name: s.filename || s.label || 'Unnamed',
+              type: 'file',
+              hash: s.hash ? `${s.hash.substring(0, 8)}...${s.hash.slice(-4)}` : '—',
+              fullHash: s.hash,
+              date: s.created_at
+                ? new Date(s.created_at).toISOString().split('T')[0]
+                : new Date().toISOString().split('T')[0],
+              status: s.status || 'pending',
+              confirmations: s.bitcoin_block_height ? 999 : 0,
+              bitcoin_block_height: s.bitcoin_block_height || null,
+              size: '—'
+            }))
+          : []
         if (res.ok) {
           const data = await res.json()
-          // API returns { stamps: [...], pagination: {...} }
           const rows = Array.isArray(data) ? data : (data.stamps ?? [])
-          setItems(mapStamps(rows))
+          const mappedApi = mapStamps(rows)
+          const byKey = new Map()
+          for (const row of [...mappedApi, ...mappedLocal]) {
+            const key = row.fullHash || row.id
+            if (key && !byKey.has(key)) byKey.set(key, row)
+          }
+          setItems([...byKey.values()])
           setHasMore(data.pagination?.hasNext || false)
           setServerUnreachable(false)
         } else {
           setServerUnreachable(true)
+          setItems(mappedLocal)
         }
       } catch (e) {
         setServerUnreachable(true)

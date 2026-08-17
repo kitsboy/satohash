@@ -48,6 +48,12 @@ describe('publicRoutes', () => {
     expect(needsMarketingShell('/verify')).toBe(true)
   })
 
+  it('status, counsel, and proof cards are marketing public', () => {
+    expect(isMarketingPublicPath('/status')).toBe(true)
+    expect(isMarketingPublicPath('/counsel')).toBe(true)
+    expect(isMarketingPublicPath(`/p/${'a'.repeat(64)}`)).toBe(true)
+  })
+
   it('network and legal routes are marketing public with shell', () => {
     expect(isMarketingPublicPath('/network')).toBe(true)
     expect(needsMarketingShell('/network')).toBe(true)

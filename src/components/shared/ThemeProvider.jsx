@@ -14,7 +14,7 @@ function getInitialTheme() {
   const saved = localStorage.getItem('satohash_theme')
   if (saved === 'elite') return 'light'
   if (saved === 'dark') return 'dark'
-  return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'
+  return 'dark'
 }
 
 export const ThemeProvider = ({ children }) => {

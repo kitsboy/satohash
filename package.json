@@ -37,7 +37,11 @@
     "test:e2e:live": "PLAYWRIGHT_SKIP_WEBSERVER=1 PLAYWRIGHT_BASE_URL=https://satohash.io playwright test tests/e2e/live-stamp-verify.spec.js --project=chromium --workers=1 --reporter=line",
     "test:e2e:safari": "playwright test tests/e2e/safari-chrome.spec.js --workers=1 --reporter=line",
     "test:live-api": "node scripts/live-api-stamp-verify.mjs",
-    "lh:mobile": "node scripts/lighthouse-mobile-gate.mjs"
+    "lh:mobile": "node scripts/lighthouse-mobile-gate.mjs",
+    "lh:live": "BASE_URL=https://satohash.io node scripts/lighthouse-mobile-gate.mjs",
+    "bundle:budget": "node scripts/bundle-budget.mjs",
+    "watch:node": "node scripts/watch-bitcoind-health.mjs",
+    "qa:shots": "node scripts/qa-screenshots.mjs"
   },
   "lint-staged": {
     "src/**/*.{js,jsx}": [

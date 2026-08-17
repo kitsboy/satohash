@@ -1,3 +1,21 @@
+## Session — 2026-08-17 (Grok 4.6) — 50 UPGRADES + SEO
+
+**From:** Grok M3 · **To:** Kimi / next Grok · **Status:** 50-item flagship pass + SEO **this session** · free stamps ON · no paywall flip
+
+### Highlights
+- Core loop: confirmed e2e, `/stamp/done` poll, vault merge, copy-link CTA, family matrix, lastProof recover, hash-only card, folder capsule, offline queue already wired
+- Trust: calendars, block link, ots-cli, package default, `/p/:hash` Function, badge embed, confirmed proof wall, pending≠confirmed on `/watch`, receipt
+- UX: live stamp counts, default dark, no localhost API banner, i18n boot lang, 2-up mobile HUD, skip-to-stamp
+- CI: LH `FAIL_HARD`, reuse `dist` via `scripts/e2e-webserver.sh`, Playwright cache, docs-only no bump, weekly live LH, WebKit on mobile specs, bundle budget
+- Growth: Umami funnel, HQ last10 + familyClients, `/status`, `/counsel`, Capacitor scaffold, node watch script
+- SEO: hreflang, HowTo/FAQ JSON-LD, sitemap, `llms.txt`, `humans.txt`
+
+### Standing
+- Free stamps · own node · SPA → `https://api.satohash.io`
+- **Do not** flip paywall
+
+---
+
 ## Session — 2026-08-17 (Grok 4.6) — LIVE LOOP + POLISH
 
 **From:** Grok M3 · **To:** Kimi / next Grok · **Status:** Live e2e + LH soft gate + WebKit QA + visual polish **this session** · free stamps ON · no paywall flip

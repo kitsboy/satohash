@@ -6,11 +6,15 @@ import { loadLocaleBundle } from './loadLocale.js'
 const initialLang = getInitialLang()
 
 const enBundle = await loadLocaleBundle('en')
+const bootBundle =
+  initialLang === 'en' ? enBundle : await loadLocaleBundle(initialLang).catch(() => enBundle)
 
 i18n.use(initReactI18next).init({
-  resources: { en: { translation: enBundle } },
-  // Always register EN first; hydrate preferred locale after bundle load (below)
-  lng: 'en',
+  resources: {
+    en: { translation: enBundle },
+    ...(initialLang !== 'en' ? { [initialLang]: { translation: bootBundle } } : {})
+  },
+  lng: initialLang === 'en' || bootBundle !== enBundle ? initialLang : 'en',
   fallbackLng: 'en',
   supportedLngs: LANG_CODES,
   nonExplicitSupportedLngs: true,

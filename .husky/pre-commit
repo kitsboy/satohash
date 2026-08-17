@@ -1,4 +1,7 @@
-npm run version:bump
+# Skip build bump when the commit is docs/status only
+if git diff --cached --name-only | grep -qvE '^(docs/|public/docs/|LATEST-UPDATE\.md|\.ai_docs/|README\.md|docs/manifest\.json)$'; then
+  npm run version:bump
+fi
 npm run docs:sync
 # docs:sync rewrites headers in these paths — stage them with build metadata
 git add build-metadata.json docs/manifest.json \

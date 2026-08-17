@@ -39,9 +39,13 @@ import StampSuccessActions from '../components/stamps/StampSuccessActions'
 import { persistLastProof } from '../utils/lastProof'
 import { requestWakeLock, releaseWakeLock } from '../utils/wakeLock'
 import LiveNodeChip from '../components/shared/LiveNodeChip'
+import events, { trackEvent } from '../utils/analytics'
 
 export default function Stamp() {
   usePageMeta({ page: 'stamp' })
+  useEffect(() => {
+    trackEvent(events.STAMP_VIEW, { path: '/stamp' })
+  }, [])
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const deepLink = useMemo(() => parseStampDeepLink(searchParams), [searchParams])
@@ -833,6 +837,38 @@ export default function Stamp() {
       <StaticModeBanner />
       <GiveABitBadge />
 
+      {files.length === 0 && stampingStatus === 'idle' && !proofResult && (
+        <div
+          className="vault-ring rounded-2xl border p-5"
+          data-testid="hash-only-card"
+          style={{ borderColor: 'var(--border)', background: 'var(--surface-raised)' }}
+        >
+          <p
+            className="text-[10px] font-black tracking-widest uppercase"
+            style={{ color: 'var(--accent-gold)' }}
+          >
+            Hash only
+          </p>
+          <p className="mt-1 text-sm" style={{ color: 'var(--text-secondary)' }}>
+            Already have a SHA-256? Paste it. The file never needs to come here.
+          </p>
+          <input
+            data-testid="hash-only-input"
+            value={hashValue}
+            onChange={(e) => setHashValue(e.target.value.trim())}
+            placeholder="64 hex characters"
+            className="mt-3 h-12 w-full rounded-xl border px-3 font-mono text-sm"
+            style={{
+              borderColor: 'var(--border)',
+              background: 'var(--bg-primary)',
+              color: 'var(--text-primary)'
+            }}
+            autoComplete="off"
+            spellCheck={false}
+          />
+        </div>
+      )}
+
       {/* Invalid deep-link hash */}
       {hashInvalidMsg && (
         <div
@@ -1488,6 +1524,27 @@ export default function Stamp() {
                             }}
                           />
                           📁 {tp('stampPage.chooseFile') || 'Choose file'}
+                        </label>
+                        <label
+                          className="flex min-h-[52px] cursor-pointer items-center justify-center gap-2 rounded-xl border px-4 py-3 text-sm font-bold"
+                          style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
+                        >
+                          <input
+                            type="file"
+                            className="hidden"
+                            multiple
+                            webkitdirectory=""
+                            data-testid="folder-input"
+                            onChange={(e) => {
+                              const list = Array.from(e.target.files || [])
+                              if (!list.length) return
+                              setStampMode('capsule')
+                              setIsCapsuleMode(true)
+                              setShowAdvancedModes(true)
+                              setFiles(list)
+                            }}
+                          />
+                          📂 Folder (one Merkle capsule)
                         </label>
                       </div>
                     </>

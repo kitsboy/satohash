@@ -829,11 +829,14 @@ export function ProofWallPage() {
   useEffect(() => {
     fetch(`${API()}/api/stamps/recent`)
       .then((r) => r.json())
-      .then((j) => setStamps(j.stamps || []))
+      .then((j) => setStamps((j.stamps || []).filter((s) => s.status === 'confirmed')))
       .catch(() => {})
   }, [])
   return (
-    <Shell title="Proof wall" subtitle="Public gallery of recent notarizations (hash only).">
+    <Shell
+      title="Proof wall"
+      subtitle="Confirmed Bitcoin-anchored stamps only (hash, never the file)."
+    >
       <div className="grid gap-2 sm:grid-cols-2">
         {stamps.map((s) => (
           <Card key={s.id} className="font-mono text-xs">

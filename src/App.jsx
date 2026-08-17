@@ -12,6 +12,7 @@ import usePageMeta from './hooks/usePageMeta'
 import { I18nProvider } from './i18n'
 import LangUrlSync from './components/shared/LangUrlSync'
 import SkipToContent from './components/layout/SkipToContent'
+import PaywallPreviewBanner from './components/shared/PaywallPreviewBanner'
 import ScrollToTop from './components/shared/ScrollToTop'
 import OfflineBanner from './components/shared/OfflineBanner'
 import DeepHealthBanner from './components/dashboard/DeepHealthBanner'
@@ -45,6 +46,9 @@ const Access = React.lazy(() => import('./pages/Access'))
 import Landing from './pages/Landing'
 import ExplainerWatch from './pages/ExplainerWatch'
 import ExecutiveSummary from './pages/ExecutiveSummary'
+const StatusPublic = React.lazy(() => import('./pages/StatusPublic'))
+const Counsel = React.lazy(() => import('./pages/Counsel'))
+const ProofCardPublic = React.lazy(() => import('./pages/ProofCardPublic'))
 const Trust = React.lazy(() => import('./pages/trust/TrustCenter'))
 const About = React.lazy(() => import('./pages/About'))
 const Pitch = React.lazy(() => import('./pages/Pitch'))
@@ -321,6 +325,9 @@ function AppContent() {
             {/* v5.0.0-ELITE public surfaces */}
             <Route path="/proof-of-existence" element={<V5ProofOfExistence />} />
             <Route path="/network" element={<Network />} />
+            <Route path="/status" element={<StatusPublic />} />
+            <Route path="/counsel" element={<Counsel />} />
+            <Route path="/p/:hash" element={<ProofCardPublic />} />
             <Route path="/verify/batch" element={<V5BatchVerify />} />
             <Route path="/stamp/live-feed" element={<V5LiveFeed />} />
             <Route path="/compare" element={<V5Compare />} />
@@ -656,6 +663,7 @@ function App() {
             <SkipToContent />
             {isOffline && <OfflineBanner />}
             <DeepHealthBanner />
+            <PaywallPreviewBanner />
 
             <AppContent />
 

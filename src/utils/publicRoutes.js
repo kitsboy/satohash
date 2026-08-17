@@ -29,7 +29,10 @@ const MARKETING_PREFIXES = [
   '/explainer',
   '/network',
   '/proof-of-existence',
-  '/bitcoin'
+  '/bitcoin',
+  '/status',
+  '/counsel',
+  '/p/'
 ]
 
 /** Exact paths chrome-free of AppShell (family deep-links + core tools). */

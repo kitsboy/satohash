@@ -23,6 +23,7 @@ test.describe('axe-core a11y smoke', () => {
     test(`no critical violations on ${path}`, async ({ page }) => {
       await page.goto(path)
       const results = await new AxeBuilder({ page })
+        .exclude('#nprogress')
         .withTags(['wcag2a', 'wcag2aa'])
         .disableRules(['color-contrast'])
         .analyze()

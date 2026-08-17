@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import {
@@ -58,6 +58,43 @@ export default function Docs() {
 
   const [search, setSearch] = useState('')
   const [activeCategory, setActiveCategory] = useState('all')
+  const [bodyIndex, setBodyIndex] = useState({})
+
+  useEffect(() => {
+    const slugs = CATEGORY_CONFIG.flatMap((c) => c.docs)
+    const cached = localStorage.getItem('satohash_docs_index')
+    if (cached) {
+      try {
+        setBodyIndex(JSON.parse(cached))
+      } catch {
+        /* ignore */
+      }
+    }
+    let cancelled = false
+    Promise.all(
+      slugs.map(async (slug) => {
+        try {
+          const res = await fetch(`/docs/${slug}.md`)
+          if (!res.ok) return [slug, '']
+          return [slug, await res.text()]
+        } catch {
+          return [slug, '']
+        }
+      })
+    ).then((pairs) => {
+      if (cancelled) return
+      const next = Object.fromEntries(pairs)
+      setBodyIndex(next)
+      try {
+        localStorage.setItem('satohash_docs_index', JSON.stringify(next))
+      } catch {
+        /* quota */
+      }
+    })
+    return () => {
+      cancelled = true
+    }
+  }, [])
 
   const categories = useMemo(
     () =>
@@ -85,11 +122,13 @@ export default function Docs() {
   }, [categories])
 
   const filteredDocs = search
-    ? allDocs.filter(
-        (d) =>
-          d.title.toLowerCase().includes(search.toLowerCase()) ||
-          d.desc.toLowerCase().includes(search.toLowerCase())
-      )
+    ? allDocs.filter((d) => {
+        const q = search.toLowerCase()
+        const body = (bodyIndex[d.slug] || '').toLowerCase()
+        return (
+          d.title.toLowerCase().includes(q) || d.desc.toLowerCase().includes(q) || body.includes(q)
+        )
+      })
     : activeCategory === 'all'
       ? allDocs
       : categories.find((c) => c.id === activeCategory)?.docs || []

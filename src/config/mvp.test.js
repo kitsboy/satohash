@@ -7,6 +7,8 @@ describe('mvp config', () => {
     expect(MVP_PUBLIC_PATHS).toContain('/stamp/done')
     expect(MVP_PUBLIC_PATHS).toContain('/verify')
     expect(MVP_PUBLIC_PATHS).toContain('/vault')
+    expect(MVP_PUBLIC_PATHS).toContain('/status')
+    expect(MVP_PUBLIC_PATHS).toContain('/counsel')
   })
 
   it('isMvpPublicPath allows stamp without login', () => {
@@ -29,7 +31,7 @@ describe('mvp config', () => {
     expect(KIMI_NOSTR).not.toHaveProperty('secretKey')
   })
 
-  it('shouldMonitorApiHealth is true in vitest dev', () => {
-    expect(shouldMonitorApiHealth()).toBe(true)
+  it('shouldMonitorApiHealth is false on localhost', () => {
+    expect(shouldMonitorApiHealth()).toBe(false)
   })
 })

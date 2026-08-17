@@ -1,0 +1,28 @@
+name: Lighthouse live (weekly)
+
+on:
+  schedule:
+    - cron: '17 6 * * 1'
+  workflow_dispatch:
+
+jobs:
+  live_lh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+      - run: npm ci
+      - name: Lighthouse mobile vs satohash.io
+        env:
+          BASE_URL: https://satohash.io
+          FAIL_HARD: '1'
+        run: npm run lh:mobile
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: lighthouse-live
+          path: tmp/lighthouse-mobile
+          if-no-files-found: ignore

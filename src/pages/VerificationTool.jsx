@@ -15,6 +15,7 @@ import { isStaticOnlyMode } from '../utils/staticMode'
 import StaticModeBanner from '../components/shared/StaticModeBanner'
 import VerifyEli5 from '../components/stamps/VerifyEli5'
 import LiveNodeChip from '../components/shared/LiveNodeChip'
+import events, { trackEvent } from '../utils/analytics'
 
 const MerklePathNode = ({ level, hash, active }) => (
   <div className={`flex items-center gap-4 ${active ? 'opacity-100' : 'opacity-40'}`}>
@@ -37,6 +38,9 @@ const MerklePathNode = ({ level, hash, active }) => (
 
 export default function VerificationTool() {
   usePageMeta({ page: 'verify' })
+  useEffect(() => {
+    trackEvent(events.VERIFY_VIEW, { path: '/verify' })
+  }, [])
   const { t: tv } = useTranslation()
   const [searchParams] = useSearchParams()
   const [verifying, setVerifying] = useState(false)

@@ -26,17 +26,26 @@ const events = {
 
   // Verification
   VERIFICATION_STARTED: 'verification_started',
-  VERIFICATION_COMPLETED: 'verification_completed'
+  VERIFICATION_COMPLETED: 'verification_completed',
+
+  LANDING_VIEW: 'funnel_landing',
+  STAMP_VIEW: 'funnel_stamp',
+  STAMP_DONE: 'funnel_stamp_done',
+  VERIFY_VIEW: 'funnel_verify'
 }
 
 export const trackEvent = (eventName, properties = {}) => {
-  // Log to console in development
   if (import.meta.env.DEV) {
     console.log('[Analytics]', eventName, properties)
   }
 
-  // In production, integrate with analytics service
-  // Example: analytics.track(eventName, properties);
+  try {
+    if (typeof window !== 'undefined' && typeof window.umami?.track === 'function') {
+      window.umami.track(eventName, properties)
+    }
+  } catch {
+    /* umami optional */
+  }
 
   // Store events in localStorage for debugging
   try {

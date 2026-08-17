@@ -1,5 +1,5 @@
 # satohash — Last Updated 2026-08-17 by Grok 4.6
 
-Brief: Live stamp→verify loop + CI Lighthouse mobile soft gate + WebKit chrome QA + gold/navy visual polish. Free stamps ON.
+Brief: 50 flagship upgrades + SEO (status, counsel, proof cards, CI gates, live counts). Free stamps ON.
 
-Commit: `016ec13` · build 223
+Commit: pending push

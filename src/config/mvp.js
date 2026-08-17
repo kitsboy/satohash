@@ -36,7 +36,9 @@ export const MVP_PUBLIC_PATHS = [
   '/proof-of-existence',
   '/legal/terms',
   '/legal/privacy',
-  '/legal/crypto-notice'
+  '/legal/crypto-notice',
+  '/status',
+  '/counsel'
 ]
 
 /** Sub-paths allowed in MVP mode (e.g. /verify/:hash from MotoPass) */
@@ -47,6 +49,7 @@ export function isMvpPublicPath(pathname = '') {
   }
   // Public proof pages linked from Give A Bit family apps
   if (/^\/verify\/[a-f0-9]{64}$/i.test(pathname)) return true
+  if (/^\/p\/[a-f0-9]{64}$/i.test(pathname)) return true
   return false
 }
 
@@ -70,9 +73,13 @@ export function isApiExplicitlyConfigured() {
   return false
 }
 
-/** Show health banner only when we expect an API (dev or production SPA / VITE_API_URL) */
+/** Show health banner only on hosts that should talk to the public API plane. */
 export function shouldMonitorApiHealth() {
-  return import.meta.env.DEV || isApiExplicitlyConfigured()
+  if (typeof window !== 'undefined' && window.location?.hostname) {
+    const host = window.location.hostname.toLowerCase()
+    if (host === 'localhost' || host === '127.0.0.1' || host === '::1') return false
+  }
+  return isApiExplicitlyConfigured()
 }
 
 /**

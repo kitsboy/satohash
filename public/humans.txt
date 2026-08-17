@@ -1,0 +1,10 @@
+/* TEAM */
+Studio: Give A Bit
+Site: https://satohash.io
+Git: https://github.com/kitsboy/satohash
+
+/* SITE */
+Version: 5.0.0-ELITE
+Standards: OpenTimestamps, Bitcoin, ESIGN, UETA, eIDAS (concepts)
+Doctype: HTML5
+Components: React, Vite, Express

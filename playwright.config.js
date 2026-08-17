@@ -24,14 +24,14 @@ export default defineConfig({
     },
     {
       name: 'webkit',
-      testMatch: /safari-chrome\.spec\.js/,
+      testMatch: /(safari-chrome|mobile-stamp-loop)\.spec\.js/,
       use: { ...devices['iPhone 13'] },
     },
   ],
   webServer: process.env.PLAYWRIGHT_SKIP_WEBSERVER
     ? undefined
     : {
-        command: 'npm run production',
+        command: 'bash scripts/e2e-webserver.sh',
         url: process.env.PLAYWRIGHT_BASE_URL || 'http://localhost:3001',
         reuseExistingServer: !process.env.CI,
         timeout: 120 * 1000

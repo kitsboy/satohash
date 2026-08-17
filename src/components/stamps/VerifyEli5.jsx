@@ -89,6 +89,13 @@ export default function VerifyEli5({ className = '' }) {
             or equivalent against public calendars / your own node — you do not need to trust
             Satohash for the final claim.
           </p>
+          <pre
+            className="overflow-x-auto rounded-xl p-3 font-mono text-[11px] leading-relaxed"
+            style={{ background: 'var(--bg-primary)', color: 'var(--text-primary)' }}
+          >
+            {`ots-cli verify proof.ots
+# or: python3 -m opentimestamps.ots verify proof.ots`}
+          </pre>
           <p style={{ color: 'var(--text-muted)' }}>
             Own-node path: api.satohash.io readiness · bitcoind on THOR when healthy.
           </p>

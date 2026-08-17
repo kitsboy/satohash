@@ -14,6 +14,8 @@ import { isStaticOnlyMode } from '../utils/staticMode'
 import ProofTimeline from '../components/stamps/ProofTimeline'
 import ProofStatusPill from '../components/stamps/ProofStatusPill'
 import EmptyState from '../components/ui/EmptyState'
+import ProofReceipt from '../components/stamps/ProofReceipt'
+import CalendarStrip from '../components/stamps/CalendarStrip'
 import { downloadVerifiableCredential } from '../utils/verifiableCredential'
 import { shareProofLink } from '../utils/shareProof'
 import { exportProofBundle } from '../utils/proofPackage'
@@ -263,6 +265,8 @@ export default function VerifyPublic() {
             blockHeight={proof.bitcoin_block_height}
             upgradeStatus={proof.status}
           />
+          <ProofReceipt proof={proof} />
+          {proof.status !== 'confirmed' && <CalendarStrip compact />}
           <div className="grid grid-cols-2 gap-3">
             <button
               type="button"

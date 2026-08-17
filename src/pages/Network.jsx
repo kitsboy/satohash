@@ -21,7 +21,10 @@ function StatCard({ label, value, hint, icon: Icon, color = 'var(--accent-gold)'
       style={{ borderColor: 'var(--border)', background: 'var(--surface-raised)' }}
     >
       <div className="mb-3 flex items-center justify-between">
-        <p className="text-[10px] font-black tracking-[0.18em] uppercase" style={{ color: 'var(--text-tertiary)' }}>
+        <p
+          className="text-[10px] font-black tracking-[0.18em] uppercase"
+          style={{ color: 'var(--text-tertiary)' }}
+        >
           {label}
         </p>
         {Icon && (
@@ -33,7 +36,10 @@ function StatCard({ label, value, hint, icon: Icon, color = 'var(--accent-gold)'
           </span>
         )}
       </div>
-      <p className="text-2xl font-black tabular-nums tracking-tight" style={{ color: 'var(--text-primary)' }}>
+      <p
+        className="text-2xl font-black tracking-tight tabular-nums"
+        style={{ color: 'var(--text-primary)' }}
+      >
         {value ?? '—'}
       </p>
       {hint && (
@@ -51,6 +57,7 @@ export default function Network() {
   const [bitcoin, setBitcoin] = useState(null)
   const [cals, setCals] = useState(null)
   const [recent, setRecent] = useState([])
+  const [family, setFamily] = useState([])
   const [loading, setLoading] = useState(true)
   const [err, setErr] = useState(null)
 
@@ -59,16 +66,28 @@ export default function Network() {
     setErr(null)
     const base = getApiUrl() || 'https://api.satohash.io'
     try {
-      const [s, b, c, rec] = await Promise.all([
-        fetch(`${base}/api/public/stats`).then((r) => (r.ok ? r.json() : null)).catch(() => null),
-        fetch(`${base}/api/public/bitcoin`).then((r) => (r.ok ? r.json() : null)).catch(() => null),
-        fetch(`${base}/api/public/calendar-status`).then((r) => (r.ok ? r.json() : null)).catch(() => null),
-        fetch(`${base}/api/stamps/recent`).then((r) => (r.ok ? r.json() : null)).catch(() => null)
+      const [s, b, c, rec, met] = await Promise.all([
+        fetch(`${base}/api/public/stats`)
+          .then((r) => (r.ok ? r.json() : null))
+          .catch(() => null),
+        fetch(`${base}/api/public/bitcoin`)
+          .then((r) => (r.ok ? r.json() : null))
+          .catch(() => null),
+        fetch(`${base}/api/public/calendar-status`)
+          .then((r) => (r.ok ? r.json() : null))
+          .catch(() => null),
+        fetch(`${base}/api/stamps/recent`)
+          .then((r) => (r.ok ? r.json() : null))
+          .catch(() => null),
+        fetch(`${base}/metrics.json`)
+          .then((r) => (r.ok ? r.json() : null))
+          .catch(() => null)
       ])
       setStats(s)
       setBitcoin(b)
       setCals(c)
       setRecent(rec?.stamps || rec?.results || [])
+      setFamily(met?.raw?.familyClients || met?.segments || [])
     } catch (e) {
       setErr(e.message || 'Failed to load network status')
     } finally {
@@ -85,10 +104,19 @@ export default function Network() {
   const calendars = cals?.calendars || []
 
   return (
-    <div className="min-h-screen pb-16" style={{ background: 'var(--bg-primary)', color: 'var(--text-primary)' }}>
-      <section className="border-b px-4 pt-8 pb-12 sm:px-6 sm:pt-12" style={{ borderColor: 'var(--border)' }}>
+    <div
+      className="min-h-screen pb-16"
+      style={{ background: 'var(--bg-primary)', color: 'var(--text-primary)' }}
+    >
+      <section
+        className="border-b px-4 pt-8 pb-12 sm:px-6 sm:pt-12"
+        style={{ borderColor: 'var(--border)' }}
+      >
         <div className="mx-auto max-w-5xl">
-          <p className="mb-2 text-[10px] font-black tracking-[0.22em] uppercase" style={{ color: 'var(--accent-gold)' }}>
+          <p
+            className="mb-2 text-[10px] font-black tracking-[0.22em] uppercase"
+            style={{ color: 'var(--accent-gold)' }}
+          >
             Protocol plane
           </p>
           <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
@@ -181,7 +209,10 @@ export default function Network() {
                     className="flex items-center justify-between gap-3 rounded-xl border px-3 py-2.5"
                     style={{ borderColor: 'var(--border)', background: 'var(--bg-primary)' }}
                   >
-                    <span className="truncate font-mono text-[10px]" style={{ color: 'var(--text-secondary)' }}>
+                    <span
+                      className="truncate font-mono text-[10px]"
+                      style={{ color: 'var(--text-secondary)' }}
+                    >
                       {(c.url || '').replace(/^https?:\/\//, '')}
                     </span>
                     <span
@@ -216,10 +247,16 @@ export default function Network() {
                     className="flex items-center justify-between gap-2 rounded-xl border px-3 py-2"
                     style={{ borderColor: 'var(--border)', background: 'var(--bg-primary)' }}
                   >
-                    <span className="truncate font-mono text-[10px]" style={{ color: 'var(--text-secondary)' }}>
+                    <span
+                      className="truncate font-mono text-[10px]"
+                      style={{ color: 'var(--text-secondary)' }}
+                    >
                       {(s.hash || '').slice(0, 18)}…
                     </span>
-                    <span className="shrink-0 text-[10px] font-bold uppercase" style={{ color: 'var(--accent-gold)' }}>
+                    <span
+                      className="shrink-0 text-[10px] font-bold uppercase"
+                      style={{ color: 'var(--accent-gold)' }}
+                    >
                       {s.status || 'pending'}
                     </span>
                   </li>
@@ -228,6 +265,29 @@ export default function Network() {
             )}
           </div>
         </div>
+      </section>
+
+      <section className="mx-auto max-w-5xl px-4 pb-10 sm:px-6" data-testid="family-clients">
+        <h2 className="mb-3 text-sm font-black">Family clients (X-Satohash-Client)</h2>
+        {family.length === 0 ? (
+          <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>
+            No attributed family stamps yet. Deep-link with <code>?ref=motopass</code> or the client
+            header.
+          </p>
+        ) : (
+          <ul className="grid gap-2 sm:grid-cols-2">
+            {(Array.isArray(family) ? family : []).slice(0, 12).map((row) => (
+              <li
+                key={row.id || row.key || row.label}
+                className="flex items-center justify-between rounded-xl border px-3 py-2 text-xs"
+                style={{ borderColor: 'var(--border)', background: 'var(--surface-raised)' }}
+              >
+                <span className="font-bold">{row.label || row.id}</span>
+                <span className="font-mono">{row.value ?? row.count ?? 0}</span>
+              </li>
+            ))}
+          </ul>
+        )}
       </section>
 
       <section className="border-t px-4 py-12 sm:px-6" style={{ borderColor: 'var(--border)' }}>

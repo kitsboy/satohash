@@ -25,6 +25,7 @@ import { getBitcoinNetworkStats } from '../utils/mempool'
 import { BTC_ADDRESS, getApiUrl } from '../config/constants'
 import { ParticleStampCanvas } from './v5/V5Pages'
 import { buildStampPathFromSearch } from '../utils/stampDeepLink'
+import events, { trackEvent } from '../utils/analytics'
 import LiveNodeChip from '../components/shared/LiveNodeChip'
 
 const fadeUp = {
@@ -120,6 +121,26 @@ export default function Landing() {
       if (merged.blockHeight) setBlockHeight(merged.blockHeight)
     })
   }, [defaultNetworkStats])
+
+  useEffect(() => {
+    trackEvent(events.LANDING_VIEW, { path: '/' })
+  }, [])
+
+  useEffect(() => {
+    const prefetch = () => {
+      const link = document.createElement('link')
+      link.rel = 'prefetch'
+      link.href = '/stamp'
+      link.as = 'document'
+      document.head.appendChild(link)
+    }
+    if ('requestIdleCallback' in window) {
+      const id = window.requestIdleCallback(prefetch, { timeout: 2500 })
+      return () => window.cancelIdleCallback?.(id)
+    }
+    const t = setTimeout(prefetch, 800)
+    return () => clearTimeout(t)
+  }, [])
 
   useEffect(() => {
     const API = getApiUrl()
@@ -393,6 +414,7 @@ export default function Landing() {
           </motion.p>
 
           <motion.div
+            id="stamp-cta"
             variants={fadeUp}
             initial="hidden"
             animate="visible"
@@ -449,27 +471,15 @@ export default function Landing() {
             custom={0.5}
             className="mb-10 flex flex-col items-center gap-3"
           >
-            {/* Avatar row + count */}
             <div className="flex items-center gap-3">
-              <div className="flex -space-x-2">
-                {[
-                  { initials: 'AK', bg: '#4f46e5' },
-                  { initials: 'SM', bg: '#0f766e' },
-                  { initials: 'JL', bg: '#b45309' },
-                  { initials: 'PR', bg: '#db2777' },
-                  { initials: 'DW', bg: '#2563eb' }
-                ].map(({ initials, bg }) => (
-                  <div
-                    key={initials}
-                    className="flex h-8 w-8 items-center justify-center rounded-full text-[10px] font-black text-white ring-2"
-                    style={{ backgroundColor: bg, ringColor: 'var(--bg-primary)' }}
-                  >
-                    {initials}
-                  </div>
-                ))}
-              </div>
-              <p className="text-sm font-semibold" style={{ color: 'var(--text-secondary)' }}>
-                {t('landingPage.hero.socialProof', { count: '2,400+' })}
+              <p
+                className="text-sm font-semibold"
+                style={{ color: 'var(--text-secondary)' }}
+                data-testid="live-stamp-count"
+              >
+                {proofCount != null
+                  ? `${proofCount.toLocaleString()} Bitcoin-anchored proofs issued through this plane`
+                  : 'Live stamp counts load from the public metrics plane'}
               </p>
             </div>
             <Link
@@ -557,9 +567,9 @@ export default function Landing() {
                 </span>
               </div>
 
-              {/* Difficulty Adjust — clamp long floats */}
+              {/* Difficulty Adjust — hidden on narrow phones */}
               <div
-                className="min-w-0 overflow-hidden rounded-2xl p-3 sm:p-4"
+                className="hidden min-w-0 overflow-hidden rounded-2xl p-3 sm:block sm:p-4"
                 style={{ backgroundColor: 'rgba(255, 255, 255, 0.02)' }}
               >
                 <span
@@ -589,9 +599,9 @@ export default function Landing() {
                 </span>
               </div>
 
-              {/* Epoch Progress — value above bar so they never collide */}
+              {/* Epoch Progress — hidden on narrow phones */}
               <div
-                className="min-w-0 overflow-hidden rounded-2xl p-3 sm:p-4"
+                className="hidden min-w-0 overflow-hidden rounded-2xl p-3 sm:block sm:p-4"
                 style={{ backgroundColor: 'rgba(255, 255, 255, 0.02)' }}
               >
                 <span

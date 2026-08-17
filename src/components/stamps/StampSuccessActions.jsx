@@ -8,6 +8,9 @@ import { getApiUrl } from '../../config/constants'
 import { buildVerifyUrl, shareProofLink } from '../../utils/shareProof'
 import { exportProofBundle } from '../../utils/proofPackage'
 import ProofStatusPill from './ProofStatusPill'
+import CalendarStrip from './CalendarStrip'
+import ProofReceipt from './ProofReceipt'
+import StampBadgeEmbed from './StampBadgeEmbed'
 
 /**
  * Share sheet, QR, package export, status — used on Stamp inline success + /stamp/done
@@ -111,14 +114,58 @@ export default function StampSuccessActions({
         </button>
       )}
 
+      {!isConfirmed && proof?.status !== 'confirmed' && <CalendarStrip compact />}
+
+      {(confirmedBlock || proof?.bitcoin_block_height) && (
+        <a
+          data-testid="block-explorer-link"
+          href={`https://mempool.space/block/${confirmedBlock || proof.bitcoin_block_height}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex min-h-[44px] items-center justify-center rounded-xl border text-xs font-black uppercase"
+          style={{ borderColor: 'var(--accent-success)', color: 'var(--accent-success)' }}
+        >
+          Bitcoin block {(confirmedBlock || proof.bitcoin_block_height).toLocaleString()} ↗
+        </a>
+      )}
+
+      <ProofReceipt proof={proof} />
+
       <div className="grid grid-cols-1 gap-3">
         <button
           type="button"
-          onClick={onShare}
-          className="flex min-h-[52px] items-center justify-center gap-2 rounded-xl text-sm font-black tracking-wider uppercase"
+          data-testid="copy-verify-link"
+          onClick={async () => {
+            try {
+              await navigator.clipboard.writeText(verifyUrl)
+              toast.success('Verify link copied')
+            } catch {
+              toast.error('Copy failed')
+            }
+          }}
+          className="btn-sheen flex min-h-[56px] items-center justify-center gap-2 rounded-xl text-sm font-black tracking-wider uppercase"
           style={{ background: 'var(--accent-gold)', color: '#141b25' }}
         >
-          <Share2 size={18} /> Share verify link
+          <Link2 size={18} /> Copy verify link
+        </button>
+
+        <button
+          type="button"
+          disabled={busy}
+          onClick={onPackage}
+          className="flex min-h-[52px] items-center justify-center gap-2 rounded-xl text-sm font-black tracking-wider uppercase"
+          style={{ background: 'var(--accent-teal)', color: '#041016' }}
+        >
+          <Package size={18} /> {busy ? 'Packaging…' : 'Download proof package'}
+        </button>
+
+        <button
+          type="button"
+          onClick={onShare}
+          className="flex min-h-[48px] items-center justify-center gap-2 rounded-xl border text-xs font-black tracking-wider uppercase"
+          style={{ borderColor: 'var(--border)', color: 'var(--text-primary)' }}
+        >
+          <Share2 size={16} /> Share
         </button>
 
         <div className="grid grid-cols-2 gap-3">
@@ -138,15 +185,13 @@ export default function StampSuccessActions({
               .ots local
             </span>
           )}
-          <button
-            type="button"
-            disabled={busy}
-            onClick={onPackage}
-            className="flex min-h-[48px] items-center justify-center gap-2 rounded-xl border text-xs font-black tracking-wider uppercase"
-            style={{ borderColor: 'var(--border)', color: 'var(--text-primary)' }}
+          <Link
+            to={proof?.hash ? `/p/${proof.hash}` : '/verify'}
+            className="flex min-h-[48px] items-center justify-center gap-2 rounded-xl border text-xs font-black uppercase"
+            style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
           >
-            <Package size={16} /> {busy ? '…' : 'Package'}
-          </button>
+            No-JS card
+          </Link>
         </div>
 
         <button
@@ -177,34 +222,19 @@ export default function StampSuccessActions({
           </Link>
         )}
 
-        <div className="grid grid-cols-2 gap-3">
-          <Link
-            to="/vault"
-            className="flex min-h-[48px] items-center justify-center gap-2 rounded-xl border py-3 text-xs font-black uppercase"
-            style={{
-              borderColor: 'var(--accent-active)',
-              color: 'var(--accent-active)',
-              background: 'rgba(59,130,246,0.06)'
-            }}
-          >
-            <Vault size={14} /> Vault
-          </Link>
-          <button
-            type="button"
-            onClick={async () => {
-              try {
-                await navigator.clipboard.writeText(verifyUrl)
-                toast.success('Link copied')
-              } catch {
-                toast.error('Copy failed')
-              }
-            }}
-            className="flex min-h-[48px] items-center justify-center gap-2 rounded-xl border py-3 text-xs font-black uppercase"
-            style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
-          >
-            <Link2 size={14} /> Copy
-          </button>
-        </div>
+        <StampBadgeEmbed proof={proof} />
+
+        <Link
+          to="/vault"
+          className="flex min-h-[48px] items-center justify-center gap-2 rounded-xl border py-3 text-xs font-black uppercase"
+          style={{
+            borderColor: 'var(--accent-active)',
+            color: 'var(--accent-active)',
+            background: 'rgba(59,130,246,0.06)'
+          }}
+        >
+          <Vault size={14} /> Vault
+        </Link>
 
         {onStampAnother && (
           <button

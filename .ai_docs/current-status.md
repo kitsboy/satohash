@@ -1,7 +1,7 @@
 # Current Status — Satohash
 
 **Version:** **5.0.0-ELITE**  
-**Last Updated:** 2026-08-17 (Grok 4.6 — live e2e + LH soft gate + visual polish)  
+**Last Updated:** 2026-08-17 (Grok 4.6 — 50 upgrades + SEO)  
 **Frontend:** https://satohash.io · www · CF Pages `satohash`  
 **API:** https://api.satohash.io ✅ LIVE (THOR) — HQ metrics SoT  
 **Analytics:** Umami analytics.giveabit.io (CORS noise possible)  
@@ -58,13 +58,13 @@
 - [x] **Visual polish** — sheen CTAs, vault rings, theme-aware HUD, live node jewelry  
 
 ## Ops still open
-- [ ] Longer educational MP4 (~30s+) when Cam ready  
-- [x] ~~IBD complete → ready_to_verify~~ **DONE**  
-- [x] ~~Full e2e stamp→verify vs live API · CI lh mobile gate~~ **DONE** (physical Safari device still optional)  
-- [ ] Paywall only when Cam flips  
-- [ ] Optional Socket.IO CORS / Umami funnel events  
-- [ ] Store apps: PWA → Capacitor later (not started)  
-- [ ] Watch bitcoind RAM/OOM (history 2026-07-28)  
+- [x] 50-item upgrade batch (loop, trust, UX, CI, growth) + SEO  
+- [x] `/status` · `/counsel` · `/p/:hash` zero-JS card  
+- [x] Umami funnel events · family client tile on `/network`  
+- [x] Capacitor scaffold only (`docs/STORE-APPS.md`)  
+- [x] `npm run watch:node` for bitcoind readiness  
+- [ ] Paywall only when Cam flips (`docs/PAYWALL-STAGING.md`)  
+- [ ] Physical iPhone Safari (WebKit e2e expanded)  
 
 ## Agent entry
 **AGENTS.md** · this file · `docs/handoff-log.md` · `docs/KIMI-HANDOFF.md` · `docs/MVP-CHECKLIST.md` · goodbye summary under `docs/archive/`

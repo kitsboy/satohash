@@ -60,6 +60,16 @@ test.describe('Safari / WebKit chrome', () => {
     await page.keyboard.press('Escape')
   })
 
+  test('sticky stamp CTA appears after choosing a file', async ({ page }) => {
+    await page.goto('/stamp')
+    await expect(page.getByRole('heading', { level: 1 }).first()).toBeVisible({ timeout: 20000 })
+    const file = test.info().outputPath('safari-stamp.txt')
+    const { writeFileSync } = await import('fs')
+    writeFileSync(file, `safari-${Date.now()}`)
+    await page.getByTestId('choose-file-input').setInputFiles(file)
+    await expect(page.locator('.stamp-sticky-bar')).toBeVisible({ timeout: 10000 })
+  })
+
   test('/verify ELI-5 and language control do not overflow', async ({ page }) => {
     await page.goto('/verify')
     await expect(page.getByTestId('verify-eli5')).toBeVisible({ timeout: 20_000 })

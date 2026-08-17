@@ -61,6 +61,8 @@ export default function MarketingDesktopNav({ onDonate }) {
       { label: 'Government', href: '/government', icon: Building2 },
       { label: t('landingPage.nav.legal', { defaultValue: 'Trust' }), href: '/trust', icon: Scale },
       { label: 'Docs', href: '/docs', icon: BookOpen },
+      { label: 'Status', href: '/status', icon: ShieldCheck },
+      { label: 'For counsel', href: '/counsel', icon: Scale },
       { label: 'Exec summary', href: '/docs/executive-summary', icon: FileText }
     ],
     [t]

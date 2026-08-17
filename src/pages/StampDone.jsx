@@ -9,12 +9,16 @@ import EmptyState from '../components/ui/EmptyState'
 import { findStampByHashOrId, localRecordToProof } from '../utils/vaultLocal'
 import { persistLastProof, readLastProof } from '../utils/lastProof'
 import LiveNodeChip from '../components/shared/LiveNodeChip'
+import events, { trackEvent } from '../utils/analytics'
 
 /**
  * Dedicated success route so browser Back does not re-submit a stamp.
  */
 export default function StampDone() {
   usePageMeta({ page: 'stamp' })
+  useEffect(() => {
+    trackEvent(events.STAMP_DONE, { path: '/stamp/done' })
+  }, [])
   const [searchParams] = useSearchParams()
   const navigate = useNavigate()
   const [proof, setProof] = useState(null)
@@ -53,6 +57,28 @@ export default function StampDone() {
     }
   }, [searchParams])
 
+  useEffect(() => {
+    const stampId = proof?.id
+    if (!stampId || proof.status === 'confirmed' || proof.status === 'failed') return undefined
+    if (!isApiExplicitlyConfigured()) return undefined
+    const tick = async () => {
+      try {
+        const res = await fetch(`${getApiUrl()}/api/stamps/${encodeURIComponent(stampId)}`)
+        if (!res.ok) return
+        const data = await res.json()
+        setProof((prev) => {
+          const next = { ...prev, ...data, source: 'api' }
+          persistLastProof(next)
+          return next
+        })
+      } catch {
+        /* keep showing last known */
+      }
+    }
+    const id = setInterval(tick, 8000)
+    return () => clearInterval(id)
+  }, [proof?.id, proof?.status])
+
   if (loading) {
     return (
       <div className="mx-auto flex min-h-[50vh] max-w-lg items-center justify-center p-6 pb-28">
@@ -72,7 +98,7 @@ export default function StampDone() {
         <EmptyState
           imageSrc="/media/ui/empty-proof.jpg"
           title="No stamp on this screen"
-          description="Stamp a file first. Success opens here so going Back will not re-submit."
+          description="Your last proof is stored on this device. If you refreshed a blank tab, stamp again — Back will not re-submit."
           actionLabel="Go to Stamp"
           onAction={() => navigate('/stamp')}
         />
@@ -126,7 +152,7 @@ export default function StampDone() {
         <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
           {confirmed
             ? 'Your fingerprint is anchored on Bitcoin via OpenTimestamps.'
-            : 'Submitted successfully. Pending is not the same as Bitcoin confirmed.'}
+            : 'Submitted successfully. Pending is not the same as Bitcoin confirmed. This page polls every 8s.'}
         </p>
       </header>
 

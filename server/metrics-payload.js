@@ -239,6 +239,15 @@ export function buildMetricsPayload(db, opts = {}) {
        WHERE client_id IS NOT NULL AND trim(client_id) != ''`
     )?.n || 0
 
+  const last10 =
+    safeQuery(
+      db,
+      `SELECT id, hash, status, client_id, created_at, bitcoin_block_height
+       FROM timestamps
+       ORDER BY created_at DESC
+       LIMIT 10`
+    ) || []
+
   const totalAttempted = confirmed + failed
   const confirmRate =
     totalAttempted > 0
@@ -654,8 +663,18 @@ export function buildMetricsPayload(db, opts = {}) {
         failed,
         failed7d,
         familyFree,
-        distinctClients
-      }
+        distinctClients,
+        confirmRate
+      },
+      last10: last10.map((r) => ({
+        id: r.id,
+        hash: r.hash,
+        status: r.status,
+        client_id: r.client_id || 'spa',
+        created_at: r.created_at,
+        bitcoin_block_height: r.bitcoin_block_height || null
+      })),
+      familyClients: clientRows.slice(0, 20)
     }
   }
 

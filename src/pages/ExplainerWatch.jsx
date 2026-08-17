@@ -10,6 +10,7 @@ import usePageMeta from '../hooks/usePageMeta'
 const VIDEO_SRC = '/media/video/satohash-explainer-with-vo.mp4?v=10s-kimi-20260804'
 const POSTER_SRC = '/media/video/kimi-teacher.jpg'
 const VIDEO_SECONDS = 10
+const LONG_VO_SRC = '/media/video/vo-complete.mp3'
 
 const SCRIPT_BEATS = [
   {
@@ -221,6 +222,24 @@ export default function ExplainerWatch() {
           )}
         </div>
 
+        <div
+          className="vault-ring mt-4 rounded-2xl border p-4 text-sm leading-relaxed"
+          data-testid="pending-vs-confirmed"
+          style={{ borderColor: 'var(--border-gold)', background: 'var(--surface-raised)' }}
+        >
+          <p
+            className="text-[10px] font-black tracking-widest uppercase"
+            style={{ color: 'var(--accent-gold)' }}
+          >
+            Pending ≠ confirmed
+          </p>
+          <p className="mt-2" style={{ color: 'var(--text-secondary)' }}>
+            <strong style={{ color: 'var(--text-primary)' }}>Pending</strong> means calendars have
+            the fingerprint. <strong style={{ color: 'var(--accent-success)' }}>Confirmed</strong>{' '}
+            means a Bitcoin block includes it. Do not treat pending as final.
+          </p>
+        </div>
+
         <div className="mt-4">
           <div
             className="h-1.5 overflow-hidden rounded-full"
@@ -271,6 +290,27 @@ export default function ExplainerWatch() {
             {muted ? <VolumeX size={16} /> : <Volume2 size={16} />}
             {muted ? 'Sound off' : 'Sound on'}
           </button>
+        </div>
+
+        <div
+          className="mt-6 rounded-2xl border p-4"
+          style={{ borderColor: 'var(--border)', background: 'var(--bg-secondary)' }}
+        >
+          <p
+            className="text-[10px] font-black tracking-widest uppercase"
+            style={{ color: 'var(--text-secondary)' }}
+          >
+            Longer cut (~80s audio)
+          </p>
+          <p className="mt-1 text-sm" style={{ color: 'var(--text-muted)' }}>
+            Same story, spoken. The 10s video stays primary until a new MP4 ships.
+          </p>
+          <audio className="mt-3 w-full" controls preload="none" src={LONG_VO_SRC}>
+            Your browser does not support audio.
+          </audio>
+        </div>
+
+        <div className="mt-4 flex flex-wrap items-center justify-center gap-2 sm:gap-3">
           <Link
             to="/stamp"
             className="inline-flex min-h-[48px] items-center gap-2 rounded-2xl border px-5 text-sm font-black uppercase"
