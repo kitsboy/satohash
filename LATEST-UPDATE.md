@@ -2,4 +2,4 @@
 
 Brief: Live stamp→verify loop + CI Lighthouse mobile soft gate + WebKit chrome QA + gold/navy visual polish. Free stamps ON.
 
-Commit: pending push · build 222
+Commit: `016ec13` · build 223
