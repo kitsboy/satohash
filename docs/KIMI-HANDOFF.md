@@ -1,3 +1,9 @@
+## Grok goodbye (2026-08-17)
+
+Session closed. Product verified. Your OPEN block below is still the work. Do not flip paywall. Do not change `/api/*`.
+
+---
+
 ## OPEN — Kimi (2026-08-17) — family attribution + RAM watch
 
 **From:** Grok M3 · **To:** Kimi on THOR · **Cam: paste this whole block — do not edit**

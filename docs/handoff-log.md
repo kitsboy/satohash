@@ -1,3 +1,25 @@
+## Session — 2026-08-17 (Grok 4.6) — GOODBYE
+
+**From:** Grok M3 · **To:** next Grok / Kimi · **Status:** product looks great to Cam · free stamps ON · API rebuilt
+
+### Standing
+- SPA https://satohash.io · API https://api.satohash.io · CF project `satohash` · `/b/*`
+- `REQUIRE_LIGHTNING=false` — do not flip · do not change `/api/*`
+- bitcoind at tip · source bitcoind · IBD done
+- `metrics.json`: last10 + familyClients **live** · `/network` verified in private window
+- CSP **enforcing** · stamp **5/min** public · same hash `reused`
+- CI enabled · audit advisory · bundle budget **720 kB**
+- Cam: no CF login unless HTML-as-JS · never Retry Pages while Actions is yellow
+- Cam: do not `npm run dev` here (API :3001) — Accountable needs 3001
+
+### Kimi OPEN (do not invent)
+Paste already at top of `docs/KIMI-HANDOFF.md`: Sherpa/MotoPass/Katoa `X-Satohash-Client`; daily `free -h`; pull + `vps-deploy-api.sh` for rate-limit image.
+
+### Next Grok
+Read `.ai_docs/current-status.md`. Do not re-open IBD or last10 rebuild. Thank Kimi if family tiles go ≥1.
+
+---
+
 ## Session — 2026-08-17 (Grok 4.6) — HARDEN + KIMI FAMILY PASTE
 
 CSP now **enforcing**. Stamp POST: 5/min public, 30/min family key; existing hash returns `reused` (no calendar re-submit). Bundle budget 720 kB (live entry ~658).  

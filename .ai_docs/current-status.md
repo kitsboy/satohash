@@ -1,7 +1,7 @@
 # Current Status — Satohash
 
 **Version:** **5.0.0-ELITE** (Build ~240)  
-**Last Updated:** 2026-08-17 (Grok 4.6 — CSP enforcing + family Kimi request)  
+**Last Updated:** 2026-08-17 (Grok 4.6 — goodbye)  
 **Frontend:** https://satohash.io · www · CF Pages project **`satohash`**  
 **API:** https://api.satohash.io ✅ LIVE (THOR Docker, image rebuilt 2026-08-17)  
 **Metrics SoT:** `https://api.satohash.io/metrics.json` (`raw.last10` + `raw.familyClients` **live**)  

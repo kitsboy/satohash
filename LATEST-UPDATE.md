@@ -1,5 +1,5 @@
 # satohash — Last Updated 2026-08-17 by Grok 4.6
 
-Brief: CSP enforcing. Stamp 5/min + hash reuse. Kimi: family X-Satohash-Client + RAM. Free stamps ON.
+Brief: Goodbye. Product live, last10/family tiles on, CSP on, free stamps ON. Kimi: family headers + RAM.
 
-Commit: pending this push
+Commit: `516d859` + this goodbye
