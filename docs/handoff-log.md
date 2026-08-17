@@ -1,3 +1,9 @@
+## Session — 2026-08-17 (Grok 4.6) — LEAN + NO RACE
+
+Extracted landing particles off V5Pages barrel. Queued CF deploys (no overlap). Dropped source maps from dist. Removed L402 from JSON-LD. Lazy OTS panel below the fold.
+
+---
+
 ## Session — 2026-08-17 (Grok 4.6) — STALE VERIFY CHUNK
 
 Cam hit `Failed to fetch dynamically imported module: VerificationTool-DvVO52Jg.js` on `/stamp` after a deploy race. Core loop (Stamp / StampDone / Verify / VerifyPublic) is now eager. Lazy routes use `lazyWithReload`. Boot reset no longer requires a service worker (Pixel Chrome).

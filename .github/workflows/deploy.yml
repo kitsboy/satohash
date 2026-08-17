@@ -7,6 +7,11 @@ on:
     branches: [main]
   workflow_dispatch:
 
+# One production deploy at a time — overlapping pushes poisoned /b/* chunks
+concurrency:
+  group: satohash-pages-production
+  cancel-in-progress: false
+
 jobs:
   deploy_cloudflare:
     runs-on: ubuntu-latest

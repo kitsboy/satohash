@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, lazy, Suspense } from 'react'
 import { useTranslation } from 'react-i18next'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Link, Navigate, useSearchParams } from 'react-router-dom'
@@ -20,10 +20,10 @@ import {
 import Footer from '../components/layout/Footer'
 import usePageMeta from '../hooks/usePageMeta'
 import MarketingDesktopNav from '../components/layout/MarketingDesktopNav'
-import OtsVerifyPanel from '../components/stamps/OtsVerifyPanel'
+const OtsVerifyPanel = lazy(() => import('../components/stamps/OtsVerifyPanel'))
 import { getBitcoinNetworkStats } from '../utils/mempool'
 import { BTC_ADDRESS, getApiUrl } from '../config/constants'
-import { ParticleStampCanvas } from './v5/V5Pages'
+import ParticleStampCanvas from '../components/marketing/ParticleStampCanvas'
 import { buildStampPathFromSearch } from '../utils/stampDeepLink'
 import events, { trackEvent } from '../utils/analytics'
 import LiveNodeChip from '../components/shared/LiveNodeChip'
@@ -961,7 +961,9 @@ export default function Landing() {
             viewport={{ once: true }}
             custom={0.1}
           >
-            <OtsVerifyPanel />
+            <Suspense fallback={null}>
+              <OtsVerifyPanel />
+            </Suspense>
           </motion.div>
         </div>
       </section>

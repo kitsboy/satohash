@@ -6,7 +6,8 @@
   "scripts": {
     "server": "node server/index.js",
     "dev": "concurrently \"npm run server\" \"vite\"",
-    "build": "npm run build:metrics && npm run build:ots && vite build && npm run build:strip-metrics && npm run build:verify",
+    "build": "npm run build:metrics && npm run build:ots && vite build && npm run build:strip-metrics && npm run build:strip-maps && npm run build:verify",
+    "build:strip-maps": "node scripts/strip-dist-sourcemaps.js",
     "test:coverage": "vitest run --coverage",
     "build:metrics": "node scripts/fetch-metrics-json.js",
     "build:strip-metrics": "node scripts/strip-dist-metrics.js",
