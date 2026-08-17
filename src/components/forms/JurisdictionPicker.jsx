@@ -11,12 +11,14 @@ export default function JurisdictionPicker({ value, onChange }) {
   return (
     <div className="space-y-2">
       <label
+        htmlFor="jurisdiction"
         className="text-[10px] font-black tracking-widest uppercase"
         style={{ color: 'var(--text-secondary)' }}
       >
         Jurisdiction
       </label>
       <select
+        id="jurisdiction"
         value={value}
         onChange={(e) => onChange(e.target.value)}
         className="w-full rounded-xl border px-4 py-3 text-sm"

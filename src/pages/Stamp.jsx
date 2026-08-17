@@ -1797,6 +1797,7 @@ export default function Stamp() {
                   </span>
                   <input
                     type="checkbox"
+                    aria-label="Multi-Party"
                     className="accent-[var(--accent-gold)]"
                     checked={multiParty}
                     onChange={(e) => {
@@ -1873,6 +1874,7 @@ export default function Stamp() {
                   </span>
                   <input
                     type="checkbox"
+                    aria-label="L402 Gating"
                     className="accent-[var(--accent-gold)]"
                     checked={l402Gating}
                     onChange={(e) => setL402Gating(e.target.checked)}

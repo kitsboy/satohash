@@ -10,7 +10,10 @@ test.describe('Static edge — MotoPass integration', () => {
   test('public verify shows valid fingerprint for hash id', async ({ page }) => {
     const hash = 'a'.repeat(64)
     await page.goto(`/verify/${hash}`)
-    await expect(page.getByText(/valid fingerprint|fingerprint/i)).toBeVisible({ timeout: 15000 })
+    // Scope to the page's primary heading — avoids matching the body message too
+    await expect(
+      page.getByRole('heading', { level: 1, name: /valid fingerprint|verified|fingerprint/i })
+    ).toBeVisible({ timeout: 15000 })
   })
 
   test('verify tool accepts hash query param', async ({ page }) => {
@@ -29,7 +32,10 @@ test.describe('Static edge — MotoPass integration', () => {
 
   test('government page loads', async ({ page }) => {
     await page.goto('/government')
-    await expect(page.getByRole('heading', { name: /government/i })).toBeVisible()
+    // Scope to the h1 — the page has multiple "Government" headings (h1 + section h3)
+    await expect(
+      page.getByRole('heading', { level: 1, name: /government/i })
+    ).toBeVisible()
   })
 
   test('widgets page shows embed code', async ({ page }) => {

@@ -10,7 +10,11 @@ test('landing page loads correctly', async ({ page }) => {
 
 test('health check returns ok', async ({ request }) => {
   let response = await request.get('/health');
-  if (!response.ok()) {
+  // vite preview (no backend) serves SPA HTML for /health with status 200 — detect
+  // the content-type so we don't try to JSON-parse an HTML fallback page.
+  const contentType = (response.headers()['content-type'] || '').toLowerCase();
+  const isJson = response.ok() && contentType.includes('application/json');
+  if (!isJson) {
     response = await request.get('https://api.satohash.io/health');
   }
   expect(response.ok()).toBeTruthy();
