@@ -1,3 +1,9 @@
+## Session — 2026-08-17 (Grok 4.6) — CI #64 RED WAS AUDIT GATE
+
+Cam: do nothing on the red run. It died at `npm audit --audit-level=high` and skipped tests. Audit is now advisory; matrix is Node 22 only so e2e actually runs.
+
+---
+
 ## Session — 2026-08-17 (Grok 4.6) — STAMP STEPS + CI DISPATCH
 
 Empty STEP 1–3 on `/stamp` was the wrong `t()` (useI18n vs i18next). Copy + icons restored. `ci.yml` has `workflow_dispatch` + concurrency. Cam enabled the workflow; first push after enable will actually run it (may be red — last May run failed).
