@@ -70,11 +70,12 @@ export async function onRequestGet({ params }) {
 <html lang="en">
 <head>
   <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+  <meta name="format-detection" content="telephone=no"/>
+  <meta name="theme-color" content="#141b25"/>
   <title>${esc(title)}</title>
   <meta name="description" content="${esc(desc)}"/>
   <meta name="robots" content="index,follow"/>
-  <meta name="theme-color" content="#141b25"/>
   <link rel="canonical" href="${canon}"/>
   <link rel="icon" href="https://satohash.io/logo.png"/>
   <meta property="og:site_name" content="Satohash"/>
@@ -82,12 +83,13 @@ export async function onRequestGet({ params }) {
   <meta property="og:title" content="${esc(title)}"/>
   <meta property="og:description" content="${esc(desc)}"/>
   <meta property="og:url" content="${canon}"/>
-  <meta property="og:image" content="https://satohash.io/og-image.svg"/>
+  <meta property="og:image" content="https://satohash.io/media/video/01-stamp-hero.jpg"/>
+  <meta property="og:image:type" content="image/jpeg"/>
   <meta property="og:image:alt" content="Satohash — Bitcoin-anchored proof of existence"/>
   <meta name="twitter:card" content="summary_large_image"/>
   <meta name="twitter:title" content="${esc(title)}"/>
   <meta name="twitter:description" content="${esc(desc)}"/>
-  <meta name="twitter:image" content="https://satohash.io/og-image.svg"/>
+  <meta name="twitter:image" content="https://satohash.io/media/video/01-stamp-hero.jpg"/>
   <script type="application/ld+json">${jsonLd}</script>
   <style>
     :root{--bg:#141b25;--card:#1e2a3a;--gold:#f0b429;--text:#f1f5f9;--muted:#8892a4;--ok:#22d3a5;--line:rgba(240,180,41,.28)}
@@ -108,7 +110,7 @@ export async function onRequestGet({ params }) {
     .pill.ok{background:rgba(34,211,165,.12);color:var(--ok);border:1px solid rgba(34,211,165,.35)}
     .pill.wait{background:rgba(240,180,41,.1);color:var(--gold);border:1px solid var(--line)}
     h1{font-size:1.35rem;line-height:1.2;margin:.7rem 0 .85rem;letter-spacing:-.03em}
-    .h{font-family:ui-monospace,"JetBrains Mono",monospace;font-size:12px;word-break:break-all;
+    .h{font-family:ui-monospace,"JetBrains Mono",monospace;font-size:12px;word-break:break-all;-webkit-text-size-adjust:100%;}
       background:#141b25;border:1px solid rgba(255,255,255,.06);border-radius:.75rem;padding:.75rem;margin:0 0 1rem}
     p{line-height:1.55;font-size:.95rem;margin:0 0 .75rem}
     .muted{color:var(--muted);font-size:.82rem}

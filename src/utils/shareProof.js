@@ -44,7 +44,9 @@ export async function shareProofLink(proof) {
 
   try {
     if (typeof navigator !== 'undefined' && navigator.share) {
-      await navigator.share({ title, text, url })
+      // Chrome Android often drops the `url` field — put the link in text too
+      // so iPhone friends still get a tappable /p/<hash>.
+      await navigator.share({ title, text: `${text}\n${url}`, url })
       return 'shared'
     }
   } catch (err) {

@@ -13,6 +13,10 @@ describe('shareProof', () => {
     expect(url).toMatch(new RegExp(`/verify/${hash}$`))
   })
 
+  it('share text stays honest for iPhone friends', () => {
+    expect(buildShareText({ status: 'pending', filename: 'x.pdf' })).toMatch(/not confirmed/i)
+  })
+
   it('share card URL is /p/{hash}', () => {
     const hash = 'c'.repeat(64)
     expect(buildProofCardUrl({ hash, id: 'uuid-1', source: 'api' })).toMatch(

@@ -40,7 +40,10 @@ body {
 @media (max-width: 767px) {
   .stamp-page input,
   .stamp-page textarea,
-  .stamp-page select {
+  .stamp-page select,
+  .verify-public-page input,
+  .verify-public-page textarea,
+  .verify-public-page select {
     font-size: 16px;
   }
 }

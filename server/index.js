@@ -308,7 +308,7 @@ app.use(
 app.use(hpp())
 // xss-clean is incompatible with Express 5 (read-only req.query); rely on helmet + input validation
 app.use((req, res, next) => {
-  res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=()')
+  res.setHeader('Permissions-Policy', 'camera=(self), microphone=(self), geolocation=()')
   res.setHeader('X-Content-Type-Options', 'nosniff')
   next()
 })

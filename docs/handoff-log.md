@@ -1,3 +1,9 @@
+## Session — 2026-08-17 (Grok 4.6) — PIXEL + IPHONE HARDENING
+
+Cam uses Pixel 10 Pro; friends use iPhone. Camera/mic allowed on-origin. Android Share embeds `/p/<hash>` in text. iMessage OG uses JPEG (not SVG). iOS will not treat the hash as a phone number. Playwright: `--project=pixel` + webkit.
+
+---
+
 ## Session — 2026-08-17 (Grok 4.6) — ZERO-JS CARD FINISH
 
 Cam confirmed live `/p/<hash>` serves the Function card (empty SHA-256 smoke). Finished the card: Institutional Noir HTML, pending≠confirmed, OG + JSON-LD, counsel/stamp/verify, empty-file note, mempool block link.

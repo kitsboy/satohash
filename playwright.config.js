@@ -20,14 +20,19 @@ export default defineConfig({
     {
       name: 'chromium',
       testIgnore: process.env.PLAYWRIGHT_SKIP_LIVE_LOOP
-        ? /safari-chrome\.spec\.js|live-stamp-verify\.spec\.js/
-        : /safari-chrome\.spec\.js/,
+        ? /safari-chrome\.spec\.js|android-chrome\.spec\.js|live-stamp-verify\.spec\.js/
+        : /safari-chrome\.spec\.js|android-chrome\.spec\.js/,
       use: { ...devices['Desktop Chrome'] },
     },
     {
       name: 'webkit',
-      testMatch: /(safari-chrome|mobile-stamp-loop)\.spec\.js/,
+      testMatch: /(safari-chrome|mobile-stamp-loop|proof-card)\.spec\.js/,
       use: { ...devices['iPhone 13'] },
+    },
+    {
+      name: 'pixel',
+      testMatch: /(android-chrome|mobile-stamp-loop|proof-card)\.spec\.js/,
+      use: { ...devices['Pixel 7'] },
     },
   ],
   webServer: process.env.PLAYWRIGHT_SKIP_WEBSERVER
