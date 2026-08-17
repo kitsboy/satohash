@@ -138,7 +138,7 @@
     "uuid": "^13.0.0",
     "xss-clean": "^0.1.4",
     "zod": "^4.3.6",
-    "zustand": "^4.5.0"
+    "zustand": "^5.0.15"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.12.1",
