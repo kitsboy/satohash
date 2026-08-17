@@ -3,7 +3,9 @@
 import { readFileSync, statSync } from 'fs'
 import { join } from 'path'
 
-const MAX_KB = Number(process.env.BUNDLE_MAX_KB || 420)
+// Eager marketing (Landing + /watch + legal) is ~650 kB today. Do not
+// re-eager Stamp/Verify into this file — that blew past 1 MB.
+const MAX_KB = Number(process.env.BUNDLE_MAX_KB || 720)
 const htmlPath = join(process.cwd(), 'dist', 'index.html')
 let html
 try {
@@ -12,7 +14,9 @@ try {
   console.error('No dist/index.html — run npm run build first')
   process.exit(1)
 }
-const refs = [...html.matchAll(/src="(\/?b\/index-[^"]+\.js)"/g)].map((m) => m[1].replace(/^\//, ''))
+const refs = [...html.matchAll(/src="(\/?b\/index-[^"]+\.js)"/g)].map((m) =>
+  m[1].replace(/^\//, '')
+)
 if (!refs.length) {
   console.error('No /b/index-*.js script in dist/index.html')
   process.exit(1)

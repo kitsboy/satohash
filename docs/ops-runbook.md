@@ -17,6 +17,7 @@ Canonical short ops pointer. Detailed procedures remain in:
 3. **Free stamps:** `REQUIRE_LIGHTNING=false` until Cam flips paywall
 4. **Metrics SoT:** `https://api.satohash.io/metrics.json`
 5. **No secrets in git / handoffs**
+6. **One SPA deploy path:** GitHub Actions `Deploy` only — never Retry in the CF Pages UI while Actions is yellow
 
 ## When SPA shows `Unexpected token '<'`
 

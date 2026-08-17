@@ -1,3 +1,10 @@
+## Session — 2026-08-17 (Grok 4.6) — HARDEN + KIMI FAMILY PASTE
+
+CSP now **enforcing**. Stamp POST: 5/min public, 30/min family key; existing hash returns `reused` (no calendar re-submit). Bundle budget 720 kB (live entry ~658).  
+**Kimi OPEN (paste top of KIMI-HANDOFF):** Sherpa/MotoPass/Katoa must send `X-Satohash-Client`; daily bitcoind `free -h`. Cam: never Retry in CF UI. One deploy path = GitHub Actions.
+
+---
+
 ## Session — 2026-08-17 (Grok 4.6) — DOCS CURRENT
 
 **From:** Grok M3 · **To:** next Grok / Kimi · **Status:** product live · API image rebuilt · free stamps ON

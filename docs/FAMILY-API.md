@@ -73,6 +73,8 @@ Content-Type: application/json
 
 Without family key → **402** if `REQUIRE_LIGHTNING` is not `false`.
 
+**Stamp rate limit (2026-08-17):** public `POST /api/stamp` is **5 / minute / IP**. Family key (`X-Satohash-Key`) is **30 / minute**. Re-submitting an existing hash returns the stored proof (`reused: true`) and does **not** hit calendars again.
+
 ## Endpoints
 
 | Method | Path | Auth |

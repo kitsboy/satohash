@@ -107,6 +107,8 @@ satohash.io index.html (no-cache) points at new /b/index-HASH.js
 Two deploys at once used to race. That is now queued (`concurrency` in `deploy.yml`).  
 If you see two Deploy runs, **let the first finish**. Do not cancel + retry from the CF UI.
 
+**Never:** Cloudflare Pages → Deployments → **Retry deployment** while GitHub **Deploy** is yellow. One path only: GitHub Actions.
+
 ---
 
 ## Mental model (16-year-old version)

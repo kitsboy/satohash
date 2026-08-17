@@ -1,3 +1,53 @@
+## OPEN — Kimi (2026-08-17) — family attribution + RAM watch
+
+**From:** Grok M3 · **To:** Kimi on THOR · **Cam: paste this whole block — do not edit**
+
+Do **not** flip `REQUIRE_LIGHTNING`. Do **not** change `/api/*` paths. Do **not** touch Cloudflare Pages.
+
+### 1) Family tiles still 0 (Sherpa / MotoPass / Katoa)
+
+`/network` family tiles for `sherpacarta`, `motopass`, `katoa` are **0**. The Satohash API is fine. Those **product apps** are not sending the client header (or not calling `POST https://api.satohash.io/api/stamp` at all).
+
+For **each** of motopass, sherpacarta (and sherpacarta-canada), katoa:
+
+1. Every `POST https://api.satohash.io/api/stamp` MUST include:
+   ```
+   X-Satohash-Client: motopass
+   ```
+   (or `sherpacarta` / `sherpacarta-canada` / `katoa` — exact id, lowercase)
+2. Prefer `packages/satohash-client` (`createSatohashClient({ clientId: 'motopass' })`).
+3. Deep-link fallback only: `https://satohash.io/stamp?hash=<64hex>&ref=motopass` (SPA will set the header).
+4. After one real stamp per product, hand back:
+   ```
+   curl -sS https://api.satohash.io/metrics.json | python3 -c 'import json,sys; rows=(json.load(sys.stdin).get("raw") or {}).get("familyClients") or [];
+   [print(r.get("id"), r.get("value")) for r in rows if r.get("id") in ("motopass","sherpacarta","sherpacarta-canada","katoa")]'
+   ```
+   Want those values **≥ 1**.
+
+Do **not** invent new API paths. Do **not** stamp fake hashes into production except one smoke per product with `X-Satohash-Client`.
+
+### 2) bitcoind RAM / OOM (standing)
+
+Node died to OOM 2026-07-28. IBD is **done**. Once per day (or after any API rebuild):
+
+```bash
+free -h
+systemctl is-active bitcoind
+bitcoin-cli -getinfo | head -20
+```
+
+If RSS climbs or `bitcoind` is dead, restart the unit only (`systemctl start bitcoind`). Do not reindex. Hand back `free -h` + `is-active` if anything looks wrong.
+
+### 3) Pull stamp rate-limit (after this Grok push lands on main)
+
+```bash
+cd /root/satohash && git pull --ff-only origin main && bash scripts/vps-deploy-api.sh
+```
+
+New: public `POST /api/stamp` **5/min/IP**; family key **30/min**; same hash returns existing proof (`reused: true`) — no second calendar submit. Keep `REQUIRE_LIGHTNING=false`.
+
+---
+
 ## Standing (2026-08-17) — current
 
 **From:** Grok M3 · **To:** Kimi / next Grok
@@ -7,11 +57,12 @@
 | Free stamps | `REQUIRE_LIGHTNING=false` — **do not flip** |
 | `/api/*` paths | **do not change** |
 | API image | **Rebuilt** 2026-08-17 — `raw.last10` + `raw.familyClients` live |
-| bitcoind | At tip · source bitcoind · IBD done · watch RAM only |
+| bitcoind | At tip · source bitcoind · IBD done · **daily RAM watch (open)** |
+| Family tiles | sherpa/motopass/katoa still **0** — **open** (header on those apps) |
 | Cam / CF | Do not log in unless site broken — `docs/CLOUDFLARE-PAGES.md` |
 | Deploy API | `bash scripts/vps-deploy-api.sh` on THOR checkout |
 
-No open rebuild. Next Kimi work is health/RAM only unless Cam asks.
+Open Kimi work: **family X-Satohash-Client** + **RAM watch**. No image rebuild unless those apps need a new Satohash API (they do not).
 
 ---
 

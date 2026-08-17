@@ -60,7 +60,8 @@ export function register(app, deps) {
 
   const stampRateLimit = rateLimit({
     windowMs: 60 * 1000,
-    max: 10,
+    // Public/free path is the calendar-spam surface. Family key gets more room.
+    max: (req) => (req.headers['x-satohash-key'] ? 30 : 5),
     standardHeaders: true,
     legacyHeaders: false,
     message: { error: 'Too many stamp requests. Please wait.' }
@@ -105,6 +106,24 @@ export function register(app, deps) {
         .toLowerCase()
         .slice(0, 64)
       const hashBuffer = Buffer.from(hash, 'hex')
+      try {
+        const existing = db
+          .prepare('SELECT id, hash, status FROM timestamps WHERE hash = ? LIMIT 1')
+          .get(hash)
+        if (existing?.id) {
+          return res.json({
+            success: true,
+            reused: true,
+            id: existing.id,
+            hash: existing.hash,
+            status: existing.status || 'pending',
+            message: 'Hash already stamped — returning existing proof (no new calendar submit).'
+          })
+        }
+      } catch {
+        /* table/column variance — continue to new stamp */
+      }
+
       const opSHA256 = new OpenTimestamps.Ops.OpSHA256()
       const detached = OpenTimestamps.DetachedTimestampFile.fromHash(opSHA256, hashBuffer)
 

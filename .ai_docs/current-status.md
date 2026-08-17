@@ -1,7 +1,7 @@
 # Current Status — Satohash
 
 **Version:** **5.0.0-ELITE** (Build ~240)  
-**Last Updated:** 2026-08-17 (Grok 4.6 — docs current after Kimi API rebuild)  
+**Last Updated:** 2026-08-17 (Grok 4.6 — CSP enforcing + family Kimi request)  
 **Frontend:** https://satohash.io · www · CF Pages project **`satohash`**  
 **API:** https://api.satohash.io ✅ LIVE (THOR Docker, image rebuilt 2026-08-17)  
 **Metrics SoT:** `https://api.satohash.io/metrics.json` (`raw.last10` + `raw.familyClients` **live**)  
@@ -84,10 +84,14 @@
 
 ## Ops still open
 
+- [ ] **Kimi:** Sherpa / MotoPass / Katoa send `X-Satohash-Client` (tiles still 0)  
+- [ ] **Kimi:** daily bitcoind RAM (`free -h`)  
 - [ ] Paywall only when Cam flips (`docs/PAYWALL-STAGING.md`)  
 - [ ] Physical iPhone Safari (friends share `/p/<hash>`)  
-- [ ] Remaining 22 npm advisories need breaking OTS upgrades — do not `--force`  
-- [ ] Dependabot PRs — ignore unless Grok merges (setup-node v7 already on main)  
+- [ ] Remaining 22 npm advisories — do not `--force`  
+- [x] CSP **enforcing** (2026-08-17)  
+- [x] Stamp rate limit 5/min public · reuse existing hash  
+- [x] One deploy path documented (no CF Retry)  
 
 ## Local ports (M3 / Cam)
 

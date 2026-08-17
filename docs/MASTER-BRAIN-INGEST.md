@@ -6,6 +6,20 @@
 
 ---
 
+## Paste block (2026-08-17 — family header + RAM)
+
+```markdown
+### Satohash family attribution (OPEN — Kimi)
+
+/network tiles for motopass / sherpacarta / katoa are 0.
+Each family app POST /api/stamp MUST send X-Satohash-Client: <id>.
+Prefer packages/satohash-client. Deep-link fallback /stamp?hash=&ref=.
+Do not change /api/* paths. REQUIRE_LIGHTNING=false.
+bitcoind: daily free -h + systemctl is-active bitcoind (OOM 2026-07-28).
+```
+
+---
+
 ## Paste block (2026-08-17 — API metrics last10 LIVE)
 
 ```markdown
