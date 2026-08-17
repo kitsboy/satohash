@@ -61,7 +61,7 @@
     "node": ">=20.0.0"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.93.0",
+    "@anthropic-ai/sdk": "^0.117.1",
     "@radix-ui/react-tooltip": "^1.2.8",
     "@sentry/node": "^10.45.0",
     "@sentry/react": "^10.45.0",
