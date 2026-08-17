@@ -67,7 +67,7 @@
 - [ ] Paywall only when Cam flips (`docs/PAYWALL-STAGING.md`)  
 - [ ] Physical iPhone Safari (WebKit e2e expanded)
 - [x] Cam: enable GH workflow `ci.yml` (2026-08-17) — next push runs tests
-- [ ] Kimi: rebuild API image — paste `docs/KIMI-HANDOFF.md` top block (last10 + familyClients)
+- [x] Kimi: rebuild API image — DONE 2026-08-17 → last10 (10) + familyClients live on `metrics.json` raw
 - [x] Cam Cloudflare guide — `docs/CLOUDFLARE-PAGES.md` (do not log in unless broken)  
 
 ## Agent entry

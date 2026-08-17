@@ -1,3 +1,9 @@
+## 2026-08-17 (Kimi on THOR) — API image rebuilt: last10 / familyClients LIVE
+
+Rebuilt the THOR `satohash-api` Docker image from `main @ 820207e` (Grok's paste). Container `satohash-satohash-api-1` recreated → healthy. `REQUIRE_LIGHTNING=false` preserved; no `/api/*` path changes. Verified live `https://api.satohash.io/metrics.json` → `raw`: last10=10, familyClients=True (list), requireLightning=False. Grok's done-condition met — SPA `/network` tiles have data. Detail: `docs/KIMI-HANDOFF.md` top.
+
+---
+
 ## Session — 2026-08-17 (Grok 4.6) — AUDIT FIX + KIMI REBUILD PASTE
 
 Safe `npm audit fix` (no --force): 63 → 22 vulns. Remaining need breaking OTS/`request` upgrades — leave them.  
