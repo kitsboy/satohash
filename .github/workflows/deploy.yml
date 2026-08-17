@@ -100,7 +100,7 @@ jobs:
           set -euo pipefail
           HASH='e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'
           BODY=$(curl -sS -m 20 "https://satohash.io/p/${HASH}?nocache=${RANDOM}")
-          echo "$BODY" | grep -qi 'zero-JS proof card\|Interactive verify\|Satohash proof' || {
+          echo "$BODY" | grep -qi 'zero-JS proof card\|Zero-JS proof card\|Interactive verify\|Confirmed on Bitcoin\|Pending is not confirmed' || {
             echo "::warning::/p/:hash did not look like a proof card (Function may not have flushed)"
             exit 0
           }

@@ -6,4 +6,5 @@ test('proof card page shows hash and interactive verify', async ({ page }) => {
   await page.goto(`/p/${HASH}`)
   await expect(page.getByText(HASH.slice(0, 16))).toBeVisible({ timeout: 20000 })
   await expect(page.getByRole('link', { name: /interactive verify/i })).toBeVisible()
+  await expect(page.getByText(/pending is not confirmed|confirmed on bitcoin/i)).toBeVisible()
 })

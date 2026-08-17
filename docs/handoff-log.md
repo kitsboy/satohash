@@ -1,3 +1,9 @@
+## Session — 2026-08-17 (Grok 4.6) — ZERO-JS CARD FINISH
+
+Cam confirmed live `/p/<hash>` serves the Function card (empty SHA-256 smoke). Finished the card: Institutional Noir HTML, pending≠confirmed, OG + JSON-LD, counsel/stamp/verify, empty-file note, mempool block link.
+
+---
+
 ## Session — 2026-08-17 (Grok 4.6) — BATCHES 1/2/4/5
 
 **From:** Grok M3 · **Status:** CI isolate LH · `/p/:hash` share card · Umami conversion · family share docs
