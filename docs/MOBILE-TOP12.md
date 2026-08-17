@@ -12,7 +12,10 @@
 | 8 | Verify ELI-5 toggle | `VerifyEli5` on `/verify` |
 | 9 | PWA icons + `start_url=/stamp` | `site.webmanifest`, `/icons/*` |
 | 10 | Mobile e2e | `tests/e2e/mobile-stamp-loop.spec.js` |
-| 11 | Lighthouse mobile gate | `npm run lh:mobile` |
+| 11 | Lighthouse mobile gate | `npm run lh:mobile` + CI soft job |
 | 12 | Empty/error + proof package | `EmptyState`, `proofPackage.js` |
+| 13 | Live stamp → verify e2e | `tests/e2e/live-stamp-verify.spec.js` · `npm run test:live-api` |
+| 14 | WebKit / Safari chrome QA | `tests/e2e/safari-chrome.spec.js` (language + tooltips) |
+| 15 | Live node jewelry | `LiveNodeChip` on landing / stamp / verify / done |
 
 **Graphics:** Imagine → `public/icons/icon-*.png`, `public/media/ui/empty-proof.jpg`

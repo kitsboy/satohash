@@ -1,5 +1,5 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 218) · **Updated:** 2026-08-17
+> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 222) · **Updated:** 2026-08-17
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Deploy — canonical
@@ -84,7 +84,29 @@ Never bake secrets into the SPA.
 
 ---
 
-## 5. Smoke after deploy
+## 5. CI gates
+
+GitHub Actions `.github/workflows/ci.yml`:
+
+| Gate | When | Fail CI? |
+|------|------|----------|
+| lint · i18n · unit · Vite build | every push / PR | yes |
+| Playwright (Chromium + WebKit safari-chrome) | Node 20 | yes |
+| `npm run lh:mobile` (home / stamp / verify) | Node 20 | **no** — soft (`continue-on-error`) |
+| `npm run test:live-api` against `api.satohash.io` | after tests | yes (429 is soft pass) |
+| Live SPA stamp loop | after tests | **no** — soft |
+
+Local:
+
+```bash
+npm run test:live-api
+npm run test:e2e:safari
+BASE_URL=https://satohash.io npm run lh:mobile
+```
+
+---
+
+## 6. Smoke after deploy
 
 ```bash
 curl -sf https://satohash.io/ | grep -oE '/b/index-[^"]+\.js'
@@ -95,6 +117,6 @@ curl -sf https://api.satohash.io/metrics.json | head -c 200
 
 ---
 
-## 6. Rollback
+## 7. Rollback
 
 CF Pages → previous Production deployment. API: previous Docker image / compose. See `docs/ROLLBACK.md`.

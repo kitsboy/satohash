@@ -1,5 +1,5 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 218) · **Updated:** 2026-08-17
+> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 222) · **Updated:** 2026-08-17
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Satohash Design Tokens
@@ -70,6 +70,10 @@ Fonts: **Plus Jakarta Sans** (UI), **Space Grotesk** (headings), **JetBrains Mon
 
 - `.glass-card` — frosted panel
 - `.btn-holographic` — primary CTA
+- `.btn-sheen` — gold CTA shine on hover
+- `.vault-ring` — dual gold ring + inset highlight
+- `.hud-glass` — theme-aware telemetry glass
+- `.live-chip` — own-node / free-stamp jewelry
 - `.pill-success` / `.pill-pending` / `.pill-danger` — status badges
 
 ## Theme Toggle

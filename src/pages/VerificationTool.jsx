@@ -14,6 +14,7 @@ import { useTranslation } from 'react-i18next'
 import { isStaticOnlyMode } from '../utils/staticMode'
 import StaticModeBanner from '../components/shared/StaticModeBanner'
 import VerifyEli5 from '../components/stamps/VerifyEli5'
+import LiveNodeChip from '../components/shared/LiveNodeChip'
 
 const MerklePathNode = ({ level, hash, active }) => (
   <div className={`flex items-center gap-4 ${active ? 'opacity-100' : 'opacity-40'}`}>
@@ -262,14 +263,17 @@ export default function VerificationTool() {
   }
 
   return (
-    <div className="mx-auto max-w-5xl space-y-8 p-4 pb-[calc(7rem+env(safe-area-inset-bottom,0px))] sm:space-y-12 sm:p-6 sm:pb-20 md:p-8">
+    <div className="verify-public-page mx-auto max-w-5xl space-y-8 p-4 pb-[calc(7rem+env(safe-area-inset-bottom,0px))] sm:space-y-12 sm:p-6 sm:pb-20 md:p-8">
       <StaticModeBanner />
       <header className="space-y-2 text-center">
-        <div className="mb-4 inline-flex items-center gap-3 rounded-full border border-[var(--accent-active)]/20 bg-[var(--accent-active)]/10 px-4 py-2">
-          <ShieldCheck className="text-[var(--accent-active)]" size={16} />
-          <span className="text-[10px] font-bold tracking-[0.2em] text-[var(--accent-active)] uppercase">
-            Courtroom-Grade Verification
-          </span>
+        <div className="mb-4 flex flex-wrap items-center justify-center gap-2">
+          <div className="inline-flex items-center gap-3 rounded-full border border-[var(--accent-active)]/20 bg-[var(--accent-active)]/10 px-4 py-2">
+            <ShieldCheck className="text-[var(--accent-active)]" size={16} />
+            <span className="text-[10px] font-bold tracking-[0.2em] text-[var(--accent-active)] uppercase">
+              Courtroom-Grade Verification
+            </span>
+          </div>
+          <LiveNodeChip />
         </div>
         <h1 className="text-3xl font-bold tracking-tighter text-[var(--text-primary)] uppercase sm:text-5xl">
           The Verification Shield
@@ -284,7 +288,7 @@ export default function VerificationTool() {
 
       {/* Input Selector */}
       <div
-        className="group relative space-y-8 overflow-hidden rounded-[2.5rem] border bg-[var(--bg-secondary)] p-8 text-center md:p-16"
+        className="vault-ring group relative space-y-8 overflow-hidden rounded-[2.5rem] border bg-[var(--bg-secondary)] p-8 text-center md:p-16"
         onDragEnter={handleDragEnter}
         onDragLeave={handleDragLeave}
         onDragOver={handleDragOver}
@@ -365,6 +369,7 @@ export default function VerificationTool() {
                   />
                   <input
                     type="text"
+                    data-testid="verify-hash-input"
                     value={hashInput}
                     onChange={(e) => setHashInput(e.target.value)}
                     onKeyDown={(e) => {
@@ -404,9 +409,10 @@ export default function VerificationTool() {
               </div>
             </div>
             <button
+              data-testid="verify-submit"
               onClick={handleVerify}
               disabled={!hashInput && !otsFile}
-              className="h-14 rounded-xl bg-[var(--text-primary)] px-12 font-bold tracking-widest text-[var(--bg-primary)] uppercase transition-all hover:scale-[1.02] disabled:opacity-40"
+              className="btn-sheen h-14 rounded-xl bg-[var(--text-primary)] px-12 font-bold tracking-widest text-[var(--bg-primary)] uppercase transition-all hover:scale-[1.02] disabled:opacity-40"
             >
               Initiate Verification
             </button>
@@ -464,6 +470,7 @@ export default function VerificationTool() {
 
         {result === 'success' && (
           <motion.div
+            data-testid="verify-result"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             className="grid grid-cols-1 gap-12 text-left lg:grid-cols-2"

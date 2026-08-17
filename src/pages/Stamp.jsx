@@ -38,6 +38,7 @@ import StampStickyBar from '../components/stamps/StampStickyBar'
 import StampSuccessActions from '../components/stamps/StampSuccessActions'
 import { persistLastProof } from '../utils/lastProof'
 import { requestWakeLock, releaseWakeLock } from '../utils/wakeLock'
+import LiveNodeChip from '../components/shared/LiveNodeChip'
 
 export default function Stamp() {
   usePageMeta({ page: 'stamp' })
@@ -796,12 +797,15 @@ export default function Stamp() {
     <div className="stamp-page mx-auto max-w-6xl space-y-8 p-4 pb-[calc(8.5rem+env(safe-area-inset-bottom,0px))] sm:space-y-12 sm:pb-24 md:p-8 md:pb-20">
       {/* Secondary trail — primary chrome is MarketingShell on mobile */}
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <p
-          className="text-[11px] font-black tracking-widest uppercase"
-          style={{ color: 'var(--accent-gold)' }}
-        >
-          Free stamp
-        </p>
+        <div className="flex flex-wrap items-center gap-2">
+          <p
+            className="text-[11px] font-black tracking-widest uppercase"
+            style={{ color: 'var(--accent-gold)' }}
+          >
+            Free stamp
+          </p>
+          <LiveNodeChip compact />
+        </div>
         <div className="flex flex-wrap gap-2 sm:gap-3">
           <Link
             to="/verify"
@@ -1224,11 +1228,12 @@ export default function Stamp() {
               borderColor: isDragging ? 'var(--accent-gold)' : 'var(--border)',
               backgroundColor: isDragging ? 'var(--surface-raised)' : 'transparent'
             }}
-            className={`group relative flex min-h-[320px] flex-col items-center justify-center overflow-hidden rounded-[2.5rem] border-2 border-dashed p-6 text-center transition-colors sm:min-h-[400px] sm:p-12 md:h-[460px] ${
+            className={`vault-ring group relative flex min-h-[320px] flex-col items-center justify-center overflow-hidden rounded-[2.5rem] border-2 border-dashed p-6 text-center transition-colors sm:min-h-[400px] sm:p-12 md:h-[460px] ${
               (stampMode === 'single' || stampMode === 'capsule') && stampingStatus === 'idle'
                 ? 'cursor-pointer'
                 : ''
             }`}
+            data-testid="stamp-dropzone"
           >
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,var(--accent-gold),transparent)] opacity-0 transition-opacity group-hover:opacity-[0.03]" />
 
@@ -1603,7 +1608,7 @@ export default function Stamp() {
                   type="button"
                   data-testid="stamp-file-button"
                   onClick={startStamping}
-                  className="relative z-20 hidden h-14 min-h-[52px] w-full items-center justify-center gap-3 rounded-xl font-black tracking-widest uppercase shadow-lg transition-all hover:opacity-95 active:scale-[0.99] md:flex"
+                  className="btn-sheen relative z-20 hidden h-14 min-h-[52px] w-full items-center justify-center gap-3 rounded-xl font-black tracking-widest uppercase shadow-lg transition-all hover:opacity-95 active:scale-[0.99] md:flex"
                   style={{
                     background: 'var(--accent-gold)',
                     color: '#141b25',

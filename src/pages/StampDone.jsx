@@ -8,6 +8,7 @@ import StampSuccessActions from '../components/stamps/StampSuccessActions'
 import EmptyState from '../components/ui/EmptyState'
 import { findStampByHashOrId, localRecordToProof } from '../utils/vaultLocal'
 import { persistLastProof, readLastProof } from '../utils/lastProof'
+import LiveNodeChip from '../components/shared/LiveNodeChip'
 
 /**
  * Dedicated success route so browser Back does not re-submit a stamp.
@@ -84,14 +85,18 @@ export default function StampDone() {
   return (
     <div className="mx-auto max-w-lg space-y-6 p-4 pb-[calc(7rem+env(safe-area-inset-bottom,0px))] sm:p-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <p
-          className="text-[11px] font-black tracking-widest uppercase"
-          style={{ color: 'var(--accent-gold)' }}
-        >
-          Stamp complete
-        </p>
+        <div className="flex flex-wrap items-center gap-2">
+          <p
+            className="text-[11px] font-black tracking-widest uppercase"
+            style={{ color: 'var(--accent-gold)' }}
+          >
+            Stamp complete
+          </p>
+          <LiveNodeChip compact />
+        </div>
         <Link
-          to="/verify"
+          to={proof.hash ? `/verify?hash=${encodeURIComponent(proof.hash)}` : '/verify'}
+          data-testid="done-verify"
           className="inline-flex min-h-[40px] items-center gap-1 rounded-lg border px-3 text-[11px] font-bold tracking-widest uppercase"
           style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
         >
@@ -124,6 +129,29 @@ export default function StampDone() {
             : 'Submitted successfully. Pending is not the same as Bitcoin confirmed.'}
         </p>
       </header>
+
+      <ol
+        className="vault-ring grid grid-cols-1 gap-2 rounded-2xl border p-4 text-left sm:grid-cols-3"
+        style={{ borderColor: 'var(--border)', background: 'var(--surface-raised)' }}
+      >
+        {[
+          { n: '1', t: 'Fingerprint', d: 'Hashed on this device' },
+          { n: '2', t: 'Calendars', d: 'OpenTimestamps pending' },
+          { n: '3', t: 'Bitcoin', d: confirmed ? 'Anchored' : 'Waiting on a block' }
+        ].map((s) => (
+          <li key={s.n} className="min-w-0">
+            <p
+              className="text-[9px] font-black tracking-widest uppercase"
+              style={{ color: 'var(--accent-gold)' }}
+            >
+              {s.n} · {s.t}
+            </p>
+            <p className="mt-0.5 text-xs" style={{ color: 'var(--text-secondary)' }}>
+              {s.d}
+            </p>
+          </li>
+        ))}
+      </ol>
 
       <div className="flex justify-center">
         <StampSuccessActions

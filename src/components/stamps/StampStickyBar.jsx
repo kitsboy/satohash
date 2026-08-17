@@ -36,9 +36,10 @@ export default function StampStickyBar({
         )}
         <button
           type="button"
+          data-testid="stamp-sticky-cta"
           disabled={disabled}
           onClick={onClick}
-          className="min-h-[52px] flex-[2] rounded-xl text-sm font-black tracking-widest uppercase shadow-lg disabled:opacity-50"
+          className="btn-sheen min-h-[52px] flex-[2] rounded-xl text-sm font-black tracking-widest uppercase shadow-lg disabled:opacity-50"
           style={{
             background: 'var(--accent-gold)',
             color: '#141b25',

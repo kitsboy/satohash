@@ -1,5 +1,5 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 218) · **Updated:** 2026-08-17
+> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 222) · **Updated:** 2026-08-17
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Architecture & repo map
@@ -32,6 +32,9 @@ api.satohash.io (Express on THOR)
 | Family contract | `docs/FAMILY-API.md` |
 | OTS deep dive | `docs/OTS-DEEP-LEARN.md` |
 | Agent / deploy | `AGENTS.md` · `docs/deploy.md` · `docs/handoff-log.md` |
+| Live e2e | `tests/e2e/live-stamp-verify.spec.js` · `scripts/live-api-stamp-verify.mjs` |
+| Safari / WebKit | `tests/e2e/safari-chrome.spec.js` |
+| Lighthouse mobile | `scripts/lighthouse-mobile-gate.mjs` (`npm run lh:mobile`) |
 
 ---
 

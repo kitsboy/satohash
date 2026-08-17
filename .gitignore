@@ -16,3 +16,4 @@ data/backups/
 # Runtime artifacts / secrets — never commit
 backups/
 bitcoin.conf
+tmp/

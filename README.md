@@ -1,6 +1,6 @@
 # Satohash v5.0.0-ELITE
 
-[![Version](https://img.shields.io/badge/version-4.1.0--ELITE-indigo.svg)](https://github.com/kitsboy/satohash)
+[![Version](https://img.shields.io/badge/version-5.0.0--ELITE-indigo.svg)](https://github.com/kitsboy/satohash)
 [![License](https://img.shields.io/badge/license-MIT-black.svg)](LICENSE)
 [![Protocol](https://img.shields.io/badge/protocol-OpenTimestamps-orange.svg)](https://opentimestamps.org)
 [![Parent Studio](https://img.shields.io/badge/studio-Give_A_Bit-orange.svg)](https://giveabit.io)

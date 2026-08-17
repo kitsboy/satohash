@@ -159,6 +159,11 @@ body {
     max-width: 100%;
   }
 
+  :focus-visible {
+    outline: 2px solid var(--accent-gold);
+    outline-offset: 2px;
+  }
+
   body {
     font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
     background-image:
@@ -506,6 +511,83 @@ body {
     background: rgba(28, 35, 51, 0.8);
     backdrop-filter: blur(20px);
     border: 1px solid var(--border-gold);
+  }
+
+  /* ─── Grok 4.6 jewelry ──────────────────────────────── */
+  .btn-sheen {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-sheen::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    transform: translateX(-120%);
+    background: linear-gradient(
+      105deg,
+      transparent 30%,
+      rgba(255, 255, 255, 0.22) 48%,
+      transparent 66%
+    );
+    transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+  }
+
+  .btn-sheen:hover::after {
+    transform: translateX(120%);
+  }
+
+  .vault-ring {
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--accent-gold) 18%, transparent),
+      0 12px 40px -18px rgba(0, 0, 0, 0.55),
+      inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  }
+
+  .hud-glass {
+    background: color-mix(in srgb, var(--surface-raised) 86%, transparent);
+    backdrop-filter: blur(18px) saturate(1.12);
+    -webkit-backdrop-filter: blur(18px) saturate(1.12);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-noir);
+  }
+
+  .live-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    border-radius: 9999px;
+    border: 1px solid var(--border-gold);
+    background: var(--accent-gold-subtle);
+    padding: 0.28rem 0.7rem;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: var(--accent-gold);
+    white-space: nowrap;
+    max-width: 100%;
+  }
+
+  .live-chip-dot {
+    width: 0.4rem;
+    height: 0.4rem;
+    border-radius: 9999px;
+    background: var(--text-muted);
+    flex-shrink: 0;
+  }
+
+  .live-chip-dot.is-live {
+    background: var(--accent-success);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-success) 22%, transparent);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .btn-sheen::after,
+    .live-chip-dot.is-live {
+      animation: none !important;
+      transition: none !important;
+    }
   }
 
   @media (min-width: 768px) {

@@ -25,6 +25,7 @@ import { getBitcoinNetworkStats } from '../utils/mempool'
 import { BTC_ADDRESS, getApiUrl } from '../config/constants'
 import { ParticleStampCanvas } from './v5/V5Pages'
 import { buildStampPathFromSearch } from '../utils/stampDeepLink'
+import LiveNodeChip from '../components/shared/LiveNodeChip'
 
 const fadeUp = {
   hidden: { opacity: 0, y: 32 },
@@ -91,6 +92,7 @@ export default function Landing() {
     []
   )
   const [networkStats, setNetworkStats] = useState(defaultNetworkStats)
+  const [nodeHud, setNodeHud] = useState(null)
   const [pwaPrompt, setPwaPrompt] = useState(null)
   const [pwaDismissed, setPwaDismissed] = useState(
     () => localStorage.getItem('pwa-dismissed') === 'true'
@@ -118,6 +120,21 @@ export default function Landing() {
       if (merged.blockHeight) setBlockHeight(merged.blockHeight)
     })
   }, [defaultNetworkStats])
+
+  useEffect(() => {
+    const API = getApiUrl()
+    fetch(`${API}/api/public/readiness`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => {
+        const b = d?.planes?.bitcoin_node
+        if (!b) return
+        setNodeHud({
+          source: b.source
+        })
+        if (b.block_height) setBlockHeight(b.block_height)
+      })
+      .catch(() => {})
+  }, [])
 
   useEffect(() => {
     const handler = (e) => {
@@ -384,8 +401,13 @@ export default function Landing() {
           >
             <Link
               to="/stamp"
-              className="flex min-h-[48px] w-full items-center justify-center gap-2 rounded-2xl px-6 py-3.5 text-base font-black transition-all hover:opacity-90 sm:w-auto sm:px-8 sm:py-4"
-              style={{ backgroundColor: 'var(--accent-gold)', color: '#141b25' }}
+              data-testid="landing-cta-stamp"
+              className="btn-sheen flex min-h-[48px] w-full items-center justify-center gap-2 rounded-2xl px-6 py-3.5 text-base font-black transition-all hover:opacity-90 sm:w-auto sm:px-8 sm:py-4"
+              style={{
+                backgroundColor: 'var(--accent-gold)',
+                color: '#141b25',
+                boxShadow: '0 10px 32px var(--accent-gold-glow)'
+              }}
             >
               {t('landingPage.hero.ctaStamp')} <ArrowRight size={16} />
             </Link>
@@ -465,31 +487,31 @@ export default function Landing() {
             initial="hidden"
             animate="visible"
             custom={0.6}
-            className="mx-auto mt-12 max-w-4xl rounded-3xl border p-6 backdrop-blur-md"
-            style={{
-              borderColor: 'var(--border)',
-              backgroundColor: 'rgba(20, 27, 37, 0.75)',
-              boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.4)'
-            }}
+            className="hud-glass mx-auto mt-12 max-w-4xl rounded-3xl p-6"
           >
             <div
-              className="mb-4 flex items-center justify-between border-b pb-4 text-[10px] font-black tracking-widest uppercase"
-              style={{ borderColor: 'rgba(255,255,255,0.06)' }}
+              className="mb-4 flex flex-wrap items-center justify-between gap-3 border-b pb-4 text-[10px] font-black tracking-widest uppercase"
+              style={{ borderColor: 'var(--border)' }}
             >
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2">
                 <span className="relative flex h-2 w-2">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500"></span>
                 </span>
-                <span className="text-emerald-400">{t('landingPage.telemetry.title')}</span>
+                <span style={{ color: 'var(--accent-success)' }}>
+                  {t('landingPage.telemetry.title')}
+                </span>
+                <LiveNodeChip />
               </div>
               <a
                 href="https://mempool.space"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1 text-sky-400 hover:underline"
+                className="flex items-center gap-1 hover:underline"
+                style={{ color: 'var(--accent-teal)' }}
               >
-                mempool.space <ChevronRight size={10} />
+                {nodeHud?.source === 'bitcoind' ? 'own node + mempool' : 'mempool.space'}{' '}
+                <ChevronRight size={10} />
               </a>
             </div>
 
@@ -505,7 +527,10 @@ export default function Landing() {
                 >
                   {t('landingPage.telemetry.tipHeight')}
                 </span>
-                <span className="block truncate font-mono text-base font-black text-white sm:text-lg md:text-xl">
+                <span
+                  className="block truncate font-mono text-base font-black sm:text-lg md:text-xl"
+                  style={{ color: 'var(--text-primary)' }}
+                >
                   #{blockHeight ? Number(blockHeight).toLocaleString() : '895,441'}
                 </span>
               </div>
@@ -551,7 +576,7 @@ export default function Landing() {
                         ? 'var(--accent-success, #4ade80)'
                         : Number(networkStats.difficultyChange) < 0
                           ? 'var(--accent-pending, #fbbf24)'
-                          : 'white'
+                          : 'var(--text-primary)'
                   }}
                   title={`${networkStats.difficultyChange}%`}
                 >
@@ -575,7 +600,10 @@ export default function Landing() {
                 >
                   {t('landingPage.telemetry.epochProgress')}
                 </span>
-                <span className="mb-1.5 block font-mono text-base font-black text-white sm:text-lg md:text-xl">
+                <span
+                  className="mb-1.5 block font-mono text-base font-black sm:text-lg md:text-xl"
+                  style={{ color: 'var(--text-primary)' }}
+                >
                   {(() => {
                     const n = Number(networkStats.difficultyProgress)
                     if (!Number.isFinite(n)) return '—'
@@ -595,7 +623,7 @@ export default function Landing() {
 
             <div
               className="mt-4 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 border-t pt-4 text-center text-xs"
-              style={{ borderColor: 'rgba(255,255,255,0.06)', color: 'var(--text-muted)' }}
+              style={{ borderColor: 'var(--border)', color: 'var(--text-muted)' }}
             >
               <span>🔐 {t('landingPage.telemetry.zeroKnowledge')}</span>
               <span>⚡ {t('landingPage.telemetry.compliance')}</span>

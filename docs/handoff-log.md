@@ -1,3 +1,42 @@
+## Session — 2026-08-17 (Grok 4.6) — LIVE LOOP + POLISH
+
+**From:** Grok M3 · **To:** Kimi / next Grok · **Status:** Live e2e + LH soft gate + WebKit QA + visual polish **this session** · free stamps ON · no paywall flip
+
+### Done this session
+1. **git pull** — already current (`97d3481`)
+2. **Full e2e** — landing → stamp → API → `/stamp/done` → verify  
+   - UI: `tests/e2e/live-stamp-verify.spec.js` · `npm run test:e2e:live`  
+   - API: `scripts/live-api-stamp-verify.mjs` · `npm run test:live-api` (429 soft pass)
+3. **CI Lighthouse mobile soft gate** — Node 20 job, `continue-on-error`, artifact + step summary
+4. **Safari / WebKit** — `tests/e2e/safari-chrome.spec.js` (language menu + tooltips + /verify overflow). Playwright WebKit / iPhone 13 — not a physical iPhone
+5. **Visual polish** (existing gold/navy noir, not a light-theme flip)  
+   - `LiveNodeChip` on landing / stamp / verify / done  
+   - `.btn-sheen` · `.vault-ring` · `.hud-glass` · `:focus-visible` gold  
+   - Theme-aware landing HUD · own-node tip height · done next-steps + hash verify link
+6. **Stale test** — `auth-stamp` no longer expects `/stamp` → `/access`
+7. **Docs** — status, handoff, deploy CI table, architecture e2e pointers, DESIGN-TOKENS, README badge 5.0.0-ELITE · build **222**
+
+### Standing (do not re-open)
+- Free stamps · `REQUIRE_LIGHTNING=false`
+- bitcoind **at tip** · `source: bitcoind` · IBD **done**
+- SPA → `https://api.satohash.io` only
+- Metrics SoT: `https://api.satohash.io/metrics.json`
+
+### Next (suggested — not started)
+- Physical-device Safari (this session used WebKit)
+- CI Lighthouse `FAIL_HARD=1` once scores are stable
+- Longer explainer when Cam ready
+- **Do not** flip paywall
+
+### Git
+- Build: `222` · version `5.0.0-ELITE`
+- Deploy: push `main` → GHA Deploy
+
+### Docs
+- `docs/handoff-log.md` · `.ai_docs/current-status.md` · `docs/deploy.md` · `docs/MOBILE-TOP12.md`
+
+---
+
 ## Session — 2026-08-16 (Grok) — GOODBYE
 
 **From:** Grok M3 · **To:** Kimi / next Grok · **Status:** Mobile overflow + public docs **pushed** · free stamps ON · no paywall flip

@@ -19,7 +19,13 @@ export default defineConfig({
   projects: [
     {
       name: 'chromium',
+      testIgnore: /safari-chrome\.spec\.js/,
       use: { ...devices['Desktop Chrome'] },
+    },
+    {
+      name: 'webkit',
+      testMatch: /safari-chrome\.spec\.js/,
+      use: { ...devices['iPhone 13'] },
     },
   ],
   webServer: process.env.PLAYWRIGHT_SKIP_WEBSERVER

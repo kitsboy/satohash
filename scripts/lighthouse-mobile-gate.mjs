@@ -74,8 +74,36 @@ for (const route of ROUTES) {
 }
 
 const summaryPath = join(outDir, 'summary.json')
-writeFileSync(summaryPath, JSON.stringify({ base: BASE, thresholds: THRESHOLDS, results }, null, 2))
+const summary = {
+  base: BASE,
+  thresholds: THRESHOLDS,
+  failed,
+  results,
+  generatedAt: new Date().toISOString()
+}
+writeFileSync(summaryPath, JSON.stringify(summary, null, 2))
 console.log(`\nWrote ${summaryPath}`)
+
+if (process.env.GITHUB_STEP_SUMMARY) {
+  const lines = [
+    `### Lighthouse mobile (soft) — ${BASE}`,
+    '',
+    '| Route | Perf | A11y | BP | SEO |',
+    '|-------|------|------|----|-----|'
+  ]
+  for (const row of results) {
+    if (row.error) {
+      lines.push(`| ${row.route} | error | — | — | — |`)
+      continue
+    }
+    const s = row.scores || {}
+    const pct = (n) => (typeof n === 'number' ? String(Math.round(n * 100)) : '—')
+    lines.push(
+      `| ${row.route} | ${pct(s.performance)} | ${pct(s.accessibility)} | ${pct(s['best-practices'])} | ${pct(s.seo)} |`
+    )
+  }
+  writeFileSync(process.env.GITHUB_STEP_SUMMARY, `${lines.join('\n')}\n`, { flag: 'a' })
+}
 
 if (FAIL_HARD && failed) {
   process.exit(1)

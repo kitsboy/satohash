@@ -46,9 +46,18 @@ export default function MarketingDesktopNav({ onDonate }) {
         hash: true,
         icon: HelpCircle
       },
-      { label: t('landingPage.nav.features', { defaultValue: 'Features' }), href: '/#features', hash: true, icon: LayoutGrid },
+      {
+        label: t('landingPage.nav.features', { defaultValue: 'Features' }),
+        href: '/#features',
+        hash: true,
+        icon: LayoutGrid
+      },
       { label: 'Explainer', href: '/watch', icon: Fingerprint },
-      { label: t('nav.comparison', { defaultValue: 'Compare' }), href: '/comparison', icon: GitCompare },
+      {
+        label: t('nav.comparison', { defaultValue: 'Compare' }),
+        href: '/comparison',
+        icon: GitCompare
+      },
       { label: 'Government', href: '/government', icon: Building2 },
       { label: t('landingPage.nav.legal', { defaultValue: 'Trust' }), href: '/trust', icon: Scale },
       { label: 'Docs', href: '/docs', icon: BookOpen },
@@ -59,7 +68,17 @@ export default function MarketingDesktopNav({ onDonate }) {
 
   const allLinks = useMemo(
     () => [
-      ...primary.map((l) => ({ ...l, icon: l.href === '/stamp' ? Fingerprint : l.href === '/verify' ? ShieldCheck : l.href === '/templates' ? FileText : BadgeDollarSign })),
+      ...primary.map((l) => ({
+        ...l,
+        icon:
+          l.href === '/stamp'
+            ? Fingerprint
+            : l.href === '/verify'
+              ? ShieldCheck
+              : l.href === '/templates'
+                ? FileText
+                : BadgeDollarSign
+      })),
       ...more
     ],
     [primary, more]
@@ -190,7 +209,7 @@ export default function MarketingDesktopNav({ onDonate }) {
               )}
               <Link
                 to="/stamp"
-                className="inline-flex h-10 shrink-0 items-center gap-1.5 rounded-xl px-4 text-[11px] font-black tracking-wide uppercase transition-opacity hover:opacity-90"
+                className="btn-sheen inline-flex h-10 shrink-0 items-center gap-1.5 rounded-xl px-4 text-[11px] font-black tracking-wide uppercase transition-opacity hover:opacity-90"
                 style={{ background: 'var(--accent-gold)', color: '#141b25' }}
               >
                 {t('landingPage.nav.startFree', { defaultValue: 'Stamp free' })}
@@ -216,7 +235,7 @@ export default function MarketingDesktopNav({ onDonate }) {
           <LanguageSwitcher compact />
           <Link
             to="/stamp"
-            className="inline-flex h-10 min-h-[40px] items-center rounded-xl px-3 text-[11px] font-black uppercase"
+            className="btn-sheen inline-flex h-10 min-h-[40px] items-center rounded-xl px-3 text-[11px] font-black uppercase"
             style={{ background: 'var(--accent-gold)', color: '#141b25' }}
             onClick={() => setNavOpen(false)}
           >
@@ -248,7 +267,9 @@ export default function MarketingDesktopNav({ onDonate }) {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.16 }}
             className="fixed inset-0 z-[99] md:hidden"
-            style={{ top: 'calc(3.5rem + env(safe-area-inset-top, 0px) + var(--satohash-health-banner-h, 0px))' }}
+            style={{
+              top: 'calc(3.5rem + env(safe-area-inset-top, 0px) + var(--satohash-health-banner-h, 0px))'
+            }}
           >
             <button
               type="button"
@@ -292,7 +313,9 @@ export default function MarketingDesktopNav({ onDonate }) {
                       >
                         <Icon size={17} />
                       </span>
-                      <span className="flex-1 text-left text-[15px] font-semibold">{link.label}</span>
+                      <span className="flex-1 text-left text-[15px] font-semibold">
+                        {link.label}
+                      </span>
                     </>
                   )
                   const cls =

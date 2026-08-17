@@ -63,6 +63,7 @@ export default function StampSuccessActions({
           SHA-256 fingerprint
         </p>
         <p
+          data-testid="done-hash"
           className="font-mono text-xs break-all select-all"
           style={{ color: 'var(--text-primary)' }}
         >
