@@ -170,7 +170,7 @@ export default function VerifyPublic() {
     // Update OG meta tags dynamically
     const API = getApiUrl()
     const ogImageUrl = isStaticOnlyMode()
-      ? `${window.location.origin}/og-image.svg`
+      ? `${window.location.origin}/media/video/01-stamp-hero.jpg`
       : `${API}/api/og/${proof.hash || proof.id}`
 
     const setMeta = (property, content) => {

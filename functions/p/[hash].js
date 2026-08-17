@@ -17,7 +17,12 @@ function utc(raw) {
   if (!raw) return ''
   const d = new Date(raw)
   if (Number.isNaN(d.getTime())) return esc(String(raw))
-  return esc(d.toISOString().replace('T', ' ').replace(/\.\d{3}Z$/, ' UTC'))
+  return esc(
+    d
+      .toISOString()
+      .replace('T', ' ')
+      .replace(/\.\d{3}Z$/, ' UTC')
+  )
 }
 
 export async function onRequestGet({ params }) {
@@ -38,6 +43,7 @@ export async function onRequestGet({ params }) {
     /* hash-only card */
   }
 
+  const validHash = /^[a-f0-9]{64}$/i.test(hex)
   const status = proof.status || 'pending'
   const confirmed = status === 'confirmed'
   const block = proof.bitcoin_block_height
@@ -75,7 +81,7 @@ export async function onRequestGet({ params }) {
   <meta name="theme-color" content="#141b25"/>
   <title>${esc(title)}</title>
   <meta name="description" content="${esc(desc)}"/>
-  <meta name="robots" content="index,follow"/>
+  <meta name="robots" content="${validHash ? 'index,follow' : 'noindex,follow'}"/>
   <link rel="canonical" href="${canon}"/>
   <link rel="icon" href="https://satohash.io/logo.png"/>
   <meta property="og:site_name" content="Satohash"/>

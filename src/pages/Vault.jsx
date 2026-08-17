@@ -41,6 +41,7 @@ import { getOfflineQueue, findStampByHashOrId, otsBase64ToBlob } from '../utils/
 import { upgradeOtsBrowser } from '../utils/otsClient'
 import { isStaticOnlyMode } from '../utils/staticMode'
 import PinModal from '../components/forms/PinModal'
+import { buildProofCardUrl } from '../utils/shareProof'
 
 const StatusBadge = ({ status }) => {
   const { t } = useI18n()
@@ -1340,10 +1341,10 @@ export default function Vault() {
                             label={tv('vaultPage.actions.badge')}
                             onClick={() => {
                               navigator.clipboard.writeText(
-                                window.location.origin + '/verify/' + item.id
+                                buildProofCardUrl({ hash: item.fullHash, id: item.id })
                               )
-                              toast.success('Proof URL Copied', {
-                                description: 'Share link is in your clipboard'
+                              toast.success('Proof card copied', {
+                                description: 'Share /p/<hash> — works in iMessage'
                               })
                             }}
                           />

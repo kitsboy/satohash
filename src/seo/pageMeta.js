@@ -1469,6 +1469,135 @@ export const pageMeta = {
       description: 'Satohash 如何使用比特币和 OpenTimestamps，无需托管钱包。'
     }
   },
+  watch: {
+    en: {
+      title: 'Watch — 10s Satohash Explainer',
+      description:
+        'Ten-second Kimi explainer: hash a file on your device, timestamp it with OpenTimestamps, prove it on Bitcoin.'
+    },
+    es: {
+      title: 'Ver — Explicador Satohash de 10s',
+      description:
+        'Explicador de 10 segundos: hashea en tu dispositivo y ancla la prueba en Bitcoin.'
+    },
+    fr: {
+      title: 'Regarder — Explainer Satohash 10s',
+      description: 'Explainer de 10 secondes : hachez sur l’appareil, ancrez sur Bitcoin.'
+    },
+    de: {
+      title: 'Ansehen — 10s Satohash-Erklärer',
+      description: '10-Sekunden-Erklärer: lokal hashen, auf Bitcoin verankern.'
+    },
+    pt: {
+      title: 'Assistir — Explainer Satohash de 10s',
+      description: 'Explainer de 10 segundos: hash no dispositivo, âncora no Bitcoin.'
+    },
+    sw: {
+      title: 'Tazama — Maelezo ya Satohash sekunde 10',
+      description: 'Maelezo ya sekunde 10: hash kwenye kifaa, funga kwenye Bitcoin.'
+    },
+    zh: {
+      title: '观看 — 10 秒 Satohash 讲解',
+      description: '十秒讲解：在设备上哈希，锚定到比特币。'
+    }
+  },
+  status: {
+    en: {
+      title: 'Status — Live API & Bitcoin Node',
+      description:
+        'Public Satohash status: API readiness, own bitcoind tip, calendars, free stamps (paywall off).'
+    },
+    es: {
+      title: 'Estado — API y nodo Bitcoin en vivo',
+      description: 'Estado público: API, nodo Bitcoin propio, calendarios, sellos gratis.'
+    },
+    fr: {
+      title: 'Statut — API et nœud Bitcoin',
+      description: 'Statut public : API, nœud Bitcoin, calendriers, tamponnage gratuit.'
+    },
+    de: {
+      title: 'Status — Live-API & Bitcoin-Node',
+      description: 'Öffentlicher Status: API, eigener Bitcoin-Node, Kalender, freie Stempel.'
+    },
+    pt: {
+      title: 'Status — API e nó Bitcoin ao vivo',
+      description: 'Status público: API, nó Bitcoin próprio, calendários, carimbos grátis.'
+    },
+    sw: {
+      title: 'Hali — API na nodi ya Bitcoin',
+      description: 'Hali ya umma: API, nodi ya Bitcoin, kalenda, muhuri wa bure.'
+    },
+    zh: {
+      title: '状态 — 实时 API 与比特币节点',
+      description: '公开状态：API、自有比特币节点、日历、免费盖章。'
+    }
+  },
+  counsel: {
+    en: {
+      title: 'For counsel — What a Satohash stamp is',
+      description:
+        'OpenTimestamps / Bitcoin proof of existence for eIDAS, ESIGN, and UETA readers. Pending is not confirmed.'
+    },
+    es: {
+      title: 'Para abogados — Qué es un sello Satohash',
+      description:
+        'Prueba de existencia OpenTimestamps / Bitcoin para lectores eIDAS, ESIGN y UETA.'
+    },
+    fr: {
+      title: 'Pour les avocats — Qu’est-ce qu’un tampon Satohash',
+      description: 'Preuve d’existence OpenTimestamps / Bitcoin pour lecteurs eIDAS, ESIGN et UETA.'
+    },
+    de: {
+      title: 'Für Anwälte — Was ein Satohash-Stempel ist',
+      description: 'OpenTimestamps-/Bitcoin-Existenznachweis für eIDAS, ESIGN und UETA.'
+    },
+    pt: {
+      title: 'Para advogados — O que é um carimbo Satohash',
+      description: 'Prova de existência OpenTimestamps / Bitcoin para leitores eIDAS, ESIGN e UETA.'
+    },
+    sw: {
+      title: 'Kwa mawakili — Muhuri wa Satohash ni nini',
+      description: 'Ushahidi wa OpenTimestamps / Bitcoin kwa eIDAS, ESIGN na UETA.'
+    },
+    zh: {
+      title: '致律师 — Satohash 盖章是什么',
+      description: '面向 eIDAS、ESIGN、UETA 读者的 OpenTimestamps / 比特币存在证明。'
+    }
+  },
+  network: {
+    en: {
+      title: 'Network — Calendars, Bitcoin, Family Clients',
+      description:
+        'Live OpenTimestamps calendars, own-node Bitcoin height, recent stamps, and family client attribution.'
+    },
+    es: {
+      title: 'Red — Calendarios, Bitcoin, clientes familia',
+      description:
+        'Calendarios OpenTimestamps, altura Bitcoin, sellos recientes y clientes familia.'
+    },
+    fr: {
+      title: 'Réseau — Calendriers, Bitcoin, clients famille',
+      description:
+        'Calendriers OpenTimestamps, hauteur Bitcoin, tampons récents et clients famille.'
+    },
+    de: {
+      title: 'Netzwerk — Kalender, Bitcoin, Familien-Clients',
+      description: 'OpenTimestamps-Kalender, Bitcoin-Höhe, letzte Stempel und Familien-Clients.'
+    },
+    pt: {
+      title: 'Rede — Calendários, Bitcoin, clientes família',
+      description:
+        'Calendários OpenTimestamps, altura Bitcoin, carimbos recentes e clientes família.'
+    },
+    sw: {
+      title: 'Mtandao — Kalenda, Bitcoin, wateja wa familia',
+      description: 'Kalenda za OpenTimestamps, urefu wa Bitcoin, muhuri wa hivi karibuni na wateja.'
+    },
+    zh: {
+      title: '网络 — 日历、比特币、家族客户端',
+      description: 'OpenTimestamps 日历、自有节点高度、最近盖章与家族客户端。'
+    }
+  },
   notFound: {
     en: {
       title: 'Page Not Found',

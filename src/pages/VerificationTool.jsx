@@ -2,7 +2,6 @@ import { motion } from 'framer-motion'
 import { Upload, ShieldCheck, Hash, Globe, Database, CheckCircle2, XCircle } from 'lucide-react'
 import { useState, useRef, useCallback, useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import { jsPDF } from 'jspdf'
 import { toast } from 'sonner'
 import usePageMeta from '../hooks/usePageMeta'
 import { getApiUrl } from '../config/constants'
@@ -256,7 +255,8 @@ export default function VerificationTool() {
     }
   }
 
-  const downloadReport = () => {
+  const downloadReport = async () => {
+    const { jsPDF } = await import('jspdf')
     const doc = new jsPDF()
     doc.setFontSize(20)
     doc.text('VERIFICATION REPORT', 20, 30)

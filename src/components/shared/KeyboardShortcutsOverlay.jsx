@@ -2,6 +2,10 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { X, Command } from 'lucide-react'
 
 const SHORTCUTS = [
+  { keys: ['S'], label: 'Go to Stamp' },
+  { keys: ['V'], label: 'Go to Verify' },
+  { keys: ['G'], label: 'Watch explainer' },
+  { keys: ['D'], label: 'Open docs' },
   { keys: ['⌘', 'K'], label: 'Open command palette' },
   { keys: ['⌘', 'S'], label: 'Go to Stamp' },
   { keys: ['⌘', 'V'], label: 'Go to Vault' },

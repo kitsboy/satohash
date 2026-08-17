@@ -48,6 +48,7 @@ function fmt(s) {
 
 export default function ExplainerWatch() {
   usePageMeta({
+    page: 'watch',
     title: 'Explainer — Satohash',
     description:
       '10-second Kimi explainer: stamp files onto Bitcoin with OpenTimestamps. Free. Sovereign. Private. Longer cut coming soon.'

@@ -3,5 +3,8 @@ Allow: /
 Disallow: /api/
 Disallow: /admin/
 Disallow: /metrics
+# Empty proof-card / verify shells — real /p/<64hex> stays indexable
+Disallow: /p/$
+Disallow: /verify/$
 
 Sitemap: https://satohash.io/sitemap.xml

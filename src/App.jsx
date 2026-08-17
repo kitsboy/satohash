@@ -22,6 +22,7 @@ import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import { getApiUrl } from './config/constants'
 import { isMarketingPublicPath, needsMarketingShell } from './utils/publicRoutes'
+import useAppHotkeys from './hooks/useAppHotkeys'
 
 import { lazyWithReload } from './utils/lazyWithReload'
 import Stamp from './pages/Stamp'
@@ -169,6 +170,7 @@ const TimestampVerificationHelp = lazyWithReload(() => import('./pages/timestamp
 
 function AppContent() {
   const location = useLocation()
+  useAppHotkeys()
 
   const reduceMotion =
     typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches

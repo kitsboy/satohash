@@ -331,6 +331,10 @@ export default function AppShellNoir({ children }) {
                 style={{ borderColor: 'var(--border)' }}
               >
                 {[
+                  ['S', 'Stamp'],
+                  ['V', 'Verify'],
+                  ['G', 'Watch'],
+                  ['D', 'Docs'],
                   ['⌘S', 'Stamp'],
                   ['⌘V', 'Vault'],
                   ['⌘E', 'Explorer'],

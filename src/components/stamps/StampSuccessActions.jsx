@@ -1,11 +1,11 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { QRCodeSVG as QRCode } from 'qrcode.react'
 import { Share2, Download, Package, Link2, Vault } from 'lucide-react'
 import { toast } from 'sonner'
-import { downloadCertificate } from '../../utils/certificate'
+
 import { getApiUrl } from '../../config/constants'
-import { buildVerifyUrl, buildProofCardUrl, shareProofLink } from '../../utils/shareProof'
+import { buildProofCardUrl, shareProofLink } from '../../utils/shareProof'
 import { exportProofBundle } from '../../utils/proofPackage'
 import ProofStatusPill from './ProofStatusPill'
 import CalendarStrip from './CalendarStrip'
@@ -24,15 +24,27 @@ export default function StampSuccessActions({
 }) {
   const [busy, setBusy] = useState(false)
   const [showQr, setShowQr] = useState(true)
-  const verifyUrl = useMemo(() => buildVerifyUrl(proof), [proof])
   const shareUrl = useMemo(() => buildProofCardUrl(proof), [proof])
   const hasHostedId =
     proof?.id && proof?.source !== 'browser-ots' && !String(proof.id).startsWith('ots-')
 
+  useEffect(() => {
+    const hash = String(proof?.hash || '').toLowerCase()
+    if (!/^[a-f0-9]{64}$/.test(hash)) return undefined
+    const href = `/p/${hash}`
+    const existing = document.querySelector(`link[rel="prefetch"][href="${href}"]`)
+    if (existing) return undefined
+    const link = document.createElement('link')
+    link.rel = 'prefetch'
+    link.href = href
+    document.head.appendChild(link)
+    return () => link.remove()
+  }, [proof?.hash])
+
   const onShare = async () => {
     const r = await shareProofLink(proof)
     if (r === 'shared') toast.success('Shared')
-    else if (r === 'copied') toast.success('Verify link copied')
+    else if (r === 'copied') toast.success('Proof card link copied')
     else toast.error('Could not share — copy the link manually')
   }
 
@@ -198,7 +210,8 @@ export default function StampSuccessActions({
 
         <button
           type="button"
-          onClick={() =>
+          onClick={async () => {
+            const { downloadCertificate } = await import('../../utils/certificate')
             downloadCertificate({
               id: proof?.id || 'pending',
               name: proof?.filename || 'Document',
@@ -207,7 +220,7 @@ export default function StampSuccessActions({
               date: new Date().toISOString().split('T')[0],
               status: isConfirmed || proof?.status === 'confirmed' ? 'confirmed' : 'pending'
             })
-          }
+          }}
           className="flex min-h-[48px] items-center justify-center gap-2 rounded-xl border py-3 text-xs font-black uppercase"
           style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
         >
