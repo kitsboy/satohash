@@ -1,5 +1,5 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 226) · **Updated:** 2026-08-17
+> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 227) · **Updated:** 2026-08-17
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Deploy — canonical
@@ -90,11 +90,12 @@ GitHub Actions `.github/workflows/ci.yml`:
 
 | Gate | When | Fail CI? |
 |------|------|----------|
-| lint · i18n · unit · Vite build | every push / PR | yes |
-| Playwright (Chromium + WebKit safari-chrome) | Node 20 | yes |
-| `npm run lh:mobile` (home / stamp / verify) | Node 20 | **no** — soft (`continue-on-error`) |
-| `npm run test:live-api` against `api.satohash.io` | after tests | yes (429 is soft pass) |
-| Live SPA stamp loop | after tests | **no** — soft |
+| lint · i18n · unit · Vite build | `test_and_build` | yes |
+| Playwright (Chromium + WebKit) | Node 20 · skips live stamp loop | yes |
+| `npm run lh:mobile` preview | **own job** `lighthouse_preview` | yes (`FAIL_HARD=1`) — does **not** skip `live_loop` |
+| `npm run test:live-api` | `live_loop` after `test_and_build` | yes (429 soft pass) |
+| Live SPA stamp loop | `live_loop` | **no** — `continue-on-error` |
+| Weekly LH vs satohash.io | `lighthouse-weekly.yml` | **no** — artifact only |
 
 Local:
 
