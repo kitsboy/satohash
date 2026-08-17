@@ -144,7 +144,7 @@ export function NavMoreMenu({ label, open, onToggle, onClose, active, children }
           />
           <div
             role="menu"
-            className="absolute top-full right-0 z-50 mt-2 min-w-[12.5rem] overflow-hidden rounded-xl border py-1.5 shadow-2xl"
+            className="absolute top-full right-0 z-50 mt-2 max-h-[min(70vh,24rem)] min-w-[12.5rem] overflow-y-auto overscroll-contain rounded-xl border py-1.5 shadow-2xl"
             style={{
               borderColor: 'var(--border-bright)',
               background: 'color-mix(in srgb, var(--bg-secondary) 96%, transparent)',

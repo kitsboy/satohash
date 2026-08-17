@@ -1,32 +1,33 @@
----
-title: Mission
-project: [Project Name]
-version: 0.1.0
-audience: internal
-tags: [project, mission, purpose, values]
-last_updated: YYYY-MM-DD
-owner: Nova (Product Management & Documentation)
----
+# Satohash — Mission
 
-# [Project Name] — Mission
+**Version:** 5.0.0-ELITE · **Updated:** 2026-08-16 · **Live:** https://satohash.io
+
+Satohash exists so a person can prove a file existed — without handing the file to a notary, a SaaS vault, or us.
 
 ## Our Purpose
-[One paragraph — why this project exists. What gap does it fill in the world?]
+
+Digital “proof” still lives in vendor databases. If that company fails, is compelled, or quietly edits a row, the record is only as strong as their uptime and honesty. Deepfakes make timestamps more important, not less.
+
+Satohash turns existence and integrity into math on Bitcoin: a local SHA-256 fingerprint, an OpenTimestamps receipt, a public chain.
 
 ## Core Values
-1. **Bitcoin Sovereignty First** — [How this project puts Bitcoin self-custody and permissionless access first]
-2. **Privacy by Design** — [Zero-knowledge, client-side, no tracking]
-3. **Open Source** — [License, community model]
-4. **Safe Harbour** — [How it protects users legally and ethically]
+
+1. **Bitcoin Sovereignty First** — Finality is Bitcoin proof-of-work, not a Satohash database.
+2. **Privacy by Design** — Document bytes never leave the device. Only a hash is submitted.
+3. **Open Source** — MIT license. Proofs verify with open tools if this site disappears.
+4. **Safe Harbour** — Educational and informational. Not legal, financial, or investment advice.
 
 ## The Problem We Solve
-[What broken system or unmet need does this address?]
+
+Proving that something existed *before* a date has legal, commercial, and personal value. Traditional notarization is slow and expensive. Centralized e-sign platforms store the document.
 
 ## Our Solution
-[How Bitcoin + the specific project architecture solves it]
+
+Hash locally → submit the fingerprint to OpenTimestamps calendars → Bitcoin confirmation. Portable `.ots` proofs. Free stamps today (`REQUIRE_LIGHTNING=false`). A later Lightning fee would be paid **to us**; the chain stays Bitcoin.
 
 ## Who It Serves
-[Target users, communities, or use cases]
+
+Families, freelancers, journalists, government evidence workflows, and Give A Bit family apps via `https://api.satohash.io`.
 
 ---
 
@@ -40,4 +41,4 @@ Always consult qualified professionals for legal and financial decisions.
 ```
 
 ---
-**Diligence pack:** [docs/diligence/](../diligence/) (investor + architecture + ask)
+**Diligence pack:** [docs/diligence/](diligence/) (investor + architecture + ask)

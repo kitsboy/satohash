@@ -4,6 +4,7 @@ import { FileText, TrendingUp, Megaphone, Briefcase, Shield, ArrowRight } from '
 import KimiContact from '../components/forms/KimiContact'
 import Footer from '../components/layout/Footer'
 import usePageMeta from '../hooks/usePageMeta'
+import { renderDocMarkdown } from '../utils/renderDocMarkdown'
 
 const TABS = [
   { id: 'pitch', label: 'Pitch', icon: Briefcase },
@@ -13,32 +14,7 @@ const TABS = [
 ]
 
 function renderMarkdown(md) {
-  return md
-    .replace(/<!--[\s\S]*?-->/g, '')
-    .replace(/^> .+$/gm, '')
-    .replace(
-      /^### (.+)$/gm,
-      '<h3 class="text-lg font-bold mt-6 mb-2 text-[var(--text-primary)]">$1</h3>'
-    )
-    .replace(
-      /^## (.+)$/gm,
-      '<h2 class="text-xl font-bold mt-8 mb-3 text-[var(--accent-gold)]">$1</h2>'
-    )
-    .replace(
-      /^# (.+)$/gm,
-      '<h1 class="text-2xl sm:text-3xl font-black mb-4 text-[var(--text-primary)]">$1</h1>'
-    )
-    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-    .replace(/\|(.+)\|/g, (line) => {
-      if (line.includes('---')) return ''
-      const cells = line
-        .split('|')
-        .filter(Boolean)
-        .map((c) => c.trim())
-      return `<div class="grid grid-cols-${Math.min(cells.length, 4)} gap-2 py-1 text-sm border-b border-[var(--border)] overflow-x-auto">${cells.map((c) => `<span class="min-w-0 break-words">${c}</span>`).join('')}</div>`
-    })
-    .replace(/\n\n/g, '</p><p class="text-sm leading-relaxed text-[var(--text-secondary)] mb-4">')
-    .replace(/^- (.+)$/gm, '<li class="ml-4 text-sm text-[var(--text-secondary)]">$1</li>')
+  return renderDocMarkdown(md)
 }
 
 export default function Pitch() {
@@ -63,7 +39,7 @@ export default function Pitch() {
   }, [tab])
 
   return (
-    <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)]">
+    <div className="min-h-screen overflow-x-clip bg-[var(--bg-primary)] text-[var(--text-primary)]">
       <main className="mx-auto max-w-4xl px-4 py-6 sm:py-10">
         <p className="mb-2 text-center text-[10px] font-bold tracking-[0.2em] text-[var(--accent-gold)] uppercase">
           Investor & Partner Hub

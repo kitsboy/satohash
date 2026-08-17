@@ -49,9 +49,12 @@ export default function MobileBottomNav() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 12, scale: 0.95 }}
               transition={{ type: 'spring', stiffness: 380, damping: 28 }}
-              className="fixed right-4 z-50 w-52 overflow-hidden rounded-2xl border shadow-2xl"
+              className="fixed z-50 overflow-hidden rounded-2xl border shadow-2xl"
               style={{
+                left: 16,
+                right: 16,
                 bottom: 'calc(var(--mobile-nav-offset, 5.5rem) + env(safe-area-inset-bottom, 0px))',
+                maxHeight: 'min(70dvh, calc(100dvh - 8rem))',
                 background: 'var(--bg-secondary)',
                 borderColor: 'var(--border-bright)',
                 boxShadow: '0 20px 60px rgba(0,0,0,0.6)'
@@ -89,37 +92,39 @@ export default function MobileBottomNav() {
                 )}
               </div>
 
-              {[
-                { name: t('nav', 'explorer') || 'Explorer', path: '/explorer' },
-                { name: t('nav', 'dashboard'), path: '/dashboard' },
-                { name: t('nav.government') || 'Government', path: '/government' },
-                { name: t('nav.batchHash') || 'Batch hash', path: '/batch-hash' },
-                { name: t('nav.widgets') || 'Widgets', path: '/widgets' },
-                { name: t('nav', 'batch') || 'Batch Stamp', path: '/batch' },
-                { name: t('nav', 'developer'), path: '/developer' },
-                { name: t('nav', 'contracts'), path: '/contracts' },
-                { name: t('nav', 'snapper') || 'Web Capture', path: '/snapper' },
-                { name: t('nav', 'settings'), path: '/settings' },
-                { name: t('nav', 'trust'), path: '/trust' },
-                { name: t('vault', 'title'), path: '/image-vault' },
-                { name: t('nav', 'protocolStats') || 'Protocol Stats', path: '/protocol-stats' }
-              ].map((link) => (
-                <NavLink
-                  key={link.path}
-                  to={link.path}
-                  onClick={() => setMoreOpen(false)}
-                  className={({ isActive }) =>
-                    [
-                      'flex min-h-[44px] items-center px-4 py-3 text-[12px] font-semibold tracking-tight transition-colors',
-                      isActive
-                        ? 'bg-[var(--accent-gold-subtle)] text-[var(--accent-gold)]'
-                        : 'text-[var(--text-secondary)] hover:bg-white/5 hover:text-[var(--text-primary)]'
-                    ].join(' ')
-                  }
-                >
-                  {link.name}
-                </NavLink>
-              ))}
+              <div className="max-h-[inherit] overflow-y-auto overscroll-contain">
+                {[
+                  { name: t('nav', 'explorer') || 'Explorer', path: '/explorer' },
+                  { name: t('nav', 'dashboard'), path: '/dashboard' },
+                  { name: t('nav.government') || 'Government', path: '/government' },
+                  { name: t('nav.batchHash') || 'Batch hash', path: '/batch-hash' },
+                  { name: t('nav.widgets') || 'Widgets', path: '/widgets' },
+                  { name: t('nav', 'batch') || 'Batch Stamp', path: '/batch' },
+                  { name: t('nav', 'developer'), path: '/developer' },
+                  { name: t('nav', 'contracts'), path: '/contracts' },
+                  { name: t('nav', 'snapper') || 'Web Capture', path: '/snapper' },
+                  { name: t('nav', 'settings'), path: '/settings' },
+                  { name: t('nav', 'trust'), path: '/trust' },
+                  { name: t('vault', 'title'), path: '/image-vault' },
+                  { name: t('nav', 'protocolStats') || 'Protocol Stats', path: '/protocol-stats' }
+                ].map((link) => (
+                  <NavLink
+                    key={link.path}
+                    to={link.path}
+                    onClick={() => setMoreOpen(false)}
+                    className={({ isActive }) =>
+                      [
+                        'flex min-h-[44px] items-center px-4 py-3 text-[12px] font-semibold tracking-tight transition-colors',
+                        isActive
+                          ? 'bg-[var(--accent-gold-subtle)] text-[var(--accent-gold)]'
+                          : 'text-[var(--text-secondary)] hover:bg-white/5 hover:text-[var(--text-primary)]'
+                      ].join(' ')
+                    }
+                  >
+                    {link.name}
+                  </NavLink>
+                ))}
+              </div>
             </motion.div>
           </>
         )}

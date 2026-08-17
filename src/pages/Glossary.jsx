@@ -1,8 +1,8 @@
 import { useState, useMemo } from 'react'
-import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { BookOpen, Search } from 'lucide-react'
 import usePageMeta from '../hooks/usePageMeta'
+import Footer from '../components/layout/Footer'
 
 const TERM_IDS = [
   'sha256',
@@ -48,7 +48,7 @@ export default function Glossary() {
   )
 
   return (
-    <div className="min-h-screen bg-[var(--bg-primary)]">
+    <div className="min-h-screen overflow-x-clip bg-[var(--bg-primary)]">
       <section className="border-b border-[var(--border)] px-4 pt-8 pb-12 sm:px-6 sm:pt-12 sm:pb-16">
         <div className="mx-auto max-w-3xl text-center">
           <BookOpen size={28} className="mx-auto mb-4 text-[var(--accent-gold)]" />
@@ -76,7 +76,7 @@ export default function Glossary() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-3xl px-6 py-16">
+      <section className="mx-auto max-w-3xl px-4 py-10 sm:px-6 sm:py-16">
         {filtered.length === 0 ? (
           <div className="py-20 text-center">
             <p className="text-lg font-bold text-[var(--text-primary)]">
@@ -91,17 +91,18 @@ export default function Glossary() {
             {filtered.map((item) => (
               <div
                 key={item.id}
-                className="rounded-2xl border border-[var(--border)] bg-[var(--surface-raised)] p-5 transition-all hover:border-[var(--accent-gold)]"
+                className="rounded-2xl border border-[var(--border)] bg-[var(--surface-raised)] p-4 ring-1 ring-transparent transition-all hover:border-[var(--accent-gold)] hover:ring-[var(--accent-gold)]/10 sm:p-5"
               >
                 <h3 className="mb-2 font-mono text-sm font-bold text-[var(--accent-gold)]">
                   {item.term}
                 </h3>
-                <p className="text-xs leading-relaxed text-[var(--text-secondary)]">{item.def}</p>
+                <p className="text-sm leading-relaxed text-[var(--text-secondary)]">{item.def}</p>
               </div>
             ))}
           </div>
         )}
       </section>
+      <Footer />
     </div>
   )
 }

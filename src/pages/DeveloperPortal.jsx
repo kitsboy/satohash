@@ -192,7 +192,7 @@ export default function DeveloperPortal() {
                       className="group relative z-10 flex cursor-help flex-col items-start gap-4 rounded-2xl border border-indigo-50 bg-white p-6 shadow-sm transition-all hover:z-20 hover:-translate-y-1 hover:border-indigo-100 hover:shadow-xl"
                     >
                       {/* Tooltip on hover */}
-                      <div className="pointer-events-none absolute bottom-full left-1/2 z-50 mb-3 w-[260px] -translate-x-1/2 opacity-0 transition-all duration-300 group-hover:-translate-y-2 group-hover:opacity-100 sm:w-[280px]">
+                      <div className="pointer-events-none absolute bottom-full left-1/2 z-50 mb-3 w-[min(16rem,calc(100vw-2rem))] max-w-[calc(100vw-2rem)] -translate-x-1/2 opacity-0 transition-all duration-300 group-hover:-translate-y-2 group-hover:opacity-100">
                         <div className="relative rounded-2xl border border-indigo-500/30 bg-slate-900 p-5 text-[11px] leading-[1.8] font-medium text-indigo-100 shadow-2xl shadow-indigo-900/40">
                           <div className="mb-3 flex items-center gap-2">
                             <Info size={12} className="text-indigo-400" />

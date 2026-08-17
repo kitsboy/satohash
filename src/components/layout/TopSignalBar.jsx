@@ -210,7 +210,7 @@ export default function TopSignalBar() {
               initial={{ opacity: 0, scale: 0.95, y: 10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 10 }}
-              className="absolute top-full right-0 z-50 mt-2 w-72 rounded-2xl border border-[var(--border-bright)] bg-[var(--bg-secondary)] p-6 shadow-[0_25px_50px_rgba(0,0,0,0.5)] backdrop-blur-xl"
+              className="absolute top-full right-0 z-50 mt-2 max-h-[min(70dvh,28rem)] w-[min(18rem,calc(100vw-1.5rem))] overflow-y-auto rounded-2xl border border-[var(--border-bright)] bg-[var(--bg-secondary)] p-5 shadow-[0_25px_50px_rgba(0,0,0,0.5)] backdrop-blur-xl sm:p-6"
             >
               <div className="mb-4 flex items-center justify-between border-b border-[var(--border)] pb-3">
                 <div className="flex items-center gap-2">

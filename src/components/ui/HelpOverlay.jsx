@@ -39,7 +39,7 @@ export default function HelpOverlay({ isOpen, onClose }) {
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[300] flex items-center justify-center p-6">
+        <div className="fixed inset-0 z-[300] flex items-end justify-center p-3 sm:items-center sm:p-6">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -52,16 +52,17 @@ export default function HelpOverlay({ isOpen, onClose }) {
             initial={{ scale: 0.9, opacity: 0, y: 20 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.9, opacity: 0, y: 20 }}
-            className="relative w-full max-w-2xl overflow-hidden rounded-[3rem] border border-[var(--border-bright)] bg-[var(--bg-secondary)] shadow-[0_50px_100px_rgba(0,0,0,0.8)]"
+            className="relative max-h-[min(92dvh,40rem)] w-full max-w-2xl overflow-y-auto overscroll-contain rounded-3xl border border-[var(--border-bright)] bg-[var(--bg-secondary)] shadow-[0_50px_100px_rgba(0,0,0,0.8)] sm:rounded-[2.5rem]"
           >
             <button
               onClick={onClose}
-              className="absolute top-8 right-8 text-[var(--text-secondary)] transition-colors hover:text-white"
+              className="absolute top-4 right-4 z-10 flex h-11 w-11 items-center justify-center rounded-xl text-[var(--text-secondary)] transition-colors hover:text-white sm:top-6 sm:right-6"
+              aria-label="Close"
             >
-              <X size={24} />
+              <X size={22} />
             </button>
 
-            <div className="space-y-12 p-12 md:p-16">
+            <div className="space-y-8 p-6 sm:space-y-12 sm:p-12 md:p-16">
               <div className="space-y-4">
                 <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5">
                   <span className="text-[10px] font-black tracking-widest text-white/40 uppercase">
@@ -71,7 +72,7 @@ export default function HelpOverlay({ isOpen, onClose }) {
                     STEP 0{currentStep + 1} / 04
                   </span>
                 </div>
-                <h2 className="text-4xl leading-none font-black tracking-tighter uppercase md:text-5xl">
+                <h2 className="pr-10 text-3xl leading-none font-black tracking-tighter uppercase sm:text-4xl md:text-5xl">
                   The Protocol <br />
                   <span className="text-[var(--text-secondary)]">Workbench.</span>
                 </h2>
@@ -103,7 +104,7 @@ export default function HelpOverlay({ isOpen, onClose }) {
                 </motion.div>
               </AnimatePresence>
 
-              <div className="flex items-center justify-between border-t border-[var(--border)] pt-8">
+              <div className="flex flex-col gap-4 border-t border-[var(--border)] pt-6 sm:flex-row sm:items-center sm:justify-between sm:pt-8">
                 <div className="flex gap-2">
                   {steps.map((_, i) => (
                     <div
@@ -112,11 +113,11 @@ export default function HelpOverlay({ isOpen, onClose }) {
                     />
                   ))}
                 </div>
-                <div className="flex gap-4">
+                <div className="flex flex-wrap gap-3">
                   {currentStep > 0 && (
                     <button
                       onClick={() => setCurrentStep((prev) => prev - 1)}
-                      className="h-14 rounded-2xl border border-[var(--border)] px-8 text-[11px] font-black tracking-widest uppercase transition-all hover:bg-white/5"
+                      className="h-12 min-w-[5.5rem] rounded-2xl border border-[var(--border)] px-5 text-[11px] font-black tracking-widest uppercase transition-all hover:bg-white/5 sm:h-14 sm:px-8"
                     >
                       Back
                     </button>
@@ -129,7 +130,7 @@ export default function HelpOverlay({ isOpen, onClose }) {
                         setCurrentStep((prev) => prev + 1)
                       }
                     }}
-                    className="flex h-14 items-center gap-3 rounded-2xl bg-[var(--text-primary)] px-10 text-[11px] font-black tracking-widest text-[var(--bg-primary)] uppercase transition-all hover:scale-105 active:scale-95"
+                    className="flex h-12 min-w-[8rem] flex-1 items-center justify-center gap-3 rounded-2xl bg-[var(--text-primary)] px-5 text-[11px] font-black tracking-widest text-[var(--bg-primary)] uppercase transition-all hover:scale-[1.02] active:scale-95 sm:h-14 sm:flex-none sm:px-10"
                   >
                     {currentStep === steps.length - 1 ? 'Initialize Workbench' : 'Continue'}
                     <ChevronRight size={16} />

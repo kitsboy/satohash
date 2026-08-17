@@ -45,7 +45,7 @@ export default function FAQ() {
   })
 
   return (
-    <div className="min-h-screen bg-[var(--bg-primary)]">
+    <div className="min-h-screen overflow-x-clip bg-[var(--bg-primary)]">
       <section className="border-b border-[var(--border)] px-4 pt-8 pb-12 sm:px-6 sm:pt-12 sm:pb-16">
         <div className="mx-auto max-w-3xl text-center">
           <p className="mb-3 text-[11px] font-bold tracking-[0.25em] text-[var(--accent-gold)] uppercase">
@@ -100,7 +100,7 @@ export default function FAQ() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-3xl px-6 py-16">
+      <section className="mx-auto max-w-3xl px-4 py-10 sm:px-6 sm:py-16">
         {filtered.length === 0 ? (
           <div className="py-20 text-center">
             <HelpCircle size={48} className="mx-auto mb-4 text-[var(--text-tertiary)]" />
@@ -129,7 +129,7 @@ export default function FAQ() {
                     onClick={() => setOpenIndex(isOpen ? null : i)}
                     aria-expanded={isOpen}
                     aria-controls={`faq-${faq.id}`}
-                    className="flex min-h-[56px] w-full items-center justify-between gap-4 px-6 py-4 text-left"
+                    className="flex min-h-[56px] w-full items-center justify-between gap-4 px-4 py-4 text-left sm:px-6"
                   >
                     <span className="text-sm font-bold text-[var(--text-primary)]">{faq.q}</span>
                     <ChevronDown
@@ -140,7 +140,10 @@ export default function FAQ() {
                     />
                   </button>
                   {isOpen && (
-                    <div id={`faq-${faq.id}`} className="border-t border-[var(--border)] px-6 py-4">
+                    <div
+                      id={`faq-${faq.id}`}
+                      className="border-t border-[var(--border)] px-4 py-4 sm:px-6"
+                    >
                       <p className="text-sm leading-relaxed text-[var(--text-secondary)]">
                         {faq.a}
                       </p>

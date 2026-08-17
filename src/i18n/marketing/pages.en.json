@@ -598,7 +598,7 @@
     "hero": {
       "title": "Satohash",
       "titleHighlight": "Documentation",
-      "subtitle": "Everything you need to understand, use, and contribute to Satohash. Architecture, deployment, business, SEO, and handoff docs — all in one place.",
+      "subtitle": "Current as of August 2026 — 5.0.0-ELITE. Stamp, verify, architecture, and Bitcoin-anchored proofs. Free stamps. Own node at tip.",
       "searchPlaceholder": "Search documentation..."
     },
     "all": "All",
@@ -616,7 +616,7 @@
     "docs": {
       "quickstart": {
         "title": "Quick Start Guide",
-        "desc": "Stamp your first document in under 60 seconds."
+        "desc": "Stamp a file at satohash.io — no account, free today."
       },
       "mission": {
         "title": "Mission & Values",
@@ -624,7 +624,7 @@
       },
       "architecture": {
         "title": "Architecture Overview",
-        "desc": "Four-plane system: Proof, Identity, Settlement, Atlas."
+        "desc": "SPA + API + own bitcoind. Proof plane live; Lightning later."
       },
       "pitch": {
         "title": "Product Pitch",
@@ -699,8 +699,8 @@
         "desc": "Chinese-language SEO strategy."
       },
       "kimi-handoff": {
-        "title": "Kimi Handoff Log",
-        "desc": "Session handoffs between agents and machines."
+        "title": "What's live",
+        "desc": "Product and infrastructure status — August 2026."
       }
     },
     "quickLinks": {

@@ -14,7 +14,9 @@ import {
   HelpCircle,
   Bookmark,
   Settings,
-  Download
+  Download,
+  ChevronRight,
+  ShieldCheck
 } from 'lucide-react'
 import Footer from '../components/layout/Footer'
 import usePageMeta from '../hooks/usePageMeta'
@@ -33,14 +35,7 @@ const CATEGORY_CONFIG = [
   {
     id: 'technical',
     icon: Server,
-    docs: [
-      'architecture',
-      'ots_setup',
-      'deploy-playbook',
-      'design-context',
-      'design-tokens',
-      'rollback'
-    ]
+    docs: ['ots_setup', 'deploy-playbook', 'design-context', 'design-tokens', 'rollback']
   },
   {
     id: 'seo',
@@ -50,9 +45,12 @@ const CATEGORY_CONFIG = [
   {
     id: 'operations',
     icon: Archive,
-    docs: ['kimi-handoff', 'improvements-log']
+    docs: ['kimi-handoff']
   }
 ]
+
+const STICKY =
+  'sticky top-[calc(3.5rem+env(safe-area-inset-top,0px)+var(--satohash-health-banner-h,0px))] z-30 md:top-[calc(4rem+var(--satohash-health-banner-h,0px))]'
 
 export default function Docs() {
   usePageMeta({ page: 'docs' })
@@ -75,7 +73,16 @@ export default function Docs() {
     [t]
   )
 
-  const allDocs = useMemo(() => categories.flatMap((c) => c.docs), [categories])
+  const allDocs = useMemo(() => {
+    const seen = new Set()
+    return categories
+      .flatMap((c) => c.docs)
+      .filter((d) => {
+        if (seen.has(d.slug)) return false
+        seen.add(d.slug)
+        return true
+      })
+  }, [categories])
 
   const filteredDocs = search
     ? allDocs.filter(
@@ -88,25 +95,45 @@ export default function Docs() {
       : categories.find((c) => c.id === activeCategory)?.docs || []
 
   return (
-    <div className="min-h-screen bg-[var(--bg-primary)]">
-      <section className="border-b border-[var(--border)] px-4 pt-8 pb-12 sm:px-6 sm:pt-12 sm:pb-16">
-        <div className="mx-auto max-w-4xl text-center">
+    <div className="min-h-screen overflow-x-clip bg-[var(--bg-primary)]">
+      <section className="relative overflow-hidden border-b border-[var(--border)] px-4 pt-8 pb-10 sm:px-6 sm:pt-12 sm:pb-14">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 opacity-40"
+          style={{
+            background:
+              'radial-gradient(ellipse at 50% -10%, rgba(240,180,41,0.12), transparent 55%)'
+          }}
+        />
+        <div className="relative mx-auto max-w-3xl text-center">
           <p className="mb-2 text-[10px] font-bold tracking-[0.25em] text-[var(--accent-gold)] uppercase">
             {t('docsPage.nav')}
           </p>
-          <BookOpen size={32} className="mx-auto mb-4 text-[var(--accent-gold)]" />
-          <h1 className="mb-4 text-3xl font-black tracking-tight text-[var(--text-primary)] sm:text-5xl">
+          <BookOpen size={28} className="mx-auto mb-3 text-[var(--accent-gold)]" />
+          <h1 className="mb-3 text-3xl font-black tracking-tight text-[var(--text-primary)] sm:text-5xl">
             {t('docsPage.hero.title')}{' '}
             <span className="text-[var(--accent-gold)]">{t('docsPage.hero.titleHighlight')}</span>
           </h1>
-          <p className="mx-auto mb-6 max-w-2xl text-sm leading-relaxed text-[var(--text-secondary)]">
+          <p className="mx-auto mb-5 max-w-2xl text-sm leading-relaxed text-[var(--text-secondary)]">
             {t('docsPage.hero.subtitle')}
           </p>
+          <div className="mb-6 flex flex-wrap items-center justify-center gap-2">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border)] px-3 py-1.5 text-[10px] font-bold tracking-wider text-[var(--text-secondary)] uppercase">
+              <ShieldCheck size={12} className="text-[var(--accent-success)]" />
+              5.0.0-ELITE
+            </span>
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border)] px-3 py-1.5 text-[10px] font-bold tracking-wider text-[var(--text-secondary)] uppercase">
+              Free stamps
+            </span>
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border)] px-3 py-1.5 text-[10px] font-bold tracking-wider text-[var(--text-secondary)] uppercase">
+              Own Bitcoin node
+            </span>
+          </div>
           <a
             href="https://github.com/kitsboy/satohash"
             target="_blank"
             rel="noopener noreferrer"
-            className="mb-8 inline-flex min-h-[44px] items-center gap-2 text-xs font-bold text-[var(--text-secondary)] hover:text-[var(--accent-gold)]"
+            className="mb-6 inline-flex min-h-[44px] items-center gap-2 text-xs font-bold text-[var(--text-secondary)] hover:text-[var(--accent-gold)]"
           >
             <ExternalLink size={14} /> {t('common.github')}
           </a>
@@ -116,22 +143,24 @@ export default function Docs() {
               className="pointer-events-none absolute top-1/2 left-4 -translate-y-1/2 text-[var(--text-tertiary)]"
             />
             <input
-              type="text"
+              type="search"
               placeholder={t('docsPage.hero.searchPlaceholder')}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="min-h-[48px] w-full rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] pr-4 pl-11 text-sm text-[var(--text-primary)] placeholder-[var(--text-tertiary)] transition-colors outline-none focus:border-[var(--accent-gold)]"
+              className="min-h-[48px] w-full rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] pr-4 pl-11 text-base text-[var(--text-primary)] placeholder-[var(--text-tertiary)] transition-colors outline-none focus:border-[var(--accent-gold)] sm:text-sm"
             />
           </div>
         </div>
       </section>
 
-      <section className="sticky top-[calc(3.5rem+env(safe-area-inset-top,0px)+var(--satohash-health-banner-h,0px))] z-30 border-b border-[var(--border)] bg-[var(--bg-primary)]/95 backdrop-blur-md md:top-[calc(4rem+var(--satohash-health-banner-h,0px))]">
-        <div className="mx-auto max-w-6xl px-4 py-3 sm:px-6">
+      <section
+        className={`${STICKY} border-b border-[var(--border)] bg-[var(--bg-primary)]/95 backdrop-blur-md`}
+      >
+        <div className="mx-auto max-w-6xl px-3 py-2.5 sm:px-6 sm:py-3">
           <div
             role="tablist"
             aria-label="Document categories"
-            className="templates-category-scroll flex flex-wrap items-center justify-center gap-2 sm:gap-2.5"
+            className="templates-category-scroll flex items-center gap-2 overflow-x-auto overscroll-x-contain pb-1 sm:justify-center"
           >
             <button
               type="button"
@@ -176,7 +205,7 @@ export default function Docs() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-6 py-12">
+      <section className="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-12">
         {filteredDocs.length === 0 ? (
           <div className="py-20 text-center">
             <BookOpen size={48} className="mx-auto mb-4 text-[var(--text-tertiary)]" />
@@ -186,7 +215,7 @@ export default function Docs() {
             <p className="text-sm text-[var(--text-secondary)]">{t('docsPage.empty.subtitle')}</p>
           </div>
         ) : (
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
             {filteredDocs.map((doc) => {
               const category = categories.find((c) => c.docs.some((d) => d.slug === doc.slug))
               const CatIcon = category?.icon || FileText
@@ -194,20 +223,24 @@ export default function Docs() {
                 <Link
                   key={`${doc.slug}-${category?.id}`}
                   to={`/docs/${doc.slug}`}
-                  className="group rounded-2xl border border-[var(--border)] bg-[var(--surface-raised)] p-5 transition-all hover:border-[var(--accent-gold)] hover:shadow-[0_0_30px_var(--accent-gold-glow)]"
+                  className="group flex min-h-[8.5rem] flex-col rounded-2xl border border-[var(--border)] bg-[var(--surface-raised)] p-4 ring-1 ring-transparent transition-all hover:border-[var(--accent-gold)] hover:shadow-[0_0_30px_var(--accent-gold-glow)] hover:ring-[var(--accent-gold)]/15 sm:p-5"
                 >
                   <div className="mb-3 flex items-center gap-2">
                     <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--accent-gold)]/10">
                       <CatIcon size={15} className="text-[var(--accent-gold)]" />
                     </div>
-                    <span className="text-[9px] font-bold tracking-widest text-[var(--text-tertiary)] uppercase">
+                    <span className="truncate text-[9px] font-bold tracking-widest text-[var(--text-tertiary)] uppercase">
                       {category?.label}
                     </span>
+                    <ChevronRight
+                      size={14}
+                      className="ml-auto shrink-0 text-[var(--text-tertiary)] transition-transform group-hover:translate-x-0.5 group-hover:text-[var(--accent-gold)]"
+                    />
                   </div>
                   <h3 className="mb-1.5 text-sm font-bold text-[var(--text-primary)] group-hover:text-[var(--accent-gold)]">
                     {doc.title}
                   </h3>
-                  <p className="text-[11px] leading-relaxed text-[var(--text-secondary)]">
+                  <p className="text-[12px] leading-relaxed text-[var(--text-secondary)]">
                     {doc.desc}
                   </p>
                 </Link>
@@ -217,35 +250,35 @@ export default function Docs() {
         )}
       </section>
 
-      <section className="border-t border-[var(--border)] bg-[var(--bg-secondary)] px-6 py-12">
-        <div className="mx-auto flex max-w-4xl flex-wrap items-center justify-center gap-6 text-xs font-bold tracking-wider uppercase">
+      <section className="border-t border-[var(--border)] bg-[var(--bg-secondary)] px-4 py-10 sm:px-6 sm:py-12">
+        <div className="mx-auto flex max-w-4xl flex-wrap items-center justify-center gap-x-6 gap-y-4 text-xs font-bold tracking-wider uppercase">
           <Link
             to="/faq"
-            className="flex items-center gap-2 text-[var(--text-secondary)] transition-colors hover:text-[var(--accent-gold)]"
+            className="flex min-h-[44px] items-center gap-2 text-[var(--text-secondary)] transition-colors hover:text-[var(--accent-gold)]"
           >
             <HelpCircle size={14} /> {t('common.faq')}
           </Link>
           <Link
             to="/glossary"
-            className="flex items-center gap-2 text-[var(--text-secondary)] transition-colors hover:text-[var(--accent-gold)]"
+            className="flex min-h-[44px] items-center gap-2 text-[var(--text-secondary)] transition-colors hover:text-[var(--accent-gold)]"
           >
             <Bookmark size={14} /> {t('common.glossary')}
           </Link>
           <Link
             to="/guides"
-            className="flex items-center gap-2 text-[var(--text-secondary)] transition-colors hover:text-[var(--accent-gold)]"
+            className="flex min-h-[44px] items-center gap-2 text-[var(--text-secondary)] transition-colors hover:text-[var(--accent-gold)]"
           >
             <BookOpen size={14} /> {t('common.guides')}
           </Link>
           <Link
             to="/developer"
-            className="flex items-center gap-2 text-[var(--text-secondary)] transition-colors hover:text-[var(--accent-gold)]"
+            className="flex min-h-[44px] items-center gap-2 text-[var(--text-secondary)] transition-colors hover:text-[var(--accent-gold)]"
           >
             <Settings size={14} /> {t('docsPage.quickLinks.developerApi')}
           </Link>
           <Link
             to="/templates"
-            className="flex items-center gap-2 text-[var(--text-secondary)] transition-colors hover:text-[var(--accent-gold)]"
+            className="flex min-h-[44px] items-center gap-2 text-[var(--text-secondary)] transition-colors hover:text-[var(--accent-gold)]"
           >
             <FileText size={14} /> {t('docsPage.quickLinks.templates')}
           </Link>
@@ -253,7 +286,7 @@ export default function Docs() {
             href="https://github.com/kitsboy/satohash"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 text-[var(--text-secondary)] transition-colors hover:text-[var(--accent-gold)]"
+            className="flex min-h-[44px] items-center gap-2 text-[var(--text-secondary)] transition-colors hover:text-[var(--accent-gold)]"
           >
             <Download size={14} /> {t('docsPage.quickLinks.sourceCode')}
           </a>

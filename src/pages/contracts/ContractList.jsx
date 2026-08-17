@@ -15,7 +15,6 @@ import {
   Trash2,
   BookOpen,
   CheckCircle2,
-  Info,
   FolderDown
 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -29,6 +28,7 @@ import JSZip from 'jszip'
 import { toast } from 'sonner'
 import usePageMeta from '../../hooks/usePageMeta'
 import { SkeletonList } from '../../components/ui/Skeletons'
+import SharedTooltip from '../../components/ui/Tooltip'
 import { getContractStats, getContractActivity } from '../../utils/contractStorage'
 import { useContractStore } from '../../store/contractStore'
 
@@ -623,26 +623,7 @@ function ActivityItem({ icon: Icon, title, time, status }) {
 }
 
 function Tooltip({ text }) {
-  return (
-    <div className="group/tooltip relative">
-      <div
-        className="flex h-6 w-6 cursor-help items-center justify-center rounded-full transition-all hover:text-white"
-        style={{
-          border: '1px solid var(--border)',
-          background: 'var(--surface-raised)',
-          color: 'var(--text-muted)'
-        }}
-      >
-        <Info size={12} />
-      </div>
-      <div className="pointer-events-none absolute bottom-full left-1/2 mb-3 w-48 -translate-x-1/2 opacity-0 transition-all group-hover/tooltip:opacity-100">
-        <div className="rounded-xl bg-slate-900 p-4 text-[10px] leading-relaxed font-bold text-white italic shadow-2xl ring-1 ring-white/10">
-          {text}
-          <div className="absolute top-full left-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rotate-45 bg-slate-900" />
-        </div>
-      </div>
-    </div>
-  )
+  return <SharedTooltip title="About this action" content={text} />
 }
 
 function EmptyState({ onAction }) {

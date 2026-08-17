@@ -319,7 +319,10 @@ export default function TermsOfService() {
           aria-label="Legal navigation"
           className="mb-8 flex flex-wrap items-center gap-x-3 gap-y-2 text-[11px] font-bold tracking-wide uppercase"
         >
-          <Link to="/trust" className="text-[var(--text-secondary)] hover:text-[var(--accent-gold)]">
+          <Link
+            to="/trust"
+            className="text-[var(--text-secondary)] hover:text-[var(--accent-gold)]"
+          >
             Trust center
           </Link>
           <span className="text-[var(--border-bright)]" aria-hidden>
@@ -361,12 +364,12 @@ export default function TermsOfService() {
           <div className="document-content">
             {/* Header */}
             <header className="mb-14 border-b-2 border-[#0f172a] pb-10">
-              <div className="mb-6 flex items-start justify-between gap-6">
+              <div className="mb-6 flex flex-col items-start justify-between gap-4 sm:flex-row sm:gap-6">
                 <div>
                   <p className="mb-3 text-[10px] font-black tracking-[0.35em] text-slate-400 uppercase">
                     Satohash Inc. · Legal Document
                   </p>
-                  <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 md:text-5xl">
+                  <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl md:text-5xl">
                     {t('legalPages.termsTitle')}
                   </h1>
                   <p className="mt-3 text-sm text-slate-600">{t('legalPages.disclaimer')}</p>
@@ -377,9 +380,13 @@ export default function TermsOfService() {
                   </span>
                   <span className="text-sm font-bold text-slate-700">May 1, 2025</span>
                   <span className="mt-1 text-[10px] font-black tracking-[0.2em] text-slate-400 uppercase">
+                    Last reviewed
+                  </span>
+                  <span className="text-sm font-bold text-slate-700">August 16, 2026</span>
+                  <span className="mt-1 text-[10px] font-black tracking-[0.2em] text-slate-400 uppercase">
                     Version
                   </span>
-                  <span className="text-sm font-bold text-slate-700">3.0</span>
+                  <span className="text-sm font-bold text-slate-700">5.0.0-ELITE</span>
                 </div>
               </div>
 

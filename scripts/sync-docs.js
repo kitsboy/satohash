@@ -21,7 +21,7 @@ const stamp = {
   version: pkg.version,
   build: buildMeta.buildNumber,
   date: new Date().toISOString().slice(0, 10),
-  live: 'https://satohash.giveabit.io',
+  live: 'https://satohash.io',
   github: 'https://github.com/kitsboy/satohash',
 };
 
@@ -48,6 +48,25 @@ const DOC_FILES = [
 const PUBLIC_COPY = {
   'docs/DEPLOY-SERVER.md': 'public/docs/deploy-server.md',
   'docs/MVP-READINESS.md': 'public/docs/mvp-readiness.md',
+  'docs/MISSION.md': 'public/docs/mission.md',
+  'docs/OTS_SETUP.md': 'public/docs/ots_setup.md',
+  'docs/deploy.md': 'public/docs/deploy-playbook.md',
+  'docs/DESIGN-CONTEXT.md': 'public/docs/design-context.md',
+  'docs/DESIGN-TOKENS.md': 'public/docs/design-tokens.md',
+  'docs/ROLLBACK.md': 'public/docs/rollback.md',
+  'docs/IMPROVEMENTS-LOG.md': 'public/docs/improvements-log.md',
+  'docs/marketing/PITCH.md': 'public/docs/pitch.md',
+  'docs/marketing/EXECUTIVE-SUMMARY.md': 'public/docs/executive-summary.md',
+  'docs/marketing/MARKETING.md': 'public/docs/marketing.md',
+  'docs/marketing/FINANCIALS.md': 'public/docs/financials.md',
+  'docs/marketing/SEO.md': 'public/docs/seo.md',
+  'docs/marketing/SEO-de.md': 'public/docs/seo-de.md',
+  'docs/marketing/SEO-es.md': 'public/docs/seo-es.md',
+  'docs/marketing/SEO-fr.md': 'public/docs/seo-fr.md',
+  'docs/marketing/SEO-pt.md': 'public/docs/seo-pt.md',
+  'docs/marketing/SEO-sw.md': 'public/docs/seo-sw.md',
+  'docs/marketing/SEO-zh.md': 'public/docs/seo-zh.md',
+  'docs/HQ-FEED.md': 'public/docs/hq-feed.md',
 };
 
 for (const rel of DOC_FILES) {
@@ -76,5 +95,14 @@ const manifest = {
     path: f,
   })),
 };
+for (const [src, dest] of Object.entries(PUBLIC_COPY)) {
+  if (DOC_FILES.includes(src)) continue
+  const full = path.join(root, src)
+  if (!fs.existsSync(full)) continue
+  fs.mkdirSync(path.dirname(path.join(root, dest)), { recursive: true })
+  fs.writeFileSync(path.join(root, dest), fs.readFileSync(full, 'utf-8'))
+  console.log(`Copied → ${dest}`)
+}
+
 fs.writeFileSync(path.join(root, 'docs/manifest.json'), JSON.stringify(manifest, null, 2));
 console.log('Wrote docs/manifest.json');

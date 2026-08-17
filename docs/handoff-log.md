@@ -1,3 +1,24 @@
+## Session — 2026-08-16 (Grok) — MOBILE OVERFLOW + PUBLIC DOCS
+
+**From:** Grok M3 · **To:** Kimi / next Grok · **Status:** Tooltips/nav clamped · public docs refreshed to 5.0.0-ELITE · free stamps ON · no paywall flip
+
+### Done this session
+1. Viewport-clamped tooltips (portal), language switcher, More nav, help overlay, hover flyouts
+2. Facelift `/docs`, DocViewer, guides, glossary, FAQ, pitch, trust, legal
+3. Replaced stale public docs (v4 / 2025 / template mission / clone-only quickstart) with current product truth
+4. `docs:sync` now copies the user-facing set to `public/docs/`
+5. Playwright: language menu stays on-screen at 390×844; `/docs` `/faq` `/stamp` no page overflow
+
+### Standing
+- Free stamps · `REQUIRE_LIGHTNING=false` · bitcoind at tip
+- SPA → `https://api.satohash.io` only
+
+### Next
+- Full e2e stamp→API→verify · CI lh mobile gate · Safari device QA
+- Do not flip paywall
+
+---
+
 ## Session — 2026-08-10 (Grok) — GOODBYE
 
 **From:** Grok M3 · **To:** Kimi / next Grok · **Status:** Mobile Top 12 **live** · IBD done · free stamps ON · no paywall flip

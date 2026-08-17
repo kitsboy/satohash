@@ -10,7 +10,19 @@ test.use({
   hasTouch: true
 })
 
-const MARKETING = ['/templates', '/pricing', '/faq', '/stamp', '/verify', '/government', '/watch']
+const MARKETING = [
+  '/templates',
+  '/pricing',
+  '/faq',
+  '/stamp',
+  '/verify',
+  '/government',
+  '/watch',
+  '/docs',
+  '/docs/quickstart',
+  '/guides',
+  '/glossary'
+]
 
 test.describe('Mobile shell', () => {
   for (const path of MARKETING) {
@@ -26,7 +38,7 @@ test.describe('Mobile shell', () => {
       const menuBtn = page.getByRole('button', { name: /open menu|close menu/i })
       if (await menuBtn.count()) {
         await menuBtn.first().click()
-        await expect(page.getByText(/Navigate|Stamp free/i).first()).toBeVisible({
+        await expect(page.getByText(/^Menu$/).first()).toBeVisible({
           timeout: 5000
         })
       }
@@ -38,6 +50,40 @@ test.describe('Mobile shell', () => {
       expect(overflow).toBe(true)
     })
   }
+
+  test('docs article and language menu stay on screen', async ({ page }) => {
+    await page.goto('/docs/quickstart')
+    await expect(page.getByRole('heading', { name: /quick start/i }).first()).toBeVisible({
+      timeout: 20000
+    })
+    const noPageOverflow = await page.evaluate(() => {
+      const d = document.documentElement
+      return d.scrollWidth <= d.clientWidth + 2
+    })
+    expect(noPageOverflow).toBe(true)
+
+    const lang = page.getByRole('button', { name: /language/i }).first()
+    await lang.click()
+    const listbox = page.getByRole('listbox', { name: /select language/i })
+    await expect(listbox).toBeVisible()
+    const box = await listbox.boundingBox()
+    expect(box).toBeTruthy()
+    expect(box.x).toBeGreaterThanOrEqual(-1)
+    expect(box.y).toBeGreaterThanOrEqual(-1)
+    expect(box.x + box.width).toBeLessThanOrEqual(390 + 2)
+    expect(box.y + box.height).toBeLessThanOrEqual(844 + 2)
+    await page.keyboard.press('Escape')
+
+    const info = page.getByRole('button', { name: /info:/i }).first()
+    if (await info.count()) {
+      await info.click()
+      const tip = page.getByRole('tooltip')
+      await expect(tip).toBeVisible()
+      const tbox = await tip.boundingBox()
+      expect(tbox.x).toBeGreaterThanOrEqual(-1)
+      expect(tbox.x + tbox.width).toBeLessThanOrEqual(390 + 2)
+    }
+  })
 
   test('vault app shell shows mobile bottom nav when authed', async ({ page }) => {
     await page.addInitScript(() => {

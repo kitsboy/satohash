@@ -31,7 +31,7 @@
       "id": "cost",
       "category": "basics",
       "q": "How much does it cost?",
-      "a": "Basic Bitcoin timestamping is completely free. No account, no credit card, no subscription. Premium features (BOLT-12 Lightning payments, API access) are in development."
+      "a": "Stamping is free today. No account, no credit card, no Lightning invoice. If we flip a paywall later, you would pay a small Lightning fee to us — the proof still anchors to Bitcoin via OpenTimestamps. We have not flipped that flag."
     },
     {
       "id": "legal",
@@ -97,7 +97,7 @@
       "id": "snapper",
       "category": "usage",
       "q": "What is the Satohash Snapper?",
-      "a": "The Satohash Snapper is a browser extension that captures web page evidence. Take a snapshot of any webpage, and the extension stamps its hash and metadata to Bitcoin for verifiable proof of its state at that moment."
+      "a": "Web Capture (/snapper) hashes a page snapshot in the browser and stamps that fingerprint. It is a site tool, not a required browser extension. The file bytes still never leave your device."
     },
     {
       "id": "procurement",

@@ -1,6 +1,12 @@
 /* Fonts load via <link> in index.html — never @import here (blocks entire CSS cascade). */
 @import 'tailwindcss';
 
+html,
+body {
+  overflow-x: clip;
+  max-width: 100%;
+}
+
 /* Templates category chip strip: horizontal scroll without page-level overflow */
 .templates-category-scroll {
   scroll-snap-type: x proximity;
@@ -1098,6 +1104,114 @@
     max-width: 100%;
     overflow-x: auto;
   }
+}
+
+/* In-app documentation article */
+.doc-h1 {
+  margin: 0 0 1rem;
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+  scroll-margin-top: 7rem;
+}
+.doc-h2 {
+  margin: 2rem 0 0.75rem;
+  font-size: clamp(1.1rem, 3vw, 1.35rem);
+  font-weight: 800;
+  color: var(--accent-gold);
+  scroll-margin-top: 7rem;
+}
+.doc-h3 {
+  margin: 1.5rem 0 0.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  scroll-margin-top: 7rem;
+}
+.doc-p {
+  margin: 0 0 1rem;
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+.doc-list {
+  margin: 0 0 1rem 1.1rem;
+  padding: 0;
+  color: var(--text-secondary);
+  font-size: 0.9375rem;
+  line-height: 1.65;
+}
+.doc-list li {
+  margin-bottom: 0.35rem;
+}
+.doc-quote {
+  margin: 0 0 1rem;
+  padding: 0.75rem 1rem;
+  border-left: 3px solid var(--accent-gold);
+  background: var(--accent-gold-subtle);
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  border-radius: 0 0.75rem 0.75rem 0;
+}
+.doc-hr {
+  margin: 1.75rem 0;
+  border: 0;
+  border-top: 1px solid var(--border);
+}
+.doc-code {
+  background: var(--bg-primary);
+  color: var(--accent-gold);
+  padding: 0.1rem 0.4rem;
+  border-radius: 0.35rem;
+  font-size: 0.8em;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  word-break: break-word;
+}
+.doc-pre {
+  margin: 0 0 1rem;
+  padding: 0.9rem 1rem;
+  border-radius: 0.85rem;
+  border: 1px solid var(--border);
+  background: var(--bg-primary);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  font-size: 0.78rem;
+  line-height: 1.55;
+  color: var(--text-primary);
+}
+.doc-table-wrap {
+  margin: 0 0 1.25rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--border);
+  border-radius: 0.85rem;
+}
+.doc-table {
+  width: 100%;
+  min-width: 28rem;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+}
+.doc-table th,
+.doc-table td {
+  padding: 0.6rem 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+.doc-table th {
+  font-weight: 700;
+  color: var(--text-primary);
+  background: var(--bg-primary);
+}
+.doc-table td {
+  color: var(--text-secondary);
+}
+.doc-link {
+  color: var(--accent-gold);
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 @media print {

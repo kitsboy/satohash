@@ -1601,7 +1601,7 @@ function ActionBtn({ icon: Icon, label, onClick }) {
       className="group/btn relative flex h-12 w-12 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-[var(--text-secondary)] transition-all hover:scale-110 hover:bg-white hover:text-black"
     >
       <Icon size={18} />
-      <span className="pointer-events-none absolute -top-10 left-1/2 -translate-x-1/2 rounded-md bg-white px-2 py-1 text-[9px] font-black whitespace-nowrap text-black uppercase opacity-0 transition-opacity group-hover/btn:opacity-100">
+      <span className="pointer-events-none absolute -top-10 left-1/2 z-20 hidden max-w-[min(12rem,calc(100vw-2rem))] -translate-x-1/2 truncate rounded-md bg-white px-2 py-1 text-[9px] font-black text-black uppercase opacity-0 transition-opacity group-hover/btn:opacity-100 sm:block">
         {label}
       </span>
     </button>

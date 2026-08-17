@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { ChevronDown, Check, Globe2 } from 'lucide-react'
 import { useI18n, languages } from '../../i18n'
 import { switchAppLanguage } from '../../i18n/setup'
+import { placePopover } from '../../utils/placePopover'
 
 /**
  * Elite language control for the menu bar.
@@ -16,7 +17,7 @@ export default function LanguageSwitcher({ compact = false }) {
   const { i18n } = useTranslation()
   const [open, setOpen] = useState(false)
   const [busy, setBusy] = useState(false)
-  const [pos, setPos] = useState({ top: 0, right: 8 })
+  const [pos, setPos] = useState({ top: 0, left: 8, width: 280, maxHeight: 360, side: 'below' })
   const btnRef = useRef(null)
   const menuRef = useRef(null)
   const current = languages.find((l) => l.code === lang) ?? languages[0]
@@ -25,9 +26,9 @@ export default function LanguageSwitcher({ compact = false }) {
     const el = btnRef.current
     if (!el) return
     const r = el.getBoundingClientRect()
-    const right = Math.max(12, window.innerWidth - r.right)
-    const top = Math.min(r.bottom + 10, window.innerHeight - 24)
-    setPos({ top, right })
+    const width = Math.min(280, window.innerWidth - 24)
+    const height = Math.min(22 * 16, window.innerHeight * 0.62)
+    setPos(placePopover(r, { width, height, gap: 10, pad: 12, prefer: 'below' }))
   }, [])
 
   useEffect(() => {
@@ -100,10 +101,13 @@ export default function LanguageSwitcher({ compact = false }) {
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: -6, scale: 0.98 }}
           transition={{ duration: 0.16, ease: [0.16, 1, 0.3, 1] }}
-          className="fixed z-[6000] w-[min(17.5rem,calc(100vw-1.25rem))] overflow-hidden rounded-2xl border py-2"
+          className="fixed z-[6000] overflow-hidden rounded-2xl border py-2"
           style={{
             top: pos.top,
-            right: pos.right,
+            left: pos.left,
+            width: pos.width,
+            maxWidth: 'calc(100vw - 24px)',
+            maxHeight: pos.maxHeight,
             borderColor: 'var(--border-bright)',
             background: 'color-mix(in srgb, var(--bg-secondary) 97%, #000)',
             boxShadow:
@@ -111,7 +115,7 @@ export default function LanguageSwitcher({ compact = false }) {
             backdropFilter: 'blur(20px)'
           }}
         >
-          <div className="flex items-center gap-2 border-b border-[var(--border)] px-4 pb-2.5 pt-1">
+          <div className="flex items-center gap-2 border-b border-[var(--border)] px-4 pt-1 pb-2.5">
             <Globe2 size={14} style={{ color: 'var(--accent-gold)' }} />
             <span
               className="text-[10px] font-black tracking-[0.16em] uppercase"
@@ -121,7 +125,7 @@ export default function LanguageSwitcher({ compact = false }) {
             </span>
           </div>
 
-          <div className="max-h-[min(60vh,22rem)] overflow-y-auto py-1">
+          <div className="max-h-[min(52vh,20rem)] overflow-y-auto overscroll-contain py-1">
             {languages.map((l) => {
               const active = lang === l.code
               return (
@@ -157,7 +161,7 @@ export default function LanguageSwitcher({ compact = false }) {
                     {l.flag}
                   </span>
                   <span className="min-w-0 flex-1">
-                    <span className="block truncate text-[13px] font-semibold leading-tight">
+                    <span className="block truncate text-[13px] leading-tight font-semibold">
                       {l.label}
                     </span>
                     <span

@@ -3,12 +3,13 @@ import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { BookOpen, ArrowRight, Shield, FileText, Zap, Globe } from 'lucide-react'
 import usePageMeta from '../hooks/usePageMeta'
+import Footer from '../components/layout/Footer'
 
 const GUIDE_IDS = [
-  { id: 'what-is-cryptographic-proof', icon: Shield },
-  { id: 'how-opentimestamps-works', icon: Zap },
-  { id: 'ots-vs-traditional-notary', icon: FileText },
-  { id: 'why-bitcoin-for-truth', icon: Globe }
+  { id: 'what-is-cryptographic-proof', icon: Shield, to: '/docs/mission' },
+  { id: 'how-opentimestamps-works', icon: Zap, to: '/docs/ots_setup' },
+  { id: 'ots-vs-traditional-notary', icon: FileText, to: '/comparison' },
+  { id: 'why-bitcoin-for-truth', icon: Globe, to: '/docs/architecture' }
 ]
 
 export default function Guides() {
@@ -17,9 +18,10 @@ export default function Guides() {
 
   const guides = useMemo(
     () =>
-      GUIDE_IDS.map(({ id, icon }) => ({
+      GUIDE_IDS.map(({ id, icon, to }) => ({
         id,
         icon,
+        to,
         title: t(`guidesPage.guides.${id}.title`),
         desc: t(`guidesPage.guides.${id}.desc`),
         readTime: t(`guidesPage.guides.${id}.readTime`)
@@ -28,7 +30,7 @@ export default function Guides() {
   )
 
   return (
-    <div className="min-h-screen bg-[var(--bg-primary)]">
+    <div className="min-h-screen overflow-x-clip bg-[var(--bg-primary)]">
       <section className="border-b border-[var(--border)] px-4 pt-8 pb-12 sm:px-6 sm:pt-12 sm:pb-16">
         <div className="mx-auto max-w-3xl text-center">
           <p className="mb-2 text-[10px] font-bold tracking-[0.25em] text-[var(--accent-gold)] uppercase">
@@ -50,9 +52,10 @@ export default function Guides() {
           {guides.map((guide) => {
             const Icon = guide.icon
             return (
-              <div
+              <Link
                 key={guide.id}
-                className="group rounded-2xl border border-[var(--border)] bg-[var(--surface-raised)] p-6 transition-all hover:border-[var(--accent-gold)] hover:shadow-[0_0_30px_var(--accent-gold-glow)]"
+                to={guide.to}
+                className="group rounded-2xl border border-[var(--border)] bg-[var(--surface-raised)] p-5 ring-1 ring-transparent transition-all hover:border-[var(--accent-gold)] hover:shadow-[0_0_30px_var(--accent-gold-glow)] hover:ring-[var(--accent-gold)]/15 sm:p-6"
               >
                 <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-[var(--accent-gold)]/10">
                   <Icon size={22} className="text-[var(--accent-gold)]" />
@@ -73,7 +76,7 @@ export default function Guides() {
                     {t('common.read')} <ArrowRight size={11} />
                   </span>
                 </div>
-              </div>
+              </Link>
             )
           })}
         </div>
@@ -100,6 +103,7 @@ export default function Guides() {
           </div>
         </div>
       </section>
+      <Footer />
     </div>
   )
 }

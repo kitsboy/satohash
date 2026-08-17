@@ -1,9 +1,11 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.giveabit.io · **Version:** 5.0.0-ELITE (Build 217) · **Updated:** 2026-08-11
+> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 218) · **Updated:** 2026-08-17
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Satohash: The Sovereign Provenance Mesh
 ### Bitcoin APPS F.O.S.S. — Engineered by Give A Bit
+
+**Status (August 2026):** Live at **https://satohash.io**. Version **5.0.0-ELITE**. Stamps are **free** (`REQUIRE_LIGHTNING=false`). Own pruned bitcoind is at tip. Lightning / L402 is **built but not charged**. Proofs stay Bitcoin + OpenTimestamps.
 
 ---
 

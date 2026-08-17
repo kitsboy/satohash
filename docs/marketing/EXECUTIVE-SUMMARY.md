@@ -1,14 +1,14 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.giveabit.io · **Version:** 5.0.0-ELITE (Build 217) · **Updated:** 2026-08-11
+> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 218) · **Updated:** 2026-08-17
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Satohash — Executive Summary
 
-**Version:** 4.1.0-ELITE (Sovereign Settlement Mesh)  
-**Date:** 2026-06-10  
-**Live at:** https://satohash.giveabit.io (primary)
+**Version:** 5.0.0-ELITE  
+**Date:** 2026-08-16  
+**Live at:** https://satohash.io (primary) · API https://api.satohash.io  
 **Built by:** Give A Bit (https://giveabit.io)  
-**GitHub:** https://github.com/kitsboy/satohash (local filesystem is currently the most up-to-date source of truth — recent push did not fully land)
+**GitHub:** https://github.com/kitsboy/satohash
 
 ---
 

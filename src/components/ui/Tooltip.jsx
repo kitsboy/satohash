@@ -1,93 +1,160 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
+import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'framer-motion'
+import { placePopover, canHoverFine } from '../../utils/placePopover'
 
 /**
- * Tooltip — a small info tooltip triggered on hover of an (i) icon button.
- *
- * Props:
- *   title    — string, shown in accent uppercase label at top of card
- *   content  — string, the explanation body
- *   className — optional extra classes on the wrapper span
+ * Tooltip — info (i) trigger. Portaled + clamped so it never opens off-screen.
+ * Hover on fine pointers; tap-to-toggle on touch.
  */
 export default function Tooltip({ title, content, className = '' }) {
   const [visible, setVisible] = useState(false)
-  const [flipBelow, setFlipBelow] = useState(false)
-  const [flipLeft, setFlipLeft] = useState(false)
+  const [pos, setPos] = useState(null)
   const triggerRef = useRef(null)
+  const cardRef = useRef(null)
 
-  // Compute flip directions in an effect (safe ref access outside render)
+  const place = useCallback(() => {
+    const el = triggerRef.current
+    if (!el) return
+    const rect = el.getBoundingClientRect()
+    const vw = window.innerWidth
+    const width = Math.min(280, vw - 24)
+    const estimate = Math.min(220, window.innerHeight * 0.45)
+    setPos(placePopover(rect, { width, height: estimate, gap: 10, pad: 12, prefer: 'above' }))
+  }, [])
+
   useEffect(() => {
-    if (visible && triggerRef.current) {
-      const rect = triggerRef.current.getBoundingClientRect()
-      setFlipBelow(rect.top < 120)
-      setFlipLeft(rect.left > window.innerWidth * 0.55)
+    if (!visible) return undefined
+    place()
+    const onReflow = () => place()
+    window.addEventListener('resize', onReflow)
+    window.addEventListener('scroll', onReflow, true)
+    return () => {
+      window.removeEventListener('resize', onReflow)
+      window.removeEventListener('scroll', onReflow, true)
+    }
+  }, [visible, place])
+
+  useEffect(() => {
+    if (!visible || !cardRef.current || !triggerRef.current) return
+    const card = cardRef.current.getBoundingClientRect()
+    const rect = triggerRef.current.getBoundingClientRect()
+    const next = placePopover(rect, {
+      width: Math.min(280, window.innerWidth - 24),
+      height: card.height,
+      gap: 10,
+      pad: 12,
+      prefer: 'above'
+    })
+    setPos((prev) => {
+      if (
+        prev &&
+        Math.abs(prev.top - next.top) < 2 &&
+        Math.abs(prev.left - next.left) < 2 &&
+        prev.side === next.side
+      ) {
+        return prev
+      }
+      return next
+    })
+  }, [visible])
+
+  useEffect(() => {
+    if (!visible) return undefined
+    const onDown = (e) => {
+      if (triggerRef.current?.contains(e.target)) return
+      if (cardRef.current?.contains(e.target)) return
+      setVisible(false)
+    }
+    const onKey = (e) => {
+      if (e.key === 'Escape') setVisible(false)
+    }
+    document.addEventListener('pointerdown', onDown)
+    document.addEventListener('keydown', onKey)
+    return () => {
+      document.removeEventListener('pointerdown', onDown)
+      document.removeEventListener('keydown', onKey)
     }
   }, [visible])
 
+  const show = () => {
+    place()
+    setVisible(true)
+  }
+  const hide = () => setVisible(false)
+  const toggle = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setVisible((v) => {
+      if (!v) place()
+      return !v
+    })
+  }
+
+  const hoverable = canHoverFine()
+
+  const card =
+    visible &&
+    pos &&
+    typeof document !== 'undefined' &&
+    createPortal(
+      <AnimatePresence>
+        <motion.div
+          ref={cardRef}
+          role="tooltip"
+          initial={{ opacity: 0, scale: 0.96, y: pos.side === 'below' ? -4 : 4 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.96 }}
+          transition={{ duration: 0.14, ease: 'easeOut' }}
+          className="fixed z-[7000] rounded-xl border border-[var(--border-bright)] bg-[var(--bg-secondary)] p-3.5 shadow-[var(--shadow-noir)]"
+          style={{
+            top: pos.top,
+            left: pos.left,
+            width: pos.width,
+            maxWidth: 'calc(100vw - 24px)'
+          }}
+        >
+          <span
+            aria-hidden
+            className="absolute left-1/2 h-2 w-2 -translate-x-1/2 rotate-45 border border-[var(--border-bright)] bg-[var(--bg-secondary)]"
+            style={
+              pos.side === 'below'
+                ? { top: -5, borderRight: 'none', borderBottom: 'none' }
+                : { bottom: -5, borderLeft: 'none', borderTop: 'none' }
+            }
+          />
+          {title && (
+            <p className="mb-1.5 text-[10px] font-black tracking-widest text-[var(--accent-gold)] uppercase">
+              {title}
+            </p>
+          )}
+          <p className="text-xs leading-relaxed text-[var(--text-secondary)]">{content}</p>
+        </motion.div>
+      </AnimatePresence>,
+      document.body
+    )
+
   return (
-    <span
-      className={`relative inline-flex items-center ${className}`}
-      onMouseEnter={() => setVisible(true)}
-      onMouseLeave={() => setVisible(false)}
-      onFocus={() => setVisible(true)}
-      onBlur={() => setVisible(false)}
-    >
-      {/* (i) trigger button */}
+    <span className={`relative inline-flex items-center ${className}`}>
       <button
         ref={triggerRef}
         type="button"
-        aria-label={`Info: ${title}`}
-        className="ml-1.5 flex h-4 w-4 flex-shrink-0 cursor-default items-center justify-center rounded-full border border-[var(--accent-active)] text-[9px] font-black text-[var(--accent-active)] shadow-[0_0_6px_var(--accent-active)] transition-all hover:shadow-[0_0_12px_var(--accent-active)] focus:ring-1 focus:ring-[var(--accent-active)] focus:outline-none"
+        aria-label={title ? `Info: ${title}` : 'More information'}
+        aria-expanded={visible}
+        className="ml-1 inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[var(--accent-gold)] text-[10px] font-black text-[var(--accent-gold)] transition-all hover:bg-[var(--accent-gold-subtle)] focus:ring-2 focus:ring-[var(--accent-gold)]/40 focus:outline-none sm:h-5 sm:w-5 sm:text-[9px]"
+        onClick={toggle}
+        onMouseEnter={hoverable ? show : undefined}
+        onMouseLeave={hoverable ? hide : undefined}
+        onFocus={show}
+        onBlur={(e) => {
+          if (cardRef.current?.contains(e.relatedTarget)) return
+          if (!hoverable) return
+          hide()
+        }}
       >
         i
       </button>
-
-      {/* Tooltip card */}
-      <AnimatePresence>
-        {visible && (
-          <motion.div
-            role="tooltip"
-            initial={{ opacity: 0, scale: 0.92, y: flipBelow ? -6 : 6 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.92, y: flipBelow ? -6 : 6 }}
-            transition={{ duration: 0.15, ease: 'easeOut' }}
-            className="pointer-events-none absolute z-50 w-[280px] rounded-xl border border-[var(--border-bright)] bg-[var(--bg-secondary)] p-3.5 shadow-[var(--shadow-noir)]"
-            style={{
-              // Horizontal: clamp to viewport when near right edge
-              ...(flipLeft
-                ? { right: 0, left: 'auto', transform: 'none' }
-                : { left: '50%', transform: 'translateX(-50%)' }),
-              // Vertical: flip above/below based on available room
-              ...(flipBelow
-                ? { top: 'calc(100% + 8px)', bottom: 'auto' }
-                : { bottom: 'calc(100% + 8px)', top: 'auto' })
-            }}
-          >
-            {/* Small caret — repositioned when flipped left */}
-            <span
-              className={`absolute border-4 border-transparent ${flipLeft ? 'right-2 -translate-x-0' : 'left-1/2 -translate-x-1/2'}`}
-              style={
-                flipBelow
-                  ? {
-                      top: -8,
-                      borderBottomColor: 'var(--border-bright)'
-                    }
-                  : {
-                      bottom: -8,
-                      borderTopColor: 'var(--border-bright)'
-                    }
-              }
-            />
-
-            {title && (
-              <p className="mb-1.5 text-[10px] font-black tracking-widest text-[var(--accent-active)] uppercase">
-                {title}
-              </p>
-            )}
-            <p className="text-xs leading-relaxed text-[var(--text-secondary)]">{content}</p>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {card}
     </span>
   )
 }

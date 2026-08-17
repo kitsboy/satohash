@@ -1,9 +1,11 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.giveabit.io · **Version:** 4.1.0-ELITE (Build 7) · **Updated:** 2026-07-06
+> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 217) · **Updated:** 2026-08-17
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Satohash: The Sovereign Provenance Mesh
 ### Bitcoin APPS F.O.S.S. — Engineered by Give A Bit
+
+**Status (August 2026):** Live at **https://satohash.io**. Version **5.0.0-ELITE**. Stamps are **free** (`REQUIRE_LIGHTNING=false`). Own pruned bitcoind is at tip. Lightning / L402 is **built but not charged**. Proofs stay Bitcoin + OpenTimestamps.
 
 ---
 
@@ -92,23 +94,75 @@ In the spirit of Bitcoin, **F.O.S.S.** is the only way to build true trust infra
 
 ## 🏛 Government, diplomacy & migration programs
 
-Agencies and programs that modernize registries, travel documents, or tender systems need **proof of “what existed when”** without uploading sensitive files to a new vendor cloud.
+Agencies modernizing registries, travel documents, or tenders need **proof of “what existed when”** without uploading sensitive files to a new vendor cloud.
 
-**Satohash for the public sector (practical posture):**
-*   **Hash-only evidence** — SHA-256 in the browser; OpenTimestamps calendars; Bitcoin as the long-term anchor.
-*   **Batch & custody** — folder stamps and sequential handoff proofs for chain-of-custody narratives.
-*   **Air-gapped friendly** — hash offline; only fingerprints and `.ots` proofs travel.
-*   **Free open path today** — strangers can stamp without accounts; Lightning paywall stays off until operators choose fees.
+**Satohash public-sector posture:** hash-only evidence · batch & custody chains · air-gapped friendly · free open path today (Lightning paywall off until operators choose).
 
-**Quiet R&D (not a product launch):** Across the Give A Bit family we explore small migration helpers. One early pattern is **MotoPass** — client-side hashing of passport-style application packets, then a deep-link into Satohash (`/stamp?hash=…&ref=…`) so biometrics never hit the proof API. Treat it as a humble concept for workshops, not a campaign. Details live under [Government use](/government) on the site.
+**Quiet R&D (not a launch):** Give A Bit experiments with migration helpers. **MotoPass** is a humble early pattern — client-side hashing of passport-style packets + Satohash deep-link (`/stamp?hash=…&ref=…`) so biometrics never hit the proof API. Workshop concept, not a campaign. See the site **Government** page for solutions, ideas, and illustrative charts.
 
-**Solid first steps for partners:**
-1. Stamp a sample packet free on satohash.io and keep the `.ots` with the archive.
-2. Wire deep-links from existing portals (see Integrations).
-3. Use batch hash for cutover folders; verify with open tools.
-4. Read the executive summary and security pages before procurement language.
+**Partner first steps:** free sample stamp → deep-link from portals → batch hash cutovers → executive summary + security before procurement language.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ---
-
-
-
+**Diligence pack:** [docs/diligence/](./diligence/) (investor + architecture + ask)

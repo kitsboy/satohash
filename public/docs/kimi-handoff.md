@@ -1,140 +1,42 @@
-# KIMI-HANDOFF — Satohash
+# What's live
 
-Session handoff log for Kimi (M4 HERMES). Append new entries at the top.
+**Version:** 5.0.0-ELITE · **Updated:** 2026-08-16 · **Live:** https://satohash.io
 
----
+Public status snapshot for Satohash. Agent session logs stay in the repo (`docs/handoff-log.md`); this page is for humans.
 
-## Handoff to Kimi — 2026-07-05
+## Product
 
-**Machine:** M3 (Grok)
-**Project:** satohash
+| Surface | Notes |
+|---|---|
+| `/` | Landing + marketing nav. CTA to the 10s explainer. |
+| `/stamp` · `/stamp/done` | Free stamp loop. Sticky CTA, camera/gallery, share + QR, proof ZIP. |
+| `/verify` | File, hash, or `.ots`. Pending vs Bitcoin-confirmed. |
+| `/templates` | Category chips, search, demo editor. |
+| `/watch` | 10-second explainer with VO. |
+| `/government` | Solutions + Motopass concept. |
+| `/network` | Live calendars / bitcoin / stamps dashboard. |
+| `/docs` | This documentation set. |
+| Languages | en · es · fr · de · pt · sw · zh |
 
-### Done
-- [x] Batch 4 items 76–100: tests (ProtectedRoute, Access, health API, auth-stamp e2e + axe), vitest 20% coverage threshold, lint-staged server, i18n:check script, forum Prometheus counter, OTS upgrade socket UI, BatchTimestamp per-file progress, Stamp dropzone tour tooltips, PWA manifest alignment, SW registration fix, pre-push hook, docs/handoff artifacts
-- [x] `docs/IMPROVEMENTS-LOG.md` — all 100 items checked off
-- [x] CHANGELOG, README pitch/docs section, `.env.example` security warnings
+## Infrastructure
 
-### Decisions
-- `build-metadata.json` stays **tracked** (pre-commit bumps it via `version:bump`)
-- Removed manual `/sw.js` registration; Vite PWA `virtual:pwa-register` drives updates
-- Health tests use supertest against exported `app` with `NODE_ENV=test` guard (no listen)
-- `public/manifest.json` mirrors `site.webmanifest` for PWA name consistency
+- API **green** at `https://api.satohash.io` (5.0.0-ELITE)
+- SPA always calls that API — never same-origin on Cloudflare Pages hosts
+- Own pruned bitcoind at tip · `ready_to_verify: true`
+- OTS calendars: alice / bob / finney (2 of 3 is healthy)
+- Lightning configured but **paywall off**
+- Metrics: `https://api.satohash.io/metrics.json`
 
-### What's Next
-- Run `npm run test:e2e` in CI with production server
-- Reconcile unpushed commits to GitHub
-- Continue Phase III NIP-05 identity per ROADMAP
+## Standing orders
 
-### Git State
-- Last commit SHA: *(run `git log -1 --format=%H` after commit)*
-- Branch: main
-- Unpushed: *(check `git log --oneline origin/main..HEAD`)*
+- Free stamps until Cam flips `REQUIRE_LIGHTNING`
+- Do not change live `/api/*` paths without an explicit request
+- Do not break `public/_redirects` SPA fallback or `GET /metrics.json`
+- Version source of truth: `package.json` → `5.0.0-ELITE`
 
----
+## Suggested next (not started)
 
-## Session Entry — 2026-07-05 (Batch 2: Items 26–50)
-
-**From:** Cursor / cam on M3  
-**Project:** Satohash v4.1.0-ELITE  
-**Live:** https://satohash.giveabit.io
-
-### What Was Done
-
-Routing & consolidation (items 26–35):
-- Routed `AdminThrottle` at `/admin/throttle` (protected)
-- Routed `Contribute` at `/contribute` (public)
-- Added `/developer-portal` → `/developer` redirect
-- Deleted duplicate `src/pages/ContractList.jsx`; App now imports `contracts/ContractList.jsx`
-- Wired all 7 onboarding pages under `/onboarding/*` with legacy redirects
-- Wired timestamp wizard routes under `/contracts/:contractId/timestamp/*` + `/timestamp/verification-help`
-- Routed `VerificationShield` at `/verify-shield/:id` (protected)
-- Routed `SignatureFlow` at `/signatures/:contractId` (protected)
-- Confirmed `/image-vault` → `/vault` redirect
-- Fixed `Snapper` placeholder in `Placeholders.jsx` — coming-soon UI instead of `null`
-
-UX & components (items 36–42):
-- Added `ThemeToggle` to Landing page header (desktop + mobile)
-- Updated `ThemeToggle` to use design tokens (`var(--border)`, `var(--accent-gold)`, etc.)
-- Enhanced `Skeletons.jsx` with `SkeletonList` + `SkeletonVaultRow`; Vault uses `SkeletonList`
-- Created reusable `EmptyState.jsx`; Forum uses it
-- Created `PinModal.jsx`; `Access.jsx` no longer uses `prompt()` for PIN save/restore
-- `LeftRailNav` skips auto-help overlay when first-run onboarding modal is active
-
-Features & polish (items 43–49):
-- `VerificationTool` supports `?q=<hash>` query param with auto-verify
-- `VerifyPublic` adds "Copy Proof" button (formatted proof text)
-- Vault adds sort (newest/oldest/status) and status filter controls
-- `MobileBottomNav` items use 44px min touch targets
-- Landing CTA section adds link to `/pitch`
-
-Docs (items 46–47, 50):
-- Updated `docs/MARKETING.md` — primary domain `satohash.giveabit.io`, v4.1
-- Updated `docs/EXECUTIVE-SUMMARY.md` — primary live URL `satohash.giveabit.io`
-- Created this `docs/KIMI-HANDOFF.md` with session append entry
-
-### Files Changed
-
-- `src/App.jsx`
-- `src/pages/Access.jsx`
-- `src/pages/Forum.jsx`
-- `src/pages/Landing.jsx`
-- `src/pages/Placeholders.jsx`
-- `src/pages/VerificationTool.jsx`
-- `src/pages/VerifyPublic.jsx`
-- `src/pages/Vault.jsx`
-- `src/pages/onboarding/Welcome.jsx`
-- `src/pages/onboarding/HowItWorks.jsx`
-- `src/pages/onboarding/ChooseTemplate.jsx`
-- `src/components/EmptyState.jsx` (new)
-- `src/components/LeftRailNav.jsx`
-- `src/components/MobileBottomNav.jsx`
-- `src/components/PinModal.jsx` (new)
-- `src/components/Skeletons.jsx`
-- `src/components/ThemeProvider.jsx`
-- `docs/MARKETING.md`
-- `docs/EXECUTIVE-SUMMARY.md`
-- `docs/KIMI-HANDOFF.md` (new)
-- Deleted: `src/pages/ContractList.jsx`
-
-### Notes for Kimi
-
-- Onboarding internal nav now uses `/onboarding/*` paths; legacy `/choose-template` and `/account-creation` redirect.
-- Timestamp wizard expects `contractId` in URL — linked from `ContractView`.
-- `SignatureFlow` requires `:contractId` param.
-- `VerificationShield` requires `:id` stamp param.
-- Prior handoff: `KIMI-HANDOFF-satohash-2026-06-10.md` at repo root remains the full baseline document.
-
----
-
-## Prior Reference
-
-See `KIMI-HANDOFF-satohash-2026-06-10.md` in repo root for the original comprehensive handoff (four-plane architecture, mission context, full doc inventory).
-
-## Handoff to Kimi — 2026-07-06
-
-**Machine:** M4 (Hermes)
-**Project:** satohash
-
-### Done
-- [x] Project docs audit & cleanup: removed 8 stale/conflicting root files that duplicated Grok's v4.1.0-ELITE work
-- [x] Cleaned docs/ cruft (MARKETING.md.bak, misplaced .ai_docs/)
-- [x] Committed as 466bd88
-- [x] Updated LATEST-UPDATE.md
-- [x] This handoff entry
-
-### Decisions
-- All June 10 handoff artifacts (KIMI-HANDOFF-satohash-2026-06-10.md, SOURCE-OF-TRUTH.md, STATUS.md, SESSION-SUMMARY-2026-06-10.md) removed — superseded by Grok's docs/KIMI-HANDOFF.md + IMPROVEMENTS-LOG.md
-- Blank templates (EXEC-SUMMARY.md, MARKETING-ONELINER.md) removed — duplicated real docs
-- CLAUDE.md removed — Grok's GROK-SESSION-PROTOCOL.md is the active agent protocol
-- archives/ preserved as-is for historical reference
-
-### What's Next
-- Push to GitHub (2 commits ahead: a7641f8 + 466bd88)
-- Review docs/ARCHITECTURE.md and docs/QUICKSTART.md for staleness against Grok's code changes
-- Continue Phase III NIP-05 identity work per ROADMAP
-- Consider cross-project wiring (Motopass, Katoa proof verification)
-
-### Git State
-- Last commit: 466bd88
-- Branch: main
-- Unpushed: 2 (a7641f8, 466bd88)
+- Full e2e stamp → live API → verify
+- CI Lighthouse mobile gate
+- Real-device Safari QA
+- Longer educational explainer (~30s+) when Cam is ready

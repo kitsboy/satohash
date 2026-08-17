@@ -1,6 +1,8 @@
 # Satohash Quickstart
 
-Get up and running with Bitcoin-anchored document timestamping in under 5 minutes.
+**Users:** stamp in the browser at [https://satohash.io/stamp](https://satohash.io/stamp) — no account, free today. The public guide is [`public/docs/quickstart.md`](../public/docs/quickstart.md) (also `/docs/quickstart` on the site).
+
+**Developers:** clone and run locally in under 5 minutes.
 
 ## Prerequisites
 - Node.js >= 20

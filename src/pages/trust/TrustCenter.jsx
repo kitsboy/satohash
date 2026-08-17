@@ -127,7 +127,7 @@ export default function TrustCenter() {
         <div className="absolute right-1/4 bottom-1/4 h-[500px] w-[500px] rounded-full bg-[var(--accent-purple)] opacity-[0.04] blur-[140px]" />
       </div>
 
-      <div className="layout-container relative z-10 pt-36 pb-32">
+      <div className="layout-container relative z-10 overflow-x-clip px-4 pt-8 pb-20 sm:px-6 sm:pt-12 sm:pb-24">
         {/* ── Hero ─────────────────────────────────────────── */}
         <section className="mb-32 text-center">
           {/* Top status bar */}
@@ -149,16 +149,16 @@ export default function TrustCenter() {
               {health.blockHeight ? ` · Block ${health.blockHeight.toLocaleString()}` : ''}
             </span>
             <span className="text-[var(--border-bright)]">·</span>
-            <span>Effective Date: May 1, 2025</span>
+            <span>Last reviewed: August 16, 2026</span>
             <span className="text-[var(--border-bright)]">·</span>
-            <span>v2.0</span>
+            <span>5.0.0-ELITE</span>
           </motion.div>
 
           <motion.h1
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="mb-6 text-6xl leading-[0.9] font-extrabold tracking-tighter uppercase md:text-8xl lg:text-9xl"
+            className="mb-6 text-4xl leading-[0.95] font-extrabold tracking-tighter uppercase sm:text-6xl md:text-8xl lg:text-9xl"
           >
             Built on Math.
             <br />

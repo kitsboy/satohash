@@ -1,70 +1,100 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.giveabit.io · **Version:** 4.1.0-ELITE (Build 81) · **Updated:** 2026-07-07
+> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 217) · **Updated:** 2026-08-17
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
-# Satohash Deploy Playbook
+# Deploy — canonical
 
-> **Live:** https://satohash.io · https://satohash.giveabit.io  
-> **Host:** Cloudflare Pages · project name **`satohash`**  
-> **M3 path:** `~/projects/satohash`
+**Single deploy doc.** Prefer this over `DEPLOY-PLAYBOOK.md`, `DEPLOY-SERVER.md`, `DEPLOYMENT.md`, and `KIMI-VPS-RUNBOOK.md` (those remain as detailed annexes until fully inlined).
 
-## What production is
+> **Live SPA:** https://satohash.io · **API:** https://api.satohash.io · **Version:** see `package.json`
 
-Satohash production is a **static React SPA** on Cloudflare Pages. There is **no Express server** on the live site.
+---
 
-| Layer | Production | Local dev only |
-|-------|------------|----------------|
-| Frontend | Cloudflare Pages (`./dist`) | Vite on port 3000 |
-| `server/` Express API | **Not deployed** | `npm run dev` on port 3001 |
-
-Core stamping and verification run **in the browser** (Web Crypto + OpenTimestamps). That is intentional — smaller attack surface, files never leave the device.
-
-## Deploy (M3 Terminal)
+## 1. Local SPA
 
 ```bash
-cd ~/projects/satohash
-git pull origin main
-./deploy.sh
+npm ci
+export VITE_API_URL=https://api.satohash.io VITE_MVP_MODE=true VITE_APP_NAME=Satohash
+npm run dev          # Vite :3000
+# optional API: npm run server / docker
 ```
 
-Or step by step:
+Build:
 
 ```bash
-cd ~/projects/satohash
-npm ci
+export VITE_API_URL=https://api.satohash.io VITE_MVP_MODE=true VITE_APP_NAME=Satohash VITE_MEMPOOL_API_URL=https://mempool.space/api
 npm run build
 npm run build:verify
+```
+
+---
+
+## 2. Cloudflare Pages (SPA)
+
+**Preferred path:** push `main` → GitHub Actions `.github/workflows/deploy.yml` → `wrangler pages deploy`.
+
+Manual (M3):
+
+```bash
+npm run build
 npx wrangler pages deploy ./dist --project-name=satohash
 ```
 
-**Must use project name `satohash` and output folder `./dist`.**
+| Domain | Notes |
+|--------|--------|
+| satohash.io / www | Custom domains on Pages project `satohash` |
+| satohash.pages.dev | Production alias |
+| satohash.giveabit.io | Same project |
 
-Auth: `npx wrangler login` (one-time in Terminal.app) **or** set `CLOUDFLARE_API_TOKEN` in the environment.
+**Do not:** dual-race wrangler + GH + CF Git without waiting — partial deploys can SPA-fallback HTML onto JS URLs (edge poison). Prefer **one** production path.
 
-## After push (GitHub)
+**Headers:** hashed bundles under `/b/*` (not long-lived immutable on `/assets/*`). Shell `index.html` is `max-age=0`.
 
-1. `git push origin main` — code is on GitHub
-2. **Deploy is not automatic** unless GitHub Actions has `CLOUDFLARE_API_TOKEN` set, or you run `./deploy.sh` locally
-3. Verify live bundle: `npm run build:verify` checks local build; production should not contain bare `.fees.high` in the Landing chunk
+**Purge:** zone **satohash.io** → Caching → Purge Everything if edge serves HTML as JS.
 
-## Rollback
-
-Cloudflare Dashboard → **Workers & Pages** → **satohash** → **Deployments** → **Rollback to this deployment**
-
-## Stack (Give A Bit ecosystem)
-
-| Machine | Role |
-|---------|------|
-| **M3** (Cam laptop) | Grok codes, builds, `./deploy.sh` |
-| **M4** (HERMES) | Kimi orchestration, docs, Obsidian vault |
-
-Other projects on M3 deploy separately (e.g. **TadBuy** uses Supabase + its own Cloudflare project). This playbook is **Satohash only**.
-
-## Agent rules (Grok + Kimi)
-
-- **Never** assume `git push` updates satohash.io without a Cloudflare upload
-- After Landing or build changes, verify production bundle or run `./deploy.sh`
-- `server/` is local development only — not production
+Annex: `docs/ROLLBACK.md`.
 
 ---
-© 2026 Satohash
+
+## 3. API / Docker / VPS (THOR)
+
+API lives on THOR, not CF Pages.
+
+```bash
+# see docker-compose.vps.yml + scripts/vps-deploy-api.sh
+# env: REQUIRE_LIGHTNING=false for free stamps
+# FAMILY_API_KEYS=... for family free tier
+# OTS_CALENDARS=... public calendars
+```
+
+Annex: `docs/KIMI-VPS-RUNBOOK.md`, `docs/ops-runbook.md` (Docker packaging detail: `docs/DEPLOY-SERVER.md` if present).
+
+---
+
+## 4. Env (public SPA only)
+
+| Var | Purpose |
+|-----|---------|
+| `VITE_API_URL` | Must be `https://api.satohash.io` in production builds |
+| `VITE_MVP_MODE` | `true` for product surface |
+| `VITE_APP_NAME` | Satohash |
+| `VITE_MEMPOOL_API_URL` | mempool.space API |
+
+Never bake secrets into the SPA.
+
+---
+
+## 5. Smoke after deploy
+
+```bash
+curl -sf https://satohash.io/ | grep -oE '/b/index-[^"]+\.js'
+# main JS body must start with const/import — never <!doctype
+curl -sf https://api.satohash.io/health
+curl -sf https://api.satohash.io/metrics.json | head -c 200
+```
+
+---
+
+## 6. Rollback
+
+CF Pages → previous Production deployment. API: previous Docker image / compose. See `docs/ROLLBACK.md`.

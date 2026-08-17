@@ -10,10 +10,10 @@ import {
   Music,
   Image as ImageIcon,
   GraduationCap,
-  Scale,
-  Info
+  Scale
 } from 'lucide-react'
 import { motion } from 'framer-motion'
+import SharedTooltip from '../../components/ui/Tooltip'
 
 const TEMPLATES = [
   {
@@ -194,17 +194,5 @@ function TemplateCard({ template, onClick, index }) {
 }
 
 function Tooltip({ text }) {
-  return (
-    <div className="group/tooltip relative">
-      <div className="flex h-6 w-6 cursor-help items-center justify-center rounded-full border border-slate-200 bg-slate-100 text-slate-400 transition-all hover:bg-indigo-600 hover:text-white">
-        <Info size={12} />
-      </div>
-      <div className="pointer-events-none absolute bottom-full left-1/2 mb-3 w-48 -translate-x-1/2 opacity-0 transition-all group-hover/tooltip:opacity-100">
-        <div className="rounded-xl bg-slate-900 p-4 text-[10px] leading-relaxed font-bold text-white italic shadow-2xl ring-1 ring-white/10">
-          {text}
-          <div className="absolute top-full left-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rotate-45 bg-slate-900" />
-        </div>
-      </div>
-    </div>
-  )
+  return <SharedTooltip title="About this template" content={text} />
 }

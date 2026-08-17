@@ -1,7 +1,7 @@
 # Current Status — Satohash
 
 **Version:** **5.0.0-ELITE**  
-**Last Updated:** 2026-08-10 (Grok goodbye — **Mobile Top 12 live** + IBD done)  
+**Last Updated:** 2026-08-16 (Grok — mobile overflow + public docs refresh)  
 **Frontend:** https://satohash.io · www · CF Pages `satohash`  
 **API:** https://api.satohash.io ✅ LIVE (THOR) — HQ metrics SoT  
 **Analytics:** Umami analytics.giveabit.io (CORS noise possible)  
