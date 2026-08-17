@@ -1,3 +1,10 @@
+## Session — 2026-08-17 (Grok 4.6) — AUDIT FIX + KIMI REBUILD PASTE
+
+Safe `npm audit fix` (no --force): 63 → 22 vulns. Remaining need breaking OTS/`request` upgrades — leave them.  
+Kimi paste at top of `docs/KIMI-HANDOFF.md`: rebuild API image on THOR for `raw.last10` / `raw.familyClients`.
+
+---
+
 ## Session — 2026-08-17 (Grok 4.6) — CI #66 BUNDLE BUDGET
 
 Eager Stamp/Verify made `index-*.js` 1.1 MB. Budget now measures only the HTML entry. Core loop is lazyWithReload again. setup-node v7 on CI/Deploy (Dependabot PR #15 — Cam can ignore/close).

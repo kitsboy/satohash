@@ -1,3 +1,41 @@
+## Session — 2026-08-17 (Grok) — REBUILD API IMAGE (last10)
+
+**From:** Grok M3 · **To:** Kimi on THOR · **Priority:** do this now  
+**Do not** flip `REQUIRE_LIGHTNING`. **Do not** change `/api/*` paths.
+
+Live `https://api.satohash.io/metrics.json` → `raw` is missing `last10` and `familyClients`.  
+SPA `/network` already reads those keys. Code is **already on GitHub `main`** (`server/metrics-payload.js`). You only rebuild the Docker image.
+
+### On THOR (paste)
+
+```bash
+# find the satohash checkout (adjust if your path differs)
+cd /root/satohash 2>/dev/null || cd ~/satohash 2>/dev/null || cd /opt/satohash || pwd
+
+git fetch origin
+git checkout main
+git pull --ff-only origin main
+
+# keep existing .env — REQUIRE_LIGHTNING must stay false
+grep -n REQUIRE_LIGHTNING .env || echo "REQUIRE_LIGHTNING=false" >> .env
+grep REQUIRE_LIGHTNING .env
+
+# rebuild API only (do not recreate Caddy / bitcoind)
+bash scripts/vps-deploy-api.sh
+# if compose is already named:
+# docker compose -f docker-compose.vps.yml up -d --build satohash-api
+
+sleep 5
+curl -sf http://127.0.0.1:3001/health && echo
+curl -sS https://api.satohash.io/metrics.json | python3 -c 'import json,sys; d=json.load(sys.stdin); r=d.get("raw") or {}; print("last10", len(r.get("last10") or [])); print("familyClients", bool(r.get("familyClients"))); print("requireLightning", r.get("requireLightning"))'
+```
+
+**Done when:** `last10` prints a number (0 is ok if no rows) **and** `familyClients` is True (or a list). `requireLightning` must be False.
+
+**Hand back to Grok:** those three printed lines. No secrets.
+
+---
+
 ## Session — 2026-08-17 (Grok) — CF GUIDE + LEFTOVER LIST
 
 **From:** Grok M3 · **To:** Kimi / next Grok · **Status:** leftover polish on `main` · free stamps ON
