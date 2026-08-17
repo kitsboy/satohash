@@ -60,6 +60,7 @@ export function isMarketingPublicPath(pathname = '') {
 export function isBareSharePath(pathname = '') {
   if (!pathname) return false
   if (pathname.startsWith('/verify/') && pathname.length > 8) return true
+  if (pathname.startsWith('/p/') && pathname.length > 3) return true
   return false
 }
 

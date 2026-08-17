@@ -6,6 +6,8 @@ describe('publicRoutes', () => {
     const hash = 'a'.repeat(64)
     expect(isMarketingPublicPath(`/verify/${hash}`)).toBe(true)
     expect(isBareSharePath(`/verify/${hash}`)).toBe(true)
+    expect(isBareSharePath(`/p/${hash}`)).toBe(true)
+    expect(needsMarketingShell(`/p/${hash}`)).toBe(false)
     expect(needsMarketingShell(`/verify/${hash}`)).toBe(false)
   })
 

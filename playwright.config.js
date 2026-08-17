@@ -19,7 +19,9 @@ export default defineConfig({
   projects: [
     {
       name: 'chromium',
-      testIgnore: /safari-chrome\.spec\.js/,
+      testIgnore: process.env.PLAYWRIGHT_SKIP_LIVE_LOOP
+        ? /safari-chrome\.spec\.js|live-stamp-verify\.spec\.js/
+        : /safari-chrome\.spec\.js/,
       use: { ...devices['Desktop Chrome'] },
     },
     {

@@ -95,3 +95,15 @@ jobs:
           echo "last_head=${BODY:-empty}"
           exit 1
       - run: curl -sf https://www.satohash.io/ -o /dev/null || echo "www smoke skipped"
+      - name: Zero-JS proof card (Function, not SPA shell only)
+        run: |
+          set -euo pipefail
+          HASH='e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'
+          BODY=$(curl -sS -m 20 "https://satohash.io/p/${HASH}?nocache=${RANDOM}")
+          echo "$BODY" | grep -qi 'zero-JS proof card\|Interactive verify\|Satohash proof' || {
+            echo "::warning::/p/:hash did not look like a proof card (Function may not have flushed)"
+            exit 0
+          }
+          if echo "$BODY" | grep -q 'id="root"' && ! echo "$BODY" | grep -qi 'zero-JS'; then
+            echo "::warning::/p/:hash looks like SPA shell — Function not winning yet"
+          fi

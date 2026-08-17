@@ -286,6 +286,10 @@ export default function Stamp() {
   const goToDone = useCallback(
     (proof) => {
       if (!proof) return
+      trackEvent(events.TIMESTAMP_COMPLETED, {
+        path: '/stamp/done',
+        status: proof.status || 'pending'
+      })
       persistLastProof(proof)
       const q = new URLSearchParams()
       if (proof.id && !String(proof.id).startsWith('ots-')) q.set('id', proof.id)
@@ -564,6 +568,7 @@ export default function Stamp() {
 
     setError('')
     setProofResult(null)
+    trackEvent(events.TIMESTAMP_STARTED, { path: '/stamp', mode: stampMode })
     await requestWakeLock()
 
     try {

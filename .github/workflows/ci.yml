@@ -68,42 +68,59 @@ jobs:
 
     - name: Run E2E Tests
       if: matrix.node-version == 20
+      env:
+        # live stamp loop runs in live_loop — do not stamp production twice
+        PLAYWRIGHT_SKIP_LIVE_LOOP: '1'
       run: npx playwright test
 
-    - name: Lighthouse mobile gate
+    - name: Upload dist for Lighthouse
       if: matrix.node-version == 20
-      env:
-        BASE_URL: http://127.0.0.1:4173
-        FAIL_HARD: '1'
-      run: |
-        npx vite preview --host 127.0.0.1 --port 4173 &
-        for i in 1 2 3 4 5 6 7 8 9 10; do
-          if curl -sf http://127.0.0.1:4173/ >/dev/null; then
-            break
-          fi
-          sleep 2
-        done
-        npm run lh:mobile
-        if [ -f tmp/lighthouse-mobile/summary.json ]; then
-          echo '### Lighthouse mobile (soft)' >> "$GITHUB_STEP_SUMMARY"
-          echo '```json' >> "$GITHUB_STEP_SUMMARY"
-          cat tmp/lighthouse-mobile/summary.json >> "$GITHUB_STEP_SUMMARY"
-          echo '```' >> "$GITHUB_STEP_SUMMARY"
-        fi
-
-    - name: Upload Lighthouse summary
-      if: matrix.node-version == 20 && always()
       uses: actions/upload-artifact@v4
       with:
-        name: lighthouse-mobile
-        path: tmp/lighthouse-mobile
-        if-no-files-found: ignore
+        name: spa-dist
+        path: dist
+        if-no-files-found: error
+
+  lighthouse_preview:
+    name: Lighthouse mobile (preview)
+    runs-on: ubuntu-latest
+    needs: test_and_build
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+      - run: npm ci
+      - uses: actions/download-artifact@v4
+        with:
+          name: spa-dist
+          path: dist
+      - name: Lighthouse vs preview (isolated — must not skip live_loop)
+        env:
+          BASE_URL: http://127.0.0.1:4173
+          FAIL_HARD: '1'
+        run: |
+          npx vite preview --host 127.0.0.1 --port 4173 &
+          for i in 1 2 3 4 5 6 7 8 9 10; do
+            if curl -sf http://127.0.0.1:4173/ >/dev/null; then
+              break
+            fi
+            sleep 2
+          done
+          npm run lh:mobile
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: lighthouse-mobile
+          path: tmp/lighthouse-mobile
+          if-no-files-found: ignore
 
   live_loop:
     name: Live API stamp → verify
     runs-on: ubuntu-latest
     needs: test_and_build
-    if: github.event_name == 'push' || github.event_name == 'pull_request'
+    if: always() && needs.test_and_build.result == 'success'
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v4

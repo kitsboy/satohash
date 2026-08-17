@@ -53,7 +53,8 @@
 - [x] **Mobile overflow** — tooltips, language menu, More nav stay on-screen  
 - [x] **Public docs** — 5.0.0-ELITE truth + `/docs` facelift  
 - [x] **Live e2e** landing → stamp → API → verify (`tests/e2e/live-stamp-verify.spec.js` + `npm run test:live-api`)  
-- [x] **CI Lighthouse mobile soft gate** (`lh:mobile`, `continue-on-error`)  
+- [x] **CI Lighthouse** isolated job `lighthouse_preview` (`FAIL_HARD=1`) — does not skip `live_loop`  
+- [x] Weekly live LH is **soft** (artifact only)  
 - [x] **WebKit / Safari chrome QA** (`safari-chrome.spec.js`)  
 - [x] **Visual polish** — sheen CTAs, vault rings, theme-aware HUD, live node jewelry  
 

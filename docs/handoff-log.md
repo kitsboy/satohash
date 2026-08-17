@@ -1,3 +1,20 @@
+## Session — 2026-08-17 (Grok 4.6) — BATCHES 1/2/4/5
+
+**From:** Grok M3 · **Status:** CI isolate LH · `/p/:hash` share card · Umami conversion · family share docs
+
+### Done
+1. LH is its own job — `live_loop` only needs `test_and_build`
+2. Weekly LH soft; lighthouse pinned as devDependency
+3. Proof card share URL `/p/<hash>` (copy/QR/share); `<a href>` not React Link
+4. `isBareSharePath` includes `/p/`; dead `/status→/trust` removed
+5. Funnel: timestamp_started/completed · verification_started/completed
+6. FAMILY-API post-stamp share contract; footer `/status` + `/counsel`
+
+### Standing
+- Free stamps ON · no paywall · SPA → api.satohash.io
+
+---
+
 ## Session — 2026-08-17 (Grok 4.6) — 50 UPGRADES + SEO
 
 **From:** Grok M3 · **To:** Kimi / next Grok · **Status:** 50-item flagship pass + SEO **this session** · free stamps ON · no paywall flip

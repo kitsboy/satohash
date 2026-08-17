@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { buildVerifyUrl, buildShareText } from './shareProof'
+import { buildVerifyUrl, buildShareText, buildProofCardUrl } from './shareProof'
 
 describe('shareProof', () => {
   it('prefers hosted stamp id for verify URL', () => {
@@ -11,6 +11,13 @@ describe('shareProof', () => {
     const hash = 'b'.repeat(64)
     const url = buildVerifyUrl({ hash, source: 'browser-ots', id: 'ots-1' })
     expect(url).toMatch(new RegExp(`/verify/${hash}$`))
+  })
+
+  it('share card URL is /p/{hash}', () => {
+    const hash = 'c'.repeat(64)
+    expect(buildProofCardUrl({ hash, id: 'uuid-1', source: 'api' })).toMatch(
+      new RegExp(`/p/${hash}$`)
+    )
   })
 
   it('honest pending vs confirmed share text', () => {

@@ -14,6 +14,16 @@ export function buildVerifyUrl(proof) {
   return `${origin}/verify`
 }
 
+/** Default share / QR / copy URL — full-nav proof card (zero-JS Function on Pages). */
+export function buildProofCardUrl(proof) {
+  if (typeof window === 'undefined') return ''
+  const origin = window.location.origin
+  if (proof?.hash && /^[a-f0-9]{64}$/i.test(proof.hash)) {
+    return `${origin}/p/${String(proof.hash).toLowerCase()}`
+  }
+  return buildVerifyUrl(proof)
+}
+
 export function buildShareText(proof) {
   const status = (proof?.status || 'pending').toLowerCase()
   const label = proof?.filename || 'document'
@@ -28,7 +38,7 @@ export function buildShareText(proof) {
  * @returns {'shared'|'copied'|'failed'}
  */
 export async function shareProofLink(proof) {
-  const url = buildVerifyUrl(proof)
+  const url = buildProofCardUrl(proof)
   const title = 'Satohash proof'
   const text = buildShareText(proof)
 

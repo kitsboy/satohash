@@ -5,7 +5,7 @@ import { Share2, Download, Package, Link2, Vault } from 'lucide-react'
 import { toast } from 'sonner'
 import { downloadCertificate } from '../../utils/certificate'
 import { getApiUrl } from '../../config/constants'
-import { buildVerifyUrl, shareProofLink } from '../../utils/shareProof'
+import { buildVerifyUrl, buildProofCardUrl, shareProofLink } from '../../utils/shareProof'
 import { exportProofBundle } from '../../utils/proofPackage'
 import ProofStatusPill from './ProofStatusPill'
 import CalendarStrip from './CalendarStrip'
@@ -25,6 +25,7 @@ export default function StampSuccessActions({
   const [busy, setBusy] = useState(false)
   const [showQr, setShowQr] = useState(true)
   const verifyUrl = useMemo(() => buildVerifyUrl(proof), [proof])
+  const shareUrl = useMemo(() => buildProofCardUrl(proof), [proof])
   const hasHostedId =
     proof?.id && proof?.source !== 'browser-ots' && !String(proof.id).startsWith('ots-')
 
@@ -79,7 +80,7 @@ export default function StampSuccessActions({
         )}
       </div>
 
-      {showQr && verifyUrl && (
+      {showQr && shareUrl && (
         <div
           className="flex flex-col items-center gap-3 rounded-2xl border p-5"
           style={{ borderColor: 'var(--border)', background: 'var(--surface-raised)' }}
@@ -91,7 +92,7 @@ export default function StampSuccessActions({
             Scan to verify
           </p>
           <div className="rounded-xl bg-white p-3">
-            <QRCode value={verifyUrl} size={168} level="M" includeMargin={false} />
+            <QRCode value={shareUrl} size={168} level="M" includeMargin={false} />
           </div>
           <button
             type="button"
@@ -137,8 +138,8 @@ export default function StampSuccessActions({
           data-testid="copy-verify-link"
           onClick={async () => {
             try {
-              await navigator.clipboard.writeText(verifyUrl)
-              toast.success('Verify link copied')
+              await navigator.clipboard.writeText(shareUrl)
+              toast.success('Proof card link copied')
             } catch {
               toast.error('Copy failed')
             }
@@ -146,7 +147,7 @@ export default function StampSuccessActions({
           className="btn-sheen flex min-h-[56px] items-center justify-center gap-2 rounded-xl text-sm font-black tracking-wider uppercase"
           style={{ background: 'var(--accent-gold)', color: '#141b25' }}
         >
-          <Link2 size={18} /> Copy verify link
+          <Link2 size={18} /> Copy proof card
         </button>
 
         <button
@@ -185,13 +186,14 @@ export default function StampSuccessActions({
               .ots local
             </span>
           )}
-          <Link
-            to={proof?.hash ? `/p/${proof.hash}` : '/verify'}
+          <a
+            href={proof?.hash ? `/p/${String(proof.hash).toLowerCase()}` : '/verify'}
+            data-testid="proof-card-link"
             className="flex min-h-[48px] items-center justify-center gap-2 rounded-xl border text-xs font-black uppercase"
             style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
           >
-            No-JS card
-          </Link>
+            Proof card
+          </a>
         </div>
 
         <button

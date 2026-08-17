@@ -91,6 +91,7 @@ export default function VerificationTool() {
 
   const handleVerifyWithHash = async (hash) => {
     if (!hash) return
+    trackEvent(events.VERIFICATION_STARTED, { path: '/verify', mode: 'hash' })
     setVerifying(true)
     setResult(null)
     setVerifyData(null)
@@ -105,6 +106,7 @@ export default function VerificationTool() {
         stamp: local,
         mode: 'local'
       })
+      trackEvent(events.VERIFICATION_COMPLETED, { path: '/verify', mode: 'local' })
       setVerifying(false)
       return
     }
@@ -121,6 +123,7 @@ export default function VerificationTool() {
           stamp: match,
           mode: 'api'
         })
+        trackEvent(events.VERIFICATION_COMPLETED, { path: '/verify', mode: 'api' })
       } else if (normalized) {
         setResult('success')
         setVerifyData({
@@ -171,6 +174,7 @@ export default function VerificationTool() {
     if (!otsFile && hashInput.trim().length === 64) {
       return handleVerifyWithHash(hashInput)
     }
+    trackEvent(events.VERIFICATION_STARTED, { path: '/verify', mode: otsFile ? 'ots' : 'other' })
 
     setVerifying(true)
     setResult(null)
@@ -191,6 +195,7 @@ export default function VerificationTool() {
                 details: 'Bitcoin attestation verified via browser OpenTimestamps.',
                 mode: 'browser-ots'
               })
+              trackEvent(events.VERIFICATION_COMPLETED, { path: '/verify', mode: 'browser-ots' })
               setVerifying(false)
               return
             }

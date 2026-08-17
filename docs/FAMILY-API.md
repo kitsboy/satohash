@@ -24,7 +24,15 @@ https://satohash.io/?hash=<64hex>&ref=<productId>
 https://satohash.giveabit.io/stamp?hash=…&ref=…
 ```
 
-After stamp: share `https://satohash.io/verify/<stamp-id>` (UUID) or `/verify/<hash>`.
+**After stamp — share these (do not invent new API paths):**
+
+```
+https://satohash.io/p/<64hex>          # zero-JS proof card (family iMessage / email)
+https://satohash.io/verify/<64hex>     # interactive verify
+https://satohash.io/verify/<stamp-id>  # UUID from POST /api/stamp
+```
+
+Inbound deep-link stays `/stamp?hash=&ref=`. HQ `metrics.json` `raw.last10` + `raw.familyClients` are **read-only** aggregates.
 
 ## Architecture
 

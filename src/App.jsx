@@ -579,7 +579,6 @@ function AppContent() {
             <Route path="/web-capture" element={<Navigate to="/snapper" replace />} />
             <Route path="/audit-log" element={<Navigate to="/vault" replace />} />
             <Route path="/documentation" element={<Navigate to="/developer" replace />} />
-            <Route path="/status" element={<Navigate to="/trust" replace />} />
             <Route path="/changelog" element={<Navigate to="/docs/improvements-log" replace />} />
             <Route path="*" element={<NotFound />} />
           </Routes>

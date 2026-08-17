@@ -15,10 +15,9 @@ jobs:
           node-version: '20'
           cache: npm
       - run: npm ci
-      - name: Lighthouse mobile vs satohash.io
+      - name: Lighthouse mobile vs satohash.io (soft)
         env:
           BASE_URL: https://satohash.io
-          FAIL_HARD: '1'
         run: npm run lh:mobile
       - uses: actions/upload-artifact@v4
         if: always()

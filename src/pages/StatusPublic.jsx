@@ -125,7 +125,8 @@ export default function StatusPublic() {
         )}
 
         <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
-          HQ glass is a separate surface. This page is the public SoT for humans.
+          HQ glass is a separate surface. Last-10 and family client rows are read-only aggregates
+          from metrics.json — this page never writes stamps.
         </p>
       </div>
       <Footer />

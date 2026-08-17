@@ -31,14 +31,25 @@ export async function onRequestGet({ params }) {
   }
 
   const status = proof.status || 'pending'
+  const title = `Satohash proof ${esc(String(hex).slice(0, 12))}…`
+  const desc = `Bitcoin-anchored OpenTimestamps proof. Status: ${esc(status)}. Pending is not confirmed.`
+  const canon = `https://satohash.io/p/${esc(hex)}`
   const html = `<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Satohash proof ${esc(String(hex).slice(0, 12))}…</title>
-  <meta name="description" content="Bitcoin-anchored OpenTimestamps proof. Status: ${esc(status)}."/>
-  <link rel="canonical" href="https://satohash.io/p/${esc(hex)}"/>
+  <title>${title}</title>
+  <meta name="description" content="${desc}"/>
+  <link rel="canonical" href="${canon}"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:title" content="${title}"/>
+  <meta property="og:description" content="${desc}"/>
+  <meta property="og:url" content="${canon}"/>
+  <meta property="og:image" content="https://satohash.io/og-image.svg"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="${title}"/>
+  <meta name="twitter:description" content="${desc}"/>
   <style>
     body{margin:0;font-family:ui-sans-serif,system-ui;background:#141b25;color:#f1f5f9;padding:2rem 1rem}
     .card{max-width:36rem;margin:0 auto;border:1px solid rgba(240,180,41,.25);border-radius:1.25rem;padding:1.25rem;background:#1e2a3a}
