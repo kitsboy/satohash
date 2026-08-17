@@ -25,10 +25,13 @@ import { isMarketingPublicPath, needsMarketingShell } from './utils/publicRoutes
 import useAppHotkeys from './hooks/useAppHotkeys'
 
 import { lazyWithReload } from './utils/lazyWithReload'
-import Stamp from './pages/Stamp'
-import StampDone from './pages/StampDone'
-import Verify from './pages/VerificationTool'
-import VerifyPublic from './pages/VerifyPublic'
+
+// Core loop is lazy + reload-on-stale-chunk so landing stays small.
+// Eager Stamp/Verify blew the main index past 1 MB and tripped CI.
+const Stamp = lazyWithReload(() => import('./pages/Stamp'))
+const StampDone = lazyWithReload(() => import('./pages/StampDone'))
+const Verify = lazyWithReload(() => import('./pages/VerificationTool'))
+const VerifyPublic = lazyWithReload(() => import('./pages/VerifyPublic'))
 
 // Non-core planes stay lazy; retry+reload if a deploy invalidated the chunk
 const Vault = lazyWithReload(() => import('./pages/Vault'))

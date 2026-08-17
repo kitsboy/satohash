@@ -1,3 +1,9 @@
+## Session — 2026-08-17 (Grok 4.6) — CI #66 BUNDLE BUDGET
+
+Eager Stamp/Verify made `index-*.js` 1.1 MB. Budget now measures only the HTML entry. Core loop is lazyWithReload again. setup-node v7 on CI/Deploy (Dependabot PR #15 — Cam can ignore/close).
+
+---
+
 ## Session — 2026-08-17 (Grok 4.6) — CI #64 RED WAS AUDIT GATE
 
 Cam: do nothing on the red run. It died at `npm audit --audit-level=high` and skipped tests. Audit is now advisory; matrix is Node 22 only so e2e actually runs.
