@@ -1,5 +1,5 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 231) · **Updated:** 2026-08-17
+> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 232) · **Updated:** 2026-08-17
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Deploy — canonical
@@ -51,6 +51,8 @@ npx wrangler pages deploy ./dist --project-name=satohash
 **Headers:** hashed bundles under `/b/*` (not long-lived immutable on `/assets/*`). Shell `index.html` is `max-age=0`.
 
 **Purge:** zone **satohash.io** → Caching → Purge Everything if edge serves HTML as JS.
+
+Cam-facing walkthrough (when to log in, what to click, what not to touch): `docs/CLOUDFLARE-PAGES.md`.
 
 Annex: `docs/ROLLBACK.md`.
 

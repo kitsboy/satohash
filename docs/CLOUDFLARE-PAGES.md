@@ -1,0 +1,125 @@
+# Cloudflare Pages — ELI-16 for Cam
+
+**Short answer: do not log in now.**  
+The site is already wired. GitHub → Actions → Pages project **`satohash`** → **satohash.io**.  
+Log in only if something is _broken_ (blank page, JS that starts with `<!doctype`, share card 404).
+
+---
+
+## What Cloudflare is doing here
+
+Think of three boxes:
+
+| Box | Name                         | What it is                                                     |
+| --- | ---------------------------- | -------------------------------------------------------------- |
+| 1   | **Pages project `satohash`** | The website files (HTML/JS/CSS). This is Satohash.             |
+| 2   | **Zone `satohash.io`**       | The domain DNS + cache.                                        |
+| 3   | **Not ours for this app**    | `giveabit.io` / HQ / other Pages projects. Do not purge those. |
+
+You will **not** find a dashboard tile literally named `SATOHASH` in all-caps.  
+Look for **`satohash`** (Pages) and **`satohash.io`** (Websites / DNS).
+
+---
+
+## The one GitHub click that _is_ useful
+
+Cloudflare: stay out.  
+GitHub: if you want tests to run on every push, open
+
+https://github.com/kitsboy/satohash/actions/workflows/ci.yml
+
+and click **Enable workflow**. It is currently `disabled_manually`. Deploy already runs without this.
+
+## Shall I log in to Cloudflare now?
+
+**No — not as a first step.**
+
+Stay on the Mac. After we push, wait ~2–4 minutes, then:
+
+1. Hard-refresh https://satohash.io (or open a private window).
+2. Open `/stamp`, drop a file, stamp.
+3. Open the proof card `/p/<hash>` (share that with iPhone friends).
+
+If those three work, **close the tab. Do not click Purge.**
+
+---
+
+## Only log in if this happens
+
+| Symptom                                                 | What it usually is                                            | What to do                                                                           |
+| ------------------------------------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| Page is blank / “Unexpected token `<`”                  | Edge served **HTML instead of JS** (poisoned `/b/index-….js`) | Purge **satohash.io** cache — see below                                              |
+| `/stamp` says “Failed to fetch … VerificationTool-….js” | Stale chunk after a deploy race                               | Hard refresh first. We already eager-load Stamp/Verify. Purge only if refresh fails. |
+| `satohash.io` works but `www` doesn’t                   | Custom domain glitch                                          | Pages → `satohash` → Custom domains. Do not recreate the project.                    |
+| `/p/abc…` is the React app, not the gold card           | Function didn’t match                                         | Confirm URL is `/p/<64 hex>`. Do not edit Functions in the UI.                       |
+
+---
+
+## If you _do_ log in — exact clicks
+
+1. https://dash.cloudflare.com — account that owns **satohash.io**.
+2. Left: **Workers & Pages** → **Pages** → project **`satohash`**.
+   - Custom domains should include `satohash.io` and `www.satohash.io`.
+   - Production is GitHub `main` via **GitHub Actions** (`deploy.yml`), not a second “retry deploy” from the UI.
+3. Left: **Websites** → **`satohash.io`** (the zone).
+   - **Caching → Configuration → Purge Everything** — only if HTML is being served as JS.
+4. **Do not** open `giveabit.io` and purge that. Wrong zone = HQ / family sites get hurt.
+
+### Purge checklist (only when JS is HTML)
+
+1. Confirm poison:  
+   `curl -sS https://satohash.io/b/index-XXXX.js | head -c 40`  
+   Must start with `import` / `const` / `var`. If it starts with `<!doctype` or `<`, purge.
+2. Zone **satohash.io** → Caching → Purge Everything.
+3. Wait 30 seconds. Private window. Hard refresh.
+4. Do **not** also click “Retry deployment” in Pages while Actions is already deploying.
+
+---
+
+## What you should never click
+
+- **Delete project** / unbind `satohash.io`
+- **Change build command** or output dir in the Pages UI (Actions already builds)
+- **Enable a second Git integration** that deploys the same project (race → HTML-as-JS)
+- **Purge giveabit.io**
+- **Edit `/api/*` routes** (API is THOR, not Pages)
+- **Turn on a paywall** anywhere in CF (stamps are free; `REQUIRE_LIGHTNING=false` lives on the VPS)
+
+---
+
+## How a good deploy looks
+
+```
+You / Grok push main
+        ↓
+GitHub Action “Deploy” builds Vite (assets in /b/*)
+        ↓
+wrangler pages deploy → project satohash
+        ↓
+satohash.io index.html (no-cache) points at new /b/index-HASH.js
+```
+
+Two deploys at once used to race. That is now queued (`concurrency` in `deploy.yml`).  
+If you see two Deploy runs, **let the first finish**. Do not cancel + retry from the CF UI.
+
+---
+
+## Mental model (16-year-old version)
+
+Cloudflare is the **billboard on the street**.  
+GitHub is the **workshop**.  
+THOR (`api.satohash.io`) is the **notary office**.
+
+You do not walk to the billboard and rearrange letters unless the poster is showing yesterday’s ad (or garbage).  
+You go back to the workshop (this repo), we push, the billboard updates itself.
+
+---
+
+## Pointers
+
+| Want              | Doc                                |
+| ----------------- | ---------------------------------- |
+| Deploy commands   | `docs/deploy.md`                   |
+| VPS / Kimi / API  | `docs/ops-runbook.md`              |
+| Rollback          | `docs/ROLLBACK.md`                 |
+| Family share URLs | `docs/FAMILY-API.md` (`/p/<hash>`) |

@@ -1,5 +1,5 @@
 # satohash — Last Updated 2026-08-17 by Grok 4.6
 
-Brief: Lean core — no V5 barrel on landing, serialized Pages deploys, no source maps on the edge. Free stamps ON.
+Brief: Leftover polish + ELI-16 Cloudflare guide. Do **not** log into CF unless the site is broken. Free stamps ON.
 
 Commit: pending push

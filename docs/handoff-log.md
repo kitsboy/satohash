@@ -1,3 +1,15 @@
+## Session — 2026-08-17 (Grok 4.6) — CF ELI-16 + LEFTOVER BATCHES
+
+Cam asked: batches + commit/push + “shall I log into CF and look for SATOHASH?”
+
+**CF:** Do **not** log in unless the live site is broken. Project is `satohash`, zone is `satohash.io`. Guide: `docs/CLOUDFLARE-PAGES.md`.
+
+**This batch:** keyboard S/V/G/D · vault copies `/p/<hash>` · prefetch proof card · JPEG OG (iMessage) · empty `/p/` noindex · pageMeta for watch/status/counsel/network · lazy jspdf on verify + stamp PDF · Kimi API rebuild note · CI still disabled in GH UI (no `gh` here).
+
+**Kimi:** rebuild API image for `raw.last10` / `raw.familyClients`. Do not flip paywall.
+
+---
+
 ## Session — 2026-08-17 (Grok 4.6) — LEAN + NO RACE
 
 Extracted landing particles off V5Pages barrel. Queued CF deploys (no overlap). Dropped source maps from dist. Removed L402 from JSON-LD. Lazy OTS panel below the fold.

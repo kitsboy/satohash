@@ -49,7 +49,26 @@ If `/watch` shows stale video: hard refresh; check MP4 duration ~10s not ~80s. M
 - OOM history 2026-07-28 (killed bitcoind) — watch `free -h`; node ~1GB RSS; 7.8G RAM / 8G swap on THOR
 - API logs may show "fetch failed"/HTTP 500/timeout right after node start (startup flap) — re-check after 3-5 min
 
+## Kimi — API image rebuild (open)
+
+SPA already reads `raw.last10` + `raw.familyClients` on `/network`. Live `https://api.satohash.io/metrics.json` may still omit those keys until THOR runs a **Docker rebuild from current `main`**.
+
+```bash
+# on THOR — do not flip REQUIRE_LIGHTNING
+git pull
+# then the usual image rebuild from docs/KIMI-VPS-RUNBOOK.md / scripts/vps-deploy-api.sh
+```
+
+Confirm after rebuild:
+
+```bash
+curl -sS https://api.satohash.io/metrics.json | python3 -c 'import json,sys; d=json.load(sys.stdin); print("last10", bool(d.get("raw",{}).get("last10"))); print("familyClients", bool(d.get("raw",{}).get("familyClients")))'
+```
+
+Do **not** change live `/api/*` paths. Free stamps stay `REQUIRE_LIGHTNING=false`.
+
 ## Handoffs
 
 Newest session notes: `docs/handoff-log.md` (also append `docs/KIMI-HANDOFF.md` until fully migrated).  
-MASTER-BRAIN paste: `docs/MASTER-BRAIN-INGEST.md`.
+MASTER-BRAIN paste: `docs/MASTER-BRAIN-INGEST.md`.  
+Cloudflare (Cam): `docs/CLOUDFLARE-PAGES.md` — do not log in unless the site is broken.

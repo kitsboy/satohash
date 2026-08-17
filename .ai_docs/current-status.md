@@ -1,7 +1,7 @@
 # Current Status — Satohash
 
 **Version:** **5.0.0-ELITE**  
-**Last Updated:** 2026-08-17 (Grok 4.6 — 50 upgrades + SEO)  
+**Last Updated:** 2026-08-17 (Grok 4.6 — leftover batches + CF guide)  
 **Frontend:** https://satohash.io · www · CF Pages `satohash`  
 **API:** https://api.satohash.io ✅ LIVE (THOR) — HQ metrics SoT  
 **Analytics:** Umami analytics.giveabit.io (CORS noise possible)  
@@ -65,7 +65,10 @@
 - [x] Capacitor scaffold only (`docs/STORE-APPS.md`)  
 - [x] `npm run watch:node` for bitcoind readiness  
 - [ ] Paywall only when Cam flips (`docs/PAYWALL-STAGING.md`)  
-- [ ] Physical iPhone Safari (WebKit e2e expanded)  
+- [ ] Physical iPhone Safari (WebKit e2e expanded)
+- [ ] Cam: enable GH workflow `ci.yml` (Actions UI) — still `disabled_manually`
+- [ ] Kimi: rebuild API image so `metrics.json` has `raw.last10` + `raw.familyClients`
+- [x] Cam Cloudflare guide — `docs/CLOUDFLARE-PAGES.md` (do not log in unless broken)  
 
 ## Agent entry
 **AGENTS.md** · this file · `docs/handoff-log.md` · `docs/KIMI-HANDOFF.md` · `docs/MVP-CHECKLIST.md` · goodbye summary under `docs/archive/`

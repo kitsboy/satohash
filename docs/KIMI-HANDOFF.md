@@ -1,3 +1,18 @@
+## Session — 2026-08-17 (Grok) — CF GUIDE + LEFTOVER LIST
+
+**From:** Grok M3 · **To:** Kimi / next Grok · **Status:** leftover polish on `main` · free stamps ON
+
+### Kimi
+1. Rebuild API image from current `main` so `metrics.json` has `raw.last10` + `raw.familyClients`
+2. Do **not** flip `REQUIRE_LIGHTNING`
+3. Do **not** change `/api/*` paths
+4. Cam should **not** log into Cloudflare unless the site is broken — `docs/CLOUDFLARE-PAGES.md`
+
+### Cam
+Stay out of the CF dashboard. After deploy: private window → `/` → `/stamp` → `/p/<hash>`.
+
+---
+
 ## Session — 2026-08-10 (Grok) — GOODBYE · Mobile Top 12 live
 
 **From:** Grok M3 · **To:** Kimi / next Grok · **Status:** Mobile Top 12 **on CF Pages** · IBD **done** · free stamps ON

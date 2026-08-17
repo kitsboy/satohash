@@ -6,6 +6,7 @@
 |-------------|------------|
 | **Any agent (status)** | `.ai_docs/current-status.md` |
 | **Grok / coding (M3)** | This file → `docs/deploy.md` → `docs/architecture.md` → code |
+| **Cam / Cloudflare** | `docs/CLOUDFLARE-PAGES.md` — do **not** log in unless the live site is broken |
 | **Kimi on VPS / THOR** | `docs/ops-runbook.md` (or `docs/KIMI-VPS-RUNBOOK.md` until fully merged) |
 | **API / family clients** | `docs/FAMILY-API.md` |
 | **OTS / stamp work** | `docs/OTS-DEEP-LEARN.md` + `docs/LEARN-STAMP-FAMILY.md` |
