@@ -1,3 +1,23 @@
+## 2026-08-19 (Kimi/THOR — Standard Project Kit adopted + debrief + live verify)
+
+**Scope:** Standard Project Kit rollout + first machine-readable session debrief + live API verification.
+
+**Done:**
+- Adopted the senior-engineer **Standard Project Kit** (skill `standard-project-kit`): investigate → bounded implement → verify real system → milestone tag → handoff; two-actor loop (Kimi assistant + Grok/Aider coder). Default build/handoff method for ALL projects.
+- Session debrief now runs **automatically at session end** (silent, machine-readable YAML) via the `/goodbye` pipeline.
+- Wrote first debrief: `docs/debriefs/session-2026-08-19-001.yaml`.
+- Repo in sync: `/root/satohash` at `0c2e434` (0 commits behind origin/main).
+- Verified live: `api.satohash.io/health` → ok, v5.0.0-ELITE, uptime ~2.3d · `metrics.json` → requireLightning=false, last10=10, familyClients=true.
+
+**Git State:**
+- Tip SHA: `0c2e434`; in sync with origin/main.
+
+**Kimi OPEN (unchanged):** Sherpa/MotoPass/Katoa `X-Satohash-Client` · daily bitcoind `free -h` · pull + `vps-deploy-api.sh` for rate-limit image.
+
+**Do not regress:** `REQUIRE_LIGHTNING=false` · no `/api/*` path changes · no nsec/secrets in git · SPA calls `api.satohash.io` only · `/b/*` assets · one deploy path = GitHub Actions (never Retry CF UI while Actions is yellow).
+
+---
+
 ## Session — 2026-08-17 (Grok 4.6) — GOODBYE
 
 **From:** Grok M3 · **To:** next Grok / Kimi · **Status:** product looks great to Cam · free stamps ON · API rebuilt
