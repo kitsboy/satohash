@@ -1,5 +1,4 @@
-# satohash — Last Updated 2026-08-20 by Grok 4.6
+# Satohash — Last Updated 2026-08-20 by Kimi (THOR)
 
-Brief: Goodbye. ~84s Kimi/Pippa explainer live on `/watch` (hash mark top-left). Free stamps ON. Kimi: family headers + RAM.
-
-Commit: `f64463f` + this goodbye docs
+Brief: Money rails connected end-to-end — all 9 LNURL receive addresses live, HQ Money Plane audit shipped, LNbits postgres backups added, health checks fixed (bitcoin/lightning), landing button renamed to "Confirm .ots Stamp", deploy-race resilience handler added.
+Commit: 6ef0e6e (satohash main) · 5ea7204b (HQ) · 3e3f7c7 (giveabit)

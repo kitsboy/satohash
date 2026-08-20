@@ -1,3 +1,26 @@
+## Session — 2026-08-20 (Kimi on THOR — money rails + resilience)
+
+**Done this session:**
+- **Health fix:** `server/routes/health.js` lib import paths `./lib/*` → `../lib/*` — bitcoin + lightning checks were erroring since route extraction. Deep health all-green now: bitcoind healthy (963,332, 100%), LNbits healthy, OTS 3/3, Nostr 2/3. Commits `0bf6b54` + `2796819`.
+- **LNbits backup:** postgres dump cron 06:30 daily, 14-day retention, 600 perms — 9 family wallets now recoverable (`/root/scripts/backup-lnbits.sh`). First backup verified.
+- **Money Plane (HQ v3.32.1):** new payment-audit section on Money tab — per-site on-chain / LNURL / LNbits / channels / paywall rows with ELI16 tooltips. Live on hq.giveabit.io.
+- **All 9 LNURL addresses LIVE:** created LNURL-pay links for giveabit, satohash, katoa, motopass, openstrata, stranded, tadbuy, kimi + existing sherpa — all `PAYREQ` + invoice generation verified on `api.satohash.io:8443` and via giveabit.io `.well-known/lnurlp/*` stubs (commit `3e3f7c7`). Family registry: `giveabit.io/wallets.json` (commit `09e20b2`).
+- **UI:** landing button "Confirm .ots" → **"Confirm .ots Stamp"** (`ddf4223`).
+- **Resilience:** `vite:preloadError` auto-reload handler — recovers from deploy-race chunk fetch failures (`6ef0e6e`). Triggered by Cam's error report at 19:19Z during the rename deploy; old chunk `OtsVerifyPanel-DB13-VZL.js` retained on CDN.
+- **On-chain test:** Cam sent 6,865 sats to fresh LND address `bc1qkrlg6ssme0ztgynr2us846mtlde0r33ly7kdmc` (txid `718fc6d0…`). Was mempool-pending at session close — verify LND `walletbalance` next session.
+
+**Still to do:**
+- Sherpa / MotoPass / Katoa `X-Satohash-Client` (tiles 0)
+- Daily bitcoind `free -h`
+- Paywall only when Cam flips
+- iPhone Safari `/p/<hash>` share
+- LN channels open (Cam: "soon") — large inbound needs them
+- On-chain addresses published on other sites' donate pages
+
+**Git:** satohash main @ `6ef0e6e` · HQ main @ `5ea7204b` · giveabit main @ `3e3f7c7` — all pushed, M3 synced.
+
+---
+
 ## Latest Session Summary (from 2026-08-20 goodbye)
 
 **Chat Topic:** Rebuild and publish the Satohash `/watch` explainer.
