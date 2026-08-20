@@ -64,6 +64,7 @@ const NostrHealth = lazyWithReload(() => import('./pages/NostrHealth'))
 const NotaryTemplates = lazyWithReload(() => import('./pages/NotaryTemplates'))
 const TemplatesShowcase = lazyWithReload(() => import('./pages/TemplatesShowcase'))
 const NotFound = lazyWithReload(() => import('./pages/NotFound'))
+const Donate = lazyWithReload(() => import('./pages/Donate'))
 const TemplateDetail = lazyWithReload(() => import('./pages/TemplateDetail'))
 const FAQ = lazyWithReload(() => import('./pages/FAQ'))
 const Pricing = lazyWithReload(() => import('./pages/Pricing'))
@@ -204,6 +205,7 @@ function AppContent() {
             <Route path="/trust-center" element={<Navigate to="/trust" replace />} />
             <Route path="/verify/:id" element={<VerifyPublic />} />
             <Route path="/contribute" element={<Contribute />} />
+            <Route path="/donate" element={<Donate />} />
 
             {/* Public legal pages */}
             <Route path="/legal/crypto-notice" element={<CryptoNotice />} />

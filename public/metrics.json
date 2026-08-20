@@ -2,16 +2,16 @@
   "schema": "gab.product-metrics.v1",
   "productId": "satohash",
   "name": "Satohash",
-  "updatedAt": "2026-08-11T04:10:36.080Z",
+  "updatedAt": "2026-08-20T21:34:33.297Z",
   "window": {
     "label": "7d",
-    "from": "2026-08-04T04:10:36.080Z",
-    "to": "2026-08-11T04:10:36.080Z"
+    "from": "2026-08-13T21:34:33.297Z",
+    "to": "2026-08-20T21:34:33.297Z"
   },
   "health": {
     "status": "green",
     "message": "API healthy — live stamp aggregates for HQ",
-    "latencyMs": 0,
+    "latencyMs": 1,
     "uptimePct24h": null,
     "dependencies": [
       {
@@ -21,8 +21,8 @@
       },
       {
         "id": "bitcoin-anchor",
-        "status": "green",
-        "detail": "No pending anchors"
+        "status": "amber",
+        "detail": "2 pending Bitcoin confirmation(s)"
       },
       {
         "id": "api.satohash.io",
@@ -32,7 +32,7 @@
       {
         "id": "client-attribution",
         "status": "green",
-        "detail": "5 distinct X-Satohash-Client id(s)"
+        "detail": "6 distinct X-Satohash-Client id(s)"
       }
     ]
   },
@@ -40,7 +40,7 @@
     {
       "key": "stamps_total",
       "label": "Stamps (all time)",
-      "value": 12,
+      "value": 33,
       "unit": "proofs",
       "format": "number",
       "priority": 1,
@@ -49,7 +49,7 @@
     {
       "key": "stamps_24h",
       "label": "Stamps 24h",
-      "value": 0,
+      "value": 15,
       "unit": "proofs",
       "delta": 0,
       "deltaUnit": "%",
@@ -60,7 +60,7 @@
     {
       "key": "stamps_7d",
       "label": "Stamps 7d",
-      "value": 1,
+      "value": 20,
       "unit": "proofs",
       "format": "number",
       "priority": 2,
@@ -69,7 +69,7 @@
     {
       "key": "monthly_capacity",
       "label": "Monthly capacity (est.)",
-      "value": 4,
+      "value": 86,
       "unit": "proofs",
       "format": "number",
       "priority": 2,
@@ -78,7 +78,7 @@
     {
       "key": "pending",
       "label": "Pending confirm",
-      "value": 0,
+      "value": 2,
       "unit": "proofs",
       "format": "number",
       "priority": 2,
@@ -87,7 +87,7 @@
     {
       "key": "confirmed",
       "label": "Confirmed (all time)",
-      "value": 12,
+      "value": 31,
       "unit": "proofs",
       "format": "number",
       "priority": 2,
@@ -96,7 +96,7 @@
     {
       "key": "confirmed_7d",
       "label": "Confirmed 7d",
-      "value": 1,
+      "value": 18,
       "unit": "proofs",
       "format": "number",
       "priority": 2,
@@ -123,7 +123,7 @@
     {
       "key": "api_clients",
       "label": "Active API clients",
-      "value": 5,
+      "value": 6,
       "unit": "clients",
       "format": "number",
       "priority": 3,
@@ -150,7 +150,7 @@
     {
       "key": "p50_ms",
       "label": "Metrics build p50",
-      "value": 0,
+      "value": 1,
       "unit": "ms",
       "format": "duration",
       "priority": 5,
@@ -174,42 +174,6 @@
       "color": "#8a5a00",
       "points": [
         {
-          "t": "2026-07-28T12:00:00.000Z",
-          "v": 3
-        },
-        {
-          "t": "2026-07-29T12:00:00.000Z",
-          "v": 0
-        },
-        {
-          "t": "2026-07-30T12:00:00.000Z",
-          "v": 0
-        },
-        {
-          "t": "2026-07-31T12:00:00.000Z",
-          "v": 0
-        },
-        {
-          "t": "2026-08-01T12:00:00.000Z",
-          "v": 0
-        },
-        {
-          "t": "2026-08-02T12:00:00.000Z",
-          "v": 0
-        },
-        {
-          "t": "2026-08-03T12:00:00.000Z",
-          "v": 0
-        },
-        {
-          "t": "2026-08-04T12:00:00.000Z",
-          "v": 3
-        },
-        {
-          "t": "2026-08-05T12:00:00.000Z",
-          "v": 0
-        },
-        {
           "t": "2026-08-06T12:00:00.000Z",
           "v": 0
         },
@@ -231,7 +195,43 @@
         },
         {
           "t": "2026-08-11T12:00:00.000Z",
+          "v": 1
+        },
+        {
+          "t": "2026-08-12T12:00:00.000Z",
           "v": 0
+        },
+        {
+          "t": "2026-08-13T12:00:00.000Z",
+          "v": 0
+        },
+        {
+          "t": "2026-08-14T12:00:00.000Z",
+          "v": 0
+        },
+        {
+          "t": "2026-08-15T12:00:00.000Z",
+          "v": 0
+        },
+        {
+          "t": "2026-08-16T12:00:00.000Z",
+          "v": 0
+        },
+        {
+          "t": "2026-08-17T12:00:00.000Z",
+          "v": 5
+        },
+        {
+          "t": "2026-08-18T12:00:00.000Z",
+          "v": 0
+        },
+        {
+          "t": "2026-08-19T12:00:00.000Z",
+          "v": 1
+        },
+        {
+          "t": "2026-08-20T12:00:00.000Z",
+          "v": 14
         }
       ]
     },
@@ -242,42 +242,6 @@
       "color": "#1f6b3a",
       "points": [
         {
-          "t": "2026-07-28T12:00:00.000Z",
-          "v": 3
-        },
-        {
-          "t": "2026-07-29T12:00:00.000Z",
-          "v": 0
-        },
-        {
-          "t": "2026-07-30T12:00:00.000Z",
-          "v": 0
-        },
-        {
-          "t": "2026-07-31T12:00:00.000Z",
-          "v": 0
-        },
-        {
-          "t": "2026-08-01T12:00:00.000Z",
-          "v": 0
-        },
-        {
-          "t": "2026-08-02T12:00:00.000Z",
-          "v": 0
-        },
-        {
-          "t": "2026-08-03T12:00:00.000Z",
-          "v": 0
-        },
-        {
-          "t": "2026-08-04T12:00:00.000Z",
-          "v": 3
-        },
-        {
-          "t": "2026-08-05T12:00:00.000Z",
-          "v": 0
-        },
-        {
           "t": "2026-08-06T12:00:00.000Z",
           "v": 0
         },
@@ -299,7 +263,43 @@
         },
         {
           "t": "2026-08-11T12:00:00.000Z",
+          "v": 1
+        },
+        {
+          "t": "2026-08-12T12:00:00.000Z",
           "v": 0
+        },
+        {
+          "t": "2026-08-13T12:00:00.000Z",
+          "v": 0
+        },
+        {
+          "t": "2026-08-14T12:00:00.000Z",
+          "v": 0
+        },
+        {
+          "t": "2026-08-15T12:00:00.000Z",
+          "v": 0
+        },
+        {
+          "t": "2026-08-16T12:00:00.000Z",
+          "v": 0
+        },
+        {
+          "t": "2026-08-17T12:00:00.000Z",
+          "v": 5
+        },
+        {
+          "t": "2026-08-18T12:00:00.000Z",
+          "v": 0
+        },
+        {
+          "t": "2026-08-19T12:00:00.000Z",
+          "v": 1
+        },
+        {
+          "t": "2026-08-20T12:00:00.000Z",
+          "v": 12
         }
       ]
     },
@@ -310,42 +310,6 @@
       "color": "#c45f00",
       "points": [
         {
-          "t": "2026-07-28T12:00:00.000Z",
-          "v": 0
-        },
-        {
-          "t": "2026-07-29T12:00:00.000Z",
-          "v": 0
-        },
-        {
-          "t": "2026-07-30T12:00:00.000Z",
-          "v": 0
-        },
-        {
-          "t": "2026-07-31T12:00:00.000Z",
-          "v": 0
-        },
-        {
-          "t": "2026-08-01T12:00:00.000Z",
-          "v": 0
-        },
-        {
-          "t": "2026-08-02T12:00:00.000Z",
-          "v": 0
-        },
-        {
-          "t": "2026-08-03T12:00:00.000Z",
-          "v": 0
-        },
-        {
-          "t": "2026-08-04T12:00:00.000Z",
-          "v": 0
-        },
-        {
-          "t": "2026-08-05T12:00:00.000Z",
-          "v": 0
-        },
-        {
           "t": "2026-08-06T12:00:00.000Z",
           "v": 0
         },
@@ -368,6 +332,42 @@
         {
           "t": "2026-08-11T12:00:00.000Z",
           "v": 0
+        },
+        {
+          "t": "2026-08-12T12:00:00.000Z",
+          "v": 0
+        },
+        {
+          "t": "2026-08-13T12:00:00.000Z",
+          "v": 0
+        },
+        {
+          "t": "2026-08-14T12:00:00.000Z",
+          "v": 0
+        },
+        {
+          "t": "2026-08-15T12:00:00.000Z",
+          "v": 0
+        },
+        {
+          "t": "2026-08-16T12:00:00.000Z",
+          "v": 0
+        },
+        {
+          "t": "2026-08-17T12:00:00.000Z",
+          "v": 0
+        },
+        {
+          "t": "2026-08-18T12:00:00.000Z",
+          "v": 0
+        },
+        {
+          "t": "2026-08-19T12:00:00.000Z",
+          "v": 0
+        },
+        {
+          "t": "2026-08-20T12:00:00.000Z",
+          "v": 2
         }
       ]
     },
@@ -378,42 +378,6 @@
       "color": "#1a5f7a",
       "points": [
         {
-          "t": "2026-07-28T12:00:00.000Z",
-          "v": 0
-        },
-        {
-          "t": "2026-07-29T12:00:00.000Z",
-          "v": 0
-        },
-        {
-          "t": "2026-07-30T12:00:00.000Z",
-          "v": 0
-        },
-        {
-          "t": "2026-07-31T12:00:00.000Z",
-          "v": 0
-        },
-        {
-          "t": "2026-08-01T12:00:00.000Z",
-          "v": 0
-        },
-        {
-          "t": "2026-08-02T12:00:00.000Z",
-          "v": 0
-        },
-        {
-          "t": "2026-08-03T12:00:00.000Z",
-          "v": 0
-        },
-        {
-          "t": "2026-08-04T12:00:00.000Z",
-          "v": 0
-        },
-        {
-          "t": "2026-08-05T12:00:00.000Z",
-          "v": 0
-        },
-        {
           "t": "2026-08-06T12:00:00.000Z",
           "v": 0
         },
@@ -435,6 +399,42 @@
         },
         {
           "t": "2026-08-11T12:00:00.000Z",
+          "v": 0
+        },
+        {
+          "t": "2026-08-12T12:00:00.000Z",
+          "v": 0
+        },
+        {
+          "t": "2026-08-13T12:00:00.000Z",
+          "v": 0
+        },
+        {
+          "t": "2026-08-14T12:00:00.000Z",
+          "v": 0
+        },
+        {
+          "t": "2026-08-15T12:00:00.000Z",
+          "v": 0
+        },
+        {
+          "t": "2026-08-16T12:00:00.000Z",
+          "v": 0
+        },
+        {
+          "t": "2026-08-17T12:00:00.000Z",
+          "v": 0
+        },
+        {
+          "t": "2026-08-18T12:00:00.000Z",
+          "v": 0
+        },
+        {
+          "t": "2026-08-19T12:00:00.000Z",
+          "v": 0
+        },
+        {
+          "t": "2026-08-20T12:00:00.000Z",
           "v": 0
         }
       ]
@@ -448,31 +448,31 @@
         {
           "id": "hash_local",
           "label": "Local hash",
-          "count": 12,
+          "count": 33,
           "hint": "File never leaves device"
         },
         {
           "id": "submit",
           "label": "Submit stamp",
-          "count": 12,
+          "count": 15,
           "hint": "API or SPA"
         },
         {
           "id": "calendar",
           "label": "Calendar attested",
-          "count": 12,
+          "count": 33,
           "hint": "OTS calendars accepted"
         },
         {
           "id": "bitcoin",
           "label": "Bitcoin confirmed",
-          "count": 12,
+          "count": 31,
           "hint": "On-chain anchor"
         },
         {
           "id": "pending_queue",
           "label": "Still pending",
-          "count": 0,
+          "count": 2,
           "hint": "Upgrade daemon queue"
         }
       ]
@@ -484,19 +484,27 @@
       "label": "By suite client_id (X-Satohash-Client)",
       "rows": [
         {
+          "id": "spa",
+          "label": "Satohash SPA",
+          "value": 12,
+          "meta": {
+            "offer": "direct web stamps"
+          }
+        },
+        {
+          "id": "e2e-live",
+          "label": "e2e-live",
+          "value": 11,
+          "meta": {
+            "offer": "attributed client"
+          }
+        },
+        {
           "id": "public",
           "label": "Public / unattributed",
           "value": 6,
           "meta": {
             "offer": "open stamping or pre-attribution stamps"
-          }
-        },
-        {
-          "id": "spa",
-          "label": "Satohash SPA",
-          "value": 2,
-          "meta": {
-            "offer": "direct web stamps"
           }
         },
         {
@@ -620,7 +628,7 @@
         {
           "id": "pending",
           "label": "Pending",
-          "value": 0,
+          "value": 2,
           "meta": {
             "offer": "awaiting BTC"
           }
@@ -628,7 +636,7 @@
         {
           "id": "confirmed",
           "label": "Confirmed",
-          "value": 12,
+          "value": 31,
           "meta": {
             "offer": "Bitcoin anchored"
           }
@@ -797,7 +805,7 @@
     "seriesFromDb": true,
     "note": "Live metrics from satohash API DB",
     "version": "5.0.0-ELITE",
-    "uptimeSec": 1139347,
+    "uptimeSec": 184,
     "requireLightning": false,
     "familyFreeTier": true,
     "directory": {
@@ -931,21 +939,242 @@
       ]
     },
     "counts": {
-      "stampsTotal": 12,
-      "stamps24h": 0,
-      "stamps7d": 1,
-      "pending": 0,
-      "confirmed": 12,
-      "confirmed7d": 1,
+      "stampsTotal": 33,
+      "stamps24h": 15,
+      "stamps7d": 20,
+      "pending": 2,
+      "confirmed": 31,
+      "confirmed7d": 18,
       "failed": 0,
       "failed7d": 0,
       "familyFree": 0,
-      "distinctClients": 5
-    }
+      "distinctClients": 6,
+      "confirmRate": 100
+    },
+    "last10": [
+      {
+        "id": "d8361b66-c66a-401b-b7f9-16b7c0ad73f7",
+        "hash": "09d23107e2e656e23192f586a52977cec07fb59b138036ea839340df0202c769",
+        "status": "pending",
+        "client_id": "spa",
+        "created_at": "2026-08-20 21:32:28",
+        "bitcoin_block_height": null
+      },
+      {
+        "id": "14a0f1a8-776b-4ed8-841e-c057ae5978bc",
+        "hash": "84f5d3c5a25db84abff212e0f66a3c61a5c87c579df0ed4fafd110c761c1c55e",
+        "status": "pending",
+        "client_id": "e2e-live",
+        "created_at": "2026-08-20 21:29:46",
+        "bitcoin_block_height": null
+      },
+      {
+        "id": "9212102b-c970-435f-9fa0-62c168f7848d",
+        "hash": "fc46b7291d4dcb43d1331a54b61a36b04a79ee7463ac601f0b4e4ef0142cd660",
+        "status": "confirmed",
+        "client_id": "spa",
+        "created_at": "2026-08-20 19:48:50",
+        "bitcoin_block_height": null
+      },
+      {
+        "id": "af0ae674-aa7e-44ed-90a0-f11e5fe432ea",
+        "hash": "837885f1067d16bd3e3b27d12c9e3ef89cabbb1e9a811dd1340838c2e193210b",
+        "status": "confirmed",
+        "client_id": "e2e-live",
+        "created_at": "2026-08-20 19:46:14",
+        "bitcoin_block_height": null
+      },
+      {
+        "id": "1463e960-6acc-437d-b1b5-ef8e451ee511",
+        "hash": "816b5c288d6dfe086b769385916e67583764f86434bf581298612c038f469d07",
+        "status": "confirmed",
+        "client_id": "e2e-live",
+        "created_at": "2026-08-20 19:26:52",
+        "bitcoin_block_height": null
+      },
+      {
+        "id": "0092f8ce-5fa3-4bf4-9453-c6bd58fdad58",
+        "hash": "1dd446f919758538efdf816a6cc4e4432019cec05e414c3ffeb921c9622c1aa3",
+        "status": "confirmed",
+        "client_id": "spa",
+        "created_at": "2026-08-20 19:13:36",
+        "bitcoin_block_height": null
+      },
+      {
+        "id": "efbde2b8-e8ba-47fd-8d9b-4741447b0b28",
+        "hash": "35a800b3152fd863792bb87ed233f41b07ef8ae40961bb9f9f2b28ac05c5f92b",
+        "status": "confirmed",
+        "client_id": "e2e-live",
+        "created_at": "2026-08-20 19:11:08",
+        "bitcoin_block_height": null
+      },
+      {
+        "id": "9c4b86db-7526-4e9c-9ea8-1f9ab8a08dad",
+        "hash": "297115490c34dbfdaf83637d6d7e3a393b34b0accee0ccbf0ef4658a30c2b61d",
+        "status": "confirmed",
+        "client_id": "spa",
+        "created_at": "2026-08-20 18:30:46",
+        "bitcoin_block_height": null
+      },
+      {
+        "id": "7d904c3d-caf6-4183-9de8-9b5c059f65dc",
+        "hash": "8fe8c24d400b820b30316faadaf2ef3c131f7590204514b5b3941459c11a82fc",
+        "status": "confirmed",
+        "client_id": "e2e-live",
+        "created_at": "2026-08-20 18:28:17",
+        "bitcoin_block_height": null
+      },
+      {
+        "id": "f04bcd01-7249-46c8-97dd-e54a7a030e57",
+        "hash": "19b572949eddebc0121a65a3ffddf7bd878f8a26c15d048d6f2fa2d5f5088dc1",
+        "status": "confirmed",
+        "client_id": "spa",
+        "created_at": "2026-08-20 17:31:15",
+        "bitcoin_block_height": null
+      }
+    ],
+    "familyClients": [
+      {
+        "id": "spa",
+        "label": "Satohash SPA",
+        "value": 12,
+        "meta": {
+          "offer": "direct web stamps"
+        }
+      },
+      {
+        "id": "e2e-live",
+        "label": "e2e-live",
+        "value": 11,
+        "meta": {
+          "offer": "attributed client"
+        }
+      },
+      {
+        "id": "public",
+        "label": "Public / unattributed",
+        "value": 6,
+        "meta": {
+          "offer": "open stamping or pre-attribution stamps"
+        }
+      },
+      {
+        "id": "mvp-smoke",
+        "label": "mvp-smoke",
+        "value": 1,
+        "meta": {
+          "offer": "attributed client"
+        }
+      },
+      {
+        "id": "kimi-truth-sweep",
+        "label": "kimi-truth-sweep",
+        "value": 1,
+        "meta": {
+          "offer": "attributed client"
+        }
+      },
+      {
+        "id": "kimi-ops-smoke",
+        "label": "kimi-ops-smoke",
+        "value": 1,
+        "meta": {
+          "offer": "attributed client"
+        }
+      },
+      {
+        "id": "grok-closeout",
+        "label": "grok-closeout",
+        "value": 1,
+        "meta": {
+          "offer": "attributed client"
+        }
+      },
+      {
+        "id": "sherpacarta",
+        "label": "SherpaCarta",
+        "value": 0,
+        "meta": {
+          "offer": "governance docs / charter"
+        }
+      },
+      {
+        "id": "sherpacarta-canada",
+        "label": "SherpaCarta Canada",
+        "value": 0,
+        "meta": {
+          "offer": "campaign / referendum proofs"
+        }
+      },
+      {
+        "id": "motopass",
+        "label": "MotoPass",
+        "value": 0,
+        "meta": {
+          "offer": "passport/docs proofs"
+        }
+      },
+      {
+        "id": "katoa",
+        "label": "Katoa",
+        "value": 0,
+        "meta": {
+          "offer": "creator attestations"
+        }
+      },
+      {
+        "id": "giveabit",
+        "label": "Give A Bit",
+        "value": 0,
+        "meta": {
+          "offer": "education demos"
+        }
+      },
+      {
+        "id": "tadbuy",
+        "label": "TadBuy",
+        "value": 0,
+        "meta": {
+          "offer": "ad / campaign receipts"
+        }
+      },
+      {
+        "id": "stranded",
+        "label": "Stranded",
+        "value": 0,
+        "meta": {
+          "offer": "energy map attestations"
+        }
+      },
+      {
+        "id": "openstrata",
+        "label": "OpenStrata",
+        "value": 0,
+        "meta": {
+          "offer": "protocol docs"
+        }
+      },
+      {
+        "id": "cli",
+        "label": "CLI",
+        "value": 0,
+        "meta": {
+          "offer": "developer tooling"
+        }
+      },
+      {
+        "id": "hq",
+        "label": "HQ",
+        "value": 0,
+        "meta": {
+          "offer": "ops smoke / suite"
+        }
+      }
+    ]
   },
   "_staticMirror": {
     "source": "https://api.satohash.io/metrics.json",
-    "mirroredAt": "2026-08-11T04:10:36.164Z",
+    "mirroredAt": "2026-08-20T21:34:33.323Z",
     "attempt": 1,
     "note": "Local/preview fallback only. Production satohash.io/metrics.json is proxied by CF Pages Function → api.satohash.io. HQ SoT: https://api.satohash.io/metrics.json",
     "canonical": "https://api.satohash.io/metrics.json"
