@@ -1,3 +1,23 @@
+## Session — 2026-08-20 (Kimi on THOR — Tier 1+2 enhancement batch)
+
+**Tier 1 + Tier 2 shipped** (4 parallel agents + orchestrator finishing; agents hit API rate-limit caps so orchestrator completed ~60% of the work directly):
+
+- **Donate page** `/donate` — Lightning QR (satohash@api.satohash.io:8443) + on-chain card (LND address, mempool link) + transparency section. TipButton component on Landing hero. `public/data/donate.json` receive config.
+- **Status page upgrade** `/status` — live transparency dashboard: service, Bitcoin node (blocks/chain/pruned/ready_to_verify), OTS calendars 3/3, Nostr relays, Lightning/LNbits, recent stamps. Fixed LiveNodeChip (was querying non-existent /api/public/readiness).
+- **Proof certificate** — server endpoint `GET /api/stamps/:id/certificate` (jspdf PDF + QR, verified live 317KB PDF) + existing client-side certificate button.
+- **Proof card share** `/p/<hash>` — Copy proof link + Share (navigator.share w/ copy fallback).
+- **SEO** — FAQPage schema now emits 8 real Q&As from i18n; WebSite SearchAction schema on landing; 5 learn articles at /docs/learn-* (sitemap + hreflang audit doc).
+- **Lighthouse/security audit** — `docs/LIGHTHOUSE-REPORT.md` (curl-based, honest).
+- **Sentry** — DSN documented in .env.example (server + client both wired in code, just need a DSN in Vault).
+
+**Git:** satohash `fd70475` pushed · tests 126/126 pass · build clean · live verified (donate/status/docs 200, certificate endpoint 200 PDF).
+
+**Tier 3/4 plan** ready in `docs/TIER3-4-PLAN.md` (widget, CLI, API docs, webhooks, PWA, theme, batch UI; Sentry DSN, CI tests, cache audit, metrics strip, security sweep).
+
+**Still open:** Cam's 6,865-sat test tx still mempool-pending (low fee); LN channels; X-Satohash-Client attribution; on-chain addresses on other sites.
+
+---
+
 ## Session — 2026-08-20 (Kimi on THOR — money rails + resilience)
 
 **Done this session:**
