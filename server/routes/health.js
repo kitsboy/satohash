@@ -168,7 +168,7 @@ export function register(app, deps) {
     // Lightning — LND / LNbits (optional for free tier; required for paid flip)
     try {
       const { lnbitsWalletInfo, isLndConfigured, isLnbitsConfigured } =
-        await import('./lib/lnbits.js')
+        await import('../lib/lnbits.js')
       const lnq = await lnbitsWalletInfo()
       details.lightning = {
         status: isLnbitsConfigured() || isLndConfigured() ? lnq.status || 'configured' : 'optional',
@@ -182,7 +182,7 @@ export function register(app, deps) {
 
     // Bitcoin Core RPC (own node) — IBD = syncing (not degraded); true RPC fail = degraded
     try {
-      const { bitcoinRpcHealth } = await import('./lib/bitcoin-rpc.js')
+      const { bitcoinRpcHealth } = await import('../lib/bitcoin-rpc.js')
       details.bitcoin = await bitcoinRpcHealth()
       if (details.bitcoin.configured && details.bitcoin.status === 'unhealthy') {
         status = 'degraded'
