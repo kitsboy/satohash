@@ -1,4 +1,45 @@
-# Satohash Tier 3 + Tier 4 — Enhancement Plan (2026-08-20)
+# Satohash SEO Strategy & Uniformity Protocol (2026-08-21)
+
+## The uniform SEO standard (every site, current + future)
+
+Every site in the Give A Bit family gets the SAME treatment, enforced by the
+nightly self-healing audit (`/root/hq/scripts/seo-audit.py` → HQ SEO Plane):
+
+| Signal | What it is | How to fix |
+|--------|-----------|-----------|
+| Site up | Reachable | — |
+| Security headers | CSP + HSTS | `_headers` file |
+| robots.txt | Crawl map | static file |
+| sitemap.xml | Page list | static file |
+| **llms.txt** | **AI crawler map** | static file |
+| Structured data | JSON-LD | index.html / app.html |
+| hreflang | Language routing | static alternates in head |
+| Prerender | Crawlers see real HTML | CF middleware (functions/_middleware.js) or SSR |
+| AI crawler access | GPTBot/Claude/Perplexity not 403 | **CF dashboard AI Crawl Control** (per domain) |
+
+## Self-healing loop (LIVE)
+
+1. **Nightly 01:10** cron runs `seo-audit.py` (10 sites, auto-discovers new ones from projects.json)
+2. Writes `metrics/seo-audit.json` → HQ **SEO Plane** tab shows scores + plain-English tooltips
+3. **Regression detection**: score drop ≥15 or a green→red signal → logged to `docs/FIXES-LOG.md` + alert
+4. New sites **join automatically** (auto-discovered from projects.json) — zero manual setup
+
+## Current state (2026-08-21): 92/100 A — 6 sites at 100
+
+Satohash, Give A Bit, MotoPass, Tadbuy, OpenStrata, HQ = 100.
+SherpaCarta/Katoa (89): **needs Cam** — CF AI Crawl Control unblock for GPTBot/ClaudeBot/PerplexityBot (same as satohash).
+Stranded (89): hreflang pushed, deploy pending verify.
+Buzz (56): planned project, not launched.
+
+## To make everything 100 (Cam, 2 min per site in CF)
+
+For **sherpacarta.org** and **katoa.org**: dash.cloudflare.com → domain → Security → AI Crawl Control → unblock GPTBot, ClaudeBot, PerplexityBot, ChatGPT-User (exactly what we did for satohash.io).
+
+## Handoff to Grok (family-site code — M3 lane)
+
+- X-Satohash-Client attribution (katoa, motopass, sherpacarta, tadbuy): add header on satohash API calls
+- On-chain donate address for katoa, motopass, tadbuy, stranded, openstrata
+
 
 Prepared by Kimi (THOR). Tier 1 + Tier 2 shipped in parallel-agent batch; this doc is the
 next-wave blueprint. All items are fully autonomous (Kimi + spawned agents, end-to-end).
