@@ -1,3 +1,20 @@
+## Session — 2026-08-20 (Kimi on THOR — Tier 3+4 batch)
+
+**Tier 3 + Tier 4 shipped** (done directly — agents rate-limited last batch):
+
+- **Swagger API docs** `server/swagger.js` → v5.0.0, **14 documented paths** (public, stamps, network, identity incl. certificate + LNURL + NIP-05). Live at api.satohash.io/api-docs (spec verified in swagger-ui-init.js).
+- **CLI polish** `packages/satohash-cli` — `--json` output on all commands, `stamp --watch` (polls until Bitcoin-confirmed), `watch --interval N`, proper exit codes, richer help. Tested live (`status --json` 200).
+- **Webhook recipes** `docs/WEBHOOKS.md` — accurate to real routes (X-Npub auth, /test endpoint, at-least-once semantics).
+- **Tier 3/4 plan completion** — recon found most items ALREADY DONE (widgets, theme toggle, batch UI with zip, PWA install prompt, full CI with playwright, comprehensive _headers, live proofCount). Verified + documented in `docs/TIER3-4-PLAN.md`.
+- **Security header sweep** — live-verified full CSP/HSTS/XFO/nosniff/referrer/permissions on 6 routes. ✅ No changes needed.
+- **Sentry** — code wired both sides; **Cam-gated**: needs a free sentry.io DSN → Vault (self-host not recommended on THOR: kafka+clickhouse ~8GB RAM).
+
+**Git:** satohash `b8fbbf3` pushed · tests 126/126 · build clean · M3 synced.
+
+**Remaining gate items (Cam):** Sentry DSN, LN channels, paywall flip, Umbrel node, iPhone Safari test.
+
+---
+
 ## Session — 2026-08-20 (Kimi on THOR — Tier 1+2 enhancement batch)
 
 **Tier 1 + Tier 2 shipped** (4 parallel agents + orchestrator finishing; agents hit API rate-limit caps so orchestrator completed ~60% of the work directly):
