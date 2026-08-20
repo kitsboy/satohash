@@ -11,7 +11,8 @@ import {
   Plus,
   Lock,
   Video,
-  Mic
+  Mic,
+  Mail
 } from 'lucide-react'
 import { useState, useCallback, useEffect, useRef, useMemo } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
@@ -55,6 +56,7 @@ export default function Stamp() {
   const [deepLinkClientId, setDeepLinkClientId] = useState('spa')
   const [hashFromDeepLink, setHashFromDeepLink] = useState(false)
   const [hashInvalidMsg, setHashInvalidMsg] = useState('')
+  const [notifyEmail, setNotifyEmail] = useState('') // optional "email me when confirmed"
   const deepLinkHandled = useRef(false)
   const pollRef = useRef(null)
 
@@ -395,7 +397,10 @@ export default function Stamp() {
           },
           body: JSON.stringify({
             hash: hex,
-            filename: label || 'Linked document'
+            filename: label || 'Linked document',
+            ...(notifyEmail && /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(notifyEmail)
+              ? { email: notifyEmail }
+              : {})
           })
         })
 
@@ -644,6 +649,9 @@ export default function Stamp() {
         body: JSON.stringify({
           hash,
           filename: caseLabel || file.name,
+          ...(notifyEmail && /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(notifyEmail)
+            ? { email: notifyEmail }
+            : {}),
           ...(nostr_signed_event ? { nostr_signed_event } : {})
         })
       })
@@ -1686,19 +1694,34 @@ export default function Stamp() {
                 ))}
               </div>
               {stampingStatus === 'idle' && (
-                <button
-                  type="button"
-                  data-testid="stamp-file-button"
-                  onClick={startStamping}
-                  className="btn-sheen relative z-20 hidden h-14 min-h-[52px] w-full items-center justify-center gap-3 rounded-xl font-black tracking-widest uppercase shadow-lg transition-all hover:opacity-95 active:scale-[0.99] md:flex"
-                  style={{
-                    background: 'var(--accent-gold)',
-                    color: '#141b25',
-                    boxShadow: '0 8px 28px var(--accent-gold-glow)'
-                  }}
-                >
-                  {t('stamp', 'stamp') || 'Stamp on Bitcoin'} <ChevronRight size={18} />
-                </button>
+                <>
+                  <label className="relative z-20 mt-3 flex items-center gap-2 rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] px-3 py-2">
+                    <Mail size={14} className="shrink-0 text-[var(--text-muted)]" />
+                    <input
+                      type="email"
+                      value={notifyEmail}
+                      onChange={(e) => setNotifyEmail(e.target.value)}
+                      placeholder={t('stampPage.notifyEmailPlaceholder', {
+                        defaultValue: 'Email me when confirmed (optional)'
+                      })}
+                      className="w-full bg-transparent text-sm outline-none placeholder:text-[var(--text-muted)]"
+                      aria-label="Email me when confirmed"
+                    />
+                  </label>
+                  <button
+                    type="button"
+                    data-testid="stamp-file-button"
+                    onClick={startStamping}
+                    className="btn-sheen relative z-20 hidden h-14 min-h-[52px] w-full items-center justify-center gap-3 rounded-xl font-black tracking-widest uppercase shadow-lg transition-all hover:opacity-95 active:scale-[0.99] md:flex"
+                    style={{
+                      background: 'var(--accent-gold)',
+                      color: '#141b25',
+                      boxShadow: '0 8px 28px var(--accent-gold-glow)'
+                    }}
+                  >
+                    {t('stamp', 'stamp') || 'Stamp on Bitcoin'} <ChevronRight size={18} />
+                  </button>
+                </>
               )}
             </div>
           )}

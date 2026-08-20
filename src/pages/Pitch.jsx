@@ -22,6 +22,16 @@ export default function Pitch() {
   const [tab, setTab] = useState('pitch')
   const [content, setContent] = useState('')
   const [loading, setLoading] = useState(true)
+  const [proofCount, setProofCount] = useState(null)
+
+  useEffect(() => {
+    fetch('https://api.satohash.io/api/public/status')
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => {
+        if (d && d.stamps_stored != null) setProofCount(d.stamps_stored)
+      })
+      .catch(() => {})
+  }, [])
 
   useEffect(() => {
     setLoading(true)
@@ -47,6 +57,21 @@ export default function Pitch() {
         <h1 className="mb-6 text-center text-2xl font-black tracking-tight sm:text-3xl">
           Pitch, summary &amp; financials
         </h1>
+
+        {proofCount != null && (
+          <p className="mb-6 text-center text-sm text-[var(--text-secondary)]">
+            <span className="font-black text-[var(--accent-gold)]">
+              {proofCount.toLocaleString()}
+            </span>{' '}
+            Bitcoin-anchored proofs issued through this plane —{' '}
+            <a
+              href="https://satohash.io/network"
+              className="text-[var(--accent-gold)] hover:underline"
+            >
+              live network ↗
+            </a>
+          </p>
+        )}
 
         {/* Government strip — humble, post-government page update */}
         <div

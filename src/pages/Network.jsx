@@ -234,6 +234,13 @@ export default function Network() {
             <div className="mb-4 flex items-center gap-2">
               <Zap size={16} style={{ color: 'var(--accent-gold)' }} />
               <h2 className="text-sm font-black">Recent stamps</h2>
+              <Link
+                to="/community/proof-wall"
+                className="ml-auto text-[10px] font-bold uppercase"
+                style={{ color: 'var(--accent-gold)' }}
+              >
+                Proof wall →
+              </Link>
             </div>
             {loading && recent.length === 0 ? (
               <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>

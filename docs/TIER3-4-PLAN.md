@@ -32,6 +32,17 @@ next-wave blueprint. All items are fully autonomous (Kimi + spawned agents, end-
 - Umbrel node integration (hardware)
 - iPhone Safari physical test of `/p/<hash>`
 
+## Handoff to Grok (family-site code — M3 lane)
+
+These are code changes in family repos (M3/Grok territory — Kimi does not push code there):
+
+- **X-Satohash-Client attribution** (katoa, motopass, sherpacarta, tadbuy): when each site
+  calls satohash `/api/stamp` or `/stamp?hash=&ref=`, add header
+  `X-Satohash-Client: <site-id>` (server stores it → HQ tiles go live). One-line JS change per repo.
+- **On-chain donate address** for katoa, motopass, tadbuy, stranded, openstrata: add the LND
+  address `bc1qkrlg6ssme0ztgynr2us846mtlde0r33ly7kdmc` (or per-site fresh addresses) to each
+  site's wallets.json + a donate section. SherpaCarta already has one.
+
 ## Process
 
 - Each tier = one parallel-agent batch (max 4 agents, strict file ownership, no shared-file edits)

@@ -260,6 +260,14 @@ export default function VerifyPublic() {
       {/* Proof certificate */}
       {!loading && proof && (
         <div className="mx-auto max-w-lg space-y-6 px-4 pt-20 pb-[calc(3rem+env(safe-area-inset-bottom,0px))]">
+          <div className="flex justify-end">
+            <Link
+              to="/verify/batch"
+              className="inline-flex items-center gap-1 text-xs text-[var(--text-secondary)] transition-colors hover:text-[var(--accent-gold)]"
+            >
+              Batch verify multiple hashes →
+            </Link>
+          </div>
           <ProofStatusPill
             status={proof.status}
             blockHeight={proof.bitcoin_block_height}

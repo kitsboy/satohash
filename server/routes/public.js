@@ -61,7 +61,7 @@ export function register(app, deps) {
   /** GET /api/public/readiness — full flip-ready status for Cam/Kimi */
   app.get('/api/public/readiness', async (req, res) => {
     try {
-      const { buildReadinessReport } = await import('./lib/readiness.js')
+      const { buildReadinessReport } = await import('../lib/readiness.js')
       const report = await buildReadinessReport()
       res.json(report)
     } catch (err) {
