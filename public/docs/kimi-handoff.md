@@ -8,11 +8,11 @@ Public status snapshot for Satohash. Agent session logs stay in the repo (`docs/
 
 | Surface | Notes |
 |---|---|
-| `/` | Landing + marketing nav. CTA to the 10s explainer. |
+| `/` | Landing + marketing nav. CTA to the explainer. |
 | `/stamp` · `/stamp/done` | Free stamp loop. Sticky CTA, camera/gallery, share + QR, proof ZIP. |
 | `/verify` | File, hash, or `.ots`. Pending vs Bitcoin-confirmed. |
 | `/templates` | Category chips, search, demo editor. |
-| `/watch` | 10-second explainer with VO. |
+| `/watch` | ~80s educational cut with VO; 10s teaser toggle. |
 | `/government` | Solutions + Motopass concept. |
 | `/network` | Live calendars / bitcoin / stamps dashboard. |
 | `/docs` | This documentation set. |

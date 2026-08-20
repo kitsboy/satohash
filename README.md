@@ -14,7 +14,7 @@
 
 | Resource | Path |
 |----------|------|
-| **10s explainer** | [/watch](https://satohash.io/watch) · media `public/media/video/` |
+| **Explainer (~80s)** | [/watch](https://satohash.io/watch) · media `public/media/video/` |
 | **Exec summary (UI)** | [/docs/executive-summary](https://satohash.io/docs/executive-summary) |
 | **Live pitch deck** | [/pitch](https://satohash.io/pitch) |
 | Executive summary (md) | [docs/marketing/EXECUTIVE-SUMMARY.md](docs/marketing/EXECUTIVE-SUMMARY.md) |

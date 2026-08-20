@@ -176,7 +176,7 @@ export default function About() {
               className="inline-flex min-h-[48px] items-center rounded-xl border px-6 py-3 text-xs font-black tracking-wider uppercase"
               style={{ borderColor: 'var(--border)', color: 'var(--text-primary)' }}
             >
-              10s explainer
+              Watch explainer
             </Link>
             <Link
               to="/government"

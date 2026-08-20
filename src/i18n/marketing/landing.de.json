@@ -14,6 +14,7 @@
     "subtitle": "Legen Sie eine beliebige Datei ab. Erhalten Sie einen permanenten, Bitcoin-gestützten Zeitstempel. Gerichtsfest. Keine Anwälte. Kein Vertrauen erforderlich.",
     "description": "Satohash hasht Ihre Datei lokal in Ihrem Browser — Ihr Dokument verlässt niemals Ihr Gerät. Nur ein kryptografischer Fingerabdruck wird in die Bitcoin-Blockchain geschrieben und erstellt einen unveränderlichen Existenznachweis für jede Datei, jeden Vertrag, jedes Foto oder jeden Datensatz.",
     "ctaStamp": "Datei stempeln — Kostenlos",
+    "ctaWatch": "Erklärer ansehen",
     "ctaTemplates": "Vorlagen durchsuchen",
     "socialProof": "Schließen Sie sich {{count}} Fachleuten an, die Dokumente in Bitcoin verankern",
     "tryTemplate": "Vorlage kostenlos ausprobieren"

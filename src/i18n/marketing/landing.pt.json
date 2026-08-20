@@ -14,6 +14,7 @@
     "subtitle": "Largue qualquer ficheiro. Obtenha um carimbo temporal permanente, ancorado em Bitcoin. Válido em tribunal. Sem advogados. Sem necessidade de confiança.",
     "description": "O Satohash calcula o hash do seu ficheiro localmente no seu navegador — o seu documento nunca sai do seu dispositivo. Apenas uma impressão digital criptográfica é escrita na blockchain Bitcoin, criando prova imutável de existência para qualquer ficheiro, contrato, fotografia ou conjunto de dados.",
     "ctaStamp": "Carimbar um ficheiro — É grátis",
+    "ctaWatch": "Assistir ao explainer",
     "ctaTemplates": "Explorar modelos",
     "socialProof": "Junte-se a {{count}} profissionais que ancoram documentos em Bitcoin",
     "tryTemplate": "Experimente um modelo grátis"

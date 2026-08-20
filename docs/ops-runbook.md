@@ -29,14 +29,15 @@ Canonical short ops pointer. Detailed procedures remain in:
 
 | Item | Path |
 |------|------|
-| Player | https://satohash.io/watch (native **~10s** Kimi teaser) |
-| Primary MP4 | `public/media/video/satohash-explainer-with-vo.mp4` (~10s, VO baked in) |
-| Cache-bust | SPA loads `…mp4?v=10s-kimi-20260804` (overwrite same path carefully) |
-| Legacy VO | `vo-complete.mp3` (~80s) — not driving `/watch` while teaser is primary |
-| Music | `satohash-explainer-music.mp3` (future long cut) |
+| Player | https://satohash.io/watch (native **~80s** educational cut; 10s teaser toggle) |
+| Primary MP4 | `public/media/video/satohash-explainer-with-vo2.mp4` (~79.9s, VO baked in) |
+| Teaser MP4 | `satohash-explainer-with-vo.mp4` (~10s) |
+| Cache-bust | SPA loads `…vo2.mp4?v=80s-20260819` (overwrite same path carefully) |
+| Legacy VO | `vo-complete.mp3` (~80s) — baked into vo2; not a separate player |
+| Music | `satohash-explainer-music.mp3` (mix source) |
 | Ops notes | `docs/EXPLAINER-MUSIC-AND-VO.md` · `public/media/video/SCRIPT.md` |
 
-If `/watch` shows stale video: hard refresh; check MP4 duration ~10s not ~80s. Marketing routes are eager-loaded.
+If `/watch` shows stale video: hard refresh; check MP4 duration **~80s** (full) or ~10s (teaser). Marketing routes are eager-loaded.
 
 ## Bitcoin own-node (bitcoind) — 2026-08-10 truth (**IBD COMPLETE**)
 

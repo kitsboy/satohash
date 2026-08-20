@@ -14,6 +14,7 @@
     "subtitle": "拖放任意文件。获得永久、由 Bitcoin 背书的时间戳。法庭认可。无需律师。无需信任任何第三方。",
     "description": "Satohash 在您的浏览器本地计算文件哈希——您的文档永远不会离开您的设备。只有加密指纹会被写入 Bitcoin 区块链，为任何文件、合同、照片或数据集创建不可篡改的存在证明。",
     "ctaStamp": "为文件加盖时间戳——完全免费",
+    "ctaWatch": "观看讲解",
     "ctaTemplates": "浏览模板",
     "socialProof": "加入 {{count}} 位将文档锚定到 Bitcoin 的专业人士",
     "tryTemplate": "免费试用模板"

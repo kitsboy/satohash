@@ -1471,34 +1471,34 @@ export const pageMeta = {
   },
   watch: {
     en: {
-      title: 'Watch — 10s Satohash Explainer',
+      title: 'Watch — Satohash Explainer',
       description:
-        'Ten-second Kimi explainer: hash a file on your device, timestamp it with OpenTimestamps, prove it on Bitcoin.'
+        '80-second Kimi explainer: hash a file on your device, timestamp it with OpenTimestamps, prove it on Bitcoin. 10-second teaser also on the page.'
     },
     es: {
-      title: 'Ver — Explicador Satohash de 10s',
+      title: 'Ver — Explicador Satohash',
       description:
-        'Explicador de 10 segundos: hashea en tu dispositivo y ancla la prueba en Bitcoin.'
+        'Explicador de 80 segundos: hashea en tu dispositivo y ancla la prueba en Bitcoin.'
     },
     fr: {
-      title: 'Regarder — Explainer Satohash 10s',
-      description: 'Explainer de 10 secondes : hachez sur l’appareil, ancrez sur Bitcoin.'
+      title: 'Regarder — Explainer Satohash',
+      description: 'Explainer de 80 secondes : hachez sur l’appareil, ancrez sur Bitcoin.'
     },
     de: {
-      title: 'Ansehen — 10s Satohash-Erklärer',
-      description: '10-Sekunden-Erklärer: lokal hashen, auf Bitcoin verankern.'
+      title: 'Ansehen — Satohash-Erklärer',
+      description: '80-Sekunden-Erklärer: lokal hashen, auf Bitcoin verankern.'
     },
     pt: {
-      title: 'Assistir — Explainer Satohash de 10s',
-      description: 'Explainer de 10 segundos: hash no dispositivo, âncora no Bitcoin.'
+      title: 'Assistir — Explainer Satohash',
+      description: 'Explainer de 80 segundos: hash no dispositivo, âncora no Bitcoin.'
     },
     sw: {
-      title: 'Tazama — Maelezo ya Satohash sekunde 10',
-      description: 'Maelezo ya sekunde 10: hash kwenye kifaa, funga kwenye Bitcoin.'
+      title: 'Tazama — Maelezo ya Satohash',
+      description: 'Maelezo ya sekunde 80: hash kwenye kifaa, funga kwenye Bitcoin.'
     },
     zh: {
-      title: '观看 — 10 秒 Satohash 讲解',
-      description: '十秒讲解：在设备上哈希，锚定到比特币。'
+      title: '观看 — Satohash 讲解',
+      description: '八十秒讲解：在设备上哈希，锚定到比特币。'
     }
   },
   status: {

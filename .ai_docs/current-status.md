@@ -17,7 +17,7 @@
 | API | THOR Docker + Caddy | `satohash-satohash-api-1` healthy after Kimi rebuild |
 | Metrics | API `/metrics.json` | SPA `/metrics.json` is CF Function proxy |
 | Bitcoin | THOR bitcoind | Own node **at tip** · `source: bitcoind` · IBD **done** |
-| Explainer | `/watch` | **10s** Kimi teaser |
+| Explainer | `/watch` | **~80s** educational cut (vo2) · 10s teaser toggle |
 | Bundles | `/b/*` | Do not revert to long-cache `/assets/*` |
 
 **Code = M3 / Grok. Ops = Kimi / THOR.** No Umbrel. Do not fight M4 for coding.
@@ -49,14 +49,14 @@
 
 | Path | Notes |
 |------|--------|
-| `/` | Landing · live node chip · Watch 10s |
+| `/` | Landing · live node chip · Watch explainer |
 | `/stamp` | Free stamp · STEP 1–3 copy live · card no longer clips |
 | `/stamp/done` | Success · share `/p/<hash>` |
 | `/verify` | Public verify |
 | `/p/<hash>` | Zero-JS Function proof card (iMessage JPEG OG) |
 | `/network` | Live calendars, bitcoind tip, recent stamps, **family tiles** |
 | `/status` · `/counsel` | Public status · counsel one-pager |
-| `/watch` | 10s teaser |
+| `/watch` | ~80s educational cut · 10s teaser toggle |
 | Language | en es fr de pt sw zh |
 
 ## Metrics (verified live 2026-08-17)

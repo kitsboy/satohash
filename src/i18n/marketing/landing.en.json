@@ -14,6 +14,7 @@
     "subtitle": "Drop any file. Get a permanent, Bitcoin-backed timestamp. Valid in court. No lawyers. No trust required.",
     "description": "Satohash hashes your file locally in your browser — your document never leaves your device. Only a cryptographic fingerprint gets written to the Bitcoin blockchain, creating immutable proof of existence for any file, contract, photo, or dataset.",
     "ctaStamp": "Stamp a File — It's Free",
+    "ctaWatch": "Watch explainer",
     "ctaTemplates": "Browse Templates",
     "socialProof": "Join {{count}} professionals anchoring documents to Bitcoin",
     "tryTemplate": "Try a template for free"

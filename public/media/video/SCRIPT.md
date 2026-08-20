@@ -1,10 +1,24 @@
-# Satohash explainer — 10s Kimi teaser
+# Satohash explainer — board
 
-**Primary file:** `satohash-explainer-with-vo.mp4` (~10s, H.264 1280×720, VO baked in)  
-**Player:** `/watch` (native video element)  
+**Primary file:** `satohash-explainer-with-vo2.mp4` (~80s, H.264 1280×720, VO baked in)  
+**Teaser:** `satohash-explainer-with-vo.mp4` (~10s)  
+**Player:** `/watch` (native video · Full cut default)  
 **Poster:** `kimi-teacher.jpg`
 
-## Beats (approx.)
+## Full cut (~80s)
+
+| Time | Visual | Line |
+|------|--------|------|
+| 0:00–0:07 | Stamp + file | File that must exist now — and be provable forever. Stamped onto Bitcoin. Free. |
+| 0:07–0:19 | Document / fingerprint | Emailing yourself is not proof. Fingerprint + receipt that cannot be faked. |
+| 0:19–0:33 | File → hash → calendar → block | One click. No account. Independent calendars. One Bitcoin block. |
+| 0:33–0:43 | Many files → one coin | Batch stamp a folder. Each file gets its own proof. |
+| 0:43–0:52 | Verify | Come back, enter the stamp. Green badge. Trust, but verify. |
+| 0:52–1:20 | Hold / CTA | Nothing to install. Stamp free at satohash.io. |
+
+Timings follow `docs/EXPLAINER-SCRIPT-PRODUCTION.md` (60s script spoken over ~80s).
+
+## 10s teaser
 
 | Time | Visual | Line |
 |------|--------|------|
@@ -12,13 +26,3 @@
 | 0:03–0:06 | Laptop / fingerprint | File stays local · fingerprint only |
 | 0:06–0:08 | Calendars → Bitcoin block | Independent calendars · one Bitcoin block |
 | 0:08–0:10 | Kimi + Stamp CTA | Free · no account · satohash.io |
-
-## Longer cut (later)
-
-Full educational script (~30s+) is offline with Cam. Optional assets still on disk:
-
-- `vo-complete.mp3` (~80s) — previous interactive VO
-- `satohash-explainer-music.mp3` — ambient BGM
-- Slide stills `01-…`–`06-…` + section VO stems
-
-Do not re-label the 10s teaser as a 60s product cut until a longer MP4 ships.

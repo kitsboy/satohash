@@ -1,18 +1,19 @@
 # Explainer: music + voiceover
 
-## Live on `/watch` (2026-08-04)
+## Live on `/watch` (2026-08-19)
 
 | Spec | Value |
 |------|--------|
-| File | `public/media/video/satohash-explainer-with-vo.mp4` |
-| Length | **~10.0 s** (Kimi teaser) |
-| Format | H.264 1280×720 + AAC stereo (VO baked in) |
-| Player | Native `<video>` on `/watch` |
-| CTA copy | “Watch 10s explainer” on landing / about |
+| Primary | `public/media/video/satohash-explainer-with-vo2.mp4` |
+| Length | **~83.7 s** (Kimi / Pippa educational cut, VO + dance bed) |
+| Format | H.264 1280×720 + AAC stereo |
+| Player | Native `<video>` on `/watch` · Full cut default |
+| Teaser | `satohash-explainer-with-vo.mp4` (~10.0 s) — still on `/watch` as Short |
+| CTA copy | “Watch explainer” on landing / about (not “10s”) |
 
-Longer educational cut planned later (Cam has full script offline).
+Cache-bust: SPA loads `…vo2.mp4?v=80s-20260819`. Media TTL 5 min (`public/_headers`).
 
-## Music (archive / future long cut)
+## Music (archive / mix source)
 
 | Spec | Value |
 |------|--------|
@@ -22,22 +23,19 @@ Longer educational cut planned later (Cam has full script offline).
 | Peak | ~−21 dB (headroom for VO) |
 | Style | Dark ambient, soft pulse, no drums 0–10s, arp/pad after 0:10, lift ~0:45, fade last 3s |
 
-## Voiceover (legacy stems — not driving `/watch` while teaser is primary)
+## Voiceover (legacy stems)
 
 | Asset | Status |
 |-------|--------|
-| `vo-complete.mp3` | ~79.8s — previous interactive clock |
+| `vo-complete.mp3` | ~79.8s — same story as vo2; not driving `/watch` now that VO is baked in |
 | `vo-section-1/2/3.mp3` | Optional stems (~26 / 30 / 23s) |
 
-See `public/media/video/SCRIPT.md` for the 10s teaser board.
+See `public/media/video/SCRIPT.md` for the board.
 
 ## Preview video (no VO)
 
 `public/media/video/satohash-explainer-preview.mp4` — graphics + music only (legacy).
 
-## Next polish path (long cut)
+## Mux note (vo2)
 
-1. Produce 30s+ MP4 when ready (Cam/Grok Desktop).  
-2. Drop in as new primary file or dual-length player.  
-3. Update landing CTA length label.  
-4. Optional: HyperFrames mix of stills + VO + music.
+Source vo2 had picture through ~45s / last keyframe ~63s and audio to ~80s. Remuxed 2026-08-19: last frame held to audio end, SAR 1:1, `+faststart`. Do not restore the unpadded file.

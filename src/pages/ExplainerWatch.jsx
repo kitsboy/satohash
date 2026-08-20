@@ -5,14 +5,70 @@ import MarketingDesktopNav from '../components/layout/MarketingDesktopNav'
 import Footer from '../components/layout/Footer'
 import usePageMeta from '../hooks/usePageMeta'
 
-/** 10s Kimi teaser — longer educational cut coming later. */
-// Query busts CF/browser cache when same path is overwritten (old ~80s file shared the name).
-const VIDEO_SRC = '/media/video/satohash-explainer-with-vo.mp4?v=10s-kimi-20260804'
-const POSTER_SRC = '/media/video/kimi-teacher.jpg'
-const VIDEO_SECONDS = 10
-const LONG_VO_SRC = '/media/video/vo-complete.mp3'
+/** Query busts CF/browser cache when the same path is overwritten. */
+const CUTS = {
+  full: {
+    id: 'full',
+    src: '/media/video/satohash-explainer-with-vo2.mp4?v=kimi-noir-20260819',
+    file: 'satohash-explainer-with-vo2.mp4',
+    seconds: 84,
+    label: '~84s',
+    title: 'Full cut',
+    aria: 'Satohash 80-second explainer with voiceover'
+  },
+  short: {
+    id: 'short',
+    src: '/media/video/satohash-explainer-with-vo.mp4?v=10s-kimi-20260804',
+    file: 'satohash-explainer-with-vo.mp4',
+    seconds: 10,
+    label: '10s',
+    title: 'Teaser',
+    aria: 'Satohash 10-second explainer with voiceover'
+  }
+}
 
-const SCRIPT_BEATS = [
+const POSTER_SRC = '/media/video/kimi-teacher.jpg'
+
+const FULL_BEATS = [
+  {
+    id: 'hook',
+    t: '0:00',
+    title: 'Hook',
+    line: 'Got a file that needs to exist right now — and be provable forever? Satohash stamps it onto Bitcoin. Permanently. For free.'
+  },
+  {
+    id: 'problem',
+    t: '0:07',
+    title: 'Problem',
+    line: 'Emailing yourself a copy is not proof. Satohash fingerprints the file and gives you a receipt that cannot be faked.'
+  },
+  {
+    id: 'how',
+    t: '0:19',
+    title: 'How it works',
+    line: 'One click. No account. No wallet. Independent calendars, then one Bitcoin block. The proof is yours forever.'
+  },
+  {
+    id: 'batch',
+    t: '0:33',
+    title: 'Batch',
+    line: 'A folder of documents? Batch stamp them. Every file gets its own independent proof.'
+  },
+  {
+    id: 'verify',
+    t: '0:43',
+    title: 'Verify',
+    line: 'Come back later, enter the stamp. Calendars and Bitcoin agree — green badge. Trust, but verify.'
+  },
+  {
+    id: 'cta',
+    t: '0:52',
+    title: 'CTA',
+    line: 'Nothing to install. Nothing to buy. Stamp your first file free at satohash.io.'
+  }
+]
+
+const SHORT_BEATS = [
   {
     id: 'hook',
     t: '0:00',
@@ -51,13 +107,16 @@ export default function ExplainerWatch() {
     page: 'watch',
     title: 'Explainer — Satohash',
     description:
-      '10-second Kimi explainer: stamp files onto Bitcoin with OpenTimestamps. Free. Sovereign. Private. Longer cut coming soon.'
+      '80-second Kimi explainer: stamp files onto Bitcoin with OpenTimestamps. Free. Sovereign. Private. 10-second teaser also on this page.'
   })
 
   const videoRef = useRef(null)
+  const [cutId, setCutId] = useState('full')
+  const cut = CUTS[cutId]
+  const beats = cutId === 'full' ? FULL_BEATS : SHORT_BEATS
   const [playing, setPlaying] = useState(false)
   const [t, setT] = useState(0)
-  const [total, setTotal] = useState(VIDEO_SECONDS)
+  const [total, setTotal] = useState(cut.seconds)
   const [muted, setMuted] = useState(false)
   const [ended, setEnded] = useState(false)
   const [ready, setReady] = useState(false)
@@ -72,6 +131,14 @@ export default function ExplainerWatch() {
       setTotal(v.duration)
     }
   }, [])
+
+  useEffect(() => {
+    setPlaying(false)
+    setEnded(false)
+    setReady(false)
+    setT(0)
+    setTotal(CUTS[cutId].seconds)
+  }, [cutId])
 
   useEffect(() => {
     const v = videoRef.current
@@ -110,12 +177,12 @@ export default function ExplainerWatch() {
       v.removeEventListener('durationchange', onMeta)
       v.removeEventListener('timeupdate', onTime)
     }
-  }, [syncFromVideo, total])
+  }, [syncFromVideo, total, cutId])
 
   useEffect(() => {
     const v = videoRef.current
     if (v) v.muted = muted
-  }, [muted])
+  }, [muted, cutId])
 
   const toggle = async () => {
     const v = videoRef.current
@@ -143,6 +210,13 @@ export default function ExplainerWatch() {
     setPlaying(false)
   }
 
+  const switchCut = (id) => {
+    if (id === cutId) return
+    const v = videoRef.current
+    if (v) v.pause()
+    setCutId(id)
+  }
+
   return (
     <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)]">
       <MarketingDesktopNav />
@@ -153,15 +227,42 @@ export default function ExplainerWatch() {
             className="mb-2 text-[10px] font-black tracking-[0.25em] uppercase"
             style={{ color: 'var(--accent-gold)' }}
           >
-            ~{Math.round(total)}s teaser · Kimi
+            ~{Math.round(total)}s · Kimi
           </p>
           <h1 className="font-display text-2xl font-black tracking-tight sm:text-4xl">
             Stamp it onto <span className="gold-text">Bitcoin</span>
           </h1>
           <p className="mx-auto mt-2 max-w-lg text-sm" style={{ color: 'var(--text-secondary)' }}>
-            Short educational cut — file stays local, fingerprint timestamps, Bitcoin anchors the
-            proof. Full-length explainer coming later.
+            File stays local. Fingerprint timestamps. Bitcoin anchors the proof. Full educational
+            cut is primary; 10s teaser still here.
           </p>
+        </div>
+
+        <div
+          className="mb-4 flex flex-wrap items-center justify-center gap-2"
+          role="tablist"
+          aria-label="Explainer length"
+        >
+          {Object.values(CUTS).map((c) => {
+            const active = c.id === cutId
+            return (
+              <button
+                key={c.id}
+                type="button"
+                role="tab"
+                aria-selected={active}
+                onClick={() => switchCut(c.id)}
+                className="inline-flex min-h-[44px] items-center rounded-2xl border px-4 text-xs font-black tracking-widest uppercase"
+                style={{
+                  borderColor: active ? 'var(--accent-gold)' : 'var(--border)',
+                  color: active ? '#141b25' : 'var(--text-secondary)',
+                  background: active ? 'var(--accent-gold)' : 'transparent'
+                }}
+              >
+                {c.title} ({c.label})
+              </button>
+            )
+          })}
         </div>
 
         <div
@@ -173,14 +274,15 @@ export default function ExplainerWatch() {
           }}
         >
           <video
+            key={cut.src}
             ref={videoRef}
-            src={VIDEO_SRC}
+            src={cut.src}
             poster={POSTER_SRC}
             playsInline
             preload="metadata"
             className="absolute inset-0 h-full w-full bg-black object-contain"
             onClick={toggle}
-            aria-label="Satohash 10-second explainer with voiceover"
+            aria-label={cut.aria}
           />
 
           {(!playing || !ready) && !ended && t < 0.15 && (
@@ -293,24 +395,6 @@ export default function ExplainerWatch() {
           </button>
         </div>
 
-        <div
-          className="mt-6 rounded-2xl border p-4"
-          style={{ borderColor: 'var(--border)', background: 'var(--bg-secondary)' }}
-        >
-          <p
-            className="text-[10px] font-black tracking-widest uppercase"
-            style={{ color: 'var(--text-secondary)' }}
-          >
-            Longer cut (~80s audio)
-          </p>
-          <p className="mt-1 text-sm" style={{ color: 'var(--text-muted)' }}>
-            Same story, spoken. The 10s video stays primary until a new MP4 ships.
-          </p>
-          <audio className="mt-3 w-full" controls preload="none" src={LONG_VO_SRC}>
-            Your browser does not support audio.
-          </audio>
-        </div>
-
         <div className="mt-4 flex flex-wrap items-center justify-center gap-2 sm:gap-3">
           <Link
             to="/stamp"
@@ -326,14 +410,13 @@ export default function ExplainerWatch() {
           style={{ borderColor: 'var(--border)', background: 'var(--surface-raised)' }}
         >
           <h2 className="font-display text-lg font-black sm:text-xl">
-            Teaser board <span className="gold-text">(~{Math.round(total)}s)</span>
+            {cut.title} board <span className="gold-text">(~{Math.round(total)}s)</span>
           </h2>
           <p className="mt-1 text-xs" style={{ color: 'var(--text-secondary)' }}>
-            Video file: <code className="text-[11px]">satohash-explainer-with-vo.mp4</code> — VO
-            baked in. Longer educational cut later; keep the full script offline until then.
+            Video file: <code className="text-[11px]">{cut.file}</code> — VO baked in.
           </p>
           <ol className="mt-6 space-y-4">
-            {SCRIPT_BEATS.map((b) => (
+            {beats.map((b) => (
               <li
                 key={b.id}
                 className="flex gap-3 rounded-xl border p-3 sm:gap-4 sm:p-4"

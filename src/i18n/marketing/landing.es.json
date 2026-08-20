@@ -14,6 +14,7 @@
     "subtitle": "Sube cualquier archivo. Obtén una marca de tiempo permanente respaldada por Bitcoin. Válida en tribunales. Sin abogados. Sin necesidad de confiar en nadie.",
     "description": "Satohash calcula el hash de tu archivo localmente en tu navegador — tu documento nunca abandona tu dispositivo. Solo una huella criptográfica se escribe en la blockchain de Bitcoin, creando una prueba inmutable de existencia para cualquier archivo, contrato, foto o conjunto de datos.",
     "ctaStamp": "Sellar un archivo — Es gratis",
+    "ctaWatch": "Ver el explainer",
     "ctaTemplates": "Explorar plantillas",
     "socialProof": "Únete a {{count}} profesionales que anclan documentos en Bitcoin",
     "tryTemplate": "Prueba una plantilla gratis"

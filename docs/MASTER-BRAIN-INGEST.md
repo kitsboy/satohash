@@ -123,7 +123,7 @@ source=bitcoind; API height matches tip; local mempool live; deep health green. 
 - [x] Docs consolidation + route/component structure
 - [x] THOR: IBD finish → bitcoind at tip · source bitcoind (2026-08-08/10)
 - [x] THOR: client_id + directory live on metrics
-- [x] Homepage CTA → /watch (10s teaser)
+- [x] Homepage CTA → /watch (~80s educational cut; 10s teaser toggle)
 - [ ] Wallets/paywall when Cam flips
 
 **Orchestration:** Kimi THOR. Coding: Grok M3.

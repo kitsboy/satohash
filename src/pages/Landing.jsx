@@ -441,7 +441,7 @@ export default function Landing() {
                 color: 'var(--accent-gold)'
               }}
             >
-              {t('landingPage.hero.ctaWatch', { defaultValue: 'Watch 10s explainer' })}{' '}
+              {t('landingPage.hero.ctaWatch', { defaultValue: 'Watch explainer' })}{' '}
               <ArrowRight size={16} />
             </Link>
             <Link
@@ -930,7 +930,7 @@ export default function Landing() {
               className="inline-flex items-center gap-2 rounded-2xl border px-6 py-3.5 text-sm font-bold transition-colors hover:border-[var(--accent-gold)]"
               style={{ borderColor: 'rgba(240,180,41,0.4)', color: 'var(--accent-gold)' }}
             >
-              Watch 10s explainer
+              Watch explainer
             </Link>
           </motion.div>
         </div>
