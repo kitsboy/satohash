@@ -1,3 +1,22 @@
+## Session — 2026-08-20 (Kimi on THOR — security headers parity, 9/9)
+
+**Security headers sweep — ALL 9 SITES GREEN** (was 4-5 sites missing CSP/HSTS):
+
+| Repo | Branch | Fix |
+|------|--------|-----|
+| motopass | main | + HSTS + CSP |
+| tadbuy | main | + HSTS + CSP |
+| stranded | main | + HSTS (had CSP) |
+| sherpacarta | main | + HSTS (had CSP) |
+| openstrata | **main** (SvelteKit app) | full `static/_headers` (CSP+HSTS+XFO) — discovered real app on main branch, not talent |
+| HQ | main | + HSTS + CSP to `pages/_headers` (source; public/ is build output) |
+
+- Verified live: every site now returns CSP + HSTS preload + XFO DENY + nosniff + referrer-policy. Re-audit: `bash /root/scripts/header-parity-audit.sh` → 9/9 ✅.
+- Log watchdog (new) caught the readiness 500 bug class (263+207 in 6h) → already fixed via import path; state-file dedup now silent.
+- All commits pushed per repo; openstrata deploy confirmed via CF native integration.
+
+---
+
 ## Session — 2026-08-20 (Kimi on THOR — Batch 3: completion sweep)
 
 **Autonomous completion batch (all verified live):**
