@@ -1,3 +1,21 @@
+## Session — 2026-08-20 (Kimi on THOR — Batch 3: completion sweep)
+
+**Autonomous completion batch (all verified live):**
+
+- **Fixed production bug:** `/api/public/readiness` was returning **500 for 207 requests/6h** — `server/routes/public.js` imported `./lib/readiness.js` (wrong path, same class as the earlier health.js bug). Fixed → `../lib/readiness.js` → now 200 with all planes (proof_api, paywall, bitcoin_node, lightning, ai, nostr). **This was the endpoint LiveNodeChip/monitors rely on.**
+- **Batch verify page** `/verify/batch` — paste up to 50 hashes, check all at once, confirmed/pending/not-found chips. Linked from verify page + sitemap.
+- **Notify-me email** on Stamp — optional "email me when confirmed" field (backend `email` support already existed; UI now exposes it, sends on both stamp paths).
+- **5 more learn articles** (10 total now): OTS vs DocuSign, protecting AI outputs, photos/video, blockchain for archives, compliance audits. All in sitemap.
+- **Proof-wall link** on Network page + **live proof counter** on Pitch page.
+- **Ops watchdogs (new crons):** `satohash-logwatch.sh` (6h error-class sweep → FIXES-LOG + TG alert on new classes), `backup-integrity-test.sh` (weekly — **verified LNbits restores 9 wallets + satohash SQLite integrity ok, 21 stamps**), `header-parity-audit.sh` (weekly — **found gaps: motopass/tadbuy/openstrata/hq/sherpa missing CSP/HSTS** → `/root/hq/docs/HEADER-PARITY.md`).
+- **Nostr relays** already rotated (7 relays, env-config) — verified.
+
+**Git:** satohash `23b2263` pushed · tests 126/126 · build clean · M3 synced · all new routes 200 live.
+
+**Handed to Grok (family repos, M3 lane):** X-Satohash-Client attribution + on-chain donate for katoa/motopass/tadbuy/stranded/openstrata (see docs/TIER3-4-PLAN.md §Handoff to Grok).
+
+---
+
 ## Session — 2026-08-20 (Kimi on THOR — Tier 3+4 batch)
 
 **Tier 3 + Tier 4 shipped** (done directly — agents rate-limited last batch):
