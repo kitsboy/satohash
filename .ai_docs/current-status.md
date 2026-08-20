@@ -82,6 +82,7 @@
 
 ## Ops still open
 
+- [x] **Kimi (2026-08-20):** All 9 LNbits wallets now have live LNURL-pay addresses (`<site>@api.satohash.io:8443`) + giveabit.io `.well-known/lnurlp/` stubs resolve to real LNbits callbacks. SherpaCarta was the only live one before; now: giveabit, satohash, katoa, motopass, openstrata, stranded, tadbuy, kimi, sherpa — all PAYREQ + invoice generation verified. Family registry: `giveabit.io/wallets.json`. HQ Money Plane (v3.32.1) shows every site's rails.
 - [ ] **Kimi:** Sherpa / MotoPass / Katoa send `X-Satohash-Client` (tiles still 0)  
 - [ ] **Kimi:** daily bitcoind RAM (`free -h`)  
 - [ ] Paywall only when Cam flips (`docs/PAYWALL-STAGING.md`)  
