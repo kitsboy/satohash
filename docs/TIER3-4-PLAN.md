@@ -19,11 +19,11 @@ next-wave blueprint. All items are fully autonomous (Kimi + spawned agents, end-
 
 | # | Item | Files/area | Notes |
 |---|------|-----------|-------|
-| 1 | Sentry DSN wiring | `.env` + Vault | Code already inits both server (`config.SENTRY_DSN`) and client (`VITE_SENTRY_DSN`); needs a real DSN from Cam's Sentry account → Vault, never git |
-| 2 | CI smoke tests | `.github/workflows/*` | Playwright suites exist (`tests/e2e/*`) — wire to GitHub Actions on every push |
-| 3 | Cache-header audit | `public/_headers`, CF config | Verify `/b/*` long-cache + `index.html` no-cache (prevents stale-chunk errors at the source) |
-| 4 | On-site metrics strip | `src/components/shared/*` | Live "28 proofs issued" counter + recent-stamps strip from `/metrics.json` |
-| 5 | Security headers sweep | helmet config, `_headers` | Re-audit CSP/HSTS/Referrer-Policy; tighten loose routes |
+| 1 | Sentry DSN wiring | `.env` + Vault | Code already inits both server (`config.SENTRY_DSN`) and client (`VITE_SENTRY_DSN`). **Cam-gated:** needs a free DSN from sentry.io (2-min setup) → Vault, never git. Self-hosting Sentry on THOR is NOT recommended (needs kafka+clickhouse, ~8GB RAM). |
+| 2 | CI smoke tests | `.github/workflows/*` | ✅ **DONE** — `ci.yml` runs eslint + i18n + vitest + playwright (chromium+webkit) on push/PR. `deploy.yml` + `lighthouse-weekly.yml` also live. |
+| 3 | Cache-header audit | `public/_headers` | ✅ **DONE** — `/` + `/index.html` + `/sw.js` no-cache; `/b/*` 1h immutable-safe; `/media/video/*` 5min; `/metrics.json` 60s CORS. Verified current. |
+| 4 | On-site metrics strip | `src/pages/Landing.jsx` | ✅ **DONE** — landing shows live `proofCount` from API ("N Bitcoin-anchored proofs issued through this plane"). |
+| 5 | Security headers sweep | helmet + `_headers` | ✅ **DONE 2026-08-20** — live sweep of /, /stamp, /verify, /status, /api/public/status, /docs/learn-*: full CSP, HSTS preload, X-Frame-Options DENY, nosniff, strict-origin-when-cross-origin, permissions-policy all present. No changes needed. |
 
 ## Gate (needs Cam — NOT autonomous)
 
