@@ -1,3 +1,25 @@
+## Session — 2026-08-20 (Kimi on THOR — SEO prerender + AI crawler batch)
+
+**SEO batch shipped (verified live):**
+
+- **Prerendering** — `scripts/prerender-seo.js` generates 18 static HTML pages at build (landing, FAQ, 6 secondary: stamp/pricing/templates/verify/donate/network, 10 learn articles) with full content + Article/FAQPage JSON-LD. Wired into `npm run build`.
+- **Crawler middleware** — `functions/_middleware.js` serves prerendered HTML to crawler UAs (Googlebot/Bingbot/DuckDuckBot verified 200 + content), humans keep the SPA (verified).
+- **llms.txt** — AI-crawler map of Satohash (what/why/key facts/10 articles). Live at satohash.io/llms.txt, in sitemap.
+- **robots.txt** — explicit Allow for GPTBot/ChatGPT-User/ClaudeBot/anthropic-ai/PerplexityBot/Applebot-Extended.
+- **Sitemap** — +llms.txt, +robots.txt (68 URLs, valid).
+
+**Verified live:** Googlebot → prerendered landing/article ✅ · Bingbot/DuckDuckBot ✅ · humans → SPA ✅ · llms.txt 200 ✅.
+
+**⚠️ NEEDS CAM (2-min CF dashboard):** GPTBot/ClaudeBot/PerplexityBot get **403 from Cloudflare bot fight mode** (blocked at edge before middleware). To unblock:
+1. dash.cloudflare.com → satohash.io → **Security → Bots** (or WAF → Custom rules)
+2. Add rule: **Allow** when `User-Agent contains "GPTBot" OR "ClaudeBot" OR "PerplexityBot" OR "ChatGPT-User"**
+3. Deploy. Then AI crawlers get the prerendered HTML too.
+(Alternative: add a CF API token to THOR vault and I'll do it — but dashboard is 2 min.)
+
+**Commits:** `c83d1f5` (prerender+llms+middleware) · `d44029e` (robots) · tests 126/126 · M3 synced.
+
+---
+
 ## Session — 2026-08-20 (Kimi on THOR — security headers parity, 9/9)
 
 **Security headers sweep — ALL 9 SITES GREEN** (was 4-5 sites missing CSP/HSTS):
