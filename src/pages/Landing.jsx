@@ -459,7 +459,7 @@ export default function Landing() {
                 color: 'var(--text-secondary)'
               }}
             >
-              Confirm .ots <ChevronRight size={16} />
+              Confirm .ots Stamp <ChevronRight size={16} />
             </a>
           </motion.div>
 
