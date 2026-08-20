@@ -93,9 +93,9 @@ source=bitcoind; API height matches tip; local mempool live; deep health green. 
 - Landing: #free-and-fees · #verify-ots
 - Exec summary: /docs/executive-summary (charts + formal brief)
 - Explainer: /watch · media public/media/video/
-  - vo-complete.mp3 (~80s) drives slide clock
-  - satohash-explainer-music.mp3 under VO
-  - satohash-explainer-with-vo.mp4 downloadable mix
+  - satohash-explainer-with-vo2.mp4 (~84s) primary — Kimi/Pippa VO + dance bed
+  - satohash-explainer-with-vo.mp4 (~10s) teaser toggle
+  - Hash mark top-left on close · cache-bust `?v=kimi-noir-20260819`
 
 **CRITICAL LESSON (2026-07-27 — still true):**
 - CF Pages has no `/api/*`. SPA must use VITE_API_URL=https://api.satohash.io
@@ -123,7 +123,7 @@ source=bitcoind; API height matches tip; local mempool live; deep health green. 
 - [x] Docs consolidation + route/component structure
 - [x] THOR: IBD finish → bitcoind at tip · source bitcoind (2026-08-08/10)
 - [x] THOR: client_id + directory live on metrics
-- [x] Homepage CTA → /watch (~80s educational cut; 10s teaser toggle)
+- [x] Homepage CTA → /watch (~84s Kimi/Pippa cut; 10s teaser toggle)
 - [ ] Wallets/paywall when Cam flips
 
 **Orchestration:** Kimi THOR. Coding: Grok M3.

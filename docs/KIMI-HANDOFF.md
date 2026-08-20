@@ -1,3 +1,23 @@
+## Latest Session Summary (from 2026-08-20 goodbye)
+
+**Chat Topic:** Rebuild and publish the Satohash `/watch` explainer.
+
+**Finished in this session:**
+- ~84s Kimi/Pippa cut live as `/watch` full cut (`satohash-explainer-with-vo2.mp4`)
+- Dance bed ~15%, Noir graphics, hash mark top-left on close
+- Git `f64463f` · HyperFrames https://hyperframes.dev/p/915356ed-8e2f-4c6e-97a4-d931b33b1341
+- 10s teaser still on `/watch` as Short
+
+**Still to do:**
+- Sherpa / MotoPass / Katoa `X-Satohash-Client` (tiles 0)
+- Daily bitcoind `free -h`
+- Paywall only when Cam flips
+- iPhone Safari `/p/<hash>` share
+
+**Next for Kimi:** Integrate this summary into MASTER-BRAIN / Kanban. Do **not** flip `REQUIRE_LIGHTNING`. Do **not** change `/api/*`. Do **not** touch Cloudflare Pages. OPEN block below is still the work.
+
+---
+
 ## Grok goodbye (2026-08-17)
 
 Session closed. Product verified. Your OPEN block below is still the work. Do not flip paywall. Do not change `/api/*`.

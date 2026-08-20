@@ -1,0 +1,51 @@
+# ================================================================
+# GENERIC SESSION DEBRIEF — Satohash
+# ================================================================
+
+runbook:
+  name: Session Debrief
+  version: "2.0"
+  trigger:
+    phrases: ["run session debrief", "/goodbye"]
+
+project_config:
+  project_name: "Satohash"
+  context_file: null
+  framework_terms: null
+  id_prefixes:
+    architectural_decision: "AD-"
+    open_question: "OQ-"
+  output_location: "docs/debriefs/"
+
+output_schema:
+  session_id: "session-2026-08-20-001"
+  date: "2026-08-20"
+  status: "confirmed"
+
+  summary:
+    purpose: "Rebuild and publish the /watch explainer (Kimi voice, Noir graphics, dance bed)."
+    outcomes:
+      - "Shipped satohash-explainer-with-vo2.mp4 (~83.7s, 1920x1080) as /watch full cut."
+      - "HeyGen Pippa VO, instrumental dance bed ~15%, Satohash hash mark top-left on close."
+      - "Pushed f64463f to origin/main (CF Pages). HyperFrames https://hyperframes.dev/p/915356ed-8e2f-4c6e-97a4-d931b33b1341"
+
+  architectural_decisions:
+    - id: "AD-002"
+      decision: "Primary /watch asset is the HyperFrames Kimi cut (vo2), not stock stills or the 10s teaser."
+      rationale: "Cam asked for a major upgrade of voice and graphics; teaser remains as Short toggle."
+      status: "agreed"
+
+  open_questions:
+    - id: "OQ-001"
+      question: "Sherpa/MotoPass/Katoa X-Satohash-Client still pending?"
+      context: "Standing Kimi OPEN. Unchanged this session."
+      priority: "medium"
+      status: "open"
+
+  session_notes:
+    deprecated_items:
+      - "Pre-2026-08-19 vo2 mux (picture ended before audio) — do not restore."
+    corrections_to_prior_sessions:
+      - "Explainer is ~84s Kimi/Pippa, not a 10s-only or 80s-stills primary."
+    other:
+      - "Source composition: videos/satohash-explainer/ on M3."

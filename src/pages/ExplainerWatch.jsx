@@ -107,7 +107,7 @@ export default function ExplainerWatch() {
     page: 'watch',
     title: 'Explainer — Satohash',
     description:
-      '80-second Kimi explainer: stamp files onto Bitcoin with OpenTimestamps. Free. Sovereign. Private. 10-second teaser also on this page.'
+      '84-second Kimi explainer: stamp files onto Bitcoin with OpenTimestamps. Free. Sovereign. Private. 10-second teaser also on this page.'
   })
 
   const videoRef = useRef(null)

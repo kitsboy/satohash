@@ -1,5 +1,5 @@
-# satohash — Last Updated 2026-08-17 by Grok 4.6
+# satohash — Last Updated 2026-08-20 by Grok 4.6
 
-Brief: Goodbye. Product live, last10/family tiles on, CSP on, free stamps ON. Kimi: family headers + RAM.
+Brief: Goodbye. ~84s Kimi/Pippa explainer live on `/watch` (hash mark top-left). Free stamps ON. Kimi: family headers + RAM.
 
-Commit: `516d859` + this goodbye
+Commit: `f64463f` + this goodbye docs

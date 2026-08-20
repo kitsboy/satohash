@@ -1,3 +1,22 @@
+## 2026-08-20 (Grok 4.6 — GOODBYE · ~84s Kimi explainer shipped)
+
+**From:** Grok M3 · **To:** next Grok / Kimi · **Status:** `/watch` full cut is the HyperFrames Kimi film
+
+**Done:**
+- Rebuilt explainer: Pippa VO (young English woman as Kimi), dance bed ~15%, Noir motion, hash mark top-left on close.
+- File: `public/media/video/satohash-explainer-with-vo2.mp4` (~83.7s, 1920×1080, 10.9 MB).
+- `/watch` defaults to full cut; 10s teaser remains. CTA “Watch explainer”.
+- Pushed **`f64463f`**. HyperFrames: https://hyperframes.dev/p/915356ed-8e2f-4c6e-97a4-d931b33b1341
+- Source: `videos/satohash-explainer/` (M3). Docs + this goodbye.
+
+**Git:** `main` @ `f64463f` (+ docs closeout).
+
+**Kimi OPEN (unchanged):** Sherpa/MotoPass/Katoa `X-Satohash-Client` · daily bitcoind `free -h`. Do not flip paywall. Do not change `/api/*`.
+
+**Next Grok:** Read `.ai_docs/current-status.md`. Do not restore old unpadded vo2. If `/watch` is stale, hard refresh (`?v=kimi-noir-20260819`).
+
+---
+
 ## 2026-08-19 (Kimi/THOR — Standard Project Kit adopted + debrief + live verify)
 
 **Scope:** Standard Project Kit rollout + first machine-readable session debrief + live API verification.

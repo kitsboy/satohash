@@ -16,7 +16,7 @@
 - **Bitcoin node:** Bitcoin Core v28.1 pruned — **IBD complete** (~Aug 8); at tip; `source: bitcoind`; local mempool
 - **Paywall:** REQUIRE_LIGHTNING=false (free stamps). LNbits invoice key wired — flip-ready.
 - **Nostr:** Multi-relay publish on stamp (2/3 relays ok, damus.io flaky)
-- **Explain video:** /watch ~80s educational cut (primary) · 10s teaser toggle
+- **Explain video:** /watch ~84s Kimi/Pippa cut (primary) · 10s teaser toggle · hash mark top-left on close
 - **HQ:** 🟢 Green on `api.satohash.io/metrics.json`
 
 ## Hard rules

@@ -47,7 +47,7 @@ ots verify mydoc.pdf.ots -f mydoc.pdf
 - Paywall: **off** (`REQUIRE_LIGHTNING=false`)
 - Bitcoin: own pruned **bitcoind** on THOR, at chain tip, `ready_to_verify`
 - Languages: English, Español, Français, Deutsch, Português, Kiswahili, 中文
-- Explainer: [/watch](/watch) (~80s educational cut; 10s teaser toggle)
+- Explainer: [/watch](/watch) (~84s Kimi/Pippa cut; 10s teaser toggle)
 
 When a Lightning fee exists later, you would pay **us** a small invoice. The chain of proof stays Bitcoin + OTS.
 

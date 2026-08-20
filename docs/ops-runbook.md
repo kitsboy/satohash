@@ -29,15 +29,17 @@ Canonical short ops pointer. Detailed procedures remain in:
 
 | Item | Path |
 |------|------|
-| Player | https://satohash.io/watch (native **~80s** educational cut; 10s teaser toggle) |
-| Primary MP4 | `public/media/video/satohash-explainer-with-vo2.mp4` (~79.9s, VO baked in) |
+| Player | https://satohash.io/watch (native **~84s** Kimi/Pippa cut; 10s teaser toggle) |
+| Primary MP4 | `public/media/video/satohash-explainer-with-vo2.mp4` (~83.7s, 1920×1080, VO + dance bed) |
 | Teaser MP4 | `satohash-explainer-with-vo.mp4` (~10s) |
-| Cache-bust | SPA loads `…vo2.mp4?v=80s-20260819` (overwrite same path carefully) |
-| Legacy VO | `vo-complete.mp3` (~80s) — baked into vo2; not a separate player |
-| Music | `satohash-explainer-music.mp3` (mix source) |
+| Cache-bust | SPA loads `…vo2.mp4?v=kimi-noir-20260819` (overwrite same path carefully) |
+| Close | Small Satohash **hash mark**, top-left, last ~3s |
+| Legacy VO | `vo-complete.mp3` (~80s) — not a separate player |
+| Music | Dance bed baked into vo2 (~15%); `satohash-explainer-music.mp3` is archive |
+| Source | `videos/satohash-explainer/` (HyperFrames) · share https://hyperframes.dev/p/915356ed-8e2f-4c6e-97a4-d931b33b1341 |
 | Ops notes | `docs/EXPLAINER-MUSIC-AND-VO.md` · `public/media/video/SCRIPT.md` |
 
-If `/watch` shows stale video: hard refresh; check MP4 duration **~80s** (full) or ~10s (teaser). Marketing routes are eager-loaded.
+If `/watch` shows stale video: hard refresh; check MP4 duration **~84s** (full) or ~10s (teaser). Marketing routes are eager-loaded.
 
 ## Bitcoin own-node (bitcoind) — 2026-08-10 truth (**IBD COMPLETE**)
 

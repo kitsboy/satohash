@@ -1,6 +1,6 @@
 # What's live
 
-**Version:** 5.0.0-ELITE · **Updated:** 2026-08-16 · **Live:** https://satohash.io
+**Version:** 5.0.0-ELITE · **Updated:** 2026-08-20 · **Live:** https://satohash.io
 
 Public status snapshot for Satohash. Agent session logs stay in the repo (`docs/handoff-log.md`); this page is for humans.
 
@@ -12,7 +12,7 @@ Public status snapshot for Satohash. Agent session logs stay in the repo (`docs/
 | `/stamp` · `/stamp/done` | Free stamp loop. Sticky CTA, camera/gallery, share + QR, proof ZIP. |
 | `/verify` | File, hash, or `.ots`. Pending vs Bitcoin-confirmed. |
 | `/templates` | Category chips, search, demo editor. |
-| `/watch` | ~80s educational cut with VO; 10s teaser toggle. |
+| `/watch` | ~84s Kimi/Pippa cut (VO + dance bed); 10s teaser toggle. |
 | `/government` | Solutions + Motopass concept. |
 | `/network` | Live calendars / bitcoin / stamps dashboard. |
 | `/docs` | This documentation set. |
