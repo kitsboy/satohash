@@ -7,4 +7,23 @@ Disallow: /metrics
 Disallow: /p/$
 Disallow: /verify/$
 
+# AI crawlers — welcome (prerendered content is served to them)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
 Sitemap: https://satohash.io/sitemap.xml
