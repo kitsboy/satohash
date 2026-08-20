@@ -49,3 +49,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     </ErrorBoundary>
   </React.StrictMode>
 )
+
+// Vite dynamic-import resilience: if a lazily-loaded chunk fails to fetch
+// (CF Pages deploy race, flaky network, SW cache desync), retry once, then
+// hard-reload so the browser picks up the newest index.html + chunk manifest.
+window.addEventListener('vite:preloadError', (event) => {
+  event.preventDefault()
+  window.location.reload()
+})
