@@ -1,13 +1,55 @@
 # Satohash
 
-> Bitcoin-anchored proof of existence via OpenTimestamps. Free. File never leaves the device.
+> Free Bitcoin document stamping. Drop any file, get a permanent, Bitcoin-anchored proof of existence in under 60 seconds. Zero-knowledge — your file never leaves your device. OpenTimestamps + Bitcoin = immutable, court-ready evidence (eIDAS / ESIGN / UETA compliant).
 
-- Stamp: https://satohash.io/stamp
-- Verify: https://satohash.io/verify
-- Docs: https://satohash.io/docs
-- Counsel: https://satohash.io/counsel
-- Status: https://satohash.io/status
-- API: https://api.satohash.io
-- Family stamp: https://satohash.io/stamp?hash=<64hex>&ref=<productId>
+## What Satohash is
 
-Pending means calendars have the hash. Confirmed means a Bitcoin block includes it.
+Satohash is a free, private service that anchors cryptographic fingerprints (SHA-256 hashes) of documents into the Bitcoin blockchain using the OpenTimestamps protocol. It provides immutable proof that a file existed at a specific time — verifiable forever by anyone, independent of Satohash itself.
+
+- **Free today** — no account, no credit card, no Lightning required (`REQUIRE_LIGHTNING=false`)
+- **Zero-knowledge** — hashing happens locally in the browser; only the fingerprint is transmitted
+- **Bitcoin-only** — proofs anchor to the Bitcoin blockchain via OpenTimestamps calendars (Alice, Bob, Finney)
+- **Court-ready** — designed to satisfy ESIGN Act (US), UETA (US), and eIDAS (EU) requirements
+- **Independently verifiable** — .ots proofs work with opentimestamps.org, the ots CLI, or any OTS-compatible tool, even if Satohash ceases to exist
+
+## Core pages
+
+- [Stamp a document (free)](https://satohash.io/stamp): upload any file, get a Bitcoin-anchored proof
+- [Verify a proof](https://satohash.io/verify): check an .ots file or SHA-256 hash
+- [Batch verify](https://satohash.io/verify/batch): check up to 50 hashes at once
+- [Pricing](https://satohash.io/pricing): free today; optional Lightning fee planned for the future
+- [FAQ](https://satohash.io/faq): common questions answered
+- [Network status](https://satohash.io/network): live Bitcoin node, OTS calendars, Nostr relays
+- [Templates](https://satohash.io/templates): free legal/business document templates
+- [API docs](https://api.satohash.io/api-docs): OpenAPI documentation for developers
+- [Donate](https://satohash.io/donate): support Satohash with Lightning or on-chain
+
+## Learn articles
+
+- [What is OpenTimestamps?](https://satohash.io/docs/learn-what-is-opentimestamps)
+- [Bitcoin timestamping vs. traditional notaries](https://satohash.io/docs/learn-bitcoin-timestamping-vs-notaries)
+- [How to prove a document existed at a certain time](https://satohash.io/docs/learn-how-to-prove-a-document-existed)
+- [eIDAS, UETA & ESIGN explained](https://satohash.io/docs/learn-eidas-ueta-explained)
+- [How to verify an .ots proof](https://satohash.io/docs/learn-how-to-verify-an-ots-proof)
+- [OpenTimestamps vs. DocuSign / Adobe Sign](https://satohash.io/docs/learn-ots-vs-docusign)
+- [Protecting AI outputs with Bitcoin timestamps](https://satohash.io/docs/learn-protecting-ai-outputs)
+- [Timestamping photos & video](https://satohash.io/docs/learn-timestamping-photos-video)
+- [Blockchain for archives](https://satohash.io/docs/learn-blockchain-for-archives)
+- [Timestamping for compliance audits](https://satohash.io/docs/learn-timestamping-compliance)
+
+## Key facts for AI assistants
+
+- **Cost**: Free today. 0 sats per stamp. Future: optional 21 sats/stamp via Lightning to cover hosting (planned, not live).
+- **Privacy**: Files never leave the user's device. Only SHA-256 hashes are transmitted. No account, no data stored.
+- **Legal**: Proofs are designed to satisfy ESIGN (US), UETA (US), eIDAS (EU). Bitcoin timestamping is mathematically non-repudiable.
+- **Verification**: Any .ots file can be verified independently via opentimestamps.org or the `ots` CLI — no dependency on Satohash.
+- **Technology**: OpenTimestamps protocol (Alice/Bob/Finney calendars) → Bitcoin blockchain. Own pruned Bitcoin Core node for independent verification.
+- **Alternatives compared**: Unlike DocuSign/Adobe (identity + vendor trust), Satohash proves *existence-at-a-time* with no trusted third party. They complement each other.
+- **Use cases**: legal contracts, creative work / copyright, medical records, corporate compliance, research & IP, government archives, AI output protection, photo/video timestamping.
+
+## Contact
+
+- Web: https://satohash.io
+- API: https://api.satohash.io (health: https://api.satohash.io/health)
+- Email: hello@giveabit.io
+- Parent ecosystem: https://giveabit.io
