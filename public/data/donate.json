@@ -1,0 +1,19 @@
+{
+  "updated": "2026-08-20",
+  "org": "Satohash / Give A Bit",
+  "lightning": {
+    "lud16": "satohash@api.satohash.io:8443",
+    "lnurl": "https://api.satohash.io:8443/.well-known/lnurlp/satohash",
+    "minSendableSats": 1000,
+    "maxSendableSats": 100000000,
+    "note": "LNURL-pay via LNbits on THOR. Instant, near-zero fee."
+  },
+  "onchain": {
+    "address": "bc1qkrlg6ssme0ztgynr2us846mtlde0r33ly7kdmc",
+    "network": "mainnet",
+    "type": "bech32 (P2WPKH)",
+    "explorer": "https://mempool.space/address/bc1qkrlg6ssme0ztgynr2us846mtlde0r33ly7kdmc",
+    "note": "LND wallet on THOR — covered by offline seed backup (2026-08-06)."
+  },
+  "transparency": "Stamps remain free; tips fund infrastructure (OTS calendars, node, API)."
+}

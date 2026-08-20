@@ -43,6 +43,12 @@
   <url><loc>https://satohash.io/developer</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
   <url><loc>https://satohash.io/access</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
   <url><loc>https://satohash.io/contribute</loc><priority>0.6</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://satohash.io/donate</loc><priority>0.7</priority><changefreq>monthly</changefreq><lastmod>2026-08-20</lastmod></url>
+  <url><loc>https://satohash.io/docs/learn-what-is-opentimestamps</loc><priority>0.6</priority><changefreq>monthly</changefreq><lastmod>2026-08-20</lastmod></url>
+  <url><loc>https://satohash.io/docs/learn-bitcoin-timestamping-vs-notaries</loc><priority>0.6</priority><changefreq>monthly</changefreq><lastmod>2026-08-20</lastmod></url>
+  <url><loc>https://satohash.io/docs/learn-how-to-prove-a-document-existed</loc><priority>0.6</priority><changefreq>monthly</changefreq><lastmod>2026-08-20</lastmod></url>
+  <url><loc>https://satohash.io/docs/learn-eidas-ueta-explained</loc><priority>0.6</priority><changefreq>monthly</changefreq><lastmod>2026-08-20</lastmod></url>
+  <url><loc>https://satohash.io/docs/learn-how-to-verify-an-ots-proof</loc><priority>0.6</priority><changefreq>monthly</changefreq><lastmod>2026-08-20</lastmod></url>
   <url><loc>https://satohash.io/atlas</loc><priority>0.6</priority><changefreq>weekly</changefreq></url>
   <url><loc>https://satohash.io/legal/privacy</loc><priority>0.5</priority><changefreq>yearly</changefreq></url>
   <url><loc>https://satohash.io/legal/terms</loc><priority>0.5</priority><changefreq>yearly</changefreq></url>

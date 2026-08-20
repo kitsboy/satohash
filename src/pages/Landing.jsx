@@ -27,6 +27,7 @@ import ParticleStampCanvas from '../components/marketing/ParticleStampCanvas'
 import { buildStampPathFromSearch } from '../utils/stampDeepLink'
 import events, { trackEvent } from '../utils/analytics'
 import LiveNodeChip from '../components/shared/LiveNodeChip'
+import TipButton from '../components/marketing/TipButton'
 
 const fadeUp = {
   hidden: { opacity: 0, y: 32 },
@@ -461,6 +462,7 @@ export default function Landing() {
             >
               Confirm .ots Stamp <ChevronRight size={16} />
             </a>
+            <TipButton size="lg" className="min-h-[48px] justify-center sm:w-auto" />
           </motion.div>
 
           {/* Social proof + template link */}

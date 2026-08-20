@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
+import { Copy, Check, Share2 } from 'lucide-react'
 import usePageMeta from '../hooks/usePageMeta'
 import { getApiUrl } from '../config/constants'
 import { isSha256Hex, normalizeSha256 } from '../utils/hashUtils'
@@ -11,10 +12,36 @@ export default function ProofCardPublic() {
   const { hash } = useParams()
   const hex = normalizeSha256(hash) || hash
   const [proof, setProof] = useState(null)
+  const [copied, setCopied] = useState(false)
   usePageMeta({
     title: `Bitcoin proof ${String(hex || '').slice(0, 12)}…`,
     description: `OpenTimestamps proof card for SHA-256 ${String(hex || '').slice(0, 16)}…. Pending is not confirmed.`
   })
+
+  const cardUrl =
+    typeof window !== 'undefined' ? window.location.href : `https://satohash.io/p/${hex || ''}`
+
+  const copyLink = async () => {
+    try {
+      await navigator.clipboard.writeText(cardUrl)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    } catch {
+      /* clipboard unavailable */
+    }
+  }
+
+  const shareLink = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: 'Bitcoin proof of existence', url: cardUrl })
+        return
+      } catch {
+        /* user cancelled or share failed — fall through to copy */
+      }
+    }
+    copyLink()
+  }
 
   useEffect(() => {
     if (!hex) return
@@ -86,6 +113,25 @@ export default function ProofCardPublic() {
           >
             Hard-open card
           </a>
+        </div>
+        <div className="flex flex-col gap-2 sm:flex-row">
+          <button
+            type="button"
+            onClick={copyLink}
+            className="inline-flex min-h-[44px] flex-1 items-center justify-center gap-2 rounded-xl border text-xs font-black uppercase transition-colors hover:border-[var(--accent-gold)]"
+            style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
+          >
+            {copied ? <Check size={14} className="text-emerald-400" /> : <Copy size={14} />}
+            {copied ? 'Copied' : 'Copy proof link'}
+          </button>
+          <button
+            type="button"
+            onClick={shareLink}
+            className="inline-flex min-h-[44px] flex-1 items-center justify-center gap-2 rounded-xl border text-xs font-black uppercase transition-colors hover:border-[var(--accent-gold)]"
+            style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
+          >
+            <Share2 size={14} /> Share
+          </button>
         </div>
       </div>
     </div>
