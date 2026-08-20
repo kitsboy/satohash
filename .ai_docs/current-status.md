@@ -77,6 +77,8 @@
 - [x] Institutional Noir motion (not stock stills)  
 - [x] Satohash hash mark small, top-left, last ~3s  
 - [x] Pushed `f64463f` — Pages `/watch` · HyperFrames https://hyperframes.dev/p/915356ed-8e2f-4c6e-97a4-d931b33b1341  
+- [x] **Kimi (2026-08-20):** fixed `health.js` lib import paths (`./lib/*` → `../lib/*`) — bitcoin + lightning checks were erroring since route extraction. Deep health now all-green: bitcoind healthy (963332, 100%), LNbits healthy, OTS 3/3, Nostr 2/3. Commit `0bf6b54` pushed.  
+- [x] **Kimi (2026-08-20):** LNbits postgres backup cron added (06:30 daily, 14-day retention, 600 perms) — 9 family wallets now recoverable. First backup verified 19:17 UTC.  
 
 ## Ops still open
 
