@@ -20,6 +20,24 @@
 
 ---
 
+## Session — 2026-08-21 (Kimi on THOR — day end / goodbye)
+
+**Massive day — all four enhancement tiers + SEO + HQ shipped:**
+
+- **Tier 1+2:** /donate page (Lightning QR + on-chain), TipButton, /status transparency dashboard, server-side proof certificate (GET /api/stamps/:id/certificate), proof-card share, batch-verify page, notify-me email on stamp, 5+5 learn articles (10 total), FAQPage/Article/WebSite schema, sitemap 68 URLs.
+- **SEO engine:** 18 prerendered pages served to crawlers (functions/_middleware.js), llms.txt, robots welcomes AI bots, Cloudflare AI Crawl Control unblocked by Cam → **GPTBot/ClaudeBot/PerplexityBot all 200 + full content**. Suite 9/9 sites at 100 (SEO Plane 96/100 A).
+- **HQ v3.32.7:** SEO Plane tab (nightly audit, self-healing: auto-discovers new sites + regression alerts), Money Plane, welcome strip, / palette keyboard nav, CSP fix (was blocking icons/metrics), clickable status chips, LN node chip redesign. v3.32.6 private-IP guard for LNbits proxy.
+- **Security headers 9/9 green** across all family repos (motopass/tadbuy/stranded/sherpa/openstrata/HQ fixed; openstrata real app discovered on main branch).
+- **Watchdogs:** satohash-logwatch (6h error sweep), backup-integrity-test (weekly, verified restores), header-parity-audit (weekly, 9/9).
+- **Fixed live bug:** /api/public/readiness was 500 (import path) — 207 errors/6h → fixed.
+- **Payment:** Cam's 6,865-sat test confirmed on-chain in LND. GiveABit 7,704 sats parked in LNbits until channels open (sweep later).
+
+**Still open (Cam-gated):** Sentry DSN, LN channels (~500k sats), paywall flip, Umbrel node, iPhone Safari test, Search Console (Tue reminder).
+
+**For Grok:** family-site X-Satohash-Client attribution + on-chain donate addresses (see docs/TIER3-4-PLAN.md §Handoff to Grok).
+
+---
+
 ## Session — 2026-08-20 (Kimi on THOR — security headers parity, 9/9)
 
 **Security headers sweep — ALL 9 SITES GREEN** (was 4-5 sites missing CSP/HSTS):
