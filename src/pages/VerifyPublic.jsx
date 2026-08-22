@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { Copy, Share2, Hash, ExternalLink, Download } from 'lucide-react'
+import { Copy, Share2, Hash, Download } from 'lucide-react'
 import { toast } from 'sonner'
 import { motion } from 'framer-motion'
 import { QRCodeSVG as QRCode } from 'qrcode.react'
@@ -16,6 +16,8 @@ import ProofStatusPill from '../components/stamps/ProofStatusPill'
 import EmptyState from '../components/ui/EmptyState'
 import ProofReceipt from '../components/stamps/ProofReceipt'
 import CalendarStrip from '../components/stamps/CalendarStrip'
+import VerifyYourselfCard from '../components/stamps/VerifyYourselfCard'
+import Tooltip from '../components/ui/Tooltip'
 import { downloadVerifiableCredential } from '../utils/verifiableCredential'
 import { shareProofLink } from '../utils/shareProof'
 import { exportProofBundle } from '../utils/proofPackage'
@@ -402,6 +404,10 @@ export default function VerifyPublic() {
                   style={{ color: 'var(--text-secondary)' }}
                 >
                   {t('verifyPublicPage.stamped')}
+                  <Tooltip
+                    title="When it was stamped"
+                    content="The moment your document's fingerprint was recorded and sent to OpenTimestamps. This is when you can prove the file already existed."
+                  />
                 </p>
                 <p className="mt-0.5 text-sm font-bold" style={{ color: 'var(--text-primary)' }}>
                   {proof.created_at ? new Date(proof.created_at).toLocaleDateString() : '—'}
@@ -414,6 +420,10 @@ export default function VerifyPublic() {
                     style={{ color: 'var(--text-secondary)' }}
                   >
                     {t('verifyPublicPage.bitcoinBlock')}
+                    <Tooltip
+                      title="Why a Bitcoin block?"
+                      content="Your fingerprint is folded into a public Bitcoin block. Blocks are permanent, tamper-evident, and anyone can check them for free — that's what makes the proof honest and independent."
+                    />
                   </p>
                   <p
                     className="mt-0.5 text-sm font-bold"
@@ -425,19 +435,8 @@ export default function VerifyPublic() {
               )}
             </div>
 
-            {/* mempool.space explorer link when confirmed */}
-            {proof.status === 'confirmed' && proof.bitcoin_block_height && (
-              <a
-                href={`https://mempool.space/block/${proof.bitcoin_block_height}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 pt-2 text-xs font-black tracking-widest uppercase transition-all hover:opacity-70"
-                style={{ color: 'var(--accent-active)' }}
-              >
-                <ExternalLink size={12} />
-                {t('verifyPublicPage.viewMempool')}
-              </a>
-            )}
+            {/* "Verify this yourself" — honesty-first glowing CTA */}
+            <VerifyYourselfCard blockHeight={proof.bitcoin_block_height} />
           </motion.div>
 
           {/* QR Code card */}

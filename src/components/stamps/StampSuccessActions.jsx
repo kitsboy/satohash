@@ -11,6 +11,7 @@ import ProofStatusPill from './ProofStatusPill'
 import CalendarStrip from './CalendarStrip'
 import ProofReceipt from './ProofReceipt'
 import StampBadgeEmbed from './StampBadgeEmbed'
+import VerifyYourselfCard from './VerifyYourselfCard'
 
 /**
  * Share sheet, QR, package export, status — used on Stamp inline success + /stamp/done
@@ -130,16 +131,7 @@ export default function StampSuccessActions({
       {!isConfirmed && proof?.status !== 'confirmed' && <CalendarStrip compact />}
 
       {(confirmedBlock || proof?.bitcoin_block_height) && (
-        <a
-          data-testid="block-explorer-link"
-          href={`https://mempool.space/block/${confirmedBlock || proof.bitcoin_block_height}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex min-h-[44px] items-center justify-center rounded-xl border text-xs font-black uppercase"
-          style={{ borderColor: 'var(--accent-success)', color: 'var(--accent-success)' }}
-        >
-          Bitcoin block {(confirmedBlock || proof.bitcoin_block_height).toLocaleString()} ↗
-        </a>
+        <VerifyYourselfCard blockHeight={confirmedBlock || proof.bitcoin_block_height} />
       )}
 
       <ProofReceipt proof={proof} />

@@ -9,6 +9,7 @@ import EmptyState from '../components/ui/EmptyState'
 import { findStampByHashOrId, localRecordToProof } from '../utils/vaultLocal'
 import { persistLastProof, readLastProof } from '../utils/lastProof'
 import LiveNodeChip from '../components/shared/LiveNodeChip'
+import Tooltip from '../components/ui/Tooltip'
 import events, { trackEvent } from '../utils/analytics'
 
 /**
@@ -161,9 +162,24 @@ export default function StampDone() {
         style={{ borderColor: 'var(--border)', background: 'var(--surface-raised)' }}
       >
         {[
-          { n: '1', t: 'Fingerprint', d: 'Hashed on this device' },
-          { n: '2', t: 'Calendars', d: 'OpenTimestamps pending' },
-          { n: '3', t: 'Bitcoin', d: confirmed ? 'Anchored' : 'Waiting on a block' }
+          {
+            n: '1',
+            t: 'Fingerprint',
+            d: 'Hashed on this device',
+            tip: 'A fingerprint (SHA-256) is a short, unique ID for your file, made on your own device. It never leaves your control as plain text.'
+          },
+          {
+            n: '2',
+            t: 'Calendars',
+            d: 'OpenTimestamps pending',
+            tip: 'Independent public calendars agree on the time. They are free and open — no account needed — so no single company controls your proof.'
+          },
+          {
+            n: '3',
+            t: 'Bitcoin',
+            d: confirmed ? 'Anchored' : 'Waiting on a block',
+            tip: 'Your fingerprint gets folded into a public Bitcoin block. Once there, it is permanent and anyone can check it forever — that is the final, tamper-evident seal.'
+          }
         ].map((s) => (
           <li key={s.n} className="min-w-0">
             <p
@@ -171,6 +187,7 @@ export default function StampDone() {
               style={{ color: 'var(--accent-gold)' }}
             >
               {s.n} · {s.t}
+              <Tooltip title={`Step ${s.n} — ${s.t}`} content={s.tip} />
             </p>
             <p className="mt-0.5 text-xs" style={{ color: 'var(--text-secondary)' }}>
               {s.d}

@@ -1,3 +1,5 @@
+import Tooltip from '../ui/Tooltip'
+
 const CALENDARS = [
   { id: 'alice', host: 'alice.btc.calendar.opentimestamps.org' },
   { id: 'bob', host: 'bob.btc.calendar.opentimestamps.org' },
@@ -17,6 +19,10 @@ export default function CalendarStrip({ compact = false }) {
         style={{ color: 'var(--text-secondary)' }}
       >
         OpenTimestamps calendars
+        <Tooltip
+          title="What are OTS calendars?"
+          content="Independent, free, open servers that timestamp your fingerprint so its time is agreed by more than one party. No account, no KYC — that is what keeps the proof honest."
+        />
       </p>
       <ul className={`mt-2 ${compact ? 'space-y-1' : 'space-y-1.5'}`}>
         {CALENDARS.map((c) => (
