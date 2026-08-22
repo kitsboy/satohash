@@ -1,0 +1,10 @@
+{
+  "source_url": "https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html",
+  "fetched_at": "2026-08-22T15:17:35Z",
+  "http_status": 200,
+  "content_type": "text/html; charset=utf-8",
+  "extraction_method": "watch_probe",
+  "verbatim_extracted_text": "EN\nEuropean Central Bank\nEuro foreign exchange reference rates\nThe reference rates are based on the regular daily concertation procedure between central banks across Europe\nUSD 1.0876",
+  "etag": "\"5f3e-6f2a-00\"",
+  "last_modified": "2026-08-22T07:00:00Z"
+}

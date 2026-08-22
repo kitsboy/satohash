@@ -1,0 +1,47 @@
+{
+  "schema": "gab.intel-sources.v1",
+  "watch": [
+    {
+      "id": "ecb-eur-usd",
+      "watch_probe": "https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html",
+      "fields": [
+        "EUR_USD_rate"
+      ],
+      "urls": [
+        {
+          "url": "https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html",
+          "last_hash": null,
+          "proof": null
+        }
+      ]
+    },
+    {
+      "id": "btc-price-json",
+      "watch_probe": "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd",
+      "fields": [
+        "BTC_USD_price"
+      ],
+      "urls": [
+        {
+          "url": "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd",
+          "last_hash": null,
+          "proof": null
+        }
+      ]
+    },
+    {
+      "id": "bitcoin-whitepaper-pdf",
+      "watch_probe": "https://bitcoin.org/bitcoin.pdf",
+      "fields": [
+        "whitepaper_sha256"
+      ],
+      "urls": [
+        {
+          "url": "https://bitcoin.org/bitcoin.pdf",
+          "last_hash": null,
+          "proof": null
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "schema": "gab.claims.v1",
+  "claims": [
+    {
+      "id": "sample-ecb-eur-usd",
+      "claim": "ECB Euro foreign exchange reference rate for USD (verbatim slice anchored via OTS)",
+      "confidence": "unverified_candidate",
+      "last_verified": "2026-08-22T00:00:00Z"
+    }
+  ]
+}
