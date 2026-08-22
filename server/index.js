@@ -66,6 +66,7 @@ import { register as registerIdentityRoutes } from './routes/identity.js'
 import { register as registerComplianceRoutes } from './routes/compliance.js'
 import { register as registerAiRoutes } from './routes/ai.js'
 import { register as registerPublicRoutes } from './routes/public.js'
+import { register as registerMotopassFeeRoutes } from './routes/motopass-fee.js'
 import { register as registerTemplatesRoutes } from './routes/templates.js'
 import { register as registerHealthRoutes } from './routes/health.js'
 import { register as registerMetricsRoutes } from './routes/metrics.js'
@@ -441,6 +442,7 @@ registerIdentityRoutes(app, routeDeps)
 registerComplianceRoutes(app, routeDeps)
 registerAiRoutes(app, routeDeps)
 registerPublicRoutes(app, routeDeps)
+registerMotopassFeeRoutes(app, routeDeps)
 registerTemplatesRoutes(app, routeDeps)
 registerHealthRoutes(app, routeDeps)
 registerMetricsRoutes(app, routeDeps)

@@ -127,3 +127,99 @@ export async function createStampPaymentOffer() {
     note: 'Set LNBITS_URL + LNBITS_INVOICE_KEY for real invoices before flipping REQUIRE_LIGHTNING=true'
   }
 }
+
+/* ────────────────────────────────────────────────────────────────
+ * MotoPass application-fee rail (commerce loop, 2026-08-22)
+ * Zero-knowledge: invoices are keyed ONLY by payment_hash. No name,
+ * no email, no account — the receipt is the hash + optional npub.
+ * Rail: motopass@api.satohash.io:8443 (LNbits wallet 'MotoPass Wallet').
+ * ──────────────────────────────────────────────────────────────── */
+
+export function motopassBaseUrl() {
+  return (process.env.MOTOPASS_LNBITS_URL || process.env.LNBITS_URL || '').replace(/\/$/, '')
+}
+
+export function motopassInvoiceKey() {
+  return process.env.MOTOPASS_LNBITS_INVOICE_KEY || ''
+}
+
+/** Application fee in sats (BTC-first). Configurable; default 128,247 sats (≈ $99 @ $77k). */
+export function motopassAppFeeSats() {
+  const v = parseInt(process.env.MOTOPASS_APP_FEE_SATS || '128247', 10)
+  return Number.isFinite(v) && v >= 1000 ? v : 128247
+}
+
+export function isMotopassRailConfigured() {
+  return Boolean(motopassBaseUrl() && motopassInvoiceKey())
+}
+
+/**
+ * Create a real BOLT11 invoice on the MotoPass LNbits wallet.
+ * Throws on backend failure (caller maps to 5xx). Returns payment_hash
+ * so the app can poll settlement without exposing the wallet key.
+ */
+export async function createMotopassApplicationInvoice(
+  amountSats,
+  memo = 'MotoPass application fee'
+) {
+  const url = `${motopassBaseUrl()}/api/v1/payments`
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Api-Key': motopassInvoiceKey()
+    },
+    body: JSON.stringify({
+      out: false,
+      amount: amountSats,
+      memo: memo.slice(0, 120),
+      unit: 'sat'
+    }),
+    signal: AbortSignal.timeout(10000)
+  })
+  if (!res.ok) {
+    const t = await res.text()
+    throw new Error(`MotoPass LNbits invoice failed: ${res.status} ${t.slice(0, 200)}`)
+  }
+  const data = await res.json()
+  const payment_request = data.payment_request || data.bolt11 || data.pay_req || data.paymentRequest
+  const payment_hash = data.payment_hash || data.checking_id || data.paymentHash
+  if (!payment_request || !payment_hash) {
+    throw new Error('MotoPass LNbits invoice missing payment_request/payment_hash')
+  }
+  return {
+    payment_request,
+    payment_hash,
+    amount_sats: amountSats,
+    memo,
+    provider: 'lnbits',
+    mock: false
+  }
+}
+
+/**
+ * Settlement check for a MotoPass application-fee invoice.
+ * Returns { paid, status, amount_msat }. Never throws — surfaces errors
+ * as { paid:false, status:'error', error } so the SPA can show honestly.
+ */
+export async function motopassInvoiceStatus(paymentHash) {
+  try {
+    const url = `${motopassBaseUrl()}/api/v1/payments/${encodeURIComponent(paymentHash)}`
+    const res = await fetch(url, {
+      headers: { 'X-Api-Key': motopassInvoiceKey() },
+      signal: AbortSignal.timeout(8000)
+    })
+    if (!res.ok) {
+      throw new Error(`LNbits status HTTP ${res.status}`)
+    }
+    const d = await res.json()
+    return {
+      paid: d.paid === true,
+      status: d.status || (d.paid === true ? 'paid' : 'pending'),
+      amount_msat: d.amount ?? d.details?.amount ?? null
+    }
+  } catch (e) {
+    logger.warn('motopass invoice status: %s', e.message)
+    return { paid: false, status: 'error', error: e.message, amount_msat: null }
+  }
+}
