@@ -184,6 +184,59 @@ function buildClientSegments(db) {
 }
 
 /**
+ * Per-client trust-pipeline hook: for each family offering, how many of its
+ * stamps are still `pending_stamp` (calendar-attested, NOT yet Bitcoin-anchored)
+ * vs `attested` (confirmed@block). This is Lenny's "pending_stamp vs attested"
+ * honesty KPI — the engine never blurs the two. A consumer with a deep pending
+ * queue is not yet live; that is surfaced, never hidden.
+ *
+ * One spine, N consumers: the reusable spine is what every offering calls, and
+ * this hook confirms per-offering that the spine is being used (rows exist) and
+ * how much of each offering's load is actually anchored vs waiting.
+ */
+function buildTrustByClient(db) {
+  const rows =
+    safeQuery(
+      db,
+      `SELECT COALESCE(NULLIF(trim(client_id), ''), 'public') AS cid,
+              status,
+              COUNT(*) AS n
+       FROM timestamps
+       GROUP BY cid, status`
+    ) || []
+
+  const byClient = new Map()
+  for (const r of rows) {
+    const key = String(r.cid).toLowerCase()
+    const bucket = byClient.get(key) || { pending_stamp: 0, attested: 0, failed: 0 }
+    if (r.status === 'confirmed') bucket.attested += Number(r.n) || 0
+    else if (r.status === 'failed') bucket.failed += Number(r.n) || 0
+    else bucket.pending_stamp += Number(r.n) || 0
+    byClient.set(key, bucket)
+  }
+
+  // Order by the canonical family list first, then any extras by volume.
+  const knownIds = FAMILY_CLIENTS.map((c) => c.id)
+  const ordered = []
+  for (const id of knownIds) {
+    const b = byClient.get(id)
+    if (b) ordered.push({ id, ...b })
+  }
+  for (const [cid, b] of byClient) {
+    if (!knownIds.includes(cid)) ordered.push({ id: cid, ...b })
+  }
+
+  return {
+    total: {
+      pending_stamp: ordered.reduce((s, r) => s + r.pending_stamp, 0),
+      attested: ordered.reduce((s, r) => s + r.attested, 0),
+      failed: ordered.reduce((s, r) => s + r.failed, 0)
+    },
+    by_client: ordered
+  }
+}
+
+/**
  * @param {import('better-sqlite3').Database} db
  * @param {{ version?: string, uptimeSec?: number }} [opts]
  */
@@ -226,6 +279,18 @@ export function buildMetricsPayload(db, opts = {}) {
     )?.n || 0
 
   const clientRows = buildClientSegments(db)
+  const trustByClient = buildTrustByClient(db)
+  const pendingAttested = trustByClient.total
+  const attestedRate =
+    pendingAttested.attested + pendingAttested.pending_stamp > 0
+      ? Number(
+          (
+            (pendingAttested.attested /
+              (pendingAttested.attested + pendingAttested.pending_stamp)) *
+            100
+          ).toFixed(1)
+        )
+      : 0
   const familyIds = new Set(
     FAMILY_CLIENTS.filter((c) => !['spa', 'cli', 'public', 'hq'].includes(c.id)).map((c) => c.id)
   )
@@ -403,6 +468,24 @@ export function buildMetricsPayload(db, opts = {}) {
         hint: 'Attributed to suite clients via X-Satohash-Client / client_id.'
       },
       {
+        key: 'pending_stamp_vs_attested',
+        label: 'Pending-stamp vs attested',
+        value: pendingAttested.attested,
+        unit: 'attested (of pending_stamp + attested)',
+        format: 'number',
+        priority: 2,
+        hint: `attested=${pendingAttested.attested} · pending_stamp=${pendingAttested.pending_stamp} · attested_rate=${attestedRate}% — honest depth: never blurs calendar-attested (pending) with Bitcoin-anchored (attested).`
+      },
+      {
+        key: 'attested_rate',
+        label: 'Attested rate',
+        value: attestedRate,
+        unit: '%',
+        format: 'percent',
+        priority: 2,
+        hint: 'attested / (attested + pending_stamp). A consumer stuck pending shows a low rate — surfaced, never hidden.'
+      },
+      {
         key: 'api_clients',
         label: 'Active API clients',
         value: distinctClients,
@@ -538,6 +621,18 @@ export function buildMetricsPayload(db, opts = {}) {
           },
           { id: 'failed', label: 'Failed', value: failed, meta: { offer: 'retry / investigate' } }
         ]
+      },
+      {
+        id: 'trust_pipeline',
+        label: 'Trust pipeline by client (pending_stamp vs attested)',
+        rows: trustByClient.by_client.map((r) => ({
+          id: r.id,
+          label: r.id,
+          value: r.attested,
+          meta: {
+            offer: `attested=${r.attested} · pending_stamp=${r.pending_stamp} · failed=${r.failed}`
+          }
+        }))
       }
     ],
     offers: [
