@@ -34,6 +34,13 @@ body {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+
+  body::before,
+  .animate-jewel-pulse,
+  .animate-glow,
+  .animate-breathing {
+    animation: none !important;
+  }
 }
 
 /* Inputs: 16px min on mobile avoids iOS zoom on focus */
@@ -51,7 +58,7 @@ body {
 @layer base {
   :root {
     /* cache-bust token so CF edge cannot keep a poisoned HTML-as-CSS object */
-    --satohash-css-build: 2026-07-29-css2;
+    --satohash-css-build: 2026-08-23-jewel;
 
     /* ── Mobile-first breakpoints (reference) ─────────────── */
     --bp-sm: 640px;
@@ -60,44 +67,54 @@ body {
     --bp-xl: 1280px;
     --touch-min: 44px;
 
-    /* ── Backgrounds ──────────────────────────────────────── */
-    --bg-primary: #141b25; /* Deep navy — breathable dark */
-    --bg-secondary: #1a2233; /* Nav/surface */
-    --surface-raised: #1e2a3a; /* Cards */
-    --surface-overlay: #223044; /* Modals/tooltips */
+    /* ── Jewel palette (Satohash identity = sky #38bdf8, family design-tokens) ── */
+    --jewel-sky: #38bdf8; /* Satohash identity accent · pipes · info */
+    --jewel-sky-glow: rgba(56, 189, 248, 0.35);
+    --jewel-sky-subtle: rgba(56, 189, 248, 0.1);
+    --jewel-cyan: #22d3ee; /* electric secondary */
+    --jewel-cyan-glow: rgba(34, 211, 238, 0.28);
+    --jewel-violet: #8b5cf6; /* Nostr / comms jewel */
+    --jewel-ice: #d4f0f8; /* glacier ink tint (design-tokens slate ink) */
+    --jewel-gold: #f0b429; /* Bitcoin gold CTA */
 
-    /* ── Typography ───────────────────────────────────────── */
-    --text-primary: #f1f5f9;
-    --text-secondary: #8892a4;
-    --text-muted: #4a5568;
+    /* ── Backgrounds (glacier jewel — deep cold blue-teal, never flat black) ── */
+    --bg-primary: #0e1c2a; /* deep glacier teal-navy — rich, not flat */
+    --bg-secondary: #12273a; /* nav/surface */
+    --surface-raised: #16304a; /* cards — jewel mid-tone */
+    --surface-overlay: #1c3a57; /* modals/tooltips */
+
+    /* ── Typography (ice-tinted, never pure white) ───────── */
+    --text-primary: #e8f4fb;
+    --text-secondary: #93a9bb;
+    --text-muted: #5d7287;
 
     /* ── Primary accent: Bitcoin Gold ────────────────────── */
     --accent-gold: #f0b429;
     --accent-gold-glow: rgba(240, 180, 41, 0.35);
     --accent-gold-subtle: rgba(240, 180, 41, 0.08);
 
-    /* ── Secondary accent: Teal ───────────────────────────── */
-    --accent-teal: #0ea5e9;
-    --accent-teal-glow: rgba(14, 165, 233, 0.35);
-    --accent-teal-subtle: rgba(14, 165, 233, 0.08);
+    /* ── Secondary accent: Sky (Satohash identity) ───────── */
+    --accent-teal: #38bdf8;
+    --accent-teal-glow: rgba(56, 189, 248, 0.35);
+    --accent-teal-subtle: rgba(56, 189, 248, 0.08);
 
     /* ── Semantic ─────────────────────────────────────────── */
-    --accent-success: #22d3a5;
-    --accent-danger: #f43f5e;
+    --accent-success: #34d399;
+    --accent-danger: #fb7185;
     --accent-warning: #f0b429;
     --accent-pending: #f0b429;
 
     /* ── Legacy compatibility aliases ────────────────────── */
     --primary: #f0b429;
-    --accent: #0ea5e9;
-    --accent-active: #0ea5e9;
-    --accent-active-glow: rgba(14, 165, 233, 0.35);
+    --accent: #38bdf8;
+    --accent-active: #38bdf8;
+    --accent-active-glow: rgba(56, 189, 248, 0.35);
     --accent-purple: #8b5cf6;
 
-    /* ── Borders ──────────────────────────────────────────── */
-    --border: rgba(255, 255, 255, 0.06);
-    --border-bright: rgba(255, 255, 255, 0.12);
-    --border-gold: rgba(240, 180, 41, 0.2);
+    /* ── Borders (tinted jewel, never pure white-alpha) ──── */
+    --border: rgba(148, 197, 255, 0.1);
+    --border-bright: rgba(148, 197, 255, 0.18);
+    --border-gold: rgba(240, 180, 41, 0.22);
 
     /* ── Radii ────────────────────────────────────────────── */
     --radius-pill: 9999px;
@@ -105,35 +122,36 @@ body {
     --radius-button: 0.875rem;
 
     /* ── Shadows ──────────────────────────────────────────── */
-    --shadow-noir: 0 20px 60px -15px rgba(0, 0, 0, 0.9);
+    --shadow-noir: 0 20px 60px -15px rgba(4, 14, 26, 0.9);
     --shadow-gold: 0 0 40px rgba(240, 180, 41, 0.15);
-    --shadow-elevated: 0 8px 32px rgba(0, 0, 0, 0.4);
+    --shadow-elevated: 0 8px 32px rgba(4, 14, 26, 0.55);
     --shadow-glow: 0 0 30px var(--accent-active-glow);
+    --shadow-sky: 0 0 34px var(--jewel-sky-glow);
 
     /* ── Component aliases ────────────────────────────────── */
     --bg-card: var(--surface-raised);
-    --bg-subtle: rgba(255, 255, 255, 0.03);
-    --bg-hover: rgba(255, 255, 255, 0.05);
+    --bg-subtle: rgba(148, 197, 255, 0.04);
+    --bg-hover: rgba(148, 197, 255, 0.08);
     --text-base: var(--text-primary);
     --text-faint: var(--text-muted);
     --warning: var(--accent-warning);
     --success: var(--accent-success);
     --danger: var(--accent-danger);
-    --bg-navbar: rgba(20, 27, 37, 0.85);
+    --bg-navbar: rgba(14, 28, 42, 0.85);
   }
 
   [data-theme='elite'] {
-    --bg-primary: #fcfcfc;
-    --bg-secondary: #f3f4f6;
-    --surface-raised: #ffffff;
-    --surface-overlay: #ffffff;
+    --bg-primary: #f6f1e8; /* warm parchment — never pure white */
+    --bg-secondary: #efe9dd;
+    --surface-raised: #fdfbf5;
+    --surface-overlay: #fdfbf5;
 
-    --text-primary: #050505;
-    --text-secondary: #4b5563;
-    --text-muted: #6b7280;
+    --text-primary: #2b2118; /* warm ink */
+    --text-secondary: #5b4f3d;
+    --text-muted: #8a7c66;
 
-    --border: rgba(0, 0, 0, 0.08);
-    --border-bright: rgba(0, 0, 0, 0.15);
+    --border: rgba(87, 66, 32, 0.1);
+    --border-bright: rgba(87, 66, 32, 0.18);
     --border-gold: rgba(217, 119, 6, 0.35);
 
     --accent-active: #d97706;
@@ -145,9 +163,10 @@ body {
     --accent-pending: #d97706;
     --accent-danger: #dc2626;
 
-    --bg-navbar: rgba(243, 244, 246, 0.85);
-    --shadow-noir: 0 4px 24px rgba(0, 0, 0, 0.08);
+    --bg-navbar: rgba(239, 233, 221, 0.85);
+    --shadow-noir: 0 4px 24px rgba(60, 40, 10, 0.1);
     --shadow-glow: 0 0 20px rgba(217, 119, 6, 0.15);
+    --shadow-sky: 0 0 20px rgba(217, 119, 6, 0.12);
 
     background-color: var(--bg-primary) !important;
   }
@@ -170,11 +189,29 @@ body {
   body {
     font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
     background-image:
-      radial-gradient(circle at 10% 20%, rgba(240, 180, 41, 0.04), transparent 45%),
-      radial-gradient(circle at 90% 80%, rgba(14, 165, 233, 0.05), transparent 45%);
+      radial-gradient(circle at 12% 18%, rgba(56, 189, 248, 0.07), transparent 42%),
+      radial-gradient(circle at 88% 12%, rgba(139, 92, 246, 0.05), transparent 38%),
+      radial-gradient(circle at 85% 85%, rgba(34, 211, 238, 0.06), transparent 45%),
+      radial-gradient(circle at 8% 88%, rgba(240, 180, 41, 0.04), transparent 40%);
     background-attachment: fixed;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Jewelled aurora mesh — slow drift behind content (honors reduced motion) */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: -20%;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      radial-gradient(38% 42% at 22% 28%, rgba(56, 189, 248, 0.1), transparent 70%),
+      radial-gradient(30% 36% at 78% 22%, rgba(139, 92, 246, 0.08), transparent 70%),
+      radial-gradient(34% 40% at 70% 82%, rgba(34, 211, 238, 0.09), transparent 70%),
+      radial-gradient(26% 30% at 16% 80%, rgba(240, 180, 41, 0.06), transparent 70%);
+    animation: auroraDrift 26s cubic-bezier(0.37, 0, 0.63, 1) infinite alternate;
+    will-change: transform, opacity;
   }
 
   body::after {
@@ -210,16 +247,21 @@ body {
 }
 
 @layer components {
-  /* ─── Primary Card ──────────────────────────────────── */
+  /* ─── Primary Card (jewel surface — never flat) ─────── */
   .glass-card {
     position: relative;
     overflow: hidden;
     border-radius: var(--radius-card);
-    background: var(--bg-card);
+    background: linear-gradient(
+      160deg,
+      color-mix(in srgb, var(--surface-raised) 88%, var(--accent-active)) 0%,
+      var(--surface-raised) 48%,
+      color-mix(in srgb, var(--surface-raised) 88%, var(--accent-gold)) 100%
+    );
     border: 1px solid var(--border);
     box-shadow:
-      0 4px 12px rgba(0, 0, 0, 0.3),
-      0 0 0 1px rgba(255, 255, 255, 0.03) inset;
+      0 4px 12px rgba(4, 14, 26, 0.3),
+      inset 0 1px 0 color-mix(in srgb, var(--accent-active) 12%, transparent);
     transition:
       transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
       opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
@@ -232,11 +274,24 @@ body {
   }
 
   .glass-card:hover {
-    border-color: rgba(240, 180, 41, 0.3);
+    border-color: color-mix(in srgb, var(--accent-active) 45%, var(--border));
     box-shadow:
-      0 0 0 1px rgba(240, 180, 41, 0.1),
-      var(--shadow-elevated);
+      0 0 0 1px color-mix(in srgb, var(--accent-active) 12%, transparent),
+      var(--shadow-elevated),
+      var(--shadow-sky);
     transform: translateY(-4px);
+  }
+
+  /* Jewelled top hairline — electric edge */
+  .glass-card::after {
+    content: '';
+    pointer-events: none;
+    position: absolute;
+    inset-x: 0;
+    top: 0;
+    height: 2px;
+    opacity: 0.85;
+    background: linear-gradient(90deg, var(--accent-active), var(--accent-gold));
   }
 
   /* Subtle grain overlay for texture */
@@ -742,8 +797,14 @@ body {
     padding: 2rem;
     text-align: center;
     border-radius: var(--radius-card);
-    background: var(--bg-card);
+    background: linear-gradient(
+      170deg,
+      color-mix(in srgb, var(--surface-raised) 88%, var(--accent-active)) 0%,
+      var(--surface-raised) 55%,
+      color-mix(in srgb, var(--surface-raised) 90%, var(--accent-gold)) 100%
+    );
     border: 1px solid var(--border);
+    box-shadow: inset 0 1px 0 color-mix(in srgb, var(--accent-active) 10%, transparent);
     transition:
       transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
       opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
@@ -757,8 +818,8 @@ body {
 
   .step-card:hover {
     transform: translateY(-4px);
-    box-shadow: var(--shadow-elevated);
-    border-color: var(--border-gold);
+    box-shadow: var(--shadow-elevated), var(--shadow-sky);
+    border-color: color-mix(in srgb, var(--accent-active) 40%, var(--border));
   }
 
   .step-number {
@@ -792,9 +853,15 @@ body {
   }
 
   .surface-card {
-    background: var(--surface-raised);
+    background: linear-gradient(
+      165deg,
+      color-mix(in srgb, var(--surface-raised) 90%, var(--accent-active)) 0%,
+      var(--surface-raised) 55%,
+      color-mix(in srgb, var(--surface-raised) 92%, var(--accent-gold)) 100%
+    );
     border: 1px solid var(--border);
     border-radius: var(--radius-card);
+    box-shadow: inset 0 1px 0 color-mix(in srgb, var(--accent-active) 10%, transparent);
   }
 
   .surface-card-hover {
@@ -821,10 +888,35 @@ body {
       0 0 60px rgba(240, 180, 41, 0.1);
   }
 
+  .glow-sky {
+    box-shadow:
+      0 0 20px var(--jewel-sky-glow),
+      0 0 60px var(--jewel-cyan-glow);
+  }
+
   .glow-teal {
     box-shadow:
-      0 0 20px rgba(14, 165, 233, 0.3),
-      0 0 60px rgba(14, 165, 233, 0.1);
+      0 0 20px var(--jewel-sky-glow),
+      0 0 60px var(--jewel-cyan-glow);
+  }
+
+  .sky-border {
+    border: 1px solid color-mix(in srgb, var(--accent-active) 35%, transparent);
+    box-shadow: 0 0 24px var(--jewel-sky-glow);
+  }
+
+  .jewel-edge {
+    position: relative;
+  }
+  .jewel-edge::before {
+    content: '';
+    pointer-events: none;
+    position: absolute;
+    inset-x: 0;
+    top: 0;
+    height: 2px;
+    border-radius: 9999px 9999px 0 0;
+    background: linear-gradient(90deg, var(--accent-active), var(--accent-gold));
   }
 }
 
@@ -836,11 +928,11 @@ body {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(240, 180, 41, 0.3);
+  background: color-mix(in srgb, var(--accent-active) 40%, transparent);
   border-radius: 99px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(240, 180, 41, 0.5);
+  background: color-mix(in srgb, var(--accent-active) 65%, transparent);
 }
 
 /* ─── Animations ─────────────────────────────────────────── */
@@ -933,6 +1025,31 @@ body {
   }
 }
 
+@keyframes auroraDrift {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translate3d(2%, -3%, 0) scale(1.06);
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(-3%, 2%, 0) scale(1.02);
+    opacity: 0.75;
+  }
+}
+
+@keyframes jewelPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 10px var(--jewel-sky-glow);
+  }
+  50% {
+    box-shadow: 0 0 26px var(--jewel-sky-glow);
+  }
+}
+
 .animate-breathing {
   animation: breathing 4s infinite ease-in-out;
 }
@@ -945,13 +1062,23 @@ body {
 .animate-glow {
   animation: glowPulse 3s infinite ease-in-out;
 }
+.animate-jewel-pulse {
+  animation: jewelPulse 3.2s infinite ease-in-out;
+}
 .animate-scan {
   animation: scanLine 3s linear infinite;
 }
 
 /* ─── Text Gradient ──────────────────────────────────────── */
 .text-gradient {
-  background: linear-gradient(135deg, #f0b429 0%, #0ea5e9 100%);
+  background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-active) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-sky {
+  background: linear-gradient(135deg, var(--jewel-sky) 0%, var(--jewel-cyan) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

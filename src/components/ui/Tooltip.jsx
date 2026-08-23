@@ -106,22 +106,26 @@ export default function Tooltip({ title, content, className = '' }) {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.96 }}
           transition={{ duration: 0.14, ease: 'easeOut' }}
-          className="fixed z-[7000] rounded-xl border border-[var(--border-bright)] bg-[var(--bg-secondary)] p-3.5 shadow-[var(--shadow-noir)]"
+          className="fixed z-[7000] rounded-xl border bg-[var(--bg-secondary)] p-3.5 shadow-[var(--shadow-noir)]"
           style={{
             top: pos.top,
             left: pos.left,
             width: pos.width,
-            maxWidth: 'calc(100vw - 24px)'
+            maxWidth: 'calc(100vw - 24px)',
+            borderColor: 'color-mix(in srgb, var(--accent-active) 30%, var(--border-bright))',
+            boxShadow:
+              'var(--shadow-noir), 0 0 24px var(--jewel-sky-glow), inset 0 1px 0 color-mix(in srgb, var(--accent-active) 12%, transparent)'
           }}
         >
           <span
             aria-hidden
-            className="absolute left-1/2 h-2 w-2 -translate-x-1/2 rotate-45 border border-[var(--border-bright)] bg-[var(--bg-secondary)]"
-            style={
-              pos.side === 'below'
+            className="absolute left-1/2 h-2 w-2 -translate-x-1/2 rotate-45 border bg-[var(--bg-secondary)]"
+            style={{
+              borderColor: 'color-mix(in srgb, var(--accent-active) 30%, var(--border-bright))',
+              ...(pos.side === 'below'
                 ? { top: -5, borderRight: 'none', borderBottom: 'none' }
-                : { bottom: -5, borderLeft: 'none', borderTop: 'none' }
-            }
+                : { bottom: -5, borderLeft: 'none', borderTop: 'none' })
+            }}
           />
           {title && (
             <p className="mb-1.5 text-[10px] font-black tracking-widest text-[var(--accent-gold)] uppercase">

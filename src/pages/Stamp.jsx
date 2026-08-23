@@ -1046,7 +1046,14 @@ export default function Stamp() {
           </div>
         )}
       {/* ── 3-Step Flow Banner ── */}
-      <div className="mb-8 grid grid-cols-1 gap-0 overflow-hidden rounded-2xl border border-[var(--border)] sm:grid-cols-3">
+      <div
+        className="jewel-edge mb-8 grid grid-cols-1 gap-0 overflow-hidden rounded-2xl border sm:grid-cols-3"
+        style={{
+          borderColor: 'var(--border)',
+          background:
+            'linear-gradient(165deg, color-mix(in srgb, var(--accent-active) 6%, var(--bg-secondary)) 0%, var(--bg-secondary) 60%, color-mix(in srgb, var(--accent-gold) 5%, var(--bg-secondary)) 100%)'
+        }}
+      >
         {[
           {
             n: '1',

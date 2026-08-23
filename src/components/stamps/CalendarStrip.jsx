@@ -12,11 +12,15 @@ export default function CalendarStrip({ compact = false }) {
     <div
       data-testid="calendar-strip"
       className="rounded-xl border p-3"
-      style={{ borderColor: 'var(--border)', background: 'var(--bg-primary)' }}
+      style={{
+        borderColor: 'color-mix(in srgb, var(--accent-active) 28%, var(--border))',
+        background:
+          'linear-gradient(165deg, color-mix(in srgb, var(--accent-active) 7%, var(--bg-primary)) 0%, var(--bg-primary) 70%, color-mix(in srgb, var(--accent-gold) 4%, var(--bg-primary)) 100%)'
+      }}
     >
       <p
         className="text-[9px] font-black tracking-widest uppercase"
-        style={{ color: 'var(--text-secondary)' }}
+        style={{ color: 'var(--accent-active)' }}
       >
         OpenTimestamps calendars
         <Tooltip

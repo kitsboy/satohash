@@ -29,10 +29,10 @@ export default function VerifyYourselfCard({
       className="verify-yourself-card relative overflow-hidden rounded-2xl p-5 transition-all duration-300 hover:-translate-y-0.5"
       style={{
         background:
-          'linear-gradient(135deg, var(--surface-raised) 0%, color-mix(in srgb, var(--accent-active) 7%, transparent) 100%)',
+          'linear-gradient(135deg, var(--surface-raised) 0%, color-mix(in srgb, var(--accent-active) 8%, transparent) 100%)',
         border: '1px solid var(--accent-active)',
         boxShadow:
-          '0 0 0 1px rgba(14,165,233,0.06), 0 16px 44px -20px var(--accent-active-glow, rgba(14,165,233,0.5))'
+          '0 0 0 1px color-mix(in srgb, var(--accent-active) 10%, transparent), 0 16px 44px -20px var(--accent-active-glow, var(--jewel-sky-glow))'
       }}
     >
       {/* accent hairline — jewel-tone edge */}

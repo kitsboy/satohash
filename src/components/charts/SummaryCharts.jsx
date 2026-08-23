@@ -24,13 +24,15 @@ function ChartTooltip({ active, payload, label }) {
     <div
       className="rounded-lg border px-3 py-2 text-xs shadow-xl"
       style={{
-        background: 'var(--surface-raised)',
-        borderColor: 'var(--border)',
-        color: 'var(--text-primary)'
+        background:
+          'linear-gradient(165deg, color-mix(in srgb, var(--accent-active) 10%, var(--surface-overlay)) 0%, var(--surface-overlay) 60%, color-mix(in srgb, var(--accent-gold) 6%, var(--surface-overlay)) 100%)',
+        borderColor: 'color-mix(in srgb, var(--accent-active) 40%, var(--border))',
+        color: 'var(--text-primary)',
+        boxShadow: 'var(--shadow-noir), 0 0 22px var(--jewel-sky-glow)'
       }}
     >
       <p className="font-bold">{label || payload[0]?.name}</p>
-      <p style={{ color: 'var(--accent-gold)' }}>
+      <p className="text-gradient-sky font-black">
         {payload[0]?.value}
         {payload[0]?.payload?.days != null ? ' days' : payload[0]?.name ? '%' : ''}
       </p>

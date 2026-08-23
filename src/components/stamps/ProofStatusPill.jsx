@@ -19,11 +19,19 @@ export default function ProofStatusPill({
         role="status"
         className={`flex flex-col items-center gap-2 rounded-2xl px-5 py-5 text-center ${className}`}
         style={{
-          background: 'rgba(34,211,165,0.1)',
-          border: '1.5px solid rgba(34,211,165,0.35)'
+          background:
+            'linear-gradient(165deg, color-mix(in srgb, var(--accent-success) 16%, var(--surface-raised)) 0%, var(--surface-raised) 60%, color-mix(in srgb, var(--accent-success) 6%, var(--surface-raised)) 100%)',
+          border: '1.5px solid color-mix(in srgb, var(--accent-success) 45%, transparent)',
+          boxShadow:
+            '0 0 30px color-mix(in srgb, var(--accent-success) 18%, transparent), inset 0 1px 0 color-mix(in srgb, var(--accent-success) 16%, transparent)'
         }}
       >
-        <CheckCircle size={28} style={{ color: 'var(--accent-success)' }} aria-hidden />
+        <CheckCircle
+          size={28}
+          className="animate-jewel-pulse"
+          style={{ color: 'var(--accent-success)' }}
+          aria-hidden
+        />
         <p
           className="text-lg font-black tracking-tight uppercase"
           style={{ color: 'var(--accent-success)' }}
@@ -45,8 +53,11 @@ export default function ProofStatusPill({
         role="status"
         className={`flex flex-col items-center gap-2 rounded-2xl px-5 py-5 text-center ${className}`}
         style={{
-          background: 'rgba(239,68,68,0.1)',
-          border: '1.5px solid rgba(239,68,68,0.35)'
+          background:
+            'linear-gradient(165deg, color-mix(in srgb, var(--accent-danger) 14%, var(--surface-raised)) 0%, var(--surface-raised) 60%, transparent 100%)',
+          border: '1.5px solid color-mix(in srgb, var(--accent-danger) 42%, transparent)',
+          boxShadow:
+            '0 0 26px color-mix(in srgb, var(--accent-danger) 14%, transparent), inset 0 1px 0 color-mix(in srgb, var(--accent-danger) 12%, transparent)'
         }}
       >
         <AlertTriangle size={28} style={{ color: 'var(--accent-danger)' }} aria-hidden />
@@ -68,8 +79,11 @@ export default function ProofStatusPill({
       role="status"
       className={`flex flex-col items-center gap-2 rounded-2xl px-5 py-5 text-center ${className}`}
       style={{
-        background: 'rgba(240,180,41,0.1)',
-        border: '1.5px solid rgba(240,180,41,0.35)'
+        background:
+          'linear-gradient(165deg, color-mix(in srgb, var(--accent-gold) 12%, var(--surface-raised)) 0%, var(--surface-raised) 60%, color-mix(in srgb, var(--accent-active) 6%, var(--surface-raised)) 100%)',
+        border: '1.5px solid color-mix(in srgb, var(--accent-gold) 45%, transparent)',
+        boxShadow:
+          '0 0 26px color-mix(in srgb, var(--accent-gold) 16%, transparent), inset 0 1px 0 color-mix(in srgb, var(--accent-gold) 14%, transparent)'
       }}
     >
       <Activity

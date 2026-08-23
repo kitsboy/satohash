@@ -59,7 +59,7 @@ export default function GlobalDropzone({ onFileProcessed }) {
           particleCount: 150,
           spread: 100,
           origin: { y: 0.8 },
-          colors: ['#3b82f6', '#6366f1', '#22d3a5']
+          colors: ['#38bdf8', '#22d3ee', '#8b5cf6', '#f0b429']
         })
         if (onFileProcessed) onFileProcessed(file)
       }, 2800)
@@ -107,13 +107,24 @@ export default function GlobalDropzone({ onFileProcessed }) {
             'group w-full rounded-2xl border-2 border-dashed px-6 py-8 text-center transition-all duration-200',
             isDragActive || dragActive
               ? 'border-[var(--accent-active)] bg-[var(--accent-active)]/5'
-              : 'border-[var(--border)] bg-[var(--bg-primary)] hover:border-[var(--border-bright)] hover:bg-[var(--surface-raised)]'
+              : 'border-[var(--border)] bg-[var(--bg-primary)] hover:bg-[var(--surface-raised)]'
           )}
+          style={
+            isDragActive || dragActive
+              ? { boxShadow: '0 0 34px var(--jewel-sky-glow)' }
+              : {
+                  borderColor: 'color-mix(in srgb, var(--accent-active) 30%, var(--border))',
+                  transition: 'border-color .3s ease, box-shadow .3s ease'
+                }
+          }
         >
           <UploadCloud
             size={28}
             className="mx-auto mb-3 transition-transform group-hover:scale-110"
-            style={{ color: isDarkVault ? '#f43f5e' : 'var(--accent-active)' }}
+            style={{
+              color: isDarkVault ? '#fb7185' : 'var(--accent-active)',
+              filter: 'drop-shadow(0 0 10px var(--jewel-sky-glow))'
+            }}
           />
           <p
             className="mb-1 text-sm font-black tracking-wide uppercase"
@@ -192,13 +203,15 @@ export default function GlobalDropzone({ onFileProcessed }) {
               <motion.div
                 animate={{ scale: [1, 1.05, 1], rotate: [0, 3, -3, 0] }}
                 transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-                className="mx-auto mb-10 flex h-40 w-40 items-center justify-center rounded-[2.5rem] shadow-[0_0_80px_rgba(59,130,246,0.25)]"
+                className="mx-auto mb-10 flex h-40 w-40 items-center justify-center rounded-[2.5rem]"
                 style={{
-                  border: '1px solid rgba(255,255,255,0.06)',
-                  background: 'rgba(59,130,246,0.12)'
+                  border: '1px solid color-mix(in srgb, var(--accent-active) 35%, transparent)',
+                  background:
+                    'linear-gradient(165deg, color-mix(in srgb, var(--accent-active) 22%, transparent), transparent)',
+                  boxShadow: '0 0 80px var(--jewel-sky-glow)'
                 }}
               >
-                <UploadCloud size={52} className="text-white" />
+                <UploadCloud size={52} style={{ color: 'var(--jewel-ice)' }} />
               </motion.div>
               <h2 className="mb-4 text-5xl font-black tracking-tighter text-white uppercase italic">
                 Release to Anchor
@@ -241,9 +254,8 @@ export default function GlobalDropzone({ onFileProcessed }) {
                   <div
                     className="mb-3 rounded-full px-3 py-1 text-[10px] font-black tracking-[0.2em] uppercase italic"
                     style={{
-                      background: 'var(--accent-active)/20',
                       color: 'var(--accent-active)',
-                      backgroundColor: 'rgba(59,130,246,0.15)'
+                      backgroundColor: 'color-mix(in srgb, var(--accent-active) 16%, transparent)'
                     }}
                   >
                     {fileData?.intent} Active
@@ -258,7 +270,8 @@ export default function GlobalDropzone({ onFileProcessed }) {
                 <motion.div
                   className="absolute inset-0 rounded-full"
                   style={{
-                    background: 'linear-gradient(to right, var(--accent-active), #6366f1, #22d3a5)'
+                    background:
+                      'linear-gradient(to right, var(--accent-active), var(--jewel-cyan), var(--accent-gold))'
                   }}
                   initial={{ x: '-100%' }}
                   animate={{ x: '0%' }}

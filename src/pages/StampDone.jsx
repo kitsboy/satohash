@@ -135,18 +135,26 @@ export default function StampDone() {
         <div
           className="mx-auto flex h-16 w-16 items-center justify-center rounded-full"
           style={{
-            background: confirmed ? 'rgba(34,211,165,0.12)' : 'rgba(240,180,41,0.12)',
-            border: `2px solid ${confirmed ? 'var(--accent-success)' : 'var(--accent-gold)'}`
+            background: confirmed
+              ? 'linear-gradient(165deg, color-mix(in srgb, var(--accent-success) 26%, var(--surface-raised)), var(--surface-raised))'
+              : 'linear-gradient(165deg, color-mix(in srgb, var(--accent-gold) 26%, var(--surface-raised)), color-mix(in srgb, var(--accent-active) 12%, var(--surface-raised)))',
+            border: `2px solid ${confirmed ? 'var(--accent-success)' : 'var(--accent-gold)'}`,
+            boxShadow: confirmed
+              ? '0 0 34px color-mix(in srgb, var(--accent-success) 28%, transparent)'
+              : '0 0 34px color-mix(in srgb, var(--accent-gold) 24%, transparent), 0 0 60px color-mix(in srgb, var(--accent-active) 16%, transparent)'
           }}
         >
           <CheckCircle
             size={32}
+            className={confirmed ? 'animate-jewel-pulse' : undefined}
             style={{ color: confirmed ? 'var(--accent-success)' : 'var(--accent-gold)' }}
           />
         </div>
         <h1
-          className="text-2xl font-black tracking-tight uppercase"
-          style={{ color: 'var(--text-primary)' }}
+          className={`text-2xl font-black tracking-tight uppercase ${
+            confirmed ? '' : 'text-gradient'
+          }`}
+          style={confirmed ? { color: 'var(--text-primary)' } : undefined}
         >
           {confirmed ? 'Proof confirmed' : 'Stamp received'}
         </h1>
@@ -158,8 +166,12 @@ export default function StampDone() {
       </header>
 
       <ol
-        className="vault-ring grid grid-cols-1 gap-2 rounded-2xl border p-4 text-left sm:grid-cols-3"
-        style={{ borderColor: 'var(--border)', background: 'var(--surface-raised)' }}
+        className="jewel-edge vault-ring grid grid-cols-1 gap-2 rounded-2xl border p-4 text-left sm:grid-cols-3"
+        style={{
+          borderColor: 'var(--border)',
+          background:
+            'linear-gradient(165deg, color-mix(in srgb, var(--accent-active) 7%, var(--surface-raised)) 0%, var(--surface-raised) 60%, color-mix(in srgb, var(--accent-gold) 6%, var(--surface-raised)) 100%)'
+        }}
       >
         {[
           {

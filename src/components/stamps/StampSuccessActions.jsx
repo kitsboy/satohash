@@ -96,15 +96,20 @@ export default function StampSuccessActions({
       {showQr && shareUrl && (
         <div
           className="flex flex-col items-center gap-3 rounded-2xl border p-5"
-          style={{ borderColor: 'var(--border)', background: 'var(--surface-raised)' }}
+          style={{
+            borderColor: 'color-mix(in srgb, var(--accent-active) 35%, var(--border))',
+            background:
+              'linear-gradient(165deg, color-mix(in srgb, var(--accent-active) 8%, var(--surface-raised)) 0%, var(--surface-raised) 60%, color-mix(in srgb, var(--accent-gold) 5%, var(--surface-raised)) 100%)',
+            boxShadow: '0 0 28px var(--jewel-sky-glow)'
+          }}
         >
           <p
             className="text-[10px] font-black tracking-widest uppercase"
-            style={{ color: 'var(--text-secondary)' }}
+            style={{ color: 'var(--accent-active)' }}
           >
             Scan to verify
           </p>
-          <div className="rounded-xl bg-white p-3">
+          <div className="rounded-xl bg-white p-3 shadow-[0_0_24px_rgba(56,189,248,0.25)]">
             <QRCode value={shareUrl} size={168} level="M" includeMargin={false} />
           </div>
           <button
@@ -178,7 +183,7 @@ export default function StampSuccessActions({
             <a
               href={`${getApiUrl()}/api/stamps/${proof.id}?download=true`}
               className="flex min-h-[48px] items-center justify-center gap-2 rounded-xl text-xs font-black tracking-wider uppercase"
-              style={{ background: 'var(--accent-active)', color: '#fff' }}
+              style={{ background: 'var(--accent-active)', color: '#041016' }}
             >
               <Download size={16} /> .ots
             </a>
@@ -237,7 +242,7 @@ export default function StampSuccessActions({
           style={{
             borderColor: 'var(--accent-active)',
             color: 'var(--accent-active)',
-            background: 'rgba(59,130,246,0.06)'
+            background: 'color-mix(in srgb, var(--accent-active) 8%, transparent)'
           }}
         >
           <Vault size={14} /> Vault
