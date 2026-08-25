@@ -15,6 +15,7 @@ import ProofTimeline from '../components/stamps/ProofTimeline'
 import ProofStatusPill from '../components/stamps/ProofStatusPill'
 import EmptyState from '../components/ui/EmptyState'
 import ProofReceipt from '../components/stamps/ProofReceipt'
+import DonationReceiptShare from '../components/stamps/DonationReceiptShare'
 import CalendarStrip from '../components/stamps/CalendarStrip'
 import VerifyYourselfCard from '../components/stamps/VerifyYourselfCard'
 import Tooltip from '../components/ui/Tooltip'
@@ -276,6 +277,10 @@ export default function VerifyPublic() {
             upgradeStatus={proof.status}
           />
           <ProofReceipt proof={proof} />
+          <DonationReceiptShare
+            proof={proof}
+            isDonation={proof?.client_id === 'donations' || proof?.source === 'donations'}
+          />
           {proof.status !== 'confirmed' && <CalendarStrip compact />}
           <div className="grid grid-cols-2 gap-3">
             <button
