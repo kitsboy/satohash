@@ -110,6 +110,28 @@ db.exec(`
   );
 `)
 
+// Donation → receipt → OTS pipeline (Ziggy 2026-08-25, Giving Week critical path)
+db.exec(`
+  CREATE TABLE IF NOT EXISTS donations (
+    receipt_id TEXT PRIMARY KEY,
+    payment_hash TEXT UNIQUE NOT NULL,
+    amount_msat INTEGER,
+    amount_sats INTEGER,
+    donor_comment TEXT,
+    donor_lud16 TEXT,
+    paylink_id TEXT,
+    receipt_json TEXT,
+    receipt_hash TEXT,
+    receipt_pdf BLOB,
+    timestamp_id TEXT,
+    status TEXT DEFAULT 'pending',
+    received_at DATETIME DEFAULT (datetime('now')),
+    UNIQUE(timestamp_id)
+  );
+  CREATE INDEX IF NOT EXISTS idx_donations_received ON donations(received_at DESC);
+  CREATE INDEX IF NOT EXISTS idx_donations_hash ON donations(payment_hash);
+`)
+
 logger.info(`🗄️ Database initialized at ${dbPath}`)
 
 export default db

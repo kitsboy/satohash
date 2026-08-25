@@ -77,6 +77,7 @@ import { register as registerOgRoutes } from './routes/og.js'
 import { register as registerSearchRoutes } from './routes/search.js'
 import { register as registerPushRoutes } from './routes/push.js'
 import { register as registerWebhooksRoutes } from './routes/webhooks.js'
+import { register as registerDonationsRoutes } from './routes/donations.js'
 import { register as registerMeshRoutes } from './routes/mesh.js'
 import { register as registerSystemRoutes } from './routes/system.js'
 import { register as registerStatsRoutes } from './routes/stats.js'
@@ -453,6 +454,7 @@ registerOgRoutes(app, routeDeps)
 registerSearchRoutes(app, routeDeps)
 registerPushRoutes(app, routeDeps)
 registerWebhooksRoutes(app, routeDeps)
+registerDonationsRoutes(app, routeDeps)
 registerMeshRoutes(app, routeDeps)
 registerSystemRoutes(app, routeDeps)
 registerStatsRoutes(app, routeDeps)
