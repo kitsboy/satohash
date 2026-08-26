@@ -124,7 +124,7 @@ This dashboard shows real-time and historical uptime for all major OTS calendars
 
 ## Further Reading
 
-- [OpenTimestamps specification](https://github.com/opentimestamps/opentimestamps-spec)
+- [OpenTimestamps specification](https://opentimestamps.org/)
 - [Peter Todd's original blog post](https://petertodd.org/2016/opentimestamps-announcement)
 - [opentimestamps npm package](https://www.npmjs.com/package/javascript-opentimestamps)
 - [OTS Python client](https://github.com/opentimestamps/opentimestamps-client)

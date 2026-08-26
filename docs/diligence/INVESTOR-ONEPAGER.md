@@ -61,7 +61,7 @@ Protocol collaborators, legal design partners, Lightning volume integrations.
 - [Architecture one-pager](./ARCHITECTURE-ONEPAGER.md)
 - [Ask sheet](./ASK-SHEET.md)
 - [Pack index](./README.md)
-- Portfolio: [Family of 8](https://github.com/kitsboy/giveabit/blob/main/docs/diligence/PORTFOLIO-FAMILY-OF-8.md)
+- Portfolio: [Family of 8](https://giveabit.io/family)
 
 ---
 **Safe Harbour:** Educational / informational only. Not financial, legal, or investment advice.

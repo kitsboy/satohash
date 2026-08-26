@@ -23,7 +23,7 @@ export default function GiveABitBadge({ className = '' }) {
         MotoPass
       </a>
       <a
-        href="https://github.com/kitsboy/giveabit"
+        href="https://giveabit.io/family"
         target="_blank"
         rel="noopener noreferrer"
         className="underline"

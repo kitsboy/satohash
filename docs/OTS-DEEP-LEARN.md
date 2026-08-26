@@ -345,7 +345,7 @@ Before coding OTS-related features, confirm you understand:
 ## Source
 
 - **DGI step-by-step tutorial:** https://www.dgi.io/ots-tutorial/
-- **OpenTimestamps spec:** https://github.com/opentimestamps/opentimestamps-spec
+- **OpenTimestamps spec:** https://opentimestamps.org/
 - **Peter Todd announcement:** https://petertodd.org/2016/opentimestamps-announcement
 - **Calendar uptime:** https://uptime.opentimestamps.net
 

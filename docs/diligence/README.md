@@ -21,7 +21,7 @@ tags: [diligence, pitch, mvp, giveabit]
 | [INVESTOR-ONEPAGER.md](./INVESTOR-ONEPAGER.md) | Partners / capital / grants | 1-page full disclosure |
 | [ARCHITECTURE-ONEPAGER.md](./ARCHITECTURE-ONEPAGER.md) | Engineers | Stack, map, deploy, MVP boundary |
 | [ASK-SHEET.md](./ASK-SHEET.md) | Any conversation | What we want / offer |
-| Portfolio | Everyone | [Family of 8](https://github.com/kitsboy/giveabit/blob/main/docs/diligence/PORTFOLIO-FAMILY-OF-8.md) |
+| Portfolio | Everyone | [Family of 8](https://giveabit.io/family) |
 
 ## Self-evolution rules (agents + humans)
 1. Material product/stack/deploy/traction change → update Investor + Architecture pages same change-set.
