@@ -9,7 +9,7 @@ import usePageMeta from '../hooks/usePageMeta'
 const CUTS = {
   full: {
     id: 'full',
-    src: '/media/video/satohash-explainer-with-vo2.mp4?v=kimi-noir-20260819',
+    src: 'https://videos.giveabit.io/media/video/satohash-explainer-with-vo2.mp4?v=kimi-noir-20260819',
     file: 'satohash-explainer-with-vo2.mp4',
     seconds: 84,
     label: '~84s',
@@ -18,7 +18,7 @@ const CUTS = {
   },
   short: {
     id: 'short',
-    src: '/media/video/satohash-explainer-with-vo.mp4?v=10s-kimi-20260804',
+    src: 'https://videos.giveabit.io/media/video/satohash-explainer-with-vo.mp4?v=10s-kimi-20260804',
     file: 'satohash-explainer-with-vo.mp4',
     seconds: 10,
     label: '10s',
