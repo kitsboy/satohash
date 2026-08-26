@@ -129,11 +129,13 @@ export function register(app, deps) {
 
       let otsBinary
       try {
-        // Explicitly use the three free public OTS calendars (alice, bob, finney)
+        // Use the working public OTS aggregator pools. Direct alice/bob/finney
+        // submission returns 0 attestations; the pools aggregate up to them and
+        // return real pending attestations in <2s. See server/lib/ots-helpers.js.
         const calendarUrls = [
-          'https://alice.btc.calendar.opentimestamps.org',
-          'https://bob.btc.calendar.opentimestamps.org',
-          'https://finney.calendar.eternitywall.com'
+          'https://a.pool.opentimestamps.org',
+          'https://b.pool.opentimestamps.org',
+          'https://a.pool.eternitywall.com'
         ]
         await stampWithTimeout(detached, calendarUrls, 30000)
         otsBinary = detached.serializeToBytes()
