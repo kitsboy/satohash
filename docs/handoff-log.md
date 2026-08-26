@@ -1,3 +1,14 @@
+## 2026-08-26 (Grok THOR — family suite pitch line + agents hub)
+
+**From:** Grok 4.6 THOR · **To:** next agent · **Status:** one marketing sentence only; no product-code.
+
+**Done:**
+- `docs/marketing/PITCH.md` — added family pitch: prove a file existed / never show the file / civic notary / link to https://agents.giveabit.io/#suite
+- Suite + hardcore footer live on agents.giveabit.io (separate here.now site). Satohash card: glacier/sky icon, Stamp free + /pitch.
+
+**Not done:** no Satohash SPA/UI change this session. Do not run `docs:sync` blindly or it may wipe the family-pitch line unless that line is added to the generator.
+
+---
 ## 2026-08-25 (Kimi THOR — /goodbye · donation pipeline hardened + share-to-socials receipt)
 
 **From:** Kimi THOR · **To:** next agent · **Status:** donation→receipt→OTS pipeline BUILT + security-hardened + share UI live. NOT announced publicly (Cam keeping tweaks; Giving Week held).

@@ -1,9 +1,11 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 258) · **Updated:** 2026-08-20
+> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 280) · **Updated:** 2026-08-26
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Satohash: The Sovereign Provenance Mesh
 ### Bitcoin APPS F.O.S.S. — Engineered by Give A Bit
+
+**Family pitch (2026-08-26):** Prove a file existed. Never show the file. Bitcoin as a civic notary — .ots receipts that outlive any company. Lives in the Give A Bit suite: https://agents.giveabit.io/#suite
 
 **Status (August 2026):** Live at **https://satohash.io**. Version **5.0.0-ELITE**. Stamps are **free** (`REQUIRE_LIGHTNING=false`). Own pruned bitcoind is at tip. Lightning / L402 is **built but not charged**. Proofs stay Bitcoin + OpenTimestamps.
 

@@ -1,13 +1,13 @@
-# satohash — Handoff 2026-08-26 (Hermes/Kimi, end of session)
+# satohash — Handoff 2026-08-26 (Grok THOR · family suite)
 
-**Brief:** Video offload to R2 done + live, and the verification sweep's dead-github-links fix landed. Bitcoin L1+L2 verified green.
+**Brief:** Family-pitch one-liner added to marketing PITCH. No SPA/API change. Suite card live on agents.giveabit.io.
 
 ## What landed
-- **Video offload → R2** (t_c16aa991, commit 37ec778): /watch explainer films (vo2 + vo) moved off the bundle → R2 bucket `giveabit-videos`, served at https://videos.giveabit.io. Verified HTTP 206 + byte-range. Commit already on origin/main.
-- **Dead github links fixed** (t_ca0c3f14): kitsboy/giveabit + opentimestamps-spec links pointed at wrong/missing targets → corrected.
-- **L1/L2 verify** (t_0acd7659): OTS/on-chain API surface all green (164 stamps, block 964178, mempool fees, proof-package w/ bitcoin_block_height). One POST /api/stamp endpoint flagged for follow-up.
+- `docs/marketing/PITCH.md` — civic-notary family pitch + https://agents.giveabit.io/#suite
+- agents hub Satohash card: “Prove a file existed. Never show the file.” → stamp + /pitch
 
-## Notes
-- REQUIRES_LIGHTNING=false stays (free stamps, family tier). SPA must call https://api.satohash.io (never same-origin on CF Pages).
-- Repo is THOR-side at /root/satohash (has its own .git) — note /root/ref/satohash also exists as a checkout reference.
-- See /root/hq/docs/KIMI-HANDOFF.md + FIXES-LOG.md for the full session.
+## Unchanged
+- Free stamps (`REQUIRE_LIGHTNING=false`). SPA → https://api.satohash.io
+- Video offload / dead-link fixes from earlier today still stand.
+
+See HQ `docs/KIMI-HANDOFF.md` top + `docs/handoff-log.md`.
