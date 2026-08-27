@@ -258,7 +258,7 @@ const secondary = {
     title: 'Support Satohash — Lightning & Bitcoin',
     desc: 'Support Satohash with a Lightning tip or on-chain Bitcoin. Stamps stay free — tips fund the free public stamping tier.',
     body: `<h1>Support Satohash</h1>
-<p>Your tips keep the free public stamping tier running. Lightning: satohash@api.satohash.io:8443. On-chain: native SegWit (LND wallet, backed by offline seed backup).</p>
+<p>Your tips keep the free public stamping tier running. Lightning: satohash@breez.tips. On-chain: Breez deposit (non-custodial, backed by family seed).</p>
 <p><a href="${SITE}/donate">Donate</a></p>`
   },
   network: {

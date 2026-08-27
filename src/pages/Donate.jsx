@@ -6,9 +6,9 @@ import { Zap, Copy, Check, ExternalLink, Shield, Lock, ArrowLeft } from 'lucide-
 import usePageMeta from '../hooks/usePageMeta'
 import Footer from '../components/layout/Footer'
 
-const LNURL = 'https://api.satohash.io:8443/.well-known/lnurlp/satohash'
-const LUD16 = 'satohash@api.satohash.io:8443'
-const ONCHAIN = 'bc1qkrlg6ssme0ztgynr2us846mtlde0r33ly7kdmc'
+const LNURL = 'https://breez.tips/lnurlp/satohash'
+const LUD16 = 'satohash@breez.tips'
+const ONCHAIN = 'bc1p25zw4rh6s6fjqzxe8yzkpj4klf59v5yyzc4nqf0x6d3twu8qvq9qurdlsr'
 const EXPLORER = `https://mempool.space/address/${ONCHAIN}`
 
 function CopyField({ label, value, mono = true }) {
@@ -92,8 +92,9 @@ export default function Donate() {
             <CopyField label="Lightning address" value={LUD16} />
             <p className="mt-3 text-xs leading-relaxed text-[var(--text-muted)]">
               Scan the QR with any Lightning wallet (Phoenix, Wallet of Satoshi, Alby, Zeus…), or
-              send to the address above. Min 1,000 sats (~$0.60). Lightning is like a text message
-              for money — it arrives in seconds and costs fractions of a cent.
+              send to the address above. Any amount works. Lightning is like a text message for
+              money — it arrives in seconds and costs fractions of a cent. Non-custodial via Breez
+              Spark — no middleman, keys held by us.
             </p>
           </motion.div>
 
@@ -122,9 +123,9 @@ export default function Donate() {
               </a>
             </div>
             <p className="mt-3 text-xs leading-relaxed text-[var(--text-muted)]">
-              On-chain works for any amount. It&apos;s a native SegWit address on the Satohash LND
-              wallet — backed by an offline seed backup, so funds are recoverable even if the server
-              ever failed. Confirmations take ~10 minutes.
+              On-chain works for any amount. It&apos;s a Breez on-chain deposit address backed by
+              the family master seed — recoverable even if the server ever failed. Confirmations
+              take ~10 minutes.
             </p>
           </motion.div>
         </div>
@@ -158,7 +159,7 @@ export default function Donate() {
               <Lock size={14} className="mt-0.5 shrink-0 text-[var(--accent-gold)]" />
               <span>
                 <strong className="text-[var(--text-primary)]">No middleman.</strong> Sats land
-                directly in the Satohash Wallet on LNbits — fully transparent, no platform cut.
+                directly in the Satohash wallet on Breez Spark — non-custodial, no platform cut.
               </span>
             </li>
           </ul>

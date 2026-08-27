@@ -82,15 +82,12 @@ export const FOOTER_EXTRA_LINKS = [
 ]
 
 /**
- * Public receive only — never put LNbits invoice/admin keys here.
- * TODO(Kimi handback): replace with Satohash-dedicated on-chain + LUD-16 from
- * docs/KIMI-REQUEST-BITCOIN-WALLETS.md (HQ Vault holds secrets).
- * Current value is a temporary shared suite address until product wallet is provisioned.
+ * Public receive only — Breez rail (Config A, 2026-08-27). Non-custodial Spark.
  */
-export const BTC_ADDRESS = 'bc1qhm5ndfjhqxdk3cx0pngyps4f5nnwdckulmge6c8keyf2pk0neqtshjn8ad'
+export const BTC_ADDRESS = 'bc1p25zw4rh6s6fjqzxe8yzkpj4klf59v5yyzc4nqf0x6d3twu8qvq9qurdlsr'
 
-/** Lightning Address (LUD-16) — set after Kimi public handback; empty until then. */
-export const LN_ADDRESS = ''
+/** Lightning Address (LUD-16) — Breez Spark. */
+export const LN_ADDRESS = 'satohash@breez.tips'
 
-/** Optional LNURL-pay string — set after Kimi public handback. */
-export const LNURL_PAY = ''
+/** Optional LNURL-pay string — Breez hosted LNURL server. */
+export const LNURL_PAY = 'https://breez.tips/lnurlp/satohash'

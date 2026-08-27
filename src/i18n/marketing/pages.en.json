@@ -49,7 +49,7 @@
         "desc": "Not live yet. Sketch for when we flip REQUIRE_LIGHTNING: pay us a small Lightning fee; proof still anchors to Bitcoin via OTS.",
         "features": [
           "Everything in Free, plus (planned):",
-          "Lightning invoice through us (LNbits)",
+          "Lightning invoice through us (Breez Spark)",
           "Covers product/hosting — not a different chain",
           "Same .ots proof format",
           "Batch stamping path",

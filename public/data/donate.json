@@ -1,19 +1,19 @@
 {
-  "updated": "2026-08-20",
+  "updated": "2026-08-27",
   "org": "Satohash / Give A Bit",
   "lightning": {
-    "lud16": "satohash@api.satohash.io:8443",
-    "lnurl": "https://api.satohash.io:8443/.well-known/lnurlp/satohash",
-    "minSendableSats": 1000,
-    "maxSendableSats": 100000000,
-    "note": "LNURL-pay via LNbits on THOR. Instant, near-zero fee."
+    "lud16": "satohash@breez.tips",
+    "lnurl": "https://breez.tips/lnurlp/satohash",
+    "minSendableSats": 1,
+    "maxSendableSats": 4000000000,
+    "note": "Breez Spark LNURL-pay (non-custodial). Instant, near-zero fee."
   },
   "onchain": {
-    "address": "bc1qkrlg6ssme0ztgynr2us846mtlde0r33ly7kdmc",
+    "address": "bc1p25zw4rh6s6fjqzxe8yzkpj4klf59v5yyzc4nqf0x6d3twu8qvq9qurdlsr",
     "network": "mainnet",
-    "type": "bech32 (P2WPKH)",
-    "explorer": "https://mempool.space/address/bc1qkrlg6ssme0ztgynr2us846mtlde0r33ly7kdmc",
-    "note": "LND wallet on THOR — covered by offline seed backup (2026-08-06)."
+    "type": "taproot (P2TR)",
+    "explorer": "https://mempool.space/address/bc1p25zw4rh6s6fjqzxe8yzkpj4klf59v5yyzc4nqf0x6d3twu8qvq9qurdlsr",
+    "note": "Breez on-chain deposit — backed by family master seed (2026-08-27)."
   },
-  "transparency": "Stamps remain free; tips fund infrastructure (OTS calendars, node, API)."
+  "transparency": "Stamps remain free; tips fund infrastructure (OTS calendars, API). Breez Spark, non-custodial, no middleman."
 }
