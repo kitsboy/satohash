@@ -1,3 +1,13 @@
+## Session — 2026-08-27 · Breez donate QR (Grok M3)
+
+**Done:**
+- THOR’s `dcd1557` (“Migrate donation receive to Breez Spark”) was already on origin — pulled on M3.
+- Donate QR payload is `lightning:satohash@breez.tips` (`8b337fa`), not the HTTPS LNURL and not LNbits.
+- Live `/donate`: Lightning address `satohash@breez.tips`, on-chain `bc1p25zw4…urdlsr`. `public/data/donate.json` Breez. OTS receipts unchanged.
+
+**Git State:** SHA `8b337fa` on `origin/main`.
+
+---
 ## Session — 2026-08-20 (Kimi on THOR — SEO prerender + AI crawler batch)
 
 **SEO batch shipped (verified live):**

@@ -1,13 +1,10 @@
-# satohash — Handoff 2026-08-26 (Grok THOR · family suite)
+# satohash — Last Updated 2026-08-27 by Grok (M3)
 
-**Brief:** Family-pitch one-liner added to marketing PITCH. No SPA/API change. Suite card live on agents.giveabit.io.
+**Brief:** `/donate` is Breez Spark; QR is `lightning:satohash@breez.tips`.
 
-## What landed
-- `docs/marketing/PITCH.md` — civic-notary family pitch + https://agents.giveabit.io/#suite
-- agents hub Satohash card: “Prove a file existed. Never show the file.” → stamp + /pitch
+**Commit:** `8b337fa` (on `dcd1557` receive migration).
 
-## Unchanged
-- Free stamps (`REQUIRE_LIGHTNING=false`). SPA → https://api.satohash.io
-- Video offload / dead-link fixes from earlier today still stand.
-
-See HQ `docs/KIMI-HANDOFF.md` top + `docs/handoff-log.md`.
+- Lightning: `satohash@breez.tips`
+- On-chain: `bc1p25zw4rh6s6fjqzxe8yzkpj4klf59v5yyzc4nqf0x6d3twu8qvq9qurdlsr`
+- Live-verified: https://satohash.io/donate
+- OTS proof-of-truth on receipts unchanged. LNbits not on the public donate QR.
