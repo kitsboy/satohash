@@ -86,7 +86,7 @@ export default function Donate() {
             </div>
             <div className="mb-4 flex justify-center">
               <div className="rounded-xl border border-[var(--border)] bg-white p-3">
-                <QRCodeSVG value={LNURL} size={168} level="M" />
+                <QRCodeSVG value={`lightning:${LUD16}`} size={168} level="M" />
               </div>
             </div>
             <CopyField label="Lightning address" value={LUD16} />
