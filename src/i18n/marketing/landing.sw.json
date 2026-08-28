@@ -27,7 +27,7 @@
     "epochProgress": "Maendeleo ya kipindi",
     "satPerVb": "sat/vB",
     "zeroKnowledge": "Ujuzi wa sifuri (hashing ya ndani)",
-    "compliance": "Inatii eIDAS na ESIGN",
+    "compliance": "Inalingana na eIDAS na ESIGN",
     "proofsConfirmed": "Uthibitisho {{count}} umethibitishwa"
   },
   "features": {

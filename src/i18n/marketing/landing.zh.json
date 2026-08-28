@@ -27,7 +27,7 @@
     "epochProgress": "周期进度",
     "satPerVb": "sat/vB",
     "zeroKnowledge": "零知识（本地哈希）",
-    "compliance": "符合 eIDAS 与 ESIGN",
+    "compliance": "与 eIDAS 和 ESIGN 对齐",
     "proofsConfirmed": "已确认 {{count}} 条证明"
   },
   "features": {

@@ -408,7 +408,7 @@
       },
       "esign": {
         "term": "ESIGN Act",
-        "def": "美国联邦法律，确立电子签名和记录的合法效力。Satohash 证明符合 ESIGN 要求。"
+        "def": "美国联邦法律，确立电子签名和记录的合法效力。Satohash 证明与 ESIGN 电子记录概念对齐。"
       },
       "blockTime": {
         "term": "Block Time",

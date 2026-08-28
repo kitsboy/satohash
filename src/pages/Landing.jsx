@@ -343,13 +343,13 @@ export default function Landing() {
               </text>
 
               <text x="965" y="730" textAnchor="end">
-                eIDAS COMPLIANCE: SECTION IV ART. 26
+                eIDAS-ALIGNED EVIDENCE: SEC. IV ART. 42
               </text>
               <text x="965" y="745" textAnchor="end">
-                UETA DIGITAL CONTRACT NOTARIZATION
+                UETA DIGITAL RECORD ALIGNMENT
               </text>
               <text x="965" y="760" textAnchor="end">
-                ESIGN VALID TIMESTAMP AUTHORITY
+                ESIGN ELECTRONIC RECORD ALIGNMENT
               </text>
             </g>
           </svg>

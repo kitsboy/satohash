@@ -37,7 +37,7 @@
       "id": "legal",
       "category": "legal",
       "q": "Is the proof legally valid?",
-      "a": "Bitcoin timestamps are cryptographically verifiable and have been accepted in legal proceedings. The proof is compliant with ESIGN Act standards and compatible with eIDAS regulations. Consult qualified counsel for your jurisdiction."
+      "a": "Bitcoin timestamps are cryptographically verifiable and have been accepted as supporting evidence in legal proceedings. The proof aligns with ESIGN and UETA electronic-record concepts and provides supporting cryptographic evidence in eIDAS contexts — it is not a qualified time stamp or a guarantee of admissibility. Consult qualified counsel for your jurisdiction."
     },
     {
       "id": "ots",

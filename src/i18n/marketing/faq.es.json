@@ -37,7 +37,7 @@
       "id": "legal",
       "category": "legal",
       "q": "¿Es la prueba legalmente válida?",
-      "a": "Las marcas de tiempo de Bitcoin son criptográficamente verificables y han sido aceptadas en procedimientos legales. La prueba cumple los estándares de la ESIGN Act y es compatible con las regulaciones eIDAS. Consulta a un asesor cualificado para tu jurisdicción."
+      "a": "Las marcas de tiempo de Bitcoin son criptográficamente verificables y han sido aceptadas como prueba de apoyo en procedimientos legales. La prueba se alinea con los conceptos de registro electrónico de ESIGN y UETA y aporta evidencia criptográfica de apoyo en contextos eIDAS — no es una marca de tiempo cualificada ni una garantía de admisibilidad. Consulta a un asesor cualificado para tu jurisdicción."
     },
     {
       "id": "ots",

@@ -37,7 +37,7 @@
       "id": "legal",
       "category": "legal",
       "q": "La preuve est-elle juridiquement valable ?",
-      "a": "Les horodatages Bitcoin sont vérifiables cryptographiquement et ont été acceptés dans des procédures judiciaires. La preuve est conforme aux normes de la loi ESIGN et compatible avec les réglementations eIDAS. Consultez un conseil qualifié pour votre juridiction."
+      "a": "Les horodatages Bitcoin sont vérifiables cryptographiquement et ont été acceptés comme preuve à l'appui dans des procédures judiciaires. La preuve s'aligne sur les concepts de dossier électronique ESIGN et UETA et apporte une preuve cryptographique à l'appui dans les contextes eIDAS — ce n'est ni un horodatage qualifié ni une garantie d'admissibilité. Consultez un conseil qualifié pour votre juridiction."
     },
     {
       "id": "ots",

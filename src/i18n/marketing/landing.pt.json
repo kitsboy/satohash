@@ -27,7 +27,7 @@
     "epochProgress": "Progresso da época",
     "satPerVb": "sat/vB",
     "zeroKnowledge": "Conhecimento zero (hash local)",
-    "compliance": "Conforme com eIDAS e ESIGN",
+    "compliance": "Alinhado com eIDAS e ESIGN",
     "proofsConfirmed": "{{count}} provas confirmadas"
   },
   "features": {

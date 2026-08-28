@@ -516,7 +516,7 @@ export default function WebCapture() {
                   className="text-[9px] font-black tracking-widest uppercase"
                   style={{ color: 'var(--text-secondary)' }}
                 >
-                  Compliant eIDAS_v2
+                  eIDAS-aligned evidence
                 </span>
               </div>
             </div>

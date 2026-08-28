@@ -41,7 +41,7 @@ export const generateLegalCertificate = (proof) => {
   doc.setFontSize(10)
   doc.setFont('helvetica', 'italic')
   doc.text('1. Hash Standard: FIPS 180-4 (SHA-256)', 25, 130)
-  doc.text('2. Immutability Layer: Bitcoin Blockchain (NIST Compliant)', 25, 135)
+  doc.text('2. Immutability Layer: Bitcoin Blockchain (SHA-256 anchored)', 25, 135)
   doc.text(`3. Verification Proof (OTS Binary): Included in Satohash Archive`, 25, 140)
   doc.text(`4. Merkle Root Identity: ${proof.merkle_root || 'N/A'}`, 25, 145)
 

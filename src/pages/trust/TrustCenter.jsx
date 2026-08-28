@@ -41,31 +41,31 @@ const COMPLIANCE_ROWS = [
   {
     framework: 'ESIGN Act',
     jurisdiction: 'United States',
-    status: 'Compliant',
-    standard: 'Electronic Signature'
+    status: 'Supporting evidence',
+    standard: 'Electronic record'
   },
   {
     framework: 'UETA',
     jurisdiction: 'United States (47 states)',
-    status: 'Compliant',
-    standard: 'Uniform Electronic Transactions'
+    status: 'Supporting evidence',
+    standard: 'Electronic record'
   },
   {
     framework: 'eIDAS Regulation',
     jurisdiction: 'European Union',
-    status: 'Compatible',
-    standard: 'Electronic Identification'
+    status: 'Evidentiary',
+    standard: 'Cryptographic evidence of existence'
   },
   {
     framework: 'Swiss eIDAS',
     jurisdiction: 'Switzerland',
-    status: 'Compatible',
+    status: 'Evidentiary',
     standard: 'Federal Act on Electronic Signatures'
   },
   {
     framework: 'GDPR',
     jurisdiction: 'European Union',
-    status: 'By Design',
+    status: 'By design',
     standard: 'Zero personal data stored'
   },
   {
@@ -304,7 +304,8 @@ export default function TrustCenter() {
             International Standards
           </motion.h2>
           <motion.p variants={fadeUp} className="mb-8 text-[var(--text-secondary)]">
-            Satohash proofs are designed to meet the requirements of major global legal frameworks.
+            How Satohash proofs relate to major global legal frameworks — as supporting
+            cryptographic evidence, not regulatory certification.
           </motion.p>
 
           {/* Horizontal scroll wrapper keeps desktop layout intact on mobile */}
@@ -317,7 +318,7 @@ export default function TrustCenter() {
                   <span>Jurisdiction</span>
                   <span>Status</span>
                   <span className="flex items-center">
-                    Standard Met
+                    Posture
                     <Tooltip
                       title="NIP-05 Identity"
                       content="A Nostr protocol standard linking a human-readable handle (like user@domain.com) to a cryptographic public key. Used for tamper-proof signer identity."
@@ -341,7 +342,7 @@ export default function TrustCenter() {
                       {row.framework === 'eIDAS Regulation' && (
                         <Tooltip
                           title="eIDAS"
-                          content="EU regulation establishing a legal framework for electronic signatures across all EU member states. Qualified signatures are legally equivalent to handwritten."
+                          content="EU regulation establishing a legal framework for electronic signatures and electronic time stamps across EU member states. Satohash evidence is supporting cryptographic evidence — it is not a qualified electronic time stamp."
                         />
                       )}
                     </span>
@@ -361,8 +362,9 @@ export default function TrustCenter() {
             className="mt-5 rounded-xl border border-[var(--border)] bg-[var(--surface-raised)] px-5 py-4 text-sm leading-relaxed text-[var(--text-secondary)]"
           >
             <AlertCircle size={14} className="mr-2 inline-block text-[var(--accent-pending)]" />
-            Satohash proofs provide cryptographic evidence meeting international standards. They do
-            not constitute legal advice. For legal proceedings, consult qualified counsel.
+            Satohash proofs are cryptographic evidence that supports electronic-record and
+            evidence frameworks. They do not constitute legal advice, regulatory certification, or
+            a notarial act. For legal proceedings, consult qualified counsel.
           </motion.p>
         </motion.section>
 
@@ -720,10 +722,9 @@ function FlowDiagram() {
 
 function StatusBadge({ label }) {
   const colorMap = {
-    Compliant: { bg: 'var(--accent-success)', text: '#fff' },
-    Compatible: { bg: 'var(--accent-active)', text: '#fff' },
-    'By Design': { bg: 'var(--accent-purple)', text: '#fff' },
-    Evidentiary: { bg: 'var(--accent-pending)', text: '#000' }
+    'Supporting evidence': { bg: 'var(--accent-pending)', text: '#000' },
+    Evidentiary: { bg: 'var(--accent-pending)', text: '#000' },
+    'By design': { bg: 'var(--accent-purple)', text: '#fff' }
   }
   const c = colorMap[label] ?? { bg: 'var(--surface-raised)', text: 'var(--text-secondary)' }
 

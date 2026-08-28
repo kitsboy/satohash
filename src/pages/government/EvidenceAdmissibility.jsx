@@ -26,9 +26,9 @@ const ROWS = [
   {
     framework: 'UETA',
     region: 'US (47 states)',
-    status: 'Compatible',
-    tone: 'good',
-    note: 'Uniform electronic transactions'
+    status: 'Supporting evidence',
+    tone: 'amber',
+    note: 'Electronic record frameworks; evidentiary weight varies'
   },
   {
     framework: 'eIDAS',
@@ -47,9 +47,9 @@ const ROWS = [
   {
     framework: 'ZertES',
     region: 'Switzerland',
-    status: 'Compatible',
-    tone: 'good',
-    note: 'Federal Act on Electronic Signatures'
+    status: 'Supporting evidence',
+    tone: 'amber',
+    note: 'Federal Act on Electronic Signatures; hash evidence is supplementary'
   },
   {
     framework: 'Hague Apostille',

@@ -186,6 +186,48 @@ const SECTIONS = [
   },
   {
     id: '04',
+    icon: Shield,
+    color: 'var(--accent-danger)',
+    title: 'Indemnification',
+    content: (
+      <div className="space-y-4 text-slate-700">
+        <p className="leading-relaxed">
+          You agree to indemnify, defend, and hold harmless Satohash, Give A Bit, and their
+          respective officers, directors, employees, agents, and contributors from and against any
+          claims, liabilities, damages, losses, costs, and expenses (including reasonable
+          attorneys' fees) arising out of or relating to:
+        </p>
+        <div className="space-y-3">
+          {[
+            'Your use of the Service, including any document, hash, or content you submit or timestamp.',
+            'Your breach of these Terms, including the representations and warranties in the "What You Agree To" section.',
+            'Any claim that your timestamped content or your use of the Service infringes the rights of a third party or violates applicable law.',
+            'Your reliance on any proof or output of the Service in a manner inconsistent with these Terms or our published educational materials.'
+          ].map((item, i) => (
+            <div
+              key={i}
+              className="flex items-start gap-3 rounded-xl border border-rose-100 bg-rose-50 px-4 py-3"
+            >
+              <Shield size={14} className="mt-0.5 shrink-0 text-rose-500" />
+              <span className="text-sm leading-relaxed text-rose-800/80">{item}</span>
+            </div>
+          ))}
+        </div>
+        <p className="leading-relaxed">
+          This indemnification survives termination of your use of the Service. We may, at our
+          option, assume the exclusive defense and control of any matter subject to
+          indemnification; if we do, you agree to cooperate with us and not settle any such matter
+          without our prior written consent.
+        </p>
+        <div className="rounded-xl border border-rose-100 bg-rose-50 px-5 py-4 text-sm text-rose-700/80">
+          <strong className="text-rose-800">Plain language:</strong> If your use of Satohash causes
+          a problem for someone else, you take responsibility for it — not us.
+        </div>
+      </div>
+    )
+  },
+  {
+    id: '05',
     icon: Copyright,
     color: 'var(--accent-pending)',
     title: 'Intellectual Property',
@@ -213,7 +255,7 @@ const SECTIONS = [
     )
   },
   {
-    id: '05',
+    id: '06',
     icon: AlertTriangle,
     color: 'var(--accent-danger)',
     title: 'Limitation of Liability',
@@ -228,7 +270,11 @@ const SECTIONS = [
             'Satohash is not responsible for the legal admissibility of proofs in any specific jurisdiction. Laws vary, and you should consult counsel for legal proceedings.',
             'We are not liable for loss of your original files. Without the original file, a Bitcoin-anchored hash cannot be verified. Keep secure backups.',
             'Our total liability to you for any claim arising from use of the Service is limited to the amount you paid us in the preceding 12 months.',
-            'We are not liable for indirect, incidental, special, or consequential damages — including lost profits, lost data, or reputational harm.'
+            'We are not liable for indirect, incidental, special, or consequential damages — including lost profits, lost data, or reputational harm.',
+            'We do not warrant that any stamp will be confirmed in Bitcoin by any particular time, or at all. Pending means submitted to OpenTimestamps calendars; Confirmed means a Bitcoin block includes the attestation. Confirmation depends on third-party calendars and the Bitcoin network, which are outside our control.',
+            'Because a Bitcoin-anchored proof is only as strong as the original file, we are not liable for your failure to preserve the original document bytes or your .ots proof file.',
+            'We are not responsible for the acts or omissions of third-party OpenTimestamps calendars, Bitcoin miners, nodes, or network participants.',
+            'Our proofs are not guaranteed to be accepted as evidence by any court, tribunal, or regulator in any jurisdiction. We provide a technical tool, not a legal service.'
           ].map((item, i) => (
             <div
               key={i}
@@ -246,13 +292,106 @@ const SECTIONS = [
             including merchantability, fitness for a particular purpose, or non-infringement.
           </p>
         </div>
+        <div className="rounded-2xl border border-rose-100 bg-rose-50 p-5">
+          <p className="mb-1 text-sm font-bold tracking-wide text-rose-800 uppercase">No Warranty</p>
+          <p className="text-sm leading-relaxed text-rose-700/80">
+            To the maximum extent permitted by law, the Service is provided "as is" and "as
+            available," without warranties of any kind, whether express, implied, or statutory,
+            including without limitation warranties of merchantability, fitness for a particular
+            purpose, non-infringement, accuracy, or that the Service will be uninterrupted,
+            error-free, or that stamps will confirm in a particular time. The entire risk arising
+            out of use of the Service remains with you. Some jurisdictions do not allow the
+            exclusion of certain warranties, so some of the above exclusions may not apply to you.
+          </p>
+        </div>
       </div>
     )
   },
   {
-    id: '06',
-    icon: Globe,
-    color: 'var(--accent-active)',
+    id: '07',
+    icon: FileText,
+    color: 'var(--accent-purple)',
+    title: 'Paid Tiers, Billing & Refunds',
+    content: (
+      <div className="space-y-4 text-slate-700">
+        {[
+          {
+            h: 'Subscriptions',
+            p: 'Professional and Enterprise tiers are billed on the periodic basis shown at sign-up (monthly unless otherwise agreed). Subscription fees are non-refundable except as set out below.'
+          },
+          {
+            h: 'Automatic renewal',
+            p: 'Unless you cancel before the end of the current billing period, your subscription renews automatically at the then-current price. You may cancel at any time in your account settings or by contacting hello@giveabit.io; cancellation takes effect at the end of the current paid period and does not entitle you to a pro-rated refund except as required by law.'
+          },
+          {
+            h: 'Free tier',
+            p: 'The free tier is offered without charge, subject to reasonable usage limits published in the application. We may adjust or discontinue the free tier with reasonable notice.'
+          },
+          {
+            h: 'Price changes',
+            p: 'We may change prices for paid tiers with at least 30 days notice. Continued use after the price change takes effect constitutes acceptance of the new price.'
+          },
+          {
+            h: 'Refunds',
+            p: 'If a paid Service feature fails materially and we cannot remedy it within 30 days of written notice, you may request a refund of the fees paid for the then-current period for the affected feature. All refund requests are handled at our discretion unless required by law. Nothing in this section limits any statutory consumer rights you may have.'
+          },
+          {
+            h: 'Payments & Lightning',
+            p: 'Where a payment is made via Lightning Network (L402 / BOLT-12), the transaction is final and irreversible by design of the Bitcoin network. Refunds, where available, are issued as new payments, not chargebacks.'
+          },
+          {
+            h: 'Taxes',
+            p: 'You are responsible for any taxes applicable to your use of the Service.'
+          }
+        ].map((b, i) => (
+          <div key={i} className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3">
+            <p className="mb-1 text-sm font-bold text-slate-800">{b.h}</p>
+            <p className="text-sm leading-relaxed text-slate-600">{b.p}</p>
+          </div>
+        ))}
+        <div className="rounded-xl border border-indigo-100 bg-indigo-50 px-5 py-4 text-sm text-indigo-900/80">
+          <strong>Plain language:</strong> Paid plans auto-renew monthly until you cancel. Free
+          stamps stay free. If a paid feature breaks and we can&apos;t fix it in 30 days, we&apos;ll
+          consider a refund. Lightning payments can&apos;t be reversed — that&apos;s the point.
+        </div>
+      </div>
+    )
+  },
+  {
+    id: '08',
+    icon: CheckCircle,
+    color: 'var(--accent-success)',
+    title: 'Enterprise Service Level Agreement',
+    content: (
+      <div className="space-y-4 text-slate-700">
+        <p className="leading-relaxed">
+          For Enterprise accounts, we offer a best-efforts service availability target of{' '}
+          <strong>99.5% monthly uptime</strong>, measured against the public status of the core
+          stamping and verification endpoints, excluding scheduled maintenance and force majeure.
+        </p>
+        <div className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3">
+          <p className="mb-1 text-sm font-bold text-slate-800">Remedy</p>
+          <p className="text-sm leading-relaxed text-slate-600">
+            If we fail to meet the availability target in a calendar month, you may request a
+            service credit equal to 5% of that month&apos;s Enterprise fee for each full percentage
+            point (or partial) below the target, up to a maximum of 20% of the monthly fee.
+            Service credits are applied as a discount to the next billing cycle and are your sole
+            and exclusive remedy for availability failures. This SLA does not guarantee
+            confirmation times for individual stamps, which depend on third-party calendars and the
+            Bitcoin network.
+          </p>
+        </div>
+        <div className="rounded-xl border border-emerald-100 bg-emerald-50 px-5 py-4 text-sm text-emerald-900/80">
+          <strong>Plain language:</strong> Enterprise gets a 99.5% uptime promise. If we miss it,
+          you get a discount off the next month — but not cash for any individual stamp delay.
+        </div>
+      </div>
+    )
+  },
+  {
+    id: '09',
+    icon: Gavel,
+    color: 'var(--text-secondary)',
     title: 'Governing Law',
     content: (
       <div className="space-y-4 text-slate-700">
@@ -277,7 +416,69 @@ const SECTIONS = [
     )
   },
   {
-    id: '07',
+    id: '10',
+    icon: Scale,
+    color: 'var(--accent-active)',
+    title: 'Dispute Resolution',
+    content: (
+      <div className="space-y-4 text-slate-700">
+        {[
+          {
+            h: 'Informal resolution first',
+            p: 'Before filing any claim, you agree to notify us in writing at hello@giveabit.io and give us 30 days to resolve the dispute informally.'
+          },
+          {
+            h: 'Governing law & forum',
+            p: 'These Terms are governed by the laws of the State of Delaware, United States, without regard to conflict-of-law principles. Subject to the informal-resolution step, any claim not resolved informally shall be brought exclusively in the state or federal courts located in Delaware, and you consent to the personal jurisdiction of those courts.'
+          },
+          {
+            h: 'Small claims',
+            p: 'Either party may bring an individual claim in small-claims court if it qualifies, rather than through the courts referenced above.'
+          },
+          {
+            h: 'No class actions',
+            p: 'To the extent permitted by law, disputes shall be resolved on an individual basis; you waive the right to participate in any class or representative action against us.'
+          },
+          {
+            h: 'Survival',
+            p: 'This section survives termination of these Terms.'
+          }
+        ].map((b, i) => (
+          <div key={i} className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3">
+            <p className="mb-1 text-sm font-bold text-slate-800">{b.h}</p>
+            <p className="text-sm leading-relaxed text-slate-600">{b.p}</p>
+          </div>
+        ))}
+      </div>
+    )
+  },
+  {
+    id: '11',
+    icon: Globe,
+    color: 'var(--accent-purple)',
+    title: 'International Use & Data',
+    content: (
+      <div className="space-y-4 text-slate-700">
+        <p className="leading-relaxed">
+          The Service may be used from any jurisdiction where such use is lawful. You are
+          responsible for complying with the laws of your jurisdiction, including any
+          export-control or sanctions requirements that may apply to your use.
+        </p>
+        <p className="leading-relaxed">
+          Satohash processes only the minimal metadata described in our Privacy Policy (primarily
+          hashes and optional labels). It does not process document contents. For Enterprise
+          customers who require a data-processing agreement, we will provide a short DPA confirming
+          this posture on request at hello@giveabit.io.
+        </p>
+        <p className="leading-relaxed">
+          Blockchain data (Bitcoin) is public by nature. Once a hash is committed, it is permanent
+          and outside our control.
+        </p>
+      </div>
+    )
+  },
+  {
+    id: '12',
     icon: XCircle,
     color: 'var(--text-secondary)',
     title: 'Termination',

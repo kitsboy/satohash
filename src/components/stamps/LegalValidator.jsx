@@ -7,27 +7,27 @@ const regions = [
     id: 'us',
     name: 'United States',
     law: 'ESIGN & UETA Acts',
-    status: 'High',
+    status: 'Supporting evidence',
     detail:
-      'Blockchain timestamps are recognized as electronic evidence under the ESIGN Act and UETA at the federal and state levels. The mathematical immutability provides a prima facie presumption of integrity.',
+      'Under ESIGN and UETA, electronic records are not denied legal effect merely because they are electronic. A Bitcoin-anchored hash is an electronic record of existence-at-a-time; its admissibility and weight depend on the rules of evidence and chain of custody.',
     color: 'indigo'
   },
   {
     id: 'eu',
     name: 'European Union',
     law: 'eIDAS Regulation',
-    status: 'Hardened',
+    status: 'Evidentiary',
     detail:
-      'Qualifies as an Electronic Time Stamp under Article 41, creating a legal presumption of the accuracy of the date and time. Satahash aligns with AdES requirements for advanced signatures.',
+      'Satohash provides independently verifiable cryptographic evidence of existence-at-a-time. It is not a qualified electronic time stamp under eIDAS Article 42 (which requires an accredited Time Stamping Authority) and does not carry the eIDAS presumption of accuracy. A qualified time stamp should be used where the law requires one.',
     color: 'emerald'
   },
   {
     id: 'asia',
     name: 'APAC Region',
-    law: 'Electronic Trans. Acts',
-    status: 'Validated',
+    law: 'Electronic Transactions Acts',
+    status: 'Supporting evidence',
     detail:
-      'Recognized in global trade hubs like Singapore and Hong Kong. Satahash follows UNCITRAL Model Law principles for data messages and automated verification.',
+      'Many APAC jurisdictions adopt UNCITRAL Model Law principles for electronic data messages. Whether a Bitcoin-anchored hash is admitted, and its weight, is decided under each jurisdiction\u2019s evidence rules — confirm with local counsel.',
     color: 'amber'
   }
 ]
@@ -62,7 +62,7 @@ const LegalValidator = () => {
     <div className="space-y-16">
       <div className="mx-auto max-w-3xl text-center">
         <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-indigo-50 px-4 py-2 text-[10px] font-black tracking-[0.3em] text-indigo-600 uppercase">
-          <Gavel size={14} /> Global Compliance Protocol
+          <Gavel size={14} /> Global Evidence Orientation
         </div>
         <h2 className="mb-6 text-4xl font-black tracking-tighter text-indigo-900 uppercase italic md:text-5xl">
           Jurisdictional <br /> <span className="text-indigo-600 italic">INTELLIGENCE.</span>
@@ -134,7 +134,7 @@ const LegalValidator = () => {
                     <div
                       className={`text-[10px] font-black tracking-[0.3em] uppercase ${c.accent}`}
                     >
-                      Formal Compliance Check Verified
+                      Evidence Orientation
                     </div>
                   </div>
                 </div>
@@ -149,15 +149,15 @@ const LegalValidator = () => {
                       icon={CheckCircle2}
                       color={c.accent}
                       title="Legal Validity"
-                      status="High (Admissible)"
-                      desc="Protocol proofs meet foundational legal requirements for timestamp validity."
+                      status="Evidentiary"
+                      desc="Protocol proofs support existence-at-a-time; admissibility and weight vary by jurisdiction and proceeding."
                     />
                     <StatusCapability
                       icon={Shield}
                       color={c.accent}
                       title="e-Commerce Ready"
-                      status="Compliant"
-                      desc="Fully aligns with global electronic transfer and trade laws."
+                      status="Aligned"
+                      desc="Aligns with global electronic record and transfer concepts; evidentiary weight varies by jurisdiction."
                     />
                   </div>
 
@@ -171,11 +171,13 @@ const LegalValidator = () => {
                     </motion.div>
                     <div>
                       <div className="mb-2 text-xs font-black tracking-[0.2em] text-indigo-300 uppercase">
-                        Technical Presumption
+                        Technical Evidence
                       </div>
                       <p className="text-[11px] leading-relaxed font-bold text-indigo-100/60 italic">
-                        Satohash anchoring creates a “Technical Certificate of Existence” that
-                        shifts the burden of proof to the challenging party in most judiciaries.
+                        Satohash anchoring produces a portable “Technical Certificate of Existence.”
+                        Whether it shifts any burden of proof is a question for the court and
+                        counsel in the governing jurisdiction — independent verification makes the
+                        evidence easier to authenticate, nothing more.
                       </p>
                     </div>
                   </div>

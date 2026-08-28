@@ -37,7 +37,7 @@
       "id": "legal",
       "category": "legal",
       "q": "Ist der Nachweis rechtlich gültig?",
-      "a": "Bitcoin-Zeitstempel sind kryptografisch verifizierbar und wurden in Gerichtsverfahren akzeptiert. Der Nachweis entspricht den ESIGN Act-Standards und ist mit eIDAS-Vorschriften kompatibel. Konsultieren Sie qualifizierte Beratung für Ihre Rechtsordnung."
+      "a": "Bitcoin-Zeitstempel sind kryptografisch verifizierbar und wurden in Gerichtsverfahren als unterstützende Beweise akzeptiert. Der Nachweis orientiert sich an den Konzepten elektronischer Aufzeichnungen von ESIGN und UETA und liefert in eIDAS-Kontexten unterstützende kryptografische Beweise — er ist kein qualifizierter Zeitstempel und keine Garantie der Zulässigkeit. Konsultieren Sie qualifizierte Beratung für Ihre Rechtsordnung."
     },
     {
       "id": "ots",

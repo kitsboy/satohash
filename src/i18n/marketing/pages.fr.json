@@ -408,7 +408,7 @@
       },
       "esign": {
         "term": "ESIGN Act",
-        "def": "Loi fédérale des États-Unis qui établit la validité juridique des signatures et enregistrements électroniques. Les preuves Satohash sont conformes aux exigences ESIGN."
+        "def": "Loi fédérale des États-Unis qui établit la validité juridique des signatures et enregistrements électroniques. Les preuves Satohash s'alignent sur les concepts de dossier électronique ESIGN."
       },
       "blockTime": {
         "term": "Block Time",

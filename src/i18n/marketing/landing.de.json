@@ -27,7 +27,7 @@
     "epochProgress": "Epochenfortschritt",
     "satPerVb": "sat/vB",
     "zeroKnowledge": "Zero-Knowledge (lokales Hashing)",
-    "compliance": "eIDAS- und ESIGN-konform",
+    "compliance": "eIDAS- und ESIGN-ausgerichtet",
     "proofsConfirmed": "{{count}} Nachweise bestätigt"
   },
   "features": {
