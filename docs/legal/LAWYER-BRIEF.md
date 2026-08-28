@@ -21,18 +21,37 @@
 
 ## 2. Open entity / governing-law decisions (need Cam + counsel)
 
-- Terms currently say **"Satohash Inc."** and **"State of Delaware."** We have **no confirmed registered entity** for Satohash or Give A Bit. The family operates as "Give A Bit." Counsel must confirm:
-  1. Which entity actually operates Satohash (an incorporated entity, a Give A Bit entity, or none yet)?
-  2. Is **Delaware** the correct choice-of-law and forum, or should it follow the entity's state of formation?
-  3. Should Terms be issued in the name of the operating entity (recommended) or Give A Bit as brand owner?
-- **Lenny's recommendation:** Stand up (or confirm) a single operating entity and make all legal pages consistent with it before launch. Do not launch paid tiers under an entity that doesn't exist or isn't the true operator.
+### 2a. CURRENT CORPORATE & LEGAL STATUS (updated 2026-08-29, per Cam)
+
+**Honest, current state — as instructed by Cam:**
+
+- **No entity registered.** Satohash is **not registered** as a company anywhere. There is no "Satohash Inc." (the prior Terms placeholder) and **no** "GIVEABIT LTD. REGISTERED IN THE SEYCHELLES" (the footer claim — **confirmed false; removed**).
+- **Free, non-commercial product.** Satohash is currently free. No subscription is billed and no payment is accepted today.
+- **Server in Germany.** The Satohash API server is hosted in Germany. German law (including on data and, where relevant, electronic records) is therefore the most directly applicable operating jurisdiction for the infrastructure.
+- **Identity intentionally not disclosed — anti-dox.** Cam personally owns two companies in Vancouver, Canada, but Satohash is **not** registered under either, and he does **not** want to register it or reveal personal/company identity yet. Rationale: the product is free and he wants to audit how well it actually works before making any identity or entity commitment.
+
+**Consequences for the legal posture:**
+1. The **Seychelles footer claim is removed** (verified false — no such entity).
+2. The Terms use **[ENTITY TBD]** and **[GOVERNING LAW TBD]** placeholders — correct and retained.
+3. **Paid-tier + SLA + billing clauses are forward-looking drafts only** — NOT live or enforceable, because the payment portal is not started or finished. They activate only if/when paid services launch.
+4. For now the Terms are a **minimal, honest non-commercial free-service Terms** — no entity, no payment, no enforceable commercial commitments.
+
+**Counsel must advise on:**
+- Whether operating a free service from a Germany-hosted server, with no legal entity, creates any registration/consumer obligations (e.g., German Impressum/telemedia requirements for a website offering services to EU users) — this may be the single most concrete compliance gap.
+- When and whether to establish an entity before any commercial launch.
+- Whether anti-dox (non-disclosure of identity) is sustainable once any paid service or EU-facing site operates — several jurisdictions require an imprint/identity disclosure.
+
+### The family umbrella (as Cam wants highlighted)
+Satohash is part of the **Give A Bit** family: giveabit.io, the family of Bitcoin-native products (Katoa, SherpaCarta, MotoPass, and others), and the **@giveabit.io NIP-05 Nostr namespace** for open timestamping and sovereign identity. Legal materials should present Satohash as a Give A Bit family product, with the family as the umbrella — even while the exact legal entity remains to be determined.
+
+- **Entity status (RESOLVED per Cam 2026-08-29):** There is currently **no entity** — not "Satohash Inc.," not a Seychelles company, not a Give A Bit legal entity. Cam owns two Vancouver companies but Satohash is not under either, and he does not want to register or disclose identity yet (anti-dox, pending product audit). See §2a above for the full current status. The remaining open question for counsel is purely: **when and in what form to establish an entity before any commercial launch, and what German/EU obligations attach to the free service in the meantime** (Impressum/telemedia).
 
 ## 3. Claims-cleanliness (highest priority — R1)
 
 We must remove unsubstantiated "compliance" claims before launch:
-- Trust Center currently labels ESIGN/UETA **"Compliant"** and eIDAS **"Compatible."** → Change to **"Supporting evidence / Evidentiary."**
-- Exec summary and pitch claim Satohash "exceed[s] ESIGN and eIDAS compliance." → Remove.
-- Counsel should confirm the final wording for these labels (see `JURISDICTION-EXPLAINERS.md` for our proposed defensible language).
+- Trust Center now labels ESIGN/UETA **"Supporting evidence"** and eIDAS **"Evidentiary."** ✅ Applied.
+- Exec summary and pitch no longer claim Satohash "exceed[s] ESIGN and eIDAS compliance." ✅ Removed across code, i18n, and docs.
+- Counsel should still confirm the final wording (see `JURISDICTION-EXPLAINERS.md` for the defensible language).
 
 ## 4. New Terms clauses drafted (see `TERMS-INDEMNITY-STRENGTHENING.md`)
 

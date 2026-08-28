@@ -3,7 +3,7 @@ const JURISDICTIONS = [
   { id: 'eu-eidas', label: 'European Union (eIDAS)', framework: 'eIDAS' },
   { id: 'uk', label: 'United Kingdom', framework: 'Common Law' },
   { id: 'ch', label: 'Switzerland', framework: 'ZertES' },
-  { id: 'sc', label: 'Seychelles (Give A Bit HQ)', framework: 'IBA' },
+  { id: 'sc', label: 'Seychelles', framework: 'Offshore IBC' },
   { id: 'un', label: 'UN / Cross-border', framework: 'Hague' }
 ]
 

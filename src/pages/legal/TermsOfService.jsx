@@ -70,6 +70,13 @@ const SECTIONS = [
           the SHA-256 hashing algorithm and the OpenTimestamps protocol, we generate an immutable
           proof that a specific document existed in its current form at a specific point in time.
         </p>
+        <div className="rounded-xl border border-emerald-200 bg-emerald-50 px-5 py-4 text-sm text-emerald-900/80">
+          <strong className="text-emerald-800">Current status: a free, non-commercial service.</strong>{' '}
+          Satohash is currently provided free of charge as a non-commercial service in public beta.
+          No subscription is billed and no payment is accepted today. The commercial (paid) terms
+          described in this document are forward-looking proposals that will apply only if and when
+          paid services launch; they are not in effect now.
+        </div>
         <div className="grid gap-3 sm:grid-cols-2">
           {[
             {
@@ -241,8 +248,9 @@ const SECTIONS = [
           </p>
         </div>
         <p className="leading-relaxed">
-          The Satohash platform, interface, branding, and software are owned by Satohash Inc. and
-          protected by copyright, trademark, and other intellectual property laws. You may not copy,
+          The Satohash platform, interface, branding, and software are owned by [ENTITY TBD] (the
+          Satohash operator) and protected by copyright, trademark, and other intellectual property
+          laws. You may not copy,
           modify, distribute, or create derivative works from our platform without written
           permission.
         </p>
@@ -311,21 +319,57 @@ const SECTIONS = [
     id: '07',
     icon: FileText,
     color: 'var(--accent-purple)',
-    title: 'Paid Tiers, Billing & Refunds',
+    title: 'Paid Tiers, Billing & Refunds (Forward-Looking)',
     content: (
       <div className="space-y-4 text-slate-700">
+        <p className="leading-relaxed">
+          <strong>Forward-looking only.</strong> The pricing below describes how paid tiers would
+          operate if and when commercial services launch. Satohash is currently a free,
+          non-commercial service: no subscription is billed and no payment is accepted today. These
+          paid-tier provisions are not in effect until paid services actually launch.
+        </p>
+        <p className="leading-relaxed">
+          Satohash offers a permanent Free tier plus optional paid tiers. Prices are quoted in
+          satoshis (sats) with approximate US-dollar equivalents for convenience. The current tier
+          model is set out below.
+        </p>
         {[
           {
-            h: 'Subscriptions',
-            p: 'Professional and Enterprise tiers are billed on the periodic basis shown at sign-up (monthly unless otherwise agreed). Subscription fees are non-refundable except as set out below.'
+            h: 'Free — permanent trust anchor',
+            p: 'Unlimited stamping, verification, and .ots downloads with client-side hashing, subject to a 10-stamps-per-day cap. The Free tier is the permanent trust anchor of the Service and is NEVER paywalled: it will not be removed, made conditional on payment, or otherwise reduced to a degraded marketing hook.'
           },
+          {
+            h: 'Professional',
+            p: '~2,100 sats/month (approximately $29). For individual, high-volume stamping. Billed on the periodic basis shown at sign-up (monthly unless otherwise agreed).'
+          },
+          {
+            h: 'Business / Studio',
+            p: '~21,000 sats/month (approximately $299). For teams and studios. Billed on the periodic basis shown at sign-up (monthly unless otherwise agreed).'
+          },
+          {
+            h: 'Enterprise',
+            p: 'Custom pricing, partner-gated, and not marketed at this time. Contact hello@giveabit.io to discuss.'
+          },
+          {
+            h: 'Pay-per-use API',
+            p: 'Developer / programmatic access priced at 1–5 sats per stamp via Lightning (L402). The final per-stamp rate is published in the application.'
+          }
+        ].map((b, i) => (
+          <div key={i} className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3">
+            <p className="mb-1 text-sm font-bold text-slate-800">{b.h}</p>
+            <p className="text-sm leading-relaxed text-slate-600">{b.p}</p>
+          </div>
+        ))}
+        <div className="rounded-xl border border-amber-100 bg-amber-50 px-5 py-4 text-sm text-amber-900/80">
+          <strong>Lightning dependency:</strong> Paid tiers are priced in sats, but collection
+          depends on the Lightning Network (L402 / LND) being funded and operational. Until
+          Lightning channels are funded and tested, paid tiers may not be activatable. The Free
+          tier remains live regardless.
+        </div>
+        {[
           {
             h: 'Automatic renewal',
             p: 'Unless you cancel before the end of the current billing period, your subscription renews automatically at the then-current price. You may cancel at any time in your account settings or by contacting hello@giveabit.io; cancellation takes effect at the end of the current paid period and does not entitle you to a pro-rated refund except as required by law.'
-          },
-          {
-            h: 'Free tier',
-            p: 'The free tier is offered without charge, subject to reasonable usage limits published in the application. We may adjust or discontinue the free tier with reasonable notice.'
           },
           {
             h: 'Price changes',
@@ -350,9 +394,10 @@ const SECTIONS = [
           </div>
         ))}
         <div className="rounded-xl border border-indigo-100 bg-indigo-50 px-5 py-4 text-sm text-indigo-900/80">
-          <strong>Plain language:</strong> Paid plans auto-renew monthly until you cancel. Free
-          stamps stay free. If a paid feature breaks and we can&apos;t fix it in 30 days, we&apos;ll
-          consider a refund. Lightning payments can&apos;t be reversed — that&apos;s the point.
+          <strong>Plain language:</strong> Free stamps stay free, forever — that&apos;s the trust
+          anchor. Paid plans quote a price in sats and auto-renew until you cancel. If a paid
+          feature breaks and we can&apos;t fix it in 30 days, we&apos;ll consider a refund. Lightning
+          payments can&apos;t be reversed — that&apos;s the point.
         </div>
       </div>
     )
@@ -361,7 +406,7 @@ const SECTIONS = [
     id: '08',
     icon: CheckCircle,
     color: 'var(--accent-success)',
-    title: 'Enterprise Service Level Agreement',
+    title: 'Enterprise Service Level Agreement (Forward-Looking)',
     content: (
       <div className="space-y-4 text-slate-700">
         <p className="leading-relaxed">
@@ -396,14 +441,15 @@ const SECTIONS = [
     content: (
       <div className="space-y-4 text-slate-700">
         <p className="leading-relaxed">
-          These Terms are governed by and construed in accordance with the laws of the{' '}
-          <strong>State of Delaware, United States</strong>, without regard to its conflict of law
-          provisions.
+          These Terms are governed by and construed in accordance with the laws of{' '}
+          <strong>[GOVERNING LAW TBD — pending legal-entity confirmation]</strong>, without regard
+          to its conflict of law provisions.
         </p>
         <p className="leading-relaxed">
           Any legal action or proceeding arising from these Terms shall be brought exclusively in
-          the state or federal courts located in Delaware. By using the Service, you consent to the
-          personal jurisdiction of those courts.
+          the state or federal courts located in [JURISDICTION TBD — pending legal-entity
+          confirmation]. By using the Service, you consent to the personal jurisdiction of those
+          courts.
         </p>
         <div className="flex items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 px-5 py-4">
           <Scale size={18} className="shrink-0 text-slate-400" />
@@ -429,7 +475,7 @@ const SECTIONS = [
           },
           {
             h: 'Governing law & forum',
-            p: 'These Terms are governed by the laws of the State of Delaware, United States, without regard to conflict-of-law principles. Subject to the informal-resolution step, any claim not resolved informally shall be brought exclusively in the state or federal courts located in Delaware, and you consent to the personal jurisdiction of those courts.'
+            p: 'These Terms are governed by the laws of [GOVERNING LAW TBD — pending legal-entity confirmation], without regard to conflict-of-law principles. Subject to the informal-resolution step, any claim not resolved informally shall be brought exclusively in the state or federal courts located in [JURISDICTION TBD — pending legal-entity confirmation], and you consent to the personal jurisdiction of those courts.'
           },
           {
             h: 'Small claims',
@@ -568,7 +614,7 @@ export default function TermsOfService() {
               <div className="mb-6 flex flex-col items-start justify-between gap-4 sm:flex-row sm:gap-6">
                 <div>
                   <p className="mb-3 text-[10px] font-black tracking-[0.35em] text-slate-400 uppercase">
-                    Satohash Inc. · Legal Document
+                    [ENTITY TBD] · Legal Document
                   </p>
                   <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl md:text-5xl">
                     {t('legalPages.termsTitle')}
@@ -596,7 +642,7 @@ export default function TermsOfService() {
                 <div className="flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-4 py-2">
                   <Gavel size={13} className="text-slate-400" />
                   <span className="text-[10px] font-black tracking-[0.15em] text-slate-500 uppercase">
-                    Delaware, USA
+                    [ENTITY TBD] · Jurisdiction pending
                   </span>
                 </div>
                 <div className="flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-4 py-2">
@@ -627,8 +673,8 @@ export default function TermsOfService() {
               <p className="text-sm leading-relaxed text-indigo-900/80">
                 You keep full ownership of your documents. We provide a tool to create cryptographic
                 proof that your document existed at a certain time. We are a software provider, not
-                a law firm. Use the Service legally and responsibly. Delaware law governs any
-                disputes.
+                a law firm. Use the Service legally and responsibly. [GOVERNING LAW TBD] governs
+                any disputes.
               </p>
             </motion.div>
 

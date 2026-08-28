@@ -69,10 +69,14 @@
 ### R9 — 🟢 Minor copy precision
 - Counsel one-pager and evidence page already carry correct "is / is not." Carry the same discipline into all new paid-tier marketing copy.
 
-### R10 — 🟡 Unverified operating-entity claim in footer (NEW, 2026-08-29)
-- Footer copyright across all i18n files: **"© 2026 GIVEABIT LTD. REGISTERED IN THE SEYCHELLES."**
-- **We have no record of a Give A Bit Seychelles entity** anywhere in family docs (checked MASTER-BRAIN, HQ, git history). If the entity does not exist (or is not the true operator), the footer misstates the operator — a real legal exposure on a public site about to sell services.
-- **Fix:** Cam/counsel must confirm the entity; if it exists, add registration number to Terms; if not, change footer to "Give A Bit" without a jurisdiction claim. Flagged in LAWYER-BRIEF.md §5 Q9.
+### R10 — ✅ RESOLVED 2026-08-29: False Seychelles footer claim REMOVED
+- Prior footer claimed **"GIVEABIT LTD. REGISTERED IN THE SEYCHELLES"** across all i18n. **Cam confirmed no such entity exists.**
+- **Removed** the claim from all 7 language copyright strings (now: "© 2026 Give A Bit — family of Bitcoin-native tools. All rights reserved." — no entity, no jurisdiction). Also removed the misleading "Seychelles (Give A Bit HQ)" label from `JurisdictionPicker.jsx` and the "exceed eIDAS/ESIGN" overclaims in all 7 language legal footers.
+
+### R4 — ✅ RESOLVED 2026-08-29 (entity): No entity; free non-commercial service
+- Cam confirmed there is **no registered entity** for Satohash (or Give A Bit). Terms now use **[ENTITY TBD]** / **[GOVERNING LAW TBD]**. Server is in Germany. Identity intentionally undisclosed (anti-dox) pending product audit.
+- **Paid-tier + SLA + billing clauses re-framed as forward-looking drafts only** — not live/enforceable, since the payment portal is not built. Terms add a "current status: free, non-commercial service" notice.
+- Open for counsel: German Impressum/telemedia obligations for a free EU-facing service with no entity.
 
 ### R11 — 🟡 Premium pricing model mismatch (NEW, 2026-08-29)
 - **Mission & Scope draft v3** frames premium services as "a small Lightning payment, on the order of tens of satoshis purely to cover hosting." The **exec summary + pricing page** currently advertise $29/mo Professional and $299+/mo Enterprise subscription tiers.
@@ -85,10 +89,10 @@
 
 1. **Fix R1 everywhere** — remove unsubstantiated "compliance" claims. **✅ DONE 2026-08-29:** TrustCenter, EvidenceAdmissibility, Landing SVG, LegalValidator, TemplateLibrary, WebCapture, FAQ (en/es/fr/de/zh), landing i18n (7 langs), glossary pages (fr/zh), SEO keyword files (en + 6 langs), public pitch translations (6 langs), legal PDF generator — all rewritten to "supporting evidence / aligned / evidentiary." Compiled clean (esbuild EXIT 0 on all 7 edited JSX).
 2. **Add R2 indemnity + R3 billing/refund/SLA sections** to Terms. **✅ DONE 2026-08-29:** implemented in `TermsOfService.jsx` (sections 04 Indemnification, 07 Paid Tiers/Billing/Refunds, 08 Enterprise SLA, 10 Dispute Resolution, 11 International & Data; strengthened 06 Limitation + No Warranty).
-3. **Decide R4 entity + governing law** (Cam/counsel). **Open** — flagged in LAWYER-BRIEF.md §2.
+3. **Decide R4 entity + governing law** (Cam/counsel). **✅ RESOLVED 2026-08-29** — no entity; Terms carry [ENTITY TBD]; paid-tier clauses are forward-looking drafts. Remaining: counsel on German/EU obligations for a free EU-facing service (Impressum).
 4. **Add R5 dispute resolution + R6 DPA note + R7 warranty tightening.** **✅ DONE** (in TermsOfService.jsx §10, §11, §06).
 5. **Parent site Terms (R8)** — draft once Terms for Satohash is settled, reuse pattern.
-6. **R10 Seychelles entity claim** — confirm with Cam/counsel (LAWYER-BRIEF.md §5 Q9).
+6. **R10 Seychelles entity claim** — **✅ REMOVED 2026-08-29** (confirmed false by Cam; scrubbed from all i18n + JurisdictionPicker).
 
 Drafted language for 2–7: see `TERMS-INDEMNITY-STRENGTHENING.md`.
 Jurisdiction explainers (incl. LatAm + tax pillars): see `JURISDICTION-EXPLAINERS.md`.
