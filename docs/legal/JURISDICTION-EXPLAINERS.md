@@ -40,7 +40,9 @@ The **ESIGN Act** (Electronic Signatures in Global and National Commerce Act, 15
 > "Satohash provides independently verifiable cryptographic evidence of existence-at-a-time anchored to Bitcoin. It is not a qualified electronic time stamp under eIDAS and does not carry the eIDAS presumption of accuracy. In the EU, a formal qualified time stamp from an accredited Time Stamping Authority should be used where the law requires one; Satohash evidence can complement such an arrangement."
 
 ### B.4 Fine print (internal/counsel)
-- The only eIDAS provision that mentions blockchain is **Article 41** (electronic time stamps) and, in eIDAS 2.0, **Article 45b/45c** on the European Digital Identity Wallet and the Commission's mandate to examine decentralized ledgers — NOT an endorsement that any blockchain timestamp is automatically a QETS.
+- **Article 41(1)** is the honest hook: *"An electronic time stamp shall not be denied legal effect and admissibility as evidence in legal proceedings solely on the grounds that it is in an electronic form or that it does not meet the requirements of the qualified electronic time stamp."* (Verified against EUR-Lex consolidated text, incl. eIDAS 2.0.)
+- **Article 41(2)** presumption of accuracy of date/time and integrity of data attaches **only to qualified electronic time stamps** issued by a supervised/accredited QTSP (Art. 42). Satohash is not a QTSP, so our stamps do not carry that presumption. **Never imply otherwise.**
+- The regulation text **never uses the word "blockchain" or "distributed ledger"** (verified full-text by Rosa, 2026-08-29). eIDAS 2.0 (Reg. 2024/1183) added the "qualified electronic ledger" concept (Art. 45l) — do not claim that makes any blockchain timestamp automatically a QETS.
 - "Qualified" under eIDAS is a strict, regulated status. **Never** describe Satohash as "eIDAS-compliant" or "eIDAS-qualified." Claim *alignment with the goals* of trustworthy, long-term, verifiable time records.
 - For Member-State proceedings, evidentiary weight is decided by national civil-procedure law, not by eIDAS alone.
 
@@ -109,6 +111,42 @@ Retention, integrity, and timeliness: records must exist, be unchanged, and be p
 ### F.4 Fine print
 - The value is **evidentiary**, not a compliance certification. Regulators do not "certify" timestamps; they weigh evidence.
 - Pair with your retention/DLP policy so the practice is documented and auditable (a written policy makes evidence stronger).
+
+---
+
+## G. M&A / due diligence & data rooms 🆕
+
+### G.1 What it is
+Buyers, sellers, and counsel anchor diligence and data-room documents (VDR exports, financial statements, board approvals, closing bundles) to prove the exact state of the documents at a moment in time.
+
+### G.2 Why it matters
+Post-closing disputes often turn on *which version existed when*. A Bitcoin anchor proves that exact byte set existed by block N, independently verifiable by both sides' counsel — not dependent on the VDR vendor's own records.
+
+### G.3 Defensible claim
+> "Satohash anchors diligence and data-room documents to prove their state before closing — independently verifiable evidence of existence-at-a-time, useful in post-closing disputes over which version was in play. It is not a data room or a substitute for deal diligence."
+
+### G.4 Fine print
+- Proves existence/integrity of the bytes, **not** that the business or documents are valid/accurate — that stays with deal diligence.
+- Chain of custody (who held the file + the `.ots`) strengthens admissibility.
+- Do not imply Satohash authenticates document content or the financial soundness of the target.
+
+---
+
+## H. Family offices — long-horizon & multi-generational proof 🆕
+
+### H.1 What it is
+Family offices keep decades-long records: wills, trusts, deeds, asset registers, powers of attorney, tax filings, succession documents.
+
+### H.2 Why it matters
+Records held only in a proprietary system last only as long as that system. A Bitcoin-anchored hash survives vendor failure, corporate closure, and regime/jurisdiction change. The `.ots` is portable and verifiable forever with open tools — a multi-generational integrity layer that is self-custodied.
+
+### H.3 Defensible claim
+> "Satohash gives family offices a multi-generational integrity layer: asset documents, wills, and registers anchored to Bitcoin so their existence and state are provable for decades and verifiable forever — never held, custodied, or managed by us."
+
+### H.4 Fine print
+- We do **not** store, custody, or manage documents, keys, or assets. Self-custody of the original file and keys remains the family's responsibility — which is exactly why the open, portable proof matters.
+- Zero-knowledge design (hash only, no document bytes) means we cannot be compelled to disclose what we never held — a genuine privacy/indemnity shield for wealthy families.
+- Not an escrow, custodian, or succession-planning service.
 
 ---
 

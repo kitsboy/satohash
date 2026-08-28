@@ -62,13 +62,13 @@ The lawyer review will be organized around five pillars. Our drafted language an
 
 | Pillar | Legal relevance | Where covered |
 |---|---|---|
-| **M&A / due diligence** | Data-room + deal documents timestamped to prove state before closing; chain of custody for virtual data rooms | Terms §Service, Evidence Admissibility, Compliance explainer |
-| **Family offices** | Long-horizon record & asset-document keeping; wealth sovereignty; multi-generational proof; no custody | Terms §Service, Privacy, Indemnity |
-| **Latin markets** | Jurisdiction + legal standing in ES/PT-speaking countries; eIDAS-equivalents in LatAm; notarization culture differences | `JURISDICTION-EXPLAINERS.md` §E (LatAm, new) |
-| **Tax** | Record retention, audit trails, tax-document integrity across fiscal deadlines; how timestamps support tax compliance | Compliance explainer + `JURISDICTION-EXPLAINERS.md` §F (new) |
-| **Business / enterprise** | Commercial + enterprise use; indemnity for premium tiers | Terms §Indemnification, §Billing, §SLA, §Dispute |
+| **M&A / due diligence** | Data-room + deal documents timestamped to prove state before closing; chain of custody for virtual data rooms | `FIVE-PILLAR-LEGAL-CASE.md` §1 + `JURISDICTION-EXPLAINERS.md` §G |
+| **Family offices** | Long-horizon record & asset-document keeping; wealth sovereignty; multi-generational proof; no custody | `FIVE-PILLAR-LEGAL-CASE.md` §2 + `JURISDICTION-EXPLAINERS.md` §H |
+| **Latin markets** | Jurisdiction + legal standing in ES/PT-speaking countries; eIDAS-equivalents in LatAm; notarization culture differences | `FIVE-PILLAR-LEGAL-CASE.md` §3 + `JURISDICTION-EXPLAINERS.md` §E |
+| **Tax** | Record retention, audit trails, tax-document integrity across fiscal deadlines; how timestamps support tax compliance | `FIVE-PILLAR-LEGAL-CASE.md` §4 + `JURISDICTION-EXPLAINERS.md` §F |
+| **Business / enterprise** | Commercial + enterprise use; indemnity for premium tiers | `FIVE-PILLAR-LEGAL-CASE.md` §5 + Terms §04/§06/§07/§08/§10 |
 
-Counsel should treat the indemnity + paid-tier clauses (Pillar 5) and the LatAm/tax explainers (Pillars 3–4) as the highest-priority review items.
+**The consolidated five-pillar case, with per-pillar indemnity posture and a counsel sign-off checklist, is in `FIVE-PILLAR-LEGAL-CASE.md`.** Counsel should treat the indemnity + paid-tier clauses (Pillar 5) and the LatAm/tax explainers (Pillars 3–4) as the highest-priority review items.
 
 ## 6. What we are NOT asking for (defaults)
 
