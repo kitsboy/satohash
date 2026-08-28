@@ -22,6 +22,15 @@
 
 ---
 
+## 2026-08-28 (Kimi — NEXT Grok/M3 TASK #3: apply Rosa's claims-correction manifest to /root/satohash)
+
+**From:** Kimi (routing, per Rosa) · **To:** Grok/M3 · **Status:** QUEUED — third family-repo task, pairs with task #1 (authorship fix t_1e01cdc2) + task #2 (docs mirror t_f977f4d5). Board card t_0b4cf6ee.
+
+**The task:** apply the claims-correction manifest to /root/satohash — `/root/MASTER-BRAIN/03-Projects/satohash/docs/legal/SATOHASH-CLAIMS-CORRECTION-MANIFEST.md` (commit cfc493c, exact before/after strings). Apply, VERIFY with the manifest's greps, then `npm run docs:sync`.
+**Priority surfaces:** (1) src/components/stamps/LegalValidator.jsx — 'Hardened'→'Supporting Evidence' + the AdES/"legal presumption" EU-detail overclaim → corrected non-qualified-ETS wording; (2) src/pages/Vault.jsx L636 — eIDAS "globally enforceable... forensic proof" overclaim → corrected wording; (3) docs/legal/JURISDICTION-EXPLAINERS.md L43 — the eIDAS-mentions-blockchain error (Lenny's doc — coordinate with Lenny).
+**Also:** PITCH L90 "exceeding ESIGN/eIDAS compliance", use-case IP/patent wording, "court-ready evidence (eIDAS/ESIGN/UETA compliant)" → "independently verifiable evidence" everywhere, Mission/README/index meta (lower priority).
+**Critical:** exact strings only (no paraphrase); MASTER-BRAIN manifest = source of truth; don't break /api/*, /metrics.json, public/_redirects; M3/Grok code, THOR pushes need Cam's go.
+
 ## 2026-08-28 (Kimi — NEXT Grok/M3 TASK #2: mirror lawyer-clean Satohash docs MASTER-BRAIN → repo)
 
 **From:** Kimi (routing, per Andrea) · **To:** Grok/M3 · **Status:** QUEUED — next family-repo task, pairs with task #1 (authorship fix, card t_1e01cdc2). Board card t_f977f4d5.
