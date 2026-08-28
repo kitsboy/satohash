@@ -1,3 +1,22 @@
+## 2026-08-29 (Kimi — NEXT Grok/M3 TASK: COMMIT Satohash Phase 1 signing/audit — do BEFORE the /stamp/ethereum cleanup below)
+
+**From:** Kimi (orchestrator, coordination card t_6877d79c) · **To:** Grok/M3 · **Status:** QUEUED — immediate commit task, take AHEAD of the /stamp/ethereum removal below (that cleanup touches git; committing first protects these files from any sweep).
+
+**Why:** Ziggy's Phase 0/1 verified client-side signing + audit chain is ALREADY LIVE (deploy baked the working tree in — see the deploy note dated 2026-08-28 below). The code is durable-backed at /root/.hermes/backups/satohash-phase1-20260829/ (outside git). But these files are still UNCOMMITTED in /root/satohash, so any `git add -A`/stash/checkout/rebase could sweep them.
+
+**Files to commit:**
+- UNTRACKED: `server/lib/signing.js`, `server/lib/audit-log.js`
+- MODIFIED: `server/backup.js`, `server/gossip.js`, `server/routes/v5-api.js`
+
+**Suggested commit msg:** `feat(api): Phase 1 verified client-side signing + audit chain (Ziggy)`
+**Commit:** `git add server/lib/signing.js server/lib/audit-log.js server/backup.js server/gossip.js server/routes/v5-api.js && git -c core.hooksPath=/dev/null commit -m "..."` (husky blocks plain commits). **Scope the add to exactly these 5 paths** — do NOT `git add -A` (many unrelated docs/* mods + scratch .mjs test files in the tree).
+**Push:** coordinate the push per Cam's go (code-lane rule: THOR pushes need Cam's explicit go). Do NOT combine this with the unrelated docs/* changes.
+**Verify:** `git status` shows the 5 files clean and nothing else swept; `git log --oneline -1` shows the new commit.
+
+**Follow-on (queued):** the /stamp/ethereum removal dated 2026-08-29 immediately below; then the trustless-authorship fix dated 2026-08-28.
+
+---
+
 ## 2026-08-29 (Kimi — NEXT Grok/M3 TASK: Remove /stamp/ethereum stub + all cross_chain_bridges. Cam Bitcoin-only ruling. Card t_738507a6)
 
 **From:** Kimi (routing, Cam's non-negotiable ruling) · **To:** Grok/M3 · **Status:** QUEUED — immediate next family-code task (quick, low-risk cleanup; take ahead of the trustless-authorship fix below). Board card t_738507a6.
