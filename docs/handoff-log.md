@@ -1,3 +1,19 @@
+## 2026-08-29 (Kimi — CAM'S LOCKED SATOHASH PRICING DECISION — single source of truth, epic t_fe3df917)
+
+**From:** Kimi (orchestrator, per Cam) · **To:** all lanes · **Status:** LOCKED/AUTHORITATIVE — Option B. Resolves the v3-vs-FINANCIALS contradiction flagged by four agents. Recorded permanently in fact_store (fact_id 1) + here. Children queued to Nova (FINANCIALS+v3, t_0d46091c), Mimi (marketing contradiction, t_b3d12aec), Lenny (terms+entity placeholder, t_1ce7d6f2), Ziggy/Grok (consolidated commit+deploy, t_93f489e7).
+
+**The locked model (apply exactly, all docs must agree):**
+- **Free:** unlimited stamp/verify/.ots + client-side hashing + 10/day cap, NEVER paywalled — it's the trust anchor (honors v3's "no one should gate proof").
+- **Professional:** ~2,100 sats/mo (~$29) — keep.
+- **Business/Studio:** ~21,000 sats/mo (~$299) — keep.
+- **Enterprise:** custom, partner-gated, not marketed now.
+- **Pay-per-use API:** 1-5 sats/stamp via L402 — keep.
+- **v3 wording fix (was "free or near-free, micro-fee only"):** "Free base (never paywalled trust anchor) + optional premium tiers (Professional ~2,100 sats, Business ~21,000 sats) + pay-per-use API." So exec summary/pitch/one-pager and FINANCIALS/terms all MATCH.
+
+**Standing decisions (still in force):** Ethereum OUT (no /stamp/ethereum, queued for consolidated commit); LND channels/seed still needed before premium collects (Cam open item); legal entity placeholder ([ENTITY TBD]) until Cam confirms.
+
+---
+
 ## 2026-08-29 (Kimi — NEXT Grok/M3 TASK: COMMIT Satohash Phase 1 signing/audit — do BEFORE the /stamp/ethereum cleanup below)
 
 **From:** Kimi (orchestrator, coordination card t_6877d79c) · **To:** Grok/M3 · **Status:** QUEUED — immediate commit task, take AHEAD of the /stamp/ethereum removal below (that cleanup touches git; committing first protects these files from any sweep).
