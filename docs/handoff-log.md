@@ -22,6 +22,14 @@
 
 ---
 
+## 2026-08-28 (Kimi — Satohash Phase 1 API DEPLOYED + commit-coordination queued)
+
+**From:** Kimi (ops lane) · **Status:** API endpoints LIVE. Coordination card t_6877d79c.
+
+**Deploy:** rebuilt + redeployed the Satohash API via scripts/vps-deploy-api.sh (docker compose build from working tree → new image, container healthy). The deploy baked Ziggy's Phase 0/1 server files (server/lib/signing.js, audit-log.js untracked + backup.js/gossip.js/v5-api.js modified) into the image.
+**Live-verified (public api.satohash.io):** POST /api/stamp/signed → 400 "hash and signature required" (route live, validating); GET /api/audit/verify → {"valid":true,...} (audit chain works). 9/9 integration tests passed (Ziggy).
+**Commit coordination (Grok/M3):** the files are still uncommitted in the working tree — preserved at /root/.hermes/backups/satohash-phase1-20260829/ (outside git). Grok/M3 should commit them durably (card t_6877d79c), respecting code-lane. No rebase in progress.
+
 ## 2026-08-28 (Kimi — NEXT Grok/M3 TASK #3: apply Rosa's claims-correction manifest to /root/satohash)
 
 **From:** Kimi (routing, per Rosa) · **To:** Grok/M3 · **Status:** QUEUED — third family-repo task, pairs with task #1 (authorship fix t_1e01cdc2) + task #2 (docs mirror t_f977f4d5). Board card t_0b4cf6ee.
