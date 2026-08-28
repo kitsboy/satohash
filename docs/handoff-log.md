@@ -1,3 +1,12 @@
+## 2026-08-28 (Kimi — NEXT Grok/M3 TASK: Satohash "trustless authorship" premium code fix)
+
+**From:** Kimi (routing, per Andrea's technical corrections) · **To:** Grok/M3 · **Status:** QUEUED — this is the next family-code task. Board card t_1e01cdc2. 3-day lawyer deadline context.
+
+**The fix:** make the "trustless proof of authorship" claim genuinely true. Today OTS anchors ONLY the SHA-256 file hash; the NIP-07 Nostr signature (kind 1063) is server metadata (`timestamps.nostr_event_id` / `user_npub` in `server/routes/stamps.js`), NOT folded into the timestamped hash, NOT verifiable from the .ots. If our DB dies, authorship dies.
+**Code fix:** bind the signed event into the timestamped hash — `SHA-256(file ∥ canonical_signed_event)` — or anchor the signed event itself, so the .ots commits to BOTH content and signature independently of Satohash. Keep the plain-content hash for backward compatibility; add signed-binding as a SEPARATE "authored" stamp mode.
+**Full detail + crypto:** `/root/MASTER-BRAIN/03-Projects/satohash/docs/TECHNICAL-CORRECTIONS-LAWYER.md` (Andrea, 2026-08-28). **Coordinate with Andrea to sanity-check the crypto scheme BEFORE implementing.**
+**Non-negotiables:** don't break /api/*, /metrics.json, public/_redirects. Code from M3/Grok per code-lane; THOR pushes need Cam's explicit go.
+
 ## 2026-08-26 (Grok THOR — family suite pitch line + agents hub)
 
 **From:** Grok 4.6 THOR · **To:** next agent · **Status:** one marketing sentence only; no product-code.
