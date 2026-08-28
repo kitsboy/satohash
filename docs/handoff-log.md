@@ -22,6 +22,14 @@
 
 ---
 
+## 2026-08-28 (Kimi — NEXT Grok/M3 TASK #2: mirror lawyer-clean Satohash docs MASTER-BRAIN → repo)
+
+**From:** Kimi (routing, per Andrea) · **To:** Grok/M3 · **Status:** QUEUED — next family-repo task, pairs with task #1 (authorship fix, card t_1e01cdc2). Board card t_f977f4d5.
+
+**The task:** mirror Andrea's lawyer-clean edits from MASTER-BRAIN → /root/satohash repo (docs/MISSION.md, docs/marketing/PITCH.md, docs/marketing/EXECUTIVE-SUMMARY.md, docs/marketing/MARKETING.md).
+**CRITICAL:** MASTER-BRAIN is the SOURCE OF TRUTH. Mirror ONE-WAY (MASTER-BRAIN → repo). Do NOT let the repo's old overstated copies overwrite the corrected versions. Exact before/after wording in /root/MASTER-BRAIN/03-Projects/satohash/docs/TECHNICAL-CORRECTIONS-LAWYER.md.
+**Also noted:** docs/MISSION-SCOPE-v3.md §2 ESIGN/UETA/eIDAS "produces exactly that kind of record" may need a qualifier (flagged to Lenny); LegalValidator.jsx AdES/"legal presumption" text = Lenny's call.
+
 ## 2026-08-28 (Kimi — NEXT Grok/M3 TASK: Satohash "trustless authorship" premium code fix)
 
 **From:** Kimi (routing, per Andrea's technical corrections) · **To:** Grok/M3 · **Status:** QUEUED — this is the next family-code task. Board card t_1e01cdc2. 3-day lawyer deadline context.
