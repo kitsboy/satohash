@@ -32,7 +32,7 @@ Dynamic meta via `usePageMeta` + `src/seo/pageMeta.js` — titles and descriptio
 | bitcoin document notarization | Transactional | / |
 | free OpenTimestamps | Informational | /faq, /guides |
 | proof of existence blockchain | Commercial | /comparison |
-| eIDAS compliant timestamp | Commercial | /security |
+| eIDAS-aligned evidence timestamp | Commercial | /security |
 | NIP-05 nostr identity | Informational | /identity |
 | embed bitcoin proof badge | Commercial | /widgets |
 

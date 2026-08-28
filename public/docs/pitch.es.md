@@ -83,7 +83,7 @@ In the spirit of Bitcoin, **F.O.S.S.** is the only way to build true trust infra
 
 ## 🚀 The Premium Use Cases
 
-*   **Legal Tech & Notaries**: Mathematically prove contract drafts existed before disputable dates, exceeding ESIGN and eIDAS compliance.
+*   **Legal Tech & Notaries**: Mathematically prove contract drafts existed before disputable dates — supporting evidence aligned with ESIGN and eIDAS electronic-record concepts (not a substitute for a qualified time stamp or notarial act).
 *   **Freelance IP Protection**: Hash design briefs, illustrations, or copy before delivering to clients to secure proof of creation.
 *   **AI Output Attestation**: Capture and timestamp large language model outputs immediately upon generation to prove provenance and combat future copyright claims.
 *   **Git Codebase Notarization**: Secure your codebase release states with one-click git tag timestamping, generating permanent build audit trails.

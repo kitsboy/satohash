@@ -24,7 +24,7 @@ Satohash is a free, no-account browser tool. You drop in a document, contract, p
 
 **What it's good for right now:** proving a document, photo, manuscript, or dataset existed by a certain date — priority disputes, "I had this first," audit trails, discovery dates for research and IP. Frameworks like the US ESIGN Act and UETA, and the EU's eIDAS regulation, recognize timestamped electronic records as admissible evidence; Satohash produces exactly that kind of record. (Worth saying plainly: *admissibility isn't the same as automatic proof of a specific legal conclusion* — a court still weighs evidence in context. Satohash gives you strong, independently verifiable evidence of a date; it isn't a substitute for legal advice about your specific situation.)
 
-Cost today: free. The team has floated a possible future micro-fee (a small Lightning payment, on the order of tens of satoshis) purely to cover hosting — the anchoring mechanism and its guarantees would stay identical either way.
+Cost today: **free — and that free base is the permanent trust anchor, never paywalled.** The reconciled, Cam-locked model: **Free base (unlimited stamp/verify/.ots + client-side hashing, 10/day cap) + optional premium tiers (Professional ~2,100 sats/mo, Business ~21,000 sats/mo) + a pay-per-use API (1–5 sats/stamp via L402).** The anchoring mechanism and its guarantees are identical across every tier.
 
 ---
 
@@ -89,7 +89,7 @@ This single upgrade is the hinge the entire use-case map below swings on.
 
 Bitcoin is the most battle-tested public ledger in existence. OpenTimestamps is the open protocol that writes facts to it. Private-key cryptography is the missing piece that turns an anonymous fact into an *authored* one. Put together, they form a record that is trustless, sovereign, and quiet by design: your document never leaves your device, only a fingerprint ever touches the chain, and the resulting proof outlives Satohash itself, any single company, and any single government.
 
-**Scope:** grow Satohash from a tool that proves *existence* into a layer that proves *authorship and origin* — free or near-free, available to anyone, in any industry, with no notary, no subscription, and no permission required. The legal standards already exist (ESIGN, UETA, eIDAS). The chain already exists. The work left is making this feel as simple, obvious, and trustworthy as reaching for a pen.
+**Scope:** grow Satohash from a tool that proves *existence* into a layer that proves *authorship and origin* — a **free base (never paywalled) plus optional premium tiers** (Professional ~2,100 sats, Business ~21,000 sats) plus a **pay-per-use API**, available to anyone, in any industry, with no notary and no permission required. The legal standards already exist (ESIGN, UETA, eIDAS). The chain already exists. The work left is making this feel as simple, obvious, and trustworthy as reaching for a pen.
 
 ---
 

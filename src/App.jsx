@@ -616,7 +616,7 @@ function App() {
   usePageMeta({
     title: null,
     description:
-      'Stamp any document on the Bitcoin blockchain. Free, private, court-admissible proof of existence.'
+      'Stamp any document on the Bitcoin blockchain. Free, private, independently verifiable proof of existence.'
   })
 
   const [isOffline, setIsOffline] = useState(!navigator.onLine)

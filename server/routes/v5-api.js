@@ -15,6 +15,8 @@ import db from '../db.js'
 import logger from '../logger.js'
 import redis from '../cache.js'
 import { paywallMiddleware } from '../middleware.js'
+import { verifySignature, verifyWebCryptoP256, buildSigningMessage } from '../lib/signing.js'
+import { audit } from '../lib/audit-log.js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const router = Router()
@@ -97,17 +99,6 @@ try {
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       fail_count INTEGER DEFAULT 0
     );
-    CREATE TABLE IF NOT EXISTS cross_chain_bridges (
-      id TEXT PRIMARY KEY,
-      stamp_id TEXT NOT NULL,
-      chain TEXT NOT NULL,
-      tx_hash TEXT,
-      status TEXT DEFAULT 'pending',
-      explorer_url TEXT,
-      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      confirmed_at DATETIME
-    );
-    CREATE INDEX IF NOT EXISTS idx_bridges_stamp ON cross_chain_bridges(stamp_id);
   `)
 } catch (e) {
   logger.warn('v5 schema ensure: %s', e.message)
@@ -625,7 +616,6 @@ router.get('/stamps/:id/proof-package', (req, res) => {
     cosignatures: stamp.cosignatures ? safeJson(stamp.cosignatures) : [],
     chains: {
       bitcoin_ots: stamp.status,
-      ethereum: null,
       nostr: stamp.nostr_event_id || null
     }
   })
@@ -654,14 +644,6 @@ router.get('/stamps/:id/chains', (req, res) => {
   publicCache(res)
   const stamp = db.prepare('SELECT * FROM timestamps WHERE id = ?').get(req.params.id)
   if (!stamp) return res.status(404).json({ error: 'not found' })
-  let bridges = []
-  try {
-    bridges = db
-      .prepare(`SELECT * FROM cross_chain_bridges WHERE stamp_id = ? ORDER BY created_at`)
-      .all(req.params.id)
-  } catch {
-    bridges = []
-  }
   res.json({
     stamp_id: stamp.id,
     hash: stamp.hash,
@@ -670,7 +652,6 @@ router.get('/stamps/:id/chains', (req, res) => {
       block_height: stamp.bitcoin_block_height,
       confirmed_at: stamp.confirmed_at
     },
-    bridges,
     nostr_event_id: stamp.nostr_event_id || null
   })
 })
@@ -769,6 +750,95 @@ router.post('/stamp/cosign', async (req, res) => {
   res.json({ id, cosignatures: list, status: stamp.status })
 })
 
+// ─── 18b. POST /api/stamp/signed — VERIFIED client-side signing (Phase 1) ──
+// Sovereign-first: the private key never leaves the user's device. The browser
+// signs the canonical message satohash-sign:v1:{hash}:{nonce}:{ts} with its own
+// key (secp256k1 / NIP-07, or P-256 WebCrypto). The server verifies the signature
+// against the caller's PUBLIC key before accepting the proof. Non-repudiable.
+router.post('/stamp/signed', paywallMiddleware, async (req, res) => {
+  const {
+    hash,
+    filename,
+    signature,
+    pubkey,
+    pubkeyJWK,
+    nonce,
+    ts,
+    curve
+  } = req.body || {}
+
+  if (!hash || !signature) {
+    return res.status(400).json({ error: 'hash and signature required' })
+  }
+  if (!nonce || !ts) {
+    return res.status(400).json({ error: 'nonce and ts required (anti-replay)' })
+  }
+
+  // Anti-replay: reject timestamps more than 5 minutes in the past/future
+  const signedAt = Date.parse(ts)
+  if (Number.isNaN(signedAt)) {
+    return res.status(400).json({ error: 'invalid ts (ISO8601 required)' })
+  }
+  const skew = Math.abs(Date.now() - signedAt)
+  if (skew > 5 * 60 * 1000) {
+    return res.status(400).json({ error: 'ts too skewed (max 5 min) — re-sign' })
+  }
+
+  // Verify the signature
+  let result
+  if (curve === 'P-256' || (pubkeyJWK && pubkeyJWK.x)) {
+    result = verifyWebCryptoP256({ hash, nonce, ts, signature, pubkeyJWK })
+  } else {
+    result = verifySignature({ hash, nonce, ts, signature, pubkey, curve })
+  }
+
+  if (!result.valid) {
+    logger.warn(`✍️ Verified-signing REJECTED [${req.id}]: ${result.error || 'bad signature'}`)
+    audit('verified-signing.reject', 'signature', {
+      hash: String(hash).slice(0, 16),
+      curve: result.curve,
+      reason: result.error || 'invalid signature',
+      ip: req.ip
+    })
+    return res.status(400).json({ error: 'signature verification failed', details: result.error || 'invalid signature', curve: result.curve })
+  }
+
+  const clientId = req.headers['x-satohash-client'] || 'signed'
+  const r = await stampHashInternal(hash, filename || 'signed-document', clientId)
+  if (!r.ok) return res.status(r.httpStatus || 500).json(r)
+
+  // Store the verified signer metadata on the stamp (non-repudiable record)
+  const signerMeta = {
+    pubkey: result.pubkey || (pubkeyJWK ? `${pubkeyJWK.x.slice(0, 16)}…` : null),
+    curve: result.curve,
+    nonce,
+    ts,
+    message: buildSigningMessage({ hash, nonce, ts }),
+    verified_at: new Date().toISOString()
+  }
+  try {
+    db.prepare('UPDATE timestamps SET cosignatures = ? WHERE id = ?').run(
+      JSON.stringify([{ type: 'verified-signer', ...signerMeta }]),
+      r.id
+    )
+  } catch (e) {
+    logger.warn('verified-signer meta store failed: %s', e.message)
+  }
+
+  res.json({
+    ...r,
+    verified_signature: true,
+    signer: signerMeta
+  })
+  audit('verified-signing.accept', 'signature', {
+    stamp_id: r.id,
+    hash: String(hash).slice(0, 16),
+    curve: signerMeta.curve,
+    pubkey: signerMeta.pubkey,
+    ip: req.ip
+  })
+})
+
 // ─── 8 enhance: POST /api/verify with base64 ots ──────────
 // (primary /api/verify lives in index.js — add parallel JSON path)
 router.post('/verify/json', async (req, res) => {
@@ -810,34 +880,6 @@ router.post('/verify/json', async (req, res) => {
   res.status(400).json({ error: 'provide hash or ots_base64' })
 })
 
-// ─── 57. POST /api/stamp/ethereum (Sepolia stub) ──────────
-router.post('/stamp/ethereum', paywallMiddleware, async (req, res) => {
-  const { hash, stamp_id } = req.body || {}
-  if (!hash || !/^[a-f0-9]{64}$/i.test(hash)) {
-    return res.status(400).json({ error: 'hash required' })
-  }
-  const id = uuidv4()
-  const tx = `0x${crypto
-    .createHash('sha256')
-    .update(hash + id)
-    .digest('hex')}`
-  try {
-    db.prepare(
-      `INSERT INTO cross_chain_bridges (id, stamp_id, chain, tx_hash, status, explorer_url)
-       VALUES (?, ?, 'sepolia', ?, 'pending', ?)`
-    ).run(id, stamp_id || null, tx, `https://sepolia.etherscan.io/tx/${tx}`)
-  } catch (e) {
-    return res.status(500).json({ error: e.message })
-  }
-  res.json({
-    chain: 'sepolia',
-    tx_hash: tx,
-    status: 'pending',
-    explorer: `https://sepolia.etherscan.io/tx/${tx}`,
-    note: 'testnet calldata anchor stub — wire RPC later'
-  })
-})
-
 // ─── 90. webhooks register (public-ish with family key) ───
 router.post('/webhooks/register', paywallMiddleware, (req, res) => {
   const { url, events } = req.body || {}
@@ -874,6 +916,7 @@ router.post('/admin/keys', (req, res) => {
     label,
     req.body?.tier || 'public'
   )
+  audit('api-key.mint', 'api_key', { key_id: id, label, tier: req.body?.tier || 'public' })
   res.status(201).json({
     id,
     key: raw,
@@ -966,12 +1009,28 @@ router.get('/openapi.json', (req, res) => {
       '/api/public/network': { get: { summary: 'Bitcoin network' } },
       '/api/public/version': { get: { summary: 'Build version' } },
       '/api/stamp': { post: { summary: 'Create OTS stamp' } },
+      '/api/stamp/signed': { post: { summary: 'Create verified (client-signed) stamp' } },
       '/api/stamps': { get: { summary: 'List stamps' } },
       '/api/stamps/recent': { get: { summary: 'Recent stamps' } },
       '/api/stamps/batch': { post: { summary: 'Batch stamp' } },
       '/api/verify': { post: { summary: 'Verify hash or OTS' } },
+      '/api/audit/verify': { get: { summary: 'Verify tamper-evident audit chain integrity' } },
       '/api/stamps/{id}/proof-package': { get: { summary: 'Full proof package' } }
     }
+  })
+})
+
+// ─── Audit chain integrity check (public — for auditors/compliance) ─────────
+router.get('/audit/verify', async (req, res) => {
+  const { verifyAuditChain } = await import('../lib/audit-log.js')
+  const result = verifyAuditChain()
+  publicCache(res)
+  res.json({
+    valid: result.valid,
+    entries: result.entries,
+    error: result.error,
+    checked_at: new Date().toISOString(),
+    note: 'SHA-256 hash chain over append-only audit log; any prior edit breaks the chain.'
   })
 })
 

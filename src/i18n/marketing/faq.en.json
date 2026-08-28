@@ -31,7 +31,7 @@
       "id": "cost",
       "category": "basics",
       "q": "How much does it cost?",
-      "a": "Stamping is free today. No account, no credit card, no Lightning invoice. If we flip a paywall later, you would pay a small Lightning fee to us — the proof still anchors to Bitcoin via OpenTimestamps. We have not flipped that flag."
+      "a": "Stamping is free today and the free base tier is the permanent, never-paywalled trust anchor — no account, no credit card, no Lightning invoice. Optional premium tiers (Professional ~2,100 sats/mo, Business ~21,000 sats/mo) and a pay-per-use API are built and staged; they launch paid only once the Lightning rails are funded and tested. We have not switched any of that on."
     },
     {
       "id": "legal",

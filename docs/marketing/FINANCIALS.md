@@ -1,10 +1,28 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 260) · **Updated:** 2026-08-27
+> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 264) · **Updated:** 2026-08-28
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Satohash — FINANCIALS (Approximate)
 
 > **Disclaimer:** These are approximate projections for planning purposes only, not audited financial statements.
+
+---
+
+## Pricing Model — LOCKED (single source of truth)
+
+> Decided by **Cam** (epic t_fe3df917, **Option B**). Every Satohash doc, marketing copy, legal term, and revenue projection must state exactly this model. No other pricing wording is authoritative.
+
+| Tier | Price | Notes |
+|---|---|---|
+| **Free** | $0 — unlimited stamp / verify / `.ots` + client-side hashing, 10/day cap | **Never paywalled** — permanent trust anchor. |
+| **Professional** | ~2,100 sats/mo (~$29) | Individual, high-volume stamping. |
+| **Business / Studio** | ~21,000 sats/mo (~$299) | Teams and studios. |
+| **Enterprise** | Custom | Partner-gated, not marketed now. |
+| **Pay-per-use API** | 1–5 sats/stamp via L402 | Developer / programmatic access. |
+
+**Canonical pricing sentence:** *"Free base (never paywalled trust anchor) + optional premium tiers (Professional ~2,100 sats, Business ~21,000 sats) + pay-per-use API."*
+
+> Billing rails (L402/LND) are built but **not yet switched on** — premium tiers launch paid only once Lightning channels are funded and tested. The free anchor is live today.
 
 ---
 
@@ -105,6 +123,6 @@
 
 ---
 
-*Last updated: 2026-06-10 (handoff prep) | Contact: hello@giveabit.io*
+*Last updated: 2026-08-29 (Cam's locked pricing model applied — see Pricing Model above) | Contact: hello@giveabit.io*
 
-**Note for handoff**: These are planning approximations only. Recent work added production-grade Docker/PM2/PWA paths, richer client-side offline + Lightning components, and Nostr integration — all of which improve the reliability and perceived value of the paid tiers without materially changing the cost structure above. Gross margins remain excellent due to the near-zero marginal cost of OTS anchoring via public calendars.
+**Note for handoff**: These are planning approximations only. Recent work added production-grade Docker/PM2/PWA paths, richer client-side offline + Lightning components, and Nostr integration — all of which improve the reliability and perceived value of the paid tiers without materially changing the cost structure above. Gross margins remain excellent due to the near-zero marginal cost of OTS anchoring via public calendars. **Pricing model is locked by Cam (single source of truth, above): Free anchor (never paywalled) + Professional ~2,100 sats/mo + Business ~21,000 sats/mo + pay-per-use API (1–5 sats/stamp via L402); Enterprise is custom/partner-gated and not marketed now.**

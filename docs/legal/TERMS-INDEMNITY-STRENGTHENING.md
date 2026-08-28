@@ -46,17 +46,25 @@ This indemnification survives termination of your use of the Service. We may, at
 
 ## 3. Subscription, Payments & Refunds (NEW — R3)
 
-**Section — Paid Tiers, Billing & Refunds**
+**Section — Paid Tiers, Billing & Refunds** *(aligned 2026-08-29 to Cam's locked tier model — see FINANCIALS.md)*
 
-1. **Subscriptions.** Professional and Enterprise tiers are billed on the periodic basis shown at sign-up (monthly unless otherwise agreed). Subscription fees are non-refundable except as set out below.
+0. **Tier model.** Satohash offers a permanent Free tier plus optional paid tiers. Prices are quoted in satoshis (sats) with approximate US-dollar equivalents for convenience:
+   - **Free — permanent trust anchor:** unlimited stamping / verification / `.ots` downloads with client-side hashing, subject to a **10-stamps-per-day cap**. Never paywalled — it is the trust anchor and will not be removed, made conditional on payment, or degraded to a marketing hook.
+   - **Professional:** ~2,100 sats/month (≈ $29). Individual, high-volume stamping.
+   - **Business / Studio:** ~21,000 sats/month (≈ $299). Teams and studios.
+   - **Enterprise:** custom, partner-gated, not marketed at this time.
+   - **Pay-per-use API:** 1–5 sats/stamp via Lightning (L402); final rate published in the app.
+1. **Subscriptions.** Paid tiers are billed on the periodic basis shown at sign-up (monthly unless otherwise agreed). Subscription fees are non-refundable except as set out below.
 2. **Automatic renewal.** Unless you cancel before the end of the current billing period, your subscription renews automatically at the then-current price. You may cancel at any time in your account settings or by contacting hello@giveabit.io; cancellation takes effect at the end of the current paid period and does not entitle you to a pro-rated refund except as required by law.
-3. **Free tier.** The free tier is offered without charge, subject to reasonable usage limits published in the application. We may adjust or discontinue the free tier with reasonable notice.
+3. **Free tier.** As described above — permanent trust anchor, 10/day cap, never paywalled.
 4. **Price changes.** We may change prices for paid tiers with at least 30 days' notice. Continued use after the price change takes effect constitutes acceptance of the new price.
 5. **Refunds.** If a paid Service feature fails materially and we cannot remedy it within 30 days of written notice, you may request a refund of the fees paid for the then-current period for the affected feature. All refund requests are handled at our discretion unless required by law. Nothing in this section limits any statutory consumer rights you may have.
 6. **Payments & Lightning.** Where a payment is made via Lightning Network (L402 / BOLT-12), the transaction is final and irreversible by design of the Bitcoin network. Refunds, where available, are issued as new payments, not chargebacks.
 7. **Taxes.** You are responsible for any taxes applicable to your use of the Service.
 
-**Plain language:** Paid plans auto-renew monthly until you cancel. Free stamps stay free. If a paid feature breaks and we can't fix it in 30 days, we'll consider a refund. Lightning payments can't be reversed — that's the point.
+> ⚠️ **Lightning/LND dependency (Cam's open item):** Paid tiers can be priced in sats in the Terms, but **collection depends on LND channels being funded and tested.** Until Lightning channels are funded, paid tiers may not be activatable; the Free tier stays live regardless. Do NOT market paid tiers as purchasable until the LND rail is confirmed.
+
+**Plain language:** Free stamps stay free, forever — that's the trust anchor. Paid plans quote a price in sats and auto-renew until you cancel. If a paid feature breaks and we can't fix it in 30 days, we'll consider a refund. Lightning payments can't be reversed — that's the point.
 
 ---
 
@@ -79,7 +87,7 @@ For Enterprise accounts, we offer a best-efforts service availability target of 
 **Section — Dispute Resolution**
 
 1. **Informal resolution first.** Before filing any claim, you agree to notify us in writing at hello@giveabit.io and give us 30 days to resolve the dispute informally.
-2. **Governing law & forum.** These Terms are governed by the laws of the State of Delaware, United States, without regard to conflict-of-law principles. Subject to the informal-resolution step, any claim not resolved informally shall be brought exclusively in the state or federal courts located in Delaware, and you consent to the personal jurisdiction of those courts.
+2. **Governing law & forum.** These Terms are governed by the laws of **[GOVERNING LAW TBD — pending legal-entity confirmation]**, without regard to conflict-of-law principles. Subject to the informal-resolution step, any claim not resolved informally shall be brought exclusively in the state or federal courts located in **[JURISDICTION TBD — pending legal-entity confirmation]**, and you consent to the personal jurisdiction of those courts.
 3. **Small claims.** Either party may bring an individual claim in small-claims court if it qualifies, rather than through the courts referenced above.
 4. **No class actions.** To the extent permitted by law, disputes shall be resolved on an individual basis; you waive the right to participate in any class or representative action against us.
 5. **Survival.** This section survives termination of these Terms.
@@ -100,7 +108,7 @@ For Enterprise accounts, we offer a best-efforts service availability target of 
 
 ## 7. Entity & Effective Date (R4 — pending Cam/counsel)
 
-- Replace "**Satohash Inc.**" with the **actual legal entity** that operates the service (see LAWYER-BRIEF.md §2 — this is an open decision).
+- Replace "**Satohash Inc.**" with the **actual legal entity** that operates the service (see LAWYER-BRIEF.md §2 — this is an open decision). **STATUS 2026-08-29:** all "Satohash Inc." assertions in `src/pages/legal/TermsOfService.jsx` + `PrivacyPolicy.jsx` now use the clearly-flagged placeholder **`[ENTITY TBD]`** (and `[GOVERNING LAW TBD]` for jurisdiction), so nothing false ships while the entity decision is open. Swap in the confirmed entity name + governing law when Cam confirms.
 - Bump **Effective Date** and **Last Reviewed** to the launch date; add a version note (e.g., "v5.0.0-ELITE legal, rev 2026-08").
 
 ---

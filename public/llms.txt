@@ -1,6 +1,6 @@
 # Satohash
 
-> Free Bitcoin document stamping. Drop any file, get a permanent, Bitcoin-anchored proof of existence in under 60 seconds. Zero-knowledge — your file never leaves your device. OpenTimestamps + Bitcoin = immutable, court-ready evidence (eIDAS / ESIGN / UETA compliant).
+> Free Bitcoin document stamping. Drop any file, get a permanent, Bitcoin-anchored proof of existence in under 60 seconds. Zero-knowledge — your file never leaves your device. OpenTimestamps + Bitcoin = immutable, independently verifiable evidence of existence (aligns with the framework of eIDAS / ESIGN / UETA).
 
 ## What Satohash is
 
@@ -9,7 +9,7 @@ Satohash is a free, private service that anchors cryptographic fingerprints (SHA
 - **Free today** — no account, no credit card, no Lightning required (`REQUIRE_LIGHTNING=false`)
 - **Zero-knowledge** — hashing happens locally in the browser; only the fingerprint is transmitted
 - **Bitcoin-only** — proofs anchor to the Bitcoin blockchain via OpenTimestamps calendars (Alice, Bob, Finney)
-- **Court-ready** — designed to satisfy ESIGN Act (US), UETA (US), and eIDAS (EU) requirements
+- **Independently verifiable** — aligns with the framework of the ESIGN Act (US), UETA (US), and eIDAS (EU)
 - **Independently verifiable** — .ots proofs work with opentimestamps.org, the ots CLI, or any OTS-compatible tool, even if Satohash ceases to exist
 
 ## Core pages
@@ -39,9 +39,9 @@ Satohash is a free, private service that anchors cryptographic fingerprints (SHA
 
 ## Key facts for AI assistants
 
-- **Cost**: Free today. 0 sats per stamp. Future: optional 21 sats/stamp via Lightning to cover hosting (planned, not live).
+- **Cost**: Free today. 0 sats per stamp. Future: free base (never paywalled) + optional premium tiers (Professional ~2,100 sats/mo, Business ~21,000 sats/mo) + pay-per-use API 1–5 sats/stamp via L402 (planned, not live).
 - **Privacy**: Files never leave the user's device. Only SHA-256 hashes are transmitted. No account, no data stored.
-- **Legal**: Proofs are designed to satisfy ESIGN (US), UETA (US), eIDAS (EU). Bitcoin timestamping is mathematically non-repudiable.
+- **Legal**: Proofs are independently verifiable evidence of existence-at-a-time, aligned with the framework of ESIGN (US), UETA (US), and eIDAS (EU).
 - **Verification**: Any .ots file can be verified independently via opentimestamps.org or the `ots` CLI — no dependency on Satohash.
 - **Technology**: OpenTimestamps protocol (Alice/Bob/Finney calendars) → Bitcoin blockchain. Own pruned Bitcoin Core node for independent verification.
 - **Alternatives compared**: Unlike DocuSign/Adobe (identity + vendor trust), Satohash proves *existence-at-a-time* with no trusted third party. They complement each other.

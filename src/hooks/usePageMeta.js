@@ -15,7 +15,7 @@ export default function usePageMeta({ page, title, description, image, url }) {
       : `${siteName} — Bitcoin Document Notarization`
     const desc =
       resolvedDescription ||
-      'Stamp any document on the Bitcoin blockchain. Free, private, court-admissible proof of existence using OpenTimestamps.'
+      'Stamp any document on the Bitcoin blockchain. Free, private, independently verifiable proof of existence using OpenTimestamps.'
     const ogImage = image || 'https://satohash.io/media/video/01-stamp-hero.jpg'
     const pageUrl = url || window.location.href
 

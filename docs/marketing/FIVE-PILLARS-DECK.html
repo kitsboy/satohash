@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Satohash — Five Serious Lanes</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  /* ===== Glacier Jewel tokens (Satohash) — no pure black/white/grey ===== */
+  :root {
+    --bg-primary: #0e1c2a;
+    --bg-secondary: #12273a;
+    --surface-raised: #16304a;
+    --surface-overlay: #1c3a57;
+    --jewel-sky: #38bdf8;
+    --jewel-cyan: #22d3ee;
+    --jewel-violet: #8b5cf6;
+    --jewel-ice: #d4f0f8;
+    --jewel-gold: #f0b429;
+    --accent-success: #34d399;
+    --accent-pending: #f0b429;
+    --accent-danger: #fb7185;
+    --text-primary: #e8f4fb;
+    --text-secondary: #93a9bb;
+    --text-muted: #5d7287;
+    --border: rgba(148,197,255,0.10);
+    --border-bright: rgba(148,197,255,0.22);
+    --gold-glow: rgba(240,180,41,0.35);
+    --sky-glow: rgba(56,189,248,0.30);
+    --grad-sky-gold: linear-gradient(90deg, #38bdf8, #f0b429);
+    --grad-title: linear-gradient(120deg, #38bdf8 0%, #22d3ee 45%, #f0b429 100%);
+    --font-heading: 'Space Grotesk', 'Segoe UI', sans-serif;
+    --font-body: 'Plus Jakarta Sans', 'Segoe UI', sans-serif;
+    --font-mono: 'JetBrains Mono', 'SFMono-Regular', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    background: var(--bg-primary); color: var(--text-primary);
+    font-family: var(--font-body); overflow: hidden;
+    background-image:
+      radial-gradient(ellipse 60% 45% at 15% 10%, rgba(56,189,248,0.10), transparent 60%),
+      radial-gradient(ellipse 55% 40% at 85% 85%, rgba(139,92,246,0.08), transparent 60%),
+      radial-gradient(ellipse 45% 35% at 70% 15%, rgba(240,180,41,0.06), transparent 55%);
+  }
+
+  .slide-deck { position: relative; width: 100vw; height: 100vh; overflow: hidden; }
+  @media (min-width: 769px) {
+    .slide-deck { max-width: calc(100vh * 16 / 9); max-height: calc(100vw * 9 / 16); margin: auto; position: absolute; inset: 0; }
+  }
+
+  .slide {
+    position: absolute; width: 100%; height: 100%;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center; padding: 48px 60px;
+    opacity: 0; visibility: hidden; transition: opacity 0.45s ease;
+    background: linear-gradient(160deg, var(--bg-secondary) 0%, var(--bg-primary) 55%, #0b1723 100%);
+    overflow: hidden;
+  }
+  .slide.active { opacity: 1; visibility: visible; }
+  .slide::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--grad-sky-gold); opacity: 0.85; }
+
+  .slide-content { width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 16px; z-index: 2; }
+
+  .kicker {
+    font-family: var(--font-mono); font-size: 12.5px; letter-spacing: 0.26em;
+    text-transform: uppercase; color: var(--jewel-sky); font-weight: 700;
+    display: inline-flex; align-items: center; gap: 10px;
+  }
+  .kicker::before, .kicker::after { content: ''; width: 26px; height: 1px; background: linear-gradient(90deg, transparent, var(--jewel-sky)); }
+  .kicker::after { background: linear-gradient(90deg, var(--jewel-sky), transparent); }
+
+  h1, h2 { font-family: var(--font-heading); font-weight: 700; }
+  h1 { font-size: clamp(30px, 5vw, 60px); line-height: 1.08; }
+  h2 { font-size: clamp(24px, 3.6vw, 42px); line-height: 1.12; }
+  .grad { background: var(--grad-title); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+  .lead { font-size: clamp(15px, 1.9vw, 21px); color: var(--text-secondary); line-height: 1.5; max-width: 900px; }
+  .small { font-size: clamp(12px, 1.4vw, 14px); color: var(--text-muted); line-height: 1.55; }
+
+  /* Pillar nav chips */
+  .pillar-chips { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 6px; }
+  .chip {
+    font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--text-secondary); padding: 5px 11px; border-radius: 999px;
+    border: 1px solid var(--border); background: color-mix(in srgb, var(--jewel-sky) 6%, transparent);
+    cursor: pointer; transition: all 0.2s ease;
+  }
+  .chip:hover, .chip.on { color: var(--jewel-gold); border-color: var(--jewel-gold); background: color-mix(in srgb, var(--jewel-gold) 12%, transparent); }
+
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 13px; width: min(980px, 96%); }
+  .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 13px; width: min(900px, 96%); }
+  .cell {
+    background: linear-gradient(135deg, var(--surface-raised), var(--bg-secondary));
+    border: 1px solid var(--border); border-radius: 15px; padding: 18px 16px;
+    text-align: left; display: flex; flex-direction: column; gap: 7px; transition: all 0.25s ease;
+  }
+  .cell:hover { border-color: var(--border-bright); box-shadow: 0 12px 30px -18px var(--sky-glow); }
+  .cell .icon { width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 17px; background: color-mix(in srgb, var(--jewel-sky) 14%, transparent); }
+  .cell h3 { font-family: var(--font-heading); font-size: 15.5px; font-weight: 600; }
+  .cell p { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+
+  .pill { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; padding: 4px 9px; border-radius: 999px; border: 1px solid; }
+  .pill.ok { color: var(--accent-success); border-color: color-mix(in srgb, var(--accent-success) 40%, transparent); background: color-mix(in srgb, var(--accent-success) 12%, transparent); }
+  .pill.warn { color: var(--accent-pending); border-color: color-mix(in srgb, var(--accent-pending) 40%, transparent); background: color-mix(in srgb, var(--accent-pending) 12%, transparent); }
+  .pill.err { color: var(--accent-danger); border-color: color-mix(in srgb, var(--accent-danger) 40%, transparent); background: color-mix(in srgb, var(--accent-danger) 12%, transparent); }
+
+  .proof-badge {
+    display: inline-flex; align-items: center; gap: 8px; padding: 7px 13px; border-radius: 11px;
+    border: 1px solid var(--jewel-gold); color: var(--jewel-gold);
+    font-family: var(--font-mono); font-size: 12.5px; font-weight: 700; letter-spacing: 0.05em;
+    background: color-mix(in srgb, var(--jewel-gold) 10%, transparent);
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--jewel-gold) 15%, transparent), 0 8px 22px -12px var(--gold-glow);
+  }
+  .proof-badge .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--jewel-gold); box-shadow: 0 0 8px var(--gold-glow); }
+
+  .quote { font-family: var(--font-heading); font-size: clamp(19px, 2.6vw, 29px); line-height: 1.35; max-width: 900px; font-weight: 600; }
+  .quote em { font-style: normal; color: var(--jewel-sky); }
+
+  .cta {
+    display: inline-flex; align-items: center; gap: 10px; margin-top: 6px;
+    background: linear-gradient(135deg, var(--jewel-gold), color-mix(in srgb, var(--jewel-gold) 70%, var(--jewel-sky)));
+    color: #0e1c2a; font-family: var(--font-heading); font-weight: 700; font-size: 15.5px;
+    padding: 15px 32px; border-radius: 13px; text-decoration: none; letter-spacing: 0.04em;
+    box-shadow: 0 14px 34px -14px var(--gold-glow); transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .cta:hover { transform: translateY(-2px); box-shadow: 0 20px 44px -14px var(--gold-glow); }
+
+  /* Freshness ring */
+  .freshness-ring { position: relative; width: 120px; height: 120px; }
+  .freshness-ring svg { transform: rotate(-90deg); }
+  .freshness-ring .ring-num { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .freshness-ring .ring-num b { font-family: var(--font-heading); font-size: 24px; }
+  .freshness-ring .ring-num span { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.15em; color: var(--text-muted); text-transform: uppercase; }
+
+  .progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: var(--grad-sky-gold); transition: width 0.3s; z-index: 1000; }
+  .nav-controls { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 18px; z-index: 1000; }
+  .nav-btn { background: color-mix(in srgb, var(--jewel-sky) 12%, transparent); border: 1px solid var(--border-bright); color: var(--text-primary); width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-size: 17px; transition: all 0.2s ease; }
+  .nav-btn:hover { background: color-mix(in srgb, var(--jewel-sky) 22%, transparent); }
+  .slide-counter { color: var(--text-muted); font-size: 13px; font-family: var(--font-mono); }
+  .brand-mark { position: fixed; top: 18px; left: 22px; z-index: 1000; font-family: var(--font-heading); font-weight: 700; font-size: 13.5px; letter-spacing: 0.13em; color: var(--text-secondary); }
+  .brand-mark b { color: var(--jewel-sky); }
+
+  @media (max-width: 768px) {
+    .slide { padding: 30px 18px 54px; overflow-y: auto; justify-content: flex-start; }
+    .slide-content { gap: 11px; padding-top: 6px; }
+    .grid-3, .grid-2 { grid-template-columns: 1fr; gap: 9px; }
+    .cell { padding: 13px 13px; }
+    .nav-controls { bottom: 10px; }
+  }
+
+  .active .animate-stagger > * { opacity: 0; animation: fadeUp 0.55s ease-out forwards; }
+  .active .animate-stagger > *:nth-child(1) { animation-delay: 0.08s; }
+  .active .animate-stagger > *:nth-child(2) { animation-delay: 0.16s; }
+  .active .animate-stagger > *:nth-child(3) { animation-delay: 0.24s; }
+  .active .animate-stagger > *:nth-child(4) { animation-delay: 0.32s; }
+  .active .animate-stagger > *:nth-child(5) { animation-delay: 0.40s; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+<div class="brand-mark">SATOHASH · <b>Proof of truth</b></div>
+
+<div class="slide-deck">
+
+  <!-- 1 · TITLE -->
+  <div class="slide active">
+    <div class="slide-content animate-stagger">
+      <span class="kicker">Give A Bit · Bitcoin sovereignty first</span>
+      <h1>Five serious lanes.<br><span class="grad">One proof layer.</span></h1>
+      <p class="lead">Satohash brings independently verifiable proof of existence to the work that can't afford to trust — <b>without the document ever leaving your control.</b></p>
+      <div class="pillar-chips">
+        <span class="chip on">M&amp;A diligence</span>
+        <span class="chip">Family offices</span>
+        <span class="chip">LATAM · ES/PT</span>
+        <span class="chip">Tax &amp; compliance</span>
+        <span class="chip">Enterprise</span>
+      </div>
+      <div class="proof-badge"><span class="dot"></span> No trust required — not even in us</div>
+    </div>
+  </div>
+
+  <!-- 2 · PILLAR 1 — M&A DATA ROOMS -->
+  <div class="slide">
+    <div class="slide-content animate-stagger">
+      <span class="kicker">Pillar 1 · M&amp;A due diligence</span>
+      <h2>The deal room where every document <span class="grad">can prove itself</span></h2>
+      <p class="lead">Roughly two-thirds of M&amp;A data breaches happen during diligence — when confidential material moves across many systems and people. The integrity problem is real and quantified.</p>
+      <div class="grid-3" style="margin-top:6px;">
+        <div class="cell"><div class="icon">🔒</div><h3>Hash, not file</h3><p>Each document's fingerprint anchors to Bitcoin. The files never leave the data room.</p></div>
+        <div class="cell"><div class="icon">✅</div><h3>Verify originals</h3><p>Buyers confirm files match the seller's originals — cryptographically, without a middleman.</p></div>
+        <div class="cell"><div class="icon">⏱️</div><h3>Time-stamped</h3><p>Proof a version existed before a closing date. Unaltered, verifiable forever.</p></div>
+      </div>
+      <p class="small" style="max-width:820px; margin-top:4px;"><span class="pill ok">Live</span> Satohash proves document integrity today. <span class="pill warn">Not yet</span> The access/audit-log extension (who saw what, when) is a product build — we say so, we don't claim it.</p>
+    </div>
+  </div>
+
+  <!-- 3 · PILLAR 2 — FAMILY OFFICES -->
+  <div class="slide">
+    <div class="slide-content animate-stagger">
+      <span class="kicker">Pillar 2 · Family offices &amp; multi-generational wealth</span>
+      <h2>Records that outlive the firms that <span class="grad">held them</span></h2>
+      <p class="lead">Trust instruments, wills, governance charters, property records — the documents that define ownership and intent. Too often fragmented, lost, or held by a vendor that disappears.</p>
+      <div class="grid-3" style="margin-top:6px;">
+        <div class="cell"><div class="icon">🧬</div><h3>Across generations</h3><p>An <span style="font-family:var(--font-mono)">.ots</span> anchor proves a document's exact state at a date — verifiable decades later.</p></div>
+        <div class="cell"><div class="icon">🏛️</div><h3>Vendor-proof</h3><p>The proof lives on Bitcoin, not in an advisor firm's vault or a SaaS server.</p></div>
+        <div class="cell"><div class="icon">🔐</div><h3>Private by design</h3><p>Only a hash touches the chain. The will, deed, or trust never leaves your family's control.</p></div>
+      </div>
+      <p class="small" style="max-width:820px; margin-top:4px;">Wealth-transfer and "three-generation curse" statistics are <b>directional industry context</b>, not hard fact — we cite them as such, never overstate them.</p>
+    </div>
+  </div>
+
+  <!-- 4 · PILLAR 3 — LATAM ES -->
+  <div class="slide">
+    <div class="slide-content animate-stagger">
+      <span class="kicker">Pilar 3 · Mercados LATAM — Español</span>
+      <h2>La evidencia de que algo <span class="grad">existió en el tiempo</span></h2>
+      <p class="lead">Su documento nunca sale de su dispositivo. Solo una huella digital llega a Bitcoin. Evidencia de apoyo, admisible junto a cada sistema de identidad regulado.</p>
+      <div class="grid-3" style="margin-top:6px;">
+        <div class="cell"><div class="icon">🌎</div><h3>Admisible</h3><p>En BR, MX, AR, CL, CO, PE y ES, la evidencia electrónica es admisible — no se rechaza por ser electrónica.</p></div>
+        <div class="cell"><div class="icon">🪪</div><h3>Complementa</h3><p>La identidad es la capa regulada (ICP-Brasil, FEA/NOM-151, firma digital). Satohash aporta la capa de tiempo/existencia independiente.</p></div>
+        <div class="cell"><div class="icon">✍️</div><h3>Patrón fuerte</h3><p>Satohash para el rastro de procedencia sellado; notario para el acto final cuando la ley lo exige.</p></div>
+      </div>
+      <p class="small" style="max-width:820px; margin-top:4px;"><span class="pill warn">Honesto</span> Admisible, no se presume exacto. No afirmamos cumplimiento de ICP-Brasil, NOM-151 ni eIDAS. <b>Nunca</b> usamos la palabra «certificado».</p>
+    </div>
+  </div>
+
+  <!-- 5 · PILLAR 3 — LATAM PT -->
+  <div class="slide">
+    <div class="slide-content animate-stagger">
+      <span class="kicker">Pilar 3 · Mercados LATAM — Português</span>
+      <h2>A prova de que algo <span class="grad">existiu no tempo</span></h2>
+      <p class="lead">Seu documento nunca sai do seu dispositivo. Apenas uma impressão digital chega ao Bitcoin. Prova de apoio, admissível junto a cada sistema de identidade regulado.</p>
+      <div class="grid-3" style="margin-top:6px;">
+        <div class="cell"><div class="icon">🌎</div><h3>Admissível</h3><p>No Brasil e na região, a evidência eletrônica é admissível — não é rejeitada por ser eletrônica.</p></div>
+        <div class="cell"><div class="icon">🪪</div><h3>Complementa</h3><p>A identidade é a camada regulada (ICP-Brasil, FEA, firma digital). Satohash fornece a camada independente de tempo/existência.</p></div>
+        <div class="cell"><div class="icon">✍️</div><h3>Padrão forte</h3><p>Satohash para o rastro de proveniência com carimbo; cartório para o ato final quando a lei exigir.</p></div>
+      </div>
+      <p class="small" style="max-width:820px; margin-top:4px;"><span class="pill warn">Honesto</span> Admissível, não se presume exato. Não afirmamos conformidade com ICP-Brasil, NOM-151 ou eIDAS. <b>Nunca</b> usamos a palavra «certificado».</p>
+    </div>
+  </div>
+
+  <!-- 6 · PILLAR 4 — TAX & COMPLIANCE -->
+  <div class="slide">
+    <div class="slide-content animate-stagger">
+      <span class="kicker">Pillar 4 · Tax &amp; compliance</span>
+      <h2>Proof of what was on file <span class="grad">at the deadline</span></h2>
+      <p class="lead">Retention, integrity, and timeliness: records must exist, be unchanged, and be provable as of the relevant fiscal period. A Bitcoin anchor proves the exact state of a supporting record — years after the fact.</p>
+      <div class="grid-3" style="margin-top:6px;">
+        <div class="cell"><div class="icon">🗂️</div><h3>Reconstruction audits</h3><p>Prove a policy, ledger export, or return draft existed in a specific form by block N.</p></div>
+        <div class="cell"><div class="icon">🔐</div><h3>Hash, not PII</h3><p>Never stamp raw records with PII or TPINs to a public chain — hash only, or a private calendar.</p></div>
+        <div class="cell"><div class="icon">⚖️</div><h3>Evidence, not certification</h3><p>Strengthens the evidence layer. It does not file returns or satisfy a retention statute.</p></div>
+      </div>
+      <p class="small" style="max-width:820px; margin-top:4px;"><span class="pill ok">Live</span> Existence &amp; integrity-at-time. <span class="pill warn">Honest</span> Not tax-law compliance — regulators weigh evidence, they don't certify timestamps.</p>
+    </div>
+  </div>
+
+  <!-- 7 · PILLAR 5 — ENTERPRISE -->
+  <div class="slide">
+    <div class="slide-content animate-stagger">
+      <span class="kicker">Pillar 5 · Serious business &amp; enterprise</span>
+      <h2>Document integrity you can verify, <span class="grad">without surrendering the document</span></h2>
+      <p class="lead">The privacy-preserving integrity anchor — hash on-chain, file never leaves the device. The differentiator vs. document SaaS that stores your full files.</p>
+      <div class="grid-3" style="margin-top:6px;">
+        <div class="cell"><div class="icon">⚔️</div><h3>End the dispute</h3><p>"If a party claims a contract was altered, the cryptographic timestamp ends the argument."</p></div>
+        <div class="cell"><div class="icon">🔓</div><h3>Zero vendor lock-in</h3><p>Portable <span style="font-family:var(--font-mono)">.ots</span>. Verify with open tools forever — even if we vanished.</p></div>
+        <div class="cell"><div class="icon">🔌</div><h3>Built for builders</h3><p>REST API, webhooks, SDKs, AI-agent guides. Free developer stamps to onboard.</p></div>
+      </div>
+      <p class="small" style="max-width:820px; margin-top:4px;"><span class="pill warn">Honest</span> Enterprise offers (SLA, white-label, custom webhooks, volume) belong to the paid tiers — we don't claim readiness we haven't shipped.</p>
+    </div>
+  </div>
+
+  <!-- 8 · THE HONESTY VISUALS -->
+  <div class="slide">
+    <div class="slide-content">
+      <span class="kicker">Why you can believe all five</span>
+      <h2>An <span class="grad">honesty contract</span>, not a promise</h2>
+      <div style="display:flex; align-items:center; justify-content:center; gap:40px; flex-wrap:wrap; margin-top:8px;">
+        <div class="freshness-ring">
+          <svg width="120" height="120" viewBox="0 0 120 120">
+            <circle cx="60" cy="60" r="52" fill="none" stroke="rgba(148,197,255,0.10)" stroke-width="10"/>
+            <circle id="ringFill" cx="60" cy="60" r="52" fill="none" stroke="#f0b429" stroke-width="10"
+              stroke-linecap="round" stroke-dasharray="327" stroke-dashoffset="327"/>
+          </svg>
+          <div class="ring-num"><b>45</b><span>days fresh</span></div>
+        </div>
+        <div style="max-width:430px; text-align:left; display:flex; flex-direction:column; gap:10px;">
+          <div class="proof-badge" style="align-self:flex-start;"><span class="dot"></span> Secured by Satohash · confirm it here</div>
+          <p class="lead" style="font-size:clamp(14px,1.7vw,18px);">Every claim carries <b>when it was last confirmed</b>. Old data renders amber, never fresh green. Honest stale beats confident wrong.</p>
+          <p class="small">Live KPIs come from <span style="font-family:var(--font-mono)">/metrics.json</span> — never fabricated.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 9 · THE CLOSER -->
+  <div class="slide">
+    <div class="slide-content animate-stagger">
+      <span class="kicker">The pitch</span>
+      <h1>One proof layer.<br><span class="grad">No trust required.</span></h1>
+      <p class="lead" style="max-width:860px;">M&amp;A data rooms, family offices, Latin markets, tax &amp; compliance, enterprise — five serious lanes, one honest anchor: proof of what existed, when, verifiable forever.</p>
+      <a class="cta" href="https://satohash.io" target="_blank" rel="noopener">Stamp your first proof free ↗</a>
+      <p class="small" style="margin-top:8px;">F.O.S.S. · Give A Bit family · hello@giveabit.io · Safe Harbour: educational &amp; informational only, not legal/financial/investment advice</p>
+    </div>
+  </div>
+
+</div>
+
+<div class="nav-controls">
+  <button class="nav-btn" onclick="prevSlide()">←</button>
+  <span class="slide-counter"><span id="current">1</span> / <span id="total">9</span></span>
+  <button class="nav-btn" onclick="nextSlide()">→</button>
+</div>
+
+<script>
+  let current = 1;
+  const total = document.querySelectorAll('.slide').length;
+  document.getElementById('total').textContent = total;
+  const ringFill = document.getElementById('ringFill');
+
+  function showSlide(n) {
+    if (n < 1) n = 1;
+    if (n > total) n = total;
+    current = n;
+    document.querySelectorAll('.slide').forEach((s, i) => s.classList.toggle('active', i === n - 1));
+    document.getElementById('current').textContent = n;
+    document.getElementById('progressBar').style.width = (n / total * 100) + '%';
+    if (n === 8 && ringFill) {
+      setTimeout(() => { ringFill.style.strokeDashoffset = 327 * 0.72; }, 250);
+    }
+  }
+  function nextSlide() { showSlide(current + 1); }
+  function prevSlide() { showSlide(current - 1); }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); nextSlide(); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); prevSlide(); }
+  });
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.nav-controls') && !e.target.closest('a') && !e.target.closest('.chip')) nextSlide();
+  });
+
+  // pillar chips jump to their slide
+  const chipSlides = { 0: 2, 1: 3, 2: 4, 3: 6, 4: 7 };
+  document.querySelectorAll('.chip').forEach((c, i) => {
+    c.addEventListener('click', (e) => { e.stopPropagation(); showSlide(chipSlides[i]); });
+  });
+
+  showSlide(1);
+</script>
+</body>
+</html>

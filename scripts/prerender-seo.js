@@ -151,10 +151,10 @@ function write(name, html) {
 // ---- landing (static version of the hero + key sections) ----
 const landingTitle = 'Stamp Documents on Bitcoin — Free Proof of Existence'
 const landingDesc =
-  'Drop any file. Get a Bitcoin-anchored proof of existence in under 60 seconds. Free, private, zero-knowledge. Your file never leaves your device. OpenTimestamps + Bitcoin = immutable, court-ready evidence.'
+  'Drop any file. Get a Bitcoin-anchored proof of existence in under 60 seconds. Free, private, zero-knowledge. Your file never leaves your device. OpenTimestamps + Bitcoin = immutable, independently verifiable evidence.'
 const landingBody = `
 <h1>Prove Any File Existed. Forever.</h1>
-<p>Drop any file. Get a permanent, Bitcoin-backed timestamp. Valid in court. No lawyers. No trust required.</p>
+<p>Drop any file. Get a permanent, Bitcoin-backed timestamp. Independently verifiable. No lawyers. No trust required.</p>
 <p>Satohash hashes your file locally in your browser — your document never leaves your device. Only a cryptographic fingerprint gets written to the Bitcoin blockchain, creating immutable proof of existence for any file, contract, photo, or dataset.</p>
 <p><a href="${SITE}/stamp">Stamp a File — It's Free</a> · <a href="${SITE}/verify">Verify a proof</a> · <a href="${SITE}/pricing">Pricing</a></p>
 <h2>How it works</h2>
@@ -167,7 +167,7 @@ const landingBody = `
 <ul>
 <li><strong>No server required</strong> — zero-knowledge by design, only a hash leaves your device.</li>
 <li><strong>Anchored in ~60 minutes</strong> — every node on Earth validates it; it cannot be altered, backdated, or deleted.</li>
-<li><strong>Court-ready evidence</strong> — satisfies ESIGN Act (US), UETA, and eIDAS (EU); mathematically non-repudiable.</li>
+<li><strong>Independently verifiable evidence</strong> — aligns with the framework of the ESIGN Act (US), UETA, and eIDAS (EU); cryptography is verifiable by anyone.</li>
 <li><strong>No middleman ever</strong> — Bitcoin itself is the notary, 18,000+ full nodes strong.</li>
 </ul>
 <h2>Who needs proof that can't be faked</h2>
@@ -182,7 +182,7 @@ const faqItems = [
   ['How does Satohash work?', 'Satohash hashes your file locally in your browser (SHA-256), then submits only that fingerprint to OpenTimestamps calendars, which anchor it into the Bitcoin blockchain. You get a portable .ots proof file plus a certificate.'],
   ['Is it really free?', 'Yes — stamping is free today (REQUIRE_LIGHTNING=false). You pay no miners and no fees. Later there may be an optional Lightning fee to cover hosting, but the proof still anchors to Bitcoin.'],
   ['Does my file leave my device?', 'No. Only a cryptographic hash (fingerprint) is transmitted. The original file never leaves your browser — zero-knowledge by design.'],
-  ['Is a Bitcoin timestamp legally valid?', 'Satohash proofs are designed to satisfy ESIGN Act (US), UETA (US), and eIDAS (EU) requirements. A Bitcoin timestamp is mathematically non-repudiable evidence of existence-at-a-time.'],
+  ['Is a Bitcoin timestamp legally valid?', 'Satohash proofs are independently verifiable electronic evidence of existence-at-a-time, aligned with the framework of the ESIGN Act (US), UETA (US), and eIDAS (EU). A Bitcoin timestamp is strong evidence of when a file existed; admissibility and weight are decided by the court.'],
   ['How long does confirmation take?', 'Typically within one Bitcoin block — about 60 minutes. Pending stamps upgrade automatically as calendars gather attestations.'],
   ['What is OpenTimestamps (OTS)?', 'OpenTimestamps is a free, open-source protocol that anchors cryptographic fingerprints into the Bitcoin blockchain. It is calendar-based and independently verifiable.'],
   ['Can I verify without Satohash?', 'Yes — use opentimestamps.org, the ots CLI, or any OTS-compatible tool. Your .ots file works forever, independently of Satohash.'],
@@ -232,11 +232,11 @@ const secondary = {
 <p><a href="${SITE}/stamp">Start stamping — free</a></p>`
   },
   pricing: {
-    title: 'Pricing — Free Bitcoin Timestamping',
-    desc: 'Satohash is free today. 0 sats per stamp. Optional Lightning fee (21 sats) planned in the future to cover hosting.',
+    title: 'Pricing — Free Bitcoin Timestamping (Never Paywalled Trust Anchor)',
+    desc: 'Free base is the never-paywalled trust anchor: unlimited stamp/verify/.ots + client-side hashing (10/day cap). Optional premium tiers: Professional ~2,100 sats/mo (~$29), Business ~21,000 sats/mo (~$299). Pay-per-use API 1–5 sats/stamp via L402.',
     body: `<h1>Simple, honest pricing</h1>
-<p><strong>Live now: Free</strong> — 0 sats. Stamp &amp; verify with OpenTimestamps. No account, no Lightning invoice.</p>
-<p><strong>Future (planned):</strong> Pay-per-stamp 21 sats (optional Lightning tip-through-us, covers product costs; proof still OTS on Bitcoin). Pro pack 2,100 sats (bulk stamps / API-friendly).</p>
+<p><strong>Free — never paywalled (the trust anchor):</strong> unlimited stamp/verify/.ots + client-side hashing, 10/day cap. No account, no Lightning invoice.</p>
+<p><strong>Optional premium tiers:</strong> Professional ~2,100 sats/mo (~$29) · Business ~21,000 sats/mo (~$299). <strong>Pay-per-use API:</strong> 1–5 sats/stamp via L402 (Lightning).</p>
 <p>Chain: Bitcoin only (via OpenTimestamps).</p>
 <p><a href="${SITE}/stamp">Stamp free now</a></p>`
   },

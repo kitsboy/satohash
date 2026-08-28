@@ -18,7 +18,7 @@ https://satohash.io/?lang=fr
 | notarisation documents bitcoin | Transactionnel | / |
 | OpenTimestamps gratuit | Informationnel | /faq |
 | preuve d'existence blockchain | Commercial | /comparison |
-| horodatages conformes eIDAS | Commercial | /security |
+| horodatages alignés eIDAS | Commercial | /security |
 | identité NIP-05 nostr | Informationnel | /identity |
 | badge preuve bitcoin intégrable | Commercial | /widgets |
 

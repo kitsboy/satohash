@@ -94,7 +94,7 @@ const REASONS = [
   },
   {
     icon: Scale,
-    title: 'Court-ready proofs',
+    title: 'Independently verifiable proofs',
     body: 'OpenTimestamps + Bitcoin PoW is independent math, not a company promise.'
   },
   {
@@ -155,8 +155,10 @@ export default function ExecutiveSummary() {
               style={{ color: 'var(--text-secondary)' }}
             >
               Satohash free-timestamps a fingerprint of your file using OpenTimestamps on Bitcoin.
-              You don’t pay miners or us today. When we charge later, a small Lightning fee goes to
-              us — the proof still anchors to Bitcoin.
+              The free base tier is the permanent, never-paywalled trust anchor. Optional premium
+              tiers (Professional ~2,100 sats/mo, Business ~21,000 sats/mo) and a pay-per-use API
+              are built and staged; they launch paid only once the Lightning rails are funded and
+              tested — the proof still anchors to Bitcoin either way.
             </p>
             <div className="mt-7 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center">
               <Link
@@ -660,21 +662,21 @@ export default function ExecutiveSummary() {
                 price: '0 sats',
                 tag: 'Live now',
                 live: true,
-                points: ['OTS on Bitcoin', 'Local hash', 'Verify forever', 'No account']
+                points: ['OTS on Bitcoin', 'Local hash', 'Verify forever', 'No account', 'Never paywalled']
               },
               {
-                name: 'Pay-per-stamp',
-                price: '21 sats',
-                tag: 'Maybe later',
+                name: 'Professional',
+                price: '~2,100 sats',
+                tag: 'Built, staged',
                 live: false,
-                points: ['Lightning to us', 'Same .ots proofs', 'Covers hosting', 'Optional']
+                points: ['~$29/mo', 'Unlimited stamping', 'Full vault', 'API + PDF exports']
               },
               {
-                name: 'Pro pack',
-                price: '2,100 sats',
-                tag: 'Maybe later',
+                name: 'Business / Studio',
+                price: '~21,000 sats',
+                tag: 'Built, staged',
                 live: false,
-                points: ['Bulk credits', 'API-friendly', 'Teams', 'Same Bitcoin base']
+                points: ['~$299/mo', 'Teams & studios', 'White-label', 'SLA + volume']
               }
             ].map((t) => (
               <div

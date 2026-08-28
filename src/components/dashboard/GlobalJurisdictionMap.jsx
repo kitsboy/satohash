@@ -19,7 +19,7 @@ const JURISDICTIONS = [
     status: 'Hardened',
     color: '#10b981', // Emerald
     bgGlow: 'rgba(16, 185, 129, 0.1)',
-    law: 'eIDAS Article 41',
+    law: 'eIDAS Art. 41 ETS',
     description:
       'The highest legal standard globally. Under eIDAS, a qualified electronic time stamp shall enjoy the presumption of the accuracy of the date and the time it indicates and the integrity of the data to which the date and time are bound.',
     body: 'European Telecommunications Standards Institute (ETSI)',

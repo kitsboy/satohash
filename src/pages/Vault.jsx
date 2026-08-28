@@ -633,7 +633,7 @@ export default function Vault() {
         doc.setTextColor(100, 110, 120)
         const complianceText =
           'This document certifies that the listed electronic records have been processed and anchored client-side. The cryptographic SHA-256 digests are permanently committed to the Bitcoin blockchain ledger using OpenTimestamps protocols.\n\n' +
-          'Under the United States ESIGN Act (15 U.S.C. §§ 7001-7006) and the Uniform Electronic Transactions Act (UETA), electronic records and signatures are legally binding. Furthermore, this attestation complies with the European Union eIDAS Regulation (No 910/2014) Article 41 for electronic time stamps, creating a globally enforceable, censorship-resistant forensic proof of existence.'
+          'This is an electronic record of existence-at-a-time: under the US ESIGN Act and UETA, and the EU eIDAS Regulation (No 910/2014) Article 41(1), such an electronic record is not denied legal effect solely for being electronic. It is independently verifiable evidence; it is not a notary, a signature, or a qualified electronic time stamp.'
 
         const splitText = doc.splitTextToSize(complianceText, pageW - margin * 2)
         doc.text(splitText, margin, y)

@@ -22,7 +22,6 @@ This roadmap tracks the evolution of Satohash from a standalone notary tool to a
 11. **[ ] API Apocalypse**: 20 backend upgrades — public stats, batch stamping, web capture, DID, co-signing, proof packages, SSE feeds
 12. **[ ] Frontend Cathedral**: 20 UI mutations — particle hero, proof explorer, live network dashboard, QR scanner, pro wizard, command palette
 13. **[ ] Bitcoin Thunder**: 15 deep chain integrations — local node verify, LNURL/BOLT12, Bitcoin SSE watcher, merkle proofs, HD wallet generator
-14. **[ ] Cross-Chain Supremacy**: 10 bridges — Ethereum calldata, Polygon, IPFS pinning fix, Filecoin archive, Nostr proof publishing fix
 15. **[ ] AI Notary**: 10 autonomous features — content summarization, fraud detection, semantic search, natural language stamping, template generation
 16. **[ ] Social Proof**: 10 community features — proof wall, leaderboard, reactions, badges, social verify, email notifications
 17. **[ ] Developer Ecosystem**: 10 SDK improvements — OpenAPI spec, npm client SDK, CLI tool, WebSocket, webhooks, rate limit tiers
@@ -30,7 +29,6 @@ This roadmap tracks the evolution of Satohash from a standalone notary tool to a
 
 ## 🔭 PHASE VI: VISION 2027 (The Sovereign Settlement Mesh)
 19. **[ ] Fedimint Privacy Shields**: Using blinded tokens for zero-knowledge notarization.
-20. **[ ] Cross-Chain Escrow**: Cryptographically locked document release across multiple chains.
 21. **[ ] AI Notary Oracles**: Autonomous agents for real-time legal/logical validation of proofs.
 22. **[ ] Decentralized Governance**: Transitioning protocol parameters to community-led governance.
 

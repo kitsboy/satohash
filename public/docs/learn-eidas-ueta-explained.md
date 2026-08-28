@@ -16,9 +16,9 @@ Together: **ESIGN** covers federal law, **UETA** covers state law. A document st
 
 ## eIDAS (EU)
 
-The **eIDAS Regulation** (2014/910/EU) is the European equivalent. It defines three levels of electronic signatures — and, crucially, it governs **electronic time stamps**: a "qualified electronic time stamp" is presumed correct in court. eIDAS Article 41 even mentions the use of technologies like blockchain for long-term preservation of records.
+The **eIDAS Regulation** (2014/910/EU) is the European equivalent. It defines three levels of electronic signatures — and, crucially, it governs **electronic time stamps**: eIDAS Article 41 says an electronic time stamp shall not be denied legal effect or admissibility as evidence in legal proceedings solely because it is in electronic form. A *qualified* electronic time stamp (issued by an accredited time-stamping authority) is presumed correct in court.
 
-**Satohash angle:** Bitcoin timestamping aligns with eIDAS's goal of *trustworthy, long-term, verifiable* time records — using a technology (blockchain) the regulation itself names.
+**Satohash angle:** Bitcoin timestamping aligns with eIDAS's goal of *trustworthy, long-term, verifiable* time records. A Satohash stamp is strong, independently verifiable evidence of existence-at-a-time — it is not a *qualified* electronic time stamp, so it does not carry the eIDAS presumption of accuracy. Where the law requires a qualified time stamp, use an accredited service; Satohash evidence can complement it.
 
 ## What this means for your documents
 

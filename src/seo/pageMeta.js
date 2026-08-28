@@ -782,7 +782,7 @@ export const pageMeta = {
     en: {
       title: 'Verify — Check Bitcoin Proof',
       description:
-        'Verify any SHA-256 hash or .ots proof file against the Bitcoin blockchain. Independent, court-admissible validation.'
+        'Verify any SHA-256 hash or .ots proof file against the Bitcoin blockchain. Independent, independently verifiable validation.'
     },
     es: {
       title: 'Verificar — Comprobar Prueba Bitcoin',

@@ -400,7 +400,7 @@ export default function PrivacyPolicy() {
               <div className="mb-6 flex flex-col items-start justify-between gap-4 sm:flex-row sm:gap-6">
                 <div>
                   <p className="mb-3 text-[10px] font-black tracking-[0.35em] text-slate-400 uppercase">
-                    Satohash Inc. · Legal Document
+                    [ENTITY TBD] · Legal Document
                   </p>
                   <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl md:text-5xl">
                     {t('legalPages.privacyTitle')}

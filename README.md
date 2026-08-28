@@ -5,7 +5,7 @@
 [![Protocol](https://img.shields.io/badge/protocol-OpenTimestamps-orange.svg)](https://opentimestamps.org)
 [![Parent Studio](https://img.shields.io/badge/studio-Give_A_Bit-orange.svg)](https://giveabit.io)
 
-**Institutional-Grade Digital Notary & Cryptographic Settlement Mesh.** Satohash is a high-fidelity, zero-knowledge platform for verifiable document provenance, multi-party contract signatures, forensic web capture, and automated cryptographic evidence gathering — anchored immutably to the Bitcoin blockchain via OpenTimestamps. Built as Free and Open Source (F.O.S.S.) Bitcoin software by [Give A Bit](https://giveabit.io).
+**Sovereign Proof-of-Existence Layer & Cryptographic Settlement Mesh.** Satohash is a high-fidelity, zero-knowledge platform for verifiable document provenance, multi-party contract signatures, forensic web capture, and automated cryptographic evidence gathering — anchored immutably to the Bitcoin blockchain via OpenTimestamps. Built as Free and Open Source (F.O.S.S.) Bitcoin software by [Give A Bit](https://giveabit.io).
 
 > **Agents:** start at **[AGENTS.md](AGENTS.md)** · status **[.ai_docs/current-status.md](.ai_docs/current-status.md)** · handoff **[docs/handoff-log.md](docs/handoff-log.md)** · MASTER-BRAIN paste **[docs/MASTER-BRAIN-INGEST.md](docs/MASTER-BRAIN-INGEST.md)**.  
 > **Live:** https://satohash.io · API https://api.satohash.io · free stamps · `REQUIRE_LIGHTNING=false`.

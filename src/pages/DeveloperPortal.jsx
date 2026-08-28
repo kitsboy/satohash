@@ -746,9 +746,11 @@ function DocsContent() {
           </p>
           <p>
             Institutional clients can utilize <strong>Permanent Witness Anchors</strong> which
-            provide judicial-grade certificates recognized by global judiciaries under the{' '}
+            produce independently verifiable electronic evidence that aligns with the{' '}
             <strong>ESIGN Act</strong>
-            and <strong>eIDAS Article 41</strong>.
+            and the non-discrimination principle of <strong>eIDAS Article 41</strong> — electronic
+            evidence is not denied effect solely for being electronic. Admissibility and weight are
+            a court&apos;s call.
           </p>
         </div>
 

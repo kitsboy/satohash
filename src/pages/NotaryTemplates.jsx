@@ -2077,7 +2077,7 @@ export function TemplateEditor({ template, onBack, demoMode = false }) {
         'meta[name="description"]',
         'name',
         'description',
-        'Satohash anchors any document to the Bitcoin blockchain in under 60 seconds. Immutable, court-admissible proof of existence — free, private, no lawyers needed. Your file never leaves your device.'
+        'Satohash anchors any document to the Bitcoin blockchain in under 60 seconds. Immutable, independently verifiable proof of existence — free, private, no lawyers needed. Your file never leaves your device.'
       )
       setMeta(
         'meta[property="og:title"]',

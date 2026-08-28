@@ -8,7 +8,7 @@ import { create } from 'ipfs-http-client';
 const nftRouter = express.Router();
 
 const envSchema = z.object({
-  RPC_URL: z.string().optional().default('https://sepolia.infura.io/v3/mock'), // Mock RPC
+  RPC_URL: z.string().optional().default('http://localhost:8545'), // local mock only — no external Ethereum RPC (Satohash is Bitcoin-only)
   NFT_KEY: z.string().optional(),
   IPFS_URL: z.string().optional().default('http://localhost:5001')
 });

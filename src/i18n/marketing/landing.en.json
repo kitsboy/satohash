@@ -45,8 +45,8 @@
         "body": "Within one Bitcoin block, your proof is woven into the chain. Every node on Earth validates it. It cannot be altered, backdated, or deleted."
       },
       "court": {
-        "title": "Court-Ready Evidence",
-        "body": "Satohash proofs satisfy ESIGN Act (US), UETA, and eIDAS (EU) requirements. Your timestamp is mathematically non-repudiable."
+        "title": "Independently Verifiable Evidence",
+        "body": "Satohash proofs are independently verifiable electronic evidence of existence-at-a-time, aligned with the framework of the ESIGN Act (US), UETA, and eIDAS (EU)."
       },
       "noMiddleman": {
         "title": "No Middleman. Ever.",
@@ -109,31 +109,31 @@
     "eyebrow": "Free today · Bitcoin forever",
     "titleLine1": "How free stamping",
     "titleHighlight": "actually works",
-    "explainer": "We free-timestamp a fingerprint of your file using OpenTimestamps on Bitcoin. You don’t pay miners or us today; when we charge later, you’ll pay a small Lightning fee to us, and the proof still anchors to Bitcoin.",
+    "explainer": "We free-timestamp a fingerprint of your file using OpenTimestamps on Bitcoin. The free base tier is the permanent, never-paywalled trust anchor; optional premium tiers and a pay-per-use API are built and staged and launch paid only once the Lightning rails are funded and tested.",
     "chainNote": "Chain: Bitcoin only (via OpenTimestamps). Your file stays on your device — we only handle the hash.",
-    "futureEyebrow": "Maybe in the future",
-    "futureTitle": "Simple prices we’re sketching (not live yet)",
-    "futureSubtitle": "Same proofs, same Bitcoin anchor. Later we may flip on Lightning so a small fee pays us for hosting — not a different blockchain.",
+    "futureEyebrow": "Built and staged (not live yet)",
+    "futureTitle": "Optional premium tiers we've sketched",
+    "futureSubtitle": "Same proofs, same Bitcoin anchor. Free base (never paywalled) + optional premium tiers (Professional ~2,100 sats/mo, Business ~21,000 sats/mo) + pay-per-use API (1–5 sats/stamp). Launches paid only when rails are funded and tested.",
     "tiers": {
       "free": {
         "name": "Free",
         "price": "0 sats",
         "period": "today",
-        "desc": "Stamp & verify with OpenTimestamps. No account. No Lightning invoice.",
+        "desc": "Unlimited stamp & verify with OpenTimestamps. No account. No Lightning invoice. Never paywalled (trust anchor).",
         "badge": "Live now"
       },
       "sats": {
-        "name": "Pay-per-stamp",
-        "price": "21 sats",
-        "period": "per stamp (planned)",
-        "desc": "Optional Lightning tip-through-us when we flip the paywall. Covers product costs; proof still OTS on Bitcoin.",
+        "name": "Professional",
+        "price": "~2,100 sats",
+        "period": "per month (~$29)",
+        "desc": "Optional premium tier (built, staged). Individual high-volume stamping. Collection depends on Lightning channels being funded.",
         "badge": "Future"
       },
       "pro": {
-        "name": "Pro pack",
-        "price": "2,100 sats",
-        "period": "pack (planned)",
-        "desc": "Bulk stamps / API-friendly pack for builders. Still Bitcoin-anchored proofs — payment is Lightning to us.",
+        "name": "Business / Studio",
+        "price": "~21,000 sats",
+        "period": "per month (~$299)",
+        "desc": "Optional premium tier (built, staged). Teams and studios. Enterprise (custom) is partner-gated and not marketed now.",
         "badge": "Future"
       }
     },

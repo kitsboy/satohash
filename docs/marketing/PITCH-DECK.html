@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Satohash — Proof of Truth, on Bitcoin</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  /* ===== Glacier Jewel tokens (Satohash) — no pure black/white/grey ===== */
+  :root {
+    --bg-primary: #0e1c2a;            /* deep glacier teal-navy */
+    --bg-secondary: #12273a;
+    --surface-raised: #16304a;
+    --surface-overlay: #1c3a57;
+    --jewel-sky: #38bdf8;
+    --jewel-cyan: #22d3ee;
+    --jewel-violet: #8b5cf6;
+    --jewel-ice: #d4f0f8;
+    --jewel-gold: #f0b429;
+    --accent-success: #34d399;
+    --accent-pending: #f0b429;
+    --accent-danger: #fb7185;
+    --text-primary: #e8f4fb;
+    --text-secondary: #93a9bb;
+    --text-muted: #5d7287;
+    --border: rgba(148,197,255,0.10);
+    --border-bright: rgba(148,197,255,0.22);
+    --gold-glow: rgba(240,180,41,0.35);
+    --sky-glow: rgba(56,189,248,0.30);
+    --grad-sky-gold: linear-gradient(90deg, #38bdf8, #f0b429);
+    --grad-title: linear-gradient(120deg, #38bdf8 0%, #22d3ee 45%, #f0b429 100%);
+    --font-heading: 'Space Grotesk', 'Segoe UI', sans-serif;
+    --font-body: 'Plus Jakarta Sans', 'Segoe UI', sans-serif;
+    --font-mono: 'JetBrains Mono', 'SFMono-Regular', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    overflow: hidden;
+    background-image:
+      radial-gradient(ellipse 60% 45% at 15% 10%, rgba(56,189,248,0.10), transparent 60%),
+      radial-gradient(ellipse 55% 40% at 85% 85%, rgba(139,92,246,0.08), transparent 60%),
+      radial-gradient(ellipse 45% 35% at 70% 15%, rgba(240,180,41,0.06), transparent 55%);
+  }
+
+  .slide-deck {
+    position: relative; width: 100vw; height: 100vh; overflow: hidden;
+  }
+  @media (min-width: 769px) {
+    .slide-deck {
+      max-width: calc(100vh * 16 / 9);
+      max-height: calc(100vw * 9 / 16);
+      margin: auto; position: absolute; inset: 0;
+    }
+  }
+
+  .slide {
+    position: absolute; width: 100%; height: 100%;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center; padding: 56px 64px;
+    opacity: 0; visibility: hidden; transition: opacity 0.45s ease;
+    background: linear-gradient(160deg, var(--bg-secondary) 0%, var(--bg-primary) 55%, #0b1723 100%);
+    overflow: hidden;
+  }
+  .slide.active { opacity: 1; visibility: visible; }
+  .slide::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: var(--grad-sky-gold); opacity: 0.85;
+  }
+
+  .slide-content { width: 100%; max-width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 18px; z-index: 2; }
+
+  /* Typography */
+  .kicker {
+    font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.28em;
+    text-transform: uppercase; color: var(--jewel-sky); font-weight: 700;
+    display: inline-flex; align-items: center; gap: 10px;
+  }
+  .kicker::before, .kicker::after { content: ''; width: 28px; height: 1px; background: linear-gradient(90deg, transparent, var(--jewel-sky)); }
+  .kicker::after { background: linear-gradient(90deg, var(--jewel-sky), transparent); }
+
+  h1, h2 { font-family: var(--font-heading); font-weight: 700; }
+  h1 { font-size: clamp(34px, 6vw, 72px); line-height: 1.06; }
+  .grad { background: var(--grad-title); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+  h2 { font-size: clamp(26px, 4.2vw, 48px); line-height: 1.12; }
+  .lead { font-size: clamp(16px, 2vw, 22px); color: var(--text-secondary); line-height: 1.55; max-width: 900px; }
+  .small { font-size: clamp(13px, 1.5vw, 15px); color: var(--text-muted); line-height: 1.6; }
+
+  /* Cards / planes */
+  .plane-stack { display: flex; flex-direction: column; gap: 10px; width: min(680px, 92%); }
+  .plane {
+    display: flex; align-items: center; gap: 14px; text-align: left;
+    background: linear-gradient(135deg, var(--surface-raised), color-mix(in srgb, var(--jewel-sky) 7%, var(--bg-secondary)));
+    border: 1px solid var(--border); border-radius: 14px; padding: 14px 18px;
+    transition: all 0.25s ease;
+  }
+  .plane:hover { border-color: var(--border-bright); transform: translateX(4px); }
+  .plane .plane-tag { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; color: var(--jewel-gold); white-space: nowrap; font-weight: 700; }
+  .plane .plane-name { font-family: var(--font-heading); font-weight: 600; font-size: 16px; }
+  .plane .plane-desc { font-size: 13px; color: var(--text-secondary); }
+
+  /* Grid */
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; width: min(980px, 96%); }
+  .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; width: min(900px, 96%); }
+  .cell {
+    background: linear-gradient(135deg, var(--surface-raised), var(--bg-secondary));
+    border: 1px solid var(--border); border-radius: 16px; padding: 20px 18px;
+    text-align: left; display: flex; flex-direction: column; gap: 8px; transition: all 0.25s ease;
+  }
+  .cell:hover { border-color: var(--border-bright); box-shadow: 0 12px 32px -18px var(--sky-glow); }
+  .cell .icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; background: color-mix(in srgb, var(--jewel-sky) 14%, transparent); }
+  .cell h3 { font-family: var(--font-heading); font-size: 16px; font-weight: 600; }
+  .cell p { font-size: 13.5px; color: var(--text-secondary); line-height: 1.5; }
+
+  /* Honesty pills */
+  .pill { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; padding: 5px 10px; border-radius: 999px; border: 1px solid; }
+  .pill.ok { color: var(--accent-success); border-color: color-mix(in srgb, var(--accent-success) 40%, transparent); background: color-mix(in srgb, var(--accent-success) 12%, transparent); }
+  .pill.warn { color: var(--accent-pending); border-color: color-mix(in srgb, var(--accent-pending) 40%, transparent); background: color-mix(in srgb, var(--accent-pending) 12%, transparent); }
+  .pill.err { color: var(--accent-danger); border-color: color-mix(in srgb, var(--accent-danger) 40%, transparent); background: color-mix(in srgb, var(--accent-danger) 12%, transparent); }
+
+  /* Proof badge + freshness ring (the honesty visuals) */
+  .proof-badge {
+    display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 12px;
+    border: 1px solid var(--jewel-gold); color: var(--jewel-gold);
+    font-family: var(--font-mono); font-size: 13px; font-weight: 700; letter-spacing: 0.06em;
+    background: color-mix(in srgb, var(--jewel-gold) 10%, transparent);
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--jewel-gold) 15%, transparent), 0 8px 24px -12px var(--gold-glow);
+  }
+  .proof-badge .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--jewel-gold); box-shadow: 0 0 8px var(--gold-glow); }
+  .freshness-ring { position: relative; width: 132px; height: 132px; }
+  .freshness-ring svg { transform: rotate(-90deg); }
+  .freshness-ring .ring-fill { transition: stroke-dashoffset 1.2s ease; }
+  .freshness-ring .ring-num { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .freshness-ring .ring-num b { font-family: var(--font-heading); font-size: 26px; color: var(--text-primary); }
+  .freshness-ring .ring-num span { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.16em; color: var(--text-muted); text-transform: uppercase; }
+
+  /* Quote */
+  .quote { font-family: var(--font-heading); font-size: clamp(20px, 3vw, 32px); line-height: 1.35; max-width: 920px; font-weight: 600; }
+  .quote em { font-style: normal; color: var(--jewel-sky); }
+
+  /* CTA button */
+  .cta {
+    display: inline-flex; align-items: center; gap: 10px; margin-top: 8px;
+    background: linear-gradient(135deg, var(--jewel-gold), color-mix(in srgb, var(--jewel-gold) 70%, var(--jewel-sky)));
+    color: #0e1c2a; font-family: var(--font-heading); font-weight: 700; font-size: 16px;
+    padding: 16px 34px; border-radius: 14px; text-decoration: none; letter-spacing: 0.04em;
+    box-shadow: 0 14px 34px -14px var(--gold-glow); transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .cta:hover { transform: translateY(-2px); box-shadow: 0 20px 44px -14px var(--gold-glow); }
+
+  .chart-box { width: min(760px, 94%); height: clamp(220px, 34vh, 320px); position: relative; }
+
+  /* nav */
+  .progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: var(--grad-sky-gold); transition: width 0.3s; z-index: 1000; }
+  .nav-controls { position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 18px; z-index: 1000; }
+  .nav-btn { background: color-mix(in srgb, var(--jewel-sky) 12%, transparent); border: 1px solid var(--border-bright); color: var(--text-primary); width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-size: 17px; font-family: var(--font-body); transition: all 0.2s ease; }
+  .nav-btn:hover { background: color-mix(in srgb, var(--jewel-sky) 22%, transparent); }
+  .slide-counter { color: var(--text-muted); font-size: 13px; font-family: var(--font-mono); }
+  .brand-mark { position: fixed; top: 20px; left: 24px; z-index: 1000; font-family: var(--font-heading); font-weight: 700; font-size: 14px; letter-spacing: 0.14em; color: var(--text-secondary); }
+  .brand-mark b { color: var(--jewel-sky); }
+
+  @media (max-width: 768px) {
+    .slide { padding: 36px 20px 56px; overflow-y: auto; justify-content: flex-start; }
+    .slide-content { gap: 12px; padding-top: 8px; }
+    .grid-3, .grid-2 { grid-template-columns: 1fr; gap: 10px; }
+    .cell { padding: 14px 14px; }
+    .lead { line-height: 1.45; }
+    .slide-counter, .nav-btn { transform: scale(0.9); }
+  }
+  @media (max-width: 480px) {
+    .slide { padding: 28px 14px; }
+    .grid-3, .grid-2 { grid-template-columns: 1fr; }
+    .nav-controls { bottom: 12px; gap: 12px; }
+    .nav-btn { width: 34px; height: 34px; font-size: 15px; }
+  }
+
+  /* animations */
+  .active .animate-fade-up { animation: fadeUp 0.6s ease-out forwards; opacity: 0; }
+  .active .animate-stagger > * { opacity: 0; animation: fadeUp 0.55s ease-out forwards; }
+  .active .animate-stagger > *:nth-child(1) { animation-delay: 0.10s; }
+  .active .animate-stagger > *:nth-child(2) { animation-delay: 0.20s; }
+  .active .animate-stagger > *:nth-child(3) { animation-delay: 0.30s; }
+  .active .animate-stagger > *:nth-child(4) { animation-delay: 0.40s; }
+  .active .animate-stagger > *:nth-child(5) { animation-delay: 0.50s; }
+  .active .animate-stagger > *:nth-child(6) { animation-delay: 0.60s; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+<div class="brand-mark">SATOHASH · <b>Bitcoin notary</b></div>
+
+<div class="slide-deck">
+
+  <!-- 1 · TITLE -->
+  <div class="slide active">
+    <div class="slide-content animate-stagger">
+      <span class="kicker">Give A Bit · Bitcoin sovereignty first</span>
+      <h1>Proof of truth.<br><span class="grad">On Bitcoin.</span></h1>
+      <p class="lead">Prove a file existed — and one day, prove you made it.<br>Your document never leaves your device; the receipt outlives any company.</p>
+      <div class="proof-badge"><span class="dot"></span> Bitcoin + OpenTimestamps · verify-this-yourself</div>
+      <p class="small" style="margin-top:6px;">F.O.S.S. · Engineered by Give A Bit · Live at satohash.io</p>
+    </div>
+  </div>
+
+  <!-- 2 · THE PROBLEM -->
+  <div class="slide">
+    <div class="slide-content animate-stagger">
+      <span class="kicker">The problem</span>
+      <h2>Truth is now a <span class="grad">premium commodity</span></h2>
+      <p class="lead" style="max-width:880px;">Generative AI, deepfakes, and centralized platforms have made "what existed, when" genuinely hard to prove — and harder to trust.</p>
+      <div class="grid-3" style="margin-top:10px;">
+        <div class="cell"><div class="icon">🎭</div><h3>Deepfakes</h3><p>Content can be fabricated, altered, or denied. Timestamps matter more, not less.</p></div>
+        <div class="cell"><div class="icon">⚖️</div><h3>Slow notarization</h3><p>Traditional notaries are slow, expensive, and paper-era.</p></div>
+        <div class="cell"><div class="icon">🏦</div><h3>Centralized vaults</h3><p>DocuSign &amp; co. demand your confidential files, on a subscription, on their say-so.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3 · THE SOLUTION (three beats) -->
+  <div class="slide">
+    <div class="slide-content animate-stagger">
+      <span class="kicker">The solution</span>
+      <h2>Proof becomes <span class="grad">math on Bitcoin</span></h2>
+      <div class="grid-3" style="margin-top:10px;">
+        <div class="cell"><div class="icon">🔒</div><h3>1 · We can't see it</h3><p>Your file never leaves your device. Only a SHA-256 fingerprint is stamped — locally, in your browser.</p></div>
+        <div class="cell"><div class="icon">🛡️</div><h3>2 · You can check us</h3><p>Every claim carries a proof you verify yourself with open tools. No account. No KYC.</p></div>
+        <div class="cell"><div class="icon">⛓️</div><h3>3 · It outlives us</h3><p>A portable <span style="font-family:var(--font-mono)">.ots</span> receipt anchored to Bitcoin proof-of-work verifies forever.</p></div>
+      </div>
+      <p class="quote" style="margin-top:20px;">Your document. Your hash. <em>Bitcoin's permanence.</em></p>
+    </div>
+  </div>
+
+  <!-- 4 · HOW IT WORKS -->
+  <div class="slide">
+    <div class="slide-content">
+      <span class="kicker">How it works · zero-knowledge</span>
+      <h2>Five steps to <span class="grad">immutable proof</span></h2>
+      <div class="grid-2" style="margin-top:14px;">
+        <div class="cell"><div class="icon">1️⃣</div><h3>Hash</h3><p>Your browser computes the fingerprint. The original bytes <b>never leave your device</b>.</p></div>
+        <div class="cell"><div class="icon">2️⃣</div><h3>Stamp</h3><p>Only the 64-char hash goes to three independent OpenTimestamps calendars.</p></div>
+        <div class="cell"><div class="icon">3️⃣</div><h3>Anchor</h3><p>Calendars merge hashes into a Merkle tree, committed to Bitcoin.</p></div>
+        <div class="cell"><div class="icon">4️⃣</div><h3>Confirm</h3><p>~10 minutes later, a Bitcoin block permanently seals the commitment.</p></div>
+      </div>
+      <div class="grid-2" style="margin-top:10px;">
+        <div class="cell"><div class="icon">5️⃣</div><h3>Prove</h3><p>Download the <span style="font-family:var(--font-mono)">.ots</span>. Verify with open tools + a block explorer — forever.</p></div>
+        <div class="cell" style="border-color: var(--jewel-sky);"><div class="icon" style="background: color-mix(in srgb, var(--jewel-sky) 18%, transparent);">🧾</div><h3>No trust required</h3><p>The security comes from Bitcoin's proof-of-work — not from any company.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5 · THE STACK (four planes) -->
+  <div class="slide">
+    <div class="slide-content">
+      <span class="kicker">The architecture</span>
+      <h2>A sovereign stack, <span class="grad">four planes deep</span></h2>
+      <p class="small">Higher planes evolve without ever invalidating the proofs beneath them.</p>
+      <div class="plane-stack" style="margin-top:12px;">
+        <div class="plane"><span class="plane-tag">P4 · ATLAS</span><div><div class="plane-name">Chain intelligence</div><div class="plane-desc">Mempool, node mesh, protocol stats, jurisdiction signals</div></div></div>
+        <div class="plane"><span class="plane-tag">P3 · SETTLEMENT</span><div><div class="plane-name">Lightning micro-payments</div><div class="plane-desc">BOLT-12 offers + L402 — <span class="pill warn">built · staged</span></div></div></div>
+        <div class="plane"><span class="plane-tag">P2 · IDENTITY</span><div><div class="plane-name">Nostr NIP-05 / NIP-07</div><div class="plane-desc">Cryptographic signer identity &amp; multi-party provenance</div></div></div>
+        <div class="plane"><span class="plane-tag">P1 · PROOF</span><div><div class="plane-name">OpenTimestamps → Bitcoin PoW</div><div class="plane-desc">The eternal foundation — SHA-256 + calendar aggregation</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6 · MARKET OPPORTUNITY (Chart.js) -->
+  <div class="slide">
+    <div class="slide-content">
+      <span class="kicker">Market opportunity</span>
+      <h2>A <span class="grad">first-mover</span> in an exploding category</h2>
+      <div class="chart-box"><canvas id="marketChart"></canvas></div>
+      <p class="small" style="max-width:800px;">Notarization &amp; legal attestation ~$5B+/yr (still paper-era) · Legal tech ~$27B+ · AI provenance &amp; deepfake defense: brand-new greenfield. Bitcoin-anchored zero-trust proofs have &lt;1% penetration.</p>
+    </div>
+  </div>
+
+  <!-- 7 · PREMIUM USE CASES -->
+  <div class="slide">
+    <div class="slide-content animate-stagger">
+      <span class="kicker">Who it serves</span>
+      <h2>The premium use cases</h2>
+      <div class="grid-3" style="margin-top:10px;">
+        <div class="cell"><div class="icon">⚖️</div><h3>Legal &amp; IP</h3><p>Mathematically prove a contract draft existed before a disputable date.</p></div>
+        <div class="cell"><div class="icon">🎨</div><h3>Freelancers</h3><p>Hash design briefs and copy before delivery — proof of creation, secured.</p></div>
+        <div class="cell"><div class="icon">🤖</div><h3>AI teams</h3><p>Timestamp model outputs at generation for provenance and copyright defense.</p></div>
+        <div class="cell"><div class="icon">💻</div><h3>Developers</h3><p>One-click git-tag notarization for permanent build audit trails.</p></div>
+        <div class="cell"><div class="icon">📰</div><h3>Journalists</h3><p>Immutable forensic snapshot of a source's content before publication.</p></div>
+        <div class="cell"><div class="icon">🏛️</div><h3>Government</h3><p>Registry, tender &amp; migration proof — hash-only, air-gapped friendly, no new vendor cloud.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8 · THE AUTHORSHIP UPGRADE (v3 next chapter) -->
+  <div class="slide">
+    <div class="slide-content animate-stagger">
+      <span class="kicker">The next chapter · proof of authorship</span>
+      <h2>Prove it existed.<br><span class="grad">Prove you made it.</span></h2>
+      <p class="lead" style="max-width:880px;">Add your private key to an OpenTimestamps anchor and "this file existed" becomes <em>"this file existed, and I am the one who created it."</em></p>
+      <div class="grid-3" style="margin-top:10px;">
+        <div class="cell"><div class="icon">🔑</div><h3>Key-held</h3><p>Non-custodial — the signature lives on your key, never our server.</p></div>
+        <div class="cell"><div class="icon">🔓</div><h3>Trustless</h3><p>Verifiable by anyone, forever — no notary, no company, no permission.</p></div>
+        <div class="cell"><div class="icon">📐</div><h3>The hinge</h3><p>Unlocks nearly every enterprise, legal &amp; IP use case. This is the roadmap.</p></div>
+      </div>
+      <div class="proof-badge" style="margin-top:18px;"><span class="dot"></span> Free today · authorship on the roadmap · we say so honestly</div>
+    </div>
+  </div>
+
+  <!-- 9 · HONESTY GATES (the differentiator) -->
+  <div class="slide">
+    <div class="slide-content">
+      <span class="kicker">Why you can believe this pitch</span>
+      <h2>An <span class="grad">honesty contract</span>, not a promise</h2>
+      <p class="lead" style="font-size:clamp(15px,1.7vw,19px); max-width:900px;">We show you exactly what is live, what is staged, and how to check every claim yourself.</p>
+      <div class="grid-3" style="margin-top:8px; width:min(1020px,96%);">
+        <div class="cell"><div class="icon">✅</div><h3>Free stamps · live</h3><p>Bitcoin + OTS anchoring, zero-knowledge hashing — true today.</p><span class="pill ok">Live</span></div>
+        <div class="cell"><div class="icon">🧾</div><h3>Portable .ots proofs</h3><p>Verify with open tools forever. Independent client-side verify on the roadmap.</p><span class="pill warn">On roadmap</span></div>
+        <div class="cell"><div class="icon">✍️</div><h3>Multi-party signing</h3><p>Partial today; verified non-repudiation on the roadmap. We say so.</p><span class="pill warn">Roadmap</span></div>
+        <div class="cell"><div class="icon">⚡</div><h3>Lightning billing</h3><p>Built &amp; staged; launched only when the rails are funded and tested.</p><span class="pill warn">Staged</span></div>
+        <div class="cell"><div class="icon">⛓️</div><h3>Bitcoin only</h3><p>Ethereum / cross-chain is out of scope. Bitcoin is the truth layer.</p><span class="pill ok">Bitcoin</span></div>
+        <div class="cell"><div class="icon">🛡️</div><h3>Verify this yourself</h3><p>Every proof carries a standing invitation to check with open tools.</p><span class="pill ok">Always</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 9 · HONESTY VISUALS (freshness ring + proof badge) -->
+  <div class="slide">
+    <div class="slide-content">
+      <span class="kicker">Honesty is the brand</span>
+      <h2>We'd rather show you <span class="grad">old truth</span> than new lies</h2>
+      <div style="display:flex; align-items:center; justify-content:center; gap:44px; flex-wrap:wrap; margin-top:14px;">
+        <div class="freshness-ring">
+          <svg width="132" height="132" viewBox="0 0 132 132">
+            <circle cx="66" cy="66" r="56" fill="none" stroke="rgba(148,197,255,0.10)" stroke-width="10"/>
+            <circle class="ring-fill" id="ringFill" cx="66" cy="66" r="56" fill="none"
+              stroke="#f0b429" stroke-width="10" stroke-linecap="round"
+              stroke-dasharray="352" stroke-dashoffset="352"/>
+          </svg>
+          <div class="ring-num"><b id="freshDays">45</b><span>days fresh</span></div>
+        </div>
+        <div style="max-width:420px; text-align:left; display:flex; flex-direction:column; gap:12px;">
+          <div class="proof-badge" style="align-self:flex-start;"><span class="dot"></span> Secured by Satohash · confirm it here</div>
+          <p class="lead" style="font-size:clamp(15px,1.8vw,19px);">Every fact surfaces <b>when it was last confirmed</b>. If a claim goes stale past 45 days, we mark it — honestly, in amber and in words.</p>
+          <p class="small">Honest stale beats confident wrong. Live KPIs come from <span style="font-family:var(--font-mono)">/metrics.json</span> — never fabricated.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 10 · THE CLOSER -->
+  <div class="slide">
+    <div class="slide-content animate-stagger">
+      <span class="kicker">The pitch</span>
+      <h1>No trust required —<br><span class="grad">not even in us.</span></h1>
+      <div class="grid-3" style="margin-top:14px; width:min(1020px,96%);">
+        <div class="cell"><div class="icon">🔒</div><h3>We can't lose it</h3><p>We never had your document.</p></div>
+        <div class="cell"><div class="icon">⛓️</div><h3>We can't fake it</h3><p>Bitcoin's proof-of-work keeps the receipt.</p></div>
+        <div class="cell"><div class="icon">🛡️</div><h3>You can check it</h3><p>Free, open tools. No account. No KYC.</p></div>
+      </div>
+      <a class="cta" href="https://satohash.io" target="_blank" rel="noopener">Stamp your first proof free ↗</a>
+      <p class="small" style="margin-top:10px;">F.O.S.S. · Give A Bit family · hello@giveabit.io · Safe Harbour: educational &amp; informational only, not legal/financial/investment advice</p>
+    </div>
+  </div>
+
+</div>
+
+<div class="nav-controls">
+  <button class="nav-btn" onclick="prevSlide()">←</button>
+  <span class="slide-counter"><span id="current">1</span> / <span id="total">11</span></span>
+  <button class="nav-btn" onclick="nextSlide()">→</button>
+</div>
+
+<script>
+  let current = 1;
+  const total = document.querySelectorAll('.slide').length;
+  document.getElementById('total').textContent = total;
+
+  function showSlide(n) {
+    if (n < 1) n = 1;
+    if (n > total) n = total;
+    current = n;
+    document.querySelectorAll('.slide').forEach((s, i) => s.classList.toggle('active', i === n - 1));
+    document.getElementById('current').textContent = n;
+    document.getElementById('progressBar').style.width = (n / total * 100) + '%';
+  }
+  function nextSlide() { showSlide(current + 1); }
+  function prevSlide() { showSlide(current - 1); }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); nextSlide(); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); prevSlide(); }
+  });
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.nav-controls') && !e.target.closest('a')) nextSlide();
+  });
+  showSlide(1);
+
+  // Market chart
+  new Chart(document.getElementById('marketChart'), {
+    type: 'bar',
+    data: {
+      labels: ['Paper notarization', 'Legal tech', 'AI provenance*', 'Bitcoin zero-trust proofs'],
+      datasets: [{
+        label: 'Market size (US$B)',
+        data: [5, 27, 2, 0.01],
+        backgroundColor: ['#16304a', '#1c3a57', '#38bdf8', '#f0b429'],
+        borderColor: ['rgba(148,197,255,0.25)','rgba(148,197,255,0.25)','rgba(56,189,248,0.6)','rgba(240,180,41,0.7)'],
+        borderWidth: 1, borderRadius: 8
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { color: 'rgba(148,197,255,0.05)' }, ticks: { color: '#93a9bb', font: { family: "'Space Grotesk'" } } },
+        y: { grid: { color: 'rgba(148,197,255,0.06)' }, ticks: { color: '#93a9bb', font: { family: "'JetBrains Mono'" } }, title: { display: true, text: 'US$ billion', color: '#5d7287' } }
+      }
+    }
+  });
+
+  // Freshness ring: animate to ~28% stale-margin on load of slide 9
+  const ringFill = document.getElementById('ringFill');
+  const freshDays = document.getElementById('freshDays');
+  const target = 352 * 0.72; // 45 fresh / ~62 threshold margin → shows ~28% used
+  setTimeout(() => { ringFill.style.strokeDashoffset = target; }, 300);
+</script>
+</body>
+</html>
