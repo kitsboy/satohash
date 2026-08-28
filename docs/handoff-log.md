@@ -1,3 +1,27 @@
+## 2026-08-29 (Kimi — NEXT Grok/M3 TASK: Remove /stamp/ethereum stub + all cross_chain_bridges. Cam Bitcoin-only ruling. Card t_738507a6)
+
+**From:** Kimi (routing, Cam's non-negotiable ruling) · **To:** Grok/M3 · **Status:** QUEUED — immediate next family-code task (quick, low-risk cleanup; take ahead of the trustless-authorship fix below). Board card t_738507a6.
+
+**The ruling:** Satohash is Bitcoin-only, forever. No Ethereum, no cross-chain, ever. Remove the `/api/stamp/ethereum` testnet stub and any `cross_chain_bridges` writes so no Ethereum/cross-chain survives in code. Do NOT break the SPA or other /api/* routes.
+
+**Verified scope (all live in code as of 2026-08-29):**
+1. `server/routes/v5-api.js` (main target):
+   - L813-840: the POST `/api/stamp/ethereum` handler (fake sepolia tx hash + "testnet calldata anchor stub") → REMOVE whole router block.
+   - L100-110: `CREATE TABLE IF NOT EXISTS cross_chain_bridges` + index → REMOVE schema block (and the empty schema-ensure try/catch can collapse; keep surrounding tables).
+   - L660: `SELECT * FROM cross_chain_bridges WHERE stamp_id = ?` inside GET `/api/stamps/:id/chains` → remove the bridges lookup; return `{ stamp_id, hash, bitcoin: {...} }` only (chains endpoint becomes Bitcoin-only).
+   - L628: `ethereum: null,` inside the `chains:` object in the GET /api/stamps/:id response → remove the line, keep `bitcoin_ots` + `nostr`.
+2. `server/mesh.js` L60 + L87: Ethereum bridge simulation `INSERT OR IGNORE INTO cross_chain_bridges (...'ethereum'...)` → REMOVE both (whole bridge-to-Ethereum block, the mock fallback tx too). NOTE: these inserts reference `timestamp_id, block_number, bridged_at` columns that DON'T exist in the v5 table def (which uses `stamp_id`) — dead/half-wired code, safe to cut. Don't touch the rest of mesh.js.
+3. `server/routes/nft.js` L11: `RPC_URL ... default('https://sepolia.infura.io/v3/mock')` → drop the sepolia default / ethereum RPC mock if nothing else uses it.
+4. `docs/ENGINEERING-SCOPE-PREMIUM.md` L119 already states "Ethereum is OUT of premium (Cam declined; sepolia stub only)". Keep the OUT policy line; can drop the trailing "sepolia stub only" parenthetical for cleanliness.
+
+**Keep:** `docs/marketing/BRAND-VOICE.md` OUT-policy line (correct). Marketing/pitch/exec-summary already Bitcoin-only — don't touch. ROADMAP.md + docs/roadmap.md already purged of Cross-Chain items.
+
+**Non-negotiables:** don't break /api/*, /metrics.json, public/_redirects, or the SPA. Code from M3/Grok per code-lane. This /api path removal is all-cleared by Cam's Bitcoin-only ruling (Hermes confirmed) — but the all-clear covers REMOVAL; still push from Grok/M3. Commit with `git -c core.hooksPath=/dev/null commit` (husky blocks plain commits) then push. Verify `grep -rn "ethereum\|sepolia\|cross_chain\|calldata" server/` returns nothing (except expected strings) before declaring done.
+
+**Follow-on (still queued, do AFTER this):** the trustless-authorship fix dated 2026-08-28 below.
+
+---
+
 ## 2026-08-28 (Kimi — NEXT Grok/M3 TASK: Satohash "trustless authorship" premium code fix)
 
 **From:** Kimi (routing, per Andrea's technical corrections) · **To:** Grok/M3 · **Status:** QUEUED — this is the next family-code task. Board card t_1e01cdc2. 3-day lawyer deadline context.
