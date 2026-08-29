@@ -91,6 +91,14 @@
 **Full detail + crypto:** `/root/MASTER-BRAIN/03-Projects/satohash/docs/TECHNICAL-CORRECTIONS-LAWYER.md` (Andrea, 2026-08-28). **Coordinate with Andrea to sanity-check the crypto scheme BEFORE implementing.**
 **Non-negotiables:** don't break /api/*, /metrics.json, public/_redirects. Code from M3/Grok per code-lane; THOR pushes need Cam's explicit go.
 
+## 2026-08-29 (Grok M3 — idea list for Kimi: X + Nostr distribution)
+
+**Doc:** `docs/KIMI-IDEAS-2026-08-29.md` · also top of `docs/KIMI-HANDOFF.md`.
+
+**Ask:** use Twitter and Nostr for real, now that unfurls work. Pin `/watch` (player card live). Kind-0 + NIP-05 for the Satohash bot. njump in footer. RSS→Nostr cron. Share sheet off iris-only. No second X handle. No paywall flip.
+
+---
+
 ## 2026-08-29 (Grok M3 — quick wins: footer on core loop + title de-dupe)
 
 **Done:** `<Footer />` on `/stamp`, `/stamp/done`, `/verify`. Titles that already say Satohash are not appended again. Verify header no longer says “Courtroom-Grade”.

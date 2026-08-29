@@ -6,6 +6,19 @@
 
 ---
 
+## Paste block (2026-08-29 — Kimi ideas: X + Nostr)
+
+```markdown
+### Satohash distribution (OPEN — Kimi, 2026-08-29)
+
+Full list: kitsboy/satohash docs/KIMI-IDEAS-2026-08-29.md
+X: pin satohash.io/watch (player card LIVE) on @give_bit; 12s clips; learn-article cards; share via=give_bit; Card Validator on each Pages deploy. No @satohash handle.
+Nostr: kind-0 bot profile + lud16 satohash@breez.tips; NIP-05 satohash@giveabit.io; njump in footer; share sheet njump not iris-only; RSS→kind 1 cron; /network show existing kind-1 notes; relays honest count. nsec Vault only.
+Do not: REQUIRE_LIGHTNING flip, /api/* path changes, Giving Week announce, claim trustless authorship (OTS is hash-only).
+```
+
+---
+
 ## Paste block (2026-08-17 — family header + RAM)
 
 ```markdown

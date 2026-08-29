@@ -1,3 +1,36 @@
+## Session — 2026-08-29 · IDEAS FOR KIMI (Grok M3)
+
+**Full list:** `docs/KIMI-IDEAS-2026-08-29.md` (also MASTER-BRAIN paste below). Product looks good — this is **distribution + identity**, not a rebuild.
+
+**Do not:** flip paywall · change `/api/*` · commit nsec · Giving Week announce · second X handle.
+
+### Twitter / X (`@give_bit` only)
+1. Pin `https://satohash.io/watch` — player card is **already live**. Card Validator must show video, not a still.
+2. 3–4 × ~12s clips from the 84s film (hook / hash / block / CTA), each with its own URL.
+3. One X card per new learn article (RSS + per-page OG already work).
+4. Share intents: add `via=give_bit`; never auto-tweet a user’s hash.
+5. Evergreen “how Bitcoin timestamps a file” thread → canned reply. Pending ≠ confirmed.
+6. Optional Friday aggregate (“N fingerprints folded into Bitcoin today”) — no filenames.
+7. Card Validator on every Pages deploy (`/` `/watch` `/stamp` one learn-*).
+
+### Nostr
+1. Kind-0 profile for the stamp bot: name Satohash, `lud16=satohash@breez.tips`, website satohash.io.
+2. NIP-05 `satohash@giveabit.io` and/or `satohash@satohash.io` → **bot pubkey** (public hex). Keep `kimi@giveabit.io` as the human.
+3. Footer + `llms.txt`: `njump.me/<npub>` (humans without a handler).
+4. Share sheet: njump + primal/snort; stop **iris-only**.
+5. `/network`: show kind-1 notes we already publish (hash prefix + njump). Stamps already go out as kind 1.
+6. THOR cron: `feed.xml` → kind 1 (dedup by URL). nsec in Vault only.
+7. Explainer kind-1 from Kimi npub with `/watch` + R2 mp4.
+8. Relays: 5/7 green or honest 2/3 on `/status`. Kind 1063 often rejected — kind 1 is the real path.
+9. `/p/<hash>`: njump `nevent` only if `nostr_event_id` exists.
+
+**Honesty:** OTS hashes the file fingerprint only. Nostr id is metadata. Do not claim trustless authorship yet.
+
+### Ops this week
+Bitcoind `free -h` · GSC sitemap submit (ping URLs are dead) · MASTER-BRAIN ingest this list · Lighthouse after `11c0ceb` Pages · family `X-Satohash-Client` still 0.
+
+---
+
 ## Session — 2026-08-29 · GROK HIGH-VALUE BATCH (Cam: use ~20% weekly allotment on Satohash)
 
 **From:** Hermes (Kimi lane) via Cam. **Cam's mood:** "wow it is looking really good, well done!" — site in strong state. This is polish + verification, not a rebuild.
