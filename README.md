@@ -121,5 +121,5 @@ Portfolio map: [Family of 8](https://giveabit.io/family)
 Read AGENTS.md first. Handoff protocol: cat docs/KIMI-HANDOFF.md (latest) + KIMI-GROK-HANDOFF.md or equiv. 
 Plausible: https://github.com/plausible/analytics (light self-evolving analytics). 
 Full structure: ~/MASTER-BRAIN/01-Architecture/STRUCTURE-MAP.md + PROJECT-TEMPLATE.md. 
-M4: Tailscale + Hermes Desktop to THOR + git push only.
+Kimi vault: **THOR VPS Obsidian / MASTER-BRAIN** (not M4). Code: M3 → git push. Ops: Kimi on THOR.
 

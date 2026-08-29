@@ -24,8 +24,8 @@
 - No secrets in git (nsec, invoice keys, `.env`, PATs)
 - API lives only on `api.satohash.io` — SPA calls via `VITE_API_URL`
 - HQ SoT = `api.satohash.io/metrics.json` (not the SPA mirror)
-- M3/M4 = code + push; THOR/Kimi = Docker/node/bitcoind/LN/backups
+- M3 = code + push; THOR/Kimi = Docker/node/bitcoind/LN/backups + **Obsidian vault** (not M4)
 - www.satohash.io: if 522, check CF Pages custom domain (not THOR)
 
 ## Need help?
-Ask Kimi on THOR (via Hermes) for Docker, bitcoind, LNbits. Code stays on M3/M4.
+Ask Kimi on THOR (via Hermes) for Docker, bitcoind, LNbits. Code stays on M3. Kimi’s Obsidian is on THOR, not M4.

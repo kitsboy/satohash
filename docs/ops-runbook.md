@@ -66,5 +66,5 @@ curl -sS https://api.satohash.io/metrics.json | python3 -c 'import json,sys; d=j
 ## Handoffs
 
 Newest session notes: `docs/handoff-log.md` (also append `docs/KIMI-HANDOFF.md` until fully migrated).  
-MASTER-BRAIN paste: `docs/MASTER-BRAIN-INGEST.md`.  
+MASTER-BRAIN paste: `docs/MASTER-BRAIN-INGEST.md` → **THOR VPS Obsidian** (not M4).  
 Cloudflare (Cam): `docs/CLOUDFLARE-PAGES.md` — do not log in unless the site is broken.

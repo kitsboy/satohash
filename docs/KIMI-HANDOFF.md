@@ -1,3 +1,9 @@
+## Standing — 2026-08-29 · Kimi vault is THOR Obsidian (not M4)
+
+Cam: we **no longer use M4 Obsidian**. MASTER-BRAIN / Kanban / vault = **THOR VPS Obsidian**. GitHub handoffs (`docs/KIMI-HANDOFF.md`, `docs/KIMI-IDEAS-2026-08-29.md`, `docs/MASTER-BRAIN-INGEST.md`) are pulled on THOR. Do not Tailscale-sync notes to M4.
+
+---
+
 ## Session — 2026-08-29 · IDEAS FOR KIMI (Grok M3)
 
 **Full list:** `docs/KIMI-IDEAS-2026-08-29.md` (also MASTER-BRAIN paste below). Product looks good — this is **distribution + identity**, not a rebuild.

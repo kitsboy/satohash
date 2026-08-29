@@ -16,7 +16,7 @@
 
 ## Non-negotiables
 
-1. **Orchestration = VPS Kimi (THOR). Code = M3.** No Umbrel. Don’t fight M4 for coding ownership.
+1. **Orchestration = VPS Kimi (THOR). Code = M3.** No Umbrel. Don’t fight M4 for coding ownership. **Kimi’s Obsidian / MASTER-BRAIN vault is on THOR**, not M4. Handoffs go git → THOR Obsidian. Do not Tailscale-sync notes to M4.
 2. **Never commit secrets** (API keys, LNbits admin, nsec, `.env`).
 3. **Do not change live `/api/*` paths** without an explicit Cam request — family apps + Caddy hardcode them.
 4. **Do not break** `public/_redirects` SPA fallback or `GET /metrics.json` (HQ).

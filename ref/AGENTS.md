@@ -9,8 +9,8 @@
 
 | Agent | Role | Machine |
 |-------|------|---------|
-| Grok | Code, UI, API features, CF Pages | M3 / M4 |
-| Kimi (Hermes) | Docker ops, Bitcoin node, LNbits, HQ wiring, backups | THOR VPS |
+| Grok | Code, UI, API features, CF Pages | M3 |
+| Kimi (Hermes) | Docker ops, Bitcoin node, LNbits, HQ wiring, backups, **Obsidian / MASTER-BRAIN** | THOR VPS |
 
 ## Planes
 
@@ -43,4 +43,4 @@
 - No secrets in git
 - API = api.satohash.io only; SPA = CF Pages
 - HQ feeds from API metrics.json only
-- M3/M4 = code push; THOR = ops
+- M3 = code push; THOR = ops + Kimi Obsidian vault (not M4)

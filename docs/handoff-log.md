@@ -91,6 +91,12 @@
 **Full detail + crypto:** `/root/MASTER-BRAIN/03-Projects/satohash/docs/TECHNICAL-CORRECTIONS-LAWYER.md` (Andrea, 2026-08-28). **Coordinate with Andrea to sanity-check the crypto scheme BEFORE implementing.**
 **Non-negotiables:** don't break /api/*, /metrics.json, public/_redirects. Code from M3/Grok per code-lane; THOR pushes need Cam's explicit go.
 
+## 2026-08-29 (Grok M3 — vault home is THOR Obsidian, not M4)
+
+Cam: Kimi’s Obsidian / MASTER-BRAIN lives on **THOR VPS**. M4 Obsidian is retired. Handoffs = git → THOR. Docs updated: AGENTS.md, ops-runbook, KIMI-VPS-RUNBOOK, MASTER-BRAIN-INGEST, OPS-TWO-MACHINE, README, ref boot.
+
+---
+
 ## 2026-08-29 (Grok M3 — idea list for Kimi: X + Nostr distribution)
 
 **Doc:** `docs/KIMI-IDEAS-2026-08-29.md` · also top of `docs/KIMI-HANDOFF.md`.

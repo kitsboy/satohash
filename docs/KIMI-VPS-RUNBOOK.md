@@ -2,8 +2,9 @@
 
 **Audience:** Kimi (VPS orchestrator) and any LLM/agent operating the Give A Bit stack  
 **Code home:** M3 `~/projects/satohash` → GitHub `kitsboy/satohash`  
-**Orchestration home:** **VPS** (not Umbrel, not M4)  
-**Updated:** 2026-07-27  
+**Orchestration home:** **THOR VPS** (not Umbrel, not M4)  
+**Vault:** **THOR Obsidian / MASTER-BRAIN** — not M4 Obsidian. GitHub handoffs are pulled on THOR.  
+**Updated:** 2026-08-29  
 
 This is the **executable** handoff. Copy relevant bullets into MASTER-BRAIN / Kanban after sync.
 
@@ -158,7 +159,7 @@ Update MASTER-BRAIN Kanban: **Satohash API = LIVE**.
 | Architecture diagrams | SSH private keys |
 | Agent NIP-05 handles | Nostr nsec |
 
-**Sync path:** GitHub `docs/KIMI-HANDOFF.md` + this runbook → Kimi pulls into Obsidian/MASTER-BRAIN when Cam says sync.  
+**Sync path:** GitHub `docs/KIMI-HANDOFF.md` + this runbook → Kimi pulls into **THOR VPS Obsidian / MASTER-BRAIN** (not M4).  
 **No full chat logs** — structured bullets only.
 
 ---

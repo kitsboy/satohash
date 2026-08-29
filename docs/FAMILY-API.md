@@ -45,7 +45,7 @@ Inbound deep-link stays `/stamp?hash=&ref=`. HQ `metrics.json` `raw.last10` + `r
 | LND / LNbits | Settlement / tips — not OTS hashing |
 | Family apps | Thin clients → API only |
 
-**Orchestration:** Kimi on **VPS**. Code on **M3**. No Umbrel / no M4 coding.
+**Orchestration:** Kimi on **THOR VPS** (Obsidian / MASTER-BRAIN on THOR, not M4). Code on **M3**. No Umbrel / no M4 coding.
 
 ## Free for us
 

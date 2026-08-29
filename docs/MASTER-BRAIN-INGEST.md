@@ -1,6 +1,6 @@
 # MASTER-BRAIN ingest — Satohash / suite proof plane
 
-**For Kimi:** After reading `docs/ops-runbook.md` / `docs/KIMI-VPS-RUNBOOK.md`, merge the following into MASTER-BRAIN.md / Kanban / ecosystem notes on the **VPS/THOR vault**.  
+**For Kimi:** After reading `docs/ops-runbook.md` / `docs/KIMI-VPS-RUNBOOK.md`, merge the following into MASTER-BRAIN.md / Kanban / ecosystem notes in **THOR VPS Obsidian** (the vault lives on THOR — **not M4**).  
 **Do not invent new rules** — only record operational truth.  
 **Never paste secret values into MASTER-BRAIN.**
 
@@ -158,7 +158,7 @@ LNbits ──wallets──► HQ Vault (keys local only) [when enabled]
 
 ## Sync instruction
 
-1. Pull latest `kitsboy/satohash`  
-2. Read `docs/ops-runbook.md` + paste block above into MASTER-BRAIN  
+1. Pull latest `kitsboy/satohash` **on THOR**  
+2. Read `docs/ops-runbook.md` + paste block above into **THOR Obsidian MASTER-BRAIN** (not M4)  
 3. Execute VPS runbook as needed  
 4. Append LIVE report to `docs/handoff-log.md` / `docs/KIMI-HANDOFF.md`  

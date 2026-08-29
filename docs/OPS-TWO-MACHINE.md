@@ -4,8 +4,10 @@ Satohash is **designed** to run across two roles. This is normal and permanent.
 
 | Machine | Who | Owns |
 |---------|-----|------|
-| **M3 / M4** | Grok | Code in `~/projects/satohash` → `git push` → CF Pages SPA |
-| **THOR** | Kimi | Docker API, secrets, Caddy, crons, HQ pipes, LNbits |
+| **M3** | Grok | Code in `~/projects/satohash` → `git push` → CF Pages SPA |
+| **THOR VPS** | Kimi | Docker API, secrets, Caddy, crons, HQ pipes, LNbits, **Obsidian / MASTER-BRAIN vault** |
+
+M4 is not the Obsidian home and is not the coding owner. Do not Tailscale-sync handoffs to M4.
 
 ## Handshake (every code change that touches `server/`)
 

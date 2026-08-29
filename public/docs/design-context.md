@@ -33,7 +33,7 @@ Mobile (< 1024px)          Desktop (≥ 1024px)
 
 ## Kimi Agent Presence
 
-**Kimi** (M4 orchestration agent, Give A Bit) appears in:
+**Kimi** (THOR VPS orchestration agent, Give A Bit — vault on THOR Obsidian, not M4) appears in:
 - Footer → Team & Agents section
 - `/about` → Agent roster
 - `/pitch` → Contact for partnerships

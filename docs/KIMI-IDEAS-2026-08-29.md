@@ -1,6 +1,7 @@
 # Kimi next-wave ideas — Satohash (2026-08-29)
 
-**From:** Grok M3 · **To:** Kimi / THOR · **Tone:** product already looks good. Distribution + identity, not a rebuild.
+**From:** Grok M3 · **To:** Kimi / THOR · **Tone:** product already looks good. Distribution + identity, not a rebuild.  
+**Vault:** ingest this file in **THOR VPS Obsidian**, not M4.
 
 **Do not:** flip `REQUIRE_LIGHTNING` · change live `/api/*` paths · commit nsec / `.env` · log into Cloudflare unless the live site is broken · announce Giving Week (Cam held it).
 
@@ -98,7 +99,7 @@ Rails already exist: `server/nostr.js` publishes kind **1** + kind **1063** (has
 | 2 | Confirm THOR API image includes `11c0ceb`+ (footer/player are Pages; API image is separate) | `api.satohash.io/health` ok; no `/api/*` path change |
 | 3 | Search Console: submit `https://satohash.io/sitemap.xml` (Google/Bing ping URLs are dead 404/410) | Cam or Kimi with GSC access; 71 URLs |
 | 4 | Relays: see B8 | readiness nostr `ok_count` |
-| 5 | MASTER-BRAIN: player card + Breez donate + footer chips + this ideas list | Vault updated, no secrets |
+| 5 | MASTER-BRAIN on **THOR Obsidian** (not M4): player card + Breez donate + footer chips + this ideas list | Vault updated on THOR, no secrets |
 | 6 | Lighthouse after Pages has `11c0ceb` (desktop+mobile `/` `/stamp` `/watch`) | Scores + one fix or “no regression” note |
 
 ---
