@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1920, height=1080" />
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap");
+* { margin:0; padding:0; box-sizing:border-box; }
+html,body { width:1920px; height:1080px; overflow:hidden; margin:0; background:transparent; }
+#root { width:1920px; height:1080px; position:relative; overflow:hidden; background:transparent; }
+.cap { position:absolute; bottom:110px; left:50%; transform:translateX(-50%); max-width:1560px; }
+.cap-inner { font-family:'Plus Jakarta Sans',sans-serif; font-size:40px; font-weight:600; color:#f6f1e8;
+  text-align:center; line-height:1.25;
+  background:rgba(10,20,32,0.80); padding:12px 28px; border-radius:14px;
+  border:1px solid rgba(56,189,248,0.35);
+  box-shadow:0 10px 40px rgba(0,0,0,0.4); }
+
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="captions" data-width="1920" data-height="1080">
+  <div id="cap-0" class="cap clip" data-start="0.060" data-duration="5.490" data-track-index="2"><div id="cap-0-inner" class="cap-inner">We can't read it. We can't lose it. We never had it.</div></div>
+  <div id="cap-1" class="cap clip" data-start="5.640" data-duration="4.340" data-track-index="3"><div id="cap-1-inner" class="cap-inner">That's the honest line at the heart of Satohash.</div></div>
+  <div id="cap-2" class="cap clip" data-start="10.060" data-duration="2.300" data-track-index="4"><div id="cap-2-inner" class="cap-inner">Every dispute over who did what, and when,</div></div>
+  <div id="cap-3" class="cap clip" data-start="12.360" data-duration="5.440" data-track-index="5"><div id="cap-3-inner" class="cap-inner">comes down to one question: can you prove your version of events</div></div>
+  <div id="cap-4" class="cap clip" data-start="17.890" data-duration="4.240" data-track-index="6"><div id="cap-4-inner" class="cap-inner">without asking anyone to take your word for it?</div></div>
+  <div id="cap-5" class="cap clip" data-start="22.210" data-duration="4.960" data-track-index="7"><div id="cap-5-inner" class="cap-inner">For centuries, the answer was a notary, a lawyer, a registry —</div></div>
+  <div id="cap-6" class="cap clip" data-start="27.170" data-duration="2.920" data-track-index="8"><div id="cap-6-inner" class="cap-inner">some trusted third party to vouch for a date.</div></div>
+  <div id="cap-7" class="cap clip" data-start="30.170" data-duration="5.400" data-track-index="9"><div id="cap-7-inner" class="cap-inner">Satohash is the founding bet that this middleman is no longer necessary.</div></div>
+  <div id="cap-8" class="cap clip" data-start="35.570" data-duration="5.420" data-track-index="10"><div id="cap-8-inner" class="cap-inner">OpenTimestamps anchors a fingerprint of your file into the Bitcoin blockchain.</div></div>
+  <div id="cap-9" class="cap clip" data-start="41.150" data-duration="4.490" data-track-index="11"><div id="cap-9-inner" class="cap-inner">Permanently. Verifiably. No company between your document and the proof.</div></div>
+  <div id="cap-10" class="cap clip" data-start="45.730" data-duration="5.350" data-track-index="12"><div id="cap-10-inner" class="cap-inner">Your file never leaves your device. Only a hash touches the chain.</div></div>
+  <div id="cap-11" class="cap clip" data-start="51.790" data-duration="6.430" data-track-index="13"><div id="cap-11-inner" class="cap-inner">Once it's in a block, that timestamp can't be altered, backdated,</div></div>
+  <div id="cap-12" class="cap clip" data-start="58.260" data-duration="4.180" data-track-index="14"><div id="cap-12-inner" class="cap-inner">or quietly removed. Not by Satohash. Not by anyone.</div></div>
+  <div id="cap-13" class="cap clip" data-start="63.440" data-duration="4.640" data-track-index="15"><div id="cap-13-inner" class="cap-inner">What we prove today is when a file existed — not who made it.</div></div>
+  <div id="cap-14" class="cap clip" data-start="68.120" data-duration="2.560" data-track-index="16"><div id="cap-14-inner" class="cap-inner">Authorship is the next chapter.</div></div>
+  <div id="cap-15" class="cap clip" data-start="70.740" data-duration="3.220" data-track-index="17"><div id="cap-15-inner" class="cap-inner">Your proof is portable: it outlives Satohash itself,</div></div>
+  <div id="cap-16" class="cap clip" data-start="73.960" data-duration="3.270" data-track-index="18"><div id="cap-16-inner" class="cap-inner">and it can be checked years later with open tools.</div></div>
+  <div id="cap-17" class="cap clip" data-start="77.230" data-duration="5.800" data-track-index="19"><div id="cap-17-inner" class="cap-inner">Don't take our word for it. Verify this yourself.</div></div>
+  <div id="cap-18" class="cap clip" data-start="83.350" data-duration="3.700" data-track-index="20"><div id="cap-18-inner" class="cap-inner">Free, open tools. No account. No KYC.</div></div>
+  <div id="cap-19" class="cap clip" data-start="87.140" data-duration="2.790" data-track-index="21"><div id="cap-19-inner" class="cap-inner">Satohash. Proof of truth, on Bitcoin.</div></div>
+</div>
+<script>
+window.__timelines = window.__timelines || {};
+const tl = gsap.timeline({paused:true});
+  tl.from("#cap-0-inner", {opacity:0, y:8, duration:0.25}, 0.060);
+  tl.to("#cap-0-inner", {opacity:0, y:-8, duration:0.25}, 5.300);
+  tl.set("#cap-0-inner", {opacity:0}, 5.550);
+  tl.from("#cap-1-inner", {opacity:0, y:8, duration:0.25}, 5.640);
+  tl.to("#cap-1-inner", {opacity:0, y:-8, duration:0.25}, 9.730);
+  tl.set("#cap-1-inner", {opacity:0}, 9.980);
+  tl.from("#cap-2-inner", {opacity:0, y:8, duration:0.25}, 10.060);
+  tl.to("#cap-2-inner", {opacity:0, y:-8, duration:0.25}, 12.110);
+  tl.set("#cap-2-inner", {opacity:0}, 12.360);
+  tl.from("#cap-3-inner", {opacity:0, y:8, duration:0.25}, 12.360);
+  tl.to("#cap-3-inner", {opacity:0, y:-8, duration:0.25}, 17.550);
+  tl.set("#cap-3-inner", {opacity:0}, 17.800);
+  tl.from("#cap-4-inner", {opacity:0, y:8, duration:0.25}, 17.890);
+  tl.to("#cap-4-inner", {opacity:0, y:-8, duration:0.25}, 21.880);
+  tl.set("#cap-4-inner", {opacity:0}, 22.130);
+  tl.from("#cap-5-inner", {opacity:0, y:8, duration:0.25}, 22.210);
+  tl.to("#cap-5-inner", {opacity:0, y:-8, duration:0.25}, 26.920);
+  tl.set("#cap-5-inner", {opacity:0}, 27.170);
+  tl.from("#cap-6-inner", {opacity:0, y:8, duration:0.25}, 27.170);
+  tl.to("#cap-6-inner", {opacity:0, y:-8, duration:0.25}, 29.840);
+  tl.set("#cap-6-inner", {opacity:0}, 30.090);
+  tl.from("#cap-7-inner", {opacity:0, y:8, duration:0.25}, 30.170);
+  tl.to("#cap-7-inner", {opacity:0, y:-8, duration:0.25}, 35.320);
+  tl.set("#cap-7-inner", {opacity:0}, 35.570);
+  tl.from("#cap-8-inner", {opacity:0, y:8, duration:0.25}, 35.570);
+  tl.to("#cap-8-inner", {opacity:0, y:-8, duration:0.25}, 40.740);
+  tl.set("#cap-8-inner", {opacity:0}, 40.990);
+  tl.from("#cap-9-inner", {opacity:0, y:8, duration:0.25}, 41.150);
+  tl.to("#cap-9-inner", {opacity:0, y:-8, duration:0.25}, 45.390);
+  tl.set("#cap-9-inner", {opacity:0}, 45.640);
+  tl.from("#cap-10-inner", {opacity:0, y:8, duration:0.25}, 45.730);
+  tl.to("#cap-10-inner", {opacity:0, y:-8, duration:0.25}, 50.830);
+  tl.set("#cap-10-inner", {opacity:0}, 51.080);
+  tl.from("#cap-11-inner", {opacity:0, y:8, duration:0.25}, 51.790);
+  tl.to("#cap-11-inner", {opacity:0, y:-8, duration:0.25}, 57.970);
+  tl.set("#cap-11-inner", {opacity:0}, 58.220);
+  tl.from("#cap-12-inner", {opacity:0, y:8, duration:0.25}, 58.260);
+  tl.to("#cap-12-inner", {opacity:0, y:-8, duration:0.25}, 62.190);
+  tl.set("#cap-12-inner", {opacity:0}, 62.440);
+  tl.from("#cap-13-inner", {opacity:0, y:8, duration:0.25}, 63.440);
+  tl.to("#cap-13-inner", {opacity:0, y:-8, duration:0.25}, 67.830);
+  tl.set("#cap-13-inner", {opacity:0}, 68.080);
+  tl.from("#cap-14-inner", {opacity:0, y:8, duration:0.25}, 68.120);
+  tl.to("#cap-14-inner", {opacity:0, y:-8, duration:0.25}, 70.430);
+  tl.set("#cap-14-inner", {opacity:0}, 70.680);
+  tl.from("#cap-15-inner", {opacity:0, y:8, duration:0.25}, 70.740);
+  tl.to("#cap-15-inner", {opacity:0, y:-8, duration:0.25}, 73.710);
+  tl.set("#cap-15-inner", {opacity:0}, 73.960);
+  tl.from("#cap-16-inner", {opacity:0, y:8, duration:0.25}, 73.960);
+  tl.to("#cap-16-inner", {opacity:0, y:-8, duration:0.25}, 76.980);
+  tl.set("#cap-16-inner", {opacity:0}, 77.230);
+  tl.from("#cap-17-inner", {opacity:0, y:8, duration:0.25}, 77.230);
+  tl.to("#cap-17-inner", {opacity:0, y:-8, duration:0.25}, 82.780);
+  tl.set("#cap-17-inner", {opacity:0}, 83.030);
+  tl.from("#cap-18-inner", {opacity:0, y:8, duration:0.25}, 83.350);
+  tl.to("#cap-18-inner", {opacity:0, y:-8, duration:0.25}, 86.800);
+  tl.set("#cap-18-inner", {opacity:0}, 87.050);
+  tl.from("#cap-19-inner", {opacity:0, y:8, duration:0.25}, 87.140);
+  tl.to("#cap-19-inner", {opacity:0, y:-8, duration:0.25}, 89.680);
+  tl.set("#cap-19-inner", {opacity:0}, 89.930);
+window.__timelines["captions"] = tl;
+</script>
+</body>
+</html>

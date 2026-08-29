@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1920, height=1080" />
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap");
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html,body { width:1920px; height:1080px; overflow:hidden; margin:0; background:#0e1c2a; }
+#root { width:1920px; height:1080px; position:relative; overflow:hidden;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  background:
+    radial-gradient(1200px 700px at 70% 15%, #14283c 0%, #0e1c2a 48%, #0a1420 100%);
+}
+#root::before { content:""; position:absolute; inset:0; pointer-events:none;
+  background:
+    radial-gradient(900px 520px at 15% 82%, rgba(56,189,248,0.10) 0%, transparent 58%),
+    radial-gradient(760px 460px at 86% 12%, rgba(240,180,41,0.09) 0%, transparent 58%),
+    radial-gradient(640px 420px at 50% 50%, rgba(139,92,246,0.05) 0%, transparent 60%);
+}
+.kicker { font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:28px;
+  letter-spacing:0.14em; color:#38bdf8; text-transform:uppercase; position:relative; z-index:2; }
+.kick { position:relative; z-index:2; }
+.h1 { position:relative; z-index:2; text-align:center; margin-top:28px; }
+.h1 .line { font-family:'Space Grotesk',sans-serif; font-weight:600; color:#f6f1e8; }
+.h1 .line em { font-style:normal; color:#f0b429; }
+.sub { position:relative; z-index:2; text-align:center; margin-top:30px; max-width:1400px; }
+.sub .s1 { font-family:'Plus Jakarta Sans',sans-serif; font-weight:500; font-size:34px; color:#d4f0f8; line-height:1.35; }
+.sub .s2 { font-family:'Plus Jakarta Sans',sans-serif; font-weight:600; font-size:34px; color:#a9c6d6; line-height:1.35; margin-top:14px; }
+.mono { font-family:'JetBrains Mono',monospace; }
+.gold { color:#f0b429; }
+.sky { color:#38bdf8; }
+.gr { color:#34d399; }
+.vio { color:#8b5cf6; }
+.mut { color:#9fb4c4; }
+/* hook scene */
+.hook-lines { display:flex; flex-direction:column; gap:18px; position:relative; z-index:2; text-align:center; }
+.hook-lines .hl { font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:70px; color:#f6f1e8; }
+.hook-lines .hl:last-child em { font-style:normal; color:#f0b429; }
+/* scene2 question */
+.bigq { position:relative; z-index:2; margin-top:26px; font-family:'Space Grotesk',sans-serif;
+  font-size:120px; font-weight:700; color:#f0b429; line-height:1; }
+/* scene3 seals */
+.seal-row { display:flex; gap:34px; position:relative; z-index:2; margin-top:40px; }
+.seal { width:240px; height:150px; border-radius:18px;
+  background:linear-gradient(135deg,#1b2f45,#14283c); border:2px solid rgba(159,180,196,0.35);
+  display:flex; align-items:center; justify-content:center; color:#9fb4c4;
+  font-family:'JetBrains Mono',monospace; font-size:26px; font-weight:600; letter-spacing:0.08em;
+  box-shadow:0 18px 50px rgba(0,0,0,0.4); }
+/* scene4 chain */
+.chain-row { display:flex; align-items:center; gap:20px; position:relative; z-index:2; margin-top:44px; }
+.chain-doc { width:230px; height:140px; border-radius:16px; padding:18px;
+  background:linear-gradient(135deg,#1b2f45,#14283c); border:2px solid rgba(56,189,248,0.45);
+  display:flex; flex-direction:column; justify-content:space-between; }
+.chain-doc .cdl { font-size:14px; font-weight:700; color:#38bdf8; letter-spacing:0.06em; }
+.chain-doc .cdl-lines { display:flex; flex-direction:column; gap:8px; }
+.chain-doc .cdl-lines i { display:block; height:8px; border-radius:4px; background:rgba(246,241,232,0.35); }
+.chain-doc .cdl-lines i:nth-child(2){ width:70%; }
+.chain-arrow { font-size:44px; color:#38bdf8; }
+.chain-hash { width:260px; height:140px; border-radius:16px; padding:18px;
+  background:#14283c; border:2px solid rgba(240,180,41,0.5);
+  display:flex; flex-direction:column; justify-content:center; gap:10px; }
+.chain-hash .hlbl { font-size:14px; font-weight:700; color:#f0b429; letter-spacing:0.06em; }
+.chain-hash .hh { font-size:20px; color:#f6f1e8; letter-spacing:0.02em; line-height:1.4; }
+.chain-blocks { display:flex; gap:14px; }
+.block { width:96px; height:96px; border-radius:20px;
+  background:linear-gradient(135deg,#f0b429,#d89b1a); display:flex; align-items:center; justify-content:center;
+  box-shadow:0 0 34px rgba(240,180,41,0.45); }
+.block .b { font-family:'Space Grotesk',sans-serif; font-size:40px; font-weight:700; color:#0e1c2a; }
+.block.gap { opacity:0.28; }
+.lock-row { display:flex; align-items:center; gap:24px; position:relative; z-index:2; margin-top:40px; }
+.lock-dev { width:210px; height:130px; border-radius:16px;
+  background:linear-gradient(135deg,#1b2f45,#14283c); border:2px solid rgba(56,189,248,0.45);
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; }
+.lock-dev .ld { font-size:44px; }
+.lock-dev .ldl { font-size:14px; font-weight:700; color:#38bdf8; letter-spacing:0.06em; }
+.lock-hash { width:200px; height:130px; border-radius:16px; padding:16px;
+  background:#14283c; border:2px solid rgba(240,180,41,0.5);
+  display:flex; flex-direction:column; justify-content:center; gap:8px; }
+.lock-hash .lhl { font-size:13px; font-weight:700; color:#f0b429; }
+.lock-hash .lh { font-size:18px; color:#f6f1e8; letter-spacing:0.02em; }
+.lock-arrow { font-size:40px; color:#38bdf8; }
+.xrow { display:flex; gap:22px; position:relative; z-index:2; margin-top:34px; }
+.xchip { font-family:'Plus Jakarta Sans',sans-serif; font-size:22px; font-weight:600; color:#fb7185;
+  padding:14px 24px; border-radius:999px; background:rgba(251,113,133,0.10);
+  border:1px solid rgba(251,113,133,0.4); }
+/* scene6 gap */
+.gap-row { display:flex; gap:26px; position:relative; z-index:2; margin-top:40px; }
+.gap-card { width:300px; height:170px; border-radius:20px; padding:22px;
+  background:linear-gradient(135deg,#1b2f45,#14283c); border:2px solid rgba(139,92,246,0.45);
+  display:flex; flex-direction:column; justify-content:center; gap:10px; box-shadow:0 18px 50px rgba(0,0,0,0.4); }
+.gap-card .gl { font-family:'Space Grotesk',sans-serif; font-size:30px; font-weight:600; color:#8b5cf6; }
+.gap-card .gs { font-family:'Plus Jakarta Sans',sans-serif; font-size:22px; color:#c9aef7; line-height:1.3; }
+/* scene7 verify */
+.chip-row { display:flex; gap:24px; position:relative; z-index:2; margin-top:36px; }
+.chip { display:flex; align-items:center; gap:14px; padding:18px 28px; border-radius:999px;
+  background:linear-gradient(135deg,#1b2f45,#14283c); border:2px solid rgba(52,211,153,0.5);
+  box-shadow:0 14px 40px rgba(0,0,0,0.4); }
+.chip .chk { color:#34d399; font-size:26px; font-weight:800; }
+.chip .ct { font-family:'Plus Jakarta Sans',sans-serif; font-size:26px; font-weight:600; color:#f6f1e8; }
+.badge { position:relative; z-index:2; margin-top:38px; display:flex; align-items:center; gap:18px;
+  padding:16px 30px; border-radius:999px; background:rgba(240,180,41,0.12);
+  border:1px solid rgba(240,180,41,0.5); }
+.badge .ring { width:16px; height:16px; border-radius:50%; background:#34d399; box-shadow:0 0 14px #34d399; }
+.badge .bt { font-family:'Plus Jakarta Sans',sans-serif; font-size:24px; font-weight:600; color:#f6f1e8; }
+.badge .bl { font-family:'JetBrains Mono',monospace; font-size:18px; color:#9fb4c4; margin-left:8px; }
+/* endcard */
+.end-logo { display:flex; flex-direction:column; align-items:center; gap:6px; position:relative; z-index:2; }
+.brand-seal { width:112px; height:112px; border-radius:28px; margin-bottom:14px;
+  background:linear-gradient(135deg,#f0b429,#d89b1a,#8b5cf6); display:flex; align-items:center; justify-content:center;
+  box-shadow:0 0 48px rgba(240,180,41,0.55); }
+.brand-seal .bs { font-family:'Space Grotesk',sans-serif; font-size:54px; font-weight:700; color:#0e1c2a; }
+.end-title { font-family:'Space Grotesk',sans-serif; font-size:96px; font-weight:700; color:#f6f1e8; text-align:center; }
+.end-sub { font-family:'Plus Jakarta Sans',sans-serif; font-size:40px; font-weight:600; color:#f0b429; margin-top:12px; text-align:center; }
+.end-tag { font-family:'Plus Jakarta Sans',sans-serif; font-style:italic; font-size:26px; color:#d4f0f8; margin-top:26px; text-align:center; max-width:1300px; line-height:1.4; }
+.safe { position:absolute; bottom:34px; left:0; right:0; text-align:center;
+  font-family:'Plus Jakarta Sans',sans-serif; font-size:16px; color:#7d92a3; z-index:2; line-height:1.4; padding:0 80px; }
+
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="scene-06" data-width="1920" data-height="1080">
+  <div class="kick center" style="text-align:center;"><span class="kicker">The honest gap — said out loud</span></div>
+  <div class="h1">
+    <div class="line" style="font-size:60px;">What we prove today is</div>
+    <div class="line" style="font-size:60px;">when a file existed.</div>
+  </div>
+  <div class="sub"><div class="s1">Not who made it. Authorship is the next chapter.</div><div class="s2">Your proof is portable: it outlives Satohash itself, and it can be checked years later with open tools.</div></div>
+  <div class="gap-row">
+    <div class="gap-card"><div class="gl">when</div><div class="gs">Proved today. Existence &amp; date.</div></div>
+    <div class="gap-card"><div class="gl" style="color:#8b5cf6;">who</div><div class="gs">Next chapter. Authorship via your private key.</div></div>
+  </div>
+</div>
+<script>
+window.__timelines = window.__timelines || {};
+  const tl = gsap.timeline({paused:true});
+  tl.from(".kick", {opacity:0, y:16, duration:0.5}, 0.2);
+  tl.from(".h1 .line", {opacity:0, y:20, duration:0.7, stagger:0.2}, 0.45);
+  tl.from(".sub .s1", {opacity:0, y:18, duration:0.6}, 1.05);
+  tl.from(".sub .s2", {opacity:0, y:18, duration:0.6}, 1.45);
+  tl.from(".gap-card", {opacity:0, y:22, duration:0.6, stagger:0.3}, 1.95);
+  window.__timelines["scene-06"] = tl;
+</script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+# Render scratch & media — commit source only
+work-*/
+__pycache__/
+*.mp4
+*.wav
+*.mp3
+cap-*.png
+full-*.png
+snap-*.png
