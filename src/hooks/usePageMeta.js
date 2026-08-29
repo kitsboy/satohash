@@ -129,8 +129,8 @@ export default function usePageMeta({ page, title, description, image, url }) {
           a: 'No. Only a SHA-256 cryptographic hash is sent to the network; your file never leaves your browser.'
         },
         {
-          q: 'Is the proof legally valid?',
-          a: 'Satohash proofs satisfy ESIGN Act (US), UETA, and eIDAS (EU) requirements for electronic notarization.'
+          q: 'Is the proof legally relevant?',
+          a: 'Satohash proofs are independently verifiable evidence of existence-at-a-time. They may support evidence-based reliance in legal settings (ESIGN, UETA, eIDAS); admissibility and weight are decided in context.'
         }
       ]
       const mainEntity = (faqItems.length ? faqItems : fallback).map((item) => ({
