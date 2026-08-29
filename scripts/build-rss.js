@@ -18,10 +18,39 @@ const SRC_DOCS = join(ROOT, 'public', 'docs')
 const OUT = join(ROOT, 'dist')
 
 const SITE = 'https://satohash.io'
-const FEED_TITLE = 'Satohash — Bitcoin Document Notarization'
+// Refreshed on-brand channel metadata — mirrors the pageMeta copy voice (proof of
+// existence, mission-v3 "proof of truth, on Bitcoin" grounded to proof-of-existence,
+// FOSS civic-tool framing). Honest posture: admissible-not-presumed-accurate.
+const FEED_TITLE = 'Satohash — Free Bitcoin Proof of Existence'
 const FEED_DESC =
-  'Prove any file existed, forever. Free Bitcoin-backed timestamps via OpenTimestamps. Guides, learn articles, and updates from the Give A Bit family.'
+  'Prove a file existed without revealing it. Bitcoin anchors the fingerprint; OpenTimestamps makes it free and verifiable by anyone, forever. Guides, learn articles, and updates from the Give A Bit family — an open civic tool for truth.'
 const FEED_LANG = 'en'
+
+/** Non-learn core docs that are feed-relevant. Titles/descriptions mirror the
+ * refreshed pageMeta copy (English feed) so the feed stays consistent with the
+ * 7-language SEO refresh. Slug → /docs/<slug>. */
+const CORE_DOCS = {
+  'how-satohash-works': {
+    title: 'How Satohash Works — Free & Technical Deep-Dive',
+    description:
+      'Why it is free: a million fingerprints fold into one shared Bitcoin anchor. The plain-English answer plus the full OpenTimestamps technical deep-dive.'
+  },
+  'support-and-guidance': {
+    title: 'Request Support & Guidance — Open Civic Tool',
+    description:
+      'An honest request to legal, technical, and funding communities: help us harden Satohash, a free, open, Bitcoin-anchored civic tool for truth.'
+  },
+  'executive-summary': {
+    title: 'Executive Summary — Satohash, Proof of Truth',
+    description:
+      'Why Satohash exists: a free, sovereign, Bitcoin-anchored proof of existence via OpenTimestamps. Hash locally, stamp in minutes, verify forever.'
+  },
+  marketing: {
+    title: 'Marketing — Positioning the Sovereign Truth Layer',
+    description:
+      'Satohash marketing: positioning, the three emotional beats, channels, and assets for a free, honest, Bitcoin-anchored civic tool.'
+  }
+}
 
 /** Extract the first H1 (title) and a clean plain-text description from a markdown file. */
 function extractMeta(md) {
@@ -29,7 +58,17 @@ function extractMeta(md) {
   const firstPara = md
     .split('\n')
     .map((l) => l.trim())
-    .find((l) => l && !l.startsWith('#') && !l.startsWith('>') && !l.startsWith('---'))
+    .find(
+      (l) =>
+        l &&
+        !l.startsWith('#') &&
+        !l.startsWith('>') &&
+        !l.startsWith('---') &&
+        !l.startsWith('<!--') &&
+        // Skip metadata label lines (e.g. **Version:**, **Platform:**) so the
+        // feed description is real prose, not a front-matter field.
+        !/^\*\*[A-Za-z][A-Za-z -]+?:\*\*/.test(l)
+    )
   // Strip markdown: bold/italic, inline links, backticks, headings
   const clean = (firstPara || '')
     .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
@@ -61,14 +100,26 @@ function esc(s = '') {
 
 function buildFeed() {
   const items = []
-  const docs = readdirSync(SRC_DOCS).filter((f) => f.startsWith('learn-') && f.endsWith('.md'))
+  const docs = readdirSync(SRC_DOCS)
+    .filter(
+      (f) =>
+        (f.startsWith('learn-') || CORE_DOCS[f.replace(/\.md$/, '')]) && f.endsWith('.md')
+    )
+    .filter((f, i, arr) => arr.indexOf(f) === i)
 
   for (const f of docs) {
     const slug = f.replace('.md', '')
-    const md = readFileSync(join(SRC_DOCS, f), 'utf8')
-    const { title, desc } = extractMeta(md)
     const link = `${SITE}/docs/${slug}`
     const st = statSync(join(SRC_DOCS, f))
+    let title
+    let desc
+    if (CORE_DOCS[slug]) {
+      // Curated, on-brand copy that mirrors the refreshed pageMeta (English feed).
+      ;({ title, description: desc } = CORE_DOCS[slug])
+    } else {
+      const md = readFileSync(join(SRC_DOCS, f), 'utf8')
+      ;({ title, desc } = extractMeta(md))
+    }
     items.push({
       title: title || slug,
       desc,
