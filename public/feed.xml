@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Satohash — Bitcoin Document Notarization</title>
+    <link>https://satohash.io</link>
+    <description>Prove any file existed, forever. Free Bitcoin-backed timestamps via OpenTimestamps. Guides, learn articles, and updates from the Give A Bit family.</description>
+    <language>en</language>
+    <lastBuildDate>Sat, 29 Aug 2026 20:27:20 GMT</lastBuildDate>
+    <atom:link href="https://satohash.io/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>eIDAS, UETA &amp; ESIGN Explained (Plain English)</title>
+      <link>https://satohash.io/docs/learn-eidas-ueta-explained</link>
+      <guid isPermaLink="true">https://satohash.io/docs/learn-eidas-ueta-explained</guid>
+      <description>If you&apos;ve read about digital documents, you&apos;ve seen these acronyms: eIDAS, UETA, ESIGN. They&apos;re the laws that say electronic signatures and electronic records are legally valid. Here&apos;s what each one m</description>
+      <pubDate>Fri, 28 Aug 2026 22:27:40 GMT</pubDate>
+      <source url="https://satohash.io/feed.xml">Satohash — Bitcoin Document Notarization</source>
+    </item>
+    <item>
+      <title>Timestamping for Compliance Audits — Records Regulators Can Check</title>
+      <link>https://satohash.io/docs/learn-timestamping-compliance</link>
+      <guid isPermaLink="true">https://satohash.io/docs/learn-timestamping-compliance</guid>
+      <description>Compliance teams live in a world of &quot;prove it.&quot; Audit trails, retention policies, and evidence of controls are the price of doing business in finance, healthcare, and government. Bitcoin timestamping </description>
+      <pubDate>Thu, 20 Aug 2026 21:44:49 GMT</pubDate>
+      <source url="https://satohash.io/feed.xml">Satohash — Bitcoin Document Notarization</source>
+    </item>
+    <item>
+      <title>Blockchain for Archives — Long-Term Records That Can&apos;t Be Altered</title>
+      <link>https://satohash.io/docs/learn-blockchain-for-archives</link>
+      <guid isPermaLink="true">https://satohash.io/docs/learn-blockchain-for-archives</guid>
+      <description>Archives, libraries, governments, and companies all face the same problem: how do you prove a record is authentic and unchanged, decades after it was created? Bitcoin timestamping is quietly becoming </description>
+      <pubDate>Thu, 20 Aug 2026 21:44:37 GMT</pubDate>
+      <source url="https://satohash.io/feed.xml">Satohash — Bitcoin Document Notarization</source>
+    </item>
+    <item>
+      <title>Timestamping Photos &amp; Video — Proving What You Had, When</title>
+      <link>https://satohash.io/docs/learn-timestamping-photos-video</link>
+      <guid isPermaLink="true">https://satohash.io/docs/learn-timestamping-photos-video</guid>
+      <description>Photos and videos are the easiest things to edit and the hardest to argue about later. A Bitcoin timestamp turns &quot;I think I had this photo then&quot; into &quot;here&apos;s the block.&quot;</description>
+      <pubDate>Thu, 20 Aug 2026 21:44:24 GMT</pubDate>
+      <source url="https://satohash.io/feed.xml">Satohash — Bitcoin Document Notarization</source>
+    </item>
+    <item>
+      <title>Protecting AI Outputs with Bitcoin Timestamps</title>
+      <link>https://satohash.io/docs/learn-protecting-ai-outputs</link>
+      <guid isPermaLink="true">https://satohash.io/docs/learn-protecting-ai-outputs</guid>
+      <description>AI tools (ChatGPT, Claude, Midjourney, DALL-E, Sora…) generate text, images, and video at scale. That raises a real problem: proving when a piece of AI output was created — and proving you didn&apos;t edit</description>
+      <pubDate>Thu, 20 Aug 2026 21:44:14 GMT</pubDate>
+      <source url="https://satohash.io/feed.xml">Satohash — Bitcoin Document Notarization</source>
+    </item>
+    <item>
+      <title>OpenTimestamps vs. DocuSign / Adobe Sign — What&apos;s Different?</title>
+      <link>https://satohash.io/docs/learn-ots-vs-docusign</link>
+      <guid isPermaLink="true">https://satohash.io/docs/learn-ots-vs-docusign</guid>
+      <description>If you&apos;ve ever &quot;e-signed&quot; a document with DocuSign, Adobe Sign, or HelloSign, you already trust a company with your document&apos;s date record. Here&apos;s how Bitcoin timestamping (Satohash + OpenTimestamps) </description>
+      <pubDate>Thu, 20 Aug 2026 21:44:03 GMT</pubDate>
+      <source url="https://satohash.io/feed.xml">Satohash — Bitcoin Document Notarization</source>
+    </item>
+    <item>
+      <title>How to Verify an .ots Proof</title>
+      <link>https://satohash.io/docs/learn-how-to-verify-an-ots-proof</link>
+      <guid isPermaLink="true">https://satohash.io/docs/learn-how-to-verify-an-ots-proof</guid>
+      <description>You&apos;ve been handed a .ots file (or you made one). How do you check that it&apos;s real? Here&apos;s every way, from easiest to most independent.</description>
+      <pubDate>Thu, 20 Aug 2026 21:16:45 GMT</pubDate>
+      <source url="https://satohash.io/feed.xml">Satohash — Bitcoin Document Notarization</source>
+    </item>
+    <item>
+      <title>How to Prove a Document Existed at a Certain Time</title>
+      <link>https://satohash.io/docs/learn-how-to-prove-a-document-existed</link>
+      <guid isPermaLink="true">https://satohash.io/docs/learn-how-to-prove-a-document-existed</guid>
+      <description>Whether it&apos;s a contract dispute, a copyright claim, an invention idea, or a receipt, &quot;prove it existed before this date&quot; comes up more often than you&apos;d think. Here&apos;s how to do it with Bitcoin.</description>
+      <pubDate>Thu, 20 Aug 2026 21:16:21 GMT</pubDate>
+      <source url="https://satohash.io/feed.xml">Satohash — Bitcoin Document Notarization</source>
+    </item>
+    <item>
+      <title>Bitcoin Timestamping vs. Traditional Notaries</title>
+      <link>https://satohash.io/docs/learn-bitcoin-timestamping-vs-notaries</link>
+      <guid isPermaLink="true">https://satohash.io/docs/learn-bitcoin-timestamping-vs-notaries</guid>
+      <description>You need to prove that a document existed on a certain date. You have two very different ways to do it: a traditional notary, or Bitcoin timestamping. Here&apos;s an honest comparison.</description>
+      <pubDate>Thu, 20 Aug 2026 21:16:11 GMT</pubDate>
+      <source url="https://satohash.io/feed.xml">Satohash — Bitcoin Document Notarization</source>
+    </item>
+    <item>
+      <title>What is OpenTimestamps?</title>
+      <link>https://satohash.io/docs/learn-what-is-opentimestamps</link>
+      <guid isPermaLink="true">https://satohash.io/docs/learn-what-is-opentimestamps</guid>
+      <description>OpenTimestamps (OTS) is a free, open-source protocol that anchors a cryptographic fingerprint of any file into the Bitcoin blockchain. It was created by Peter Todd and has been running since 2016.</description>
+      <pubDate>Thu, 20 Aug 2026 21:16:01 GMT</pubDate>
+      <source url="https://satohash.io/feed.xml">Satohash — Bitcoin Document Notarization</source>
+    </item>
+  </channel>
+</rss>

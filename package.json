@@ -6,7 +6,7 @@
   "scripts": {
     "server": "node server/index.js",
     "dev": "concurrently \"npm run server\" \"vite\"",
-    "build": "npm run build:metrics && npm run build:ots && vite build && npm run build:strip-metrics && npm run build:strip-maps && npm run build:prerender && npm run build:verify",
+    "build": "npm run build:metrics && npm run build:ots && vite build && npm run build:strip-metrics && npm run build:strip-maps && npm run build:prerender && npm run build:rss && npm run build:verify",
     "build:strip-maps": "node scripts/strip-dist-sourcemaps.js",
     "test:coverage": "vitest run --coverage",
     "build:metrics": "node scripts/fetch-metrics-json.js",
@@ -14,6 +14,7 @@
     "build:ots": "test -f public/vendor/ots.browser.js || npx browserify node_modules/opentimestamps/index.js -s OpenTimestamps -o public/vendor/ots.browser.js",
     "build:verify": "node scripts/verify-landing-bundle.js",
     "build:prerender": "node scripts/prerender-seo.js",
+    "build:rss": "node scripts/build-rss.js",
     "preview": "vite preview",
     "production": "cross-env NODE_ENV=production vite build && cross-env NODE_ENV=production npm run server",
     "start:pm2": "pm2 start ecosystem.config.cjs --env production",
