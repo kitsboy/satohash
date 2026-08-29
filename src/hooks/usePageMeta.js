@@ -50,16 +50,29 @@ export default function usePageMeta({ page, title, description, image, url }) {
     setMeta('meta[property="og:title"]', 'property', 'og:title', fullTitle)
     setMeta('meta[property="og:description"]', 'property', 'og:description', desc)
     setMeta('meta[property="og:image"]', 'property', 'og:image', ogImage)
+    setMeta('meta[property="og:image:width"]', 'property', 'og:image:width', '1200')
+    setMeta('meta[property="og:image:height"]', 'property', 'og:image:height', '630')
+    setMeta('meta[property="og:image:alt"]', 'property', 'og:image:alt', desc.slice(0, 120))
+    setMeta('meta[property="og:image:type"]', 'property', 'og:image:type', 'image/jpeg')
     setMeta('meta[property="og:url"]', 'property', 'og:url', pageUrl)
     setMeta('meta[property="og:site_name"]', 'property', 'og:site_name', siteName)
     setMeta('meta[property="og:type"]', 'property', 'og:type', 'website')
     setMeta('meta[property="og:locale"]', 'property', 'og:locale', getOgLocale(lang))
+    // Richer Twitter/X cards — description + large image so shares land well on X
     setMeta('meta[name="twitter:card"]', 'name', 'twitter:card', 'summary_large_image')
     setMeta('meta[name="twitter:site"]', 'name', 'twitter:site', '@give_bit')
     setMeta('meta[name="twitter:creator"]', 'name', 'twitter:creator', '@give_bit')
     setMeta('meta[name="twitter:title"]', 'name', 'twitter:title', fullTitle)
     setMeta('meta[name="twitter:description"]', 'name', 'twitter:description', desc)
     setMeta('meta[name="twitter:image"]', 'name', 'twitter:image', ogImage)
+    setMeta('meta[name="twitter:image:alt"]', 'name', 'twitter:image:alt', desc.slice(0, 120))
+    // Generic share fallback for messengers (WhatsApp/Telegram/Signal/Nostr read OG)
+    setMeta(
+      'meta[property="og:image:secure_url"]',
+      'property',
+      'og:image:secure_url',
+      ogImage.replace('http://', 'https://')
+    )
 
     // hreflang alternates for multilingual SEO
     const base = 'https://satohash.io'
