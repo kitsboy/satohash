@@ -1,3 +1,25 @@
+## Latest Session Summary (from 2026-08-29 goodbye)
+
+**Chat Topic:** Recover Satohash, ship the high-value batch, leave Kimi a Twitter/Nostr idea list. Vault = THOR Obsidian, not M4.
+
+**Finished in this session:**
+- Pulled Kimi’s `b5e425c` paste (was on GitHub, not M3)
+- Footer polish + live proof chips + gold RSS; then Footer on `/stamp` `/stamp/done` `/verify`
+- `/watch` X player card live (`/watch-player.html`); `@give_bit` + `/og/*.png`
+- `docs/KIMI-IDEAS-2026-08-29.md` (X pin `/watch`, clips, RSS→Nostr, kind-0 + NIP-05, njump)
+- Docs: Kimi vault is **THOR VPS Obsidian**, not M4
+
+**Still to do:**
+- Kimi: pin `/watch`; Satohash bot kind-0 + NIP-05; njump share sheet; `X-Satohash-Client`; bitcoind `free -h`
+- Cam: Search Console sitemap; Card Validator on live `/watch`
+- Paywall only on Cam flip. Giving Week held. No `@satohash` handle.
+
+**Next for Kimi:** Pull `main` @ `f02a575` on THOR. Ingest this summary + `docs/KIMI-IDEAS-2026-08-29.md` into **THOR Obsidian MASTER-BRAIN / Kanban**. Do **not** use M4 Obsidian. Do **not** flip `REQUIRE_LIGHTNING`. Do **not** change `/api/*`.
+
+**Git:** `f02a575` on `origin/main`.
+
+---
+
 ## Standing — 2026-08-29 · Kimi vault is THOR Obsidian (not M4)
 
 Cam: we **no longer use M4 Obsidian**. MASTER-BRAIN / Kanban / vault = **THOR VPS Obsidian**. GitHub handoffs (`docs/KIMI-HANDOFF.md`, `docs/KIMI-IDEAS-2026-08-29.md`, `docs/MASTER-BRAIN-INGEST.md`) are pulled on THOR. Do not Tailscale-sync notes to M4.

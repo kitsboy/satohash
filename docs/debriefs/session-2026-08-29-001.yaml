@@ -1,0 +1,51 @@
+# ================================================================
+# GENERIC SESSION DEBRIEF — Satohash
+# ================================================================
+
+runbook:
+  name: Session Debrief
+  version: "2.0"
+  trigger:
+    phrases: ["run session debrief", "/goodbye"]
+
+project_config:
+  project_name: "Satohash"
+  context_file: null
+  framework_terms: null
+  id_prefixes:
+    architectural_decision: "AD-"
+    open_question: "OQ-"
+  output_location: "docs/debriefs/"
+
+output_schema:
+  session_id: "session-2026-08-29-001"
+  date: "2026-08-29"
+  status: "confirmed"
+
+  summary:
+    purpose: "Recover context, ship Kimi high-value batch, leave X/Nostr ideas, correct vault home to THOR Obsidian."
+    outcomes:
+      - "Pulled Kimi handoff b5e425c; shipped footer, player card, OG, stamp/verify footer."
+      - "docs/KIMI-IDEAS-2026-08-29.md for Twitter/Nostr distribution."
+      - "Standing: Kimi Obsidian/MASTER-BRAIN is THOR VPS, not M4. Tip f02a575."
+
+  architectural_decisions:
+    - id: "AD-003"
+      decision: "Kimi vault/MASTER-BRAIN lives on THOR VPS Obsidian. M4 Obsidian is retired."
+      rationale: "Cam 2026-08-29. Handoffs are git → THOR. Do not Tailscale-sync notes to M4."
+      status: "agreed"
+
+  open_questions:
+    - id: "OQ-002"
+      question: "Kimi X/Nostr week (pin /watch, bot NIP-05, njump share) still open?"
+      context: "docs/KIMI-IDEAS-2026-08-29.md"
+      priority: "medium"
+      status: "open"
+
+  session_notes:
+    deprecated_items:
+      - "M4 Obsidian as Kimi vault / Tailscale-sync of handoffs to M4."
+    corrections_to_prior_sessions:
+      - "whatsup/goodbye must not tell Cam to sync to M4."
+    other:
+      - "Git main @ f02a575. Untracked videos/ left local."
