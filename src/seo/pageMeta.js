@@ -26,75 +26,75 @@ const OG_LOCALE = {
 export const pageMeta = {
   landing: {
     en: {
-      title: 'Stamp Documents on Bitcoin — Free Proof of Existence',
+      title: 'Prove Any File Existed — Free Bitcoin Proof of Existence',
       description:
-        'Drop any file. Get a Bitcoin-anchored proof of existence in under 60 seconds. Free, private, zero-knowledge. Your file never leaves your device.'
+        'Drop a file. It never leaves your device. Get a permanent, Bitcoin-anchored proof of existence in minutes — free, private, verifiable by anyone, forever.'
     },
     es: {
-      title: 'Sella Documentos en Bitcoin — Prueba Gratuita de Existencia',
+      title: 'Prueba que un Archivo Existió — Gratis en Bitcoin',
       description:
-        'Sube cualquier archivo. Obtén una prueba de existencia anclada en Bitcoin en menos de 60 segundos. Gratis, privado, conocimiento cero.'
+        'Suelta un archivo; nunca sale de tu dispositivo. Prueba de existencia anclada en Bitcoin — gratis, privada, verificable por cualquiera, para siempre.'
     },
     fr: {
-      title: 'Tamponnez des Documents sur Bitcoin — Preuve Gratuite',
+      title: 'Prouvez Qu’un Fichier a Existé — Gratuit sur Bitcoin',
       description:
-        "Déposez un fichier. Obtenez une preuve d'existence ancrée sur Bitcoin en moins de 60 secondes. Gratuit, privé, zéro connaissance."
+        "Déposez un fichier. Il ne quitte jamais votre appareil. Preuve d'existence ancrée sur Bitcoin — gratuite, privée, vérifiable par tous, pour toujours."
     },
     de: {
-      title: 'Dokumente auf Bitcoin versiegeln — Kostenloser Existenznachweis',
+      title: 'Beweisen, Dass eine Datei Existierte — Kostenlos',
       description:
-        'Datei ablegen. Bitcoin-verankerten Existenznachweis in unter 60 Sekunden. Kostenlos, privat, Zero-Knowledge.'
+        'Datei ablegen. Sie verlässt nie Ihr Gerät. Bitcoin-verankerter Existenznachweis — kostenlos, privat, für immer überprüfbar.'
     },
     pt: {
-      title: 'Carimbe Documentos no Bitcoin — Prova Gratuita de Existência',
+      title: 'Prove que um Arquivo Existiu — Grátis no Bitcoin',
       description:
-        'Envie qualquer arquivo. Obtenha prova de existência ancorada no Bitcoin em menos de 60 segundos. Grátis, privado, zero-conhecimento.'
+        'Solte um arquivo. Ele nunca sai do seu dispositivo. Prova de existência ancorada no Bitcoin — grátis, privada, verificável por qualquer um, para sempre.'
     },
     sw: {
-      title: 'Weka Muhuri wa Hati kwenye Bitcoin — Ushahidi wa Bure',
+      title: 'Thibitisha Faili Lilipokuwepo — Bure kwenye Bitcoin',
       description:
-        'Weka faili yoyote. Pata ushahidi wa kuwepo uliofungwa kwenye Bitcoin ndani ya sekunde 60. Bure, faragha, ujuzi wa sifuri.'
+        'Weka faili. Haliondoki kwenye kifaa chako. Ushahidi wa kuwepo uliofungwa kwenye Bitcoin — bure, faragha, unathibitishwa na mtu yeyote, milele.'
     },
     zh: {
-      title: '在比特币上盖章文档 — 免费存在证明',
+      title: '证明任意文件曾经存在 — 免费比特币存在证明',
       description:
-        '拖放任意文件。60秒内获得比特币锚定的存在证明。免费、私密、零知识。文件永不离开您的设备。'
+        '拖放任意文件。文件永不离开您的设备。几分钟内获得永久锚定于比特币的存在证明——免费、私密、任何人皆可验证，永久有效。'
     }
   },
   faq: {
     en: {
-      title: 'FAQ — Bitcoin Document Notarization',
+      title: 'FAQ — Bitcoin Proof of Existence, Honest Answers',
       description:
-        'Answers about OpenTimestamps, zero-knowledge stamping, legal validity, NIP-05 identity, and the Satohash API.'
+        'Straight answers on OpenTimestamps, zero-knowledge stamping, legal admissibility, NIP-05 identity, and the Satohash API. No hype, no overclaiming.'
     },
     es: {
-      title: 'Preguntas Frecuentes — Notarización Bitcoin',
+      title: 'Preguntas Frecuentes — Prueba de Existencia en Bitcoin',
       description:
-        'Respuestas sobre OpenTimestamps, sellado zero-knowledge, validez legal, identidad NIP-05 y la API de Satohash.'
+        'Respuestas directas sobre OpenTimestamps, sellado cero-conocimiento, admisibilidad legal, identidad NIP-05 y la API de Satohash. Sin exageraciones.'
     },
     fr: {
-      title: 'FAQ — Notarisation de Documents Bitcoin',
+      title: 'FAQ — Preuve d’Existence Bitcoin, Réponses Honnêtes',
       description:
-        'Réponses sur OpenTimestamps, tamponnage zéro connaissance, validité légale, identité NIP-05 et API Satohash.'
+        "Réponses claires sur OpenTimestamps, tamponnage zéro connaissance, admissibilité légale, identité NIP-05 et API Satohash. Sans survente."
     },
     de: {
-      title: 'FAQ — Bitcoin-Dokumentennotarisierung',
+      title: 'FAQ — Bitcoin-Existenznachweis, Ehrliche Antworten',
       description:
-        'Antworten zu OpenTimestamps, Zero-Knowledge-Stempelung, Rechtsgültigkeit, NIP-05-Identität und Satohash-API.'
+        'Klare Antworten zu OpenTimestamps, Zero-Knowledge-Stempelung, rechtlicher Zulässigkeit, NIP-05-Identität und Satohash-API. Ohne Übertreibung.'
     },
     pt: {
-      title: 'FAQ — Notarização de Documentos em Bitcoin',
+      title: 'FAQ — Prova de Existência no Bitcoin, Respostas Honestas',
       description:
-        'Respostas sobre OpenTimestamps, carimbo zero-conhecimento, validade legal, identidade NIP-05 e API Satohash.'
+        'Respostas diretas sobre OpenTimestamps, carimbo zero-conhecimento, admissibilidade legal, identidade NIP-05 e API Satohash. Sem exageros.'
     },
     sw: {
-      title: 'Maswali — Uthibitishaji wa Hati za Bitcoin',
+      title: 'Maswali — Ushahidi wa Kuwepo kwenye Bitcoin',
       description:
-        'Majibu kuhusu OpenTimestamps, muhuri wa ujuzi wa sifuri, uhalali wa kisheria, utambulisho wa NIP-05 na API ya Satohash.'
+        'Majibu ya moja kwa moja kuhusu OpenTimestamps, muhuri wa ujuzi wa sifuri, ukubalike wa kisheria, utambulisho wa NIP-05 na API ya Satohash.'
     },
     zh: {
-      title: '常见问题 — 比特币文件公证',
-      description: '关于 OpenTimestamps、零知识盖章、法律效力、NIP-05 身份和 Satohash API 的解答。'
+      title: '常见问题 — 比特币存在证明，如实解答',
+      description: '关于 OpenTimestamps、零知识盖章、法律可采性、NIP-05 身份和 Satohash API 的坦诚解答，不夸大承诺。'
     }
   },
   pricing: {
@@ -208,38 +208,38 @@ export const pageMeta = {
   },
   guides: {
     en: {
-      title: 'Guides — How to Stamp & Verify Documents',
+      title: 'Guides — How to Prove a Document Existed',
       description:
-        'Step-by-step guides for stamping documents, verifying proofs, multi-party contracts, and API integration.'
+        'Step-by-step, plain-English guides: cryptographic proof, OpenTimestamps, OTS vs notary, and why Bitcoin is the ultimate truth layer.'
     },
     es: {
-      title: 'Guías — Cómo Sellar y Verificar Documentos',
+      title: 'Guías — Cómo Probar que un Documento Existió',
       description:
-        'Guías paso a paso para sellar documentos, verificar pruebas, contratos multiparte e integración API.'
+        'Guías paso a paso en lenguaje claro: prueba criptográfica, OpenTimestamps, OTS vs notaría y por qué Bitcoin es la capa definitiva de la verdad.'
     },
     fr: {
-      title: 'Guides — Tamponner et Vérifier des Documents',
+      title: 'Guides — Comment Prouver qu’un Document a Existé',
       description:
-        'Guides pas à pas pour tamponner, vérifier, contrats multiparte et intégration API.'
+        'Guides pas à pas en français clair : preuve cryptographique, OpenTimestamps, OTS vs notaire et pourquoi Bitcoin est la couche de vérité ultime.'
     },
     de: {
-      title: 'Anleitungen — Dokumente Stempeln & Verifizieren',
+      title: 'Anleitungen — Existenz von Dokumenten Beweisen',
       description:
-        'Schritt-für-Schritt-Anleitungen zum Stempeln, Verifizieren, Mehrparteienverträge und API-Integration.'
+        'Schritt-für-Schritt-Anleitungen: kryptografischer Beweis, OpenTimestamps, OTS vs Notar und warum Bitcoin die ultimative Wahrheitsschicht ist.'
     },
     pt: {
-      title: 'Guias — Como Carimbar e Verificar Documentos',
+      title: 'Guias — Como Provar que um Documento Existiu',
       description:
-        'Guias passo a passo para carimbar documentos, verificar provas, contratos multiparte e integração API.'
+        'Guias passo a passo em linguagem clara: prova criptográfica, OpenTimestamps, OTS vs cartório e por que o Bitcoin é a camada definitiva da verdade.'
     },
     sw: {
-      title: 'Miongozo — Jinsi ya Kuweka Muhuri na Kuthibitisha',
+      title: 'Miongozo — Jinsi ya Kuthibitisha Hati Ilipokuwepo',
       description:
-        'Miongozo ya hatua kwa hatua kwa kuweka muhuri, kuthibitisha ushahidi, mikataba ya pande nyingi na API.'
+        'Miongozo ya hatua kwa hatua: uthibitisho wa kriptografia, OpenTimestamps, OTS dhidi ya notari na kwa nini Bitcoin ni safu kuu ya ukweli.'
     },
     zh: {
-      title: '指南 — 如何盖章和验证文档',
-      description: '盖章、验证证明、多方合同和 API 集成的分步指南。'
+      title: '指南 — 如何证明文档曾经存在',
+      description: '一步步的简明指南：加密证明、OpenTimestamps、OTS 与公证对比，以及为何比特币是终极真相层。'
     }
   },
   glossary: {
@@ -499,38 +499,39 @@ export const pageMeta = {
   },
   pitch: {
     en: {
-      title: 'Satohash Pitch — Sovereign Provenance Mesh',
+      title: 'Satohash — Bitcoin as a Sovereign Civic Notary',
       description:
-        'Executive pitch deck: market opportunity, technology stack, business model, and roadmap for Bitcoin document notarization.'
+        'Prove a file existed, never show the file. Bitcoin anchors the fingerprint; OpenTimestamps makes it free and verifiable forever.'
     },
     es: {
-      title: 'Pitch de Satohash — Malla de Procedencia Soberana',
+      title: 'Satohash — Bitcoin como Notario Cívico Soberano',
       description:
-        'Presentación ejecutiva: oportunidad de mercado, stack tecnológico, modelo de negocio y hoja de ruta para notarización en Bitcoin.'
+        'Demuestra que un archivo existió sin mostrarlo. Bitcoin ancla la huella; OpenTimestamps lo hace gratis y verificable para siempre.'
     },
     fr: {
-      title: 'Pitch Satohash — Maillage de Provenance Souveraine',
+      title: 'Satohash — Bitcoin, Notaire Civique Souverain',
       description:
-        'Présentation exécutive : opportunité marché, stack technique, modèle économique et feuille de route pour la notarisation Bitcoin.'
+        "Prouvez qu'un fichier a existé sans le montrer. Bitcoin ancre l'empreinte ; OpenTimestamps la rend gratuite et vérifiable pour toujours."
     },
     de: {
-      title: 'Satohash Pitch — Souveränes Provenance-Mesh',
+      title: 'Satohash — Bitcoin als Souveräner Bürger-Notar',
       description:
-        'Executive Pitch: Marktchance, Technologie-Stack, Geschäftsmodell und Roadmap für Bitcoin-Notarisierung.'
+        'Beweisen Sie, dass eine Datei existierte, ohne sie zu zeigen. Bitcoin verankert den Fingerabdruck; OpenTimestamps macht es kostenlos und für immer prüfbar.'
     },
     pt: {
-      title: 'Pitch Satohash — Malha de Proveniência Soberana',
+      title: 'Satohash — Bitcoin como Notário Cívico Soberano',
       description:
-        'Apresentação executiva: oportunidade de mercado, stack tecnológico, modelo de negócio e roadmap para notarização Bitcoin.'
+        'Prove que um arquivo existiu sem mostrá-lo. O Bitcoin ancora a impressão digital; o OpenTimestamps torna tudo grátis e verificável para sempre.'
     },
     sw: {
-      title: 'Pitch ya Satohash — Wavu wa Asili ya Uhuru',
+      title: 'Satohash — Bitcoin kama Notari wa Kijamii',
       description:
-        'Deck ya uongozi: fursa ya soko, stack ya teknolojia, mfumo wa biashara na ramani ya barabara ya notari ya Bitcoin.'
+        'Thibitisha faili lilipokuwepo bila kuonyesha faili. Bitcoin hufunga alama; OpenTimestamps hufanya bure na kuthibitishwa milele.'
     },
     zh: {
-      title: 'Satohash 推介 — 主权溯源网格',
-      description: '执行推介材料：市场机会、技术栈、商业模式和比特币文档公证路线图。'
+      title: 'Satohash — 比特币作为主权公民公证人',
+      description:
+        '证明文件曾经存在，而无需展示文件。比特币锚定指纹；OpenTimestamps 使其免费且永久可验证。相信数学，而非中间人。'
     }
   },
   trust: {
@@ -545,7 +546,7 @@ export const pageMeta = {
         'Centro de confianza Satohash: garantías de conocimiento cero, marcos legales (eIDAS, ESIGN), código abierto auditable y manejo de datos.'
     },
     fr: {
-      title: 'Centre de Confiance — Sécurité, Confidentialité et Conformité',
+      title: 'Centre de Confiance — Sécurité et Conformité',
       description:
         'Centre de confiance Satohash : garanties zéro connaissance, cadres juridiques (eIDAS, ESIGN), audit open source et traitement des données.'
     },
@@ -1596,6 +1597,191 @@ export const pageMeta = {
     zh: {
       title: '网络 — 日历、比特币、家族客户端',
       description: 'OpenTimestamps 日历、自有节点高度、最近盖章与家族客户端。'
+    }
+  },
+  howSatohashWorks: {
+    en: {
+      title: 'How Satohash Works — Free & Technical Deep-Dive',
+      description:
+        'Why it is free: a million fingerprints fold into one shared Bitcoin anchor. The plain-English answer plus the full OpenTimestamps technical deep-dive.'
+    },
+    es: {
+      title: 'Cómo Funciona Satohash — Gratis y Técnico',
+      description:
+        'Por qué es gratis: un millón de huellas se pliegan en un único ancla compartida de Bitcoin. La respuesta clara más el detalle técnico de OpenTimestamps.'
+    },
+    fr: {
+      title: 'Comment Satohash Fonctionne — Gratuit et Technique',
+      description:
+        "Pourquoi c'est gratuit : un million d'empreintes se replient en un seul ancre Bitcoin. L'explication simple plus la plongée technique OpenTimestamps."
+    },
+    de: {
+      title: 'Wie Satohash Funktioniert — Kostenlos & Technisch',
+      description:
+        'Warum es kostenlos ist: Eine Million Fingerabdrücke falten sich in einen gemeinsamen Bitcoin-Anker. Die einfache Erklärung plus der technische Deep-Dive.'
+    },
+    pt: {
+      title: 'Como o Satohash Funciona — Grátis e Técnico',
+      description:
+        'Por que é grátis: um milhão de impressões digitais se dobram em uma única âncora de Bitcoin. A resposta simples e o detalhe técnico do OpenTimestamps.'
+    },
+    sw: {
+      title: 'Satohash Inavyofanya Kazi — Bure na Kiufundi',
+      description:
+        'Kwa nini ni bure: alama milioni moja hukunjwa kuwa nanga moja ya pamoja ya Bitcoin. Maelezo rahisi pamoja na maelezo ya kina ya OpenTimestamps.'
+    },
+    zh: {
+      title: 'Satohash 如何运作 — 免费与技术详解',
+      description:
+        '为何免费：一百万指纹折叠进一个共享的比特币锚点。简明解答加 OpenTimestamps 完整技术详解。'
+    }
+  },
+  supportAndGuidance: {
+    en: {
+      title: 'Request Support & Guidance — Open Civic Tool',
+      description:
+        'An honest request to legal, technical, and funding communities: help us harden Satohash, a free, open, Bitcoin-anchored civic tool for truth.'
+    },
+    es: {
+      title: 'Pide Apoyo y Orientación — Herramienta Cívica',
+      description:
+        'Una petición honesta a comunidades jurídicas, técnicas y de financiación: ayúdanos a fortalecer Satohash, una herramienta cívica anclada en Bitcoin.'
+    },
+    fr: {
+      title: 'Demander Soutien et Aide — Outil Civique Ouvert',
+      description:
+        "Une demande honnête aux juristes, techniciens et bailleurs de fonds : aidez-nous à renforcer Satohash, un outil civique libre, ouvert et ancré sur Bitcoin."
+    },
+    de: {
+      title: 'Unterstützung & Beratung Anfordern — Bürger-Tool',
+      description:
+        'Eine ehrliche Bitte an Rechts-, Technik- und Fördergemeinschaften: helfen Sie, Satohash zu härten — ein freies, offenes Bitcoin-Bürger-Tool für Wahrheit.'
+    },
+    pt: {
+      title: 'Peça Apoio e Orientação — Ferramenta Cívica',
+      description:
+        'Um pedido honesto a comunidades jurídicas, técnicas e de financiamento: ajude a fortalecer o Satohash, uma ferramenta cívica ancorada no Bitcoin.'
+    },
+    sw: {
+      title: 'Omba Msaada na Mwongozo — Chombo Huria cha Kijamii',
+      description:
+        'Ombi la uaminifu kwa jamii za kisheria, kiufundi na za ufadhili: tusaidie kuimarisha Satohash, chombo huria, wazi, kilichofungwa kwenye Bitcoin kwa ukweli.'
+    },
+    zh: {
+      title: '请求支持与指导 — 开放的公民工具',
+      description:
+        '向法律、技术和资助界发出的坦诚请求：帮助我们加固 Satohash——一个免费、开放、锚定于比特币的公民真相工具。'
+    }
+  },
+  marketing: {
+    en: {
+      title: 'Marketing — Positioning the Sovereign Truth Layer',
+      description:
+        'Satohash marketing: positioning, the three emotional beats, channels, and assets for a free, honest, Bitcoin-anchored civic tool.'
+    },
+    es: {
+      title: 'Marketing — Posicionando la Capa de Verdad Soberana',
+      description:
+        'Marketing de Satohash: posicionamiento, los tres latidos emocionales, canales y recursos para una herramienta cívica libre, honesta y anclada en Bitcoin.'
+    },
+    fr: {
+      title: 'Marketing — Positionner la Couche de Vérité Souveraine',
+      description:
+        'Marketing Satohash : positionnement, les trois battements émotionnels, canaux et ressources d’un outil civique libre, honnête et ancré sur Bitcoin.'
+    },
+    de: {
+      title: 'Marketing — Die Souveräne Wahrheitsebene Positionieren',
+      description:
+        'Satohash-Marketing: Positionierung, die drei emotionalen Beats, Kanäle und Assets für ein freies, ehrliches, Bitcoin-verankertes Bürger-Tool.'
+    },
+    pt: {
+      title: 'Marketing — Posicionando a Camada de Verdade Soberana',
+      description:
+        'Marketing do Satohash: posicionamento, os três batimentos emocionais, canais e recursos para uma ferramenta cívica livre, honesta e ancorada no Bitcoin.'
+    },
+    sw: {
+      title: 'Uuzaji — Kuweka Safu ya Ukweli wa Uhuru',
+      description:
+        'Uuzaji wa Satohash: uwekaji, mipigo mitatu ya kihisia, njia na rasilimali za chombo huria, cha uaminifu kilichofungwa kwenye Bitcoin.'
+    },
+    zh: {
+      title: '营销 — 定位主权真相层',
+      description:
+        'Satohash 营销：为一个免费、诚实、锚定比特币的公民工具做定位、三大情感节拍、渠道与素材。'
+    }
+  },
+  executiveSummary: {
+    en: {
+      title: 'Executive Summary — Satohash, Proof of Truth',
+      description:
+        'Why Satohash exists: a free, sovereign, Bitcoin-anchored proof of existence via OpenTimestamps. Hash locally, stamp in minutes, verify forever.'
+    },
+    es: {
+      title: 'Resumen Ejecutivo — Satohash, Prueba de Verdad',
+      description:
+        'Por qué existe Satohash: prueba de existencia gratuita y anclada en Bitcoin vía OpenTimestamps. Hashea local, sella en minutos, verifica para siempre.'
+    },
+    fr: {
+      title: 'Résumé Exécutif — Satohash, Preuve de Vérité',
+      description:
+        "Pourquoi Satohash existe : preuve d'existence gratuite, souveraine et ancrée sur Bitcoin via OpenTimestamps. Hachez localement, vérifiez pour toujours."
+    },
+    de: {
+      title: 'Executive Summary — Satohash, Beweis der Wahrheit',
+      description:
+        'Warum Satohash existiert: ein freier, souveräner, Bitcoin-verankerter Existenznachweis via OpenTimestamps. Lokal hashen, für immer verifizieren.'
+    },
+    pt: {
+      title: 'Resumo Executivo — Satohash, Prova de Verdade',
+      description:
+        'Por que o Satohash existe: prova de existência soberana, gratuita e ancorada no Bitcoin via OpenTimestamps. Hash local, verifique para sempre.'
+    },
+    sw: {
+      title: 'Muhtasari wa Uongozi — Satohash, Ushahidi wa Ukweli',
+      description:
+        'Kwa nini Satohash ipo: ushahidi wa kuwepo huru, wa bure uliofungwa kwenye Bitcoin kupitia OpenTimestamps. Hash kwenye kifaa, thibitisha milele.'
+    },
+    zh: {
+      title: '执行摘要 — Satohash，真相证明',
+      description:
+        'Satohash 为何存在：通过 OpenTimestamps 提供免费、主权、锚定于比特币的存在证明。本地哈希，数分钟盖章，永久验证。'
+    }
+  },
+  learnArticles: {
+    en: {
+      title: 'Learn — Bitcoin Proof of Existence, Explained',
+      description:
+        'Plain-English articles on proving a document existed, verifying .ots proofs, OTS vs DocuSign, timestamping photos, and protecting AI output.'
+    },
+    es: {
+      title: 'Aprende — Prueba de Existencia en Bitcoin',
+      description:
+        'Artículos en lenguaje claro sobre probar que un documento existió, verificar pruebas .ots, OTS vs DocuSign, sellar fotos y proteger la salida de IA.'
+    },
+    fr: {
+      title: 'Apprendre — Preuve d’Existence sur Bitcoin',
+      description:
+        "Articles en français clair : prouver qu'un document a existé, vérifier les preuves .ots, OTS vs DocuSign, horodater des photos et protéger la sortie IA."
+    },
+    de: {
+      title: 'Lernen — Bitcoin-Existenznachweis erklärt',
+      description:
+        'Verständliche Artikel: Existenz eines Dokuments beweisen, .ots-Beweise prüfen, OTS vs DocuSign, Fotos stempeln und KI-Ausgaben schützen.'
+    },
+    pt: {
+      title: 'Aprenda — Prova de Existência no Bitcoin',
+      description:
+        'Artigos em linguagem clara: provar que um documento existiu, verificar provas .ots, OTS vs DocuSign, carimbar fotos e proteger saída de IA.'
+    },
+    sw: {
+      title: 'Jifunze — Ushahidi wa Kuwepo kwenye Bitcoin',
+      description:
+        'Makala za lugha rahisi: kuthibitisha hati ilipokuwepo, kuthibitisha ushahidi wa .ots, OTS dhidi ya DocuSign, muhuri wa picha na kulinda pato la AI.'
+    },
+    zh: {
+      title: '学习 — 比特币存在证明详解',
+      description:
+        '简明文章：证明文档曾经存在、验证 .ots 证明、OTS 与 DocuSign 对比、照片盖章以及保护 AI 输出。'
     }
   },
   notFound: {

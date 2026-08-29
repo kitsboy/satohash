@@ -96,14 +96,32 @@ const RELATED = {
 const HEADER_STICKY =
   'sticky top-[calc(3.5rem+env(safe-area-inset-top,0px)+var(--satohash-health-banner-h,0px))] z-30 md:top-[calc(4rem+var(--satohash-health-banner-h,0px))]'
 
+/** Doc slugs whose SEO meta lives in src/seo/pageMeta.js (localized across 7 languages). */
+const SLUG_TO_PAGE_META = {
+  'how-satohash-works': 'howSatohashWorks',
+  'support-and-guidance': 'supportAndGuidance',
+  marketing: 'marketing',
+  'executive-summary': 'executiveSummary'
+}
+const LEARN_ARTICLES_PAGE = 'learnArticles'
+
 export default function DocViewer() {
   const { slug } = useParams()
   const docTitle = TITLES[slug] || slug.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())
 
-  usePageMeta({
-    title: `${docTitle} — Satohash Docs`,
-    description: 'Satohash documentation: stamp, verify, architecture, and Bitcoin-anchored proofs.'
-  })
+  // New content pages + learn articles get localized, on-brand SEO meta from pageMeta.
+  const pageKey =
+    SLUG_TO_PAGE_META[slug] || (slug.startsWith('learn-') ? LEARN_ARTICLES_PAGE : null)
+
+  usePageMeta(
+    pageKey
+      ? { page: pageKey }
+      : {
+          title: `${docTitle} — Satohash Docs`,
+          description:
+            'Satohash documentation: stamp, verify, architecture, and Bitcoin-anchored proofs.'
+        }
+  )
 
   const [content, setContent] = useState('')
   const [loading, setLoading] = useState(true)
