@@ -105,11 +105,7 @@ const REASONS = [
 ]
 
 export default function ExecutiveSummary() {
-  usePageMeta({
-    title: 'Executive Summary — Satohash',
-    description:
-      'Why Satohash: free Bitcoin-anchored proof of existence via OpenTimestamps. Hash locally, stamp in seconds, verify forever.'
-  })
+  usePageMeta({ page: 'executiveSummary' })
 
   const pieData = useMemo(() => USE_CASES, [])
   const barData = useMemo(
