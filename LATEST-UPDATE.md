@@ -1,10 +1,9 @@
-# satohash — Last Updated 2026-08-27 by Grok (M3)
+# satohash — Last Updated 2026-08-29 by Grok (M3)
 
-**Brief:** `/donate` is Breez Spark; QR is `lightning:satohash@breez.tips`.
+**Brief:** Footer polish + Twitter/X player card + per-page OG set wired. Kimi high-value batch.
 
-**Commit:** `8b337fa` (on `dcd1557` receive migration).
+**Commit:** (this push, on `b5e425c`).
 
-- Lightning: `satohash@breez.tips`
-- On-chain: `bc1p25zw4rh6s6fjqzxe8yzkpj4klf59v5yyzc4nqf0x6d3twu8qvq9qurdlsr`
-- Live-verified: https://satohash.io/donate
-- OTS proof-of-truth on receipts unchanged. LNbits not on the public donate QR.
+- Footer: Free · 0 KYC · Bitcoin-only · FOSS + live proof counts
+- `/watch` X player card → `/watch-player.html`
+- OG images: `https://satohash.io/og/*.png` · `@give_bit` canonical

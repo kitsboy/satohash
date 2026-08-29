@@ -23,6 +23,38 @@ const OG_LOCALE = {
   zh: 'zh_CN'
 }
 
+const SITE = 'https://satohash.io'
+export const DEFAULT_OG_IMAGE = `${SITE}/og/home.png`
+export const WATCH_VIDEO_URL =
+  'https://videos.giveabit.io/media/video/satohash-explainer-with-vo2.mp4?v=kimi-noir-20260819'
+export const WATCH_PLAYER_URL = `${SITE}/watch-player.html`
+
+/** Per-page OG image slug under /og/*.png (Kimi 2026-08-29 set). */
+const PAGE_OG_SLUG = {
+  landing: 'home',
+  faq: 'faq',
+  stamp: 'stamp',
+  verify: 'verify',
+  watch: 'watch',
+  pitch: 'pitch',
+  donate: 'donate',
+  network: 'network',
+  pricing: 'pricing',
+  templates: 'templates',
+  howSatohashWorks: 'how-satohash-works',
+  supportAndGuidance: 'support-and-guidance'
+}
+
+export function ogImageForPage(page, pathname) {
+  if (page && PAGE_OG_SLUG[page]) return `${SITE}/og/${PAGE_OG_SLUG[page]}.png`
+  const path = pathname || ''
+  const learn = path.match(/\/docs\/(learn-[a-z0-9-]+)\/?$/)
+  if (learn) return `${SITE}/og/${learn[1]}.png`
+  const named = path.match(/\/docs\/(how-satohash-works|support-and-guidance)\/?$/)
+  if (named) return `${SITE}/og/${named[1]}.png`
+  return DEFAULT_OG_IMAGE
+}
+
 export const pageMeta = {
   landing: {
     en: {

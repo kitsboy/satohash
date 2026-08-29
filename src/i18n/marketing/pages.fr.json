@@ -1023,6 +1023,18 @@
     "poweredBy": "Propulsé par OpenTimestamps et Bitcoin",
     "createdBy": "Créé par",
     "verifiedBuild": "Vérifié",
+    "trust": "Confiance",
+    "rssSubscribe": "S’abonner par RSS",
+    "badges": {
+      "free": "Gratuit",
+      "noKyc": "0 KYC",
+      "bitcoinOnly": "Bitcoin uniquement",
+      "foss": "FOSS"
+    },
+    "metrics": {
+      "proofs": "{{count}} preuves",
+      "today": "{{count}} aujourd’hui"
+    },
     "links": {
       "about": "À propos",
       "pitch": "Pitch",

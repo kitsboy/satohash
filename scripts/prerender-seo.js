@@ -79,31 +79,63 @@ function inline(s) {
     .replace(/\*([^*]+)\*/g, '<em>$1</em>')
 }
 
-function shell({ title, description, contentHtml, canonical, article = null, ogImage = `${SITE}/og/home.png`, ogImageAlt = null }) {
+const WATCH_VIDEO =
+  'https://videos.giveabit.io/media/video/satohash-explainer-with-vo2.mp4?v=kimi-noir-20260819'
+const WATCH_PLAYER = `${SITE}/watch-player.html`
+
+function shell({
+  title,
+  description,
+  contentHtml,
+  canonical,
+  article = null,
+  ogImage = `${SITE}/og/home.png`,
+  ogImageAlt = null,
+  player = false,
+  extraGraph = []
+}) {
   const esc = (s = '') => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
   const ogAlt = ogImageAlt || description.slice(0, 120)
   const eTitle = esc(title)
   const eDesc = esc(description)
   const eAlt = esc(ogAlt)
-  const schema = article
+  const graph = []
+  if (article) {
+    const crumbs = [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE}/` },
+      { '@type': 'ListItem', position: 2, name: 'Docs', item: `${SITE}/docs` },
+      { '@type': 'ListItem', position: 3, name: article.headline, item: canonical }
+    ]
+    graph.push({
+      '@type': 'Article',
+      headline: article.headline,
+      description: article.description,
+      datePublished: article.datePublished,
+      dateModified: article.datePublished,
+      author: { '@type': 'Organization', name: 'Satohash', url: SITE },
+      publisher: { '@type': 'Organization', name: 'Satohash', url: SITE, logo: { '@type': 'ImageObject', url: `${SITE}/logo.png` } },
+      mainEntityOfPage: canonical
+    })
+    graph.push({ '@type': 'BreadcrumbList', itemListElement: crumbs })
+  }
+  for (const node of extraGraph) graph.push(node)
+  const schema = graph.length
     ? `<script type="application/ld+json">
-${JSON.stringify(
-  {
-    '@context': 'https://schema.org',
-    '@type': 'Article',
-    headline: article.headline,
-    description: article.description,
-    datePublished: article.datePublished,
-    dateModified: article.datePublished,
-    author: { '@type': 'Organization', name: 'Satohash', url: SITE },
-    publisher: { '@type': 'Organization', name: 'Satohash', url: SITE, logo: { '@type': 'ImageObject', url: `${SITE}/logo.png` } },
-    mainEntityOfPage: canonical
-  },
-  null,
-  2
-)}
+${JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }, null, 2)}
 </script>`
     : ''
+  const playerTags = player
+    ? `<meta name="twitter:card" content="player" />
+<meta name="twitter:player" content="${WATCH_PLAYER}" />
+<meta name="twitter:player:width" content="1280" />
+<meta name="twitter:player:height" content="720" />
+<meta name="twitter:player:stream" content="${WATCH_VIDEO}" />
+<meta name="twitter:player:stream:content_type" content="video/mp4" />
+<meta property="og:video" content="${WATCH_VIDEO}" />
+<meta property="og:video:type" content="video/mp4" />
+<meta property="og:video:width" content="1920" />
+<meta property="og:video:height" content="1080" />`
+    : `<meta name="twitter:card" content="summary_large_image" />`
   return `<!doctype html>
 <html lang="${LANG}">
 <head>
@@ -128,7 +160,7 @@ ${JSON.stringify(
 <meta property="og:image:alt" content="${eAlt}" />
 <meta property="og:image:secure_url" content="${ogImage}" />
 <!-- Twitter / X Card -->
-<meta name="twitter:card" content="summary_large_image" />
+${playerTags}
 <meta name="twitter:site" content="@give_bit" />
 <meta name="twitter:creator" content="@give_bit" />
 <meta name="twitter:title" content="${eTitle}" />
@@ -375,7 +407,35 @@ for (const doc of NAMED_DOCS) {
 }
 
 // Watch + Pitch
-write('watch.html', shell({ title: watchTitle, description: watchDesc, contentHtml: watchBody, canonical: `${SITE}/watch`, ogImage: `${SITE}/og/watch.png` }))
+write(
+  'watch.html',
+  shell({
+    title: watchTitle,
+    description: watchDesc,
+    contentHtml: watchBody,
+    canonical: `${SITE}/watch`,
+    ogImage: `${SITE}/og/watch.png`,
+    player: true,
+    extraGraph: [
+      {
+        '@type': 'VideoObject',
+        name: 'Satohash explainer',
+        description: watchDesc,
+        thumbnailUrl: `${SITE}/og/watch.png`,
+        contentUrl: WATCH_VIDEO,
+        embedUrl: WATCH_PLAYER,
+        uploadDate: '2026-08-19',
+        duration: 'PT84S',
+        publisher: {
+          '@type': 'Organization',
+          name: 'Satohash',
+          url: SITE,
+          logo: { '@type': 'ImageObject', url: `${SITE}/logo.png` }
+        }
+      }
+    ]
+  })
+)
 write('pitch.html', shell({ title: pitchTitle, description: pitchDesc, contentHtml: pitchBody, canonical: `${SITE}/pitch`, ogImage: `${SITE}/og/pitch.png` }))
 
 console.log('Prerender complete → dist/prerender/')

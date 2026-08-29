@@ -1023,6 +1023,18 @@
     "poweredBy": "Inaendeshwa na OpenTimestamps & Bitcoin",
     "createdBy": "Imeundwa na",
     "verifiedBuild": "Imethibitishwa",
+    "trust": "Imani",
+    "rssSubscribe": "Jiandikishe kwa RSS",
+    "badges": {
+      "free": "Bure",
+      "noKyc": "0 KYC",
+      "bitcoinOnly": "Bitcoin tu",
+      "foss": "FOSS"
+    },
+    "metrics": {
+      "proofs": "Ushahidi {{count}}",
+      "today": "{{count}} leo"
+    },
     "links": {
       "about": "Kuhusu",
       "pitch": "Pitch",

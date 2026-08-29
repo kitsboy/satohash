@@ -91,6 +91,20 @@
 **Full detail + crypto:** `/root/MASTER-BRAIN/03-Projects/satohash/docs/TECHNICAL-CORRECTIONS-LAWYER.md` (Andrea, 2026-08-28). **Coordinate with Andrea to sanity-check the crypto scheme BEFORE implementing.**
 **Non-negotiables:** don't break /api/*, /metrics.json, public/_redirects. Code from M3/Grok per code-lane; THOR pushes need Cam's explicit go.
 
+## 2026-08-29 (Grok M3 — Kimi high-value batch shipped)
+
+**From:** Grok 4.6 M3 · **To:** Kimi / next · **Status:** footer + Twitter/X + SEO additions done; Cam “yes to all”.
+
+**Done:**
+- Footer: trust chips + live `metrics.json` counts + gold RSS
+- `@give_bit` + per-page `/og/*.png` + `/watch` player card (`/watch-player.html`)
+- BreadcrumbList / VideoObject; sitemap 71 URLs; `llms.txt` current
+- Removed App `usePageMeta` override (was stomping route meta)
+
+**Not done / Cam:** Search Console sitemap submit (Google/Bing ping endpoints are dead). Twitter Card Validator after Pages deploy. iPhone Safari `/p/<hash>` still standing.
+
+---
+
 ## 2026-08-26 (Grok THOR — family suite pitch line + agents hub)
 
 **From:** Grok 4.6 THOR · **To:** next agent · **Status:** one marketing sentence only; no product-code.

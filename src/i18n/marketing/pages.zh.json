@@ -1013,6 +1013,18 @@
     "poweredBy": "由 OpenTimestamps 和 Bitcoin 驱动",
     "createdBy": "创建者",
     "verifiedBuild": "已验证",
+    "trust": "信任",
+    "rssSubscribe": "通过 RSS 订阅",
+    "badges": {
+      "free": "免费",
+      "noKyc": "0 KYC",
+      "bitcoinOnly": "仅比特币",
+      "foss": "FOSS"
+    },
+    "metrics": {
+      "proofs": "{{count}} 份证明",
+      "today": "今日 {{count}}"
+    },
     "links": {
       "about": "关于",
       "pitch": "Pitch",

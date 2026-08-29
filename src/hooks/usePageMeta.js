@@ -1,6 +1,14 @@
 import { useEffect } from 'react'
 import { useI18n } from '../i18n'
-import { getPageMeta, getOgLocale, HREFLANG, SUPPORTED_LOCALES } from '../seo/pageMeta'
+import {
+  getPageMeta,
+  getOgLocale,
+  HREFLANG,
+  SUPPORTED_LOCALES,
+  ogImageForPage,
+  WATCH_PLAYER_URL,
+  WATCH_VIDEO_URL
+} from '../seo/pageMeta'
 
 export default function usePageMeta({ page, title, description, image, url }) {
   const { lang, t } = useI18n()
@@ -16,8 +24,11 @@ export default function usePageMeta({ page, title, description, image, url }) {
     const desc =
       resolvedDescription ||
       'Stamp any document on the Bitcoin blockchain. Free, private, independently verifiable proof of existence using OpenTimestamps.'
-    const ogImage = image || 'https://satohash.io/media/video/01-stamp-hero.jpg'
+    const path = window.location.pathname
+    const ogImage = image || ogImageForPage(page, path)
     const pageUrl = url || window.location.href
+    const imageType = ogImage.endsWith('.png') ? 'image/png' : 'image/jpeg'
+    const isWatch = page === 'watch' || path === '/watch' || path === '/watch/'
 
     document.title = fullTitle
     document.documentElement.lang = HREFLANG[lang] || 'en'
@@ -53,19 +64,40 @@ export default function usePageMeta({ page, title, description, image, url }) {
     setMeta('meta[property="og:image:width"]', 'property', 'og:image:width', '1200')
     setMeta('meta[property="og:image:height"]', 'property', 'og:image:height', '630')
     setMeta('meta[property="og:image:alt"]', 'property', 'og:image:alt', desc.slice(0, 120))
-    setMeta('meta[property="og:image:type"]', 'property', 'og:image:type', 'image/jpeg')
+    setMeta('meta[property="og:image:type"]', 'property', 'og:image:type', imageType)
     setMeta('meta[property="og:url"]', 'property', 'og:url', pageUrl)
     setMeta('meta[property="og:site_name"]', 'property', 'og:site_name', siteName)
     setMeta('meta[property="og:type"]', 'property', 'og:type', 'website')
     setMeta('meta[property="og:locale"]', 'property', 'og:locale', getOgLocale(lang))
-    // Richer Twitter/X cards — description + large image so shares land well on X
-    setMeta('meta[name="twitter:card"]', 'name', 'twitter:card', 'summary_large_image')
+    // Twitter/X — @give_bit canonical. Player card on /watch; large image everywhere else.
+    setMeta(
+      'meta[name="twitter:card"]',
+      'name',
+      'twitter:card',
+      isWatch ? 'player' : 'summary_large_image'
+    )
     setMeta('meta[name="twitter:site"]', 'name', 'twitter:site', '@give_bit')
     setMeta('meta[name="twitter:creator"]', 'name', 'twitter:creator', '@give_bit')
     setMeta('meta[name="twitter:title"]', 'name', 'twitter:title', fullTitle)
     setMeta('meta[name="twitter:description"]', 'name', 'twitter:description', desc)
     setMeta('meta[name="twitter:image"]', 'name', 'twitter:image', ogImage)
     setMeta('meta[name="twitter:image:alt"]', 'name', 'twitter:image:alt', desc.slice(0, 120))
+    if (isWatch) {
+      setMeta('meta[name="twitter:player"]', 'name', 'twitter:player', WATCH_PLAYER_URL)
+      setMeta('meta[name="twitter:player:width"]', 'name', 'twitter:player:width', '1280')
+      setMeta('meta[name="twitter:player:height"]', 'name', 'twitter:player:height', '720')
+      setMeta('meta[name="twitter:player:stream"]', 'name', 'twitter:player:stream', WATCH_VIDEO_URL)
+      setMeta(
+        'meta[name="twitter:player:stream:content_type"]',
+        'name',
+        'twitter:player:stream:content_type',
+        'video/mp4'
+      )
+      setMeta('meta[property="og:video"]', 'property', 'og:video', WATCH_VIDEO_URL)
+      setMeta('meta[property="og:video:type"]', 'property', 'og:video:type', 'video/mp4')
+      setMeta('meta[property="og:video:width"]', 'property', 'og:video:width', '1920')
+      setMeta('meta[property="og:video:height"]', 'property', 'og:video:height', '1080')
+    }
     // Generic share fallback for messengers (WhatsApp/Telegram/Signal/Nostr read OG)
     setMeta(
       'meta[property="og:image:secure_url"]',
@@ -76,7 +108,6 @@ export default function usePageMeta({ page, title, description, image, url }) {
 
     // hreflang alternates for multilingual SEO
     const base = 'https://satohash.io'
-    const path = window.location.pathname
     setLink('canonical', `${base}${path}`)
     SUPPORTED_LOCALES.forEach((code) => {
       setLink('alternate', `${base}${path}?lang=${code}`, HREFLANG[code])
@@ -92,6 +123,24 @@ export default function usePageMeta({ page, title, description, image, url }) {
       schemaEl.type = 'application/ld+json'
       document.head.appendChild(schemaEl)
     }
+    const crumbs = [{ '@type': 'ListItem', position: 1, name: 'Home', item: 'https://satohash.io/' }]
+    if (path.startsWith('/docs')) {
+      crumbs.push({
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Docs',
+        item: 'https://satohash.io/docs'
+      })
+      if (path !== '/docs' && path !== '/docs/') {
+        crumbs.push({
+          '@type': 'ListItem',
+          position: 3,
+          name: resolvedTitle || 'Article',
+          item: `https://satohash.io${path}`
+        })
+      }
+    }
+
     const graph = [
       {
         '@type': 'WebPage',
@@ -102,6 +151,30 @@ export default function usePageMeta({ page, title, description, image, url }) {
         isPartOf: { '@id': 'https://satohash.io/#website' }
       }
     ]
+    if (crumbs.length > 1) {
+      graph.push({
+        '@type': 'BreadcrumbList',
+        itemListElement: crumbs
+      })
+    }
+    if (isWatch) {
+      graph.push({
+        '@type': 'VideoObject',
+        name: 'Satohash explainer',
+        description: desc,
+        thumbnailUrl: ogImage,
+        contentUrl: WATCH_VIDEO_URL,
+        embedUrl: WATCH_PLAYER_URL,
+        uploadDate: '2026-08-19',
+        duration: 'PT84S',
+        publisher: {
+          '@type': 'Organization',
+          name: 'Satohash',
+          url: 'https://satohash.io',
+          logo: { '@type': 'ImageObject', url: 'https://satohash.io/logo.png' }
+        }
+      })
+    }
     if (page === 'pricing') {
       graph.push({
         '@type': 'Product',

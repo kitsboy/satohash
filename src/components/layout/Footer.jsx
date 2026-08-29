@@ -7,7 +7,48 @@ import { QRCodeSVG } from 'qrcode.react'
 import { toast } from 'sonner'
 import KimiContact from '../forms/KimiContact'
 import BackToTop from '../ui/BackToTop'
-import { BTC_ADDRESS } from '../../config/constants'
+import { BTC_ADDRESS, PUBLIC_API_URL } from '../../config/constants'
+
+const METRICS_TTL_MS = 60_000
+let metricsCache = { at: 0, data: null }
+
+function useLiveProofStats() {
+  const [stats, setStats] = useState(null)
+
+  useEffect(() => {
+    let cancelled = false
+    const apply = (data) => {
+      if (!cancelled) setStats(data)
+    }
+    const now = Date.now()
+    if (metricsCache.data && now - metricsCache.at < METRICS_TTL_MS) {
+      apply(metricsCache.data)
+      return undefined
+    }
+    fetch(`${PUBLIC_API_URL}/metrics.json`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => {
+        if (!d) return
+        const kpis = Array.isArray(d.kpis) ? d.kpis : []
+        const byKey = Object.fromEntries(kpis.map((k) => [k.key, k.value]))
+        const parsed = {
+          total: d?.raw?.counts?.stampsTotal ?? byKey.stamps_total ?? null,
+          today: byKey.stamps_24h ?? null,
+          free: d?.raw?.requireLightning === false
+        }
+        metricsCache = { at: Date.now(), data: parsed }
+        apply(parsed)
+      })
+      .catch(() => {
+        /* public chips are optional — never block the footer */
+      })
+    return () => {
+      cancelled = true
+    }
+  }, [])
+
+  return stats
+}
 
 const JOB_IDS = ['l402', 'rust', 'crypto', 'ux', 'nostr', 'devops', 'data']
 
@@ -79,6 +120,35 @@ const LINK_GROUPS = [
 
 const linkClass =
   'group flex min-h-[40px] items-center gap-1.5 rounded-md px-0.5 text-[13px] font-medium leading-snug text-[var(--text-secondary)] transition-colors hover:text-[var(--accent-gold)]'
+
+const chipClass =
+  'inline-flex min-h-[32px] items-center gap-1.5 rounded-full border border-[var(--border)] bg-[var(--bg-primary)]/75 px-3 text-[10px] font-bold tracking-[0.14em] text-[var(--text-secondary)] uppercase'
+
+function TrustChip({ children, href, title }) {
+  const inner = (
+    <>
+      <span
+        className="h-1 w-1 shrink-0 rounded-full bg-[var(--accent-gold)]"
+        aria-hidden
+      />
+      {children}
+    </>
+  )
+  if (href) {
+    return (
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        title={title}
+        className={`${chipClass} transition-colors hover:border-[var(--accent-gold)]/45 hover:text-[var(--text-primary)]`}
+      >
+        {inner}
+      </a>
+    )
+  }
+  return <span className={chipClass}>{inner}</span>
+}
 
 function FooterLink({ link, label }) {
   if (link.external) {
@@ -230,6 +300,7 @@ export default function Footer() {
   const { t } = useTranslation()
   const [showDonation, setShowDonation] = useState(false)
   const [jobsOpen, setJobsOpen] = useState(false)
+  const stats = useLiveProofStats()
 
   const jobs = useMemo(
     () =>
@@ -301,6 +372,22 @@ export default function Footer() {
               <p className="text-xs leading-relaxed text-[var(--text-tertiary)]">
                 {t('footerPage.legal.p1')}
               </p>
+              <div
+                className="flex flex-wrap gap-2 pt-1"
+                aria-label={t('footerPage.trust', { defaultValue: 'Trust' })}
+              >
+                <TrustChip>{t('footerPage.badges.free', { defaultValue: 'Free' })}</TrustChip>
+                <TrustChip>{t('footerPage.badges.noKyc', { defaultValue: '0 KYC' })}</TrustChip>
+                <TrustChip>
+                  {t('footerPage.badges.bitcoinOnly', { defaultValue: 'Bitcoin-only' })}
+                </TrustChip>
+                <TrustChip
+                  href="https://github.com/kitsboy/satohash"
+                  title="Source on GitHub"
+                >
+                  {t('footerPage.badges.foss', { defaultValue: 'FOSS' })}
+                </TrustChip>
+              </div>
             </div>
 
             <div className="flex w-full max-w-sm flex-col gap-3 sm:items-end">
@@ -447,6 +534,42 @@ export default function Footer() {
                 <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[var(--accent-success)]" />
                 {t('footerPage.protocolActive')}
               </span>
+              {typeof stats?.total === 'number' && (
+                <>
+                  <span className="hidden text-[var(--border-bright)] sm:inline" aria-hidden>
+                    ·
+                  </span>
+                  <span className="font-semibold tabular-nums text-[var(--text-primary)]">
+                    {t('footerPage.metrics.proofs', {
+                      count: stats.total.toLocaleString(),
+                      defaultValue: `${stats.total.toLocaleString()} proofs`
+                    })}
+                  </span>
+                </>
+              )}
+              {typeof stats?.today === 'number' && stats.today > 0 && (
+                <>
+                  <span className="hidden text-[var(--border-bright)] sm:inline" aria-hidden>
+                    ·
+                  </span>
+                  <span className="tabular-nums">
+                    {t('footerPage.metrics.today', {
+                      count: stats.today.toLocaleString(),
+                      defaultValue: `${stats.today.toLocaleString()} today`
+                    })}
+                  </span>
+                </>
+              )}
+              {stats?.free && (
+                <>
+                  <span className="hidden text-[var(--border-bright)] sm:inline" aria-hidden>
+                    ·
+                  </span>
+                  <span className="text-[var(--accent-success)]">
+                    {t('footerPage.badges.free', { defaultValue: 'Free' })}
+                  </span>
+                </>
+              )}
               <span className="hidden text-[var(--border-bright)] sm:inline" aria-hidden>
                 ·
               </span>
@@ -470,16 +593,15 @@ export default function Footer() {
               </button>
               <a
                 href="/feed.xml"
-                className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--bg-primary)]/80 px-4 text-[11px] font-semibold tracking-wide text-[var(--text-primary)] transition-all hover:border-[var(--accent-gold)]/50"
-                title="Subscribe to the Satohash RSS feed"
-                aria-label="Subscribe to the Satohash RSS feed"
+                className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-[var(--accent-gold)]/25 bg-[var(--accent-gold)]/10 px-4 text-[11px] font-semibold tracking-wide text-[var(--accent-gold)] transition-all hover:border-[var(--accent-gold)]/55 hover:bg-[var(--accent-gold)]/16"
+                title={t('footerPage.rssSubscribe', { defaultValue: 'Subscribe via RSS' })}
+                aria-label={t('footerPage.rssSubscribe', { defaultValue: 'Subscribe via RSS' })}
               >
                 <svg
                   width="13"
                   height="13"
                   viewBox="0 0 24 24"
                   fill="currentColor"
-                  className="text-[var(--accent-gold)]"
                   aria-hidden="true"
                 >
                   <path d="M6.18 17.82a2.18 2.18 0 1 0 0 4.36 2.18 2.18 0 0 0 0-4.36zM4 4.44v3.6C12.9 8.04 20 15.1 20 24h3.6C23.6 14.6 13.4 4.44 4 4.44zM4 10.1v3.6c5.7 0 10.3 4.6 10.3 10.3h3.6C17.9 14.9 9.1 10.1 4 10.1z" />

@@ -22,7 +22,12 @@ Satohash is a free, private service that anchors cryptographic fingerprints (SHA
 - [Network status](https://satohash.io/network): live Bitcoin node, OTS calendars, Nostr relays
 - [Templates](https://satohash.io/templates): free legal/business document templates
 - [API docs](https://api.satohash.io/api-docs): OpenAPI documentation for developers
-- [Donate](https://satohash.io/donate): support Satohash with Lightning or on-chain
+- [Donate](https://satohash.io/donate): support Satohash with Lightning (`satohash@breez.tips`) or on-chain
+- [Watch explainer](https://satohash.io/watch): ~84s Kimi/Pippa film — how Bitcoin becomes a civic notary
+- [Pitch](https://satohash.io/pitch): open civic notary for the truth era
+- [How Satohash works](https://satohash.io/docs/how-satohash-works): technical deep-dive (Merkle root → one Bitcoin tx)
+- [Support & guidance](https://satohash.io/docs/support-and-guidance): request for legal/technical/funding review
+- [RSS](https://satohash.io/feed.xml): learn-article feed
 
 ## Learn articles
 
@@ -52,4 +57,6 @@ Satohash is a free, private service that anchors cryptographic fingerprints (SHA
 - Web: https://satohash.io
 - API: https://api.satohash.io (health: https://api.satohash.io/health)
 - Email: hello@giveabit.io
+- X / Twitter: https://x.com/give_bit (@give_bit)
 - Parent ecosystem: https://giveabit.io
+- Suite: https://agents.giveabit.io/#suite

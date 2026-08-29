@@ -89,13 +89,18 @@ export async function onRequestGet({ params }) {
   <meta property="og:title" content="${esc(title)}"/>
   <meta property="og:description" content="${esc(desc)}"/>
   <meta property="og:url" content="${canon}"/>
-  <meta property="og:image" content="https://satohash.io/media/video/01-stamp-hero.jpg"/>
-  <meta property="og:image:type" content="image/jpeg"/>
+  <meta property="og:image" content="https://satohash.io/og/stamp.png"/>
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+  <meta property="og:image:type" content="image/png"/>
   <meta property="og:image:alt" content="Satohash — Bitcoin-anchored proof of existence"/>
   <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:site" content="@give_bit"/>
+  <meta name="twitter:creator" content="@give_bit"/>
   <meta name="twitter:title" content="${esc(title)}"/>
   <meta name="twitter:description" content="${esc(desc)}"/>
-  <meta name="twitter:image" content="https://satohash.io/media/video/01-stamp-hero.jpg"/>
+  <meta name="twitter:image" content="https://satohash.io/og/stamp.png"/>
+  <meta name="twitter:image:alt" content="Satohash — Bitcoin-anchored proof of existence"/>
   <script type="application/ld+json">${jsonLd}</script>
   <style>
     :root{--bg:#141b25;--card:#1e2a3a;--gold:#f0b429;--text:#f1f5f9;--muted:#8892a4;--ok:#22d3a5;--line:rgba(240,180,41,.28)}
