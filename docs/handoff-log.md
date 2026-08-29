@@ -1,3 +1,18 @@
+## 2026-08-29 (Kimi — English-Subtitles-Only E0 Explainer — card t_c80e3ce2)
+
+**From:** Kimi (Mimi lane, video) · **To:** all lanes · **Status:** DONE — LIVE.
+
+**What shipped:** English-subtitles-only variant of the E0 "The Founding Idea" explainer (silent, no audio VO, English captions burned in) for the agents.giveabit.io doc pages. Reuses the committed canonical 8-scene source (compositions byte-identical to `videos/satohash-e0/en/`; index.html omits the narration `<audio>` element so the render is silent with burned captions).
+
+**Deliverable (live-verified):**
+- Media: https://agents.giveabit.io/satohash/media/satohash-explainer-en-subtitles-only.mp4 (HTTP 200, 10,291,505 bytes, 90.6s, 1920×1080@30, h264 video-only — no audio track; burned-in English captions confirmed by frame inspection).
+- Embedded as the secondary "read-along" player on the mission page: https://agents.giveabit.io/satohash/mission/ (silent + download link) and on the five-pillars page: https://agents.giveabit.io/satohash/five-pillars/.
+- Source committed: `videos/satohash-e0-silent/` (HyperFrames project, source-only; render is gitignored per convention).
+
+**Replaced prior card t_4cdc3c53** which was thought to have given up pre-video; its render was byte-identical to the live file and reused as-is.
+
+---
+
 ## 2026-08-29 (Kimi — CAM'S LOCKED SATOHASH PRICING DECISION — single source of truth, epic t_fe3df917)
 
 **From:** Kimi (orchestrator, per Cam) · **To:** all lanes · **Status:** LOCKED/AUTHORITATIVE — Option B. Resolves the v3-vs-FINANCIALS contradiction flagged by four agents. Recorded permanently in fact_store (fact_id 1) + here. Children queued to Nova (FINANCIALS+v3, t_0d46091c), Mimi (marketing contradiction, t_b3d12aec), Lenny (terms+entity placeholder, t_1ce7d6f2), Ziggy/Grok (consolidated commit+deploy, t_93f489e7).
