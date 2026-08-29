@@ -1,0 +1,13 @@
+We can't read it. We can't lose it. We never had it.
+
+That's the honest line at the heart of Satohash.
+
+Every dispute over who did what, and when, comes down to one question: can you prove your version of events without asking anyone to take your word for it? For centuries, the answer was a notary, a lawyer, a registry — some trusted third party to vouch for a date.
+
+Satohash is the founding bet that this middleman is no longer necessary. OpenTimestamps anchors a fingerprint of your file into the Bitcoin blockchain — permanently, verifiably, with no company standing between your document and the proof. Your file never leaves your device. Only a hash touches the chain. Once it's in a block, that timestamp can't be altered, backdated, or quietly removed. Not by Satohash. Not by anyone.
+
+What we prove today is when a file existed — not who made it. Authorship is the next chapter. And your proof is portable: it outlives Satohash itself, and it can be checked years later with open tools.
+
+Don't take our word for it. Verify this yourself. Free, open tools. No account. No KYC.
+
+Satohash. Proof of truth, on Bitcoin.
