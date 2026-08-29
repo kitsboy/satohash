@@ -1,0 +1,9 @@
+# Render scratch & derived media — never commit (source is compositions/ + index.html)
+work-*/
+.hyperframes/
+__pycache__/
+*.wav
+*.mp4
+*.webm
+renders/
+!compositions/**/*.html
