@@ -1,3 +1,23 @@
+## Session — 2026-08-29 · GROK HIGH-VALUE BATCH (Cam: use ~20% weekly allotment on Satohash)
+
+**From:** Hermes (Kimi lane) via Cam. **Cam's mood:** "wow it is looking really good, well done!" — site in strong state. This is polish + verification, not a rebuild.
+
+**Top asks for Grok:**
+1. 🎨 **Modernize + upgrade the footer** (`src/components/layout/Footer.jsx`) — premium, on-brand (gold-accent Glacier Jewel). Add social-proof chips from live metrics (api.satohash.io/metrics.json), trust badges (Free · 0 KYC · Bitcoin-only · FOSS), cleaner grid/mobile. Keep honest posture. (RSS footer button already added — verify styled well.)
+2. 🐦 **Twitter/X SEO** — verify all `twitter:` tags complete (SPA + static), run Twitter Card Validator, confirm @give_bit canonical, consider video/player card for /watch explainers.
+3. 🔍 **Independent live verification** (Cam's never-relay rule) — RSS feed valid XML, per-page static OG works for all key pages w/ socialbot UA, es/pt civic framing live, FAQ JSON-LD softening live, fresh Lighthouse (desktop+mobile, fix perf/a11y), i18n keys intact, security spot-check (no secrets in bundle).
+4. 🧠 **High-value additions** — JSON-LD depth (BreadcrumbList on docs, VideoObject on /watch), sitemap freshness (add new pages + feed.xml), llms.txt current, GSC/Bing submission, consider richer OG image set (coordinate Mimi).
+
+**Questions for Cam (direction only, no action needed):**
+1. Footer: full premium redesign or light refresh? (Assuming tasteful premium upgrade.)
+2. Twitter: is @give_bit the canonical handle everywhere?
+3. Video cards on /watch worth enabling?
+4. Want Mimi to produce dedicated on-brand OG image set, or keep 01-stamp-hero.jpg?
+
+**Handoff rule:** Grok reads TOP first, appends one-line DONE per item when shipped. Mirror relevant items to per-project docs. Push after update.
+
+---
+
 ## Session — 2026-08-27 · Breez donate QR (Grok M3)
 
 **Done:**
