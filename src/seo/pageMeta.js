@@ -504,7 +504,7 @@ export const pageMeta = {
         'Prove a file existed, never show the file. Bitcoin anchors the fingerprint; OpenTimestamps makes it free and verifiable forever.'
     },
     es: {
-      title: 'Satohash — Bitcoin como Notario Cívico Soberano',
+      title: 'Satohash — Bitcoin como Registro de Verdad Cívico',
       description:
         'Demuestra que un archivo existió sin mostrarlo. Bitcoin ancla la huella; OpenTimestamps lo hace gratis y verificable para siempre.'
     },
@@ -519,7 +519,7 @@ export const pageMeta = {
         'Beweisen Sie, dass eine Datei existierte, ohne sie zu zeigen. Bitcoin verankert den Fingerabdruck; OpenTimestamps macht es kostenlos und für immer prüfbar.'
     },
     pt: {
-      title: 'Satohash — Bitcoin como Notário Cívico Soberano',
+      title: 'Satohash — Bitcoin como Notarização Cívica (não licenciada)',
       description:
         'Prove que um arquivo existiu sem mostrá-lo. O Bitcoin ancora a impressão digital; o OpenTimestamps torna tudo grátis e verificável para sempre.'
     },
