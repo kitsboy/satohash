@@ -25,12 +25,19 @@ const CATEGORY_CONFIG = [
   {
     id: 'getting-started',
     icon: Zap,
-    docs: ['quickstart', 'mission', 'architecture']
+    docs: ['quickstart', 'mission', 'architecture', 'how-satohash-works']
   },
   {
     id: 'product',
     icon: TrendingUp,
-    docs: ['pitch', 'executive-summary', 'marketing', 'financials', 'improvements-log']
+    docs: [
+      'pitch',
+      'support-and-guidance',
+      'executive-summary',
+      'marketing',
+      'financials',
+      'improvements-log'
+    ]
   },
   {
     id: 'technical',
