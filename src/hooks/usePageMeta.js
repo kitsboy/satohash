@@ -19,7 +19,9 @@ export default function usePageMeta({ page, title, description, image, url }) {
   useEffect(() => {
     const siteName = 'Satohash'
     const fullTitle = resolvedTitle
-      ? `${resolvedTitle} | ${siteName}`
+      ? /satohash/i.test(resolvedTitle)
+        ? resolvedTitle
+        : `${resolvedTitle} | ${siteName}`
       : `${siteName} — Bitcoin Document Notarization`
     const desc =
       resolvedDescription ||

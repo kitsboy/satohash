@@ -9,6 +9,7 @@ import EmptyState from '../components/ui/EmptyState'
 import { findStampByHashOrId, localRecordToProof } from '../utils/vaultLocal'
 import { persistLastProof, readLastProof } from '../utils/lastProof'
 import LiveNodeChip from '../components/shared/LiveNodeChip'
+import Footer from '../components/layout/Footer'
 import Tooltip from '../components/ui/Tooltip'
 import events, { trackEvent } from '../utils/analytics'
 
@@ -82,6 +83,7 @@ export default function StampDone() {
 
   if (loading) {
     return (
+      <>
       <div className="mx-auto flex min-h-[50vh] max-w-lg items-center justify-center p-6 pb-28">
         <p
           className="text-sm font-bold tracking-widest uppercase"
@@ -90,11 +92,14 @@ export default function StampDone() {
           Loading proof…
         </p>
       </div>
+      <Footer />
+      </>
     )
   }
 
   if (!proof) {
     return (
+      <>
       <div className="mx-auto max-w-lg p-6 pb-28">
         <EmptyState
           imageSrc="/media/ui/empty-proof.jpg"
@@ -104,12 +109,15 @@ export default function StampDone() {
           onAction={() => navigate('/stamp')}
         />
       </div>
+      <Footer />
+      </>
     )
   }
 
   const confirmed = proof.status === 'confirmed'
 
   return (
+    <>
     <div className="mx-auto max-w-lg space-y-6 p-4 pb-[calc(7rem+env(safe-area-inset-bottom,0px))] sm:p-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex flex-wrap items-center gap-2">
@@ -218,5 +226,7 @@ export default function StampDone() {
         />
       </div>
     </div>
+    <Footer />
+    </>
   )
 }

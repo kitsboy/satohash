@@ -91,6 +91,12 @@
 **Full detail + crypto:** `/root/MASTER-BRAIN/03-Projects/satohash/docs/TECHNICAL-CORRECTIONS-LAWYER.md` (Andrea, 2026-08-28). **Coordinate with Andrea to sanity-check the crypto scheme BEFORE implementing.**
 **Non-negotiables:** don't break /api/*, /metrics.json, public/_redirects. Code from M3/Grok per code-lane; THOR pushes need Cam's explicit go.
 
+## 2026-08-29 (Grok M3 — quick wins: footer on core loop + title de-dupe)
+
+**Done:** `<Footer />` on `/stamp`, `/stamp/done`, `/verify`. Titles that already say Satohash are not appended again. Verify header no longer says “Courtroom-Grade”.
+
+---
+
 ## 2026-08-29 (Grok M3 — Kimi high-value batch shipped)
 
 **From:** Grok 4.6 M3 · **To:** Kimi / next · **Status:** footer + Twitter/X + SEO additions done; Cam “yes to all”.

@@ -40,6 +40,7 @@ import StampSuccessActions from '../components/stamps/StampSuccessActions'
 import { persistLastProof } from '../utils/lastProof'
 import { requestWakeLock, releaseWakeLock } from '../utils/wakeLock'
 import LiveNodeChip from '../components/shared/LiveNodeChip'
+import Footer from '../components/layout/Footer'
 import events, { trackEvent } from '../utils/analytics'
 
 export default function Stamp() {
@@ -811,6 +812,7 @@ export default function Stamp() {
     !!normalizeSha256(hashValue) && files.length === 0 && stampingStatus === 'idle' && !proofResult
 
   return (
+    <>
     <div className="stamp-page mx-auto max-w-6xl space-y-8 p-4 pb-[calc(8.5rem+env(safe-area-inset-bottom,0px))] sm:space-y-12 sm:pb-24 md:p-8 md:pb-20">
       {/* Secondary trail — primary chrome is MarketingShell on mobile */}
       <div className="flex flex-wrap items-center justify-between gap-3">
@@ -2016,5 +2018,7 @@ export default function Stamp() {
         )}
       </AnimatePresence>
     </div>
+    <Footer />
+    </>
   )
 }

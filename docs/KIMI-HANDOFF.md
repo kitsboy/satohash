@@ -22,6 +22,8 @@
 3. Live verification — DONE (M3). RSS `feed.xml` valid XML, 14 items, on-brand title. Live Twitterbot already gets per-page OG PNGs + `@give_bit`. FAQ JSON-LD is independently-verifiable (no “satisfy ESIGN”). es/pt civic titles live (`Bitcoin como Registro de Verdad Cívico` / `Notarização Cívica (não licenciada)`). No `nsec`/private keys in src. GSC/Bing ping URLs return 404/410 — Cam still submits sitemap in Search Console after this deploy.
 4. Additions — DONE. BreadcrumbList on `/docs/*`, VideoObject on `/watch`, sitemap +`feed.xml` +`/docs/how-satohash-works` +`/docs/support-and-guidance` (71 URLs), `llms.txt` current, dedicated OG set wired (Cam: yes to Mimi/Kimi `/og/*.png`, not `01-stamp-hero.jpg`).
 
+**DONE follow-on (Grok M3, same day):** Footer now on `/stamp` `/stamp/done` `/verify` (core loop was chrome-less). `usePageMeta` no longer doubles “Satohash | Satohash”. Verify pill: “Independent verification” (dropped courtroom-grade). Live `/watch` player card already 200 on Pages.
+
 ---
 
 ## Session — 2026-08-27 · Breez donate QR (Grok M3)

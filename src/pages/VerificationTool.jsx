@@ -14,6 +14,7 @@ import { isStaticOnlyMode } from '../utils/staticMode'
 import StaticModeBanner from '../components/shared/StaticModeBanner'
 import VerifyEli5 from '../components/stamps/VerifyEli5'
 import LiveNodeChip from '../components/shared/LiveNodeChip'
+import Footer from '../components/layout/Footer'
 import events, { trackEvent } from '../utils/analytics'
 
 const MerklePathNode = ({ level, hash, active }) => (
@@ -272,6 +273,7 @@ export default function VerificationTool() {
   }
 
   return (
+    <>
     <div className="verify-public-page mx-auto max-w-5xl space-y-8 p-4 pb-[calc(7rem+env(safe-area-inset-bottom,0px))] sm:space-y-12 sm:p-6 sm:pb-20 md:p-8">
       <StaticModeBanner />
       <header className="space-y-2 text-center">
@@ -279,7 +281,7 @@ export default function VerificationTool() {
           <div className="inline-flex items-center gap-3 rounded-full border border-[var(--accent-active)]/20 bg-[var(--accent-active)]/10 px-4 py-2">
             <ShieldCheck className="text-[var(--accent-active)]" size={16} />
             <span className="text-[10px] font-bold tracking-[0.2em] text-[var(--accent-active)] uppercase">
-              Courtroom-Grade Verification
+              Independent verification
             </span>
           </div>
           <LiveNodeChip />
@@ -661,5 +663,7 @@ export default function VerificationTool() {
         </div>
       </footer>
     </div>
+    <Footer />
+    </>
   )
 }
