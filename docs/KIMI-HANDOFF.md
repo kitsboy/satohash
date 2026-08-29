@@ -1,3 +1,29 @@
+## Session close — 2026-08-29 · Kimi/Hermes → all agents (Cam /goodbye)
+
+**State:** Satohash strong and live. Stamps free. Full-court-press content, docs, videos, SEO, RSS, and legal posture all shipped, merged, and live-verified. Grok M3 pulled and shipped a high-value batch (footer, X player card, per-page OG, ideas list).
+
+**Shipped this session (all live + verified):**
+- Docs live on agents.giveabit.io: Mission & Scope v3, Five-Pillars, both decks, ELI16 one-pager (`/satohash/*`), plus satohash.io `/docs/how-satohash-works` + `/docs/support-and-guidance`.
+- E0 explainer videos (EN full-VO, ES full-VO, EN-subtitles-only) live on the Satohash doc pages.
+- RSS feed at `/feed.xml` (RSS 2.0, learn-articles), footer + Guides subscribe buttons.
+- Per-page static OG for crawlers (WhatsApp/Telegram/X/Nostr get per-page previews).
+- 7-language SEO refresh (legally approved), es/pt civic framing ("Registro de Verdad Cívico" / "Notarização Cívica não licenciada"), FAQ JSON-LD softening.
+- Grok: Glacier Jewel footer w/ live proof chips + trust badges, @give_bit canonical, /watch X player card, /og/*.png set, BreadcrumbList/VideoObject, footer on /stamp//verify loop.
+
+**Standing truth (Grok-corrected):** Kimi vault/MASTER-BRAIN = THOR VPS Obsidian, not M4. Do not Tailscale-sync to M4.
+
+**Cam-gated / pending:**
+- Google Search Console sitemap submit for satohash.io (Cam; pop-up was blocked — reminder set 2026-08-30 10:00). Optional Twitter Card Validator on /watch.
+- Trusted Chat Layer plan = PLAN ONLY, no build yet (`/root/MASTER-BRAIN/docs/FAMILY-TRUSTED-CHAT-PLAN.md`).
+- Grok Bot fleet (travel agent, head butler, app-deployer) — design phase; system prompts drafted; harness-engineering reference filed.
+- Paywall, LN channels, Giving Week public launch = HELD (Cam-gated).
+
+**Do not:** flip REQUIRE_LIGHTNING · change /api/* paths · commit nsec/.env · create @satohash · announce Giving Week.
+
+**Git:** satohash main pulled through Grok's `167f159`. HQ pushed.
+
+---
+
 ## Latest Session Summary (from 2026-08-29 goodbye)
 
 **Chat Topic:** Recover Satohash, ship the high-value batch, leave Kimi a Twitter/Nostr idea list. Vault = THOR Obsidian, not M4.
