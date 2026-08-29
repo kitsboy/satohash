@@ -1,10 +1,8 @@
-# satohash — Last Updated 2026-08-27 by Grok (M3)
+# Satohash — Latest
 
-**Brief:** `/donate` is Breez Spark; QR is `lightning:satohash@breez.tips`.
-
-**Commit:** `8b337fa` (on `dcd1557` receive migration).
-
-- Lightning: `satohash@breez.tips`
-- On-chain: `bc1p25zw4rh6s6fjqzxe8yzkpj4klf59v5yyzc4nqf0x6d3twu8qvq9qurdlsr`
-- Live-verified: https://satohash.io/donate
-- OTS proof-of-truth on receipts unchanged. LNbits not on the public donate QR.
+## 2026-08-29 · English-subtitles-only E0 explainer LIVE
+- Silent (no audio) English-subtitled version of the E0 "Founding Idea" explainer (90.6s, 1080p) produced and embedded on the doc pages:
+  - https://agents.giveabit.io/satohash/mission/
+  - https://agents.giveabit.io/satohash/five-pillars/
+  - Direct video: https://agents.giveabit.io/satohash/media/satohash-explainer-en-subtitles-only.mp4
+- Source committed at `videos/satohash-e0-silent/`; re-render via HyperFrames.

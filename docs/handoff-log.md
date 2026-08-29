@@ -1,3 +1,18 @@
+## 2026-08-29 (Mimi — Satohash English-subtitles-only E0 explainer, card t_4cdc3c53)
+
+**Delivered:** Silent (no-audio) English-subtitles-only version of the Satohash E0 "Founding Idea" explainer for the doc pages on agents.giveabit.io.
+
+- **Video:** 90.6s · 1920×1080@30 · H.264 · **no audio track** · English captions burned in. Rendered via HyperFrames high (`--workers 2`, 5m32s, 9.8MB).
+- **Live URL:** https://agents.giveabit.io/satohash/media/satohash-explainer-en-subtitles-only.mp4 (md5 3364813fa6ab134461771d201f2a6145, verified byte-identical live).
+- **Embedded on:** `/satohash/mission/` and `/satohash/five-pillars/` (native `<video controls>`, same-origin per CSP `default-src 'self'`, poster included).
+- **Source:** `videos/satohash-e0-silent/` in this repo (index.html + compositions + captions, narration element removed). Render artifacts gitignored.
+- **Bug fixed in source:** `fadeInAt` array in index.html was missing commas — chained index access threw `Cannot read properties of undefined (reading 'scene-03')`. Scenes rendered anyway only because sub-compositions mount independently of the main timeline; crossfades were broken. Commas added; `hyperframes check` now passes 0 errors / 49/49 WCAG AA.
+- **Re-render recipe:** `cd videos/satohash-e0-silent && npx hyperframes render --quality high --output out-en-subtitles-only.mp4 --workers 2`
+- **Publish:** here.now PUT → slug `silken-citrus-m8c7` (agents.giveabit.io), 4 files changed (2 pages + mp4 + poster), 63 hash-skipped. Finalize `state: live`, permanent.
+
+Coordination: main video series card t_945c04a5 (E0 EN+ES with VO) continues separately — this is a clean silent/subtitled add-on, not a duplicate build.
+
+---
 ## 2026-08-29 (Kimi — CAM'S LOCKED SATOHASH PRICING DECISION — single source of truth, epic t_fe3df917)
 
 **From:** Kimi (orchestrator, per Cam) · **To:** all lanes · **Status:** LOCKED/AUTHORITATIVE — Option B. Resolves the v3-vs-FINANCIALS contradiction flagged by four agents. Recorded permanently in fact_store (fact_id 1) + here. Children queued to Nova (FINANCIALS+v3, t_0d46091c), Mimi (marketing contradiction, t_b3d12aec), Lenny (terms+entity placeholder, t_1ce7d6f2), Ziggy/Grok (consolidated commit+deploy, t_93f489e7).
