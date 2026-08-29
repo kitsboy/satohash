@@ -79,7 +79,12 @@ function inline(s) {
     .replace(/\*([^*]+)\*/g, '<em>$1</em>')
 }
 
-function shell({ title, description, contentHtml, canonical, article = null }) {
+function shell({ title, description, contentHtml, canonical, article = null, ogImage = `${SITE}/og/home.png`, ogImageAlt = null }) {
+  const esc = (s = '') => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
+  const ogAlt = ogImageAlt || description.slice(0, 120)
+  const eTitle = esc(title)
+  const eDesc = esc(description)
+  const eAlt = esc(ogAlt)
   const schema = article
     ? `<script type="application/ld+json">
 ${JSON.stringify(
@@ -104,18 +109,32 @@ ${JSON.stringify(
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>${title}</title>
-<meta name="description" content="${description}" />
+<title>${eTitle}</title>
+<meta name="description" content="${eDesc}" />
 <link rel="canonical" href="${canonical}" />
 <link rel="alternate" hreflang="en" href="${canonical}" />
 <link rel="alternate" hreflang="x-default" href="${canonical}" />
+<!-- Open Graph — read by WhatsApp, Telegram, Signal, LinkedIn, Facebook, Slack -->
 <meta property="og:type" content="${article ? 'article' : 'website'}" />
-<meta property="og:title" content="${title}" />
-<meta property="og:description" content="${description}" />
+<meta property="og:title" content="${eTitle}" />
+<meta property="og:description" content="${eDesc}" />
 <meta property="og:url" content="${canonical}" />
 <meta property="og:site_name" content="Satohash" />
 <meta property="og:locale" content="en_US" />
+<meta property="og:image" content="${ogImage}" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:alt" content="${eAlt}" />
+<meta property="og:image:secure_url" content="${ogImage}" />
+<!-- Twitter / X Card -->
 <meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@give_bit" />
+<meta name="twitter:creator" content="@give_bit" />
+<meta name="twitter:title" content="${eTitle}" />
+<meta name="twitter:description" content="${eDesc}" />
+<meta name="twitter:image" content="${ogImage}" />
+<meta name="twitter:image:alt" content="${eAlt}" />
 ${schema}
 <style>
 body{font-family:system-ui,-apple-system,sans-serif;max-width:720px;margin:0 auto;padding:24px;line-height:1.65;color:#e8e6e3;background:#0d1117}
@@ -212,10 +231,10 @@ ${JSON.stringify(
 console.log('Prerendering SEO pages…')
 fs.mkdirSync(OUT, { recursive: true })
 
-write('landing.html', shell({ title: landingTitle, description: landingDesc, contentHtml: landingBody, canonical: `${SITE}/` }))
+write('landing.html', shell({ title: landingTitle, description: landingDesc, contentHtml: landingBody, canonical: `${SITE}/`, ogImage: `${SITE}/og/home.png` }))
 write(
   'faq.html',
-  shell({ title: faqTitle, description: faqDesc, contentHtml: faqBody, canonical: `${SITE}/faq` }).replace('</head>', `${faqSchema}\n</head>`)
+  shell({ title: faqTitle, description: faqDesc, contentHtml: faqBody, canonical: `${SITE}/faq`, ogImage: `${SITE}/og/faq.png` }).replace('</head>', `${faqSchema}\n</head>`)
 )
 
 // Secondary pages — concise static versions for crawlers
@@ -270,7 +289,7 @@ const secondary = {
   }
 }
 for (const [slug, p] of Object.entries(secondary)) {
-  write(`${slug}.html`, shell({ title: p.title, description: p.desc, contentHtml: p.body, canonical: `${SITE}/${slug}` }))
+  write(`${slug}.html`, shell({ title: p.title, description: p.desc, contentHtml: p.body, canonical: `${SITE}/${slug}`, ogImage: `${SITE}/og/${slug}.png` }))
 }
 
 // learn articles
@@ -293,10 +312,70 @@ if (fs.existsSync(docsDir)) {
         description,
         contentHtml: `<p class="meta">Satohash — Bitcoin document stamping</p>\n${body}`,
         canonical: `${SITE}/docs/${slug}`,
+        ogImage: `${SITE}/og/${slug}.png`,
         article: { headline: title, description, datePublished: '2026-08-20' }
       })
     )
   }
 }
+
+// Watch / Explainer — static version so video shares show rich meta
+const watchTitle = 'Satohash Explainer — Watch How It Proves a File Existed'
+const watchDesc =
+  'Watch the ~84 second Satohash explainer: how Bitcoin becomes a global notary that proves any file existed, forever — free, private, independently verifiable.'
+const watchBody = `
+<h1>Watch the Satohash explainer</h1>
+<p>Satohash anchors your document's fingerprint to the Bitcoin blockchain via OpenTimestamps — turning Bitcoin into a global, tamper-proof notary that proves a file existed at a specific moment, forever.</p>
+<ul>
+<li><strong>Zero-knowledge</strong> — your file never leaves your device, only a SHA-256 fingerprint.</li>
+<li><strong>Free &amp; private</strong> — no account, no middleman, no trust required.</li>
+<li><strong>Independently verifiable</strong> — anyone can check your proof on Bitcoin.</li>
+</ul>
+<p><a href="${SITE}/stamp">Stamp your first document — free</a></p>`
+
+// Pitch — static version of the open civic-notary pitch
+const pitchTitle = 'Satohash — An Open Civic Notary for the Truth Era'
+const pitchDesc =
+  'Satohash is a sovereign, open civic notary: Bitcoin-anchored, independently verifiable proof of existence for any file. Free, private, zero-knowledge. No trust required — only math.'
+const pitchBody = `
+<h1>An open civic notary for the truth era</h1>
+<p>Satohash proves that a file existed, at a specific moment, permanently — by anchoring its fingerprint to the Bitcoin blockchain, without the file ever leaving your device.</p>
+<p>It is an open, auditable commons: independent, verifiable-by-anyone proof of <em>what existed, when, and unaltered</em>. No middleman. No trust required.</p>
+<p><strong>"We don't need you to trust us. We need you to trust math."</strong></p>
+<p>Free today (REQUIRE_LIGHTNING=false), open source, part of the Give A Bit family. Bitcoin-only, via OpenTimestamps.</p>
+<p><a href="${SITE}/stamp">Stamp a document — free</a> · <a href="${SITE}/docs/support-and-guidance">Request guidance &amp; support</a></p>`
+
+// Named docs rendered from markdown (dist/docs mirrors public/docs)
+const NAMED_DOCS = [
+  { slug: 'how-satohash-works', og: 'how-satohash-works', fallbackTitle: 'How Satohash Works — For Free (Technical Deep-Dive)', fallbackDesc: 'Why Satohash is free and how it really works: one Merkle root anchors a million fingerprints into a single Bitcoin transaction. Plain-English answer + implementation-level deep-dive.' },
+  { slug: 'support-and-guidance', og: 'support-and-guidance', fallbackTitle: 'Satohash — A Request for Guidance, Partnership & Support', fallbackDesc: 'An honest request for guidance, review and support from the legal, technical and financial communities. An open, sovereign civic tool for truth — Bitcoin-anchored proof of existence.' }
+]
+for (const doc of NAMED_DOCS) {
+  const mdPath = path.join(docsDir, `${doc.slug}.md`)
+  if (!fs.existsSync(mdPath)) continue
+  const md = fs.readFileSync(mdPath, 'utf8')
+  const titleMatch = md.match(/^#\s+(.+)$/m)
+  const title = (titleMatch ? titleMatch[1].trim() : doc.fallbackTitle)
+    .replace(/^Satohash\s*[—–-]\s*/i, '') // drop redundant leading "Satohash — "
+    .replace(/\s*[—–-]\s*Satohash.*$/i, '')
+  const descMatch = md.match(/^([^#\n]{40,180})/m)
+  const description = (descMatch ? descMatch[1].trim().replace(/[*_`#>]/g, '').replace(/\s+/g, ' ') : doc.fallbackDesc).slice(0, 180)
+  const body = mdToHtml(md)
+  write(
+    `docs/${doc.slug}.html`,
+    shell({
+      title: `${title} — Satohash`,
+      description,
+      contentHtml: `<p class="meta">Satohash — Bitcoin document stamping</p>\n${body}`,
+      canonical: `${SITE}/docs/${doc.slug}`,
+      ogImage: `${SITE}/og/${doc.og}.png`,
+      article: { headline: title, description, datePublished: '2026-08-20' }
+    })
+  )
+}
+
+// Watch + Pitch
+write('watch.html', shell({ title: watchTitle, description: watchDesc, contentHtml: watchBody, canonical: `${SITE}/watch`, ogImage: `${SITE}/og/watch.png` }))
+write('pitch.html', shell({ title: pitchTitle, description: pitchDesc, contentHtml: pitchBody, canonical: `${SITE}/pitch`, ogImage: `${SITE}/og/pitch.png` }))
 
 console.log('Prerender complete → dist/prerender/')

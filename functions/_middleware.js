@@ -3,11 +3,15 @@
 // Prerendered files live at /prerender/*.html (built by scripts/prerender-seo.js).
 
 const CRAWLER_RE =
-  /(googlebot|bingbot|yandex|baiduspider|duckduckbot|slurp|gptbot|claude|anthropic|perplexity|chatgpt|google-inspectiontool|applebot|semrushbot|ahrefsbot|dotbot|mj12bot|petalbot|bytespider|ccbot|facebookexternalhit|twitterbot|linkedinbot|embedly|quora|pinterest)/i
+  /(googlebot|bingbot|yandex|baiduspider|duckduckbot|slurp|gptbot|claude|anthropic|perplexity|chatgpt|google-inspectiontool|applebot|semrushbot|ahrefsbot|dotbot|mj12bot|petalbot|bytespider|ccbot|facebookexternalhit|twitterbot|linkedinbot|embedly|quora|pinterest|whatsapp|telegrambot|slackbot|discordbot|viber|skypeuripreview|vkshare|tumblr|snapchat)/i
 
 const PRERENDER_MAP = [
   { route: /^\/docs\/learn-([a-z0-9-]+)\/?$/, file: (m) => `/prerender/docs/learn-${m[1]}.html` },
+  { route: /^\/docs\/how-satohash-works\/?$/, file: () => '/prerender/docs/how-satohash-works.html' },
+  { route: /^\/docs\/support-and-guidance\/?$/, file: () => '/prerender/docs/support-and-guidance.html' },
   { route: /^\/faq\/?$/, file: () => '/prerender/faq.html' },
+  { route: /^\/watch\/?$/, file: () => '/prerender/watch.html' },
+  { route: /^\/pitch\/?$/, file: () => '/prerender/pitch.html' },
   { route: /^\/(stamp|pricing|templates|verify|donate|network)\/?$/, file: (m) => `/prerender/${m[1]}.html` }
 ]
 
