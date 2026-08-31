@@ -43,7 +43,7 @@ export function interpretOtsResult({ api, structural, hash, hadOtsFile }) {
       headline: 'Your document fingerprint is anchored on Bitcoin.',
       eli16: block
         ? `Think of Bitcoin as a public notary book. Your file’s fingerprint was written into that book around block #${block}. Anyone can re-check the .ots later — even without Satohash — and see the same proof.`
-        : 'Think of Bitcoin as a public notary book. Your .ots shows a Bitcoin block attestation: the fingerprint is recorded on the chain, not only on a temporary calendar server.',
+        : 'Think of Bitcoin as a public notary book. Your proof file shows a Bitcoin block record: the fingerprint is on the chain, not only on a temporary timestamp server.',
       code:
         details || structural?.message || `Verified · block ${block ?? '—'} · hash ${hash || '—'}`
     }
@@ -54,13 +54,14 @@ export function interpretOtsResult({ api, structural, hash, hadOtsFile }) {
     if (/alice\.btc\.calendar/i.test(details)) calendars.push('Alice')
     if (/bob\.btc\.calendar/i.test(details)) calendars.push('Bob')
     if (/finney|eternitywall/i.test(details)) calendars.push('Finney')
-    const calTxt = calendars.length ? calendars.join(' + ') : 'OTS calendars'
+    const calTxt = calendars.length ? calendars.join(' + ') : 'timestamp servers'
     return {
       level: 'pending',
       title: 'Pending',
       headline: 'Valid proof file — not on the Bitcoin chain yet.',
-      eli16: `Your .ots is real and accepted by ${calTxt}. They hold a “pending receipt.” After enough Bitcoin blocks, that receipt upgrades into a permanent chain anchor. Click Upgrade .ots in a while, then Verify again. Until then the certificate correctly says PENDING.`,
-      code: details || structural?.message || 'Pending calendar attestation — no Bitcoin block yet.'
+      eli16: `Your proof file is real and accepted by ${calTxt}. They hold a pending receipt. After enough Bitcoin blocks, that receipt becomes a permanent chain record. Click Refresh proof in a while, then Verify again. Until then it correctly says PENDING.`,
+      code:
+        details || structural?.message || 'Pending timestamp-server receipt — no Bitcoin block yet.'
     }
   }
 
@@ -102,7 +103,7 @@ export function interpretOtsResult({ api, structural, hash, hadOtsFile }) {
     title: 'Checked',
     headline: 'We ran a check — see the technical log below.',
     eli16:
-      'If you expected “Success,” wait for calendars to upgrade the proof into a Bitcoin block, then Upgrade + Verify again. Pending is normal for new stamps.',
+      'If you expected “Success,” wait for timestamp servers to fold the proof into a Bitcoin block, then Refresh proof and Verify again. Pending is normal for new stamps.',
     code: details || structural?.message || JSON.stringify(api || {}, null, 2)
   }
 }

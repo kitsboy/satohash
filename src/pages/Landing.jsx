@@ -493,7 +493,7 @@ export default function Landing() {
                 color: 'var(--text-secondary)'
               }}
             >
-              Confirm .ots Stamp <ChevronRight size={16} />
+              Verify a proof <ChevronRight size={16} />
             </a>
             <TipButton size="lg" className="min-h-[48px] justify-center sm:w-auto" />
           </motion.div>
@@ -982,11 +982,24 @@ export default function Landing() {
             className="mb-10 text-center"
           >
             <h2 className="font-display text-3xl font-black tracking-tighter md:text-4xl">
-              Already have a proof? <span className="gold-text">Confirm it here</span>
+              Already have a proof? <span className="gold-text">Check it here</span>
             </h2>
             <p className="mx-auto mt-3 max-w-xl text-sm" style={{ color: 'var(--text-secondary)' }}>
-              Independent recovery paths if Satohash is offline, calendars are slow, or you only
-              have a hash, .ots file, or vault backup.
+              Drop the proof file you got when you stamped. We’ll say if it’s on Bitcoin yet, still
+              waiting, or invalid.
+            </p>
+            <p className="mx-auto mt-2 max-w-xl text-xs" style={{ color: 'var(--text-muted)' }}>
+              This box needs Satohash to be up. If the site is down, check the same file on{' '}
+              <a
+                href="https://opentimestamps.org"
+                className="underline decoration-[var(--accent-gold)]/50 underline-offset-2"
+                style={{ color: 'var(--accent-gold)' }}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                opentimestamps.org
+              </a>{' '}
+              — you do not need us.
             </p>
           </motion.div>
           <motion.div

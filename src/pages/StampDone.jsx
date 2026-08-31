@@ -122,8 +122,10 @@ export default function StampDone() {
     )
   }
 
+  const queued = proof.source === 'offline-queue'
   const confirmed =
-    proof.status === 'confirmed' || proof.status === 'verified' || Boolean(proof.isConfirmed)
+    !queued &&
+    (proof.status === 'confirmed' || proof.status === 'verified' || Boolean(proof.isConfirmed))
   const blockHeight = proof.bitcoin_block_height
 
   return (
@@ -135,7 +137,11 @@ export default function StampDone() {
               className="text-[11px] font-black tracking-widest uppercase"
               style={{ color: confirmed ? 'var(--accent-success)' : 'var(--accent-gold)' }}
             >
-              {confirmed ? t('stampDonePage.receipt') : t('stampDonePage.receiptPending')}
+              {queued
+                ? t('stampDonePage.queuedReceipt')
+                : confirmed
+                  ? t('stampDonePage.receipt')
+                  : t('stampDonePage.receiptPending')}
             </p>
             <LiveNodeChip compact />
           </div>
@@ -181,9 +187,11 @@ export default function StampDone() {
             }`}
             style={confirmed ? { color: 'var(--accent-success)' } : undefined}
           >
-            {confirmed
-              ? t('stampDonePage.foldedIntoBitcoin')
-              : t('stampDonePage.submittedNotConfirmed')}
+            {queued
+              ? t('stampDonePage.queuedTitle')
+              : confirmed
+                ? t('stampDonePage.foldedIntoBitcoin')
+                : t('stampDonePage.submittedNotConfirmed')}
           </h1>
           {confirmed && blockHeight ? (
             <p className="space-y-1">
@@ -202,64 +210,68 @@ export default function StampDone() {
             </p>
           ) : (
             <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-              {confirmed
-                ? t('stampDonePage.confirmedExplainer')
-                : t('stampDonePage.pendingExplainer')}
+              {queued
+                ? t('stampDonePage.queuedBody')
+                : confirmed
+                  ? t('stampDonePage.confirmedExplainer')
+                  : t('stampDonePage.pendingExplainer')}
             </p>
           )}
         </header>
 
-        <ol
-          className="jewel-edge vault-ring grid grid-cols-1 gap-2 rounded-2xl border p-4 text-left sm:grid-cols-3"
-          style={{
-            borderColor: 'var(--border)',
-            background:
-              'linear-gradient(165deg, color-mix(in srgb, var(--accent-active) 7%, var(--surface-raised)) 0%, var(--surface-raised) 60%, color-mix(in srgb, var(--accent-gold) 6%, var(--surface-raised)) 100%)'
-          }}
-        >
-          {[
-            {
-              n: '1',
-              t: t('stampDonePage.stepFingerprint'),
-              d: t('stampDonePage.stepFingerprintDesc'),
-              tip: t('stampDonePage.stepFingerprintTip')
-            },
-            {
-              n: '2',
-              t: t('stampDonePage.stepCalendars'),
-              d: t('stampDonePage.stepCalendarsDesc'),
-              tip: t('stampDonePage.stepCalendarsTip')
-            },
-            {
-              n: '3',
-              t: t('stampDonePage.stepBitcoin'),
-              d: confirmed
-                ? blockHeight
-                  ? t('stampDonePage.stepBitcoinBlock', {
-                      block: Number(blockHeight).toLocaleString(i18n.language)
-                    })
-                  : t('stampDonePage.stepBitcoinFolded')
-                : t('stampDonePage.stepBitcoinWaiting'),
-              tip: t('stampDonePage.stepBitcoinTip')
-            }
-          ].map((s) => (
-            <li key={s.n} className="min-w-0">
-              <p
-                className="text-[9px] font-black tracking-widest uppercase"
-                style={{ color: 'var(--accent-gold)' }}
-              >
-                {s.n} · {s.t}
-                <Tooltip
-                  title={t('stampDonePage.stepTipTitle', { n: s.n, title: s.t })}
-                  content={s.tip}
-                />
-              </p>
-              <p className="mt-0.5 text-xs" style={{ color: 'var(--text-secondary)' }}>
-                {s.d}
-              </p>
-            </li>
-          ))}
-        </ol>
+        {!queued && (
+          <ol
+            className="jewel-edge vault-ring grid grid-cols-1 gap-2 rounded-2xl border p-4 text-left sm:grid-cols-3"
+            style={{
+              borderColor: 'var(--border)',
+              background:
+                'linear-gradient(165deg, color-mix(in srgb, var(--accent-active) 7%, var(--surface-raised)) 0%, var(--surface-raised) 60%, color-mix(in srgb, var(--accent-gold) 6%, var(--surface-raised)) 100%)'
+            }}
+          >
+            {[
+              {
+                n: '1',
+                t: t('stampDonePage.stepFingerprint'),
+                d: t('stampDonePage.stepFingerprintDesc'),
+                tip: t('stampDonePage.stepFingerprintTip')
+              },
+              {
+                n: '2',
+                t: t('stampDonePage.stepCalendars'),
+                d: t('stampDonePage.stepCalendarsDesc'),
+                tip: t('stampDonePage.stepCalendarsTip')
+              },
+              {
+                n: '3',
+                t: t('stampDonePage.stepBitcoin'),
+                d: confirmed
+                  ? blockHeight
+                    ? t('stampDonePage.stepBitcoinBlock', {
+                        block: Number(blockHeight).toLocaleString(i18n.language)
+                      })
+                    : t('stampDonePage.stepBitcoinFolded')
+                  : t('stampDonePage.stepBitcoinWaiting'),
+                tip: t('stampDonePage.stepBitcoinTip')
+              }
+            ].map((s) => (
+              <li key={s.n} className="min-w-0">
+                <p
+                  className="text-[9px] font-black tracking-widest uppercase"
+                  style={{ color: 'var(--accent-gold)' }}
+                >
+                  {s.n} · {s.t}
+                  <Tooltip
+                    title={t('stampDonePage.stepTipTitle', { n: s.n, title: s.t })}
+                    content={s.tip}
+                  />
+                </p>
+                <p className="mt-0.5 text-xs" style={{ color: 'var(--text-secondary)' }}>
+                  {s.d}
+                </p>
+              </li>
+            ))}
+          </ol>
+        )}
 
         <div className="flex justify-center">
           <StampSuccessActions

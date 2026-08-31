@@ -123,8 +123,8 @@ export default function Network() {
             <div>
               <h1 className="text-3xl font-black tracking-tight sm:text-4xl">Network status</h1>
               <p className="mt-2 max-w-xl text-sm" style={{ color: 'var(--text-secondary)' }}>
-                Live view of the proof plane: stamps, OpenTimestamps calendars, family clients, and
-                the own Bitcoin node (at tip). Free stamps. Paywall off.
+                Live view of the proof plane: stamps, timestamp servers, family clients, and the own
+                Bitcoin node (at tip). Free stamps. Paywall off.
               </p>
             </div>
             <button
@@ -195,7 +195,7 @@ export default function Network() {
           >
             <div className="mb-4 flex items-center gap-2">
               <Calendar size={16} style={{ color: 'var(--accent-gold)' }} />
-              <h2 className="text-sm font-black">OpenTimestamps calendars</h2>
+              <h2 className="text-sm font-black">Timestamp servers</h2>
             </div>
             {calendars.length === 0 ? (
               <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>

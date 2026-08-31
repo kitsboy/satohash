@@ -153,7 +153,9 @@ export default function StampSuccessActions({
         </button>
       )}
 
-      {!isConfirmed && proof?.status !== 'confirmed' && <CalendarStrip compact />}
+      {!isConfirmed && proof?.status !== 'confirmed' && proof?.source !== 'offline-queue' && (
+        <CalendarStrip compact />
+      )}
 
       {(confirmedBlock || proof?.bitcoin_block_height) && (
         <VerifyYourselfCard blockHeight={confirmedBlock || proof.bitcoin_block_height} />

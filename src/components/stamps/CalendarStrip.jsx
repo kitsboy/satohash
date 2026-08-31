@@ -22,10 +22,10 @@ export default function CalendarStrip({ compact = false }) {
         className="text-[9px] font-black tracking-widest uppercase"
         style={{ color: 'var(--accent-active)' }}
       >
-        OpenTimestamps calendars
+        Timestamp servers
         <Tooltip
-          title="What are OTS calendars?"
-          content="Independent, free, open servers that timestamp your fingerprint so its time is agreed by more than one party. No account, no KYC — that is what keeps the proof honest."
+          title="What are these servers?"
+          content="Independent, free OpenTimestamps servers that record your fingerprint so more than one party agrees on the time. No account, no KYC — that is what keeps the proof honest. (The protocol calls them “calendars.”)"
         />
       </p>
       <ul className={`mt-2 ${compact ? 'space-y-1' : 'space-y-1.5'}`}>

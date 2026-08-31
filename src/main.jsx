@@ -31,10 +31,15 @@ if (import.meta.env.VITE_SENTRY_DSN) {
   })
 }
 
-// Unregister any leftover SW (selfDestroying PWA also does this). Critical after deploys.
+// Kill leftover Workbox/Vite PWA workers (HTML-as-JS poison). Keep satohash-sync
+// (queue retry only — it never caches documents).
 if (import.meta.env.PROD && 'serviceWorker' in navigator) {
   navigator.serviceWorker.getRegistrations().then((regs) => {
-    regs.forEach((r) => r.unregister())
+    regs.forEach((r) => {
+      const url = r.active?.scriptURL || r.waiting?.scriptURL || r.installing?.scriptURL || ''
+      if (url.includes('satohash-sync')) return
+      r.unregister()
+    })
   })
   if (window.caches) {
     caches.keys().then((keys) => keys.forEach((k) => caches.delete(k)))

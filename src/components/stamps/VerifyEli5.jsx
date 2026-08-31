@@ -57,11 +57,12 @@ export default function VerifyEli5({ className = '' }) {
             (SHA-256) — not the file itself.
           </li>
           <li>
-            That fingerprint is submitted to public{' '}
-            <strong style={{ color: 'var(--text-primary)' }}>OpenTimestamps</strong> calendars.
+            That fingerprint is sent to public{' '}
+            <strong style={{ color: 'var(--text-primary)' }}>timestamp servers</strong>{' '}
+            (OpenTimestamps).
           </li>
           <li>
-            Later those calendars commit into a{' '}
+            Later those servers fold it into a{' '}
             <strong style={{ color: 'var(--text-primary)' }}>Bitcoin block</strong>. Then anyone can
             prove the file existed at least by that time.
           </li>

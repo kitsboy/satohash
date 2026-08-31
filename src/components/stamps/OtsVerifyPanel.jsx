@@ -142,8 +142,8 @@ export default function OtsVerifyPanel() {
       setResult((prev) => ({
         ...(prev || { hadOtsFile: true, hash: hashInput || null }),
         upgrade: upgraded
-          ? 'New .ots downloaded — calendars had fresher data. Run Verify again.'
-          : 'Upgrade returned a file, but calendars may still be waiting on a Bitcoin block. Try again later.'
+          ? 'New proof file downloaded — timestamp servers had fresher data. Run Verify again.'
+          : 'Refresh returned a file, but servers may still be waiting on a Bitcoin block. Try again later.'
       }))
     } catch (e) {
       setErr(e.message || String(e))
@@ -165,34 +165,19 @@ export default function OtsVerifyPanel() {
 
   const recovery = [
     {
-      icon: ShieldCheck,
-      title: '1. Satohash API (this panel)',
-      body: 'Upload .ots (+ optional file/hash). Success = Bitcoin block. Pending = calendars still waiting.'
-    },
-    {
-      icon: RefreshCw,
-      title: '2. Upgrade the .ots',
-      body: 'If Pending, click Upgrade to pull newer calendar attestations, then Verify again.'
-    },
-    {
-      icon: Hash,
-      title: '3. Hash-only lookup',
-      body: 'Paste 64-char SHA-256 to search the Satohash registry (/verify/{hash}).'
-    },
-    {
       icon: ExternalLink,
-      title: '4. Independent web',
-      body: 'opentimestamps.org → Verify with the same .ots (and original file if asked).'
+      title: 'opentimestamps.org',
+      body: 'Open that site and verify with the same proof file (and original document if asked). Works even when Satohash is down.'
     },
     {
       icon: Terminal,
-      title: '5. CLI',
-      body: 'ots upgrade proof.ots && ots verify proof.ots -f original.pdf'
+      title: 'On your computer',
+      body: 'Install OpenTimestamps and run: ots verify proof.ots -f original.pdf'
     },
     {
       icon: BookOpen,
-      title: '6. Local vault',
-      body: 'Stamp page / Vault may still hold the proof and certificate on this browser.'
+      title: 'This browser’s vault',
+      body: 'If you stamped on this device, Vault may still hold a copy of the proof file.'
     }
   ]
 
@@ -234,11 +219,11 @@ export default function OtsVerifyPanel() {
       >
         <div className="flex flex-wrap items-center gap-2">
           <FileCheck2 size={18} style={{ color: 'var(--accent-gold)' }} />
-          <h3 className="font-display text-lg font-black tracking-tight">Confirm an .ots proof</h3>
+          <h3 className="font-display text-lg font-black tracking-tight">Verify a proof</h3>
         </div>
         <p className="mt-1 text-sm" style={{ color: 'var(--text-secondary)' }}>
-          Drop your OpenTimestamps proof. We’ll say clearly whether it’s on Bitcoin yet, still
-          waiting, or invalid — with a plain-language explanation.
+          Drop the proof file from when you stamped (it ends in .ots). We’ll say whether it’s on
+          Bitcoin yet, still waiting, or invalid — in plain language.
         </p>
       </div>
 
@@ -249,7 +234,7 @@ export default function OtsVerifyPanel() {
               className="mb-1.5 flex items-center gap-1.5 text-[10px] font-bold tracking-widest uppercase"
               style={{ color: 'var(--text-muted)' }}
             >
-              <Upload size={12} /> .ots proof file
+              <Upload size={12} /> Proof file (.ots)
             </span>
             <input
               type="file"
@@ -323,7 +308,7 @@ export default function OtsVerifyPanel() {
               style={{ borderColor: 'var(--border)', color: 'var(--text-primary)' }}
             >
               <RefreshCw size={16} />
-              Upgrade .ots
+              Refresh proof
             </button>
             <Link
               to="/verify"
@@ -347,7 +332,7 @@ export default function OtsVerifyPanel() {
             className="mb-3 text-[10px] font-bold tracking-widest uppercase"
             style={{ color: 'var(--text-muted)' }}
           >
-            Recovery methods
+            If this site is down
           </p>
           <ul className="space-y-2.5">
             {recovery.map(({ icon: Icon, title, body }) => (

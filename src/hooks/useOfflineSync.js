@@ -10,6 +10,21 @@ import { getApiUrl, PUBLIC_API_URL } from '../config/constants'
 const DB_NAME = 'satohash_offline'
 const STORE = 'stamp_queue'
 export const MAX_STAMP_RETRIES = 8
+const SYNC_SCRIPT = '/satohash-sync.js'
+const SYNC_TAG = 'satohash-stamp-queue'
+
+function requestBackgroundFlush() {
+  if (typeof navigator === 'undefined' || !('serviceWorker' in navigator)) return
+  navigator.serviceWorker.ready
+    .then((reg) => {
+      if (reg.sync && typeof reg.sync.register === 'function') {
+        return reg.sync.register(SYNC_TAG)
+      }
+      navigator.serviceWorker.controller?.postMessage({ type: 'satohash-flush-queue' })
+      return undefined
+    })
+    .catch(() => {})
+}
 
 /** Shared across hook instances so App + AppShellNoir do not double-flush. */
 let flushing = false
@@ -175,13 +190,28 @@ export function useOfflineSync(apiBase) {
   }, [])
 
   useEffect(() => {
+    if (typeof navigator === 'undefined' || !('serviceWorker' in navigator)) return undefined
+    navigator.serviceWorker.register(SYNC_SCRIPT).catch(() => {})
+    const onMsg = (event) => {
+      if (event.data?.type === 'satohash-sync-flushed') {
+        dbGetAll()
+          .then(setQueue)
+          .catch(() => {})
+      }
+    }
+    navigator.serviceWorker.addEventListener('message', onMsg)
+    return () => navigator.serviceWorker.removeEventListener('message', onMsg)
+  }, [])
+
+  useEffect(() => {
     const onOnline = () => {
       setIsOnline(true)
-      toast.success('Back online — submitting queued fingerprints to calendars…')
+      toast.success('Back online — submitting queued fingerprints…')
+      requestBackgroundFlush()
     }
     const onOffline = () => {
       setIsOnline(false)
-      toast.warning('Offline — fingerprints hash locally; calendar stamp waits until you reconnect')
+      toast.warning('Offline — fingerprints hash locally; we send them when you reconnect')
     }
     window.addEventListener('online', onOnline)
     window.addEventListener('offline', onOffline)
@@ -227,7 +257,7 @@ export function useOfflineSync(apiBase) {
     }
     if (ok) {
       toast.success(
-        `Submitted ${ok} queued stamp${ok > 1 ? 's' : ''} to calendars (pending Bitcoin confirmation)`
+        `Submitted ${ok} queued stamp${ok > 1 ? 's' : ''} (pending Bitcoin confirmation)`
       )
     }
     if (fail) {
@@ -250,7 +280,8 @@ export function useOfflineSync(apiBase) {
       if (!isOnline) {
         await dbPut(item)
         setQueue((q) => [...q, item])
-        toast.info('Queued locally — SHA-256 hashed, not yet sent to Bitcoin calendars')
+        toast.info('Queued locally — hashed on this device, not yet sent to Bitcoin')
+        requestBackgroundFlush()
         return { queued: true, item }
       }
       try {
@@ -260,6 +291,7 @@ export function useOfflineSync(apiBase) {
         await dbPut(item)
         setQueue((q) => [...q, item])
         toast.warning('Network error — hashed fingerprint queued; not Bitcoin-confirmed')
+        requestBackgroundFlush()
         return { queued: true, item }
       }
     },

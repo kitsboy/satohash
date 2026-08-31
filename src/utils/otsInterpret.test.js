@@ -15,7 +15,7 @@ verify PendingAttestation('https://bob.btc.calendar.opentimestamps.org')`
     })
     expect(r.level).toBe('pending')
     expect(r.title).toBe('Pending')
-    expect(r.eli16.toLowerCase()).toMatch(/not on the bitcoin|pending receipt|calendars/)
+    expect(r.eli16.toLowerCase()).toMatch(/not on the bitcoin|pending receipt|timestamp servers/)
   })
 
   it('marks bitcoin block as success', () => {

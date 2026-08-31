@@ -118,9 +118,9 @@ export default function ProofStatusPill({
         Not Bitcoin-confirmed yet
       </p>
       <p className="max-w-sm text-sm leading-snug" style={{ color: 'var(--text-secondary)' }}>
-        Submitted to OpenTimestamps calendars. Pending is{' '}
+        Sent to timestamp servers. Pending is{' '}
         <strong style={{ color: 'var(--text-primary)' }}>not</strong> confirmed — usually minutes to
-        hours, depending on calendar aggregation.
+        hours, until Bitcoin includes it.
       </p>
       {upgradeStatus && (
         <p
