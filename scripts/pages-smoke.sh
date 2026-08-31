@@ -104,6 +104,24 @@ if [ -z "$CARD" ]; then
 fi
 echo "$CARD" | grep -q '01-stamp-hero.jpg' || echo "::warning::proof card OG JPEG missing (non-fatal)"
 
+echo "== GSC verification HTML (200, no pretty-URL 308) =="
+GSC_CODE=$(curl -sS -o /tmp/gsc-body.txt -w '%{http_code}' -A "$UA" -m 25 "${BASE}/googlef508c6fb64de60ff.html" || true)
+GSC_BODY=$(cat /tmp/gsc-body.txt 2>/dev/null || true)
+if [ "$GSC_CODE" != "200" ]; then
+  echo "::error::GSC file returned ${GSC_CODE:-empty} (need 200 at .html, not Pages 308)"
+  exit 1
+fi
+echo "$GSC_BODY" | grep -q 'google-site-verification: googlef508c6fb64de60ff.html' || {
+  echo "::error::GSC file 200 but token missing"
+  echo "body=${GSC_BODY:0:120}"
+  exit 1
+}
+echo "$GSC_BODY" | grep -qiE '<!doctype|<html' && {
+  echo "::error::GSC file served SPA HTML instead of the token"
+  exit 1
+}
+echo "GSC verification file ok"
+
 echo "== API still free (informational) =="
 READY=$(fetch "https://api.satohash.io/api/public/readiness" || true)
 if echo "$READY" | grep -q '"require_lightning":true'; then

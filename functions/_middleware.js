@@ -34,9 +34,28 @@ const PLAYER_HTML = `<!doctype html>
 const PLAYER_CSP =
   "default-src 'none'; media-src https://videos.giveabit.io; img-src 'self' https://satohash.io; style-src 'unsafe-inline'; frame-ancestors https://twitter.com https://x.com https://platform.twitter.com https://tweetdeck.twitter.com https://cards-dev.twitter.com; base-uri 'none'; form-action 'none'"
 
+const GSC_VERIFY_PATHS = new Set(['/googlef508c6fb64de60ff.html', '/googlef508c6fb64de60ff'])
+const GSC_VERIFY_BODY = 'google-site-verification: googlef508c6fb64de60ff.html'
+
 export async function onRequest({ request, env, next }) {
   const url = new URL(request.url)
   const ua = request.headers.get('user-agent') || ''
+
+  // GSC HTML file must be 200 at the exact .html URL. Cloudflare Pages Pretty URLs
+  // otherwise 308 → /googlef508c6fb64de60ff, which fails ownership verification.
+  if (
+    (request.method === 'GET' || request.method === 'HEAD') &&
+    GSC_VERIFY_PATHS.has(url.pathname)
+  ) {
+    return new Response(request.method === 'HEAD' ? null : GSC_VERIFY_BODY, {
+      status: 200,
+      headers: {
+        'content-type': 'text/html; charset=utf-8',
+        'cache-control': 'public, max-age=0, must-revalidate',
+        'x-robots-tag': 'noindex'
+      }
+    })
+  }
 
   // Embeddable player for X/Twitter cards — must NOT inherit X-Frame-Options: DENY
   if (
