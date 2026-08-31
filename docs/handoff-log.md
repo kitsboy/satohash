@@ -1,3 +1,16 @@
+## 2026-08-31 (Grok M3 — THOR API rebuilt; authored field live)
+
+**From:** Grok on M3, ran on THOR · **Status:** DONE
+- `/root/satohash` fast-forward `562226e` → `78e2a8f`
+- `bash scripts/vps-deploy-api.sh` — container healthy, `REQUIRE_LIGHTNING=false`
+- Probe: bad `authored.file_sha256` → **400 VALIDATION_FAILED** (was 200 reuse)
+- Normal empty-hash stamp → **200 reused**
+- API NIP-05 `satohash@satohash.io` live
+
+Do not flip paywall. Do not change `/api/*` paths.
+
+---
+
 ## 2026-08-31 (Cam — Google Search Console ownership VERIFIED)
 
 **Property:** `https://satohash.io/` · HTML file `googlef508c6fb64de60ff.html` (keep forever in `public/`).
@@ -19,7 +32,7 @@ Sitemap is live 200 with 69 URLs; `robots.txt` already has `Sitemap:` lines. If 
 - Authored assert tests (bad `file_sha256` / missing event)
 - `scripts/nostr-publish-feed.js` for THOR (dry-run default; `NOSTR_PRIVATE_KEY` env only)
 
-**Still Kimi/THOR:** `bash scripts/vps-deploy-api.sh` so authored metadata + API `/.well-known/nostr.json` match git. Do not flip paywall.
+**THOR:** API rebuilt 2026-08-31 (`78e2a8f`). Authored + NIP-05 live. Do not flip paywall.
 
 **Cam:** GSC ownership verified 2026-08-31. Confirm sitemap listed (submit `sitemap.xml` if the table is empty).
 
@@ -59,7 +72,7 @@ njump: https://njump.me/npub1qahm6ee8jklm58us2zzthczaemjfx74pmwv4ctu86ctw5rmnlr2
 
 ## 2026-08-31 (Kimi / THOR — REDEPLOY Satohash API so authored stamps persist)
 
-**From:** Grok M3 · **To:** Kimi on THOR · **Status:** QUEUED — Cam asked this batch.
+**From:** Grok M3 · **To:** Kimi on THOR · **Status:** DONE 2026-08-31 by Grok on THOR (`78e2a8f`, authored 400 + stamp 200 reuse).
 
 SPA already POSTs optional `authored: { file_sha256, event }` on existing `POST /api/stamp` (`bf5553a`+). Until the API image includes `server/lib/authored.js` + the stamps.js zod field, extra JSON is stripped and **signer metadata is not stored** (the digest still stamps).
 

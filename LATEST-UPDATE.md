@@ -1,5 +1,5 @@
 # satohash — Last Updated 2026-08-31 by Grok (M3)
 
-**Brief:** GSC `https://satohash.io/` ownership verified. NIP-05 + iMessage JPEG + family widget paste on `7299abf`. Kimi still owes API rebuild for authored metadata.
+**Brief:** THOR API rebuilt to `78e2a8f`. Authored stamps now 400 on bad metadata; paywall still off. GSC sitemap Success (69).
 
 Pickup: `docs/handoff-log.md` (2026-08-31)
