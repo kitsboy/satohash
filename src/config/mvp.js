@@ -85,11 +85,19 @@ export function shouldMonitorApiHealth() {
 /**
  * Kimi NIP-05 — PUBLIC key only. Never commit or request NSEC.
  * kimi@giveabit.io resolves via giveabit.io/.well-known/nostr.json
- * satohash.io/.well-known/nostr.json maps local "kimi" alias to same pubkey.
+ * satohash.io/.well-known/nostr.json maps satohash, kimi, and _ to same pubkey.
  */
 export const KIMI_NOSTR = {
   nip05: 'kimi@giveabit.io',
   pubkeyHex: '076fbd672795bfba1f905084bbe05dcee4937aa1db995c2f87d616ea0f73f8d4'
+}
+
+/** Product NIP-05 — same public hex. njump for clients without a nostr: handler. */
+export const SATOHASH_NOSTR = {
+  nip05: 'satohash@satohash.io',
+  pubkeyHex: KIMI_NOSTR.pubkeyHex,
+  npub: 'npub1qahm6ee8jklm58us2zzthczaemjfx74pmwv4ctu86ctw5rmnlr2qgcaz7n',
+  njump: 'https://njump.me/npub1qahm6ee8jklm58us2zzthczaemjfx74pmwv4ctu86ctw5rmnlr2qgcaz7n'
 }
 
 /** Nav paths hidden until post-MVP */

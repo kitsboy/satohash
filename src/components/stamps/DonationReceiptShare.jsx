@@ -2,15 +2,16 @@
  * DonationReceiptShare — OPTIONAL, share-first actions for a verified receipt.
  * Cam's ask (2026-08-25): no forced email/PDF; let the giver choose.
  *   • Share to socials (primary, optional): Web Share API + explicit X / Nostr / copy-link
- *   • Email (optional): mailto with the verify link (giver chooses to send, never auto)
+ *   • Email (optional): mailto with the proof-card URL (giver chooses to send, never auto)
  *   • PDF (optional): download the proof package / certificate ONLY if they want it
  * Honesty: the URL is the proof; sharing is a choice, not a funnel.
  */
 import { Share2, Mail, FileDown, Copy, Check } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'sonner'
-import { buildXIntent, buildNostrShareLinks } from '../../utils/shareProof'
+import { buildXIntent, buildNostrShareLinks, buildProofCardUrl } from '../../utils/shareProof'
 
+/** Interactive verify / PDF live on /verify. Share/copy/iMessage use /p/<hash>. */
 function buildVerifyUrl(proof) {
   if (typeof window === 'undefined') return ''
   const origin = window.location.origin
@@ -32,7 +33,8 @@ function buildShareText(proof, isDonation) {
 
 export default function DonationReceiptShare({ proof, isDonation = false }) {
   const [copied, setCopied] = useState(false)
-  const url = buildVerifyUrl(proof)
+  const url = buildProofCardUrl(proof)
+  const verifyUrl = buildVerifyUrl(proof)
   const text = buildShareText(proof, isDonation)
 
   async function webShare() {
@@ -134,13 +136,23 @@ export default function DonationReceiptShare({ proof, isDonation = false }) {
           <Mail size={15} /> Email (optional)
         </a>
         <a
-          href={`${url}#download`}
+          href={`${verifyUrl}#download`}
           className="flex min-h-[44px] items-center justify-center gap-2 rounded-xl border text-xs font-black tracking-wider uppercase"
           style={{ borderColor: 'var(--border)', color: 'var(--text-primary)' }}
         >
           <FileDown size={15} /> PDF (optional)
         </a>
       </div>
+
+      {verifyUrl ? (
+        <a
+          href={verifyUrl}
+          className="mt-2 flex min-h-[44px] items-center justify-center rounded-xl border text-xs font-black tracking-wider uppercase"
+          style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
+        >
+          Interactive verify
+        </a>
+      ) : null}
     </div>
   )
 }

@@ -8,6 +8,7 @@ import { toast } from 'sonner'
 import KimiContact from '../forms/KimiContact'
 import BackToTop from '../ui/BackToTop'
 import { BTC_ADDRESS, PUBLIC_API_URL } from '../../config/constants'
+import { KIMI_NOSTR, SATOHASH_NOSTR } from '../../config/mvp'
 
 const METRICS_TTL_MS = 60_000
 let metricsCache = { at: 0, data: null }
@@ -127,10 +128,7 @@ const chipClass =
 function TrustChip({ children, href, title }) {
   const inner = (
     <>
-      <span
-        className="h-1 w-1 shrink-0 rounded-full bg-[var(--accent-gold)]"
-        aria-hidden
-      />
+      <span className="h-1 w-1 shrink-0 rounded-full bg-[var(--accent-gold)]" aria-hidden />
       {children}
     </>
   )
@@ -381,10 +379,7 @@ export default function Footer() {
                 <TrustChip>
                   {t('footerPage.badges.bitcoinOnly', { defaultValue: 'Bitcoin-only' })}
                 </TrustChip>
-                <TrustChip
-                  href="https://github.com/kitsboy/satohash"
-                  title="Source on GitHub"
-                >
+                <TrustChip href="https://github.com/kitsboy/satohash" title="Source on GitHub">
                   {t('footerPage.badges.foss', { defaultValue: 'FOSS' })}
                 </TrustChip>
               </div>
@@ -406,7 +401,7 @@ export default function Footer() {
                 </div>
               </a>
               <a
-                href="nostr:kimi@giveabit.io"
+                href={`nostr:${SATOHASH_NOSTR.nip05}`}
                 className="flex min-h-[44px] w-full items-center gap-3 rounded-xl border border-[var(--border)] bg-[var(--bg-primary)]/80 px-4 py-3 transition-all hover:border-[var(--accent-gold)]/50 sm:w-[280px]"
               >
                 <span className="flex h-4 w-4 shrink-0 items-center justify-center text-[10px] font-bold text-[var(--accent-gold)]">
@@ -414,10 +409,42 @@ export default function Footer() {
                 </span>
                 <div className="min-w-0 text-left">
                   <p className="text-[10px] font-semibold tracking-wide text-[var(--text-tertiary)] uppercase">
-                    {t('footerPage.nostrNip05')}
+                    {t('footerPage.productNip05', { defaultValue: 'Product NIP-05' })}
                   </p>
                   <p className="truncate text-sm font-semibold text-[var(--text-primary)]">
-                    kimi@giveabit.io
+                    {SATOHASH_NOSTR.nip05}
+                  </p>
+                </div>
+              </a>
+              <a
+                href={`nostr:${KIMI_NOSTR.nip05}`}
+                className="flex min-h-[44px] w-full items-center gap-3 rounded-xl border border-[var(--border)] bg-[var(--bg-primary)]/80 px-4 py-3 transition-all hover:border-[var(--accent-gold)]/50 sm:w-[280px]"
+              >
+                <span className="flex h-4 w-4 shrink-0 items-center justify-center text-[10px] font-bold text-[var(--accent-gold)]">
+                  ✦
+                </span>
+                <div className="min-w-0 text-left">
+                  <p className="text-[10px] font-semibold tracking-wide text-[var(--text-tertiary)] uppercase">
+                    {t('footerPage.humanNip05', { defaultValue: 'Human NIP-05' })}
+                  </p>
+                  <p className="truncate text-sm font-semibold text-[var(--text-primary)]">
+                    {KIMI_NOSTR.nip05}
+                  </p>
+                </div>
+              </a>
+              <a
+                href={SATOHASH_NOSTR.njump}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex min-h-[44px] w-full items-center gap-3 rounded-xl border border-[var(--border)] bg-[var(--bg-primary)]/80 px-4 py-3 transition-all hover:border-[var(--accent-gold)]/50 sm:w-[280px]"
+              >
+                <ExternalLink size={16} className="shrink-0 text-[var(--accent-gold)]" />
+                <div className="min-w-0 text-left">
+                  <p className="text-[10px] font-semibold tracking-wide text-[var(--text-tertiary)] uppercase">
+                    {t('footerPage.nostrNjump', { defaultValue: 'Nostr profile' })}
+                  </p>
+                  <p className="truncate text-sm font-semibold text-[var(--text-primary)]">
+                    njump.me
                   </p>
                 </div>
               </a>
@@ -539,7 +566,7 @@ export default function Footer() {
                   <span className="hidden text-[var(--border-bright)] sm:inline" aria-hidden>
                     ·
                   </span>
-                  <span className="font-semibold tabular-nums text-[var(--text-primary)]">
+                  <span className="font-semibold text-[var(--text-primary)] tabular-nums">
                     {t('footerPage.metrics.proofs', {
                       count: stats.total.toLocaleString(),
                       defaultValue: `${stats.total.toLocaleString()} proofs`

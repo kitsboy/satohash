@@ -8,11 +8,39 @@ import {
   ArrowRight,
   RefreshCw,
   Globe2,
+  Radio,
   Zap
 } from 'lucide-react'
 import Footer from '../components/layout/Footer'
 import usePageMeta from '../hooks/usePageMeta'
 import { getApiUrl } from '../config/constants'
+
+/** Real Nostr event id only — 64 hex, note1, or nevent1. Never invent. */
+function realNostrEventId(raw) {
+  if (typeof raw !== 'string') return ''
+  const id = raw.trim()
+  if (!id) return ''
+  if (/^[0-9a-f]{64}$/i.test(id)) return id.toLowerCase()
+  if (/^(note|nevent)1[02-9ac-hj-np-z]+$/i.test(id)) return id
+  return ''
+}
+
+function pickNostrEventId(stamp) {
+  if (!stamp || typeof stamp !== 'object') return ''
+  const chains = stamp.chains && typeof stamp.chains === 'object' ? stamp.chains : {}
+  return (
+    realNostrEventId(stamp.nostr_event_id) ||
+    realNostrEventId(stamp.nostrEventId) ||
+    realNostrEventId(stamp.nostr_id) ||
+    realNostrEventId(stamp.nostr) ||
+    realNostrEventId(chains.nostr) ||
+    realNostrEventId(chains.nostr_event_id)
+  )
+}
+
+function isSha256Hex(h) {
+  return typeof h === 'string' && /^[0-9a-f]{64}$/i.test(h)
+}
 
 function StatCard({ label, value, hint, icon: Icon, color = 'var(--accent-gold)' }) {
   return (
@@ -102,6 +130,19 @@ export default function Network() {
   }, [])
 
   const calendars = cals?.calendars || []
+  const nostrNotes = recent
+    .map((s) => {
+      const eventId = pickNostrEventId(s)
+      if (!eventId) return null
+      const hex = isSha256Hex(s.hash) ? s.hash.toLowerCase() : ''
+      return {
+        key: s.id || hex || eventId,
+        hash: hex,
+        prefix: hex || String(s.hash || ''),
+        eventId
+      }
+    })
+    .filter(Boolean)
 
   return (
     <div
@@ -245,29 +286,97 @@ export default function Network() {
               </p>
             ) : (
               <ul className="max-h-56 space-y-2 overflow-y-auto">
-                {recent.slice(0, 12).map((s) => (
-                  <li
-                    key={s.id || s.hash}
-                    className="flex items-center justify-between gap-2 rounded-xl border px-3 py-2"
-                    style={{ borderColor: 'var(--border)', background: 'var(--bg-primary)' }}
-                  >
+                {recent.slice(0, 12).map((s) => {
+                  const hex = isSha256Hex(s.hash) ? s.hash.toLowerCase() : ''
+                  const prefix = `${(hex || s.hash || '').slice(0, 18)}${hex || s.hash ? '…' : ''}`
+                  return (
+                    <li
+                      key={s.id || s.hash}
+                      className="flex min-h-[44px] items-center justify-between gap-2 rounded-xl border px-3"
+                      style={{ borderColor: 'var(--border)', background: 'var(--bg-primary)' }}
+                    >
+                      {hex ? (
+                        <Link
+                          to={`/p/${hex}`}
+                          className="inline-flex min-h-[44px] min-w-[44px] items-center truncate font-mono text-[10px]"
+                          style={{ color: 'var(--text-secondary)' }}
+                        >
+                          {prefix}
+                        </Link>
+                      ) : (
+                        <span
+                          className="truncate font-mono text-[10px]"
+                          style={{ color: 'var(--text-secondary)' }}
+                        >
+                          {prefix || '—'}
+                        </span>
+                      )}
+                      <span
+                        className="shrink-0 text-[10px] font-bold uppercase"
+                        style={{ color: 'var(--accent-gold)' }}
+                      >
+                        {s.status || 'pending'}
+                      </span>
+                    </li>
+                  )
+                })}
+              </ul>
+            )}
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-5xl px-4 pb-10 sm:px-6">
+        <div
+          className="rounded-2xl border p-5"
+          style={{ borderColor: 'var(--border)', background: 'var(--surface-raised)' }}
+        >
+          <div className="mb-4 flex items-center gap-2">
+            <Radio size={16} style={{ color: 'var(--accent-gold)' }} />
+            <h2 className="text-sm font-black">Notes on Nostr</h2>
+          </div>
+          {nostrNotes.length === 0 ? (
+            <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>
+              No recent stamps include a Nostr event id. Stamps still publish when the API returns{' '}
+              <code>nostr_event_id</code>. This page does not invent ids.
+            </p>
+          ) : (
+            <ul className="space-y-2">
+              {nostrNotes.map((n) => (
+                <li
+                  key={n.key}
+                  className="flex min-h-[44px] items-center justify-between gap-3 rounded-xl border px-3"
+                  style={{ borderColor: 'var(--border)', background: 'var(--bg-primary)' }}
+                >
+                  {n.hash ? (
+                    <Link
+                      to={`/p/${n.hash}`}
+                      className="inline-flex min-h-[44px] min-w-[44px] items-center truncate font-mono text-[10px]"
+                      style={{ color: 'var(--text-secondary)' }}
+                    >
+                      {n.hash.slice(0, 18)}…
+                    </Link>
+                  ) : (
                     <span
                       className="truncate font-mono text-[10px]"
                       style={{ color: 'var(--text-secondary)' }}
                     >
-                      {(s.hash || '').slice(0, 18)}…
+                      {(n.prefix || '').slice(0, 18) || '—'}
                     </span>
-                    <span
-                      className="shrink-0 text-[10px] font-bold uppercase"
-                      style={{ color: 'var(--accent-gold)' }}
-                    >
-                      {s.status || 'pending'}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
+                  )}
+                  <a
+                    href={`https://njump.me/${encodeURIComponent(n.eventId)}`}
+                    rel="noopener noreferrer"
+                    target="_blank"
+                    className="inline-flex min-h-[44px] items-center text-[10px] font-black uppercase"
+                    style={{ color: 'var(--accent-gold)' }}
+                  >
+                    njump
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       </section>
 
@@ -284,7 +393,7 @@ export default function Network() {
           </p>
         ) : (
           <ul className="grid gap-2 sm:grid-cols-2">
-            {(Array.isArray(family) ? family : []).slice(0, 12).map((row) => (
+            {(Array.isArray(family) ? family : []).slice(0, 20).map((row) => (
               <li
                 key={row.id || row.key || row.label}
                 className="flex items-center justify-between rounded-xl border px-3 py-2 text-xs"

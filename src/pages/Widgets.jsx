@@ -8,6 +8,18 @@ import usePageMeta from '../hooks/usePageMeta'
 import { getPublicBaseUrl } from '../config/constants'
 
 const DEMO_HASH = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'
+const FAMILY_STAMP_SCRIPT = 'https://satohash.io/widgets/stamp.js'
+const FAMILY_WIDGETS = [
+  { id: 'katoa', label: 'katoa' },
+  { id: 'motopass', label: 'motopass' },
+  { id: 'sherpacarta', label: 'sherpacarta' },
+  { id: 'giveabit', label: 'giveabit' }
+]
+
+function familyStampSnippet(client) {
+  return `<div data-satohash-stamp data-client="${client}" data-theme="jewel"></div>
+<script src="${FAMILY_STAMP_SCRIPT}" async></script>`
+}
 
 function buildEmbeds() {
   const base = getPublicBaseUrl()
@@ -44,12 +56,13 @@ function CopyBlock({ label, code, copyLabel, copiedLabel }) {
           {label}
         </span>
         <button
+          type="button"
           onClick={() => {
             navigator.clipboard.writeText(code)
             setCopied(true)
             setTimeout(() => setCopied(false), 2000)
           }}
-          className="flex items-center gap-1.5 text-[10px] font-bold text-[var(--text-tertiary)] hover:text-[var(--accent-gold)]"
+          className="flex min-h-[44px] items-center gap-1.5 text-[10px] font-bold text-[var(--text-tertiary)] hover:text-[var(--accent-gold)]"
         >
           {copied ? <Check size={12} /> : <Copy size={12} />}
           {copied ? copiedLabel : copyLabel}
@@ -164,6 +177,34 @@ export default function Widgets() {
             copyLabel={t('common.copy')}
             copiedLabel={t('common.copied')}
           />
+        </div>
+      </section>
+
+      <section className="border-t border-[var(--border)] px-4 py-10 sm:px-6 sm:py-16">
+        <div className="mx-auto max-w-3xl space-y-6">
+          <h2 className="text-xl font-black tracking-tight text-[var(--text-primary)] uppercase">
+            Family sites
+          </h2>
+          <p className="text-sm leading-relaxed text-[var(--text-secondary)]">
+            One paste per product id. The widget SHA-256s the file on-device — the file never leaves
+            the browser. Stamp then opens{' '}
+            <code className="font-mono text-[11px]">/stamp?hash=&amp;ref=</code> so the SPA sends{' '}
+            <code className="font-mono text-[11px]">X-Satohash-Client</code> from{' '}
+            <code className="font-mono text-[11px]">data-client</code>. HQ{' '}
+            <code className="font-mono text-[11px]">metrics.json</code>{' '}
+            <code className="font-mono text-[11px]">familyClients</code> counts only stamps that
+            actually complete with that id. Paste is not live attribution — Katoa, SherpaCarta, and
+            Give A Bit stay 0 until someone uses the snippet.
+          </p>
+          {FAMILY_WIDGETS.map((item) => (
+            <CopyBlock
+              key={item.id}
+              label={item.label}
+              code={familyStampSnippet(item.id)}
+              copyLabel={t('common.copy')}
+              copiedLabel={t('common.copied')}
+            />
+          ))}
         </div>
       </section>
 

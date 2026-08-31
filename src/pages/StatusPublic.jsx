@@ -254,6 +254,10 @@ export default function StatusPublic() {
     nostrTotal > 0 &&
     nostrOk === nostrTotal
   const nostrSomeUp = Number.isFinite(nostrOk) && nostrOk > 0 && !nostrAllUp
+  const snortRelay = Array.isArray(nostr?.relays)
+    ? nostr.relays.find((r) => /snort/i.test(String(r.url || '')))
+    : null
+  const snortError = snortRelay && snortRelay.status !== 'ok' && snortRelay.status !== 'healthy'
   const lightning = details?.lightning || null
   const paywall = details?.paywall || null
   const calendarLatency = data.stats?.calendar_health || {}
@@ -487,7 +491,7 @@ export default function StatusPublic() {
             nostr ? (
               <Pill ok={nostrAllUp} pending={nostrSomeUp || (!nostrAllUp && nostrOk !== 0)}>
                 {Number.isFinite(nostrOk) && Number.isFinite(nostrTotal)
-                  ? `${nostrOk} of ${nostrTotal} relays`
+                  ? `${nostrOk}/${nostrTotal}`
                   : `${nostr.ok_count ?? '—'}/${nostr.total ?? '—'} ok`}
               </Pill>
             ) : null
@@ -513,7 +517,7 @@ export default function StatusPublic() {
                       className="flex shrink-0 items-center gap-2 text-[10px] font-bold tracking-widest uppercase"
                       style={{ color: ok ? 'var(--accent-success)' : 'var(--accent-danger)' }}
                     >
-                      {r.latency != null ? `${r.latency}ms` : r.status}
+                      {ok ? (r.latency != null ? `${r.latency}ms` : r.status) : r.status || 'error'}
                       {!ok && r.error ? (
                         <span
                           className="hidden font-normal normal-case sm:inline"
@@ -534,7 +538,10 @@ export default function StatusPublic() {
             <p className="mt-3 text-[11px]" style={{ color: 'var(--text-muted)' }}>
               {nostrAllUp
                 ? 'All configured relays answered. Kind 1 notes still depend on each relay accepting the event.'
-                : `${nostrOk} of ${nostrTotal} relays answered. This is not a mesh — notes publish when at least one relay accepts.`}
+                : `${nostrOk}/${nostrTotal} relays answered. This is not a mesh — notes publish when at least one relay accepts.`}
+              {snortError
+                ? ` ${String(snortRelay.url || 'relay.snort.social').replace(/^wss:\/\//, '')} is ${snortRelay.status || 'error'}.`
+                : ''}
             </p>
           ) : null}
         </Section>

@@ -1,3 +1,53 @@
+## 2026-08-31 (Grok M3 — ship batch: NIP-05, iMessage JPEG, family paste, authored tests)
+
+**From:** Grok M3 · **To:** Kimi / Cam · **Status:** committing to main (Pages). API image still old until THOR rebuild.
+
+**Shipped in SPA/Pages:**
+- `satohash@satohash.io` NIP-05 (same public hex as kimi / `_`) + footer njump + CORS on `/.well-known/nostr.json`
+- `/p/<hash>` JPEG OG (`01-stamp-hero.jpg`) for iMessage; share URLs use `/p/<hash>`
+- `/network` Notes on Nostr (honest empty if no `nostr_event_id`); prerender identity/status/counsel
+- `/widgets` family paste snippets (katoa / motopass / sherpacarta / giveabit)
+- Authored assert tests (bad `file_sha256` / missing event)
+- `scripts/nostr-publish-feed.js` for THOR (dry-run default; `NOSTR_PRIVATE_KEY` env only)
+
+**Still Kimi/THOR:** `bash scripts/vps-deploy-api.sh` so authored metadata + API `/.well-known/nostr.json` match git. Do not flip paywall.
+
+**Still Cam:** Search Console Verify + submit `https://satohash.io/sitemap.xml`. Walkthrough after this push.
+
+---
+
+## 2026-08-31 (Grok M3 — iPhone / iMessage /p/<hash> JPEG OG + share)
+
+**From:** Grok M3 · **To:** Cam / next · **Status:** in tree, not committed. Physical iPhone still pending.
+
+Zero-JS Function `functions/p/[hash].js` now uses JPEG OG `https://satohash.io/media/video/01-stamp-hero.jpg` (`og:image` + `og:image:secure_url` + `twitter:image`, type `image/jpeg`). Kept `@give_bit`. Added apple-mobile-web-app-capable + black-translucent status bar + apple-touch-icon `/logo.png`. SPA fallback `ProofCardPublic.jsx` matches JPEG + PENDING ≠ CONFIRMED honesty. `DonationReceiptShare` shares `/p/<hash>` via `buildProofCardUrl` when hash is 64 hex; `/verify` stays as Interactive verify + PDF. Smoke: fail-closed JPEG present, `og/stamp.png` absent.
+
+**Test on iPhone after deploy:** share `https://satohash.io/p/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` in iMessage — JPEG unfurl, no SPA JS.
+
+**Do not:** flip REQUIRE_LIGHTNING · change `/api/*` paths · edit `_middleware.js` or `_redirects`.
+
+---
+
+## 2026-08-31 (Grok M3 — product NIP-05 + human Nostr links)
+
+**From:** Grok M3 · **To:** Kimi / next · **Status:** in tree, not pushed.
+
+**This drop:**
+- `satohash@satohash.io` NIP-05 → existing public hex `076fbd67…f8d4` (same as `_` and `kimi`). No new nsec.
+- Static `public/.well-known/nostr.json` + API `GET /.well-known/nostr.json` always include `satohash`, `kimi`, `_`. CORS `*`.
+- CF `_headers` CORS + JSON type for `/.well-known/nostr.json`. Google verify file unchanged.
+- Footer: product handle + `kimi@giveabit.io` + https njump (min-h 44). Identity page + `llms.txt` Contact. X stays `@give_bit`.
+
+**Verify after Pages deploy:**
+```
+curl -sI https://satohash.io/.well-known/nostr.json
+curl -s 'https://satohash.io/.well-known/nostr.json?name=satohash'
+```
+
+njump: https://njump.me/npub1qahm6ee8jklm58us2zzthczaemjfx74pmwv4ctu86ctw5rmnlr2qgcaz7n
+
+---
+
 ## 2026-08-31 (Kimi / THOR — REDEPLOY Satohash API so authored stamps persist)
 
 **From:** Grok M3 · **To:** Kimi on THOR · **Status:** QUEUED — Cam asked this batch.

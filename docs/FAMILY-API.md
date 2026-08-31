@@ -34,6 +34,19 @@ https://satohash.io/verify/<stamp-id>  # UUID from POST /api/stamp
 
 Inbound deep-link stays `/stamp?hash=&ref=`. HQ `metrics.json` `raw.last10` + `raw.familyClients` are **read-only** aggregates (**live on API 2026-08-17**).
 
+## Drop-in widget
+
+Family sites can paste this instead of wiring the deep-link by hand. The script SHA-256s the file **on-device** (the file is never uploaded), then opens `/stamp?hash=<64hex>&ref=<productId>`. The SPA sends `X-Satohash-Client` from `data-client`. HQ `metrics.json` `raw.familyClients` counts only stamps that complete with that id — paste is not live attribution.
+
+Swap `data-client` for the exact product id: `katoa` · `motopass` · `sherpacarta` · `giveabit`. Theme: `jewel`.
+
+```html
+<div data-satohash-stamp data-client="katoa" data-theme="jewel"></div>
+<script src="https://satohash.io/widgets/stamp.js" async></script>
+```
+
+Do **not** invent new API paths. Stamp remains `POST /api/stamp`.
+
 ## Architecture
 
 | Piece | Role |

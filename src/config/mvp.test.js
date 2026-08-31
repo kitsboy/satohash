@@ -1,5 +1,11 @@
 import { describe, it, expect } from 'vitest'
-import { isMvpPublicPath, MVP_PUBLIC_PATHS, KIMI_NOSTR, shouldMonitorApiHealth } from './mvp'
+import {
+  isMvpPublicPath,
+  MVP_PUBLIC_PATHS,
+  KIMI_NOSTR,
+  SATOHASH_NOSTR,
+  shouldMonitorApiHealth
+} from './mvp'
 
 describe('mvp config', () => {
   it('MVP_PUBLIC_PATHS includes core notary routes', () => {
@@ -29,6 +35,14 @@ describe('mvp config', () => {
     expect(KIMI_NOSTR.pubkeyHex).toMatch(/^[a-f0-9]{64}$/)
     expect(KIMI_NOSTR).not.toHaveProperty('nsec')
     expect(KIMI_NOSTR).not.toHaveProperty('secretKey')
+  })
+
+  it('SATOHASH_NOSTR product handle shares Kimi pubkey (no secret)', () => {
+    expect(SATOHASH_NOSTR.nip05).toBe('satohash@satohash.io')
+    expect(SATOHASH_NOSTR.pubkeyHex).toBe(KIMI_NOSTR.pubkeyHex)
+    expect(SATOHASH_NOSTR.njump).toContain(SATOHASH_NOSTR.npub)
+    expect(SATOHASH_NOSTR).not.toHaveProperty('nsec')
+    expect(SATOHASH_NOSTR).not.toHaveProperty('secretKey')
   })
 
   it('shouldMonitorApiHealth is false on localhost', () => {

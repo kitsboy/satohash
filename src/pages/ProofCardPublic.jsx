@@ -35,9 +35,16 @@ export default function ProofCardPublic() {
   const hex = normalizeSha256(hash) || hash
   const [proof, setProof] = useState(null)
   const [copied, setCopied] = useState(false)
+  const confirmed = proof?.status === 'confirmed'
+  const short = String(hex || '').slice(0, 12)
+  const hashPreview = String(hex || '').slice(0, 16)
   usePageMeta({
-    title: `Bitcoin proof ${String(hex || '').slice(0, 12)}…`,
-    description: `OpenTimestamps proof card for SHA-256 ${String(hex || '').slice(0, 16)}…. Pending is not confirmed.`
+    title: confirmed ? `Confirmed Bitcoin proof ${short}…` : `Bitcoin proof ${short}…`,
+    description: confirmed
+      ? `SHA-256 ${hashPreview}… is Bitcoin-confirmed via OpenTimestamps. Independently verifiable. File never left the device.`
+      : `OpenTimestamps proof card for SHA-256 ${hashPreview}…. Pending is not confirmed.`,
+    image: 'https://satohash.io/media/video/01-stamp-hero.jpg',
+    url: `https://satohash.io/p/${hex || ''}`
   })
 
   const cardUrl =
@@ -96,7 +103,6 @@ export default function ProofCardPublic() {
       .catch(() => setProof({ hash: hex, status: 'unknown', filename: 'Fingerprint' }))
   }, [hex])
 
-  const confirmed = proof?.status === 'confirmed'
   const blockLabel =
     proof?.bitcoin_block_height != null &&
     proof.bitcoin_block_height !== '' &&

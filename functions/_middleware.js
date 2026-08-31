@@ -12,7 +12,8 @@ const PRERENDER_MAP = [
   { route: /^\/faq\/?$/, file: () => '/prerender/faq.html' },
   { route: /^\/watch\/?$/, file: () => '/prerender/watch.html' },
   { route: /^\/pitch\/?$/, file: () => '/prerender/pitch.html' },
-  { route: /^\/(stamp|pricing|templates|verify|donate|network)\/?$/, file: (m) => `/prerender/${m[1]}.html` }
+  { route: /^\/(stamp|pricing|templates|verify|donate|network)\/?$/, file: (m) => `/prerender/${m[1]}.html` },
+  { route: /^\/(identity|status|counsel)\/?$/, file: (m) => `/prerender/${m[1]}.html` }
 ]
 
 const PLAYER_HTML = `<!doctype html>

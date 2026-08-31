@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
-  User,
   CheckCircle,
   XCircle,
   Shield,
@@ -23,6 +22,7 @@ import {
   registerSatohashNip05,
   resolvePubkeyHex
 } from '../lib/nip05'
+import { KIMI_NOSTR, SATOHASH_NOSTR } from '../config/mvp'
 
 export default function IdentityVerification() {
   usePageMeta({ page: 'identity' })
@@ -130,14 +130,12 @@ export default function IdentityVerification() {
     }
   }
 
-  const handleQuickVerifyKimi = async () => {
-    const handle = 'kimi@giveabit.io'
+  const handleQuickVerifyHandle = async (handle, pubkeyHex) => {
     setNip05Handle(handle)
     setIsVerifying(true)
     setVerifyResult(null)
     try {
-      const pk = localStorage.getItem('satohash_pk') || resolvePubkeyHex(npub)
-      const result = await verifyNip05(handle, pk)
+      const result = await verifyNip05(handle, pubkeyHex)
       setVerifyResult('verified')
       persistProfile({ nip05: result.handle, nip05_verified: true })
       toast.success('NIP-05 Verified!', { description: result.handle })
@@ -148,6 +146,12 @@ export default function IdentityVerification() {
       setIsVerifying(false)
     }
   }
+
+  const handleQuickVerifyProduct = () =>
+    handleQuickVerifyHandle(SATOHASH_NOSTR.nip05, SATOHASH_NOSTR.pubkeyHex)
+
+  const handleQuickVerifyKimi = () =>
+    handleQuickVerifyHandle(KIMI_NOSTR.nip05, KIMI_NOSTR.pubkeyHex)
 
   return (
     <div
@@ -178,6 +182,15 @@ export default function IdentityVerification() {
             >
               Link your cryptographic presence to real-world attestations. Establish a persistent,
               verifiable identity across the Nostr and Bitcoin meshes.
+            </p>
+            <p
+              className="mt-4 max-w-xl text-sm leading-relaxed font-semibold"
+              style={{ color: 'var(--text-secondary)' }}
+            >
+              Product NIP-05{' '}
+              <span style={{ color: 'var(--accent-active)' }}>{SATOHASH_NOSTR.nip05}</span>
+              {' — '}
+              verifies against satohash.io/.well-known/nostr.json. Human: {KIMI_NOSTR.nip05}.
             </p>
           </div>
 
@@ -365,7 +378,8 @@ export default function IdentityVerification() {
                 <div className="grid gap-6 sm:grid-cols-2">
                   <button
                     type="button"
-                    onClick={handleQuickVerifyKimi}
+                    onClick={handleQuickVerifyProduct}
+                    disabled={isVerifying}
                     className="group flex cursor-pointer flex-col items-center rounded-3xl p-6 text-center transition-all"
                     style={{
                       background: 'var(--surface-raised)',
@@ -377,13 +391,13 @@ export default function IdentityVerification() {
                       className="mb-1 text-[9px] font-black tracking-widest uppercase"
                       style={{ color: 'var(--text-secondary)' }}
                     >
-                      Try Verified Identity
+                      Product NIP-05
                     </div>
                     <div
                       className="mb-4 text-[10px] font-bold"
                       style={{ color: 'var(--text-secondary)' }}
                     >
-                      Verify kimi@giveabit.io (Give A Bit NIP-05)
+                      Verify {SATOHASH_NOSTR.nip05} via satohash.io/.well-known/nostr.json
                     </div>
                     <span
                       className="text-[10px] font-black uppercase italic group-hover:underline"
@@ -392,13 +406,50 @@ export default function IdentityVerification() {
                       Run Check <ExternalLink size={10} className="inline" />
                     </span>
                   </button>
-                  <SocialLink
-                    icon={Zap}
-                    label="satohash.io NIP-05"
-                    desc="Register yourname@satohash.io when backend is live"
-                    action="Learn More"
-                  />
+                  <button
+                    type="button"
+                    onClick={handleQuickVerifyKimi}
+                    disabled={isVerifying}
+                    className="group flex cursor-pointer flex-col items-center rounded-3xl p-6 text-center transition-all"
+                    style={{
+                      background: 'var(--surface-raised)',
+                      border: '1px solid var(--border)'
+                    }}
+                  >
+                    <Globe size={20} className="mb-4" style={{ color: 'var(--text-secondary)' }} />
+                    <div
+                      className="mb-1 text-[9px] font-black tracking-widest uppercase"
+                      style={{ color: 'var(--text-secondary)' }}
+                    >
+                      Human NIP-05
+                    </div>
+                    <div
+                      className="mb-4 text-[10px] font-bold"
+                      style={{ color: 'var(--text-secondary)' }}
+                    >
+                      Verify {KIMI_NOSTR.nip05} (Give A Bit)
+                    </div>
+                    <span
+                      className="text-[10px] font-black uppercase italic group-hover:underline"
+                      style={{ color: 'var(--accent-active)' }}
+                    >
+                      Run Check <ExternalLink size={10} className="inline" />
+                    </span>
+                  </button>
                 </div>
+                <a
+                  href={SATOHASH_NOSTR.njump}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex min-h-[44px] items-center justify-center gap-2 rounded-2xl px-4 text-[10px] font-black tracking-widest uppercase transition-all hover:opacity-90"
+                  style={{
+                    background: 'var(--surface-raised)',
+                    border: '1px solid var(--border)',
+                    color: 'var(--accent-active)'
+                  }}
+                >
+                  Open profile on njump <ExternalLink size={12} />
+                </a>
 
                 <button
                   onClick={handleConnectExtension}
@@ -543,39 +594,6 @@ export default function IdentityVerification() {
           </div>
         </div>
       </div>
-    </div>
-  )
-}
-
-function SocialLink({ icon: Icon, label, desc, action }) {
-  return (
-    <div
-      className="group flex cursor-pointer flex-col items-center rounded-3xl p-6 text-center transition-all"
-      style={{ background: 'var(--surface-raised)', border: '1px solid var(--border)' }}
-    >
-      <Icon
-        size={20}
-        className="mb-4 transition-colors"
-        style={{ color: 'var(--text-secondary)' }}
-      />
-      <div
-        className="mb-1 text-[9px] font-black tracking-widest uppercase"
-        style={{ color: 'var(--text-secondary)' }}
-      >
-        {label}
-      </div>
-      <div
-        className="mb-4 text-[10px] leading-tight font-bold"
-        style={{ color: 'var(--text-secondary)' }}
-      >
-        {desc}
-      </div>
-      <span
-        className="flex items-center gap-1 text-[10px] font-black uppercase italic group-hover:underline"
-        style={{ color: 'var(--accent-active)' }}
-      >
-        {action} <ExternalLink size={10} />
-      </span>
     </div>
   )
 }

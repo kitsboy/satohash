@@ -18,6 +18,11 @@
   Cache-Control: public, max-age=0, must-revalidate
   X-Robots-Tag: noindex
 
+# NIP-05 — CORS required for clients resolving satohash@satohash.io
+/.well-known/nostr.json
+  Access-Control-Allow-Origin: *
+  Content-Type: application/json; charset=utf-8
+
 # Always revalidate shell so deploys beat stale HTML / SW mismatches
 /
   Cache-Control: public, max-age=0, must-revalidate

@@ -132,27 +132,31 @@ export async function onRequestGet({ params }) {
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
   <meta name="format-detection" content="telephone=no"/>
   <meta name="theme-color" content="#141b25"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
   <title>${esc(title)}</title>
   <meta name="description" content="${esc(desc)}"/>
   <meta name="robots" content="${validHash ? 'index,follow' : 'noindex,follow'}"/>
   <link rel="canonical" href="${canon}"/>
   <link rel="icon" href="https://satohash.io/logo.png"/>
+  <link rel="apple-touch-icon" href="https://satohash.io/logo.png"/>
   <meta property="og:site_name" content="Satohash"/>
   <meta property="og:type" content="article"/>
   <meta property="og:title" content="${esc(title)}"/>
   <meta property="og:description" content="${esc(desc)}"/>
   <meta property="og:url" content="${canon}"/>
-  <meta property="og:image" content="https://satohash.io/og/stamp.png"/>
+  <meta property="og:image" content="https://satohash.io/media/video/01-stamp-hero.jpg"/>
+  <meta property="og:image:secure_url" content="https://satohash.io/media/video/01-stamp-hero.jpg"/>
   <meta property="og:image:width" content="1200"/>
   <meta property="og:image:height" content="630"/>
-  <meta property="og:image:type" content="image/png"/>
+  <meta property="og:image:type" content="image/jpeg"/>
   <meta property="og:image:alt" content="Satohash — Bitcoin-anchored proof of existence"/>
   <meta name="twitter:card" content="summary_large_image"/>
   <meta name="twitter:site" content="@give_bit"/>
   <meta name="twitter:creator" content="@give_bit"/>
   <meta name="twitter:title" content="${esc(title)}"/>
   <meta name="twitter:description" content="${esc(desc)}"/>
-  <meta name="twitter:image" content="https://satohash.io/og/stamp.png"/>
+  <meta name="twitter:image" content="https://satohash.io/media/video/01-stamp-hero.jpg"/>
   <meta name="twitter:image:alt" content="Satohash — Bitcoin-anchored proof of existence"/>
   <script type="application/ld+json">${jsonLd}</script>
   <style>

@@ -130,4 +130,37 @@ describe('satohash-authored:v1', () => {
     expect(mismatch.ok).toBe(false)
     expect(mismatch.error).toMatch(/authoredDigest/)
   })
+
+  it('assertAuthoredStamp rejects authored.file_sha256 that is not 64 hex', () => {
+    const event = signAuthored(FILE_A)
+    const notHex = assertAuthoredStamp({
+      hash: FILE_A,
+      authored: { file_sha256: 'not-a-sha256', event }
+    })
+    expect(notHex.ok).toBe(false)
+    expect(notHex.error).toMatch(/file_sha256/)
+
+    const tooShort = assertAuthoredStamp({
+      hash: FILE_A,
+      authored: { file_sha256: 'abc', event }
+    })
+    expect(tooShort.ok).toBe(false)
+    expect(tooShort.error).toMatch(/file_sha256/)
+  })
+
+  it('assertAuthoredStamp rejects missing event', () => {
+    const missing = assertAuthoredStamp({
+      hash: FILE_A,
+      authored: { file_sha256: FILE_A }
+    })
+    expect(missing.ok).toBe(false)
+    expect(missing.error).toMatch(/event/)
+
+    const nullEvent = assertAuthoredStamp({
+      hash: FILE_A,
+      authored: { file_sha256: FILE_A, event: null }
+    })
+    expect(nullEvent.ok).toBe(false)
+    expect(nullEvent.error).toMatch(/event/)
+  })
 })

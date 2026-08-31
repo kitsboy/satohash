@@ -104,6 +104,16 @@ if [ -z "$CARD" ]; then
 fi
 echo "$CARD" | grep -q '01-stamp-hero.jpg' || echo "::warning::proof card OG JPEG missing (non-fatal)"
 
+echo "== /p/<hash> JPEG OG (iMessage) =="
+echo "$CARD" | grep -q '01-stamp-hero.jpg' || {
+  echo "::error::/p/${HASH} HTML missing 01-stamp-hero.jpg"
+  exit 1
+}
+echo "$CARD" | grep -q 'og/stamp.png' && {
+  echo "::error::/p/${HASH} still references og/stamp.png"
+  exit 1
+}
+
 echo "== GSC verification HTML (200, no pretty-URL 308) =="
 GSC_CODE=$(curl -sS -o /tmp/gsc-body.txt -w '%{http_code}' -A "$UA" -m 25 "${BASE}/googlef508c6fb64de60ff.html" || true)
 GSC_BODY=$(cat /tmp/gsc-body.txt 2>/dev/null || true)

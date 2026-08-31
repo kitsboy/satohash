@@ -109,11 +109,17 @@ export function register(app, deps) {
   app.get('/.well-known/nostr.json', (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*')
     const name = req.query.name
-    const pk = process.env.NOSTR_PUBLIC_KEY || ''
-    const relayList = ['wss://relay.damus.io', 'wss://nos.lol', 'wss://relay.snort.social']
-    const relays = pk ? { [pk]: relayList } : {}
+    // Public hex only — same as public/.well-known/nostr.json. Never an nsec.
+    const PRODUCT_HEX = '076fbd672795bfba1f905084bbe05dcee4937aa1db995c2f87d616ea0f73f8d4'
+    const pk = process.env.NOSTR_PUBLIC_KEY || PRODUCT_HEX
+    const relayList = [
+      'wss://relay.damus.io',
+      'wss://nos.lol',
+      'wss://relay.snort.social',
+      'wss://relay.nostr.band'
+    ]
+    const relays = { [pk]: relayList }
     const names = {}
-    if (pk) names['_'] = pk
     try {
       // Create identities table if not exists
       db.prepare(
@@ -131,6 +137,9 @@ export function register(app, deps) {
     } catch (e) {
       // Table may not exist yet — silent fail
     }
+    names['_'] = pk
+    names.satohash = pk
+    names.kimi = pk
     if (name) {
       const resolved = names[name]
       if (!resolved) return res.status(404).json({ error: 'Name not found' })

@@ -17,5 +17,6 @@ data/backups/
 backups/
 bitcoin.conf
 tmp/
+.cache/
 test-results/
 playwright-report/
