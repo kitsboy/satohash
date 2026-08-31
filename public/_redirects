@@ -10,5 +10,8 @@
 # cached SPA fallback HTML under asset URLs (System Desync / Unexpected token '<').
 # Bundles use /b/*; stale recovery is PWA cleanup + ErrorBoundary hard reset.
 
+# Google Search Console HTML verification — never SPA-fallback this path
+/googlef508c6fb64de60ff.html  /googlef508c6fb64de60ff.html  200
+
 # SPA fallback — BrowserRouter requires all routes to serve index.html
 /*    /index.html   200

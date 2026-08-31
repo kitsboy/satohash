@@ -13,6 +13,11 @@
   Content-Security-Policy: default-src 'none'; media-src https://videos.giveabit.io; img-src 'self' https://satohash.io; style-src 'unsafe-inline'; frame-ancestors https://twitter.com https://x.com https://platform.twitter.com https://tweetdeck.twitter.com https://cards-dev.twitter.com; base-uri 'none'; form-action 'none'
   X-Robots-Tag: noindex, nofollow
 
+# Google Search Console ownership file — keep forever
+/googlef508c6fb64de60ff.html
+  Cache-Control: public, max-age=0, must-revalidate
+  X-Robots-Tag: noindex
+
 # Always revalidate shell so deploys beat stale HTML / SW mismatches
 /
   Cache-Control: public, max-age=0, must-revalidate
