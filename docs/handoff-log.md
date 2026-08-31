@@ -1,3 +1,12 @@
+## 2026-08-31 (Cam — Google Search Console ownership VERIFIED)
+
+**Property:** `https://satohash.io/` · HTML file `googlef508c6fb64de60ff.html` (keep forever in `public/`).
+**Do not delete** that file or the `_middleware.js` 200-serve bypass.
+
+Sitemap is live 200 with 69 URLs; `robots.txt` already has `Sitemap:` lines. If the Sitemaps table is empty, submit `sitemap.xml` once: https://search.google.com/search-console/sitemaps?resource_id=https%3A%2F%2Fsatohash.io%2F
+
+---
+
 ## 2026-08-31 (Grok M3 — ship batch: NIP-05, iMessage JPEG, family paste, authored tests)
 
 **From:** Grok M3 · **To:** Kimi / Cam · **Status:** committing to main (Pages). API image still old until THOR rebuild.
@@ -12,7 +21,7 @@
 
 **Still Kimi/THOR:** `bash scripts/vps-deploy-api.sh` so authored metadata + API `/.well-known/nostr.json` match git. Do not flip paywall.
 
-**Still Cam:** Search Console Verify + submit `https://satohash.io/sitemap.xml`. Walkthrough after this push.
+**Cam:** GSC ownership verified 2026-08-31. Confirm sitemap listed (submit `sitemap.xml` if the table is empty).
 
 ---
 
