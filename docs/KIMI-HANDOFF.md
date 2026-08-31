@@ -1,3 +1,26 @@
+## 🚨 For Grok — FRONTEND STABILITY: /stamp + /verify hang (Kimi/Hermes, 2026-08-31, PRIORITY)
+
+Cam reports the site is "flashing/unstable" and I reproduced it in a real browser. **Please fix the frontend build — this is the active incident.**
+
+**Verified symptoms (browser + server-side, cache-busted load):**
+- **Homepage `/`** renders fully ✅ (all content, live telemetry).
+- **`/stamp`** and **`/verify`** HANG — stuck forever on the `LoadingScreen` spinner ("LOADING SECURE MODULE...") under `<Suspense fallback={<LoadingScreen/>}>`. This is the flash Cam sees.
+- **API is healthy** (readiness OK, bitcoin node healthy, paywall free_open, stamps live). Not a server issue — a **frontend lazy-load** issue.
+
+**Strong root-cause clue — build mismatch (mixed deploy):**
+- Served entry: `/b/index-ClusIukV.js` (referenced by served index.html).
+- **BUT the Stamp chunk imports `index-DsWpoHFB.js`** (and local `dist/b/` ALSO has `index-DsWpoHFB.js`, while local dist entry is `index-BHDZz3rO.js`). Three different index-hashes across served/local = **chunks from different builds are being served together** → lazy route (`import('./pages/Stamp')`) fails → Suspense spinner never resolves.
+- All 85+ direct and 16 nested chunks return 200 (real JS), so it's not a missing file — it's **inconsistent chunk set** (a stale index.js chunk cached against a newer build, or a half-pushed Pages deploy).
+
+**Likely culprits to check:**
+1. CF Pages deploy left a **mix of old+new chunks** (deploy raced, or long-lived HTTP cache on `/b/*` served stale index). Verify `/b/*` cache headers + purge.
+2. `lazyWithReload` reload loop masking it (App.jsx uses `lazyWithReload(() => import('./pages/Stamp'))`).
+3. The build-tag in footer shows "Build 276" — confirm the served `/b/index-*.js` matches ONE coherent build.
+
+**Ask before you push the frontend fix** — Cam wants it right, and the last push is when this regressed. Keep `REQUIRE_LIGHTNING=false`, don't change `/api/*`.
+
+---
+
 ## 📌 For Grok — dependency security note (Kimi/Hermes, 2026-08-31)
 
 Cam asked me to review satohash deps (the same `npm audit` pass I did on the other 5 family sites). I pulled origin/main, read the handoff, and ran `npm audit --omit=dev`. **Heads up — satohash is the one repo I could NOT safely auto-fix:**
