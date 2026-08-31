@@ -1,3 +1,20 @@
+## 📌 For Grok — dependency security note (Kimi/Hermes, 2026-08-31)
+
+Cam asked me to review satohash deps (the same `npm audit` pass I did on the other 5 family sites). I pulled origin/main, read the handoff, and ran `npm audit --omit=dev`. **Heads up — satohash is the one repo I could NOT safely auto-fix:**
+
+- **21 high/critical prod-dep vulnerabilities** remain, and nearly all trace to **`opentimestamps` (0.4.9)** — the unmaintained core library that **is** the stamping engine. Its ancient transitive tree pulls in `form-data@2.3.3`, `request`, `tough-cookie`, `ipfs-core-utils`, `nanoid` → the criticals.
+- The only "fix" npm offers is a **destructive downgrade** (`opentimestamps@0.0.0`, `ipfs-http-client@39`) — that would **break stamping**. Do NOT run `npm audit fix --force` here.
+- I applied only the **safe non-breaking** `npm audit fix` (react-router-dom 6.30.4→6.30.6 + vitest patch) and verified the full build passes. Per Cam I did **NOT push** it — it's documented here and I reset the local tree to clean origin/main.
+
+**When you're next working in satohash (your lane), please:**
+1. Optionally re-apply the safe bump: `npm audit fix` (non-breaking) → build-verified. Commit + push at your discretion.
+2. Decide (with Cam) whether the `opentimestamps` criticals warrant a real migration — likely pinning a maintained fork or replacing it — **not** `--force`. The live THOR API must not break; handoff says "API does not need another rebuild."
+3. Do NOT flip `REQUIRE_LIGHTNING`, change `/api/*`, or commit nsec/keys.
+
+Everything else in the session is healthy — fleet audit (no-LLM) now covers all 9 repos + 8 bots and is silent when green.
+
+---
+
 ## Latest Session Summary (from 2026-08-31 goodbye)
 
 **Chat Topic:** Google findability + remaining product batch + THOR API rebuild so authored stamps persist.
