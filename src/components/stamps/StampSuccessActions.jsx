@@ -5,7 +5,13 @@ import { Share2, Download, Package, Link2, Vault } from 'lucide-react'
 import { toast } from 'sonner'
 
 import { getApiUrl } from '../../config/constants'
-import { buildProofCardUrl, shareProofLink } from '../../utils/shareProof'
+import {
+  buildProofCardUrl,
+  buildShareText,
+  buildXIntent,
+  buildNostrShareLinks,
+  shareProofLink
+} from '../../utils/shareProof'
 import { exportProofBundle } from '../../utils/proofPackage'
 import ProofStatusPill from './ProofStatusPill'
 import CalendarStrip from './CalendarStrip'
@@ -26,6 +32,20 @@ export default function StampSuccessActions({
   const [busy, setBusy] = useState(false)
   const [showQr, setShowQr] = useState(true)
   const shareUrl = useMemo(() => buildProofCardUrl(proof), [proof])
+  const shareText = useMemo(() => buildShareText(proof), [proof])
+  const xIntent = useMemo(
+    () => buildXIntent({ text: shareText, url: shareUrl }),
+    [shareText, shareUrl]
+  )
+  const nostrLinks = useMemo(
+    () =>
+      buildNostrShareLinks({
+        text: shareText,
+        url: shareUrl,
+        nostrEventId: proof?.nostr_event_id
+      }),
+    [shareText, shareUrl, proof?.nostr_event_id]
+  )
   const hasHostedId =
     proof?.id && proof?.source !== 'browser-ots' && !String(proof.id).startsWith('ots-')
 
@@ -177,6 +197,30 @@ export default function StampSuccessActions({
         >
           <Share2 size={16} /> Share
         </button>
+
+        <div className="grid grid-cols-2 gap-3">
+          <a
+            href={xIntent}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex min-h-[44px] items-center justify-center gap-2 rounded-xl border text-xs font-black tracking-wider uppercase"
+            style={{ borderColor: 'var(--border-gold)', color: 'var(--text-primary)' }}
+          >
+            X / Twitter
+          </a>
+          {nostrLinks.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex min-h-[44px] items-center justify-center gap-2 rounded-xl border text-xs font-black tracking-wider uppercase"
+              style={{ borderColor: 'var(--border)', color: 'var(--text-primary)' }}
+            >
+              {link.label}
+            </a>
+          ))}
+        </div>
 
         <div className="grid grid-cols-2 gap-3">
           {hasHostedId ? (

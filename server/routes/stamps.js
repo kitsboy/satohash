@@ -1,8 +1,24 @@
+import { assertAuthoredStamp } from '../lib/authored.js'
+
 /**
  * Extracted from server/index.js — paths preserved.
  * @param {import('express').Express} app
  * @param {object} deps
  */
+
+function authoredFromCosignatures(raw) {
+  if (!raw) return null
+  try {
+    const list = typeof raw === 'string' ? JSON.parse(raw) : raw
+    if (!Array.isArray(list)) return null
+    const row = list.find((c) => c && c.type === 'authored-v1')
+    if (!row?.file_sha256 || !row.event) return null
+    return { file_sha256: row.file_sha256, event: row.event }
+  } catch {
+    return null
+  }
+}
+
 export function register(app, deps) {
   const {
     express,
@@ -82,7 +98,36 @@ export function register(app, deps) {
           .regex(/^[a-f0-9]{64}$/i, 'Hash must be a valid hex string'),
         filename: z.string().min(1).max(255).optional().default('unknown'),
         email: z.string().email().optional(),
-        nostr_pubkey: z.string().optional()
+        nostr_pubkey: z.string().optional(),
+        authored: z
+          .object({
+            file_sha256: z
+              .string()
+              .length(64)
+              .regex(/^[a-f0-9]{64}$/i),
+            event: z.preprocess(
+              (v) => {
+                if (!v || typeof v !== 'object' || Array.isArray(v)) return v
+                try {
+                  return JSON.parse(
+                    JSON.stringify({
+                      id: v.id,
+                      pubkey: v.pubkey,
+                      created_at: v.created_at,
+                      kind: v.kind,
+                      tags: v.tags,
+                      content: v.content,
+                      sig: v.sig
+                    })
+                  )
+                } catch {
+                  return v
+                }
+              },
+              z.record(z.string(), z.any())
+            )
+          })
+          .optional()
       })
       const validation = stampSchema.safeParse(req.body)
       if (!validation.success) {
@@ -91,7 +136,16 @@ export function register(app, deps) {
         })
       }
 
-      const { hash, filename, email, nostr_pubkey } = validation.data
+      const { hash, filename, email, nostr_pubkey, authored } = validation.data
+      let authoredBinding = null
+      if (authored) {
+        authoredBinding = assertAuthoredStamp({ hash, authored })
+        if (!authoredBinding.ok) {
+          return sendError(res, ERROR_CODES.VALIDATION_FAILED, {
+            details: [authoredBinding.error || 'authored stamp binding failed']
+          })
+        }
+      }
       // FIX 3a — extract npub from header or body for user scoping
       const userNpub = req.headers['x-npub'] || req.body.npub || null
       // HQ attribution — always store X-Satohash-Client when present
@@ -179,6 +233,23 @@ export function register(app, deps) {
           )
         } catch {
           /* column may not exist yet — v5-api ALTER adds it */
+        }
+      }
+
+      if (authoredBinding?.ok) {
+        try {
+          db.prepare('UPDATE timestamps SET cosignatures = ? WHERE id = ?').run(
+            JSON.stringify([
+              {
+                type: 'authored-v1',
+                file_sha256: authoredBinding.fileSha256,
+                event: authoredBinding.event
+              }
+            ]),
+            id
+          )
+        } catch {
+          /* cosignatures column may not exist on older DBs */
         }
       }
 
@@ -529,6 +600,7 @@ export function register(app, deps) {
       return res.send(Buffer.from(rawBinary))
     }
 
+    const authored = authoredFromCosignatures(stamp.cosignatures)
     res.json({
       id: stamp.id,
       hash: stamp.hash,
@@ -537,7 +609,8 @@ export function register(app, deps) {
       created_at: stamp.created_at,
       confirmed_at: stamp.confirmed_at,
       bitcoin_block_height: stamp.bitcoin_block_height,
-      ipfs_cid: stamp.ipfs_cid
+      ipfs_cid: stamp.ipfs_cid,
+      ...(authored ? { authored } : {})
     })
   })
 

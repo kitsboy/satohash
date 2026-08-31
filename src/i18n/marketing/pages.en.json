@@ -591,7 +591,12 @@
       },
       "v3Label": "Proof DNA v3 (white-label)"
     },
-    "nip05Cta": "Set Up NIP-05 Identity"
+    "nip05Cta": "Set Up NIP-05 Identity",
+    "stampWidget": {
+      "title": "Stamp on Satohash",
+      "body": "Family apps hash on-device, then open satohash.io/stamp?hash=&ref= so the SPA sets X-Satohash-Client. Katoa, Sherpa, Tadbuy, and OpenStrata use the same drop-in — never upload the file.",
+      "embedLabel": "Stamp widget"
+    }
   },
   "docsPage": {
     "nav": "Documentation",
@@ -832,7 +837,8 @@
   },
   "appPage": {
     "skipToContent": "Skip to main content",
-    "offlineBanner": "Offline — changes will sync when reconnected"
+    "offlineBanner": "Offline — changes will sync when reconnected",
+    "offlineBannerQueued": "Offline — {{count}} fingerprints hashed, waiting to stamp"
   },
   "onboardingPage": {
     "skip": "Skip",
@@ -979,7 +985,7 @@
       },
       "crypto": {
         "title": "Cryptography Systems Lead",
-        "desc": "Lead the development of ZK-SHA256 implementations and advanced Merkle path traversal algorithms for courtroom-grade verification."
+        "desc": "Lead the development of ZK-SHA256 implementations and advanced Merkle path traversal algorithms for independent cryptographic verification."
       },
       "ux": {
         "title": "Institutional UX Designer",
@@ -1096,7 +1102,68 @@
     },
     "confirmedToast": "Confirmed on Bitcoin!",
     "stampFailed": "Stamping failed",
-    "feeUnavailable": "Fee estimates unavailable"
+    "feeUnavailable": "Fee estimates unavailable",
+    "moreOptions": "More options (capsule · redact · voice)",
+    "filePhotoOrHash": "File · photo · or hash — one thumb path",
+    "hashingLabel": "Local Hashing",
+    "anchoringLabel": "Anchoring to Bitcoin",
+    "hashingProgress": "Computing SHA-256 fingerprint locally...",
+    "anchoringProgress": "Submitting to Bitcoin via OpenTimestamps...",
+    "hashingSticky": "Hashing…",
+    "anchoringSticky": "Anchoring…",
+    "stampHashSticky": "Stamp hash on Bitcoin",
+    "privacyGuarantee": "Privacy Guarantee",
+    "privacyGuaranteeBody": "The original file never leaves your device. We only send a SHA-256 fingerprint — pending is not Bitcoin-confirmed.",
+    "caseConfig": "Case Configuration",
+    "caseLabel": "Label / Case ID",
+    "casePlaceholder": "e.g. Estate Archive 2026",
+    "hashOnly": "Hash only",
+    "hashOnlyBody": "Already have a SHA-256? Paste it. The file never needs to come here.",
+    "hashOnlyPlaceholder": "64 hex characters",
+    "fileTooLarge": "File is {{size}} MB — max {{max}} MB for browser stamp. Hash offline and paste the SHA-256.",
+    "fileTooLargeToast": "File too large for browser stamp",
+    "fileTooLargeToastDesc": "Use a smaller file or stamp a precomputed SHA-256 hash",
+    "tooManyRequests": "Too many requests — try again in {{seconds}}s",
+    "notifyEmailPlaceholder": "Email me when confirmed (optional)",
+    "photosGallery": "Photos / gallery",
+    "folderCapsule": "Folder (one Merkle capsule)",
+    "otsViaBitcoin": "Anchored via OpenTimestamps → Bitcoin",
+    "freeStamp": "Free stamp",
+    "openingSuccess": "Opening success screen…",
+    "targetAsset": "Target Asset",
+    "capsuleManifest": "Capsule Manifest ({{count}} Assets)",
+    "clear": "Clear",
+    "stepN": "Step {{n}}",
+    "verify": "Verify",
+    "vault": "Vault",
+    "watch": "Watch",
+    "invalidStampLink": "Invalid stamp link"
+  },
+  "stampDonePage": {
+    "loading": "Loading proof…",
+    "emptyTitle": "No stamp on this screen",
+    "emptyBody": "Your last proof is stored on this device. If you refreshed a blank tab, stamp again — Back will not re-submit.",
+    "emptyCta": "Go to Stamp",
+    "receipt": "Receipt",
+    "receiptPending": "Receipt — pending",
+    "foldedIntoBitcoin": "Folded into Bitcoin",
+    "submittedNotConfirmed": "Submitted — not Bitcoin-confirmed yet",
+    "bitcoinBlock": "Bitcoin block",
+    "pendingExplainer": "Pending is not confirmed. This page polls every 8s until a block lands.",
+    "confirmedExplainer": "Your fingerprint is in the chain via OpenTimestamps.",
+    "verify": "Verify",
+    "stepFingerprint": "Fingerprint",
+    "stepFingerprintDesc": "Hashed on this device",
+    "stepFingerprintTip": "A fingerprint (SHA-256) is a short, unique ID for your file, made on your own device. It never leaves your control as plain text.",
+    "stepCalendars": "Calendars",
+    "stepCalendarsDesc": "OpenTimestamps pending",
+    "stepCalendarsTip": "Independent public calendars agree on the time. They are free and open — no account needed — so no single company controls your proof.",
+    "stepBitcoin": "Bitcoin",
+    "stepBitcoinWaiting": "Waiting on a block",
+    "stepBitcoinFolded": "Folded in",
+    "stepBitcoinBlock": "Block {{block}}",
+    "stepBitcoinTip": "Your fingerprint gets folded into a public Bitcoin block. Once there, anyone can check it forever — that is the final, tamper-evident seal.",
+    "stepTipTitle": "Step {{n}} — {{title}}"
   },
   "trustPage": {
     "backSecurity": "← Security overview",

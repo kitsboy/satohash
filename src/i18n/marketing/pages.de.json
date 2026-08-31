@@ -591,7 +591,12 @@
       },
       "v3Label": "Proof DNA v3"
     },
-    "nip05Cta": "NIP-05-Identität einrichten"
+    "nip05Cta": "NIP-05-Identität einrichten",
+    "stampWidget": {
+      "title": "Stamp on Satohash",
+      "body": "Family-Apps hashen lokal und öffnen satohash.io/stamp?hash=&ref=, damit die SPA X-Satohash-Client setzt. Katoa, Sherpa, Tadbuy und OpenStrata nutzen dasselbe Drop-in — die Datei wird nicht hochgeladen.",
+      "embedLabel": "Stamp-Widget"
+    }
   },
   "docsPage": {
     "nav": "Dokumentation",
@@ -832,7 +837,8 @@
   },
   "appPage": {
     "skipToContent": "Zum Hauptinhalt springen",
-    "offlineBanner": "Offline — Änderungen werden bei erneuter Verbindung synchronisiert"
+    "offlineBanner": "Offline — Änderungen werden bei erneuter Verbindung synchronisiert",
+    "offlineBannerQueued": "Offline — {{count}} Fingerabdrücke gehasht, warten auf Stempel"
   },
   "onboardingPage": {
     "skip": "Überspringen",
@@ -1178,7 +1184,68 @@
     "step2Label": "Wir hashen lokal",
     "step2Desc": "Ein eindeutiger SHA-256-Fingerabdruck wird im Browser berechnet.",
     "step3Label": "Bitcoin zeitstempelt ihn",
-    "step3Desc": "Der Fingerabdruck wird dauerhaft in die Blockchain geschrieben."
+    "step3Desc": "Der Fingerabdruck wird dauerhaft in die Blockchain geschrieben.",
+    "moreOptions": "Weitere Optionen (Kapsel · Redact · Stimme)",
+    "filePhotoOrHash": "Datei · Foto · oder Hash — ein Daumenweg",
+    "hashingLabel": "Lokales Hashing",
+    "anchoringLabel": "Verankerung in Bitcoin",
+    "hashingProgress": "SHA-256-Fingerabdruck wird lokal berechnet...",
+    "anchoringProgress": "Übermittlung an Bitcoin via OpenTimestamps...",
+    "hashingSticky": "Hashing…",
+    "anchoringSticky": "Verankern…",
+    "stampHashSticky": "Hash auf Bitcoin stempeln",
+    "privacyGuarantee": "Datenschutzgarantie",
+    "privacyGuaranteeBody": "Die Originaldatei verlässt Ihr Gerät nicht. Wir senden nur einen SHA-256-Fingerabdruck — ausstehend ist nicht auf Bitcoin bestätigt.",
+    "caseConfig": "Fallkonfiguration",
+    "caseLabel": "Bezeichnung / Fall-ID",
+    "casePlaceholder": "z. B. Nachlassarchiv 2026",
+    "hashOnly": "Nur Hash",
+    "hashOnlyBody": "Haben Sie schon einen SHA-256? Einfügen. Die Datei muss nicht hierher.",
+    "hashOnlyPlaceholder": "64 Hex-Zeichen",
+    "fileTooLarge": "Datei ist {{size}} MB — max. {{max}} MB im Browser. Offline hashen und SHA-256 einfügen.",
+    "fileTooLargeToast": "Datei zu groß für Browser-Stempel",
+    "fileTooLargeToastDesc": "Kleinere Datei verwenden oder einen vorberechneten SHA-256 stempeln",
+    "tooManyRequests": "Zu viele Anfragen — erneut in {{seconds}} s",
+    "notifyEmailPlaceholder": "E-Mail bei Bestätigung (optional)",
+    "photosGallery": "Fotos / Galerie",
+    "folderCapsule": "Ordner (eine Merkle-Kapsel)",
+    "otsViaBitcoin": "Verankert via OpenTimestamps → Bitcoin",
+    "freeStamp": "Kostenloser Stempel",
+    "openingSuccess": "Erfolgsbildschirm wird geöffnet…",
+    "targetAsset": "Zieldatei",
+    "capsuleManifest": "Kapsel-Manifest ({{count}} Dateien)",
+    "clear": "Leeren",
+    "stepN": "Schritt {{n}}",
+    "verify": "Prüfen",
+    "vault": "Tresor",
+    "watch": "Ansehen",
+    "invalidStampLink": "Ungültiger Stempel-Link"
+  },
+  "stampDonePage": {
+    "loading": "Nachweis wird geladen…",
+    "emptyTitle": "Kein Stempel auf diesem Bildschirm",
+    "emptyBody": "Ihr letzter Nachweis liegt auf diesem Gerät. Nach einem leeren Reload erneut stempeln — Zurück sendet nicht nochmal.",
+    "emptyCta": "Zum Stempeln",
+    "receipt": "Beleg",
+    "receiptPending": "Beleg — ausstehend",
+    "foldedIntoBitcoin": "In Bitcoin eingefaltet",
+    "submittedNotConfirmed": "Übermittelt — noch nicht auf Bitcoin bestätigt",
+    "bitcoinBlock": "Bitcoin-Block",
+    "pendingExplainer": "Ausstehend ist nicht bestätigt. Diese Seite fragt alle 8 s, bis ein Block kommt.",
+    "confirmedExplainer": "Ihr Fingerabdruck ist über OpenTimestamps in der Kette.",
+    "verify": "Prüfen",
+    "stepFingerprint": "Fingerabdruck",
+    "stepFingerprintDesc": "Auf diesem Gerät gehasht",
+    "stepFingerprintTip": "Ein Fingerabdruck (SHA-256) ist eine kurze, eindeutige ID Ihrer Datei, auf Ihrem Gerät erzeugt. Er verlässt Sie nicht als Klartext.",
+    "stepCalendars": "Kalender",
+    "stepCalendarsDesc": "OpenTimestamps ausstehend",
+    "stepCalendarsTip": "Unabhängige öffentliche Kalender einigen sich auf den Zeitpunkt. Kostenlos und offen — kein Konto — keine Firma kontrolliert Ihren Nachweis.",
+    "stepBitcoin": "Bitcoin",
+    "stepBitcoinWaiting": "Warten auf einen Block",
+    "stepBitcoinFolded": "Eingefaltet",
+    "stepBitcoinBlock": "Block {{block}}",
+    "stepBitcoinTip": "Ihr Fingerabdruck wird in einen öffentlichen Bitcoin-Block eingefaltet. Danach kann ihn jeder prüfen — das fälschungssichere Siegel.",
+    "stepTipTitle": "Schritt {{n}} — {{title}}"
   },
   "vaultPage": {
     "securityAge": {

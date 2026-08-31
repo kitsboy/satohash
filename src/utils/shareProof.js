@@ -33,6 +33,35 @@ export function buildShareText(proof) {
   return `Pending Bitcoin timestamp for “${label}” via Satohash. Submitted — not confirmed until Bitcoin anchors.`
 }
 
+export function buildXIntent({ text, url }) {
+  return `https://twitter.com/intent/tweet?text=${encodeURIComponent(text || '')}&url=${encodeURIComponent(url || '')}&via=give_bit`
+}
+
+export function buildNostrShareLinks({ text, url, nostrEventId }) {
+  const links = []
+  const id = typeof nostrEventId === 'string' ? nostrEventId.trim() : ''
+  const encodedText = encodeURIComponent(text || '')
+  const encodedUrl = encodeURIComponent(url || '')
+
+  if (id) {
+    links.push({
+      label: 'njump',
+      href: `https://njump.me/${encodeURIComponent(id)}`
+    })
+  }
+
+  links.push({
+    label: 'Snort',
+    href: `https://snort.social/handler/share?url=${encodedUrl}&text=${encodedText}`
+  })
+  links.push({
+    label: 'Primal',
+    href: `https://primal.net/search/${encodedUrl}?text=${encodedText}&url=${encodedUrl}`
+  })
+
+  return links
+}
+
 /**
  * Prefer Web Share API; fall back to clipboard.
  * @returns {'shared'|'copied'|'failed'}

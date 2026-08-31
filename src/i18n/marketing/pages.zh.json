@@ -581,7 +581,12 @@
       },
       "v3Label": "Proof DNA v3"
     },
-    "nip05Cta": "设置 NIP-05 身份"
+    "nip05Cta": "设置 NIP-05 身份",
+    "stampWidget": {
+      "title": "Stamp on Satohash",
+      "body": "家族应用在本机计算哈希，然后打开 satohash.io/stamp?hash=&ref=，由 SPA 设置 X-Satohash-Client。Katoa、Sherpa、Tadbuy 与 OpenStrata 共用同一嵌入组件——文件不会上传。",
+      "embedLabel": "Stamp 组件"
+    }
   },
   "docsPage": {
     "nav": "文档",
@@ -822,7 +827,8 @@
   },
   "appPage": {
     "skipToContent": "跳转到主要内容",
-    "offlineBanner": "离线——重新连接后将同步更改"
+    "offlineBanner": "离线——重新连接后将同步更改",
+    "offlineBannerQueued": "离线——已哈希 {{count}} 个指纹，等待盖戳"
   },
   "onboardingPage": {
     "skip": "跳过",
@@ -1168,7 +1174,68 @@
     "step2Label": "我们在本地计算哈希",
     "step2Desc": "在浏览器中计算唯一的 SHA-256 指纹。",
     "step3Label": "比特币为其打时间戳",
-    "step3Desc": "指纹被永久写入区块链。"
+    "step3Desc": "指纹被永久写入区块链。",
+    "moreOptions": "更多选项（胶囊 · 脱敏 · 语音）",
+    "filePhotoOrHash": "文件 · 照片 · 或哈希 — 一键完成",
+    "hashingLabel": "本地哈希",
+    "anchoringLabel": "锚定到比特币",
+    "hashingProgress": "正在本机计算 SHA-256 指纹...",
+    "anchoringProgress": "正在通过 OpenTimestamps 提交到比特币...",
+    "hashingSticky": "正在哈希…",
+    "anchoringSticky": "正在锚定…",
+    "stampHashSticky": "将哈希盖章到比特币",
+    "privacyGuarantee": "隐私保证",
+    "privacyGuaranteeBody": "原始文件不会离开你的设备。我们只发送 SHA-256 指纹 — 待确认不等于已在比特币上确认。",
+    "caseConfig": "案件配置",
+    "caseLabel": "标签 / 案件编号",
+    "casePlaceholder": "例如：遗产档案 2026",
+    "hashOnly": "仅哈希",
+    "hashOnlyBody": "已有 SHA-256？直接粘贴。文件不必传到这里。",
+    "hashOnlyPlaceholder": "64 位十六进制",
+    "fileTooLarge": "文件为 {{size}} MB — 浏览器盖章上限 {{max}} MB。请离线哈希并粘贴 SHA-256。",
+    "fileTooLargeToast": "文件过大，无法在浏览器中盖章",
+    "fileTooLargeToastDesc": "请使用更小的文件，或盖章预先计算的 SHA-256",
+    "tooManyRequests": "请求过多 — {{seconds}} 秒后重试",
+    "notifyEmailPlaceholder": "确认后发邮件通知我（可选）",
+    "photosGallery": "照片 / 图库",
+    "folderCapsule": "文件夹（一个 Merkle 胶囊）",
+    "otsViaBitcoin": "经 OpenTimestamps → 比特币锚定",
+    "freeStamp": "免费盖章",
+    "openingSuccess": "正在打开成功页…",
+    "targetAsset": "目标文件",
+    "capsuleManifest": "胶囊清单（{{count}} 个文件）",
+    "clear": "清除",
+    "stepN": "步骤 {{n}}",
+    "verify": "验证",
+    "vault": "保险库",
+    "watch": "观看",
+    "invalidStampLink": "无效的盖章链接"
+  },
+  "stampDonePage": {
+    "loading": "正在加载证明…",
+    "emptyTitle": "此屏幕上没有盖章",
+    "emptyBody": "上次的证明保存在本机。若刷新了空白页，请重新盖章 — 返回不会再次提交。",
+    "emptyCta": "去盖章",
+    "receipt": "回执",
+    "receiptPending": "回执 — 待确认",
+    "foldedIntoBitcoin": "已折入比特币",
+    "submittedNotConfirmed": "已提交 — 尚未经比特币确认",
+    "bitcoinBlock": "比特币区块",
+    "pendingExplainer": "待确认不等于已确认。本页每 8 秒轮询，直到区块落地。",
+    "confirmedExplainer": "你的指纹已通过 OpenTimestamps 进入链上。",
+    "verify": "验证",
+    "stepFingerprint": "指纹",
+    "stepFingerprintDesc": "在本机哈希",
+    "stepFingerprintTip": "指纹（SHA-256）是文件的短唯一标识，在你自己的设备上生成。不会以明文离开你的控制。",
+    "stepCalendars": "日历",
+    "stepCalendarsDesc": "OpenTimestamps 待处理",
+    "stepCalendarsTip": "独立的公共日历就时间达成一致。免费开放 — 无需账户 — 没有单一公司控制你的证明。",
+    "stepBitcoin": "比特币",
+    "stepBitcoinWaiting": "等待区块",
+    "stepBitcoinFolded": "已折入",
+    "stepBitcoinBlock": "区块 {{block}}",
+    "stepBitcoinTip": "你的指纹被折入公开的比特币区块。一旦上链，任何人都可以永久核验 — 防篡改封印。",
+    "stepTipTitle": "步骤 {{n}} — {{title}}"
   },
   "vaultPage": {
     "securityAge": {

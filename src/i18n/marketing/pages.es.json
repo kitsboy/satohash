@@ -591,7 +591,12 @@
       },
       "v3Label": "Proof DNA v3"
     },
-    "nip05Cta": "Configurar identidad NIP-05"
+    "nip05Cta": "Configurar identidad NIP-05",
+    "stampWidget": {
+      "title": "Stamp on Satohash",
+      "body": "Las apps de la familia hashean en el dispositivo y abren satohash.io/stamp?hash=&ref= para que la SPA envíe X-Satohash-Client. Katoa, Sherpa, Tadbuy y OpenStrata usan el mismo widget — el archivo no se sube.",
+      "embedLabel": "Widget de stamp"
+    }
   },
   "docsPage": {
     "nav": "Documentación",
@@ -832,7 +837,8 @@
   },
   "appPage": {
     "skipToContent": "Saltar al contenido principal",
-    "offlineBanner": "Sin conexión — los cambios se sincronizarán al reconectar"
+    "offlineBanner": "Sin conexión — los cambios se sincronizarán al reconectar",
+    "offlineBannerQueued": "Sin conexión — {{count}} huellas hasheadas, esperando sellar"
   },
   "onboardingPage": {
     "skip": "Omitir",
@@ -1178,7 +1184,68 @@
     "step2Label": "Lo hasheamos localmente",
     "step2Desc": "Se calcula una huella SHA-256 única en tu navegador.",
     "step3Label": "Bitcoin lo marca en el tiempo",
-    "step3Desc": "La huella se escribe de forma permanente en la blockchain."
+    "step3Desc": "La huella se escribe de forma permanente en la blockchain.",
+    "moreOptions": "Más opciones (cápsula · redactar · voz)",
+    "filePhotoOrHash": "Archivo · foto · o hash — un solo gesto",
+    "hashingLabel": "Hash local",
+    "anchoringLabel": "Anclando a Bitcoin",
+    "hashingProgress": "Calculando huella SHA-256 en este dispositivo...",
+    "anchoringProgress": "Enviando a Bitcoin vía OpenTimestamps...",
+    "hashingSticky": "Hasheando…",
+    "anchoringSticky": "Anclando…",
+    "stampHashSticky": "Sellar hash en Bitcoin",
+    "privacyGuarantee": "Garantía de privacidad",
+    "privacyGuaranteeBody": "El archivo original no sale de tu dispositivo. Solo enviamos una huella SHA-256 — pendiente no es confirmado en Bitcoin.",
+    "caseConfig": "Configuración del caso",
+    "caseLabel": "Etiqueta / ID de caso",
+    "casePlaceholder": "p. ej. Archivo sucesorio 2026",
+    "hashOnly": "Solo hash",
+    "hashOnlyBody": "¿Ya tienes un SHA-256? Pégalo. El archivo no tiene que llegar aquí.",
+    "hashOnlyPlaceholder": "64 caracteres hex",
+    "fileTooLarge": "El archivo pesa {{size}} MB — máximo {{max}} MB en el navegador. Hashea fuera de línea y pega el SHA-256.",
+    "fileTooLargeToast": "Archivo demasiado grande para sellar en el navegador",
+    "fileTooLargeToastDesc": "Usa un archivo más pequeño o sella un hash SHA-256 ya calculado",
+    "tooManyRequests": "Demasiadas solicitudes — inténtalo de nuevo en {{seconds}} s",
+    "notifyEmailPlaceholder": "Avísame por email al confirmar (opcional)",
+    "photosGallery": "Fotos / galería",
+    "folderCapsule": "Carpeta (una cápsula Merkle)",
+    "otsViaBitcoin": "Anclado vía OpenTimestamps → Bitcoin",
+    "freeStamp": "Sello gratis",
+    "openingSuccess": "Abriendo pantalla de éxito…",
+    "targetAsset": "Archivo objetivo",
+    "capsuleManifest": "Manifiesto de cápsula ({{count}} archivos)",
+    "clear": "Limpiar",
+    "stepN": "Paso {{n}}",
+    "verify": "Verificar",
+    "vault": "Bóveda",
+    "watch": "Ver",
+    "invalidStampLink": "Enlace de sello inválido"
+  },
+  "stampDonePage": {
+    "loading": "Cargando prueba…",
+    "emptyTitle": "No hay sello en esta pantalla",
+    "emptyBody": "Tu última prueba está en este dispositivo. Si recargaste una pestaña en blanco, sella de nuevo — Atrás no reenvía.",
+    "emptyCta": "Ir a Sellar",
+    "receipt": "Recibo",
+    "receiptPending": "Recibo — pendiente",
+    "foldedIntoBitcoin": "Plegado en Bitcoin",
+    "submittedNotConfirmed": "Enviado — aún no confirmado en Bitcoin",
+    "bitcoinBlock": "Bloque de Bitcoin",
+    "pendingExplainer": "Pendiente no es confirmado. Esta página consulta cada 8 s hasta que entre un bloque.",
+    "confirmedExplainer": "Tu huella está en la cadena vía OpenTimestamps.",
+    "verify": "Verificar",
+    "stepFingerprint": "Huella",
+    "stepFingerprintDesc": "Hasheado en este dispositivo",
+    "stepFingerprintTip": "Una huella (SHA-256) es un identificador corto y único de tu archivo, calculado en tu dispositivo. No sale como texto plano.",
+    "stepCalendars": "Calendarios",
+    "stepCalendarsDesc": "OpenTimestamps pendiente",
+    "stepCalendarsTip": "Calendarios públicos independientes acuerdan el momento. Son gratuitos y abiertos — sin cuenta — ninguna empresa controla tu prueba.",
+    "stepBitcoin": "Bitcoin",
+    "stepBitcoinWaiting": "Esperando un bloque",
+    "stepBitcoinFolded": "Plegado",
+    "stepBitcoinBlock": "Bloque {{block}}",
+    "stepBitcoinTip": "Tu huella se pliega en un bloque público de Bitcoin. Una vez allí, cualquiera puede comprobarla — el sello a prueba de manipulación.",
+    "stepTipTitle": "Paso {{n}} — {{title}}"
   },
   "vaultPage": {
     "securityAge": {

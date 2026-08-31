@@ -1,7 +1,8 @@
-import { Activity, CheckCircle, AlertTriangle } from 'lucide-react'
+import { Activity, AlertTriangle, Lock } from 'lucide-react'
 
 /**
  * Giant mobile-first pending vs confirmed status.
+ * Pending is gold only — never success green.
  */
 export default function ProofStatusPill({
   status = 'pending',
@@ -26,23 +27,41 @@ export default function ProofStatusPill({
             '0 0 30px color-mix(in srgb, var(--accent-success) 18%, transparent), inset 0 1px 0 color-mix(in srgb, var(--accent-success) 16%, transparent)'
         }}
       >
-        <CheckCircle
-          size={28}
-          className="animate-jewel-pulse"
-          style={{ color: 'var(--accent-success)' }}
-          aria-hidden
-        />
+        <div
+          className="animate-jewel-pulse flex h-12 w-12 items-center justify-center rounded-full"
+          style={{
+            border: '1.5px solid var(--accent-success)',
+            background: 'color-mix(in srgb, var(--accent-success) 16%, var(--surface-raised))'
+          }}
+        >
+          <Lock size={22} style={{ color: 'var(--accent-success)' }} aria-hidden />
+        </div>
         <p
           className="text-lg font-black tracking-tight uppercase"
           style={{ color: 'var(--accent-success)' }}
         >
-          Bitcoin confirmed
+          Folded into Bitcoin
         </p>
-        <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-          {blockHeight
-            ? `Anchored in block ${Number(blockHeight).toLocaleString()}`
-            : 'Fingerprint is anchored on Bitcoin via OpenTimestamps'}
-        </p>
+        {blockHeight ? (
+          <p className="space-y-0.5">
+            <span
+              className="block text-3xl font-black tracking-tight tabular-nums"
+              style={{ color: 'var(--text-primary)' }}
+            >
+              {Number(blockHeight).toLocaleString()}
+            </span>
+            <span
+              className="block text-[10px] font-black tracking-widest uppercase"
+              style={{ color: 'var(--accent-success)' }}
+            >
+              Bitcoin block
+            </span>
+          </p>
+        ) : (
+          <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+            Fingerprint is in the chain via OpenTimestamps
+          </p>
+        )}
       </div>
     )
   }
@@ -96,12 +115,12 @@ export default function ProofStatusPill({
         className="text-lg font-black tracking-tight uppercase"
         style={{ color: 'var(--accent-gold)' }}
       >
-        Pending confirmation
+        Not Bitcoin-confirmed yet
       </p>
       <p className="max-w-sm text-sm leading-snug" style={{ color: 'var(--text-secondary)' }}>
-        Submitted to OpenTimestamps calendars. This is{' '}
-        <strong style={{ color: 'var(--text-primary)' }}>not</strong> Bitcoin-confirmed yet —
-        usually minutes to hours depending on calendar aggregation.
+        Submitted to OpenTimestamps calendars. Pending is{' '}
+        <strong style={{ color: 'var(--text-primary)' }}>not</strong> confirmed — usually minutes to
+        hours, depending on calendar aggregation.
       </p>
       {upgradeStatus && (
         <p

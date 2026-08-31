@@ -84,7 +84,7 @@ const SECTIONS = [
     slug: 'watch',
     kicker: 'Explainer',
     title: 'Watch: how Satohash proves a file existed',
-    tagline: '~84 second explainer \u2014 Bitcoin as a global notary',
+    tagline: '~84 second explainer \u2014 Bitcoin-anchored proof of existence',
   },
   {
     slug: 'pitch',

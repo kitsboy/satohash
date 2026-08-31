@@ -15,26 +15,26 @@ const JURISDICTIONS = [
   {
     id: 'eu',
     name: 'European Union',
-    region: 'Supreme Admissibility',
-    status: 'Hardened',
+    region: 'Supporting evidence',
+    status: 'Evidentiary',
     color: '#10b981', // Emerald
     bgGlow: 'rgba(16, 185, 129, 0.1)',
-    law: 'eIDAS Art. 41 ETS',
+    law: 'eIDAS Regulation',
     description:
-      'The highest legal standard globally. Under eIDAS, a qualified electronic time stamp shall enjoy the presumption of the accuracy of the date and the time it indicates and the integrity of the data to which the date and time are bound.',
+      'Satohash provides independently verifiable cryptographic evidence of existence-at-a-time. It is not a qualified electronic time stamp under eIDAS Article 42 (which requires an accredited Time Stamping Authority) and does not carry the eIDAS presumption of accuracy. A qualified time stamp should be used where the law requires one.',
     body: 'European Telecommunications Standards Institute (ETSI)',
     rating: 'Green'
   },
   {
     id: 'na',
     name: 'North America',
-    region: 'Fully Admissible',
-    status: 'Accepted',
+    region: 'Supporting evidence',
+    status: 'Supporting evidence',
     color: '#3b82f6', // Cyber Blue
     bgGlow: 'rgba(59, 130, 246, 0.1)',
     law: 'ESIGN Act & UETA',
     description:
-      'Broadly accepted across all 50 states and federal jurisdictions. The ESIGN Act ensures that a contract or signature cannot be denied legal effect solely because it is in electronic form.',
+      'Under ESIGN and UETA, electronic records are not denied legal effect solely because they are electronic. A Bitcoin-anchored hash is an electronic record of existence-at-a-time; its admissibility and weight depend on the rules of evidence and chain of custody.',
     body: 'National Conference of Commissioners on Uniform State Laws (NCCUSL)',
     rating: 'Green'
   },
@@ -84,8 +84,8 @@ export default function GlobalJurisdictionMap() {
           </h2>
         </div>
         <p className="max-w-md text-sm leading-relaxed font-medium text-[var(--text-secondary)]">
-          Satohash cryptographic proofs are designed to exceed forensic standards across all major
-          global judiciaries.
+          Satohash proofs are independently verifiable evidence of existence-at-a-time.
+          Admissibility and weight are decided by a court.
         </p>
       </div>
 

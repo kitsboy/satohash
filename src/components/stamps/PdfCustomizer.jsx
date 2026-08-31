@@ -293,7 +293,7 @@ export default function PdfCustomizer({ isOpen, onClose, contract, stampData }) 
                   Courtroom-Ready PDF Export
                 </h2>
                 <p className="text-[10px]" style={{ color: 'var(--text-secondary)' }}>
-                  Customize your legal-grade document package
+                  Customize your independently verifiable document package
                 </p>
               </div>
             </div>

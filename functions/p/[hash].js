@@ -25,6 +25,30 @@ function utc(raw) {
   )
 }
 
+/** Real Nostr event id only — hex, note1, or nevent1. Never npub / invented. */
+function realNostrEventId(...candidates) {
+  for (const raw of candidates) {
+    if (typeof raw !== 'string') continue
+    const id = raw.trim()
+    if (!id) continue
+    if (/^[0-9a-f]{64}$/i.test(id)) return id.toLowerCase()
+    if (/^(note|nevent)1[02-9ac-hj-np-z]+$/i.test(id)) return id
+  }
+  return ''
+}
+
+function pickNostrEventId(proof) {
+  if (!proof || typeof proof !== 'object') return ''
+  const chains = proof.chains && typeof proof.chains === 'object' ? proof.chains : {}
+  return realNostrEventId(
+    proof.nostr_event_id,
+    proof.nostrEventId,
+    proof.nostr_id,
+    chains.nostr,
+    chains.nostr_event_id
+  )
+}
+
 export async function onRequestGet({ params }) {
   const raw = String(params.hash || '').trim()
   const hex = /^[a-f0-9]{64}$/i.test(raw) ? raw.toLowerCase() : raw
@@ -43,12 +67,41 @@ export async function onRequestGet({ params }) {
     /* hash-only card */
   }
 
+  if (proof.id && !pickNostrEventId(proof)) {
+    try {
+      const ch = await fetch(`${API}/api/stamps/${encodeURIComponent(proof.id)}/chains`)
+      if (ch.ok) {
+        const body = await ch.json()
+        proof = {
+          ...proof,
+          nostr_event_id: body.nostr_event_id || null,
+          chains: body.chains || proof.chains
+        }
+      }
+    } catch {
+      /* omit njump */
+    }
+  }
+
   const validHash = /^[a-f0-9]{64}$/i.test(hex)
   const status = proof.status || 'pending'
   const confirmed = status === 'confirmed'
   const block = proof.bitcoin_block_height
   const hash = proof.hash || hex
   const short = String(hash).slice(0, 12)
+  const blockLabel =
+    block != null && block !== '' && Number.isFinite(Number(block))
+      ? Number(block).toLocaleString()
+      : ''
+  const statusLine = confirmed
+    ? `CONFIRMED${blockLabel ? ` · block ${blockLabel}` : ''}`
+    : String(status).toLowerCase() === 'pending'
+      ? 'PENDING ≠ CONFIRMED'
+      : `${String(status || 'unknown').toUpperCase()} · not confirmed`
+  const njumpId = pickNostrEventId(proof)
+  const njump = njumpId
+    ? `<p><a class="njump" href="https://njump.me/${encodeURIComponent(njumpId)}" rel="noopener noreferrer">njump</a></p>`
+    : ''
   const title = confirmed
     ? `Confirmed Bitcoin proof ${short}… — Satohash`
     : `Satohash proof ${short}… (${esc(status)})`
@@ -116,10 +169,11 @@ export async function onRequestGet({ params }) {
     .card{border:1px solid var(--line);border-radius:1.25rem;padding:1.35rem 1.25rem;background:var(--card);
       box-shadow:0 0 0 1px rgba(240,180,41,.08),0 24px 48px -24px rgba(0,0,0,.7)}
     .k{letter-spacing:.16em;text-transform:uppercase;font-size:10px;color:var(--gold);font-weight:800;margin:0 0 .75rem}
-    .pill{display:inline-block;border-radius:999px;padding:.28rem .7rem;font-size:10px;font-weight:800;
-      letter-spacing:.12em;text-transform:uppercase}
-    .pill.ok{background:rgba(34,211,165,.12);color:var(--ok);border:1px solid rgba(34,211,165,.35)}
-    .pill.wait{background:rgba(240,180,41,.1);color:var(--gold);border:1px solid var(--line)}
+    .status{display:inline-block;border-radius:.5rem;padding:.4rem .8rem;font-size:12px;font-weight:800;
+      letter-spacing:.12em;text-transform:uppercase;margin:0 0 .55rem}
+    .status.ok{background:rgba(34,211,165,.12);color:var(--ok);border:1px solid rgba(34,211,165,.35)}
+    .status.wait{background:rgba(240,180,41,.1);color:var(--gold);border:1px solid var(--line)}
+    a.njump{color:var(--gold);font-weight:800;letter-spacing:.08em;text-transform:uppercase;font-size:12px}
     h1{font-size:1.35rem;line-height:1.2;margin:.7rem 0 .85rem;letter-spacing:-.03em}
     .h{font-family:ui-monospace,"JetBrains Mono",monospace;font-size:12px;word-break:break-all;-webkit-text-size-adjust:100%;}
       background:#141b25;border:1px solid rgba(255,255,255,.06);border-radius:.75rem;padding:.75rem;margin:0 0 1rem}
@@ -148,17 +202,18 @@ export async function onRequestGet({ params }) {
     </header>
     <article class="card">
       <p class="k">Zero-JS proof card</p>
-      <span class="pill ${confirmed ? 'ok' : 'wait'}">${esc(status)}</span>
+      <p class="status ${confirmed ? 'ok' : 'wait'}" role="status">${esc(statusLine)}</p>
       <h1>${confirmed ? 'Confirmed on Bitcoin' : 'Pending is not confirmed'}</h1>
       <p class="h">${esc(hash)}</p>
       <p>Satohash recorded this fingerprint${proof.created_at ? ` at ${utc(proof.created_at)}` : ''}.
       ${
         confirmed
-          ? `Bitcoin has anchored it${block ? ` in <a href="https://mempool.space/block/${esc(block)}">block ${esc(Number(block).toLocaleString())}</a>` : ''}.`
-          : 'Calendars have the digest. A Bitcoin block has not included it yet.'
+          ? `Bitcoin has anchored it${blockLabel ? ` in <a href="https://mempool.space/block/${esc(block)}">block ${esc(blockLabel)}</a>` : ''}.`
+          : 'Calendars have the digest. A Bitcoin block has not included it yet. Pending is not confirmed.'
       }</p>
       ${emptyNote}
       <p class="muted">Only a SHA-256 fingerprint was submitted. The original file never needed to leave the device. You do not need to trust Satohash — verify with OpenTimestamps.</p>
+      ${njump}
       <p><code>ots-cli verify proof.ots</code></p>
       <p class="cals"><strong>Calendars</strong> · alice · bob · finney</p>
       <div class="actions">

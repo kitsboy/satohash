@@ -29,7 +29,9 @@ function buildEmbeds() {
   data-label="Bitcoin Proof"
   data-verify="${base}/verify/${DEMO_HASH}"
 ></div>
-<script src="${base}/widgets/proof-dna.js" async></script>`
+<script src="${base}/widgets/proof-dna.js" async></script>`,
+    stamp: `<div data-satohash-stamp data-client="katoa"></div>
+<script src="${base}/widgets/stamp.js" async></script>`
   }
 }
 
@@ -145,6 +147,23 @@ export default function Widgets() {
               </ul>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="border-t border-[var(--border)] px-4 py-10 sm:px-6 sm:py-16">
+        <div className="mx-auto max-w-3xl space-y-6">
+          <h2 className="text-xl font-black tracking-tight text-[var(--text-primary)] uppercase">
+            {t('widgetsPage.stampWidget.title')}
+          </h2>
+          <p className="text-sm leading-relaxed text-[var(--text-secondary)]">
+            {t('widgetsPage.stampWidget.body')}
+          </p>
+          <CopyBlock
+            label={t('widgetsPage.stampWidget.embedLabel')}
+            code={embeds.stamp}
+            copyLabel={t('common.copy')}
+            copiedLabel={t('common.copied')}
+          />
         </div>
       </section>
 

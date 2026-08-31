@@ -354,10 +354,10 @@ if (fs.existsSync(docsDir)) {
 // Watch / Explainer — static version so video shares show rich meta
 const watchTitle = 'Satohash Explainer — Watch How It Proves a File Existed'
 const watchDesc =
-  'Watch the ~84 second Satohash explainer: how Bitcoin becomes a global notary that proves any file existed, forever — free, private, independently verifiable.'
+  'Watch the ~84 second Satohash explainer: hash on your device, OpenTimestamps, prove existence on Bitcoin — free, private, independently verifiable.'
 const watchBody = `
 <h1>Watch the Satohash explainer</h1>
-<p>Satohash anchors your document's fingerprint to the Bitcoin blockchain via OpenTimestamps — turning Bitcoin into a global, tamper-proof notary that proves a file existed at a specific moment, forever.</p>
+<p>Satohash hashes your file on the device, then anchors the fingerprint to Bitcoin via OpenTimestamps — independently verifiable proof that a file existed at a specific moment. Free, private, no account required.</p>
 <ul>
 <li><strong>Zero-knowledge</strong> — your file never leaves your device, only a SHA-256 fingerprint.</li>
 <li><strong>Free &amp; private</strong> — no account, no middleman, no trust required.</li>

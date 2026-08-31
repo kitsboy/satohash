@@ -1,72 +1,71 @@
 import { motion } from 'framer-motion'
-import {
-  Check,
-  Zap,
-  Building2,
-  Bitcoin,
-  Infinity,
-  Shield,
-  Clock,
-  Globe,
-  ArrowRight
-} from 'lucide-react'
+import { Check, Zap, Building2, Bitcoin, Shield, Clock, Globe, ArrowRight } from 'lucide-react'
 
 const TIERS = [
   {
     name: 'Free',
-    description: 'Perfect for testing and small projects',
-    price: { sats: 0, display: 'Free' },
+    description: 'Permanent trust anchor. Live now. Never paywalled.',
+    price: { sats: 0, display: '0 sats', per: 'live now' },
     icon: Zap,
-    color: 'blue',
+    color: 'gold',
+    live: true,
+    tag: 'Live now',
     features: [
-      { text: '100 timestamps / day', included: true },
-      { text: 'Free verification', included: true },
-      { text: 'Bitcoin block height API', included: true },
-      { text: 'Community support', included: true },
-      { text: 'Standard calendar servers', included: true },
-      { text: 'Webhook notifications', included: false },
-      { text: 'Priority confirmation', included: false },
-      { text: 'Custom calendar', included: false }
+      { text: 'Unlimited stamp / verify / .ots', included: true },
+      { text: 'Client-side hashing — file never leaves the device', included: true },
+      { text: '10 stamps / day cap', included: true },
+      { text: 'Bitcoin-anchored OpenTimestamps proofs', included: true },
+      { text: 'No account, no Lightning invoice', included: true },
+      { text: 'Never paywalled', included: true },
+      { text: 'Full vault / API / webhooks', included: false },
+      { text: 'White-label / SLA', included: false }
     ],
-    cta: 'Get Started Free',
+    cta: 'Stamp a File',
+    href: '/stamp',
     popular: false
   },
   {
-    name: 'Pro',
-    description: 'For production applications',
-    price: { sats: 50, display: '50 sats', per: 'per timestamp' },
+    name: 'Professional',
+    description: 'Built and staged. Individual, high-volume stamping.',
+    price: { sats: 2100, display: '~2,100 sats', per: '/ mo (~$29)' },
     icon: Bitcoin,
-    color: 'orange',
+    color: 'gold',
+    live: false,
+    tag: 'Built, staged',
     features: [
-      { text: '10,000 timestamps / day', included: true },
-      { text: 'Free verification', included: true },
-      { text: 'Bitcoin block height API', included: true },
-      { text: 'Email support', included: true },
-      { text: 'Premium calendar servers', included: true },
-      { text: 'Webhook notifications', included: true },
-      { text: 'Priority confirmation', included: true },
-      { text: 'Custom calendar', included: false }
+      { text: 'Everything in Free', included: true },
+      { text: 'Unlimited stamping / full vault (planned)', included: true },
+      { text: 'API access + webhooks (planned)', included: true },
+      { text: 'PDF exports + priority calendar (planned)', included: true },
+      { text: 'Lightning billing when rails are funded', included: true },
+      { text: 'Launches paid only once Lightning is funded', included: true },
+      { text: 'White-label / SLA', included: false },
+      { text: 'Live checkout today', included: false }
     ],
-    cta: 'Start Pro Trial',
+    cta: 'Coming soon',
+    href: null,
     popular: true
   },
   {
-    name: 'Enterprise',
-    description: 'Custom solutions for scale',
-    price: { sats: null, display: 'Custom', per: 'contact us' },
+    name: 'Business',
+    description: 'Built and staged. Teams and studios (~$299/mo).',
+    price: { sats: 21000, display: '~21,000 sats', per: '/ mo (~$299)' },
     icon: Building2,
-    color: 'purple',
+    color: 'gold',
+    live: false,
+    tag: 'Built, staged',
     features: [
-      { text: 'Unlimited timestamps', included: true },
-      { text: 'Free verification', included: true },
-      { text: 'Bitcoin block height API', included: true },
-      { text: '24/7 dedicated support', included: true },
-      { text: 'Private calendar cluster', included: true },
-      { text: 'Webhook + WebSocket', included: true },
-      { text: 'Guaranteed confirmation', included: true },
-      { text: 'Custom integration', included: true }
+      { text: 'Everything in Professional', included: true },
+      { text: 'Teams and studios', included: true },
+      { text: 'White-label options (planned)', included: true },
+      { text: 'SLA / priority support (planned)', included: true },
+      { text: 'Volume + dedicated calendar path (planned)', included: true },
+      { text: 'Launches paid only once Lightning is funded', included: true },
+      { text: 'Enterprise (custom, partner-gated) is not marketed now', included: true },
+      { text: 'Live checkout today', included: false }
     ],
-    cta: 'Contact Sales',
+    cta: 'Coming soon',
+    href: null,
     popular: false
   }
 ]
@@ -74,113 +73,139 @@ const TIERS = [
 const PAYMENT_INFO = [
   {
     icon: Bitcoin,
-    title: 'Lightning Payments',
-    description: 'Pay instantly with Bitcoin Lightning. No credit cards. No KYC. Just sats.'
+    title: 'Lightning when paid launches',
+    description:
+      'Paid tiers collect in sats over Lightning. Rails are built; they switch on only once channels are funded and tested. Free stays live either way.'
   },
   {
     icon: Clock,
-    title: 'Pay Per Use',
-    description: 'Only pay for what you use. No monthly subscriptions or hidden fees.'
+    title: 'Pay-per-use API',
+    description:
+      'Developer access is 1–5 sats per stamp via L402 when billing is on. Not a replacement for the free 10/day trust anchor.'
   },
   {
     icon: Shield,
-    title: 'Privacy First',
-    description: "Lightning payments preserve your privacy. We don't store payment data."
+    title: 'Privacy first',
+    description:
+      'No KYC. Client-side hashing. Lightning payments, when live, do not require a credit card.'
   }
 ]
 
 export default function PricingTiers() {
-  const getColorClasses = (color) => {
-    const colors = {
-      blue: {
-        bg: 'bg-blue-500/10',
-        border: 'border-blue-500/30',
-        text: 'text-blue-400',
-        button: 'bg-blue-500 hover:bg-blue-600'
-      },
-      orange: {
-        bg: 'bg-orange-500/10',
-        border: 'border-orange-500/50',
-        text: 'text-orange-400',
-        button: 'bg-orange-500 hover:bg-orange-600'
-      },
-      purple: {
-        bg: 'bg-purple-500/10',
-        border: 'border-purple-500/30',
-        text: 'text-purple-400',
-        button: 'bg-purple-500 hover:bg-purple-600'
-      }
-    }
-    return colors[color]
-  }
-
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-12">
-      {/* Pricing Cards */}
+      <p className="text-center text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+        Free is live now. Professional and Business are built and staged — they launch paid only
+        once Lightning rails are funded. Enterprise is custom and partner-gated, not marketed now.
+      </p>
+
       <div className="grid gap-6 md:grid-cols-3">
         {TIERS.map((tier) => {
           const Icon = tier.icon
-          const colors = getColorClasses(tier.color)
 
           return (
             <div
               key={tier.name}
-              className={`relative rounded-2xl border ${tier.popular ? colors.border : 'border-gray-700'} ${tier.popular ? 'bg-gray-800/80' : 'bg-gray-800/50'} overflow-hidden ${tier.popular ? 'scale-105 shadow-2xl shadow-orange-500/20' : ''}`}
+              className="relative overflow-hidden rounded-2xl border"
+              style={{
+                borderColor: tier.popular || tier.live ? 'var(--border-gold)' : 'var(--border)',
+                background: 'var(--surface-raised)',
+                boxShadow: tier.popular ? '0 0 28px var(--accent-gold-glow)' : undefined
+              }}
             >
-              {/* Popular Badge */}
-              {tier.popular && (
-                <div className="absolute top-0 right-0 rounded-bl-lg bg-orange-500 px-4 py-1 text-xs font-bold text-white">
-                  POPULAR
+              {tier.tag && (
+                <div
+                  className="absolute top-0 right-0 rounded-bl-lg px-4 py-1 text-[10px] font-black tracking-widest uppercase"
+                  style={{
+                    background: tier.live ? 'var(--accent-gold)' : 'var(--bg-primary)',
+                    color: tier.live ? '#141b25' : 'var(--text-secondary)',
+                    borderLeft: '1px solid var(--border)',
+                    borderBottom: '1px solid var(--border)'
+                  }}
+                >
+                  {tier.tag}
                 </div>
               )}
 
               <div className="p-6">
-                {/* Header */}
                 <div
-                  className={`h-12 w-12 rounded-xl ${colors.bg} mb-4 flex items-center justify-center`}
+                  className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl"
+                  style={{
+                    background: 'color-mix(in srgb, var(--accent-gold) 12%, transparent)'
+                  }}
                 >
-                  <Icon className={`h-6 w-6 ${colors.text}`} />
+                  <Icon className="h-6 w-6" style={{ color: 'var(--accent-gold)' }} />
                 </div>
 
-                <h3 className="mb-1 text-2xl font-bold">{tier.name}</h3>
-                <p className="mb-4 text-sm text-gray-400">{tier.description}</p>
+                <h3 className="mb-1 text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>
+                  {tier.name}
+                </h3>
+                <p className="mb-4 text-sm" style={{ color: 'var(--text-secondary)' }}>
+                  {tier.description}
+                </p>
 
-                {/* Price */}
                 <div className="mb-6">
                   <div className="flex items-baseline gap-2">
                     <span
-                      className={`text-4xl font-bold ${tier.price.sats === 0 ? 'text-green-400' : colors.text}`}
+                      className="text-4xl font-bold"
+                      style={{
+                        color: tier.live ? 'var(--accent-gold)' : 'var(--text-primary)'
+                      }}
                     >
                       {tier.price.display}
                     </span>
                     {tier.price.per && (
-                      <span className="text-sm text-gray-500">{tier.price.per}</span>
+                      <span className="text-sm" style={{ color: 'var(--text-muted)' }}>
+                        {tier.price.per}
+                      </span>
                     )}
                   </div>
-                  {tier.price.sats > 0 && (
-                    <p className="mt-1 text-xs text-gray-500">
-                      ~${(tier.price.sats * 0.0007).toFixed(3)} USD at current rates
-                    </p>
-                  )}
                 </div>
 
-                {/* CTA Button */}
-                <button
-                  className={`w-full rounded-lg py-3 font-semibold text-white transition-all ${colors.button} mb-6`}
-                >
-                  {tier.cta}
-                </button>
+                {tier.href ? (
+                  <a
+                    href={tier.href}
+                    className="mb-6 flex min-h-[44px] w-full items-center justify-center rounded-lg text-sm font-semibold"
+                    style={{ background: 'var(--accent-gold)', color: '#141b25' }}
+                  >
+                    {tier.cta}
+                  </a>
+                ) : (
+                  <button
+                    type="button"
+                    disabled
+                    className="mb-6 flex min-h-[44px] w-full items-center justify-center rounded-lg text-sm font-semibold opacity-70"
+                    style={{
+                      background: 'var(--bg-primary)',
+                      color: 'var(--text-secondary)',
+                      border: '1px solid var(--border)'
+                    }}
+                  >
+                    {tier.cta}
+                  </button>
+                )}
 
-                {/* Features */}
                 <ul className="space-y-3">
                   {tier.features.map((feature, fidx) => (
                     <li key={fidx} className="flex items-start gap-3">
                       {feature.included ? (
-                        <Check className={`h-5 w-5 ${colors.text} flex-shrink-0`} />
+                        <Check
+                          className="h-5 w-5 flex-shrink-0"
+                          style={{ color: 'var(--accent-gold)' }}
+                        />
                       ) : (
-                        <span className="h-5 w-5 flex-shrink-0 text-gray-600">—</span>
+                        <span
+                          className="h-5 w-5 flex-shrink-0"
+                          style={{ color: 'var(--text-muted)' }}
+                        >
+                          —
+                        </span>
                       )}
-                      <span className={feature.included ? 'text-gray-300' : 'text-gray-500'}>
+                      <span
+                        style={{
+                          color: feature.included ? 'var(--text-secondary)' : 'var(--text-muted)'
+                        }}
+                      >
                         {feature.text}
                       </span>
                     </li>
@@ -192,95 +217,118 @@ export default function PricingTiers() {
         })}
       </div>
 
-      {/* Payment Info */}
       <div className="grid gap-6 md:grid-cols-3">
         {PAYMENT_INFO.map((info, idx) => {
           const Icon = info.icon
           return (
-            <div key={idx} className="rounded-xl border border-gray-700 bg-gray-800/50 p-6">
-              <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-orange-500/20">
-                <Icon className="h-5 w-5 text-orange-400" />
+            <div
+              key={idx}
+              className="rounded-xl border p-6"
+              style={{ borderColor: 'var(--border)', background: 'var(--surface-raised)' }}
+            >
+              <div
+                className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg"
+                style={{
+                  background: 'color-mix(in srgb, var(--accent-gold) 16%, transparent)'
+                }}
+              >
+                <Icon className="h-5 w-5" style={{ color: 'var(--accent-gold)' }} />
               </div>
-              <h4 className="mb-2 font-semibold">{info.title}</h4>
-              <p className="text-sm text-gray-400">{info.description}</p>
+              <h4 className="mb-2 font-semibold" style={{ color: 'var(--text-primary)' }}>
+                {info.title}
+              </h4>
+              <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+                {info.description}
+              </p>
             </div>
           )
         })}
       </div>
 
-      {/* Rate Limits Detail */}
-      <div className="rounded-2xl border border-gray-700 bg-gradient-to-r from-gray-800/50 to-gray-900/50 p-6">
-        <h3 className="mb-6 flex items-center gap-2 text-xl font-bold">
-          <Globe className="h-5 w-5 text-orange-400" />
-          Rate Limits & Fair Use
+      <div
+        className="rounded-2xl border p-6"
+        style={{ borderColor: 'var(--border)', background: 'var(--surface-raised)' }}
+      >
+        <h3
+          className="mb-6 flex items-center gap-2 text-xl font-bold"
+          style={{ color: 'var(--text-primary)' }}
+        >
+          <Globe className="h-5 w-5" style={{ color: 'var(--accent-gold)' }} />
+          Fair use
         </h3>
 
         <div className="grid gap-8 md:grid-cols-2">
           <div>
-            <h4 className="mb-3 font-semibold text-gray-300">Request Limits</h4>
-            <ul className="space-y-2 text-sm text-gray-400">
-              <li className="flex justify-between">
-                <span>Free tier</span>
-                <span className="text-white">100 requests / day</span>
+            <h4 className="mb-3 font-semibold" style={{ color: 'var(--text-primary)' }}>
+              Live now
+            </h4>
+            <ul className="space-y-2 text-sm" style={{ color: 'var(--text-secondary)' }}>
+              <li className="flex justify-between gap-4">
+                <span>Free stamp / verify / .ots</span>
+                <span style={{ color: 'var(--text-primary)' }}>10 / day</span>
               </li>
-              <li className="flex justify-between">
-                <span>Pro tier</span>
-                <span className="text-white">10,000 requests / day</span>
+              <li className="flex justify-between gap-4">
+                <span>Client-side hashing</span>
+                <span style={{ color: 'var(--text-primary)' }}>Unlimited</span>
               </li>
-              <li className="flex justify-between">
-                <span>Enterprise</span>
-                <span className="text-white">
-                  <Infinity className="inline h-4 w-4" /> Unlimited
-                </span>
+              <li className="flex justify-between gap-4">
+                <span>Paid checkout</span>
+                <span style={{ color: 'var(--text-primary)' }}>Not live</span>
               </li>
             </ul>
           </div>
 
           <div>
-            <h4 className="mb-3 font-semibold text-gray-300">Burst Limits</h4>
-            <ul className="space-y-2 text-sm text-gray-400">
-              <li className="flex justify-between">
-                <span>Free tier</span>
-                <span className="text-white">10 requests / minute</span>
+            <h4 className="mb-3 font-semibold" style={{ color: 'var(--text-primary)' }}>
+              Staged (Lightning-funded)
+            </h4>
+            <ul className="space-y-2 text-sm" style={{ color: 'var(--text-secondary)' }}>
+              <li className="flex justify-between gap-4">
+                <span>Professional</span>
+                <span style={{ color: 'var(--text-primary)' }}>~2,100 sats / mo</span>
               </li>
-              <li className="flex justify-between">
-                <span>Pro tier</span>
-                <span className="text-white">100 requests / minute</span>
+              <li className="flex justify-between gap-4">
+                <span>Business / Studio</span>
+                <span style={{ color: 'var(--text-primary)' }}>~21,000 sats / mo</span>
               </li>
-              <li className="flex justify-between">
-                <span>Enterprise</span>
-                <span className="text-white">Custom limits</span>
+              <li className="flex justify-between gap-4">
+                <span>Pay-per-use API</span>
+                <span style={{ color: 'var(--text-primary)' }}>1–5 sats / stamp (L402)</span>
               </li>
             </ul>
           </div>
         </div>
 
-        <div className="mt-6 border-t border-gray-700 pt-6">
-          <p className="text-sm text-gray-500">
-            Rate limits reset daily at 00:00 UTC. Need higher limits?{' '}
+        <div className="mt-6 border-t pt-6" style={{ borderColor: 'var(--border)' }}>
+          <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
+            Free is the never-paywalled trust anchor. Need Enterprise (custom, partner-gated)?{' '}
             <a
-              href="mailto:hello@giveabit.io?subject=Rate limit increase request"
-              className="ml-1 text-orange-400 hover:text-orange-300"
+              href="mailto:hello@giveabit.io?subject=Satohash Enterprise"
+              className="ml-1"
+              style={{ color: 'var(--accent-gold)' }}
             >
-              Contact our team
+              Contact the team
             </a>
             .
           </p>
         </div>
       </div>
 
-      {/* Enterprise CTA */}
       <div className="py-8 text-center">
-        <h3 className="mb-3 text-2xl font-bold">Building something big?</h3>
-        <p className="mb-6 text-gray-400">
-          Get dedicated infrastructure, custom integrations, and dedicated support.
+        <h3 className="mb-3 text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>
+          Enterprise is partner-gated
+        </h3>
+        <p className="mb-6" style={{ color: 'var(--text-secondary)' }}>
+          Custom pricing is not marketed now. Free remains live; paid tiers wait on funded Lightning
+          rails.
         </p>
         <a
-          href="mailto:hello@giveabit.io?subject=Enterprise inquiry"
-          className="inline-flex items-center gap-2 rounded-lg border border-gray-600 bg-gray-800 px-6 py-3 transition-colors hover:bg-gray-700"
+          href="mailto:hello@giveabit.io?subject=Satohash Enterprise"
+          className="inline-flex min-h-[44px] items-center gap-2 rounded-lg border px-6 py-3"
+          style={{ borderColor: 'var(--border)', color: 'var(--text-primary)' }}
         >
           <Building2 className="h-5 w-5" />
-          Talk to Sales
+          Talk to us
           <ArrowRight className="h-4 w-4" />
         </a>
       </div>

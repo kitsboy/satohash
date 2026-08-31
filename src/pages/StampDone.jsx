@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
-import { CheckCircle, ShieldCheck } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
+import { Clock, Lock, ShieldCheck } from 'lucide-react'
 import usePageMeta from '../hooks/usePageMeta'
 import { getApiUrl } from '../config/constants'
 import { isApiExplicitlyConfigured } from '../config/mvp'
@@ -18,6 +19,7 @@ import events, { trackEvent } from '../utils/analytics'
  */
 export default function StampDone() {
   usePageMeta({ page: 'stamp' })
+  const { t, i18n } = useTranslation()
   useEffect(() => {
     trackEvent(events.STAMP_DONE, { path: '/stamp/done' })
   }, [])
@@ -61,7 +63,13 @@ export default function StampDone() {
 
   useEffect(() => {
     const stampId = proof?.id
-    if (!stampId || proof.status === 'confirmed' || proof.status === 'failed') return undefined
+    if (
+      !stampId ||
+      proof.status === 'confirmed' ||
+      proof.status === 'verified' ||
+      proof.status === 'failed'
+    )
+      return undefined
     if (!isApiExplicitlyConfigured()) return undefined
     const tick = async () => {
       try {
@@ -84,15 +92,15 @@ export default function StampDone() {
   if (loading) {
     return (
       <>
-      <div className="mx-auto flex min-h-[50vh] max-w-lg items-center justify-center p-6 pb-28">
-        <p
-          className="text-sm font-bold tracking-widest uppercase"
-          style={{ color: 'var(--text-muted)' }}
-        >
-          Loading proof…
-        </p>
-      </div>
-      <Footer />
+        <div className="mx-auto flex min-h-[50vh] max-w-lg items-center justify-center p-6 pb-28">
+          <p
+            className="text-sm font-bold tracking-widest uppercase"
+            style={{ color: 'var(--text-muted)' }}
+          >
+            {t('stampDonePage.loading')}
+          </p>
+        </div>
+        <Footer />
       </>
     )
   }
@@ -100,133 +108,170 @@ export default function StampDone() {
   if (!proof) {
     return (
       <>
-      <div className="mx-auto max-w-lg p-6 pb-28">
-        <EmptyState
-          imageSrc="/media/ui/empty-proof.jpg"
-          title="No stamp on this screen"
-          description="Your last proof is stored on this device. If you refreshed a blank tab, stamp again — Back will not re-submit."
-          actionLabel="Go to Stamp"
-          onAction={() => navigate('/stamp')}
-        />
-      </div>
-      <Footer />
+        <div className="mx-auto max-w-lg p-6 pb-28">
+          <EmptyState
+            imageSrc="/media/ui/empty-proof.jpg"
+            title={t('stampDonePage.emptyTitle')}
+            description={t('stampDonePage.emptyBody')}
+            actionLabel={t('stampDonePage.emptyCta')}
+            onAction={() => navigate('/stamp')}
+          />
+        </div>
+        <Footer />
       </>
     )
   }
 
-  const confirmed = proof.status === 'confirmed'
+  const confirmed =
+    proof.status === 'confirmed' || proof.status === 'verified' || Boolean(proof.isConfirmed)
+  const blockHeight = proof.bitcoin_block_height
 
   return (
     <>
-    <div className="mx-auto max-w-lg space-y-6 p-4 pb-[calc(7rem+env(safe-area-inset-bottom,0px))] sm:p-6">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div className="flex flex-wrap items-center gap-2">
-          <p
-            className="text-[11px] font-black tracking-widest uppercase"
-            style={{ color: 'var(--accent-gold)' }}
+      <div className="mx-auto max-w-lg space-y-6 p-4 pb-[calc(7rem+env(safe-area-inset-bottom,0px))] sm:p-6">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div className="flex flex-wrap items-center gap-2">
+            <p
+              className="text-[11px] font-black tracking-widest uppercase"
+              style={{ color: confirmed ? 'var(--accent-success)' : 'var(--accent-gold)' }}
+            >
+              {confirmed ? t('stampDonePage.receipt') : t('stampDonePage.receiptPending')}
+            </p>
+            <LiveNodeChip compact />
+          </div>
+          <Link
+            to={proof.hash ? `/verify?hash=${encodeURIComponent(proof.hash)}` : '/verify'}
+            data-testid="done-verify"
+            className="inline-flex min-h-[40px] items-center gap-1 rounded-lg border px-3 text-[11px] font-bold tracking-widest uppercase"
+            style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
           >
-            Stamp complete
-          </p>
-          <LiveNodeChip compact />
+            <ShieldCheck size={14} /> {t('stampDonePage.verify')}
+          </Link>
         </div>
-        <Link
-          to={proof.hash ? `/verify?hash=${encodeURIComponent(proof.hash)}` : '/verify'}
-          data-testid="done-verify"
-          className="inline-flex min-h-[40px] items-center gap-1 rounded-lg border px-3 text-[11px] font-bold tracking-widest uppercase"
-          style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
-        >
-          <ShieldCheck size={14} /> Verify
-        </Link>
-      </div>
 
-      <header className="space-y-3 text-center">
-        <div
-          className="mx-auto flex h-16 w-16 items-center justify-center rounded-full"
+        <header className="space-y-3 text-center">
+          <div
+            className={`mx-auto flex h-16 w-16 items-center justify-center rounded-full ${
+              confirmed ? 'animate-jewel-pulse' : ''
+            }`}
+            style={{
+              background: confirmed
+                ? 'linear-gradient(165deg, color-mix(in srgb, var(--accent-success) 26%, var(--surface-raised)), var(--surface-raised))'
+                : 'linear-gradient(165deg, color-mix(in srgb, var(--accent-gold) 26%, var(--surface-raised)), color-mix(in srgb, var(--accent-active) 12%, var(--surface-raised)))',
+              border: `2px solid ${confirmed ? 'var(--accent-success)' : 'var(--accent-gold)'}`,
+              boxShadow: confirmed
+                ? '0 0 34px color-mix(in srgb, var(--accent-success) 28%, transparent)'
+                : '0 0 34px color-mix(in srgb, var(--accent-gold) 24%, transparent), 0 0 60px color-mix(in srgb, var(--accent-active) 16%, transparent)'
+            }}
+          >
+            {confirmed ? (
+              <Lock size={32} style={{ color: 'var(--accent-success)' }} aria-hidden />
+            ) : (
+              <Clock
+                size={32}
+                className="animate-pulse"
+                style={{ color: 'var(--accent-gold)' }}
+                aria-hidden
+              />
+            )}
+          </div>
+          <h1
+            className={`text-2xl font-black tracking-tight uppercase ${
+              confirmed ? '' : 'text-gradient'
+            }`}
+            style={confirmed ? { color: 'var(--accent-success)' } : undefined}
+          >
+            {confirmed
+              ? t('stampDonePage.foldedIntoBitcoin')
+              : t('stampDonePage.submittedNotConfirmed')}
+          </h1>
+          {confirmed && blockHeight ? (
+            <p className="space-y-1">
+              <span
+                className="block text-4xl font-black tracking-tight tabular-nums"
+                style={{ color: 'var(--text-primary)' }}
+              >
+                {Number(blockHeight).toLocaleString(i18n.language)}
+              </span>
+              <span
+                className="block text-[10px] font-black tracking-widest uppercase"
+                style={{ color: 'var(--accent-success)' }}
+              >
+                {t('stampDonePage.bitcoinBlock')}
+              </span>
+            </p>
+          ) : (
+            <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+              {confirmed
+                ? t('stampDonePage.confirmedExplainer')
+                : t('stampDonePage.pendingExplainer')}
+            </p>
+          )}
+        </header>
+
+        <ol
+          className="jewel-edge vault-ring grid grid-cols-1 gap-2 rounded-2xl border p-4 text-left sm:grid-cols-3"
           style={{
-            background: confirmed
-              ? 'linear-gradient(165deg, color-mix(in srgb, var(--accent-success) 26%, var(--surface-raised)), var(--surface-raised))'
-              : 'linear-gradient(165deg, color-mix(in srgb, var(--accent-gold) 26%, var(--surface-raised)), color-mix(in srgb, var(--accent-active) 12%, var(--surface-raised)))',
-            border: `2px solid ${confirmed ? 'var(--accent-success)' : 'var(--accent-gold)'}`,
-            boxShadow: confirmed
-              ? '0 0 34px color-mix(in srgb, var(--accent-success) 28%, transparent)'
-              : '0 0 34px color-mix(in srgb, var(--accent-gold) 24%, transparent), 0 0 60px color-mix(in srgb, var(--accent-active) 16%, transparent)'
+            borderColor: 'var(--border)',
+            background:
+              'linear-gradient(165deg, color-mix(in srgb, var(--accent-active) 7%, var(--surface-raised)) 0%, var(--surface-raised) 60%, color-mix(in srgb, var(--accent-gold) 6%, var(--surface-raised)) 100%)'
           }}
         >
-          <CheckCircle
-            size={32}
-            className={confirmed ? 'animate-jewel-pulse' : undefined}
-            style={{ color: confirmed ? 'var(--accent-success)' : 'var(--accent-gold)' }}
+          {[
+            {
+              n: '1',
+              t: t('stampDonePage.stepFingerprint'),
+              d: t('stampDonePage.stepFingerprintDesc'),
+              tip: t('stampDonePage.stepFingerprintTip')
+            },
+            {
+              n: '2',
+              t: t('stampDonePage.stepCalendars'),
+              d: t('stampDonePage.stepCalendarsDesc'),
+              tip: t('stampDonePage.stepCalendarsTip')
+            },
+            {
+              n: '3',
+              t: t('stampDonePage.stepBitcoin'),
+              d: confirmed
+                ? blockHeight
+                  ? t('stampDonePage.stepBitcoinBlock', {
+                      block: Number(blockHeight).toLocaleString(i18n.language)
+                    })
+                  : t('stampDonePage.stepBitcoinFolded')
+                : t('stampDonePage.stepBitcoinWaiting'),
+              tip: t('stampDonePage.stepBitcoinTip')
+            }
+          ].map((s) => (
+            <li key={s.n} className="min-w-0">
+              <p
+                className="text-[9px] font-black tracking-widest uppercase"
+                style={{ color: 'var(--accent-gold)' }}
+              >
+                {s.n} · {s.t}
+                <Tooltip
+                  title={t('stampDonePage.stepTipTitle', { n: s.n, title: s.t })}
+                  content={s.tip}
+                />
+              </p>
+              <p className="mt-0.5 text-xs" style={{ color: 'var(--text-secondary)' }}>
+                {s.d}
+              </p>
+            </li>
+          ))}
+        </ol>
+
+        <div className="flex justify-center">
+          <StampSuccessActions
+            proof={proof}
+            isConfirmed={confirmed}
+            confirmedBlock={proof.bitcoin_block_height}
+            upgradeStatus={proof.status}
+            onStampAnother={() => navigate('/stamp')}
           />
         </div>
-        <h1
-          className={`text-2xl font-black tracking-tight uppercase ${
-            confirmed ? '' : 'text-gradient'
-          }`}
-          style={confirmed ? { color: 'var(--text-primary)' } : undefined}
-        >
-          {confirmed ? 'Proof confirmed' : 'Stamp received'}
-        </h1>
-        <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-          {confirmed
-            ? 'Your fingerprint is anchored on Bitcoin via OpenTimestamps.'
-            : 'Submitted successfully. Pending is not the same as Bitcoin confirmed. This page polls every 8s.'}
-        </p>
-      </header>
-
-      <ol
-        className="jewel-edge vault-ring grid grid-cols-1 gap-2 rounded-2xl border p-4 text-left sm:grid-cols-3"
-        style={{
-          borderColor: 'var(--border)',
-          background:
-            'linear-gradient(165deg, color-mix(in srgb, var(--accent-active) 7%, var(--surface-raised)) 0%, var(--surface-raised) 60%, color-mix(in srgb, var(--accent-gold) 6%, var(--surface-raised)) 100%)'
-        }}
-      >
-        {[
-          {
-            n: '1',
-            t: 'Fingerprint',
-            d: 'Hashed on this device',
-            tip: 'A fingerprint (SHA-256) is a short, unique ID for your file, made on your own device. It never leaves your control as plain text.'
-          },
-          {
-            n: '2',
-            t: 'Calendars',
-            d: 'OpenTimestamps pending',
-            tip: 'Independent public calendars agree on the time. They are free and open — no account needed — so no single company controls your proof.'
-          },
-          {
-            n: '3',
-            t: 'Bitcoin',
-            d: confirmed ? 'Anchored' : 'Waiting on a block',
-            tip: 'Your fingerprint gets folded into a public Bitcoin block. Once there, it is permanent and anyone can check it forever — that is the final, tamper-evident seal.'
-          }
-        ].map((s) => (
-          <li key={s.n} className="min-w-0">
-            <p
-              className="text-[9px] font-black tracking-widest uppercase"
-              style={{ color: 'var(--accent-gold)' }}
-            >
-              {s.n} · {s.t}
-              <Tooltip title={`Step ${s.n} — ${s.t}`} content={s.tip} />
-            </p>
-            <p className="mt-0.5 text-xs" style={{ color: 'var(--text-secondary)' }}>
-              {s.d}
-            </p>
-          </li>
-        ))}
-      </ol>
-
-      <div className="flex justify-center">
-        <StampSuccessActions
-          proof={proof}
-          isConfirmed={confirmed}
-          confirmedBlock={proof.bitcoin_block_height}
-          upgradeStatus={proof.status}
-          onStampAnother={() => navigate('/stamp')}
-        />
       </div>
-    </div>
-    <Footer />
+      <Footer />
     </>
   )
 }

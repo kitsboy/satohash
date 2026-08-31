@@ -45,7 +45,7 @@ export function Certificates() {
             <h1 className="text-4xl font-bold tracking-tighter uppercase">Certificates</h1>
           </div>
           <p className="font-medium text-[var(--text-secondary)]">
-            Assemble case-ready evidence and legal-grade reports.
+            Assemble independently verifiable proof packages and receipts.
           </p>
         </div>
         <button

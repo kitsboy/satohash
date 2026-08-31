@@ -1,14 +1,107 @@
 /**
  * useOfflineSync — Offline queue & background sync for proof timestamping.
- * When offline: stamps are queued to IndexedDB.
- * When online:  queued stamps are retried automatically.
+ * Hash locally (WebCrypto, no network). Queue POST /api/stamp in IndexedDB.
+ * Flush when back online. Queued ≠ Bitcoin-confirmed.
  */
-import { useState, useEffect, useCallback, useRef } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { toast } from 'sonner'
-import { getApiUrl } from '../config/constants'
+import { getApiUrl, PUBLIC_API_URL } from '../config/constants'
 
 const DB_NAME = 'satohash_offline'
 const STORE = 'stamp_queue'
+export const MAX_STAMP_RETRIES = 8
+
+/** Shared across hook instances so App + AppShellNoir do not double-flush. */
+let flushing = false
+
+export function resolveStampApi(apiBase) {
+  const u = String(apiBase || getApiUrl() || '')
+  if (/localhost|127\.0\.0\.1/.test(u)) return PUBLIC_API_URL
+  return u.replace(/\/$/, '')
+}
+
+export function stampRequestHeaders(payload) {
+  const client = String(payload?.client_id || payload?.clientId || 'spa').trim() || 'spa'
+  return {
+    'Content-Type': 'application/json',
+    'X-Satohash-Client': client
+  }
+}
+
+export function buildQueueItem(payload, { now = Date.now(), id } = {}) {
+  const hash = String(payload?.hash || payload?.fileSha256 || '')
+  const filename = String(payload?.filename || 'unknown')
+  return {
+    id: id || `queue-${now.toString(36)}-${Math.random().toString(36).slice(2, 8)}`,
+    payload,
+    fileSha256: hash,
+    filename,
+    queuedAt: new Date(now).toISOString(),
+    retries: 0
+  }
+}
+
+export function nextRetry(item) {
+  return { ...item, retries: (item.retries || 0) + 1 }
+}
+
+/**
+ * Drop 4xx (except 429) after MAX_STAMP_RETRIES.
+ * Call on the item AFTER nextRetry(). Network (null status) and 429 never drop.
+ */
+export function shouldDrop(item, status) {
+  if (status == null) return false
+  if (status === 429) return false
+  if (status >= 400 && status < 500) {
+    return (item.retries || 0) >= MAX_STAMP_RETRIES
+  }
+  return false
+}
+
+async function toArrayBuffer(file) {
+  if (file instanceof ArrayBuffer) return file
+  if (ArrayBuffer.isView(file)) {
+    return file.buffer.slice(file.byteOffset, file.byteOffset + file.byteLength)
+  }
+  if (file && typeof file.arrayBuffer === 'function') return file.arrayBuffer()
+  if (typeof FileReader !== 'undefined' && file && typeof file.size === 'number') {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader()
+      reader.onload = () => resolve(reader.result)
+      reader.onerror = () => reject(reader.error || new Error('FileReader failed'))
+      reader.readAsArrayBuffer(file)
+    })
+  }
+  throw new TypeError('hashFileOffline: expected File, Blob, or ArrayBuffer')
+}
+
+async function hashBufferMainThread(buffer) {
+  const hashBuffer = await crypto.subtle.digest('SHA-256', buffer)
+  const hashArray = Array.from(new Uint8Array(hashBuffer))
+  return hashArray.map((b) => b.toString(16).padStart(2, '0')).join('')
+}
+
+/** SHA-256 via hashWorker (WebCrypto). Works with no network. */
+export async function hashFileOffline(file) {
+  const buffer = await toArrayBuffer(file)
+  if (typeof Worker !== 'undefined') {
+    try {
+      const { wrap } = await import('comlink')
+      const worker = new Worker(new URL('../workers/hashWorker.js', import.meta.url), {
+        type: 'module'
+      })
+      const hashFn = wrap(worker)
+      try {
+        return await hashFn.hashFile(buffer)
+      } finally {
+        worker.terminate()
+      }
+    } catch {
+      /* worker unavailable — main thread */
+    }
+  }
+  return hashBufferMainThread(buffer)
+}
 
 function openDB() {
   return new Promise((res, rej) => {
@@ -55,11 +148,25 @@ async function dbClear() {
   })
 }
 
+async function postStamp(api, payload) {
+  const res = await fetch(`${api}/api/stamp`, {
+    method: 'POST',
+    headers: stampRequestHeaders(payload),
+    body: JSON.stringify(payload)
+  })
+  let result = null
+  try {
+    result = await res.json()
+  } catch {
+    result = { success: res.ok, status: res.status }
+  }
+  return { res, result }
+}
+
 export function useOfflineSync(apiBase) {
   const [isOnline, setIsOnline] = useState(() => navigator.onLine)
   const [queue, setQueue] = useState([])
-  const flushing = useRef(false)
-  const API = apiBase || getApiUrl()
+  const API = resolveStampApi(apiBase)
 
   useEffect(() => {
     dbGetAll()
@@ -70,11 +177,11 @@ export function useOfflineSync(apiBase) {
   useEffect(() => {
     const onOnline = () => {
       setIsOnline(true)
-      toast.success('Back online — syncing queued stamps…')
+      toast.success('Back online — submitting queued fingerprints to calendars…')
     }
     const onOffline = () => {
       setIsOnline(false)
-      toast.warning('Offline — stamps will be queued locally')
+      toast.warning('Offline — fingerprints hash locally; calendar stamp waits until you reconnect')
     }
     window.addEventListener('online', onOnline)
     window.addEventListener('offline', onOffline)
@@ -85,33 +192,52 @@ export function useOfflineSync(apiBase) {
   }, [])
 
   const flushQueue = useCallback(async () => {
-    if (flushing.current) return
-    flushing.current = true
-    const items = await dbGetAll()
-    let ok = 0,
-      fail = 0
-    for (const item of items) {
-      try {
-        const res = await fetch(`${API}/api/stamp`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(item.payload)
-        })
-        if (res.ok) {
-          await dbDelete(item.id)
-          ok++
-        } else {
-          await dbPut({ ...item, retries: (item.retries || 0) + 1 })
+    if (flushing) return
+    flushing = true
+    let ok = 0
+    let fail = 0
+    let dropped = 0
+    try {
+      const items = await dbGetAll()
+      for (const item of items) {
+        try {
+          const { res } = await postStamp(API, item.payload)
+          if (res.ok) {
+            await dbDelete(item.id)
+            ok++
+            continue
+          }
+          const updated = nextRetry(item)
+          if (shouldDrop(updated, res.status)) {
+            await dbDelete(item.id)
+            dropped++
+          } else {
+            await dbPut(updated)
+            fail++
+          }
+        } catch {
           fail++
         }
-      } catch {
-        fail++
       }
+      setQueue(await dbGetAll())
+    } catch {
+      /* IDB unavailable */
+    } finally {
+      flushing = false
     }
-    setQueue(await dbGetAll())
-    if (ok) toast.success(`Synced ${ok} queued stamp${ok > 1 ? 's' : ''}`)
-    if (fail) toast.error(`${fail} stamp${fail > 1 ? 's' : ''} failed to sync — will retry`)
-    flushing.current = false
+    if (ok) {
+      toast.success(
+        `Submitted ${ok} queued stamp${ok > 1 ? 's' : ''} to calendars (pending Bitcoin confirmation)`
+      )
+    }
+    if (fail) {
+      toast.error(`${fail} queued stamp${fail > 1 ? 's' : ''} not submitted — will retry`)
+    }
+    if (dropped) {
+      toast.error(
+        `${dropped} queued stamp${dropped > 1 ? 's' : ''} dropped after ${MAX_STAMP_RETRIES} failed attempts`
+      )
+    }
   }, [API])
 
   useEffect(() => {
@@ -120,33 +246,24 @@ export function useOfflineSync(apiBase) {
 
   const queueStamp = useCallback(
     async (payload) => {
-      const item = {
-        id: `queue-${Date.now().toString(36)}`,
-        payload,
-        queuedAt: new Date().toISOString(),
-        retries: 0
-      }
+      const item = buildQueueItem(payload)
       if (!isOnline) {
         await dbPut(item)
         setQueue((q) => [...q, item])
-        toast.info(`Stamp queued offline (${queue.length + 1} pending)`)
-        return { queued: true }
+        toast.info('Queued locally — SHA-256 hashed, not yet sent to Bitcoin calendars')
+        return { queued: true, item }
       }
       try {
-        const res = await fetch(`${API}/api/stamp`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        })
-        return { queued: false, result: await res.json() }
+        const { res, result } = await postStamp(API, payload)
+        return { queued: false, result, status: res.status }
       } catch {
         await dbPut(item)
         setQueue((q) => [...q, item])
-        toast.warning('Network error — stamp queued locally')
-        return { queued: true }
+        toast.warning('Network error — hashed fingerprint queued; not Bitcoin-confirmed')
+        return { queued: true, item }
       }
     },
-    [isOnline, queue.length, API]
+    [isOnline, API]
   )
 
   const clearQueue = useCallback(async () => {
@@ -155,7 +272,15 @@ export function useOfflineSync(apiBase) {
     toast.info('Queue cleared')
   }, [])
 
-  return { isOnline, queue, queueCount: queue.length, queueStamp, flushQueue, clearQueue }
+  return {
+    isOnline,
+    queue,
+    queueCount: queue.length,
+    queueStamp,
+    flushQueue,
+    clearQueue,
+    hashFileOffline
+  }
 }
 
 export default useOfflineSync

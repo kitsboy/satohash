@@ -591,7 +591,12 @@
       },
       "v3Label": "Proof DNA v3"
     },
-    "nip05Cta": "Configurer l'identité NIP-05"
+    "nip05Cta": "Configurer l'identité NIP-05",
+    "stampWidget": {
+      "title": "Stamp on Satohash",
+      "body": "Les apps de la famille hachent sur l’appareil, puis ouvrent satohash.io/stamp?hash=&ref= pour que le SPA envoie X-Satohash-Client. Katoa, Sherpa, Tadbuy et OpenStrata utilisent le même widget — le fichier n’est jamais envoyé.",
+      "embedLabel": "Widget de stamp"
+    }
   },
   "docsPage": {
     "nav": "Documentation",
@@ -832,7 +837,8 @@
   },
   "appPage": {
     "skipToContent": "Aller au contenu principal",
-    "offlineBanner": "Hors ligne — les modifications seront synchronisées à la reconnexion"
+    "offlineBanner": "Hors ligne — les modifications seront synchronisées à la reconnexion",
+    "offlineBannerQueued": "Hors ligne — {{count}} empreintes hachées, en attente de tampon"
   },
   "onboardingPage": {
     "skip": "Passer",
@@ -1178,7 +1184,68 @@
     "step2Label": "Nous le hachons localement",
     "step2Desc": "Une empreinte SHA-256 unique est calculée dans votre navigateur.",
     "step3Label": "Bitcoin l’horodate",
-    "step3Desc": "L’empreinte est écrite de façon permanente sur la blockchain."
+    "step3Desc": "L’empreinte est écrite de façon permanente sur la blockchain.",
+    "moreOptions": "Plus d’options (capsule · redact · voix)",
+    "filePhotoOrHash": "Fichier · photo · ou hash — un seul geste",
+    "hashingLabel": "Hachage local",
+    "anchoringLabel": "Ancrage sur Bitcoin",
+    "hashingProgress": "Calcul de l’empreinte SHA-256 sur cet appareil...",
+    "anchoringProgress": "Envoi vers Bitcoin via OpenTimestamps...",
+    "hashingSticky": "Hachage…",
+    "anchoringSticky": "Ancrage…",
+    "stampHashSticky": "Tamponner le hash sur Bitcoin",
+    "privacyGuarantee": "Garantie de confidentialité",
+    "privacyGuaranteeBody": "Le fichier original ne quitte pas votre appareil. Nous n’envoyons qu’une empreinte SHA-256 — en attente n’est pas confirmé sur Bitcoin.",
+    "caseConfig": "Configuration du dossier",
+    "caseLabel": "Libellé / ID de dossier",
+    "casePlaceholder": "ex. Archive successorale 2026",
+    "hashOnly": "Hash seul",
+    "hashOnlyBody": "Vous avez déjà un SHA-256 ? Collez-le. Le fichier n’a pas besoin d’arriver ici.",
+    "hashOnlyPlaceholder": "64 caractères hex",
+    "fileTooLarge": "Fichier de {{size}} Mo — max {{max}} Mo dans le navigateur. Hachez hors ligne et collez le SHA-256.",
+    "fileTooLargeToast": "Fichier trop volumineux pour tamponner dans le navigateur",
+    "fileTooLargeToastDesc": "Utilisez un fichier plus petit ou tamponnez un hash SHA-256 déjà calculé",
+    "tooManyRequests": "Trop de requêtes — réessayez dans {{seconds}} s",
+    "notifyEmailPlaceholder": "M’envoyer un e-mail à la confirmation (optionnel)",
+    "photosGallery": "Photos / galerie",
+    "folderCapsule": "Dossier (une capsule Merkle)",
+    "otsViaBitcoin": "Ancré via OpenTimestamps → Bitcoin",
+    "freeStamp": "Tampon gratuit",
+    "openingSuccess": "Ouverture de l’écran de succès…",
+    "targetAsset": "Fichier cible",
+    "capsuleManifest": "Manifeste de capsule ({{count}} fichiers)",
+    "clear": "Effacer",
+    "stepN": "Étape {{n}}",
+    "verify": "Vérifier",
+    "vault": "Coffre",
+    "watch": "Voir",
+    "invalidStampLink": "Lien de tampon invalide"
+  },
+  "stampDonePage": {
+    "loading": "Chargement de la preuve…",
+    "emptyTitle": "Aucun tampon sur cet écran",
+    "emptyBody": "Votre dernière preuve est sur cet appareil. Si vous avez actualisé un onglet vide, tamponnez à nouveau — Retour ne renvoie pas.",
+    "emptyCta": "Aller tamponner",
+    "receipt": "Reçu",
+    "receiptPending": "Reçu — en attente",
+    "foldedIntoBitcoin": "Plié dans Bitcoin",
+    "submittedNotConfirmed": "Envoyé — pas encore confirmé sur Bitcoin",
+    "bitcoinBlock": "Bloc Bitcoin",
+    "pendingExplainer": "En attente n’est pas confirmé. Cette page interroge toutes les 8 s jusqu’à un bloc.",
+    "confirmedExplainer": "Votre empreinte est dans la chaîne via OpenTimestamps.",
+    "verify": "Vérifier",
+    "stepFingerprint": "Empreinte",
+    "stepFingerprintDesc": "Haché sur cet appareil",
+    "stepFingerprintTip": "Une empreinte (SHA-256) est un identifiant court et unique de votre fichier, calculé sur votre appareil. Elle ne part pas en clair.",
+    "stepCalendars": "Calendriers",
+    "stepCalendarsDesc": "OpenTimestamps en attente",
+    "stepCalendarsTip": "Des calendriers publics indépendants s’accordent sur le moment. Ils sont gratuits et ouverts — sans compte — aucune entreprise ne contrôle votre preuve.",
+    "stepBitcoin": "Bitcoin",
+    "stepBitcoinWaiting": "En attente d’un bloc",
+    "stepBitcoinFolded": "Plié",
+    "stepBitcoinBlock": "Bloc {{block}}",
+    "stepBitcoinTip": "Votre empreinte est pliée dans un bloc Bitcoin public. Une fois là, n’importe qui peut la vérifier — le sceau infalsifiable.",
+    "stepTipTitle": "Étape {{n}} — {{title}}"
   },
   "vaultPage": {
     "securityAge": {

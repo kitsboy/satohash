@@ -591,7 +591,12 @@
       },
       "v3Label": "Proof DNA v3"
     },
-    "nip05Cta": "Configurar identidade NIP-05"
+    "nip05Cta": "Configurar identidade NIP-05",
+    "stampWidget": {
+      "title": "Stamp on Satohash",
+      "body": "Os apps da família fazem o hash no dispositivo e abrem satohash.io/stamp?hash=&ref= para a SPA enviar X-Satohash-Client. Katoa, Sherpa, Tadbuy e OpenStrata usam o mesmo widget — o arquivo nunca é enviado.",
+      "embedLabel": "Widget de stamp"
+    }
   },
   "docsPage": {
     "nav": "Documentação",
@@ -832,7 +837,8 @@
   },
   "appPage": {
     "skipToContent": "Ir para o conteúdo principal",
-    "offlineBanner": "Offline — as alterações serão sincronizadas ao reconectar"
+    "offlineBanner": "Offline — as alterações serão sincronizadas ao reconectar",
+    "offlineBannerQueued": "Offline — {{count}} impressões digitais hasheadas, aguardando selo"
   },
   "onboardingPage": {
     "skip": "Pular",
@@ -1178,7 +1184,68 @@
     "step2Label": "Hasheamos localmente",
     "step2Desc": "Uma impressão SHA-256 única é calculada no seu navegador.",
     "step3Label": "O Bitcoin carimba no tempo",
-    "step3Desc": "A impressão é gravada permanentemente na blockchain."
+    "step3Desc": "A impressão é gravada permanentemente na blockchain.",
+    "moreOptions": "Mais opções (cápsula · redigir · voz)",
+    "filePhotoOrHash": "Arquivo · foto · ou hash — um único gesto",
+    "hashingLabel": "Hash local",
+    "anchoringLabel": "Ancorando no Bitcoin",
+    "hashingProgress": "Calculando impressão SHA-256 neste dispositivo...",
+    "anchoringProgress": "Enviando ao Bitcoin via OpenTimestamps...",
+    "hashingSticky": "Hasheando…",
+    "anchoringSticky": "Ancorando…",
+    "stampHashSticky": "Carimbar hash no Bitcoin",
+    "privacyGuarantee": "Garantia de privacidade",
+    "privacyGuaranteeBody": "O arquivo original não sai do seu dispositivo. Enviamos só uma impressão SHA-256 — pendente não é confirmado no Bitcoin.",
+    "caseConfig": "Configuração do caso",
+    "caseLabel": "Rótulo / ID do caso",
+    "casePlaceholder": "ex. Arquivo sucessório 2026",
+    "hashOnly": "Só hash",
+    "hashOnlyBody": "Já tem um SHA-256? Cole. O arquivo não precisa vir aqui.",
+    "hashOnlyPlaceholder": "64 caracteres hex",
+    "fileTooLarge": "O arquivo tem {{size}} MB — máximo {{max}} MB no navegador. Hasheie offline e cole o SHA-256.",
+    "fileTooLargeToast": "Arquivo grande demais para carimbar no navegador",
+    "fileTooLargeToastDesc": "Use um arquivo menor ou carimbe um hash SHA-256 já calculado",
+    "tooManyRequests": "Muitas solicitações — tente de novo em {{seconds}} s",
+    "notifyEmailPlaceholder": "Avise-me por e-mail ao confirmar (opcional)",
+    "photosGallery": "Fotos / galeria",
+    "folderCapsule": "Pasta (uma cápsula Merkle)",
+    "otsViaBitcoin": "Ancorado via OpenTimestamps → Bitcoin",
+    "freeStamp": "Carimbo grátis",
+    "openingSuccess": "Abrindo tela de sucesso…",
+    "targetAsset": "Arquivo alvo",
+    "capsuleManifest": "Manifesto da cápsula ({{count}} arquivos)",
+    "clear": "Limpar",
+    "stepN": "Passo {{n}}",
+    "verify": "Verificar",
+    "vault": "Cofre",
+    "watch": "Assistir",
+    "invalidStampLink": "Link de carimbo inválido"
+  },
+  "stampDonePage": {
+    "loading": "Carregando prova…",
+    "emptyTitle": "Nenhum carimbo nesta tela",
+    "emptyBody": "Sua última prova está neste dispositivo. Se recarregou uma aba em branco, carimbe de novo — Voltar não reenvia.",
+    "emptyCta": "Ir para Carimbar",
+    "receipt": "Recibo",
+    "receiptPending": "Recibo — pendente",
+    "foldedIntoBitcoin": "Dobrado no Bitcoin",
+    "submittedNotConfirmed": "Enviado — ainda não confirmado no Bitcoin",
+    "bitcoinBlock": "Bloco Bitcoin",
+    "pendingExplainer": "Pendente não é confirmado. Esta página consulta a cada 8 s até um bloco entrar.",
+    "confirmedExplainer": "Sua impressão está na cadeia via OpenTimestamps.",
+    "verify": "Verificar",
+    "stepFingerprint": "Impressão",
+    "stepFingerprintDesc": "Hasheado neste dispositivo",
+    "stepFingerprintTip": "Uma impressão (SHA-256) é um ID curto e único do seu arquivo, feito no seu dispositivo. Não sai como texto puro.",
+    "stepCalendars": "Calendários",
+    "stepCalendarsDesc": "OpenTimestamps pendente",
+    "stepCalendarsTip": "Calendários públicos independentes concordam no momento. São gratuitos e abertos — sem conta — nenhuma empresa controla sua prova.",
+    "stepBitcoin": "Bitcoin",
+    "stepBitcoinWaiting": "Aguardando um bloco",
+    "stepBitcoinFolded": "Dobrado",
+    "stepBitcoinBlock": "Bloco {{block}}",
+    "stepBitcoinTip": "Sua impressão é dobrada num bloco público de Bitcoin. Lá, qualquer um pode conferir — o selo à prova de adulteração.",
+    "stepTipTitle": "Passo {{n}} — {{title}}"
   },
   "vaultPage": {
     "securityAge": {

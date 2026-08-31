@@ -39,7 +39,6 @@
   <url><loc>https://satohash.io/stamp</loc><priority>0.9</priority><changefreq>weekly</changefreq></url>
   <url><loc>https://satohash.io/verify</loc><priority>0.9</priority><changefreq>weekly</changefreq></url>
   <url><loc>https://satohash.io/verify/batch</loc><priority>0.7</priority><changefreq>weekly</changefreq><lastmod>2026-08-20</lastmod></url>
-  <url><loc>https://satohash.io/community/proof-wall</loc><priority>0.7</priority><changefreq>daily</changefreq></url>
   <url><loc>https://satohash.io/vault</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
   <url><loc>https://satohash.io/security</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
   <url><loc>https://satohash.io/developer</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
@@ -64,7 +63,6 @@
   <url><loc>https://satohash.io/network</loc><priority>0.7</priority><changefreq>daily</changefreq></url>
   <url><loc>https://satohash.io/status</loc><priority>0.8</priority><changefreq>hourly</changefreq></url>
   <url><loc>https://satohash.io/counsel</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
-  <url><loc>https://satohash.io/community/proof-wall</loc><priority>0.6</priority><changefreq>daily</changefreq></url>
   <url><loc>https://satohash.io/llms.txt</loc><priority>0.5</priority><changefreq>monthly</changefreq><lastmod>2026-08-29</lastmod></url>
   <url><loc>https://satohash.io/feed.xml</loc><priority>0.5</priority><changefreq>weekly</changefreq><lastmod>2026-08-29</lastmod></url>
   <url><loc>https://satohash.io/docs/how-satohash-works</loc><priority>0.8</priority><changefreq>monthly</changefreq><lastmod>2026-08-29</lastmod></url>

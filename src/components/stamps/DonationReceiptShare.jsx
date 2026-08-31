@@ -9,6 +9,7 @@
 import { Share2, Mail, FileDown, Copy, Check } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'sonner'
+import { buildXIntent, buildNostrShareLinks } from '../../utils/shareProof'
 
 function buildVerifyUrl(proof) {
   if (typeof window === 'undefined') return ''
@@ -57,9 +58,16 @@ export default function DonationReceiptShare({ proof, isDonation = false }) {
     }
   }
 
-  const xIntent = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`
-  const nostrShare = `https://iris.to/post?text=${encodeURIComponent(`${text}\n${url}`)}`
+  const xIntent = buildXIntent({ text, url })
+  const nostrLinks = buildNostrShareLinks({
+    text,
+    url,
+    nostrEventId: proof?.nostr_event_id
+  })
   const mailto = `mailto:?subject=${encodeURIComponent('A Give A Bit receipt to verify')}&body=${encodeURIComponent(`${text}\n\n${url}`)}`
+  const shareLinkClass =
+    'flex min-h-[44px] items-center justify-center gap-2 rounded-xl border text-xs font-black tracking-wider uppercase'
+  const shareLinkStyle = { borderColor: 'var(--border)', color: 'var(--text-primary)' }
 
   return (
     <div
@@ -95,26 +103,24 @@ export default function DonationReceiptShare({ proof, isDonation = false }) {
           href={xIntent}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex min-h-[44px] items-center justify-center gap-2 rounded-xl border text-xs font-black tracking-wider uppercase"
-          style={{ borderColor: 'var(--border)', color: 'var(--text-primary)' }}
+          className={shareLinkClass}
+          style={shareLinkStyle}
         >
           X / Twitter
         </a>
-        <a
-          href={nostrShare}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex min-h-[44px] items-center justify-center gap-2 rounded-xl border text-xs font-black tracking-wider uppercase"
-          style={{ borderColor: 'var(--border)', color: 'var(--text-primary)' }}
-        >
-          Nostr
-        </a>
-        <button
-          type="button"
-          onClick={copyLink}
-          className="flex min-h-[44px] items-center justify-center gap-2 rounded-xl border text-xs font-black tracking-wider uppercase"
-          style={{ borderColor: 'var(--border)', color: 'var(--text-primary)' }}
-        >
+        {nostrLinks.map((link) => (
+          <a
+            key={link.href}
+            href={link.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={shareLinkClass}
+            style={shareLinkStyle}
+          >
+            {link.label}
+          </a>
+        ))}
+        <button type="button" onClick={copyLink} className={shareLinkClass} style={shareLinkStyle}>
           {copied ? <Check size={15} /> : <Copy size={15} />} {copied ? 'Copied' : 'Copy link'}
         </button>
       </div>

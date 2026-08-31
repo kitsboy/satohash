@@ -1,5 +1,5 @@
-# satohash — Last Updated 2026-08-29 by Grok (M3) · goodbye
+# satohash — Last Updated 2026-08-31 by Grok (M3)
 
-**Brief:** Session closed. Tip `f02a575`. Kimi vault = THOR Obsidian. Next: pin `/watch`, Nostr bot identity.
+**Brief:** Authored stamps bind Nostr sig into the OTS digest; family `widgets/stamp.js`; offline hash+queue; stamp/done i18n. Also shipped prior polish (hide v5 shells, honest copy, share `via=give_bit`, film hero, receipts).
 
-Pickup: `docs/archive/SESSION-SUMMARY-2026-08-29-goodbye.md`
+Pickup: `docs/handoff-log.md` (2026-08-31)

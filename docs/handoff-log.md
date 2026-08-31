@@ -1,3 +1,19 @@
+## 2026-08-31 (Grok M3 — authored stamp + family widget + offline queue + i18n; polish batch)
+
+**From:** Grok M3 · **To:** Kimi / next · **Status:** in tree, Cam asked commit+push.
+
+**This drop:**
+- Authored mode (`satohash-authored:v1`): SHA-256(file fingerprint ∥ canonical signed Nostr event) is what OTS stamps. Optional `authored` field on existing POST `/api/stamp`. Panel on `/stamp` after local hash. Independent verify: hash file → verifyEvent → recompute digest → .ots.
+- Family widget: `public/widgets/stamp.js` — hash on-device, deep-link `/stamp?hash=&ref=` (`X-Satohash-Client`). Optional `data-mode="api"` with CORS fallback.
+- Offline-first: IndexedDB queue + `hashFileOffline`. Did **not** re-enable Workbox (`selfDestroying` stays). Queued ≠ confirmed.
+- `/stamp` + `/stamp/done` user copy in en es fr de pt sw zh.
+
+**Earlier same session (also in this commit):** hide v5 cross-chain/AI/leaderboard shells; one-mode stamp; legal overclaim cleanup; share sheet `via=give_bit` + njump/Snort/Primal; landing 84s film hero; `/stamp/done` folded-into-Bitcoin receipt; `/p/<hash>` PENDING ≠ CONFIRMED.
+
+**Do not:** flip REQUIRE_LIGHTNING · change `/api/*` paths · commit nsec · `@satohash` (handle taken; Cam creating `@satohashio` later).
+
+---
+
 ## 2026-08-29 (Kimi — CAM'S LOCKED SATOHASH PRICING DECISION — single source of truth, epic t_fe3df917)
 
 **From:** Kimi (orchestrator, per Cam) · **To:** all lanes · **Status:** LOCKED/AUTHORITATIVE — Option B. Resolves the v3-vs-FINANCIALS contradiction flagged by four agents. Recorded permanently in fact_store (fact_id 1) + here. Children queued to Nova (FINANCIALS+v3, t_0d46091c), Mimi (marketing contradiction, t_b3d12aec), Lenny (terms+entity placeholder, t_1ce7d6f2), Ziggy/Grok (consolidated commit+deploy, t_93f489e7).

@@ -22,6 +22,7 @@ import 'nprogress/nprogress.css'
 import { getApiUrl } from './config/constants'
 import { isMarketingPublicPath, needsMarketingShell } from './utils/publicRoutes'
 import useAppHotkeys from './hooks/useAppHotkeys'
+import { useOfflineSync } from './hooks/useOfflineSync'
 
 import { lazyWithReload } from './utils/lazyWithReload'
 
@@ -113,10 +114,6 @@ const SignatureFlow = lazyWithReload(() => import('./pages/signatures/SignatureF
 const V5ProofOfExistence = lazyWithReload(() =>
   import('./pages/v5/V5Pages').then((m) => ({ default: m.ProofOfExistencePage }))
 )
-
-const V5BatchVerify = lazyWithReload(() =>
-  import('./pages/v5/V5Pages').then((m) => ({ default: m.BatchVerifyPage }))
-)
 const V5LiveFeed = lazyWithReload(() =>
   import('./pages/v5/V5Pages').then((m) => ({ default: m.StampLiveFeedPage }))
 )
@@ -132,26 +129,11 @@ const V5Bitcoin = lazyWithReload(() =>
 const V5Block = lazyWithReload(() =>
   import('./pages/v5/V5Pages').then((m) => ({ default: m.BlockPage }))
 )
-const V5CrossChain = lazyWithReload(() =>
-  import('./pages/v5/V5Pages').then((m) => ({ default: m.CrossChainVerifyPage }))
-)
-const V5AiHub = lazyWithReload(() =>
-  import('./pages/v5/V5Pages').then((m) => ({ default: m.AiHubPage }))
-)
-const V5ProofWall = lazyWithReload(() =>
-  import('./pages/v5/V5Pages').then((m) => ({ default: m.ProofWallPage }))
-)
-const V5Leaderboard = lazyWithReload(() =>
-  import('./pages/v5/V5Pages').then((m) => ({ default: m.LeaderboardPage }))
-)
 const V5Widget = lazyWithReload(() =>
   import('./pages/v5/V5Pages').then((m) => ({ default: m.ProofWidgetPage }))
 )
 const V5Report = lazyWithReload(() =>
   import('./pages/v5/V5Pages').then((m) => ({ default: m.StampReportPage }))
-)
-const V5WizardPro = lazyWithReload(() =>
-  import('./pages/v5/V5Pages').then((m) => ({ default: m.StampWizardProPage }))
 )
 
 // Onboarding flow (protected)
@@ -342,28 +324,24 @@ function AppContent() {
             <Route path="/status" element={<StatusPublic />} />
             <Route path="/counsel" element={<Counsel />} />
             <Route path="/p/:hash" element={<ProofCardPublic />} />
-            <Route path="/verify/batch" element={<V5BatchVerify />} />
             <Route path="/stamp/live-feed" element={<V5LiveFeed />} />
             <Route path="/compare" element={<V5Compare />} />
             <Route path="/developer/playground" element={<V5Playground />} />
             <Route path="/bitcoin" element={<V5Bitcoin />} />
             <Route path="/block/:height" element={<V5Block />} />
-            <Route path="/verify/cross-chain" element={<V5CrossChain />} />
-            <Route path="/ai" element={<V5AiHub />} />
-            <Route path="/ai-notary" element={<V5AiHub />} />
-            <Route path="/community/proof-wall" element={<V5ProofWall />} />
-            <Route path="/community/leaderboard" element={<V5Leaderboard />} />
+            <Route path="/verify/cross-chain" element={<Navigate to="/verify" replace />} />
+            <Route path="/ai" element={<Navigate to="/docs" replace />} />
+            <Route path="/ai-notary" element={<Navigate to="/docs" replace />} />
+            <Route path="/community/proof-wall" element={<Navigate to="/network" replace />} />
+            <Route path="/community/leaderboard" element={<Navigate to="/network" replace />} />
             <Route path="/widget/proof/:hash" element={<V5Widget />} />
             <Route path="/stamp/:id/report" element={<V5Report />} />
-            <Route path="/stamp/wizard-pro" element={<V5WizardPro />} />
+            <Route path="/stamp/wizard-pro" element={<Navigate to="/stamp" replace />} />
             <Route path="/stamp/drag-and-drop" element={<Navigate to="/stamp" replace />} />
             <Route path="/mobile-scanner" element={<Navigate to="/stamp" replace />} />
             <Route path="/history/timeline" element={<Navigate to="/vault" replace />} />
             <Route path="/dashboard/metrics" element={<Navigate to="/protocol-stats" replace />} />
-            <Route
-              path="/community/feed"
-              element={<Navigate to="/community/proof-wall" replace />}
-            />
+            <Route path="/community/feed" element={<Navigate to="/network" replace />} />
             <Route path="/verify/social" element={<Navigate to="/proof-of-existence" replace />} />
             <Route
               path="/settings"
@@ -613,6 +591,7 @@ function AppContent() {
 
 function App() {
   const [isOffline, setIsOffline] = useState(!navigator.onLine)
+  const { queueCount } = useOfflineSync()
   const [showOnboarding, setShowOnboarding] = useState(() => {
     return (
       localStorage.getItem('satohash_authed') === 'true' &&
@@ -668,7 +647,7 @@ function App() {
             <ScrollToTop />
             <LangUrlSync />
             <SkipToContent />
-            {isOffline && <OfflineBanner />}
+            {isOffline && <OfflineBanner queueCount={queueCount} />}
             <DeepHealthBanner />
             <PaywallPreviewBanner />
 

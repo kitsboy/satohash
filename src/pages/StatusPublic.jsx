@@ -246,6 +246,14 @@ export default function StatusPublic() {
   const btcFallback = !btc && network ? network : null
   const ots = details?.ots || null
   const nostr = details?.nostr || null
+  const nostrOk = Number(nostr?.ok_count)
+  const nostrTotal = Number(nostr?.total)
+  const nostrAllUp =
+    Number.isFinite(nostrOk) &&
+    Number.isFinite(nostrTotal) &&
+    nostrTotal > 0 &&
+    nostrOk === nostrTotal
+  const nostrSomeUp = Number.isFinite(nostrOk) && nostrOk > 0 && !nostrAllUp
   const lightning = details?.lightning || null
   const paywall = details?.paywall || null
   const calendarLatency = data.stats?.calendar_health || {}
@@ -477,15 +485,11 @@ export default function StatusPublic() {
           title="Nostr relays"
           right={
             nostr ? (
-              nostr.status === 'healthy' || nostr.status === 'ok' ? (
-                <Pill ok>
-                  {nostr.ok_count ?? '—'}/{nostr.total ?? '—'} ok
-                </Pill>
-              ) : (
-                <Pill pending>
-                  {nostr.ok_count ?? '—'}/{nostr.total ?? '—'} ok
-                </Pill>
-              )
+              <Pill ok={nostrAllUp} pending={nostrSomeUp || (!nostrAllUp && nostrOk !== 0)}>
+                {Number.isFinite(nostrOk) && Number.isFinite(nostrTotal)
+                  ? `${nostrOk} of ${nostrTotal} relays`
+                  : `${nostr.ok_count ?? '—'}/${nostr.total ?? '—'} ok`}
+              </Pill>
             ) : null
           }
         >
@@ -526,6 +530,13 @@ export default function StatusPublic() {
           ) : (
             <Unavailable />
           )}
+          {nostr && Number.isFinite(nostrOk) && Number.isFinite(nostrTotal) ? (
+            <p className="mt-3 text-[11px]" style={{ color: 'var(--text-muted)' }}>
+              {nostrAllUp
+                ? 'All configured relays answered. Kind 1 notes still depend on each relay accepting the event.'
+                : `${nostrOk} of ${nostrTotal} relays answered. This is not a mesh — notes publish when at least one relay accepts.`}
+            </p>
+          ) : null}
         </Section>
 
         {/* ── Lightning / LNURL ────────────────────────── */}

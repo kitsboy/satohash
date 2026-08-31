@@ -343,7 +343,7 @@ export default function Landing() {
               </text>
 
               <text x="965" y="730" textAnchor="end">
-                eIDAS-ALIGNED EVIDENCE: SEC. IV ART. 42
+                INDEPENDENTLY VERIFIABLE EVIDENCE
               </text>
               <text x="965" y="745" textAnchor="end">
                 UETA DIGITAL RECORD ALIGNMENT
@@ -408,11 +408,45 @@ export default function Landing() {
             initial="hidden"
             animate="visible"
             custom={0.3}
-            className="mx-auto mb-10 max-w-xl text-base leading-relaxed"
+            className="mx-auto mb-8 max-w-xl text-base leading-relaxed"
             style={{ color: 'var(--text-muted)' }}
           >
             {t('landingPage.hero.description')}
           </motion.p>
+
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            custom={0.35}
+            className="mx-auto mb-8 w-full max-w-3xl min-w-0"
+          >
+            <div
+              className="gold-border jewel-edge relative w-full overflow-hidden rounded-2xl"
+              style={{
+                aspectRatio: '16 / 9',
+                borderColor: 'var(--border-gold)',
+                background: '#05070a',
+                boxShadow: '0 0 24px var(--jewel-sky-glow)'
+              }}
+            >
+              <video
+                src="https://videos.giveabit.io/media/video/satohash-explainer-with-vo2.mp4?v=kimi-noir-20260819"
+                poster="/og/watch.png"
+                playsInline
+                preload="metadata"
+                controls
+                className="absolute inset-0 h-full w-full bg-black object-contain"
+                aria-label="Satohash explainer: file never leaves the device, Bitcoin keeps the receipt"
+              />
+            </div>
+            <p
+              className="mt-3 text-xs font-medium tracking-wide sm:text-sm"
+              style={{ color: 'var(--text-muted)' }}
+            >
+              84 seconds · file never leaves the device
+            </p>
+          </motion.div>
 
           <motion.div
             id="stamp-cta"
@@ -442,8 +476,7 @@ export default function Landing() {
                 color: 'var(--accent-gold)'
               }}
             >
-              {t('landingPage.hero.ctaWatch', { defaultValue: 'Watch explainer' })}{' '}
-              <ArrowRight size={16} />
+              Full explainer page <ArrowRight size={16} />
             </Link>
             <Link
               to="/templates"

@@ -591,7 +591,12 @@
       },
       "v3Label": "Proof DNA v3"
     },
-    "nip05Cta": "Sanidi Utambulisho wa NIP-05"
+    "nip05Cta": "Sanidi Utambulisho wa NIP-05",
+    "stampWidget": {
+      "title": "Stamp on Satohash",
+      "body": "Programu za familia huhesabu hash kwenye kifaa, kisha hufungua satohash.io/stamp?hash=&ref= ili SPA iweke X-Satohash-Client. Katoa, Sherpa, Tadbuy na OpenStrata hutumia widget ile ile — faili haiwasilishwi.",
+      "embedLabel": "Widget ya stamp"
+    }
   },
   "docsPage": {
     "nav": "Nyaraka",
@@ -832,7 +837,8 @@
   },
   "appPage": {
     "skipToContent": "Ruka hadi maudhui kuu",
-    "offlineBanner": "Nje ya mtandao — mabadiliko yatasawazishwa unapounganika tena"
+    "offlineBanner": "Nje ya mtandao — mabadiliko yatasawazishwa unapounganika tena",
+    "offlineBannerQueued": "Nje ya mtandao — alama {{count}} zimehesabiwa, zinasubiri muhuri"
   },
   "onboardingPage": {
     "skip": "Ruka",
@@ -1178,7 +1184,68 @@
     "step2Label": "Tunahesabu hash ndani",
     "step2Desc": "Alama ya kipekee ya SHA-256 inahesabiwa kwenye kivinjari chako.",
     "step3Label": "Bitcoin inaweka muhuri wa muda",
-    "step3Desc": "Alama inaandikwa kabisa kwenye blockchain."
+    "step3Desc": "Alama inaandikwa kabisa kwenye blockchain.",
+    "moreOptions": "Chaguo zaidi (kapsuli · futa · sauti)",
+    "filePhotoOrHash": "Faili · picha · au hash — njia moja ya kidole",
+    "hashingLabel": "Hash ya ndani",
+    "anchoringLabel": "Inatia nanga kwenye Bitcoin",
+    "hashingProgress": "Inahesabu alama ya SHA-256 kwenye kifaa hiki...",
+    "anchoringProgress": "Inatuma kwa Bitcoin kupitia OpenTimestamps...",
+    "hashingSticky": "Inahesabu hash…",
+    "anchoringSticky": "Inatia nanga…",
+    "stampHashSticky": "Weka muhuri wa hash kwenye Bitcoin",
+    "privacyGuarantee": "Dhamana ya faragha",
+    "privacyGuaranteeBody": "Faili asili haiondoki kwenye kifaa chako. Tunatuma alama ya SHA-256 tu — kusubiri si kuthibitishwa kwenye Bitcoin.",
+    "caseConfig": "Mpangilio wa kesi",
+    "caseLabel": "Lebo / Kitambulisho cha kesi",
+    "casePlaceholder": "k.m. Kumbukumbu ya mirathi 2026",
+    "hashOnly": "Hash pekee",
+    "hashOnlyBody": "Tayari una SHA-256? Bandika. Faili haihitaji kufika hapa.",
+    "hashOnlyPlaceholder": "Herufi 64 za hex",
+    "fileTooLarge": "Faili ni MB {{size}} — kiwango cha juu MB {{max}} kwenye kivinjari. Hesabu hash nje ya mtandao kisha bandika SHA-256.",
+    "fileTooLargeToast": "Faili ni kubwa mno kwa muhuri wa kivinjari",
+    "fileTooLargeToastDesc": "Tumia faili ndogo au weka muhuri wa hash ya SHA-256 iliyohesabiwa",
+    "tooManyRequests": "Maombi mengi mno — jaribu tena baada ya sekunde {{seconds}}",
+    "notifyEmailPlaceholder": "Nitumie barua pepe ikithibitishwa (si lazima)",
+    "photosGallery": "Picha / galeria",
+    "folderCapsule": "Folda (kapsuli moja ya Merkle)",
+    "otsViaBitcoin": "Imewekwa nanga kupitia OpenTimestamps → Bitcoin",
+    "freeStamp": "Muhuri wa bure",
+    "openingSuccess": "Inafungua skrini ya mafanikio…",
+    "targetAsset": "Faili lengwa",
+    "capsuleManifest": "Orodha ya kapsuli (faili {{count}})",
+    "clear": "Futa",
+    "stepN": "Hatua {{n}}",
+    "verify": "Thibitisha",
+    "vault": "Hazina",
+    "watch": "Tazama",
+    "invalidStampLink": "Kiungo cha muhuri si sahihi"
+  },
+  "stampDonePage": {
+    "loading": "Inapakia uthibitisho…",
+    "emptyTitle": "Hakuna muhuri kwenye skrini hii",
+    "emptyBody": "Uthibitisho wako wa mwisho uko kwenye kifaa hiki. Ukiweka upya kichupo tupu, weka muhuri tena — Nyuma haitumii tena.",
+    "emptyCta": "Nenda Weka muhuri",
+    "receipt": "Risiti",
+    "receiptPending": "Risiti — inasubiri",
+    "foldedIntoBitcoin": "Imekunjwa ndani ya Bitcoin",
+    "submittedNotConfirmed": "Imewasilishwa — bado haijathibitishwa kwenye Bitcoin",
+    "bitcoinBlock": "Bloku ya Bitcoin",
+    "pendingExplainer": "Kusubiri si kuthibitishwa. Ukurasa huu unaangalia kila sekunde 8 hadi bloku ije.",
+    "confirmedExplainer": "Alama yako iko kwenye mnyororo kupitia OpenTimestamps.",
+    "verify": "Thibitisha",
+    "stepFingerprint": "Alama",
+    "stepFingerprintDesc": "Imehesabiwa hash kwenye kifaa hiki",
+    "stepFingerprintTip": "Alama (SHA-256) ni kitambulisho kifupi na cha kipekee cha faili yako, kilichotengenezwa kwenye kifaa chako. Haitoki kama maandishi wazi.",
+    "stepCalendars": "Kalenda",
+    "stepCalendarsDesc": "OpenTimestamps inasubiri",
+    "stepCalendarsTip": "Kalenda za umma huru zinakubaliana kuhusu wakati. Ni bure na wazi — hakuna akaunti — hakuna kampuni inayodhibiti uthibitisho wako.",
+    "stepBitcoin": "Bitcoin",
+    "stepBitcoinWaiting": "Inasubiri bloku",
+    "stepBitcoinFolded": "Imekunjwa",
+    "stepBitcoinBlock": "Bloku {{block}}",
+    "stepBitcoinTip": "Alama yako inakunjwa kwenye bloku ya umma ya Bitcoin. Ikiwa huko, yeyote anaweza kuiangalia — muhuri usiobadilika.",
+    "stepTipTitle": "Hatua {{n}} — {{title}}"
   },
   "vaultPage": {
     "securityAge": {

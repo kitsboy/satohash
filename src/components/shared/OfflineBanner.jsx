@@ -1,7 +1,11 @@
 import { useTranslation } from 'react-i18next'
 
-export default function OfflineBanner() {
+export default function OfflineBanner({ queueCount = 0 }) {
   const { t } = useTranslation()
+  const msg =
+    queueCount > 0
+      ? t('appPage.offlineBannerQueued', { count: queueCount })
+      : t('appPage.offlineBanner')
 
   return (
     <div
@@ -10,7 +14,7 @@ export default function OfflineBanner() {
       role="status"
       aria-live="polite"
     >
-      ⚡ {t('appPage.offlineBanner')}
+      ⚡ {msg}
     </div>
   )
 }

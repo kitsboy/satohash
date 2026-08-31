@@ -27,7 +27,7 @@
 ---
 
 ## 🏛 The Elite Standard
-Satohash **5.0.0-ELITE** is the **Sovereign Settlement Layer** — a complete four-plane system (Proof / Identity / Settlement / Atlas) for legal-grade, zero-knowledge, Bitcoin-anchored provenance. Designed by [Give A Bit](https://giveabit.io) for law firms, compliance teams, creators, journalists, AI pipelines, and autonomous agents who need absolute, portable, independently verifiable truth.
+Satohash **5.0.0-ELITE** is the **Sovereign Settlement Layer** — a complete four-plane system (Proof / Identity / Settlement / Atlas) for independently verifiable Bitcoin-anchored proof of existence. Designed by [Give A Bit](https://giveabit.io) for law firms, compliance teams, creators, journalists, AI pipelines, and autonomous agents who need absolute, portable, independently verifiable truth.
 
 ### 🚀 Core Protocol Features (Current)
 - **Bitcoin Anchoring via OpenTimestamps (OTS)** — SHA-256 client-side hash → three public calendars → permanent Bitcoin block commitment. Portable `.ots` proofs.
