@@ -96,8 +96,8 @@ Rails already exist: `server/nostr.js` publishes kind **1** + kind **1063** (has
 | # | Idea | Done when |
 |---|------|-----------|
 | 1 | Daily `free -h` + `systemctl is-active bitcoind` (OOM 2026-07-28) | Hand-back in handoff once this week |
-| 2 | Confirm THOR API image includes `11c0ceb`+ (footer/player are Pages; API image is separate) | `api.satohash.io/health` ok; no `/api/*` path change |
-| 3 | Search Console: submit `https://satohash.io/sitemap.xml` (Google/Bing ping URLs are dead 404/410) | Cam or Kimi with GSC access; 71 URLs |
+| 2 | Confirm THOR API image includes authored.js + NIP-05 (`78e2a8f`, 2026-08-31) | **DONE** — health ok; authored 400; no `/api/*` path change |
+| 3 | Search Console: submit `https://satohash.io/sitemap.xml` | **DONE** 2026-08-31 — Success, 69 pages. Keep HTML verify file forever. |
 | 4 | Relays: see B8 | readiness nostr `ok_count` |
 | 5 | MASTER-BRAIN on **THOR Obsidian** (not M4): player card + Breez donate + footer chips + this ideas list | Vault updated on THOR, no secrets |
 | 6 | Lighthouse after Pages has `11c0ceb` (desktop+mobile `/` `/stamp` `/watch`) | Scores + one fix or “no regression” note |

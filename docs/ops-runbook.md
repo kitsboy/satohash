@@ -53,9 +53,9 @@ If `/watch` shows stale video: hard refresh; check MP4 duration **~84s** (full) 
 - OOM history 2026-07-28 (killed bitcoind) — watch `free -h`; node ~1GB RSS; 7.8G RAM / 8G swap on THOR
 - API logs may show "fetch failed"/HTTP 500/timeout right after node start (startup flap) — re-check after 3-5 min
 
-## Kimi — API image rebuild (**DONE 2026-08-17**)
+## Kimi — API image rebuild (**DONE 2026-08-31**, Grok on THOR)
 
-Live `https://api.satohash.io/metrics.json` **has** `raw.last10` (10) and `raw.familyClients` (list). `/network` tiles are live. Recipe if a future rebuild is needed: `bash scripts/vps-deploy-api.sh` after `git pull` on THOR. Keep `REQUIRE_LIGHTNING=false`. Do **not** change `/api/*` paths.
+Live image from git `78e2a8f`: authored field on `POST /api/stamp` is enforced (bad `authored.file_sha256` → 400). `REQUIRE_LIGHTNING=false`. Metrics still have `raw.last10` + `raw.familyClients`. Recipe for a future rebuild: `cd /root/satohash && git pull origin main && bash scripts/vps-deploy-api.sh`. Do **not** change `/api/*` paths.
 
 Confirm (should already pass):
 

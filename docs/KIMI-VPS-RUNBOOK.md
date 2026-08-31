@@ -51,7 +51,7 @@ Repo: **https://github.com/kitsboy/satohash** branch `main`
 | `GET /health` | Liveness |
 | `GET /metrics.json` | HQ SoT — includes `raw.last10` + `raw.familyClients` (**live 2026-08-17**) |
 
-**Done (2026-08-17):** API image rebuilt from `main`. Live `metrics.json` has `raw.last10` and `raw.familyClients`. Do not change `/api/*` paths. Keep `REQUIRE_LIGHTNING=false`. Future rebuild: `bash scripts/vps-deploy-api.sh`.
+**Done (2026-08-31):** API image rebuilt from `78e2a8f` (Grok on THOR). Authored field live. Live `metrics.json` has `raw.last10` and `raw.familyClients`. Do not change `/api/*` paths. Keep `REQUIRE_LIGHTNING=false`. Future rebuild: `bash scripts/vps-deploy-api.sh`.
 | `GET /api/public/status` | HQ / suite heartbeat (no secrets) |
 | `POST /api/stamp` | Create OTS (family key or paywall or open) |
 

@@ -1,3 +1,21 @@
+## 2026-08-31 (Grok M3 — session close; Cam leaving)
+
+**Git:** `main` @ `62b8999` **pushed**. SPA Pages + API THOR both current for this drop.  
+**Pickup:** `.ai_docs/current-status.md` · this file · `LATEST-UPDATE.md`
+
+**Done tonight:**
+- GSC `https://satohash.io/` verified; sitemap.xml **Success / 69**; keep `public/googlef508c6fb64de60ff.html` forever
+- NIP-05 `satohash@satohash.io` + njump footer; `/p/<hash>` JPEG OG; family widget paste
+- THOR API rebuilt (`78e2a8f` image): authored **400** on bad field; stamps still free
+
+**Not tonight (Cam skipped):** iMessage `/p/<hash>` test · pin `/watch` on `@give_bit`
+
+**Do not:** flip `REQUIRE_LIGHTNING` · change `/api/*` · delete GSC HTML file · log into Cloudflare · GA/GTM · `@satohash` handle
+
+**Kimi vault:** THOR Obsidian, not M4. Ingest this close into MASTER-BRAIN. THOR tree may be one docs commit behind (`62b8999`); API does **not** need another rebuild for authored.
+
+---
+
 ## 2026-08-31 (Grok M3 — THOR API rebuilt; authored field live)
 
 **From:** Grok on M3, ran on THOR · **Status:** DONE
@@ -16,7 +34,7 @@ Do not flip paywall. Do not change `/api/*` paths.
 **Property:** `https://satohash.io/` · HTML file `googlef508c6fb64de60ff.html` (keep forever in `public/`).
 **Do not delete** that file or the `_middleware.js` 200-serve bypass.
 
-Sitemap is live 200 with 69 URLs; `robots.txt` already has `Sitemap:` lines. If the Sitemaps table is empty, submit `sitemap.xml` once: https://search.google.com/search-console/sitemaps?resource_id=https%3A%2F%2Fsatohash.io%2F
+Sitemap **Success, 69 pages** (Cam deleted the broken `/sitemap.xml.` trailing-dot row). Keep the HTML verification file forever.
 
 ---
 
@@ -34,7 +52,7 @@ Sitemap is live 200 with 69 URLs; `robots.txt` already has `Sitemap:` lines. If 
 
 **THOR:** API rebuilt 2026-08-31 (`78e2a8f`). Authored + NIP-05 live. Do not flip paywall.
 
-**Cam:** GSC ownership verified 2026-08-31. Confirm sitemap listed (submit `sitemap.xml` if the table is empty).
+**Cam:** GSC ownership + sitemap Success (69). iPhone `/p/<hash>` and X pin skipped tonight.
 
 ---
 

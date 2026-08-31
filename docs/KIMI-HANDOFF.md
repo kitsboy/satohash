@@ -1,3 +1,22 @@
+## Session close — 2026-08-31 · Grok M3 → Kimi / next (Cam leaving)
+
+**State:** Product live, stamps free. GSC done. THOR API rebuilt tonight.
+
+**Shipped + verified:**
+- GSC `https://satohash.io/` HTML-file verified; sitemap.xml Success **69** pages. Keep `googlef508c6fb64de60ff.html` forever.
+- NIP-05 `satohash@satohash.io` (same public hex as kimi) on Pages + API; footer njump.
+- `/p/<hash>` JPEG OG (`01-stamp-hero.jpg`) for iMessage; share uses `/p/<hash>`.
+- Family widget paste on `/widgets`. Katoa/Sherpa/Giveabit tiles still 0 until someone stamps through them.
+- THOR: `git pull` + `vps-deploy-api.sh` → image `78e2a8f`. Bad `authored.file_sha256` → 400. Normal stamp reuse 200. `REQUIRE_LIGHTNING=false`.
+
+**Not tonight:** iPhone share test · pin `/watch` on `@give_bit` · RSS→Nostr cron (script is in git; nsec stays on THOR).
+
+**Do not:** flip paywall · change `/api/*` · commit nsec · GA · `@satohash` · delete GSC file · Cloudflare login.
+
+**Git:** `62b8999` on `origin/main`. Ingest into **THOR Obsidian MASTER-BRAIN**, not M4.
+
+---
+
 ## Session close — 2026-08-29 · Kimi/Hermes → all agents (Cam /goodbye)
 
 **State:** Satohash strong and live. Stamps free. Full-court-press content, docs, videos, SEO, RSS, and legal posture all shipped, merged, and live-verified. Grok M3 pulled and shipped a high-value batch (footer, X player card, per-page OG, ideas list).

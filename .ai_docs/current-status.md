@@ -1,14 +1,15 @@
 # Current Status — Satohash
 
-**Version:** **5.0.0-ELITE** (Build 247)  
-**Last Updated:** 2026-08-29 (Grok 4.6 — goodbye)  
+**Version:** **5.0.0-ELITE** (Build 274)  
+**Last Updated:** 2026-08-31 (Grok 4.6 — Cam leaving; session close)  
 **Frontend:** https://satohash.io · www · CF Pages project **`satohash`**  
-**API:** https://api.satohash.io ✅ LIVE (THOR Docker)  
+**API:** https://api.satohash.io ✅ LIVE (THOR Docker, image from `78e2a8f`)  
 **Metrics SoT:** `https://api.satohash.io/metrics.json` (`raw.last10` + `raw.familyClients` **live**)  
 **HQ:** https://hq.giveabit.io  
-**Git:** `main` @ `f02a575`  
+**Git:** `main` @ `62b8999` (pushed)  
 **Kimi vault:** **THOR VPS Obsidian** (not M4)  
-**Analytics:** Umami analytics.giveabit.io (CORS noise possible)
+**Analytics:** Umami `analytics.giveabit.io` — **not** Google Analytics  
+**Search:** GSC property `https://satohash.io/` **verified** · sitemap.xml **Success, 69 pages**
 
 ## Planes
 
@@ -54,8 +55,8 @@
 | `/stamp` | Free stamp · STEP 1–3 copy live |
 | `/stamp/done` | Success · share `/p/<hash>` |
 | `/verify` | Public verify |
-| `/p/<hash>` | Zero-JS Function proof card (iMessage JPEG OG) |
-| `/network` | Live calendars, bitcoind tip, recent stamps, family tiles |
+| `/p/<hash>` | Zero-JS Function proof card (iMessage JPEG `01-stamp-hero.jpg`) |
+| `/network` | Live calendars, bitcoind tip, recent stamps, family tiles, Notes on Nostr |
 | `/status` · `/counsel` | Public status · counsel one-pager |
 | `/watch` | ~84s Kimi/Pippa · 10s teaser · `?v=kimi-noir-20260819` |
 | Language | en es fr de pt sw zh |
@@ -70,28 +71,29 @@
 | Family with counts | public 6 · spa 4 · kimi/e2e/mvp smoke 1 each |
 | Sherpa / MotoPass / Katoa | **0** attributed stamps (honest) |
 
-## This session (2026-08-19 → 2026-08-20)
+## This session (2026-08-31)
 
-- [x] git pull · whatsup recovery  
-- [x] Rebuild `/watch` full cut: HyperFrames product-launch video  
-- [x] Kimi character lock (user reference) · HeyGen **Pippa** VO · dance bed ~15%  
-- [x] Institutional Noir motion (not stock stills)  
-- [x] Satohash hash mark small, top-left, last ~3s  
-- [x] Pushed `f64463f` — Pages `/watch` · HyperFrames https://hyperframes.dev/p/915356ed-8e2f-4c6e-97a4-d931b33b1341  
-- [x] **Kimi (2026-08-20):** fixed `health.js` lib import paths (`./lib/*` → `../lib/*`) — bitcoin + lightning checks were erroring since route extraction. Deep health now all-green: bitcoind healthy (963332, 100%), LNbits healthy, OTS 3/3, Nostr 2/3. Commit `0bf6b54` pushed.  
-- [x] **Kimi (2026-08-20):** LNbits postgres backup cron added (06:30 daily, 14-day retention, 600 perms) — 9 family wallets now recoverable. First backup verified 19:17 UTC.  
+- [x] GSC HTML file live (`googlef508c6fb64de60ff.html` — keep forever) · Cam **verified** ownership  
+- [x] Sitemap submitted: **Success, 69 pages** (deleted broken `/sitemap.xml.` trailing-dot row)  
+- [x] NIP-05 `satohash@satohash.io` (same public hex as kimi) + footer njump + CORS  
+- [x] `/p/<hash>` JPEG OG for iMessage · share uses `/p/<hash>`  
+- [x] Family widget paste on `/widgets` (katoa/motopass/sherpacarta/giveabit)  
+- [x] THOR `git pull` + `vps-deploy-api.sh` — authored field **400** on bad metadata; free stamp **200** reuse  
+- [x] Pushed `62b8999` · API container healthy · `REQUIRE_LIGHTNING=false`
 
 ## Ops still open
 
-- [x] **Kimi (2026-08-20):** All 9 LNbits wallets now have live LNURL-pay addresses (`<site>@api.satohash.io:8443`) + giveabit.io `.well-known/lnurlp/` stubs resolve to real LNbits callbacks. SherpaCarta was the only live one before; now: giveabit, satohash, katoa, motopass, openstrata, stranded, tadbuy, kimi, sherpa — all PAYREQ + invoice generation verified. Family registry: `giveabit.io/wallets.json`. HQ Money Plane (v3.32.1) shows every site's rails.
-- [ ] **Kimi:** Sherpa / MotoPass / Katoa send `X-Satohash-Client` (tiles still 0)  
+- [ ] Physical iPhone Safari share of `/p/<hash>` (JPEG unfurl) — Cam skipped tonight  
+- [ ] Pin `/watch` on **`@give_bit`** (do not wait on `@satohashio`; `@satohash` taken)  
+- [ ] Family tiles: Katoa / Sherpa / Giveabit still **0** attributed (widget exists; nobody stamped through them)  
+- [ ] Kind-0 Nostr profile + RSS→Nostr cron (`scripts/nostr-publish-feed.js`; nsec on THOR only)  
 - [ ] **Kimi:** daily bitcoind RAM (`free -h`)  
-- [ ] Paywall only when Cam flips (`docs/PAYWALL-STAGING.md`)  
-- [ ] Physical iPhone Safari (friends share `/p/<hash>`)  
-- [ ] Remaining 22 npm advisories — do not `--force`  
+- [ ] Paywall only when Cam flips (`docs/PAYWALL-STAGING.md`) — LND not configured  
+- [ ] Remaining npm advisories — do not `--force`  
+- [x] GSC sitemap  
+- [x] THOR API includes authored.js  
 - [x] CSP **enforcing**  
 - [x] Stamp rate limit 5/min public · reuse existing hash  
-- [x] One deploy path documented (no CF Retry)  
 - [x] Longer educational MP4 (~84s Kimi cut) **shipped**  
 
 ## Local ports (M3 / Cam)
