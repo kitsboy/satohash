@@ -1,3 +1,25 @@
+## Latest Session Summary (from 2026-08-31 goodbye)
+
+**Chat Topic:** Google findability + remaining product batch + THOR API rebuild so authored stamps persist.
+
+**Finished in this session:**
+- GSC verified; sitemap.xml Success **69** pages; keep `googlef508c6fb64de60ff.html` forever
+- NIP-05 `satohash@satohash.io` + njump footer; `/p/<hash>` JPEG OG; family widget paste
+- THOR `vps-deploy-api.sh` — authored **400** on bad field; free stamp **200** reuse; paywall off
+- Clean pickup files: `.ai_docs/current-status.md` · `docs/handoff-log.md` · `docs/archive/SESSION-SUMMARY-2026-08-31-goodbye.md`
+
+**Still to do:**
+- Cam: iPhone `/p/<hash>` iMessage test; pin `/watch` on `@give_bit`
+- Family tiles Katoa/Sherpa/Giveabit still 0
+- Kind-0 + RSS→Nostr cron (script in git; nsec on THOR)
+- Paywall / LND / GA stay off
+
+**Next for Kimi:** Ingest this summary into **THOR Obsidian MASTER-BRAIN / Kanban** (not M4). API does **not** need another rebuild for authored. `git pull` on `/root/satohash` is enough to pick up docs. Educate Hermes. Do not flip `REQUIRE_LIGHTNING`. Do not change `/api/*`.
+
+**Git:** `origin/main` through this goodbye. Full notes: `docs/archive/SESSION-SUMMARY-2026-08-31-goodbye.md`
+
+---
+
 ## Session close — 2026-08-31 · Grok M3 → Kimi / next (Cam leaving)
 
 **State:** Product live, stamps free. GSC done. THOR API rebuilt tonight.

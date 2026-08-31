@@ -1,6 +1,14 @@
+## 2026-08-31 (Grok M3 — /goodbye)
+
+**Pickup:** `.ai_docs/current-status.md` · this file · `docs/archive/SESSION-SUMMARY-2026-08-31-goodbye.md` · `/whatsup` next chat.
+
+Clean summary also at top of `docs/KIMI-HANDOFF.md`. Vault = **THOR Obsidian**, not M4.
+
+---
+
 ## 2026-08-31 (Grok M3 — session close; Cam leaving)
 
-**Git:** `main` @ `62b8999` **pushed**. SPA Pages + API THOR both current for this drop.  
+**Git:** `main` pushed (SPA Pages + API THOR current for authored).  
 **Pickup:** `.ai_docs/current-status.md` · this file · `LATEST-UPDATE.md`
 
 **Done tonight:**

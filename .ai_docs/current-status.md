@@ -1,12 +1,12 @@
 # Current Status — Satohash
 
 **Version:** **5.0.0-ELITE** (Build 274)  
-**Last Updated:** 2026-08-31 (Grok 4.6 — Cam leaving; session close)  
+**Last Updated:** 2026-08-31 (Grok 4.6 — /goodbye)  
 **Frontend:** https://satohash.io · www · CF Pages project **`satohash`**  
 **API:** https://api.satohash.io ✅ LIVE (THOR Docker, image from `78e2a8f`)  
 **Metrics SoT:** `https://api.satohash.io/metrics.json` (`raw.last10` + `raw.familyClients` **live**)  
 **HQ:** https://hq.giveabit.io  
-**Git:** `main` @ `62b8999` (pushed)  
+**Git:** `main` @ `c8f4868`+ (goodbye commit on `origin/main`)  
 **Kimi vault:** **THOR VPS Obsidian** (not M4)  
 **Analytics:** Umami `analytics.giveabit.io` — **not** Google Analytics  
 **Search:** GSC property `https://satohash.io/` **verified** · sitemap.xml **Success, 69 pages**
