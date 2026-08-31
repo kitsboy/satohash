@@ -12,7 +12,7 @@
     "build:metrics": "node scripts/fetch-metrics-json.js",
     "build:strip-metrics": "node scripts/strip-dist-metrics.js",
     "build:ots": "test -f public/vendor/ots.browser.js || npx browserify node_modules/opentimestamps/index.js -s OpenTimestamps -o public/vendor/ots.browser.js",
-    "build:verify": "node scripts/verify-landing-bundle.js",
+    "build:verify": "node scripts/verify-landing-bundle.js && node scripts/verify-chunk-graph.mjs && node scripts/bundle-budget.mjs",
     "build:prerender": "node scripts/prerender-seo.js",
     "build:rss": "node scripts/build-rss.js",
     "generate:og": "node scripts/generate-og-images.js",

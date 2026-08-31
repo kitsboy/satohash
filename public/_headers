@@ -33,6 +33,9 @@
 /sw.js
   Cache-Control: public, max-age=0, must-revalidate
 
+/registerSW.js
+  Cache-Control: public, max-age=0, must-revalidate
+
 # Explainer media — short TTL so VO/MP4 swaps show up without waiting 4h edge cache
 /media/video/*
   Cache-Control: public, max-age=300, must-revalidate

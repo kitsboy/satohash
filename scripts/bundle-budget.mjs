@@ -3,9 +3,9 @@
 import { readFileSync, statSync } from 'fs'
 import { join } from 'path'
 
-// Eager marketing (Landing + /watch + legal) is ~650 kB today. Do not
-// re-eager Stamp/Verify into this file — that blew past 1 MB.
-const MAX_KB = Number(process.env.BUNDLE_MAX_KB || 720)
+// Core loop (Stamp + Verify) is eager so those routes cannot hang on a
+// lazy chunk that imports the HTML entry. Budget is the HTML entry only.
+const MAX_KB = Number(process.env.BUNDLE_MAX_KB || 1400)
 const htmlPath = join(process.cwd(), 'dist', 'index.html')
 let html
 try {

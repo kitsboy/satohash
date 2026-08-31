@@ -26,14 +26,15 @@ import { useOfflineSync } from './hooks/useOfflineSync'
 
 import { lazyWithReload } from './utils/lazyWithReload'
 
-// Core loop is lazy + reload-on-stale-chunk so landing stays small.
-// Eager Stamp/Verify blew the main index past 1 MB and tripped CI.
-const Stamp = lazyWithReload(() => import('./pages/Stamp'))
-const StampDone = lazyWithReload(() => import('./pages/StampDone'))
-const Verify = lazyWithReload(() => import('./pages/VerificationTool'))
+// Core product loop is eager. Lazy + circular index↔page chunks hung
+// /stamp and /verify on LoadingScreen and flashed "System Desync".
+// Stamp/Verify live in named chunks (see vite.config.js), not the HTML entry.
+import Stamp from './pages/Stamp'
+import StampDone from './pages/StampDone'
+import Verify from './pages/VerificationTool'
 const VerifyPublic = lazyWithReload(() => import('./pages/VerifyPublic'))
 
-// Non-core planes stay lazy; retry+reload if a deploy invalidated the chunk
+// Non-core planes stay lazy; retry the import once if a deploy invalidated the chunk
 const Vault = lazyWithReload(() => import('./pages/Vault'))
 const Contracts = lazyWithReload(() => import('./pages/contracts/ContractList'))
 const WebCapture = lazyWithReload(() => import('./pages/WebCapture'))

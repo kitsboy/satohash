@@ -290,11 +290,9 @@
           'error',
           function (e) {
             var msg = String((e && (e.message || (e.error && e.error.message))) || '')
-            if (
-              msg.indexOf("Unexpected token '<'") !== -1 ||
-              msg.indexOf('Failed to fetch dynamically imported module') !== -1 ||
-              msg.indexOf('Importing a module script failed') !== -1
-            ) {
+            // HTML-as-JS poison only. Dynamic-import failures must not reload
+            // the tab — that flashed "System Desync" on /stamp and /verify.
+            if (msg.indexOf("Unexpected token '<'") !== -1) {
               resetClient()
             }
           },
@@ -302,7 +300,7 @@
         )
         window.addEventListener('unhandledrejection', function (e) {
           var msg = String((e && e.reason && (e.reason.message || e.reason)) || '')
-          if (msg.indexOf("Unexpected token '<'") !== -1 || msg.indexOf('dynamically imported module') !== -1) {
+          if (msg.indexOf("Unexpected token '<'") !== -1) {
             resetClient()
           }
         })

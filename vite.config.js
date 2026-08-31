@@ -5,7 +5,7 @@ import { fileURLToPath } from 'url'
 import { VitePWA } from 'vite-plugin-pwa'
 import viteCompression from 'vite-plugin-compression'
 import { ViteImageOptimizer } from 'vite-plugin-image-optimizer'
-import { readFileSync } from 'fs'
+import { readFileSync, writeFileSync } from 'fs'
 import wasm from 'vite-plugin-wasm'
 import topLevelAwait from 'vite-plugin-top-level-await'
 
@@ -41,10 +41,12 @@ export default defineConfig({
                 }
             }
         },
-        // EMERGENCY: self-destroying SW kills every old registration on next visit.
-        // Stops System Desync (HTML served as JS via stale SW). Re-enable full PWA later.
+        // Self-destroying SW for leftover Workbox registrations. Do NOT inject
+        // registerSW.js — re-registering the killer worker on every load +
+        // client.navigate() was flashing "System Desync".
         VitePWA({
             registerType: 'autoUpdate',
+            injectRegister: false,
             selfDestroying: true,
             workbox: {
                 cleanupOutdatedCaches: true,
@@ -52,6 +54,21 @@ export default defineConfig({
                 skipWaiting: true
             }
         }),
+        {
+            name: 'neutralize-register-sw',
+            enforce: 'post',
+            writeBundle: {
+                sequential: true,
+                order: 'post',
+                handler() {
+                    const p = path.join(__dirname, 'dist', 'registerSW.js')
+                    writeFileSync(
+                        p,
+                        "if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then(function(rs){rs.forEach(function(r){var u=(r.active&&r.active.scriptURL)||'';if(u.indexOf('satohash-sync')!==-1)return;r.unregister()})})}\n"
+                    )
+                }
+            }
+        },
         ViteImageOptimizer({
             png: { quality: 80 },
             jpeg: { quality: 80 },

@@ -10,7 +10,6 @@ import { getApiUrl, PUBLIC_API_URL } from '../config/constants'
 const DB_NAME = 'satohash_offline'
 const STORE = 'stamp_queue'
 export const MAX_STAMP_RETRIES = 8
-const SYNC_SCRIPT = '/satohash-sync.js'
 const SYNC_TAG = 'satohash-stamp-queue'
 
 function requestBackgroundFlush() {
@@ -191,7 +190,9 @@ export function useOfflineSync(apiBase) {
 
   useEffect(() => {
     if (typeof navigator === 'undefined' || !('serviceWorker' in navigator)) return undefined
-    navigator.serviceWorker.register(SYNC_SCRIPT).catch(() => {})
+    // Do not register satohash-sync.js while a self-destroying /sw.js may still
+    // be dying. Two SWs at scope `/` + client.navigate flashed System Desync.
+    // Queue still flushes from this page when online.
     const onMsg = (event) => {
       if (event.data?.type === 'satohash-sync-flushed') {
         dbGetAll()

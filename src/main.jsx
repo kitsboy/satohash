@@ -11,7 +11,7 @@ import './i18n/setup'
 // Build stamp — must be runtime-referenced so Vite content-hash changes after
 // edge HTML-as-JS poison (immutable cache on satohash.io apex).
 if (typeof window !== 'undefined') {
-  window.__SATOHASH_SPA_BUILD__ = '2026-07-29-bundle-b1'
+  window.__SATOHASH_SPA_BUILD__ = '2026-08-31-stable-pages'
 }
 
 if (import.meta.env.VITE_SENTRY_DSN) {
@@ -55,10 +55,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   </React.StrictMode>
 )
 
-// Vite dynamic-import resilience: if a lazily-loaded chunk fails to fetch
-// (CF Pages deploy race, flaky network, SW cache desync), retry once, then
-// hard-reload so the browser picks up the newest index.html + chunk manifest.
+// Swallow Vite preload failures without a full reload. location.reload() here
+// stacked with SW unregister-navigate and ErrorBoundary reset into a flash loop.
 window.addEventListener('vite:preloadError', (event) => {
   event.preventDefault()
-  window.location.reload()
 })
