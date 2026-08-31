@@ -67,7 +67,7 @@
       "id": "duration",
       "category": "usage",
       "q": "How long does stamping take?",
-      "a": "The hash is generated instantly in your browser. The OTS calendar commits periodically to Bitcoin blocks. Most proofs are anchored within a few hours, and you get a verification link immediately."
+      "a": "The hash is generated instantly in your browser. Timestamp servers commit periodically to Bitcoin blocks. Most proofs are anchored within a few hours, and you get a verification link immediately."
     },
     {
       "id": "nip05",
@@ -115,7 +115,7 @@
       "id": "airGap",
       "category": "institutional",
       "q": "Can we use Satohash air-gapped?",
-      "a": "Yes. Hash files offline, transfer hashes via QR or CSV, and stamp via browser OTS calendars without api.satohash.io."
+      "a": "Yes. Hash files offline, transfer hashes via QR or CSV, and stamp via public timestamp servers without api.satohash.io."
     },
     {
       "id": "chainOfCustody",

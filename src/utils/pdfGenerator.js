@@ -157,9 +157,9 @@ export const generatePDF = async (stampInfo, watermarkType = 'SATOHASH PROTOCOL 
 
 2. Permanent Anchoring: The unique identifier was committed to the Bitcoin blockchain—the most secure public ledger in existence. This commitment creates an immutable "Proof of Existence" linked to a specific Bitcoin block height and timestamp.
 
-3. Immutability & Verifiability: Because the Bitcoin blockchain is secured by globally distributed Proof-of-Work, the record is tamper-proof. Any party in possession of the original file and this certificate can independently verify the attestation without relying on a centralized authority.
+3. Immutability & Verifiability: Because the Bitcoin blockchain is secured by globally distributed Proof-of-Work, the record is tamper-evident. Anyone with the original file and this proof can independently verify it without relying on Satohash.
 
-4. Legal Admissibility: This attestation satisfies requirements for digital evidence integrity as outlined in the ESIGN Act (USA), UETA (USA), and eIDAS Regulation (EU), providing a mathematically certain date and state of existence.`
+4. Evidence, not a qualified timestamp: This is independently verifiable evidence of existence-at-a-time. It is not a qualified electronic time stamp under eIDAS, and a court decides admissibility and weight.`
 
   doc.text(doc.splitTextToSize(statement, pageWidth - margin * 2), margin, 45)
 

@@ -947,7 +947,7 @@
     "share": "Shiriki",
     "copyHash": "Nakili hash",
     "copyProof": "Nakili uthibitisho",
-    "downloadCert": "Pakua cheti cha PDF",
+    "downloadCert": "Pakua PDF ya uthibitisho",
     "footer": "Uthibitisho huu umeunganishwa kabisa kwenye blockchain ya Bitcoin na hauwezi kubadilishwa au kufutwa. Thibitisha kwa uhuru kwenye",
     "toasts": {
       "linkCopied": "Kiungo kimenakiliwa!",

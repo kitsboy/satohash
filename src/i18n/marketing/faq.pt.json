@@ -67,7 +67,7 @@
       "id": "duration",
       "category": "usage",
       "q": "Quanto tempo demora o carimbo?",
-      "a": "O hash é gerado instantaneamente no seu navegador. O calendário OTS compromete-se periodicamente com blocos Bitcoin. A maioria das provas fica ancorada em poucas horas, e recebe um link de verificação de imediato."
+      "a": "O hash é gerado instantaneamente no seu navegador. Os servidores de tempo comprometem-se periodicamente com blocos Bitcoin. A maioria das provas fica ancorada em poucas horas, e recebe um link de verificação de imediato."
     },
     {
       "id": "nip05",
@@ -115,7 +115,7 @@
       "id": "airGap",
       "category": "institutional",
       "q": "Uso air-gap?",
-      "a": "Sim, hash offline e calendários OTS."
+      "a": "Sim: hash offline e carimbo via servidores de tempo no navegador."
     },
     {
       "id": "chainOfCustody",

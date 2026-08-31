@@ -67,7 +67,7 @@
       "id": "duration",
       "category": "usage",
       "q": "¿Cuánto tarda el sellado?",
-      "a": "El hash se genera al instante en tu navegador. El calendario OTS se compromete periódicamente con bloques de Bitcoin. La mayoría de las pruebas se anclan en unas horas, y obtienes un enlace de verificación de inmediato."
+      "a": "El hash se genera al instante en tu navegador. Los servidores de tiempo se comprometen periódicamente con bloques de Bitcoin. La mayoría de las pruebas se anclan en unas horas, y obtienes un enlace de verificación de inmediato."
     },
     {
       "id": "nip05",
@@ -115,7 +115,7 @@
       "id": "airGap",
       "category": "institutional",
       "q": "¿Uso air-gap?",
-      "a": "Sí. Hashee offline y selle vía calendarios OTS del navegador."
+      "a": "Sí. Hashea sin conexión y sella vía servidores de tiempo en el navegador."
     },
     {
       "id": "chainOfCustody",

@@ -947,7 +947,7 @@
     "share": "Partager",
     "copyHash": "Copier le hachage",
     "copyProof": "Copier la preuve",
-    "downloadCert": "Télécharger le certificat PDF",
+    "downloadCert": "Télécharger le PDF de preuve",
     "footer": "Cette preuve est ancrée de façon permanente dans la blockchain Bitcoin et ne peut être modifiée ni supprimée. Vérifiez de manière indépendante sur",
     "toasts": {
       "linkCopied": "Lien copié !",

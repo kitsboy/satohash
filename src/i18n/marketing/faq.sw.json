@@ -67,7 +67,7 @@
       "id": "duration",
       "category": "usage",
       "q": "Kuweka muhuri kunachukua muda gani?",
-      "a": "Hash inatengenezwa mara moja kwenye kivinjari chako. Kalenda ya OTS inajitolea mara kwa mara kwenye vizuizi vya Bitcoin. Uthibitisho mwingi unaunganishwa ndani ya masaa machache, na unapata kiungo cha uthibitishaji mara moja."
+      "a": "Hash inatengenezwa mara moja kwenye kivinjari chako. Seva za muhuri wa muda hujiunga mara kwa mara kwenye vizuizi vya Bitcoin. Uthibitisho mwingi unaunganishwa ndani ya masaa machache, na unapata kiungo cha uthibitishaji mara moja."
     },
     {
       "id": "nip05",
@@ -115,7 +115,7 @@
       "id": "airGap",
       "category": "institutional",
       "q": "Air-gap?",
-      "a": "Ndiyo, hash nje ya mtandao na kalenda OTS."
+      "a": "Ndiyo: hash nje ya mtandao, kisha weka muhuri kupitia seva za muda kwenye kivinjari."
     },
     {
       "id": "chainOfCustody",

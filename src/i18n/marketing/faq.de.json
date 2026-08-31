@@ -67,7 +67,7 @@
       "id": "duration",
       "category": "usage",
       "q": "Wie lange dauert das Stempeln?",
-      "a": "Der Hash wird sofort in Ihrem Browser erzeugt. Der OTS-Kalender committet periodisch in Bitcoin-Blöcke. Die meisten Nachweise sind innerhalb weniger Stunden verankert, und Sie erhalten sofort einen Verifizierungslink."
+      "a": "Der Hash wird sofort in Ihrem Browser erzeugt. Zeitstempel-Server schreiben periodisch in Bitcoin-Blöcke. Die meisten Nachweise sind innerhalb weniger Stunden verankert, und Sie erhalten sofort einen Verifizierungslink."
     },
     {
       "id": "nip05",
@@ -115,7 +115,7 @@
       "id": "airGap",
       "category": "institutional",
       "q": "Air-Gap?",
-      "a": "Ja, offline hashen und Browser-OTS-Kalender."
+      "a": "Ja: offline hashen, dann über öffentliche Zeitstempel-Server im Browser stempeln."
     },
     {
       "id": "chainOfCustody",

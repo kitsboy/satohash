@@ -476,26 +476,8 @@ export default function Landing() {
                 color: 'var(--accent-gold)'
               }}
             >
-              Full explainer page <ArrowRight size={16} />
+              Watch how it works <ArrowRight size={16} />
             </Link>
-            <Link
-              to="/templates"
-              className="flex min-h-[48px] w-full items-center justify-center gap-2 rounded-2xl border px-6 py-3.5 text-sm font-bold transition-all hover:text-white sm:w-auto sm:px-8 sm:py-4 sm:text-base"
-              style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
-            >
-              {t('landingPage.hero.ctaTemplates')} <ArrowRight size={16} />
-            </Link>
-            <a
-              href="#verify-ots"
-              className="flex min-h-[48px] w-full items-center justify-center gap-2 rounded-2xl border px-6 py-3.5 text-sm font-bold transition-all hover:text-white sm:w-auto sm:px-8 sm:py-4 sm:text-base"
-              style={{
-                borderColor: 'var(--border)',
-                color: 'var(--text-secondary)'
-              }}
-            >
-              Verify a proof <ChevronRight size={16} />
-            </a>
-            <TipButton size="lg" className="min-h-[48px] justify-center sm:w-auto" />
           </motion.div>
 
           {/* Social proof + template link */}
@@ -517,13 +499,23 @@ export default function Landing() {
                   : 'Live stamp counts load from the public metrics plane'}
               </p>
             </div>
-            <Link
-              to="/templates"
-              className="flex items-center gap-1 text-sm font-semibold transition-opacity hover:opacity-70"
-              style={{ color: 'var(--accent-gold)' }}
-            >
-              {t('landingPage.hero.tryTemplate')} <ArrowRight size={13} />
-            </Link>
+            <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
+              <Link
+                to="/templates"
+                className="flex items-center gap-1 text-sm font-semibold transition-opacity hover:opacity-70"
+                style={{ color: 'var(--accent-gold)' }}
+              >
+                {t('landingPage.hero.tryTemplate')} <ArrowRight size={13} />
+              </Link>
+              <a
+                href="#verify-ots"
+                className="flex items-center gap-1 text-sm font-semibold transition-opacity hover:opacity-70"
+                style={{ color: 'var(--text-secondary)' }}
+              >
+                Verify a proof <ChevronRight size={13} />
+              </a>
+              <TipButton size="sm" className="min-h-[40px]" />
+            </div>
           </motion.div>
 
           {/* Sovereign Bitcoin Network HUD Console */}

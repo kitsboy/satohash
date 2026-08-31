@@ -67,7 +67,7 @@
       "id": "duration",
       "category": "usage",
       "q": "Combien de temps prend l'horodatage ?",
-      "a": "Le hachage est généré instantanément dans votre navigateur. Le calendrier OTS s'engage périodiquement dans les blocs Bitcoin. La plupart des preuves sont ancrées en quelques heures, et vous obtenez un lien de vérification immédiatement."
+      "a": "Le hachage est généré instantanément dans votre navigateur. Les serveurs d’horodatage s’engagent périodiquement dans les blocs Bitcoin. La plupart des preuves sont ancrées en quelques heures, et vous obtenez un lien de vérification immédiatement."
     },
     {
       "id": "nip05",
@@ -115,7 +115,7 @@
       "id": "airGap",
       "category": "institutional",
       "q": "Usage air-gap ?",
-      "a": "Oui, hachage hors ligne et calendriers OTS navigateur."
+      "a": "Oui : hachage hors ligne, puis horodatage via les serveurs publics dans le navigateur."
     },
     {
       "id": "chainOfCustody",

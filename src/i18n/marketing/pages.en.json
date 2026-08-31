@@ -34,7 +34,7 @@
         "desc": "Unlimited stamp & verify with OpenTimestamps. No account. No Lightning invoice. Bitcoin-anchored proofs. Never paywalled.",
         "features": [
           "SHA-256 hashing in your browser",
-          "OpenTimestamps calendar anchoring",
+          "OpenTimestamps server anchoring",
           "Downloadable .ots proof files",
           "Verify any proof, anywhere",
           "Browser-based — nothing to install",
@@ -50,7 +50,7 @@
         "features": [
           "Everything in Free, plus (planned):",
           "Unlimited stamping / full vault",
-          "PDF exports + priority calendar submission",
+          "PDF exports + priority timestamp submission",
           "API access + webhooks",
           "Breez Spark / L402 Lightning billing",
           "Launches paid only when rails are funded"
@@ -67,7 +67,7 @@
           "White-label options",
           "SLA / priority support",
           "Custom webhooks + volume",
-          "Dedicated calendar path",
+          "Dedicated timestamp-server path",
           "Enterprise: custom, partner-gated"
         ],
         "cta": "Contact Sales"
@@ -96,7 +96,7 @@
           "enterprise": "yes"
         },
         "freeCalendar": {
-          "label": "Free calendar anchoring",
+          "label": "Free timestamp-server anchoring",
           "free": "upTo10",
           "premium": "unlimited",
           "enterprise": "unlimited"
@@ -132,7 +132,7 @@
           "enterprise": "unlimited"
         },
         "dedicatedCalendar": {
-          "label": "Dedicated OTS calendar",
+          "label": "Dedicated timestamp servers",
           "free": "dash",
           "premium": "dash",
           "enterprise": "yes"
@@ -323,7 +323,7 @@
       },
       "how-opentimestamps-works": {
         "title": "How OpenTimestamps Works",
-        "desc": "The protocol that makes free Bitcoin timestamping possible. Learn about OTS calendars, Merkle trees, and block commitment.",
+        "desc": "The protocol that makes free Bitcoin timestamping possible. Learn about timestamp servers, Merkle trees, and block commitment.",
         "readTime": "7 min"
       },
       "ots-vs-traditional-notary": {
@@ -653,7 +653,7 @@
       },
       "ots_setup": {
         "title": "OTS Setup Guide",
-        "desc": "Configure OpenTimestamps calendars and verification."
+        "desc": "Configure OpenTimestamps servers and verification."
       },
       "deploy-playbook": {
         "title": "Deploy Playbook",
@@ -947,7 +947,7 @@
     "share": "Share",
     "copyHash": "Copy Hash",
     "copyProof": "Copy Proof",
-    "downloadCert": "Download Certificate PDF",
+    "downloadCert": "Download proof PDF",
     "footer": "This proof is permanently anchored in the Bitcoin blockchain and cannot be altered or deleted. Verify independently at",
     "toasts": {
       "linkCopied": "Link copied!",
@@ -1066,21 +1066,21 @@
   },
   "staticMode": {
     "title": "Browser verification mode",
-    "body": "Hashing, vault, and OpenTimestamps stamping run in your browser via public calendars. Optional api.satohash.io adds hosted sync, OG cards, and fleet analytics.",
+    "body": "Hashing, vault, and OpenTimestamps stamping run in your browser via public timestamp servers. Optional api.satohash.io adds hosted sync, OG cards, and fleet analytics.",
     "trustLink": "Trust & compliance →",
-    "stampQueued": "Hash saved locally. Browser OTS will retry on sync — or stamp now via public calendars.",
+    "stampQueued": "Hash saved locally. Browser OTS will retry on sync — or stamp now via public timestamp servers.",
     "verifyStructural": "Structural .ots check passed. Full Bitcoin attestation: use browser verify or opentimestamps.org."
   },
   "proofTimeline": {
     "hashed": "Hashed locally",
-    "submitted": "Submitted to calendar",
+    "submitted": "Submitted to timestamp servers",
     "pending": "Pending Bitcoin block",
     "confirmed": "Confirmed on-chain",
     "ariaLabel": "Proof lifecycle"
   },
   "stampPage": {
     "motopassLoaded": "MotoPass hash loaded",
-    "motopassDesc": "Upload the matching file to complete stamping, or stamp hash via public calendars.",
+    "motopassDesc": "Upload the matching file to complete stamping, or stamp the hash via public timestamp servers.",
     "linkedHashReady": "Hash prefilled from a family app — one click stamps it on Bitcoin via OpenTimestamps. Your file never leaves the origin product.",
     "stampHashBtn": "Stamp on Bitcoin",
     "stampOnBitcoin": "Stamp on Bitcoin",
@@ -1193,7 +1193,7 @@
   "governmentUse": {
     "title": "Government &",
     "titleHighlight": "Diplomatic Use",
-    "subtitle": "Zero-knowledge timestamps for passports, national IDs, land titles, and distressed-asset programs. Documents never leave the device — only SHA-256 fingerprints reach OpenTimestamps calendars.",
+    "subtitle": "Zero-knowledge timestamps for passports, national IDs, land titles, and distressed-asset programs. Documents never leave the device — only SHA-256 fingerprints reach timestamp servers.",
     "passport": {
       "title": "Passport & travel programs",
       "body": "MotoPass hashes application payloads client-side; Satohash anchors fingerprints to Bitcoin without uploading biometrics."

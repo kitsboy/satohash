@@ -947,7 +947,7 @@
     "share": "Compartilhar",
     "copyHash": "Copiar hash",
     "copyProof": "Copiar prova",
-    "downloadCert": "Baixar certificado PDF",
+    "downloadCert": "Baixar PDF da prova",
     "footer": "Esta prova está permanentemente ancorada na blockchain Bitcoin e não pode ser alterada ou excluída. Verifique de forma independente em",
     "toasts": {
       "linkCopied": "Link copiado!",

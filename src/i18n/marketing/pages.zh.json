@@ -937,7 +937,7 @@
     "share": "分享",
     "copyHash": "复制哈希",
     "copyProof": "复制证明",
-    "downloadCert": "下载证书 PDF",
+    "downloadCert": "下载证明 PDF",
     "footer": "此证明永久锚定在 Bitcoin 区块链上，无法更改或删除。请独立验证：",
     "toasts": {
       "linkCopied": "链接已复制！",

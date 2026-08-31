@@ -947,7 +947,7 @@
     "share": "Teilen",
     "copyHash": "Hash kopieren",
     "copyProof": "Nachweis kopieren",
-    "downloadCert": "Zertifikat-PDF herunterladen",
+    "downloadCert": "Nachweis-PDF herunterladen",
     "footer": "Dieser Nachweis ist dauerhaft in der Bitcoin-Blockchain verankert und kann nicht geändert oder gelöscht werden. Unabhängig verifizieren unter",
     "toasts": {
       "linkCopied": "Link kopiert!",

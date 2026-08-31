@@ -28,7 +28,7 @@ export async function qrDataUrlForVerify(contractId) {
 }
 
 /**
- * Generate courtroom-ready contract PDF with optional certificate page.
+ * Generate a contract PDF with optional proof page.
  * Returns { ok, warnings } so callers can surface partial failures.
  */
 export async function generateContractPdf(contract) {
@@ -173,7 +173,7 @@ export async function generateContractPdf(contract) {
     doc.setFontSize(8)
     doc.setFont('helvetica', 'italic')
     doc.setTextColor(120, 120, 120)
-    const footerText = `This document is cryptographically anchored to the Bitcoin blockchain via the Satohash Protocol. The underlying content is protected by SHA-256 hashing. Modifying even a single character in the original file will invalidate this certificate. For verification, visit ${getVerifyUrl()}/${contract.id} or scan the QR code above.`
+    const footerText = `This document is cryptographically anchored to the Bitcoin blockchain via Satohash. The content is identified by SHA-256 hashing. Changing even a single character in the original file invalidates this proof. Verify at ${getVerifyUrl()}/${contract.id} or scan the QR code above.`
     const splitFooter = doc.splitTextToSize(footerText, pageWidth - margin * 2)
     doc.text(splitFooter, margin, currentY)
   }

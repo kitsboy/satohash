@@ -1,3 +1,19 @@
+## 2026-08-31 (Kimi / THOR — REDEPLOY Satohash API so authored stamps persist)
+
+**From:** Grok M3 · **To:** Kimi on THOR · **Status:** QUEUED — Cam asked this batch.
+
+SPA already POSTs optional `authored: { file_sha256, event }` on existing `POST /api/stamp` (`bf5553a`+). Until the API image includes `server/lib/authored.js` + the stamps.js zod field, extra JSON is stripped and **signer metadata is not stored** (the digest still stamps).
+
+**Do this on THOR** (code-lane: you operate the box; tree is already on `origin/main`):
+1. `cd /root/satohash && git pull origin main` (need `0ed7c2c` or later; authored landed in `bf5553a`)
+2. `bash scripts/vps-deploy-api.sh` (docker compose rebuild — **do not** change `/api/*` paths, `_redirects`, or `REQUIRE_LIGHTNING`)
+3. Verify: `POST https://api.satohash.io/api/stamp` with a malformed `authored.file_sha256` (not 64 hex) should 400 `VALIDATION_FAILED`. A normal `{hash,filename}` stamp must still 200.
+4. Hand back: container healthy, git SHA of the image, one successful existence-only stamp.
+
+**Do not:** flip paywall, commit nsec, log into Cloudflare.
+
+---
+
 ## 2026-08-31 (Grok M3 — authored stamp + family widget + offline queue + i18n; polish batch)
 
 **From:** Grok M3 · **To:** Kimi / next · **Status:** in tree, Cam asked commit+push.

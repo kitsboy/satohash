@@ -947,7 +947,7 @@
     "share": "Compartir",
     "copyHash": "Copiar hash",
     "copyProof": "Copiar prueba",
-    "downloadCert": "Descargar certificado PDF",
+    "downloadCert": "Descargar PDF de la prueba",
     "footer": "Esta prueba está anclada permanentemente en la blockchain de Bitcoin y no puede alterarse ni eliminarse. Verifica de forma independiente en",
     "toasts": {
       "linkCopied": "¡Enlace copiado!",
