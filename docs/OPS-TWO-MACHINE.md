@@ -4,8 +4,8 @@ Satohash is **designed** to run across two roles. This is normal and permanent.
 
 | Machine | Who | Owns |
 |---------|-----|------|
-| **M3** | Grok | Code in `~/projects/satohash` → `git push` → CF Pages SPA |
-| **THOR VPS** | Kimi | Docker API, secrets, Caddy, crons, HQ pipes, LNbits, **Obsidian / MASTER-BRAIN vault** |
+| **M3** | Grok | Code in `~/projects/satohash` → `git push` → **CF Pages SPA**. Standing auth: when Kimi cannot alter Pages (or files a frontend incident), Grok **pushes** — do not wait for a second ask. |
+| **THOR VPS** | Kimi | Docker API, secrets, Caddy, crons, HQ pipes, LNbits, **Obsidian / MASTER-BRAIN vault**. **Cannot** deploy or edit Cloudflare Pages. |
 
 M4 is not the Obsidian home and is not the coding owner. Do not Tailscale-sync handoffs to M4.
 
@@ -14,7 +14,7 @@ M4 is not the Obsidian home and is not the coding owner. Do not Tailscale-sync h
 1. **Grok** commits + pushes `main`
 2. **Kimi** on THOR: `git pull` + `docker compose … up -d --build`
 3. Smoke: `curl https://api.satohash.io/health` and key routes
-4. SPA-only changes: Grok push is enough (CF Actions deploys Pages)
+4. SPA-only / Pages incidents: Grok push is enough (CF Actions deploys Pages). Kimi does not wrangle Pages.
 
 ## What is *not* a shortfall
 

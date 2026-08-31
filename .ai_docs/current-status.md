@@ -1,12 +1,12 @@
 # Current Status — Satohash
 
-**Version:** **5.0.0-ELITE** (Build 274)  
-**Last Updated:** 2026-08-31 (Grok 4.6 — /goodbye)  
-**Frontend:** https://satohash.io · www · CF Pages project **`satohash`**  
+**Version:** **5.0.0-ELITE** (Build 278)  
+**Last Updated:** 2026-08-31 (Grok 4.6 — /goodbye after Pages stability)  
+**Frontend:** https://satohash.io · www · CF Pages project **`satohash`** — **stable** (`ec1c69e`, entry `/b/index-D_2O1MUS.js`)  
 **API:** https://api.satohash.io ✅ LIVE (THOR Docker, image from `78e2a8f`)  
 **Metrics SoT:** `https://api.satohash.io/metrics.json` (`raw.last10` + `raw.familyClients` **live**)  
 **HQ:** https://hq.giveabit.io  
-**Git:** `main` @ `c8f4868`+ (goodbye commit on `origin/main`)  
+**Git:** `main` @ `ec1c69e`+ (Pages stability on `origin/main`)  
 **Kimi vault:** **THOR VPS Obsidian** (not M4)  
 **Analytics:** Umami `analytics.giveabit.io` — **not** Google Analytics  
 **Search:** GSC property `https://satohash.io/` **verified** · sitemap.xml **Success, 69 pages**
@@ -15,12 +15,12 @@
 
 | Plane | Where | Notes |
 |-------|--------|--------|
-| SPA | CF Pages → satohash.io | Must call `https://api.satohash.io` — never same-origin `/api/*` |
+| SPA | CF Pages → satohash.io | **Grok lane.** Kimi cannot alter Pages. Grok has standing auth to push SPA fixes. Must call `https://api.satohash.io` |
 | API | THOR Docker + Caddy | `satohash-satohash-api-1` healthy |
 | Metrics | API `/metrics.json` | SPA `/metrics.json` is CF Function proxy |
 | Bitcoin | THOR bitcoind | Own node **at tip** · `source: bitcoind` · IBD **done** |
 | Explainer | `/watch` | **~84s** Kimi/Pippa cut (vo2) · 10s teaser toggle · hash mark top-left on close |
-| Bundles | `/b/*` | Do not revert to long-cache `/assets/*` |
+| Bundles | `/b/*` | Do not revert to long-cache `/assets/*`. Stamp/Verify **eager**. VitePWA `injectRegister: false` |
 
 **Code = M3 / Grok. Ops = Kimi / THOR.** No Umbrel. Do not fight M4 for coding.
 
@@ -32,7 +32,8 @@
 4. Do not rename package name or `VITE_API_URL`.  
 5. **Free stamps:** `REQUIRE_LIGHTNING=false`. Proofs = OTS → Bitcoin.  
 6. SPA → `https://api.satohash.io` only.  
-7. Version SoT: `package.json` (`5.0.0-ELITE`).
+7. Version SoT: `package.json` (`5.0.0-ELITE`).  
+8. **Pages = Grok.** When Kimi cannot alter Pages, Grok pushes. Do not wait for a second ask.
 
 ## Bitcoin (THOR)
 
@@ -52,9 +53,9 @@
 | Path | Notes |
 |------|--------|
 | `/` | Landing · live node chip · Watch explainer |
-| `/stamp` | Free stamp · STEP 1–3 copy live |
-| `/stamp/done` | Success · share `/p/<hash>` |
-| `/verify` | Public verify |
+| `/stamp` | Free stamp · STEP 1–3 · **eager** (no lazy hang) |
+| `/stamp/done` | Success · share `/p/<hash>` · **eager** |
+| `/verify` | Public verify · **eager** |
 | `/p/<hash>` | Zero-JS Function proof card (iMessage JPEG `01-stamp-hero.jpg`) |
 | `/network` | Live calendars, bitcoind tip, recent stamps, family tiles, Notes on Nostr |
 | `/status` · `/counsel` | Public status · counsel one-pager |
@@ -71,25 +72,25 @@
 | Family with counts | public 6 · spa 4 · kimi/e2e/mvp smoke 1 each |
 | Sherpa / MotoPass / Katoa | **0** attributed stamps (honest) |
 
-## This session (2026-08-31)
+## This session (2026-08-31, later)
 
-- [x] GSC HTML file live (`googlef508c6fb64de60ff.html` — keep forever) · Cam **verified** ownership  
-- [x] Sitemap submitted: **Success, 69 pages** (deleted broken `/sitemap.xml.` trailing-dot row)  
-- [x] NIP-05 `satohash@satohash.io` (same public hex as kimi) + footer njump + CORS  
-- [x] `/p/<hash>` JPEG OG for iMessage · share uses `/p/<hash>`  
-- [x] Family widget paste on `/widgets` (katoa/motopass/sherpacarta/giveabit)  
-- [x] THOR `git pull` + `vps-deploy-api.sh` — authored field **400** on bad metadata; free stamp **200** reuse  
-- [x] Pushed `62b8999` · API container healthy · `REQUIRE_LIGHTNING=false`
+- [x] Kimi incident: `/stamp` + `/verify` hang / System Desync flash  
+- [x] Root: lazy chunks imported HTML entry + SW / preload / ErrorBoundary reload loop  
+- [x] Fix live `ec1c69e` — eager Stamp/Verify; `injectRegister: false`; no auto hard-reload  
+- [x] Pages Deploy **success**; live entry `/b/index-D_2O1MUS.js`; Cam: “Much better!”  
+- [x] Standing rule: **Pages = Grok**; Kimi cannot alter Pages; Grok does not wait to push SPA fixes  
+- [x] GSC verified · sitemap Success 69 · NIP-05 · authored API · paywall off (from earlier today)
 
 ## Ops still open
 
-- [ ] Physical iPhone Safari share of `/p/<hash>` (JPEG unfurl) — Cam skipped tonight  
+- [ ] Physical iPhone Safari share of `/p/<hash>` (JPEG unfurl) — Cam skipped earlier  
 - [ ] Pin `/watch` on **`@give_bit`** (do not wait on `@satohashio`; `@satohash` taken)  
 - [ ] Family tiles: Katoa / Sherpa / Giveabit still **0** attributed (widget exists; nobody stamped through them)  
 - [ ] Kind-0 Nostr profile + RSS→Nostr cron (`scripts/nostr-publish-feed.js`; nsec on THOR only)  
 - [ ] **Kimi:** daily bitcoind RAM (`free -h`)  
 - [ ] Paywall only when Cam flips (`docs/PAYWALL-STAGING.md`) — LND not configured  
-- [ ] Remaining npm advisories — do not `--force`  
+- [ ] Remaining npm advisories (`opentimestamps` tree) — do **not** `--force`  
+- [x] `/stamp` `/verify` System Desync flash  
 - [x] GSC sitemap  
 - [x] THOR API includes authored.js  
 - [x] CSP **enforcing**  

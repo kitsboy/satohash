@@ -24,6 +24,7 @@
 6. **Free stamps today:** `REQUIRE_LIGHTNING=false`. Proofs = OpenTimestamps → **Bitcoin**. Later paywall = Lightning fee **to us**; chain stays Bitcoin.
 7. **SPA must call** `https://api.satohash.io` — never same-origin on CF Pages hosts.
 8. **Version SoT:** `package.json` (`5.0.0-ELITE`). Ignore older `v4` strings in archive docs.
+9. **Pages = Grok.** Kimi cannot alter Cloudflare Pages. When the live SPA is broken (or Kimi files a Pages incident), **Grok already has authorization** to fix and `git push main` — do not wait for a second “ask before you push.” Keep `REQUIRE_LIGHTNING=false`. Do not change `/api/*`.
 
 ## Planes
 

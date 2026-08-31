@@ -24,7 +24,7 @@ This is the **executable** handoff. Copy relevant bullets into MASTER-BRAIN / Ka
 | Layer | Where | Notes |
 |-------|--------|--------|
 | Product code | M3 + GitHub | Grok edits here; Kimi does **not** develop app trees |
-| Static sites | Cloudflare Pages | e.g. satohash.io |
+| Static sites | Cloudflare Pages | satohash.io — **Grok only.** Kimi cannot alter Pages. Grok has standing authorization to push SPA/Pages fixes (Cam 2026-08-31). |
 | Satohash API | **VPS Docker** | Target: `https://api.satohash.io` |
 | Bitcoin pruned node | VPS | Optional verify independence (`BITCOIN_RPC_URL`) |
 | LND + LNbits | VPS | Settlement / wallets — **not** OTS hashing |

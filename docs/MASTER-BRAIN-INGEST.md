@@ -6,6 +6,22 @@
 
 ---
 
+## Paste block (2026-08-31 — Pages stable + Grok standing auth)
+
+```markdown
+### Satohash SPA stability (DONE 2026-08-31 — Grok M3, Cam confirmed)
+
+Incident: /stamp + /verify hung / flashed "System Desync" (lazy chunks imported HTML entry + SW reload loop).
+Fix live: git ec1c69e · Pages Deploy success · /b/index-D_2O1MUS.js · Stamp/Verify eager · VitePWA injectRegister false.
+Cam: "Much better!"
+
+Standing (Cam): Kimi CANNOT alter Cloudflare Pages. Grok ALWAYS has authorization to push SPA/Pages fixes. Do not wait for a second ask. REQUIRE_LIGHTNING=false. Do not change /api/*.
+Kimi: git pull docs only — do NOT rebuild API for this. Vault = THOR Obsidian, not M4.
+Open (unchanged): pin /watch on @give_bit; iPhone /p/<hash> unfurl; family X-Satohash-Client stamps; RSS→Nostr cron; bitcoind free -h; no npm audit --force on opentimestamps.
+```
+
+---
+
 ## Paste block (2026-08-29 — Kimi ideas: X + Nostr)
 
 ```markdown

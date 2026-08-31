@@ -1,5 +1,5 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 265) · **Updated:** 2026-08-31
+> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 278) · **Updated:** 2026-08-31
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Architecture & repo map
@@ -24,7 +24,7 @@ api.satohash.io (Express on THOR)
 
 | Concern | Location |
 |---------|----------|
-| Landing / stamp / verify UI | `src/pages/`, `src/components/{layout,stamps,ui,…}/` |
+| Landing / stamp / verify UI | `src/pages/` — **Landing, Stamp, StampDone, Verify are eager** (lazy hung `/stamp`+`/verify` and flashed System Desync, 2026-08-31). Other routes stay `lazyWithReload`. |
 | Explainer | `/watch` · `src/pages/ExplainerWatch.jsx` · `public/media/video/` |
 | Exec summary | `/docs/executive-summary` · `src/pages/ExecutiveSummary.jsx` |
 | API | `server/index.js` (thin) + `server/routes/*` + `server/lib/*` |
@@ -45,7 +45,7 @@ api.satohash.io (Express on THOR)
   AGENTS.md                 # sole agent entry
   README.md
   package.json              # version SoT
-  vite.config.js            # assetsDir: 'b'
+  vite.config.js            # assetsDir: 'b' · VitePWA injectRegister:false (selfDestroying, no registerSW loop)
   public/
     _redirects              # SPA fallback — do not break
     _headers
@@ -83,6 +83,7 @@ api.satohash.io (Express on THOR)
 | `POST /api/verify`, `POST /api/upgrade` | OTS lifecycle |
 | `GET /metrics.json` | HQ |
 | `GET /health` | Ops |
+| SPA `/stamp` `/stamp/done` `/verify` | Core loop — **eager** in `src/App.jsx`. Do not re-lazy without `scripts/verify-chunk-graph.mjs`. |
 | SPA `/stamp?hash=&ref=` | Family deep-link |
 | SPA `/watch` | Explainer (eager-loaded; VO-driven) |
 | `public/media/video/*` | Explainer frames, music, VO, MP4 |
@@ -101,6 +102,7 @@ api.satohash.io (Express on THOR)
 ## Related
 
 - Deploy: `docs/deploy.md`
+- Pages (Cam ELI-16): `docs/CLOUDFLARE-PAGES.md` — Grok pushes SPA; Kimi does not alter Pages
 - Ops: `docs/ops-runbook.md`
 - Migration of doc sprawl: `docs/archive/MIGRATION-LOG.md`
 - Legacy layout notes: `docs/REPO-LAYOUT.md` (superseded by this file for orientation)

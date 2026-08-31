@@ -13,11 +13,15 @@ Canonical short ops pointer. Detailed procedures remain in:
 ## Daily truths
 
 1. **API** on THOR Docker + Caddy → `api.satohash.io`
-2. **SPA** on Cloudflare Pages → `satohash.io`
+2. **SPA** on Cloudflare Pages → `satohash.io` (**Grok lane.** Kimi cannot alter Pages; Grok has standing auth to push SPA fixes.)
 3. **Free stamps:** `REQUIRE_LIGHTNING=false` until Cam flips paywall
 4. **Metrics SoT:** `https://api.satohash.io/metrics.json`
 5. **No secrets in git / handoffs**
 6. **One SPA deploy path:** GitHub Actions `Deploy` only — never Retry in the CF Pages UI while Actions is yellow
+
+## When SPA flashes “System Desync” or hangs on `/stamp` `/verify`
+
+Fixed **2026-08-31** (`ec1c69e`, live). Cause was lazy Stamp/Verify chunks importing the HTML entry + a service-worker / `vite:preloadError` / ErrorBoundary reload loop. Core loop is eager; `injectRegister: false`. If it returns: hard refresh once, then Grok (not a CF UI retry).
 
 ## When SPA shows `Unexpected token '<'`
 

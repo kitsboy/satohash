@@ -1,3 +1,36 @@
+## Latest Session Summary (from 2026-08-31 goodbye — Pages stable)
+
+**Chat Topic:** Recover from last night, pull Kimi’s incident, stop `/stamp`+`/verify` flashing System Desync, record Pages = Grok standing auth, then close.
+
+**Finished in this session:**
+- Live SPA fix `ec1c69e` (Build 278). Pages Deploy success. Entry `/b/index-D_2O1MUS.js`. Cam: “Much better!”
+- Stamp / StampDone / Verify **eager**. VitePWA `injectRegister: false`. No auto hard-reload on lazy-chunk errors. `scripts/verify-chunk-graph.mjs` in `build:verify`.
+- Standing rule (Cam): **Kimi cannot alter Pages. Grok always has authorization** to push SPA/Pages fixes — do not wait for a second “ask before you push.”
+- Maps updated: `AGENTS.md` #9 · `docs/architecture.md` · `docs/deploy.md` · `docs/CLOUDFLARE-PAGES.md` · `docs/OPS-TWO-MACHINE.md` · `docs/ops-runbook.md` · `docs/KIMI-VPS-RUNBOOK.md`
+
+**Still to do:**
+- Cam: iPhone `/p/<hash>` iMessage test; pin `/watch` on `@give_bit`
+- Family tiles Katoa/Sherpa/Giveabit still 0
+- Kind-0 + RSS→Nostr cron (script in git; nsec on THOR)
+- Optional safe `npm audit fix` (non-force). Do **not** `--force` opentimestamps.
+- Paywall / LND / GA stay off
+
+**Next for Kimi:** Ingest this summary + the MASTER-BRAIN paste into **THOR Obsidian** (not M4). `git pull` on `/root/satohash` is docs only — **do not** rebuild the API for this. Educate Hermes: Pages incidents go to Grok; she does not wrangle Cloudflare. Do not flip `REQUIRE_LIGHTNING`. Do not change `/api/*`.
+
+**Git:** `ec1c69e` on `origin/main`. Full notes: `docs/archive/SESSION-SUMMARY-2026-08-31-pages-stable-goodbye.md`
+
+---
+
+## ✅ RESOLVED — FRONTEND STABILITY: /stamp + /verify hang (Kimi 2026-08-31 → Grok `ec1c69e`)
+
+Was: homepage OK; `/stamp` `/verify` hung on LoadingScreen / flashed System Desync. Mixed `/b/*` chunks + lazy Stamp importing the HTML entry + SW/`vite:preloadError`/ErrorBoundary reload loop.
+
+**Fixed live.** Eager core loop. `injectRegister: false`. No auto-reload stack. Cam confirmed. If it returns: one hard refresh, then Grok (standing Pages auth — do not ask again).
+
+Original incident text kept below for history.
+
+---
+
 ## 🚨 For Grok — FRONTEND STABILITY: /stamp + /verify hang (Kimi/Hermes, 2026-08-31, PRIORITY)
 
 Cam reports the site is "flashing/unstable" and I reproduced it in a real browser. **Please fix the frontend build — this is the active incident.**
@@ -17,7 +50,7 @@ Cam reports the site is "flashing/unstable" and I reproduced it in a real browse
 2. `lazyWithReload` reload loop masking it (App.jsx uses `lazyWithReload(() => import('./pages/Stamp'))`).
 3. The build-tag in footer shows "Build 276" — confirm the served `/b/index-*.js` matches ONE coherent build.
 
-**Ask before you push the frontend fix** — Cam wants it right, and the last push is when this regressed. Keep `REQUIRE_LIGHTNING=false`, don't change `/api/*`.
+~~**Ask before you push the frontend fix**~~ **SUPERSEDED (Cam 2026-08-31):** Pages = Grok; standing auth to push SPA fixes. Keep `REQUIRE_LIGHTNING=false`, don't change `/api/*`.
 
 ---
 

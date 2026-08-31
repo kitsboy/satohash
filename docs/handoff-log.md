@@ -1,3 +1,19 @@
+## 2026-08-31 (Grok M3 — /goodbye after Pages stability)
+
+**Pickup:** `.ai_docs/current-status.md` · this file · `docs/archive/SESSION-SUMMARY-2026-08-31-pages-stable-goodbye.md` · `/whatsup` next chat.
+
+**Git:** `ec1c69e` on `origin/main`. Pages Deploy **success**. Live `/b/index-D_2O1MUS.js`. Cam: “Much better!”
+
+**Done:** `/stamp` + `/verify` no longer flash System Desync. Eager core loop. No SW re-register loop. Standing rule recorded: **Pages = Grok**; Kimi cannot alter Pages; Grok does not wait for a second ask to push SPA fixes.
+
+**Not this wave:** iPhone `/p/<hash>` unfurl · pin `/watch` on `@give_bit` · family attributed stamps · RSS→Nostr cron · `opentimestamps` audit `--force` (do not).
+
+**Do not:** flip `REQUIRE_LIGHTNING` · change `/api/*` · delete GSC HTML · log into Cloudflare · GA/GTM · `@satohash`
+
+**Kimi vault:** THOR Obsidian, not M4. Ingest the paste in `docs/MASTER-BRAIN-INGEST.md`. API does **not** need a rebuild for this SPA fix.
+
+---
+
 ## 2026-08-31 (Grok M3 — /goodbye)
 
 **Pickup:** `.ai_docs/current-status.md` · this file · `docs/archive/SESSION-SUMMARY-2026-08-31-goodbye.md` · `/whatsup` next chat.

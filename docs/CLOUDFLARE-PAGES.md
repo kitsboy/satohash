@@ -54,7 +54,7 @@ If those three work, **close the tab. Do not click Purge.**
 | Symptom                                                 | What it usually is                                            | What to do                                                                           |
 | ------------------------------------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
 | Page is blank / “Unexpected token `<`”                  | Edge served **HTML instead of JS** (poisoned `/b/index-….js`) | Purge **satohash.io** cache — see below                                              |
-| `/stamp` says “Failed to fetch … VerificationTool-….js” | Stale chunk after a deploy race                               | Hard refresh first. We already eager-load Stamp/Verify. Purge only if refresh fails. |
+| `/stamp` or `/verify` flash “System Desync” / hang on “LOADING SECURE MODULE…” | Mixed `/b/*` chunks + auto-reload loop (fixed `ec1c69e`, 2026-08-31) | Hard refresh once (`Cmd-Shift-R`). Stamp/Verify are eager. If it still flashes after the new `index-*.js`, tell Grok — **do not** Retry deploy in the CF UI. |
 | `satohash.io` works but `www` doesn’t                   | Custom domain glitch                                          | Pages → `satohash` → Custom domains. Do not recreate the project.                    |
 | `/p/abc…` is the React app, not the gold card           | Function didn’t match                                         | Confirm URL is `/p/<64 hex>`. Do not edit Functions in the UI.                       |
 
@@ -95,7 +95,7 @@ If those three work, **close the tab. Do not click Purge.**
 ## How a good deploy looks
 
 ```
-You / Grok push main
+Grok (M3) pushes main — Kimi cannot alter Pages; Grok has standing authorization for SPA/Pages fixes.
         ↓
 GitHub Action “Deploy” builds Vite (assets in /b/*)
         ↓

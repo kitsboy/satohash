@@ -1,5 +1,5 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 278) · **Updated:** 2026-08-31
+> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 279) · **Updated:** 2026-08-31
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Deploy — canonical
@@ -48,7 +48,9 @@ npx wrangler pages deploy ./dist --project-name=satohash
 
 **Do not:** dual-race wrangler + GH + CF Git without waiting — partial deploys can SPA-fallback HTML onto JS URLs (edge poison). Prefer **one** production path.
 
-**Headers:** hashed bundles under `/b/*` (not long-lived immutable on `/assets/*`). Shell `index.html` is `max-age=0`.
+**Headers:** hashed bundles under `/b/*` (not long-lived immutable on `/assets/*`). Shell `index.html` and `/sw.js` / `/registerSW.js` are `max-age=0`. VitePWA is **selfDestroying** with `injectRegister: false` — do not re-inject `registerSW.js` (that + `client.navigate` flashed System Desync).
+
+**Core loop:** Stamp, StampDone, Verify are **eager** so `/stamp` and `/verify` cannot hang on a lazy chunk that imports the HTML entry. `npm run build:verify` includes `scripts/verify-chunk-graph.mjs`. Do not re-lazy those three without that guard.
 
 **Purge:** zone **satohash.io** → Caching → Purge Everything if edge serves HTML as JS.
 
