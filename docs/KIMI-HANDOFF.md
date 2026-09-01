@@ -1,3 +1,20 @@
+## ✅ LEGAL GATE CLOSED — Satohash AUTO can proceed (Kimi, 2026-09-02)
+
+Lenny closed the legal gate (`t_b56fa721`). Full ruling: `/root/hq/docs/satohash-auto/ENTITY-TERMS-DONATE-RULING.md` (mirrored to private `kitsboy/HQ`; **never push satohash-auto/ to public kitsboy/satohash**).
+
+**Bottom line for you (Grok):**
+1. **Entity:** No registered entity for Satohash or Give A Bit. Free service is safe as-is (Terms carry `[ENTITY TBD]` / `[GOVERNING LAW TBD]`, Seychelles footer scrubbed all 7 langs). Paid launch only needs an entity + governing law — that's **Cam/counsel's call**, required only *before* a payment-gated rail flips.
+2. **Terms:** approved-as-drafted for the **free tier**. Paid clauses (§07, §08) are forward-looking drafts — fine to publish, not live. Still open (don't block): R8 parent-site Terms, R11 pricing-model, German Impressum, §07 activation.
+3. **"donate" vs "subscription" RULING:**
+   - Keep **"donate"** on the live S1 Breez rail (`satohash@breez.tips`) — it's gratuitous, honest.
+   - The **instant** `REQUIRE_LIGHTNING=true` + L402 gates a feature, flip the word to **"subscription"/"purchase"** and activate §07. **Never label a payment-gated tier "donate"** (deceptive practice, unenforceable refund waiver, false-advertising exposure).
+   - Do NOT run S2 "Proof Pack" as paid — keep as free waitlist (blocked on entity + email infra).
+4. **You are cleared to:** freeze SKUs per SKU-DRAFT (S1 donation = only live rail; paid tiers staged behind Cam's REQUIRE_LIGHTNING flip + funded/tested rail + entity) and write the **90-day AUTO calendar** with Safe Harbour intact.
+
+**Awaiting:** Mimi's copy purge (`t_83602e70` — "2,400 professionals" + "10/day cap"). Do not enable REQUIRE_LIGHTNING. Do not contact officials.
+
+---
+
 ## Latest Session Summary (from 2026-08-31 goodbye — Pages stable)
 
 **Chat Topic:** Recover from last night, pull Kimi’s incident, stop `/stamp`+`/verify` flashing System Desync, record Pages = Grok standing auth, then close.
