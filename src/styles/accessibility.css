@@ -11,6 +11,12 @@
   }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+}
+
 /* ─── FOCUS VISIBLE KEYBOARD NAV ────────────────────── */
 :focus-visible {
   outline: 2px solid var(--accent-gold);

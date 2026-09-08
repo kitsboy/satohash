@@ -42,6 +42,11 @@ function isSha256Hex(h) {
   return typeof h === 'string' && /^[0-9a-f]{64}$/i.test(h)
 }
 
+function isFinneyCalendar(c) {
+  const hay = `${c?.url || ''} ${c?.host || ''} ${c?.id || ''}`.toLowerCase()
+  return hay.includes('finney') || hay.includes('eternitywall')
+}
+
 function StatCard({ label, value, hint, icon: Icon, color = 'var(--accent-gold)' }) {
   return (
     <div
@@ -130,6 +135,8 @@ export default function Network() {
   }, [])
 
   const calendars = cals?.calendars || []
+  const calendarsUp = calendars.filter((c) => c.ok).length
+  const finneyDown = calendars.some((c) => isFinneyCalendar(c) && !c.ok)
   const nostrNotes = recent
     .map((s) => {
       const eventId = pickNostrEventId(s)
@@ -216,12 +223,10 @@ export default function Network() {
           />
           <StatCard
             label="OTS calendars"
-            value={
-              calendars.length
-                ? `${calendars.filter((c) => c.ok).length}/${calendars.length} up`
-                : '—'
+            value={calendars.length ? `${calendarsUp}/${calendars.length} up` : '—'}
+            hint={
+              finneyDown ? 'Finney often flaky — Alice + Bob are enough' : 'Public calendar health'
             }
-            hint="Public calendar health"
             icon={Calendar}
             color="#22d3a5"
           />
@@ -244,26 +249,41 @@ export default function Network() {
               </p>
             ) : (
               <ul className="space-y-2">
-                {calendars.map((c) => (
-                  <li
-                    key={c.url}
-                    className="flex items-center justify-between gap-3 rounded-xl border px-3 py-2.5"
-                    style={{ borderColor: 'var(--border)', background: 'var(--bg-primary)' }}
-                  >
-                    <span
-                      className="truncate font-mono text-[10px]"
-                      style={{ color: 'var(--text-secondary)' }}
+                {calendars.map((c) => {
+                  const finney = isFinneyCalendar(c)
+                  return (
+                    <li
+                      key={c.url}
+                      className="rounded-xl border px-3 py-2.5"
+                      style={{ borderColor: 'var(--border)', background: 'var(--bg-primary)' }}
                     >
-                      {(c.url || '').replace(/^https?:\/\//, '')}
-                    </span>
-                    <span
-                      className="shrink-0 text-[10px] font-black uppercase"
-                      style={{ color: c.ok ? 'var(--accent-success)' : 'var(--accent-danger)' }}
-                    >
-                      {c.ok ? `${c.response_time_ms ?? '—'}ms` : 'down'}
-                    </span>
-                  </li>
-                ))}
+                      <div className="flex items-center justify-between gap-3">
+                        <span
+                          className="truncate font-mono text-[10px]"
+                          style={{ color: 'var(--text-secondary)' }}
+                        >
+                          {(c.url || '').replace(/^https?:\/\//, '')}
+                        </span>
+                        <span
+                          className="shrink-0 text-[10px] font-black uppercase"
+                          style={{
+                            color: c.ok ? 'var(--accent-success)' : 'var(--accent-danger)'
+                          }}
+                        >
+                          {c.ok ? `${c.response_time_ms ?? '—'}ms` : 'down'}
+                        </span>
+                      </div>
+                      {finney ? (
+                        <p
+                          className="mt-1 text-[10px] leading-snug"
+                          style={{ color: 'var(--text-muted)' }}
+                        >
+                          often flaky — Alice + Bob are enough
+                        </p>
+                      ) : null}
+                    </li>
+                  )
+                })}
               </ul>
             )}
           </div>
@@ -393,16 +413,28 @@ export default function Network() {
           </p>
         ) : (
           <ul className="grid gap-2 sm:grid-cols-2">
-            {(Array.isArray(family) ? family : []).slice(0, 20).map((row) => (
-              <li
-                key={row.id || row.key || row.label}
-                className="flex items-center justify-between rounded-xl border px-3 py-2 text-xs"
-                style={{ borderColor: 'var(--border)', background: 'var(--surface-raised)' }}
-              >
-                <span className="font-bold">{row.label || row.id}</span>
-                <span className="font-mono">{row.value ?? row.count ?? 0}</span>
-              </li>
-            ))}
+            {(Array.isArray(family) ? family : []).slice(0, 20).map((row) => {
+              const count = Number(row.value ?? row.count ?? 0)
+              return (
+                <li
+                  key={row.id || row.key || row.label}
+                  className="flex items-center justify-between gap-3 rounded-xl border px-3 py-2 text-xs"
+                  style={{ borderColor: 'var(--border)', background: 'var(--surface-raised)' }}
+                >
+                  <span className="font-bold">{row.label || row.id}</span>
+                  {count === 0 ? (
+                    <span
+                      className="text-right text-[10px]"
+                      style={{ color: 'var(--text-tertiary)' }}
+                    >
+                      No stamps through this widget yet
+                    </span>
+                  ) : (
+                    <span className="font-mono">{count}</span>
+                  )}
+                </li>
+              )
+            })}
           </ul>
         )}
       </section>

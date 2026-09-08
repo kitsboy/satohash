@@ -122,7 +122,8 @@ export default function StampDone() {
     )
   }
 
-  const queued = proof.source === 'offline-queue'
+  const queued =
+    proof.source === 'offline-queue' || proof.status === 'queued' || proof.status === 'offline'
   const confirmed =
     !queued &&
     (proof.status === 'confirmed' || proof.status === 'verified' || Boolean(proof.isConfirmed))
@@ -134,7 +135,7 @@ export default function StampDone() {
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="flex flex-wrap items-center gap-2">
             <p
-              className="text-[11px] font-black tracking-widest uppercase"
+              className="inline-flex items-center text-[11px] font-black tracking-widest uppercase"
               style={{ color: confirmed ? 'var(--accent-success)' : 'var(--accent-gold)' }}
             >
               {queued
@@ -142,6 +143,10 @@ export default function StampDone() {
                 : confirmed
                   ? t('stampDonePage.receipt')
                   : t('stampDonePage.receiptPending')}
+              <Tooltip
+                title="Pending is not confirmed"
+                content="The fingerprint is at OpenTimestamps calendars. It is NOT in a Bitcoin block until status is confirmed. Pending ≠ confirmed."
+              />
             </p>
             <LiveNodeChip compact />
           </div>
@@ -182,7 +187,7 @@ export default function StampDone() {
             )}
           </div>
           <h1
-            className={`text-2xl font-black tracking-tight uppercase ${
+            className={`inline-flex items-center justify-center gap-1 text-2xl font-black tracking-tight uppercase ${
               confirmed ? '' : 'text-gradient'
             }`}
             style={confirmed ? { color: 'var(--accent-success)' } : undefined}
@@ -192,6 +197,10 @@ export default function StampDone() {
               : confirmed
                 ? t('stampDonePage.foldedIntoBitcoin')
                 : t('stampDonePage.submittedNotConfirmed')}
+            <Tooltip
+              title="Pending is not confirmed"
+              content="The fingerprint is at OpenTimestamps calendars. It is NOT in a Bitcoin block until status is confirmed. Pending ≠ confirmed."
+            />
           </h1>
           {confirmed && blockHeight ? (
             <p className="space-y-1">

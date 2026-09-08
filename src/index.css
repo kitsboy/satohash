@@ -28,6 +28,10 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+
   .stamp-page *,
   .verify-public-page * {
     animation-duration: 0.01ms !important;
@@ -38,8 +42,20 @@ body {
   body::before,
   .animate-jewel-pulse,
   .animate-glow,
-  .animate-breathing {
+  .animate-breathing,
+  .animate-float,
+  .animate-fade-up,
+  .animate-scan,
+  .gold-text,
+  .hud-glass {
     animation: none !important;
+  }
+
+  .btn-sheen::after {
+    content: none !important;
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
   }
 }
 
@@ -642,9 +658,16 @@ body {
 
   @media (prefers-reduced-motion: reduce) {
     .btn-sheen::after,
-    .live-chip-dot.is-live {
+    .live-chip-dot.is-live,
+    .hud-glass,
+    .gold-text {
       animation: none !important;
       transition: none !important;
+    }
+
+    .btn-sheen::after {
+      content: none !important;
+      transform: none !important;
     }
   }
 

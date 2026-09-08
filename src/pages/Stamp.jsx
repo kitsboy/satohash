@@ -28,7 +28,6 @@ import usePageMeta from '../hooks/usePageMeta'
 import { getApiUrl } from '../config/constants'
 import { normalizeSha256 } from '../utils/hashUtils'
 import { useTranslation } from 'react-i18next'
-import { isStaticOnlyMode } from '../utils/staticMode'
 import { isApiExplicitlyConfigured } from '../config/mvp'
 import StaticModeBanner from '../components/shared/StaticModeBanner'
 import GiveABitBadge from '../components/marketing/GiveABitBadge'
@@ -52,6 +51,7 @@ export default function Stamp() {
   }, [])
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
+  const templateParam = searchParams.get('template')
   const deepLink = useMemo(() => parseStampDeepLink(searchParams), [searchParams])
   const [stampMode, setStampMode] = useState('single') // single, capsule, redact, deposition
   const [showAdvancedModes, setShowAdvancedModes] = useState(false)
@@ -647,7 +647,7 @@ export default function Stamp() {
           id: q.item?.id,
           hash: stampHash,
           filename,
-          status: 'pending',
+          status: 'queued',
           source: 'offline-queue',
           ...(bound ? { authored: { file_sha256: bound.fileSha256, event: bound.event } } : {})
         }
@@ -718,7 +718,7 @@ export default function Stamp() {
           id: q.item?.id,
           hash: stampHash,
           filename,
-          status: 'pending',
+          status: 'queued',
           source: 'offline-queue'
         }
         persistLastProof(localProof)
@@ -839,7 +839,8 @@ export default function Stamp() {
           filename: caseLabel || file?.name,
           hash: hashValue,
           created_at: new Date().toISOString(),
-          status: 'pending',
+          status: 'queued',
+          source: 'offline-queue',
           size: file?.size || 0
         }
 
@@ -847,11 +848,8 @@ export default function Stamp() {
         offlineQ.push(queuedItem)
         localStorage.setItem('satohash_offline_queue', JSON.stringify(offlineQ))
 
-        const queuedMsg = isStaticOnlyMode()
-          ? tp('staticMode.stampQueued')
-          : 'Connection offline. Hash queued for synchronization.'
-        toast.warning(isStaticOnlyMode() ? 'Hash saved — API pending' : '⚡ Stamp Queued Offline', {
-          description: queuedMsg
+        toast.warning('Saved on this device only', {
+          description: 'Not submitted to calendars yet. Not a Bitcoin proof.'
         })
 
         const existing = JSON.parse(localStorage.getItem('satohash_stamps') || '[]')
@@ -921,6 +919,14 @@ export default function Stamp() {
         </div>
         <StaticModeBanner />
         <GiveABitBadge />
+        {templateParam ? (
+          <p
+            className="inline-flex rounded-full border px-3 py-1 text-[11px] font-bold tracking-wider uppercase"
+            style={{ borderColor: 'var(--accent-gold)', color: 'var(--accent-gold)' }}
+          >
+            Template: {templateParam}
+          </p>
+        ) : null}
 
         {files.length === 0 && stampingStatus === 'idle' && !proofResult && (
           <div
@@ -1522,8 +1528,12 @@ export default function Stamp() {
                               ? 'Drop multiple files to create a signed evidence bundle anchored as a single proof.'
                               : t('stamp', 'dropzone')}
                           </p>
-                          <p className="px-2 text-[10px] font-bold tracking-widest text-balance text-[var(--text-muted)] uppercase">
+                          <p className="inline-flex items-center justify-center gap-1 px-2 text-[10px] font-bold tracking-widest text-balance text-[var(--text-muted)] uppercase">
                             {tp('stampPage.otsViaBitcoin')}
+                            <Tooltip
+                              title="Pending is not confirmed"
+                              content="The fingerprint is at OpenTimestamps calendars. It is NOT in a Bitcoin block until status is confirmed. Pending ≠ confirmed."
+                            />
                           </p>
                           <div className="flex flex-wrap items-center justify-center gap-2 pt-1">
                             <Tooltip
@@ -1536,7 +1546,11 @@ export default function Stamp() {
                             />
                             <Tooltip
                               title="Step 3 — Bitcoin Timestamp"
-                              content="The hash is submitted to public OTS calendars and permanently committed to the Bitcoin blockchain. Download your .ots proof when complete."
+                              content="The hash is submitted to public OTS calendars. It is NOT in a Bitcoin block until status is confirmed. Pending ≠ confirmed."
+                            />
+                            <Tooltip
+                              title="Pending is not confirmed"
+                              content="The fingerprint is at OpenTimestamps calendars. It is NOT in a Bitcoin block until status is confirmed. Pending ≠ confirmed."
                             />
                           </div>
                         </div>

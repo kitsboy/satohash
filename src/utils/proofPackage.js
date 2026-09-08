@@ -38,19 +38,30 @@ export async function buildProofPackage(proof, { includeOts = true } = {}) {
     ]
   }
   zip.file('proof.json', JSON.stringify(meta, null, 2))
+  const hash = proof?.hash || ''
+  const isHex64 = /^[a-f0-9]{64}$/i.test(hash)
+  const blockHeight = proof?.bitcoin_block_height
   zip.file(
     'README.txt',
     [
       'Satohash proof package',
       '======================',
+      'PENDING IS NOT BITCOIN CONFIRMED.',
       '',
       `File: ${proof?.filename || '—'}`,
-      `SHA-256: ${proof?.hash || '—'}`,
+      `SHA-256: ${hash || '—'}`,
       `Status: ${proof?.status || 'pending'}`,
       `Stamp id: ${proof?.id || '—'}`,
+      blockHeight
+        ? `Bitcoin block height: ${blockHeight}`
+        : 'Block height not stored yet — do not treat this as a block receipt.',
+      '',
+      'Verify: https://satohash.io/verify',
+      ...(isHex64 ? [`Proof card: https://satohash.io/p/${hash.toLowerCase()}`] : []),
       '',
       'Open proof.json for machine-readable metadata.',
       'If present, proof.ots is the OpenTimestamps receipt.',
+      'The fingerprint is at OpenTimestamps calendars. It is NOT in a Bitcoin block until status is confirmed. Pending ≠ confirmed.',
       'You can re-check at https://satohash.io/verify without trusting Satohash alone.',
       ''
     ].join('\n')

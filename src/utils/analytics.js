@@ -23,6 +23,7 @@ const events = {
   TIMESTAMP_STARTED: 'timestamp_started',
   TIMESTAMP_COMPLETED: 'timestamp_completed',
   TIMESTAMP_DOWNLOADED: 'timestamp_downloaded',
+  PROOF_SHARED: 'proof_shared',
 
   // Verification
   VERIFICATION_STARTED: 'verification_started',
@@ -32,6 +33,14 @@ const events = {
   STAMP_VIEW: 'funnel_stamp',
   STAMP_DONE: 'funnel_stamp_done',
   VERIFY_VIEW: 'funnel_verify'
+}
+
+/** 8-char hex prefix only — never send a full hash. */
+export function analyticsHashPrefix(hash) {
+  const h = String(hash || '')
+    .toLowerCase()
+    .replace(/[^a-f0-9]/g, '')
+  return h ? h.slice(0, 8) : undefined
 }
 
 export const trackEvent = (eventName, properties = {}) => {

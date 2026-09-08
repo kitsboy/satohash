@@ -3,7 +3,11 @@ import Tooltip from '../ui/Tooltip'
 const CALENDARS = [
   { id: 'alice', host: 'alice.btc.calendar.opentimestamps.org' },
   { id: 'bob', host: 'bob.btc.calendar.opentimestamps.org' },
-  { id: 'finney', host: 'finney.calendar.eternitywall.com', note: 'may be flaky' }
+  {
+    id: 'finney',
+    host: 'finney.calendar.eternitywall.com',
+    note: 'often flaky — Alice + Bob are enough'
+  }
 ]
 
 /** Pending-card jewelry: which public OTS calendars attest the stamp. */

@@ -10,6 +10,7 @@ import { Share2, Mail, FileDown, Copy, Check } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'sonner'
 import { buildXIntent, buildNostrShareLinks, buildProofCardUrl } from '../../utils/shareProof'
+import events, { trackEvent, analyticsHashPrefix } from '../../utils/analytics'
 
 /** Interactive verify / PDF live on /verify. Share/copy/iMessage use /p/<hash>. */
 function buildVerifyUrl(proof) {
@@ -37,10 +38,16 @@ export default function DonationReceiptShare({ proof, isDonation = false }) {
   const verifyUrl = buildVerifyUrl(proof)
   const text = buildShareText(proof, isDonation)
 
+  const funnelProps = () => {
+    const hash_prefix = analyticsHashPrefix(proof?.hash)
+    return hash_prefix ? { hash_prefix } : {}
+  }
+
   async function webShare() {
     try {
       if (typeof navigator !== 'undefined' && navigator.share) {
         await navigator.share({ title: 'Give A Bit receipt', text: `${text}\n${url}`, url })
+        trackEvent(events.PROOF_SHARED, { via: 'share', ...funnelProps() })
         return true
       }
     } catch (e) {
@@ -54,6 +61,7 @@ export default function DonationReceiptShare({ proof, isDonation = false }) {
       await navigator.clipboard.writeText(url)
       setCopied(true)
       setTimeout(() => setCopied(false), 1600)
+      trackEvent(events.PROOF_SHARED, { via: 'copy', ...funnelProps() })
       toast.success('Receipt link copied')
     } catch {
       toast.error('Could not copy link')
@@ -105,6 +113,7 @@ export default function DonationReceiptShare({ proof, isDonation = false }) {
           href={xIntent}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => trackEvent(events.PROOF_SHARED, { via: 'x', ...funnelProps() })}
           className={shareLinkClass}
           style={shareLinkStyle}
         >
@@ -116,6 +125,7 @@ export default function DonationReceiptShare({ proof, isDonation = false }) {
             href={link.href}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => trackEvent(events.PROOF_SHARED, { via: 'nostr', ...funnelProps() })}
             className={shareLinkClass}
             style={shareLinkStyle}
           >

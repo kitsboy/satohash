@@ -13,6 +13,8 @@ import {
   shareProofLink
 } from '../../utils/shareProof'
 import { exportProofBundle } from '../../utils/proofPackage'
+import events, { trackEvent, analyticsHashPrefix } from '../../utils/analytics'
+import Tooltip from '../ui/Tooltip'
 import ProofStatusPill from './ProofStatusPill'
 import CalendarStrip from './CalendarStrip'
 import ProofReceipt from './ProofReceipt'
@@ -62,8 +64,16 @@ export default function StampSuccessActions({
     return () => link.remove()
   }, [proof?.hash])
 
+  const funnelProps = () => {
+    const hash_prefix = analyticsHashPrefix(proof?.hash)
+    return hash_prefix ? { hash_prefix } : {}
+  }
+
   const onShare = async () => {
     const r = await shareProofLink(proof)
+    if (r === 'shared' || r === 'copied') {
+      trackEvent(events.PROOF_SHARED, { via: r === 'shared' ? 'share' : 'copy', ...funnelProps() })
+    }
     if (r === 'shared') toast.success('Shared')
     else if (r === 'copied') toast.success('Proof card link copied')
     else toast.error('Could not share — copy the link manually')
@@ -73,6 +83,7 @@ export default function StampSuccessActions({
     setBusy(true)
     try {
       const r = await exportProofBundle(proof, { certificate: true })
+      trackEvent(events.TIMESTAMP_DOWNLOADED, { kind: 'package', ...funnelProps() })
       toast.success(r === 'shared' ? 'Package shared' : 'Proof package downloaded')
     } catch (e) {
       toast.error('Package failed', { description: e.message })
@@ -83,11 +94,19 @@ export default function StampSuccessActions({
 
   return (
     <div className="w-full max-w-md space-y-5">
-      <ProofStatusPill
-        status={isConfirmed ? 'confirmed' : proof?.status}
-        blockHeight={confirmedBlock || proof?.bitcoin_block_height}
-        upgradeStatus={upgradeStatus}
-      />
+      <div className="relative">
+        <ProofStatusPill
+          status={isConfirmed ? 'confirmed' : proof?.status}
+          blockHeight={confirmedBlock || proof?.bitcoin_block_height}
+          upgradeStatus={upgradeStatus}
+        />
+        <span className="absolute top-3 right-3">
+          <Tooltip
+            title="Pending is not confirmed"
+            content="The fingerprint is at OpenTimestamps calendars. It is NOT in a Bitcoin block until status is confirmed. Pending ≠ confirmed."
+          />
+        </span>
+      </div>
 
       <div
         className="space-y-1 rounded-xl border p-4"
@@ -170,6 +189,7 @@ export default function StampSuccessActions({
           onClick={async () => {
             try {
               await navigator.clipboard.writeText(shareUrl)
+              trackEvent(events.PROOF_SHARED, { via: 'copy', ...funnelProps() })
               toast.success('Proof card link copied')
             } catch {
               toast.error('Copy failed')
@@ -205,6 +225,7 @@ export default function StampSuccessActions({
             href={xIntent}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => trackEvent(events.PROOF_SHARED, { via: 'x', ...funnelProps() })}
             className="flex min-h-[44px] items-center justify-center gap-2 rounded-xl border text-xs font-black tracking-wider uppercase"
             style={{ borderColor: 'var(--border-gold)', color: 'var(--text-primary)' }}
           >
@@ -216,6 +237,7 @@ export default function StampSuccessActions({
               href={link.href}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackEvent(events.PROOF_SHARED, { via: 'nostr', ...funnelProps() })}
               className="flex min-h-[44px] items-center justify-center gap-2 rounded-xl border text-xs font-black tracking-wider uppercase"
               style={{ borderColor: 'var(--border)', color: 'var(--text-primary)' }}
             >
@@ -228,6 +250,9 @@ export default function StampSuccessActions({
           {hasHostedId ? (
             <a
               href={`${getApiUrl()}/api/stamps/${proof.id}?download=true`}
+              onClick={() =>
+                trackEvent(events.TIMESTAMP_DOWNLOADED, { kind: 'ots', ...funnelProps() })
+              }
               className="flex min-h-[48px] items-center justify-center gap-2 rounded-xl text-xs font-black tracking-wider uppercase"
               style={{ background: 'var(--accent-active)', color: '#041016' }}
             >
