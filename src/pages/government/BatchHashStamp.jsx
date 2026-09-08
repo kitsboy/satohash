@@ -149,7 +149,7 @@ export default function BatchHashStamp() {
           </p>
         )}
       </div>
-      <Footer />
+      <Footer compact />
     </div>
   )
 }

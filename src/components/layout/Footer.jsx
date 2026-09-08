@@ -350,6 +350,7 @@ function CompactFooter() {
         </nav>
         <span
           className="min-w-0 shrink truncate text-[10px] leading-none whitespace-nowrap text-[var(--text-tertiary)] tabular-nums sm:text-[11px]"
+          style={{ fontVariantNumeric: 'tabular-nums' }}
           title={spaBuild || undefined}
         >
           © Give A Bit{build ? ` · b${build}` : ''}

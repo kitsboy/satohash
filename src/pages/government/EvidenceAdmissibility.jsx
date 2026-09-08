@@ -106,7 +106,10 @@ export default function EvidenceAdmissibility() {
   return (
     <div className="min-h-screen pb-16" style={{ background: 'var(--bg-primary)' }}>
       {/* Hero */}
-      <section className="border-b px-4 pt-8 pb-12 sm:px-6 sm:pt-12 sm:pb-16" style={{ borderColor: 'var(--border)' }}>
+      <section
+        className="border-b px-4 pt-8 pb-12 sm:px-6 sm:pt-12 sm:pb-16"
+        style={{ borderColor: 'var(--border)' }}
+      >
         <div className="mx-auto max-w-3xl text-center">
           <Scale size={32} className="mx-auto mb-4" style={{ color: 'var(--accent-gold)' }} />
           <p
@@ -115,16 +118,21 @@ export default function EvidenceAdmissibility() {
           >
             Government · Evidence
           </p>
-          <h1 className="text-3xl font-black tracking-tight sm:text-4xl" style={{ color: 'var(--text-primary)' }}>
+          <h1
+            className="text-3xl font-black tracking-tight sm:text-4xl"
+            style={{ color: 'var(--text-primary)' }}
+          >
             {t('evidenceAdmissibilityPage.title', { defaultValue: 'Evidence admissibility' })}
           </h1>
-          <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+          <p
+            className="mx-auto mt-4 max-w-xl text-sm leading-relaxed"
+            style={{ color: 'var(--text-secondary)' }}
+          >
             {t('evidenceAdmissibilityPage.subtitle', {
-              defaultValue:
-                'How hash-based proofs fit common electronic-evidence frameworks'
+              defaultValue: 'How hash-based proofs fit common electronic-evidence frameworks'
             })}{' '}
-            — <strong style={{ color: 'var(--text-primary)' }}>educational reference only</strong>, not
-            legal advice.
+            — <strong style={{ color: 'var(--text-primary)' }}>educational reference only</strong>,
+            not legal advice.
           </p>
           <div
             className="mx-auto mt-6 flex max-w-lg items-start gap-2 rounded-xl border px-4 py-3 text-left text-[11px] leading-relaxed"
@@ -167,7 +175,10 @@ export default function EvidenceAdmissibility() {
                 <h3 className="text-sm font-black" style={{ color: 'var(--text-primary)' }}>
                   {p.title}
                 </h3>
-                <p className="mt-2 text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                <p
+                  className="mt-2 text-xs leading-relaxed"
+                  style={{ color: 'var(--text-secondary)' }}
+                >
                   {p.body}
                 </p>
               </div>
@@ -177,14 +188,23 @@ export default function EvidenceAdmissibility() {
       </section>
 
       {/* Matrix */}
-      <section className="border-y px-4 py-12 sm:px-6" style={{ borderColor: 'var(--border)', background: 'var(--bg-secondary)' }}>
+      <section
+        className="border-y px-4 py-12 sm:px-6"
+        style={{ borderColor: 'var(--border)', background: 'var(--bg-secondary)' }}
+      >
         <div className="mx-auto max-w-5xl">
           <div className="mb-6 flex flex-col items-center gap-2 text-center sm:flex-row sm:justify-between sm:text-left">
             <div>
-              <p className="text-[10px] font-black tracking-[0.2em] uppercase" style={{ color: 'var(--accent-gold)' }}>
+              <p
+                className="text-[10px] font-black tracking-[0.2em] uppercase"
+                style={{ color: 'var(--accent-gold)' }}
+              >
                 Framework matrix
               </p>
-              <h2 className="text-lg font-black sm:text-xl" style={{ color: 'var(--text-primary)' }}>
+              <h2
+                className="text-lg font-black sm:text-xl"
+                style={{ color: 'var(--text-primary)' }}
+              >
                 High-level orientation
               </h2>
             </div>
@@ -216,10 +236,16 @@ export default function EvidenceAdmissibility() {
                     {row.status}
                   </span>
                 </div>
-                <p className="mt-1 text-[10px] font-bold tracking-wide uppercase" style={{ color: 'var(--text-tertiary)' }}>
+                <p
+                  className="mt-1 text-[10px] font-bold tracking-wide uppercase"
+                  style={{ color: 'var(--text-tertiary)' }}
+                >
                   {row.region}
                 </p>
-                <p className="mt-2 text-[11px] leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                <p
+                  className="mt-2 text-[11px] leading-relaxed"
+                  style={{ color: 'var(--text-secondary)' }}
+                >
                   {row.note}
                 </p>
               </div>
@@ -285,7 +311,11 @@ export default function EvidenceAdmissibility() {
             </div>
             <ul className="space-y-3">
               {PRACTICAL.map((line) => (
-                <li key={line} className="flex gap-2 text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                <li
+                  key={line}
+                  className="flex gap-2 text-xs leading-relaxed"
+                  style={{ color: 'var(--text-secondary)' }}
+                >
                   <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--accent-gold)]" />
                   {line}
                 </li>
@@ -303,10 +333,21 @@ export default function EvidenceAdmissibility() {
               <AlertTriangle size={18} style={{ color: 'var(--accent-gold)' }} />
               <h2 className="text-base font-black">What this is not</h2>
             </div>
-            <ul className="space-y-3 text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-              <li>Not a substitute for qualified electronic signatures where law requires a QTSA/QES.</li>
-              <li>Not proof of who created a file — only that content matching the hash existed by a time bound.</li>
-              <li>Not automatic court admission; custody, authenticity, and relevance remain human questions.</li>
+            <ul
+              className="space-y-3 text-xs leading-relaxed"
+              style={{ color: 'var(--text-secondary)' }}
+            >
+              <li>
+                Not a substitute for qualified electronic signatures where law requires a QTSA/QES.
+              </li>
+              <li>
+                Not proof of who created a file — only that content matching the hash existed by a
+                time bound.
+              </li>
+              <li>
+                Not automatic court admission; custody, authenticity, and relevance remain human
+                questions.
+              </li>
               <li>Not legal advice from Satohash or Give A Bit.</li>
             </ul>
           </div>
@@ -354,7 +395,7 @@ export default function EvidenceAdmissibility() {
         </div>
       </section>
 
-      <Footer />
+      <Footer compact />
     </div>
   )
 }

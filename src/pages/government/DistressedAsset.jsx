@@ -106,7 +106,7 @@ export default function DistressedAsset() {
           </p>
         )}
       </div>
-      <Footer />
+      <Footer compact />
     </div>
   )
 }

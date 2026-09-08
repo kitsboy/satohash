@@ -7,7 +7,7 @@ import { placePopover, canHoverFine } from '../../utils/placePopover'
 function InfoMark() {
   return (
     <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden className="shrink-0">
-      <circle cx="8" cy="8" r="6.6" fill="none" stroke="currentColor" strokeWidth="1.4" />
+      <circle cx="8" cy="8" r="6.6" fill="none" stroke="currentColor" strokeWidth="1.15" />
       <circle cx="8" cy="5.15" r="1" fill="currentColor" />
       <rect x="7.2" y="7.15" width="1.6" height="5.05" rx="0.8" fill="currentColor" />
     </svg>

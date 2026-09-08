@@ -49,8 +49,14 @@ export default function MotoPassVerify() {
   }
 
   return (
-    <div className="min-h-screen pb-16" style={{ background: 'var(--bg-primary)', color: 'var(--text-primary)' }}>
-      <section className="border-b px-4 pt-8 pb-12 sm:px-6 sm:pt-12" style={{ borderColor: 'var(--border)' }}>
+    <div
+      className="min-h-screen pb-16"
+      style={{ background: 'var(--bg-primary)', color: 'var(--text-primary)' }}
+    >
+      <section
+        className="border-b px-4 pt-8 pb-12 sm:px-6 sm:pt-12"
+        style={{ borderColor: 'var(--border)' }}
+      >
         <div className="mx-auto max-w-3xl">
           <div className="mb-4 flex flex-wrap items-center gap-2">
             <span
@@ -95,7 +101,10 @@ export default function MotoPassVerify() {
           className="rounded-2xl border p-4 sm:p-5"
           style={{ borderColor: 'var(--border)', background: 'var(--surface-raised)' }}
         >
-          <label className="mb-2 block text-[10px] font-black tracking-widest uppercase" style={{ color: 'var(--accent-gold)' }}>
+          <label
+            className="mb-2 block text-[10px] font-black tracking-widest uppercase"
+            style={{ color: 'var(--accent-gold)' }}
+          >
             SHA-256 hashes
           </label>
           <textarea
@@ -131,7 +140,10 @@ export default function MotoPassVerify() {
                 className="rounded-2xl border p-4"
                 style={{ borderColor: 'var(--border)', background: 'var(--surface-raised)' }}
               >
-                <p className="font-mono text-[10px] break-all" style={{ color: 'var(--text-secondary)' }}>
+                <p
+                  className="font-mono text-[10px] break-all"
+                  style={{ color: 'var(--text-secondary)' }}
+                >
                   {r.hash}
                 </p>
                 <div className="mt-3 flex flex-wrap gap-2">
@@ -186,7 +198,10 @@ export default function MotoPassVerify() {
             <Shield size={16} style={{ color: 'var(--accent-gold)' }} />
             <h2 className="text-sm font-black">How the pattern works</h2>
           </div>
-          <ul className="space-y-2 text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+          <ul
+            className="space-y-2 text-xs leading-relaxed"
+            style={{ color: 'var(--text-secondary)' }}
+          >
             {[
               'Source app hashes the package on-device (never upload biometrics to Satohash).',
               'Deep-link to /stamp?hash=…&ref=… for free OTS + Bitcoin-bound proof.',
@@ -202,7 +217,7 @@ export default function MotoPassVerify() {
           <div className="mt-5 flex flex-wrap gap-3">
             <Link
               to="/government"
-              className="inline-flex min-h-[44px] items-center gap-1 text-[11px] font-bold uppercase text-[var(--accent-gold)]"
+              className="inline-flex min-h-[44px] items-center gap-1 text-[11px] font-bold text-[var(--accent-gold)] uppercase"
             >
               Government hub <ArrowRight size={12} />
             </Link>
@@ -225,7 +240,7 @@ export default function MotoPassVerify() {
           </div>
         </div>
       </section>
-      <Footer />
+      <Footer compact />
     </div>
   )
 }

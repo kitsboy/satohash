@@ -155,7 +155,7 @@ export default function ChainOfCustody() {
           </div>
         )}
       </div>
-      <Footer />
+      <Footer compact />
     </div>
   )
 }

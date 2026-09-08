@@ -484,6 +484,7 @@ export default function Network() {
                         <Link
                           to={`/p/${hex}`}
                           title={titleHash}
+                          aria-label={`Proof ${titleHash}`}
                           className="inline-flex min-h-[44px] min-w-[44px] items-center truncate font-mono text-[10px]"
                           style={{ color: 'var(--text-secondary)' }}
                         >
