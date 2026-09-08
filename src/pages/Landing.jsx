@@ -441,7 +441,7 @@ export default function Landing() {
             >
               <video
                 src="https://videos.giveabit.io/media/video/satohash-explainer-with-vo2.mp4?v=kimi-noir-20260819"
-                poster="/og/watch.png"
+                poster="/og/watch.jpg"
                 playsInline
                 preload="none"
                 controls

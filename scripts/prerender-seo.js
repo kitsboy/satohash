@@ -327,7 +327,8 @@ for (const [slug, p] of Object.entries(secondary)) {
     slug === 'verify' ||
     slug === 'pricing' ||
     slug === 'donate' ||
-    slug === 'network'
+    slug === 'network' ||
+    slug === 'templates'
       ? 'jpg'
       : 'png'
   write(`${slug}.html`, shell({ title: p.title, description: p.desc, contentHtml: p.body, canonical: `${SITE}/${slug}`, ogImage: `${SITE}/og/${slug}.${ext}` }))

@@ -28,7 +28,7 @@ const PLAYER_HTML = `<!doctype html>
 <body>
 <div class="player">
 <h1>Satohash explainer · 84 seconds</h1>
-<video controls playsinline preload="metadata" poster="https://satohash.io/og/watch.png" src="https://videos.giveabit.io/media/video/satohash-explainer-with-vo2.mp4?v=kimi-noir-20260819" aria-label="Satohash explainer · 84 seconds">
+<video controls playsinline preload="metadata" poster="https://satohash.io/og/watch.jpg" src="https://videos.giveabit.io/media/video/satohash-explainer-with-vo2.mp4?v=kimi-noir-20260819" aria-label="Satohash explainer · 84 seconds">
 <a href="https://satohash.io/watch">Watch the Satohash explainer</a>
 </video>
 </div>
