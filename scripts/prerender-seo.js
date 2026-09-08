@@ -338,7 +338,9 @@ for (const [slug, p] of Object.entries(secondary)) {
 const LEARN_OG_JPEG = new Set([
   'learn-how-to-verify-an-ots-proof',
   'learn-what-is-opentimestamps',
-  'learn-how-to-prove-a-document-existed'
+  'learn-how-to-prove-a-document-existed',
+  'learn-eidas-ueta-explained',
+  'learn-ots-vs-docusign'
 ])
 const docsDir = path.join(DIST, 'docs')
 if (fs.existsSync(docsDir)) {

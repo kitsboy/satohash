@@ -22,7 +22,7 @@ export default function Counsel() {
           >
             For counsel · one pager
           </p>
-          <h1 className="font-display text-3xl font-black tracking-tight sm:text-4xl">
+          <h1 className="font-display scroll-mt-24 text-3xl font-black tracking-tight sm:text-4xl">
             What a Satohash stamp proves
           </h1>
           <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>

@@ -75,6 +75,20 @@ export default function Docs() {
   const docsBodiesFetched = useRef(false)
 
   useEffect(() => {
+    const added = []
+    const href = '/verify'
+    if (!document.querySelector(`link[rel="prefetch"][href="${href}"]`)) {
+      const link = document.createElement('link')
+      link.rel = 'prefetch'
+      link.href = href
+      link.as = 'document'
+      document.head.appendChild(link)
+      added.push(link)
+    }
+    return () => added.forEach((link) => link.remove())
+  }, [])
+
+  useEffect(() => {
     try {
       const cached = localStorage.getItem('satohash_docs_index')
       if (!cached) return

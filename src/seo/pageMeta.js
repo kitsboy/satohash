@@ -66,7 +66,9 @@ const PAGE_OG_JPEG = new Set([
 const LEARN_OG_JPEG = new Set([
   'learn-how-to-verify-an-ots-proof',
   'learn-what-is-opentimestamps',
-  'learn-how-to-prove-a-document-existed'
+  'learn-how-to-prove-a-document-existed',
+  'learn-eidas-ueta-explained',
+  'learn-ots-vs-docusign'
 ])
 
 export function ogImageForPage(page, pathname) {
