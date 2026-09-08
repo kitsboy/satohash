@@ -100,7 +100,7 @@ export default function StampDone() {
             {t('stampDonePage.loading')}
           </p>
         </div>
-        <Footer />
+        <Footer compact />
       </>
     )
   }
@@ -117,7 +117,7 @@ export default function StampDone() {
             onAction={() => navigate('/stamp')}
           />
         </div>
-        <Footer />
+        <Footer compact />
       </>
     )
   }
@@ -182,7 +182,7 @@ export default function StampDone() {
             ) : (
               <Clock
                 size={32}
-                className="animate-pulse"
+                className="motion-safe:animate-pulse"
                 style={{ color: 'var(--accent-gold)' }}
                 aria-hidden
               />
@@ -286,7 +286,7 @@ export default function StampDone() {
           />
         </div>
       </div>
-      <Footer />
+      <Footer compact />
     </>
   )
 }

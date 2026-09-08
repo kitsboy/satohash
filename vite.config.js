@@ -24,14 +24,22 @@ export default defineConfig({
             transformIndexHtml: {
                 order: 'post',
                 handler(html) {
+                    const noscripts = []
+                    let out = html.replace(/<noscript[\s\S]*?<\/noscript>/gi, (m) => {
+                        noscripts.push(m)
+                        return `<!--NOSCRIPT_KEEP_${noscripts.length - 1}-->`
+                    })
                     const links = []
-                    let out = html.replace(
+                    out = out.replace(
                         /<link[^>]+rel=["']stylesheet["'][^>]*>\s*/gi,
                         (m) => {
                             links.push(m.trim())
                             return ''
                         }
                     )
+                    noscripts.forEach((m, i) => {
+                        out = out.replace(`<!--NOSCRIPT_KEEP_${i}-->`, m)
+                    })
                     if (!links.length) return html
                     // Insert just before the first module script
                     return out.replace(

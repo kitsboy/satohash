@@ -43,14 +43,33 @@ export function analyticsHashPrefix(hash) {
   return h ? h.slice(0, 8) : undefined
 }
 
+const FULL_HASH = /^[a-f0-9]{64}$/i
+
+function sanitizeAnalyticsProps(properties = {}) {
+  const out = {}
+  for (const [key, value] of Object.entries(properties)) {
+    if (key === 'filename') continue
+    if (typeof value === 'string' && FULL_HASH.test(value)) {
+      if (!out.hash_prefix) {
+        const prefix = analyticsHashPrefix(value)
+        if (prefix) out.hash_prefix = prefix
+      }
+      continue
+    }
+    out[key] = value
+  }
+  return out
+}
+
 export const trackEvent = (eventName, properties = {}) => {
+  const props = sanitizeAnalyticsProps(properties)
   if (import.meta.env.DEV) {
-    console.log('[Analytics]', eventName, properties)
+    console.log('[Analytics]', eventName, props)
   }
 
   try {
     if (typeof window !== 'undefined' && typeof window.umami?.track === 'function') {
-      window.umami.track(eventName, properties)
+      window.umami.track(eventName, props)
     }
   } catch {
     /* umami optional */
@@ -61,7 +80,7 @@ export const trackEvent = (eventName, properties = {}) => {
     const storedEvents = JSON.parse(localStorage.getItem('satohash_analytics') || '[]')
     storedEvents.push({
       event: eventName,
-      properties,
+      properties: props,
       timestamp: new Date().toISOString()
     })
     // Keep only last 100 events

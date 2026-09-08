@@ -102,25 +102,43 @@ export default function Landing() {
 
   useEffect(() => {
     const API = getApiUrl()
-    Promise.all([
-      // /api/history requires x-npub (401 otherwise); public metrics.json
-      // carries the same stamp counts without auth.
-      fetch(`${API}/metrics.json`)
-        .then((r) => r.json())
-        .then((d) => d?.raw?.counts ?? null)
-        .catch(() => null),
-      getBitcoinNetworkStats()
-    ]).then(([counts, stats]) => {
-      if (counts && typeof counts.stampsTotal === 'number') setProofCount(counts.stampsTotal)
-      if (!stats || typeof stats !== 'object') return
-      const merged = {
-        ...defaultNetworkStats,
-        ...stats,
-        fees: { ...defaultNetworkStats.fees, ...(stats.fees || {}) }
-      }
-      setNetworkStats(merged)
-      if (merged.blockHeight) setBlockHeight(merged.blockHeight)
-    })
+    // Cheap own-plane count; do not wait on mempool.space.
+    fetch(`${API}/metrics.json`)
+      .then((r) => r.json())
+      .then((d) => d?.raw?.counts ?? null)
+      .then((counts) => {
+        if (counts && typeof counts.stampsTotal === 'number') setProofCount(counts.stampsTotal)
+      })
+      .catch(() => {})
+  }, [])
+
+  useEffect(() => {
+    let cancelled = false
+    let idleId
+    let timeoutId
+    const run = () => {
+      if (cancelled) return
+      getBitcoinNetworkStats().then((stats) => {
+        if (cancelled || !stats || typeof stats !== 'object') return
+        const merged = {
+          ...defaultNetworkStats,
+          ...stats,
+          fees: { ...defaultNetworkStats.fees, ...(stats.fees || {}) }
+        }
+        setNetworkStats(merged)
+        if (merged.blockHeight) setBlockHeight(merged.blockHeight)
+      })
+    }
+    if (typeof requestIdleCallback === 'function') {
+      idleId = requestIdleCallback(run, { timeout: 1500 })
+    } else {
+      timeoutId = setTimeout(run, 1500)
+    }
+    return () => {
+      cancelled = true
+      if (idleId != null) window.cancelIdleCallback?.(idleId)
+      if (timeoutId != null) clearTimeout(timeoutId)
+    }
   }, [defaultNetworkStats])
 
   useEffect(() => {

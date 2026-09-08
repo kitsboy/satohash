@@ -156,6 +156,10 @@ else
   echo "Paywall still free_open (or readiness missing the flag)"
 fi
 
+# Retry-After is set on 429 (stampRateLimit in server/routes/stamps.js).
+# Do not probe production for 429 — curl -sI of a fake path is useless, and
+# hammering POST /api/stamp would trip the live limiter. Skip live 429 checks.
+
 echo "== live API POST /api/stamp (HTTP 200, reuse OK) =="
 STAMP_CODE=$(curl -sS -o /tmp/satohash-stamp-live.json -w '%{http_code}' -A "$UA" -m 25 \
   -X POST "https://api.satohash.io/api/stamp" \

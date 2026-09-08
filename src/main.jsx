@@ -11,7 +11,7 @@ import './i18n/setup'
 // Build stamp — must be runtime-referenced so Vite content-hash changes after
 // edge HTML-as-JS poison (immutable cache on satohash.io apex).
 if (typeof window !== 'undefined') {
-  window.__SATOHASH_SPA_BUILD__ = '2026-08-31-stable-pages'
+  window.__SATOHASH_SPA_BUILD__ = __APP_VERSION__ + '-b' + __BUILD_NUMBER__
 }
 
 if (import.meta.env.VITE_SENTRY_DSN) {
