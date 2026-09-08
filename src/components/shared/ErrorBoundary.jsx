@@ -70,7 +70,7 @@ class ErrorBoundary extends React.Component {
             </div>
 
             <h1 className="mb-4 text-3xl font-black tracking-tighter">
-              {stale ? 'Update required' : 'System Desync'}
+              {stale ? 'Update required' : 'Something went wrong'}
             </h1>
             <p className="mb-10 leading-relaxed font-medium text-white/40">
               {this.state.autoResetting
@@ -95,7 +95,7 @@ class ErrorBoundary extends React.Component {
               className="active:scale-0.98 flex w-full items-center justify-center gap-3 rounded-2xl bg-indigo-600 py-4.5 text-sm font-black text-white shadow-xl shadow-indigo-600/20 transition-all hover:scale-[1.02] hover:bg-indigo-500"
             >
               <RefreshCw size={18} className="animate-spin-slow" />
-              {stale ? 'CLEAR CACHE & RELOAD' : 'RE-INITIALIZE INTERFACE'}
+              {stale ? 'CLEAR CACHE & RELOAD' : 'Reload page'}
             </button>
 
             <button
@@ -115,8 +115,7 @@ class ErrorBoundary extends React.Component {
             <button
               type="button"
               onClick={() => {
-                this.setState({ hasError: false, error: null })
-                hardResetClient()
+                window.location.assign('/')
               }}
               className="mt-2 flex w-full items-center justify-center gap-2 rounded-2xl border py-3 text-xs font-bold transition-all hover:opacity-80"
               style={{ borderColor: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.4)' }}
@@ -125,7 +124,7 @@ class ErrorBoundary extends React.Component {
             </button>
 
             <p className="mt-8 font-mono text-[9px] tracking-[0.3em] text-white/10 uppercase">
-              Satohash Protocol v1.2.0 • Recovery Layer Active
+              Satohash · proofs are still on Bitcoin
             </p>
           </motion.div>
         </div>

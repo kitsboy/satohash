@@ -72,19 +72,54 @@ export function shouldDrop(item, status) {
   return false
 }
 
-async function toArrayBuffer(file) {
-  if (file instanceof ArrayBuffer) return file
+const HASH_READ_CHUNK = 2 * 1024 * 1024
+
+function reportHashProgress(onProgress, pct) {
+  if (typeof onProgress === 'function') {
+    onProgress(Math.max(0, Math.min(100, Math.round(pct))))
+  }
+}
+
+async function toArrayBuffer(file, onProgress) {
+  if (file instanceof ArrayBuffer) {
+    reportHashProgress(onProgress, 90)
+    return file
+  }
   if (ArrayBuffer.isView(file)) {
+    reportHashProgress(onProgress, 90)
     return file.buffer.slice(file.byteOffset, file.byteOffset + file.byteLength)
   }
-  if (file && typeof file.arrayBuffer === 'function') return file.arrayBuffer()
+  if (file && typeof file.size === 'number' && typeof file.slice === 'function') {
+    const size = file.size
+    if (size === 0) {
+      reportHashProgress(onProgress, 90)
+      return new ArrayBuffer(0)
+    }
+    const out = new Uint8Array(size)
+    let offset = 0
+    while (offset < size) {
+      const end = Math.min(offset + HASH_READ_CHUNK, size)
+      const chunk = await file.slice(offset, end).arrayBuffer()
+      out.set(new Uint8Array(chunk), offset)
+      offset = end
+      reportHashProgress(onProgress, (offset / size) * 90)
+    }
+    return out.buffer
+  }
+  if (file && typeof file.arrayBuffer === 'function') {
+    const buf = await file.arrayBuffer()
+    reportHashProgress(onProgress, 90)
+    return buf
+  }
   if (typeof FileReader !== 'undefined' && file && typeof file.size === 'number') {
-    return new Promise((resolve, reject) => {
+    const buf = await new Promise((resolve, reject) => {
       const reader = new FileReader()
       reader.onload = () => resolve(reader.result)
       reader.onerror = () => reject(reader.error || new Error('FileReader failed'))
       reader.readAsArrayBuffer(file)
     })
+    reportHashProgress(onProgress, 90)
+    return buf
   }
   throw new TypeError('hashFileOffline: expected File, Blob, or ArrayBuffer')
 }
@@ -95,9 +130,8 @@ async function hashBufferMainThread(buffer) {
   return hashArray.map((b) => b.toString(16).padStart(2, '0')).join('')
 }
 
-/** SHA-256 via hashWorker (WebCrypto). Works with no network. */
-export async function hashFileOffline(file) {
-  const buffer = await toArrayBuffer(file)
+/** SHA-256 via hashWorker (WebCrypto). Works with no network. onProgress: 0–90 read, 100 after digest. */
+export async function hashFileOffline(file, onProgress) {
   if (typeof Worker !== 'undefined') {
     try {
       const { wrap } = await import('comlink')
@@ -106,7 +140,9 @@ export async function hashFileOffline(file) {
       })
       const hashFn = wrap(worker)
       try {
-        return await hashFn.hashFile(buffer)
+        return typeof onProgress === 'function'
+          ? await hashFn.hashFile(file, onProgress)
+          : await hashFn.hashFile(file)
       } finally {
         worker.terminate()
       }
@@ -114,7 +150,10 @@ export async function hashFileOffline(file) {
       /* worker unavailable — main thread */
     }
   }
-  return hashBufferMainThread(buffer)
+  const buffer = await toArrayBuffer(file, onProgress)
+  const hex = await hashBufferMainThread(buffer)
+  reportHashProgress(onProgress, 100)
+  return hex
 }
 
 function openDB() {

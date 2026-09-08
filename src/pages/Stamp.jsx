@@ -34,6 +34,7 @@ import GiveABitBadge from '../components/marketing/GiveABitBadge'
 import { stampHashBrowser, downloadOtsBlob } from '../utils/otsClient'
 import { upsertLocalStamp } from '../utils/vaultLocal'
 import { parseStampDeepLink } from '../utils/stampDeepLink'
+import { createTemplateStampFile } from '../utils/templateStampFile'
 import StampStickyBar from '../components/stamps/StampStickyBar'
 import StampSuccessActions from '../components/stamps/StampSuccessActions'
 import { persistLastProof } from '../utils/lastProof'
@@ -78,6 +79,7 @@ export default function Stamp() {
   const [isDragging, setIsDragging] = useState(false)
   const [files, setFiles] = useState([])
   const [stampingStatus, setStampingStatus] = useState('idle') // idle, hashing, anchoring, complete
+  const [hashProgress, setHashProgress] = useState(0)
   const [caseLabel, setCaseLabel] = useState('')
   const [proofResult, setProofResult] = useState(null) // { id, hash, filename, status }
   const [hashValue, setHashValue] = useState('')
@@ -102,6 +104,11 @@ export default function Stamp() {
     const file = files[0]
     setAuthoredBind(null)
     if (!file || stampMode === 'redact' || stampMode === 'deposition') return undefined
+    // Large files: hash on Stamp click so the hashing bar can show real read percent
+    if (file.size > 2 * 1024 * 1024) {
+      setHashValue('')
+      return undefined
+    }
     let cancelled = false
     ;(async () => {
       try {
@@ -115,6 +122,13 @@ export default function Stamp() {
       cancelled = true
     }
   }, [files, stampMode, hashFileOffline])
+
+  // /stamp?template=<id> — on-device placeholder file so hash/stamp runs on real bytes
+  useEffect(() => {
+    if (!templateParam) return
+    if (files.length > 0) return
+    setFiles([createTemplateStampFile(templateParam)])
+  }, [templateParam, files.length])
 
   useEffect(() => {
     if (lastEvent?.type === 'upgrade:status' && proofResult?.id) {
@@ -599,6 +613,7 @@ export default function Stamp() {
 
     try {
       setStampingStatus('hashing')
+      setHashProgress(0)
 
       // Real SHA-256 hashing in browser - file NEVER leaves device
       const file = files[0]
@@ -620,7 +635,9 @@ export default function Stamp() {
       }
       let hash = hashValue
       if (!normalizeSha256(hash)) {
-        hash = await hashFileOffline(file)
+        hash = await hashFileOffline(file, (pct) => setHashProgress(pct))
+      } else {
+        setHashProgress(100)
       }
       setHashValue(hash)
 
@@ -871,9 +888,13 @@ export default function Stamp() {
     }
   }
 
-  // Progress percentage per status
+  // Progress percentage per status — hashing uses real read/digest percent
   const progressPercent =
-    stampingStatus === 'hashing' ? '30%' : stampingStatus === 'anchoring' ? '70%' : '100%'
+    stampingStatus === 'hashing'
+      ? `${hashProgress}%`
+      : stampingStatus === 'anchoring'
+        ? '70%'
+        : '100%'
 
   const canStampFile = files.length > 0 && stampingStatus === 'idle'
   const canStampHash =
@@ -1711,7 +1732,7 @@ export default function Stamp() {
                       <div className="mb-2 flex justify-between text-[10px] font-bold tracking-widest uppercase">
                         <span>
                           {stampingStatus === 'hashing'
-                            ? tp('stampPage.hashingLabel')
+                            ? `hashing ${hashProgress}%`
                             : tp('stampPage.anchoringLabel')}
                         </span>
                         <span className="text-[var(--accent-gold)]">{progressPercent}</span>
@@ -1733,7 +1754,7 @@ export default function Stamp() {
                       <Activity className="animate-pulse text-[var(--accent-gold)]" size={18} />
                       <p className="truncate font-mono text-xs font-medium">
                         {stampingStatus === 'hashing'
-                          ? tp('stampPage.hashingProgress')
+                          ? `${tp('stampPage.hashingProgress')} ${hashProgress}%`
                           : tp('stampPage.anchoringProgress')}
                       </p>
                     </div>
@@ -1830,10 +1851,10 @@ export default function Stamp() {
           </div>
 
           <StampStickyBar
-            visible={canStampFile || canStampHash}
+            visible={canStampFile || canStampHash || stampingStatus === 'hashing'}
             label={
               stampingStatus === 'hashing'
-                ? tp('stampPage.hashingSticky')
+                ? `hashing ${hashProgress}%`
                 : stampingStatus === 'anchoring'
                   ? tp('stampPage.anchoringSticky')
                   : canStampHash

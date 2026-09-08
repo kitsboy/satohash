@@ -1131,7 +1131,7 @@
     "fileTooLarge": "File is {{size}} MB — max {{max}} MB for browser stamp. Hash offline and paste the SHA-256.",
     "fileTooLargeToast": "File too large for browser stamp",
     "fileTooLargeToastDesc": "Use a smaller file or stamp a precomputed SHA-256 hash",
-    "tooManyRequests": "Too many requests — try again in {{seconds}}s",
+    "tooManyRequests": "Too many stamp requests (about 5 per minute on the public path). Wait {{seconds}}s, then try again. This is an abuse limit, not a daily quota. Your file was not charged and not lost.",
     "notifyEmailPlaceholder": "Email me when confirmed (optional)",
     "photosGallery": "Photos / gallery",
     "folderCapsule": "Folder (one Merkle capsule)",
