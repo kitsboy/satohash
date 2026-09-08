@@ -1,3 +1,20 @@
+## 2026-09-08 (Grok M3 — harden wave: Info icons, cache_spill, compact donate)
+
+**Pickup:** `.ai_docs/current-status.md` · this file · HEAD `c63ae0d`.
+
+**Live at start:** API `gitSha=7a57b32` · 818MB · Caddy OK · stamps 283 · paywall off.
+
+**Pushed:**
+- `b743aad` sqlite `cache_spill=OFF`, OpenAPI `/api/public/bitcoin`, smoke asserts `/health` no-store.
+- `49f087d` templates OG JPEG, landing/middleware watch poster jpg, watch-player `preload=none`, security.txt Canonical.
+- `c63ae0d` Lucide Info tooltips (gold ring, 44px hit), stamp step labels, compact glossary/guides/integrations/donate/comparison/widgets, StampDone “View on mempool.space”, copy-SHA 44px, family Retry 44px.
+
+**Do not:** flip paywall · change `/api/*` · shuffle package.json deps · `--force` opentimestamps · `@satohash`
+
+**Kimi:** THOR ingest. API rebuild for `b743aad`. Pages auto-deploys SPA.
+
+---
+
 ## 2026-09-08 (Grok M3 — harden wave: temp_store, OG JPEGs, status copy SHA)
 
 **Pickup:** `.ai_docs/current-status.md` · this file · HEAD `a82a37f`.
