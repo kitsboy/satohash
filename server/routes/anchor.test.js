@@ -12,10 +12,10 @@ function createAnchorApp() {
 }
 
 describe('POST /api/anchor', () => {
-  const app = createAnchorApp()
   const validHash = 'a'.repeat(64)
 
   it('accepts a valid SHA-256 hash', async () => {
+    const app = createAnchorApp()
     const res = await request(app).post('/api/anchor').send({ hash: validHash })
     expect(res.status).toBe(202)
     expect(res.body.status).toBe('pending_anchor')
@@ -24,15 +24,27 @@ describe('POST /api/anchor', () => {
   })
 
   it('rejects invalid hash length', async () => {
+    const app = createAnchorApp()
     const res = await request(app).post('/api/anchor').send({ hash: 'abc' })
+    if (res.status === 401) {
+      throw new Error(
+        'POST /api/anchor returned 401 — authMiddleware is still mounted before /api/anchor; invalid length must be 400 without auth'
+      )
+    }
     expect(res.status).toBe(400)
     expect(res.body.code).toBe('VALIDATION_FAILED')
   })
 
   it('rejects non-hex hash', async () => {
+    const app = createAnchorApp()
     const res = await request(app)
       .post('/api/anchor')
       .send({ hash: 'g'.repeat(64) })
+    if (res.status === 401) {
+      throw new Error(
+        'POST /api/anchor returned 401 — authMiddleware is still mounted before /api/anchor; invalid hash must be 400 without auth'
+      )
+    }
     expect(res.status).toBe(400)
     expect(res.body.code).toBe('VALIDATION_FAILED')
   })

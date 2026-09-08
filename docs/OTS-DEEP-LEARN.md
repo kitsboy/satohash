@@ -6,6 +6,8 @@
 > **Audience:** Grok (M3 coding) + Kimi (THOR ops) — read before every session  
 > **Also read:** `docs/LEARN-STAMP-FAMILY.md` (2026-07-27 family handoff + SPA/API plane)
 
+**Do not `npm audit fix --force`.** `opentimestamps@0.4.9` is the stamp engine; `--force` would downgrade the tree and break stamping. Safe `npm audit fix` (non-force) is OK.
+
 ---
 
 ## Family product path (suite)

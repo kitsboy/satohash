@@ -37,6 +37,7 @@
     "version:bump": "node scripts/increment-build.js",
     "api:smoke": "bash scripts/api-local-smoke.sh",
     "mvp:smoke": "bash scripts/mvp-smoke.sh",
+    "pages:live-smoke": "bash scripts/pages-smoke.sh",
     "test:e2e:mobile": "playwright test tests/e2e/mobile-stamp-loop.spec.js --workers=1 --reporter=line",
     "test:e2e:live": "PLAYWRIGHT_SKIP_WEBSERVER=1 PLAYWRIGHT_BASE_URL=https://satohash.io playwright test tests/e2e/live-stamp-verify.spec.js --project=chromium --workers=1 --reporter=line",
     "test:e2e:safari": "playwright test tests/e2e/safari-chrome.spec.js --workers=1 --reporter=line",

@@ -365,9 +365,10 @@ app.use('/api/lightning', lightningRoutes)
 app.use('/admin/', adminRouter) // Use dedicated admin router with throttling metrics
 // v5 public + stamp surface (must mount before /api/stamps/:id catch-all)
 app.use('/api', v5ApiRouter)
+// Mount before auth so invalid bodies return validation 400 without a token.
+app.use('/api/anchor', anchorRouter)
 app.use(authMiddleware)
 app.use('/api/nft', nftRouter)
-app.use('/api/anchor', anchorRouter)
 
 // API Docs
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs))

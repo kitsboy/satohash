@@ -3,12 +3,49 @@ if git diff --cached --name-only | grep -qvE '^(docs/|public/docs/|LATEST-UPDATE
   npm run version:bump
 fi
 npm run docs:sync
-# docs:sync rewrites headers in these paths — stage them with build metadata
-git add build-metadata.json docs/manifest.json \
-  docs/marketing/EXECUTIVE-SUMMARY.md docs/marketing/MARKETING.md \
-  docs/marketing/FINANCIALS.md docs/marketing/PITCH.md \
-  docs/DESIGN-CONTEXT.md docs/DESIGN-TOKENS.md docs/deploy.md \
-  docs/DEPLOY-SERVER.md docs/MVP-READINESS.md docs/ROLLBACK.md \
+# Stage every tracked path docs:sync writes (DOC_FILES + PUBLIC_COPY dests)
+# so header stamps land in the same commit and the working tree stays clean.
+stage_if_tracked() {
+  for p in "$@"; do
+    if git ls-files --error-unmatch "$p" >/dev/null 2>&1; then
+      git add -- "$p"
+    fi
+  done
+}
+stage_if_tracked \
+  build-metadata.json \
+  docs/manifest.json \
   docs/architecture.md \
-  public/docs/deploy-server.md public/docs/mvp-readiness.md 2>/dev/null || true
+  docs/ARCHITECTURE.md \
+  docs/marketing/EXECUTIVE-SUMMARY.md \
+  docs/marketing/MARKETING.md \
+  docs/marketing/FINANCIALS.md \
+  docs/marketing/PITCH.md \
+  docs/DESIGN-CONTEXT.md \
+  docs/DESIGN-TOKENS.md \
+  docs/deploy.md \
+  docs/DEPLOY-SERVER.md \
+  docs/MVP-READINESS.md \
+  docs/ROLLBACK.md \
+  public/docs/deploy-server.md \
+  public/docs/mvp-readiness.md \
+  public/docs/mission.md \
+  public/docs/ots_setup.md \
+  public/docs/deploy-playbook.md \
+  public/docs/design-context.md \
+  public/docs/design-tokens.md \
+  public/docs/rollback.md \
+  public/docs/improvements-log.md \
+  public/docs/pitch.md \
+  public/docs/executive-summary.md \
+  public/docs/marketing.md \
+  public/docs/financials.md \
+  public/docs/seo.md \
+  public/docs/seo-de.md \
+  public/docs/seo-es.md \
+  public/docs/seo-fr.md \
+  public/docs/seo-pt.md \
+  public/docs/seo-sw.md \
+  public/docs/seo-zh.md \
+  public/docs/hq-feed.md
 npx lint-staged

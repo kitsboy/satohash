@@ -6,6 +6,23 @@ import { dispatchWebhook } from './webhooks.js'
 import { performBackup } from './backup.js'
 import crypto from 'crypto'
 
+function parseBitcoinBlockHeight(info) {
+  if (typeof info !== 'string' || !info) return null
+  const patterns = [
+    /BitcoinBlockHeaderAttestation\((\d+)\)/i,
+    /Bitcoin block (\d+)/,
+    /BitcoinBlock[\s:]*(\d+)/i,
+    /block(?: height)?[:\s#]*(\d{5,7})/i
+  ]
+  for (const re of patterns) {
+    const match = info.match(re)
+    if (!match) continue
+    const n = parseInt(match[1], 10)
+    if (Number.isFinite(n) && n > 0) return n
+  }
+  return null
+}
+
 /**
  *
  * Upgrade Daemon: Every 15 minutes, check for pending OTS files and try to upgrade them.
@@ -141,10 +158,9 @@ const startUpgradeDaemon = (io) => {
           const upgradedBinary = detached.serializeToBytes()
           const info = OpenTimestamps.info(detached)
 
-          let blockHeight = null
-          if (info.includes('Bitcoin block')) {
-            const match = info.match(/Bitcoin block (\d+)/)
-            if (match) blockHeight = parseInt(match[1])
+          const blockHeight = parseBitcoinBlockHeight(info)
+          if (blockHeight == null) {
+            logger.warn(`confirmed without block height (${stamp.id})`)
           }
 
           db.prepare(

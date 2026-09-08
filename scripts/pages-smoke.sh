@@ -75,6 +75,22 @@ echo "$STAMP" | grep -qE 'file-input|stamp-dropzone|Notarize|root' || {
   exit 1
 }
 
+echo "== homepage and /stamp share the same /b/index-*.js (no mixed-chunk poison) =="
+entry_js() {
+  printf '%s' "$1" | grep -oE 'b/index-[^"[:space:]]+\.js' | head -1
+}
+HOME_JS=$(entry_js "$HOME_HTML")
+STAMP_JS=$(entry_js "$STAMP")
+if [ -z "$HOME_JS" ] || [ -z "$STAMP_JS" ]; then
+  echo "::error::missing /b/index-*.js (homepage=${HOME_JS:-none} /stamp=${STAMP_JS:-none})"
+  exit 1
+fi
+if [ "$HOME_JS" != "$STAMP_JS" ]; then
+  echo "::error::mixed-chunk poison: homepage /${HOME_JS} != /stamp /${STAMP_JS}"
+  exit 1
+fi
+echo "Same entry chunk: /${HOME_JS}"
+
 echo "== /verify shell =="
 curl -fsS -A "$UA" -m 25 -o /dev/null "${BASE}/verify?nocache=${RANDOM}" || {
   echo "::error::/verify did not return 200"
@@ -139,5 +155,50 @@ if echo "$READY" | grep -q '"require_lightning":true'; then
 else
   echo "Paywall still free_open (or readiness missing the flag)"
 fi
+
+echo "== live API POST /api/stamp (HTTP 200, reuse OK) =="
+STAMP_CODE=$(curl -sS -o /tmp/satohash-stamp-live.json -w '%{http_code}' -A "$UA" -m 25 \
+  -X POST "https://api.satohash.io/api/stamp" \
+  -H 'Content-Type: application/json' \
+  -H 'X-Satohash-Client: pages-smoke' \
+  -d "{\"hash\":\"${HASH}\",\"filename\":\"pages-smoke.txt\"}" || true)
+if [ "$STAMP_CODE" != "200" ]; then
+  echo "::error::POST /api/stamp returned ${STAMP_CODE:-empty} (need 200; reuse of empty SHA-256 is OK)"
+  echo "body=$(head -c 300 /tmp/satohash-stamp-live.json 2>/dev/null || true)"
+  exit 1
+fi
+echo "POST /api/stamp 200 (reuse OK)"
+
+echo "== live GET /metrics.json (200 JSON, paywall off) =="
+METRICS_CODE=$(curl -sS -o /tmp/satohash-metrics-live.json -w '%{http_code}' -A "$UA" -m 25 \
+  "https://api.satohash.io/metrics.json" || true)
+if [ "$METRICS_CODE" != "200" ]; then
+  echo "::error::GET /metrics.json returned ${METRICS_CODE:-empty} (need 200)"
+  exit 1
+fi
+node -e '
+  const fs = require("fs");
+  let j;
+  try {
+    j = JSON.parse(fs.readFileSync("/tmp/satohash-metrics-live.json", "utf8"));
+  } catch (e) {
+    console.error("::error::GET /metrics.json is not JSON:", e.message);
+    process.exit(1);
+  }
+  if (j && j.raw && j.raw.requireLightning === true) {
+    console.error("::error::raw.requireLightning is true — paywall must stay off");
+    process.exit(1);
+  }
+'
+echo "GET /metrics.json 200 JSON (raw.requireLightning !== true)"
+
+echo "== live GET /health (200) =="
+HEALTH_CODE=$(curl -sS -o /tmp/satohash-health-live.json -w '%{http_code}' -A "$UA" -m 25 \
+  "https://api.satohash.io/health" || true)
+if [ "$HEALTH_CODE" != "200" ]; then
+  echo "::error::GET /health returned ${HEALTH_CODE:-empty} (need 200)"
+  exit 1
+fi
+echo "GET /health 200"
 
 echo "pages-smoke ok"
