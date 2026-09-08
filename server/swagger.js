@@ -181,8 +181,54 @@ const options = {
           tags: ['Public'],
           summary: 'Stamp statistics',
           description:
-            'Rolling stats: stamps created in window, active clients, average confirm time, calendar health per calendar.',
-          responses: { 200: { description: 'Stats payload' } }
+            'Rolling 24h stats from GET /api/public/stats: stamps created in window, distinct active clients, average confirm time in seconds, calendar health per calendar. Live keys only — no invented user counts or daily caps.',
+          responses: {
+            200: {
+              description: 'Stats payload (example values; counts are illustrative)',
+              content: {
+                'application/json': {
+                  schema: {
+                    type: 'object',
+                    properties: {
+                      window: { type: 'string', example: '24h' },
+                      stamps_created: { type: 'integer', example: 12 },
+                      clients_active: { type: 'integer', example: 4 },
+                      avg_confirm_time_sec: { type: 'integer', nullable: true, example: 3600 },
+                      calendar_health: {
+                        type: 'object',
+                        additionalProperties: {
+                          type: 'object',
+                          properties: {
+                            ok: { type: 'boolean' },
+                            ms: { type: 'integer' },
+                            error: { type: 'string' }
+                          }
+                        }
+                      },
+                      timestamp: { type: 'string', format: 'date-time' }
+                    }
+                  },
+                  examples: {
+                    live: {
+                      summary: 'Example GET /api/public/stats shape (24h window; no invented caps)',
+                      value: {
+                        window: '24h',
+                        stamps_created: 12,
+                        clients_active: 4,
+                        avg_confirm_time_sec: 3600,
+                        calendar_health: {
+                          'https://alice.btc.calendar.opentimestamps.org': { ok: true, ms: 120 },
+                          'https://bob.btc.calendar.opentimestamps.org': { ok: true, ms: 95 },
+                          'https://finney.calendar.eternitywall.com': { ok: true, ms: 210 }
+                        },
+                        timestamp: '2026-09-08T00:00:00.000Z'
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       },
       '/api/public/network': {

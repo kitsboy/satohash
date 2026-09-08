@@ -275,6 +275,7 @@ const startUpgradeDaemon = (io) => {
       try {
         db.pragma('wal_checkpoint(TRUNCATE)')
         db.pragma('incremental_vacuum(100)') // reclaim free pages after TRUNCATE
+        db.pragma('optimize') // once-per-successful-batch, not every empty tick
       } catch (e) {
         logger.warn(`[DAEMON] wal_checkpoint(TRUNCATE) failed: ${e.message}`)
       }
