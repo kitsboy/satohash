@@ -22,13 +22,16 @@ const PLAYER_HTML = `<!doctype html>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="robots" content="noindex,nofollow" />
-<title>Satohash explainer</title>
-<style>html,body{margin:0;height:100%;background:#0e1c2a}video{display:block;width:100%;height:100%;object-fit:contain;background:#0e1c2a}</style>
+<title>Satohash explainer · 84 seconds</title>
+<style>html,body{margin:0;height:100%;background:#0e1c2a;color:#e8f4fb;font-family:"Plus Jakarta Sans",system-ui,sans-serif}.player{display:flex;flex-direction:column;height:100%}h1{margin:0;flex:0 0 auto;padding:.45rem .75rem;font-size:13px;font-weight:700;letter-spacing:.04em}video{display:block;width:100%;flex:1 1 auto;min-height:0;object-fit:contain;background:#0e1c2a}</style>
 </head>
 <body>
-<video controls playsinline preload="metadata" poster="https://satohash.io/og/watch.png" src="https://videos.giveabit.io/media/video/satohash-explainer-with-vo2.mp4?v=kimi-noir-20260819">
+<div class="player">
+<h1>Satohash explainer · 84 seconds</h1>
+<video controls playsinline preload="metadata" poster="https://satohash.io/og/watch.png" src="https://videos.giveabit.io/media/video/satohash-explainer-with-vo2.mp4?v=kimi-noir-20260819" aria-label="Satohash explainer · 84 seconds">
 <a href="https://satohash.io/watch">Watch the Satohash explainer</a>
 </video>
+</div>
 </body>
 </html>`
 
@@ -68,6 +71,7 @@ export async function onRequest({ request, env, next }) {
         'content-type': 'text/html; charset=utf-8',
         'cache-control': 'public, max-age=3600',
         'x-robots-tag': 'noindex, nofollow',
+        'x-frame-options': 'ALLOWALL',
         'content-security-policy': PLAYER_CSP
       }
     })

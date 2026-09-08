@@ -102,6 +102,47 @@ export default function VerifyEli5({ className = '' }) {
           </p>
         </div>
       )}
+
+      <div
+        id="check-without-satohash"
+        data-testid="check-without-satohash"
+        className="mt-4 space-y-2 rounded-xl border p-3 sm:p-4"
+        style={{ borderColor: 'var(--border)', background: 'var(--bg-primary)' }}
+      >
+        <p
+          className="text-[10px] font-black tracking-widest uppercase"
+          style={{ color: 'var(--accent-gold)' }}
+        >
+          Check without Satohash
+        </p>
+        <ul
+          className="list-disc space-y-1.5 pl-5 text-sm leading-relaxed"
+          style={{ color: 'var(--text-secondary)' }}
+        >
+          <li>
+            Keep the <strong style={{ color: 'var(--text-primary)' }}>.ots</strong> file.
+          </li>
+          <li>
+            <code className="rounded px-1" style={{ background: 'var(--bg-secondary)' }}>
+              ots verify document.ots
+            </code>{' '}
+            (OpenTimestamps client)
+          </li>
+          <li>Or any Bitcoin node + the merkle path.</li>
+          <li>
+            <strong style={{ color: 'var(--accent-gold)' }}>Pending ≠ a Bitcoin block.</strong>
+          </li>
+        </ul>
+        <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
+          <a
+            href="/docs/learn-how-to-verify-an-ots-proof"
+            className="font-bold underline underline-offset-2"
+            style={{ color: 'var(--accent-gold)' }}
+          >
+            How to verify an OTS proof
+          </a>
+        </p>
+      </div>
     </div>
   )
 }

@@ -4,6 +4,8 @@
  */
 const API = 'https://api.satohash.io'
 const EMPTY_SHA256 = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'
+/** iMessage/OG unfurl — JPEG only, never PNG/SVG. Absolute https. */
+const OG_JPEG = 'https://satohash.io/media/video/01-stamp-hero.jpg'
 
 function esc(s) {
   return String(s || '')
@@ -145,8 +147,8 @@ export async function onRequestGet({ params }) {
   <meta property="og:title" content="${esc(title)}"/>
   <meta property="og:description" content="${esc(desc)}"/>
   <meta property="og:url" content="${canon}"/>
-  <meta property="og:image" content="https://satohash.io/media/video/01-stamp-hero.jpg"/>
-  <meta property="og:image:secure_url" content="https://satohash.io/media/video/01-stamp-hero.jpg"/>
+  <meta property="og:image" content="${OG_JPEG}"/>
+  <meta property="og:image:secure_url" content="${OG_JPEG}"/>
   <meta property="og:image:width" content="1200"/>
   <meta property="og:image:height" content="630"/>
   <meta property="og:image:type" content="image/jpeg"/>
@@ -156,7 +158,8 @@ export async function onRequestGet({ params }) {
   <meta name="twitter:creator" content="@give_bit"/>
   <meta name="twitter:title" content="${esc(title)}"/>
   <meta name="twitter:description" content="${esc(desc)}"/>
-  <meta name="twitter:image" content="https://satohash.io/media/video/01-stamp-hero.jpg"/>
+  <meta name="twitter:image" content="${OG_JPEG}"/>
+  <meta name="twitter:image:src" content="${OG_JPEG}"/>
   <meta name="twitter:image:alt" content="Satohash — Bitcoin-anchored proof of existence"/>
   <script type="application/ld+json">${jsonLd}</script>
   <style>
@@ -217,6 +220,7 @@ export async function onRequestGet({ params }) {
       }</p>
       ${emptyNote}
       <p class="muted">Only a SHA-256 fingerprint was submitted. The original file never needed to leave the device. You do not need to trust Satohash — verify with OpenTimestamps.</p>
+      <p class="muted">Share this page in iMessage — the preview is a photo, not the app.</p>
       ${njump}
       <p><code>ots-cli verify proof.ots</code></p>
       <p class="cals"><strong>Calendars</strong> · alice · bob · finney</p>

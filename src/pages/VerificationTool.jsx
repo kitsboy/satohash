@@ -289,6 +289,17 @@ export default function VerificationTool() {
                 />
               </span>
             </div>
+            <a
+              href="#check-without-satohash"
+              className="inline-flex min-h-[36px] items-center rounded-full border px-4 py-2 text-[10px] font-bold tracking-wider uppercase"
+              style={{
+                borderColor: 'var(--border)',
+                color: 'var(--text-secondary)',
+                background: 'var(--bg-secondary)'
+              }}
+            >
+              Check without Satohash
+            </a>
             <LiveNodeChip />
           </div>
           <h1 className="text-3xl font-bold tracking-tighter text-[var(--text-primary)] uppercase sm:text-5xl">
