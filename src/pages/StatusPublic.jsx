@@ -173,7 +173,7 @@ function CopyShaButton({ sha }) {
       type="button"
       onClick={copy}
       title={full}
-      aria-label={full}
+      aria-label={`Copy git SHA ${full}`}
       className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center gap-1 rounded px-1 font-mono font-bold whitespace-nowrap transition-colors hover:text-[var(--accent-gold)]"
       style={{ color: copied ? 'var(--accent-success)' : 'var(--text-muted)' }}
     >

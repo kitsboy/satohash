@@ -349,7 +349,7 @@ function CompactFooter() {
           ))}
         </nav>
         <span
-          className="min-w-0 shrink truncate text-[10px] leading-none whitespace-nowrap text-[var(--text-tertiary)] sm:text-[11px]"
+          className="min-w-0 shrink truncate text-[10px] leading-none whitespace-nowrap text-[var(--text-tertiary)] tabular-nums sm:text-[11px]"
           title={spaBuild || undefined}
         >
           © Give A Bit{build ? ` · b${build}` : ''}

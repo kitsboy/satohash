@@ -619,7 +619,7 @@ export default function TermsOfService() {
                   <p className="mb-3 text-[10px] font-black tracking-[0.35em] text-slate-400 uppercase">
                     [ENTITY TBD] · Legal Document
                   </p>
-                  <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl md:text-5xl">
+                  <h1 className="scroll-mt-24 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl md:text-5xl">
                     {t('legalPages.termsTitle')}
                   </h1>
                   <p className="mt-3 text-sm text-slate-600">{t('legalPages.disclaimer')}</p>

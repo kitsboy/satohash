@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { QRCodeSVG } from 'qrcode.react'
@@ -44,6 +44,21 @@ function CopyField({ label, value, mono = true }) {
 
 export default function Donate() {
   usePageMeta({ page: 'donate' })
+
+  // Prefetch /stamp on mount so the Stamp-for-free CTA is instant.
+  useEffect(() => {
+    const added = []
+    const href = '/stamp'
+    if (!document.querySelector(`link[rel="prefetch"][href="${href}"]`)) {
+      const link = document.createElement('link')
+      link.rel = 'prefetch'
+      link.href = href
+      link.as = 'document'
+      document.head.appendChild(link)
+      added.push(link)
+    }
+    return () => added.forEach((link) => link.remove())
+  }, [])
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-secondary)] pb-24">
@@ -168,6 +183,7 @@ export default function Donate() {
         <div className="flex flex-col items-center gap-4">
           <Link
             to="/stamp"
+            data-testid="donate-stamp-cta"
             className="inline-flex min-h-[44px] items-center justify-center rounded-xl border border-[var(--accent-gold)] px-5 text-sm font-bold text-[var(--accent-gold)]"
           >
             Stamp for free

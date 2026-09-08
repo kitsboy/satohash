@@ -3,12 +3,13 @@ import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { placePopover, canHoverFine } from '../../utils/placePopover'
 
-/** Stem + tittle only — no enclosing circle (Lucide Info is already a ring). */
+/** One gold ring + i-mark. Not Lucide Info (that would be a circle inside a circle). */
 function InfoMark() {
   return (
-    <svg viewBox="0 0 14 16" width="12" height="14" aria-hidden className="shrink-0">
-      <circle cx="7" cy="2.4" r="1.35" fill="currentColor" />
-      <rect x="6.15" y="5.6" width="1.7" height="8.2" rx="0.85" fill="currentColor" />
+    <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden className="shrink-0">
+      <circle cx="8" cy="8" r="6.6" fill="none" stroke="currentColor" strokeWidth="1.4" />
+      <circle cx="8" cy="5.15" r="1" fill="currentColor" />
+      <rect x="7.2" y="7.15" width="1.6" height="5.05" rx="0.8" fill="currentColor" />
     </svg>
   )
 }
@@ -16,7 +17,7 @@ function InfoMark() {
 /**
  * Tooltip — info trigger. Portaled + clamped so it never opens off-screen.
  * Hover on fine pointers; tap-to-toggle on touch.
- * Single gold i-mark (no badge ring). Optional `label` for a row of steps.
+ * Single gold circle around the i. Optional `label` for a row of steps.
  */
 export default function Tooltip({ title, content, className = '', label = '' }) {
   const [visible, setVisible] = useState(false)
@@ -123,9 +124,7 @@ export default function Tooltip({ title, content, className = '', label = '' }) 
             left: pos.left,
             width: pos.width,
             maxWidth: 'calc(100vw - 24px)',
-            borderColor: 'color-mix(in srgb, var(--accent-active) 30%, var(--border-bright))',
-            boxShadow:
-              'var(--shadow-noir), 0 0 24px var(--jewel-sky-glow), inset 0 1px 0 color-mix(in srgb, var(--accent-active) 12%, transparent)'
+            borderColor: 'color-mix(in srgb, var(--accent-gold) 28%, var(--border))'
           }}
         >
           <span
@@ -156,11 +155,11 @@ export default function Tooltip({ title, content, className = '', label = '' }) 
         type="button"
         aria-label={title ? `Info: ${title}` : 'More information'}
         aria-expanded={visible}
-        className={`relative ml-0.5 inline-flex shrink-0 items-center justify-center gap-1 rounded-sm transition-colors focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]/45 focus-visible:outline-none ${
+        className={`relative ml-0.5 inline-flex shrink-0 items-center justify-center gap-1.5 rounded-sm transition-colors focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]/45 focus-visible:outline-none ${
           label
             ? 'min-h-[44px] px-1'
-            : "h-4 w-3.5 before:absolute before:inset-[-14px] before:content-['']"
-        } ${visible ? 'text-[var(--accent-gold)]' : 'text-[var(--text-tertiary)] hover:text-[var(--accent-gold)]'}`}
+            : "h-4 w-4 before:absolute before:inset-[-14px] before:content-['']"
+        } ${visible ? 'text-[var(--accent-gold)]' : 'text-[var(--accent-gold)]/80 hover:text-[var(--accent-gold)]'}`}
         onPointerDown={hoverable ? undefined : toggle}
         onMouseEnter={hoverable ? show : undefined}
         onMouseLeave={hoverable ? hide : undefined}

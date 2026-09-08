@@ -464,11 +464,13 @@ export default function Network() {
                 {recent.slice(0, 12).map((s) => {
                   const hex = isSha256Hex(s.hash) ? s.hash.toLowerCase() : ''
                   const prefix = `${(hex || s.hash || '').slice(0, 18)}${hex || s.hash ? '…' : ''}`
+                  const titleHash = hex ? `${hex.slice(0, 12)}…` : undefined
                   return (
                     <li
                       key={s.id || s.hash}
                       className="flex min-h-[44px] items-center justify-between gap-2 rounded-xl border px-3"
                       style={{ borderColor: 'var(--border)', background: 'var(--bg-primary)' }}
+                      title={titleHash}
                       onPointerEnter={() => {
                         if (document.querySelector('link[rel="prefetch"][href="/verify"]')) return
                         const link = document.createElement('link')
@@ -481,6 +483,7 @@ export default function Network() {
                       {hex ? (
                         <Link
                           to={`/p/${hex}`}
+                          title={titleHash}
                           className="inline-flex min-h-[44px] min-w-[44px] items-center truncate font-mono text-[10px]"
                           style={{ color: 'var(--text-secondary)' }}
                         >

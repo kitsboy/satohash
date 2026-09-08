@@ -70,7 +70,7 @@ export default function CryptoNotice() {
           >
             Legal · Cryptographic notice
           </p>
-          <h1 className="text-3xl font-black tracking-tight sm:text-4xl">
+          <h1 className="scroll-mt-24 text-3xl font-black tracking-tight sm:text-4xl">
             {t('legalPages.cryptoTitle', { defaultValue: 'Cryptographic notice' })}
           </h1>
           <p className="mt-3 text-sm" style={{ color: 'var(--text-secondary)' }}>

@@ -636,7 +636,7 @@ export default function GovernmentUse() {
         </div>
       </section>
 
-      <Footer />
+      <Footer compact />
     </div>
   )
 }

@@ -189,7 +189,7 @@ export default function BatchVerify() {
           </motion.div>
         )}
       </div>
-      <Footer />
+      <Footer compact />
     </div>
   )
 }
