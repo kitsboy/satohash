@@ -89,6 +89,7 @@ export function register(app, deps) {
       family_free_tier: Boolean(process.env.FAMILY_API_KEYS || process.env.FAMILY_API_KEY),
       require_lightning: process.env.REQUIRE_LIGHTNING !== 'false',
       stamps_stored: stampsApprox,
+      git_sha: process.env.GIT_SHA || process.env.npm_package_version || null,
       timestamp: new Date().toISOString(),
       clients_expected: directory.clientsExpected,
       metrics_url: 'https://api.satohash.io/metrics.json',

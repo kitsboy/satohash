@@ -11,7 +11,8 @@ if [[ ! -f .env ]]; then
   exit 1
 fi
 
-echo "→ Building & starting satohash-api + redis"
+export GIT_SHA=$(git rev-parse --short HEAD)
+echo "→ Building & starting satohash-api + redis (GIT_SHA=$GIT_SHA)"
 docker compose -f docker-compose.vps.yml up -d --build
 
 echo "→ Waiting for health"

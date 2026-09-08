@@ -3,10 +3,13 @@ FROM node:20-alpine AS deps
 WORKDIR /app
 RUN apk add --no-cache python3 make g++
 COPY package*.json ./
+ENV NODE_ENV=production
 RUN npm ci --omit=dev --ignore-scripts && npm rebuild better-sqlite3
 
 FROM node:20-alpine
 WORKDIR /app
+ARG GIT_SHA=unknown
+ENV GIT_SHA=$GIT_SHA
 RUN apk add --no-cache wget && npm install -g pm2
 
 COPY package*.json ./

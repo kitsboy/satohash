@@ -92,9 +92,10 @@ export function register(app, deps) {
     details.service = 'satohash-api'
     details.plane = 'proof'
     details.timestamp = new Date().toISOString()
+    const gitSha = process.env.GIT_SHA || process.env.npm_package_version || null
 
     if (!deep) {
-      res.json({ status: 'ok', details })
+      res.json({ status: 'ok', gitSha, details })
       return
     }
 
@@ -213,7 +214,7 @@ export function register(app, deps) {
       confirmations: confirmationCounter.total
     }
 
-    res.json({ status, details })
+    res.json({ status, gitSha, details })
   })
 
   /**

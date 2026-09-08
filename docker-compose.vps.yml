@@ -8,13 +8,13 @@
 # DNS: api.satohash.io → VPS IP (Cloudflare DNS only / grey cloud if TLS via Caddy)
 # Put Caddy/nginx in front for HTTPS, or add a caddy service later.
 
-version: '3.9'
-
 services:
   satohash-api:
     build:
       context: .
       dockerfile: Dockerfile.api
+      args:
+        GIT_SHA: ${GIT_SHA:-unknown}
     restart: unless-stopped
     ports:
       - '127.0.0.1:3001:3001'
