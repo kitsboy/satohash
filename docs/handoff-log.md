@@ -1,3 +1,20 @@
+## 2026-09-08 (Grok M3 — harden wave: minimal info mark, sticky comparison)
+
+**Pickup:** `.ai_docs/current-status.md` · this file · HEAD `23baa3e`.
+
+**Live at start:** API `gitSha=39143fa` · 818MB · Caddy OK · 285 stamps · paywall off.
+
+**Pushed:**
+- `5e9702d` incremental_vacuum after WAL TRUNCATE, OpenAPI `/api/stamps/recent`.
+- `c1a3bb7` how-satohash-works + support-and-guidance OG JPEG, smoke `/og/watch.jpg`, llms.txt version.
+- `23baa3e` Info mark is stem+tittle only (no badge ring), Donate Stamp-for-free, comparison sticky first column, truncated git SHA + copy, Developer/exec-summary compact footers.
+
+**Do not:** flip paywall · change `/api/*` · shuffle package.json deps · `--force` opentimestamps · `@satohash`
+
+**Kimi:** THOR ingest. API rebuild for `5e9702d`. Pages auto-deploys SPA.
+
+---
+
 ## 2026-09-08 (Grok M3 — harden wave: Info icons, cache_spill, compact donate)
 
 **Pickup:** `.ai_docs/current-status.md` · this file · HEAD `c63ae0d`.
