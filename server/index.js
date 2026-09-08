@@ -297,6 +297,7 @@ app.use(
   })
 )
 app.use(
+  // Helmet is API-only (JSON on api.satohash.io, not the CF Pages SPA). CSP on JSON does not constrain satohash.io; CORS below is the browser gate.
   helmet({
     contentSecurityPolicy: {
       directives: {

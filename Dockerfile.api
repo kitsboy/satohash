@@ -5,9 +5,11 @@ RUN apk add --no-cache python3 make g++
 COPY package*.json ./
 ENV NODE_ENV=production
 RUN npm ci --omit=dev --ignore-scripts && npm rebuild better-sqlite3
-# Drop fat frontend packages that npm ci --omit=dev still installs from the SPA tree
+# Keep a single package.json so Pages `npm ci` is unchanged. Do not add package.api.json.
+# Drop fat frontend packages that npm ci --omit=dev still installs from the SPA tree.
 # Keep opentimestamps (stamp path). Prune ipfs-http-client — NFT mocks unless IPFS_URL is set.
-RUN rm -rf node_modules/react node_modules/react-dom node_modules/three node_modules/ethers node_modules/framer-motion node_modules/lucide-react node_modules/vite node_modules/@vitejs node_modules/lighthouse node_modules/wrangler node_modules/puppeteer-core node_modules/@puppeteer node_modules/playwright node_modules/canvas-confetti node_modules/howler node_modules/jspdf node_modules/@sentry/react node_modules/i18next node_modules/react-i18next node_modules/react-router-dom node_modules/@tanstack node_modules/ipfs-http-client 2>/dev/null || true
+# pino-pretty is local/dev only; production logger is JSON pino (NODE_ENV=production).
+RUN rm -rf node_modules/react node_modules/react-dom node_modules/three node_modules/ethers node_modules/framer-motion node_modules/lucide-react node_modules/vite node_modules/@vitejs node_modules/lighthouse node_modules/wrangler node_modules/puppeteer-core node_modules/@puppeteer node_modules/playwright node_modules/canvas-confetti node_modules/howler node_modules/jspdf node_modules/@sentry/react node_modules/i18next node_modules/react-i18next node_modules/react-router-dom node_modules/@tanstack node_modules/ipfs-http-client node_modules/pino-pretty node_modules/@radix-ui node_modules/@types/three node_modules/recharts node_modules/qrcode.react node_modules/sonner node_modules/react-dropzone node_modules/react-error-boundary node_modules/zustand node_modules/tailwindcss node_modules/@tailwindcss node_modules/autoprefixer node_modules/postcss node_modules/concurrently node_modules/i18next-browser-languagedetector node_modules/i18next-http-backend node_modules/socket.io-client node_modules/comlink node_modules/clsx node_modules/tailwind-merge 2>/dev/null || true
 
 FROM node:20-alpine
 WORKDIR /app

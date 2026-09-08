@@ -33,6 +33,14 @@ for i in $(seq 1 30); do
       fi
       curl -sS "http://127.0.0.1:3001/api/public/status" | head -c 400
       echo
+      echo "→ Reloading Caddy (best-effort, non-fatal)"
+      if command -v systemctl >/dev/null 2>&1 && systemctl list-unit-files --type=service 2>/dev/null | grep -q '^caddy\.service'; then
+        systemctl reload caddy >/dev/null 2>&1 && echo "OK  systemctl reload caddy" || echo "WARN systemctl reload caddy failed (non-fatal)"
+      elif command -v caddy >/dev/null 2>&1; then
+        caddy reload >/dev/null 2>&1 && echo "OK  caddy reload" || echo "WARN caddy reload failed (non-fatal)"
+      else
+        echo "SKIP caddy not installed"
+      fi
       echo "Next: point DNS api.satohash.io → this host; TLS via Caddy/nginx."
       exit 0
     fi

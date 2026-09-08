@@ -15,6 +15,7 @@ const logger = pino({
     ],
     censor: '[redacted]'
   },
+  // Production is JSON pino (no pino-pretty). Pretty transport is local/dev only.
   transport:
     process.env.NODE_ENV !== 'production'
       ? {

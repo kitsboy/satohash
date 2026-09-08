@@ -16,6 +16,7 @@ const db = new Database(dbPath)
 db.pragma('journal_mode = WAL') // Performance refinement
 db.pragma('synchronous = NORMAL')
 db.pragma('busy_timeout = 5000')
+db.pragma('cache_size = -8000') // ~8MB page cache (negative = KiB)
 
 // Initialize Schema
 db.exec(`

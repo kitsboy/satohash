@@ -1,4 +1,5 @@
 import path from 'path'
+import crypto from 'crypto'
 import jwt from 'jsonwebtoken'
 
 const PRIVATE_IP_PATTERNS = [
@@ -17,6 +18,12 @@ export function isPrivateHost(hostname) {
   const h = hostname.toLowerCase()
   if (h === 'localhost' || h.endsWith('.local') || h.endsWith('.internal')) return true
   return PRIVATE_IP_PATTERNS.some((re) => re.test(h))
+}
+
+/** Truncated SHA-256 of a client IP for logs — never log the raw address. */
+export function hashClientIp(ip) {
+  if (ip == null || ip === '') return 'unknown'
+  return crypto.createHash('sha256').update(String(ip)).digest('hex').slice(0, 16)
 }
 
 export function validateWebhookUrl(urlString) {

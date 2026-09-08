@@ -3,6 +3,7 @@ import rateLimit from 'express-rate-limit'
 import logger from './logger.js'
 import redis from './cache.js'
 import * as Sentry from '@sentry/node'
+import { hashClientIp } from './security.js'
 
 /**
  * Middleware for Correlation IDs.
@@ -36,7 +37,7 @@ export const tieredRateLimiter = (tier = 'public') => {
     message: { error: 'Too many requests, slow down please.' },
     handler: (req, res, next, options) => {
       logger.warn(
-        `⚠️ Rate Limit Exceeded [${req.id}]: IP: ${req.ip} URI: ${req.originalUrl} Tier: ${tier}`
+        `⚠️ Rate Limit Exceeded [${req.id}]: IP: ${hashClientIp(req.ip)} URI: ${req.originalUrl} Tier: ${tier}`
       )
       res.status(options.statusCode).json(options.message)
     }
@@ -66,7 +67,7 @@ const blockIP = async (ip, redis, reason) => {
     await redis.set(`blocklist:${ip}`, reason, 'EX', 3600) // 1 hour block
     if (ioInstance)
       ioInstance.emit('intrusion:blocked', { ip, reason, timestamp: new Date().toISOString() })
-    logger.warn(`🚫 IP Blocked: ${ip} - ${reason}`)
+    logger.warn(`🚫 IP Blocked: ${hashClientIp(ip)} - ${reason}`)
   } catch (e) {
     logger.warn('Failed to block IP:', e)
   }
@@ -108,7 +109,7 @@ export const searchRateLimiter = rateLimit({
   legacyHeaders: false,
   message: { error: 'Too many search requests. Please wait.' },
   handler: (req, res, next, options) => {
-    logger.warn(`⚠️ Search Rate Limit Exceeded [${req.id}]: IP: ${req.ip}`)
+    logger.warn(`⚠️ Search Rate Limit Exceeded [${req.id}]: IP: ${hashClientIp(req.ip)}`)
     res.status(options.statusCode).json(options.message)
   }
 })
@@ -146,7 +147,9 @@ export const paywallMiddleware = async (req, res, next) => {
   if (isFamilyApiKey(familyKey)) {
     req.satohashFamily = true
     req.satohashClient = req.satohashClient || 'family'
-    logger.info(`🏠 [FAMILY] Free stamp tier for client=${req.satohashClient} ip=${req.ip}`)
+    logger.info(
+      `🏠 [FAMILY] Free stamp tier for client=${req.satohashClient} ip=${hashClientIp(req.ip)}`
+    )
     return next()
   }
 
@@ -155,7 +158,7 @@ export const paywallMiddleware = async (req, res, next) => {
 
   // Paid path: accept L402 token or preimage proof (full macaroon verify can be added later)
   if (authHeader?.startsWith('L402 ') || (preimage && String(preimage).length >= 16)) {
-    logger.info(`⚡ [PAYWALL] Cleared payment proof for ${req.ip}`)
+    logger.info(`⚡ [PAYWALL] Cleared payment proof for ${hashClientIp(req.ip)}`)
     return next()
   }
 

@@ -756,16 +756,7 @@ router.post('/stamp/cosign', async (req, res) => {
 // key (secp256k1 / NIP-07, or P-256 WebCrypto). The server verifies the signature
 // against the caller's PUBLIC key before accepting the proof. Non-repudiable.
 router.post('/stamp/signed', paywallMiddleware, async (req, res) => {
-  const {
-    hash,
-    filename,
-    signature,
-    pubkey,
-    pubkeyJWK,
-    nonce,
-    ts,
-    curve
-  } = req.body || {}
+  const { hash, filename, signature, pubkey, pubkeyJWK, nonce, ts, curve } = req.body || {}
 
   if (!hash || !signature) {
     return res.status(400).json({ error: 'hash and signature required' })
@@ -800,7 +791,11 @@ router.post('/stamp/signed', paywallMiddleware, async (req, res) => {
       reason: result.error || 'invalid signature',
       ip: req.ip
     })
-    return res.status(400).json({ error: 'signature verification failed', details: result.error || 'invalid signature', curve: result.curve })
+    return res.status(400).json({
+      error: 'signature verification failed',
+      details: result.error || 'invalid signature',
+      curve: result.curve
+    })
   }
 
   const clientId = req.headers['x-satohash-client'] || 'signed'
@@ -1003,7 +998,38 @@ router.get('/openapi.json', (req, res) => {
     },
     servers: [{ url: process.env.PUBLIC_API_URL || 'https://api.satohash.io' }],
     paths: {
-      '/health': { get: { summary: 'Liveness' } },
+      '/health': {
+        get: {
+          summary: 'Liveness',
+          description:
+            'JSON liveness. gitSha is GIT_SHA. ?deep=true adds details.paywall.require_lightning (REQUIRE_LIGHTNING env).',
+          responses: {
+            200: {
+              description: 'Health payload',
+              content: {
+                'application/json': {
+                  examples: {
+                    liveness: {
+                      summary: 'Default GET /health',
+                      value: {
+                        status: 'ok',
+                        gitSha: '8e78fb5',
+                        details: {
+                          uptime: 3600.12,
+                          version: '5.0.0-ELITE',
+                          service: 'satohash-api',
+                          plane: 'proof',
+                          timestamp: '2026-09-07T00:00:00.000Z'
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
       '/api/public/status': { get: { summary: 'Suite heartbeat' } },
       '/api/public/stats': { get: { summary: '24h stats' } },
       '/api/public/network': { get: { summary: 'Bitcoin network' } },

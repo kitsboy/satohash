@@ -31,7 +31,7 @@ const options = {
           tags: ['Network'],
           summary: 'API health',
           description:
-            'Basic liveness + uptime. JSON includes gitSha (short git of the API image). Append ?deep=true for full dependency health (db, redis, OTS calendars, Nostr, lightning, bitcoin).',
+            'Basic liveness + uptime. JSON includes gitSha (short git of the API image). Append ?deep=true for full dependency health (db, redis, OTS calendars, Nostr, lightning, bitcoin) plus details.paywall.require_lightning (from REQUIRE_LIGHTNING env).',
           parameters: [
             {
               name: 'deep',
@@ -41,7 +41,72 @@ const options = {
               description: 'Deep health check'
             }
           ],
-          responses: { 200: { description: 'Health payload' } }
+          responses: {
+            200: {
+              description: 'Health payload',
+              content: {
+                'application/json': {
+                  schema: {
+                    type: 'object',
+                    properties: {
+                      status: { type: 'string', example: 'ok' },
+                      gitSha: {
+                        type: 'string',
+                        nullable: true,
+                        description: 'Short git of the API image (GIT_SHA)'
+                      },
+                      details: {
+                        type: 'object',
+                        properties: {
+                          uptime: { type: 'number' },
+                          version: { type: 'string' },
+                          service: { type: 'string' },
+                          plane: { type: 'string' },
+                          timestamp: { type: 'string', format: 'date-time' }
+                        }
+                      }
+                    }
+                  },
+                  examples: {
+                    liveness: {
+                      summary: 'Default GET /health (no deep)',
+                      value: {
+                        status: 'ok',
+                        gitSha: '8e78fb5',
+                        details: {
+                          uptime: 3600.12,
+                          version: '5.0.0-ELITE',
+                          service: 'satohash-api',
+                          plane: 'proof',
+                          timestamp: '2026-09-07T00:00:00.000Z'
+                        }
+                      }
+                    },
+                    deepPaywall: {
+                      summary:
+                        '?deep=true paywall slice (require_lightning from env; no invented stamp metrics)',
+                      value: {
+                        status: 'ok',
+                        gitSha: '8e78fb5',
+                        details: {
+                          uptime: 3600.12,
+                          version: '5.0.0-ELITE',
+                          service: 'satohash-api',
+                          plane: 'proof',
+                          timestamp: '2026-09-07T00:00:00.000Z',
+                          paywall: {
+                            require_lightning: false,
+                            mode: 'free_open',
+                            stamp_price_sats: 21
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       },
       '/api/public/status': {
