@@ -1,3 +1,22 @@
+## 2026-09-08 (Grok M3 — harden wave: mmap, self-host fonts, status gitSha)
+
+**Pickup:** `.ai_docs/current-status.md` · this file · HEAD `5a96204`.
+
+**Live at start of wave:** API `gitSha=5133f1b` · image **868MB** · stamps **277** · `REQUIRE_LIGHTNING=false`.
+
+**Pushed:**
+- `9340776` sqlite mmap 64MB, `/health` + `/api/public/status` `Cache-Control: no-store`, hashed v5 audit IPs, WAL TRUNCATE after successful upgrade pass, Retry-After on generic 429, extra API image prune, OpenAPI `/metrics.json` example.
+- `16c5076` self-hosted OFL fonts 500/700, stamp/verify OG JPEG, watch `preload=none`, `/og/*.jpg` 1h cache, `scripts/smoke-live.sh`.
+- `5a96204` compact footer on `/faq` `/counsel` `/status`, Verify witnesses is a `<section>` (one contentinfo), Status live gitSha + stamps, Network family fetch error vs empty, stamp dropzone SHA-256 line.
+
+**GUI extras (3):** docs search gold focus ring · stamp dropzone stronger gold drag-over · watch play 44px + gold hover.
+
+**Do not:** flip paywall · change `/api/*` · shuffle package.json deps · `--force` opentimestamps · `@satohash`
+
+**Kimi:** THOR ingest. Next API rebuild needed for `9340776`. Pages auto-deploys SPA from `5a96204`.
+
+---
+
 ## 2026-09-08 (Grok M3 — harden wave: API prune, honest HUD, compact GUI)
 
 **Pickup:** `.ai_docs/current-status.md` · this file · HEAD `83aa3b4` (ahead of live Pages until CF deploys).
