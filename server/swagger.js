@@ -271,6 +271,69 @@ const options = {
           }
         }
       },
+      '/api/public/bitcoin': {
+        get: {
+          tags: ['Network'],
+          summary: 'Own-node Bitcoin status',
+          description:
+            'Live GET /api/public/bitcoin from THOR bitcoind when RPC is healthy or syncing (source: bitcoind). Falls back to mempool.space tip height only if own node is unavailable. Example values; block_height is a round placeholder, not a live tip.',
+          responses: {
+            200: {
+              description:
+                'Bitcoin node payload (example values; block_height is a round placeholder)',
+              content: {
+                'application/json': {
+                  schema: {
+                    type: 'object',
+                    properties: {
+                      source: { type: 'string', example: 'bitcoind' },
+                      status: { type: 'string', example: 'healthy' },
+                      block_height: {
+                        type: 'integer',
+                        nullable: true,
+                        example: 900000,
+                        description:
+                          'Tip height from source (example placeholder, not a live claim)'
+                      },
+                      headers: { type: 'integer', nullable: true, example: 900000 },
+                      ibd: { type: 'boolean', example: false },
+                      progress_pct: { type: 'number', nullable: true, example: 100 },
+                      peers: { type: 'integer', nullable: true },
+                      mempool_count: { type: 'integer', nullable: true },
+                      chain: { type: 'string', example: 'main' },
+                      pruned: { type: 'boolean', nullable: true },
+                      ready_to_verify: { type: 'boolean', example: true },
+                      note: { type: 'string' },
+                      timestamp: { type: 'string', format: 'date-time' }
+                    }
+                  },
+                  examples: {
+                    bitcoind: {
+                      summary:
+                        'Example GET /api/public/bitcoin own node (round block_height is illustrative, not a live tip)',
+                      value: {
+                        source: 'bitcoind',
+                        status: 'healthy',
+                        block_height: 900000,
+                        headers: 900000,
+                        ibd: false,
+                        progress_pct: 100,
+                        peers: 8,
+                        mempool_count: 4000,
+                        chain: 'main',
+                        pruned: true,
+                        ready_to_verify: true,
+                        note: 'Own pruned bitcoind ready for independent verify',
+                        timestamp: '2026-09-08T00:00:00.000Z'
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
       '/api/public/version': {
         get: {
           tags: ['Public'],

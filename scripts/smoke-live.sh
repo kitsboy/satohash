@@ -21,6 +21,11 @@ tmp=$(mktemp -d)
 trap 'rm -rf "$tmp"' EXIT
 
 check_200 "https://api.satohash.io/health" "$tmp/health.json"
+health_cc=$(curl -sI -A "$UA" -m 25 "https://api.satohash.io/health" | tr -d '\r' || true)
+if ! echo "$health_cc" | grep -qiE '^cache-control:.*no-store'; then
+  fail "https://api.satohash.io/health missing Cache-Control no-store"
+fi
+echo "OK  https://api.satohash.io/health Cache-Control no-store"
 check_200 "https://api.satohash.io/metrics.json" "$tmp/metrics.json"
 check_200 "https://satohash.io/og/home.jpg" "$tmp/home.jpg"
 check_200 "https://satohash.io/og/stamp.jpg" "$tmp/stamp.jpg"
