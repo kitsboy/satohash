@@ -205,21 +205,32 @@ export default function StampDone() {
             />
           </h1>
           {confirmed && hasBlockHeight ? (
-            <p
-              className="font-mono text-sm tabular-nums"
-              style={{ color: 'var(--accent-success)' }}
-            >
-              {t('stampDonePage.bitcoinBlock')}{' '}
+            <div>
+              <p
+                className="font-mono text-sm tabular-nums"
+                style={{ color: 'var(--accent-success)' }}
+              >
+                {t('stampDonePage.bitcoinBlock')}{' '}
+                <a
+                  href={`https://mempool.space/block/${heightNum}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Bitcoin block ${heightNum} on mempool.space`}
+                  className="inline-flex min-h-[44px] items-center underline underline-offset-2"
+                >
+                  {heightNum.toLocaleString(i18n.language)}
+                </a>
+              </p>
               <a
                 href={`https://mempool.space/block/${heightNum}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={`Bitcoin block ${heightNum} on mempool.space`}
-                className="inline-flex min-h-[44px] items-center underline underline-offset-2"
+                className="inline-flex min-h-[44px] items-center text-sm underline underline-offset-2"
+                style={{ color: 'var(--text-secondary)' }}
               >
-                {heightNum.toLocaleString(i18n.language)}
+                View on mempool.space
               </a>
-            </p>
+            </div>
           ) : confirmed ? (
             <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
               Block height not stored yet — pending ≠ the issue; confirmation is recorded.

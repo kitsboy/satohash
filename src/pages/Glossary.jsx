@@ -102,7 +102,7 @@ export default function Glossary() {
           </div>
         )}
       </section>
-      <Footer />
+      <Footer compact />
     </div>
   )
 }

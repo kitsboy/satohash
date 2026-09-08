@@ -201,7 +201,7 @@ export default function Comparison() {
         </div>
       </section>
 
-      <Footer />
+      <Footer compact />
     </div>
   )
 }

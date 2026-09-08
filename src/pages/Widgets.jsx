@@ -219,7 +219,7 @@ export default function Widgets() {
         </div>
       </section>
 
-      <Footer />
+      <Footer compact />
     </div>
   )
 }

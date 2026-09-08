@@ -307,7 +307,7 @@ window.open(\`${getPublicBaseUrl()}/verify/\${stampId}\`)
         </div>
       </section>
 
-      <Footer />
+      <Footer compact />
     </div>
   )
 }

@@ -173,7 +173,7 @@ export default function Donate() {
           .
         </div>
       </div>
-      <Footer />
+      <Footer compact />
     </div>
   )
 }

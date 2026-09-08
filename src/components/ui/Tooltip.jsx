@@ -1,13 +1,16 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
 import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'framer-motion'
+import { Info } from 'lucide-react'
 import { placePopover, canHoverFine } from '../../utils/placePopover'
 
 /**
- * Tooltip — info (i) trigger. Portaled + clamped so it never opens off-screen.
+ * Tooltip — info trigger. Portaled + clamped so it never opens off-screen.
  * Hover on fine pointers; tap-to-toggle on touch.
+ * Visual is a gold-ring Lucide Info (not a tiny filled "i" pebble).
+ * Optional `label` sits beside the icon so a row of triggers is readable.
  */
-export default function Tooltip({ title, content, className = '' }) {
+export default function Tooltip({ title, content, className = '', label = '' }) {
   const [visible, setVisible] = useState(false)
   const [pos, setPos] = useState(null)
   const triggerRef = useRef(null)
@@ -145,7 +148,15 @@ export default function Tooltip({ title, content, className = '' }) {
         type="button"
         aria-label={title ? `Info: ${title}` : 'More information'}
         aria-expanded={visible}
-        className="ml-0.5 inline-flex h-[18px] w-[18px] shrink-0 -translate-y-px items-center justify-center rounded-full bg-[var(--accent-gold)] text-[10px] leading-none font-black text-[#141b25] shadow-[0_0_0_1px_rgba(20,27,37,0.25)] transition-transform hover:scale-110 focus:ring-2 focus:ring-[var(--accent-gold)]/50 focus:outline-none sm:h-4 sm:w-4 sm:text-[9px]"
+        className={`relative ml-0.5 inline-flex shrink-0 items-center justify-center gap-1.5 rounded-full transition-colors focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]/55 focus-visible:outline-none ${
+          label
+            ? 'min-h-[44px] px-1.5'
+            : "h-[22px] w-[22px] before:absolute before:inset-[-11px] before:content-['']"
+        } ${
+          visible
+            ? 'text-[var(--accent-gold)]'
+            : 'text-[var(--text-secondary)] hover:text-[var(--accent-gold)]'
+        }`}
         onPointerDown={hoverable ? undefined : toggle}
         onMouseEnter={hoverable ? show : undefined}
         onMouseLeave={hoverable ? hide : undefined}
@@ -156,7 +167,21 @@ export default function Tooltip({ title, content, className = '' }) {
           hide()
         }}
       >
-        i
+        <span
+          aria-hidden
+          className={`inline-flex h-[22px] w-[22px] items-center justify-center rounded-full border transition-colors ${
+            visible
+              ? 'border-[var(--accent-gold)] bg-[var(--accent-gold)] text-[#141b25] shadow-[0_0_12px_var(--accent-gold-glow)]'
+              : 'border-[var(--accent-gold)]/80 bg-[var(--bg-primary)] text-[var(--accent-gold)]'
+          }`}
+        >
+          <Info size={13} strokeWidth={2.4} />
+        </span>
+        {label ? (
+          <span className="max-w-[7.5rem] truncate text-[10px] font-bold tracking-wider uppercase">
+            {label}
+          </span>
+        ) : null}
       </button>
       {card}
     </span>

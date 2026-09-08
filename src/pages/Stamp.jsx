@@ -1586,20 +1586,24 @@ export default function Stamp() {
                               content="The fingerprint is at OpenTimestamps calendars. It is NOT in a Bitcoin block until status is confirmed. Pending ≠ confirmed."
                             />
                           </p>
-                          <div className="flex flex-wrap items-center justify-center gap-2 pt-1">
+                          <div className="flex flex-wrap items-center justify-center gap-1 pt-1">
                             <Tooltip
+                              label="1 File"
                               title="Step 1 — Drop Your File"
                               content="Drag any document here or click to browse. Your file stays on your device — only a SHA-256 hash is sent to the server."
                             />
                             <Tooltip
+                              label="2 Hash"
                               title="Step 2 — Local Hashing"
                               content="Satohash computes a unique SHA-256 fingerprint in your browser using a Web Worker. The original file never leaves your machine."
                             />
                             <Tooltip
+                              label="3 Stamp"
                               title="Step 3 — Bitcoin Timestamp"
                               content="The hash is submitted to public OTS calendars. It is NOT in a Bitcoin block until status is confirmed. Pending ≠ confirmed."
                             />
                             <Tooltip
+                              label="Pending ≠ confirmed"
                               title="Pending is not confirmed"
                               content="The fingerprint is at OpenTimestamps calendars. It is NOT in a Bitcoin block until status is confirmed. Pending ≠ confirmed."
                             />

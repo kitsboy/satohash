@@ -121,7 +121,7 @@ export default function Guides() {
           </div>
         </div>
       </section>
-      <Footer />
+      <Footer compact />
     </div>
   )
 }

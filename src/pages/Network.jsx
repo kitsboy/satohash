@@ -42,13 +42,15 @@ function isSha256Hex(h) {
   return typeof h === 'string' && /^[0-9a-f]{64}$/i.test(h)
 }
 
-function InlineRetry({ onRetry, loading }) {
+function InlineRetry({ onRetry, loading, large = false }) {
   return (
     <button
       type="button"
       onClick={onRetry}
       disabled={loading}
-      className="ml-2 inline-flex min-h-[28px] items-center rounded px-1.5 text-[10px] font-black tracking-widest uppercase transition-colors hover:text-[var(--accent-gold)] disabled:cursor-wait disabled:opacity-50"
+      className={`ml-2 inline-flex items-center rounded px-1.5 text-[10px] font-black tracking-widest uppercase transition-colors hover:text-[var(--accent-gold)] disabled:cursor-wait disabled:opacity-50 ${
+        large ? 'min-h-[44px]' : 'min-h-[28px]'
+      }`}
       style={{ color: 'var(--text-secondary)' }}
     >
       Retry
@@ -123,6 +125,7 @@ export default function Network() {
       added.push(link)
     }
     prefetchDoc('/status')
+    prefetchDoc('/verify')
     return () => added.forEach((link) => link.remove())
   }, [])
 
@@ -466,6 +469,14 @@ export default function Network() {
                       key={s.id || s.hash}
                       className="flex min-h-[44px] items-center justify-between gap-2 rounded-xl border px-3"
                       style={{ borderColor: 'var(--border)', background: 'var(--bg-primary)' }}
+                      onPointerEnter={() => {
+                        if (document.querySelector('link[rel="prefetch"][href="/verify"]')) return
+                        const link = document.createElement('link')
+                        link.rel = 'prefetch'
+                        link.href = '/verify'
+                        link.as = 'document'
+                        document.head.appendChild(link)
+                      }}
                     >
                       {hex ? (
                         <Link
@@ -566,7 +577,7 @@ export default function Network() {
         ) : familyError ? (
           <p className="text-xs" style={{ color: 'var(--accent-danger)' }}>
             Could not load family clients
-            <InlineRetry onRetry={load} loading={loading} />
+            <InlineRetry onRetry={load} loading={loading} large />
           </p>
         ) : family.length === 0 ? (
           <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>
