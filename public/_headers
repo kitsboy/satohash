@@ -66,6 +66,6 @@
 /assets/*.js
   Cache-Control: public, max-age=60, must-revalidate
 
-# OG JPEGs — short TTL so iMessage unfurls pick up stamp/verify/home cards
+# OG JPEGs — same TTL as hashed /b/* so unfurls pick up new cards without 4h edge poison
 /og/*.jpg
-  Cache-Control: public, max-age=3600
+  Cache-Control: public, max-age=14400, must-revalidate

@@ -31,7 +31,7 @@ export const WATCH_VIDEO_URL =
   'https://videos.giveabit.io/media/video/satohash-explainer-with-vo2.mp4?v=kimi-noir-20260819'
 export const WATCH_PLAYER_URL = `${SITE}/watch-player.html`
 
-/** Per-page OG image slug under /og. JPEG for landing/stamp/verify/faq/pricing/watch (iMessage). */
+/** Per-page OG image slug under /og. JPEG for landing/stamp/verify/faq/pricing/watch/pitch/network/donate (iMessage). */
 const PAGE_OG_SLUG = {
   landing: 'home',
   faq: 'faq',
@@ -47,7 +47,17 @@ const PAGE_OG_SLUG = {
   supportAndGuidance: 'support-and-guidance'
 }
 
-const PAGE_OG_JPEG = new Set(['landing', 'stamp', 'verify', 'faq', 'pricing', 'watch'])
+const PAGE_OG_JPEG = new Set([
+  'landing',
+  'stamp',
+  'verify',
+  'faq',
+  'pricing',
+  'watch',
+  'pitch',
+  'network',
+  'donate'
+])
 
 export function ogImageForPage(page, pathname) {
   if (page === 'landing') return DEFAULT_OG_IMAGE

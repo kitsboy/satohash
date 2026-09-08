@@ -322,7 +322,14 @@ const secondary = {
   }
 }
 for (const [slug, p] of Object.entries(secondary)) {
-  const ext = slug === 'stamp' || slug === 'verify' || slug === 'pricing' ? 'jpg' : 'png'
+  const ext =
+    slug === 'stamp' ||
+    slug === 'verify' ||
+    slug === 'pricing' ||
+    slug === 'donate' ||
+    slug === 'network'
+      ? 'jpg'
+      : 'png'
   write(`${slug}.html`, shell({ title: p.title, description: p.desc, contentHtml: p.body, canonical: `${SITE}/${slug}`, ogImage: `${SITE}/og/${slug}.${ext}` }))
 }
 
@@ -438,7 +445,7 @@ write(
     ]
   })
 )
-write('pitch.html', shell({ title: pitchTitle, description: pitchDesc, contentHtml: pitchBody, canonical: `${SITE}/pitch`, ogImage: `${SITE}/og/pitch.png` }))
+write('pitch.html', shell({ title: pitchTitle, description: pitchDesc, contentHtml: pitchBody, canonical: `${SITE}/pitch`, ogImage: `${SITE}/og/pitch.jpg` }))
 
 // Identity / Status / Counsel — crawler shells (no certificates, no Ethereum)
 const identityTitle = 'NIP-05 Identity — satohash@satohash.io'
