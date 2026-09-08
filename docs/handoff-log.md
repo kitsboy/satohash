@@ -1,3 +1,22 @@
+## 2026-09-08 (Grok M3 — harden wave: Caddy unit, watch src-on-play, compact trust)
+
+**Pickup:** `.ai_docs/current-status.md` · this file · HEAD `5ca8730`.
+
+**Live at start:** API `gitSha=9340776` · image **818MB** · `/health` `Cache-Control: no-store` · stamps **280** · paywall off.
+
+**Pushed:**
+- `82a17bf` Helmet drop Google Fonts CSP, `wal_autocheckpoint=1000`, OpenAPI `/api/public/status` example, Caddy reload via `systemctl cat caddy.service` + `caddy reload --config`.
+- `9a8f803` `/fonts/*.woff2` 1y cache, preload Jakarta 700 only, faq/pricing/watch OG JPEG, watch video src only on play, `/b/*` 4h, CI advisory `smoke_live`.
+- `5ca8730` compact footer about/trust/security, Network fail-vs-empty for node/calendars, Status git_sha fallback, StampDone mempool.space block link, Verify chip 44px, Access nested footer retagged.
+
+**GUI extras:** Status gitSha `font-mono tabular-nums` · Trust `/security` gold hover · About values chips 44px.
+
+**Do not:** flip paywall · change `/api/*` · shuffle package.json deps · `--force` opentimestamps · `@satohash`
+
+**Kimi:** THOR ingest. API rebuild needed for `82a17bf`. Pages auto-deploys SPA.
+
+---
+
 ## 2026-09-08 (Grok M3 — harden wave: mmap, self-host fonts, status gitSha)
 
 **Pickup:** `.ai_docs/current-status.md` · this file · HEAD `5a96204`.
