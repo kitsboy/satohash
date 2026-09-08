@@ -91,7 +91,7 @@ export default function Comparison() {
           <p className="mb-3 text-xs text-[var(--text-secondary)] lg:hidden">
             {t('comparisonPage.mobileHint')}
           </p>
-          <div className="hidden overflow-x-auto rounded-2xl border border-[var(--border)] lg:block print:block">
+          <div className="overflow-x-auto rounded-2xl border border-[var(--border)] print:block">
             <table className="comparison-table w-full text-left text-sm">
               <thead>
                 <tr className="border-b border-[var(--border)] bg-[var(--surface-raised)]">
@@ -115,7 +115,11 @@ export default function Comparison() {
                     key={row.id}
                     className={`border-b border-[var(--border)] ${i % 2 === 0 ? 'bg-[var(--bg-primary)]' : 'bg-[var(--bg-secondary)]'}`}
                   >
-                    <td className="sticky left-0 z-10 bg-inherit p-4 text-xs font-bold text-[var(--text-primary)]">
+                    <td
+                      className={`sticky left-0 z-10 p-4 text-xs font-bold text-[var(--text-primary)] ${
+                        i % 2 === 0 ? 'bg-[var(--bg-primary)]' : 'bg-[var(--bg-secondary)]'
+                      }`}
+                    >
                       {row.feature}
                     </td>
                     {COLUMN_KEYS.map((key) => {
@@ -136,39 +140,6 @@ export default function Comparison() {
                 ))}
               </tbody>
             </table>
-          </div>
-          <div className="space-y-4 lg:hidden print:hidden">
-            {rows.map((row) => (
-              <article
-                key={row.id}
-                className="rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] p-4"
-              >
-                <h3 className="mb-3 text-sm font-black text-[var(--text-primary)]">
-                  {row.feature}
-                </h3>
-                <dl className="grid grid-cols-2 gap-2 text-[10px]">
-                  {columns.map((col) => {
-                    const val = row[col.key]
-                    return (
-                      <div key={col.key} className="rounded-lg border border-[var(--border)] p-2">
-                        <dt className="font-bold uppercase" style={{ color: col.color }}>
-                          {col.label}
-                        </dt>
-                        <dd className="mt-1 text-[var(--text-secondary)]">
-                          {val === true ? (
-                            <Check size={14} className="text-[var(--accent-success)]" />
-                          ) : val === false ? (
-                            <XIcon size={14} className="text-[var(--text-tertiary)]" />
-                          ) : (
-                            val
-                          )}
-                        </dd>
-                      </div>
-                    )
-                  })}
-                </dl>
-              </article>
-            ))}
           </div>
         </div>
       </section>

@@ -165,12 +165,20 @@ export default function Donate() {
           </ul>
         </motion.div>
 
-        <div className="text-center text-xs text-[var(--text-muted)]">
-          Prefer to contribute code instead?{' '}
-          <Link to="/contribute" className="text-[var(--accent-gold)] hover:underline">
-            See the contribute page
+        <div className="flex flex-col items-center gap-4">
+          <Link
+            to="/stamp"
+            className="inline-flex min-h-[44px] items-center justify-center rounded-xl border border-[var(--accent-gold)] px-5 text-sm font-bold text-[var(--accent-gold)]"
+          >
+            Stamp for free
           </Link>
-          .
+          <div className="text-center text-xs text-[var(--text-muted)]">
+            Prefer to contribute code instead?{' '}
+            <Link to="/contribute" className="text-[var(--accent-gold)] hover:underline">
+              See the contribute page
+            </Link>
+            .
+          </div>
         </div>
       </div>
       <Footer compact />

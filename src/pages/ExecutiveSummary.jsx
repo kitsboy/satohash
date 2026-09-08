@@ -658,7 +658,13 @@ export default function ExecutiveSummary() {
                 price: '0 sats',
                 tag: 'Live now',
                 live: true,
-                points: ['OTS on Bitcoin', 'Local hash', 'Verify forever', 'No account', 'Never paywalled']
+                points: [
+                  'OTS on Bitcoin',
+                  'Local hash',
+                  'Verify forever',
+                  'No account',
+                  'Never paywalled'
+                ]
               },
               {
                 name: 'Professional',
@@ -764,7 +770,7 @@ export default function ExecutiveSummary() {
         </div>
       </section>
 
-      <Footer />
+      <Footer compact />
     </div>
   )
 }

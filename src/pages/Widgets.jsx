@@ -62,7 +62,7 @@ function CopyBlock({ label, code, copyLabel, copiedLabel }) {
             setCopied(true)
             setTimeout(() => setCopied(false), 2000)
           }}
-          className="flex min-h-[44px] items-center gap-1.5 text-[10px] font-bold text-[var(--text-tertiary)] hover:text-[var(--accent-gold)]"
+          className="inline-flex min-h-[44px] min-w-[44px] items-center gap-1.5 text-[10px] font-bold text-[var(--text-tertiary)] hover:text-[var(--accent-gold)]"
         >
           {copied ? <Check size={12} /> : <Copy size={12} />}
           {copied ? copiedLabel : copyLabel}

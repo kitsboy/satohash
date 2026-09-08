@@ -216,6 +216,7 @@ export default function StampDone() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`Bitcoin block ${heightNum} on mempool.space`}
+                  title={`Bitcoin block ${heightNum}`}
                   className="inline-flex min-h-[44px] items-center underline underline-offset-2"
                 >
                   {heightNum.toLocaleString(i18n.language)}

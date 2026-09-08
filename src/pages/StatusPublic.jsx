@@ -157,9 +157,11 @@ function Unavailable({ message = 'Unavailable — live endpoint did not respond.
 function CopyShaButton({ sha }) {
   const [copied, setCopied] = useState(false)
   if (!sha || sha === '—') return null
+  const full = String(sha)
+  const short = full.slice(0, 7)
   const copy = async () => {
     try {
-      await navigator.clipboard.writeText(String(sha))
+      await navigator.clipboard.writeText(full)
       setCopied(true)
       window.setTimeout(() => setCopied(false), 1600)
     } catch {
@@ -170,12 +172,16 @@ function CopyShaButton({ sha }) {
     <button
       type="button"
       onClick={copy}
-      aria-label={copied ? 'Copied' : `Copy git SHA ${sha}`}
-      className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center gap-1 rounded px-1 text-[10px] font-bold tracking-wider uppercase transition-colors hover:text-[var(--accent-gold)]"
+      title={full}
+      aria-label={full}
+      className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center gap-1 rounded px-1 font-mono font-bold whitespace-nowrap transition-colors hover:text-[var(--accent-gold)]"
       style={{ color: copied ? 'var(--accent-success)' : 'var(--text-muted)' }}
     >
+      <span className="tabular-nums">{short}</span>
       {copied ? <Check size={12} aria-hidden /> : <Copy size={12} aria-hidden />}
-      {copied ? 'Copied' : null}
+      {copied ? (
+        <span className="text-[10px] font-bold tracking-wider uppercase">Copied</span>
+      ) : null}
     </button>
   )
 }
@@ -390,8 +396,7 @@ export default function StatusPublic() {
                 label="Git SHA"
                 value={
                   gitSha ? (
-                    <span className="inline-flex max-w-full items-center gap-1">
-                      <span className="truncate">{gitSha}</span>
+                    <span className="inline-flex max-w-full items-center gap-1 whitespace-nowrap">
                       <CopyShaButton sha={gitSha} />
                     </span>
                   ) : (
@@ -776,9 +781,8 @@ export default function StatusPublic() {
         >
           <CircleDot size={12} style={{ color: 'var(--accent-success)' }} />
           All systems reported from API plane ‘proof’ · git{' '}
-          <span className="inline-flex items-center gap-1 font-mono tabular-nums">
-            {gitSha || '—'}
-            {gitSha ? <CopyShaButton sha={gitSha} /> : null}
+          <span className="inline-flex items-center gap-1 font-mono whitespace-nowrap tabular-nums">
+            {gitSha ? <CopyShaButton sha={gitSha} /> : '—'}
           </span>
           {details?.version ? ` · ${details.version}` : ''}
         </div>

@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { BookOpen, Search } from 'lucide-react'
 import usePageMeta from '../hooks/usePageMeta'
@@ -29,6 +29,20 @@ export default function Glossary() {
   usePageMeta({ page: 'glossary' })
   const { t } = useTranslation()
   const [search, setSearch] = useState('')
+
+  useEffect(() => {
+    const added = []
+    const href = '/docs'
+    if (!document.querySelector(`link[rel="prefetch"][href="${href}"]`)) {
+      const link = document.createElement('link')
+      link.rel = 'prefetch'
+      link.href = href
+      link.as = 'document'
+      document.head.appendChild(link)
+      added.push(link)
+    }
+    return () => added.forEach((link) => link.remove())
+  }, [])
 
   const terms = useMemo(
     () =>

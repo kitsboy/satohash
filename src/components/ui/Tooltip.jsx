@@ -1,14 +1,22 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
 import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Info } from 'lucide-react'
 import { placePopover, canHoverFine } from '../../utils/placePopover'
+
+/** Stem + tittle only — no enclosing circle (Lucide Info is already a ring). */
+function InfoMark() {
+  return (
+    <svg viewBox="0 0 14 16" width="12" height="14" aria-hidden className="shrink-0">
+      <circle cx="7" cy="2.4" r="1.35" fill="currentColor" />
+      <rect x="6.15" y="5.6" width="1.7" height="8.2" rx="0.85" fill="currentColor" />
+    </svg>
+  )
+}
 
 /**
  * Tooltip — info trigger. Portaled + clamped so it never opens off-screen.
  * Hover on fine pointers; tap-to-toggle on touch.
- * Visual is a gold-ring Lucide Info (not a tiny filled "i" pebble).
- * Optional `label` sits beside the icon so a row of triggers is readable.
+ * Single gold i-mark (no badge ring). Optional `label` for a row of steps.
  */
 export default function Tooltip({ title, content, className = '', label = '' }) {
   const [visible, setVisible] = useState(false)
@@ -148,15 +156,11 @@ export default function Tooltip({ title, content, className = '', label = '' }) 
         type="button"
         aria-label={title ? `Info: ${title}` : 'More information'}
         aria-expanded={visible}
-        className={`relative ml-0.5 inline-flex shrink-0 items-center justify-center gap-1.5 rounded-full transition-colors focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]/55 focus-visible:outline-none ${
+        className={`relative ml-0.5 inline-flex shrink-0 items-center justify-center gap-1 rounded-sm transition-colors focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]/45 focus-visible:outline-none ${
           label
-            ? 'min-h-[44px] px-1.5'
-            : "h-[22px] w-[22px] before:absolute before:inset-[-11px] before:content-['']"
-        } ${
-          visible
-            ? 'text-[var(--accent-gold)]'
-            : 'text-[var(--text-secondary)] hover:text-[var(--accent-gold)]'
-        }`}
+            ? 'min-h-[44px] px-1'
+            : "h-4 w-3.5 before:absolute before:inset-[-14px] before:content-['']"
+        } ${visible ? 'text-[var(--accent-gold)]' : 'text-[var(--text-tertiary)] hover:text-[var(--accent-gold)]'}`}
         onPointerDown={hoverable ? undefined : toggle}
         onMouseEnter={hoverable ? show : undefined}
         onMouseLeave={hoverable ? hide : undefined}
@@ -167,16 +171,7 @@ export default function Tooltip({ title, content, className = '', label = '' }) 
           hide()
         }}
       >
-        <span
-          aria-hidden
-          className={`inline-flex h-[22px] w-[22px] items-center justify-center rounded-full border transition-colors ${
-            visible
-              ? 'border-[var(--accent-gold)] bg-[var(--accent-gold)] text-[#141b25] shadow-[0_0_12px_var(--accent-gold-glow)]'
-              : 'border-[var(--accent-gold)]/80 bg-[var(--bg-primary)] text-[var(--accent-gold)]'
-          }`}
-        >
-          <Info size={13} strokeWidth={2.4} />
-        </span>
+        <InfoMark />
         {label ? (
           <span className="max-w-[7.5rem] truncate text-[10px] font-bold tracking-wider uppercase">
             {label}

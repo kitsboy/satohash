@@ -30,6 +30,7 @@ import Tooltip from '../components/ui/Tooltip'
 
 import { getApiUrl, getPublicBaseUrl } from '../config/constants'
 import { isApiExplicitlyConfigured } from '../config/mvp'
+import Footer from '../components/layout/Footer'
 
 const API_URL = getApiUrl()
 const BASE_URL = getPublicBaseUrl()
@@ -1225,6 +1226,7 @@ export default function Developer() {
           </div>
         </div>
       </div>
+      <Footer compact />
     </div>
   )
 }
