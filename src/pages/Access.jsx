@@ -544,8 +544,7 @@ export default function Access() {
           </a>
         </p>
 
-        {/* Footer Trust Strip */}
-        <footer className="space-y-8 text-center">
+        <section className="space-y-8 text-center" aria-label="Trust">
           <div className="flex flex-wrap justify-center gap-12 text-[var(--text-secondary)]">
             <div className="flex items-center gap-2">
               <Lock size={14} className="text-[var(--accent-active)]" />
@@ -572,7 +571,7 @@ export default function Access() {
               {t('accessPage.footer')}
             </p>
           </div>
-        </footer>
+        </section>
       </div>
 
       <PinModal

@@ -127,7 +127,7 @@ export default function StampDone() {
   const confirmed =
     !queued &&
     (proof.status === 'confirmed' || proof.status === 'verified' || Boolean(proof.isConfirmed))
-  const blockHeight = proof.bitcoin_block_height
+  const blockHeight = proof.bitcoin_block_height ?? proof.block_height ?? proof.blockHeight ?? null
   const heightNum = Number(blockHeight)
   const hasBlockHeight = blockHeight != null && blockHeight !== '' && Number.isFinite(heightNum)
 
@@ -209,7 +209,15 @@ export default function StampDone() {
               className="font-mono text-sm tabular-nums"
               style={{ color: 'var(--accent-success)' }}
             >
-              {t('stampDonePage.bitcoinBlock')} {heightNum.toLocaleString(i18n.language)}
+              {t('stampDonePage.bitcoinBlock')}{' '}
+              <a
+                href={`https://mempool.space/block/${heightNum}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline underline-offset-2"
+              >
+                {heightNum.toLocaleString(i18n.language)}
+              </a>
             </p>
           ) : confirmed ? (
             <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
@@ -280,7 +288,7 @@ export default function StampDone() {
           <StampSuccessActions
             proof={proof}
             isConfirmed={confirmed}
-            confirmedBlock={proof.bitcoin_block_height}
+            confirmedBlock={hasBlockHeight ? heightNum : proof.bitcoin_block_height}
             upgradeStatus={proof.status}
             onStampAnother={() => navigate('/stamp')}
           />

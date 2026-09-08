@@ -47,7 +47,14 @@ function isFinneyCalendar(c) {
   return hay.includes('finney') || hay.includes('eternitywall')
 }
 
-function StatCard({ label, value, hint, icon: Icon, color = 'var(--accent-gold)' }) {
+function StatCard({
+  label,
+  value,
+  hint,
+  icon: Icon,
+  color = 'var(--accent-gold)',
+  hintDanger = false
+}) {
   return (
     <div
       className="rounded-2xl border p-5"
@@ -76,7 +83,10 @@ function StatCard({ label, value, hint, icon: Icon, color = 'var(--accent-gold)'
         {value ?? '—'}
       </p>
       {hint && (
-        <p className="mt-1 text-[11px]" style={{ color: 'var(--text-secondary)' }}>
+        <p
+          className="mt-1 text-[11px]"
+          style={{ color: hintDanger ? 'var(--accent-danger)' : 'var(--text-secondary)' }}
+        >
           {hint}
         </p>
       )}
@@ -92,6 +102,8 @@ export default function Network() {
   const [recent, setRecent] = useState([])
   const [family, setFamily] = useState([])
   const [familyError, setFamilyError] = useState(false)
+  const [bitcoinError, setBitcoinError] = useState(false)
+  const [calsError, setCalsError] = useState(false)
   const [loading, setLoading] = useState(true)
   const [err, setErr] = useState(null)
 
@@ -99,19 +111,35 @@ export default function Network() {
     setLoading(true)
     setErr(null)
     setFamilyError(false)
+    setBitcoinError(false)
+    setCalsError(false)
     const base = getApiUrl() || 'https://api.satohash.io'
     let metricsFailed = false
+    let bitcoinFailed = false
+    let calsFailed = false
     try {
       const [s, b, c, rec, met] = await Promise.all([
         fetch(`${base}/api/public/stats`)
           .then((r) => (r.ok ? r.json() : null))
           .catch(() => null),
         fetch(`${base}/api/public/bitcoin`)
-          .then((r) => (r.ok ? r.json() : null))
-          .catch(() => null),
+          .then((r) => {
+            if (!r.ok) throw new Error(`HTTP ${r.status}`)
+            return r.json()
+          })
+          .catch(() => {
+            bitcoinFailed = true
+            return null
+          }),
         fetch(`${base}/api/public/calendar-status`)
-          .then((r) => (r.ok ? r.json() : null))
-          .catch(() => null),
+          .then((r) => {
+            if (!r.ok) throw new Error(`HTTP ${r.status}`)
+            return r.json()
+          })
+          .catch(() => {
+            calsFailed = true
+            return null
+          }),
         fetch(`${base}/api/stamps/recent`)
           .then((r) => (r.ok ? r.json() : null))
           .catch(() => null),
@@ -126,7 +154,9 @@ export default function Network() {
           })
       ])
       setStats(s)
+      setBitcoinError(bitcoinFailed)
       setBitcoin(b)
+      setCalsError(calsFailed)
       setCals(c)
       setRecent(rec?.stamps || rec?.results || [])
       if (metricsFailed) {
@@ -139,6 +169,8 @@ export default function Network() {
     } catch (e) {
       setErr(e.message || 'Failed to load network status')
       setFamilyError(true)
+      setBitcoinError(true)
+      setCalsError(true)
     } finally {
       setLoading(false)
     }
@@ -237,30 +269,61 @@ export default function Network() {
           />
           <StatCard
             label="Bitcoin source"
-            value={bitcoin?.source || '—'}
+            value={bitcoinError ? '—' : bitcoin?.source || '—'}
             hint={
-              bitcoin?.status === 'syncing'
-                ? `IBD ~${bitcoin.progress_pct ?? '—'}%`
-                : bitcoin?.block_height != null
-                  ? `Height ${bitcoin.block_height}`
-                  : 'mempool fallback OK'
+              bitcoinError
+                ? 'Could not load Bitcoin node'
+                : loading && !bitcoin
+                  ? 'Loading…'
+                  : bitcoin?.status === 'syncing'
+                    ? `IBD ~${bitcoin.progress_pct ?? '—'}%`
+                    : bitcoin?.block_height != null
+                      ? `Height ${bitcoin.block_height}`
+                      : bitcoin
+                        ? 'No height reported'
+                        : 'No node data reported'
             }
+            hintDanger={bitcoinError}
             icon={Bitcoin}
             color="#f97316"
           />
           <StatCard
             label="Block height"
-            value={bitcoin?.block_height ?? bitcoin?.headers ?? '—'}
-            hint={bitcoin?.ibd ? 'Syncing headers complete' : 'Live tip'}
+            value={bitcoinError ? '—' : (bitcoin?.block_height ?? bitcoin?.headers ?? '—')}
+            hint={
+              bitcoinError
+                ? 'Could not load Bitcoin node'
+                : loading && !bitcoin
+                  ? 'Loading…'
+                  : bitcoin?.ibd
+                    ? 'Syncing headers complete'
+                    : bitcoin?.block_height != null
+                      ? 'Live tip'
+                      : bitcoin
+                        ? 'No height reported'
+                        : 'No node data reported'
+            }
+            hintDanger={bitcoinError}
             icon={Activity}
             color="#0ea5e9"
           />
           <StatCard
             label="OTS calendars"
-            value={calendars.length ? `${calendarsUp}/${calendars.length} up` : '—'}
-            hint={
-              finneyDown ? 'Finney often flaky — Alice + Bob are enough' : 'Public calendar health'
+            value={
+              calsError ? '—' : calendars.length ? `${calendarsUp}/${calendars.length} up` : '—'
             }
+            hint={
+              calsError
+                ? 'Could not load OTS calendars'
+                : loading && !cals
+                  ? 'Loading…'
+                  : calendars.length === 0
+                    ? 'No calendar status reported'
+                    : finneyDown
+                      ? 'Finney often flaky — Alice + Bob are enough'
+                      : 'Public calendar health'
+            }
+            hintDanger={calsError}
             icon={Calendar}
             color="#22d3a5"
           />
@@ -277,9 +340,17 @@ export default function Network() {
               <Calendar size={16} style={{ color: 'var(--accent-gold)' }} />
               <h2 className="text-sm font-black">Timestamp servers</h2>
             </div>
-            {calendars.length === 0 ? (
+            {loading && calendars.length === 0 && !calsError ? (
               <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>
-                Calendar status unavailable — public calendars still used at stamp time.
+                Loading timestamp servers…
+              </p>
+            ) : calsError ? (
+              <p className="text-xs" style={{ color: 'var(--accent-danger)' }}>
+                Could not load OTS calendars
+              </p>
+            ) : calendars.length === 0 ? (
+              <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>
+                No calendar status reported. Public calendars still used at stamp time.
               </p>
             ) : (
               <ul className="space-y-2">

@@ -94,7 +94,7 @@ function Section({ icon: Icon, title, right, children }) {
   )
 }
 
-function Stat({ icon: Icon, label, value, sub }) {
+function Stat({ icon: Icon, label, value, sub, mono = false }) {
   return (
     <div
       className="rounded-xl border px-4 py-3"
@@ -107,7 +107,11 @@ function Stat({ icon: Icon, label, value, sub }) {
         <Icon size={12} style={{ color: 'var(--accent-gold)' }} />
         {label}
       </div>
-      <div className="mt-1 text-xl font-black text-[var(--text-primary)]">{value}</div>
+      <div
+        className={`mt-1 text-xl font-black text-[var(--text-primary)] ${mono ? 'font-mono tabular-nums' : ''}`}
+      >
+        {value}
+      </div>
       {sub ? (
         <div className="mt-0.5 text-[10px]" style={{ color: 'var(--text-secondary)' }}>
           {sub}
@@ -274,7 +278,13 @@ export default function StatusPublic() {
   const mode =
     paywall?.mode ||
     (requireLightning === false ? 'free_open' : requireLightning === true ? 'paid' : null)
-  const gitSha = data.health?.gitSha || data.health?.git_sha || null
+  const gitSha =
+    data.health?.gitSha ||
+    data.health?.git_sha ||
+    data.status?.git_sha ||
+    data.status?.gitSha ||
+    null
+  const gitShaFromHealth = Boolean(data.health?.gitSha || data.health?.git_sha)
   const stampsTotal = data.metrics?.raw?.counts?.stampsTotal ?? data.status?.stamps_stored ?? null
   const familyFree = data.status?.family_free_tier ?? null
   const recent = Array.isArray(data.recent) ? data.recent.slice(0, 10) : []
@@ -344,7 +354,19 @@ export default function StatusPublic() {
             <LoadingRows count={2} />
           ) : data.status || data.health || data.metrics ? (
             <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-              <Stat icon={GitBranch} label="Git SHA" value={gitSha || '—'} sub="from /health" />
+              <Stat
+                icon={GitBranch}
+                label="Git SHA"
+                value={gitSha || '—'}
+                sub={
+                  gitSha
+                    ? gitShaFromHealth
+                      ? 'from /health'
+                      : 'from /api/public/status'
+                    : 'from /health or /api/public/status'
+                }
+                mono
+              />
               <Stat
                 icon={Activity}
                 label="Mode"
@@ -713,7 +735,8 @@ export default function StatusPublic() {
           style={{ color: 'var(--text-muted)' }}
         >
           <CircleDot size={12} style={{ color: 'var(--accent-success)' }} />
-          All systems reported from API plane ‘proof’ · git {gitSha || '—'}
+          All systems reported from API plane ‘proof’ · git{' '}
+          <span className="font-mono tabular-nums">{gitSha || '—'}</span>
           {details?.version ? ` · ${details.version}` : ''}
         </div>
       </div>

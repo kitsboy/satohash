@@ -344,7 +344,7 @@ export default function About() {
           {['Private', 'Free today', 'Open proofs', 'Bitcoin finality', 'FOSS spirit'].map((v) => (
             <span
               key={v}
-              className="inline-flex min-h-[40px] items-center gap-1.5 rounded-full border px-4 py-2 text-[11px] font-bold"
+              className="inline-flex min-h-[44px] items-center gap-1.5 rounded-full border px-4 py-2 text-[11px] font-bold"
               style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
             >
               <CheckCircle2 size={12} style={{ color: 'var(--accent-gold)' }} />
@@ -406,7 +406,7 @@ export default function About() {
         <KimiContact />
       </section>
 
-      <Footer />
+      <Footer compact />
     </div>
   )
 }

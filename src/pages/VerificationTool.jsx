@@ -641,7 +641,7 @@ export default function VerificationTool() {
           </div>
           <a
             href="#check-without-satohash"
-            className="inline-flex min-h-[36px] items-center rounded-full border px-4 py-2 text-[10px] font-bold tracking-wider uppercase"
+            className="inline-flex min-h-[44px] items-center rounded-full border px-4 py-2 text-[10px] font-bold tracking-wider uppercase"
             style={{
               borderColor: 'var(--border)',
               color: 'var(--text-secondary)',

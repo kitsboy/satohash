@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { getApiUrl } from '../../config/constants'
 import { Link } from 'react-router-dom'
 import Tooltip from '../../components/ui/Tooltip'
+import Footer from '../../components/layout/Footer'
 import usePageMeta from '../../hooks/usePageMeta'
 import {
   Shield,
@@ -184,7 +185,7 @@ export default function TrustCenter() {
           >
             <Link
               to="/security"
-              className="text-xs font-black tracking-widest uppercase underline"
+              className="text-xs font-black tracking-widest uppercase underline transition-colors hover:text-[var(--accent-gold)]"
               style={{ color: 'var(--accent-active)' }}
             >
               {t('trustPage.securityLink')}
@@ -362,9 +363,9 @@ export default function TrustCenter() {
             className="mt-5 rounded-xl border border-[var(--border)] bg-[var(--surface-raised)] px-5 py-4 text-sm leading-relaxed text-[var(--text-secondary)]"
           >
             <AlertCircle size={14} className="mr-2 inline-block text-[var(--accent-pending)]" />
-            Satohash proofs are cryptographic evidence that supports electronic-record and
-            evidence frameworks. They do not constitute legal advice, regulatory certification, or
-            a notarial act. For legal proceedings, consult qualified counsel.
+            Satohash proofs are cryptographic evidence that supports electronic-record and evidence
+            frameworks. They do not constitute legal advice, regulatory certification, or a notarial
+            act. For legal proceedings, consult qualified counsel.
           </motion.p>
         </motion.section>
 
@@ -658,6 +659,7 @@ export default function TrustCenter() {
           </Link>
         </motion.div>
       </div>
+      <Footer compact />
     </div>
   )
 }
