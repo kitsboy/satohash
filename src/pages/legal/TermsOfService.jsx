@@ -71,7 +71,9 @@ const SECTIONS = [
           proof that a specific document existed in its current form at a specific point in time.
         </p>
         <div className="rounded-xl border border-emerald-200 bg-emerald-50 px-5 py-4 text-sm text-emerald-900/80">
-          <strong className="text-emerald-800">Current status: a free, non-commercial service.</strong>{' '}
+          <strong className="text-emerald-800">
+            Current status: a free, non-commercial service.
+          </strong>{' '}
           Satohash is currently provided free of charge as a non-commercial service in public beta.
           No subscription is billed and no payment is accepted today. The commercial (paid) terms
           described in this document are forward-looking proposals that will apply only if and when
@@ -201,8 +203,8 @@ const SECTIONS = [
         <p className="leading-relaxed">
           You agree to indemnify, defend, and hold harmless Satohash, Give A Bit, and their
           respective officers, directors, employees, agents, and contributors from and against any
-          claims, liabilities, damages, losses, costs, and expenses (including reasonable
-          attorneys' fees) arising out of or relating to:
+          claims, liabilities, damages, losses, costs, and expenses (including reasonable attorneys'
+          fees) arising out of or relating to:
         </p>
         <div className="space-y-3">
           {[
@@ -222,9 +224,9 @@ const SECTIONS = [
         </div>
         <p className="leading-relaxed">
           This indemnification survives termination of your use of the Service. We may, at our
-          option, assume the exclusive defense and control of any matter subject to
-          indemnification; if we do, you agree to cooperate with us and not settle any such matter
-          without our prior written consent.
+          option, assume the exclusive defense and control of any matter subject to indemnification;
+          if we do, you agree to cooperate with us and not settle any such matter without our prior
+          written consent.
         </p>
         <div className="rounded-xl border border-rose-100 bg-rose-50 px-5 py-4 text-sm text-rose-700/80">
           <strong className="text-rose-800">Plain language:</strong> If your use of Satohash causes
@@ -250,9 +252,8 @@ const SECTIONS = [
         <p className="leading-relaxed">
           The Satohash platform, interface, branding, and software are owned by [ENTITY TBD] (the
           Satohash operator) and protected by copyright, trademark, and other intellectual property
-          laws. You may not copy,
-          modify, distribute, or create derivative works from our platform without written
-          permission.
+          laws. You may not copy, modify, distribute, or create derivative works from our platform
+          without written permission.
         </p>
         <p className="leading-relaxed">
           The underlying cryptographic protocols (SHA-256, OpenTimestamps) are open standards and
@@ -301,7 +302,9 @@ const SECTIONS = [
           </p>
         </div>
         <div className="rounded-2xl border border-rose-100 bg-rose-50 p-5">
-          <p className="mb-1 text-sm font-bold tracking-wide text-rose-800 uppercase">No Warranty</p>
+          <p className="mb-1 text-sm font-bold tracking-wide text-rose-800 uppercase">
+            No Warranty
+          </p>
           <p className="text-sm leading-relaxed text-rose-700/80">
             To the maximum extent permitted by law, the Service is provided "as is" and "as
             available," without warranties of any kind, whether express, implied, or statutory,
@@ -363,8 +366,8 @@ const SECTIONS = [
         <div className="rounded-xl border border-amber-100 bg-amber-50 px-5 py-4 text-sm text-amber-900/80">
           <strong>Lightning dependency:</strong> Paid tiers are priced in sats, but collection
           depends on the Lightning Network (L402 / LND) being funded and operational. Until
-          Lightning channels are funded and tested, paid tiers may not be activatable. The Free
-          tier remains live regardless.
+          Lightning channels are funded and tested, paid tiers may not be activatable. The Free tier
+          remains live regardless.
         </div>
         {[
           {
@@ -396,8 +399,8 @@ const SECTIONS = [
         <div className="rounded-xl border border-indigo-100 bg-indigo-50 px-5 py-4 text-sm text-indigo-900/80">
           <strong>Plain language:</strong> Free stamps stay free, forever — that&apos;s the trust
           anchor. Paid plans quote a price in sats and auto-renew until you cancel. If a paid
-          feature breaks and we can&apos;t fix it in 30 days, we&apos;ll consider a refund. Lightning
-          payments can&apos;t be reversed — that&apos;s the point.
+          feature breaks and we can&apos;t fix it in 30 days, we&apos;ll consider a refund.
+          Lightning payments can&apos;t be reversed — that&apos;s the point.
         </div>
       </div>
     )
@@ -419,11 +422,11 @@ const SECTIONS = [
           <p className="text-sm leading-relaxed text-slate-600">
             If we fail to meet the availability target in a calendar month, you may request a
             service credit equal to 5% of that month&apos;s Enterprise fee for each full percentage
-            point (or partial) below the target, up to a maximum of 20% of the monthly fee.
-            Service credits are applied as a discount to the next billing cycle and are your sole
-            and exclusive remedy for availability failures. This SLA does not guarantee
-            confirmation times for individual stamps, which depend on third-party calendars and the
-            Bitcoin network.
+            point (or partial) below the target, up to a maximum of 20% of the monthly fee. Service
+            credits are applied as a discount to the next billing cycle and are your sole and
+            exclusive remedy for availability failures. This SLA does not guarantee confirmation
+            times for individual stamps, which depend on third-party calendars and the Bitcoin
+            network.
           </p>
         </div>
         <div className="rounded-xl border border-emerald-100 bg-emerald-50 px-5 py-4 text-sm text-emerald-900/80">
@@ -507,8 +510,8 @@ const SECTIONS = [
       <div className="space-y-4 text-slate-700">
         <p className="leading-relaxed">
           The Service may be used from any jurisdiction where such use is lawful. You are
-          responsible for complying with the laws of your jurisdiction, including any
-          export-control or sanctions requirements that may apply to your use.
+          responsible for complying with the laws of your jurisdiction, including any export-control
+          or sanctions requirements that may apply to your use.
         </p>
         <p className="leading-relaxed">
           Satohash processes only the minimal metadata described in our Privacy Policy (primarily
@@ -673,8 +676,8 @@ export default function TermsOfService() {
               <p className="text-sm leading-relaxed text-indigo-900/80">
                 You keep full ownership of your documents. We provide a tool to create cryptographic
                 proof that your document existed at a certain time. We are a software provider, not
-                a law firm. Use the Service legally and responsibly. [GOVERNING LAW TBD] governs
-                any disputes.
+                a law firm. Use the Service legally and responsibly. [GOVERNING LAW TBD] governs any
+                disputes.
               </p>
             </motion.div>
 
@@ -740,7 +743,7 @@ export default function TermsOfService() {
           </div>
         </motion.div>
       </div>
-      <Footer />
+      <Footer compact />
     </div>
   )
 }

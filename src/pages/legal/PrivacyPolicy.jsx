@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 /* eslint-disable react/no-unescaped-entities -- legal prose */
 import { useTranslation } from 'react-i18next'
 import usePageMeta from '../../hooks/usePageMeta'
+import Footer from '../../components/layout/Footer'
 import {
   ArrowLeft,
   EyeOff,
@@ -356,13 +357,13 @@ export default function PrivacyPolicy() {
   const navigate = useNavigate()
 
   return (
-    <div className="min-h-screen bg-[var(--bg-primary)] px-4 pt-8 pb-16 text-[var(--text-primary)] sm:px-6 sm:pt-10">
+    <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)]">
       {/* Ambient glow */}
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
         <div className="absolute top-0 left-1/3 h-[400px] w-[400px] rounded-full bg-[var(--accent-success)] opacity-[0.04] blur-[130px]" />
       </div>
 
-      <div className="layout-container relative z-10 max-w-4xl">
+      <div className="layout-container relative z-10 max-w-4xl px-4 pt-8 pb-16 sm:px-6 sm:pt-10">
         {/* Back */}
         <motion.div
           initial={{ opacity: 0, x: -16 }}
@@ -501,6 +502,7 @@ export default function PrivacyPolicy() {
           </div>
         </motion.div>
       </div>
+      <Footer compact />
     </div>
   )
 }

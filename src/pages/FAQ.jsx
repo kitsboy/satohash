@@ -179,19 +179,19 @@ export default function FAQ() {
           <div className="flex flex-wrap items-center justify-center gap-4 text-xs font-bold tracking-wider uppercase">
             <Link
               to="/templates"
-              className="text-[var(--text-secondary)] transition-colors hover:text-[var(--accent-gold)]"
+              className="inline-flex min-h-[44px] items-center text-[var(--text-secondary)] transition-colors hover:text-[var(--accent-gold)]"
             >
               <BookOpen size={14} className="mr-1.5 inline" /> {t('faqPage.related.templates')}
             </Link>
             <Link
               to="/pitch"
-              className="text-[var(--text-secondary)] transition-colors hover:text-[var(--accent-gold)]"
+              className="inline-flex min-h-[44px] items-center text-[var(--text-secondary)] transition-colors hover:text-[var(--accent-gold)]"
             >
               <BookOpen size={14} className="mr-1.5 inline" /> {t('faqPage.related.pitch')}
             </Link>
             <Link
               to="/trust"
-              className="text-[var(--text-secondary)] transition-colors hover:text-[var(--accent-gold)]"
+              className="inline-flex min-h-[44px] items-center text-[var(--text-secondary)] transition-colors hover:text-[var(--accent-gold)]"
             >
               <BookOpen size={14} className="mr-1.5 inline" /> {t('faqPage.related.trust')}
             </Link>

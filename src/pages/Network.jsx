@@ -42,6 +42,20 @@ function isSha256Hex(h) {
   return typeof h === 'string' && /^[0-9a-f]{64}$/i.test(h)
 }
 
+function InlineRetry({ onRetry, loading }) {
+  return (
+    <button
+      type="button"
+      onClick={onRetry}
+      disabled={loading}
+      className="ml-2 inline-flex min-h-[28px] items-center rounded px-1.5 text-[10px] font-black tracking-widest uppercase transition-colors hover:text-[var(--accent-gold)] disabled:cursor-wait disabled:opacity-50"
+      style={{ color: 'var(--text-secondary)' }}
+    >
+      Retry
+    </button>
+  )
+}
+
 function isFinneyCalendar(c) {
   const hay = `${c?.url || ''} ${c?.host || ''} ${c?.id || ''}`.toLowerCase()
   return hay.includes('finney') || hay.includes('eternitywall')
@@ -83,12 +97,12 @@ function StatCard({
         {value ?? '—'}
       </p>
       {hint && (
-        <p
+        <div
           className="mt-1 text-[11px]"
           style={{ color: hintDanger ? 'var(--accent-danger)' : 'var(--text-secondary)' }}
         >
           {hint}
-        </p>
+        </div>
       )}
     </div>
   )
@@ -96,6 +110,22 @@ function StatCard({
 
 export default function Network() {
   usePageMeta({ page: 'network', title: 'Network · Satohash' })
+
+  useEffect(() => {
+    const added = []
+    const prefetchDoc = (href) => {
+      if (document.querySelector(`link[rel="prefetch"][href="${href}"]`)) return
+      const link = document.createElement('link')
+      link.rel = 'prefetch'
+      link.href = href
+      link.as = 'document'
+      document.head.appendChild(link)
+      added.push(link)
+    }
+    prefetchDoc('/status')
+    return () => added.forEach((link) => link.remove())
+  }, [])
+
   const [stats, setStats] = useState(null)
   const [bitcoin, setBitcoin] = useState(null)
   const [cals, setCals] = useState(null)
@@ -254,6 +284,7 @@ export default function Network() {
           {err && (
             <p className="mt-4 text-sm" style={{ color: 'var(--accent-danger)' }}>
               {err}
+              <InlineRetry onRetry={load} loading={loading} />
             </p>
           )}
         </div>
@@ -271,17 +302,22 @@ export default function Network() {
             label="Bitcoin source"
             value={bitcoinError ? '—' : bitcoin?.source || '—'}
             hint={
-              bitcoinError
-                ? 'Could not load Bitcoin node'
-                : loading && !bitcoin
-                  ? 'Loading…'
-                  : bitcoin?.status === 'syncing'
-                    ? `IBD ~${bitcoin.progress_pct ?? '—'}%`
-                    : bitcoin?.block_height != null
-                      ? `Height ${bitcoin.block_height}`
-                      : bitcoin
-                        ? 'No height reported'
-                        : 'No node data reported'
+              bitcoinError ? (
+                <>
+                  Could not load Bitcoin node
+                  <InlineRetry onRetry={load} loading={loading} />
+                </>
+              ) : loading && !bitcoin ? (
+                'Loading…'
+              ) : bitcoin?.status === 'syncing' ? (
+                `IBD ~${bitcoin.progress_pct ?? '—'}%`
+              ) : bitcoin?.block_height != null ? (
+                `Height ${bitcoin.block_height}`
+              ) : bitcoin ? (
+                'No height reported'
+              ) : (
+                'No node data reported'
+              )
             }
             hintDanger={bitcoinError}
             icon={Bitcoin}
@@ -291,17 +327,22 @@ export default function Network() {
             label="Block height"
             value={bitcoinError ? '—' : (bitcoin?.block_height ?? bitcoin?.headers ?? '—')}
             hint={
-              bitcoinError
-                ? 'Could not load Bitcoin node'
-                : loading && !bitcoin
-                  ? 'Loading…'
-                  : bitcoin?.ibd
-                    ? 'Syncing headers complete'
-                    : bitcoin?.block_height != null
-                      ? 'Live tip'
-                      : bitcoin
-                        ? 'No height reported'
-                        : 'No node data reported'
+              bitcoinError ? (
+                <>
+                  Could not load Bitcoin node
+                  <InlineRetry onRetry={load} loading={loading} />
+                </>
+              ) : loading && !bitcoin ? (
+                'Loading…'
+              ) : bitcoin?.ibd ? (
+                'Syncing headers complete'
+              ) : bitcoin?.block_height != null ? (
+                'Live tip'
+              ) : bitcoin ? (
+                'No height reported'
+              ) : (
+                'No node data reported'
+              )
             }
             hintDanger={bitcoinError}
             icon={Activity}
@@ -313,15 +354,20 @@ export default function Network() {
               calsError ? '—' : calendars.length ? `${calendarsUp}/${calendars.length} up` : '—'
             }
             hint={
-              calsError
-                ? 'Could not load OTS calendars'
-                : loading && !cals
-                  ? 'Loading…'
-                  : calendars.length === 0
-                    ? 'No calendar status reported'
-                    : finneyDown
-                      ? 'Finney often flaky — Alice + Bob are enough'
-                      : 'Public calendar health'
+              calsError ? (
+                <>
+                  Could not load OTS calendars
+                  <InlineRetry onRetry={load} loading={loading} />
+                </>
+              ) : loading && !cals ? (
+                'Loading…'
+              ) : calendars.length === 0 ? (
+                'No calendar status reported'
+              ) : finneyDown ? (
+                'Finney often flaky — Alice + Bob are enough'
+              ) : (
+                'Public calendar health'
+              )
             }
             hintDanger={calsError}
             icon={Calendar}
@@ -347,6 +393,7 @@ export default function Network() {
             ) : calsError ? (
               <p className="text-xs" style={{ color: 'var(--accent-danger)' }}>
                 Could not load OTS calendars
+                <InlineRetry onRetry={load} loading={loading} />
               </p>
             ) : calendars.length === 0 ? (
               <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>
@@ -519,6 +566,7 @@ export default function Network() {
         ) : familyError ? (
           <p className="text-xs" style={{ color: 'var(--accent-danger)' }}>
             Could not load family clients
+            <InlineRetry onRetry={load} loading={loading} />
           </p>
         ) : family.length === 0 ? (
           <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>

@@ -18,7 +18,9 @@ import {
   Stamp,
   Timer,
   Wallet,
-  Zap
+  Zap,
+  Copy,
+  Check
 } from 'lucide-react'
 import Footer from '../components/layout/Footer'
 import LiveNodeChip from '../components/shared/LiveNodeChip'
@@ -152,6 +154,32 @@ function Unavailable({ message = 'Unavailable — live endpoint did not respond.
   )
 }
 
+function CopyShaButton({ sha }) {
+  const [copied, setCopied] = useState(false)
+  if (!sha || sha === '—') return null
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(String(sha))
+      setCopied(true)
+      window.setTimeout(() => setCopied(false), 1600)
+    } catch {
+      /* clipboard unavailable */
+    }
+  }
+  return (
+    <button
+      type="button"
+      onClick={copy}
+      aria-label={copied ? 'Copied' : `Copy git SHA ${sha}`}
+      className="inline-flex min-h-[28px] items-center gap-1 rounded px-1 text-[10px] font-bold tracking-wider uppercase transition-colors hover:text-[var(--accent-gold)]"
+      style={{ color: copied ? 'var(--accent-success)' : 'var(--text-muted)' }}
+    >
+      {copied ? <Check size={12} aria-hidden /> : <Copy size={12} aria-hidden />}
+      {copied ? 'Copied' : null}
+    </button>
+  )
+}
+
 function LoadingRows({ count = 3 }) {
   return (
     <div className="space-y-2">
@@ -270,7 +298,11 @@ export default function StatusPublic() {
   const paywall = details?.paywall || null
   const calendarLatency = data.stats?.calendar_health || {}
 
-  const live = data.health?.status === 'ok' || data.status?.ok === true
+  const stampsTotal = data.metrics?.raw?.counts?.stampsTotal ?? data.status?.stamps_stored ?? null
+  const metricsUp = stampsTotal != null && Number.isFinite(Number(stampsTotal))
+  // Overall live when API metrics/status are up. CORS-fail on /health or
+  // calendars/node stays per-section Unavailable — do not title the page degraded.
+  const live = data.health?.status === 'ok' || data.status?.ok === true || metricsUp
   const requireLightning =
     paywall?.require_lightning ??
     data.status?.require_lightning ??
@@ -285,7 +317,6 @@ export default function StatusPublic() {
     data.status?.gitSha ||
     null
   const gitShaFromHealth = Boolean(data.health?.gitSha || data.health?.git_sha)
-  const stampsTotal = data.metrics?.raw?.counts?.stampsTotal ?? data.status?.stamps_stored ?? null
   const familyFree = data.status?.family_free_tier ?? null
   const recent = Array.isArray(data.recent) ? data.recent.slice(0, 10) : []
 
@@ -357,7 +388,16 @@ export default function StatusPublic() {
               <Stat
                 icon={GitBranch}
                 label="Git SHA"
-                value={gitSha || '—'}
+                value={
+                  gitSha ? (
+                    <span className="inline-flex max-w-full items-center gap-1">
+                      <span className="truncate">{gitSha}</span>
+                      <CopyShaButton sha={gitSha} />
+                    </span>
+                  ) : (
+                    '—'
+                  )
+                }
                 sub={
                   gitSha
                     ? gitShaFromHealth
@@ -716,7 +756,7 @@ export default function StatusPublic() {
           <span className="font-mono">/api/stamps/recent</span>.
         </p>
 
-        {!loading && !data.status && !data.health && (
+        {!loading && !data.status && !data.health && !data.metrics && (
           <p
             className="flex items-center gap-2 rounded-xl border px-4 py-3 text-xs"
             style={{
@@ -736,7 +776,10 @@ export default function StatusPublic() {
         >
           <CircleDot size={12} style={{ color: 'var(--accent-success)' }} />
           All systems reported from API plane ‘proof’ · git{' '}
-          <span className="font-mono tabular-nums">{gitSha || '—'}</span>
+          <span className="inline-flex items-center gap-1 font-mono tabular-nums">
+            {gitSha || '—'}
+            {gitSha ? <CopyShaButton sha={gitSha} /> : null}
+          </span>
           {details?.version ? ` · ${details.version}` : ''}
         </div>
       </div>

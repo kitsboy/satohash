@@ -165,7 +165,7 @@ export default function Pitch() {
           <KimiContact />
         </section>
       </main>
-      <Footer />
+      <Footer compact />
     </div>
   )
 }

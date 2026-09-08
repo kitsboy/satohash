@@ -18,6 +18,7 @@ import { toast } from 'sonner'
 import usePageMeta from '../hooks/usePageMeta'
 import { generateSecretKey, getPublicKey, nip19 } from 'nostr-tools'
 import PinModal from '../components/forms/PinModal'
+import Footer from '../components/layout/Footer'
 
 export default function Access() {
   usePageMeta({ page: 'access' })
@@ -219,7 +220,7 @@ export default function Access() {
   }
 
   return (
-    <div className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-[var(--bg-primary)] p-6">
+    <div className="relative flex min-h-screen flex-col overflow-hidden bg-[var(--bg-primary)]">
       {/* Cinematic Background */}
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,var(--accent-active),transparent)] opacity-[0.03]" />
@@ -236,342 +237,344 @@ export default function Access() {
         />
       </div>
 
-      <div className="relative z-10 w-full max-w-5xl space-y-16">
-        {/* Header */}
-        <header className="space-y-6 text-center">
-          <Link to="/" className="group mb-8 inline-flex items-center gap-3">
-            <div className="relative h-10 w-10">
-              <div className="absolute inset-0 rounded-full bg-[var(--accent-active)] opacity-20 blur-lg transition-opacity group-hover:opacity-40" />
-              <img
-                src="/logo.png"
-                alt="Satohash"
-                className="relative h-full w-full object-contain transition-transform group-hover:scale-110"
-              />
-            </div>
-            <span className="text-2xl font-black tracking-tighter text-white uppercase">
-              Satohash
-            </span>
-          </Link>
-          <h1 className="text-5xl leading-none font-black tracking-tighter uppercase md:text-7xl">
-            {t('accessPage.hero.title1')} <br /> {t('accessPage.hero.title2')}{' '}
-            <span className="text-[var(--text-secondary)]">
-              {t('accessPage.hero.titleHighlight')}
-            </span>
-          </h1>
-          <p className="mx-auto max-w-2xl text-lg font-medium text-[var(--text-secondary)] md:text-xl">
-            {t('accessPage.hero.subtitle')}
-          </p>
-        </header>
-
-        {/* Auth Cards */}
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-          {/* Card 1 — Generate New Identity */}
-          <motion.div
-            whileHover={{ y: -5 }}
-            className="group flex flex-col items-center space-y-6 rounded-[2.5rem] border bg-[var(--bg-secondary)] p-10 text-center transition-all"
-            style={{ borderColor: 'color-mix(in srgb, var(--accent-gold) 20%, transparent)' }}
-            onMouseEnter={(e) =>
-              (e.currentTarget.style.borderColor =
-                'color-mix(in srgb, var(--accent-gold) 50%, transparent)')
-            }
-            onMouseLeave={(e) =>
-              (e.currentTarget.style.borderColor =
-                'color-mix(in srgb, var(--accent-gold) 20%, transparent)')
-            }
-          >
-            {/* Icon */}
-            <div
-              className="relative flex h-20 w-20 items-center justify-center overflow-hidden rounded-3xl border bg-[var(--bg-primary)] shadow-2xl transition-all group-hover:scale-110"
-              style={{
-                borderColor: 'color-mix(in srgb, var(--accent-gold) 30%, transparent)',
-                color: 'var(--accent-gold)'
-              }}
-            >
-              <Fingerprint size={32} />
-              {isVerifying && (
-                <motion.div
-                  initial={{ y: -100 }}
-                  animate={{ y: 100 }}
-                  transition={{ duration: 1.5, repeat: Infinity, ease: 'linear' }}
-                  className="absolute inset-x-0 h-1"
-                  style={{
-                    background: 'var(--accent-gold)',
-                    boxShadow: '0 0 15px var(--accent-gold)'
-                  }}
+      <div className="relative z-10 flex w-full flex-1 flex-col items-center justify-center p-6">
+        <div className="w-full max-w-5xl space-y-16">
+          {/* Header */}
+          <header className="space-y-6 text-center">
+            <Link to="/" className="group mb-8 inline-flex items-center gap-3">
+              <div className="relative h-10 w-10">
+                <div className="absolute inset-0 rounded-full bg-[var(--accent-active)] opacity-20 blur-lg transition-opacity group-hover:opacity-40" />
+                <img
+                  src="/logo.png"
+                  alt="Satohash"
+                  className="relative h-full w-full object-contain transition-transform group-hover:scale-110"
                 />
-              )}
-            </div>
+              </div>
+              <span className="text-2xl font-black tracking-tighter text-white uppercase">
+                Satohash
+              </span>
+            </Link>
+            <h1 className="text-5xl leading-none font-black tracking-tighter uppercase md:text-7xl">
+              {t('accessPage.hero.title1')} <br /> {t('accessPage.hero.title2')}{' '}
+              <span className="text-[var(--text-secondary)]">
+                {t('accessPage.hero.titleHighlight')}
+              </span>
+            </h1>
+            <p className="mx-auto max-w-2xl text-lg font-medium text-[var(--text-secondary)] md:text-xl">
+              {t('accessPage.hero.subtitle')}
+            </p>
+          </header>
 
-            {/* Copy */}
-            <div className="space-y-3">
-              <h3 className="text-2xl font-bold tracking-tight text-[var(--text-primary)]">
-                {t('accessPage.cards.newIdentity.title')}
-              </h3>
-              <p className="max-w-[240px] text-sm leading-relaxed font-medium text-[var(--text-secondary)]">
-                {t('accessPage.cards.newIdentity.desc')}
-              </p>
-            </div>
-
-            {/* CTA */}
-            <button
-              onClick={handleGenerateKey}
-              disabled={isVerifying}
-              className="flex h-14 w-full items-center justify-center gap-3 rounded-xl text-[10px] font-bold tracking-widest uppercase transition-all hover:opacity-90 disabled:cursor-wait disabled:opacity-50"
-              style={{ backgroundColor: 'var(--accent-gold)', color: '#141b25' }}
+          {/* Auth Cards */}
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+            {/* Card 1 — Generate New Identity */}
+            <motion.div
+              whileHover={{ y: -5 }}
+              className="group flex flex-col items-center space-y-6 rounded-[2.5rem] border bg-[var(--bg-secondary)] p-10 text-center transition-all"
+              style={{ borderColor: 'color-mix(in srgb, var(--accent-gold) 20%, transparent)' }}
+              onMouseEnter={(e) =>
+                (e.currentTarget.style.borderColor =
+                  'color-mix(in srgb, var(--accent-gold) 50%, transparent)')
+              }
+              onMouseLeave={(e) =>
+                (e.currentTarget.style.borderColor =
+                  'color-mix(in srgb, var(--accent-gold) 20%, transparent)')
+              }
             >
-              {isVerifying ? (
-                <>
-                  <Loader2 size={14} className="animate-spin" />{' '}
-                  {t('accessPage.cards.newIdentity.generating')}
-                </>
-              ) : (
-                <>
-                  {t('accessPage.cards.newIdentity.cta')} <ChevronRight size={14} />
-                </>
-              )}
-            </button>
-          </motion.div>
-
-          {/* Card 2 — Import Existing nsec */}
-          <motion.div
-            whileHover={{ y: -5 }}
-            className="group flex flex-col items-center space-y-6 rounded-[2.5rem] border border-[var(--border)] bg-[var(--bg-secondary)] p-10 text-center transition-all hover:border-[var(--accent-active)]/50"
-          >
-            {/* Icon */}
-            <div className="relative flex h-20 w-20 items-center justify-center overflow-hidden rounded-3xl border border-[var(--accent-active)]/20 bg-[var(--bg-primary)] text-[var(--accent-active)] shadow-2xl transition-all group-hover:scale-110">
-              <KeyRound size={32} />
-              {isVerifying && importMode && (
-                <motion.div
-                  initial={{ y: -100 }}
-                  animate={{ y: 100 }}
-                  transition={{ duration: 1.5, repeat: Infinity, ease: 'linear' }}
-                  className="absolute inset-x-0 h-1 bg-[var(--accent-active)] shadow-[0_0_15px_var(--accent-active-glow)]"
-                />
-              )}
-            </div>
-
-            {/* Copy */}
-            <div className="space-y-3">
-              <h3 className="text-2xl font-bold tracking-tight text-[var(--text-primary)]">
-                {t('accessPage.cards.import.title')}
-              </h3>
-              <p className="max-w-[240px] text-sm leading-relaxed font-medium text-[var(--text-secondary)]">
-                {t('accessPage.cards.import.desc')}
-              </p>
-            </div>
-
-            {/* Toggle / Input area */}
-            {!importMode ? (
-              <button
-                onClick={() => setImportMode(true)}
-                className="flex h-14 w-full items-center justify-center gap-3 rounded-xl bg-[var(--text-primary)] text-[10px] font-bold tracking-widest text-[var(--bg-primary)] uppercase transition-all hover:scale-[1.02]"
+              {/* Icon */}
+              <div
+                className="relative flex h-20 w-20 items-center justify-center overflow-hidden rounded-3xl border bg-[var(--bg-primary)] shadow-2xl transition-all group-hover:scale-110"
+                style={{
+                  borderColor: 'color-mix(in srgb, var(--accent-gold) 30%, transparent)',
+                  color: 'var(--accent-gold)'
+                }}
               >
-                {t('accessPage.cards.import.cta')} <ChevronRight size={14} />
-              </button>
-            ) : (
-              <div className="w-full space-y-3">
-                {localStorage.getItem('satohash_encrypted_nsec') && !showPinRestore && (
-                  <button
-                    onClick={handlePinRestore}
-                    className="w-full rounded-xl py-2 text-center text-xs transition-all hover:opacity-80"
+                <Fingerprint size={32} />
+                {isVerifying && (
+                  <motion.div
+                    initial={{ y: -100 }}
+                    animate={{ y: 100 }}
+                    transition={{ duration: 1.5, repeat: Infinity, ease: 'linear' }}
+                    className="absolute inset-x-0 h-1"
                     style={{
-                      color: 'var(--accent-gold)',
-                      background: 'color-mix(in srgb, var(--accent-gold) 12%, transparent)'
+                      background: 'var(--accent-gold)',
+                      boxShadow: '0 0 15px var(--accent-gold)'
                     }}
-                  >
-                    🔑 {t('accessPage.cards.import.restorePin')}
-                  </button>
+                  />
                 )}
-                <div className="relative">
+              </div>
+
+              {/* Copy */}
+              <div className="space-y-3">
+                <h3 className="text-2xl font-bold tracking-tight text-[var(--text-primary)]">
+                  {t('accessPage.cards.newIdentity.title')}
+                </h3>
+                <p className="max-w-[240px] text-sm leading-relaxed font-medium text-[var(--text-secondary)]">
+                  {t('accessPage.cards.newIdentity.desc')}
+                </p>
+              </div>
+
+              {/* CTA */}
+              <button
+                onClick={handleGenerateKey}
+                disabled={isVerifying}
+                className="flex h-14 w-full items-center justify-center gap-3 rounded-xl text-[10px] font-bold tracking-widest uppercase transition-all hover:opacity-90 disabled:cursor-wait disabled:opacity-50"
+                style={{ backgroundColor: 'var(--accent-gold)', color: '#141b25' }}
+              >
+                {isVerifying ? (
+                  <>
+                    <Loader2 size={14} className="animate-spin" />{' '}
+                    {t('accessPage.cards.newIdentity.generating')}
+                  </>
+                ) : (
+                  <>
+                    {t('accessPage.cards.newIdentity.cta')} <ChevronRight size={14} />
+                  </>
+                )}
+              </button>
+            </motion.div>
+
+            {/* Card 2 — Import Existing nsec */}
+            <motion.div
+              whileHover={{ y: -5 }}
+              className="group flex flex-col items-center space-y-6 rounded-[2.5rem] border border-[var(--border)] bg-[var(--bg-secondary)] p-10 text-center transition-all hover:border-[var(--accent-active)]/50"
+            >
+              {/* Icon */}
+              <div className="relative flex h-20 w-20 items-center justify-center overflow-hidden rounded-3xl border border-[var(--accent-active)]/20 bg-[var(--bg-primary)] text-[var(--accent-active)] shadow-2xl transition-all group-hover:scale-110">
+                <KeyRound size={32} />
+                {isVerifying && importMode && (
+                  <motion.div
+                    initial={{ y: -100 }}
+                    animate={{ y: 100 }}
+                    transition={{ duration: 1.5, repeat: Infinity, ease: 'linear' }}
+                    className="absolute inset-x-0 h-1 bg-[var(--accent-active)] shadow-[0_0_15px_var(--accent-active-glow)]"
+                  />
+                )}
+              </div>
+
+              {/* Copy */}
+              <div className="space-y-3">
+                <h3 className="text-2xl font-bold tracking-tight text-[var(--text-primary)]">
+                  {t('accessPage.cards.import.title')}
+                </h3>
+                <p className="max-w-[240px] text-sm leading-relaxed font-medium text-[var(--text-secondary)]">
+                  {t('accessPage.cards.import.desc')}
+                </p>
+              </div>
+
+              {/* Toggle / Input area */}
+              {!importMode ? (
+                <button
+                  onClick={() => setImportMode(true)}
+                  className="flex h-14 w-full items-center justify-center gap-3 rounded-xl bg-[var(--text-primary)] text-[10px] font-bold tracking-widest text-[var(--bg-primary)] uppercase transition-all hover:scale-[1.02]"
+                >
+                  {t('accessPage.cards.import.cta')} <ChevronRight size={14} />
+                </button>
+              ) : (
+                <div className="w-full space-y-3">
+                  {localStorage.getItem('satohash_encrypted_nsec') && !showPinRestore && (
+                    <button
+                      onClick={handlePinRestore}
+                      className="w-full rounded-xl py-2 text-center text-xs transition-all hover:opacity-80"
+                      style={{
+                        color: 'var(--accent-gold)',
+                        background: 'color-mix(in srgb, var(--accent-gold) 12%, transparent)'
+                      }}
+                    >
+                      🔑 {t('accessPage.cards.import.restorePin')}
+                    </button>
+                  )}
+                  <div className="relative">
+                    <input
+                      type={keyVisible ? 'text' : 'password'}
+                      value={nsec}
+                      onChange={(e) => setNsec(e.target.value)}
+                      placeholder={t('accessPage.cards.import.placeholder')}
+                      className="h-12 w-full rounded-xl border bg-transparent px-4 pr-12 font-mono text-xs outline-none focus:border-[var(--accent-active)]"
+                      style={{ borderColor: 'var(--border)', color: 'var(--text-primary)' }}
+                      onKeyDown={(e) => e.key === 'Enter' && handleImportKey()}
+                      autoFocus
+                    />
+                    <button
+                      onClick={() => setKeyVisible(!keyVisible)}
+                      className="absolute top-1/2 right-3 -translate-y-1/2 opacity-50 hover:opacity-100"
+                      style={{ color: 'var(--text-secondary)' }}
+                      tabIndex={-1}
+                    >
+                      {keyVisible ? <EyeOff size={14} /> : <Eye size={14} />}
+                    </button>
+                  </div>
+                  <button
+                    onClick={handleImportKey}
+                    disabled={isVerifying || !nsec}
+                    className="flex h-12 w-full items-center justify-center gap-2 rounded-xl text-xs font-black uppercase transition-all hover:opacity-90 disabled:opacity-40"
+                    style={{ backgroundColor: 'var(--accent-gold)', color: '#141b25' }}
+                  >
+                    {isVerifying ? (
+                      <>
+                        <Loader2 size={14} className="animate-spin" />{' '}
+                        {t('accessPage.cards.import.verifying')}
+                      </>
+                    ) : (
+                      t('accessPage.cards.import.submit')
+                    )}
+                  </button>
+                  <button
+                    onClick={() => {
+                      setImportMode(false)
+                      setNsec('')
+                      setKeyVisible(false)
+                    }}
+                    className="w-full text-center text-[10px] font-medium tracking-widest uppercase opacity-70 transition-opacity hover:opacity-100"
+                    style={{ color: 'var(--text-secondary)' }}
+                  >
+                    {t('accessPage.cards.import.cancel')}
+                  </button>
+                </div>
+              )}
+            </motion.div>
+
+            {/* Card 3 — Admin Password Login */}
+            <motion.div
+              whileHover={{ y: -5 }}
+              className="group flex flex-col items-center space-y-6 rounded-[2.5rem] border bg-[var(--bg-secondary)] p-10 text-center transition-all"
+              style={{ borderColor: 'color-mix(in srgb, var(--accent-danger) 20%, transparent)' }}
+              onMouseEnter={(e) =>
+                (e.currentTarget.style.borderColor =
+                  'color-mix(in srgb, var(--accent-danger) 50%, transparent)')
+              }
+              onMouseLeave={(e) =>
+                (e.currentTarget.style.borderColor =
+                  'color-mix(in srgb, var(--accent-danger) 20%, transparent)')
+              }
+            >
+              {/* Icon */}
+              <div
+                className="relative flex h-20 w-20 items-center justify-center overflow-hidden rounded-3xl border bg-[var(--bg-primary)] shadow-2xl transition-all group-hover:scale-110"
+                style={{
+                  borderColor: 'color-mix(in srgb, var(--accent-danger) 30%, transparent)',
+                  color: 'var(--accent-danger)'
+                }}
+              >
+                <ShieldCheck size={32} />
+              </div>
+
+              {/* Copy */}
+              <div className="space-y-3">
+                <h3 className="text-2xl font-bold tracking-tight text-[var(--text-primary)]">
+                  {t('accessPage.cards.admin.title')}
+                </h3>
+                <p className="max-w-[240px] text-sm leading-relaxed font-medium text-[var(--text-secondary)]">
+                  {t('accessPage.cards.admin.desc')}
+                </p>
+              </div>
+
+              {/* Toggle / Input area */}
+              {!adminMode ? (
+                <button
+                  onClick={() => setAdminMode(true)}
+                  className="flex h-14 w-full items-center justify-center gap-3 rounded-xl text-[10px] font-bold tracking-widest uppercase transition-all hover:scale-[1.02]"
+                  style={{ backgroundColor: 'var(--accent-danger)', color: '#fff' }}
+                >
+                  {t('accessPage.cards.admin.cta')} <ChevronRight size={14} />
+                </button>
+              ) : (
+                <div className="w-full space-y-3">
                   <input
-                    type={keyVisible ? 'text' : 'password'}
-                    value={nsec}
-                    onChange={(e) => setNsec(e.target.value)}
-                    placeholder={t('accessPage.cards.import.placeholder')}
-                    className="h-12 w-full rounded-xl border bg-transparent px-4 pr-12 font-mono text-xs outline-none focus:border-[var(--accent-active)]"
+                    type="password"
+                    value={adminPassword}
+                    onChange={(e) => setAdminPassword(e.target.value)}
+                    placeholder={t('accessPage.cards.admin.placeholder')}
+                    className="h-12 w-full rounded-xl border bg-transparent px-4 font-mono text-xs outline-none focus:border-[var(--accent-danger)]"
                     style={{ borderColor: 'var(--border)', color: 'var(--text-primary)' }}
-                    onKeyDown={(e) => e.key === 'Enter' && handleImportKey()}
+                    onKeyDown={(e) => e.key === 'Enter' && handleAdminLogin()}
                     autoFocus
                   />
                   <button
-                    onClick={() => setKeyVisible(!keyVisible)}
-                    className="absolute top-1/2 right-3 -translate-y-1/2 opacity-50 hover:opacity-100"
-                    style={{ color: 'var(--text-secondary)' }}
-                    tabIndex={-1}
+                    onClick={handleAdminLogin}
+                    disabled={adminLoading || !adminPassword}
+                    className="flex h-12 w-full items-center justify-center gap-2 rounded-xl text-xs font-black uppercase transition-all hover:opacity-90 disabled:opacity-40"
+                    style={{ backgroundColor: 'var(--accent-danger)', color: '#fff' }}
                   >
-                    {keyVisible ? <EyeOff size={14} /> : <Eye size={14} />}
+                    {adminLoading ? (
+                      <>
+                        <Loader2 size={14} className="animate-spin" />{' '}
+                        {t('accessPage.cards.import.verifying')}
+                      </>
+                    ) : (
+                      t('accessPage.cards.admin.submit')
+                    )}
+                  </button>
+                  <button
+                    onClick={() => {
+                      setAdminMode(false)
+                      setAdminPassword('')
+                    }}
+                    className="w-full text-center text-[10px] font-medium tracking-widest uppercase opacity-70 transition-opacity hover:opacity-100"
+                    style={{ color: 'var(--text-secondary)' }}
+                  >
+                    {t('accessPage.cards.admin.cancel')}
                   </button>
                 </div>
-                <button
-                  onClick={handleImportKey}
-                  disabled={isVerifying || !nsec}
-                  className="flex h-12 w-full items-center justify-center gap-2 rounded-xl text-xs font-black uppercase transition-all hover:opacity-90 disabled:opacity-40"
-                  style={{ backgroundColor: 'var(--accent-gold)', color: '#141b25' }}
-                >
-                  {isVerifying ? (
-                    <>
-                      <Loader2 size={14} className="animate-spin" />{' '}
-                      {t('accessPage.cards.import.verifying')}
-                    </>
-                  ) : (
-                    t('accessPage.cards.import.submit')
-                  )}
-                </button>
-                <button
-                  onClick={() => {
-                    setImportMode(false)
-                    setNsec('')
-                    setKeyVisible(false)
-                  }}
-                  className="w-full text-center text-[10px] font-medium tracking-widest uppercase opacity-70 transition-opacity hover:opacity-100"
-                  style={{ color: 'var(--text-secondary)' }}
-                >
-                  {t('accessPage.cards.import.cancel')}
-                </button>
-              </div>
-            )}
-          </motion.div>
+              )}
+            </motion.div>
+          </div>
 
-          {/* Card 3 — Admin Password Login */}
-          <motion.div
-            whileHover={{ y: -5 }}
-            className="group flex flex-col items-center space-y-6 rounded-[2.5rem] border bg-[var(--bg-secondary)] p-10 text-center transition-all"
-            style={{ borderColor: 'color-mix(in srgb, var(--accent-danger) 20%, transparent)' }}
-            onMouseEnter={(e) =>
-              (e.currentTarget.style.borderColor =
-                'color-mix(in srgb, var(--accent-danger) 50%, transparent)')
-            }
-            onMouseLeave={(e) =>
-              (e.currentTarget.style.borderColor =
-                'color-mix(in srgb, var(--accent-danger) 20%, transparent)')
-            }
-          >
-            {/* Icon */}
-            <div
-              className="relative flex h-20 w-20 items-center justify-center overflow-hidden rounded-3xl border bg-[var(--bg-primary)] shadow-2xl transition-all group-hover:scale-110"
-              style={{
-                borderColor: 'color-mix(in srgb, var(--accent-danger) 30%, transparent)',
-                color: 'var(--accent-danger)'
-              }}
+          {/* Stay signed in checkbox */}
+          <div className="mt-4 flex items-center justify-center gap-3">
+            <input
+              type="checkbox"
+              id="remember-me"
+              checked={rememberMe}
+              onChange={(e) => setRememberMe(e.target.checked)}
+              className="h-4 w-4 cursor-pointer rounded accent-[var(--accent-gold)]"
+            />
+            <label
+              htmlFor="remember-me"
+              className="cursor-pointer text-sm font-semibold"
+              style={{ color: 'var(--text-secondary)' }}
             >
-              <ShieldCheck size={32} />
+              {t('accessPage.rememberMe')}
+            </label>
+          </div>
+
+          <p className="text-center text-xs" style={{ color: 'var(--text-muted)' }}>
+            🔐 {t('accessPage.privacy')}
+            <br />
+            <a href="/trust" className="underline" style={{ color: 'var(--accent-gold)' }}>
+              {t('accessPage.privacyLink')}
+            </a>
+          </p>
+
+          <section className="space-y-8 text-center" aria-label="Trust">
+            <div className="flex flex-wrap justify-center gap-12 text-[var(--text-secondary)]">
+              <div className="flex items-center gap-2">
+                <Lock size={14} className="text-[var(--accent-active)]" />
+                <span className="text-[10px] font-black tracking-widest uppercase">
+                  {t('accessPage.trust.e2e')}
+                </span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Shield size={14} className="text-[var(--accent-active)]" />
+                <span className="text-[10px] font-black tracking-widest uppercase">
+                  {t('accessPage.trust.custody')}
+                </span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Cpu size={14} className="text-[var(--accent-active)]" />
+                <span className="text-[10px] font-black tracking-widest uppercase">
+                  {t('accessPage.trust.zk')}
+                </span>
+              </div>
             </div>
 
-            {/* Copy */}
-            <div className="space-y-3">
-              <h3 className="text-2xl font-bold tracking-tight text-[var(--text-primary)]">
-                {t('accessPage.cards.admin.title')}
-              </h3>
-              <p className="max-w-[240px] text-sm leading-relaxed font-medium text-[var(--text-secondary)]">
-                {t('accessPage.cards.admin.desc')}
+            <div className="mx-auto max-w-2xl border-t border-[var(--border)] pt-8">
+              <p className="font-mono text-[10px] leading-relaxed tracking-[0.2em] text-[var(--text-secondary)] uppercase">
+                {t('accessPage.footer')}
               </p>
             </div>
-
-            {/* Toggle / Input area */}
-            {!adminMode ? (
-              <button
-                onClick={() => setAdminMode(true)}
-                className="flex h-14 w-full items-center justify-center gap-3 rounded-xl text-[10px] font-bold tracking-widest uppercase transition-all hover:scale-[1.02]"
-                style={{ backgroundColor: 'var(--accent-danger)', color: '#fff' }}
-              >
-                {t('accessPage.cards.admin.cta')} <ChevronRight size={14} />
-              </button>
-            ) : (
-              <div className="w-full space-y-3">
-                <input
-                  type="password"
-                  value={adminPassword}
-                  onChange={(e) => setAdminPassword(e.target.value)}
-                  placeholder={t('accessPage.cards.admin.placeholder')}
-                  className="h-12 w-full rounded-xl border bg-transparent px-4 font-mono text-xs outline-none focus:border-[var(--accent-danger)]"
-                  style={{ borderColor: 'var(--border)', color: 'var(--text-primary)' }}
-                  onKeyDown={(e) => e.key === 'Enter' && handleAdminLogin()}
-                  autoFocus
-                />
-                <button
-                  onClick={handleAdminLogin}
-                  disabled={adminLoading || !adminPassword}
-                  className="flex h-12 w-full items-center justify-center gap-2 rounded-xl text-xs font-black uppercase transition-all hover:opacity-90 disabled:opacity-40"
-                  style={{ backgroundColor: 'var(--accent-danger)', color: '#fff' }}
-                >
-                  {adminLoading ? (
-                    <>
-                      <Loader2 size={14} className="animate-spin" />{' '}
-                      {t('accessPage.cards.import.verifying')}
-                    </>
-                  ) : (
-                    t('accessPage.cards.admin.submit')
-                  )}
-                </button>
-                <button
-                  onClick={() => {
-                    setAdminMode(false)
-                    setAdminPassword('')
-                  }}
-                  className="w-full text-center text-[10px] font-medium tracking-widest uppercase opacity-70 transition-opacity hover:opacity-100"
-                  style={{ color: 'var(--text-secondary)' }}
-                >
-                  {t('accessPage.cards.admin.cancel')}
-                </button>
-              </div>
-            )}
-          </motion.div>
+          </section>
         </div>
-
-        {/* Stay signed in checkbox */}
-        <div className="mt-4 flex items-center justify-center gap-3">
-          <input
-            type="checkbox"
-            id="remember-me"
-            checked={rememberMe}
-            onChange={(e) => setRememberMe(e.target.checked)}
-            className="h-4 w-4 cursor-pointer rounded accent-[var(--accent-gold)]"
-          />
-          <label
-            htmlFor="remember-me"
-            className="cursor-pointer text-sm font-semibold"
-            style={{ color: 'var(--text-secondary)' }}
-          >
-            {t('accessPage.rememberMe')}
-          </label>
-        </div>
-
-        <p className="text-center text-xs" style={{ color: 'var(--text-muted)' }}>
-          🔐 {t('accessPage.privacy')}
-          <br />
-          <a href="/trust" className="underline" style={{ color: 'var(--accent-gold)' }}>
-            {t('accessPage.privacyLink')}
-          </a>
-        </p>
-
-        <section className="space-y-8 text-center" aria-label="Trust">
-          <div className="flex flex-wrap justify-center gap-12 text-[var(--text-secondary)]">
-            <div className="flex items-center gap-2">
-              <Lock size={14} className="text-[var(--accent-active)]" />
-              <span className="text-[10px] font-black tracking-widest uppercase">
-                {t('accessPage.trust.e2e')}
-              </span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Shield size={14} className="text-[var(--accent-active)]" />
-              <span className="text-[10px] font-black tracking-widest uppercase">
-                {t('accessPage.trust.custody')}
-              </span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Cpu size={14} className="text-[var(--accent-active)]" />
-              <span className="text-[10px] font-black tracking-widest uppercase">
-                {t('accessPage.trust.zk')}
-              </span>
-            </div>
-          </div>
-
-          <div className="mx-auto max-w-2xl border-t border-[var(--border)] pt-8">
-            <p className="font-mono text-[10px] leading-relaxed tracking-[0.2em] text-[var(--text-secondary)] uppercase">
-              {t('accessPage.footer')}
-            </p>
-          </div>
-        </section>
       </div>
 
       <PinModal
@@ -593,6 +596,7 @@ export default function Access() {
         description={t('accessPage.pin.restoreDesc')}
         submitLabel={t('accessPage.pin.restoreSubmit')}
       />
+      <Footer compact />
     </div>
   )
 }

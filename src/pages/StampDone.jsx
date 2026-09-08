@@ -155,7 +155,7 @@ export default function StampDone() {
           <Link
             to={proof.hash ? `/verify?hash=${encodeURIComponent(proof.hash)}` : '/verify'}
             data-testid="done-verify"
-            className="inline-flex min-h-[40px] items-center gap-1 rounded-lg border px-3 text-[11px] font-bold tracking-widest uppercase"
+            className="inline-flex min-h-[44px] items-center gap-1 rounded-lg border px-3 text-[11px] font-bold tracking-widest uppercase"
             style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
           >
             <ShieldCheck size={14} /> {t('stampDonePage.verify')}
@@ -214,7 +214,8 @@ export default function StampDone() {
                 href={`https://mempool.space/block/${heightNum}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="underline underline-offset-2"
+                aria-label={`Bitcoin block ${heightNum} on mempool.space`}
+                className="inline-flex min-h-[44px] items-center underline underline-offset-2"
               >
                 {heightNum.toLocaleString(i18n.language)}
               </a>

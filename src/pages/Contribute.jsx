@@ -13,10 +13,11 @@ import {
 import { motion } from 'framer-motion'
 import usePageMeta from '../hooks/usePageMeta'
 import { getPublicBaseUrl } from '../config/constants'
+import Footer from '../components/layout/Footer'
 
 const glassCard = 'rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)]'
 const btnHolographic =
-  'bg-[var(--accent-active)] text-white px-4 py-2 rounded-lg font-medium hover:opacity-90 transition-all duration-200 inline-flex items-center'
+  'bg-[var(--accent-active)] text-white px-4 py-2 min-h-[44px] rounded-lg font-medium hover:opacity-90 transition-all duration-200 inline-flex items-center'
 
 const WAY_IDS = ['issues', 'prs', 'docs', 'translations']
 const WAY_ICONS = { issues: Bug, prs: GitPullRequest, docs: BookOpen, translations: Globe }
@@ -50,11 +51,11 @@ const Contribute = () => {
   )
 
   return (
-    <div className="from-bg-primary to-bg-secondary min-h-screen bg-gradient-to-br p-4 pb-24">
+    <div className="from-bg-primary to-bg-secondary min-h-screen bg-gradient-to-br">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="mx-auto max-w-4xl space-y-8"
+        className="mx-auto max-w-4xl space-y-8 p-4"
       >
         <div className="text-center">
           <h1 className="mx-auto mb-4 flex items-center justify-center text-4xl font-bold">
@@ -157,13 +158,14 @@ const Contribute = () => {
             </a>
             <a
               href={`${getPublicBaseUrl()}/developer`}
-              className="btn-secondary inline-flex items-center rounded-lg border border-[var(--border)] px-4 py-2"
+              className="btn-secondary inline-flex min-h-[44px] items-center rounded-lg border border-[var(--border)] px-4 py-2"
             >
               {t('contributePage.why.apiDocs')}
             </a>
           </div>
         </motion.div>
       </motion.div>
+      <Footer compact />
     </div>
   )
 }

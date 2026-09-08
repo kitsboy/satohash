@@ -33,23 +33,41 @@ export default function CryptoNotice() {
   const { t } = useTranslation()
 
   return (
-    <div className="min-h-screen pb-16" style={{ background: 'var(--bg-primary)', color: 'var(--text-primary)' }}>
-      <section className="border-b px-4 pt-8 pb-12 sm:px-6 sm:pt-12" style={{ borderColor: 'var(--border)' }}>
+    <div
+      className="min-h-screen pb-16"
+      style={{ background: 'var(--bg-primary)', color: 'var(--text-primary)' }}
+    >
+      <section
+        className="border-b px-4 pt-8 pb-12 sm:px-6 sm:pt-12"
+        style={{ borderColor: 'var(--border)' }}
+      >
         <div className="mx-auto max-w-3xl">
           <div className="mb-6 flex flex-wrap gap-3 text-[11px] font-bold tracking-wide uppercase">
-            <Link to="/legal/terms" className="text-[var(--text-secondary)] hover:text-[var(--accent-gold)]">
+            <Link
+              to="/legal/terms"
+              className="text-[var(--text-secondary)] hover:text-[var(--accent-gold)]"
+            >
               Terms
             </Link>
             <span style={{ color: 'var(--border-bright)' }}>·</span>
-            <Link to="/legal/privacy" className="text-[var(--text-secondary)] hover:text-[var(--accent-gold)]">
+            <Link
+              to="/legal/privacy"
+              className="text-[var(--text-secondary)] hover:text-[var(--accent-gold)]"
+            >
               Privacy
             </Link>
             <span style={{ color: 'var(--border-bright)' }}>·</span>
-            <Link to="/trust" className="text-[var(--text-secondary)] hover:text-[var(--accent-gold)]">
+            <Link
+              to="/trust"
+              className="text-[var(--text-secondary)] hover:text-[var(--accent-gold)]"
+            >
               Trust center
             </Link>
           </div>
-          <p className="mb-2 text-[10px] font-black tracking-[0.22em] uppercase" style={{ color: 'var(--accent-gold)' }}>
+          <p
+            className="mb-2 text-[10px] font-black tracking-[0.22em] uppercase"
+            style={{ color: 'var(--accent-gold)' }}
+          >
             Legal · Cryptographic notice
           </p>
           <h1 className="text-3xl font-black tracking-tight sm:text-4xl">
@@ -60,7 +78,10 @@ export default function CryptoNotice() {
               defaultValue: 'Educational reference — not legal advice. Laws vary by jurisdiction.'
             })}
           </p>
-          <p className="mt-2 text-[11px] font-bold tracking-widest uppercase" style={{ color: 'var(--text-tertiary)' }}>
+          <p
+            className="mt-2 text-[11px] font-bold tracking-widest uppercase"
+            style={{ color: 'var(--text-tertiary)' }}
+          >
             Last updated: {new Date().toLocaleDateString()}
           </p>
         </div>
@@ -81,10 +102,17 @@ export default function CryptoNotice() {
           <ul className="space-y-4">
             {PROVES.map((p) => (
               <li key={p.title} className="flex gap-3">
-                <Fingerprint size={16} className="mt-0.5 shrink-0" style={{ color: 'var(--accent-gold)' }} />
+                <Fingerprint
+                  size={16}
+                  className="mt-0.5 shrink-0"
+                  style={{ color: 'var(--accent-gold)' }}
+                />
                 <div>
                   <p className="text-sm font-bold">{p.title}</p>
-                  <p className="mt-1 text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                  <p
+                    className="mt-1 text-xs leading-relaxed"
+                    style={{ color: 'var(--text-secondary)' }}
+                  >
                     {p.body}
                   </p>
                 </div>
@@ -93,38 +121,53 @@ export default function CryptoNotice() {
           </ul>
         </div>
 
-        <article className="space-y-6 text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+        <article
+          className="space-y-6 text-sm leading-relaxed"
+          style={{ color: 'var(--text-secondary)' }}
+        >
           <section>
-            <h2 className="mb-3 flex items-center gap-2 text-base font-black" style={{ color: 'var(--text-primary)' }}>
+            <h2
+              className="mb-3 flex items-center gap-2 text-base font-black"
+              style={{ color: 'var(--text-primary)' }}
+            >
               <Bitcoin size={18} style={{ color: 'var(--accent-gold)' }} /> OpenTimestamps + Bitcoin
             </h2>
             <p>
               Satohash uses the OpenTimestamps (OTS) protocol. Document hashes are aggregated into a
               Merkle tree and committed through public calendars, then anchored toward the Bitcoin
-              blockchain. You receive a portable <strong style={{ color: 'var(--text-primary)' }}>.ots</strong> proof
-              file.
+              blockchain. You receive a portable{' '}
+              <strong style={{ color: 'var(--text-primary)' }}>.ots</strong> proof file.
             </p>
           </section>
 
           <section>
-            <h2 className="mb-3 flex items-center gap-2 text-base font-black" style={{ color: 'var(--text-primary)' }}>
+            <h2
+              className="mb-3 flex items-center gap-2 text-base font-black"
+              style={{ color: 'var(--text-primary)' }}
+            >
               <Lock size={18} style={{ color: 'var(--accent-gold)' }} /> Privacy by design
             </h2>
             <p>
-              Hashing happens on your device. We do not receive your original file — only the SHA-256
-              fingerprint (and metadata you choose to attach, such as a filename label).
+              Hashing happens on your device. We do not receive your original file — only the
+              SHA-256 fingerprint (and metadata you choose to attach, such as a filename label).
             </p>
           </section>
 
           <section>
-            <h2 className="mb-3 flex items-center gap-2 text-base font-black" style={{ color: 'var(--text-primary)' }}>
+            <h2
+              className="mb-3 flex items-center gap-2 text-base font-black"
+              style={{ color: 'var(--text-primary)' }}
+            >
               <Scale size={18} style={{ color: 'var(--accent-gold)' }} /> Legal weight
             </h2>
             <p>
               Many jurisdictions recognize electronic records and cryptographic integrity evidence
               (e.g. ESIGN/UETA, eIDAS discussions). The weight of a blockchain timestamp depends on
               procedure, custody, and counsel. See our educational{' '}
-              <Link to="/evidence-admissibility" className="font-bold text-[var(--accent-gold)] underline-offset-2 hover:underline">
+              <Link
+                to="/evidence-admissibility"
+                className="font-bold text-[var(--accent-gold)] underline-offset-2 hover:underline"
+              >
                 evidence admissibility
               </Link>{' '}
               matrix.
@@ -172,7 +215,7 @@ export default function CryptoNotice() {
           </Link>
         </div>
       </section>
-      <Footer />
+      <Footer compact />
     </div>
   )
 }
