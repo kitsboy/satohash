@@ -1,3 +1,24 @@
+## 2026-09-08 (Grok M3 — harden wave: API prune, honest HUD, compact GUI)
+
+**Pickup:** `.ai_docs/current-status.md` · this file · HEAD `83aa3b4` (ahead of live Pages until CF deploys).
+
+**Live API (this wave started):** `gitSha=8e78fb5` · image **907MB** (was ~1.09GB) · stamps **276** · `REQUIRE_LIGHTNING=false`.
+
+**Pushed (3 batches):**
+- `b6d5151` sqlite `cache_size=-8000`, hashed IP in 429 logs, prune `pino-pretty` + more frontend from API image, Caddy reload after healthy, OpenAPI `/health` example, Helmet comment (API-only).
+- `1361d51` homepage OG JPEG `public/og/home.jpg`, fonts 500/700 only, indicative mempool fees, prefetch `/verify`, no invented block heights.
+- `83aa3b4` compact footer on `/pricing` `/docs`, Verify card click-focus, motion-safe jewel/skeletons, iPhone-SE nowrap footer + build, gold hover on verify cards, docs empty-search helper.
+
+**GUI extras (3):** verify-card gold hover · stamp CTA 44px tap · docs “no hits” line.
+
+**Not this wave:** pin `/watch` on `@give_bit` · entity / Impressum · `REQUIRE_LIGHTNING` · dedicated `package.api.json` (skipped; prune in Dockerfile instead).
+
+**Do not:** flip paywall · change `/api/*` · shuffle package.json deps vs devDeps · `--force` opentimestamps · `@satohash`
+
+**Kimi:** THOR Obsidian ingest. Next API rebuild needed for `b6d5151` (cache_size, hashed IP, extra prune). Pages auto-deploys SPA from `83aa3b4`.
+
+---
+
 ## 2026-09-08 (Grok M3 — copy purge + SKU freeze, Cam asked push)
 
 **Pickup:** `.ai_docs/current-status.md` · this file · `docs/legal/SKU-FREEZE.md` · `docs/legal/AUTO-90-DAY-CALENDAR.md`
