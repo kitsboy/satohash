@@ -346,8 +346,63 @@ const options = {
         get: {
           tags: ['Stamps'],
           summary: 'Recent stamps',
-          description: 'Most recent stamps (hash, filename, status, block height).',
-          responses: { 200: { description: 'Array of recent stamps' } }
+          description:
+            'Last 20 stamps from GET /api/stamps/recent: id, hash, status, created_at, client. No filename, block height, user counts, or daily cap.',
+          responses: {
+            200: {
+              description: 'Recent stamps envelope (not a bare array)',
+              content: {
+                'application/json': {
+                  schema: {
+                    type: 'object',
+                    properties: {
+                      stamps: {
+                        type: 'array',
+                        items: {
+                          type: 'object',
+                          properties: {
+                            id: { type: 'string' },
+                            hash: {
+                              type: 'string',
+                              description:
+                                'SHA-256 hex (64 chars) or truncated 16-char prefix + ellipsis in examples'
+                            },
+                            status: { type: 'string', enum: ['pending', 'confirmed', 'failed'] },
+                            created_at: { type: 'string' },
+                            client: { type: 'string', nullable: true }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  examples: {
+                    recent: {
+                      summary:
+                        'Live GET /api/stamps/recent shape — no invented user counts or 10/day cap',
+                      value: {
+                        stamps: [
+                          {
+                            id: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890',
+                            hash: 'e3b0c44298fc1c14...',
+                            status: 'pending',
+                            created_at: '2026-09-08T00:00:00.000Z',
+                            client: 'spa'
+                          },
+                          {
+                            id: 'b2c3d4e5-f6a7-8901-bcde-f12345678901',
+                            hash: 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
+                            status: 'confirmed',
+                            created_at: '2026-09-07T12:00:00.000Z',
+                            client: null
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       },
       '/api/stamps/{hash}/by-hash': {

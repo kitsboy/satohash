@@ -318,6 +318,7 @@ app.use(
         ],
         fontSrc: ["'self'"],
         objectSrc: ["'none'"],
+        // Caddy terminates TLS on api.satohash.io; this is belt-and-suspenders (harmless on HTTPS JSON)
         upgradeInsecureRequests: []
       }
     },
