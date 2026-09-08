@@ -231,6 +231,74 @@ const options = {
           }
         }
       },
+      '/api/public/calendar-status': {
+        get: {
+          tags: ['Network'],
+          summary: 'OTS calendar health',
+          description:
+            'Live GET /api/public/calendar-status: probes Alice, Bob, and Finney calendars. Each entry has url, ok, http_status, response_time_ms, last_checked. Alice + Bob are enough; Finney often flaky — not an invented outage.',
+          responses: {
+            200: {
+              description: 'Calendar probe payload (example values; latencies are illustrative)',
+              content: {
+                'application/json': {
+                  schema: {
+                    type: 'object',
+                    properties: {
+                      calendars: {
+                        type: 'array',
+                        items: {
+                          type: 'object',
+                          properties: {
+                            url: { type: 'string', format: 'uri' },
+                            ok: { type: 'boolean' },
+                            http_status: { type: 'integer' },
+                            response_time_ms: { type: 'integer' },
+                            last_checked: { type: 'string', format: 'date-time' }
+                          }
+                        }
+                      },
+                      timestamp: { type: 'string', format: 'date-time' }
+                    }
+                  },
+                  examples: {
+                    live: {
+                      summary:
+                        'Example GET /api/public/calendar-status — Alice + Bob up; Finney flaky',
+                      value: {
+                        calendars: [
+                          {
+                            url: 'https://alice.btc.calendar.opentimestamps.org',
+                            ok: true,
+                            http_status: 200,
+                            response_time_ms: 120,
+                            last_checked: '2026-09-08T00:00:00.000Z'
+                          },
+                          {
+                            url: 'https://bob.btc.calendar.opentimestamps.org',
+                            ok: true,
+                            http_status: 200,
+                            response_time_ms: 95,
+                            last_checked: '2026-09-08T00:00:00.000Z'
+                          },
+                          {
+                            url: 'https://finney.calendar.eternitywall.com',
+                            ok: false,
+                            http_status: 0,
+                            response_time_ms: 4000,
+                            last_checked: '2026-09-08T00:00:00.000Z'
+                          }
+                        ],
+                        timestamp: '2026-09-08T00:00:00.000Z'
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
       '/api/public/network': {
         get: {
           tags: ['Network'],
