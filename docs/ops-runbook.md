@@ -45,6 +45,9 @@ Fixed **2026-08-31** (`ec1c69e`, live). Cause was lazy Stamp/Verify chunks impor
 
 If `/watch` shows stale video: hard refresh; check MP4 duration **~84s** (full) or ~10s (teaser). Marketing routes are eager-loaded.
 
+**Cam (not Grok):** Pin on X account **@give_bit** (not @satohash). Suggested text (one paragraph, honest): 84 seconds. File never leaves the device. Free Bitcoin proof of existence. https://satohash.io/watch  
+Card must be the player card (`/watch-player.html`). After pin, paste into cards-dev.twitter.com.
+
 ## Bitcoin own-node (bitcoind) — 2026-08-10 truth (**IBD COMPLETE**)
 
 - Node: Bitcoin Core v28.1, pruned 10GB, datadir **`/root/.bitcoin`** (NOT package default `/var/lib/bitcoin`)
@@ -56,6 +59,28 @@ If `/watch` shows stale video: hard refresh; check MP4 duration **~84s** (full) 
 - If you ever see `status:"syncing"` again after a reindex/re-IBD, treat as healthy progress (not an outage); OTS calendars still work
 - OOM history 2026-07-28 (killed bitcoind) — watch `free -h`; node ~1GB RSS; 7.8G RAM / 8G swap on THOR
 - API logs may show "fetch failed"/HTTP 500/timeout right after node start (startup flap) — re-check after 3-5 min
+
+### Daily RAM (Kimi / THOR)
+
+On THOR: `free -h`  
+`node scripts/watch-bitcoind-health.mjs`  
+Exit 1 if not `ready_to_verify`. History: OOM 2026-07-28.
+
+## RSS → Nostr cron (Kimi / THOR)
+
+`scripts/nostr-publish-feed.js` publishes kind-1 notes from `https://satohash.io/feed.xml`. **Default is dry-run** (print events, do not publish, do not write state). `--publish` is explicit.
+
+- Env `NOSTR_PRIVATE_KEY` (64 hex) **only on THOR**, never git, never a hook, never this file.
+- Do not add this script to git hooks.
+- Cron every 15 min (after a dry-run looks right):
+
+```cron
+*/15 * * * * cd /root/satohash && node scripts/nostr-publish-feed.js
+```
+
+Until Kimi sets `NOSTR_PRIVATE_KEY` on THOR, leave the crontab off or keep invoking without `--publish`.
+
+**Kind-0 profile (once, THOR; public fields only):** name Satohash · `lud16` satohash@breez.tips · `nip05` satohash@satohash.io · website https://satohash.io. nsec stays on THOR.
 
 ## Kimi — API image rebuild (**DONE 2026-08-31**, Grok on THOR)
 

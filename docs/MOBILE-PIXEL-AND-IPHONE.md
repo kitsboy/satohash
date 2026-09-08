@@ -32,3 +32,14 @@ They never need the app. You send `https://satohash.io/p/<64hex>`.
 | iPhone chrome | `npx playwright test --project=webkit` |
 | Live card | hard-open `/p/<hash>` |
 | Camera / mic | `_headers` `camera=(self); microphone=(self)` — stamp only, no geolocation |
+
+## Cam: 2-minute iMessage test
+
+We cannot hold the iPhone. Cam confirms the live `/p/<hash>` card unfurls.
+
+1. Open https://satohash.io/p/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+2. Share to iMessage
+3. Must unfurl JPEG `01-stamp-hero.jpg`, not a blank SPA
+4. Zero-JS card, Pending ≠ Confirmed honesty
+
+**Done when:** screenshot of the JPEG card in iMessage.

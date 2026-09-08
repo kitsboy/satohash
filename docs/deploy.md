@@ -1,5 +1,5 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 282) · **Updated:** 2026-09-08
+> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 283) · **Updated:** 2026-09-08
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Deploy — canonical
@@ -32,6 +32,8 @@ npm run build:verify
 ## 2. Cloudflare Pages (SPA)
 
 **Preferred path:** push `main` → GitHub Actions `.github/workflows/deploy.yml` → `wrangler pages deploy`.
+
+**Git remote:** origin must have a single push URL (`git@github.com:kitsboy/satohash.git`). A second https push URL runs husky twice and flakes pre-push. Fix: `git remote set-url --delete --push origin https://github.com/kitsboy/satohash.git` if present.
 
 Manual (M3):
 
