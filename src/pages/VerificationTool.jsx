@@ -279,27 +279,6 @@ export default function VerificationTool() {
         <StaticModeBanner />
         <header className="space-y-2 text-center">
           <div className="mb-4 flex flex-wrap items-center justify-center gap-2">
-            <div className="inline-flex items-center gap-3 rounded-full border border-[var(--accent-active)]/20 bg-[var(--accent-active)]/10 px-4 py-2">
-              <ShieldCheck className="text-[var(--accent-active)]" size={16} />
-              <span className="inline-flex items-center text-[10px] font-bold tracking-[0.2em] text-[var(--accent-active)] uppercase">
-                Independent verification
-                <Tooltip
-                  title="Pending is not confirmed"
-                  content="The fingerprint is at OpenTimestamps calendars. It is NOT in a Bitcoin block until status is confirmed. Pending ≠ confirmed."
-                />
-              </span>
-            </div>
-            <a
-              href="#check-without-satohash"
-              className="inline-flex min-h-[36px] items-center rounded-full border px-4 py-2 text-[10px] font-bold tracking-wider uppercase"
-              style={{
-                borderColor: 'var(--border)',
-                color: 'var(--text-secondary)',
-                background: 'var(--bg-secondary)'
-              }}
-            >
-              Check without Satohash
-            </a>
             <LiveNodeChip />
           </div>
           <h1 className="text-3xl font-bold tracking-tighter text-[var(--text-primary)] uppercase sm:text-5xl">
@@ -331,8 +310,7 @@ export default function VerificationTool() {
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,var(--accent-active),transparent)] opacity-0 transition-opacity group-hover:opacity-[0.02]" />
 
           {!result && !verifying && (
-            <div className="space-y-8">
-              {/* Hidden file input for .ots files */}
+            <div className="space-y-6">
               <input
                 ref={fileRef}
                 type="file"
@@ -340,100 +318,75 @@ export default function VerificationTool() {
                 className="hidden"
                 onChange={handleFileSelect}
               />
-              {/* Desktop upload icon */}
-              <button
-                type="button"
-                aria-label="Upload .ots proof file"
-                className="mx-auto hidden h-24 w-24 cursor-pointer items-center justify-center rounded-3xl border border-[var(--border)] bg-[var(--bg-primary)] text-[var(--text-secondary)] transition-all hover:border-[var(--accent-active)] hover:text-[var(--accent-active)] sm:flex"
-                onClick={() => fileRef.current?.click()}
-              >
-                <Upload size={40} />
-              </button>
-              {/* Mobile tap target — large button for easy finger tap */}
-              <label
-                className="mx-auto flex cursor-pointer flex-col items-center gap-3 rounded-2xl border-2 border-dashed p-6 transition-all active:scale-95 sm:hidden"
-                style={{
-                  borderColor: 'var(--border-bright)',
-                  background: 'var(--bg-secondary)',
-                  maxWidth: '280px'
-                }}
-              >
-                <input type="file" accept=".ots" className="hidden" onChange={handleFileSelect} />
-                <div
-                  className="flex h-16 w-16 items-center justify-center rounded-2xl"
-                  style={{ background: 'rgba(59,130,246,0.1)', color: 'var(--accent-active)' }}
-                >
-                  <Upload size={28} />
-                </div>
-                <div className="text-center">
-                  <p className="text-sm font-black" style={{ color: 'var(--text-primary)' }}>
-                    Tap to upload .ots proof
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <div className="flex min-h-[48px] flex-col justify-center gap-3 rounded-2xl border border-[var(--border)] bg-[var(--bg-primary)] p-5 text-left transition-colors hover:border-[var(--accent-gold)]">
+                  <p className="text-sm font-bold text-[var(--text-primary)]">
+                    Paste a SHA-256 hash
                   </p>
-                  <p className="mt-1 text-xs" style={{ color: 'var(--text-secondary)' }}>
-                    OpenTimestamps file
-                  </p>
-                </div>
-              </label>
-              {otsFile && (
-                <p className="text-sm font-medium" style={{ color: 'var(--accent-gold)' }}>
-                  📎 {otsFile.name}
-                </p>
-              )}
-              <div className="space-y-4">
-                <p className="text-xl font-bold">Drop an .ots proof or paste SHA-256 hash</p>
-                <div className="flex items-center justify-center gap-4">
-                  <div className="h-px w-12 bg-[var(--border)]" />
-                  <span className="text-[10px] font-bold text-[var(--text-secondary)] uppercase">
-                    Or Paste SHA-256
-                  </span>
-                  <div className="h-px w-12 bg-[var(--border)]" />
-                </div>
-                <div className="relative mx-auto flex max-w-lg items-center gap-2">
-                  <div className="relative flex-1">
-                    <Hash
-                      className="absolute top-1/2 left-4 -translate-y-1/2 text-[var(--text-secondary)]"
-                      size={18}
-                    />
-                    <input
-                      type="text"
-                      data-testid="verify-hash-input"
-                      value={hashInput}
-                      onChange={(e) => setHashInput(e.target.value)}
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter' && hashInput.trim()) {
-                          e.preventDefault()
-                          handleVerifyWithHash(hashInput.trim())
+                  <div className="relative flex items-center gap-2">
+                    <div className="relative flex-1">
+                      <Hash
+                        className="absolute top-1/2 left-4 -translate-y-1/2 text-[var(--text-secondary)]"
+                        size={18}
+                      />
+                      <input
+                        type="text"
+                        data-testid="verify-hash-input"
+                        value={hashInput}
+                        onChange={(e) => setHashInput(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' && hashInput.trim()) {
+                            e.preventDefault()
+                            handleVerifyWithHash(hashInput.trim())
+                          }
+                        }}
+                        aria-label="SHA-256 hash to verify"
+                        placeholder="e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                        className="h-14 w-full rounded-2xl border border-[var(--border)] bg-[var(--bg-primary)] pr-4 pl-12 font-mono text-sm outline-none focus:border-[var(--accent-gold)]"
+                        inputMode="text"
+                        autoComplete="off"
+                        autoCorrect="off"
+                        autoCapitalize="none"
+                        spellCheck={false}
+                      />
+                    </div>
+                    <button
+                      type="button"
+                      onClick={async () => {
+                        try {
+                          const text = await navigator.clipboard.readText()
+                          setHashInput(text.trim())
+                        } catch {
+                          toast.error('Could not read clipboard — paste manually')
                         }
                       }}
-                      aria-label="SHA-256 hash to verify"
-                      placeholder="e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-                      className="h-14 w-full rounded-2xl border border-[var(--border)] bg-[var(--bg-primary)] pr-4 pl-12 font-mono text-sm outline-none focus:border-[var(--accent-active)]"
-                      inputMode="text"
-                      autoComplete="off"
-                      autoCorrect="off"
-                      autoCapitalize="none"
-                      spellCheck={false}
-                    />
+                      className="flex-shrink-0 rounded-xl px-3 py-2 text-xs font-bold transition-all hover:border-[var(--accent-gold)] hover:text-[var(--accent-gold)] active:scale-95"
+                      style={{
+                        background: 'var(--bg-secondary)',
+                        color: 'var(--text-secondary)',
+                        border: '1px solid var(--border)'
+                      }}
+                    >
+                      Paste
+                    </button>
                   </div>
-                  <button
-                    onClick={async () => {
-                      try {
-                        const text = await navigator.clipboard.readText()
-                        setHashInput(text.trim())
-                      } catch {
-                        toast.error('Could not read clipboard — paste manually')
-                      }
-                    }}
-                    className="flex-shrink-0 rounded-xl px-3 py-2 text-xs font-bold transition-all active:scale-95"
-                    style={{
-                      background: 'var(--bg-secondary)',
-                      color: 'var(--text-secondary)',
-                      border: '1px solid var(--border)'
-                    }}
-                  >
-                    Paste
-                  </button>
                 </div>
+                <button
+                  type="button"
+                  aria-label="Drop an .ots proof"
+                  onClick={() => fileRef.current?.click()}
+                  className={`flex min-h-[48px] flex-col items-center justify-center gap-2 rounded-2xl border bg-[var(--bg-primary)] p-5 text-center transition-colors hover:border-[var(--accent-gold)] ${
+                    isDragOver ? 'border-[var(--accent-gold)]' : 'border-[var(--border)]'
+                  }`}
+                >
+                  <Upload size={22} className="text-[var(--text-secondary)]" />
+                  <p className="text-sm font-bold text-[var(--text-primary)]">Drop an .ots proof</p>
+                  {otsFile ? (
+                    <p className="text-xs font-medium text-[var(--accent-gold)]">{otsFile.name}</p>
+                  ) : (
+                    <p className="text-xs text-[var(--text-secondary)]">OpenTimestamps file</p>
+                  )}
+                </button>
               </div>
               <button
                 data-testid="verify-submit"
@@ -664,6 +617,30 @@ export default function VerificationTool() {
           )}
         </div>
 
+        <div className="flex flex-wrap items-center justify-center gap-2">
+          <div className="inline-flex items-center gap-3 rounded-full border border-[var(--accent-active)]/20 bg-[var(--accent-active)]/10 px-4 py-2">
+            <ShieldCheck className="text-[var(--accent-active)]" size={16} />
+            <span className="inline-flex items-center text-[10px] font-bold tracking-[0.2em] text-[var(--accent-active)] uppercase">
+              Independent verification
+              <Tooltip
+                title="Pending is not confirmed"
+                content="The fingerprint is at OpenTimestamps calendars. It is NOT in a Bitcoin block until status is confirmed. Pending ≠ confirmed."
+              />
+            </span>
+          </div>
+          <a
+            href="#check-without-satohash"
+            className="inline-flex min-h-[36px] items-center rounded-full border px-4 py-2 text-[10px] font-bold tracking-wider uppercase"
+            style={{
+              borderColor: 'var(--border)',
+              color: 'var(--text-secondary)',
+              background: 'var(--bg-secondary)'
+            }}
+          >
+            Check without Satohash
+          </a>
+        </div>
+
         {/* Educational Footer */}
         <footer className="grid grid-cols-1 gap-8 border-t border-[var(--border)] pt-12 md:grid-cols-3">
           <div className="space-y-3">
@@ -695,7 +672,7 @@ export default function VerificationTool() {
           </div>
         </footer>
       </div>
-      <Footer />
+      <Footer compact />
     </>
   )
 }

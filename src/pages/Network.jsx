@@ -421,9 +421,11 @@ export default function Network() {
       <section className="mx-auto max-w-5xl px-4 pb-10 sm:px-6" data-testid="family-clients">
         <h2 className="mb-3 text-sm font-black">Family clients (X-Satohash-Client)</h2>
         {loading && family.length === 0 ? (
-          <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>
-            Loading family clients…
-          </p>
+          <ul className="space-y-2" aria-busy="true" aria-label="Loading family clients">
+            {[0, 1, 2, 3].map((i) => (
+              <li key={i} className="h-10 animate-pulse rounded-xl bg-[var(--surface-raised)]" />
+            ))}
+          </ul>
         ) : family.length === 0 ? (
           <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>
             No attributed family stamps yet. Deep-link with <code>?ref=motopass</code> or the client

@@ -294,7 +294,59 @@ function DonationModal({ open, onClose, t }) {
   )
 }
 
-export default function Footer() {
+function CompactFooter() {
+  const compactLinks = [
+    { to: '/stamp', label: 'Stamp' },
+    { to: '/verify', label: 'Verify' },
+    { to: '/docs', label: 'Docs' },
+    { to: '/legal/terms', label: 'Terms' }
+  ]
+
+  return (
+    <footer
+      role="contentinfo"
+      className="relative border-t border-[var(--border)] bg-[var(--bg-secondary)]"
+    >
+      <div className="mx-auto flex min-h-[44px] max-w-6xl flex-wrap items-center justify-between gap-x-4 gap-y-1 px-5 py-1 sm:px-8">
+        <nav
+          aria-label="Stamp and verify"
+          className="flex min-h-[44px] flex-wrap items-center gap-x-1"
+        >
+          {compactLinks.map((link, i) => (
+            <span key={link.to} className="inline-flex items-center">
+              {i > 0 && (
+                <span className="mx-2 text-[var(--text-tertiary)]" aria-hidden>
+                  ·
+                </span>
+              )}
+              <Link
+                to={link.to}
+                className="inline-flex min-h-[44px] items-center text-[13px] font-medium text-[var(--text-secondary)] transition-colors hover:text-[var(--accent-gold)]"
+                onClick={() => {
+                  try {
+                    window.scrollTo(0, 0)
+                  } catch {
+                    /* ignore */
+                  }
+                }}
+              >
+                {link.label}
+              </Link>
+            </span>
+          ))}
+        </nav>
+        <span className="text-[11px] text-[var(--text-tertiary)]">© Give A Bit</span>
+      </div>
+    </footer>
+  )
+}
+
+export default function Footer({ compact = false }) {
+  if (compact) return <CompactFooter />
+  return <FullFooter />
+}
+
+function FullFooter() {
   const { t } = useTranslation()
   const [showDonation, setShowDonation] = useState(false)
   const [jobsOpen, setJobsOpen] = useState(false)

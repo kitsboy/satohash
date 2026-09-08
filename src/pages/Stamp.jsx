@@ -2140,7 +2140,7 @@ export default function Stamp() {
           )}
         </AnimatePresence>
       </div>
-      <Footer />
+      <Footer compact />
     </>
   )
 }
