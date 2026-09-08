@@ -94,7 +94,7 @@ export default function Counsel() {
           .
         </p>
       </article>
-      <Footer />
+      <Footer compact />
     </div>
   )
 }

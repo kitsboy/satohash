@@ -51,14 +51,19 @@ export default function Stamp() {
     trackEvent(events.STAMP_VIEW, { path: '/stamp' })
   }, [])
   useEffect(() => {
-    const href = '/verify'
-    if (document.querySelector(`link[rel="prefetch"][href="${href}"]`)) return undefined
-    const link = document.createElement('link')
-    link.rel = 'prefetch'
-    link.href = href
-    link.as = 'document'
-    document.head.appendChild(link)
-    return () => link.remove()
+    const added = []
+    const prefetchDoc = (href) => {
+      if (document.querySelector(`link[rel="prefetch"][href="${href}"]`)) return
+      const link = document.createElement('link')
+      link.rel = 'prefetch'
+      link.href = href
+      link.as = 'document'
+      document.head.appendChild(link)
+      added.push(link)
+    }
+    prefetchDoc('/verify')
+    prefetchDoc('/docs')
+    return () => added.forEach((link) => link.remove())
   }, [])
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
@@ -1398,9 +1403,16 @@ export default function Stamp() {
               }}
               animate={{
                 borderColor: isDragging ? 'var(--accent-gold)' : 'var(--border)',
-                backgroundColor: isDragging ? 'var(--surface-raised)' : 'transparent'
+                backgroundColor: isDragging
+                  ? 'color-mix(in srgb, var(--accent-gold) 8%, transparent)'
+                  : 'transparent',
+                boxShadow: isDragging
+                  ? '0 0 0 1px var(--accent-gold), 0 0 28px var(--accent-gold-glow)'
+                  : '0 0 0 0 transparent'
               }}
-              className={`vault-ring group relative flex min-h-[28rem] flex-col items-center justify-start overflow-visible rounded-[2.5rem] border-2 border-dashed px-5 pt-10 pb-8 text-center transition-colors sm:min-h-[32rem] sm:justify-center sm:px-10 sm:pt-12 sm:pb-10 md:min-h-[36rem] ${
+              className={`vault-ring group relative flex min-h-[28rem] flex-col items-center justify-start overflow-visible rounded-[2.5rem] border-dashed px-5 pt-10 pb-8 text-center transition-colors sm:min-h-[32rem] sm:justify-center sm:px-10 sm:pt-12 sm:pb-10 md:min-h-[36rem] ${
+                isDragging ? 'border-[3px]' : 'border-2'
+              } ${
                 (stampMode === 'single' || stampMode === 'capsule') && stampingStatus === 'idle'
                   ? 'cursor-pointer'
                   : ''
@@ -1559,6 +1571,14 @@ export default function Stamp() {
                               ? 'Drop multiple files to create a signed evidence bundle anchored as a single proof.'
                               : t('stamp', 'dropzone')}
                           </p>
+                          {files.length === 0 ? (
+                            <p
+                              className="px-2 text-xs leading-snug text-balance"
+                              style={{ color: 'var(--text-muted)' }}
+                            >
+                              File never leaves this device. We send a SHA-256.
+                            </p>
+                          ) : null}
                           <p className="inline-flex items-center justify-center gap-1 px-2 text-[10px] font-bold tracking-widest text-balance text-[var(--text-muted)] uppercase">
                             {tp('stampPage.otsViaBitcoin')}
                             <Tooltip

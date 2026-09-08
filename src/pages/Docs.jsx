@@ -210,7 +210,7 @@ export default function Docs() {
               placeholder={t('docsPage.hero.searchPlaceholder')}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="min-h-[48px] w-full rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] pr-4 pl-11 text-base text-[var(--text-primary)] placeholder-[var(--text-tertiary)] transition-colors outline-none focus:border-[var(--accent-gold)] sm:text-sm"
+              className="min-h-[48px] w-full rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] pr-4 pl-11 text-base text-[var(--text-primary)] placeholder-[var(--text-tertiary)] transition-colors outline-none focus:border-[var(--accent-gold)] focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]/35 sm:text-sm"
             />
           </div>
         </div>

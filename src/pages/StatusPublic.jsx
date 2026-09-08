@@ -9,6 +9,7 @@ import {
   CheckCircle2,
   CircleDot,
   Database,
+  GitBranch,
   Globe,
   Loader2,
   Radio,
@@ -174,7 +175,8 @@ export default function StatusPublic() {
     health: null,
     network: null,
     stats: null,
-    recent: []
+    recent: [],
+    metrics: null
   })
   const [loading, setLoading] = useState(true)
   const [updatedAt, setUpdatedAt] = useState(null)
@@ -219,15 +221,17 @@ export default function StatusPublic() {
       fetchJson(`${API}/health?deep=true`),
       fetchJson(`${API}/api/public/network`),
       fetchJson(`${API}/api/public/stats`),
-      recentP
-    ]).then(([statusR, healthR, networkR, statsR, recentR]) => {
+      recentP,
+      fetchJson(`${API}/metrics.json`)
+    ]).then(([statusR, healthR, networkR, statsR, recentR, metricsR]) => {
       if (cancelled) return
       setData({
         status: statusR.status === 'fulfilled' ? statusR.value : null,
         health: healthR.status === 'fulfilled' ? healthR.value : null,
         network: networkR.status === 'fulfilled' ? networkR.value : null,
         stats: statsR.status === 'fulfilled' ? statsR.value : null,
-        recent: recentR.status === 'fulfilled' ? recentR.value : []
+        recent: recentR.status === 'fulfilled' ? recentR.value : [],
+        metrics: metricsR.status === 'fulfilled' ? metricsR.value : null
       })
       setUpdatedAt(new Date())
       setLoading(false)
@@ -263,8 +267,15 @@ export default function StatusPublic() {
   const calendarLatency = data.stats?.calendar_health || {}
 
   const live = data.health?.status === 'ok' || data.status?.ok === true
-  const mode = paywall?.mode || (data.status?.require_lightning === false ? 'free_open' : 'paid')
-  const stampsTotal = data.status?.stamps_stored ?? null
+  const requireLightning =
+    paywall?.require_lightning ??
+    data.status?.require_lightning ??
+    data.metrics?.raw?.requireLightning
+  const mode =
+    paywall?.mode ||
+    (requireLightning === false ? 'free_open' : requireLightning === true ? 'paid' : null)
+  const gitSha = data.health?.gitSha || data.health?.git_sha || null
+  const stampsTotal = data.metrics?.raw?.counts?.stampsTotal ?? data.status?.stamps_stored ?? null
   const familyFree = data.status?.family_free_tier ?? null
   const recent = Array.isArray(data.recent) ? data.recent.slice(0, 10) : []
 
@@ -331,19 +342,20 @@ export default function StatusPublic() {
         >
           {loading ? (
             <LoadingRows count={2} />
-          ) : data.status ? (
+          ) : data.status || data.health || data.metrics ? (
             <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-              <Stat
-                icon={Server}
-                label="Service"
-                value={data.status.service || '—'}
-                sub={data.status.plane ? `plane ${data.status.plane}` : null}
-              />
+              <Stat icon={GitBranch} label="Git SHA" value={gitSha || '—'} sub="from /health" />
               <Stat
                 icon={Activity}
                 label="Mode"
-                value={mode === 'free_open' ? 'Free open' : 'Paid (LN)'}
-                sub={data.status.require_lightning === false ? 'no paywall today' : null}
+                value={mode === 'free_open' ? 'Free open' : mode === 'paid' ? 'Paid (LN)' : '—'}
+                sub={
+                  mode === 'free_open'
+                    ? 'REQUIRE_LIGHTNING=false'
+                    : mode === 'paid'
+                      ? 'REQUIRE_LIGHTNING=true'
+                      : null
+                }
               />
               <Stat
                 icon={CheckCircle2}
@@ -355,7 +367,11 @@ export default function StatusPublic() {
                 icon={Stamp}
                 label="Stamps stored"
                 value={stampsTotal != null ? fmtNum(stampsTotal) : '—'}
-                sub={data.stats ? `${fmtNum(data.stats.stamps_created ?? 0)} in last 24h` : null}
+                sub={
+                  data.stats?.stamps_created != null
+                    ? `${fmtNum(data.stats.stamps_created)} in last 24h`
+                    : 'from /metrics.json'
+                }
               />
             </div>
           ) : (
@@ -669,6 +685,8 @@ export default function StatusPublic() {
         <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
           Public transparency surface. Every section is read-only and fetched from public endpoints
           — this page never writes stamps and requires no authentication. Sources:{' '}
+          <span className="font-mono">/health</span>,{' '}
+          <span className="font-mono">/metrics.json</span>,{' '}
           <span className="font-mono">/api/public/status</span>,{' '}
           <span className="font-mono">/health?deep=true</span>,{' '}
           <span className="font-mono">/api/public/network</span>,{' '}
@@ -695,11 +713,11 @@ export default function StatusPublic() {
           style={{ color: 'var(--text-muted)' }}
         >
           <CircleDot size={12} style={{ color: 'var(--accent-success)' }} />
-          All systems reported from API plane ‘proof’ · version{' '}
-          {details?.version || data.status?.service || '—'}
+          All systems reported from API plane ‘proof’ · git {gitSha || '—'}
+          {details?.version ? ` · ${details.version}` : ''}
         </div>
       </div>
-      <Footer />
+      <Footer compact />
     </div>
   )
 }

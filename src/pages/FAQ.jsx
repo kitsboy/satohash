@@ -199,7 +199,7 @@ export default function FAQ() {
         </div>
       </section>
 
-      <Footer />
+      <Footer compact />
     </div>
   )
 }

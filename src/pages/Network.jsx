@@ -91,13 +91,16 @@ export default function Network() {
   const [cals, setCals] = useState(null)
   const [recent, setRecent] = useState([])
   const [family, setFamily] = useState([])
+  const [familyError, setFamilyError] = useState(false)
   const [loading, setLoading] = useState(true)
   const [err, setErr] = useState(null)
 
   const load = async () => {
     setLoading(true)
     setErr(null)
+    setFamilyError(false)
     const base = getApiUrl() || 'https://api.satohash.io'
+    let metricsFailed = false
     try {
       const [s, b, c, rec, met] = await Promise.all([
         fetch(`${base}/api/public/stats`)
@@ -113,16 +116,29 @@ export default function Network() {
           .then((r) => (r.ok ? r.json() : null))
           .catch(() => null),
         fetch(`${base}/metrics.json`)
-          .then((r) => (r.ok ? r.json() : null))
-          .catch(() => null)
+          .then((r) => {
+            if (!r.ok) throw new Error(`HTTP ${r.status}`)
+            return r.json()
+          })
+          .catch(() => {
+            metricsFailed = true
+            return null
+          })
       ])
       setStats(s)
       setBitcoin(b)
       setCals(c)
       setRecent(rec?.stamps || rec?.results || [])
-      setFamily(met?.raw?.familyClients || met?.segments || [])
+      if (metricsFailed) {
+        setFamilyError(true)
+        setFamily([])
+      } else {
+        setFamilyError(false)
+        setFamily(met?.raw?.familyClients || met?.segments || [])
+      }
     } catch (e) {
       setErr(e.message || 'Failed to load network status')
+      setFamilyError(true)
     } finally {
       setLoading(false)
     }
@@ -420,7 +436,7 @@ export default function Network() {
 
       <section className="mx-auto max-w-5xl px-4 pb-10 sm:px-6" data-testid="family-clients">
         <h2 className="mb-3 text-sm font-black">Family clients (X-Satohash-Client)</h2>
-        {loading && family.length === 0 ? (
+        {loading && family.length === 0 && !familyError ? (
           <ul className="space-y-2" aria-busy="true" aria-label="Loading family clients">
             {[0, 1, 2, 3].map((i) => (
               <li
@@ -429,6 +445,10 @@ export default function Network() {
               />
             ))}
           </ul>
+        ) : familyError ? (
+          <p className="text-xs" style={{ color: 'var(--accent-danger)' }}>
+            Could not load family clients
+          </p>
         ) : family.length === 0 ? (
           <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>
             No attributed family stamps yet. Deep-link with <code>?ref=motopass</code> or the client

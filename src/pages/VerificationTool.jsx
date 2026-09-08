@@ -652,8 +652,10 @@ export default function VerificationTool() {
           </a>
         </div>
 
-        {/* Educational Footer */}
-        <footer className="grid grid-cols-1 gap-8 border-t border-[var(--border)] pt-12 md:grid-cols-3">
+        <section
+          className="grid grid-cols-1 gap-8 border-t border-[var(--border)] pt-12 md:grid-cols-3"
+          aria-label="Global witnesses"
+        >
           <div className="space-y-3">
             <div className="flex items-center gap-2 text-[var(--accent-active)]">
               <Globe size={16} />
@@ -681,7 +683,7 @@ export default function VerificationTool() {
               No central authority can revoke or alter this attestation record once confirmed.
             </p>
           </div>
-        </footer>
+        </section>
       </div>
       <Footer compact />
     </>
