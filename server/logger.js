@@ -11,7 +11,11 @@ const logger = pino({
       'filename',
       'original_filename',
       '*.filename',
-      '*.original_filename'
+      '*.original_filename',
+      'req.body.filename',
+      'req.body.original_filename',
+      'body.filename',
+      'body.original_filename'
     ],
     censor: '[redacted]'
   },

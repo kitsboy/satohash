@@ -39,6 +39,7 @@ export const tieredRateLimiter = (tier = 'public') => {
       logger.warn(
         `⚠️ Rate Limit Exceeded [${req.id}]: IP: ${hashClientIp(req.ip)} URI: ${req.originalUrl} Tier: ${tier}`
       )
+      res.setHeader('Retry-After', String(Math.ceil(targetLimit.windowMs / 1000)))
       res.status(options.statusCode).json(options.message)
     }
   })
@@ -110,6 +111,7 @@ export const searchRateLimiter = rateLimit({
   message: { error: 'Too many search requests. Please wait.' },
   handler: (req, res, next, options) => {
     logger.warn(`⚠️ Search Rate Limit Exceeded [${req.id}]: IP: ${hashClientIp(req.ip)}`)
+    res.setHeader('Retry-After', '60')
     res.status(options.statusCode).json(options.message)
   }
 })

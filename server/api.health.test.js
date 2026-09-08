@@ -12,6 +12,7 @@ function createHealthApp() {
   const app = express()
 
   app.get('/health', async (req, res) => {
+    res.setHeader('Cache-Control', 'no-store')
     const deep = req.query.deep === 'true'
     let status = 'ok'
     const details = {
@@ -42,6 +43,7 @@ describe('GET /health', () => {
   it('returns ok status', async () => {
     const res = await request(app).get('/health')
     expect(res.status).toBe(200)
+    expect(res.headers['cache-control']).toBe('no-store')
     expect(res.body.status).toBe('ok')
     expect(res.body.details).toBeDefined()
     expect(res.body.details.timestamp).toBeTypeOf('string')

@@ -308,8 +308,91 @@ const options = {
           tags: ['Public'],
           summary: 'Product metrics envelope',
           description:
-            'gab.product-metrics.v1 envelope for HQ: raw stats, last10 stamps, familyClients attribution, health dependencies.',
-          responses: { 200: { description: 'Metrics envelope' } }
+            'gab.product-metrics.v1 envelope for HQ: raw stats, last10 stamps, familyClients attribution, health dependencies. raw.requireLightning mirrors REQUIRE_LIGHTNING (false = free stamps).',
+          responses: {
+            200: {
+              description: 'Metrics envelope',
+              content: {
+                'application/json': {
+                  examples: {
+                    live: {
+                      summary:
+                        'Illustrative live snapshot (real KPI keys + raw.counts; not a user or daily-cap claim)',
+                      value: {
+                        schema: 'gab.product-metrics.v1',
+                        productId: 'satohash',
+                        name: 'Satohash',
+                        health: {
+                          status: 'green',
+                          message: 'API healthy — live stamp aggregates for HQ',
+                          uptimePct24h: null
+                        },
+                        kpis: [
+                          {
+                            key: 'stamps_total',
+                            label: 'Stamps (all time)',
+                            value: 190,
+                            unit: 'proofs',
+                            format: 'number',
+                            priority: 1
+                          },
+                          {
+                            key: 'stamps_24h',
+                            label: 'Stamps 24h',
+                            value: 7,
+                            unit: 'proofs',
+                            format: 'number',
+                            priority: 1
+                          },
+                          {
+                            key: 'pending',
+                            label: 'Pending confirm',
+                            value: 2,
+                            unit: 'proofs',
+                            format: 'number',
+                            priority: 2
+                          },
+                          {
+                            key: 'confirmed',
+                            label: 'Confirmed (all time)',
+                            value: 188,
+                            unit: 'proofs',
+                            format: 'number',
+                            priority: 2
+                          },
+                          {
+                            key: 'confirm_rate',
+                            label: 'Confirm rate',
+                            value: 100,
+                            unit: '%',
+                            format: 'percent',
+                            priority: 1
+                          }
+                        ],
+                        raw: {
+                          demo: false,
+                          requireLightning: false,
+                          counts: {
+                            stampsTotal: 190,
+                            stamps24h: 7,
+                            stamps7d: 46,
+                            pending: 2,
+                            confirmed: 188,
+                            confirmed7d: 44,
+                            failed: 0,
+                            failed7d: 0,
+                            familyFree: 1,
+                            distinctClients: 12,
+                            confirmRate: 100
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }
     }

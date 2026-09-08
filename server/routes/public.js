@@ -71,6 +71,7 @@ export function register(app, deps) {
   })
 
   app.get('/api/public/status', async (req, res) => {
+    res.setHeader('Cache-Control', 'no-store')
     let stampsApprox = null
     try {
       const row = db.prepare('SELECT COUNT(*) AS n FROM timestamps').get()

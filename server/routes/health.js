@@ -82,6 +82,7 @@ export function register(app, deps) {
   })
 
   app.get('/health', async (req, res) => {
+    res.setHeader('Cache-Control', 'no-store')
     const deep = req.query.deep === 'true'
     let status = 'ok'
     let details = {}

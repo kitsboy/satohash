@@ -17,6 +17,7 @@ import redis from '../cache.js'
 import { paywallMiddleware } from '../middleware.js'
 import { verifySignature, verifyWebCryptoP256, buildSigningMessage } from '../lib/signing.js'
 import { audit } from '../lib/audit-log.js'
+import { hashClientIp } from '../security.js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const router = Router()
@@ -789,7 +790,7 @@ router.post('/stamp/signed', paywallMiddleware, async (req, res) => {
       hash: String(hash).slice(0, 16),
       curve: result.curve,
       reason: result.error || 'invalid signature',
-      ip: req.ip
+      ip: hashClientIp(req.ip)
     })
     return res.status(400).json({
       error: 'signature verification failed',
@@ -830,7 +831,7 @@ router.post('/stamp/signed', paywallMiddleware, async (req, res) => {
     hash: String(hash).slice(0, 16),
     curve: signerMeta.curve,
     pubkey: signerMeta.pubkey,
-    ip: req.ip
+    ip: hashClientIp(req.ip)
   })
 })
 

@@ -112,6 +112,7 @@ const startUpgradeDaemon = (io) => {
   // Use a slightly offset cron to avoid thundering herd on full segments
   cron.schedule('3,18,33,48 * * * *', async () => {
     logger.info('🔄 [DAEMON] Initiating OTS confirmation check cycle...')
+    let upgradedThisPass = 0
 
     // Only pick top 20 pending stamps to avoid overwhelming memory/network
     const pendingStamps = db
@@ -173,6 +174,7 @@ const startUpgradeDaemon = (io) => {
             WHERE id = ?
           `
           ).run(Buffer.from(upgradedBinary), blockHeight, stamp.id)
+          upgradedThisPass += 1
 
           logger.info(`🎊 [DAEMON] TRUTH_FOUND: ${stamp.id} confirmed at block ${blockHeight}.`)
 
@@ -265,6 +267,15 @@ const startUpgradeDaemon = (io) => {
         logger.info(`[DAEMON] Backfilled bitcoin_block_height ${blockHeight} for ${stamp.id}`)
       } catch (error) {
         logger.error(`❌ [DAEMON] Height backfill failed for ${stamp.id}: ${error.message}`)
+      }
+    }
+
+    // Shrink WAL after a pass that actually confirmed proofs — skip empty ticks
+    if (upgradedThisPass > 0) {
+      try {
+        db.pragma('wal_checkpoint(TRUNCATE)')
+      } catch (e) {
+        logger.warn(`[DAEMON] wal_checkpoint(TRUNCATE) failed: ${e.message}`)
       }
     }
   })
