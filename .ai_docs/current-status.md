@@ -1,12 +1,12 @@
 # Current Status — Satohash
 
 **Version:** **5.0.0-ELITE** (Build 331+)  
-**Last Updated:** 2026-09-08 (Grok 4.6 — leftover 18 harden items + docs/Kimi maps)  
+**Last Updated:** 2026-09-08 (Grok 4.6 — /goodbye after harden marathon)  
 **Frontend:** https://satohash.io · www · CF Pages project **`satohash`** — Grok lane, `assetsDir: 'b'`  
-**API:** https://api.satohash.io ✅ LIVE (THOR Docker). Confirm SHA with `GET /health` (`gitSha`). Last verified this session: **`7cc0932`**, image **818MB**, `Cache-Control: no-store`, Caddy reload OK. Tree HEAD after this wave is **`6ead07f`** until the next THOR rebuild.  
+**API:** https://api.satohash.io ✅ LIVE (THOR Docker). Confirm SHA with `GET /health` (`gitSha`). **Live now: `e979e69`**, image **818MB**, `Cache-Control: no-store`, Caddy reload OK, paywall off, ~288 stamps.  
 **Metrics SoT:** `https://api.satohash.io/metrics.json`  
 **HQ:** https://hq.giveabit.io  
-**Git:** `main` @ **`6ead07f`** (pushing with this docs commit)  
+**Git:** `main` @ **`e979e69`**  
 **Kimi vault:** **THOR VPS Obsidian** (not M4)  
 **Analytics:** Umami `analytics.giveabit.io` — **not** Google Analytics  
 **Search:** GSC property `https://satohash.io/` **verified**
@@ -77,7 +77,7 @@
 - [x] Remaining 18 of the last 20: government compact footers, 2 more learn OG JPEGs, thinner info ring (1.15px, still **one** gold circle), docs prefetch `/verify`, OpenAPI calendar-status, smoke learn JPEG, Network `/p/` aria-label, counsel `scroll-mt-24`, Safari `fontVariantNumeric`, sqlite `analysis_limit=400`
 - [x] Info icon: one gold ring around a plain i (not Lucide-in-a-ring)
 - [x] Docs/maps: this file · `docs/handoff-log.md` · `docs/KIMI-HANDOFF.md` · `docs/MASTER-BRAIN-INGEST.md` · `docs/ops-runbook.md`
-- [ ] THOR rebuild for `161c7e0`+ (`analysis_limit`) after this push
+- [x] THOR rebuild live **`e979e69`** (`analysis_limit` in this image)
 - [ ] Pin `/watch` on **`@give_bit`**
 - [ ] Physical iPhone `/p/<hash>` unfurl
 

@@ -1,3 +1,25 @@
+## Latest Session Summary (from 2026-09-08 goodbye)
+
+**Chat Topic:** Cam asked Grok to run successive 20-item harden lists alone (agents, batched push), iterate the info “i”, then close.
+
+**Finished in this session:**
+- Live API **`gitSha=e979e69`** · ~818MB · `Cache-Control: no-store` · Caddy OK · paywall **off** · ~288 stamps.
+- Info “i”: **one gold ring** around a plain i (1.15px). Not two circles.
+- Compact footers across stamp/legal/government/marketing. Honest HUD (no fake 2400 / 10-day cap). OG JPEGs for iMessage. Self-hosted fonts. Watch `src` only on play.
+- sqlite: WAL, mmap, cache_size, temp_store, cache_spill, analysis_limit, optimize after successful upgrade.
+- Maps: `.ai_docs/current-status.md` · `docs/handoff-log.md` · this file · `docs/MASTER-BRAIN-INGEST.md` · `docs/ops-runbook.md` · `docs/archive/SESSION-SUMMARY-2026-09-08-goodbye.md`
+
+**Still to do:**
+- Pin `/watch` on **`@give_bit`**
+- Physical iPhone `/p/<hash>` JPEG unfurl
+- RSS→Nostr cron (nsec on THOR)
+- Entity / Impressum — counsel, not a code flip
+- Do not `--force` opentimestamps
+
+**Next for Kimi:** Ingest `docs/MASTER-BRAIN-INGEST.md` (2026-09-08 paste) into **THOR Obsidian** (not M4). Educate Hermes: Pages → Grok. `git pull` on `/root/satohash` — API already rebuilt to `e979e69`. Do not flip paywall. Do not change `/api/*`.
+
+---
+
 ## Latest Session Summary (Grok M3, 2026-09-08 — leftover 18 + maps)
 
 **For Kimi on THOR Obsidian (not M4).** Vault stays on THOR. Code = M3/Grok. Pages = Grok (standing push). Do not flip `REQUIRE_LIGHTNING`. Do not change `/api/*`. Do not `--force` opentimestamps. Do not use `@satohash`.

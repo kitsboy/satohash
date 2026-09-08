@@ -1,3 +1,17 @@
+## 2026-09-08 (Grok M3 — /goodbye)
+
+**Pickup:** `.ai_docs/current-status.md` · this file · `docs/KIMI-HANDOFF.md` · `docs/archive/SESSION-SUMMARY-2026-09-08-goodbye.md` · `/whatsup` next chat.
+
+**Live:** API `gitSha=e979e69` · 818MB · Caddy OK · paywall off · ~288 stamps. Pages from `main`.
+
+**Done this chat:** successive 20-item harden waves (agents, batched push); one-circle gold info i; compact footers; OG JPEGs; sqlite pragmas; maps + Kimi ingest. THOR rebuilt to HEAD.
+
+**Still open:** pin `/watch` on `@give_bit`; iPhone `/p/` unfurl; RSS→Nostr; no `--force` opentimestamps.
+
+**Kimi:** THOR Obsidian, not M4. Ingest MASTER-BRAIN paste. Do not Tailscale-sync notes to M4.
+
+---
+
 ## 2026-09-08 (Grok M3 — leftover 18 done + Kimi/maps refresh)
 
 **Pickup:** `.ai_docs/current-status.md` · this file · `docs/KIMI-HANDOFF.md` · `docs/MASTER-BRAIN-INGEST.md`
