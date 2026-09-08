@@ -1,3 +1,20 @@
+## 2026-09-08 (Grok M3 — harden wave: one-circle info i, sqlite optimize)
+
+**Pickup:** `.ai_docs/current-status.md` · this file · HEAD `8ad9de8`.
+
+**Live at start:** API `gitSha=cd2d1ca` · 818MB · Caddy OK · 285 stamps · paywall off.
+
+**Pushed:**
+- `0d4ea89` sqlite `optimize` after successful upgrade pass, OpenAPI `/api/public/stats`.
+- `e8ee09c` three learn OG JPEGs, smoke how-satohash-works.jpg, glossary prefetch `/stamp`, robots llms note.
+- `8ad9de8` info icon is **one** gold ring around the i (not Lucide-in-a-ring), compact batch-verify/government, SHA copy aria-label, donate stamp CTA test id, tabular-nums build.
+
+**Do not:** flip paywall · change `/api/*` · shuffle package.json deps · `--force` opentimestamps · `@satohash`
+
+**Kimi:** THOR ingest. API rebuild for `0d4ea89`. Pages auto-deploys SPA.
+
+---
+
 ## 2026-09-08 (Grok M3 — harden wave: minimal info mark, sticky comparison)
 
 **Pickup:** `.ai_docs/current-status.md` · this file · HEAD `23baa3e`.
