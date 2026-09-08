@@ -142,7 +142,8 @@ const options = {
                     hash: {
                       type: 'string',
                       pattern: '^[a-f0-9]{64}$',
-                      description: 'SHA-256 hex hash'
+                      description: 'SHA-256 hex hash',
+                      example: 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'
                     },
                     filename: { type: 'string', description: 'Original filename (optional)' }
                   }
@@ -151,7 +152,27 @@ const options = {
             }
           },
           responses: {
-            200: { description: 'Stamp created or already pending' },
+            200: {
+              description:
+                'Stamp created, already pending, or reused. Empty SHA-256 of an empty file (e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855) returns 200 reused/confirmed if already stamped.',
+              content: {
+                'application/json': {
+                  examples: {
+                    reusedEmpty: {
+                      summary: 'Reuse of empty-file SHA-256',
+                      value: {
+                        success: true,
+                        reused: true,
+                        hash: 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
+                        status: 'confirmed',
+                        message:
+                          'Hash already stamped — returning existing proof (no new calendar submit).'
+                      }
+                    }
+                  }
+                }
+              }
+            },
             429: { description: 'Rate limited (5/min public)' }
           }
         }

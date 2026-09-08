@@ -16,6 +16,7 @@ if (typeof window !== 'undefined') {
 
 if (import.meta.env.VITE_SENTRY_DSN) {
   import('@sentry/react').then((Sentry) => {
+    window.__SATOHASH_SENTRY__ = Sentry
     Sentry.init({
       dsn: import.meta.env.VITE_SENTRY_DSN,
       integrations: [Sentry.browserTracingIntegration(), Sentry.replayIntegration()],

@@ -7,11 +7,13 @@ import { getApiUrl } from '../../config/constants'
  * Readiness first (dev), falls back to /health?deep=true (public deep health)
  * because /api/public/readiness is not part of the live public surface.
  */
-export default function LiveNodeChip({ compact = false, className = '' }) {
+export default function LiveNodeChip({ compact = false, className = '', defer = false }) {
   const [info, setInfo] = useState(null)
 
   useEffect(() => {
     let cancelled = false
+    let idleId
+    let timeoutId
     const API = getApiUrl()
 
     const fromReadiness = (d) => {
@@ -38,28 +40,41 @@ export default function LiveNodeChip({ compact = false, className = '' }) {
       }
     }
 
-    fetch(`${API}/api/public/readiness`)
-      .then((r) => (r.ok ? r.json() : null))
-      .then((d) => {
-        if (cancelled) return
-        const readyInfo = fromReadiness(d)
-        if (readyInfo) {
-          setInfo(readyInfo)
-          return
-        }
-        // Readiness is not exposed on the live API (500) — use deep health.
-        return fetch(`${API}/health?deep=true`)
-          .then((r) => (r.ok ? r.json() : null))
-          .then((h) => {
-            if (!cancelled && h) setInfo(fromHealth(h))
-          })
-      })
-      .catch(() => {})
+    const run = () => {
+      if (cancelled) return
+      fetch(`${API}/api/public/readiness`)
+        .then((r) => (r.ok ? r.json() : null))
+        .then((d) => {
+          if (cancelled) return
+          const readyInfo = fromReadiness(d)
+          if (readyInfo) {
+            setInfo(readyInfo)
+            return
+          }
+          // Readiness is not exposed on the live API (500) — use deep health.
+          return fetch(`${API}/health?deep=true`)
+            .then((r) => (r.ok ? r.json() : null))
+            .then((h) => {
+              if (!cancelled && h) setInfo(fromHealth(h))
+            })
+        })
+        .catch(() => {})
+    }
+
+    if (!defer) {
+      run()
+    } else if (typeof requestIdleCallback === 'function') {
+      idleId = requestIdleCallback(run, { timeout: 1200 })
+    } else {
+      timeoutId = setTimeout(run, 1200)
+    }
 
     return () => {
       cancelled = true
+      if (idleId != null) cancelIdleCallback?.(idleId)
+      if (timeoutId != null) clearTimeout(timeoutId)
     }
-  }, [])
+  }, [defer])
 
   if (!info) return null
 

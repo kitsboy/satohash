@@ -540,7 +540,7 @@ export default function Landing() {
                 <span style={{ color: 'var(--accent-success)' }}>
                   {t('landingPage.telemetry.title')}
                 </span>
-                <LiveNodeChip />
+                <LiveNodeChip defer />
               </div>
               <a
                 href="https://mempool.space"
