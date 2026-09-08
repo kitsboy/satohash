@@ -22,10 +22,11 @@
   "telemetry": {
     "title": "Live Bitcoin Network Telemetry",
     "tipHeight": "Tip Height",
-    "fastestFee": "Fastest Fee",
+    "fastestFee": "Indicative fee",
     "difficultyAdjust": "Difficulty Adjust",
     "epochProgress": "Epoch Progress",
     "satPerVb": "sat/vB",
+    "feeNote": "Indicative · mempool, not a Satohash fee",
     "zeroKnowledge": "Zero-Knowledge (Local Hashing)",
     "compliance": "eIDAS & ESIGN Aligned",
     "proofsConfirmed": "{{count}} Proofs Confirmed"

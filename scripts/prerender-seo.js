@@ -89,7 +89,7 @@ function shell({
   contentHtml,
   canonical,
   article = null,
-  ogImage = `${SITE}/og/home.png`,
+  ogImage = `${SITE}/og/home.jpg`,
   ogImageAlt = null,
   player = false,
   extraGraph = []
@@ -99,6 +99,7 @@ function shell({
   const eTitle = esc(title)
   const eDesc = esc(description)
   const eAlt = esc(ogAlt)
+  const ogType = /\.jpe?g$/i.test(ogImage) ? 'image/jpeg' : 'image/png'
   const graph = []
   if (article) {
     const crumbs = [
@@ -156,7 +157,7 @@ ${JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }, null, 2)
 <meta property="og:image" content="${ogImage}" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
-<meta property="og:image:type" content="image/png" />
+<meta property="og:image:type" content="${ogType}" />
 <meta property="og:image:alt" content="${eAlt}" />
 <meta property="og:image:secure_url" content="${ogImage}" />
 <!-- Twitter / X Card -->
@@ -263,7 +264,7 @@ ${JSON.stringify(
 console.log('Prerendering SEO pages…')
 fs.mkdirSync(OUT, { recursive: true })
 
-write('landing.html', shell({ title: landingTitle, description: landingDesc, contentHtml: landingBody, canonical: `${SITE}/`, ogImage: `${SITE}/og/home.png` }))
+write('landing.html', shell({ title: landingTitle, description: landingDesc, contentHtml: landingBody, canonical: `${SITE}/`, ogImage: `${SITE}/og/home.jpg` }))
 write(
   'faq.html',
   shell({ title: faqTitle, description: faqDesc, contentHtml: faqBody, canonical: `${SITE}/faq`, ogImage: `${SITE}/og/faq.png` }).replace('</head>', `${faqSchema}\n</head>`)
@@ -480,8 +481,8 @@ const counselBody = `
 </ul>
 <p>Satohash is the product surface. The chain of trust is OpenTimestamps + Bitcoin proof of work. Counsel should verify the <code>.ots</code> independently. <a href="${SITE}/verify">Verify a proof</a>.</p>`
 
-write('identity.html', shell({ title: identityTitle, description: identityDesc, contentHtml: identityBody, canonical: `${SITE}/identity`, ogImage: `${SITE}/og/home.png` }))
-write('status.html', shell({ title: statusTitle, description: statusDesc, contentHtml: statusBody, canonical: `${SITE}/status`, ogImage: `${SITE}/og/home.png` }))
-write('counsel.html', shell({ title: counselTitle, description: counselDesc, contentHtml: counselBody, canonical: `${SITE}/counsel`, ogImage: `${SITE}/og/home.png` }))
+write('identity.html', shell({ title: identityTitle, description: identityDesc, contentHtml: identityBody, canonical: `${SITE}/identity`, ogImage: `${SITE}/og/home.jpg` }))
+write('status.html', shell({ title: statusTitle, description: statusDesc, contentHtml: statusBody, canonical: `${SITE}/status`, ogImage: `${SITE}/og/home.jpg` }))
+write('counsel.html', shell({ title: counselTitle, description: counselDesc, contentHtml: counselBody, canonical: `${SITE}/counsel`, ogImage: `${SITE}/og/home.jpg` }))
 
 console.log('Prerender complete → dist/prerender/')

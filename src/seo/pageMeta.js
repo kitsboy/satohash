@@ -24,12 +24,14 @@ const OG_LOCALE = {
 }
 
 const SITE = 'https://satohash.io'
-export const DEFAULT_OG_IMAGE = `${SITE}/og/home.png`
+/** Homepage / default unfurl — JPEG for iMessage (PNG kept at /og/home.png). */
+export const DEFAULT_OG_IMAGE = `${SITE}/og/home.jpg`
+export const DEFAULT_OG_IMAGE_PNG = `${SITE}/og/home.png`
 export const WATCH_VIDEO_URL =
   'https://videos.giveabit.io/media/video/satohash-explainer-with-vo2.mp4?v=kimi-noir-20260819'
 export const WATCH_PLAYER_URL = `${SITE}/watch-player.html`
 
-/** Per-page OG image slug under /og/*.png (Kimi 2026-08-29 set). */
+/** Per-page OG image slug under /og/*.png (Kimi 2026-08-29 set). Homepage uses JPEG. */
 const PAGE_OG_SLUG = {
   landing: 'home',
   faq: 'faq',
@@ -46,8 +48,10 @@ const PAGE_OG_SLUG = {
 }
 
 export function ogImageForPage(page, pathname) {
+  if (page === 'landing') return DEFAULT_OG_IMAGE
   if (page && PAGE_OG_SLUG[page]) return `${SITE}/og/${PAGE_OG_SLUG[page]}.png`
   const path = pathname || ''
+  if (!path || path === '/') return DEFAULT_OG_IMAGE
   const learn = path.match(/\/docs\/(learn-[a-z0-9-]+)\/?$/)
   if (learn) return `${SITE}/og/${learn[1]}.png`
   const named = path.match(/\/docs\/(how-satohash-works|support-and-guidance)\/?$/)
@@ -107,7 +111,7 @@ export const pageMeta = {
     fr: {
       title: 'FAQ — Preuve d’Existence Bitcoin, Réponses Honnêtes',
       description:
-        "Réponses claires sur OpenTimestamps, tamponnage zéro connaissance, admissibilité légale, identité NIP-05 et API Satohash. Sans survente."
+        'Réponses claires sur OpenTimestamps, tamponnage zéro connaissance, admissibilité légale, identité NIP-05 et API Satohash. Sans survente.'
     },
     de: {
       title: 'FAQ — Bitcoin-Existenznachweis, Ehrliche Antworten',
@@ -126,7 +130,8 @@ export const pageMeta = {
     },
     zh: {
       title: '常见问题 — 比特币存在证明，如实解答',
-      description: '关于 OpenTimestamps、零知识盖章、法律可采性、NIP-05 身份和 Satohash API 的坦诚解答，不夸大承诺。'
+      description:
+        '关于 OpenTimestamps、零知识盖章、法律可采性、NIP-05 身份和 Satohash API 的坦诚解答，不夸大承诺。'
     }
   },
   pricing: {
@@ -271,7 +276,8 @@ export const pageMeta = {
     },
     zh: {
       title: '指南 — 如何证明文档曾经存在',
-      description: '一步步的简明指南：加密证明、OpenTimestamps、OTS 与公证对比，以及为何比特币是终极真相层。'
+      description:
+        '一步步的简明指南：加密证明、OpenTimestamps、OTS 与公证对比，以及为何比特币是终极真相层。'
     }
   },
   glossary: {
@@ -1682,7 +1688,7 @@ export const pageMeta = {
     fr: {
       title: 'Demander Soutien et Aide — Outil Civique Ouvert',
       description:
-        "Une demande honnête aux juristes, techniciens et bailleurs de fonds : aidez-nous à renforcer Satohash, un outil civique libre, ouvert et ancré sur Bitcoin."
+        'Une demande honnête aux juristes, techniciens et bailleurs de fonds : aidez-nous à renforcer Satohash, un outil civique libre, ouvert et ancré sur Bitcoin.'
     },
     de: {
       title: 'Unterstützung & Beratung Anfordern — Bürger-Tool',

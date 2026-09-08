@@ -22,10 +22,11 @@
   "telemetry": {
     "title": "Bitcoin 网络实时遥测",
     "tipHeight": "区块高度",
-    "fastestFee": "最快费率",
+    "fastestFee": "参考费率",
     "difficultyAdjust": "难度调整",
     "epochProgress": "周期进度",
     "satPerVb": "sat/vB",
+    "feeNote": "仅供参考 · 来自 mempool，非 Satohash 收费",
     "zeroKnowledge": "零知识（本地哈希）",
     "compliance": "与 eIDAS 和 ESIGN 对齐",
     "proofsConfirmed": "已确认 {{count}} 条证明"

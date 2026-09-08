@@ -81,7 +81,7 @@ export default function Welcome() {
   const { t, i18n } = useTranslation()
   const navigate = useNavigate()
   const location = useLocation()
-  const [blockHeight, setBlockHeight] = useState(830421)
+  const [blockHeight, setBlockHeight] = useState(null)
   const [isHovered, setIsHovered] = useState(null)
 
   const resumePath = getResumeOnboardingPath()
@@ -190,7 +190,8 @@ export default function Welcome() {
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-indigo-400 opacity-75"></span>
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-indigo-500"></span>
               </span>
-              Secured by Bitcoin Network • Block #{blockHeight.toLocaleString()}
+              Secured by Bitcoin Network • Block #
+              {blockHeight != null ? Number(blockHeight).toLocaleString() : '—'}
             </motion.div>
 
             <motion.h1

@@ -22,10 +22,11 @@
   "telemetry": {
     "title": "Live-Bitcoin-Netzwerk-Telemetrie",
     "tipHeight": "Blockhöhe",
-    "fastestFee": "Schnellste Gebühr",
+    "fastestFee": "Richtwert-Gebühr",
     "difficultyAdjust": "Schwierigkeitsanpassung",
     "epochProgress": "Epochenfortschritt",
     "satPerVb": "sat/vB",
+    "feeNote": "Richtwert · Mempool, keine Satohash-Gebühr",
     "zeroKnowledge": "Zero-Knowledge (lokales Hashing)",
     "compliance": "eIDAS- und ESIGN-ausgerichtet",
     "proofsConfirmed": "{{count}} Nachweise bestätigt"

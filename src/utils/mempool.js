@@ -87,11 +87,11 @@ export const getBlockHeightResult = async () => {
     const response = await fetch(`${MEMPOOL_API_URL}/blocks/tip/height`, {
       signal: AbortSignal.timeout(5000)
     })
-    if (!response.ok) return offlineResult(880000, `http_${response.status}`)
+    if (!response.ok) return offlineResult(null, `http_${response.status}`)
     const height = await response.json()
     return liveResult(height)
   } catch (e) {
-    return offlineResult(880000, e?.name === 'TimeoutError' ? 'timeout' : 'offline')
+    return offlineResult(null, e?.name === 'TimeoutError' ? 'timeout' : 'offline')
   }
 }
 
@@ -101,20 +101,20 @@ export const getBlockHeight = async () => {
 }
 
 const NETWORK_STATS_FALLBACK = {
-  blockHeight: 880000,
-  difficultyChange: 0.12,
-  difficultyProgress: 52.4,
-  remainingBlocks: 980,
-  fees: { high: 25, medium: 18, low: 12, minimum: 2 },
+  blockHeight: null,
+  difficultyChange: null,
+  difficultyProgress: null,
+  remainingBlocks: null,
+  fees: { high: null, medium: null, low: null, minimum: null },
   timestamp: Date.now()
 }
 
 function normalizeNetworkFees(fees = {}) {
   return {
-    high: fees.high ?? fees.fastestFee ?? NETWORK_STATS_FALLBACK.fees.high,
-    medium: fees.medium ?? fees.halfHourFee ?? NETWORK_STATS_FALLBACK.fees.medium,
-    low: fees.low ?? fees.hourFee ?? NETWORK_STATS_FALLBACK.fees.low,
-    minimum: fees.minimum ?? fees.minimumFee ?? NETWORK_STATS_FALLBACK.fees.minimum
+    high: fees.high ?? fees.fastestFee ?? null,
+    medium: fees.medium ?? fees.halfHourFee ?? null,
+    low: fees.low ?? fees.hourFee ?? null,
+    minimum: fees.minimum ?? fees.minimumFee ?? null
   }
 }
 
@@ -127,17 +127,15 @@ export const getBitcoinNetworkStatsResult = async () => {
       fetch(`${MEMPOOL_API_URL}/v1/fees/recommended`, { signal: AbortSignal.timeout(5000) })
     ])
 
-    const height = heightRes.ok ? await heightRes.json() : NETWORK_STATS_FALLBACK.blockHeight
+    const height = heightRes.ok ? await heightRes.json() : null
     const diff = diffRes.ok
       ? await diffRes.json()
       : {
-          progressPercent: NETWORK_STATS_FALLBACK.difficultyProgress,
-          difficultyChange: NETWORK_STATS_FALLBACK.difficultyChange,
-          remainingBlocks: NETWORK_STATS_FALLBACK.remainingBlocks
+          progressPercent: null,
+          difficultyChange: null,
+          remainingBlocks: null
         }
-    const fees = feesRes.ok
-      ? await feesRes.json()
-      : { fastestFee: 25, halfHourFee: 18, hourFee: 12, minimumFee: 2 }
+    const fees = feesRes.ok ? await feesRes.json() : {}
 
     const allOk = heightRes.ok && diffRes.ok && feesRes.ok
     return {
@@ -147,13 +145,11 @@ export const getBitcoinNetworkStatsResult = async () => {
       data: {
         blockHeight: height,
         // Round for UI pills (raw mempool floats overflow cards)
-        difficultyChange: Number(
-          (diff.difficultyChange ?? NETWORK_STATS_FALLBACK.difficultyChange).toFixed(4)
-        ),
-        difficultyProgress: Number(
-          (diff.progressPercent ?? NETWORK_STATS_FALLBACK.difficultyProgress).toFixed(2)
-        ),
-        remainingBlocks: diff.remainingBlocks ?? NETWORK_STATS_FALLBACK.remainingBlocks,
+        difficultyChange:
+          diff.difficultyChange == null ? null : Number(Number(diff.difficultyChange).toFixed(4)),
+        difficultyProgress:
+          diff.progressPercent == null ? null : Number(Number(diff.progressPercent).toFixed(2)),
+        remainingBlocks: diff.remainingBlocks ?? null,
         fees: normalizeNetworkFees({
           high: fees?.fastestFee,
           medium: fees?.halfHourFee,
@@ -173,13 +169,14 @@ export const getBitcoinNetworkStatsResult = async () => {
   }
 }
 
-/** Flat stats for Landing and legacy callers — always includes fees.high */
+/** Flat stats for Landing and legacy callers — missing fields stay null, never invented */
 export const getBitcoinNetworkStats = async () => {
   const result = await getBitcoinNetworkStatsResult()
   const data = result?.data ?? {}
   return {
     ...NETWORK_STATS_FALLBACK,
     ...data,
-    fees: normalizeNetworkFees(data.fees)
+    fees: normalizeNetworkFees(data.fees),
+    timestamp: data.timestamp ?? Date.now()
   }
 }

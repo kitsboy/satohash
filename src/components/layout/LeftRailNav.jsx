@@ -400,7 +400,7 @@ export default function LeftRailNav() {
                 className="font-mono text-[9px] font-semibold tracking-wider"
                 style={{ color: 'var(--accent-gold)' }}
               >
-                #{blockHeight ? blockHeight.toLocaleString() : '895,441'}
+                #{blockHeight ? blockHeight.toLocaleString() : '—'}
               </span>
             </div>
           </div>

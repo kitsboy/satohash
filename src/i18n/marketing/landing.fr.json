@@ -22,10 +22,11 @@
   "telemetry": {
     "title": "Télémétrie en direct du réseau Bitcoin",
     "tipHeight": "Hauteur du bloc",
-    "fastestFee": "Frais les plus rapides",
+    "fastestFee": "Frais indicatifs",
     "difficultyAdjust": "Ajustement de difficulté",
     "epochProgress": "Progression de l'époque",
     "satPerVb": "sat/vB",
+    "feeNote": "Indicatif · mempool, pas un frais Satohash",
     "zeroKnowledge": "Connaissance nulle (hachage local)",
     "compliance": "Aligné eIDAS et ESIGN",
     "proofsConfirmed": "{{count}} preuves confirmées"

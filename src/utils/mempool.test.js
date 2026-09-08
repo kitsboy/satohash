@@ -71,6 +71,19 @@ describe('mempool client', () => {
     expect(result.data?.fees?.high).toBeDefined()
   })
 
+  it('does not invent a block height or fee when mempool is offline', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(() => Promise.reject(new Error('offline')))
+    )
+    const height = await getBlockHeightResult()
+    expect(height.ok).toBe(false)
+    expect(height.data).toBeNull()
+    const stats = await getBitcoinNetworkStats()
+    expect(stats.blockHeight).toBeNull()
+    expect(stats.fees?.high ?? null).toBeNull()
+  })
+
   it.skipIf(!LIVE)('live mempool.space still returns shape', async () => {
     const result = await getTieredFeeEstimatesResult()
     expect(result).toHaveProperty('ok')

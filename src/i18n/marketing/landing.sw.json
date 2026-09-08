@@ -22,10 +22,11 @@
   "telemetry": {
     "title": "Telemetria ya mtandao wa Bitcoin moja kwa moja",
     "tipHeight": "Urefu wa kizuizi",
-    "fastestFee": "Ada ya haraka zaidi",
+    "fastestFee": "Ada ya makadirio",
     "difficultyAdjust": "Marekebisho ya ugumu",
     "epochProgress": "Maendeleo ya kipindi",
     "satPerVb": "sat/vB",
+    "feeNote": "Makadirio · mempool, si ada ya Satohash",
     "zeroKnowledge": "Ujuzi wa sifuri (hashing ya ndani)",
     "compliance": "Inalingana na eIDAS na ESIGN",
     "proofsConfirmed": "Uthibitisho {{count}} umethibitishwa"

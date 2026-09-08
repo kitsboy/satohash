@@ -83,17 +83,7 @@ export default function Landing() {
   const [copied, setCopied] = useState(false)
   const [proofCount, setProofCount] = useState(null)
   const [blockHeight, setBlockHeight] = useState(null)
-  const defaultNetworkStats = useMemo(
-    () => ({
-      blockHeight: 895441,
-      difficultyChange: 0.12,
-      difficultyProgress: 52.4,
-      remainingBlocks: 980,
-      fees: { high: 25, medium: 18, low: 12, minimum: 2 }
-    }),
-    []
-  )
-  const [networkStats, setNetworkStats] = useState(defaultNetworkStats)
+  const [networkStats, setNetworkStats] = useState({ fees: {} })
   const [nodeHud, setNodeHud] = useState(null)
   const [pwaPrompt, setPwaPrompt] = useState(null)
   const [pwaDismissed, setPwaDismissed] = useState(
@@ -120,13 +110,11 @@ export default function Landing() {
       if (cancelled) return
       getBitcoinNetworkStats().then((stats) => {
         if (cancelled || !stats || typeof stats !== 'object') return
-        const merged = {
-          ...defaultNetworkStats,
+        setNetworkStats({
           ...stats,
-          fees: { ...defaultNetworkStats.fees, ...(stats.fees || {}) }
-        }
-        setNetworkStats(merged)
-        if (merged.blockHeight) setBlockHeight(merged.blockHeight)
+          fees: { ...(stats.fees || {}) }
+        })
+        if (stats.blockHeight) setBlockHeight(stats.blockHeight)
       })
     }
     if (typeof requestIdleCallback === 'function') {
@@ -139,7 +127,7 @@ export default function Landing() {
       if (idleId != null) window.cancelIdleCallback?.(idleId)
       if (timeoutId != null) clearTimeout(timeoutId)
     }
-  }, [defaultNetworkStats])
+  }, [])
 
   useEffect(() => {
     trackEvent(events.LANDING_VIEW, { path: '/' })
@@ -147,11 +135,14 @@ export default function Landing() {
 
   useEffect(() => {
     const prefetch = () => {
-      const link = document.createElement('link')
-      link.rel = 'prefetch'
-      link.href = '/stamp'
-      link.as = 'document'
-      document.head.appendChild(link)
+      ;['/stamp', '/verify'].forEach((href) => {
+        if (document.querySelector(`link[rel="prefetch"][href="${href}"]`)) return
+        const link = document.createElement('link')
+        link.rel = 'prefetch'
+        link.href = href
+        link.as = 'document'
+        document.head.appendChild(link)
+      })
     }
     if ('requestIdleCallback' in window) {
       const id = window.requestIdleCallback(prefetch, { timeout: 2500 })
@@ -477,6 +468,14 @@ export default function Landing() {
             <Link
               to="/stamp"
               data-testid="landing-cta-stamp"
+              onPointerEnter={() => {
+                if (document.querySelector('link[rel="prefetch"][href="/verify"]')) return
+                const link = document.createElement('link')
+                link.rel = 'prefetch'
+                link.href = '/verify'
+                link.as = 'document'
+                document.head.appendChild(link)
+              }}
               className="btn-sheen flex min-h-[48px] w-full items-center justify-center gap-2 rounded-2xl px-6 py-3.5 text-base font-black transition-all hover:opacity-90 sm:w-auto sm:px-8 sm:py-4"
               style={{
                 backgroundColor: 'var(--accent-gold)',
@@ -588,7 +587,7 @@ export default function Landing() {
                   className="block truncate font-mono text-base font-black sm:text-lg md:text-xl"
                   style={{ color: 'var(--text-primary)' }}
                 >
-                  #{blockHeight ? Number(blockHeight).toLocaleString() : '895,441'}
+                  #{blockHeight ? Number(blockHeight).toLocaleString() : '—'}
                 </span>
               </div>
 
@@ -611,6 +610,14 @@ export default function Landing() {
                   <span className="shrink-0 text-[10px] font-normal opacity-80 sm:text-xs">
                     {t('landingPage.telemetry.satPerVb')}
                   </span>
+                </span>
+                <span
+                  className="mt-1 block text-[8px] leading-snug font-medium tracking-wide uppercase sm:text-[9px]"
+                  style={{ color: 'var(--text-muted)' }}
+                >
+                  {t('landingPage.telemetry.feeNote', {
+                    defaultValue: 'Indicative · mempool, not a Satohash fee'
+                  })}
                 </span>
               </div>
 
@@ -635,9 +642,18 @@ export default function Landing() {
                           ? 'var(--accent-pending, #fbbf24)'
                           : 'var(--text-primary)'
                   }}
-                  title={`${networkStats.difficultyChange}%`}
+                  title={
+                    networkStats.difficultyChange == null
+                      ? undefined
+                      : `${networkStats.difficultyChange}%`
+                  }
                 >
                   {(() => {
+                    if (
+                      networkStats.difficultyChange == null ||
+                      networkStats.difficultyChange === ''
+                    )
+                      return '—'
                     const n = Number(networkStats.difficultyChange)
                     if (!Number.isFinite(n)) return '—'
                     const sign = n > 0 ? '+' : ''
@@ -662,6 +678,11 @@ export default function Landing() {
                   style={{ color: 'var(--text-primary)' }}
                 >
                   {(() => {
+                    if (
+                      networkStats.difficultyProgress == null ||
+                      networkStats.difficultyProgress === ''
+                    )
+                      return '—'
                     const n = Number(networkStats.difficultyProgress)
                     if (!Number.isFinite(n)) return '—'
                     return `${Math.min(100, Math.max(0, n)).toFixed(1)}%`
