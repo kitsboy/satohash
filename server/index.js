@@ -271,7 +271,10 @@ register.registerMetric(forumPostsCounter)
 const app = express()
 const httpServer = createServer(app)
 const io = new Server(httpServer, {
-  cors: { origin: config.CORS_ORIGIN, methods: ['GET', 'POST'] }
+  cors: {
+    origin: config.CORS_ORIGIN === '*' ? true : config.CORS_ORIGIN?.split(',').map((s) => s.trim()),
+    methods: ['GET', 'POST']
+  }
 })
 const port = config.PORT
 
