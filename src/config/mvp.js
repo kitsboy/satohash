@@ -33,7 +33,6 @@ export const MVP_PUBLIC_PATHS = [
   '/identity',
   '/changelog',
   '/network',
-  '/proof-of-existence',
   '/legal/terms',
   '/legal/privacy',
   '/legal/crypto-notice',
@@ -100,5 +99,26 @@ export const SATOHASH_NOSTR = {
   njump: 'https://njump.me/npub1qahm6ee8jklm58us2zzthczaemjfx74pmwv4ctu86ctw5rmnlr2qgcaz7n'
 }
 
-/** Nav paths hidden until post-MVP */
-export const MVP_DEFERRED_PATHS = ['/forum', '/contracts', '/offers', '/admin']
+/** Nav paths and v5 playground surfaces hidden until post-MVP */
+export const MVP_DEFERRED_PATHS = [
+  '/forum',
+  '/contracts',
+  '/offers',
+  '/admin',
+  '/explorer',
+  '/protocol-stats',
+  '/proof-of-existence',
+  '/stamp/live-feed',
+  '/compare',
+  '/developer/playground',
+  '/certificates',
+  '/image-vault'
+]
+
+/** True when this path is a deferred v5/cathedral surface (MVP freeze). */
+export function isMvpDeferredPath(pathname = '') {
+  if (!MVP_MODE) return false
+  return MVP_DEFERRED_PATHS.some(
+    (p) => pathname === p || (p !== '/' && pathname.startsWith(`${p}/`))
+  )
+}

@@ -77,6 +77,26 @@ export default function TemplateDetail() {
   }
 
   return (
-    <Editor key={template.id} template={template} demoMode onBack={() => navigate('/templates')} />
+    <div className="min-h-screen bg-[var(--bg-primary)]">
+      <div className="mx-auto flex max-w-7xl flex-col gap-3 px-4 pt-6 sm:flex-row sm:items-center sm:justify-between md:px-8">
+        <p className="text-xs text-[var(--text-secondary)]">
+          {t('templateDetailPage.demoHint', {
+            defaultValue: 'Demo editor — sample data only. Stamp a real file for a Bitcoin proof.'
+          })}
+        </p>
+        <Link
+          to={`/stamp?template=${encodeURIComponent(template.id)}`}
+          className="inline-flex min-h-[44px] shrink-0 items-center justify-center rounded-xl bg-[var(--accent-gold)] px-5 text-xs font-black tracking-wider text-black uppercase"
+        >
+          {t('templateDetailPage.stampThis', { defaultValue: 'Stamp this template' })}
+        </Link>
+      </div>
+      <Editor
+        key={template.id}
+        template={template}
+        demoMode
+        onBack={() => navigate('/templates')}
+      />
+    </div>
   )
 }

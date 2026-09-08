@@ -537,12 +537,14 @@ export default function GovernmentUse() {
                 style={{ borderColor: 'var(--border)', background: 'var(--surface-raised)' }}
               >
                 <Icon size={20} className="mb-2" style={{ color: 'var(--accent-gold)' }} />
-                <h3 className="text-base font-black">{t(`governmentUse.${c.key}.title`)}</h3>
+                <h3 className="text-base font-black">
+                  {t(`governmentUse.${c.key}.title`, { defaultValue: c.key })}
+                </h3>
                 <p
                   className="mt-2 text-xs leading-relaxed"
                   style={{ color: 'var(--text-secondary)' }}
                 >
-                  {t(`governmentUse.${c.key}.body`)}
+                  {t(`governmentUse.${c.key}.body`, { defaultValue: '' })}
                 </p>
                 <span
                   className="mt-4 inline-flex min-h-[40px] items-center gap-1 text-[10px] font-black tracking-widest uppercase"

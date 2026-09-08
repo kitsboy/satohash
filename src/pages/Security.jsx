@@ -20,7 +20,10 @@ export default function Security() {
   const sections = useMemo(
     () =>
       SECTION_CONFIG.map(({ id, icon }) => {
-        const data = t(`securityPage.sections.${id}`, { returnObjects: true })
+        const data = t(`securityPage.sections.${id}`, {
+          returnObjects: true,
+          defaultValue: { title: id, body: '', items: [] }
+        })
         return { id, icon, title: data.title, body: data.body, items: data.items }
       }),
     [t]

@@ -34,8 +34,8 @@ export default function Glossary() {
     () =>
       TERM_IDS.map((id) => ({
         id,
-        term: t(`glossaryPage.terms.${id}.term`),
-        def: t(`glossaryPage.terms.${id}.def`)
+        term: t(`glossaryPage.terms.${id}.term`, { defaultValue: id }),
+        def: t(`glossaryPage.terms.${id}.def`, { defaultValue: '' })
       })),
     [t]
   )

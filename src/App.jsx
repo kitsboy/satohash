@@ -20,6 +20,7 @@ import ProtectedRoute from './components/shared/ProtectedRoute'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import { getApiUrl } from './config/constants'
+import { isMvpDeferredPath } from './config/mvp'
 import { isMarketingPublicPath, needsMarketingShell } from './utils/publicRoutes'
 import useAppHotkeys from './hooks/useAppHotkeys'
 import { useOfflineSync } from './hooks/useOfflineSync'
@@ -174,6 +175,10 @@ function AppContent() {
 
   const isPublic = isMarketingPublicPath(location.pathname)
 
+  if (isMvpDeferredPath(location.pathname)) {
+    return <Navigate to="/" replace />
+  }
+
   const content = (
     <main id="main-content" tabIndex={-1}>
       <ErrorBoundary>
@@ -319,15 +324,43 @@ function AppContent() {
             <Route path="/distressed-asset" element={<DistressedAsset />} />
             <Route path="/widgets" element={<Widgets />} />
             <Route path="/identity" element={<Identity />} />
-            {/* v5.0.0-ELITE public surfaces */}
-            <Route path="/proof-of-existence" element={<V5ProofOfExistence />} />
+            {/* v5.0.0-ELITE — playground routes are MVP-deferred (Navigate to /) */}
+            <Route
+              path="/proof-of-existence"
+              element={
+                <ProtectedRoute>
+                  <V5ProofOfExistence />
+                </ProtectedRoute>
+              }
+            />
             <Route path="/network" element={<Network />} />
             <Route path="/status" element={<StatusPublic />} />
             <Route path="/counsel" element={<Counsel />} />
             <Route path="/p/:hash" element={<ProofCardPublic />} />
-            <Route path="/stamp/live-feed" element={<V5LiveFeed />} />
-            <Route path="/compare" element={<V5Compare />} />
-            <Route path="/developer/playground" element={<V5Playground />} />
+            <Route
+              path="/stamp/live-feed"
+              element={
+                <ProtectedRoute>
+                  <V5LiveFeed />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/compare"
+              element={
+                <ProtectedRoute>
+                  <V5Compare />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/developer/playground"
+              element={
+                <ProtectedRoute>
+                  <V5Playground />
+                </ProtectedRoute>
+              }
+            />
             <Route path="/bitcoin" element={<V5Bitcoin />} />
             <Route path="/block/:height" element={<V5Block />} />
             <Route path="/verify/cross-chain" element={<Navigate to="/verify" replace />} />
@@ -341,9 +374,9 @@ function AppContent() {
             <Route path="/stamp/drag-and-drop" element={<Navigate to="/stamp" replace />} />
             <Route path="/mobile-scanner" element={<Navigate to="/stamp" replace />} />
             <Route path="/history/timeline" element={<Navigate to="/vault" replace />} />
-            <Route path="/dashboard/metrics" element={<Navigate to="/protocol-stats" replace />} />
+            <Route path="/dashboard/metrics" element={<Navigate to="/network" replace />} />
             <Route path="/community/feed" element={<Navigate to="/network" replace />} />
-            <Route path="/verify/social" element={<Navigate to="/proof-of-existence" replace />} />
+            <Route path="/verify/social" element={<Navigate to="/verify" replace />} />
             <Route
               path="/settings"
               element={

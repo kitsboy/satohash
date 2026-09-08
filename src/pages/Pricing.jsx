@@ -57,7 +57,12 @@ export default function Pricing() {
           desc: tier.desc,
           features: tier.features,
           cta: tier.cta,
-          to: id === 'enterprise' ? 'mailto:hello@giveabit.io?subject=Satohash Enterprise' : '/',
+          to:
+            id === 'free'
+              ? '/stamp'
+              : id === 'enterprise'
+                ? 'mailto:hello@giveabit.io?subject=Satohash Enterprise'
+                : null,
           highlighted: id === 'premium'
         }
       }),
@@ -161,7 +166,15 @@ export default function Pricing() {
                   ))}
                 </ul>
 
-                {tier.to.startsWith('mailto') ? (
+                {!tier.to ? (
+                  <button
+                    type="button"
+                    disabled
+                    className="flex min-h-[48px] w-full cursor-not-allowed items-center justify-center gap-2 rounded-xl border border-[var(--border)] text-sm font-black tracking-wider text-[var(--text-tertiary)] uppercase opacity-80"
+                  >
+                    {tier.cta}
+                  </button>
+                ) : tier.to.startsWith('mailto') ? (
                   <a
                     href={tier.to}
                     className={`flex min-h-[48px] w-full items-center justify-center gap-2 rounded-xl text-sm font-black tracking-wider uppercase transition-all ${
@@ -204,7 +217,7 @@ export default function Pricing() {
                   </th>
                   {TIER_COLUMNS.map((col) => (
                     <th key={col} className="p-4 text-center font-bold text-[var(--accent-gold)]">
-                      {t(`pricingPage.tiers.${col}.name`)}
+                      {t(`pricingPage.tiers.${col}.name`, { defaultValue: col })}
                     </th>
                   ))}
                 </tr>

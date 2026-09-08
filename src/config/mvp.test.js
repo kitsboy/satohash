@@ -1,7 +1,9 @@
 import { describe, it, expect } from 'vitest'
 import {
   isMvpPublicPath,
+  isMvpDeferredPath,
   MVP_PUBLIC_PATHS,
+  MVP_DEFERRED_PATHS,
   KIMI_NOSTR,
   SATOHASH_NOSTR,
   shouldMonitorApiHealth
@@ -47,5 +49,35 @@ describe('mvp config', () => {
 
   it('shouldMonitorApiHealth is false on localhost', () => {
     expect(shouldMonitorApiHealth()).toBe(false)
+  })
+
+  it('MVP_DEFERRED_PATHS hides v5 playground and cathedral', () => {
+    expect(MVP_DEFERRED_PATHS).toEqual(
+      expect.arrayContaining([
+        '/forum',
+        '/contracts',
+        '/offers',
+        '/admin',
+        '/explorer',
+        '/protocol-stats',
+        '/proof-of-existence',
+        '/stamp/live-feed',
+        '/compare',
+        '/developer/playground',
+        '/certificates',
+        '/image-vault'
+      ])
+    )
+    expect(MVP_PUBLIC_PATHS).not.toContain('/proof-of-existence')
+  })
+
+  it('isMvpDeferredPath matches prefixes but not /comparison or core loop', () => {
+    expect(isMvpDeferredPath('/forum')).toBe(true)
+    expect(isMvpDeferredPath('/forum/abc')).toBe(true)
+    expect(isMvpDeferredPath('/compare')).toBe(true)
+    expect(isMvpDeferredPath('/comparison')).toBe(false)
+    expect(isMvpDeferredPath('/stamp')).toBe(false)
+    expect(isMvpDeferredPath('/network')).toBe(false)
+    expect(isMvpDeferredPath('/templates')).toBe(false)
   })
 })

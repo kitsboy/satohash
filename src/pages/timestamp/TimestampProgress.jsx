@@ -119,7 +119,7 @@ export default function TimestampProgress() {
                 />
               )}
               <span className={currentStep >= index ? 'font-semibold' : 'text-secondary'}>
-                {t(`timestamp.progress.step${index + 1}`)}
+                {t(`timestamp.progress.step${index + 1}`, { defaultValue: `Step ${index + 1}` })}
               </span>
             </div>
           ))}

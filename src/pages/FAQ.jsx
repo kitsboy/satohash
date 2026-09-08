@@ -30,7 +30,7 @@ export default function FAQ() {
     () =>
       CATEGORY_ORDER.map((id) => ({
         id,
-        label: t(`faqPage.categories.${id}`)
+        label: t(`faqPage.categories.${id}`, { defaultValue: id })
       })),
     [t]
   )

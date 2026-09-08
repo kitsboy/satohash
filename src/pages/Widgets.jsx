@@ -155,7 +155,7 @@ export default function Widgets() {
               </p>
               <ul className="space-y-1 font-mono text-[10px]">
                 {attrKeys.map((key) => (
-                  <li key={key}>{t(`widgetsPage.embed.attrs.${key}`)}</li>
+                  <li key={key}>{t(`widgetsPage.embed.attrs.${key}`, { defaultValue: key })}</li>
                 ))}
               </ul>
             </div>
@@ -193,8 +193,8 @@ export default function Widgets() {
             <code className="font-mono text-[11px]">data-client</code>. HQ{' '}
             <code className="font-mono text-[11px]">metrics.json</code>{' '}
             <code className="font-mono text-[11px]">familyClients</code> counts only stamps that
-            actually complete with that id. Paste is not live attribution — Katoa, SherpaCarta, and
-            Give A Bit stay 0 until someone uses the snippet.
+            actually complete with that id. Katoa, SherpaCarta, and Give A Bit paste exists; counts
+            stay honest zeros until a family site actually completes a stamp.
           </p>
           {FAMILY_WIDGETS.map((item) => (
             <CopyBlock

@@ -33,7 +33,7 @@ export default function Comparison() {
     () =>
       COLUMN_KEYS.map((key) => ({
         key,
-        label: t(`comparisonPage.columns.${key}`),
+        label: t(`comparisonPage.columns.${key}`, { defaultValue: key }),
         color: key === 'satohash' ? 'var(--accent-gold)' : 'var(--text-secondary)'
       })),
     [t]
@@ -46,7 +46,7 @@ export default function Comparison() {
         const resolve = (val) => {
           if (val === true || val === false) return val
           if (id === 'monthlyCost' && val === 'variableGas') {
-            return t('comparisonPage.cellValues.variableGas')
+            return t('comparisonPage.cellValues.variableGas', { defaultValue: 'Variable gas' })
           }
           return val
         }

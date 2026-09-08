@@ -113,7 +113,7 @@ export default function Docs() {
     () =>
       CATEGORY_CONFIG.map((cat) => ({
         ...cat,
-        label: t(`docsPage.categories.${cat.id}`),
+        label: t(`docsPage.categories.${cat.id}`, { defaultValue: humanTitle(cat.id) }),
         docs: cat.docs.map((slug) => ({
           slug,
           title: t(`docsPage.docs.${slug}.title`, { defaultValue: humanTitle(slug) }),

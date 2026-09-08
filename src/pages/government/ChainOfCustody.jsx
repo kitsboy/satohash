@@ -96,7 +96,7 @@ export default function ChainOfCustody() {
           {fields.map((f) => (
             <input
               key={f.key}
-              placeholder={t(`chainOfCustodyPage.fields.${f.key}`)}
+              placeholder={t(`chainOfCustodyPage.fields.${f.key}`, { defaultValue: f.key })}
               value={f.value}
               onChange={(e) => f.set(e.target.value)}
               className="min-h-[44px] w-full rounded-xl border px-4 py-3 text-sm"

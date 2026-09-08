@@ -36,9 +36,9 @@ const Contribute = () => {
       WAY_IDS.map((id) => ({
         id,
         icon: WAY_ICONS[id],
-        title: t(`contributePage.ways.${id}.title`),
-        description: t(`contributePage.ways.${id}.description`),
-        cta: t(`contributePage.ways.${id}.cta`),
+        title: t(`contributePage.ways.${id}.title`, { defaultValue: id }),
+        description: t(`contributePage.ways.${id}.description`, { defaultValue: '' }),
+        cta: t(`contributePage.ways.${id}.cta`, { defaultValue: id }),
         href: WAY_HREFS[id]
       })),
     [t]

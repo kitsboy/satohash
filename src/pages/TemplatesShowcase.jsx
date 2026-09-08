@@ -589,12 +589,18 @@ export default function TemplatesShowcase() {
                     {template.description}
                   </p>
                   <div className="flex flex-wrap gap-2">
+                    <Link
+                      to={`/stamp?template=${encodeURIComponent(template.id)}`}
+                      className="inline-flex min-h-[44px] items-center gap-1.5 rounded-lg bg-[var(--accent-gold)] px-3.5 py-2 text-[10px] font-bold tracking-wider text-black uppercase transition-all hover:bg-[var(--accent-gold)]/90"
+                    >
+                      {t('nav.stamp', { defaultValue: 'Stamp' })}
+                    </Link>
                     <button
                       type="button"
                       onClick={() => openDemo(template.id)}
                       onMouseEnter={() => import('./NotaryTemplates').catch(() => {})}
                       disabled={openingDemoId === template.id}
-                      className="inline-flex min-h-[44px] items-center gap-1.5 rounded-lg bg-[var(--accent-gold)] px-3.5 py-2 text-[10px] font-bold tracking-wider text-black uppercase transition-all hover:bg-[var(--accent-gold)]/90 disabled:opacity-70"
+                      className="inline-flex min-h-[44px] items-center gap-1.5 rounded-lg border border-[var(--border)] px-3.5 py-2 text-[10px] font-bold tracking-wider text-[var(--text-secondary)] uppercase transition-all hover:border-[var(--accent-gold)] hover:text-[var(--text-primary)] disabled:opacity-70"
                     >
                       {openingDemoId === template.id
                         ? t('common.loading', { defaultValue: 'Loading…' })
@@ -812,11 +818,17 @@ export default function TemplatesShowcase() {
             </div>
 
             <div className="flex gap-3">
+              <Link
+                to={`/stamp?template=${encodeURIComponent(previewTemplate.id)}`}
+                className="flex-1 rounded-xl bg-[var(--accent-gold)] py-3 text-center text-xs font-black tracking-wider text-black uppercase transition-all hover:bg-[var(--accent-gold)]/90"
+              >
+                {t('templateDetailPage.stampThis', { defaultValue: 'Stamp this template' })}
+              </Link>
               <button
                 type="button"
                 onClick={() => openDemo(previewTemplate.id)}
                 disabled={openingDemoId === previewTemplate.id}
-                className="flex-1 rounded-xl bg-[var(--accent-gold)] py-3 text-center text-xs font-black tracking-wider text-black uppercase transition-all hover:bg-[var(--accent-gold)]/90 disabled:opacity-70"
+                className="flex-1 rounded-xl border border-[var(--border)] py-3 text-center text-xs font-black tracking-wider text-[var(--text-secondary)] uppercase transition-all hover:border-[var(--accent-gold)] hover:text-[var(--text-primary)] disabled:opacity-70"
               >
                 {openingDemoId === previewTemplate.id
                   ? t('common.loading', { defaultValue: 'Loading…' })
@@ -843,6 +855,14 @@ export default function TemplatesShowcase() {
       {/* Fullscreen demo overlay — opens in-place so demo data is always visible */}
       {activeDemo && (
         <div className="fixed inset-0 z-[200] overflow-y-auto bg-[var(--bg-primary)]">
+          <div className="sticky top-0 z-10 flex items-center justify-end gap-3 border-b border-[var(--border)] bg-[var(--bg-primary)]/95 px-4 py-3 backdrop-blur-md">
+            <Link
+              to={`/stamp?template=${encodeURIComponent(activeDemo.template.id)}`}
+              className="inline-flex min-h-[44px] items-center rounded-xl bg-[var(--accent-gold)] px-5 text-xs font-black tracking-wider text-black uppercase"
+            >
+              {t('templateDetailPage.stampThis', { defaultValue: 'Stamp this template' })}
+            </Link>
+          </div>
           <activeDemo.Editor
             key={activeDemo.template.id}
             template={activeDemo.template}

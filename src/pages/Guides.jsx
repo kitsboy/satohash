@@ -22,9 +22,9 @@ export default function Guides() {
         id,
         icon,
         to,
-        title: t(`guidesPage.guides.${id}.title`),
-        desc: t(`guidesPage.guides.${id}.desc`),
-        readTime: t(`guidesPage.guides.${id}.readTime`)
+        title: t(`guidesPage.guides.${id}.title`, { defaultValue: id }),
+        desc: t(`guidesPage.guides.${id}.desc`, { defaultValue: '' }),
+        readTime: t(`guidesPage.guides.${id}.readTime`, { defaultValue: '' })
       })),
     [t]
   )

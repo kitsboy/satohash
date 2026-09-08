@@ -107,7 +107,10 @@ export default function Integrations() {
   const sections = useMemo(
     () =>
       SECTION_IDS.map(({ id, icon }) => {
-        const data = t(`integrationsPage.sections.${id}`, { returnObjects: true })
+        const data = t(`integrationsPage.sections.${id}`, {
+          returnObjects: true,
+          defaultValue: { title: id, desc: '', features: [] }
+        })
         return { id, icon, title: data.title, desc: data.desc, features: data.features }
       }),
     [t]
