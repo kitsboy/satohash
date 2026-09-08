@@ -183,9 +183,9 @@ if (config.ANTHROPIC_API_KEY) {
   logger.info('Using mock Claude API (console trap)')
 }
 
-if (config.SENTRY_DSN) {
+if (config.SENTRY_DSN?.trim()) {
   Sentry.init({
-    dsn: config.SENTRY_DSN,
+    dsn: config.SENTRY_DSN.trim(),
     environment: config.NODE_ENV,
     tracesSampleRate: 0.3,
     beforeSend(event, hint) {
@@ -269,6 +269,7 @@ const forumPostsCounter = new promClient.Counter({
 register.registerMetric(forumPostsCounter)
 
 const app = express()
+app.set('trust proxy', 1) // Caddy is the one hop.
 const httpServer = createServer(app)
 const io = new Server(httpServer, {
   cors: {

@@ -31,7 +31,7 @@ const options = {
           tags: ['Network'],
           summary: 'API health',
           description:
-            'Basic liveness + uptime. Append ?deep=true for full dependency health (db, redis, OTS calendars, Nostr, lightning, bitcoin).',
+            'Basic liveness + uptime. JSON includes gitSha (short git of the API image). Append ?deep=true for full dependency health (db, redis, OTS calendars, Nostr, lightning, bitcoin).',
           parameters: [
             {
               name: 'deep',
@@ -49,7 +49,7 @@ const options = {
           tags: ['Public'],
           summary: 'Suite status',
           description:
-            'Service identity, plane, family free tier flag, stamps stored, expected family clients.',
+            'Service identity, plane, family free tier flag, stamps stored, expected family clients. JSON includes git_sha (short git of the API image).',
           responses: { 200: { description: 'Status payload' } }
         }
       },
