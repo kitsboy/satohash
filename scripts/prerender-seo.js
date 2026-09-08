@@ -267,7 +267,7 @@ fs.mkdirSync(OUT, { recursive: true })
 write('landing.html', shell({ title: landingTitle, description: landingDesc, contentHtml: landingBody, canonical: `${SITE}/`, ogImage: `${SITE}/og/home.jpg` }))
 write(
   'faq.html',
-  shell({ title: faqTitle, description: faqDesc, contentHtml: faqBody, canonical: `${SITE}/faq`, ogImage: `${SITE}/og/faq.png` }).replace('</head>', `${faqSchema}\n</head>`)
+  shell({ title: faqTitle, description: faqDesc, contentHtml: faqBody, canonical: `${SITE}/faq`, ogImage: `${SITE}/og/faq.jpg` }).replace('</head>', `${faqSchema}\n</head>`)
 )
 
 // Secondary pages — concise static versions for crawlers
@@ -322,7 +322,7 @@ const secondary = {
   }
 }
 for (const [slug, p] of Object.entries(secondary)) {
-  const ext = slug === 'stamp' || slug === 'verify' ? 'jpg' : 'png'
+  const ext = slug === 'stamp' || slug === 'verify' || slug === 'pricing' ? 'jpg' : 'png'
   write(`${slug}.html`, shell({ title: p.title, description: p.desc, contentHtml: p.body, canonical: `${SITE}/${slug}`, ogImage: `${SITE}/og/${slug}.${ext}` }))
 }
 
@@ -416,14 +416,14 @@ write(
     description: watchDesc,
     contentHtml: watchBody,
     canonical: `${SITE}/watch`,
-    ogImage: `${SITE}/og/watch.png`,
+    ogImage: `${SITE}/og/watch.jpg`,
     player: true,
     extraGraph: [
       {
         '@type': 'VideoObject',
         name: 'Satohash explainer',
         description: watchDesc,
-        thumbnailUrl: `${SITE}/og/watch.png`,
+        thumbnailUrl: `${SITE}/og/watch.jpg`,
         contentUrl: WATCH_VIDEO,
         embedUrl: WATCH_PLAYER,
         uploadDate: '2026-08-19',

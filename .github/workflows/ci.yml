@@ -119,6 +119,15 @@ jobs:
           path: tmp/lighthouse-mobile
           if-no-files-found: ignore
 
+  smoke_live:
+    name: Live smoke (advisory)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: API health, metrics, OG JPEG
+        continue-on-error: true
+        run: bash scripts/smoke-live.sh
+
   live_loop:
     name: Live API stamp → verify
     runs-on: ubuntu-latest

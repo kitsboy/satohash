@@ -104,8 +104,7 @@ function fmt(s) {
 
 export default function ExplainerWatch() {
   usePageMeta({
-    page: 'watch',
-    image: 'https://satohash.io/og/watch.png'
+    page: 'watch'
   })
 
   const videoRef = useRef(null)
@@ -182,9 +181,19 @@ export default function ExplainerWatch() {
     if (v) v.muted = muted
   }, [muted, cutId])
 
+  const attachActiveSrc = () => {
+    const v = videoRef.current
+    if (!v) return
+    const nextSrc = CUTS[cutId].src
+    if (v.getAttribute('src') !== nextSrc) {
+      v.src = nextSrc
+    }
+  }
+
   const toggle = async () => {
     const v = videoRef.current
     if (!v) return
+    attachActiveSrc()
     if (ended || (v.currentTime >= (v.duration || total) - 0.12 && !playing)) {
       v.currentTime = 0
       setEnded(false)
@@ -211,7 +220,11 @@ export default function ExplainerWatch() {
   const switchCut = (id) => {
     if (id === cutId) return
     const v = videoRef.current
-    if (v) v.pause()
+    if (v) {
+      v.pause()
+      v.removeAttribute('src')
+      v.load()
+    }
     setCutId(id)
   }
 
@@ -272,9 +285,8 @@ export default function ExplainerWatch() {
           }}
         >
           <video
-            key={cut.src}
+            key={cutId}
             ref={videoRef}
-            src={cut.src}
             poster={POSTER_SRC}
             playsInline
             preload="none"

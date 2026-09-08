@@ -50,10 +50,14 @@
 # SPA fallback (/* → index.html) + long immutable cache poisoned satohash.io apex
 # under /assets/* → "Unexpected token '<'". Bundles now live under /b/*.
 /b/*.css
-  Cache-Control: public, max-age=3600, must-revalidate
+  Cache-Control: public, max-age=14400, must-revalidate
 
 /b/*.js
-  Cache-Control: public, max-age=3600, must-revalidate
+  Cache-Control: public, max-age=14400, must-revalidate
+
+# Self-hosted OFL woff2 — filenames are stable; must-revalidate on replace
+/fonts/*.woff2
+  Cache-Control: public, max-age=31536000, must-revalidate
 
 # Legacy /assets/* paths — short TTL only (do not re-poison the edge)
 /assets/*.css
