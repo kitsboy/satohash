@@ -1229,13 +1229,13 @@ export default function Stamp() {
                   type="button"
                   data-testid="more-options"
                   onClick={() => setShowAdvancedModes(true)}
-                  className="min-h-[44px] w-full rounded-xl border text-xs font-black tracking-widest uppercase"
-                  style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
+                  className="min-h-[44px] self-start px-1 text-[11px] font-medium tracking-wide uppercase"
+                  style={{ color: 'var(--text-tertiary)' }}
                 >
                   {tp('stampPage.moreOptions')}
                 </button>
               )}
-              {(showAdvancedModes || stampMode !== 'single') && (
+              {showAdvancedModes && (
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-4">
                   <button
                     type="button"

@@ -38,7 +38,7 @@ export default function NotFound() {
           </Link>
           <Link
             to="/verify"
-            className="inline-flex min-h-[48px] min-w-[44px] items-center gap-2.5 rounded-xl border border-[var(--border)] px-6 text-sm font-bold tracking-wider text-[var(--text-secondary)] uppercase transition-all hover:border-[var(--accent-gold)] hover:text-[var(--text-primary)]"
+            className="inline-flex min-h-[48px] min-w-[44px] items-center gap-2.5 rounded-xl bg-[var(--accent-gold)] px-6 text-sm font-black tracking-wider text-black uppercase transition-all hover:bg-[var(--accent-gold)]/90 hover:shadow-[0_0_30px_var(--accent-gold-glow)]"
           >
             <ShieldCheck size={16} /> {t('nav.verify', { defaultValue: 'Verify' })}
           </Link>

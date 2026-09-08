@@ -39,6 +39,17 @@ for (const entry of entryRefs) {
   }
 }
 
+const registerSwPath = join(dist, 'registerSW.js')
+if (existsSync(registerSwPath)) {
+  const registerSw = readFileSync(registerSwPath, 'utf8')
+  if (registerSw.includes('navigator.serviceWorker.register')) {
+    console.error(
+      'verify-chunk-graph: dist/registerSW.js registers a service worker (must be unregister-only)'
+    )
+    failed = true
+  }
+}
+
 if (failed) process.exit(1)
 if (pages.length) {
   console.log(
