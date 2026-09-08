@@ -448,7 +448,12 @@ export default function Network() {
                       No stamps through this widget yet
                     </span>
                   ) : (
-                    <span className="font-mono">{count}</span>
+                    <span
+                      className="text-right text-[10px]"
+                      style={{ color: 'var(--text-secondary)' }}
+                    >
+                      {count === 1 ? '1 attributed stamp' : `${count} attributed stamps`}
+                    </span>
                   )}
                 </li>
               )

@@ -128,6 +128,8 @@ export default function StampDone() {
     !queued &&
     (proof.status === 'confirmed' || proof.status === 'verified' || Boolean(proof.isConfirmed))
   const blockHeight = proof.bitcoin_block_height
+  const heightNum = Number(blockHeight)
+  const hasBlockHeight = blockHeight != null && blockHeight !== '' && Number.isFinite(heightNum)
 
   return (
     <>
@@ -202,28 +204,20 @@ export default function StampDone() {
               content="The fingerprint is at OpenTimestamps calendars. It is NOT in a Bitcoin block until status is confirmed. Pending ≠ confirmed."
             />
           </h1>
-          {confirmed && blockHeight ? (
-            <p className="space-y-1">
-              <span
-                className="block text-4xl font-black tracking-tight tabular-nums"
-                style={{ color: 'var(--text-primary)' }}
-              >
-                {Number(blockHeight).toLocaleString(i18n.language)}
-              </span>
-              <span
-                className="block text-[10px] font-black tracking-widest uppercase"
-                style={{ color: 'var(--accent-success)' }}
-              >
-                {t('stampDonePage.bitcoinBlock')}
-              </span>
+          {confirmed && hasBlockHeight ? (
+            <p
+              className="font-mono text-sm tabular-nums"
+              style={{ color: 'var(--accent-success)' }}
+            >
+              {t('stampDonePage.bitcoinBlock')} {heightNum.toLocaleString(i18n.language)}
+            </p>
+          ) : confirmed ? (
+            <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
+              Block height not stored yet — pending ≠ the issue; confirmation is recorded.
             </p>
           ) : (
             <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-              {queued
-                ? t('stampDonePage.queuedBody')
-                : confirmed
-                  ? t('stampDonePage.confirmedExplainer')
-                  : t('stampDonePage.pendingExplainer')}
+              {queued ? t('stampDonePage.queuedBody') : t('stampDonePage.pendingExplainer')}
             </p>
           )}
         </header>
@@ -254,9 +248,9 @@ export default function StampDone() {
                 n: '3',
                 t: t('stampDonePage.stepBitcoin'),
                 d: confirmed
-                  ? blockHeight
+                  ? hasBlockHeight
                     ? t('stampDonePage.stepBitcoinBlock', {
-                        block: Number(blockHeight).toLocaleString(i18n.language)
+                        block: heightNum.toLocaleString(i18n.language)
                       })
                     : t('stampDonePage.stepBitcoinFolded')
                   : t('stampDonePage.stepBitcoinWaiting'),

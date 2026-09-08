@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useDropzone } from 'react-dropzone'
 import { UploadCloud, ShieldCheck, Lock } from 'lucide-react'
 import { clsx } from 'clsx'
-import confetti from 'canvas-confetti'
 import { toast } from 'sonner'
 import { encryptFile } from '../../utils/crypto'
 import { pickRotating } from '../../utils/id'
@@ -55,12 +54,6 @@ export default function GlobalDropzone({ onFileProcessed }) {
 
       setTimeout(() => {
         setIsProcessing(false)
-        confetti({
-          particleCount: 150,
-          spread: 100,
-          origin: { y: 0.8 },
-          colors: ['#38bdf8', '#22d3ee', '#8b5cf6', '#f0b429']
-        })
         if (onFileProcessed) onFileProcessed(file)
       }, 2800)
     },

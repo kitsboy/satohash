@@ -11,11 +11,8 @@ export default function NotFound() {
     <div className="flex min-h-screen flex-col items-center justify-center bg-[var(--bg-primary)] px-6">
       <div className="mx-auto max-w-md text-center">
         <div className="mb-8 flex items-center justify-center">
-          <div className="relative">
-            <div className="flex h-32 w-32 items-center justify-center rounded-[2rem] border-2 border-[var(--accent-gold)]/30 bg-[var(--surface-raised)]">
-              <span className="text-6xl font-black text-[var(--accent-gold)]">?</span>
-            </div>
-            <div className="absolute -right-2 -bottom-2 h-5 w-5 animate-pulse rounded-full border-2 border-[var(--accent-active)] bg-[var(--accent-active)] shadow-[0_0_12px_var(--accent-active)]" />
+          <div className="flex h-32 w-32 items-center justify-center rounded-[2rem] border-2 border-[var(--accent-gold)]/30 bg-[var(--surface-raised)]">
+            <span className="text-6xl font-black text-[var(--accent-gold)]">?</span>
           </div>
         </div>
 

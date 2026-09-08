@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Check, Loader } from 'lucide-react'
-import confetti from 'canvas-confetti'
 import Button from '../../components/ui/Button'
 import { createTimestamp } from '../../utils/opentimestamps'
 import { buildMerkleTree } from '../../utils/merkle'
@@ -72,12 +71,6 @@ export default function TimestampProgress() {
       localStorage.setItem('satohash_contracts', JSON.stringify(contracts))
 
       setCurrentStep(3)
-      confetti({
-        particleCount: 150,
-        spread: 70,
-        origin: { y: 0.6 },
-        colors: ['#6366f1', '#8b5cf6', '#ffffff']
-      })
     }
 
     processTimestamp()
