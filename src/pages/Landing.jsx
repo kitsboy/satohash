@@ -495,7 +495,9 @@ export default function Landing() {
                 data-testid="live-stamp-count"
               >
                 {proofCount != null
-                  ? `${proofCount.toLocaleString()} Bitcoin-anchored proofs issued through this plane`
+                  ? t('landingPage.hero.socialProof', {
+                      count: proofCount.toLocaleString()
+                    })
                   : 'Live stamp counts load from the public metrics plane'}
               </p>
             </div>

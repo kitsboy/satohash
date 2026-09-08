@@ -1,3 +1,17 @@
+## 2026-09-08 (Grok M3 — copy purge + SKU freeze, Cam asked push)
+
+**Pickup:** `.ai_docs/current-status.md` · this file · `docs/legal/SKU-FREEZE.md` · `docs/legal/AUTO-90-DAY-CALENDAR.md`
+
+**Done:** Dropped “2,400 professionals” and “10/day cap” from SPA i18n, `/pricing`, prerender, mission/financials. Landing social proof uses live stamp count. Restored local `public/og/*.png` (were deleted on disk, never commit that). `videos/` gitignored. SKU freeze: free stamp + Breez donate only; paid stays staged.
+
+**Not this wave:** iPhone `/p/<hash>` unfurl · pin `/watch` on `@give_bit` · entity / Impressum / parent Terms · `REQUIRE_LIGHTNING`
+
+**Do not:** flip paywall · change `/api/*` · label a gated payment “donate” · invent an Impressum · `--force` opentimestamps
+
+**Kimi:** Ingest SKU freeze + calendar into THOR Obsidian. API does **not** need a rebuild. Pages will rebuild from this SPA/docs commit.
+
+---
+
 ## 2026-08-31 (Grok M3 — /goodbye after Pages stability)
 
 **Pickup:** `.ai_docs/current-status.md` · this file · `docs/archive/SESSION-SUMMARY-2026-08-31-pages-stable-goodbye.md` · `/whatsup` next chat.

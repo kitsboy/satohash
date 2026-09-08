@@ -82,7 +82,7 @@ export default {
     step1: 'Lokal hashen',
     step2: 'Auf Bitcoin verankern',
     step3: 'Dauerhaft nachweisen',
-    socialProof: 'Schließen Sie sich über 2.400 Fachleuten an, die Dokumente auf Bitcoin verankern',
+    socialProof: 'Hashen Sie auf Ihrem Gerät. Bitcoin bewahrt die Quittung.',
     tryTemplate: 'Vorlage kostenlos ausprobieren',
     features: {
       title: 'Alles für manipulationssichere Dokumente',

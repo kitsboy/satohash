@@ -1,5 +1,5 @@
-# satohash — Last Updated 2026-08-31 by Grok (M3)
+# satohash — Last Updated 2026-09-08 by Grok (M3)
 
-**Brief:** /goodbye. `/stamp` + `/verify` stable on Pages (`ec1c69e`). Pages = Grok standing auth. Paywall off. Next chat: `/whatsup`.
+**Brief:** Copy purge live-bound: no “2,400 professionals”, no “10/day cap”. SKU freeze + 90-day calendar in `docs/legal/`. Paywall off.
 
-Pickup: `.ai_docs/current-status.md` · `docs/handoff-log.md` · `docs/archive/SESSION-SUMMARY-2026-08-31-pages-stable-goodbye.md`
+Pickup: `.ai_docs/current-status.md` · `docs/handoff-log.md` · `docs/legal/SKU-FREEZE.md`

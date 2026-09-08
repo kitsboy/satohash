@@ -23,7 +23,7 @@
       "eyebrow": "Free today · Future premium tiers",
       "title": "Proof of Existence,",
       "titleHighlight": "For Everyone",
-      "subtitle": "The free base tier is the permanent, never-paywalled trust anchor — unlimited stamping, verification, and .ots proofs, hashed client-side (10/day cap). Optional premium tiers and a pay-per-use API are built and staged; they launch paid only once the Lightning rails are funded and tested. Tiers below mix what is live with a simple sketch of how paid tiers may look later."
+      "subtitle": "The free base tier is the permanent, never-paywalled trust anchor — stamp, verify, and download .ots proofs, hashed client-side, with no daily quota. Optional premium tiers and a pay-per-use API are built and staged; they launch paid only once the Lightning rails are funded and tested. Tiers below mix what is live with a simple sketch of how paid tiers may look later."
     },
     "mostPopular": "Recommended",
     "tiers": {
@@ -38,7 +38,7 @@
           "Downloadable .ots proof files",
           "Verify any proof, anywhere",
           "Browser-based — nothing to install",
-          "10/day cap — never paywalled (trust anchor)"
+          "No daily quota — never paywalled (trust anchor)"
         ],
         "cta": "Stamp a File"
       },
@@ -97,7 +97,7 @@
         },
         "freeCalendar": {
           "label": "Free timestamp-server anchoring",
-          "free": "upTo10",
+          "free": "yes",
           "premium": "unlimited",
           "enterprise": "unlimited"
         },

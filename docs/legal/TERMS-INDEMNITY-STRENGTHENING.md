@@ -49,14 +49,14 @@ This indemnification survives termination of your use of the Service. We may, at
 **Section — Paid Tiers, Billing & Refunds** *(aligned 2026-08-29 to Cam's locked tier model — see FINANCIALS.md)*
 
 0. **Tier model.** Satohash offers a permanent Free tier plus optional paid tiers. Prices are quoted in satoshis (sats) with approximate US-dollar equivalents for convenience:
-   - **Free — permanent trust anchor:** unlimited stamping / verification / `.ots` downloads with client-side hashing, subject to a **10-stamps-per-day cap**. Never paywalled — it is the trust anchor and will not be removed, made conditional on payment, or degraded to a marketing hook.
+   - **Free — permanent trust anchor:** stamping / verification / `.ots` downloads with client-side hashing, **no daily quota**. Never paywalled — it is the trust anchor and will not be removed, made conditional on payment, or degraded to a marketing hook. A short public rate-limit exists only against abuse (currently 5 stamps/min), not as a product cap.
    - **Professional:** ~2,100 sats/month (≈ $29). Individual, high-volume stamping.
    - **Business / Studio:** ~21,000 sats/month (≈ $299). Teams and studios.
    - **Enterprise:** custom, partner-gated, not marketed at this time.
    - **Pay-per-use API:** 1–5 sats/stamp via Lightning (L402); final rate published in the app.
 1. **Subscriptions.** Paid tiers are billed on the periodic basis shown at sign-up (monthly unless otherwise agreed). Subscription fees are non-refundable except as set out below.
 2. **Automatic renewal.** Unless you cancel before the end of the current billing period, your subscription renews automatically at the then-current price. You may cancel at any time in your account settings or by contacting hello@giveabit.io; cancellation takes effect at the end of the current paid period and does not entitle you to a pro-rated refund except as required by law.
-3. **Free tier.** As described above — permanent trust anchor, 10/day cap, never paywalled.
+3. **Free tier.** As described above — permanent trust anchor, no daily quota, never paywalled.
 4. **Price changes.** We may change prices for paid tiers with at least 30 days' notice. Continued use after the price change takes effect constitutes acceptance of the new price.
 5. **Refunds.** If a paid Service feature fails materially and we cannot remedy it within 30 days of written notice, you may request a refund of the fees paid for the then-current period for the affected feature. All refund requests are handled at our discretion unless required by law. Nothing in this section limits any statutory consumer rights you may have.
 6. **Payments & Lightning.** Where a payment is made via Lightning Network (L402 / BOLT-12), the transaction is final and irreversible by design of the Bitcoin network. Refunds, where available, are issued as new payments, not chargebacks.

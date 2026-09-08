@@ -27,7 +27,7 @@ Proving that something existed *before* a date has legal, commercial, and person
 
 ## Our Solution
 
-Hash locally → submit the fingerprint to OpenTimestamps calendars → Bitcoin confirmation. Portable `.ots` proofs. **Free today and forever** — the free tier is the never-paywalled trust anchor (unlimited stamp/verify/.ots + client-side hashing, 10/day cap). **Pricing (locked):** Free base (never paywalled trust anchor) + optional premium tiers (Professional ~2,100 sats, Business ~21,000 sats) + pay-per-use API (1–5 sats/stamp via L402). The anchoring mechanism and its guarantees stay identical either way.
+Hash locally → submit the fingerprint to OpenTimestamps calendars → Bitcoin confirmation. Portable `.ots` proofs. **Free today and forever** — the free tier is the never-paywalled trust anchor (stamp/verify/.ots + client-side hashing, no daily quota). **Pricing (locked):** Free base (never paywalled trust anchor) + optional premium tiers (Professional ~2,100 sats, Business ~21,000 sats) + pay-per-use API (1–5 sats/stamp via L402). The anchoring mechanism and its guarantees stay identical either way.
 
 **Today Satohash proves "when," not "who."** The next chapter is proof of authorship: pair an OTS anchor with a private-key signature, and "this file existed" becomes "this file existed, and I am the one who created it" — trustless, non-custodial, verifiable by anyone, forever.
 

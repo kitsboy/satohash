@@ -97,7 +97,7 @@
         },
         "freeCalendar": {
           "label": "免费日历锚定",
-          "free": "upTo10",
+          "free": "yes",
           "premium": "unlimited",
           "enterprise": "unlimited"
         },

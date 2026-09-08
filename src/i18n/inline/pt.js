@@ -80,7 +80,7 @@ export default {
     step1: 'Hash local',
     step2: 'Ancorar no Bitcoin',
     step3: 'Provar para sempre',
-    socialProof: 'Junte-se a mais de 2.400 profissionais que ancoram documentos no Bitcoin',
+    socialProof: 'Faça o hash no seu dispositivo. O Bitcoin guarda o recibo.',
     tryTemplate: 'Experimente um modelo gratuitamente',
     features: {
       title: 'Tudo o Que Precisa para Documentos à Prova de Adulteração',

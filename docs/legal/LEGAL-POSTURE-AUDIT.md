@@ -6,6 +6,8 @@
 
 > Status flags: 🟢 adequate · 🟡 strengthen before launch · 🔴 fix now (material risk)
 
+**2026-09-08 update:** Lenny closed the legal gate for the **free** service (`t_b56fa721`). SKU freeze: `SKU-FREEZE.md`. 90-day sequence: `AUTO-90-DAY-CALENDAR.md`. Live copy no longer claims “2,400 professionals” or a “10/day cap.” Paid launch still needs entity + Lightning + Cam’s `REQUIRE_LIGHTNING` flip. Do not contact officials. Do not invent an Impressum.
+
 ---
 
 ## 1. Assets audited

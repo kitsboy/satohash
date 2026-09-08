@@ -16,7 +16,7 @@
     "ctaStamp": "Stamp a File — It's Free",
     "ctaWatch": "Watch explainer",
     "ctaTemplates": "Browse Templates",
-    "socialProof": "Join {{count}} professionals anchoring documents to Bitcoin",
+    "socialProof": "{{count}} Bitcoin-anchored proofs issued through this plane",
     "tryTemplate": "Try a template for free"
   },
   "telemetry": {

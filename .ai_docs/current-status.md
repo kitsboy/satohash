@@ -1,7 +1,7 @@
 # Current Status — Satohash
 
 **Version:** **5.0.0-ELITE** (Build 278)  
-**Last Updated:** 2026-08-31 (Grok 4.6 — /goodbye after Pages stability)  
+**Last Updated:** 2026-09-08 (Grok 4.6 — copy purge + SKU freeze, Cam asked push)  
 **Frontend:** https://satohash.io · www · CF Pages project **`satohash`** — **stable** (`ec1c69e`, entry `/b/index-D_2O1MUS.js`)  
 **API:** https://api.satohash.io ✅ LIVE (THOR Docker, image from `78e2a8f`)  
 **Metrics SoT:** `https://api.satohash.io/metrics.json` (`raw.last10` + `raw.familyClients` **live**)  

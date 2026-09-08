@@ -14,7 +14,7 @@
 
 | Tier | Price | Notes |
 |---|---|---|
-| **Free** | $0 — unlimited stamp / verify / `.ots` + client-side hashing, 10/day cap | **Never paywalled** — permanent trust anchor. |
+| **Free** | $0 — stamp / verify / `.ots` + client-side hashing, no daily quota | **Never paywalled** — permanent trust anchor. Public API has an abuse rate-limit (5 stamps/min), not a product cap. |
 | **Professional** | ~2,100 sats/mo (~$29) | Individual, high-volume stamping. |
 | **Business / Studio** | ~21,000 sats/mo (~$299) | Teams and studios. |
 | **Enterprise** | Custom | Partner-gated, not marketed now. |

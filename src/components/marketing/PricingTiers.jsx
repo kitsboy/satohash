@@ -13,7 +13,7 @@ const TIERS = [
     features: [
       { text: 'Unlimited stamp / verify / .ots', included: true },
       { text: 'Client-side hashing — file never leaves the device', included: true },
-      { text: '10 stamps / day cap', included: true },
+      { text: 'No daily quota (abuse rate-limit only)', included: true },
       { text: 'Bitcoin-anchored OpenTimestamps proofs', included: true },
       { text: 'No account, no Lightning invoice', included: true },
       { text: 'Never paywalled', included: true },
@@ -81,7 +81,7 @@ const PAYMENT_INFO = [
     icon: Clock,
     title: 'Pay-per-use API',
     description:
-      'Developer access is 1–5 sats per stamp via L402 when billing is on. Not a replacement for the free 10/day trust anchor.'
+      'Developer access is 1–5 sats per stamp via L402 when billing is on. Not a replacement for the free, never-paywalled trust anchor.'
   },
   {
     icon: Shield,

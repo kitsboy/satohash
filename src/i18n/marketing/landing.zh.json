@@ -16,7 +16,7 @@
     "ctaStamp": "为文件加盖时间戳——完全免费",
     "ctaWatch": "观看讲解",
     "ctaTemplates": "浏览模板",
-    "socialProof": "加入 {{count}} 位将文档锚定到 Bitcoin 的专业人士",
+    "socialProof": "本平台已签发 {{count}} 份锚定到 Bitcoin 的证明",
     "tryTemplate": "免费试用模板"
   },
   "telemetry": {

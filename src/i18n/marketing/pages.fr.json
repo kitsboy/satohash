@@ -97,7 +97,7 @@
         },
         "freeCalendar": {
           "label": "Ancrage gratuit via calendrier",
-          "free": "upTo10",
+          "free": "yes",
           "premium": "unlimited",
           "enterprise": "unlimited"
         },

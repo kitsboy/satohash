@@ -154,7 +154,7 @@ The **privacy-preserving integrity anchor** — hash on-chain, file never leaves
 
 | Tier            | Price                | Notes                                      |
 |-----------------|----------------------|--------------------------------------------|
-| Free            | $0                   | Free base — never paywalled trust anchor. Unlimited stamp/verify/.ots + client-side hashing, 10/day cap |
+| Free            | $0                   | Free base — never paywalled trust anchor. Stamp/verify/.ots + client-side hashing, no daily quota |
 | Professional    | ~2,100 sats/mo (~$29) | Unlimited, full vault, API, PDF exports    |
 | Business        | ~21,000 sats/mo (~$299) | White-label, SLA, custom webhooks, volume  |
 | Pay-per-use API | 1–5 sats/stamp       | Lightning (L402) — no subscription friction |

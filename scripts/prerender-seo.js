@@ -284,9 +284,9 @@ const secondary = {
   },
   pricing: {
     title: 'Pricing — Free Bitcoin Timestamping (Never Paywalled Trust Anchor)',
-    desc: 'Free base is the never-paywalled trust anchor: unlimited stamp/verify/.ots + client-side hashing (10/day cap). Optional premium tiers: Professional ~2,100 sats/mo (~$29), Business ~21,000 sats/mo (~$299). Pay-per-use API 1–5 sats/stamp via L402.',
+    desc: 'Free base is the never-paywalled trust anchor: stamp/verify/.ots + client-side hashing, no daily quota. Optional premium tiers: Professional ~2,100 sats/mo (~$29), Business ~21,000 sats/mo (~$299). Pay-per-use API 1–5 sats/stamp via L402.',
     body: `<h1>Simple, honest pricing</h1>
-<p><strong>Free — never paywalled (the trust anchor):</strong> unlimited stamp/verify/.ots + client-side hashing, 10/day cap. No account, no Lightning invoice.</p>
+<p><strong>Free — never paywalled (the trust anchor):</strong> stamp/verify/.ots + client-side hashing, no daily quota. No account, no Lightning invoice.</p>
 <p><strong>Optional premium tiers:</strong> Professional ~2,100 sats/mo (~$29) · Business ~21,000 sats/mo (~$299). <strong>Pay-per-use API:</strong> 1–5 sats/stamp via L402 (Lightning).</p>
 <p>Chain: Bitcoin only (via OpenTimestamps).</p>
 <p><a href="${SITE}/stamp">Stamp free now</a></p>`

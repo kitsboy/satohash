@@ -97,7 +97,7 @@
         },
         "freeCalendar": {
           "label": "Kostenlose Kalender-Verankerung",
-          "free": "upTo10",
+          "free": "yes",
           "premium": "unlimited",
           "enterprise": "unlimited"
         },

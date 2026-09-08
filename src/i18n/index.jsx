@@ -97,7 +97,7 @@ export const translations = {
       step1: 'Hash locally',
       step2: 'Anchor to Bitcoin',
       step3: 'Prove forever',
-      socialProof: 'Join 2,400+ professionals anchoring documents to Bitcoin',
+      socialProof: 'Hash on your device. Bitcoin keeps the receipt.',
       tryTemplate: 'Try a template for free',
       features: {
         title: 'Everything You Need for Tamper-Proof Documents',
@@ -284,7 +284,7 @@ export const translations = {
       step1: 'Hash local',
       step2: 'Anclar a Bitcoin',
       step3: 'Probar para siempre',
-      socialProof: 'Únete a más de 2.400 profesionales anclando documentos a Bitcoin',
+      socialProof: 'Hashea en tu dispositivo. Bitcoin guarda el recibo.',
       tryTemplate: 'Prueba una plantilla gratis',
       features: {
         title: 'Todo lo que Necesitas para Documentos a Prueba de Manipulaciones',
@@ -471,7 +471,7 @@ export const translations = {
       step1: 'Hash local',
       step2: 'Ancrage sur Bitcoin',
       step3: 'Preuve permanente',
-      socialProof: 'Rejoignez plus de 2 400 professionnels ancrant leurs documents sur Bitcoin',
+      socialProof: 'Hachez sur votre appareil. Bitcoin garde le reçu.',
       tryTemplate: 'Essayez un modèle gratuitement',
       features: {
         title: "Tout ce qu'il Faut pour des Documents Inviolables",
@@ -657,7 +657,7 @@ export const translations = {
       step1: '本地哈希',
       step2: '锚定到比特币',
       step3: '永久证明',
-      socialProof: '加入2,400多名将文件锚定到比特币的专业人士',
+      socialProof: '在你的设备上哈希。Bitcoin 保存收据。',
       tryTemplate: '免费试用模板',
       features: {
         title: '防篡改文件所需的一切',
@@ -837,7 +837,7 @@ export const translations = {
       step1: 'تجزئة محلية',
       step2: 'ربط بـ Bitcoin',
       step3: 'إثبات دائم',
-      socialProof: 'انضم إلى أكثر من 2,400 محترف يربطون مستنداتهم بـ Bitcoin',
+      socialProof: 'جزّئ الملف على جهازك. Bitcoin يحتفظ بالإيصال.',
       tryTemplate: 'جرّب قالباً مجاناً',
       features: {
         title: 'كل ما تحتاجه لمستندات محمية من التلاعب',

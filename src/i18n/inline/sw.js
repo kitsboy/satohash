@@ -80,7 +80,7 @@ export default {
     step1: 'Hash ndani ya kifaa',
     step2: 'Funga kwenye Bitcoin',
     step3: 'Thibitisha milele',
-    socialProof: 'Jiunge na wataalamu zaidi ya 2,400 wanaofunga hati kwenye Bitcoin',
+    socialProof: 'Hash kwenye kifaa chako. Bitcoin huhifadhi risiti.',
     tryTemplate: 'Jaribu kiolezo bila malipo',
     features: {
       title: 'Kila Kitu Unachohitaji kwa Hati Zisizoweza Kubadilishwa',

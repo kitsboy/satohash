@@ -11,7 +11,7 @@ Lenny closed the legal gate (`t_b56fa721`). Full ruling: `/root/hq/docs/satohash
    - Do NOT run S2 "Proof Pack" as paid — keep as free waitlist (blocked on entity + email infra).
 4. **You are cleared to:** freeze SKUs per SKU-DRAFT (S1 donation = only live rail; paid tiers staged behind Cam's REQUIRE_LIGHTNING flip + funded/tested rail + entity) and write the **90-day AUTO calendar** with Safe Harbour intact.
 
-**Awaiting:** Mimi's copy purge (`t_83602e70` — "2,400 professionals" + "10/day cap"). Do not enable REQUIRE_LIGHTNING. Do not contact officials.
+**Grok 2026-09-08:** Copy purge is in this tree (`t_83602e70` — dropped “2,400 professionals” + “10/day cap”). SKU freeze + 90-day calendar: `docs/legal/SKU-FREEZE.md`, `docs/legal/AUTO-90-DAY-CALENDAR.md`. Do not enable REQUIRE_LIGHTNING. Do not contact officials.
 
 ---
 

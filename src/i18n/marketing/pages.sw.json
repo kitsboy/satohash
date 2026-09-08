@@ -97,7 +97,7 @@
         },
         "freeCalendar": {
           "label": "Kuunganisha kalenda bure",
-          "free": "upTo10",
+          "free": "yes",
           "premium": "unlimited",
           "enterprise": "unlimited"
         },

@@ -24,7 +24,7 @@ Satohash is a free, no-account browser tool. You drop in a document, contract, p
 
 **What it's good for right now:** proving a document, photo, manuscript, or dataset existed by a certain date — priority disputes, "I had this first," audit trails, discovery dates for research and IP. Frameworks like the US ESIGN Act and UETA, and the EU's eIDAS regulation, recognize timestamped electronic records as admissible evidence; Satohash produces exactly that kind of record. (Worth saying plainly: *admissibility isn't the same as automatic proof of a specific legal conclusion* — a court still weighs evidence in context. Satohash gives you strong, independently verifiable evidence of a date; it isn't a substitute for legal advice about your specific situation.)
 
-Cost today: **free — and that free base is the permanent trust anchor, never paywalled.** The reconciled, Cam-locked model: **Free base (unlimited stamp/verify/.ots + client-side hashing, 10/day cap) + optional premium tiers (Professional ~2,100 sats/mo, Business ~21,000 sats/mo) + a pay-per-use API (1–5 sats/stamp via L402).** The anchoring mechanism and its guarantees are identical across every tier.
+Cost today: **free — and that free base is the permanent trust anchor, never paywalled.** The reconciled, Cam-locked model: **Free base (stamp/verify/.ots + client-side hashing, no daily quota) + optional premium tiers (Professional ~2,100 sats/mo, Business ~21,000 sats/mo) + a pay-per-use API (1–5 sats/stamp via L402).** The anchoring mechanism and its guarantees are identical across every tier. Public stamp traffic is abuse-rate-limited (5/min), not capped at 10/day.
 
 ---
 
