@@ -631,9 +631,17 @@
         "title": "Architecture Overview",
         "desc": "SPA + API + own bitcoind. Proof plane live; Lightning later."
       },
+      "how-satohash-works": {
+        "title": "How Satohash Works",
+        "desc": "Why it is free, and how a fingerprint is folded into Bitcoin."
+      },
       "pitch": {
         "title": "Product Pitch",
         "desc": "The Sovereign Provenance Mesh story."
+      },
+      "support-and-guidance": {
+        "title": "Support and Guidance",
+        "desc": "An honest request for guidance, partnership, and support."
       },
       "executive-summary": {
         "title": "Executive Summary",

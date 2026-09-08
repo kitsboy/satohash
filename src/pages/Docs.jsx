@@ -59,6 +59,12 @@ const CATEGORY_CONFIG = [
 const STICKY =
   'sticky top-[calc(3.5rem+env(safe-area-inset-top,0px)+var(--satohash-health-banner-h,0px))] z-30 md:top-[calc(4rem+var(--satohash-health-banner-h,0px))]'
 
+function humanTitle(slug) {
+  return String(slug || '')
+    .replace(/[-_]/g, ' ')
+    .replace(/\b\w/g, (c) => c.toUpperCase())
+}
+
 export default function Docs() {
   usePageMeta({ page: 'docs' })
   const { t } = useTranslation()
@@ -110,8 +116,8 @@ export default function Docs() {
         label: t(`docsPage.categories.${cat.id}`),
         docs: cat.docs.map((slug) => ({
           slug,
-          title: t(`docsPage.docs.${slug}.title`),
-          desc: t(`docsPage.docs.${slug}.desc`)
+          title: t(`docsPage.docs.${slug}.title`, { defaultValue: humanTitle(slug) }),
+          desc: t(`docsPage.docs.${slug}.desc`, { defaultValue: '' })
         }))
       })),
     [t]

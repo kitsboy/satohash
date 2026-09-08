@@ -631,9 +631,17 @@
         "title": "Muhtasari wa Usanifu",
         "desc": "Mfumo wa ndege nne: Proof, Identity, Settlement, Atlas."
       },
+      "how-satohash-works": {
+        "title": "Jinsi Satohash inavyofanya kazi",
+        "desc": "Kwa nini ni bure, na jinsi alama inavyowekwa kwenye Bitcoin."
+      },
       "pitch": {
         "title": "Pitch ya Bidhaa",
         "desc": "Hadithi ya Sovereign Provenance Mesh."
+      },
+      "support-and-guidance": {
+        "title": "Msaada na mwongozo",
+        "desc": "Ombi la kweli la mwongozo, ushirikiano, na msaada."
       },
       "executive-summary": {
         "title": "Muhtasari wa Uongozi",

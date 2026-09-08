@@ -631,9 +631,17 @@
         "title": "Architektur-Übersicht",
         "desc": "Vier-Ebenen-System: Proof, Identity, Settlement, Atlas."
       },
+      "how-satohash-works": {
+        "title": "So funktioniert Satohash",
+        "desc": "Warum es kostenlos ist und wie ein Fingerabdruck in Bitcoin verankert wird."
+      },
       "pitch": {
         "title": "Produkt-Pitch",
         "desc": "Die Sovereign Provenance Mesh Story."
+      },
+      "support-and-guidance": {
+        "title": "Unterstützung und Orientierung",
+        "desc": "Eine ehrliche Bitte um Rat, Partnerschaft und Unterstützung."
       },
       "executive-summary": {
         "title": "Executive Summary",

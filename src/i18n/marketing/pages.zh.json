@@ -621,9 +621,17 @@
         "title": "架构概览",
         "desc": "四平面系统：Proof、Identity、Settlement、Atlas。"
       },
+      "how-satohash-works": {
+        "title": "Satohash 如何运作",
+        "desc": "为何免费，以及指纹如何写入 Bitcoin。"
+      },
       "pitch": {
         "title": "产品 Pitch",
         "desc": "Sovereign Provenance Mesh 故事。"
+      },
+      "support-and-guidance": {
+        "title": "支持与指导",
+        "desc": "一份关于指导、合作与支持的诚实请求。"
       },
       "executive-summary": {
         "title": "执行摘要",

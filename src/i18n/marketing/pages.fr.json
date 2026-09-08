@@ -631,9 +631,17 @@
         "title": "Vue d'ensemble de l'architecture",
         "desc": "Système à quatre plans : Proof, Identity, Settlement, Atlas."
       },
+      "how-satohash-works": {
+        "title": "Comment Satohash fonctionne",
+        "desc": "Pourquoi c'est gratuit, et comment une empreinte est ancrée dans Bitcoin."
+      },
       "pitch": {
         "title": "Pitch produit",
         "desc": "L'histoire de Sovereign Provenance Mesh."
+      },
+      "support-and-guidance": {
+        "title": "Soutien et orientation",
+        "desc": "Une demande honnête de conseils, de partenariat et de soutien."
       },
       "executive-summary": {
         "title": "Résumé exécutif",
