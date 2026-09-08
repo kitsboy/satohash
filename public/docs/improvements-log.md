@@ -710,8 +710,8 @@
 - [x] Metrics: null uptimePct24h; no demo poison
 - [x] docs/LEARN-STAMP-FAMILY.md + MASTER-BRAIN ingest refresh
 - [x] Sherpa paste prompt: GROK-PROMPT-STAMP-HANDOFF.md (sibling repo)
-- [ ] THOR Docker rebuild (client_id live)
-- [ ] Live GHA SPA verify bundle contains API base
-- [ ] Full family client audit (motopass, katoa, …)
-- [ ] Kimi: LNbits wallet `satohash` + L1 bc1 + LUD-16 (HQ Vault keys)
-- [ ] Grok: publish L1/L2 on SPA after public handback
+- [x] THOR Docker rebuild (client_id live) — 12 distinct clients
+- [x] Live GHA SPA verify bundle contains API base
+- [ ] Full family client audit — Katoa / SherpaCarta / Give A Bit still 0 attributed
+- [ ] Kimi: LNbits wallet `satohash` exists (0 sats); LND not configured; paywall stays off (`REQUIRE_LIGHTNING=false`) — not paywall-ready
+- [x] Grok: publish L1/L2 on SPA — donate rail is Breez `satohash@breez.tips`
