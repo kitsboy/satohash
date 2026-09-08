@@ -1,5 +1,7 @@
 # Satohash
 
+Version: 5.0.0-ELITE
+
 > Free Bitcoin document stamping. Drop any file, get a permanent, Bitcoin-anchored proof of existence in under 60 seconds. Zero-knowledge — your file never leaves your device. OpenTimestamps + Bitcoin = immutable, independently verifiable evidence of existence (aligns with the framework of eIDAS / ESIGN / UETA).
 
 ## What Satohash is

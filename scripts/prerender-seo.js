@@ -410,7 +410,7 @@ for (const doc of NAMED_DOCS) {
       description,
       contentHtml: `<p class="meta">Satohash — Bitcoin document stamping</p>\n${body}`,
       canonical: `${SITE}/docs/${doc.slug}`,
-      ogImage: `${SITE}/og/${doc.og}.png`,
+      ogImage: `${SITE}/og/${doc.og}.jpg`,
       article: { headline: title, description, datePublished: '2026-08-20' }
     })
   )
