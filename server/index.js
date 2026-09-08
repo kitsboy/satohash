@@ -282,7 +282,19 @@ const port = config.PORT
 startAlertDaemon(io)
 
 // Middlewares
-app.use(pino({ logger }))
+app.use(
+  pino({
+    logger,
+    autoLogging: {
+      ignore: (req) => {
+        const url = (req.url || '').split('?')[0]
+        return (
+          url === '/health' || url === '/health/ui' || url === '/metrics.json' || url === '/metrics'
+        )
+      }
+    }
+  })
+)
 app.use(
   helmet({
     contentSecurityPolicy: {

@@ -1,19 +1,20 @@
 import express from 'express'
 import logger from '../logger.js'
 import db from '../db.js'
-import { create } from 'ipfs-http-client'
 
 const nftRouter = express.Router()
 
-const ipfsUrl = process.env.IPFS_URL || 'http://localhost:5001'
-
-let ipfs
-if (ipfsUrl) {
+async function uploadNftMetadata(nftMetadata) {
+  const ipfsUrl = process.env.IPFS_URL
+  if (!ipfsUrl) return null
   try {
-    ipfs = create({ url: ipfsUrl })
-    logger.info(`🌐 IPFS connected for NFT metadata`)
+    const { create } = await import('ipfs-http-client')
+    const ipfs = create({ url: ipfsUrl })
+    const { cid } = await ipfs.add(JSON.stringify(nftMetadata))
+    return `ipfs://${cid}`
   } catch (err) {
-    logger.warn(`⚠️ IPFS connection failed for NFTs: ${err.message}`)
+    logger.warn(`⚠️ IPFS upload failed for NFTs: ${err.message}`)
+    return null
   }
 }
 
@@ -55,16 +56,13 @@ nftRouter.post('/mint', async (req, res) => {
       ...metadata
     }
 
-    // Upload to IPFS (mock if no client)
-    let metadataURI
-    if (ipfs) {
-      const { cid } = await ipfs.add(JSON.stringify(nftMetadata))
-      metadataURI = `ipfs://${cid}`
+    // Upload to IPFS only when IPFS_URL is set; otherwise mock CID (NFT is not MVP)
+    let metadataURI = await uploadNftMetadata(nftMetadata)
+    if (metadataURI) {
       logger.info(`📁 NFT metadata uploaded to IPFS: ${metadataURI}`)
     } else {
-      // Mock CID
       metadataURI = `ipfs://QmMockMetadata_${timestampId}`
-      console.log('[MOCK IPFS] Metadata URI generated:', metadataURI)
+      logger.info('[MOCK IPFS] Metadata URI generated: %s', metadataURI)
     }
 
     const mintTx = {

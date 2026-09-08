@@ -120,7 +120,6 @@ const startUpgradeDaemon = (io) => {
 
     if (pendingStamps.length === 0) {
       logger.info('✅ [DAEMON] State: All proofs confirmed.')
-      return
     }
 
     for (const stamp of pendingStamps) {
@@ -233,6 +232,39 @@ const startUpgradeDaemon = (io) => {
           logger.warn('⚠️ [DAEMON] OTS calendar rate limit hit. Pausing daemon until next cycle.')
           break // Exit the loop for this cycle
         }
+      }
+    }
+
+    // Confirmed stamps missing height: parse local OTS only — no calendar upgrade
+    const confirmedMissingHeight = db
+      .prepare(
+        `
+      SELECT id, upgraded_binary, ots_binary
+      FROM timestamps
+      WHERE status = 'confirmed' AND bitcoin_block_height IS NULL
+      LIMIT 20
+    `
+      )
+      .all()
+
+    for (const stamp of confirmedMissingHeight) {
+      try {
+        const raw = stamp.upgraded_binary || stamp.ots_binary
+        if (!raw || Buffer.from(raw).toString('utf8', 0, 4) === 'ots:') continue
+        const detached = OpenTimestamps.DetachedTimestampFile.deserialize(Buffer.from(raw))
+        const info = OpenTimestamps.info(detached)
+        const blockHeight = parseBitcoinBlockHeight(info)
+        if (blockHeight == null) continue
+        db.prepare(
+          `
+          UPDATE timestamps
+          SET bitcoin_block_height = ?, updated_at = CURRENT_TIMESTAMP
+          WHERE id = ?
+        `
+        ).run(blockHeight, stamp.id)
+        logger.info(`[DAEMON] Backfilled bitcoin_block_height ${blockHeight} for ${stamp.id}`)
+      } catch (error) {
+        logger.error(`❌ [DAEMON] Height backfill failed for ${stamp.id}: ${error.message}`)
       }
     }
   })

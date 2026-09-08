@@ -80,7 +80,10 @@ export function register(app, deps) {
     max: (req) => (req.headers['x-satohash-key'] ? 30 : 5),
     standardHeaders: true,
     legacyHeaders: false,
-    message: { error: 'Too many stamp requests. Please wait.' }
+    handler: (req, res) => {
+      res.setHeader('Retry-After', '60')
+      return sendError(res, ERROR_CODES.RATE_LIMITED)
+    }
   })
 
   /**

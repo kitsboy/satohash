@@ -5,6 +5,8 @@ RUN apk add --no-cache python3 make g++
 COPY package*.json ./
 ENV NODE_ENV=production
 RUN npm ci --omit=dev --ignore-scripts && npm rebuild better-sqlite3
+# Drop fat frontend packages that npm ci --omit=dev still installs from the SPA tree
+RUN rm -rf node_modules/react node_modules/react-dom node_modules/three node_modules/ethers node_modules/framer-motion node_modules/lucide-react node_modules/vite node_modules/@vitejs node_modules/lighthouse node_modules/wrangler node_modules/puppeteer-core node_modules/@puppeteer node_modules/playwright node_modules/canvas-confetti node_modules/howler node_modules/jspdf node_modules/@sentry/react node_modules/i18next node_modules/react-i18next node_modules/react-router-dom node_modules/@tanstack 2>/dev/null || true
 
 FROM node:20-alpine
 WORKDIR /app

@@ -1,3 +1,7 @@
 api.satohash.io {
     reverse_proxy 127.0.0.1:3001
+    # do not enable request body logging on /api/stamp
+    log {
+        output stdout
+    }
 }
