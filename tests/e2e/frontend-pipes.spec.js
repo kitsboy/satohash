@@ -16,9 +16,9 @@ test.describe('Frontend pipes', () => {
     await expect(page.getByRole('searchbox')).toBeVisible()
   })
 
-  test('image-vault requires auth', async ({ page }) => {
+  test('image-vault is frozen in MVP and sends home', async ({ page }) => {
     await page.goto('/image-vault')
-    await expect(page).toHaveURL(/\/access/)
+    await expect(page).toHaveURL(/\/$/)
   })
 
   test('choose-template links to template library', async ({ page }) => {
@@ -43,28 +43,14 @@ test.describe('Frontend pipes', () => {
     await expect(page).toHaveURL(/\/onboarding\/choose-template/)
   })
 
-  test('forum npub gate shows toast when posting without identity', async ({ page }) => {
-    await page.addInitScript(() => {
-      localStorage.setItem('satohash_authed', 'true')
-      localStorage.setItem('satohash-onboarded', 'true')
-    })
+  test('forum is frozen in MVP and sends home', async ({ page }) => {
     await page.goto('/forum')
-    await page.getByPlaceholder(/thread title/i).fill('Test thread')
-    await page.getByRole('button', { name: /create/i }).click()
-    await expect(page.getByText(/nostr identity/i)).toBeVisible({ timeout: 5000 })
+    await expect(page).toHaveURL(/\/$/)
   })
 
-  test('contract create stores draft in localStorage', async ({ page }) => {
-    await page.addInitScript(() => {
-      localStorage.setItem('satohash_authed', 'true')
-      localStorage.setItem('satohash-onboarded', 'true')
-    })
+  test('contracts are frozen in MVP and send home', async ({ page }) => {
     await page.goto('/contracts/new/nda')
-    await expect(page).toHaveURL(/\/contracts\/new\/nda/)
-    await page.getByRole('textbox').first().fill('Test Contract Alpha')
-    await page.getByRole('button', { name: /save|draft/i }).first().click({ timeout: 8000 }).catch(() => {})
-    const stored = await page.evaluate(() => localStorage.getItem('satohash_contracts'))
-    expect(stored).toBeTruthy()
+    await expect(page).toHaveURL(/\/$/)
   })
 
   test('vault shows cached banner when history API fails', async ({ page }) => {
