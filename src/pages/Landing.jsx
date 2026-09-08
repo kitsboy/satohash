@@ -434,7 +434,7 @@ export default function Landing() {
                 src="https://videos.giveabit.io/media/video/satohash-explainer-with-vo2.mp4?v=kimi-noir-20260819"
                 poster="/og/watch.png"
                 playsInline
-                preload="metadata"
+                preload="none"
                 controls
                 className="absolute inset-0 h-full w-full bg-black object-contain"
                 aria-label="Satohash explainer: file never leaves the device, Bitcoin keeps the receipt"

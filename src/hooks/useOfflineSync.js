@@ -134,15 +134,16 @@ async function hashBufferMainThread(buffer) {
 export async function hashFileOffline(file, onProgress) {
   if (typeof Worker !== 'undefined') {
     try {
-      const { wrap } = await import('comlink')
+      const { wrap, transfer } = await import('comlink')
       const worker = new Worker(new URL('../workers/hashWorker.js', import.meta.url), {
         type: 'module'
       })
       const hashFn = wrap(worker)
       try {
+        const buffer = await toArrayBuffer(file, onProgress)
         return typeof onProgress === 'function'
-          ? await hashFn.hashFile(file, onProgress)
-          : await hashFn.hashFile(file)
+          ? await hashFn.hashFile(transfer(buffer, [buffer]), onProgress)
+          : await hashFn.hashFile(transfer(buffer, [buffer]))
       } finally {
         worker.terminate()
       }

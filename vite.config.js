@@ -106,14 +106,24 @@ export default defineConfig({
         chunkSizeWarningLimit: 800,
         rollupOptions: {
             output: {
-                manualChunks: {
-                    vendor: ['react', 'react-dom', 'react-router-dom'],
-                    motion: ['framer-motion'],
-                    icons: ['lucide-react'],
-                    three: ['three'],
-                    crypto: ['bitcoinjs-lib', 'ethers', 'tiny-secp256k1'],
-                    utils: ['jspdf'],
-                    i18n: ['i18next', 'react-i18next']
+                manualChunks(id) {
+                    if (
+                        id.includes('node_modules/react-dom') ||
+                        id.includes('node_modules/react/') ||
+                        id.includes('react-router')
+                    )
+                        return 'vendor'
+                    if (id.includes('framer-motion')) return 'motion'
+                    if (id.includes('lucide-react')) return 'icons'
+                    if (id.includes('i18next') || id.includes('react-i18next')) return 'i18n'
+                    if (id.includes('jspdf')) return 'utils'
+                    if (id.includes('three')) return 'three'
+                    if (
+                        id.includes('bitcoinjs-lib') ||
+                        id.includes('ethers') ||
+                        id.includes('tiny-secp256k1')
+                    )
+                        return 'crypto'
                 }
             }
         }

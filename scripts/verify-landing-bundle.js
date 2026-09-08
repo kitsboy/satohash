@@ -25,6 +25,15 @@ const landingFiles = allJs.filter((name) => name.startsWith('Landing-'))
 const unsafeFeesHigh = /\.fees\.high\b/
 const safeOptionalHigh =
   /\(\(_\w+\s*=\s*\w+\.fees\)\s*==\s*null\s*\?\s*void\s*0\s*:\s*_\w+\.high\)|fees\?\.high/
+const threeChunkImport = /(?:from|import)\(?["']\.\/three-[^"']+\.js["']/
+
+function assertNoThree(file, content) {
+  if (threeChunkImport.test(content)) {
+    console.error(`verify-landing-bundle: ${file} imports three (landing must not)`)
+    return false
+  }
+  return true
+}
 
 if (landingFiles.length > 0) {
   let failed = false
@@ -38,6 +47,7 @@ if (landingFiles.length > 0) {
       console.error(`verify-landing-bundle: missing optional fees?.high guard in ${file}`)
       failed = true
     }
+    if (!assertNoThree(file, content)) failed = true
   }
   if (failed) process.exit(1)
   console.log(`verify-landing-bundle: ok (chunk: ${landingFiles.join(', ')})`)
@@ -48,9 +58,7 @@ if (landingFiles.length > 0) {
 const indexFiles = allJs
   .filter((name) => name.startsWith('index-'))
   .sort(
-    (a, b) =>
-      fs.statSync(path.join(assetsDir, b)).size -
-      fs.statSync(path.join(assetsDir, a)).size,
+    (a, b) => fs.statSync(path.join(assetsDir, b)).size - fs.statSync(path.join(assetsDir, a)).size
   )
 
 if (indexFiles.length === 0) {
@@ -64,5 +72,8 @@ if (size < 50_000) {
   console.error(`verify-landing-bundle: main shell ${main} too small (${size} bytes)`)
   process.exit(1)
 }
+
+const indexSrc = fs.readFileSync(path.join(assetsDir, main), 'utf8')
+if (!assertNoThree(main, indexSrc)) process.exit(1)
 
 console.log(`verify-landing-bundle: ok (eager-index: ${main}, ${size} bytes)`)

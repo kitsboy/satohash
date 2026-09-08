@@ -130,8 +130,26 @@ export default function Network() {
 
   useEffect(() => {
     load()
-    const id = setInterval(load, 60000)
-    return () => clearInterval(id)
+    let id = null
+    const startPolling = () => {
+      if (id != null) return
+      id = setInterval(load, 60000)
+    }
+    const stopPolling = () => {
+      if (id == null) return
+      clearInterval(id)
+      id = null
+    }
+    const onVisibility = () => {
+      if (document.visibilityState === 'hidden') stopPolling()
+      else startPolling()
+    }
+    if (document.visibilityState !== 'hidden') startPolling()
+    document.addEventListener('visibilitychange', onVisibility)
+    return () => {
+      stopPolling()
+      document.removeEventListener('visibilitychange', onVisibility)
+    }
   }, [])
 
   const calendars = cals?.calendars || []

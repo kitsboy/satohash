@@ -8,7 +8,7 @@ function report(onProgress, pct) {
   }
 }
 
-/** Read File/Blob in 2MB slices (0–90%). ArrayBuffer sources skip to 90%. */
+/** Read File/Blob in 2MB slices (0–90%). Transferred ArrayBuffers skip to 90%. */
 async function readToArrayBuffer(source, onProgress) {
   if (source instanceof ArrayBuffer) {
     report(onProgress, 90)

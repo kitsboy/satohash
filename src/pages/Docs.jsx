@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react'
+import { useState, useMemo, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import {
@@ -72,17 +72,27 @@ export default function Docs() {
   const [search, setSearch] = useState('')
   const [activeCategory, setActiveCategory] = useState('all')
   const [bodyIndex, setBodyIndex] = useState({})
+  const docsBodiesFetched = useRef(false)
 
   useEffect(() => {
-    const slugs = CATEGORY_CONFIG.flatMap((c) => c.docs)
-    const cached = localStorage.getItem('satohash_docs_index')
-    if (cached) {
-      try {
-        setBodyIndex(JSON.parse(cached))
-      } catch {
-        /* ignore */
+    try {
+      const cached = localStorage.getItem('satohash_docs_index')
+      if (!cached) return
+      const parsed = JSON.parse(cached)
+      if (!parsed || typeof parsed !== 'object') return
+      setBodyIndex(parsed)
+      const slugs = CATEGORY_CONFIG.flatMap((c) => c.docs)
+      if (slugs.every((slug) => typeof parsed[slug] === 'string')) {
+        docsBodiesFetched.current = true
       }
+    } catch {
+      /* ignore */
     }
+  }, [])
+
+  useEffect(() => {
+    if (search.trim().length < 2 || docsBodiesFetched.current) return undefined
+    const slugs = CATEGORY_CONFIG.flatMap((c) => c.docs)
     let cancelled = false
     Promise.all(
       slugs.map(async (slug) => {
@@ -97,6 +107,7 @@ export default function Docs() {
     ).then((pairs) => {
       if (cancelled) return
       const next = Object.fromEntries(pairs)
+      docsBodiesFetched.current = true
       setBodyIndex(next)
       try {
         localStorage.setItem('satohash_docs_index', JSON.stringify(next))
@@ -107,7 +118,7 @@ export default function Docs() {
     return () => {
       cancelled = true
     }
-  }, [])
+  }, [search])
 
   const categories = useMemo(
     () =>
