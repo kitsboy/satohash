@@ -277,7 +277,7 @@ export default function ExplainerWatch() {
             src={cut.src}
             poster={POSTER_SRC}
             playsInline
-            preload="metadata"
+            preload="none"
             className="absolute inset-0 h-full w-full bg-black object-contain"
             onClick={toggle}
             aria-label={cut.aria}
@@ -287,11 +287,11 @@ export default function ExplainerWatch() {
             <button
               type="button"
               onClick={toggle}
-              className="absolute inset-0 flex items-center justify-center bg-black/30 transition-colors hover:bg-black/40"
+              className="group absolute inset-0 flex items-center justify-center bg-black/30 transition-colors hover:bg-black/40"
               aria-label="Play explainer"
             >
               <span
-                className="flex h-16 w-16 items-center justify-center rounded-full sm:h-20 sm:w-20"
+                className="flex h-16 min-h-[44px] w-16 min-w-[44px] items-center justify-center rounded-full transition-all group-hover:scale-105 group-hover:shadow-[0_0_28px_var(--accent-gold-glow)] sm:h-20 sm:w-20"
                 style={{ background: 'var(--accent-gold)', color: '#141b25' }}
               >
                 <Play size={28} fill="currentColor" className="ml-1" />

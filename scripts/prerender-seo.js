@@ -322,7 +322,8 @@ const secondary = {
   }
 }
 for (const [slug, p] of Object.entries(secondary)) {
-  write(`${slug}.html`, shell({ title: p.title, description: p.desc, contentHtml: p.body, canonical: `${SITE}/${slug}`, ogImage: `${SITE}/og/${slug}.png` }))
+  const ext = slug === 'stamp' || slug === 'verify' ? 'jpg' : 'png'
+  write(`${slug}.html`, shell({ title: p.title, description: p.desc, contentHtml: p.body, canonical: `${SITE}/${slug}`, ogImage: `${SITE}/og/${slug}.${ext}` }))
 }
 
 // learn articles

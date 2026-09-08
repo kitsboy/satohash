@@ -31,7 +31,7 @@ export const WATCH_VIDEO_URL =
   'https://videos.giveabit.io/media/video/satohash-explainer-with-vo2.mp4?v=kimi-noir-20260819'
 export const WATCH_PLAYER_URL = `${SITE}/watch-player.html`
 
-/** Per-page OG image slug under /og/*.png (Kimi 2026-08-29 set). Homepage uses JPEG. */
+/** Per-page OG image slug under /og. JPEG for landing/stamp/verify (iMessage). */
 const PAGE_OG_SLUG = {
   landing: 'home',
   faq: 'faq',
@@ -47,9 +47,14 @@ const PAGE_OG_SLUG = {
   supportAndGuidance: 'support-and-guidance'
 }
 
+const PAGE_OG_JPEG = new Set(['landing', 'stamp', 'verify'])
+
 export function ogImageForPage(page, pathname) {
   if (page === 'landing') return DEFAULT_OG_IMAGE
-  if (page && PAGE_OG_SLUG[page]) return `${SITE}/og/${PAGE_OG_SLUG[page]}.png`
+  if (page && PAGE_OG_SLUG[page]) {
+    const ext = PAGE_OG_JPEG.has(page) ? 'jpg' : 'png'
+    return `${SITE}/og/${PAGE_OG_SLUG[page]}.${ext}`
+  }
   const path = pathname || ''
   if (!path || path === '/') return DEFAULT_OG_IMAGE
   const learn = path.match(/\/docs\/(learn-[a-z0-9-]+)\/?$/)
