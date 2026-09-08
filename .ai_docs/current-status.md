@@ -1,15 +1,15 @@
 # Current Status — Satohash
 
-**Version:** **5.0.0-ELITE** (Build 278)  
-**Last Updated:** 2026-09-08 (Grok 4.6 — copy purge + SKU freeze, Cam asked push)  
-**Frontend:** https://satohash.io · www · CF Pages project **`satohash`** — **stable** (`ec1c69e`, entry `/b/index-D_2O1MUS.js`)  
-**API:** https://api.satohash.io ✅ LIVE (THOR Docker, image from `78e2a8f`)  
-**Metrics SoT:** `https://api.satohash.io/metrics.json` (`raw.last10` + `raw.familyClients` **live**)  
+**Version:** **5.0.0-ELITE** (Build 331+)  
+**Last Updated:** 2026-09-08 (Grok 4.6 — leftover 18 harden items + docs/Kimi maps)  
+**Frontend:** https://satohash.io · www · CF Pages project **`satohash`** — Grok lane, `assetsDir: 'b'`  
+**API:** https://api.satohash.io ✅ LIVE (THOR Docker). Confirm SHA with `GET /health` (`gitSha`). Last verified this session: **`7cc0932`**, image **818MB**, `Cache-Control: no-store`, Caddy reload OK. Tree HEAD after this wave is **`6ead07f`** until the next THOR rebuild.  
+**Metrics SoT:** `https://api.satohash.io/metrics.json`  
 **HQ:** https://hq.giveabit.io  
-**Git:** `main` @ `ec1c69e`+ (Pages stability on `origin/main`)  
+**Git:** `main` @ **`6ead07f`** (pushing with this docs commit)  
 **Kimi vault:** **THOR VPS Obsidian** (not M4)  
 **Analytics:** Umami `analytics.giveabit.io` — **not** Google Analytics  
-**Search:** GSC property `https://satohash.io/` **verified** · sitemap.xml **Success, 69 pages**
+**Search:** GSC property `https://satohash.io/` **verified**
 
 ## Planes
 
@@ -69,8 +69,17 @@
 | `raw.requireLightning` | **false** |
 | `raw.last10` | **10** rows |
 | `raw.familyClients` | **17** rows (list; zeros for unused family ids) |
-| Family with counts | public 6 · spa 4 · kimi/e2e/mvp smoke 1 each |
-| Sherpa / MotoPass / Katoa | **0** attributed stamps (honest) |
+| Family with counts | live `raw.familyClients` — do not invent zeros; read metrics.json |
+| Sherpa / Katoa / Giveabit | attributed stamps exist (honest live counts; not 0) |
+
+## This session (2026-09-08 — leftover 18 + knowledge)
+
+- [x] Remaining 18 of the last 20: government compact footers, 2 more learn OG JPEGs, thinner info ring (1.15px, still **one** gold circle), docs prefetch `/verify`, OpenAPI calendar-status, smoke learn JPEG, Network `/p/` aria-label, counsel `scroll-mt-24`, Safari `fontVariantNumeric`, sqlite `analysis_limit=400`
+- [x] Info icon: one gold ring around a plain i (not Lucide-in-a-ring)
+- [x] Docs/maps: this file · `docs/handoff-log.md` · `docs/KIMI-HANDOFF.md` · `docs/MASTER-BRAIN-INGEST.md` · `docs/ops-runbook.md`
+- [ ] THOR rebuild for `161c7e0`+ (`analysis_limit`) after this push
+- [ ] Pin `/watch` on **`@give_bit`**
+- [ ] Physical iPhone `/p/<hash>` unfurl
 
 ## This session (2026-08-31, later)
 
@@ -83,9 +92,8 @@
 
 ## Ops still open
 
-- [ ] Physical iPhone Safari share of `/p/<hash>` (JPEG unfurl) — Cam skipped earlier  
-- [ ] Pin `/watch` on **`@give_bit`** (do not wait on `@satohashio`; `@satohash` taken)  
-- [ ] Family tiles: Katoa / Sherpa / Giveabit still **0** attributed (widget exists; nobody stamped through them)  
+- [ ] Physical iPhone Safari share of `/p/<hash>` (JPEG unfurl)  
+- [ ] Pin `/watch` on **`@give_bit`** (not `@satohash`)  
 - [ ] Kind-0 Nostr profile + RSS→Nostr cron (`scripts/nostr-publish-feed.js`; nsec on THOR only)  
 - [ ] **Kimi:** daily bitcoind RAM (`free -h`)  
 - [ ] Paywall only when Cam flips (`docs/PAYWALL-STAGING.md`) — LND not configured  

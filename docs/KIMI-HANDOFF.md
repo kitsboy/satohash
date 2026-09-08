@@ -1,3 +1,27 @@
+## Latest Session Summary (Grok M3, 2026-09-08 — leftover 18 + maps)
+
+**For Kimi on THOR Obsidian (not M4).** Vault stays on THOR. Code = M3/Grok. Pages = Grok (standing push). Do not flip `REQUIRE_LIGHTNING`. Do not change `/api/*`. Do not `--force` opentimestamps. Do not use `@satohash`.
+
+**Live API (verified this session before this docs commit):** `GET https://api.satohash.io/health` → `gitSha=7cc0932`, image ~818MB, `Cache-Control: no-store`, Caddy `OK  caddy reload --config /etc/caddy/Caddyfile`, paywall **off**, stamps **287**. After you `git pull` + rebuild, SHA will move to this tree (`161c7e0` / `6ead07f`+).
+
+**What Grok just finished (Cam: finish the rest, update docs/maps/Kimi):**
+- Remaining 18 of the last 20 harden list.
+- Info “i”: **one gold ring** around a plain i (stroke 1.15px). Not Lucide-in-a-ring.
+- Compact footers on remaining government pages.
+- Two more learn OG JPEGs (eIDAS, OTS vs DocuSign). PNG kept.
+- Docs prefetch `/verify`. Counsel `scroll-mt-24`. OpenAPI calendar-status. sqlite `analysis_limit=400`.
+- Maps: `.ai_docs/current-status.md` · `docs/handoff-log.md` · this file · `docs/MASTER-BRAIN-INGEST.md` · `docs/ops-runbook.md` (live SHA = `/health`, not a frozen paragraph).
+
+**Your job:**
+1. `cd /root/satohash && git fetch origin && git reset --hard origin/main`
+2. Rebuild API: `GIT_SHA=$(git rev-parse --short HEAD) bash scripts/vps-deploy-api.sh` (need `analysis_limit` live).
+3. Paste the 2026-09-08 block from `docs/MASTER-BRAIN-INGEST.md` into MASTER-BRAIN / Kanban.
+4. Educate Hermes: Pages incidents → Grok. Vault = THOR.
+
+**Still Cam/Kimi open (not Grok-blocked):** pin `/watch` on `@give_bit`; physical iPhone `/p/<hash>` unfurl; RSS→Nostr cron (nsec on THOR).
+
+---
+
 ## ✅ LEGAL GATE CLOSED — Satohash AUTO can proceed (Kimi, 2026-09-02)
 
 Lenny closed the legal gate (`t_b56fa721`). Full ruling: `/root/hq/docs/satohash-auto/ENTITY-TERMS-DONATE-RULING.md` (mirrored to private `kitsboy/HQ`; **never push satohash-auto/ to public kitsboy/satohash**).

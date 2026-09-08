@@ -84,7 +84,7 @@ Until Kimi sets `NOSTR_PRIVATE_KEY` on THOR, leave the crontab off or keep invok
 
 ## Kimi — API image rebuild (**DONE 2026-08-31**, Grok on THOR)
 
-Live image from git `78e2a8f`: authored field on `POST /api/stamp` is enforced (bad `authored.file_sha256` → 400). `REQUIRE_LIGHTNING=false`. Metrics still have `raw.last10` + `raw.familyClients`. Recipe for a future rebuild: `cd /root/satohash && git pull origin main && bash scripts/vps-deploy-api.sh`. Do **not** change `/api/*` paths.
+Live SHA is **`GET https://api.satohash.io/health` → `gitSha`** (do not trust this paragraph’s hash). Last Grok check 2026-09-08: `7cc0932`, image ~818MB, `Cache-Control: no-store`, Caddy `OK  caddy reload --config /etc/caddy/Caddyfile`. `REQUIRE_LIGHTNING=false`. Metrics still have `raw.last10` + `raw.familyClients`. Recipe: `cd /root/satohash && git fetch origin && git reset --hard origin/main && GIT_SHA=$(git rev-parse --short HEAD) bash scripts/vps-deploy-api.sh`. Do **not** change `/api/*` paths.
 
 Confirm (should already pass):
 

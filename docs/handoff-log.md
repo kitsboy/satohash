@@ -1,3 +1,22 @@
+## 2026-09-08 (Grok M3 — leftover 18 done + Kimi/maps refresh)
+
+**Pickup:** `.ai_docs/current-status.md` · this file · `docs/KIMI-HANDOFF.md` · `docs/MASTER-BRAIN-INGEST.md`
+
+**Live API at start of closeout:** `gitSha=7cc0932` · 818MB · Caddy OK · 287 stamps · paywall off.
+
+**This closeout (code):**
+- `161c7e0` sqlite `analysis_limit=400`, OpenAPI `/api/public/calendar-status`
+- `9995253` learn-eidas + learn-ots-vs-docusign OG JPEG, docs prefetch `/verify`, counsel `scroll-mt-24`
+- `6ead07f` compact remaining government footers, info ring 1.15px (still **one** circle), Safari tabular-nums, Network `/p/` aria-label
+
+**Knowledge:** current-status, ops-runbook (live SHA from `/health`, not a frozen git hash), KIMI-HANDOFF top, MASTER-BRAIN ingest paste.
+
+**Kimi:** `git pull` on `/root/satohash`. Rebuild API for `161c7e0`+. Ingest paste into **THOR Obsidian** (not M4). Do not flip paywall. Do not change `/api/*`. Pages = Grok.
+
+**Do not:** `--force` opentimestamps · `@satohash` · invent family zeros · wait to push SPA fixes
+
+---
+
 ## 2026-09-08 (Grok M3 — harden wave: one-circle info i, sqlite optimize)
 
 **Pickup:** `.ai_docs/current-status.md` · this file · HEAD `8ad9de8`.

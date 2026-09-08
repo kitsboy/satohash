@@ -6,6 +6,23 @@
 
 ---
 
+## Paste block (2026-09-08 — leftover 18 + one-circle info i)
+
+```markdown
+### Satohash 2026-09-08 (Grok M3 — leftover 18 + maps)
+
+Live API (before this docs SHA): gitSha=7cc0932 · ~818MB · Cache-Control no-store · Caddy reload OK · REQUIRE_LIGHTNING=false · stamps ~287.
+Code tree after closeout: 161c7e0 / 9995253 / 6ead07f + docs commit. Kimi: git pull + API rebuild for analysis_limit=400.
+
+Product still: free OTS→Bitcoin stamps. SPA CF Pages (Grok). API THOR Docker. Eager Stamp/Verify. Vite assetsDir b. SPA calls https://api.satohash.io only.
+
+Info icon: one gold ring around a plain i (not two circles). Compact footers on government pages. Learn OG JPEGs for iMessage (PNG kept).
+
+Vault = THOR Obsidian, not M4. Pages = Grok standing push. Do not flip paywall. Do not change /api/*. Do not --force opentimestamps. Pin /watch on @give_bit (open). iPhone /p/ unfurl (open).
+```
+
+---
+
 ## Paste block (2026-08-31 — Pages stable + Grok standing auth)
 
 ```markdown
