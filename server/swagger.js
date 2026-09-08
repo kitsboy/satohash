@@ -114,8 +114,66 @@ const options = {
           tags: ['Public'],
           summary: 'Suite status',
           description:
-            'Service identity, plane, family free tier flag, stamps stored, expected family clients. JSON includes git_sha (short git of the API image).',
-          responses: { 200: { description: 'Status payload' } }
+            'Service identity, plane, family free tier flag, stamps stored, expected family clients. JSON includes git_sha (short git of the API image). Live body from GET /api/public/status — no invented user counts or daily caps.',
+          responses: {
+            200: {
+              description: 'Status payload',
+              content: {
+                'application/json': {
+                  schema: {
+                    type: 'object',
+                    properties: {
+                      ok: { type: 'boolean', example: true },
+                      service: { type: 'string', example: 'satohash-api' },
+                      plane: { type: 'string', example: 'proof' },
+                      family_free_tier: { type: 'boolean' },
+                      require_lightning: { type: 'boolean', example: false },
+                      stamps_stored: { type: 'integer', nullable: true },
+                      git_sha: {
+                        type: 'string',
+                        nullable: true,
+                        description: 'Short git of the API image (GIT_SHA)'
+                      },
+                      timestamp: { type: 'string', format: 'date-time' },
+                      clients_expected: {
+                        type: 'array',
+                        items: { type: 'string' },
+                        description: 'Family client ids (directory.clientsExpected)'
+                      }
+                    }
+                  },
+                  examples: {
+                    live: {
+                      summary: 'Live GET /api/public/status shape',
+                      value: {
+                        ok: true,
+                        service: 'satohash-api',
+                        plane: 'proof',
+                        family_free_tier: true,
+                        require_lightning: false,
+                        stamps_stored: 12,
+                        git_sha: '8e78fb5',
+                        timestamp: '2026-09-07T00:00:00.000Z',
+                        clients_expected: [
+                          'sherpacarta',
+                          'sherpacarta-canada',
+                          'motopass',
+                          'katoa',
+                          'giveabit',
+                          'tadbuy',
+                          'stranded',
+                          'openstrata',
+                          'spa',
+                          'cli',
+                          'hq'
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       },
       '/api/public/stats': {

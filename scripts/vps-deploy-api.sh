@@ -31,15 +31,37 @@ for i in $(seq 1 30); do
       elif [[ -n "$hs" ]]; then
         echo "WARN docker health=$hs after 60s — preferring /health 200"
       fi
+      # docker image prune of dangling satohash-api is a separate ops step
       curl -sS "http://127.0.0.1:3001/api/public/status" | head -c 400
       echo
       echo "→ Reloading Caddy (best-effort, non-fatal)"
-      if command -v systemctl >/dev/null 2>&1 && systemctl list-unit-files --type=service 2>/dev/null | grep -q '^caddy\.service'; then
-        systemctl reload caddy >/dev/null 2>&1 && echo "OK  systemctl reload caddy" || echo "WARN systemctl reload caddy failed (non-fatal)"
-      elif command -v caddy >/dev/null 2>&1; then
-        caddy reload >/dev/null 2>&1 && echo "OK  caddy reload" || echo "WARN caddy reload failed (non-fatal)"
+      caddy_unit=""
+      if command -v systemctl >/dev/null 2>&1; then
+        if systemctl cat caddy.service >/dev/null 2>&1; then
+          caddy_unit="caddy.service"
+        elif systemctl cat caddy >/dev/null 2>&1; then
+          caddy_unit="caddy"
+        else
+          caddy_file=$(ls /etc/systemd/system/*caddy* 2>/dev/null | head -n 1 || true)
+          if [[ -n "${caddy_file:-}" && -f "$caddy_file" ]]; then
+            caddy_unit=$(basename "$caddy_file")
+          else
+            caddy_unit=$(systemctl list-units --type=service --all 2>/dev/null | grep -i caddy | awk '{print $1}' | head -n 1 || true)
+          fi
+        fi
+      fi
+      if [[ -n "${caddy_unit:-}" ]]; then
+        if systemctl reload "$caddy_unit" >/dev/null 2>&1; then
+          echo "OK  systemctl reload $caddy_unit"
+        elif command -v caddy >/dev/null 2>&1 && [[ -f /etc/caddy/Caddyfile ]]; then
+          caddy reload --config /etc/caddy/Caddyfile >/dev/null 2>&1 && echo "OK  caddy reload --config /etc/caddy/Caddyfile" || echo "WARN caddy reload failed (non-fatal)"
+        else
+          echo "WARN systemctl reload $caddy_unit failed (non-fatal)"
+        fi
+      elif command -v caddy >/dev/null 2>&1 && [[ -f /etc/caddy/Caddyfile ]]; then
+        caddy reload --config /etc/caddy/Caddyfile >/dev/null 2>&1 && echo "OK  caddy reload --config /etc/caddy/Caddyfile" || echo "WARN caddy reload failed (non-fatal)"
       else
-        echo "SKIP caddy not installed"
+        echo "SKIP caddy unit not found"
       fi
       echo "Next: point DNS api.satohash.io → this host; TLS via Caddy/nginx."
       exit 0
