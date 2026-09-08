@@ -1,3 +1,22 @@
+## 2026-09-08 (Grok M3 — harden wave: temp_store, OG JPEGs, status copy SHA)
+
+**Pickup:** `.ai_docs/current-status.md` · this file · HEAD `a82a37f`.
+
+**Live at start:** API `gitSha=5c79060` · image **818MB** · Caddy **active** · stamps **283** · paywall off · `/health` `no-store`.
+
+**Pushed:**
+- `90cc3ff` sqlite `temp_store=MEMORY`, OpenAPI `/api/public/network` example, dangling image prune after healthy. Helmet Nostr relays kept (API still pings them).
+- `1ac9177` pitch/network/donate OG JPEG, watch-player poster jpg, `/og/*.jpg` 4h, smoke stamp+verify jpg, humans.txt dated.
+- `a82a37f` compact footer pitch/contribute/legal, Access compact footer, StampDone mempool 44px, Status live if metrics up + copy SHA, Network retry, FAQ related links 44px.
+
+**GUI extras:** FAQ related links 44px · Status copy-SHA · StampDone verify chip also 44px.
+
+**Do not:** flip paywall · change `/api/*` · shuffle package.json deps · `--force` opentimestamps · `@satohash`
+
+**Kimi:** THOR ingest. API rebuild for `90cc3ff`. Pages auto-deploys SPA.
+
+---
+
 ## 2026-09-08 (Grok M3 — harden wave: Caddy unit, watch src-on-play, compact trust)
 
 **Pickup:** `.ai_docs/current-status.md` · this file · HEAD `5ca8730`.
