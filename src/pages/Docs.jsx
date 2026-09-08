@@ -275,7 +275,14 @@ export default function Docs() {
             <p className="text-lg font-bold text-[var(--text-primary)]">
               {t('docsPage.empty.title')}
             </p>
-            <p className="text-sm text-[var(--text-secondary)]">{t('docsPage.empty.subtitle')}</p>
+            <p className="text-sm text-[var(--text-secondary)]">
+              {search.trim()
+                ? t('docsPage.empty.noHits', {
+                    query: search.trim(),
+                    defaultValue: `No docs match “${search.trim()}”. Try another term.`
+                  })
+                : t('docsPage.empty.subtitle')}
+            </p>
           </div>
         ) : (
           <div className="grid gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
@@ -356,7 +363,7 @@ export default function Docs() {
         </div>
       </section>
 
-      <Footer />
+      <Footer compact />
     </div>
   )
 }

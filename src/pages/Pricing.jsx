@@ -295,7 +295,7 @@ export default function Pricing() {
         </div>
       </section>
 
-      <Footer />
+      <Footer compact />
     </div>
   )
 }

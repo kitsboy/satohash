@@ -423,7 +423,10 @@ export default function Network() {
         {loading && family.length === 0 ? (
           <ul className="space-y-2" aria-busy="true" aria-label="Loading family clients">
             {[0, 1, 2, 3].map((i) => (
-              <li key={i} className="h-10 animate-pulse rounded-xl bg-[var(--surface-raised)]" />
+              <li
+                key={i}
+                className="h-10 rounded-xl bg-[var(--surface-raised)] motion-safe:animate-pulse"
+              />
             ))}
           </ul>
         ) : family.length === 0 ? (

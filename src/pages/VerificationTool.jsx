@@ -51,6 +51,7 @@ export default function VerificationTool() {
   const [verifyData, setVerifyData] = useState(null)
   const [isDragOver, setIsDragOver] = useState(false)
   const fileRef = useRef()
+  const hashInputRef = useRef(null)
   const autoVerifiedRef = useRef(false)
 
   const handleFileSelect = (e) => {
@@ -319,17 +320,24 @@ export default function VerificationTool() {
                 onChange={handleFileSelect}
               />
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <div className="flex min-h-[48px] flex-col justify-center gap-3 rounded-2xl border border-[var(--border)] bg-[var(--bg-primary)] p-5 text-left transition-colors hover:border-[var(--accent-gold)]">
+                <div
+                  className="flex min-h-[48px] cursor-pointer flex-col justify-center gap-3 rounded-2xl border border-[var(--border)] bg-[var(--bg-primary)] p-5 text-left transition-colors hover:border-[color-mix(in_srgb,var(--accent-gold)_70%,white)] hover:shadow-[0_0_16px_var(--accent-gold-glow)]"
+                  onClick={(e) => {
+                    if (e.target.closest('button, a, input, textarea, select')) return
+                    hashInputRef.current?.focus()
+                  }}
+                >
                   <p className="text-sm font-bold text-[var(--text-primary)]">
                     Paste a SHA-256 hash
                   </p>
                   <div className="relative flex items-center gap-2">
                     <div className="relative flex-1">
                       <Hash
-                        className="absolute top-1/2 left-4 -translate-y-1/2 text-[var(--text-secondary)]"
+                        className="pointer-events-none absolute top-1/2 left-4 -translate-y-1/2 text-[var(--text-secondary)]"
                         size={18}
                       />
                       <input
+                        ref={hashInputRef}
                         type="text"
                         data-testid="verify-hash-input"
                         value={hashInput}
@@ -356,6 +364,7 @@ export default function VerificationTool() {
                         try {
                           const text = await navigator.clipboard.readText()
                           setHashInput(text.trim())
+                          hashInputRef.current?.focus()
                         } catch {
                           toast.error('Could not read clipboard — paste manually')
                         }
@@ -375,8 +384,10 @@ export default function VerificationTool() {
                   type="button"
                   aria-label="Drop an .ots proof"
                   onClick={() => fileRef.current?.click()}
-                  className={`flex min-h-[48px] flex-col items-center justify-center gap-2 rounded-2xl border bg-[var(--bg-primary)] p-5 text-center transition-colors hover:border-[var(--accent-gold)] ${
-                    isDragOver ? 'border-[var(--accent-gold)]' : 'border-[var(--border)]'
+                  className={`flex min-h-[48px] cursor-pointer flex-col items-center justify-center gap-2 rounded-2xl border bg-[var(--bg-primary)] p-5 text-center transition-colors hover:border-[color-mix(in_srgb,var(--accent-gold)_70%,white)] hover:shadow-[0_0_16px_var(--accent-gold-glow)] ${
+                    isDragOver
+                      ? 'border-[color-mix(in_srgb,var(--accent-gold)_70%,white)]'
+                      : 'border-[var(--border)]'
                   }`}
                 >
                   <Upload size={22} className="text-[var(--text-secondary)]" />

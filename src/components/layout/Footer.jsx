@@ -301,27 +301,40 @@ function CompactFooter() {
     { to: '/docs', label: 'Docs' },
     { to: '/legal/terms', label: 'Terms' }
   ]
+  const build = typeof __BUILD_NUMBER__ !== 'undefined' ? String(__BUILD_NUMBER__) : ''
+  const spaBuild =
+    (typeof window !== 'undefined' && window.__SATOHASH_SPA_BUILD__) ||
+    (typeof __APP_VERSION__ !== 'undefined' && build
+      ? `${__APP_VERSION__}-b${build}`
+      : build
+        ? `b${build}`
+        : '')
 
   return (
     <footer
       role="contentinfo"
       className="relative border-t border-[var(--border)] bg-[var(--bg-secondary)]"
     >
-      <div className="mx-auto flex min-h-[44px] max-w-6xl flex-wrap items-center justify-between gap-x-4 gap-y-1 px-5 py-1 sm:px-8">
+      <div className="mx-auto flex h-11 max-w-6xl flex-nowrap items-center justify-between gap-x-2 overflow-hidden px-3 sm:gap-x-4 sm:px-8">
         <nav
           aria-label="Stamp and verify"
-          className="flex min-h-[44px] flex-wrap items-center gap-x-1"
+          className="flex min-w-0 flex-nowrap items-center overflow-hidden"
         >
           {compactLinks.map((link, i) => (
-            <span key={link.to} className="inline-flex items-center">
+            <span
+              key={link.to}
+              className={`inline-flex shrink-0 items-center ${
+                link.to === '/legal/terms' ? 'max-[22rem]:hidden' : ''
+              }`}
+            >
               {i > 0 && (
-                <span className="mx-2 text-[var(--text-tertiary)]" aria-hidden>
+                <span className="mx-1 text-[var(--text-tertiary)] sm:mx-2" aria-hidden>
                   ·
                 </span>
               )}
               <Link
                 to={link.to}
-                className="inline-flex min-h-[44px] items-center text-[13px] font-medium text-[var(--text-secondary)] transition-colors hover:text-[var(--accent-gold)]"
+                className="inline-flex h-11 min-w-0 items-center text-[12px] font-medium whitespace-nowrap text-[var(--text-secondary)] transition-colors hover:text-[var(--accent-gold)] sm:text-[13px]"
                 onClick={() => {
                   try {
                     window.scrollTo(0, 0)
@@ -335,7 +348,12 @@ function CompactFooter() {
             </span>
           ))}
         </nav>
-        <span className="text-[11px] text-[var(--text-tertiary)]">© Give A Bit</span>
+        <span
+          className="min-w-0 shrink truncate text-[10px] leading-none whitespace-nowrap text-[var(--text-tertiary)] sm:text-[11px]"
+          title={spaBuild || undefined}
+        >
+          © Give A Bit{build ? ` · b${build}` : ''}
+        </span>
       </div>
     </footer>
   )

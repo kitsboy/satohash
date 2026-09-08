@@ -50,6 +50,16 @@ export default function Stamp() {
   useEffect(() => {
     trackEvent(events.STAMP_VIEW, { path: '/stamp' })
   }, [])
+  useEffect(() => {
+    const href = '/verify'
+    if (document.querySelector(`link[rel="prefetch"][href="${href}"]`)) return undefined
+    const link = document.createElement('link')
+    link.rel = 'prefetch'
+    link.href = href
+    link.as = 'document'
+    document.head.appendChild(link)
+    return () => link.remove()
+  }, [])
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const templateParam = searchParams.get('template')

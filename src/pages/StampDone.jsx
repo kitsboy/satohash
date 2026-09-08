@@ -165,7 +165,7 @@ export default function StampDone() {
         <header className="space-y-3 text-center">
           <div
             className={`mx-auto flex h-16 w-16 items-center justify-center rounded-full ${
-              confirmed ? 'animate-jewel-pulse' : ''
+              confirmed ? 'motion-safe:animate-pulse' : ''
             }`}
             style={{
               background: confirmed
