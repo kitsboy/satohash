@@ -19,6 +19,7 @@ db.pragma('busy_timeout = 5000')
 db.pragma('cache_size = -8000') // ~8MB page cache (negative = KiB)
 db.pragma('mmap_size = 67108864') // ~64MB mmap so hot pages skip extra read() syscalls
 db.pragma('wal_autocheckpoint = 1000') // checkpoint WAL about every 1000 pages
+db.pragma('temp_store = MEMORY') // temp tables/indexes in RAM, not disk
 
 // Initialize Schema
 db.exec(`

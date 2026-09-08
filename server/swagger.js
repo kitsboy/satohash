@@ -190,8 +190,85 @@ const options = {
           tags: ['Network'],
           summary: 'Network overview',
           description:
-            'Bitcoin node status (blocks, chain, pruned, ibd), calendars, mempool fallback state.',
-          responses: { 200: { description: 'Network payload' } }
+            'Companion network surface from GET /api/public/network: mempool.space tip + recommended fees and a derived halving estimate. Own-node bitcoind status is GET /api/public/bitcoin (source: bitcoind), not this route.',
+          responses: {
+            200: {
+              description: 'Network payload (example values; block_height is a round placeholder)',
+              content: {
+                'application/json': {
+                  schema: {
+                    type: 'object',
+                    properties: {
+                      source: { type: 'string', example: 'mempool.space' },
+                      block_height: {
+                        type: 'integer',
+                        nullable: true,
+                        example: 900000,
+                        description:
+                          'Tip height from source (example placeholder, not a live claim)'
+                      },
+                      fees: {
+                        type: 'object',
+                        nullable: true,
+                        properties: {
+                          fastestFee: { type: 'integer' },
+                          halfHourFee: { type: 'integer' },
+                          hourFee: { type: 'integer' },
+                          economyFee: { type: 'integer' },
+                          minimumFee: { type: 'integer' }
+                        }
+                      },
+                      fee_estimates: {
+                        type: 'object',
+                        nullable: true,
+                        description: 'Same object as fees'
+                      },
+                      halving: {
+                        type: 'object',
+                        nullable: true,
+                        properties: {
+                          next_halving_height: { type: 'integer' },
+                          blocks_remaining: { type: 'integer' },
+                          approx_days: { type: 'integer' }
+                        }
+                      },
+                      timestamp: { type: 'string', format: 'date-time' }
+                    }
+                  },
+                  examples: {
+                    mempool: {
+                      summary:
+                        'Example GET /api/public/network (round block_height is illustrative, not a live tip)',
+                      value: {
+                        source: 'mempool.space',
+                        block_height: 900000,
+                        fees: {
+                          fastestFee: 2,
+                          halfHourFee: 1,
+                          hourFee: 1,
+                          economyFee: 1,
+                          minimumFee: 1
+                        },
+                        fee_estimates: {
+                          fastestFee: 2,
+                          halfHourFee: 1,
+                          hourFee: 1,
+                          economyFee: 1,
+                          minimumFee: 1
+                        },
+                        halving: {
+                          next_halving_height: 1050000,
+                          blocks_remaining: 150000,
+                          approx_days: 1042
+                        },
+                        timestamp: '2026-09-08T00:00:00.000Z'
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       },
       '/api/public/version': {
