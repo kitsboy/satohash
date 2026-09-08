@@ -32,8 +32,8 @@ export default function Glossary() {
 
   useEffect(() => {
     const added = []
-    const href = '/docs'
-    if (!document.querySelector(`link[rel="prefetch"][href="${href}"]`)) {
+    const prefetchDoc = (href) => {
+      if (document.querySelector(`link[rel="prefetch"][href="${href}"]`)) return
       const link = document.createElement('link')
       link.rel = 'prefetch'
       link.href = href
@@ -41,6 +41,8 @@ export default function Glossary() {
       document.head.appendChild(link)
       added.push(link)
     }
+    prefetchDoc('/docs')
+    prefetchDoc('/stamp')
     return () => added.forEach((link) => link.remove())
   }, [])
 

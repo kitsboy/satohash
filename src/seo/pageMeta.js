@@ -62,6 +62,13 @@ const PAGE_OG_JPEG = new Set([
   'supportAndGuidance'
 ])
 
+/** Learn slugs with JPEG OG cards (PNG kept). Only files actually converted. */
+const LEARN_OG_JPEG = new Set([
+  'learn-how-to-verify-an-ots-proof',
+  'learn-what-is-opentimestamps',
+  'learn-how-to-prove-a-document-existed'
+])
+
 export function ogImageForPage(page, pathname) {
   if (page === 'landing') return DEFAULT_OG_IMAGE
   if (page && PAGE_OG_SLUG[page]) {
@@ -71,7 +78,10 @@ export function ogImageForPage(page, pathname) {
   const path = pathname || ''
   if (!path || path === '/') return DEFAULT_OG_IMAGE
   const learn = path.match(/\/docs\/(learn-[a-z0-9-]+)\/?$/)
-  if (learn) return `${SITE}/og/${learn[1]}.png`
+  if (learn) {
+    const ext = LEARN_OG_JPEG.has(learn[1]) ? 'jpg' : 'png'
+    return `${SITE}/og/${learn[1]}.${ext}`
+  }
   const named = path.match(/\/docs\/(how-satohash-works|support-and-guidance)\/?$/)
   if (named) return `${SITE}/og/${named[1]}.jpg`
   return DEFAULT_OG_IMAGE

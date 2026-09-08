@@ -57,6 +57,7 @@ Satohash is a free, private service that anchors cryptographic fingerprints (SHA
 ## Contact
 
 - Web: https://satohash.io
+- robots.txt: https://satohash.io/robots.txt
 - API: https://api.satohash.io (health: https://api.satohash.io/health)
 - Email: hello@giveabit.io
 - X / Twitter: https://x.com/give_bit (@give_bit)

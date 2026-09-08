@@ -28,3 +28,4 @@ Allow: /
 
 Sitemap: https://satohash.io/sitemap.xml
 Sitemap: https://satohash.io/feed.xml
+# llms: https://satohash.io/llms.txt

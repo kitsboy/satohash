@@ -31,6 +31,7 @@ check_200 "https://satohash.io/og/home.jpg" "$tmp/home.jpg"
 check_200 "https://satohash.io/og/stamp.jpg" "$tmp/stamp.jpg"
 check_200 "https://satohash.io/og/verify.jpg" "$tmp/verify.jpg"
 check_200 "https://satohash.io/og/watch.jpg" "$tmp/watch.jpg"
+check_200 "https://satohash.io/og/how-satohash-works.jpg" "$tmp/how-satohash-works.jpg"
 
 node -e '
 const fs = require("fs");

@@ -335,6 +335,11 @@ for (const [slug, p] of Object.entries(secondary)) {
 }
 
 // learn articles
+const LEARN_OG_JPEG = new Set([
+  'learn-how-to-verify-an-ots-proof',
+  'learn-what-is-opentimestamps',
+  'learn-how-to-prove-a-document-existed'
+])
 const docsDir = path.join(DIST, 'docs')
 if (fs.existsSync(docsDir)) {
   const learns = fs.readdirSync(docsDir).filter((f) => f.startsWith('learn-') && f.endsWith('.md'))
@@ -354,7 +359,7 @@ if (fs.existsSync(docsDir)) {
         description,
         contentHtml: `<p class="meta">Satohash — Bitcoin document stamping</p>\n${body}`,
         canonical: `${SITE}/docs/${slug}`,
-        ogImage: `${SITE}/og/${slug}.png`,
+        ogImage: `${SITE}/og/${slug}.${LEARN_OG_JPEG.has(slug) ? 'jpg' : 'png'}`,
         article: { headline: title, description, datePublished: '2026-08-20' }
       })
     )
