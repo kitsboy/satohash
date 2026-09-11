@@ -1053,13 +1053,15 @@ export default function Stamp() {
                     style={{ color: 'var(--text-primary)' }}
                   >
                     {deepLink.product
-                      ? `Stamp for ${deepLink.product.chip || deepLink.product.id}`
+                      ? `Continuing from ${deepLink.product.name}`
                       : 'Hash ready to stamp'}
                   </h2>
                   <p className="text-xs leading-snug" style={{ color: 'var(--text-secondary)' }}>
-                    {deepLink.displayLabel
-                      ? `“${deepLink.displayLabel}” — only the fingerprint is sent; file stays on device.`
-                      : 'Only the SHA-256 fingerprint is submitted. One tap anchors via OpenTimestamps → Bitcoin.'}
+                    {deepLink.product?.blurb
+                      ? deepLink.product.blurb
+                      : deepLink.displayLabel
+                        ? `“${deepLink.displayLabel}” — only the fingerprint is sent; file stays on device.`
+                        : 'Only the SHA-256 fingerprint is submitted. One tap anchors via OpenTimestamps → Bitcoin.'}
                   </p>
                 </div>
               </div>

@@ -9,19 +9,49 @@ import { normalizeSha256 } from './hashUtils'
 
 /** Known Give A Bit family product ids → display labels */
 export const FAMILY_PRODUCTS = {
-  sherpacarta: { id: 'sherpacarta', name: 'SherpaCarta', chip: 'From SherpaCarta' },
+  sherpacarta: {
+    id: 'sherpacarta',
+    name: 'SherpaCarta',
+    chip: 'From SherpaCarta',
+    blurb:
+      'SherpaCarta hashed this file on your device. Stamp the fingerprint on Bitcoin — the file was never uploaded.'
+  },
   'sherpacarta-canada': {
     id: 'sherpacarta-canada',
     name: 'SherpaCarta Canada',
     chip: 'From SherpaCarta Canada'
   },
-  motopass: { id: 'motopass', name: 'MotoPass', chip: 'From MotoPass' },
-  giveabit: { id: 'giveabit', name: 'Give A Bit', chip: 'From Give A Bit' },
-  tadbuy: { id: 'tadbuy', name: 'TadBuy', chip: 'From TadBuy' },
+  motopass: {
+    id: 'motopass',
+    name: 'MotoPass',
+    chip: 'From MotoPass',
+    blurb:
+      'MotoPass hashed this file on your device. Stamp the fingerprint on Bitcoin — the file was never uploaded.'
+  },
+  giveabit: {
+    id: 'giveabit',
+    name: 'Give A Bit',
+    chip: 'From Give A Bit',
+    blurb:
+      'Give A Bit hashed this file on your device. Stamp the fingerprint on Bitcoin — the file was never uploaded.'
+  },
+  tadbuy: {
+    id: 'tadbuy',
+    name: 'TadBuy',
+    chip: 'From TadBuy',
+    blurb:
+      'TadBuy hashed this file on your device. Stamp the fingerprint on Bitcoin — the file was never uploaded.'
+  },
   openstrata: { id: 'openstrata', name: 'OpenStrata', chip: 'From OpenStrata' },
   btcminiscript: { id: 'btcminiscript', name: 'BTC Miniscript', chip: 'From BTC Miniscript' },
   stranded: { id: 'stranded', name: 'Stranded', chip: 'From Stranded' },
-  katoa: { id: 'katoa', name: 'Katoa', chip: 'From Katoa' },
+  katoa: {
+    id: 'katoa',
+    name: 'Katoa',
+    chip: 'From Katoa',
+    blurb:
+      'Katoa hashed this file on your device. Stamp the fingerprint on Bitcoin — the file was never uploaded.'
+  },
   camtaylor: { id: 'camtaylor', name: 'Cam Taylor', chip: 'From Cam Taylor' },
   lindala: { id: 'lindala', name: 'Lindala', chip: 'From Lindala' },
   spa: { id: 'spa', name: 'Satohash', chip: 'Satohash' },
@@ -44,7 +74,7 @@ export const STAMP_DEEP_LINK_KEYS = [
 
 /**
  * @param {string|null|undefined} refOrSource
- * @returns {{ id: string, name: string, chip: string } | null}
+ * @returns {{ id: string, name: string, chip: string, blurb?: string } | null}
  */
 export function resolveFamilyProduct(refOrSource) {
   if (!refOrSource || typeof refOrSource !== 'string') return null

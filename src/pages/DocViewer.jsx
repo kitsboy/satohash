@@ -305,6 +305,20 @@ export default function DocViewer() {
                 <div dangerouslySetInnerHTML={{ __html: html }} />
               </article>
 
+              {slug?.startsWith('learn-') && (
+                <div className="mt-6 rounded-2xl border border-[var(--accent-gold)]/35 bg-[var(--surface-raised)] px-4 py-5 sm:px-6">
+                  <Link
+                    to="/stamp"
+                    className="inline-flex min-h-[48px] w-full items-center justify-center rounded-xl bg-[var(--accent-gold)] px-6 text-sm font-black tracking-wider text-black uppercase sm:w-auto"
+                  >
+                    Stamp a file — free
+                  </Link>
+                  <p className="mt-2 text-xs leading-relaxed text-[var(--text-secondary)]">
+                    File never leaves the device.
+                  </p>
+                </div>
+              )}
+
               <div className="mt-6 flex flex-col gap-4 rounded-2xl border border-[var(--border)] bg-[var(--surface-raised)] px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
                 <div className="flex flex-wrap items-center gap-3">
                   <span className="text-xs font-bold text-[var(--text-secondary)]">

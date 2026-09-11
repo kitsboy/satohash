@@ -16,6 +16,17 @@ describe('stampDeepLink', () => {
     expect(resolveFamilyProduct('SherpaCarta-Canada')?.id).toBe('sherpacarta-canada')
   })
 
+  it('includes family handoff blurbs for core products', () => {
+    expect(resolveFamilyProduct('tadbuy')?.blurb).toBe(
+      'TadBuy hashed this file on your device. Stamp the fingerprint on Bitcoin — the file was never uploaded.'
+    )
+    expect(resolveFamilyProduct('katoa')?.blurb).toMatch(/^Katoa hashed this file on your device/)
+    expect(resolveFamilyProduct('giveabit')?.blurb).toMatch(/^Give A Bit hashed this file/)
+    expect(resolveFamilyProduct('sherpacarta')?.blurb).toMatch(/^SherpaCarta hashed this file/)
+    expect(resolveFamilyProduct('motopass')?.blurb).toMatch(/^MotoPass hashed this file/)
+    expect(resolveFamilyProduct('openstrata')?.blurb).toBeUndefined()
+  })
+
   it('parses canonical stamp query', () => {
     const p = parseStampDeepLink(
       new URLSearchParams({

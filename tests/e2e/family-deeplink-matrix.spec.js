@@ -3,9 +3,9 @@ import { test, expect } from '@playwright/test'
 const HASH = '9da88734e32d3d2f931c187016d18cfbb0f7404ca90479ed4d6718c49289ee1b'
 
 const FAMILY = [
-  { ref: 'sherpacarta', expect: /Sherpa/i },
-  { ref: 'motopass', expect: /MotoPass|Moto/i },
-  { ref: 'katoa', expect: /Katoa/i }
+  { ref: 'sherpacarta', expect: /Continuing from SherpaCarta/ },
+  { ref: 'motopass', expect: /Continuing from MotoPass/ },
+  { ref: 'katoa', expect: /Continuing from Katoa/ }
 ]
 
 test.describe('Family deep-link matrix', () => {

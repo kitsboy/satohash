@@ -85,6 +85,11 @@ data = r.json()
 print(f"Stamp ID: {data['id']} — Status: {data['status']}")`
 }
 
+const CLI_COMMANDS = [
+  'node packages/satohash-cli/bin/satohash.js help',
+  'node packages/satohash-cli/bin/satohash.js stamp ./file.pdf'
+]
+
 const BITCOIN_STEPS = [
   {
     emoji: '📄',
@@ -669,6 +674,82 @@ export default function Developer() {
                         </div>
                       </div>
                     </div>
+                  </div>
+
+                  {/* CLI — repo-local; hash stays on the machine */}
+                  <div
+                    className="space-y-4 rounded-2xl border p-5 sm:p-6"
+                    style={{
+                      borderColor: 'var(--border-bright)',
+                      background: 'var(--bg-secondary)'
+                    }}
+                  >
+                    <div className="flex items-center gap-3">
+                      <Terminal size={18} style={{ color: 'var(--accent-gold)' }} />
+                      <h2
+                        className="text-lg font-black tracking-tight uppercase"
+                        style={{ color: 'var(--text-primary)' }}
+                      >
+                        CLI
+                      </h2>
+                    </div>
+                    <p
+                      className="text-sm leading-relaxed"
+                      style={{ color: 'var(--text-secondary)' }}
+                    >
+                      Hash stays on the machine; only SHA-256 is POSTed. Always sends{' '}
+                      <code
+                        className="font-mono text-[11px]"
+                        style={{ color: 'var(--accent-gold)' }}
+                      >
+                        X-Satohash-Client: cli
+                      </code>
+                      . Proof card{' '}
+                      <code
+                        className="font-mono text-[11px]"
+                        style={{ color: 'var(--text-primary)' }}
+                      >
+                        https://satohash.io/p/&lt;hash&gt;
+                      </code>
+                      .
+                    </p>
+                    <div className="space-y-2">
+                      {CLI_COMMANDS.map((cmd) => (
+                        <div
+                          key={cmd}
+                          className="flex items-center gap-2 rounded-xl border px-3"
+                          style={{ borderColor: 'var(--border)', background: '#050505' }}
+                        >
+                          <pre
+                            className="min-w-0 flex-1 overflow-x-auto py-3 font-mono text-[11px] leading-relaxed"
+                            style={{ color: 'var(--accent-active)' }}
+                          >
+                            {cmd}
+                          </pre>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              navigator.clipboard.writeText(cmd)
+                              toast.success('Copied')
+                            }}
+                            className="inline-flex min-h-[44px] min-w-[44px] shrink-0 items-center justify-center rounded-lg"
+                            style={{ color: 'var(--text-secondary)' }}
+                            aria-label={`Copy ${cmd}`}
+                          >
+                            <Copy size={16} />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                    <a
+                      href="https://github.com/kitsboy/satohash/tree/main/packages/satohash-cli"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex min-h-[44px] items-center gap-2 text-xs font-bold"
+                      style={{ color: 'var(--accent-gold)' }}
+                    >
+                      CLI source on GitHub <ArrowRight size={14} />
+                    </a>
                   </div>
                 </motion.div>
               )}
