@@ -43,7 +43,7 @@ const ENDPOINTS = [
     method: 'POST',
     path: '/api/v1/timestamp/batch',
     name: 'Batch Timestamp',
-    description: 'Timestamp up to 1000 hashes'
+    description: 'Timestamp up to 100 hashes'
   },
   {
     method: 'GET',

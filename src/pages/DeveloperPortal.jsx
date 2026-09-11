@@ -226,7 +226,7 @@ export default function DeveloperPortal() {
                 <FeatureCard
                   icon={Layers}
                   title="Batch Notarization"
-                  desc="Anchor up to 100,000 artifacts in a single Bitcoin transaction using our Merkle-aggregator."
+                  desc="Anchor thousands of artifacts in a single Bitcoin transaction using our Merkle-aggregator."
                   stat="1.2ms/hash"
                 />
                 <FeatureCard
