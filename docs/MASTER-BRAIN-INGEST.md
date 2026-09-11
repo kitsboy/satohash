@@ -6,6 +6,27 @@
 
 ---
 
+## Paste block (2026-09-11 — 20 improvements + family API)
+
+```markdown
+### Satohash 2026-09-11 (Grok M3 — 20-item wave)
+
+SPA push on main. API live still e979e69 until you rebuild.
+
+Kimi:
+1. cd /root/satohash && git fetch origin && git reset --hard origin/main
+2. Rebuild API: GIT_SHA=$(git rev-parse --short HEAD) bash scripts/vps-deploy-api.sh
+   Need keepAliveTimeout 65s / headersTimeout 66s / timeout 120s from server/index.js.
+3. RSS→Nostr remains dry-run until NOSTR_PRIVATE_KEY is in Vault. Kind-0 script: scripts/nostr-kind0-profile.js (default dry-run).
+4. Ingest this paste. Vault = THOR Obsidian, not M4.
+
+Family widgets live in their repos (katoa CSP, sherpacarta, tadbuy, giveabit /tools). data-client ids: katoa, sherpacarta, tadbuy, giveabit. CLI attributed stamp exists (familyClients cli=1).
+
+Do not flip REQUIRE_LIGHTNING. Do not change /api/*. Do not --force opentimestamps. Pages = Grok. Pin /watch still Cam on @give_bit.
+```
+
+---
+
 ## Paste block (2026-09-08 — leftover 18 + one-circle info i)
 
 ```markdown

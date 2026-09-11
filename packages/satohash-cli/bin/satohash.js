@@ -36,6 +36,33 @@ function headers() {
   return h
 }
 
+function parseRetryAfterMs(header) {
+  if (!header) return 60_000
+  const seconds = Number(header)
+  if (Number.isFinite(seconds) && seconds >= 0) {
+    return Math.min(Math.max(seconds, 1), 120) * 1000
+  }
+  const at = Date.parse(header)
+  if (!Number.isNaN(at)) return Math.min(Math.max(at - Date.now(), 1000), 120_000)
+  return 60_000
+}
+
+async function fetchWithRetry(url, init, retries = 1) {
+  const r = await fetch(url, init)
+  if (r.status !== 429 || retries <= 0) return r
+  const ra = r.headers.get('Retry-After')
+  const waitMs = parseRetryAfterMs(ra)
+  console.error(
+    `429 rate limited; Retry-After ${ra || '60'} — waiting ${Math.round(waitMs / 1000)}s`
+  )
+  await new Promise((res) => setTimeout(res, waitMs))
+  return fetchWithRetry(url, init, retries - 1)
+}
+
+function proofCardUrl(hash) {
+  return `https://satohash.io/p/${String(hash || '').toLowerCase()}`
+}
+
 function out(args, data, { pretty = true } = {}) {
   if (args.json) {
     console.log(JSON.stringify(typeof data === 'string' ? { raw: data } : data, null, pretty ? 2 : 0))
@@ -63,6 +90,8 @@ Flags:
 Env:
   SATOHASH_API_URL                API base (default https://api.satohash.io)
   SATOHASH_KEY                    family/API key (optional)
+
+Always sends X-Satohash-Client: cli. Stamp success prints https://satohash.io/p/<hash>.
 
 Examples:
   satohash stamp contract.pdf --watch
@@ -92,7 +121,7 @@ async function main() {
     }
     const buf = fs.readFileSync(arg)
     const hash = crypto.createHash('sha256').update(buf).digest('hex')
-    const r = await fetch(`${API}/api/stamp`, {
+    const r = await fetchWithRetry(`${API}/api/stamp`, {
       method: 'POST',
       headers: headers(),
       body: JSON.stringify({ hash, filename: path.basename(arg) })
@@ -102,7 +131,9 @@ async function main() {
       out(args, body)
       process.exit(1)
     }
-    out(args, body)
+    const proof = proofCardUrl(body.hash || hash)
+    out(args, args.json ? { ...body, proof_url: proof } : body)
+    if (!args.json) console.log(`proof card: ${proof}`)
     if (args.watch) {
       console.error(`⏳ watching ${hash.slice(0, 16)}… (Ctrl+C to stop)`)
       await watchLoop(hash, args)
@@ -115,7 +146,7 @@ async function main() {
       console.error('hash required: satohash verify <hash>')
       process.exit(1)
     }
-    const r = await fetch(`${API}/api/verify`, {
+    const r = await fetchWithRetry(`${API}/api/verify`, {
       method: 'POST',
       headers: headers(),
       body: JSON.stringify({ hash: arg })

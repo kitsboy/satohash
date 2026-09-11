@@ -1,10 +1,12 @@
 {
   "name": "Satohash",
   "short_name": "Satohash",
-  "description": "Satohash — Anchor documents to Bitcoin. Permanent proof of existence.",
+  "description": "Satohash — Anchor documents to Bitcoin. Permanent proof of existence. Hash offline; queued stamps sync on reconnect. Static fallback: /offline.html.",
   "start_url": "/stamp",
   "scope": "/",
   "display": "standalone",
+  "prefer_related_applications": false,
+  "related_applications": [],
   "background_color": "#141b25",
   "theme_color": "#F0B429",
   "icons": [

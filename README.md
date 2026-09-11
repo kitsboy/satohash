@@ -102,6 +102,8 @@ npm run lint && npm run format
 Frontend dev server: **3000**  
 Backend API + Swagger: **3001**
 
+**CLI** — from the repo, no extra install: `node packages/satohash-cli/bin/satohash.js status|stamp|verify|watch` (or `npx --prefix packages/satohash-cli satohash`). Always sends `X-Satohash-Client: cli`. Env: `SATOHASH_API_URL`, `SATOHASH_KEY`. See [packages/satohash-cli/README.md](packages/satohash-cli/README.md).
+
 Full setup, env, and troubleshooting: [docs/QUICKSTART.md](docs/QUICKSTART.md)
 
 ## 📜 Legal & Compliance

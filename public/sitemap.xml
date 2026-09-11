@@ -22,6 +22,7 @@
   <url><loc>https://satohash.io/templates/api-benefits</loc><priority>0.6</priority><changefreq>monthly</changefreq></url>
   <url><loc>https://satohash.io/faq</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
   <url><loc>https://satohash.io/pricing</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://satohash.io/proof-pack</loc><priority>0.6</priority><changefreq>monthly</changefreq><lastmod>2026-09-11</lastmod></url>
   <url><loc>https://satohash.io/comparison</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
   <url><loc>https://satohash.io/docs</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
   <url><loc>https://satohash.io/guides</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>

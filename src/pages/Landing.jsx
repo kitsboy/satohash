@@ -424,10 +424,50 @@ export default function Landing() {
           </motion.p>
 
           <motion.div
+            id="stamp-cta"
             variants={fadeUp}
             initial="hidden"
             animate="visible"
             custom={0.35}
+            className="mb-6 flex w-full max-w-md flex-col items-stretch gap-3 sm:max-w-none sm:flex-row sm:flex-nowrap sm:items-center sm:justify-center sm:gap-4"
+          >
+            <Link
+              to="/stamp"
+              data-testid="landing-cta-stamp"
+              onPointerEnter={() => {
+                if (document.querySelector('link[rel="prefetch"][href="/verify"]')) return
+                const link = document.createElement('link')
+                link.rel = 'prefetch'
+                link.href = '/verify'
+                link.as = 'document'
+                document.head.appendChild(link)
+              }}
+              className="btn-sheen order-1 flex min-h-[48px] w-full items-center justify-center gap-2 rounded-2xl px-6 py-3.5 text-base font-black transition-all hover:opacity-90 sm:w-auto sm:min-w-[220px] sm:px-8 sm:py-4"
+              style={{
+                backgroundColor: 'var(--accent-gold)',
+                color: '#141b25',
+                boxShadow: '0 10px 32px var(--accent-gold-glow)'
+              }}
+            >
+              {t('landingPage.hero.ctaStamp')} <ArrowRight size={16} />
+            </Link>
+            <Link
+              to="/watch"
+              className="order-2 flex min-h-[48px] w-full items-center justify-center gap-2 rounded-2xl border px-6 py-3.5 text-base font-bold transition-all hover:text-white sm:w-auto sm:px-8 sm:py-4"
+              style={{
+                borderColor: 'var(--border-gold, var(--accent-gold))',
+                color: 'var(--accent-gold)'
+              }}
+            >
+              {t('landingPage.hero.ctaWatch')} <ArrowRight size={16} />
+            </Link>
+          </motion.div>
+
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            custom={0.4}
             className="mx-auto mb-8 w-full max-w-3xl min-w-0"
           >
             <div
@@ -455,46 +495,6 @@ export default function Landing() {
             >
               84 seconds · file never leaves the device
             </p>
-          </motion.div>
-
-          <motion.div
-            id="stamp-cta"
-            variants={fadeUp}
-            initial="hidden"
-            animate="visible"
-            custom={0.4}
-            className="mb-6 flex w-full max-w-md flex-col items-stretch gap-3 sm:max-w-none sm:flex-row sm:flex-wrap sm:items-center sm:justify-center sm:gap-4"
-          >
-            <Link
-              to="/stamp"
-              data-testid="landing-cta-stamp"
-              onPointerEnter={() => {
-                if (document.querySelector('link[rel="prefetch"][href="/verify"]')) return
-                const link = document.createElement('link')
-                link.rel = 'prefetch'
-                link.href = '/verify'
-                link.as = 'document'
-                document.head.appendChild(link)
-              }}
-              className="btn-sheen flex min-h-[48px] w-full items-center justify-center gap-2 rounded-2xl px-6 py-3.5 text-base font-black transition-all hover:opacity-90 sm:w-auto sm:px-8 sm:py-4"
-              style={{
-                backgroundColor: 'var(--accent-gold)',
-                color: '#141b25',
-                boxShadow: '0 10px 32px var(--accent-gold-glow)'
-              }}
-            >
-              {t('landingPage.hero.ctaStamp')} <ArrowRight size={16} />
-            </Link>
-            <Link
-              to="/watch"
-              className="flex min-h-[48px] w-full items-center justify-center gap-2 rounded-2xl border px-6 py-3.5 text-base font-bold transition-all hover:text-white sm:w-auto sm:px-8 sm:py-4"
-              style={{
-                borderColor: 'var(--border-gold, var(--accent-gold))',
-                color: 'var(--accent-gold)'
-              }}
-            >
-              Watch how it works <ArrowRight size={16} />
-            </Link>
           </motion.div>
 
           {/* Social proof + template link */}

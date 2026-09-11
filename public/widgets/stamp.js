@@ -129,6 +129,51 @@
     return name.slice(0, 255) || 'document'
   }
 
+  function retryAfterMs(res) {
+    var raw = res && res.headers && res.headers.get ? res.headers.get('Retry-After') : null
+    var cap = 10000
+    if (raw == null || raw === '') return 400
+    var sec = Number(raw)
+    if (isFinite(sec) && sec >= 0) return Math.min(sec * 1000, cap)
+    var when = Date.parse(raw)
+    if (!isNaN(when)) return Math.min(Math.max(0, when - Date.now()), cap)
+    return 400
+  }
+
+  function postStampOnce(hash, stampLabel, client) {
+    return fetch(API_ORIGIN + '/api/stamp', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Satohash-Client': client
+      },
+      body: JSON.stringify({ hash: hash, filename: stampLabel })
+    })
+  }
+
+  /** One retry on 429 / 5xx (and network failure). File is never uploaded. */
+  function postStamp(hash, stampLabel, client) {
+    return postStampOnce(hash, stampLabel, client).then(
+      function (res) {
+        var retryable = res.status === 429 || (res.status >= 500 && res.status <= 599)
+        if (!retryable) return res
+        var wait = res.status === 429 ? retryAfterMs(res) : 400
+        return new Promise(function (resolve) {
+          setTimeout(resolve, wait)
+        }).then(function () {
+          return postStampOnce(hash, stampLabel, client)
+        })
+      },
+      function () {
+        return new Promise(function (resolve) {
+          setTimeout(resolve, 400)
+        }).then(function () {
+          return postStampOnce(hash, stampLabel, client)
+        })
+      }
+    )
+  }
+
   function initWidget(host) {
     var origin = spaOrigin()
     var client = clientId(host.getAttribute('data-client'))
@@ -195,14 +240,7 @@
           }
 
           btn.textContent = 'Stamping…'
-          return fetch(API_ORIGIN + '/api/stamp', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'X-Satohash-Client': client
-            },
-            body: JSON.stringify({ hash: hash, filename: stampLabel })
-          })
+          return postStamp(hash, stampLabel, client)
             .then(function (res) {
               if (!res.ok) throw new Error('stamp-http')
               return res.json().catch(function () {

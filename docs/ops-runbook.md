@@ -45,8 +45,26 @@ Fixed **2026-08-31** (`ec1c69e`, live). Cause was lazy Stamp/Verify chunks impor
 
 If `/watch` shows stale video: hard refresh; check MP4 duration **~84s** (full) or ~10s (teaser). Marketing routes are eager-loaded.
 
-**Cam (not Grok):** Pin on X account **@give_bit** (not @satohash). Suggested text (one paragraph, honest): 84 seconds. File never leaves the device. Free Bitcoin proof of existence. https://satohash.io/watch  
+**Cam (not Grok):** Pin on X account **@give_bit** (not @satohash). Paste-ready copy: `docs/marketing/GIVE-BIT-X-PACK.md`.  
 Card must be the player card (`/watch-player.html`). After pin, paste into cards-dev.twitter.com.
+
+## Card Validator (after every Pages deploy)
+
+X/OG unfurls read crawler HTML (Twitterbot), not the SPA shell. After a Pages deploy (or before a `/watch` pin), from M3:
+
+```bash
+node scripts/cards-validate.mjs
+```
+
+| Check | Want |
+|-------|------|
+| UA | `Twitterbot/1.0` (hits CF prerender) |
+| `/` `/stamp` one learn article `/identity` `/status` `/counsel` | `twitter:card=summary_large_image` + JPEG `og:image` |
+| `/watch` | `twitter:card=player` + `twitter:player` → `https://satohash.io/watch-player.html` |
+| `/p/<hash>` | last10 hash from `https://api.satohash.io/metrics.json` · JPEG `01-stamp-hero.jpg` |
+| `twitter:site` | `@give_bit` |
+
+Fail closed on PNG hero, missing player tags, or `@satohash`. Clips for social: `bash scripts/cut-explainer-clips.sh` (writes `/tmp/satohash-clips/`, not git).
 
 ## Bitcoin own-node (bitcoind) — 2026-08-10 truth (**IBD COMPLETE**)
 
@@ -68,19 +86,95 @@ Exit 1 if not `ready_to_verify`. History: OOM 2026-07-28.
 
 ## RSS → Nostr cron (Kimi / THOR)
 
-`scripts/nostr-publish-feed.js` publishes kind-1 notes from `https://satohash.io/feed.xml`. **Default is dry-run** (print events, do not publish, do not write state). `--publish` is explicit.
+`scripts/nostr-publish-feed.js` publishes kind-1 notes from `https://satohash.io/feed.xml`. **Default is dry-run** (print events, do not publish, do not write state). `--publish` is explicit. Do **not** duplicate this script.
 
-- Env `NOSTR_PRIVATE_KEY` (64 hex) **only on THOR**, never git, never a hook, never this file.
+- Env `NOSTR_PRIVATE_KEY` (64 hex) **only on THOR**, never git, never a hook, never this file. Prefer `EnvironmentFile=` over inline crontab env.
 - Do not add this script to git hooks.
 - Cron every 15 min (after a dry-run looks right):
 
 ```cron
-*/15 * * * * cd /root/satohash && node scripts/nostr-publish-feed.js
+*/15 * * * * set -a; . /etc/satohash/nostr.env; set +a; cd /root/satohash && /usr/bin/node scripts/nostr-publish-feed.js --publish
 ```
 
-Until Kimi sets `NOSTR_PRIVATE_KEY` on THOR, leave the crontab off or keep invoking without `--publish`.
+Until Kimi sets `NOSTR_PRIVATE_KEY` on THOR, leave the crontab / timer off or keep invoking without `--publish`.
 
-**Kind-0 profile (once, THOR; public fields only):** name Satohash · `lud16` satohash@breez.tips · `nip05` satohash@satohash.io · website https://satohash.io. nsec stays on THOR.
+### systemd (preferred on THOR)
+
+`/etc/satohash/nostr.env` (mode `600`, root-only; **not** in git):
+
+```
+NOSTR_PRIVATE_KEY=<64-hex>
+# NOSTR_RELAYS=wss://relay.damus.io,wss://nos.lol,wss://relay.primal.net
+# NOSTR_NIP05=satohash@satohash.io
+```
+
+`/etc/systemd/system/satohash-nostr-feed.service`:
+
+```
+[Unit]
+Description=Satohash RSS → Nostr kind-1
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=/root/satohash
+EnvironmentFile=/etc/satohash/nostr.env
+ExecStart=/usr/bin/node /root/satohash/scripts/nostr-publish-feed.js --publish
+Nice=10
+```
+
+`/etc/systemd/system/satohash-nostr-feed.timer`:
+
+```
+[Unit]
+Description=Satohash RSS → Nostr every 15 min
+
+[Timer]
+OnBootSec=2min
+OnUnitActiveSec=15min
+AccuracySec=1min
+Persistent=true
+
+[Install]
+WantedBy=timers.target
+```
+
+```bash
+# dry-run first (no --publish)
+cd /root/satohash && set -a && . /etc/satohash/nostr.env && set +a && node scripts/nostr-publish-feed.js --dry-run
+systemctl daemon-reload
+systemctl enable --now satohash-nostr-feed.timer
+systemctl list-timers satohash-nostr-feed.timer
+```
+
+## Kind-0 Nostr profile (once, THOR)
+
+Public fields only. nsec / `NOSTR_PRIVATE_KEY` stays on THOR.
+
+| Field | Value |
+|-------|--------|
+| name | Satohash |
+| about | Free Bitcoin proof of existence (hash on device, receipt on Bitcoin) |
+| lud16 | satohash@breez.tips |
+| website | https://satohash.io |
+| nip05 | satohash@satohash.io (omit with `NOSTR_NIP05=`) |
+
+```bash
+# dry-run (default; no key required)
+node scripts/nostr-kind0-profile.js
+# publish once — same EnvironmentFile as the feed timer
+set -a && . /etc/satohash/nostr.env && set +a
+node scripts/nostr-kind0-profile.js --publish
+```
+
+Do not log the key. Do not add to git hooks. Kind-0 is a one-shot, not a cron.
+
+## Sentry Vault (Cam-gated)
+
+Code is wired (`SENTRY_DSN` server, `VITE_SENTRY_DSN` SPA) and **off** when empty. Do **not** invent a DSN. Cam creates a sentry.io project (free tier is enough) and pastes both values into **Cam Vault** + THOR / Pages env. Never git, never this file, never a handoff.
+
+Self-hosting Sentry on THOR is **not** recommended (kafka + clickhouse ~8GB RAM). Leave both env vars blank until Cam pastes them. SPA: Cloudflare Pages env `VITE_SENTRY_DSN` (rebuild required). API: THOR `.env` `SENTRY_DSN` then API container recreate. Confirm empty today: `grep SENTRY .env` must not appear in git.
 
 ## Kimi — API image rebuild (**DONE 2026-08-31**, Grok on THOR)
 

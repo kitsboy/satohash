@@ -12,6 +12,75 @@
 
 const DEFAULT_API = 'https://api.satohash.io'
 const DEFAULT_SITE = 'https://satohash.io'
+const RETRY_AFTER_CAP_MS = 10_000
+const NETWORK_RETRIES = 2
+const RETRYABLE_STATUS = new Set([502, 503, 504])
+
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms))
+}
+
+function backoffMs(usedNetwork) {
+  return Math.min(250 * 2 ** Math.max(0, usedNetwork - 1), 2000)
+}
+
+/**
+ * Parse Retry-After (delta-seconds or HTTP-date). Capped at 10s.
+ * @param {string|null} raw
+ * @returns {number} milliseconds
+ */
+export function parseRetryAfterMs(raw) {
+  if (raw == null || raw === '') return 1000
+  const sec = Number(raw)
+  if (Number.isFinite(sec) && sec >= 0) {
+    return Math.min(sec * 1000, RETRY_AFTER_CAP_MS)
+  }
+  const when = Date.parse(raw)
+  if (!Number.isNaN(when)) {
+    return Math.min(Math.max(0, when - Date.now()), RETRY_AFTER_CAP_MS)
+  }
+  return 1000
+}
+
+/**
+ * fetch with bounded retries. Fresh AbortSignal per attempt when timeoutMs is set.
+ * - Network failure and 502/503/504: up to 2 retries
+ * - 429: honor Retry-After (cap 10s), then one retry
+ * @param {string} url
+ * @param {RequestInit} [init]
+ * @param {{ timeoutMs?: number, retries?: number }} [opts]
+ */
+export async function fetchWithRetry(url, init = {}, opts = {}) {
+  const timeoutMs = opts.timeoutMs
+  const networkRetries = opts.retries ?? NETWORK_RETRIES
+  let usedNetwork = 0
+  let used429 = 0
+
+  while (true) {
+    try {
+      const signal = timeoutMs ? AbortSignal.timeout(timeoutMs) : init.signal
+      const res = await fetch(url, { ...init, signal })
+      if (res.status === 429 && used429 < 1) {
+        used429 += 1
+        await sleep(parseRetryAfterMs(res.headers.get('Retry-After')))
+        continue
+      }
+      if (RETRYABLE_STATUS.has(res.status) && usedNetwork < networkRetries) {
+        usedNetwork += 1
+        await sleep(backoffMs(usedNetwork))
+        continue
+      }
+      return res
+    } catch (err) {
+      if (usedNetwork < networkRetries) {
+        usedNetwork += 1
+        await sleep(backoffMs(usedNetwork))
+        continue
+      }
+      throw err
+    }
+  }
+}
 
 /**
  * @param {object} [opts]
@@ -29,18 +98,24 @@ export function createSatohashClient(opts = {}) {
   function headers(extra = {}) {
     const h = {
       'Content-Type': 'application/json',
-      'X-Satohash-Client': clientId,
-      ...extra
+      ...extra,
+      'X-Satohash-Client': clientId
     }
     if (apiKey) h['X-Satohash-Key'] = apiKey
     return h
   }
 
+  function apiFetch(path, init = {}, timeoutMs) {
+    return fetchWithRetry(
+      `${apiBase}${path}`,
+      { ...init, headers: headers(init.headers) },
+      { timeoutMs }
+    )
+  }
+
   async function getApiHealth() {
     try {
-      const res = await fetch(`${apiBase}/health`, {
-        signal: AbortSignal.timeout(8000)
-      })
+      const res = await apiFetch('/health', { method: 'GET' }, 8000)
       const data = await res.json().catch(() => ({}))
       return { ok: res.ok, status: res.status, data }
     } catch (e) {
@@ -48,11 +123,12 @@ export function createSatohashClient(opts = {}) {
     }
   }
 
+  /** Alias of getApiHealth — suite heartbeat. */
+  const ping = getApiHealth
+
   async function getPublicStatus() {
     try {
-      const res = await fetch(`${apiBase}/api/public/status`, {
-        signal: AbortSignal.timeout(8000)
-      })
+      const res = await apiFetch('/api/public/status', { method: 'GET' }, 8000)
       const data = await res.json().catch(() => ({}))
       return { ok: res.ok, status: res.status, data }
     } catch (e) {
@@ -72,15 +148,17 @@ export function createSatohashClient(opts = {}) {
       return { ok: false, error: 'hash must be 64 hex chars', httpStatus: 400 }
     }
     try {
-      const res = await fetch(`${apiBase}/api/stamp`, {
-        method: 'POST',
-        headers: headers(),
-        body: JSON.stringify({
-          hash: hex,
-          filename: options.filename || `${clientId}-document`
-        }),
-        signal: AbortSignal.timeout(45000)
-      })
+      const res = await apiFetch(
+        '/api/stamp',
+        {
+          method: 'POST',
+          body: JSON.stringify({
+            hash: hex,
+            filename: options.filename || `${clientId}-document`
+          })
+        },
+        45000
+      )
       const data = await res.json().catch(() => ({}))
       if (!res.ok) {
         return {
@@ -105,9 +183,7 @@ export function createSatohashClient(opts = {}) {
 
   async function getStamp(id) {
     try {
-      const res = await fetch(`${apiBase}/api/stamps/${encodeURIComponent(id)}`, {
-        signal: AbortSignal.timeout(10000)
-      })
+      const res = await apiFetch(`/api/stamps/${encodeURIComponent(id)}`, { method: 'GET' }, 10000)
       const data = await res.json().catch(() => ({}))
       return { ok: res.ok, httpStatus: res.status, data }
     } catch (e) {
@@ -141,7 +217,7 @@ export function createSatohashClient(opts = {}) {
 
   async function getStats() {
     try {
-      const res = await fetch(`${apiBase}/api/public/stats`, { signal: AbortSignal.timeout(8000) })
+      const res = await apiFetch('/api/public/stats', { method: 'GET' }, 8000)
       return { ok: res.ok, status: res.status, data: await res.json().catch(() => ({})) }
     } catch (e) {
       return { ok: false, error: e.message }
@@ -150,7 +226,7 @@ export function createSatohashClient(opts = {}) {
 
   async function getRecent() {
     try {
-      const res = await fetch(`${apiBase}/api/stamps/recent`, { signal: AbortSignal.timeout(8000) })
+      const res = await apiFetch('/api/stamps/recent', { method: 'GET' }, 8000)
       return { ok: res.ok, status: res.status, data: await res.json().catch(() => ({})) }
     } catch (e) {
       return { ok: false, error: e.message }
@@ -159,9 +235,11 @@ export function createSatohashClient(opts = {}) {
 
   async function getProofPackage(id) {
     try {
-      const res = await fetch(`${apiBase}/api/stamps/${encodeURIComponent(id)}/proof-package`, {
-        signal: AbortSignal.timeout(10000)
-      })
+      const res = await apiFetch(
+        `/api/stamps/${encodeURIComponent(id)}/proof-package`,
+        { method: 'GET' },
+        10000
+      )
       return { ok: res.ok, status: res.status, data: await res.json().catch(() => ({})) }
     } catch (e) {
       return { ok: false, error: e.message }
@@ -170,12 +248,14 @@ export function createSatohashClient(opts = {}) {
 
   async function batchStamp(items) {
     try {
-      const res = await fetch(`${apiBase}/api/stamps/batch`, {
-        method: 'POST',
-        headers: headers(),
-        body: JSON.stringify({ items }),
-        signal: AbortSignal.timeout(120000)
-      })
+      const res = await apiFetch(
+        '/api/stamps/batch',
+        {
+          method: 'POST',
+          body: JSON.stringify({ items })
+        },
+        120000
+      )
       return { ok: res.ok, status: res.status, data: await res.json().catch(() => ({})) }
     } catch (e) {
       return { ok: false, error: e.message }
@@ -187,6 +267,7 @@ export function createSatohashClient(opts = {}) {
     siteBase,
     clientId,
     getApiHealth,
+    ping,
     getPublicStatus,
     getStats,
     getRecent,

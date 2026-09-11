@@ -37,29 +37,86 @@ export function buildXIntent({ text, url }) {
   return `https://twitter.com/intent/tweet?text=${encodeURIComponent(text || '')}&url=${encodeURIComponent(url || '')}&via=give_bit`
 }
 
-export function buildNostrShareLinks({ text, url, nostrEventId }) {
-  const links = []
-  const id = typeof nostrEventId === 'string' ? nostrEventId.trim() : ''
+/** Real event id only — 64 hex, note1, or nevent1. Never invent. */
+export function realNostrEventId(raw) {
+  if (typeof raw !== 'string') return ''
+  const id = raw.trim()
+  if (!id) return ''
+  if (/^[0-9a-f]{64}$/i.test(id)) return id.toLowerCase()
+  if (/^(note|nevent)1[02-9ac-hj-np-z]+$/i.test(id)) return id
+  return ''
+}
+
+function canOfferNativeNostr() {
+  if (typeof window === 'undefined' || typeof navigator === 'undefined') return false
+  try {
+    return Boolean(window.nostr)
+  } catch {
+    return false
+  }
+}
+
+function njumpSearchOrCompose({ text, url }) {
+  const q = [text, url].filter(Boolean).join(' ').trim()
+  return `https://njump.me/?q=${encodeURIComponent(q)}`
+}
+
+/**
+ * Share targets: native nostr: (only if a handler is detectable + real event id),
+ * then njump + Primal + Snort + Iris as equals. Navigator-less still returns HTTP links.
+ */
+export function buildNostrShareLinks({ text, url, nostrEventId } = {}) {
+  const eventId = realNostrEventId(nostrEventId)
   const encodedText = encodeURIComponent(text || '')
   const encodedUrl = encodeURIComponent(url || '')
+  const searchQ = encodeURIComponent([text, url].filter(Boolean).join(' ').trim())
+  const links = []
 
-  if (id) {
-    links.push({
-      label: 'njump',
-      href: `https://njump.me/${encodeURIComponent(id)}`
-    })
+  if (eventId && canOfferNativeNostr()) {
+    links.push({ label: 'Nostr app', href: `nostr:${eventId}`, native: true })
   }
 
   links.push({
-    label: 'Snort',
-    href: `https://snort.social/handler/share?url=${encodedUrl}&text=${encodedText}`
-  })
-  links.push({
-    label: 'Primal',
-    href: `https://primal.net/search/${encodedUrl}?text=${encodedText}&url=${encodedUrl}`
+    label: 'njump',
+    href: eventId
+      ? `https://njump.me/${encodeURIComponent(eventId)}`
+      : njumpSearchOrCompose({ text, url })
   })
 
-  return links
+  if (eventId) {
+    links.push({
+      label: 'Primal',
+      href: `https://primal.net/e/${encodeURIComponent(eventId)}`
+    })
+    links.push({
+      label: 'Snort',
+      href: `https://snort.social/e/${encodeURIComponent(eventId)}`
+    })
+    links.push({
+      label: 'Iris',
+      href: `https://iris.to/${encodeURIComponent(eventId)}`
+    })
+  } else {
+    links.push({
+      label: 'Primal',
+      href: `https://primal.net/search/${encodedUrl}?text=${encodedText}&url=${encodedUrl}`
+    })
+    links.push({
+      label: 'Snort',
+      href: `https://snort.social/handler/share?url=${encodedUrl}&text=${encodedText}`
+    })
+    links.push({
+      label: 'Iris',
+      href: `https://iris.to/search/${searchQ}`
+    })
+  }
+
+  const seen = new Set()
+  return links.filter((link) => {
+    if (!link.href || seen.has(link.href)) return false
+    seen.add(link.href)
+    return true
+  })
 }
 
 /**

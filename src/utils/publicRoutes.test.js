@@ -56,6 +56,11 @@ describe('publicRoutes', () => {
     expect(isMarketingPublicPath(`/p/${'a'.repeat(64)}`)).toBe(true)
   })
 
+  it('/proof-pack is a marketing public waitlist with shell', () => {
+    expect(isMarketingPublicPath('/proof-pack')).toBe(true)
+    expect(needsMarketingShell('/proof-pack')).toBe(true)
+  })
+
   it('network and legal routes are marketing public with shell', () => {
     expect(isMarketingPublicPath('/network')).toBe(true)
     expect(needsMarketingShell('/network')).toBe(true)

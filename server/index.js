@@ -271,6 +271,10 @@ register.registerMetric(forumPostsCounter)
 const app = express()
 app.set('trust proxy', 1) // Caddy is the one hop.
 const httpServer = createServer(app)
+// Keep-alive above typical reverse-proxy idle (~60s) so reused sockets are not 502'd.
+httpServer.keepAliveTimeout = 65_000
+httpServer.headersTimeout = 66_000
+httpServer.timeout = 120_000
 const io = new Server(httpServer, {
   cors: {
     origin: config.CORS_ORIGIN === '*' ? true : config.CORS_ORIGIN?.split(',').map((s) => s.trim()),

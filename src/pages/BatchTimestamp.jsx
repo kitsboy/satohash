@@ -17,7 +17,101 @@ import { toast } from 'sonner'
 import usePageMeta from '../hooks/usePageMeta'
 import { getApiUrl } from '../config/constants'
 
-const API_URL = getApiUrl()
+const STAMP_HEADERS = {
+  'Content-Type': 'application/json',
+  'X-Satohash-Client': 'spa'
+}
+const MAX_BATCH_FILES = 100
+
+function parseRetryAfterSeconds(res) {
+  const raw = res.headers.get('Retry-After')
+  if (!raw) return 2
+  const asNumber = Number(raw)
+  if (Number.isFinite(asNumber) && asNumber >= 0) return Math.min(asNumber, 120)
+  const asDate = Date.parse(raw)
+  if (!Number.isNaN(asDate)) {
+    return Math.max(1, Math.min(Math.ceil((asDate - Date.now()) / 1000), 120))
+  }
+  return 2
+}
+
+function sleep(ms, signal) {
+  return new Promise((resolve, reject) => {
+    const timer = setTimeout(resolve, ms)
+    if (!signal) return
+    const onAbort = () => {
+      clearTimeout(timer)
+      reject(new DOMException('Aborted', 'AbortError'))
+    }
+    if (signal.aborted) {
+      onAbort()
+      return
+    }
+    signal.addEventListener('abort', onAbort, { once: true })
+  })
+}
+
+async function postStamp({ api, hash, filename, signal }) {
+  const body = JSON.stringify({ hash, filename })
+  const res = await fetch(`${api}/api/stamp`, {
+    method: 'POST',
+    headers: STAMP_HEADERS,
+    body,
+    signal
+  })
+  if (res.status !== 429) return res
+  await sleep(parseRetryAfterSeconds(res) * 1000, signal)
+  return fetch(`${api}/api/stamp`, {
+    method: 'POST',
+    headers: STAMP_HEADERS,
+    body,
+    signal
+  })
+}
+
+function safeZipFilename(name) {
+  return String(name || 'file')
+    .replace(/[/\\?%*:|"<>]/g, '-')
+    .replace(/\s+/g, '-')
+    .slice(0, 80)
+}
+
+function otsZipName({ hash, filename, id }) {
+  const safe = safeZipFilename(filename || id || 'file')
+  const prefix =
+    typeof hash === 'string' && /^[a-f0-9]{8,}$/i.test(hash) ? hash.slice(0, 8).toLowerCase() : null
+  if (prefix) return `${prefix}-${safe}.ots`
+  return `${id || 'stamp'}-${safe}.ots`
+}
+
+function batchReadme(results) {
+  const cards = (results || [])
+    .filter((r) => r.hash)
+    .slice(0, 20)
+    .map((r) => `  https://satohash.io/p/${r.hash}`)
+    .join('\n')
+  return `Satohash batch .ots proofs
+==========================
+
+Each .ots file is an OpenTimestamps receipt for one file you stamped.
+
+Pending is not confirmed.
+- Pending: submitted to OpenTimestamps calendars. Not yet in a Bitcoin block.
+- Confirmed: a Bitcoin block includes the attestation.
+
+Verify any proof:
+  https://satohash.io/verify
+
+Shareable proof cards:
+  https://satohash.io/p/<sha256-hash>
+${cards ? `\nThis batch:\n${cards}\n` : ''}
+Keep the original file. The .ots only matches those exact bytes.
+Independent check: ots-cli or any OpenTimestamps library, against public
+calendars or your own Bitcoin node.
+
+Satohash is evidence of existence-at-a-time, not a notary or e-signature.
+`
+}
 
 export default function BatchTimestamp() {
   usePageMeta({ page: 'batch' })
@@ -34,8 +128,16 @@ export default function BatchTimestamp() {
     if (saved) {
       try {
         const parsed = JSON.parse(saved)
-        if (parsed && parsed.length > 0) {
-          setBatchResult(parsed)
+        const rows = Array.isArray(parsed) ? parsed : parsed?.results
+        if (Array.isArray(rows) && rows.length > 0) {
+          const success = rows.filter((r) => r.status === 'stamped' && r.id).length
+          setBatchResult({
+            success,
+            total: rows.length,
+            results: rows,
+            status: 'complete',
+            completed: success
+          })
         }
       } catch (_e) {
         /* ignore corrupt cache */
@@ -64,7 +166,7 @@ export default function BatchTimestamp() {
       hash: null,
       progress: 0
     }))
-    setFiles((prev) => [...prev, ...newFiles].slice(0, 100)) // Max 100 files for UI
+    setFiles((prev) => [...prev, ...newFiles].slice(0, MAX_BATCH_FILES))
   }, [])
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -102,7 +204,7 @@ export default function BatchTimestamp() {
       setProgress(Math.round(((i + 1) / updatedFiles.length) * 50))
     }
 
-    return updatedFiles.filter((f) => f.hash).map((f) => f.hash)
+    return updatedFiles
   }
 
   const handleBatchStamp = async () => {
@@ -121,9 +223,10 @@ export default function BatchTimestamp() {
     const API = getApiUrl()
 
     // Step 1: hash all files in browser (off-thread via Web Worker)
-    const hashes = await calculateHashes()
+    const hashedFiles = await calculateHashes()
+    const stampable = hashedFiles.filter((f) => f.hash)
 
-    if (hashes.length === 0) {
+    if (stampable.length === 0) {
       setError('No valid files to timestamp')
       toast.error('No valid files to timestamp')
       setIsProcessing(false)
@@ -132,97 +235,62 @@ export default function BatchTimestamp() {
 
     // Step 2: stamp each hash via API one at a time
     let successCount = 0
-    const results = []
     const currentResults = []
 
-    for (let i = 0; i < files.length; i++) {
+    for (let i = 0; i < hashedFiles.length; i++) {
       if (signal.aborted) break
-      const fileData = files[i]
+      const fileData = hashedFiles[i]
       if (!fileData.hash) continue
 
       try {
-        const stampProgress = Math.round(50 + ((i + 1) / files.length) * 50)
+        const stampProgress = Math.round(50 + ((i + 1) / hashedFiles.length) * 50)
         setFiles((prev) =>
           prev.map((f, idx) =>
             idx === i ? { ...f, status: 'stamping', progress: stampProgress } : f
           )
         )
 
-        const res = await fetch(`${API}/api/stamp`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ hash: fileData.hash, filename: fileData.file.name }),
+        const res = await postStamp({
+          api: API,
+          hash: fileData.hash,
+          filename: fileData.file.name,
           signal
         })
-
-        if (res.status === 429) {
-          // Rate limited — wait 2s and retry once
-          await new Promise((r) => setTimeout(r, 2000))
-          const retry = await fetch(`${API}/api/stamp`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ hash: fileData.hash, filename: fileData.file.name }),
-            signal
-          })
-          const retryData = await retry.json()
-          setFiles((prev) =>
-            prev.map((f, idx) =>
-              idx === i
-                ? {
-                    ...f,
-                    status: retry.ok ? 'stamped' : 'error',
-                    stampId: retryData.id,
-                    progress: retry.ok ? 100 : stampProgress
-                  }
-                : f
-            )
-          )
-          if (retry.ok) {
-            successCount++
-            navigator.vibrate?.([20])
-          }
-          results.push(retryData)
-          currentResults.push({
-            id: retryData.id,
-            filename: fileData.file.name,
-            hash: fileData.hash,
-            status: retry.ok ? 'stamped' : 'error',
-            created_at: retryData.created_at
-          })
-          localStorage.setItem('satohash_batch_results', JSON.stringify(currentResults))
-        } else {
-          const data = await res.json()
-          setFiles((prev) =>
-            prev.map((f, idx) =>
-              idx === i
-                ? {
-                    ...f,
-                    status: res.ok ? 'stamped' : 'error',
-                    stampId: data.id,
-                    progress: res.ok ? 100 : stampProgress
-                  }
-                : f
-            )
-          )
-          if (res.ok) {
-            successCount++
-            navigator.vibrate?.([20])
-          }
-          results.push(data)
-          currentResults.push({
-            id: data.id,
-            filename: fileData.file.name,
-            hash: fileData.hash,
-            status: res.ok ? 'stamped' : 'error',
-            created_at: data.created_at
-          })
-          localStorage.setItem('satohash_batch_results', JSON.stringify(currentResults))
+        let data = {}
+        try {
+          data = await res.json()
+        } catch {
+          /* non-JSON error body */
         }
 
-        setProgress(Math.round(((i + 1) / files.length) * 100))
+        setFiles((prev) =>
+          prev.map((f, idx) =>
+            idx === i
+              ? {
+                  ...f,
+                  status: res.ok ? 'stamped' : 'error',
+                  stampId: data.id,
+                  progress: res.ok ? 100 : stampProgress
+                }
+              : f
+          )
+        )
+        if (res.ok) {
+          successCount++
+          navigator.vibrate?.([20])
+        }
+        currentResults.push({
+          id: data.id,
+          filename: data.filename || fileData.file.name,
+          hash: data.hash || fileData.hash,
+          status: res.ok ? 'stamped' : 'error',
+          created_at: data.created_at
+        })
+        localStorage.setItem('satohash_batch_results', JSON.stringify(currentResults))
 
-        // Small delay between stamps to avoid rate limiting
-        if (i < files.length - 1) await new Promise((r) => setTimeout(r, 100))
+        setProgress(Math.round(((i + 1) / hashedFiles.length) * 100))
+
+        if (i < hashedFiles.length - 1) await sleep(100, signal)
       } catch (err) {
         if (err.name === 'AbortError') break
         setFiles((prev) =>
@@ -235,8 +303,8 @@ export default function BatchTimestamp() {
 
     setBatchResult({
       success: successCount,
-      total: files.length,
-      results,
+      total: hashedFiles.length,
+      results: currentResults,
       status: 'complete',
       completed: successCount
     })
@@ -254,18 +322,23 @@ export default function BatchTimestamp() {
     const API = getApiUrl()
     const zip = new JSZip()
     const manifest = []
+    let otsCount = 0
 
     toast.info('Building ZIP archive...', { duration: 3000 })
 
     for (const result of batchResult.results) {
+      const zipName = otsZipName({
+        hash: result.hash,
+        filename: result.filename || result.name,
+        id: result.id
+      })
       if (result.id) {
         try {
           const res = await fetch(`${API}/api/stamps/${result.id}?download=true`)
           if (res.ok) {
             const blob = await res.blob()
-            const buffer = await blob.arrayBuffer()
-            const filename = `${result.filename || result.id}.ots`
-            zip.file(filename, buffer)
+            zip.file(zipName, await blob.arrayBuffer())
+            otsCount++
           }
         } catch (_e) {
           /* skip missing stamp in zip */
@@ -276,10 +349,13 @@ export default function BatchTimestamp() {
         filename: result.filename || result.name,
         hash: result.hash,
         status: result.status,
+        ots: zipName,
+        proof_card: result.hash ? `https://satohash.io/p/${result.hash}` : null,
         created_at: result.created_at
       })
     }
 
+    zip.file('README.txt', batchReadme(batchResult.results))
     zip.file('manifest.json', JSON.stringify(manifest, null, 2))
 
     const blob = await zip.generateAsync({ type: 'blob', compression: 'DEFLATE' })
@@ -292,7 +368,7 @@ export default function BatchTimestamp() {
     document.body.removeChild(a)
     URL.revokeObjectURL(url)
     toast.success('ZIP downloaded!', {
-      description: `${batchResult.results.length} proofs + manifest`
+      description: `${otsCount} .ots + README`
     })
   }
 
@@ -644,13 +720,17 @@ export default function BatchTimestamp() {
                     </p>
                   </div>
 
-                  <button
-                    onClick={downloadBatch}
-                    className="btn-holographic min-w-[280px] py-5 text-xs"
-                  >
-                    <Download className="mr-3 inline h-4 w-4" />
-                    Ingest All Proofs (.zip)
-                  </button>
+                  {batchResult.success > 0 && (
+                    <button
+                      type="button"
+                      onClick={downloadBatch}
+                      data-testid="batch-download-zip"
+                      className="btn-holographic inline-flex min-h-[48px] min-w-[280px] items-center justify-center py-5 text-xs"
+                    >
+                      <Download className="mr-3 inline h-4 w-4" />
+                      Download all .ots (zip)
+                    </button>
+                  )}
                 </>
               ) : (
                 <>

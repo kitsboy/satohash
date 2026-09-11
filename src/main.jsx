@@ -32,16 +32,23 @@ if (import.meta.env.VITE_SENTRY_DSN) {
   })
 }
 
-// Kill leftover Workbox/Vite PWA workers (HTML-as-JS poison). Keep satohash-sync
-// (queue retry only — it never caches documents).
+// Kill leftover Workbox/Vite PWA workers (HTML-as-JS poison). Then register
+// satohash-sync once (queue retry only — never caches HTML/JS, no fetch handler).
+// Do not register /sw.js: VitePWA stays injectRegister:false + selfDestroying.
 if (import.meta.env.PROD && 'serviceWorker' in navigator) {
-  navigator.serviceWorker.getRegistrations().then((regs) => {
-    regs.forEach((r) => {
-      const url = r.active?.scriptURL || r.waiting?.scriptURL || r.installing?.scriptURL || ''
-      if (url.includes('satohash-sync')) return
-      r.unregister()
-    })
-  })
+  navigator.serviceWorker
+    .getRegistrations()
+    .then((regs) =>
+      Promise.all(
+        regs.map((r) => {
+          const url = r.active?.scriptURL || r.waiting?.scriptURL || r.installing?.scriptURL || ''
+          if (url.includes('satohash-sync')) return undefined
+          return r.unregister()
+        })
+      )
+    )
+    .then(() => navigator.serviceWorker.register('/satohash-sync.js'))
+    .catch(() => {})
   if (window.caches) {
     caches.keys().then((keys) => keys.forEach((k) => caches.delete(k)))
   }

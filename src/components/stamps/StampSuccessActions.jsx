@@ -231,19 +231,21 @@ export default function StampSuccessActions({
           >
             X / Twitter
           </a>
-          {nostrLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => trackEvent(events.PROOF_SHARED, { via: 'nostr', ...funnelProps() })}
-              className="flex min-h-[44px] items-center justify-center gap-2 rounded-xl border text-xs font-black tracking-wider uppercase"
-              style={{ borderColor: 'var(--border)', color: 'var(--text-primary)' }}
-            >
-              {link.label}
-            </a>
-          ))}
+          {nostrLinks.map((link) => {
+            const native = link.native || String(link.href).startsWith('nostr:')
+            return (
+              <a
+                key={link.href}
+                href={link.href}
+                {...(native ? {} : { target: '_blank', rel: 'noopener noreferrer' })}
+                onClick={() => trackEvent(events.PROOF_SHARED, { via: 'nostr', ...funnelProps() })}
+                className="flex min-h-[44px] items-center justify-center gap-2 rounded-xl border text-xs font-black tracking-wider uppercase"
+                style={{ borderColor: 'var(--border)', color: 'var(--text-primary)' }}
+              >
+                {link.label}
+              </a>
+            )
+          })}
         </div>
 
         <div className="grid grid-cols-2 gap-3">

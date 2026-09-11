@@ -27,6 +27,7 @@ import { clsx } from 'clsx'
 import usePageMeta from '../../hooks/usePageMeta'
 import { getVerifyUrl } from '../../config/constants'
 import { loadContracts, updateContract } from '../../utils/contractStorage'
+import { buildProofCardUrl, buildXIntent } from '../../utils/shareProof'
 import ContractLifecycleBar from '../../components/stamps/ContractLifecycleBar'
 import SignerIdentityBadge from '../../components/stamps/SignerIdentityBadge'
 import { generateContractPdf } from '../../utils/pdfHelpers'
@@ -93,6 +94,14 @@ export default function ContractView() {
   const isDraft = contract.status === 'draft'
   const isSigned = contract.status === 'signed'
   const isTimestamped = contract.status === 'timestamped'
+  const shareUrl = buildProofCardUrl({
+    hash: contract.hash || contract.timestamp?.hash,
+    id: contract.id
+  })
+  const xIntent = buildXIntent({
+    text: 'Cryptographic Proof on Satohash',
+    url: shareUrl
+  })
 
   const handleDownload = async () => {
     try {
@@ -158,17 +167,17 @@ export default function ContractView() {
           >
             <a
               href={`mailto:?subject=Satohash Proof&body=Check out this cryptographic proof: ${window.location.origin}/verify/${contractId}`}
-              className="rounded-lg p-2 transition-colors"
+              className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg p-2 transition-colors"
               style={{ color: 'var(--text-secondary)' }}
               title="Share via Email"
             >
               <Mail size={14} />
             </a>
             <a
-              href={`https://twitter.com/intent/tweet?text=Cryptographic Proof on Satohash&url=${window.location.origin}/verify/${contractId}`}
+              href={xIntent}
               target="_blank"
               rel="noreferrer"
-              className="rounded-lg p-2 transition-colors hover:text-blue-500"
+              className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg p-2 transition-colors hover:text-blue-500"
               style={{ color: 'var(--text-secondary)' }}
               title="Share on X"
             >
@@ -178,7 +187,7 @@ export default function ContractView() {
               href={`https://www.linkedin.com/sharing/share-offsite/?url=${window.location.origin}/verify/${contractId}`}
               target="_blank"
               rel="noreferrer"
-              className="rounded-lg p-2 transition-colors hover:text-blue-700"
+              className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg p-2 transition-colors hover:text-blue-700"
               style={{ color: 'var(--text-secondary)' }}
               title="Share on LinkedIn"
             >

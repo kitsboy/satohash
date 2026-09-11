@@ -119,19 +119,21 @@ export default function DonationReceiptShare({ proof, isDonation = false }) {
         >
           X / Twitter
         </a>
-        {nostrLinks.map((link) => (
-          <a
-            key={link.href}
-            href={link.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => trackEvent(events.PROOF_SHARED, { via: 'nostr', ...funnelProps() })}
-            className={shareLinkClass}
-            style={shareLinkStyle}
-          >
-            {link.label}
-          </a>
-        ))}
+        {nostrLinks.map((link) => {
+          const native = link.native || String(link.href).startsWith('nostr:')
+          return (
+            <a
+              key={link.href}
+              href={link.href}
+              {...(native ? {} : { target: '_blank', rel: 'noopener noreferrer' })}
+              onClick={() => trackEvent(events.PROOF_SHARED, { via: 'nostr', ...funnelProps() })}
+              className={shareLinkClass}
+              style={shareLinkStyle}
+            >
+              {link.label}
+            </a>
+          )
+        })}
         <button type="button" onClick={copyLink} className={shareLinkClass} style={shareLinkStyle}>
           {copied ? <Check size={15} /> : <Copy size={15} />} {copied ? 'Copied' : 'Copy link'}
         </button>

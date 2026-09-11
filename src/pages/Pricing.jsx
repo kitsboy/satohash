@@ -201,6 +201,14 @@ export default function Pricing() {
             )
           })}
         </div>
+        <p className="mt-10 text-center">
+          <Link
+            to="/proof-pack"
+            className="inline-flex min-h-[44px] items-center justify-center text-sm font-semibold text-[var(--accent-gold)] underline-offset-4 hover:underline"
+          >
+            Proof Pack waitlist (free, not for sale)
+          </Link>
+        </p>
       </section>
 
       <section className="border-t border-[var(--border)] bg-[var(--bg-secondary)] px-6 py-16">

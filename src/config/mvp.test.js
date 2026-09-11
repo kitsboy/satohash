@@ -17,6 +17,7 @@ describe('mvp config', () => {
     expect(MVP_PUBLIC_PATHS).toContain('/vault')
     expect(MVP_PUBLIC_PATHS).toContain('/status')
     expect(MVP_PUBLIC_PATHS).toContain('/counsel')
+    expect(MVP_PUBLIC_PATHS).toContain('/proof-pack')
   })
 
   it('isMvpPublicPath allows stamp without login', () => {

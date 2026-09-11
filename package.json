@@ -43,6 +43,8 @@
     "test:e2e:safari": "playwright test tests/e2e/safari-chrome.spec.js --workers=1 --reporter=line",
     "test:e2e:pixel": "playwright test --project=pixel --workers=1 --reporter=line",
     "test:live-api": "node scripts/live-api-stamp-verify.mjs",
+    "test:family-api": "node scripts/family-api-smoke.mjs",
+    "cards:validate": "node scripts/cards-validate.mjs",
     "lh:mobile": "node scripts/lighthouse-mobile-gate.mjs",
     "lh:live": "BASE_URL=https://satohash.io node scripts/lighthouse-mobile-gate.mjs",
     "bundle:budget": "node scripts/bundle-budget.mjs",

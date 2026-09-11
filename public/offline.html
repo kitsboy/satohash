@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content="#F0B429" />
+    <meta name="color-scheme" content="dark" />
+    <title>Satohash — Offline</title>
+    <link rel="icon" type="image/png" href="/logo.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <style>
+      :root {
+        --bg: #0e1c2a;
+        --card: #12273a;
+        --border: rgba(56, 189, 248, 0.18);
+        --text: #e8f4fb;
+        --muted: #93a9bb;
+        --gold: #f0b429;
+        --sky: #38bdf8;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        min-height: 100%;
+        background: var(--bg);
+        color: var(--text);
+        font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+      }
+      body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1.5rem;
+        padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
+      }
+      main {
+        width: min(28rem, 100%);
+        background: linear-gradient(165deg, #16304a 0%, var(--card) 100%);
+        border: 1px solid var(--border);
+        border-radius: 1.5rem;
+        padding: 1.75rem 1.5rem 1.5rem;
+        text-align: center;
+      }
+      .mark {
+        width: 3rem;
+        height: 3rem;
+        margin: 0 auto 1rem;
+        border-radius: 0.9rem;
+        background: rgba(240, 180, 41, 0.12);
+        border: 1px solid rgba(240, 180, 41, 0.35);
+        display: grid;
+        place-items: center;
+        color: var(--gold);
+        font-size: 1.35rem;
+        font-weight: 800;
+      }
+      h1 {
+        margin: 0 0 0.5rem;
+        font-size: 1.25rem;
+        letter-spacing: -0.03em;
+      }
+      p {
+        margin: 0 0 1.25rem;
+        color: var(--muted);
+        font-size: 0.95rem;
+        line-height: 1.5;
+      }
+      a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
+        padding: 0.65rem 1.15rem;
+        border-radius: 0.85rem;
+        background: var(--gold);
+        color: #1a1408;
+        font-weight: 700;
+        font-size: 0.9rem;
+        text-decoration: none;
+      }
+      a.secondary {
+        margin-left: 0.5rem;
+        background: transparent;
+        color: var(--sky);
+        border: 1px solid rgba(56, 189, 248, 0.35);
+      }
+      small {
+        display: block;
+        margin-top: 1.15rem;
+        color: var(--muted);
+        font-size: 0.72rem;
+        letter-spacing: 0.04em;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="mark" aria-hidden="true">₿</div>
+      <h1>You’re offline</h1>
+      <p>
+        Satohash still hashes on this device. Stamps queue locally and send to Bitcoin
+        calendars when you reconnect. Nothing here caches the app shell or
+        <code>/b/*</code> bundles.
+      </p>
+      <a href="/stamp">Try Stamp</a>
+      <a class="secondary" href="/">Home</a>
+      <small>Static fallback · /offline.html · no service-worker fetch</small>
+    </main>
+  </body>
+</html>

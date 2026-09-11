@@ -3,6 +3,11 @@
  * Does not intercept fetches. Does not cache HTML, JS, or images.
  * Flushes IndexedDB stamp_queue to api.satohash.io when the browser fires Background Sync
  * (or when a page posts satohash-flush-queue).
+ *
+ * SAFE PWA (do not regress 2026-08-31 System Desync):
+ * - NO fetch event listener — never intercept navigations or /b/*
+ * - NO Cache Storage for index.html or hashed bundles
+ * - skipWaiting + clients.claim only (no clients.navigate)
  */
 /* eslint-disable no-restricted-globals */
 const DB_NAME = 'satohash_offline'

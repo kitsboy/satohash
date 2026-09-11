@@ -71,6 +71,7 @@ const BatchVerify = lazyWithReload(() => import('./pages/BatchVerify'))
 const TemplateDetail = lazyWithReload(() => import('./pages/TemplateDetail'))
 const FAQ = lazyWithReload(() => import('./pages/FAQ'))
 const Pricing = lazyWithReload(() => import('./pages/Pricing'))
+const ProofPack = lazyWithReload(() => import('./pages/ProofPack'))
 const Comparison = lazyWithReload(() => import('./pages/Comparison'))
 const Guides = lazyWithReload(() => import('./pages/Guides'))
 const Glossary = lazyWithReload(() => import('./pages/Glossary'))
@@ -306,6 +307,7 @@ function AppContent() {
             <Route path="/templates/:templateId" element={<TemplateDetail />} />
             <Route path="/faq" element={<FAQ />} />
             <Route path="/pricing" element={<Pricing />} />
+            <Route path="/proof-pack" element={<ProofPack />} />
             <Route path="/comparison" element={<Comparison />} />
             <Route path="/guides" element={<Guides />} />
             <Route path="/glossary" element={<Glossary />} />

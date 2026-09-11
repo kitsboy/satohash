@@ -68,6 +68,7 @@ const LINK_GROUPS = [
       { key: 'glossary', path: '/glossary' },
       { key: 'comparison', path: '/comparison' },
       { key: 'widgets', path: '/widgets' },
+      { key: 'proofPack', path: '/proof-pack', label: 'Proof Pack waitlist' },
       { key: 'integrations', path: '/integrations' }
     ]
   },

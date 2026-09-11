@@ -27,6 +27,7 @@ export const MVP_PUBLIC_PATHS = [
   '/evidence-admissibility',
   '/distressed-asset',
   '/pricing',
+  '/proof-pack',
   '/comparison',
   '/glossary',
   '/widgets',

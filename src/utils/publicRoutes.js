@@ -10,6 +10,7 @@ const MARKETING_PREFIXES = [
   '/legal/',
   '/faq',
   '/pricing',
+  '/proof-pack',
   '/comparison',
   '/guides',
   '/glossary',

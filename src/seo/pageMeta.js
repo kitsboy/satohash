@@ -42,6 +42,7 @@ const PAGE_OG_SLUG = {
   donate: 'donate',
   network: 'network',
   pricing: 'pricing',
+  proofPack: 'stamp',
   templates: 'templates',
   howSatohashWorks: 'how-satohash-works',
   supportAndGuidance: 'support-and-guidance'
@@ -53,6 +54,7 @@ const PAGE_OG_JPEG = new Set([
   'verify',
   'faq',
   'pricing',
+  'proofPack',
   'watch',
   'pitch',
   'network',
@@ -1599,6 +1601,42 @@ export const pageMeta = {
     zh: {
       title: '状态 — 实时 API 与比特币节点',
       description: '公开状态：API、自有比特币节点、日历、免费盖章。'
+    }
+  },
+  proofPack: {
+    en: {
+      title: 'Proof Pack waitlist — Free, not for sale',
+      description:
+        'Proof Pack is not for sale. Local waitlist only — no email form. Follow @give_bit. Stamp is free today.'
+    },
+    es: {
+      title: 'Lista de espera Proof Pack — Gratis, no se vende',
+      description:
+        'Proof Pack no está a la venta. Lista local, sin correo. Sigue @give_bit. El sello es gratis hoy.'
+    },
+    fr: {
+      title: 'Liste d’attente Proof Pack — Gratuit, pas à vendre',
+      description:
+        'Proof Pack n’est pas à vendre. Liste locale, pas d’e-mail. Suivez @give_bit. Le tamponnage est gratuit.'
+    },
+    de: {
+      title: 'Proof-Pack-Warteliste — Kostenlos, nicht käuflich',
+      description:
+        'Proof Pack ist nicht zu kaufen. Lokale Liste, keine E-Mail. Folgen Sie @give_bit. Stempeln ist heute kostenlos.'
+    },
+    pt: {
+      title: 'Lista de espera Proof Pack — Grátis, não à venda',
+      description:
+        'Proof Pack não está à venda. Lista local, sem e-mail. Siga @give_bit. O carimbo é grátis hoje.'
+    },
+    sw: {
+      title: 'Orodha ya Proof Pack — Bure, haiuzwi',
+      description:
+        'Proof Pack haiuzwi. Orodha ya kifaa, bila barua pepe. Fuata @give_bit. Muhuri ni bure leo.'
+    },
+    zh: {
+      title: 'Proof Pack 候补名单 — 免费，不出售',
+      description: 'Proof Pack 暂不出售。仅本机候补，无邮箱表单。关注 @give_bit。今日盖章免费。'
     }
   },
   counsel: {

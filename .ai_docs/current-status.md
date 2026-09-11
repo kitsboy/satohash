@@ -1,12 +1,12 @@
 # Current Status — Satohash
 
 **Version:** **5.0.0-ELITE** (Build 331+)  
-**Last Updated:** 2026-09-08 (Grok 4.6 — /goodbye after harden marathon)  
+**Last Updated:** 2026-09-11 (Grok — 20 improvements + family API stability)  
 **Frontend:** https://satohash.io · www · CF Pages project **`satohash`** — Grok lane, `assetsDir: 'b'`  
-**API:** https://api.satohash.io ✅ LIVE (THOR Docker). Confirm SHA with `GET /health` (`gitSha`). **Live now: `e979e69`**, image **818MB**, `Cache-Control: no-store`, Caddy reload OK, paywall off, ~288 stamps.  
+**API:** https://api.satohash.io ✅ LIVE (THOR Docker). Confirm SHA with `GET /health` (`gitSha`). **Live now: `e979e69`** until Kimi rebuilds this tree (keepAliveTimeout). Image **818MB**, `Cache-Control: no-store`, Caddy reload OK, paywall off, ~298 stamps + CLI=1.  
 **Metrics SoT:** `https://api.satohash.io/metrics.json`  
 **HQ:** https://hq.giveabit.io  
-**Git:** `main` @ **`e979e69`**  
+**Git:** `main` (this push)  
 **Kimi vault:** **THOR VPS Obsidian** (not M4)  
 **Analytics:** Umami `analytics.giveabit.io` — **not** Google Analytics  
 **Search:** GSC property `https://satohash.io/` **verified**
@@ -52,7 +52,8 @@
 
 | Path | Notes |
 |------|--------|
-| `/` | Landing · live node chip · Watch explainer |
+| `/` | Landing · live node chip · Watch explainer · hero CTA = Stamp + Watch only |
+| `/proof-pack` | Free waitlist (not for sale; no email; localStorage + @give_bit) |
 | `/stamp` | Free stamp · STEP 1–3 · **eager** (no lazy hang) |
 | `/stamp/done` | Success · share `/p/<hash>` · **eager** |
 | `/verify` | Public verify · **eager** |
@@ -72,14 +73,22 @@
 | Family with counts | live `raw.familyClients` — do not invent zeros; read metrics.json |
 | Sherpa / Katoa / Giveabit | attributed stamps exist (honest live counts; not 0) |
 
+## This session (2026-09-11 — #12 / #13 / #17)
+
+- [x] Landing hero: Stamp (gold, first thumb, full-width mobile) + Watch (gold border). Video kept below CTAs. Templates/donate stay out of that row.
+- [x] Batch stamp: `X-Satohash-Client: spa`, Retry-After on 429 (else 2s, retry once), zip named `{hash-prefix}-{filename}.ots` + README.txt, `data-testid=batch-download-zip`
+- [x] `/proof-pack` free waitlist — not for sale, no `/api/waitlist`, no email. Pricing links it.
+- [ ] Push SPA when Cam wants
+
 ## This session (2026-09-08 — leftover 18 + knowledge)
 
 - [x] Remaining 18 of the last 20: government compact footers, 2 more learn OG JPEGs, thinner info ring (1.15px, still **one** gold circle), docs prefetch `/verify`, OpenAPI calendar-status, smoke learn JPEG, Network `/p/` aria-label, counsel `scroll-mt-24`, Safari `fontVariantNumeric`, sqlite `analysis_limit=400`
 - [x] Info icon: one gold ring around a plain i (not Lucide-in-a-ring)
 - [x] Docs/maps: this file · `docs/handoff-log.md` · `docs/KIMI-HANDOFF.md` · `docs/MASTER-BRAIN-INGEST.md` · `docs/ops-runbook.md`
 - [x] THOR rebuild live **`e979e69`** (`analysis_limit` in this image)
-- [ ] Pin `/watch` on **`@give_bit`**
-- [ ] Physical iPhone `/p/<hash>` unfurl
+- [x] 2026-09-11 20-item wave (share, waitlist, prerender, PWA sync-only, CLI stamp, family widgets, client retries)
+- [ ] Pin `/watch` on **`@give_bit`** (paste-ready: `docs/marketing/GIVE-BIT-X-PACK.md`)
+- [ ] Physical iPhone `/p/<hash>` unfurl (HTML already JPEG `01-stamp-hero.jpg`)
 
 ## This session (2026-08-31, later)
 

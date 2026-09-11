@@ -1,3 +1,19 @@
+## Latest Session Summary (Grok M3, 2026-09-11 — 20 items + family API)
+
+**For Kimi on THOR Obsidian (not M4).** Code = M3/Grok. Pages = Grok. Do not flip `REQUIRE_LIGHTNING`. Do not change `/api/*`. Do not `--force` opentimestamps.
+
+**Live API before rebuild:** `gitSha=e979e69`, paywall off, `cli` family count = 1.
+
+**Your job:**
+1. `cd /root/satohash && git fetch origin && git reset --hard origin/main`
+2. Rebuild API for keep-alive: `GIT_SHA=$(git rev-parse --short HEAD) bash scripts/vps-deploy-api.sh`
+3. Ingest the 2026-09-11 paste in `docs/MASTER-BRAIN-INGEST.md`
+4. RSS→Nostr / Kind-0 stay dry-run until `NOSTR_PRIVATE_KEY` is in Vault (never git)
+
+**Cam still:** pin `/watch` on `@give_bit` (copy in `docs/marketing/GIVE-BIT-X-PACK.md`); iPhone `/p/` unfurl (JPEG already live in HTML).
+
+---
+
 ## Latest Session Summary (from 2026-09-08 goodbye)
 
 **Chat Topic:** Cam asked Grok to run successive 20-item harden lists alone (agents, batched push), iterate the info “i”, then close.

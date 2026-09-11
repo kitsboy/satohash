@@ -455,50 +455,64 @@ write(
 )
 write('pitch.html', shell({ title: pitchTitle, description: pitchDesc, contentHtml: pitchBody, canonical: `${SITE}/pitch`, ogImage: `${SITE}/og/pitch.jpg` }))
 
-// Identity / Status / Counsel — crawler shells (no certificates, no Ethereum)
-const identityTitle = 'NIP-05 Identity — satohash@satohash.io'
+// Identity / Status / Counsel — crawler shells (Twitterbot / Googlebot)
+const identityTitle = 'Satohash identity — NIP-05'
 const identityDesc =
-  'Product NIP-05 is satohash@satohash.io. Optional Nostr identity on Satohash. Stamps stay free; proofs are OpenTimestamps on Bitcoin.'
+  'kimi@giveabit.io is the Give A Bit family NIP-05. Public keys live in satohash.io/.well-known/nostr.json. Voice: @give_bit.'
 const identityBody = `
-<h1>NIP-05 identity</h1>
-<p>The product handle is <strong>satohash@satohash.io</strong> (NIP-05). You can also verify a handle you already control.</p>
-<p>Identity is optional. A stamp proves a SHA-256 fingerprint existed at a time via OpenTimestamps on Bitcoin — not who you are, and not a certificate.</p>
-<p>Stamping is free today. Chain: Bitcoin only.</p>
-<p><a href="${SITE}/identity">Open identity</a> · <a href="${SITE}/stamp">Stamp a file — free</a></p>`
+<h1>Satohash identity — NIP-05</h1>
+<p>Satohash is part of the <strong>Give A Bit</strong> family. The human NIP-05 is <strong>kimi@giveabit.io</strong>. The public voice on X is <a href="https://x.com/give_bit">@give_bit</a> — not @satohash.</p>
+<p>NIP-05 names for this product are published as static JSON at <a href="${SITE}/.well-known/nostr.json"><code>${SITE}/.well-known/nostr.json</code></a> (served from the SPA host, not the API). That file maps <code>kimi</code>, <code>satohash</code>, and <code>_</code> to the same public key.</p>
+<p>Identity is optional. A stamp proves a SHA-256 fingerprint existed at a time via OpenTimestamps on Bitcoin — not who you are, and not a certificate. Stamping is free today (<code>REQUIRE_LIGHTNING=false</code>). Chain: Bitcoin only.</p>
+<p><a href="${SITE}/identity">Open identity</a> · <a href="${SITE}/.well-known/nostr.json">nostr.json</a> · <a href="${SITE}/stamp">Stamp a file — free</a></p>`
 
-const statusTitle = 'Status — Live API & Bitcoin Node'
+const statusTitle = 'Satohash status — live node, calendars, stamps'
 const statusDesc =
-  'Public Satohash status: API readiness, own bitcoind tip, OpenTimestamps calendars, Nostr relay count (ok/total), free stamps (paywall off).'
+  'Live Satohash status: own Bitcoin node, OpenTimestamps calendars, and stamps. Source of truth is api.satohash.io /health and /metrics.json. Pending is not confirmed.'
 const statusBody = `
-<h1>Live status</h1>
-<p>Public transparency: API, own Bitcoin Core node, OpenTimestamps calendars (Alice, Bob, Finney), and Nostr relay pings. Stamps are free today.</p>
-<p>The live page reports the actual Nostr <code>ok_count/total</code> from health (for example 2/3). That is a relay ping, not a mesh. A down relay such as snort is shown as error — notes still publish when at least one relay accepts.</p>
+<h1>Satohash status — live node, calendars, stamps</h1>
+<p>The live dashboard is <a href="${SITE}/status">${SITE}/status</a>. It reads public endpoints; it never writes stamps and requires no account.</p>
+<p>Source of truth is the API plane, not this static page:</p>
+<ul>
+<li><a href="https://api.satohash.io/health"><code>https://api.satohash.io/health</code></a> — API readiness, git SHA, bitcoind tip, OpenTimestamps calendars</li>
+<li><a href="https://api.satohash.io/metrics.json"><code>https://api.satohash.io/metrics.json</code></a> — stamp counts and paywall flag (<code>raw.requireLightning</code> is <code>false</code> today)</li>
+</ul>
+<p><strong>Pending ≠ confirmed.</strong> Pending means submitted to calendars. Confirmed means a Bitcoin block includes the attestation. Do not treat a pending stamp as finality.</p>
+<p>Stamps are free today. Chain: Bitcoin only, via OpenTimestamps.</p>
 <p><a href="${SITE}/status">View live status</a> · <a href="${SITE}/network">Network</a></p>`
 
-const counselTitle = 'For counsel — What a Satohash stamp is'
+const counselTitle = 'Satohash for counsel'
 const counselDesc =
-  'OpenTimestamps / Bitcoin proof of existence for eIDAS, ESIGN, and UETA readers. Pending is not confirmed.'
+  'Bitcoin-anchored proof of existence via OpenTimestamps. The file never leaves the device. Independently verifiable. Not legal advice.'
 const counselBody = `
-<h1>What a Satohash stamp proves</h1>
-<p>Bitcoin-anchored proof of <em>existence at a time</em>, not of identity, consent, or legal validity of the underlying document.</p>
-<h2>It is</h2>
-<ul>
-<li>A SHA-256 fingerprint computed on the client. The file never needs to leave the device.</li>
-<li>An OpenTimestamps receipt that calendars later commit into a Bitcoin transaction.</li>
-<li>Independently verifiable with <code>ots-cli</code> or any OTS library against public calendars or your own Bitcoin node.</li>
-<li>Compatible in spirit with ESIGN / UETA (US) and eIDAS electronic timestamp concepts — a mathematical attestation of prior existence, not a notary commission.</li>
-</ul>
-<h2>It is not</h2>
-<ul>
-<li>Proof that a particular person authored, signed, or consented to the file.</li>
-<li>Proof the file is true, lawful, admissible, or complete.</li>
-<li>A government-issued notarial act or qualified trust service by itself.</li>
-<li>Instant Bitcoin finality. <strong>Pending</strong> means submitted to calendars. <strong>Confirmed</strong> means a Bitcoin block includes the attestation.</li>
-</ul>
-<p>Satohash is the product surface. The chain of trust is OpenTimestamps + Bitcoin proof of work. Counsel should verify the <code>.ots</code> independently. <a href="${SITE}/verify">Verify a proof</a>.</p>`
+<h1>Satohash for counsel</h1>
+<p>Satohash issues Bitcoin-anchored proof of existence: a SHA-256 fingerprint computed on the client, then an OpenTimestamps receipt that calendars later commit into a Bitcoin transaction. The file never leaves the device.</p>
+<p>The <code>.ots</code> proof is independently verifiable with <code>ots-cli</code>, opentimestamps.org, or any OTS library against public calendars or your own Bitcoin node — even if Satohash ceases to exist.</p>
+<p><strong>This is not legal advice.</strong> A stamp is evidence that a fingerprint existed at a time. It is not proof of identity, consent, authorship, truth, admissibility, or a notarial act.</p>
+<p><strong>Pending is not confirmed.</strong> Pending means submitted to calendars. Confirmed means a Bitcoin block includes the attestation.</p>
+<p><a href="${SITE}/counsel">Counsel one-pager</a> · <a href="${SITE}/docs/how-satohash-works">How Satohash works</a> · <a href="${SITE}/verify">Verify a proof</a></p>`
 
 write('identity.html', shell({ title: identityTitle, description: identityDesc, contentHtml: identityBody, canonical: `${SITE}/identity`, ogImage: `${SITE}/og/home.jpg` }))
 write('status.html', shell({ title: statusTitle, description: statusDesc, contentHtml: statusBody, canonical: `${SITE}/status`, ogImage: `${SITE}/og/home.jpg` }))
 write('counsel.html', shell({ title: counselTitle, description: counselDesc, contentHtml: counselBody, canonical: `${SITE}/counsel`, ogImage: `${SITE}/og/home.jpg` }))
+
+const proofPackTitle = 'Proof Pack waitlist — free, not for sale'
+const proofPackDesc =
+  'Satohash Proof Pack is a free waitlist, not a paid SKU. No email form. Announcements on @give_bit. Stamp a file for free today.'
+const proofPackBody = `
+<h1>Proof Pack waitlist — free, not for sale</h1>
+<p>Proof Pack is a future bundle idea: <code>.ots</code> receipts, a shareable proof card, and a PDF together. It is <strong>not for sale</strong>. There is no checkout and no email form.</p>
+<p>Join the local waitlist on the site, or follow <a href="https://x.com/give_bit">@give_bit</a>. Stamping is free today (<code>REQUIRE_LIGHTNING=false</code>). Pending is not confirmed.</p>
+<p><a href="${SITE}/proof-pack">Open the waitlist</a> · <a href="${SITE}/stamp">Stamp a file — free</a></p>`
+write(
+  'proof-pack.html',
+  shell({
+    title: proofPackTitle,
+    description: proofPackDesc,
+    contentHtml: proofPackBody,
+    canonical: `${SITE}/proof-pack`,
+    ogImage: `${SITE}/og/stamp.jpg`
+  })
+)
 
 console.log('Prerender complete → dist/prerender/')

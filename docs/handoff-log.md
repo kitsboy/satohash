@@ -1,3 +1,21 @@
+## 2026-09-11 (Grok M3 — 20 improvements + family API stability)
+
+**Pickup:** `.ai_docs/current-status.md` · this file · `docs/KIMI-HANDOFF.md` · `docs/MASTER-BRAIN-INGEST.md`
+
+**Live API at start:** `gitSha=e979e69` · paywall off · family `cli` now 1 (first attributed CLI stamp `5680125571d3a2c781eee2f54b61af7834d568a5e12524e77eaa3e4536080100`).
+
+**SPA (this push):** share sheet njump/Primal/Snort/Iris + `via=give_bit`; landing Stamp then Watch then video; `/proof-pack` free waitlist (no email); batch zip + `X-Satohash-Client: spa`; prerender identity/status/counsel/proof-pack; PWA = register `/satohash-sync.js` only (no fetch intercept); family client retries; widget 429/5xx retry.
+
+**Family widgets pushed separately:** Katoa homepage already had it (CSP fix); SherpaCarta / TadBuy / Giveabit widget + CSP.
+
+**Cam still:** pin `/watch` on `@give_bit` (paste `docs/marketing/GIVE-BIT-X-PACK.md`); physical iPhone `/p/` JPEG (HTML already JPEG); Kind-0 / RSS→Nostr nsec on THOR; Sentry DSN in Vault.
+
+**Kimi:** `git pull` on `/root/satohash`. Rebuild API for `keepAliveTimeout` 65s (`server/index.js`). Cron RSS→Nostr still dry-run until nsec. Vault = THOR, not M4. Do not flip paywall. Do not change `/api/*`. Do not `--force` opentimestamps.
+
+**Do not:** VitePWA `injectRegister` · fetch listener on satohash-sync · sell Proof Pack · `@satohash`
+
+---
+
 ## 2026-09-08 (Grok M3 — /goodbye)
 
 **Pickup:** `.ai_docs/current-status.md` · this file · `docs/KIMI-HANDOFF.md` · `docs/archive/SESSION-SUMMARY-2026-09-08-goodbye.md` · `/whatsup` next chat.
