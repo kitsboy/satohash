@@ -450,7 +450,10 @@ export default function CodeExamples() {
         <ul className="list-inside list-disc space-y-1 text-sm text-gray-400">
           <li>Always store the .ots file alongside your original document</li>
           <li>Use webhooks for async confirmation instead of polling</li>
-          <li>Free tier includes 100 requests/day - perfect for testing</li>
+          <li>
+            Free tier has no daily quota - the public path is limited to 5 requests/min to stay
+            healthy
+          </li>
           <li>SHA-256 hashes are calculated client-side for privacy</li>
         </ul>
       </div>

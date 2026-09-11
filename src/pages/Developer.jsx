@@ -919,7 +919,7 @@ export default function Developer() {
                         },
                         {
                           label: 'Rate Limits',
-                          tip: '100 free stamps per day. After that, top up API credits. No Lightning wallet needed for the free tier.'
+                          tip: 'No daily quota on the free tier. The public path is rate-limited to 5 requests per minute to keep the service healthy. No Lightning wallet needed for the free tier.'
                         },
                         {
                           label: 'Bearer Token',
@@ -1034,9 +1034,10 @@ export default function Developer() {
                       className="text-base leading-relaxed"
                       style={{ color: 'var(--text-secondary)' }}
                     >
-                      Start free — 100 stamps per day, no credit card. When you need more, top up
-                      with API credits. Heavy users can pay via Bitcoin Lightning for per-request
-                      billing.
+                      Start free — no daily quota, no credit card. The only limit is a
+                      5-requests-per-minute guard that keeps the service healthy for everyone. When
+                      you need more throughput, top up with API credits. Heavy users can pay via
+                      Bitcoin Lightning for per-request billing.
                     </p>
                   </div>
                   <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
@@ -1045,7 +1046,7 @@ export default function Developer() {
                       price="$0"
                       unit="/ month"
                       features={[
-                        '100 stamps / day',
+                        'No daily quota',
                         'OTS Bitcoin proof',
                         '.ots file download',
                         'Community support'
@@ -1138,7 +1139,7 @@ export default function Developer() {
                       API Credits
                       <Tooltip
                         title="API Credits"
-                        content="Each stamp costs 1 credit. Top up with a card or with Bitcoin Lightning. 100 free credits per day — no payment needed to get started."
+                        content="Each stamp costs 1 credit. Top up with a card or with Bitcoin Lightning. The free tier carries no daily quota — no payment needed to get started."
                       />
                     </span>
                   </div>
@@ -1152,19 +1153,16 @@ export default function Developer() {
                 </div>
                 <div>
                   <h3
-                    className="font-mono text-4xl font-black tracking-tighter"
+                    className="font-mono text-2xl font-black tracking-tight"
                     style={{ color: 'var(--text-primary)' }}
                   >
-                    100{' '}
-                    <span className="text-base" style={{ color: 'var(--text-secondary)' }}>
-                      / day free
-                    </span>
+                    No daily quota
                   </h3>
                   <p
-                    className="text-[10px] font-bold tracking-widest uppercase"
+                    className="mt-1 text-[10px] font-bold tracking-widest uppercase"
                     style={{ color: 'var(--text-secondary)' }}
                   >
-                    No credit card required
+                    5 requests / min abuse guard · no credit card
                   </p>
                 </div>
                 <div
@@ -1172,18 +1170,15 @@ export default function Developer() {
                   style={{ borderColor: 'var(--border)', background: 'var(--bg-primary)' }}
                 >
                   <div className="flex justify-between text-[10px] font-black tracking-widest uppercase">
-                    <span style={{ color: 'var(--text-secondary)' }}>Daily usage</span>
-                    <span style={{ color: 'var(--text-primary)' }}>0 / 100</span>
+                    <span style={{ color: 'var(--text-secondary)' }}>Public rate limit</span>
+                    <span style={{ color: 'var(--text-primary)' }}>5 / min</span>
                   </div>
-                  <div
-                    className="h-1.5 w-full overflow-hidden rounded-full"
-                    style={{ background: 'var(--surface-raised)' }}
+                  <p
+                    className="text-[11px] leading-relaxed"
+                    style={{ color: 'var(--text-secondary)' }}
                   >
-                    <div
-                      className="h-full w-0 rounded-full"
-                      style={{ background: 'var(--accent-active)' }}
-                    />
-                  </div>
+                    An abuse guard, not a quota. Stamping is never capped by the day.
+                  </p>
                 </div>
                 <button
                   className="flex h-12 w-full items-center justify-center gap-2 rounded-xl text-[11px] font-black tracking-widest uppercase transition-all hover:scale-[1.02]"

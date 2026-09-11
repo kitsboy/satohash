@@ -1,5 +1,5 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 342) · **Updated:** 2026-09-11
+> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 343) · **Updated:** 2026-09-11
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Satohash — The Sovereign Provenance Pitch
@@ -157,7 +157,7 @@ Agencies modernizing registries, travel documents, or tenders need proof of *"wh
 
 This pitch is not a promise — it is a *report*. We show you exactly what is live, what is staged, and how to check every claim yourself:
 
-*   **Free stamps** — live and true today. `REQUIRE_LIGHTNING=false`. Free base is the never-paywalled trust anchor (unlimited verify, 10 stamps/day).
+*   **Free stamps** — live and true today. `REQUIRE_LIGHTNING=false`. Free base is the never-paywalled trust anchor (no daily quota; 5 req/min public abuse guard).
 *   **Pricing (Cam-locked 2026-08-29)** — free base + optional premium tiers (Professional ~2,100 sats/mo ~$29, Business ~21,000 sats/mo ~$299) + pay-per-use API (1–5 sats/stamp). Premium rails built but not yet switched on.
 *   **Bitcoin + OTS anchoring** — live, verified, own node at tip.
 *   **Zero-knowledge** — your file never leaves your device. Core promise.

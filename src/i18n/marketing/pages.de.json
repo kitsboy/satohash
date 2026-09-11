@@ -507,7 +507,7 @@
           "POST /api/v1/timestamp — Nachweis erstellen",
           "GET /api/v1/verify/:id — Nachweis verifizieren",
           "GET /api/v1/price — Aktuelle Preise",
-          "Rate Limit: 100 Anfragen/Min. im Free-Tier"
+          "Rate Limit: 5 Anfragen/Min. im Free-Tier — kein Tageslimit"
         ]
       },
       "webhooks": {

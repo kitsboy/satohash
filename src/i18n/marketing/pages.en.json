@@ -507,7 +507,7 @@
           "POST /api/v1/timestamp — Create a proof",
           "GET /api/v1/verify/:id — Verify a proof",
           "GET /api/v1/price — Current pricing",
-          "Rate-limited to 100 req/min for free tier"
+          "Rate-limited to 5 req/min for free tier — no daily quota"
         ]
       },
       "webhooks": {

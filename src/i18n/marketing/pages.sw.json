@@ -507,7 +507,7 @@
           "POST /api/v1/timestamp — Unda uthibitisho",
           "GET /api/v1/verify/:id — Thibitisha uthibitisho",
           "GET /api/v1/price — Bei ya sasa",
-          "Imepunguzwa kiwango hadi maombi 100/dak kwa kiwango cha bure"
+          "Imepunguzwa kiwango hadi maombi 5/dak kwa kiwango cha bure — hakuna kikomo cha siku"
         ]
       },
       "webhooks": {

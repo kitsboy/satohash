@@ -507,7 +507,7 @@
           "POST /api/v1/timestamp — Créer une preuve",
           "GET /api/v1/verify/:id — Vérifier une preuve",
           "GET /api/v1/price — Tarification actuelle",
-          "Limité à 100 req/min pour le plan gratuit"
+          "Limité à 5 req/min pour le plan gratuit — pas de quota journalier"
         ]
       },
       "webhooks": {

@@ -339,7 +339,7 @@ const SECTIONS = [
         {[
           {
             h: 'Free — permanent trust anchor',
-            p: 'Unlimited stamping, verification, and .ots downloads with client-side hashing, subject to a 10-stamps-per-day cap. The Free tier is the permanent trust anchor of the Service and is NEVER paywalled: it will not be removed, made conditional on payment, or otherwise reduced to a degraded marketing hook.'
+            p: 'Stamping, verification, and .ots downloads with client-side hashing, with no daily quota. The only limit is a 5-requests-per-minute abuse guard on the public path, which exists to keep the Service healthy for everyone. The Free tier is the permanent trust anchor of the Service and is NEVER paywalled: it will not be removed, made conditional on payment, or otherwise reduced to a degraded marketing hook.'
           },
           {
             h: 'Professional',

@@ -502,7 +502,7 @@
           "POST /api/v1/timestamp — 创建证明",
           "GET /api/v1/verify/:id — 验证证明",
           "GET /api/v1/price — 当前定价",
-          "免费版限制为 100 次请求/分钟"
+          "免费版限制为每分钟 5 次请求——无每日配额"
         ]
       },
       "webhooks": {

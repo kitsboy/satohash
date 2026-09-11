@@ -265,7 +265,7 @@ export default function PricingTiers() {
             <ul className="space-y-2 text-sm" style={{ color: 'var(--text-secondary)' }}>
               <li className="flex justify-between gap-4">
                 <span>Free stamp / verify / .ots</span>
-                <span style={{ color: 'var(--text-primary)' }}>10 / day</span>
+                <span style={{ color: 'var(--text-primary)' }}>No daily quota</span>
               </li>
               <li className="flex justify-between gap-4">
                 <span>Client-side hashing</span>
