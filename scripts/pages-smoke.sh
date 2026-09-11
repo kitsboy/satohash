@@ -52,11 +52,24 @@ if [ -z "$INDEX" ] || echo "$BODY" | grep -qiE '<!doctype|<html'; then
 fi
 
 echo "== OG is JPEG (iMessage) =="
-HOME_HTML=$(fetch "${BASE}/?nocache=${RANDOM}")
-echo "$HOME_HTML" | grep -q 'media/video/01-stamp-hero.jpg' || {
+# A single cache-busted read can catch a CF edge variant: on 2026-09-11 the first read of the
+# settled homepage came back without the JPEG hero marker while the next two were fine (see
+# t_2e23ea8a). Retry a few times instead of turning an inconsistency into a red gate — still
+# fail closed if the marker never shows.
+HOME_HTML=""
+for i in 1 2 3; do
+  HOME_HTML=$(fetch "${BASE}/?nocache=${RANDOM}${i}")
+  if echo "$HOME_HTML" | grep -q 'media/video/01-stamp-hero.jpg'; then
+    break
+  fi
+  echo "attempt $i: homepage is missing the JPEG hero marker — retrying"
+  HOME_HTML=""
+  sleep 5
+done
+if [ -z "$HOME_HTML" ]; then
   echo "::error::Homepage OG image is not the JPEG hero"
   exit 1
-}
+fi
 echo "$HOME_HTML" | grep -q 'og-image.svg' && {
   echo "::error::Homepage still references og-image.svg"
   exit 1
@@ -79,17 +92,40 @@ echo "== homepage and /stamp share the same /b/index-*.js (no mixed-chunk poison
 entry_js() {
   printf '%s' "$1" | grep -oE 'b/index-[^"[:space:]]+\.js' | head -1
 }
-HOME_JS=$(entry_js "$HOME_HTML")
-STAMP_JS=$(entry_js "$STAMP")
+# A Cloudflare Pages rollout flips / and /stamp independently, so ONE read can honestly
+# catch the old entry chunk on one path and the new one on the other. That is what failed
+# Deploy run 34645366777 ("mixed-chunk poison: homepage /b/index-D9wvmZw-.js !=
+# /stamp /b/index-BCtq2UCL.js") while the served content was fine. Wait for the rollout to
+# settle (both paths agreeing) instead of failing on the first mismatch — still fail closed
+# if they never agree, because that is the real HTML-as-JS/mixed-build poison we guard.
+HOME_JS=""
+STAMP_JS=""
+MIXED_ATTEMPTS="${SMOKE_MIXED_ATTEMPTS:-12}"
+for i in $(seq 1 "$MIXED_ATTEMPTS"); do
+  HOME_HTML=$(fetch "${BASE}/?nocache=${RANDOM}${i}")
+  STAMP=$(fetch "${BASE}/stamp?nocache=${RANDOM}${i}")
+  HOME_JS=$(entry_js "$HOME_HTML")
+  STAMP_JS=$(entry_js "$STAMP")
+  if [ -z "$HOME_JS" ] || [ -z "$STAMP_JS" ]; then
+    echo "attempt $i: missing /b/index-*.js (homepage=${HOME_JS:-none} /stamp=${STAMP_JS:-none})"
+    sleep 8
+    continue
+  fi
+  if [ "$HOME_JS" = "$STAMP_JS" ]; then
+    echo "Same entry chunk: /${HOME_JS} (attempt $i)"
+    break
+  fi
+  echo "attempt $i: rollout still in flight — homepage /${HOME_JS} != /stamp /${STAMP_JS}"
+  sleep 10
+done
 if [ -z "$HOME_JS" ] || [ -z "$STAMP_JS" ]; then
   echo "::error::missing /b/index-*.js (homepage=${HOME_JS:-none} /stamp=${STAMP_JS:-none})"
   exit 1
 fi
 if [ "$HOME_JS" != "$STAMP_JS" ]; then
-  echo "::error::mixed-chunk poison: homepage /${HOME_JS} != /stamp /${STAMP_JS}"
+  echo "::error::mixed-chunk poison: homepage /${HOME_JS} != /stamp /${STAMP_JS} (still split after ${MIXED_ATTEMPTS} attempts)"
   exit 1
 fi
-echo "Same entry chunk: /${HOME_JS}"
 
 echo "== /verify shell =="
 curl -fsS -A "$UA" -m 25 -o /dev/null "${BASE}/verify?nocache=${RANDOM}" || {

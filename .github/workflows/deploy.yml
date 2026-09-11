@@ -26,6 +26,12 @@ concurrency:
   group: satohash-pages-production
   cancel-in-progress: false
 
+# checks:read — the job waits for the Cloudflare Pages check run on the pushed commit so
+# the smoke job starts only once the NEW build is published, not the previous deployment.
+permissions:
+  contents: read
+  checks: read
+
 jobs:
   build_and_verify:
     runs-on: ubuntu-latest
@@ -46,6 +52,47 @@ jobs:
           VITE_MEMPOOL_API_URL: https://mempool.space/api
         run: npm run build
       - run: npm run build:verify
+      - name: Wait for the Cloudflare Pages build of ${{ github.sha }}
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          # The CF Pages <-> GitHub integration posts a check run named "Cloudflare Pages" on
+          # the pushed commit. Waiting for it is what tells us THIS commit is the one published:
+          # the old marker probe below ("Satohash" is present) is also true of the PREVIOUS
+          # deployment, so it let the smoke job start mid-rollout while / and /stamp were still
+          # served from two different builds (run 34645366777, see t_2e23ea8a).
+          API="https://api.github.com/repos/${GITHUB_REPOSITORY}/commits/${GITHUB_SHA}/check-runs?per_page=100"
+          SAW_CHECK=0
+          for attempt in $(seq 1 60); do # ~10 minutes at 10s
+            JSON=$(curl -fsSL -H "Authorization: Bearer ${GITHUB_TOKEN}" \
+              -H "Accept: application/vnd.github+json" "$API" || echo '{}')
+            STATE=$(printf '%s' "$JSON" | jq -r '
+              [.check_runs[]? | select(.name == "Cloudflare Pages")]
+              | sort_by(.started_at // "") | last
+              | if . == null then "absent" else "\(.status) \(.conclusion // "pending")" end' 2>/dev/null || echo absent)
+            case "$STATE" in
+              "completed success")
+                echo "Cloudflare Pages published ${GITHUB_SHA} (attempt ${attempt})"
+                SAW_CHECK=1
+                break
+                ;;
+              "completed "*)
+                echo "::error::Cloudflare Pages check for ${GITHUB_SHA} finished as '${STATE}'"
+                exit 1
+                ;;
+              *)
+                echo "attempt ${attempt}: Cloudflare Pages check is '${STATE}' — waiting"
+                ;;
+            esac
+            sleep 10
+          done
+          if [ "$SAW_CHECK" != "1" ]; then
+            # Never hard-fail on a missing integration signal — fall back to the liveness probe
+            # below and let the smoke job's convergence check decide.
+            echo "::warning::no completed 'Cloudflare Pages' check run for ${GITHUB_SHA} within ~10 minutes — falling back to the liveness probe"
+          fi
+
       - name: Verify live deploy (CF Pages git integration)
         run: |
           set -euo pipefail
@@ -55,7 +102,7 @@ jobs:
             HTML=$(curl -fsSL --max-time 20 "$URL" || true)
             printf '%s' "$HTML" > /tmp/prod-page.html
             if [ -s /tmp/prod-page.html ] && grep -q "$MARKER" /tmp/prod-page.html; then
-              echo "OK — $URL live with marker '$MARKER' (attempt $attempt) for $GITHUB_SHA"
+              echo "OK — $URL is answering with marker '$MARKER' (attempt $attempt)"
               exit 0
             fi
             echo "attempt $attempt: production not live yet (CF Pages git build may still be running)"
