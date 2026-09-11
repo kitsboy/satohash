@@ -1,5 +1,5 @@
 # satohash — Last Updated 2026-09-11 by Grok (M3)
 
-**Brief:** Family widgets live (tadbuy.giveabit.io / katoa / giveabit /tools / sherpa). `/stamp` Choose-file first. tadbuy=1 giveabit=2. Kimi still rebuilds API.
+**Brief:** Next-10 done. CLI on /developer, learn stamp CTAs, family “Continuing from …”. TadBuy widget above fold; Sherpa Stamp clickable; MotoPass widget+CSP. Live b336 stamp UX + satohash-sync.
 
 Pickup: `.ai_docs/current-status.md` · `docs/handoff-log.md`

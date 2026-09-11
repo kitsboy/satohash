@@ -1,3 +1,13 @@
+## 2026-09-11 (Grok M3 — next 10: family widgets + CLI/learn/banner)
+
+**Satohash `bda22d5`:** CLI on `/developer`; learn-* gold Stamp CTA; deep-link “Continuing from TadBuy|Katoa|Give A Bit|SherpaCarta|MotoPass”. Live Pages already on `7d54e86` / b336 Choose-file UX, satohash-sync only, share njump/Primal/Snort/Iris, watch player card OK. Lighthouse mobile `/` 61 `/stamp` 67 `/verify` 80 (gates pass).
+
+**Family (their mains):** TadBuy widget above fold `tadbuy.giveabit.io` (`2428258`+bump). Sherpa cookie no longer covers Stamp (`3c2abc9`). MotoPass footer widget + CSP `satohash.io` (`e990be9`) → motopass.giveabit.io.
+
+**Kimi still:** API rebuild (keep-alive). Live stamp-done noted own bitcoind RPC unreachable (calendars still stamp).
+
+---
+
 ## 2026-09-11 (Grok M3 — top 5: live widgets + /stamp UX)
 
 **Pickup:** this file · `.ai_docs/current-status.md`
