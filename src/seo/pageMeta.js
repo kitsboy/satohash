@@ -884,33 +884,38 @@ export const pageMeta = {
   },
   batch: {
     en: {
-      title: 'Batch Stamp — Up to 100 Files',
+      title: 'Batch Stamp — Multiple Files in One Session',
       description:
-        'Stamp up to 100 documents in one session. Per-file progress, bulk export, and shared Merkle aggregation.'
+        'Stamp many documents in one session. Per-file progress, bulk export, and shared Merkle aggregation.'
     },
     es: {
-      title: 'Sello por Lotes — Hasta 100 Archivos',
-      description: 'Selle hasta 100 documentos en una sesión con progreso por archivo.'
+      title: 'Sello por Lotes — Varios Archivos en Una Sesión',
+      description:
+        'Selle varios documentos en una sesión con progreso por archivo y exportación en bloque.'
     },
     fr: {
-      title: "Tamponnage par Lot — Jusqu'à 100 Fichiers",
-      description: "Tamponnez jusqu'à 100 documents en une session avec progression par fichier."
+      title: 'Tamponnage par Lot — Plusieurs Fichiers en Une Session',
+      description:
+        'Tamponnez plusieurs documents en une session avec progression par fichier et export groupé.'
     },
     de: {
-      title: 'Batch-Stempel — Bis zu 100 Dateien',
-      description: 'Stempeln Sie bis zu 100 Dokumente in einer Sitzung mit Fortschritt pro Datei.'
+      title: 'Batch-Stempel — Mehrere Dateien in Einer Sitzung',
+      description:
+        'Stempeln Sie mehrere Dokumente in einer Sitzung mit Fortschritt pro Datei und Sammel-Export.'
     },
     pt: {
-      title: 'Carimbo em Lote — Até 100 Arquivos',
-      description: 'Carimbe até 100 documentos em uma sessão com progresso por arquivo.'
+      title: 'Carimbo em Lote — Vários Arquivos em Uma Sessão',
+      description:
+        'Carimbe vários documentos em uma sessão com progresso por arquivo e exportação em lote.'
     },
     sw: {
-      title: 'Muhuri wa Kundi — Faili 100',
-      description: 'Weka muhuri hadi faili 100 katika kipindi kimoja na maendeleo kwa kila faili.'
+      title: 'Muhuri wa Kundi — Faili Nyingi Katika Kipindi Kimoja',
+      description:
+        'Weka muhuri kwenye hati nyingi katika kipindi kimoja na maendeleo kwa kila faili.'
     },
     zh: {
-      title: '批量盖章 — 最多100个文件',
-      description: '一次会话中盖章最多100个文档，显示每个文件的进度。'
+      title: '批量盖章 — 一次处理多个文件',
+      description: '一次会话中为多个文档盖章，显示每个文件的进度并支持批量导出。'
     }
   },
   settings: {

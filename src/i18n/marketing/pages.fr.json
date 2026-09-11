@@ -128,7 +128,7 @@
         "batchStamping": {
           "label": "Horodatage par lots",
           "free": "dash",
-          "premium": "upTo100",
+          "premium": "plannedHigher",
           "enterprise": "unlimited"
         },
         "dedicatedCalendar": {
@@ -157,15 +157,14 @@
         }
       },
       "cellValues": {
-        "yes": "Oui",
-        "dash": "—",
-        "unlimited": "Illimité",
-        "upTo10": "Jusqu'à 10/mois",
-        "upTo100": "Jusqu'à 100",
-        "sla99": "99.9%",
         "community": "Communauté",
+        "dash": "—",
+        "dedicated247": "Dédié 24/7",
         "email": "E-mail",
-        "dedicated247": "Dédié 24/7"
+        "plannedHigher": "Limites supérieures (prévues)",
+        "sla99": "99.9%",
+        "unlimited": "Illimité",
+        "yes": "Oui"
       }
     },
     "faqTeaser": {
@@ -1190,11 +1189,10 @@
     "motopassLoaded": "Hash MotoPass chargé",
     "motopassDesc": "Téléversez le fichier correspondant pour terminer le tampon, ou tamponnez le hash via les calendriers publics.",
     "linkedHashReady": "Hash MotoPass / lié prêt — tamponnez vers OpenTimestamps sans re-téléverser un fichier.",
-    "stampHashBtn": "Tamponner sur Bitcoin",
+    "stampHashBtn": "Tamponner le hash via calendriers publics",
     "stampOnBitcoin": "Tamponner sur Bitcoin",
     "openVerify": "Ouvrir la vérification",
     "invalidHash": "Hash SHA-256 invalide — 64 caractères hexadécimaux attendus.",
-    "stampHashBtn": "Tamponner le hash via calendriers publics",
     "step1Label": "Déposez votre fichier",
     "step1Desc": "Tout format. Reste sur votre appareil — jamais téléversé.",
     "step2Label": "Nous le hachons localement",

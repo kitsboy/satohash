@@ -128,7 +128,7 @@
         "batchStamping": {
           "label": "Batch stamping",
           "free": "dash",
-          "premium": "upTo100",
+          "premium": "plannedHigher",
           "enterprise": "unlimited"
         },
         "dedicatedCalendar": {
@@ -157,15 +157,14 @@
         }
       },
       "cellValues": {
-        "yes": "Yes",
-        "dash": "—",
-        "unlimited": "Unlimited",
-        "upTo10": "Up to 10/month",
-        "upTo100": "Up to 100",
-        "sla99": "99.9%",
         "community": "Community",
+        "dash": "—",
+        "dedicated247": "24/7 Dedicated",
         "email": "Email",
-        "dedicated247": "24/7 Dedicated"
+        "plannedHigher": "Higher limits (planned)",
+        "sla99": "99.9%",
+        "unlimited": "Unlimited",
+        "yes": "Yes"
       }
     },
     "faqTeaser": {

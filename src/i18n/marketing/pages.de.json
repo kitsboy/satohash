@@ -128,7 +128,7 @@
         "batchStamping": {
           "label": "Batch-Stempelung",
           "free": "dash",
-          "premium": "upTo100",
+          "premium": "plannedHigher",
           "enterprise": "unlimited"
         },
         "dedicatedCalendar": {
@@ -157,15 +157,14 @@
         }
       },
       "cellValues": {
-        "yes": "Ja",
-        "dash": "—",
-        "unlimited": "Unbegrenzt",
-        "upTo10": "Bis zu 10/Monat",
-        "upTo100": "Bis zu 100",
-        "sla99": "99,9 %",
         "community": "Community",
+        "dash": "—",
+        "dedicated247": "24/7 Dediziert",
         "email": "E-Mail",
-        "dedicated247": "24/7 Dediziert"
+        "plannedHigher": "Höhere Grenzen (geplant)",
+        "sla99": "99,9 %",
+        "unlimited": "Unbegrenzt",
+        "yes": "Ja"
       }
     },
     "faqTeaser": {
@@ -1190,11 +1189,10 @@
     "motopassLoaded": "MotoPass-Hash geladen",
     "motopassDesc": "Laden Sie die passende Datei hoch, um den Stempel abzuschließen, oder stempeln Sie den Hash über öffentliche Kalender.",
     "linkedHashReady": "MotoPass- / verknüpfter Hash bereit — mit OpenTimestamps stempeln, ohne die Datei erneut hochzuladen.",
-    "stampHashBtn": "Auf Bitcoin stempeln",
+    "stampHashBtn": "Hash über öffentliche Kalender stempeln",
     "stampOnBitcoin": "Auf Bitcoin stempeln",
     "openVerify": "Verifizierung öffnen",
     "invalidHash": "Ungültiger SHA-256-Hash — genau 64 Hexadezimalzeichen erwartet.",
-    "stampHashBtn": "Hash über öffentliche Kalender stempeln",
     "step1Label": "Datei ablegen",
     "step1Desc": "Jedes Format. Bleibt auf Ihrem Gerät — wird nie hochgeladen.",
     "step2Label": "Wir hashen lokal",

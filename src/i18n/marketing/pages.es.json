@@ -128,7 +128,7 @@
         "batchStamping": {
           "label": "Sellado por lotes",
           "free": "dash",
-          "premium": "upTo100",
+          "premium": "plannedHigher",
           "enterprise": "unlimited"
         },
         "dedicatedCalendar": {
@@ -157,15 +157,14 @@
         }
       },
       "cellValues": {
-        "yes": "Sí",
-        "dash": "—",
-        "unlimited": "Ilimitado",
-        "upTo10": "Hasta 10/mes",
-        "upTo100": "Hasta 100",
-        "sla99": "99.9%",
         "community": "Comunidad",
+        "dash": "—",
+        "dedicated247": "Dedicado 24/7",
         "email": "Correo electrónico",
-        "dedicated247": "Dedicado 24/7"
+        "plannedHigher": "Límites superiores (previstos)",
+        "sla99": "99.9%",
+        "unlimited": "Ilimitado",
+        "yes": "Sí"
       }
     },
     "faqTeaser": {
@@ -1190,11 +1189,10 @@
     "motopassLoaded": "Hash de MotoPass cargado",
     "motopassDesc": "Sube el archivo correspondiente para completar el sellado, o sella el hash vía calendarios públicos.",
     "linkedHashReady": "Hash de MotoPass / vinculado listo: sella en OpenTimestamps sin volver a subir un archivo.",
-    "stampHashBtn": "Sellar en Bitcoin",
+    "stampHashBtn": "Sellar hash vía calendarios públicos",
     "stampOnBitcoin": "Sellar en Bitcoin",
     "openVerify": "Abrir verificación",
     "invalidHash": "Hash SHA-256 inválido — se esperan exactamente 64 caracteres hexadecimales.",
-    "stampHashBtn": "Sellar hash vía calendarios públicos",
     "step1Label": "Suelta tu archivo",
     "step1Desc": "Cualquier formato. Se queda en tu dispositivo — nunca se sube.",
     "step2Label": "Lo hasheamos localmente",

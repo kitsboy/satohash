@@ -128,7 +128,7 @@
         "batchStamping": {
           "label": "Kuweka muhuri kwa kundi",
           "free": "dash",
-          "premium": "upTo100",
+          "premium": "plannedHigher",
           "enterprise": "unlimited"
         },
         "dedicatedCalendar": {
@@ -157,15 +157,14 @@
         }
       },
       "cellValues": {
-        "yes": "Ndiyo",
-        "dash": "—",
-        "unlimited": "Bila kikomo",
-        "upTo10": "Hadi 10/mwezi",
-        "upTo100": "Hadi 100",
-        "sla99": "99.9%",
         "community": "Jumuiya",
+        "dash": "—",
+        "dedicated247": "Maalum 24/7",
         "email": "Barua pepe",
-        "dedicated247": "Maalum 24/7"
+        "plannedHigher": "Vikomo vya juu (vimepangwa)",
+        "sla99": "99.9%",
+        "unlimited": "Bila kikomo",
+        "yes": "Ndiyo"
       }
     },
     "faqTeaser": {
@@ -1190,11 +1189,10 @@
     "motopassLoaded": "Hash ya MotoPass imepakiwa",
     "motopassDesc": "Pakia faili inayolingana kukamilisha muhuri, au weka muhuri wa hash kupitia kalenda za umma.",
     "linkedHashReady": "Hash ya MotoPass / iliyounganishwa iko tayari — weka muhuri kwenye OpenTimestamps bila kupakia faili tena.",
-    "stampHashBtn": "Weka muhuri kwenye Bitcoin",
+    "stampHashBtn": "Weka muhuri wa hash kupitia kalenda za umma",
     "stampOnBitcoin": "Weka muhuri kwenye Bitcoin",
     "openVerify": "Fungua ukurasa wa thibitisha",
     "invalidHash": "Hash ya SHA-256 si sahihi — herufi 64 za hex zinatarajiwa.",
-    "stampHashBtn": "Weka muhuri wa hash kupitia kalenda za umma",
     "step1Label": "Dondosha faili yako",
     "step1Desc": "Aina yoyote. Inabaki kwenye kifaa chako — haipandishwi kamwe.",
     "step2Label": "Tunahesabu hash ndani",
