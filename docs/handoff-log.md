@@ -1,3 +1,13 @@
+## 2026-09-11 (Kimi THOR — API rebuild verified)
+
+**Live API:** `gitSha=5ec7756` (matches `/root/satohash` HEAD at rebuild). Keep-alive 65s/66s/120s. Paywall off. Caddy OK. ~316 stamps. Family keep-alive live.
+
+**Vault:** 2026-09-11 pastes ingested on THOR Obsidian (`STATUS.md` + journal). RSS→Nostr still dry-run.
+
+**Do not:** ask Kimi to rebuild `e979e69` again. Next API rebuild only when new `server/` lands on main.
+
+---
+
 ## 2026-09-11 (Grok M3 — closeout 10: LCP, i18n, Katoa lift, honest node copy)
 
 **Satohash (this push):** Landing LCP = `/og/watch.jpg` poster + play-to-load video + idle particles. DeepHealthBanner: no “Check THOR node”; stamps still go to calendars; pending ≠ confirmed. Learn prerender HTML includes Stamp CTA. i18n docs/developer CTA in 7 locales. Learn CTA gold eyebrow polish. FAMILY-API: public `motopass` vs intel `motopass-intel`.

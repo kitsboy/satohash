@@ -11,7 +11,7 @@
 ```markdown
 ### Satohash 2026-09-11 closeout
 SPA LCP: landing poster /og/watch.jpg, video src on play. Node-down copy: calendars still stamp; pending ≠ confirmed. Learn prerender has Stamp CTA. Katoa widget after trust bar. Public widget client=motopass; intel cron=motopass-intel.
-Kimi: if /health gitSha still e979e69, rebuild API (keep-alive). Pages = Grok. Do not flip paywall.
+Kimi 2026-09-11: API rebuilt. Live gitSha=5ec7756. Keep-alive live. Do not rebuild e979e69 again. Pages = Grok. Do not flip paywall.
 ```
 
 ---

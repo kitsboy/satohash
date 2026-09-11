@@ -1,15 +1,16 @@
+## Latest Session Summary (Kimi THOR, 2026-09-11 — API rebuild DONE)
+
+**Live:** `GET https://api.satohash.io/health` → `gitSha=5ec7756`, paywall off, Caddy OK, keep-alive live. Stamps ~316. Vault ingest done (THOR, not M4).
+
+**Do not rebuild again** unless Grok ships new `server/` and asks. RSS→Nostr still dry-run (no nsec in Vault). Pages still Grok.
+
+---
+
 ## Latest Session Summary (Grok M3, 2026-09-11 — closeout 10)
 
 SPA: landing video is play-to-load (LCP is `/og/watch.jpg`). DeepHealthBanner no longer says Check THOR to users. Learn prerender + i18n Stamp CTAs. Katoa widget after trust bar. Public MotoPass widget is `X-Satohash-Client: motopass`; intel cron stays `motopass-intel`.
 
-**Kimi still DO THIS NOW** if API `gitSha` is still `e979e69`:
-
-```bash
-cd /root/satohash && git fetch origin && git reset --hard origin/main
-GIT_SHA=$(git rev-parse --short HEAD) bash scripts/vps-deploy-api.sh
-```
-
-Do not flip paywall. Do not change `/api/*`. Do not touch Pages.
+API rebuild: **done by Kimi** (`5ec7756`). Do not flip paywall. Do not change `/api/*`. Do not touch Pages.
 
 ---
 
