@@ -526,19 +526,38 @@ export default function Landing() {
                   <button
                     type="button"
                     onClick={() => setHeroPlaying(true)}
-                    className="absolute inset-0 z-10"
+                    className="group absolute inset-0 z-10 flex items-center justify-center focus-visible:outline-none"
                     aria-label={HERO_VIDEO_LABEL}
                   >
                     <span
-                      className="absolute top-1/2 left-1/2 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full"
+                      className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-black/10"
+                      aria-hidden
+                    />
+                    <span
+                      className="relative flex h-16 min-h-[48px] w-16 min-w-[48px] items-center justify-center rounded-full group-focus-visible:ring-2 group-focus-visible:ring-[var(--accent-gold)] group-focus-visible:ring-offset-2 group-focus-visible:ring-offset-[#05070a] motion-safe:transition-transform motion-safe:duration-300 motion-safe:group-hover:scale-105 sm:h-20 sm:w-20"
                       style={{
                         backgroundColor: 'var(--accent-gold)',
                         color: '#141b25',
-                        boxShadow: '0 8px 28px var(--accent-gold-glow)'
+                        boxShadow:
+                          '0 0 0 1.15px color-mix(in srgb, #fff 35%, var(--accent-gold)), 0 14px 40px var(--accent-gold-glow)'
                       }}
                       aria-hidden
                     >
-                      <Play size={28} fill="currentColor" />
+                      <Play size={28} fill="currentColor" className="ml-1" />
+                    </span>
+                    <span className="pointer-events-none absolute right-3 bottom-3 left-3 flex items-end justify-between gap-2">
+                      <span
+                        className="rounded-full border px-2.5 py-1 text-[10px] font-black tracking-[0.16em] text-white uppercase"
+                        style={{
+                          borderColor: 'color-mix(in srgb, var(--accent-gold) 45%, transparent)',
+                          background: 'color-mix(in srgb, #05070a 70%, transparent)'
+                        }}
+                      >
+                        84s
+                      </span>
+                      <span className="hidden text-right text-[10px] font-semibold tracking-wide text-white/80 sm:block">
+                        File never leaves the device
+                      </span>
                     </span>
                   </button>
                 </>

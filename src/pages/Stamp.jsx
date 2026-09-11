@@ -2,6 +2,9 @@ import { motion, AnimatePresence } from 'framer-motion'
 import {
   ShieldCheck,
   Upload,
+  FileUp,
+  Camera,
+  Image,
   File,
   ChevronRight,
   Activity,
@@ -1579,8 +1582,17 @@ export default function Stamp() {
                       </div>
                     ) : (
                       <>
-                        <div className="mx-auto flex h-16 w-16 shrink-0 items-center justify-center rounded-3xl border border-[var(--border)] bg-[var(--surface-raised)] text-[var(--accent-gold)] shadow-2xl sm:h-20 sm:w-20">
-                          {isCapsuleMode ? <FileArchive size={32} /> : <Upload size={32} />}
+                        <div
+                          className="mx-auto flex h-16 w-16 shrink-0 items-center justify-center rounded-full sm:h-20 sm:w-20"
+                          style={{
+                            border: '1.15px solid var(--accent-gold)',
+                            color: 'var(--accent-gold)',
+                            background:
+                              'color-mix(in srgb, var(--accent-gold) 10%, var(--surface-raised))',
+                            boxShadow: '0 0 28px var(--accent-gold-glow)'
+                          }}
+                        >
+                          {isCapsuleMode ? <FileArchive size={28} /> : <Upload size={28} />}
                         </div>
                         <div className="w-full max-w-md space-y-3 px-1">
                           <h3 className="px-2 text-xl font-bold tracking-tight text-balance sm:text-2xl">
@@ -1673,7 +1685,8 @@ export default function Stamp() {
                                 }
                               }}
                             />
-                            📁 {tp('stampPage.chooseFile') || 'Choose file'}
+                            <FileUp size={16} strokeWidth={2.25} aria-hidden />
+                            {tp('stampPage.chooseFile') || 'Choose file'}
                           </label>
                           <label
                             className="flex min-h-[52px] cursor-pointer items-center justify-center gap-2 rounded-xl border px-4 py-3 text-sm font-bold"
@@ -1695,7 +1708,8 @@ export default function Stamp() {
                                 }
                               }}
                             />
-                            📷 {tp('stampPage.takePhoto') || 'Take photo'}
+                            <Camera size={16} strokeWidth={2.25} aria-hidden />
+                            {tp('stampPage.takePhoto') || 'Take photo'}
                           </label>
                           <label
                             className="flex min-h-[52px] cursor-pointer items-center justify-center gap-2 rounded-xl border px-4 py-3 text-sm font-bold"
@@ -1716,7 +1730,8 @@ export default function Stamp() {
                                 }
                               }}
                             />
-                            🖼 {tp('stampPage.photosGallery')}
+                            <Image size={16} strokeWidth={2.25} aria-hidden />
+                            {tp('stampPage.photosGallery')}
                           </label>
                           {showAdvancedModes && (
                             <label

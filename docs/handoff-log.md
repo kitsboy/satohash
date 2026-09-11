@@ -1,3 +1,9 @@
+## 2026-09-11 (Grok M3 — landing play card + stamp vault polish)
+
+Landing hero: gold play disc with 1.15px rim, vignette, 84s chip; video src still waits for play (LCP poster). Stamp idle: one gold ring around upload mark; Choose/Photo/Gallery use lucide, not emoji. Verified local desktop+mobile.
+
+---
+
 ## 2026-09-11 (Kimi THOR — API rebuild verified)
 
 **Live API:** `gitSha=5ec7756` (matches `/root/satohash` HEAD at rebuild). Keep-alive 65s/66s/120s. Paywall off. Caddy OK. ~316 stamps. Family keep-alive live.
