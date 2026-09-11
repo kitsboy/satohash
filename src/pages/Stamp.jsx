@@ -914,6 +914,10 @@ export default function Stamp() {
   const canStampFile = files.length > 0 && stampingStatus === 'idle'
   const canStampHash =
     !!normalizeSha256(hashValue) && files.length === 0 && stampingStatus === 'idle' && !proofResult
+  const idleFilePick =
+    (stampMode === 'single' || stampMode === 'capsule') &&
+    files.length === 0 &&
+    stampingStatus === 'idle'
 
   return (
     <>
@@ -1566,19 +1570,17 @@ export default function Stamp() {
                           <h3 className="px-2 text-xl font-bold tracking-tight text-balance sm:text-2xl">
                             {isCapsuleMode ? 'Assemble Evidence Capsule' : t('stamp', 'title')}
                           </h3>
+                          <p
+                            className="px-2 text-xs leading-snug text-balance"
+                            style={{ color: 'var(--text-muted)' }}
+                          >
+                            File never leaves this device. We send a SHA-256.
+                          </p>
                           <p className="px-2 font-medium text-balance text-[var(--text-secondary)]">
                             {isCapsuleMode
                               ? 'Drop multiple files to create a signed evidence bundle anchored as a single proof.'
                               : t('stamp', 'dropzone')}
                           </p>
-                          {files.length === 0 ? (
-                            <p
-                              className="px-2 text-xs leading-snug text-balance"
-                              style={{ color: 'var(--text-muted)' }}
-                            >
-                              File never leaves this device. We send a SHA-256.
-                            </p>
-                          ) : null}
                           <p className="inline-flex items-center justify-center gap-1 px-2 text-[10px] font-bold tracking-widest text-balance text-[var(--text-muted)] uppercase">
                             {tp('stampPage.otsViaBitcoin')}
                             <Tooltip
@@ -1633,11 +1635,33 @@ export default function Stamp() {
                           onClick={(e) => e.stopPropagation()}
                         >
                           <label
-                            className="flex min-h-[52px] cursor-pointer items-center justify-center gap-2 rounded-xl border-2 border-dashed px-4 py-3 font-bold"
+                            className="btn-sheen flex min-h-[52px] cursor-pointer items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-black tracking-widest uppercase shadow-lg"
                             style={{
-                              borderColor: 'var(--border-bright)',
-                              color: 'var(--accent-gold)'
+                              background: 'var(--accent-gold)',
+                              color: '#141b25',
+                              boxShadow: '0 8px 28px var(--accent-gold-glow)'
                             }}
+                          >
+                            <input
+                              type="file"
+                              className="hidden"
+                              accept="*/*"
+                              data-testid="choose-file-input"
+                              onChange={(e) => {
+                                if (e.target.files?.[0]) {
+                                  setFiles(
+                                    isCapsuleMode
+                                      ? [...files, e.target.files[0]]
+                                      : [e.target.files[0]]
+                                  )
+                                }
+                              }}
+                            />
+                            📁 {tp('stampPage.chooseFile') || 'Choose file'}
+                          </label>
+                          <label
+                            className="flex min-h-[52px] cursor-pointer items-center justify-center gap-2 rounded-xl border px-4 py-3 text-sm font-bold"
+                            style={{ borderColor: 'var(--border)', color: 'var(--text-primary)' }}
                           >
                             <input
                               type="file"
@@ -1677,27 +1701,6 @@ export default function Stamp() {
                               }}
                             />
                             🖼 {tp('stampPage.photosGallery')}
-                          </label>
-                          <label
-                            className="flex min-h-[52px] cursor-pointer items-center justify-center gap-2 rounded-xl border px-4 py-3 text-sm font-bold"
-                            style={{ borderColor: 'var(--border)', color: 'var(--text-primary)' }}
-                          >
-                            <input
-                              type="file"
-                              className="hidden"
-                              accept="*/*"
-                              data-testid="choose-file-input"
-                              onChange={(e) => {
-                                if (e.target.files?.[0]) {
-                                  setFiles(
-                                    isCapsuleMode
-                                      ? [...files, e.target.files[0]]
-                                      : [e.target.files[0]]
-                                  )
-                                }
-                              }}
-                            />
-                            📁 {tp('stampPage.chooseFile') || 'Choose file'}
                           </label>
                           {showAdvancedModes && (
                             <label
@@ -1885,7 +1888,7 @@ export default function Stamp() {
           </div>
 
           <StampStickyBar
-            visible={canStampFile || canStampHash || stampingStatus === 'hashing'}
+            visible={canStampFile || canStampHash || stampingStatus === 'hashing' || idleFilePick}
             label={
               stampingStatus === 'hashing'
                 ? `hashing ${hashProgress}%`
@@ -1893,7 +1896,9 @@ export default function Stamp() {
                   ? tp('stampPage.anchoringSticky')
                   : canStampHash
                     ? tp('stampPage.stampHashSticky')
-                    : t('stamp', 'stamp') || tp('stampPage.stampOnBitcoin')
+                    : canStampFile
+                      ? t('stamp', 'stamp') || tp('stampPage.stampOnBitcoin')
+                      : 'Choose a file'
             }
             disabled={stampingStatus !== 'idle'}
             onClick={() => {
@@ -1904,6 +1909,11 @@ export default function Stamp() {
                   caseLabel || deepLink.displayLabel || 'Linked document',
                   deepLinkClientId || deepLink.clientId
                 )
+              } else if (idleFilePick) {
+                const input =
+                  document.getElementById('file-input') ||
+                  document.querySelector('[data-testid="choose-file-input"]')
+                input?.click()
               }
             }}
           />

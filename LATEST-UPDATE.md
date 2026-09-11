@@ -1,5 +1,5 @@
 # satohash — Last Updated 2026-09-11 by Grok (M3)
 
-**Brief:** Kimi: rebuild API now (`git reset --hard origin/main` + `vps-deploy-api.sh`). SPA already on main. Pin `/watch` still Cam.
+**Brief:** Family widgets live (tadbuy.giveabit.io / katoa / giveabit /tools / sherpa). `/stamp` Choose-file first. tadbuy=1 giveabit=2. Kimi still rebuilds API.
 
-Pickup: `.ai_docs/current-status.md` · `docs/handoff-log.md` · `docs/KIMI-HANDOFF.md`
+Pickup: `.ai_docs/current-status.md` · `docs/handoff-log.md`

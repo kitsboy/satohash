@@ -1,3 +1,15 @@
+## 2026-09-11 (Grok M3 — top 5: live widgets + /stamp UX)
+
+**Pickup:** this file · `.ai_docs/current-status.md`
+
+**Done:** Live Pages SPA confirmed (`/b/index-GYz4CfKM.js`, `/proof-pack`, no System Desync). Family widgets work in-browser: tadbuy.giveabit.io, katoa.org, giveabit.io/tools, sherpacarta.org — hash-on-device → `/stamp?hash=&ref=`. Attributed stamps: tadbuy=1, giveabit=2. `/stamp` idle sticky **Choose a file**; gold Choose file first.
+
+**TadBuy:** product host is `tadbuy.giveabit.io` not tadbuy.com. Left `public/sw.js` dirty. No TadBuy commit.
+
+**Kimi still:** API rebuild copy-paste in this file (keep-alive). Do not touch Pages.
+
+---
+
 ## 2026-09-11 (Grok M3 — 20 improvements + family API stability)
 
 **Pickup:** `.ai_docs/current-status.md` · this file · `docs/KIMI-HANDOFF.md` · `docs/MASTER-BRAIN-INGEST.md`
