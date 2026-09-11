@@ -56,6 +56,11 @@ describe('publicRoutes', () => {
     expect(isMarketingPublicPath(`/p/${'a'.repeat(64)}`)).toBe(true)
   })
 
+  it('/developer is marketing public so the CLI is findable', () => {
+    expect(isMarketingPublicPath('/developer')).toBe(true)
+    expect(needsMarketingShell('/developer')).toBe(true)
+  })
+
   it('/proof-pack is a marketing public waitlist with shell', () => {
     expect(isMarketingPublicPath('/proof-pack')).toBe(true)
     expect(needsMarketingShell('/proof-pack')).toBe(true)

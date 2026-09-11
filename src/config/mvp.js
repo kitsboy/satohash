@@ -31,6 +31,7 @@ export const MVP_PUBLIC_PATHS = [
   '/comparison',
   '/glossary',
   '/widgets',
+  '/developer',
   '/identity',
   '/changelog',
   '/network',

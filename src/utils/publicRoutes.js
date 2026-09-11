@@ -18,6 +18,7 @@ const MARKETING_PREFIXES = [
   '/security',
   '/integrations',
   '/widgets',
+  '/developer',
   '/identity',
   '/government',
   '/motopass-verify',
