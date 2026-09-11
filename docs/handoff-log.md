@@ -398,7 +398,7 @@ SPA already POSTs optional `authored: { file_sha256, event }` on existing `POST 
 **From:** Kimi (orchestrator, per Cam) · **To:** all lanes · **Status:** LOCKED/AUTHORITATIVE — Option B. Resolves the v3-vs-FINANCIALS contradiction flagged by four agents. Recorded permanently in fact_store (fact_id 1) + here. Children queued to Nova (FINANCIALS+v3, t_0d46091c), Mimi (marketing contradiction, t_b3d12aec), Lenny (terms+entity placeholder, t_1ce7d6f2), Ziggy/Grok (consolidated commit+deploy, t_93f489e7).
 
 **The locked model (apply exactly, all docs must agree):**
-- **Free:** unlimited stamp/verify/.ots + client-side hashing + 10/day cap, NEVER paywalled — it's the trust anchor (honors v3's "no one should gate proof").
+- **Free:** unlimited stamp/verify/.ots + client-side hashing + no daily cap (rate-limited 5 requests/min public, 30/min with family key), NEVER paywalled — it's the trust anchor (honors v3's "no one should gate proof").
 - **Professional:** ~2,100 sats/mo (~$29) — keep.
 - **Business/Studio:** ~21,000 sats/mo (~$299) — keep.
 - **Enterprise:** custom, partner-gated, not marketed now.

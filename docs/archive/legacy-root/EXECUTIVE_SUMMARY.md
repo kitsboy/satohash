@@ -126,7 +126,7 @@ See `CLAUDE.md` and `docs/ARCHITECTURE.md` for the living operational view.
 
 | Tier            | Price          | Notes                                      |
 |-----------------|----------------|--------------------------------------------|
-| Free            | $0             | 5–100 stamps/day (tiered), basic verify    |
+| Free            | $0             | rate-limited (5 requests/min public), basic verify |
 | Professional    | $29/mo         | Unlimited, full vault, API, PDF exports    |
 | Enterprise      | $299+/mo       | White-label, SLA, custom webhooks, volume  |
 | Pay-per-use API | ~$0.01/stamp   | Lightning (L402) — no subscription friction|

@@ -17,7 +17,7 @@ Satohash provides a REST API for Bitcoin-anchored document timestamping. You sen
 ## Quick Start (3 steps)
 
 ### 1. Get an API key
-Visit https://satohash.giveabit.io and sign in. Your API key appears in the dashboard. The free tier allows **100 requests per day** with no credit card.
+Visit https://satohash.giveabit.io and sign in. Your API key appears in the dashboard. The free tier is rate-limited to **5 requests per minute** (no daily cap) with no credit card.
 
 ### 2. Compute the SHA-256 hash of your document
 
