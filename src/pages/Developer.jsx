@@ -25,6 +25,7 @@ import {
 } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 import Tooltip from '../components/ui/Tooltip'
 
@@ -314,6 +315,7 @@ function PricingTier({ tier, price, unit, features, accent, recommended, onSelec
 
 export default function Developer() {
   usePageMeta({ page: 'developer' })
+  const { t } = useTranslation()
   const navigate = useNavigate()
   const [activeTab, setActiveTab] = useState('overview')
   const [codeLang, setCodeLang] = useState('curl')
@@ -690,21 +692,14 @@ export default function Developer() {
                         className="text-lg font-black tracking-tight uppercase"
                         style={{ color: 'var(--text-primary)' }}
                       >
-                        CLI
+                        {t('developerPage.cliTitle')}
                       </h2>
                     </div>
                     <p
                       className="text-sm leading-relaxed"
                       style={{ color: 'var(--text-secondary)' }}
                     >
-                      Hash stays on the machine; only SHA-256 is POSTed. Always sends{' '}
-                      <code
-                        className="font-mono text-[11px]"
-                        style={{ color: 'var(--accent-gold)' }}
-                      >
-                        X-Satohash-Client: cli
-                      </code>
-                      . Proof card{' '}
+                      {t('developerPage.cliHint')}{' '}
                       <code
                         className="font-mono text-[11px]"
                         style={{ color: 'var(--text-primary)' }}
@@ -748,7 +743,7 @@ export default function Developer() {
                       className="inline-flex min-h-[44px] items-center gap-2 text-xs font-bold"
                       style={{ color: 'var(--accent-gold)' }}
                     >
-                      CLI source on GitHub <ArrowRight size={14} />
+                      {t('developerPage.cliSource')} <ArrowRight size={14} />
                     </a>
                   </div>
                 </motion.div>

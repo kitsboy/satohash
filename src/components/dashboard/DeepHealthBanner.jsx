@@ -71,7 +71,7 @@ export default function DeepHealthBanner() {
           setStatus({
             level: 'warn',
             message:
-              'Own bitcoind RPC unreachable — public mempool/calendars still serve stamps. Check THOR node.'
+              'Independent Bitcoin node check is down. Stamps still go to OpenTimestamps calendars. Pending is not confirmed.'
           })
           return
         }
@@ -159,7 +159,7 @@ export default function DeepHealthBanner() {
       style={styles}
     >
       <Icon size={12} className="shrink-0" aria-hidden />
-      <span className="min-w-0 max-w-[min(100%,42rem)] leading-snug">{status.message}</span>
+      <span className="max-w-[min(100%,42rem)] min-w-0 leading-snug">{status.message}</span>
       <Activity size={12} className="hidden shrink-0 opacity-60 sm:inline" aria-hidden />
       <button
         type="button"

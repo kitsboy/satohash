@@ -1046,15 +1046,15 @@ export default function Stamp() {
                     className="text-[10px] font-black tracking-widest uppercase"
                     style={{ color: 'var(--accent-gold)' }}
                   >
-                    Family handoff
+                    {tp('stampPage.familyHandoff')}
                   </p>
                   <h2
                     className="text-lg font-black tracking-tight"
                     style={{ color: 'var(--text-primary)' }}
                   >
                     {deepLink.product
-                      ? `Continuing from ${deepLink.product.name}`
-                      : 'Hash ready to stamp'}
+                      ? tp('stampPage.continuingFrom', { product: deepLink.product.name })
+                      : tp('stampPage.hashReady')}
                   </h2>
                   <p className="text-xs leading-snug" style={{ color: 'var(--text-secondary)' }}>
                     {deepLink.product?.blurb
@@ -1095,7 +1095,7 @@ export default function Stamp() {
                     className="rounded-full px-3 py-1 text-[10px] font-bold"
                     style={{ color: 'var(--text-muted)' }}
                   >
-                    Deep link
+                    {tp('stampPage.deepLink')}
                   </span>
                 )}
               </div>
@@ -1140,14 +1140,14 @@ export default function Stamp() {
                     toast.success('Hash copied')
                   }}
                 >
-                  Copy hash
+                  {tp('stampPage.copyHash')}
                 </button>
                 <Link
                   to={`/verify/${hashValue}`}
                   className="rounded-xl border px-4 py-2 text-[10px] font-black uppercase"
                   style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
                 >
-                  Check existing proof
+                  {tp('stampPage.checkExisting')}
                 </Link>
                 <button
                   type="button"
@@ -1160,8 +1160,22 @@ export default function Stamp() {
                     )
                   }
                 >
-                  Browser calendars only
+                  {tp('stampPage.browserCalendarsOnly')}
                 </button>
+                <Link
+                  to="/docs/how-satohash-works"
+                  className="rounded-xl border px-4 py-2 text-[10px] font-black uppercase"
+                  style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
+                >
+                  {tp('stampPage.learnCta')}
+                </Link>
+                <Link
+                  to="/developer"
+                  className="rounded-xl border px-4 py-2 text-[10px] font-black uppercase"
+                  style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
+                >
+                  {tp('stampPage.developerCta')}
+                </Link>
               </div>
             </div>
           )}

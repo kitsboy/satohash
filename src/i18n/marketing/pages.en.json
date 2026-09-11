@@ -564,6 +564,11 @@
       "cta": "Developer Dashboard"
     }
   },
+  "developerPage": {
+    "cliTitle": "CLI",
+    "cliHint": "Hash stays on the machine; only SHA-256 is POSTed. Always sends X-Satohash-Client: cli. Proof card",
+    "cliSource": "CLI source on GitHub"
+  },
   "widgetsPage": {
     "nav": "Proof DNA Widgets",
     "hero": {
@@ -720,7 +725,10 @@
       "developerApi": "Developer API",
       "templates": "Templates",
       "sourceCode": "Source Code"
-    }
+    },
+    "stampCtaEyebrow": "Free stamp",
+    "stampCta": "Stamp a file — free",
+    "stampCtaHint": "File never leaves the device."
   },
   "notFoundPage": {
     "title": "404",
@@ -1145,7 +1153,16 @@
     "verify": "Verify",
     "vault": "Vault",
     "watch": "Watch",
-    "invalidStampLink": "Invalid stamp link"
+    "invalidStampLink": "Invalid stamp link",
+    "learnCta": "Learn how it works",
+    "developerCta": "Developer CLI",
+    "familyHandoff": "Family handoff",
+    "continuingFrom": "Continuing from {{product}}",
+    "hashReady": "Hash ready to stamp",
+    "copyHash": "Copy hash",
+    "checkExisting": "Check existing proof",
+    "browserCalendarsOnly": "Browser calendars only",
+    "deepLink": "Deep link"
   },
   "stampDonePage": {
     "loading": "Loading proof…",

@@ -564,6 +564,11 @@
       "cta": "Tableau de bord développeur"
     }
   },
+  "developerPage": {
+    "cliTitle": "CLI",
+    "cliHint": "Le hash reste sur la machine ; seul le SHA-256 est envoyé. Envoie toujours X-Satohash-Client: cli. Carte de preuve",
+    "cliSource": "Code source de la CLI sur GitHub"
+  },
   "widgetsPage": {
     "nav": "Proof DNA Widgets",
     "hero": {
@@ -720,7 +725,10 @@
       "developerApi": "API développeur",
       "templates": "Modèles",
       "sourceCode": "Code source"
-    }
+    },
+    "stampCtaEyebrow": "Tampon gratuit",
+    "stampCta": "Tamponner un fichier — gratuit",
+    "stampCtaHint": "Le fichier ne quitte jamais l'appareil."
   },
   "notFoundPage": {
     "title": "404",
@@ -1227,7 +1235,16 @@
     "verify": "Vérifier",
     "vault": "Coffre",
     "watch": "Voir",
-    "invalidStampLink": "Lien de tampon invalide"
+    "invalidStampLink": "Lien de tampon invalide",
+    "learnCta": "Comment ça marche",
+    "developerCta": "CLI développeur",
+    "familyHandoff": "Relais famille",
+    "continuingFrom": "Suite depuis {{product}}",
+    "hashReady": "Hash prêt à tamponner",
+    "copyHash": "Copier le hash",
+    "checkExisting": "Vérifier une preuve existante",
+    "browserCalendarsOnly": "Calendriers du navigateur uniquement",
+    "deepLink": "Lien profond"
   },
   "stampDonePage": {
     "loading": "Chargement de la preuve…",

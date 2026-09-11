@@ -554,6 +554,11 @@
       "cta": "开发者仪表板"
     }
   },
+  "developerPage": {
+    "cliTitle": "CLI",
+    "cliHint": "哈希留在本机，仅提交 SHA-256。始终发送 X-Satohash-Client: cli。证明卡片",
+    "cliSource": "GitHub 上的 CLI 源码"
+  },
   "widgetsPage": {
     "nav": "Proof DNA Widgets",
     "hero": {
@@ -710,7 +715,10 @@
       "developerApi": "开发者 API",
       "templates": "模板",
       "sourceCode": "源代码"
-    }
+    },
+    "stampCtaEyebrow": "免费盖章",
+    "stampCta": "免费盖章文件",
+    "stampCtaHint": "文件不会离开您的设备。"
   },
   "notFoundPage": {
     "title": "404",
@@ -1217,7 +1225,16 @@
     "verify": "验证",
     "vault": "保险库",
     "watch": "观看",
-    "invalidStampLink": "无效的盖章链接"
+    "invalidStampLink": "无效的盖章链接",
+    "learnCta": "了解工作原理",
+    "developerCta": "开发者 CLI",
+    "familyHandoff": "家族交接",
+    "continuingFrom": "继续来自 {{product}}",
+    "hashReady": "哈希已就绪，可盖章",
+    "copyHash": "复制哈希",
+    "checkExisting": "查看已有证明",
+    "browserCalendarsOnly": "仅浏览器日历",
+    "deepLink": "深度链接"
   },
   "stampDonePage": {
     "loading": "正在加载证明…",

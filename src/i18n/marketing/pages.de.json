@@ -564,6 +564,11 @@
       "cta": "Developer-Dashboard"
     }
   },
+  "developerPage": {
+    "cliTitle": "CLI",
+    "cliHint": "Der Hash bleibt auf dem Gerät; nur SHA-256 wird gesendet. Sendet immer X-Satohash-Client: cli. Proof-Karte",
+    "cliSource": "CLI-Quellcode auf GitHub"
+  },
   "widgetsPage": {
     "nav": "Proof DNA Widgets",
     "hero": {
@@ -720,7 +725,10 @@
       "developerApi": "Developer API",
       "templates": "Vorlagen",
       "sourceCode": "Quellcode"
-    }
+    },
+    "stampCtaEyebrow": "Kostenloser Stempel",
+    "stampCta": "Datei stempeln — kostenlos",
+    "stampCtaHint": "Die Datei verlässt das Gerät nicht."
   },
   "notFoundPage": {
     "title": "404",
@@ -1227,7 +1235,16 @@
     "verify": "Prüfen",
     "vault": "Tresor",
     "watch": "Ansehen",
-    "invalidStampLink": "Ungültiger Stempel-Link"
+    "invalidStampLink": "Ungültiger Stempel-Link",
+    "learnCta": "So funktioniert's",
+    "developerCta": "Entwickler-CLI",
+    "familyHandoff": "Familien-Übergabe",
+    "continuingFrom": "Weiter von {{product}}",
+    "hashReady": "Hash bereit zum Stempeln",
+    "copyHash": "Hash kopieren",
+    "checkExisting": "Vorhandenen Nachweis prüfen",
+    "browserCalendarsOnly": "Nur Browser-Kalender",
+    "deepLink": "Deep-Link"
   },
   "stampDonePage": {
     "loading": "Nachweis wird geladen…",

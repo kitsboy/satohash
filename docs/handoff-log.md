@@ -1,3 +1,13 @@
+## 2026-09-11 (Grok M3 — closeout 10: LCP, i18n, Katoa lift, honest node copy)
+
+**Satohash (this push):** Landing LCP = `/og/watch.jpg` poster + play-to-load video + idle particles. DeepHealthBanner: no “Check THOR node”; stamps still go to calendars; pending ≠ confirmed. Learn prerender HTML includes Stamp CTA. i18n docs/developer CTA in 7 locales. Learn CTA gold eyebrow polish. FAMILY-API: public `motopass` vs intel `motopass-intel`.
+
+**Katoa:** widget moved after trust bar (`586ec15`). **TadBuy/MotoPass/Sherpa:** prior pushes; CSP motopass live includes satohash.io.
+
+**Kimi still:** API rebuild keep-alive. Own node RPC may still be unreachable; calendars stamp.
+
+---
+
 ## 2026-09-11 (Grok M3 — next 10: family widgets + CLI/learn/banner)
 
 **Satohash `bda22d5`:** CLI on `/developer`; learn-* gold Stamp CTA; deep-link “Continuing from TadBuy|Katoa|Give A Bit|SherpaCarta|MotoPass”. Live Pages already on `7d54e86` / b336 Choose-file UX, satohash-sync only, share njump/Primal/Snort/Iris, watch player card OK. Lighthouse mobile `/` 61 `/stamp` 67 `/verify` 80 (gates pass).

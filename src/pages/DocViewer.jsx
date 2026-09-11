@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from 'react'
 import { Link, useParams } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import usePageMeta from '../hooks/usePageMeta'
 import {
   ArrowLeft,
@@ -110,6 +111,7 @@ const SLUG_TO_PAGE_META = {
 const LEARN_ARTICLES_PAGE = 'learnArticles'
 
 export default function DocViewer() {
+  const { t } = useTranslation()
   const { slug } = useParams()
   const docTitle = TITLES[slug] || slug.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())
 
@@ -306,15 +308,26 @@ export default function DocViewer() {
               </article>
 
               {slug?.startsWith('learn-') && (
-                <div className="mt-6 rounded-2xl border border-[var(--accent-gold)]/35 bg-[var(--surface-raised)] px-4 py-5 sm:px-6">
+                <div
+                  className="mt-6 rounded-2xl border bg-[var(--surface-raised)] px-4 py-5 sm:px-6"
+                  style={{
+                    borderColor: 'color-mix(in srgb, var(--accent-gold) 35%, transparent)'
+                  }}
+                >
+                  <p
+                    className="mb-2 text-[10px] font-black tracking-widest uppercase"
+                    style={{ color: 'var(--accent-gold)' }}
+                  >
+                    {t('docsPage.stampCtaEyebrow')}
+                  </p>
                   <Link
                     to="/stamp"
                     className="inline-flex min-h-[48px] w-full items-center justify-center rounded-xl bg-[var(--accent-gold)] px-6 text-sm font-black tracking-wider text-black uppercase sm:w-auto"
                   >
-                    Stamp a file — free
+                    {t('docsPage.stampCta')}
                   </Link>
                   <p className="mt-2 text-xs leading-relaxed text-[var(--text-secondary)]">
-                    File never leaves the device.
+                    {t('docsPage.stampCtaHint')}
                   </p>
                 </div>
               )}

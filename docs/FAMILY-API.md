@@ -77,6 +77,8 @@ X-Satohash-Key: <family key>
 X-Satohash-Client: motopass
 # Required for HQ segments (timestamps.client_id). Examples:
 #   sherpacarta | sherpacarta-canada | motopass | katoa | spa | cli
+# Public MotoPass widget / SPA: X-Satohash-Client: motopass
+# HQ country-intel cron (scripts/stamp-changed.mjs): motopass-intel — do not use on the public site
 Content-Type: application/json
 
 {"hash":"<64 hex>","filename":"seal.json"}

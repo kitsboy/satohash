@@ -564,6 +564,11 @@
       "cta": "Painel do desenvolvedor"
     }
   },
+  "developerPage": {
+    "cliTitle": "CLI",
+    "cliHint": "O hash permanece na máquina; só o SHA-256 é enviado. Sempre envia X-Satohash-Client: cli. Cartão de prova",
+    "cliSource": "Código da CLI no GitHub"
+  },
   "widgetsPage": {
     "nav": "Proof DNA Widgets",
     "hero": {
@@ -720,7 +725,10 @@
       "developerApi": "API para desenvolvedores",
       "templates": "Modelos",
       "sourceCode": "Código-fonte"
-    }
+    },
+    "stampCtaEyebrow": "Carimbo grátis",
+    "stampCta": "Carimbar um arquivo — grátis",
+    "stampCtaHint": "O arquivo nunca sai do dispositivo."
   },
   "notFoundPage": {
     "title": "404",
@@ -1227,7 +1235,16 @@
     "verify": "Verificar",
     "vault": "Cofre",
     "watch": "Assistir",
-    "invalidStampLink": "Link de carimbo inválido"
+    "invalidStampLink": "Link de carimbo inválido",
+    "learnCta": "Saiba como funciona",
+    "developerCta": "CLI para desenvolvedores",
+    "familyHandoff": "Repasse da família",
+    "continuingFrom": "Continuando de {{product}}",
+    "hashReady": "Hash pronto para carimbar",
+    "copyHash": "Copiar hash",
+    "checkExisting": "Verificar prova existente",
+    "browserCalendarsOnly": "Somente calendários do navegador",
+    "deepLink": "Link profundo"
   },
   "stampDonePage": {
     "loading": "Carregando prova…",

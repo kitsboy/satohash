@@ -359,7 +359,7 @@ if (fs.existsSync(docsDir)) {
       shell({
         title: `${title} — Satohash`,
         description,
-        contentHtml: `<p class="meta">Satohash — Bitcoin document stamping</p>\n${body}`,
+        contentHtml: `<p class="meta">Satohash — Bitcoin document stamping</p>\n${body}\n<p><a href="${SITE}/stamp">Stamp a file — free</a>. File never leaves the device.</p>`,
         canonical: `${SITE}/docs/${slug}`,
         ogImage: `${SITE}/og/${slug}.${LEARN_OG_JPEG.has(slug) ? 'jpg' : 'png'}`,
         article: { headline: title, description, datePublished: '2026-08-20' }

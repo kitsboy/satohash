@@ -1,3 +1,18 @@
+## Latest Session Summary (Grok M3, 2026-09-11 — closeout 10)
+
+SPA: landing video is play-to-load (LCP is `/og/watch.jpg`). DeepHealthBanner no longer says Check THOR to users. Learn prerender + i18n Stamp CTAs. Katoa widget after trust bar. Public MotoPass widget is `X-Satohash-Client: motopass`; intel cron stays `motopass-intel`.
+
+**Kimi still DO THIS NOW** if API `gitSha` is still `e979e69`:
+
+```bash
+cd /root/satohash && git fetch origin && git reset --hard origin/main
+GIT_SHA=$(git rev-parse --short HEAD) bash scripts/vps-deploy-api.sh
+```
+
+Do not flip paywall. Do not change `/api/*`. Do not touch Pages.
+
+---
+
 ## Latest Session Summary (Grok M3, 2026-09-11 — 20 items + family API)
 
 **For Kimi on THOR Obsidian (not M4).** Code = M3/Grok. Pages = Grok. Do not flip `REQUIRE_LIGHTNING`. Do not change `/api/*`. Do not `--force` opentimestamps.

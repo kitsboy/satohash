@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, lazy, Suspense } from 'react'
+import { useState, useEffect, useMemo, lazy, Suspense, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Link, Navigate, useSearchParams } from 'react-router-dom'
@@ -15,19 +15,26 @@ import {
   Award,
   X,
   Fingerprint,
-  ChevronRight
+  ChevronRight,
+  Play
 } from 'lucide-react'
 import Footer from '../components/layout/Footer'
 import usePageMeta from '../hooks/usePageMeta'
 import MarketingDesktopNav from '../components/layout/MarketingDesktopNav'
 const OtsVerifyPanel = lazy(() => import('../components/stamps/OtsVerifyPanel'))
+const ParticleStampCanvas = lazy(() => import('../components/marketing/ParticleStampCanvas'))
 import { getBitcoinNetworkStats } from '../utils/mempool'
 import { BTC_ADDRESS, getApiUrl } from '../config/constants'
-import ParticleStampCanvas from '../components/marketing/ParticleStampCanvas'
 import { buildStampPathFromSearch } from '../utils/stampDeepLink'
 import events, { trackEvent } from '../utils/analytics'
 import LiveNodeChip from '../components/shared/LiveNodeChip'
 import TipButton from '../components/marketing/TipButton'
+
+const HERO_VIDEO =
+  'https://videos.giveabit.io/media/video/satohash-explainer-with-vo2.mp4?v=kimi-noir-20260819'
+const HERO_POSTER = '/og/watch.jpg'
+const HERO_VIDEO_LABEL =
+  'Satohash explainer: file never leaves the device, Bitcoin keeps the receipt'
 
 const fadeUp = {
   hidden: { opacity: 0, y: 32 },
@@ -89,6 +96,13 @@ export default function Landing() {
   const [pwaDismissed, setPwaDismissed] = useState(
     () => localStorage.getItem('pwa-dismissed') === 'true'
   )
+  const [showParticles, setShowParticles] = useState(false)
+  const [heroPlaying, setHeroPlaying] = useState(false)
+  const bindHeroVideo = useCallback((el) => {
+    if (!el) return
+    const play = el.play()
+    if (play && typeof play.catch === 'function') play.catch(() => {})
+  }, [])
 
   useEffect(() => {
     const API = getApiUrl()
@@ -131,6 +145,21 @@ export default function Landing() {
 
   useEffect(() => {
     trackEvent(events.LANDING_VIEW, { path: '/' })
+  }, [])
+
+  useEffect(() => {
+    let idleId
+    let timeoutId
+    const show = () => setShowParticles(true)
+    if (typeof requestIdleCallback === 'function') {
+      idleId = requestIdleCallback(show, { timeout: 2500 })
+    } else {
+      timeoutId = setTimeout(show, 1)
+    }
+    return () => {
+      if (idleId != null) window.cancelIdleCallback?.(idleId)
+      if (timeoutId != null) clearTimeout(timeoutId)
+    }
   }, [])
 
   useEffect(() => {
@@ -207,9 +236,13 @@ export default function Landing() {
 
       {/* ── HERO ─────────────────────────────────────────────────── */}
       <section className="relative flex min-h-screen items-center overflow-hidden pt-[calc(3.5rem+var(--satohash-health-banner-h,0px))] md:pt-[calc(4rem+var(--satohash-health-banner-h,0px))]">
-        {/* v5 particle network — gold confirmed / blue pending stamps */}
+        {/* v5 particle network — deferred so LCP is the poster JPEG, not the canvas */}
         <div className="pointer-events-none absolute inset-0 opacity-40">
-          <ParticleStampCanvas />
+          {showParticles ? (
+            <Suspense fallback={null}>
+              <ParticleStampCanvas />
+            </Suspense>
+          ) : null}
         </div>
         {/* Precision Cryptographic Blueprint Grid Background */}
         <div
@@ -479,15 +512,48 @@ export default function Landing() {
                 boxShadow: '0 0 24px var(--jewel-sky-glow)'
               }}
             >
-              <video
-                src="https://videos.giveabit.io/media/video/satohash-explainer-with-vo2.mp4?v=kimi-noir-20260819"
-                poster="/og/watch.jpg"
-                playsInline
-                preload="none"
-                controls
-                className="absolute inset-0 h-full w-full bg-black object-contain"
-                aria-label="Satohash explainer: file never leaves the device, Bitcoin keeps the receipt"
-              />
+              {!heroPlaying ? (
+                <>
+                  <img
+                    src={HERO_POSTER}
+                    alt=""
+                    width={1200}
+                    height={630}
+                    fetchPriority="high"
+                    decoding="async"
+                    className="absolute inset-0 h-full w-full rounded-[inherit] object-cover"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setHeroPlaying(true)}
+                    className="absolute inset-0 z-10"
+                    aria-label={HERO_VIDEO_LABEL}
+                  >
+                    <span
+                      className="absolute top-1/2 left-1/2 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full"
+                      style={{
+                        backgroundColor: 'var(--accent-gold)',
+                        color: '#141b25',
+                        boxShadow: '0 8px 28px var(--accent-gold-glow)'
+                      }}
+                      aria-hidden
+                    >
+                      <Play size={28} fill="currentColor" />
+                    </span>
+                  </button>
+                </>
+              ) : (
+                <video
+                  ref={bindHeroVideo}
+                  src={HERO_VIDEO}
+                  poster={HERO_POSTER}
+                  playsInline
+                  preload="none"
+                  controls
+                  className="absolute inset-0 h-full w-full bg-black object-contain"
+                  aria-label={HERO_VIDEO_LABEL}
+                />
+              )}
             </div>
             <p
               className="mt-3 text-xs font-medium tracking-wide sm:text-sm"

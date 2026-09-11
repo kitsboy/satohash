@@ -564,6 +564,11 @@
       "cta": "Dashibodi ya Msanidi"
     }
   },
+  "developerPage": {
+    "cliTitle": "CLI",
+    "cliHint": "Hash inabaki kwenye mashine; SHA-256 pekee hutumwa. Daima hutuma X-Satohash-Client: cli. Kadi ya uthibitisho",
+    "cliSource": "Chanzo cha CLI kwenye GitHub"
+  },
   "widgetsPage": {
     "nav": "Proof DNA Widgets",
     "hero": {
@@ -720,7 +725,10 @@
       "developerApi": "API ya Msanidi",
       "templates": "Violezo",
       "sourceCode": "Msimbo wa Chanzo"
-    }
+    },
+    "stampCtaEyebrow": "Muhuri wa bure",
+    "stampCta": "Weka muhuri faili — bure",
+    "stampCtaHint": "Faili haitoki kwenye kifaa."
   },
   "notFoundPage": {
     "title": "404",
@@ -1227,7 +1235,16 @@
     "verify": "Thibitisha",
     "vault": "Hazina",
     "watch": "Tazama",
-    "invalidStampLink": "Kiungo cha muhuri si sahihi"
+    "invalidStampLink": "Kiungo cha muhuri si sahihi",
+    "learnCta": "Jifunze jinsi inavyofanya kazi",
+    "developerCta": "CLI ya msanidi",
+    "familyHandoff": "Uhamisho wa familia",
+    "continuingFrom": "Inaendelea kutoka {{product}}",
+    "hashReady": "Hash tayari kuwekwa muhuri",
+    "copyHash": "Nakili hash",
+    "checkExisting": "Angalia uthibitisho uliopo",
+    "browserCalendarsOnly": "Kalenda za kivinjari pekee",
+    "deepLink": "Kiungo kirefu"
   },
   "stampDonePage": {
     "loading": "Inapakia uthibitisho…",
