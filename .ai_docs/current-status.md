@@ -3,7 +3,7 @@
 **Version:** **5.0.0-ELITE** (Build 331+)  
 **Last Updated:** 2026-09-11 (Grok — 20 improvements + family API stability)  
 **Frontend:** https://satohash.io · www · CF Pages project **`satohash`** — Grok lane, `assetsDir: 'b'`  
-**API:** https://api.satohash.io ✅ LIVE (THOR Docker). Confirm SHA with `GET /health` (`gitSha`). **Live now: `e979e69`** until Kimi rebuilds this tree (keepAliveTimeout). Image **818MB**, `Cache-Control: no-store`, Caddy reload OK, paywall off, ~298 stamps + CLI=1.  
+**API:** https://api.satohash.io ✅ LIVE (THOR Docker). Confirm SHA with `GET /health` (`gitSha`). **Live now: `e979e69`** until Kimi rebuilds. **Kimi copy-paste:** `cd /root/satohash && git fetch origin && git reset --hard origin/main` then `GIT_SHA=$(git rev-parse --short HEAD) bash scripts/vps-deploy-api.sh`. Image **818MB**, `Cache-Control: no-store`, Caddy reload OK, paywall off, ~298 stamps + CLI=1.  
 **Metrics SoT:** `https://api.satohash.io/metrics.json`  
 **HQ:** https://hq.giveabit.io  
 **Git:** `main` (this push)  

@@ -9,20 +9,23 @@
 ## Paste block (2026-09-11 — 20 improvements + family API)
 
 ```markdown
-### Satohash 2026-09-11 (Grok M3 — 20-item wave)
+### Satohash 2026-09-11 (Grok M3 — 20-item wave) — Kimi DO THIS NOW
 
-SPA push on main. API live still e979e69 until you rebuild.
+SPA already on main. Live API is still e979e69. Rebuild so family keep-alive is live.
 
-Kimi:
-1. cd /root/satohash && git fetch origin && git reset --hard origin/main
-2. Rebuild API: GIT_SHA=$(git rev-parse --short HEAD) bash scripts/vps-deploy-api.sh
-   Need keepAliveTimeout 65s / headersTimeout 66s / timeout 120s from server/index.js.
-3. RSS→Nostr remains dry-run until NOSTR_PRIVATE_KEY is in Vault. Kind-0 script: scripts/nostr-kind0-profile.js (default dry-run).
-4. Ingest this paste. Vault = THOR Obsidian, not M4.
+Copy-paste on THOR:
 
-Family widgets live in their repos (katoa CSP, sherpacarta, tadbuy, giveabit /tools). data-client ids: katoa, sherpacarta, tadbuy, giveabit. CLI attributed stamp exists (familyClients cli=1).
+cd /root/satohash && git fetch origin && git reset --hard origin/main
+GIT_SHA=$(git rev-parse --short HEAD) bash scripts/vps-deploy-api.sh
 
-Do not flip REQUIRE_LIGHTNING. Do not change /api/*. Do not --force opentimestamps. Pages = Grok. Pin /watch still Cam on @give_bit.
+Done when: curl -sS https://api.satohash.io/health → gitSha equals git rev-parse --short HEAD (not e979e69).
+Need: keepAliveTimeout 65s / headersTimeout 66s / timeout 120s from server/index.js.
+REQUIRE_LIGHTNING stays false. Do not change /api/*. Do not touch Pages.
+
+Then ingest this paste. Vault = THOR Obsidian, not M4.
+RSS→Nostr / Kind-0 stay dry-run until NOSTR_PRIVATE_KEY is in Vault (never git).
+Family widgets: katoa, sherpacarta, tadbuy, giveabit. CLI attributed stamp exists (cli=1).
+Pin /watch still Cam on @give_bit.
 ```
 
 ---

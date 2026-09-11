@@ -2,13 +2,25 @@
 
 **For Kimi on THOR Obsidian (not M4).** Code = M3/Grok. Pages = Grok. Do not flip `REQUIRE_LIGHTNING`. Do not change `/api/*`. Do not `--force` opentimestamps.
 
-**Live API before rebuild:** `gitSha=e979e69`, paywall off, `cli` family count = 1.
+**Live API before rebuild:** `gitSha=e979e69`, paywall off, `cli` family count = 1. SPA already on `main` (`d415525`+). API still needs this rebuild so keep-alive (65s) is live for family clients.
 
-**Your job:**
-1. `cd /root/satohash && git fetch origin && git reset --hard origin/main`
-2. Rebuild API for keep-alive: `GIT_SHA=$(git rev-parse --short HEAD) bash scripts/vps-deploy-api.sh`
-3. Ingest the 2026-09-11 paste in `docs/MASTER-BRAIN-INGEST.md`
-4. RSS→Nostr / Kind-0 stay dry-run until `NOSTR_PRIVATE_KEY` is in Vault (never git)
+### DO THIS NOW (copy-paste on THOR)
+
+```bash
+cd /root/satohash && git fetch origin && git reset --hard origin/main
+GIT_SHA=$(git rev-parse --short HEAD) bash scripts/vps-deploy-api.sh
+```
+
+**Done when:** `curl -sS https://api.satohash.io/health` → `gitSha` matches `git rev-parse --short HEAD` on `/root/satohash` (not `e979e69`). `REQUIRE_LIGHTNING` stays false. Caddy still serves `api.satohash.io`. Then:
+
+```bash
+curl -sS https://api.satohash.io/health
+curl -sS https://api.satohash.io/metrics.json | python3 -c "import json,sys; d=json.load(sys.stdin); print('requireLightning', d.get('raw',{}).get('requireLightning'))"
+```
+
+Do **not** change `/api/*` paths. Do **not** flip the paywall. Do **not** touch Cloudflare Pages.
+
+**After rebuild:** ingest the 2026-09-11 paste in `docs/MASTER-BRAIN-INGEST.md`. RSS→Nostr / Kind-0 stay dry-run until `NOSTR_PRIVATE_KEY` is in Vault (never git).
 
 **Cam still:** pin `/watch` on `@give_bit` (copy in `docs/marketing/GIVE-BIT-X-PACK.md`); iPhone `/p/` unfurl (JPEG already live in HTML).
 

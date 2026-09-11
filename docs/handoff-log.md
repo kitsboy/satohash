@@ -10,7 +10,14 @@
 
 **Cam still:** pin `/watch` on `@give_bit` (paste `docs/marketing/GIVE-BIT-X-PACK.md`); physical iPhone `/p/` JPEG (HTML already JPEG); Kind-0 / RSS→Nostr nsec on THOR; Sentry DSN in Vault.
 
-**Kimi:** `git pull` on `/root/satohash`. Rebuild API for `keepAliveTimeout` 65s (`server/index.js`). Cron RSS→Nostr still dry-run until nsec. Vault = THOR, not M4. Do not flip paywall. Do not change `/api/*`. Do not `--force` opentimestamps.
+**Kimi — DO THIS NOW (copy-paste on THOR):**
+
+```bash
+cd /root/satohash && git fetch origin && git reset --hard origin/main
+GIT_SHA=$(git rev-parse --short HEAD) bash scripts/vps-deploy-api.sh
+```
+
+Done when `GET https://api.satohash.io/health` `gitSha` matches HEAD (not `e979e69`). That ships keep-alive 65s for family clients. Cron RSS→Nostr still dry-run until nsec. Vault = THOR, not M4. Do not flip paywall. Do not change `/api/*`. Do not `--force` opentimestamps.
 
 **Do not:** VitePWA `injectRegister` · fetch listener on satohash-sync · sell Proof Pack · `@satohash`
 

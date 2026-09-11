@@ -19,6 +19,19 @@ Canonical short ops pointer. Detailed procedures remain in:
 5. **No secrets in git / handoffs**
 6. **One SPA deploy path:** GitHub Actions `Deploy` only — never Retry in the CF Pages UI while Actions is yellow
 
+## DO THIS NOW (2026-09-11) — API rebuild for family keep-alive
+
+Live SPA is already on `main`. Live API is still `e979e69` until you rebuild. Copy-paste on THOR:
+
+```bash
+cd /root/satohash && git fetch origin && git reset --hard origin/main
+GIT_SHA=$(git rev-parse --short HEAD) bash scripts/vps-deploy-api.sh
+```
+
+**Done when:** `curl -sS https://api.satohash.io/health` → `gitSha` matches `git rev-parse --short HEAD` (not `e979e69`). Paywall stays off. Do not change `/api/*`. Do not touch Pages.
+
+This ships `keepAliveTimeout` 65s / `headersTimeout` 66s / `timeout` 120s so family suite sockets are not 502'd by Caddy idle.
+
 ## When SPA flashes “System Desync” or hangs on `/stamp` `/verify`
 
 Fixed **2026-08-31** (`ec1c69e`, live). Cause was lazy Stamp/Verify chunks importing the HTML entry + a service-worker / `vite:preloadError` / ErrorBoundary reload loop. Core loop is eager; `injectRegister: false`. If it returns: hard refresh once, then Grok (not a CF UI retry).
