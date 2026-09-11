@@ -1,11 +1,25 @@
 name: Deploy
 
-# Auto-deploy on every push to main (no dashboard button required).
-# Manual re-run still available: Actions → Deploy → Run workflow
+# ONE deployer: the Cloudflare Pages <-> GitHub integration builds and publishes every push to main.
+# The duplicate `wrangler pages deploy` step and this repo's CLOUDFLARE_API_TOKEN secret were
+# retired 2026-09-11 (see HQ docs/CLOUDFLARE-TOKEN-RETIREMENT.md).
+# What is left: build the commit here (early red signal) and verify production actually came back live
+# — with no Cloudflare credential of any kind.
+# Break-glass (manual ONLY, never on push): Actions -> this workflow -> Run workflow -> mode =
+# break-glass-deploy. That job is the single place a token is used and it needs the repo secret
+# CLOUDFLARE_PAGES_TOKEN (Pages:Edit, created in the Cloudflare dashboard).
 on:
   push:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      mode:
+        description: "verify = check production is live (no token); break-glass-deploy = manual wrangler fallback"
+        type: choice
+        options:
+          - verify
+          - break-glass-deploy
+        default: verify
 
 # One production deploy at a time — overlapping pushes poisoned /b/* chunks
 concurrency:
@@ -13,31 +27,15 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  deploy_cloudflare:
+  build_and_verify:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
-    # Job-level env so secrets are visible to steps (step-level if: env.* cannot see step env)
-    env:
-      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
         with:
           node-version: '22'
           cache: npm
-      - name: Require Cloudflare secrets
-        run: |
-          if [ -z "${CLOUDFLARE_API_TOKEN:-}" ]; then
-            echo "::error::CLOUDFLARE_API_TOKEN not set in repo Actions secrets."
-            echo "Add CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID under Settings → Secrets and variables → Actions."
-            exit 1
-          fi
-          if [ -z "${CLOUDFLARE_ACCOUNT_ID:-}" ]; then
-            echo "::error::CLOUDFLARE_ACCOUNT_ID not set in repo Actions secrets."
-            exit 1
-          fi
-          echo "Cloudflare secrets present (values never logged)."
       - run: npm ci
       # Public build-time env only (no secrets). Ensures SPA posts to API plane.
       - name: Build SPA
@@ -48,14 +46,60 @@ jobs:
           VITE_MEMPOOL_API_URL: https://mempool.space/api
         run: npm run build
       - run: npm run build:verify
-      - name: Deploy to Cloudflare Pages
-        run: npx wrangler pages deploy ./dist --project-name=satohash
+      - name: Verify live deploy (CF Pages git integration)
+        run: |
+          set -euo pipefail
+          URL="https://satohash.io/"
+          MARKER="Satohash"
+          for attempt in $(seq 1 24); do
+            HTML=$(curl -fsSL --max-time 20 "$URL" || true)
+            if [ -n "$HTML" ] && printf '%s' "$HTML" | grep -q "$MARKER"; then
+              echo "OK — $URL live with marker '$MARKER' (attempt $attempt) for $GITHUB_SHA"
+              exit 0
+            fi
+            echo "attempt $attempt: production not live yet (CF Pages git build may still be running)"
+            sleep 10
+          done
+          echo "::error::$URL did not serve '$MARKER' within ~4 minutes — check the Cloudflare Pages deployment for $GITHUB_SHA"
+          exit 1
 
   smoke:
-    needs: deploy_cloudflare
-    if: needs.deploy_cloudflare.result == 'success'
+    needs: build_and_verify
+    if: needs.build_and_verify.result == 'success'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
       - name: Production pages smoke
         run: bash scripts/pages-smoke.sh
+
+  # Manual fallback only — cannot race the git integration because it never runs on push.
+  break_glass_deploy:
+    if: github.event_name == 'workflow_dispatch' && inputs.mode == 'break-glass-deploy'
+    runs-on: ubuntu-latest
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_PAGES_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - name: Build SPA
+        env:
+          VITE_API_URL: https://api.satohash.io
+          VITE_MVP_MODE: 'true'
+          VITE_APP_NAME: Satohash
+          VITE_MEMPOOL_API_URL: https://mempool.space/api
+        run: npm run build
+      - run: npm run build:verify
+      - name: Require scoped Pages token
+        run: |
+          if [ -z "${CLOUDFLARE_API_TOKEN:-}" ]; then
+            echo "::error::repo secret CLOUDFLARE_PAGES_TOKEN is not set — create a Pages:Edit token in the Cloudflare dashboard and add it under Settings -> Secrets and variables -> Actions."
+            exit 1
+          fi
+          echo "Scoped Pages token present (value never logged)."
+      - name: Deploy to Cloudflare Pages (break-glass, manual only)
+        run: npx wrangler pages deploy ./dist --project-name=satohash
