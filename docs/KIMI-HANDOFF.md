@@ -1,3 +1,37 @@
+## Latest Session Summary (Ziggy THOR, 2026-09-11 — Satohash CI hygiene: Deploy `smoke` race + pre-push `npm test`)
+
+**Lane:** CI/deploy only — no `/api/*`, no `REQUIRE_LIGHTNING`, no CORS, no copy strings, no Cloudflare credential. Commit **`5d08434`** on `main` (kanban `t_2e23ea8a`).
+
+### 1. Deploy `smoke` was red because the gate read production MID-ROLLOUT — the site was fine
+
+Real log, `gh run view 34645366777 --log-failed` (job 103415336828, `smoke` on `e11de08`):
+
+```
+2026-09-11T20:41:57.4708577Z attempt 1: ref=b/index-D9wvmZw-.js head=const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["b/OtsVerifyPanel-BMK8oD2A.js","b/vendor-eE
+2026-09-11T20:41:58.0963451Z ##[error]mixed-chunk poison: homepage /b/index-D9wvmZw-.js != /stamp /b/index-BCtq2UCL.js
+```
+
+Hypothesis **CONFIRMED**: Cloudflare Pages flips `/` and `/stamp` independently, so one read catches the old entry chunk on one path and the new one on the other. Root cause of the red gate: `build_and_verify`'s liveness step only asserted the marker `Satohash`, which the **previous** deployment also serves — so `smoke` started while the flip was still in flight.
+
+Fixed (both, because either alone leaves a hole):
+- `.github/workflows/deploy.yml` — `build_and_verify` now waits for the **`Cloudflare Pages` check run** of the pushed commit (posted by the CF Pages GitHub integration) before the liveness probe, so it can no longer call the previous deployment "live". Adds `permissions: contents: read, checks: read`. If the check run never appears it warns and falls back to the probe instead of hard-failing. Verified in run 34648489181: `attempt 8: Cloudflare Pages published 5d08434fa141cee8885dbb2bfb652729920b85de` → `OK — https://satohash.io/ is answering with marker 'Satohash' (attempt 1)`.
+- `scripts/pages-smoke.sh` — the mixed-chunk guard waits for the rollout to settle (up to 12 cache-busted homepage/stamp read pairs, 10s apart) instead of failing on the first split read, and still **fails closed** when the two paths never agree. Both branches validated against a stub origin using the exact shipped block: converging stub → exit 0; permanently split stub → `::error::mixed-chunk poison: homepage /b/index-OLD.js != /stamp /b/index-NEW.js (still split after 3 attempts)` exit 1.
+- Also retried the homepage JPEG-hero read (3 attempts): a run from THOR on the *settled* deploy came back without `media/video/01-stamp-hero.jpg` while the next two reads were fine — same single-shot-read class, would have gone red on a healthy site.
+
+### 2. Pre-push `npm test` failed on unmodified `origin/main` (forced `--no-verify` twice)
+
+Not clone state — `npm ls --depth=0` is clean and `node_modules` is in sync. `server/routes/v5-api.test.js > "v5-jobs module exports startV5Jobs"` dynamically imports `server/v5-jobs.js`, which pulls `db.js` (better-sqlite3 native bindings + schema init) and `logger.js` (`@sentry/node`, pino + its transport worker). Measured on THOR: **2.2s warm, 31.4s cold, ~8.4s under vitest** — past vitest's 5000ms default. Static imports are collection-time and never carry this cost; dynamic imports are charged to the test. Both module-import tests now pass an explicit 60s import budget; the assertions are unchanged.
+
+### Acceptance evidence
+
+- `git push origin HEAD:main` (`2f149bc..5d08434`) **without `--no-verify`** — husky pre-push `npm test` ran and passed: `Test Files 39 passed (39) · Tests 166 passed | 1 skipped (167)` in 115.6s.
+- `Deploy` run **34648489181** on `5d08434`: **success** — `build_and_verify` 2m32s (waited ~70s / 8 attempts for the CF Pages publish), `smoke` green in 40s with `Same entry chunk: /b/index-DQGiRMji.js (attempt 1)`.
+- `bash scripts/pages-smoke.sh` from THOR against live: **exit 0**.
+
+**Still open (not mine to flip):** `/terms` renders the SPA 404 — the real route is `/legal/terms` (reported in `t_19b132ff`, routing lane).
+
+---
+
 ## Latest Session Summary (Kimi THOR, 2026-09-11 — API rebuild DONE)
 
 **Live:** `GET https://api.satohash.io/health` → `gitSha=5ec7756`, paywall off, Caddy OK, keep-alive live. Stamps ~316. Vault ingest done (THOR, not M4).
