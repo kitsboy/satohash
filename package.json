@@ -36,6 +36,9 @@
     "prepare": "husky",
     "version:bump": "node scripts/increment-build.js",
     "api:smoke": "bash scripts/api-local-smoke.sh",
+    "guard:ots": "node scripts/guard-ots-chain.mjs",
+    "test:ots-vendor": "node tests/ots-vendor/transport.test.mjs",
+    "test:ots-vendor:live": "node tests/ots-vendor/live.test.mjs",
     "mvp:smoke": "bash scripts/mvp-smoke.sh",
     "pages:live-smoke": "bash scripts/pages-smoke.sh",
     "test:e2e:mobile": "playwright test tests/e2e/mobile-stamp-loop.spec.js --workers=1 --reporter=line",
@@ -113,7 +116,7 @@
     "node-fetch": "^3.3.2",
     "nodemailer": "^8.0.7",
     "nostr-tools": "^2.23.3",
-    "opentimestamps": "^0.4.9",
+    "opentimestamps": "file:vendor/opentimestamps",
     "pdf-lib": "^1.17.1",
     "pino": "^10.3.1",
     "pino-http": "^11.0.0",
@@ -185,11 +188,7 @@
     "parse-duration": "^2.1.3",
     "bn.js": "^4.12.5",
     "elliptic": "^6.6.1",
-    "interface-datastore": "^8.3.2",
-    "request": {
-      "form-data": "^4.0.1",
-      "qs": "^6.16.0",
-      "tough-cookie": "^4.1.4"
-    }
-  }
+    "interface-datastore": "^8.3.2"
+  },
+  "_ots_vendor_note": "SATOHASH OTS VENDOR FENCE (t_61803c78): opentimestamps now resolves to ./vendor/opentimestamps (file: dependency), a fork of upstream 0.4.9 whose request/request-promise HTTP transport was replaced by src/request-shim.js on the built-in fetch. `request` and `request-promise` must NEVER appear in the install tree again — request@2.88.2 loads require('uuid/v4') at boot and any uuid>=9 override crash-loops the API with ERR_PACKAGE_PATH_NOT_EXPORTED (2026-09-12 incident). Do not reintroduce an `overrides.request` block; it has no target now. Run `npm run guard:ots` after any override/dependency change."
 }

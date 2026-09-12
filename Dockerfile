@@ -2,6 +2,8 @@
 FROM node:20-alpine AS base
 WORKDIR /app
 COPY package*.json ./
+# Vendored opentimestamps fork (file:vendor/opentimestamps) — see Dockerfile.api.
+COPY vendor ./vendor
 
 # ---- Dependencies & Build ----
 FROM base AS build
