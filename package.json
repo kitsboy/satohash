@@ -189,8 +189,7 @@
     "request": {
       "form-data": "^4.0.1",
       "qs": "^6.16.0",
-      "tough-cookie": "^4.1.4",
-      "uuid": "^9.0.1"
+      "tough-cookie": "^4.1.4"
     }
   }
 }
