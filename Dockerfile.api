@@ -3,8 +3,19 @@ FROM node:20-alpine AS deps
 WORKDIR /app
 RUN apk add --no-cache python3 make g++
 COPY package*.json ./
+# Vendored opentimestamps fork (package.json -> "file:vendor/opentimestamps"):
+# the fetch-transport replacement for the deprecated request/request-promise
+# stack. Must be present before npm ci resolves the file: dependency.
+COPY vendor ./vendor
+COPY scripts/guard-ots-chain.mjs ./scripts/guard-ots-chain.mjs
 ENV NODE_ENV=production
 RUN npm ci --omit=dev --ignore-scripts && npm rebuild better-sqlite3
+# BOOT-CHAIN GATE (t_ae0b0175): opentimestamps -> request -> require('uuid/v4').
+# A dependency override that bumps request's nested uuid past 3.x makes this
+# require throw ERR_PACKAGE_PATH_NOT_EXPORTED and the API crash-loops at boot.
+# Verifying here means a broken tree fails the IMAGE BUILD — it can never reach
+# production as a crash-loop. Replaced the runtime-only check that tests missed.
+RUN node scripts/guard-ots-chain.mjs
 # Keep a single package.json so Pages `npm ci` is unchanged. Do not add package.api.json.
 # Drop fat frontend packages that npm ci --omit=dev still installs from the SPA tree.
 # Keep opentimestamps (stamp path). Prune ipfs-http-client — NFT mocks unless IPFS_URL is set.
@@ -19,6 +30,7 @@ RUN apk add --no-cache wget && npm install -g pm2
 
 COPY package*.json ./
 COPY --from=deps /app/node_modules ./node_modules
+COPY vendor ./vendor
 COPY server ./server
 COPY ecosystem.config.cjs ./
 

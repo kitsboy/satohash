@@ -31,6 +31,13 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
+      - name: OTS boot-chain guard (opentimestamps -> request -> uuid/v4)
+        # Fence for t_ae0b0175: a dependency override that bumps request's nested
+        # uuid past 3.x breaks the OTS deep require and crash-loops the API at boot.
+        # This fails the build loudly in CI instead of failing silently at boot.
+        # Do NOT raise the uuid override without replacing the opentimestamps dep.
+        run: npm run guard:ots
+
       - name: Sync docs
         run: npm run docs:sync
 
