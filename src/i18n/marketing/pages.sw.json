@@ -558,9 +558,9 @@
       "cta": "Galeri ya Widget"
     },
     "apiKey": {
-      "title": "Pata Funguo Yako ya API",
-      "subtitle": "Zalisha funguo za API kutoka dashibodi ya msanidi. Kila funguo ina ruhusa za upeo na inaweza kubatilishwa kwa uhuru.",
-      "cta": "Dashibodi ya Msanidi"
+      "title": "Hakuna Funguo ya API Inahitajika",
+      "subtitle": "Satohash inatia muhuri bila akaunti na bila funguo — tuma hash yako ya SHA-256 kwa /api/stamp. Programu za suite hupokea X-Satohash-Key yenye upeo kutoka kwa timu.",
+      "cta": "Mwongozo wa Msanidi"
     }
   },
   "developerPage": {

@@ -558,9 +558,9 @@
       "cta": "Galeria de widgets"
     },
     "apiKey": {
-      "title": "Obtenha sua chave de API",
-      "subtitle": "Gere chaves de API no painel do desenvolvedor. Cada chave tem permissões com escopo e pode ser revogada de forma independente.",
-      "cta": "Painel do desenvolvedor"
+      "title": "Nenhuma chave de API necessária",
+      "subtitle": "O Satohash carimba sem conta e sem chave — envie seu hash SHA-256 para /api/stamp. Apps da suíte recebem uma X-Satohash-Key com escopo do time.",
+      "cta": "Guia do desenvolvedor"
     }
   },
   "developerPage": {

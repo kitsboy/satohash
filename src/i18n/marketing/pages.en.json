@@ -558,9 +558,9 @@
       "cta": "Widget Gallery"
     },
     "apiKey": {
-      "title": "Get Your API Key",
-      "subtitle": "Generate API keys from the developer dashboard. Each key has scoped permissions and can be revoked independently.",
-      "cta": "Developer Dashboard"
+      "title": "No API Key Needed",
+      "subtitle": "Satohash stamps without an account or a key — POST your SHA-256 hash to /api/stamp. Suite apps receive a scoped X-Satohash-Key from the team.",
+      "cta": "Developer Guide"
     }
   },
   "developerPage": {

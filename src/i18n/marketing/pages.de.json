@@ -558,9 +558,9 @@
       "cta": "Widget-Galerie"
     },
     "apiKey": {
-      "title": "API-Key erhalten",
-      "subtitle": "API-Keys im Developer-Dashboard generieren. Jeder Key hat scoped Berechtigungen und kann unabhängig widerrufen werden.",
-      "cta": "Developer-Dashboard"
+      "title": "Kein API-Key nötig",
+      "subtitle": "Satohash stempelt ohne Konto und ohne Key — sende deinen SHA-256-Hash an /api/stamp. Suite-Apps erhalten einen eingeschränkten X-Satohash-Key vom Team.",
+      "cta": "Entwickler-Guide"
     }
   },
   "developerPage": {

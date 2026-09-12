@@ -14,7 +14,6 @@ import {
   Activity,
   History,
   Check,
-  Trash2,
   Copy,
   X,
   Layers,
@@ -124,11 +123,6 @@ export default function Settings() {
       }
     }
   })
-
-  const [keys, setKeys] = useState([
-    { id: 1, name: 'Production Node', key: 'SAT_LIVE_8F2...A9B', status: 'Active' },
-    { id: 2, name: 'Staging Wallet', key: 'SAT_TEST_3C1...D4E', status: 'Active' }
-  ])
 
   const [isInvoiceOpen, setIsInvoiceOpen] = useState(false)
   const [eliteMode, setEliteMode] = useState(() => {
@@ -378,17 +372,6 @@ export default function Settings() {
       description: 'Your sovereign profile has been synced with the mesh.',
       icon: <Check className="text-[var(--accent-success)]" />
     })
-  }
-
-  const generateKey = () => {
-    const newKey = {
-      id: Date.now(),
-      name: 'New API Key',
-      key: `SAT_LIVE_${Date.now().toString(36).slice(-6).toUpperCase()}...`,
-      status: 'Active'
-    }
-    setKeys([...keys, newKey])
-    toast.success('New API Key Generated')
   }
 
   const resetSettings = () => {
@@ -886,58 +869,25 @@ export default function Settings() {
                       />
                     </div>
 
-                    <div className="space-y-8 rounded-3xl border border-[var(--border)] bg-[var(--bg-primary)] p-8">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-4 text-[var(--accent-purple)]">
-                          <Key size={24} />
-                          <h4 className="text-xl font-bold text-[var(--text-primary)]">
-                            API Mesh Keys
-                          </h4>
-                        </div>
-                        <button
-                          onClick={generateKey}
-                          className="h-10 rounded-xl border border-[var(--border-bright)] px-6 text-[10px] font-black tracking-widest uppercase transition-all hover:bg-[var(--text-primary)] hover:text-[var(--bg-primary)]"
-                        >
-                          + New Key
-                        </button>
+                    <div className="space-y-4 rounded-3xl border border-[var(--border)] bg-[var(--bg-primary)] p-8">
+                      <div className="flex items-center gap-4 text-[var(--accent-active)]">
+                        <Key size={24} />
+                        <h4 className="text-xl font-bold text-[var(--text-primary)]">API Access</h4>
                       </div>
-                      <div className="space-y-4">
-                        {keys.map((k) => (
-                          <div
-                            key={k.id}
-                            className="group flex items-center justify-between rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] p-5"
-                          >
-                            <div className="space-y-1">
-                              <p className="text-sm font-bold text-[var(--text-primary)]">
-                                {k.name}
-                              </p>
-                              <span className="font-mono text-[10px] tracking-widest text-[var(--text-secondary)]">
-                                {k.key}
-                              </span>
-                            </div>
-                            <div className="flex items-center gap-4 opacity-100 transition-opacity group-hover:opacity-100 md:opacity-0">
-                              <button
-                                onClick={() => {
-                                  navigator.clipboard.writeText(k.key)
-                                  toast.success('Key copied to clipboard')
-                                }}
-                                className="text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
-                              >
-                                <Copy size={16} />
-                              </button>
-                              <button
-                                onClick={() => {
-                                  setKeys(keys.filter((item) => item.id !== k.id))
-                                  toast.error('Key Revoked')
-                                }}
-                                className="text-[var(--accent-danger)]/50 hover:text-[var(--accent-danger)]"
-                              >
-                                <Trash2 size={16} />
-                              </button>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
+                      <p className="text-sm leading-relaxed text-[var(--text-secondary)]">
+                        You do not need an API key. Stamping is open — send a SHA-256 hash to{' '}
+                        <span className="font-mono text-[11px]">POST /api/stamp</span> and you get a
+                        proof back. Suite apps receive a scoped{' '}
+                        <span className="font-mono text-[11px]">X-Satohash-Key</span> from the team
+                        by hand, so there is nothing to generate or revoke here.
+                      </p>
+                      <a
+                        href="/developer"
+                        className="inline-flex text-xs font-black tracking-widest uppercase"
+                        style={{ color: 'var(--accent-active)' }}
+                      >
+                        Authentication guide
+                      </a>
                     </div>
                   </div>
                 </SettingSection>

@@ -2,12 +2,10 @@ import { motion, AnimatePresence } from 'framer-motion'
 import usePageMeta from '../hooks/usePageMeta'
 import {
   Terminal,
-  Key,
   Zap,
   Activity,
   Code2,
   Lock,
-  Plus,
   ChevronRight,
   ShieldCheck,
   BarChart3,
@@ -29,19 +27,11 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 import Tooltip from '../components/ui/Tooltip'
 
-import { getApiUrl, getPublicBaseUrl } from '../config/constants'
+import { getApiUrl } from '../config/constants'
 import { isApiExplicitlyConfigured } from '../config/mvp'
 import Footer from '../components/layout/Footer'
 
 const API_URL = getApiUrl()
-const BASE_URL = getPublicBaseUrl()
-
-const MOCK_KEYS = [
-  { id: 1, name: 'Main Production Node', key: 'SAT_LIVE_8F2...A9B', status: 'Active' },
-  { id: 2, name: 'Financial Ledger Worker', key: 'SAT_LIVE_4K9...R2D', status: 'Active' },
-  { id: 3, name: 'iOS Personal Sync', key: 'SAT_TEST_3C1...D4E', status: 'Active' },
-  { id: 4, name: 'Legacy Archive', key: 'SAT_REVOKED_1A2...B3C', status: 'Revoked' }
-]
 
 const CODE_EXAMPLES = {
   curl: `# Step 1: hash your file locally (nothing leaves your machine)
@@ -49,7 +39,7 @@ sha256sum mycontract.pdf
 # => e3b0c44298fc1c149afbf4c8996fb924...
 
 # Step 2: send only the hash to Satohash
-curl -X POST ${BASE_URL}/api/stamp \\
+curl -X POST ${API_URL}/api/stamp \\
   -H "Content-Type: application/json" \\
   -d '{"hash":"e3b0c44298fc1c149afbf4c8996fb924..."}'
 
@@ -65,7 +55,7 @@ async function hashFile(file) {
 
 // Send hash to Satohash
 const hash = await hashFile(myFile)
-const res = await fetch('${BASE_URL}/api/stamp', {
+const res = await fetch('${API_URL}/api/stamp', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({ hash })
@@ -80,7 +70,7 @@ with open('mycontract.pdf', 'rb') as f:
     file_hash = hashlib.sha256(f.read()).hexdigest()
 
 # Send hash to Satohash
-r = requests.post('${BASE_URL}/api/stamp',
+r = requests.post('${API_URL}/api/stamp',
     json={'hash': file_hash})
 data = r.json()
 print(f"Stamp ID: {data['id']} — Status: {data['status']}")`
@@ -152,43 +142,20 @@ const AI_INTEGRATIONS = [
 
 // ─── SUB-COMPONENTS ───────────────────────────────────────────────────────────
 
-const ApiKeyRow = ({ name, keySnippet, status }) => (
-  <div className="group flex items-center justify-between rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] p-5 transition-all hover:border-[var(--border-bright)]">
-    <div className="flex items-center gap-4">
-      <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--bg-secondary)] text-[var(--accent-active)]">
-        <Key size={20} />
-      </div>
-      <div>
-        <p className="text-sm font-bold tracking-tight" style={{ color: 'var(--text-primary)' }}>
-          {name}
-        </p>
-        <p
-          className="font-mono text-[10px] tracking-[0.2em] uppercase"
-          style={{ color: 'var(--text-secondary)' }}
-        >
-          {keySnippet || '—'}
-        </p>
-      </div>
+const AuthCard = ({ icon: Icon, title, children, accent = 'var(--accent-active)' }) => (
+  <div
+    className="space-y-2 rounded-2xl border p-5"
+    style={{ borderColor: 'var(--border)', background: 'var(--bg-secondary)' }}
+  >
+    <div className="flex items-center gap-2">
+      <Icon size={15} style={{ color: accent }} />
+      <span className="text-sm font-black" style={{ color: 'var(--text-primary)' }}>
+        {title}
+      </span>
     </div>
-    <div className="flex items-center gap-6">
-      <div className="flex items-center gap-2">
-        <div
-          className={`h-1.5 w-1.5 rounded-full ${status === 'Active' ? 'bg-[var(--accent-success)]' : 'bg-red-500'}`}
-        />
-        <span
-          className="text-[10px] font-black tracking-widest uppercase"
-          style={{ color: 'var(--text-secondary)' }}
-        >
-          {status}
-        </span>
-      </div>
-      <button
-        className="opacity-0 transition-colors group-hover:opacity-100"
-        style={{ color: 'var(--text-secondary)' }}
-      >
-        <Copy size={16} />
-      </button>
-    </div>
+    <p className="text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+      {children}
+    </p>
   </div>
 )
 
@@ -323,8 +290,6 @@ export default function Developer() {
     '> Satohash API ready',
     '> Connected to 3 OTS calendars (alice · bob · finney)'
   ])
-  const [apiKeys, setApiKeys] = useState(null)
-  const [keysError, setKeysError] = useState(false)
   const [apiUsage] = useState(() => {
     try {
       return JSON.parse(localStorage.getItem('satohash_api_usage') || '{"calls":0,"stamps":0}')
@@ -349,51 +314,12 @@ export default function Developer() {
     return () => clearInterval(interval)
   }, [])
 
-  useEffect(() => {
-    fetch(`${API_URL}/api/keys`)
-      .then((r) => (r.ok ? r.json() : Promise.reject()))
-      .then((d) => setApiKeys(Array.isArray(d) ? d : MOCK_KEYS))
-      .catch(() => {
-        setKeysError(true)
-        setApiKeys(MOCK_KEYS)
-      })
-  }, [])
-
-  const handleGenerateKey = async () => {
-    try {
-      const res = await fetch(`${API_URL}/api/keys`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: 'New Key' })
-      })
-      if (res.ok) {
-        const newKey = await res.json()
-        setApiKeys((prev) => [...(prev || MOCK_KEYS), newKey])
-        toast.success('API Key Generated')
-      } else toast.error('Key generation failed')
-    } catch {
-      toast.error('Key generation failed')
-    }
-  }
-
   return (
     <div
       className="min-h-screen pb-20"
       style={{ background: 'var(--bg-primary)', color: 'var(--text-primary)' }}
     >
       <div className="mx-auto max-w-6xl space-y-12 px-4 py-8 md:px-8">
-        {keysError && (
-          <div
-            role="alert"
-            className="rounded-2xl border px-4 py-3 text-sm"
-            style={{
-              borderColor: 'var(--accent-pending)',
-              background: 'color-mix(in srgb, var(--accent-pending) 8%, transparent)'
-            }}
-          >
-            Demo mode — API keys are simulated until the developer API is reachable.
-          </div>
-        )}
         <div
           className="flex flex-wrap gap-4 rounded-2xl border px-4 py-3 text-xs font-bold tracking-widest uppercase"
           style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
@@ -419,7 +345,7 @@ export default function Developer() {
                 className="font-mono text-[10px] font-bold tracking-widest uppercase"
                 style={{ color: 'var(--accent-active)' }}
               >
-                Developer API — {BASE_URL.replace(/^https?:\/\//, '')}
+                Developer API — {API_URL.replace(/^https?:\/\//, '')}
                 {!isApiExplicitlyConfigured() && (
                   <span
                     className="ml-2 rounded-full px-2 py-0.5 text-[8px] font-black uppercase"
@@ -454,7 +380,7 @@ export default function Developer() {
               className="flex min-w-max rounded-2xl border p-1.5"
               style={{ borderColor: 'var(--border)', background: 'var(--bg-secondary)' }}
             >
-              {['overview', 'keys', 'docs', 'strategy'].map((tab) => (
+              {['overview', 'auth', 'docs', 'strategy'].map((tab) => (
                 <button
                   key={tab}
                   onClick={() => setActiveTab(tab)}
@@ -749,86 +675,91 @@ export default function Developer() {
                 </motion.div>
               )}
 
-              {/* KEYS TAB */}
-              {activeTab === 'keys' && (
+              {/* AUTH TAB */}
+              {activeTab === 'auth' && (
                 <motion.div
-                  key="keys"
+                  key="auth"
                   initial={{ opacity: 0, scale: 0.98 }}
                   animate={{ opacity: 1, scale: 1 }}
                   className="space-y-6"
                 >
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <h2
-                        className="flex items-center text-2xl font-black tracking-tight uppercase"
-                        style={{ color: 'var(--text-primary)' }}
-                      >
-                        API Keys
-                        <Tooltip
-                          title="API Key"
-                          content="A secret token you include in your requests so Satohash knows who you are. Keep it private — treat it like a password."
-                        />
-                      </h2>
-                      {keysError && (
-                        <span
-                          className="rounded-full border px-3 py-1 text-[9px] font-black tracking-widest uppercase"
-                          style={{
-                            borderColor:
-                              'color-mix(in srgb, var(--accent-pending) 30%, transparent)',
-                            color: 'var(--accent-pending)',
-                            background: 'color-mix(in srgb, var(--accent-pending) 10%, transparent)'
-                          }}
-                        >
-                          Demo data
-                        </span>
-                      )}
-                    </div>
-                    <button
-                      onClick={handleGenerateKey}
-                      className="flex h-10 items-center gap-2 rounded-xl px-5 text-[10px] font-black tracking-widest uppercase transition-all hover:scale-105"
-                      style={{ background: 'var(--text-primary)', color: 'var(--bg-primary)' }}
+                  <div className="flex flex-wrap items-center gap-3">
+                    <h2
+                      className="flex items-center text-2xl font-black tracking-tight uppercase"
+                      style={{ color: 'var(--text-primary)' }}
                     >
-                      <Plus size={14} /> New Key
-                    </button>
+                      Authentication
+                      <Tooltip
+                        title="Do I need an API key?"
+                        content="No. Stamping is open today — send a SHA-256 hash and get a proof back. Keys only exist for suite apps we hand out ourselves. You never have to create or store one."
+                      />
+                    </h2>
+                    <span
+                      className="rounded-full border px-3 py-1 text-[9px] font-black tracking-widest uppercase"
+                      style={{
+                        borderColor:
+                          'color-mix(in srgb, var(--accent-success) 30%, transparent)',
+                        color: 'var(--accent-success)',
+                        background: 'color-mix(in srgb, var(--accent-success) 10%, transparent)'
+                      }}
+                    >
+                      No key required
+                    </span>
                   </div>
-                  <div className="space-y-3">
-                    {apiKeys === null
-                      ? Array.from({ length: 3 }).map((_, i) => (
-                          <div
-                            key={i}
-                            className="flex animate-pulse items-center justify-between rounded-xl border p-5"
-                            style={{
-                              borderColor: 'var(--border)',
-                              background: 'var(--bg-primary)'
-                            }}
-                          >
-                            <div className="flex items-center gap-4">
-                              <div
-                                className="h-12 w-12 rounded-xl"
-                                style={{ background: 'var(--surface-raised)' }}
-                              />
-                              <div className="space-y-2">
-                                <div
-                                  className="h-3 w-36 rounded"
-                                  style={{ background: 'var(--surface-raised)' }}
-                                />
-                                <div
-                                  className="h-2 w-24 rounded"
-                                  style={{ background: 'var(--surface-raised)' }}
-                                />
-                              </div>
-                            </div>
-                          </div>
-                        ))
-                      : apiKeys.map((k) => (
-                          <ApiKeyRow
-                            key={k.id}
-                            name={k.name}
-                            keySnippet={k.key || k.keySnippet}
-                            status={k.status}
-                          />
-                        ))}
+                  <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+                    <AuthCard
+                      icon={Bitcoin}
+                      title="No key needed today"
+                      accent="var(--accent-success)"
+                    >
+                      Send <code className="font-mono">POST /api/stamp</code> with{' '}
+                      <code className="font-mono">{'{"hash":"<64-char sha256>"}'}</code> and you get a
+                      proof ID back. Open to everyone, rate-limited — no account, no signup, no key.
+                    </AuthCard>
+                    <AuthCard
+                      icon={Building2}
+                      title="Suite apps (internal)"
+                      accent="var(--accent-purple)"
+                    >
+                      Give A Bit family apps send <code className="font-mono">X-Satohash-Key</code> —
+                      a key we provision server-side. It is not self-serve: ask at hello@giveabit.io
+                      and we issue one by hand.
+                    </AuthCard>
+                    <AuthCard icon={Zap} title="If paid mode is on" accent="var(--accent-pending)">
+                      The API answers <code className="font-mono">HTTP 402</code> with a Lightning
+                      invoice. Pay per call, then retry with{' '}
+                      <code className="font-mono">Authorization: L402 &lt;token&gt;</code>. Still no
+                      account and no KYC — keys are never required.
+                    </AuthCard>
                   </div>
+                  <div
+                    className="space-y-3 rounded-2xl border p-5"
+                    style={{ borderColor: 'var(--border)', background: 'var(--bg-secondary)' }}
+                  >
+                    <h3
+                      className="text-sm font-black tracking-widest uppercase"
+                      style={{ color: 'var(--text-primary)' }}
+                    >
+                      Try it right now — {API_URL.replace(/^https?:\/\//, '')}
+                    </h3>
+                    <pre
+                      className="overflow-x-auto rounded-xl p-4 font-mono text-[11px] leading-relaxed"
+                      style={{ background: 'var(--bg-primary)', color: 'var(--text-secondary)' }}
+                    >
+                      {`curl -X POST ${API_URL}/api/stamp \\
+  -H "Content-Type: application/json" \\
+  -d '{"hash":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"}'`}
+                    </pre>
+                  </div>
+                  <p
+                    className="text-xs leading-relaxed"
+                    style={{ color: 'var(--text-secondary)' }}
+                  >
+                    Self-serve API keys are not available. This page previously offered a key
+                    manager that called an endpoint which never existed, and minted keys that no
+                    server ever checked — so it was removed rather than faked. Stamping does not
+                    need a key: send a hash, get a proof.
+                  </p>
                 </motion.div>
               )}
 

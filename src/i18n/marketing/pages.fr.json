@@ -558,9 +558,9 @@
       "cta": "Galerie de widgets"
     },
     "apiKey": {
-      "title": "Obtenez votre clé API",
-      "subtitle": "Générez des clés API depuis le tableau de bord développeur. Chaque clé a des permissions à portée limitée et peut être révoquée indépendamment.",
-      "cta": "Tableau de bord développeur"
+      "title": "Aucune clé API requise",
+      "subtitle": "Satohash horodate sans compte ni clé — envoyez votre empreinte SHA-256 à /api/stamp. Les applications de la suite reçoivent une X-Satohash-Key à portée limitée de notre équipe.",
+      "cta": "Guide développeur"
     }
   },
   "developerPage": {

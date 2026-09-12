@@ -548,9 +548,9 @@
       "cta": "Widget 画廊"
     },
     "apiKey": {
-      "title": "获取 API 密钥",
-      "subtitle": "在开发者仪表板生成 API 密钥。每个密钥具有作用域权限，可独立撤销。",
-      "cta": "开发者仪表板"
+      "title": "无需 API 密钥",
+      "subtitle": "Satohash 无需账户与密钥即可存证——将 SHA-256 哈希发送至 /api/stamp。套件应用由团队单独发放限定范围的 X-Satohash-Key。",
+      "cta": "开发者指南"
     }
   },
   "developerPage": {

@@ -558,9 +558,9 @@
       "cta": "Galería de widgets"
     },
     "apiKey": {
-      "title": "Obtén tu clave API",
-      "subtitle": "Genera claves API desde el panel de desarrollador. Cada clave tiene permisos con alcance y puede revocarse de forma independiente.",
-      "cta": "Panel de desarrollador"
+      "title": "No se necesita clave API",
+      "subtitle": "Satohash sella sin cuenta y sin clave: envía tu hash SHA-256 a /api/stamp. Las apps de la suite reciben una X-Satohash-Key con alcance limitado del equipo.",
+      "cta": "Guía para desarrolladores"
     }
   },
   "developerPage": {

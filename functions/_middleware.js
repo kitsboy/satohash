@@ -45,6 +45,37 @@ export async function onRequest({ request, env, next }) {
   const url = new URL(request.url)
   const ua = request.headers.get('user-agent') || ''
 
+  // ── Unmatched /api/* must not be answered with the SPA shell ────────────────
+  // public/_redirects ends with `/* /index.html 200`, so a path like /api/keys on
+  // this host used to come back as HTTP 200 text/html. Any "does this endpoint
+  // exist?" probe therefore read as a false positive — that is how a dead
+  // /api/keys call shipped unnoticed. Real API routes live on api.satohash.io;
+  // the only /api route served here is /api/metrics (a JSON proxy).
+  if (url.pathname === '/api' || url.pathname.startsWith('/api/')) {
+    const res = await next()
+    const ct = res.headers.get('content-type') || ''
+    if (ct.includes('text/html')) {
+      return new Response(
+        JSON.stringify({
+          error: 'Not Found',
+          message: `No API route at ${url.pathname} on this host.`,
+          hint: 'The Satohash API is served from https://api.satohash.io. This host only answers /api/metrics.',
+          api: 'https://api.satohash.io'
+        }),
+        {
+          status: 404,
+          headers: {
+            'content-type': 'application/json; charset=utf-8',
+            'cache-control': 'no-store',
+            'access-control-allow-origin': '*',
+            'x-robots-tag': 'noindex'
+          }
+        }
+      )
+    }
+    return res
+  }
+
   // GSC HTML file must be 200 at the exact .html URL. Cloudflare Pages Pretty URLs
   // otherwise 308 → /googlef508c6fb64de60ff, which fails ownership verification.
   if (

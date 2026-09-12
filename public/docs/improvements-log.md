@@ -715,3 +715,15 @@
 - [ ] Full family client audit — Katoa / SherpaCarta / Give A Bit still 0 attributed
 - [ ] Kimi: LNbits wallet `satohash` exists (0 sats); LND not configured; paywall stays off (`REQUIRE_LIGHTNING=false`) — not paywall-ready
 - [x] Grok: publish L1/L2 on SPA — donate rail is Breez `satohash@breez.tips`
+
+---
+
+## Batch — /developer key surface tells the truth (2026-09-12)
+
+- [x] Deleted the self-serve API-key manager from `/developer` (MOCK_KEYS, the `GET/POST /api/keys` calls, the Generate Key CTA, the ApiKeyRow list) — `/api/keys` never existed; the demo banner was the only honest part of it
+- [x] `/developer` → **Auth** tab replaces the Keys tab: no key required (stamping is open), suite apps use `X-Satohash-Key` issued by the team, L402 if paid mode is enabled, plus a curl example verified against production
+- [x] `/developer` examples + API banner now point at the API host (`getApiUrl()`), not the website origin — `POST https://satohash.io/api/stamp` = 405 (static host), `POST https://api.satohash.io/api/stamp` = proof
+- [x] `Settings` → removed the fabricated "API Mesh Keys" generator (`SAT_LIVE_…` strings minted in the browser, never checked by any server) → truthful API Access note
+- [x] `Integrations` API-key block rewritten in all 7 locales → "No API Key Needed"
+- [x] `functions/_middleware.js`: unmatched `/api/*` on satohash.io now answers a JSON 404 instead of the SPA shell with HTTP 200 (kills the false-positive "the endpoint exists" probe)
+- [ ] API plane: `api_keys` + `POST/GET /api/admin/keys` are write-only (no middleware reads `key_hash`) — decision card spawned
