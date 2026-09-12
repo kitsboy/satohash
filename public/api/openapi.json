@@ -273,10 +273,10 @@
         }
       }
     },
-    "/api/v1/timestamp/batch": {
+    "/api/v1/stamps/batch": {
       "post": {
         "summary": "Create batch timestamps",
-        "description": "Timestamp up to 1,000 hashes in a single request. Perfect for archives, legal teams, and auditors. Processes asynchronously with webhook notification when complete.",
+        "description": "Batch-stamp multiple hashes in a single request (max 50 hashes). Each hash is submitted to the Bitcoin-anchored OpenTimestamps pipeline and results are returned inline.",
         "tags": ["Batch Timestamping"],
         "requestBody": {
           "required": true,
@@ -634,9 +634,9 @@
               "type": "string",
               "pattern": "^[a-fA-F0-9]{64}$"
             },
-            "description": "Array of SHA-256 hashes to timestamp (max 1,000 for Pro, 100 for Free)",
+            "description": "Array of SHA-256 hashes to timestamp (max 50 hashes per request)",
             "minItems": 1,
-            "maxItems": 1000
+            "maxItems": 50
           },
           "webhook_url": {
             "type": "string",
@@ -805,7 +805,7 @@
                 "properties": {
                   "event": {
                     "type": "string",
-                    "enum": ["timestamp.confirmed"]
+                    "enum": ["confirmed"]
                   },
                   "timestamp_id": {
                     "type": "string"
