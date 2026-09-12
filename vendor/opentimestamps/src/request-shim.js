@@ -38,6 +38,26 @@
 
 const DEFAULT_TIMEOUT_MS = 30000
 
+// AbortSignal.timeout (Chrome 103+/Safari 16+/Firefox 100+) is a 2022-era API.
+// The SPA's build target (es2022) and the general supported-browser matrix can
+// include engines that lack it, and browserify does NOT polyfill it. Fall back
+// to a manual AbortController+setTimeout timer so a timeout signal is available
+// everywhere. Node has AbortSignal.timeout since 17.3, so this only matters on
+// older browsers — but it makes the bundle robust without any polyfill.
+function timeoutSignal (ms) {
+  if (typeof AbortSignal !== 'undefined' && typeof AbortSignal.timeout === 'function') {
+    return AbortSignal.timeout(ms)
+  }
+  const controller = typeof AbortController !== 'undefined' ? new AbortController() : null
+  if (!controller) {
+    return undefined
+  }
+  const timer = setTimeout(() => controller.abort(), ms)
+  // do not keep the event loop alive on the Node/server side (mirrors upstream)
+  if (timer && typeof timer.unref === 'function') timer.unref()
+  return controller.signal
+}
+
 class RequestError extends Error {
   constructor (message, statusCode, detail) {
     super(message)
@@ -83,7 +103,7 @@ module.exports = function requestPromise (options) {
     method,
     headers,
     redirect: 'follow',
-    signal: AbortSignal.timeout(timeoutMs)
+    signal: timeoutSignal(timeoutMs)
   }
 
   if (method !== 'GET' && method !== 'HEAD') {
