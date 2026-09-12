@@ -82,15 +82,6 @@ try {
       content TEXT NOT NULL,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     );
-    CREATE TABLE IF NOT EXISTS api_keys (
-      id TEXT PRIMARY KEY,
-      key_hash TEXT NOT NULL UNIQUE,
-      label TEXT,
-      tier TEXT DEFAULT 'public',
-      active INTEGER DEFAULT 1,
-      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      revoked_at DATETIME
-    );
     CREATE TABLE IF NOT EXISTS webhook_registry (
       id TEXT PRIMARY KEY,
       url TEXT NOT NULL,
@@ -893,46 +884,6 @@ router.post('/webhooks/register', paywallMiddleware, (req, res) => {
     return res.status(500).json({ error: e.message })
   }
   res.status(201).json({ id, url, events: events || ['stamp.confirmed'] })
-})
-
-// ─── 92. admin keys (ADMIN_KEY) ───────────────────────────
-router.post('/admin/keys', (req, res) => {
-  const admin =
-    req.headers['x-admin-key'] || req.headers['authorization']?.replace(/^Bearer\s+/i, '')
-  if (!admin || admin !== process.env.ADMIN_KEY) {
-    return res.status(401).json({ error: 'admin auth required' })
-  }
-  const label = req.body?.label || 'key'
-  const raw = crypto.randomBytes(24).toString('hex')
-  const key_hash = crypto.createHash('sha256').update(raw).digest('hex')
-  const id = uuidv4()
-  db.prepare(`INSERT INTO api_keys (id, key_hash, label, tier) VALUES (?, ?, ?, ?)`).run(
-    id,
-    key_hash,
-    label,
-    req.body?.tier || 'public'
-  )
-  audit('api-key.mint', 'api_key', { key_id: id, label, tier: req.body?.tier || 'public' })
-  res.status(201).json({
-    id,
-    key: raw,
-    label,
-    note: 'store key now — only hash retained server-side'
-  })
-})
-
-router.get('/admin/keys', (req, res) => {
-  const admin =
-    req.headers['x-admin-key'] || req.headers['authorization']?.replace(/^Bearer\s+/i, '')
-  if (!admin || admin !== process.env.ADMIN_KEY) {
-    return res.status(401).json({ error: 'admin auth required' })
-  }
-  const rows = db
-    .prepare(
-      `SELECT id, label, tier, active, created_at, revoked_at FROM api_keys ORDER BY created_at DESC`
-    )
-    .all()
-  res.json({ keys: rows })
 })
 
 // ─── 29. SSE stamp feed ───────────────────────────────────

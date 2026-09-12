@@ -726,4 +726,4 @@
 - [x] `Settings` → removed the fabricated "API Mesh Keys" generator (`SAT_LIVE_…` strings minted in the browser, never checked by any server) → truthful API Access note
 - [x] `Integrations` API-key block rewritten in all 7 locales → "No API Key Needed"
 - [x] `functions/_middleware.js`: unmatched `/api/*` on satohash.io now answers a JSON 404 instead of the SPA shell with HTTP 200 (kills the false-positive "the endpoint exists" probe)
-- [ ] API plane: `api_keys` + `POST/GET /api/admin/keys` are write-only (no middleware reads `key_hash`) — decision card spawned
+- [x] API plane: removed the write-only `api_keys` table declaration + `POST/GET /api/admin/keys` mint/list routes (nothing ever reads `key_hash`) — the routes now 404; pre-existing table left in place (no user data dropped). Scoped team keys, if ever resurrected, must ship with middleware verification + a scope/tier contract + revocation

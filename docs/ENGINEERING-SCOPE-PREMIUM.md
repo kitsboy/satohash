@@ -51,7 +51,7 @@ Plan aligned to `docs/roadmap.md`, `docs/marketing/EXECUTIVE-SUMMARY.md`, `docs/
 - **Batch stamping EXISTS** but synchronous + capped: `POST /api/stamps/batch` (≤50), `POST /api/stamp/multihash`.
 - **Verify EXISTS**: `POST /api/verify/json`, SPA `VerifyPublic.jsx`, `/api/stamps/:id/ots`, `proof-package`.
 - **Co-signing is WEAK**: `POST /api/stamp/cosign` stores arbitrary hex signatures + an *unverified* npub header. No pubkey verification, no non-repudiation.
-- **API keys EXIST**: `/api/admin/keys` (hashed, tier field) — good foundation.
+- **API keys were REMOVED (2026-09-12)**: the inert `api_keys` table + `POST/GET /api/admin/keys` minted keys nothing ever verified, so they were deleted. Real auth today = `FAMILY_API_KEYS` via `X-Satohash-Key`, or L402/`X-Preimage`. Future scoped team keys must NOT resurrect the mint route without: (a) `key_hash` verification inside `paywallMiddleware`/dedicated auth middleware, (b) a documented scope/tier contract, (c) owner-side revocation.
 - **Client SDK EXISTS** (thin): `packages/satohash-client` (stampHash, batchStamp, getStamp, proof-package). **CLI exists**: `packages/satohash-cli`.
 - **Webhooks EXIST**: `/api/webhooks/register`, `stamp.confirmed` event. OpenAPI at `/api/openapi.json`.
 - **Paywall scaffolding EXISTS**: `paywallMiddleware` + `X-L402-Token` headers in `server/index.js`.
@@ -68,7 +68,7 @@ Plan aligned to `docs/roadmap.md`, `docs/marketing/EXECUTIVE-SUMMARY.md`, `docs/
 ## 2. Engineering plan (Ziggy's lane — server/infra/API/verification)
 
 ### Phase 0 — Foundation & infra (prereq for everything premium)
-- Tiered key enforcement middleware keyed off `api_keys.tier` (public/pro/enterprise).
+- Tiered key enforcement middleware (future — keyed off a *scoped* key table, with `key_hash` verification + a scope/tier contract + revocation; do not ship without all three).
 - Per-tier rate limiting (5/min public; pro/ent higher).
 - Append-only, hashed audit log for premium compliance.
 - SQLite stamp-DB backup + restore-verify (LNbits postgres 06:30 + R2 offsite already live — add the stamp DB).
