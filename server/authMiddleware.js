@@ -1,12 +1,6 @@
 import jwt from 'jsonwebtoken';
-import { generateAuthenticationOptions, verifyAuthenticationResponse } from '@simplewebauthn/server';
 import logger from './logger.js';
 import db from './db.js';
-import redis from './cache.js';
-
-// Mock WebAuthn keys for local testing
-const MOCK_EXPECTED_CHALLENGE = 'mock-challenge-' + Date.now();
-const MOCK_RP_ID = process.env.NODE_ENV === 'production' ? 'satohash.com' : 'localhost:3001';
 
 // Tenant resolution
 const getTenantId = (req) => {
@@ -30,31 +24,18 @@ const getTenantId = (req) => {
   return 'default';
 };
 
-// WebAuthn mock verifier (local calc, always pass for mock)
-const verifyWebAuthnMock = async (req, res) => {
-  // In real, use verifyAuthenticationResponse
-  // For mock, check if response has expectedChallenge
-  const { verification } = req.body;
-  if (verification && verification.response && verification.response.challenge === MOCK_EXPECTED_CHALLENGE.replace(/[^a-z0-9]/gi, '')) {
-    return { verified: true, session: 'mock-session' };
-  }
-  return { verified: false };
-};
-
-// Auth middleware: Sets req.tenantId, verifies WebAuthn if required
+// Auth middleware: Sets req.tenantId
 export const authMiddleware = async (req, res, next) => {
   req.tenantId = getTenantId(req);
 
-  // Zero-trust: Require WebAuthn for sensitive routes (mock)
-  if (req.path.startsWith('/api/admin') || req.path.startsWith('/admin')) {
-    const verification = await verifyWebAuthnMock(req, res);
-    if (!verification.verified) {
-      return res.status(401).json({ error: 'WebAuthn verification failed' });
-    }
-    req.webauthnSession = verification.session;
-  }
+  // NOTE: the legacy WebAuthn mock admin gate was removed 2026-09-12 (t_2fed7832).
+  // It only ever fired for unmatched /api/admin/* and /admin/* paths (real admin
+  // routes are served earlier by adminRouter's own Bearer-ADMIN_KEY `adminAuth`),
+  // it crashed on body-less requests (`Cannot destructure 'verification' of
+  // req.body`) turning removed routes into 500s, and it was an always-reject mock.
+  // Removing it lets unmatched admin paths return the normal Express 404 like any
+  // other removed route. `withTenantFilter` (below) is the surviving tenant helper.
 
-  // Filter DB queries? Done in route handlers
   next();
 };
 
