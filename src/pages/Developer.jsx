@@ -543,23 +543,23 @@ export default function Developer() {
                   <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
                     <StatCard
                       icon={Activity}
-                      label="API Requests"
-                      value="1.2M"
-                      sub="Per Month"
+                      label="Public Rate Limit"
+                      value="5/min"
+                      sub="No daily quota"
                       color="var(--accent-active)"
                     />
                     <StatCard
                       icon={ShieldCheck}
-                      label="Uptime"
-                      value="99.99%"
-                      sub="All systems nominal"
+                      label="Availability"
+                      value="High availability"
+                      sub="3 OTS calendars pinged live"
                       color="var(--accent-success)"
                     />
                     <StatCard
                       icon={Zap}
-                      label="Avg Latency"
-                      value="42ms"
-                      sub="Stamp creation"
+                      label="Batch Stamping"
+                      value="Up to 100"
+                      sub="Files per batch"
                       color="var(--accent-pending)"
                     />
                   </div>

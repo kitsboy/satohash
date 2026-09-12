@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Activity, Clock, Zap, Cpu, Globe } from 'lucide-react'
 import { getFeeEstimates, getMempoolStats } from '../../utils/mempool'
+import { getApiUrl } from '../../config/constants'
+
+const APP_VERSION = typeof __APP_VERSION__ !== 'undefined' ? `v${__APP_VERSION__}` : '—'
 
 function entropyFromStats(stats) {
   const seed = stats?.count ?? 124000
@@ -11,6 +14,7 @@ function entropyFromStats(stats) {
 export default function BlockchainPulse() {
   const [stats, setStats] = useState(null)
   const [fees, setFees] = useState(null)
+  const [witnesses, setWitnesses] = useState(null)
   const [loading, setLoading] = useState(true)
   const [entropy, setEntropy] = useState('00000000')
   const [isDegraded, setIsDegraded] = useState(false)
@@ -18,9 +22,17 @@ export default function BlockchainPulse() {
   useEffect(() => {
     const fetchPulse = async () => {
       try {
-        const [mempoolData, feeResults] = await Promise.all([getMempoolStats(), getFeeEstimates()])
+        const [mempoolData, feeResults, meshData] = await Promise.all([
+          getMempoolStats(),
+          getFeeEstimates(),
+          fetch(`${getApiUrl()}/api/mesh/nodes`)
+            .then((r) => (r.ok ? r.json() : null))
+            .catch(() => null)
+        ])
         setStats(mempoolData)
         setFees(feeResults)
+        // Witness calendars are pinged live by the API; never invent a node count.
+        setWitnesses(Array.isArray(meshData?.nodes) ? meshData.nodes : null)
         setEntropy(entropyFromStats(mempoolData))
         setIsDegraded(mempoolData.source === 'fallback' || feeResults.source === 'fallback')
       } catch (err) {
@@ -38,6 +50,7 @@ export default function BlockchainPulse() {
 
   const fastestFee = fees?.high ?? fees?.fastestFee
   const mempoolCount = stats?.count ?? stats?.mempoolSize
+  const witnessActive = witnesses ? witnesses.filter((n) => n.status === 'Active').length : null
 
   return (
     <div className="group relative overflow-hidden rounded-[2.5rem] border border-[var(--border)] bg-[var(--bg-secondary)] p-2 shadow-sm transition-all hover:border-[var(--border-bright)]">
@@ -86,8 +99,12 @@ export default function BlockchainPulse() {
             value={mempoolCount != null ? `${(mempoolCount / 1000).toFixed(0)}k txs` : '—'}
             icon={<Clock size={12} />}
           />
-          <StatBox label="Nodes" value="1,400+" icon={<Globe size={12} />} />
-          <StatBox label="Kernel" value="v4.0.0-E" icon={<Cpu size={12} />} />
+          <StatBox
+            label="Witness Nodes"
+            value={witnesses ? `${witnessActive}/${witnesses.length}` : '—'}
+            icon={<Globe size={12} />}
+          />
+          <StatBox label="Kernel" value={APP_VERSION} icon={<Cpu size={12} />} />
         </div>
 
         {/* Metadata Jewelry */}

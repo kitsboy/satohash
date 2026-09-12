@@ -162,7 +162,7 @@
         "dedicated247": "24/7 Dediziert",
         "email": "E-Mail",
         "plannedHigher": "Höhere Grenzen (geplant)",
-        "sla99": "99,9 %",
+        "sla99": "Nach Vereinbarung",
         "unlimited": "Unbegrenzt",
         "yes": "Ja"
       }
@@ -1012,7 +1012,7 @@
       },
       "devops": {
         "title": "Souveräne Node-DevOps",
-        "desc": "Orchestrieren Sie unser globales Witness-Node-Mesh. 99.999 % Verfügbarkeit für das Truth OS unter extremen Netzwerkbedingungen sicherstellen."
+        "desc": "Orchestrieren Sie unser globales Witness-Node-Mesh. Halten Sie das Truth OS unter extremen Netzwerkbedingungen erreichbar."
       },
       "data": {
         "title": "Blockchain-Datenwissenschaftler",

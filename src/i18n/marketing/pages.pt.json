@@ -162,7 +162,7 @@
         "dedicated247": "Dedicado 24/7",
         "email": "E-mail",
         "plannedHigher": "Limites maiores (planejados)",
-        "sla99": "99,9%",
+        "sla99": "Conforme acordo",
         "unlimited": "Ilimitado",
         "yes": "Sim"
       }
@@ -1012,7 +1012,7 @@
       },
       "devops": {
         "title": "DevOps de nós soberanos",
-        "desc": "Orquestrar nossa malha global de nós testemunha. Garantir 99.999% de disponibilidade para o Truth OS em condições extremas de rede."
+        "desc": "Orquestrar nossa malha global de nós testemunha. Manter o Truth OS acessível em condições extremas de rede."
       },
       "data": {
         "title": "Cientista de dados blockchain",

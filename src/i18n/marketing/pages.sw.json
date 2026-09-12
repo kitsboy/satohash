@@ -162,7 +162,7 @@
         "dedicated247": "Maalum 24/7",
         "email": "Barua pepe",
         "plannedHigher": "Vikomo vya juu (vimepangwa)",
-        "sla99": "99.9%",
+        "sla99": "Kwa makubaliano",
         "unlimited": "Bila kikomo",
         "yes": "Ndiyo"
       }
@@ -1012,7 +1012,7 @@
       },
       "devops": {
         "title": "DevOps wa nodi huru",
-        "desc": "Ratibu mtandao wetu wa kimataifa wa nodi za shahidi. Hakikisha upatikanaji wa 99.999% kwa Truth OS katika hali kali za mtandao."
+        "desc": "Ratibu mtandao wetu wa kimataifa wa nodi za shahidi. Hakikisha Truth OS inapatikana katika hali kali za mtandao."
       },
       "data": {
         "title": "Mwanasayansi wa data ya blockchain",

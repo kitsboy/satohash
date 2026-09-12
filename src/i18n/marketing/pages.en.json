@@ -162,7 +162,7 @@
         "dedicated247": "24/7 Dedicated",
         "email": "Email",
         "plannedHigher": "Higher limits (planned)",
-        "sla99": "99.9%",
+        "sla99": "By agreement",
         "unlimited": "Unlimited",
         "yes": "Yes"
       }
@@ -1012,7 +1012,7 @@
       },
       "devops": {
         "title": "Sovereign Node DevOps",
-        "desc": "Orchestrate our global mesh of witness nodes. Ensure 99.999% availability for the Truth OS under extreme network conditions."
+        "desc": "Orchestrate our global mesh of witness nodes. Keep the Truth OS reachable under extreme network conditions."
       },
       "data": {
         "title": "Blockchain Data Scientist",

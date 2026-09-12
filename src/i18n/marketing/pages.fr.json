@@ -162,7 +162,7 @@
         "dedicated247": "Dédié 24/7",
         "email": "E-mail",
         "plannedHigher": "Limites supérieures (prévues)",
-        "sla99": "99.9%",
+        "sla99": "Sur accord",
         "unlimited": "Illimité",
         "yes": "Oui"
       }
@@ -1012,7 +1012,7 @@
       },
       "devops": {
         "title": "DevOps nœuds souverains",
-        "desc": "Orchestrer notre maillage mondial de nœuds témoins. Garantir 99.999 % de disponibilité pour le Truth OS dans des conditions réseau extrêmes."
+        "desc": "Orchestrer notre maillage mondial de nœuds témoins. Maintenir le Truth OS accessible dans des conditions réseau extrêmes."
       },
       "data": {
         "title": "Data scientist blockchain",

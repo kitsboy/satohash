@@ -1,58 +1,16 @@
 import { motion } from 'framer-motion'
-import {
-  Network,
-  Globe,
-  Cpu,
-  ShieldCheck,
-  Zap,
-  BarChart3,
-  Activity,
-  Server,
-  Database,
-  MapPin,
-  ChevronRight,
-  ArrowUpRight
-} from 'lucide-react'
+import { Network, Globe, ShieldCheck, BarChart3, Server, ArrowUpRight } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import usePageMeta from '../hooks/usePageMeta'
 import { getApiUrl } from '../config/constants'
 
-const FALLBACK_NODES = [
-  {
-    city: 'Frankfurt',
-    country: 'Germany',
-    status: 'Active',
-    latency: '12',
-    uptime: '99.99',
-    region: 'Europe'
-  },
-  {
-    city: 'Singapore',
-    country: 'Singapore',
-    status: 'Active',
-    latency: '45',
-    uptime: '100.0',
-    region: 'Asia'
-  },
-  {
-    city: 'New York',
-    country: 'USA',
-    status: 'Active',
-    latency: '8',
-    uptime: '99.98',
-    region: 'North America'
-  },
-  {
-    city: 'Tokyo',
-    country: 'Japan',
-    status: 'Active',
-    latency: '62',
-    uptime: '99.95',
-    region: 'Asia'
-  }
-]
-
-const NodeCard = ({ city, country, status, latency, uptime, load }) => (
+/**
+ * Witness-node cards are fed by GET /api/mesh/nodes, which pings the
+ * OpenTimestamps calendars live and returns { name, url, status, latency }.
+ * There is no uptime measurement and no node registry, so we render only what
+ * the API actually reports — no fallback node list, no invented percentages.
+ */
+const NodeCard = ({ name, url, status, latency }) => (
   <div className="group rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] p-6 transition-all hover:border-[var(--border-bright)] hover:bg-[var(--surface-raised)]/20">
     <div className="mb-6 flex items-center justify-between">
       <div className="flex items-center gap-3">
@@ -60,9 +18,9 @@ const NodeCard = ({ city, country, status, latency, uptime, load }) => (
           <Server size={18} />
         </div>
         <div>
-          <h4 className="text-sm font-bold tracking-tight text-white">{city}</h4>
+          <h4 className="text-sm font-bold tracking-tight break-all text-white">{name}</h4>
           <p className="text-[10px] font-bold tracking-widest text-[var(--text-secondary)] uppercase">
-            {country}
+            OpenTimestamps calendar
           </p>
         </div>
       </div>
@@ -79,15 +37,22 @@ const NodeCard = ({ city, country, status, latency, uptime, load }) => (
     <div className="grid grid-cols-2 gap-4 border-t border-[var(--border)] pt-4">
       <div>
         <p className="mb-1 text-[9px] font-black tracking-widest text-[var(--text-secondary)] uppercase">
-          Latency
+          Ping Latency
         </p>
-        <p className="font-mono text-sm font-bold text-white">{latency}ms</p>
+        <p className="font-mono text-sm font-bold text-white">{latency ?? '—'}</p>
       </div>
       <div>
         <p className="mb-1 text-[9px] font-black tracking-widest text-[var(--text-secondary)] uppercase">
-          Uptime
+          Endpoint
         </p>
-        <p className="font-mono text-sm font-bold text-white">{uptime}%</p>
+        <a
+          href={url}
+          target="_blank"
+          rel="noreferrer noopener"
+          className="font-mono text-xs font-bold break-all text-[var(--accent-active)] hover:underline"
+        >
+          {url ? new URL(url).hostname : '—'}
+        </a>
       </div>
     </div>
   </div>
@@ -95,9 +60,9 @@ const NodeCard = ({ city, country, status, latency, uptime, load }) => (
 
 export default function Mesh() {
   usePageMeta({ page: 'mesh' })
-  const [activeRegion, setActiveRegion] = useState('Global')
   const [nodes, setNodes] = useState([])
   const [nodesLoading, setNodesLoading] = useState(true)
+  const [nodesError, setNodesError] = useState(false)
 
   useEffect(() => {
     const API = getApiUrl()
@@ -107,15 +72,31 @@ export default function Mesh() {
         throw new Error('Failed')
       })
       .then((data) => {
-        setNodes(Array.isArray(data) ? data : FALLBACK_NODES)
+        // Contract: { nodes: [{ name, url, status, latency }] }. Anything else is
+        // not a node list — show the empty state rather than fabricated nodes.
+        setNodes(Array.isArray(data?.nodes) ? data.nodes : [])
       })
       .catch(() => {
-        setNodes(FALLBACK_NODES)
+        setNodes([])
+        setNodesError(true)
       })
       .finally(() => {
         setNodesLoading(false)
       })
   }, [])
+
+  const activeNodes = nodes.filter((n) => n.status === 'Active').length
+
+  const latencies = nodes
+    .map((n) => Number.parseInt(String(n.latency ?? '').replace(/[^\d]/g, ''), 10))
+    .filter((n) => Number.isFinite(n))
+
+  const avgLatency =
+    latencies.length > 0
+      ? `${Math.round(latencies.reduce((a, b) => a + b, 0) / latencies.length)}ms`
+      : '—'
+
+  const onlineRatio = nodes.length > 0 ? `${Math.round((activeNodes / nodes.length) * 100)}%` : '—'
 
   return (
     <div className="mx-auto max-w-7xl space-y-12 p-8">
@@ -132,21 +113,21 @@ export default function Mesh() {
             <span className="text-[var(--text-secondary)]">Witness Mesh.</span>
           </h1>
           <p className="max-w-xl text-lg leading-relaxed font-medium text-[var(--text-secondary)]">
-            Monitor the decentralized infrastructure that powers Satohash. A global network of
-            autonomous witness nodes ensuring absolute proof propagation and finality.
+            Live view of the infrastructure that powers Satohash: the independent OpenTimestamps
+            witness calendars our proofs are submitted to, pinged from the API in real time.
           </p>
         </div>
 
-        <div className="flex rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] p-1.5 shadow-2xl">
-          {['Global', 'North America', 'Europe', 'Asia'].map((region) => (
-            <button
-              key={region}
-              onClick={() => setActiveRegion(region)}
-              className={`rounded-xl px-6 py-3 text-[10px] font-black tracking-widest uppercase transition-all ${activeRegion === region ? 'border border-[var(--border-bright)] bg-[var(--bg-primary)] text-white shadow-lg' : 'text-[var(--text-secondary)] hover:text-white'}`}
-            >
-              {region}
-            </button>
-          ))}
+        <div className="flex flex-col items-start gap-3 rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] p-5 shadow-2xl">
+          <span className="text-[10px] font-black tracking-widest text-[var(--text-secondary)] uppercase">
+            Witness calendars online
+          </span>
+          <span className="font-mono text-3xl font-black tracking-tighter text-white">
+            {nodesLoading ? '…' : nodes.length > 0 ? `${activeNodes}/${nodes.length}` : '—'}
+          </span>
+          <span className="text-[10px] font-bold tracking-widest text-[var(--text-secondary)] uppercase">
+            pinged live by api.satohash.io
+          </span>
         </div>
       </header>
 
@@ -169,14 +150,14 @@ export default function Mesh() {
                   size={400}
                   className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[var(--accent-active)]/5"
                 />
-                {/* Animated Pulsing Nodes */}
+                {/* Decorative mesh animation — illustrative, positions are not node locations */}
                 {[
-                  { t: 25, l: 30, city: 'New York' },
-                  { t: 40, l: 45, city: 'London' },
-                  { t: 35, l: 75, city: 'Tokyo' },
-                  { t: 65, l: 40, city: 'Frankfurt' },
-                  { t: 70, l: 65, city: 'Singapore' },
-                  { t: 30, l: 15, city: 'San Francisco' }
+                  { t: 25, l: 30 },
+                  { t: 40, l: 45 },
+                  { t: 35, l: 75 },
+                  { t: 65, l: 40 },
+                  { t: 70, l: 65 },
+                  { t: 30, l: 15 }
                 ].map((node, i) => (
                   <div
                     key={i}
@@ -189,9 +170,6 @@ export default function Mesh() {
                       className="h-6 w-6 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[var(--accent-active)]"
                     />
                     <div className="h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white shadow-[0_0_10px_white]" />
-                    <div className="absolute top-4 left-1/2 -translate-x-1/2 text-[9px] font-black tracking-widest whitespace-nowrap text-white/40 uppercase transition-colors group-hover:text-white">
-                      {node.city}
-                    </div>
                   </div>
                 ))}
               </div>
@@ -203,7 +181,9 @@ export default function Mesh() {
                 <h3 className="text-xl font-bold tracking-tight uppercase">Topology Active</h3>
               </div>
               <p className="text-sm font-medium text-[var(--text-secondary)]">
-                Currently monitoring 1,402 high-availability witness nodes.
+                {nodes.length > 0
+                  ? `Pinging ${nodes.length} OpenTimestamps calendar${nodes.length === 1 ? '' : 's'} live — status and latency below.`
+                  : 'No calendar pings returned yet — live status will appear here.'}
               </p>
             </div>
 
@@ -220,35 +200,23 @@ export default function Mesh() {
           </div>
         </div>
 
-        {/* Real-time Telemetry Stats */}
+        {/* Live telemetry — every value below is measured from the API ping results */}
         <div className="space-y-6 lg:col-span-4">
           <h3 className="text-[10px] font-black tracking-[0.3em] text-[var(--text-secondary)] uppercase">
             Mesh Health Metrics
           </h3>
           <div className="space-y-4">
             <MetricRow
-              label="Quorum Confidence"
-              value="99.98%"
-              trend="+0.01%"
+              label="Calendars Online"
+              value={nodes.length > 0 ? `${activeNodes}/${nodes.length}` : '—'}
+              trend="Live ping"
               color="var(--accent-success)"
             />
             <MetricRow
-              label="Avg. Propagation"
-              value="1.2s"
-              trend="-0.2s"
+              label="Avg. Ping Latency"
+              value={avgLatency}
+              trend="Live ping"
               color="var(--accent-active)"
-            />
-            <MetricRow
-              label="Anchor Density"
-              value="42k/hr"
-              trend="Stable"
-              color="var(--accent-purple)"
-            />
-            <MetricRow
-              label="Node Alignment"
-              value="Full Sync"
-              trend="Nominal"
-              color="var(--accent-success)"
             />
           </div>
 
@@ -256,17 +224,18 @@ export default function Mesh() {
             <div className="flex items-center gap-3">
               <ShieldCheck size={20} className="text-[var(--accent-success)]" />
               <h4 className="text-[10px] font-black tracking-widest text-white uppercase">
-                Consensus Integrity
+                Calendar Reachability
               </h4>
             </div>
             <p className="text-xs leading-relaxed font-medium text-[var(--text-secondary)]">
-              Protocol quorums require 67%+ witness agreement for proof finalization. Current
-              alignment exceeds institutional requirements by 32.8%.
+              Proofs are submitted to independent OpenTimestamps calendars, so a single calendar
+              outage does not stop anchoring. Reachability is measured per request — we publish the
+              live reading instead of a promised uptime figure.
             </p>
             <div className="h-1.5 w-full overflow-hidden rounded-full bg-white/5">
               <motion.div
                 initial={{ width: 0 }}
-                animate={{ width: '92%' }}
+                animate={{ width: onlineRatio === '—' ? '0%' : onlineRatio }}
                 className="h-full bg-[var(--accent-success)] shadow-[0_0_15px_var(--accent-success)]"
               />
             </div>
@@ -277,12 +246,10 @@ export default function Mesh() {
       {/* Node Distribution Grid */}
       <div className="space-y-8">
         <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-black tracking-tighter uppercase">
-            High-Availability Nodes
-          </h2>
-          <button className="text-[10px] font-black tracking-widest text-[var(--text-secondary)] uppercase transition-colors hover:text-white">
-            View All Nodes <ChevronRight size={14} className="inline" />
-          </button>
+          <h2 className="text-2xl font-black tracking-tighter uppercase">Witness Calendars</h2>
+          <span className="text-[10px] font-black tracking-widest text-[var(--text-secondary)] uppercase">
+            Source: GET /api/mesh/nodes
+          </span>
         </div>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
           {nodesLoading
@@ -313,19 +280,23 @@ export default function Mesh() {
                   </div>
                 </div>
               ))
-            : nodes
-                .filter((n) => activeRegion === 'Global' || n.region === activeRegion)
-                .map((n) => (
-                  <NodeCard
-                    key={n.city}
-                    city={n.city}
-                    country={n.country}
-                    status={n.status}
-                    latency={n.latency}
-                    uptime={n.uptime}
-                  />
-                ))}
+            : nodes.map((n) => (
+                <NodeCard
+                  key={n.url || n.name}
+                  name={n.name}
+                  url={n.url}
+                  status={n.status}
+                  latency={n.latency}
+                />
+              ))}
         </div>
+        {!nodesLoading && nodes.length === 0 && (
+          <p className="rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] p-6 text-xs font-medium text-[var(--text-secondary)]">
+            {nodesError
+              ? 'Could not reach the mesh API — no live calendar readings to show. Nothing is displayed rather than a stale or invented node list.'
+              : 'The mesh API returned no calendars. Live readings will appear here on the next successful ping.'}
+          </p>
+        )}
       </div>
     </div>
   )

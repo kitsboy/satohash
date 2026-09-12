@@ -162,7 +162,7 @@
         "dedicated247": "Dedicado 24/7",
         "email": "Correo electrónico",
         "plannedHigher": "Límites superiores (previstos)",
-        "sla99": "99.9%",
+        "sla99": "Según acuerdo",
         "unlimited": "Ilimitado",
         "yes": "Sí"
       }
@@ -1012,7 +1012,7 @@
       },
       "devops": {
         "title": "DevOps de nodos soberanos",
-        "desc": "Orquesta nuestra malla global de nodos testigo. Garantiza 99.999% de disponibilidad para el Truth OS en condiciones de red extremas."
+        "desc": "Orquesta nuestra malla global de nodos testigo. Mantén el Truth OS accesible en condiciones de red extremas."
       },
       "data": {
         "title": "Científico de datos blockchain",
