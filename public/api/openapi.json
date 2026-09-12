@@ -470,8 +470,8 @@
   "webhooks": {
     "confirmed": {
       "post": {
-        "summary": "Proof confirmed webhook",
-        "description": "Sent when a pending timestamp is confirmed on Bitcoin. Registered via POST /api/webhooks (default events [\"confirmed\",\"revoked\"]); the ONLY event the server ever emits today is \"confirmed\". Verify integrity with the X-Satohash-Signature header (HMAC-SHA256 of the raw body).",
+        "summary": "Proof confirmed",
+        "description": "Emitted when a pending OpenTimestamps proof is confirmed on Bitcoin (dispatched by the upgrade daemon). This is the only event the proof pipeline emits today. Register with POST /api/webhooks; the events array is validated against [\"confirmed\",\"revoked\",\"test\",\"stamped\",\"failed\"] (default [\"confirmed\",\"revoked\"]). Verify deliveries with the X-Satohash-Signature header (HMAC-SHA256 hex of the raw JSON body); the event name is also sent as X-Satohash-Event.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -500,6 +500,129 @@
                         "description": "Bitcoin block height that confirmed the proof"
                       }
                     }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "revoked": {
+      "post": {
+        "summary": "Proof revoked",
+        "description": "Registrable event: POST /api/webhooks accepts it and stores it on the subscription. The server does not currently emit it (there is no dispatch call site), so treat it as reserved for now.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "event": {
+                    "type": "string",
+                    "enum": [
+                      "revoked"
+                    ]
+                  },
+                  "timestamp": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "data": {
+                    "type": "object",
+                    "additionalProperties": true
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "test": {
+      "post": {
+        "summary": "Delivery test ping",
+        "description": "Delivery check sent by POST /api/webhooks/:id/test: a one-off {\"event\":\"test\",\"timestamp\":...,\"message\":\"Satohash webhook test ping\"} request. The result is recorded on the subscription as last_delivery_status/last_delivery_at. Not part of the proof pipeline.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "event": {
+                    "type": "string",
+                    "enum": [
+                      "test"
+                    ]
+                  },
+                  "timestamp": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "message": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "stamped": {
+      "post": {
+        "summary": "Stamp created",
+        "description": "Registrable event: POST /api/webhooks accepts it and stores it on the subscription. The server does not currently emit it (there is no dispatch call site), so treat it as reserved for now.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "event": {
+                    "type": "string",
+                    "enum": [
+                      "stamped"
+                    ]
+                  },
+                  "timestamp": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "data": {
+                    "type": "object",
+                    "additionalProperties": true
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "failed": {
+      "post": {
+        "summary": "Proof failed",
+        "description": "Registrable event: POST /api/webhooks accepts it and stores it on the subscription. The server does not currently emit it (there is no dispatch call site), so treat it as reserved for now.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "event": {
+                    "type": "string",
+                    "enum": [
+                      "failed"
+                    ]
+                  },
+                  "timestamp": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "data": {
+                    "type": "object",
+                    "additionalProperties": true
                   }
                 }
               }
