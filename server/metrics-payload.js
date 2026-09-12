@@ -355,8 +355,9 @@ export function buildMetricsPayload(db, opts = {}) {
       status: healthStatus,
       message: healthMessage,
       latencyMs,
-      // Do not invent uptime % — HQ prefers null over fake 99.9
-      uptimePct24h: null,
+      // uptimePct24h is deliberately OMITTED (not null): the schema types it as
+      // `number` with no null variant and contract §3 forbids null typed-number
+      // fields. Never invent an uptime % — omit the key until one is measured.
       dependencies: [
         {
           id: 'opentimestamps-calendars',
@@ -672,7 +673,7 @@ export function buildMetricsPayload(db, opts = {}) {
         id: 'metrics_v1',
         title: 'Product metrics v1',
         for: ['hq'],
-        status: 'live',
+        status: 'ga',
         endpoint: 'GET /metrics.json',
         hint: 'This envelope'
       },
@@ -680,7 +681,7 @@ export function buildMetricsPayload(db, opts = {}) {
         id: 'stamps_recent',
         title: 'Recent stamps',
         for: ['hq'],
-        status: 'live',
+        status: 'ga',
         endpoint: 'GET /api/stamps/recent',
         hint: 'Live feed for HQ intel'
       },
@@ -688,7 +689,7 @@ export function buildMetricsPayload(db, opts = {}) {
         id: 'directory',
         title: 'Public directory',
         for: ['hq'],
-        status: 'live',
+        status: 'ga',
         endpoint: 'raw.directory in metrics.json',
         hint: 'Hosts, endpoints, SPA routes, clients'
       }
