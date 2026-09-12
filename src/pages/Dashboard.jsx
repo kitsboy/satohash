@@ -35,6 +35,7 @@ import { toast } from 'sonner'
 import BlockchainPulse from '../components/dashboard/BlockchainPulse'
 import usePageMeta from '../hooks/usePageMeta'
 import { getApiUrl } from '../config/constants'
+import { getBlockHeight } from '../utils/mempool'
 
 const API_URL = getApiUrl()
 
@@ -153,6 +154,7 @@ export default function Dashboard() {
   const [achievements, setAchievements] = useState({})
   const [showVoiceStamp, setShowVoiceStamp] = useState(false)
   const [stampCount, setStampCount] = useState(0)
+  const [blockHeight, setBlockHeight] = useState(null)
   const [showWelcome, setShowWelcome] = useState(
     () => !localStorage.getItem('satohash-welcome-dismissed')
   )
@@ -178,6 +180,16 @@ export default function Dashboard() {
       toast.success('Subscription successful! Welcome to Pro.')
     } else if (urlParams.get('cancel')) {
       toast.info('Subscription cancelled.')
+    }
+  }, [])
+
+  useEffect(() => {
+    let cancelled = false
+    getBlockHeight().then((height) => {
+      if (!cancelled) setBlockHeight(height)
+    })
+    return () => {
+      cancelled = true
     }
   }, [])
 
@@ -837,7 +849,11 @@ export default function Dashboard() {
                     amber
                     tooltip="Lightning Network Layer 2 payment channel is active. Enables instant micropayment-gated stamping without on-chain fees per stamp."
                   />
-                  <TeleItem icon={Box} label="Bitcoin Height" status="#845,922+" />
+                  <TeleItem
+                    icon={Box}
+                    label="Bitcoin Height"
+                    status={blockHeight != null ? `#${blockHeight.toLocaleString()}+` : '—'}
+                  />
                   <TeleItem
                     icon={Lock}
                     label="Privacy Layer"

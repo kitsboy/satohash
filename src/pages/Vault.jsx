@@ -916,13 +916,13 @@ export default function Vault() {
                   <p className="text-[9px] font-black text-[var(--text-secondary)] uppercase">
                     Witness Signatures
                   </p>
-                  <p className="text-xs font-bold text-white">1,402 Confirmed</p>
+                  <p className="text-xs font-bold text-white">—</p>
                 </div>
                 <div className="space-y-1 rounded-xl bg-white/5 p-4">
                   <p className="text-[9px] font-black text-[var(--text-secondary)] uppercase">
                     Anchor Depth
                   </p>
-                  <p className="text-xs font-bold text-white">12,402 Blocks</p>
+                  <p className="text-xs font-bold text-white">—</p>
                 </div>
               </div>
             </motion.div>

@@ -15,6 +15,7 @@ import {
 import { toast } from 'sonner'
 import usePageMeta from '../hooks/usePageMeta'
 import { getApiUrl } from '../config/constants'
+import { getBlockHeight } from '../utils/mempool'
 
 const API_URL = getApiUrl()
 
@@ -50,6 +51,19 @@ export default function ImageVault() {
   const [fetchError, setFetchError] = useState(null)
   const [searchQuery, setSearchQuery] = useState('')
   const [viewMode, setViewMode] = useState('grid') // grid, list
+  const [blockHeight, setBlockHeight] = useState(null)
+
+  useEffect(() => {
+    let cancelled = false
+    const load = async () => {
+      const height = await getBlockHeight()
+      if (!cancelled) setBlockHeight(height)
+    }
+    load()
+    return () => {
+      cancelled = true
+    }
+  }, [])
 
   const fetchImages = useCallback(async () => {
     setIsLoading(true)
@@ -271,7 +285,8 @@ export default function ImageVault() {
                 className="text-[10px] font-black tracking-widest uppercase italic"
                 style={{ color: 'var(--text-secondary)' }}
               >
-                All assets synchronized with Bitcoin Block #845,922
+                All assets synchronized with Bitcoin Block #
+                {blockHeight != null ? blockHeight.toLocaleString() : '—'}
               </p>
             </div>
           </div>
