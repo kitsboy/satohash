@@ -79,7 +79,7 @@
       "id": "api",
       "category": "technical",
       "q": "我可以通过 API 使用 Satohash 吗？",
-      "a": "可以。Satohash 提供 REST API 用于程序化加盖时间戳和验证。开发者可使用 API 密钥管理。Webhook 会在证明完成时通知您的应用。"
+      "a": "可以。Satohash 提供 REST API 用于程序化加盖时间戳和验证——无需任何 API 密钥。套件应用可向团队申请获取 X-Satohash-Key。Webhook 会在证明完成时通知您的应用。"
     },
     {
       "id": "sha256",

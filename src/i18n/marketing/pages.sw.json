@@ -467,10 +467,10 @@
       },
       "auth": {
         "title": "Uthibitishaji na Ufikiaji",
-        "body": "Ufikiaji wa msimamizi unahitaji tokeni za JWT zilizotiwa sahihi na siri ya upande wa seva. Funguo za API zinahesabiwa hash kabla ya kuhifadhiwa na zinaweza kubadilishwa kwa uhuru.",
+        "body": "Ufikiaji wa msimamizi unahitaji tokeni za JWT zilizotiwa sahihi na siri ya upande wa seva. Kuweka muhuri na uthibitishaji hakuhitaji ufunguo wa API; programu za suite hutumia X-Satohash-Key inayotolewa na timu unapoomba.",
         "items": [
           "Uthibitishaji wa msimamizi unaotegemea JWT (muda wa saa 24)",
-          "Funguo za API zenye upeo na ruhusa za kina",
+          "Hakuna funguo za API za kuzalisha, kuwekea mipaka au kubadilisha — API ya umma iko wazi",
           "Majaribio ya kuingia yaliyopunguzwa kiwango",
           "Tokeni za kikao zimehifadhiwa kwenye localStorage pekee"
         ]

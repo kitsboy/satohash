@@ -467,10 +467,10 @@
       },
       "auth": {
         "title": "Authentifizierung & Zugang",
-        "body": "Admin-Zugang erfordert JWT-Tokens, die mit einem serverseitigen Secret signiert sind. API-Keys werden vor der Speicherung gehasht und können unabhängig rotiert werden.",
+        "body": "Admin-Zugang erfordert JWT-Tokens, die mit einem serverseitigen Secret signiert sind. Stempeln und Verifizieren benötigen keinen API-Schlüssel; Suite-Apps nutzen einen X-Satohash-Key, den das Team auf Anfrage ausgibt.",
         "items": [
           "JWT-basierte Admin-Authentifizierung (24h Ablauf)",
-          "Scoped API-Keys mit granularen Berechtigungen",
+          "Keine API-Schlüssel zum Erzeugen, Einschränken oder Rotieren — die öffentliche API ist offen",
           "Rate-limitierte Login-Versuche",
           "Session-Tokens nur in localStorage gespeichert"
         ]

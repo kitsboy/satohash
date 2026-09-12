@@ -467,10 +467,10 @@
       },
       "auth": {
         "title": "Autenticación y acceso",
-        "body": "El acceso de administración requiere tokens JWT firmados con un secreto del servidor. Las claves API se hashean antes del almacenamiento y pueden rotarse de forma independiente.",
+        "body": "El acceso de administración requiere tokens JWT firmados con un secreto del servidor. El sellado y la verificación no necesitan ninguna clave API; las aplicaciones de la suite usan una X-Satohash-Key que el equipo emite a petición.",
         "items": [
           "Autenticación de administrador basada en JWT (caducidad 24 h)",
-          "Claves API con alcance y permisos granulares",
+          "No hay claves API que generar, limitar ni rotar: la API pública está abierta",
           "Intentos de inicio de sesión con límite de tasa",
           "Tokens de sesión almacenados solo en localStorage"
         ]

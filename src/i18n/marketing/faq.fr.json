@@ -79,7 +79,7 @@
       "id": "api",
       "category": "technical",
       "q": "Puis-je utiliser Satohash via une API ?",
-      "a": "Oui. Satohash fournit une API REST pour l'horodatage et la vérification programmatiques. La gestion des clés API est disponible pour les développeurs. Les webhooks notifient votre application lorsque les preuves sont terminées."
+      "a": "Oui. Satohash fournit une API REST pour l'horodatage et la vérification programmatiques — aucune clé API n'est requise. Les applications de la suite reçoivent une X-Satohash-Key délivrée par l'équipe sur demande. Les webhooks notifient votre application lorsque les preuves sont terminées."
     },
     {
       "id": "sha256",

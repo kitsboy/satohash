@@ -79,7 +79,7 @@
       "id": "api",
       "category": "technical",
       "q": "Can I use Satohash from an API?",
-      "a": "Yes. Satohash provides a REST API for programmatic stamping and verification. API key management is available for developers. Webhooks notify your app when proofs complete."
+      "a": "Yes. Satohash provides a REST API for programmatic stamping and verification — no API key is required. Suite apps receive an X-Satohash-Key issued by the team on request. Webhooks notify your app when proofs complete."
     },
     {
       "id": "sha256",

@@ -79,7 +79,7 @@
       "id": "api",
       "category": "technical",
       "q": "Kann ich Satohash über eine API nutzen?",
-      "a": "Ja. Satohash bietet eine REST-API für programmatisches Stempeln und Verifizieren. API-Schlüsselverwaltung ist für Entwickler verfügbar. Webhooks benachrichtigen Ihre App, wenn Nachweise abgeschlossen sind."
+      "a": "Ja. Satohash bietet eine REST-API für programmatisches Stempeln und Verifizieren — ein API-Schlüssel ist nicht erforderlich. Suite-Apps erhalten auf Anfrage einen X-Satohash-Key vom Team. Webhooks benachrichtigen Ihre App, wenn Nachweise abgeschlossen sind."
     },
     {
       "id": "sha256",

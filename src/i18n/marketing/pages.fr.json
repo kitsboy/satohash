@@ -467,10 +467,10 @@
       },
       "auth": {
         "title": "Authentification et accès",
-        "body": "L'accès administrateur nécessite des tokens JWT signés avec un secret côté serveur. Les clés API sont hachées avant stockage et peuvent être renouvelées indépendamment.",
+        "body": "L'accès administrateur nécessite des tokens JWT signés avec un secret côté serveur. L'horodatage et la vérification ne demandent aucune clé API ; les applications de la suite utilisent une X-Satohash-Key délivrée par l'équipe sur demande.",
         "items": [
           "Authentification admin basée sur JWT (expiration 24 h)",
-          "Clés API à portée limitée avec permissions granulaires",
+          "Aucune clé API à générer, restreindre ou renouveler — l'API publique est ouverte",
           "Tentatives de connexion limitées en débit",
           "Tokens de session stockés uniquement dans localStorage"
         ]

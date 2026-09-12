@@ -467,10 +467,10 @@
       },
       "auth": {
         "title": "Authentication & Access",
-        "body": "Admin access requires JWT tokens signed with a server-side secret. API keys are hashed before storage and can be rotated independently.",
+        "body": "Admin access requires JWT tokens signed with a server-side secret. Stamping and verification need no API key at all; suite apps use an X-Satohash-Key issued by the team on request.",
         "items": [
           "JWT-based admin authentication (24h expiry)",
-          "Scoped API keys with granular permissions",
+          "No API keys to generate, scope, or rotate — the public API is open",
           "Rate-limited login attempts",
           "Session tokens stored in localStorage only"
         ]

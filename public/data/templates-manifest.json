@@ -277,7 +277,7 @@
       "features": [
         "REST API for stamping and verification",
         "Webhook notifications on proof completion",
-        "API key management dashboard",
+        "No API key required — stamping is open",
         "BOLT-12 Lightning billing for volume",
         "OpenAPI 3.0 specification included"
       ],

@@ -79,7 +79,7 @@
       "id": "api",
       "category": "technical",
       "q": "Je, ninaweza kutumia Satohash kupitia API?",
-      "a": "Ndiyo. Satohash inatoa API ya REST kwa kuweka muhuri na uthibitishaji wa programu. Usimamizi wa funguo za API unapatikana kwa wasanidi programu. Webhooks zinaarifu programu yako uthibitisho unapokamilika."
+      "a": "Ndiyo. Satohash inatoa API ya REST kwa kuweka muhuri na uthibitishaji wa programu — hakuna ufunguo wa API unaohitajika. Programu za suite hupokea X-Satohash-Key inayotolewa na timu unapoomba. Webhooks zinaarifu programu yako uthibitisho unapokamilika."
     },
     {
       "id": "sha256",

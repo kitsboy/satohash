@@ -79,7 +79,7 @@
       "id": "api",
       "category": "technical",
       "q": "Posso usar o Satohash através de uma API?",
-      "a": "Sim. O Satohash fornece uma API REST para carimbo e verificação programáticos. A gestão de chaves API está disponível para programadores. Os webhooks notificam a sua aplicação quando as provas estão concluídas."
+      "a": "Sim. O Satohash fornece uma API REST para carimbo e verificação programáticos — não é necessária nenhuma chave de API. As aplicações da suite recebem uma X-Satohash-Key emitida pela equipa a pedido. Os webhooks notificam a sua aplicação quando as provas estão concluídas."
     },
     {
       "id": "sha256",

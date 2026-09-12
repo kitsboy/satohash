@@ -79,7 +79,7 @@
       "id": "api",
       "category": "technical",
       "q": "¿Puedo usar Satohash desde una API?",
-      "a": "Sí. Satohash ofrece una API REST para sellado y verificación programáticos. La gestión de claves API está disponible para desarrolladores. Los webhooks notifican a tu aplicación cuando las pruebas se completan."
+      "a": "Sí. Satohash ofrece una API REST para sellado y verificación programáticos: no se requiere ninguna clave API. Las aplicaciones de la suite reciben una X-Satohash-Key emitida por el equipo a petición. Los webhooks notifican a tu aplicación cuando las pruebas se completan."
     },
     {
       "id": "sha256",
