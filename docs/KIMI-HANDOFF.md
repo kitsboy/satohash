@@ -1,3 +1,34 @@
+## Latest Session Summary (Kimi THOR, 2026-09-12 — deprecated `request`/`request-promise` DELETED from the API tree; `opentimestamps` vendored on a fetch transport)
+
+**Lane:** deps/build/deploy of the **API** (`package.json`, `package-lock.json`, `Dockerfile.api`, `vendor/opentimestamps/**`, `scripts/guard-ots-chain.mjs`, deploy gate). No SPA source, no `/api/*` handler logic. Kanban `t_61803c78` (child of the 502 incident card `t_b3045877`).
+
+**Live state now:** `https://api.satohash.io/health` → `gitSha=01e5c40` (**contains** `ac98b10`, the fix commit), container recreated 2026-09-12 05:19 CEST, `Health=healthy Restarts=0`, pm2 `online restarts=0`. `docker exec satohash-satohash-api-1 sh -c 'cd /app && npm ls request request-promise'` → **empty**. In the container `require.resolve('opentimestamps')` → `/app/vendor/opentimestamps/index.js` (`0.4.9-satohash.1`).
+
+### Why the fence from the 502 fix wasn't enough
+
+`bfef38a` dropped the `request→uuid@^9` override, but `request@2.88.2` and `request-promise@4.2.6` were still **installed**, pulled in only by our own `opentimestamps@0.4.9`. Upstream JS OTS is abandoned at 0.4.9 and still declares `request@^2.85.0` + `request-promise@^4.2.2`, so there was no version to upgrade to and any future uuid override would re-trigger `ERR_PACKAGE_PATH_NOT_EXPORTED` → pm2 crash-loop → 502 windows.
+
+### What changed
+
+- **`vendor/opentimestamps`** — fork of 0.4.9 whose calendar/esplora/RPC transport is `src/request-shim.js` on the built-in global `fetch`. `index.js`, ops, merkle, attestations and the public surface are untouched upstream code (wire format preserved — proven by re-parsing a live `.ots`, digest exact match, `OTS.info()` shows the pending calendar attestation).
+- **`package.json`** — `opentimestamps: "file:vendor/opentimestamps"`; the dead `overrides.request` block is gone; both `Dockerfile` and `Dockerfile.api` `COPY vendor` before `npm ci` (required for the `file:` resolution).
+- **`scripts/guard-ots-chain.mjs`** — asserts OTS loads, resolves to the fork at a `*-satohash.N` version, `request`/`request-promise`/`request-promise-core` are **absent from the tree**, no `overrides` targets them, and no fork source file `require`s the old stack. Wired **build-failing** (`Dockerfile.api` deps stage), into CI, and as a **deploy-time gate on the RUNNING image** in `scripts/vps-deploy-api.sh` (a build gate cannot see a stale image).
+- **`tests/ots-vendor/transport.test.mjs`** — 9 offline transport tests (local http server, no network): fetch round-trip, non-2xx mapping, 404 → `CommitmentNotFoundError`, timeout semantics, esplora, bitcoin RPC, and a "require graph: no request/request-promise/uuid subpath" invariant. `npm run test:ots-vendor` → **9/9 PASSED**. Live-API variant: `npm run test:ots-vendor:live`.
+
+### Acceptance evidence (boot test on the deployed container, per the operator's gate)
+
+`POST /api/stamp` → 200 (id `5d53c8b9-…`), logs show `Submitting to remote calendar a.pool.opentimestamps.org / b.pool… / a.pool.eternitywall.com` **over the shim**; `GET /api/stamps/<id>` 200 and `/ots` 200 `application/octet-stream` 275 bytes with correct `\0OpenTimestamps\0\0Proof\0` header (sha256 `b24f5959…`); 6/6 `200` on `/health`; crash-signature count since recreate **0**. Full evidence: `/root/.hermes/kanban/boards/master-brain/attachments/t_61803c78/VERIFICATION-t_61803c78.txt`; HQ log entry `f4908969`.
+
+### Still open — routed, not done here
+
+**`public/vendor/ots.browser.js` (4.2 MB, committed) is still a browserify bundle of the UPSTREAM package** and therefore still ships `request` + `request-promise` + `uuid@3.4.0` **to browsers** (loaded by `src/utils/otsClient.js`). The SPA is a separate artifact → `t_9cf9b534` (Ziggy), with the reified `node_modules` + shim browser notes in that card's thread.
+
+### Environment note
+
+`/root/satohash/node_modules/opentimestamps` on THOR is now a **symlink to `../vendor/opentimestamps`** — a stale upstream copy was still installed there and made `npm run guard:ots` and `node tests/ots-vendor/*` fail locally. `package-lock.json` unchanged after reify.
+
+---
+
 ## Latest Session Summary (Ziggy THOR, 2026-09-11 — Satohash CI hygiene: Deploy `smoke` race + pre-push `npm test`)
 
 **Lane:** CI/deploy only — no `/api/*`, no `REQUIRE_LIGHTNING`, no CORS, no copy strings, no Cloudflare credential. Commit **`5d08434`** on `main` (kanban `t_2e23ea8a`).
