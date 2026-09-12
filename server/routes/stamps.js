@@ -330,7 +330,7 @@ export function register(app, deps) {
       io.emit('ots:stamped', { id, hash, filename, ipfs_cid: ipfsCid, client_id: clientId })
 
       // Propagate to mesh with IPFS CID
-      import('./mesh.js').then(({ default: mesh }) => {
+      import('../mesh.js').then(({ default: mesh }) => {
         mesh
           .propagate(id, hash, ipfsCid)
           .catch((err) => logger.warn(`Mesh propagation failed: ${err.message}`))
