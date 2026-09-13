@@ -1,3 +1,22 @@
+## Latest Session Summary (from 2026-09-13 goodbye)
+
+**Chat Topic:** Proof-card polish, then start finishing all seven languages.
+
+**Finished in this session:**
+- Certificate UI on `/p/<hash>` + `/stamp/done` (`261b214`)
+- Product-loop i18n A (`89262b1`)
+- `/donate` (`3d7fea5`) and `/proof-pack` (`1a85102`)
+- Docs/roadmap treat localization as **in progress** (`9bbc4c9`). SoT `docs/I18N.md`
+
+**Still to do:**
+- Next SPA page: `/about` → Pitch → Network → Explorer → Atlas (commit+push each)
+- de/pt/sw app JSON catch-up; slice C last
+- No Arabic until the seven are done
+
+**Next for Kimi:** Ingest this into MASTER-BRAIN / Kanban on **THOR Obsidian** (not M4). **Do not rebuild the API** for copy. Pages = Grok. Educate Hermes: i18n is SPA. Full note: `docs/archive/SESSION-SUMMARY-2026-09-13-goodbye.md`.
+
+---
+
 ## Latest Session Summary (Grok M3, 2026-09-13 — finish all seven languages)
 
 **Lane:** SPA copy. **Kimi: do not rebuild the API for this.** Pages = Grok.

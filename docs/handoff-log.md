@@ -1,3 +1,11 @@
+## 2026-09-13 (Grok M3 — goodbye)
+
+Session closed. Summary: `docs/archive/SESSION-SUMMARY-2026-09-13-goodbye.md`. Next chat `/whatsup` → code `/about` in all 7 locales, commit+push that page. Kimi: ingest on **THOR** Obsidian; **do not rebuild API**; do not Tailscale-sync to M4.
+
+Shipped this session: certificate proof `261b214`; i18n A `89262b1`; donate `3d7fea5`; proof-pack `1a85102`; docs/roadmap `9bbc4c9`. SoT `docs/I18N.md`.
+
+---
+
 ## 2026-09-13 (Grok M3 — docs: finish-all-seven languages)
 
 Cam: whole site in the seven locales we already offer. **SoT:** `docs/I18N.md`. Roadmaps (`docs/roadmap.md`, `ROADMAP.md`) no longer mark localization complete. Next code page: **`/about`**, then Pitch → Network → Explorer → Atlas. Commit + push after each page. Kimi: SPA only — **do not rebuild API** for copy. No Arabic until the seven are done.
