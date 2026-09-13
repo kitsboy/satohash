@@ -1624,5 +1624,23 @@
     "contributeLink": "Zur Contribute-Seite",
     "copy": "Kopieren",
     "copied": "Kopiert"
+  },
+  "proofPackPage": {
+    "kicker": "Warteliste · kostenlos · nicht zu verkaufen",
+    "title": "Proof-Pack-Warteliste",
+    "lede": "Proof Pack ist eine künftige Paketidee — .ots-Quittungen, eine teilbare Beweiskarte und ein PDF zusammen. Es ist nicht zu verkaufen. Kein Checkout, keine Rechnung, kein E-Mail-Formular (noch keine E-Mail-Infrastruktur).",
+    "whatIs": "Was das ist",
+    "is1": "Eine lokale Warteliste auf diesem Gerät. Wir sammeln keine E-Mail.",
+    "is2Before": "Ankündigungen laufen über",
+    "is3Before": "Stempeln ist heute kostenlos. Legen Sie eine Datei auf",
+    "is3After": ". Pending ist nicht confirmed.",
+    "whatIsNot": "Was das nicht ist",
+    "not1": "Kein bezahltes SKU. Kein Abo. Kein Spenden-zum-Freischalten-Pack.",
+    "not2": "Kein Tageskontingent und keine Profi-Zählung. Live-Beweis ist die Stempelzahl.",
+    "not3": "Keine Mailingliste. „I'm in“ setzt nur ein Flag im Browser.",
+    "follow": "@give_bit folgen",
+    "stampNow": "Jetzt kostenlos stempeln",
+    "listed": "Sie stehen auf der lokalen Liste — wir kündigen auf @give_bit an",
+    "imIn": "I'm in"
   }
 }

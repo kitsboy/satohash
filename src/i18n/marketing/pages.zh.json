@@ -1614,5 +1614,23 @@
     "contributeLink": "查看贡献页",
     "copy": "复制",
     "copied": "已复制"
+  },
+  "proofPackPage": {
+    "kicker": "候补名单 · 免费 · 非卖品",
+    "title": "Proof Pack 候补名单",
+    "lede": "Proof Pack 是未来的打包设想 — .ots 回执、可分享的证明卡和一份 PDF。它不出售。没有结账、没有发票、没有邮箱表单（我们还没有邮件基础设施）。",
+    "whatIs": "这是什么",
+    "is1": "此设备上的本地候补名单。我们不收集邮箱。",
+    "is2Before": "公告发布在",
+    "is3Before": "今天盖戳免费。把文件放到",
+    "is3After": "。Pending 不是 confirmed。",
+    "whatIsNot": "这不是什么",
+    "not1": "不是付费 SKU。不是订阅。不是捐款解锁包。",
+    "not2": "不是每日配额，也不是专业计数。现场证明是戳记数量。",
+    "not3": "不是邮件列表。「I'm in」只在浏览器里设一个标记。",
+    "follow": "关注 @give_bit",
+    "stampNow": "立即免费盖戳",
+    "listed": "你已在本地名单上 — 我们将在 @give_bit 公布",
+    "imIn": "I'm in"
   }
 }

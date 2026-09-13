@@ -1624,5 +1624,23 @@
     "contributeLink": "See the contribute page",
     "copy": "Copy",
     "copied": "Copied"
+  },
+  "proofPackPage": {
+    "kicker": "Waitlist · free · not for sale",
+    "title": "Proof Pack waitlist",
+    "lede": "Proof Pack is a future bundle idea — .ots receipts, a shareable proof card, and a PDF together. It is not for sale. There is no checkout, no invoice, and no email form (we do not have email infrastructure yet).",
+    "whatIs": "What this is",
+    "is1": "A local waitlist on this device. We do not collect your email.",
+    "is2Before": "Announcements happen on",
+    "is3Before": "Stamping is free today. Drop a file on",
+    "is3After": ". Pending is not confirmed.",
+    "whatIsNot": "What this is not",
+    "not1": "Not a paid SKU. Not a subscription. Not a donate-to-unlock pack.",
+    "not2": "Not a daily quota or a professional-count claim. Live proof is stamp count.",
+    "not3": "Not a mailing list. “I'm in” only sets a flag in your browser.",
+    "follow": "Follow @give_bit",
+    "stampNow": "Stamp free now",
+    "listed": "You're on the local list — we'll announce on @give_bit",
+    "imIn": "I'm in"
   }
 }

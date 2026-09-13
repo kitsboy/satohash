@@ -1624,5 +1624,23 @@
     "contributeLink": "Tazama ukurasa wa kuchangia",
     "copy": "Nakili",
     "copied": "Imenakiliwa"
+  },
+  "proofPackPage": {
+    "kicker": "Orodha ya kusubiri · bure · haiuzwi",
+    "title": "Orodha ya kusubiri ya Proof Pack",
+    "lede": "Proof Pack ni wazo la kifurushi cha baadaye — risiti za .ots, kadi ya ushahidi ya kushiriki, na PDF pamoja. Haiuzwi. Hakuna checkout, ankara, wala fomu ya barua pepe (bado hatuna miundombinu ya barua pepe).",
+    "whatIs": "Hii ni nini",
+    "is1": "Orodha ya kusubiri ya kifaa hiki. Hatukusanyi barua pepe yako.",
+    "is2Before": "Matangazo hutoka kwenye",
+    "is3Before": "Kugonga ni bure leo. Dondosha faili kwenye",
+    "is3After": ". Pending si confirmed.",
+    "whatIsNot": "Hii si nini",
+    "not1": "Si SKU ya kulipia. Si usajili. Si kifurushi cha kutoa ili kufungua.",
+    "not2": "Si kiasi cha kila siku wala hesabu ya kitaalamu. Ushahidi wa moja kwa moja ni idadi ya migongo.",
+    "not3": "Si orodha ya barua. «I'm in» inaweka alama tu kwenye kivinjari.",
+    "follow": "Fuata @give_bit",
+    "stampNow": "Gonga bure sasa",
+    "listed": "Uko kwenye orodha ya kifaa — tutatangaza kwenye @give_bit",
+    "imIn": "I'm in"
   }
 }

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight, Check, Package } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import Footer from '../components/layout/Footer'
 import usePageMeta from '../hooks/usePageMeta'
 
@@ -16,6 +17,7 @@ function readListed() {
 }
 
 export default function ProofPack() {
+  const { t } = useTranslation()
   usePageMeta({ page: 'proofPack' })
   const [listed, setListed] = useState(readListed)
 
@@ -36,7 +38,7 @@ export default function ProofPack() {
             className="text-[10px] font-black tracking-widest uppercase"
             style={{ color: 'var(--accent-gold)' }}
           >
-            Waitlist · free · not for sale
+            {t('proofPackPage.kicker')}
           </p>
           <div className="flex items-start gap-3">
             <div
@@ -49,13 +51,11 @@ export default function ProofPack() {
               <Package size={18} style={{ color: 'var(--accent-gold)' }} />
             </div>
             <h1 className="font-display text-3xl font-black tracking-tight sm:text-4xl">
-              Proof Pack waitlist
+              {t('proofPackPage.title')}
             </h1>
           </div>
           <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-            Proof Pack is a future bundle idea — <code>.ots</code> receipts, a shareable proof card,
-            and a PDF together. It is <strong>not for sale</strong>. There is no checkout, no
-            invoice, and no email form (we do not have email infrastructure yet).
+            {t('proofPackPage.lede')}
           </p>
         </header>
 
@@ -63,14 +63,14 @@ export default function ProofPack() {
           className="space-y-3 rounded-2xl border p-5"
           style={{ borderColor: 'var(--border)', background: 'var(--surface-raised)' }}
         >
-          <h2 className="text-sm font-black uppercase">What this is</h2>
+          <h2 className="text-sm font-black uppercase">{t('proofPackPage.whatIs')}</h2>
           <ul
             className="list-disc space-y-2 pl-5 text-sm leading-relaxed"
             style={{ color: 'var(--text-secondary)' }}
           >
-            <li>A local waitlist on this device. We do not collect your email.</li>
+            <li>{t('proofPackPage.is1')}</li>
             <li>
-              Announcements happen on{' '}
+              {t('proofPackPage.is2Before')}{' '}
               <a
                 href={GIVE_BIT_X}
                 target="_blank"
@@ -83,11 +83,11 @@ export default function ProofPack() {
               .
             </li>
             <li>
-              Stamping is free today. Drop a file on{' '}
+              {t('proofPackPage.is3Before')}{' '}
               <Link to="/stamp" className="underline" style={{ color: 'var(--accent-gold)' }}>
                 /stamp
               </Link>
-              . Pending is not confirmed.
+              {t('proofPackPage.is3After')}
             </li>
           </ul>
         </section>
@@ -96,14 +96,14 @@ export default function ProofPack() {
           className="space-y-3 rounded-2xl border p-5"
           style={{ borderColor: 'var(--border)' }}
         >
-          <h2 className="text-sm font-black uppercase">What this is not</h2>
+          <h2 className="text-sm font-black uppercase">{t('proofPackPage.whatIsNot')}</h2>
           <ul
             className="list-disc space-y-2 pl-5 text-sm leading-relaxed"
             style={{ color: 'var(--text-secondary)' }}
           >
-            <li>Not a paid SKU. Not a subscription. Not a donate-to-unlock pack.</li>
-            <li>Not a daily quota or a professional-count claim. Live proof is stamp count.</li>
-            <li>Not a mailing list. “I&apos;m in” only sets a flag in your browser.</li>
+            <li>{t('proofPackPage.not1')}</li>
+            <li>{t('proofPackPage.not2')}</li>
+            <li>{t('proofPackPage.not3')}</li>
           </ul>
         </section>
 
@@ -118,14 +118,14 @@ export default function ProofPack() {
               color: 'var(--accent-gold)'
             }}
           >
-            Follow @give_bit <ArrowRight size={16} />
+            {t('proofPackPage.follow')} <ArrowRight size={16} />
           </a>
           <Link
             to="/stamp"
             className="btn-sheen inline-flex min-h-[48px] items-center justify-center gap-2 rounded-xl px-6 text-sm font-black uppercase"
             style={{ background: 'var(--accent-gold)', color: '#141b25' }}
           >
-            Stamp free now <ArrowRight size={16} />
+            {t('proofPackPage.stampNow')} <ArrowRight size={16} />
           </Link>
           {listed ? (
             <p
@@ -134,7 +134,7 @@ export default function ProofPack() {
               data-testid="proof-pack-listed"
             >
               <Check size={16} />
-              You&apos;re on the local list — we&apos;ll announce on @give_bit
+              {t('proofPackPage.listed')}
             </p>
           ) : (
             <button
@@ -144,7 +144,7 @@ export default function ProofPack() {
               className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-xl border px-6 text-sm font-bold"
               style={{ borderColor: 'var(--border)', color: 'var(--text-primary)' }}
             >
-              I&apos;m in
+              {t('proofPackPage.imIn')}
             </button>
           )}
         </div>

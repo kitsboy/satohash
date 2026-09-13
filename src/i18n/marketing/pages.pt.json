@@ -1624,5 +1624,23 @@
     "contributeLink": "Ver a página de contribuição",
     "copy": "Copiar",
     "copied": "Copiado"
+  },
+  "proofPackPage": {
+    "kicker": "Lista de espera · grátis · não está à venda",
+    "title": "Lista de espera Proof Pack",
+    "lede": "Proof Pack é uma ideia de pacote futuro — recibos .ots, um cartão de prova partilhável e um PDF juntos. Não está à venda. Não há checkout, fatura nem formulário de e-mail (ainda não temos infra de e-mail).",
+    "whatIs": "O que isto é",
+    "is1": "Uma lista de espera local neste dispositivo. Não recolhemos o seu e-mail.",
+    "is2Before": "Os anúncios saem em",
+    "is3Before": "Selar é grátis hoje. Largue um ficheiro em",
+    "is3After": ". Pending não é confirmed.",
+    "whatIsNot": "O que isto não é",
+    "not1": "Não é um SKU pago. Não é uma subscrição. Não é um pack de doar-para-desbloquear.",
+    "not2": "Não é uma quota diária nem uma contagem profissional. A prova em direto é a contagem de selos.",
+    "not3": "Não é uma mailing list. «I'm in» só põe uma marca no browser.",
+    "follow": "Seguir @give_bit",
+    "stampNow": "Selar grátis agora",
+    "listed": "Está na lista local — anunciaremos em @give_bit",
+    "imIn": "I'm in"
   }
 }

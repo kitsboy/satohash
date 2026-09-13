@@ -1624,5 +1624,23 @@
     "contributeLink": "Voir la page contribuer",
     "copy": "Copier",
     "copied": "Copié"
+  },
+  "proofPackPage": {
+    "kicker": "Liste d’attente · gratuit · pas à vendre",
+    "title": "Liste d’attente Proof Pack",
+    "lede": "Proof Pack est une idée de lot futur — reçus .ots, une carte de preuve partageable et un PDF ensemble. Il n’est pas à vendre. Pas de caisse, pas de facture, pas de formulaire e-mail (pas encore d’infra e-mail).",
+    "whatIs": "Ce que c’est",
+    "is1": "Une liste d’attente locale sur cet appareil. Nous ne collectons pas votre e-mail.",
+    "is2Before": "Les annonces se font sur",
+    "is3Before": "L’horodatage est gratuit aujourd’hui. Déposez un fichier sur",
+    "is3After": ". Pending n’est pas confirmed.",
+    "whatIsNot": "Ce que ce n’est pas",
+    "not1": "Pas un SKU payant. Pas un abonnement. Pas un pack don-pour-débloquer.",
+    "not2": "Pas un quota quotidien ni un décompte professionnel. La preuve live, c’est le nombre de sceaux.",
+    "not3": "Pas une liste de diffusion. « I'm in » ne pose qu’un drapeau dans votre navigateur.",
+    "follow": "Suivre @give_bit",
+    "stampNow": "Horodater gratuitement maintenant",
+    "listed": "Vous êtes sur la liste locale — nous annoncerons sur @give_bit",
+    "imIn": "I'm in"
   }
 }

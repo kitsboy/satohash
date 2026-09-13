@@ -1,3 +1,9 @@
+## 2026-09-13 (Grok M3 — i18n /proof-pack)
+
+`/proof-pack` waitlist copy in all 7 locales. “I'm in” kept as the CTA phrase. Next remaining public: About, Pitch, Network, Explorer.
+
+---
+
 ## 2026-09-13 (Grok M3 — i18n /donate)
 
 `/donate` wired to `donatePage` in all 7 locales (LN + on-chain copy, where sats go, stamp CTA). Next: Proof Pack, then About.
