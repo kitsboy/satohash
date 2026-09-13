@@ -11,13 +11,12 @@
 # Bundles use /b/*; stale recovery is PWA cleanup + ErrorBoundary hard reset.
 
 # Thank-you pages — real static pages (200, not the SPA shell) so donors/leads
-# never bounce to the homepage or a dead end. Served before the SPA catch-all.
-/thank-you      /thank-you.html   200
-/thanks         /thank-you.html   200
-/thankyou       /thank-you.html   200
-/success        /thank-you.html   200
-/donate/thank-you /thank-you.html 200
+# never bounce to the homepage or a dead end.
+# NOTE: served by Cloudflare Pretty URLs — `thank-you.html` auto-resolves at the
+# extensionless `/thank-you` (same as sherpacarta.org). Do NOT add
+# `/thank-you /thank-you.html 200` rewrites here: they collide with Pretty-URL
+# .html-stripping into a self-308 loop (verified 2026-09-13 on all 5 money sites).
 
-# SPA fallback — BrowserRouter requires all routes to serve index.html
+# Satohash — Cloudflare Pages redirects.
 # Static files at the site root (incl. Google Search Console HTML) are served first.
 /*    /index.html   200
