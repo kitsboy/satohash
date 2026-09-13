@@ -44,10 +44,6 @@
     {
       "slug": "rollback",
       "path": "docs/ROLLBACK.md"
-    },
-    {
-      "slug": "architecture",
-      "path": "docs/architecture.md"
     }
   ]
 }

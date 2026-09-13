@@ -2,6 +2,7 @@
 > **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 366) · **Updated:** 2026-09-13
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
+<<<<<<< Updated upstream
 # Satohash — Executive Summary
 
 **Version:** 5.0.0-ELITE  

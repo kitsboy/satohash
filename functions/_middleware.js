@@ -41,6 +41,63 @@ const PLAYER_CSP =
 const GSC_VERIFY_PATHS = new Set(['/googlef508c6fb64de60ff.html', '/googlef508c6fb64de60ff'])
 const GSC_VERIFY_BODY = 'google-site-verification: googlef508c6fb64de60ff.html'
 
+// Known client routes (BrowserRouter). A GET matching none of these is a real
+// 404 — never the SPA shell (soft-404 close). Keep in sync with src/App.jsx.
+const KNOWN_ROUTES = [
+  /^\/$/,
+  /^\/access\/?$/, /^\/about\/?$/, /^\/pitch\/?$/, /^\/trust\/?$/, /^\/trust-center\/?$/,
+  /^\/verify\/[^/]+\/?$/, /^\/verify\/?$/, /^\/verify\/batch\/?$/, /^\/verify\/cross-chain\/?$/,
+  /^\/verify\/social\/?$/, /^\/verify-shield\/[^/]+\/?$/,
+  /^\/contribute\/?$/, /^\/donate\/?$/,
+  /^\/legal\/(crypto-notice|privacy|terms)\/?$/,
+  /^\/vault\/?$/, /^\/stamp\/?$/, /^\/stamp\/done\/?$/, /^\/stamp\/live-feed\/?$/,
+  /^\/stamp\/[^/]+\/report\/?$/, /^\/stamp\/wizard-pro\/?$/, /^\/stamp\/drag-and-drop\/?$/,
+  /^\/contracts\/?$/, /^\/contracts\/[^/]+\/?$/, /^\/contracts\/new\/[^/]+\/?$/,
+  /^\/contracts\/edit\/[^/]+\/?$/,
+  /^\/contracts\/[^/]+\/timestamp\/(review|explanation|progress|result)\/?$/,
+  /^\/snapper\/?$/, /^\/certificates\/?$/, /^\/developer\/?$/, /^\/developers\/?$/,
+  /^\/developer-portal\/?$/, /^\/developer\/playground\/?$/, /^\/documentation\/?$/,
+  /^\/atlas\/?$/, /^\/nodes\/?$/, /^\/explorer\/?$/,
+  /^\/templates\/?$/, /^\/templates\/new\/?$/, /^\/templates\/[^/]+\/?$/,
+  /^\/faq\/?$/, /^\/pricing\/?$/, /^\/proof-pack\/?$/, /^\/comparison\/?$/, /^\/compare\/?$/,
+  /^\/guides\/?$/, /^\/glossary\/?$/, /^\/docs\/?$/, /^\/docs\/executive-summary\/?$/,
+  /^\/docs\/[^/]+\/?$/, /^\/watch\/?$/, /^\/explainer\/?$/, /^\/watch-player\/?$/,
+  /^\/security\/?$/, /^\/integrations\/?$/, /^\/government\/?$/, /^\/motopass-verify\/?$/,
+  /^\/batch-hash\/?$/, /^\/chain-of-custody\/?$/, /^\/evidence-admissibility\/?$/,
+  /^\/distressed-asset\/?$/, /^\/widgets\/?$/, /^\/identity\/?$/, /^\/proof-of-existence\/?$/,
+  /^\/network\/?$/, /^\/status\/?$/, /^\/counsel\/?$/, /^\/p\/[^/]+\/?$/,
+  /^\/bitcoin\/?$/, /^\/block\/[^/]+\/?$/, /^\/ai\/?$/, /^\/ai-notary\/?$/,
+  /^\/community\/(proof-wall|leaderboard|feed)\/?$/,
+  /^\/widget\/proof\/[^/]+\/?$/, /^\/mobile-scanner\/?$/, /^\/history\/timeline\/?$/,
+  /^\/dashboard\/?$/, /^\/dashboard\/metrics\/?$/, /^\/settings\/?$/, /^\/image-vault\/?$/,
+  /^\/protocol-stats\/?$/, /^\/offers\/?$/, /^\/forum\/?$/, /^\/forum\/[^/]+\/?$/,
+  /^\/mobile-signer\/?$/, /^\/batch\/?$/, /^\/admin\/?$/, /^\/admin\/throttle\/?$/,
+  /^\/signatures\/[^/]+\/?$/, /^\/onboarding\/(welcome|how-it-works|choose-template|account-creation|value-confirmation|batch-proof|template-library)\/?$/,
+  /^\/timestamp\/verification-help\/?$/, /^\/nostr-health\/?$/, /^\/choose-template\/?$/,
+  /^\/account-creation\/?$/, /^\/web-capture\/?$/, /^\/audit-log\/?$/, /^\/changelog\/?$/,
+]
+
+const NOT_FOUND_HTML = `<!doctype html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex"><title>404 — Page not found · Satohash</title>
+<style>html,body{margin:0;height:100%;background:#0e1c2a;color:#e8f4fb;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+.wrap{min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;text-align:center;padding:2rem}
+.code{font-size:5rem;font-weight:800;color:#f0a030;line-height:1}h1{font-size:1.4rem;margin:0}
+p{color:#9fc0d4;margin:0}a{color:#f0a030}</style></head><body>
+<div class="wrap"><div class="code">404</div><h1>Page not found</h1>
+<p>That address doesn't exist on Satohash.</p>
+<p><a href="/">← Back to satohash.io</a></p></div></body></html>`
+
+function isKnownRoute(pathname) {
+  return KNOWN_ROUTES.some((re) => re.test(pathname))
+}
+
+function isPageRequest(pathname) {
+  if (pathname.startsWith('/api/') || pathname.startsWith('/assets/') || pathname.startsWith('/b/')) return false
+  if (/\.[a-zA-Z0-9]+$/.test(pathname)) return false
+  return true
+}
+
 export async function onRequest({ request, env, next }) {
   const url = new URL(request.url)
   const ua = request.headers.get('user-agent') || ''
@@ -104,6 +161,20 @@ export async function onRequest({ request, env, next }) {
         'x-robots-tag': 'noindex, nofollow',
         'x-frame-options': 'ALLOWALL',
         'content-security-policy': PLAYER_CSP
+      }
+    })
+  }
+
+  // Real 404 for unknown client routes (soft-404 close) — before SPA fallback.
+  // Crawlers still get prerender for KNOWN routes below; junk URLs must not
+  // return the SPA shell. Skip /api, /assets, /b/* (handled above / static).
+  if (request.method === 'GET' && isPageRequest(url.pathname) && !isKnownRoute(url.pathname)) {
+    return new Response(NOT_FOUND_HTML, {
+      status: 404,
+      headers: {
+        'content-type': 'text/html; charset=utf-8',
+        'x-robots-tag': 'noindex',
+        'cache-control': 'public, max-age=300'
       }
     })
   }

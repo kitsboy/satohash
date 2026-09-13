@@ -2,6 +2,7 @@
 > **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 366) · **Updated:** 2026-09-13
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
+<<<<<<< Updated upstream
 # Satohash — The Sovereign Provenance Pitch
 
 **Family pitch (2026-08-26):** Prove a file existed. Never show the file. Bitcoin as a civic notary — `.ots` receipts that outlive any company. Lives in the Give A Bit suite: https://agents.giveabit.io/#suite
