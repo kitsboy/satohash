@@ -29,14 +29,18 @@ stopwords (the/your/device/hash/blockchain/proof). Landing bundles compared by t
 - `document.documentElement.lang` is set from the active locale.
 - Language selection persists via `localStorage.satohash_lang` (see `index.html` head script).
 
+## 2026-09-13 update (finish-all-seven)
+
+Landing + FAQ remain translated. **Product loop is no longer English-only:** stamp leftovers, verify, `/stamp/done`, `/p/<hash>` (SPA + zero-JS), counsel, status chrome, `/watch`, nav/footer, `/donate`, `/proof-pack` are on the 7-locale catalog (`docs/I18N.md`). Remaining English body copy: About, Pitch, Network, Explorer, Atlas, then other public marketing, then logged-in/admin. Re-run this audit when slice B public pages are done.
+
 ## Caveats / recommendations
 
 1. **`?lang=` URL parameter** — the SPA uses query-string language selection. Crawlers handle
    this fine, but a cleaner pattern is `/es/...` prefixed paths. Not required for SEO; the
    hreflang annotations point to the query URLs consistently, which is what matters.
-2. **Route coverage** — the deep route content (articles, /p/:hash, /verify) is English-only.
-   Google will index those as English, which is acceptable; FAQ + Landing are the translated
-   surfaces.
+2. **Route coverage** — FAQ + Landing were the first translated surfaces. As of 2026-09-13 the
+   stamp/verify/proof-card loop and several public pages are translated too. Remaining English
+   body copy is listed in `docs/I18N.md` (About, Pitch, Network, Explorer, Atlas, …).
 3. **New pages must call `usePageMeta`** — any new route (e.g. /donate) gets hreflang + schema
    automatically only if it calls the hook. `/donate` does (added 2026-08-20).
 4. **No action needed now** — this audit found no broken or stubbed translations. Re-run after

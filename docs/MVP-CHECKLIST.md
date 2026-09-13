@@ -76,7 +76,7 @@ Legend: ✅ done in product/code · 🟡 partial / ops · ⬜ deferred / Cam fli
 | 49 | Government sections no crash | ✅ |
 | 50 | Content quality pass | 🟡 ongoing |
 | 51 | Cull low-value templates | ⬜ optional |
-| 52 | i18n titles | 🟡 EN primary |
+| 52 | i18n titles | 🟡 7 locales in picker; **finish remaining pages** — `docs/I18N.md` |
 | 53 | Shareable template URL | ✅ copy + toast |
 | 54 | Print/PDF path | 🟡 editor |
 | 55 | SEO per category | 🟡 page meta |

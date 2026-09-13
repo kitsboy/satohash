@@ -1,3 +1,13 @@
+## Latest Session Summary (Grok M3, 2026-09-13 — finish all seven languages)
+
+**Lane:** SPA copy. **Kimi: do not rebuild the API for this.** Pages = Grok.
+
+Cam wants the **whole site** in en/es/fr/de/pt/sw/zh. Plan SoT: `docs/I18N.md`. Next page when Grok has credit: `/about` (then Pitch, Network, Explorer, Atlas). Commit + push after each page. Do not add Arabic until those seven are done.
+
+Already shipped: product loop (`89262b1`), `/donate` (`3d7fea5`), `/proof-pack` (`1a85102`). Vault ingest: THOR Obsidian, not M4.
+
+---
+
 ## Latest Session Summary (Kimi THOR, 2026-09-12 — deprecated `request`/`request-promise` DELETED from the API tree; `opentimestamps` vendored on a fetch transport)
 
 **Lane:** deps/build/deploy of the **API** (`package.json`, `package-lock.json`, `Dockerfile.api`, `vendor/opentimestamps/**`, `scripts/guard-ots-chain.mjs`, deploy gate). No SPA source, no `/api/*` handler logic. Kanban `t_61803c78` (child of the 502 incident card `t_b3045877`).

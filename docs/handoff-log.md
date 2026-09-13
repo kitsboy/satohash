@@ -1,3 +1,11 @@
+## 2026-09-13 (Grok M3 — docs: finish-all-seven languages)
+
+Cam: whole site in the seven locales we already offer. **SoT:** `docs/I18N.md`. Roadmaps (`docs/roadmap.md`, `ROADMAP.md`) no longer mark localization complete. Next code page: **`/about`**, then Pitch → Network → Explorer → Atlas. Commit + push after each page. Kimi: SPA only — **do not rebuild API** for copy. No Arabic until the seven are done.
+
+**Already on main:** product loop A `89262b1`; donate `3d7fea5`; proof-pack `1a85102`.
+
+---
+
 ## 2026-09-13 (Grok M3 — i18n /proof-pack)
 
 `/proof-pack` waitlist copy in all 7 locales. “I'm in” kept as the CTA phrase. Next remaining public: About, Pitch, Network, Explorer.

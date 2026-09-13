@@ -69,7 +69,7 @@ Full operational details (endpoints, env vars, known token inconsistencies, daem
 │   ├── pages/          # All major surfaces (Stamp, Verify, Vault, Contracts, Snapper, Atlas, Developer, Identity, onboarding, legal, etc.)
 │   ├── utils/          # crypto, opentimestamps, merkle, pdfGenerator, mempool, nwc, storage, etc.
 │   ├── hooks/          # useSocket, useOfflineSync, useNWC...
-│   └── i18n/           # en, es, fr, de, zh
+│   └── i18n/           # en es fr de pt sw zh — finish remaining pages: docs/I18N.md
 ├── server/
 │   ├── index.js        # Express + Socket.io + routes + daemons
 │   ├── db.js + migrations/   # SQLite + Knex (multi-tenancy, webhooks, referrals, etc.)

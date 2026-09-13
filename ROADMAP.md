@@ -5,7 +5,7 @@ This roadmap tracks the evolution of Satohash from a standalone notary tool to a
 ## ✅ PHASE I: THE BASE CASE (COMPLETED)
 1.  **[x] Bitcoin Anchoring**: Core OpenTimestamps integration.
 2.  **[x] Multi-Party Signing**: Distributed signature flow for digital contracts.
-3.  **[x] Localization**: Support for EN, ES, FR, DE, PT, SW, ZH (marketing pages + unified language picker).
+3.  **[~] Localization**: Seven locales in the picker (EN, ES, FR, DE, PT, SW, ZH). **Not done.** Finish the whole site in these seven — plan in `docs/I18N.md`. Do not add Arabic until then.
 
 ## ✅ PHASE II: INSTITUTIONAL HARDENING (COMPLETED)
 4.  **[x] The Satohash Snapper**: "Snap & Stamp" web evidence capture tool.
@@ -25,7 +25,20 @@ This roadmap tracks the evolution of Satohash from a standalone notary tool to a
 15. **[ ] AI Notary**: 10 autonomous features — content summarization, fraud detection, semantic search, natural language stamping, template generation
 16. **[ ] Social Proof**: 10 community features — proof wall, leaderboard, reactions, badges, social verify, email notifications
 17. **[ ] Developer Ecosystem**: 10 SDK improvements — OpenAPI spec, npm client SDK, CLI tool, WebSocket, webhooks, rate limit tiers
-18. **[ ] Polish & Ship**: Build 214, v5.0.0-ELITE, full test suite, 7-locale i18n sweep, complete .ai_docs refresh
+18. **[ ] Polish & Ship**: Full test suite, **finish 7-locale i18n** (`docs/I18N.md`), complete `.ai_docs` refresh
+
+## 🌐 I18N FINISH (active — Grok / M3, 2026-09)
+
+Cam: whole site in the seven languages we already offer. Commit + push after each page.
+
+| Slice | Status | Surfaces |
+|-------|--------|----------|
+| **A — product loop** | **[x]** `89262b1` | Stamp leftovers, Verify, `/stamp/done`, `/p/<hash>` SPA + zero-JS, Counsel, Status, Watch, nav/footer |
+| **B — public marketing** | **[~]** | **Done:** `/donate` `3d7fea5`, `/proof-pack` `1a85102`. **Next:** About → Pitch → Network → Explorer → Atlas → remaining public marketing |
+| **C — app / ops** | **[ ]** | Admin, contracts, v5, Settings, Image vault, Protocol stats |
+| Catalog debt | **[ ]** | de/pt/sw `translations/*.json` 175 keys → match en (~250). Stop growing inline `index.jsx` |
+
+Gate: `npm run i18n:check`. Keep Bitcoin / OpenTimestamps / `ots-cli` / hash hex / Pending·Confirmed in English.
 
 ## 🔭 PHASE VI: VISION 2027 (The Sovereign Settlement Mesh)
 19. **[ ] Fedimint Privacy Shields**: Using blinded tokens for zero-knowledge notarization.
@@ -33,4 +46,4 @@ This roadmap tracks the evolution of Satohash from a standalone notary tool to a
 22. **[ ] Decentralized Governance**: Transitioning protocol parameters to community-led governance.
 
 ---
-*Status: Vision 2027 Initiated. Phase III Finalizing.*
+*Status: I18N finish is active (Grok SPA). Vision 2027 still on the board. Phase III finalizing.*
