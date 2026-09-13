@@ -49,6 +49,8 @@ const KNOWN_ROUTES = [
   /^\/verify\/[^/]+\/?$/, /^\/verify\/?$/, /^\/verify\/batch\/?$/, /^\/verify\/cross-chain\/?$/,
   /^\/verify\/social\/?$/, /^\/verify-shield\/[^/]+\/?$/,
   /^\/contribute\/?$/, /^\/donate\/?$/,
+  /^\/thank-you\/?$/, /^\/thanks\/?$/, /^\/thankyou\/?$/, /^\/success\/?$/,
+  /^\/donate\/thank-you\/?$/,
   /^\/legal\/(crypto-notice|privacy|terms)\/?$/,
   /^\/vault\/?$/, /^\/stamp\/?$/, /^\/stamp\/done\/?$/, /^\/stamp\/live-feed\/?$/,
   /^\/stamp\/[^/]+\/report\/?$/, /^\/stamp\/wizard-pro\/?$/, /^\/stamp\/drag-and-drop\/?$/,
