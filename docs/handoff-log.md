@@ -1,3 +1,9 @@
+## 2026-09-13 (Grok M3 — certificate proof card + stamp-done receipt)
+
+Public `/p/<hash>` is a vault certificate: 1.15px gold seal, jewel-edge, full SHA-256 well, status chip, ProofReceipt, calendars, ots-cli, iMessage note, Interactive verify / Hard-open / Stamp / Counsel / Copy / Share. Zero-JS Function twin matches (CSS only; all HTML strings kept). `/stamp/done` wraps the receipt the same way; 3-step list uses gold numbered discs (kept `1 · Fingerprint` copy + tooltips + Verify + mempool + StampSuccessActions). Verified local desktop 1280 + mobile 390.
+
+---
+
 ## 2026-09-11 (Grok M3 — landing play card + stamp vault polish)
 
 Landing hero: gold play disc with 1.15px rim, vignette, 84s chip; video src still waits for play (LCP poster). Stamp idle: one gold ring around upload mark; Choose/Photo/Gallery use lucide, not emoji. Verified local desktop+mobile.

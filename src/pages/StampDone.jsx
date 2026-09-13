@@ -134,168 +134,185 @@ export default function StampDone() {
   return (
     <>
       <div className="mx-auto max-w-lg space-y-6 p-4 pb-[calc(7rem+env(safe-area-inset-bottom,0px))] sm:p-6">
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="flex flex-wrap items-center gap-2">
-            <p
-              className="inline-flex items-center text-[11px] font-black tracking-widest uppercase"
-              style={{ color: confirmed ? 'var(--accent-success)' : 'var(--accent-gold)' }}
+        <article
+          className="jewel-edge vault-ring gold-border relative space-y-5 overflow-hidden rounded-2xl p-5 sm:p-6"
+          style={{
+            background:
+              'linear-gradient(165deg, color-mix(in srgb, var(--accent-active) 8%, var(--surface-raised)) 0%, var(--surface-raised) 58%, color-mix(in srgb, var(--accent-gold) 6%, var(--surface-raised)) 100%)',
+            boxShadow:
+              '0 0 0 1px color-mix(in srgb, var(--accent-gold) 12%, transparent), 0 24px 48px -24px rgba(0,0,0,.65)'
+          }}
+        >
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div className="flex flex-wrap items-center gap-2">
+              <p
+                className="inline-flex items-center text-[11px] font-black tracking-widest uppercase"
+                style={{ color: confirmed ? 'var(--accent-success)' : 'var(--accent-gold)' }}
+              >
+                {queued
+                  ? t('stampDonePage.queuedReceipt')
+                  : confirmed
+                    ? t('stampDonePage.receipt')
+                    : t('stampDonePage.receiptPending')}
+                <Tooltip
+                  title="Pending is not confirmed"
+                  content="The fingerprint is at OpenTimestamps calendars. It is NOT in a Bitcoin block until status is confirmed. Pending ≠ confirmed."
+                />
+              </p>
+              <LiveNodeChip compact />
+            </div>
+            <Link
+              to={proof.hash ? `/verify?hash=${encodeURIComponent(proof.hash)}` : '/verify'}
+              data-testid="done-verify"
+              className="inline-flex min-h-[44px] items-center gap-1 rounded-lg border px-3 text-[11px] font-bold tracking-widest uppercase focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--surface-raised)] focus-visible:outline-none"
+              style={{ borderColor: 'var(--border-gold)', color: 'var(--accent-gold)' }}
+            >
+              <ShieldCheck size={14} /> {t('stampDonePage.verify')}
+            </Link>
+          </div>
+
+          <header className="space-y-3 text-center">
+            <div
+              className={`mx-auto flex h-16 w-16 items-center justify-center rounded-full sm:h-[4.5rem] sm:w-[4.5rem] ${
+                confirmed ? 'motion-safe:animate-pulse' : ''
+              }`}
+              style={{
+                background: confirmed
+                  ? 'linear-gradient(165deg, color-mix(in srgb, var(--accent-success) 26%, var(--surface-raised)), var(--surface-raised))'
+                  : 'linear-gradient(165deg, color-mix(in srgb, var(--accent-gold) 26%, var(--surface-raised)), color-mix(in srgb, var(--accent-active) 12%, var(--surface-raised)))',
+                boxShadow: confirmed
+                  ? '0 0 0 1.15px color-mix(in srgb, #fff 35%, var(--accent-success)), 0 0 34px color-mix(in srgb, var(--accent-success) 28%, transparent)'
+                  : '0 0 0 1.15px color-mix(in srgb, #fff 35%, var(--accent-gold)), 0 0 34px color-mix(in srgb, var(--accent-gold) 24%, transparent), 0 0 60px color-mix(in srgb, var(--accent-active) 16%, transparent)'
+              }}
+            >
+              {confirmed ? (
+                <Lock size={32} style={{ color: 'var(--accent-success)' }} aria-hidden />
+              ) : (
+                <Clock
+                  size={32}
+                  className="motion-safe:animate-pulse"
+                  style={{ color: 'var(--accent-gold)' }}
+                  aria-hidden
+                />
+              )}
+            </div>
+            <h1
+              className={`inline-flex items-center justify-center gap-1 text-2xl font-black tracking-tight uppercase ${
+                confirmed ? '' : 'text-gradient'
+              }`}
+              style={confirmed ? { color: 'var(--accent-success)' } : undefined}
             >
               {queued
-                ? t('stampDonePage.queuedReceipt')
+                ? t('stampDonePage.queuedTitle')
                 : confirmed
-                  ? t('stampDonePage.receipt')
-                  : t('stampDonePage.receiptPending')}
+                  ? t('stampDonePage.foldedIntoBitcoin')
+                  : t('stampDonePage.submittedNotConfirmed')}
               <Tooltip
                 title="Pending is not confirmed"
                 content="The fingerprint is at OpenTimestamps calendars. It is NOT in a Bitcoin block until status is confirmed. Pending ≠ confirmed."
               />
-            </p>
-            <LiveNodeChip compact />
-          </div>
-          <Link
-            to={proof.hash ? `/verify?hash=${encodeURIComponent(proof.hash)}` : '/verify'}
-            data-testid="done-verify"
-            className="inline-flex min-h-[44px] items-center gap-1 rounded-lg border px-3 text-[11px] font-bold tracking-widest uppercase"
-            style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
-          >
-            <ShieldCheck size={14} /> {t('stampDonePage.verify')}
-          </Link>
-        </div>
-
-        <header className="space-y-3 text-center">
-          <div
-            className={`mx-auto flex h-16 w-16 items-center justify-center rounded-full ${
-              confirmed ? 'motion-safe:animate-pulse' : ''
-            }`}
-            style={{
-              background: confirmed
-                ? 'linear-gradient(165deg, color-mix(in srgb, var(--accent-success) 26%, var(--surface-raised)), var(--surface-raised))'
-                : 'linear-gradient(165deg, color-mix(in srgb, var(--accent-gold) 26%, var(--surface-raised)), color-mix(in srgb, var(--accent-active) 12%, var(--surface-raised)))',
-              border: `2px solid ${confirmed ? 'var(--accent-success)' : 'var(--accent-gold)'}`,
-              boxShadow: confirmed
-                ? '0 0 34px color-mix(in srgb, var(--accent-success) 28%, transparent)'
-                : '0 0 34px color-mix(in srgb, var(--accent-gold) 24%, transparent), 0 0 60px color-mix(in srgb, var(--accent-active) 16%, transparent)'
-            }}
-          >
-            {confirmed ? (
-              <Lock size={32} style={{ color: 'var(--accent-success)' }} aria-hidden />
-            ) : (
-              <Clock
-                size={32}
-                className="motion-safe:animate-pulse"
-                style={{ color: 'var(--accent-gold)' }}
-                aria-hidden
-              />
-            )}
-          </div>
-          <h1
-            className={`inline-flex items-center justify-center gap-1 text-2xl font-black tracking-tight uppercase ${
-              confirmed ? '' : 'text-gradient'
-            }`}
-            style={confirmed ? { color: 'var(--accent-success)' } : undefined}
-          >
-            {queued
-              ? t('stampDonePage.queuedTitle')
-              : confirmed
-                ? t('stampDonePage.foldedIntoBitcoin')
-                : t('stampDonePage.submittedNotConfirmed')}
-            <Tooltip
-              title="Pending is not confirmed"
-              content="The fingerprint is at OpenTimestamps calendars. It is NOT in a Bitcoin block until status is confirmed. Pending ≠ confirmed."
-            />
-          </h1>
-          {confirmed && hasBlockHeight ? (
-            <div>
-              <p
-                className="font-mono text-sm tabular-nums"
-                style={{ color: 'var(--accent-success)' }}
-              >
-                {t('stampDonePage.bitcoinBlock')}{' '}
+            </h1>
+            {confirmed && hasBlockHeight ? (
+              <div>
+                <p
+                  className="font-mono text-sm tabular-nums"
+                  style={{ color: 'var(--accent-success)' }}
+                >
+                  {t('stampDonePage.bitcoinBlock')}{' '}
+                  <a
+                    href={`https://mempool.space/block/${heightNum}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`Bitcoin block ${heightNum} on mempool.space`}
+                    title={`Bitcoin block ${heightNum}`}
+                    className="inline-flex min-h-[44px] items-center underline underline-offset-2"
+                  >
+                    {heightNum.toLocaleString(i18n.language)}
+                  </a>
+                </p>
                 <a
                   href={`https://mempool.space/block/${heightNum}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={`Bitcoin block ${heightNum} on mempool.space`}
-                  title={`Bitcoin block ${heightNum}`}
-                  className="inline-flex min-h-[44px] items-center underline underline-offset-2"
+                  className="inline-flex min-h-[44px] items-center text-sm underline underline-offset-2"
+                  style={{ color: 'var(--text-secondary)' }}
                 >
-                  {heightNum.toLocaleString(i18n.language)}
+                  View on mempool.space
                 </a>
+              </div>
+            ) : confirmed ? (
+              <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
+                Block height not stored yet — pending ≠ the issue; confirmation is recorded.
               </p>
-              <a
-                href={`https://mempool.space/block/${heightNum}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex min-h-[44px] items-center text-sm underline underline-offset-2"
-                style={{ color: 'var(--text-secondary)' }}
-              >
-                View on mempool.space
-              </a>
-            </div>
-          ) : confirmed ? (
-            <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
-              Block height not stored yet — pending ≠ the issue; confirmation is recorded.
-            </p>
-          ) : (
-            <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-              {queued ? t('stampDonePage.queuedBody') : t('stampDonePage.pendingExplainer')}
-            </p>
-          )}
-        </header>
+            ) : (
+              <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+                {queued ? t('stampDonePage.queuedBody') : t('stampDonePage.pendingExplainer')}
+              </p>
+            )}
+          </header>
 
-        {!queued && (
-          <ol
-            className="jewel-edge vault-ring grid grid-cols-1 gap-2 rounded-2xl border p-4 text-left sm:grid-cols-3"
-            style={{
-              borderColor: 'var(--border)',
-              background:
-                'linear-gradient(165deg, color-mix(in srgb, var(--accent-active) 7%, var(--surface-raised)) 0%, var(--surface-raised) 60%, color-mix(in srgb, var(--accent-gold) 6%, var(--surface-raised)) 100%)'
-            }}
-          >
-            {[
-              {
-                n: '1',
-                t: t('stampDonePage.stepFingerprint'),
-                d: t('stampDonePage.stepFingerprintDesc'),
-                tip: t('stampDonePage.stepFingerprintTip')
-              },
-              {
-                n: '2',
-                t: t('stampDonePage.stepCalendars'),
-                d: t('stampDonePage.stepCalendarsDesc'),
-                tip: t('stampDonePage.stepCalendarsTip')
-              },
-              {
-                n: '3',
-                t: t('stampDonePage.stepBitcoin'),
-                d: confirmed
-                  ? hasBlockHeight
-                    ? t('stampDonePage.stepBitcoinBlock', {
-                        block: heightNum.toLocaleString(i18n.language)
-                      })
-                    : t('stampDonePage.stepBitcoinFolded')
-                  : t('stampDonePage.stepBitcoinWaiting'),
-                tip: t('stampDonePage.stepBitcoinTip')
-              }
-            ].map((s) => (
-              <li key={s.n} className="min-w-0">
-                <p
-                  className="text-[9px] font-black tracking-widest uppercase"
-                  style={{ color: 'var(--accent-gold)' }}
-                >
-                  {s.n} · {s.t}
-                  <Tooltip
-                    title={t('stampDonePage.stepTipTitle', { n: s.n, title: s.t })}
-                    content={s.tip}
-                  />
-                </p>
-                <p className="mt-0.5 text-xs" style={{ color: 'var(--text-secondary)' }}>
-                  {s.d}
-                </p>
-              </li>
-            ))}
-          </ol>
-        )}
+          {!queued && (
+            <ol
+              className="grid grid-cols-1 gap-3 rounded-xl border p-4 text-left sm:grid-cols-3 sm:gap-4"
+              style={{
+                borderColor: 'color-mix(in srgb, var(--accent-gold) 22%, var(--border))',
+                background: 'color-mix(in srgb, var(--bg-primary) 72%, transparent)'
+              }}
+            >
+              {[
+                {
+                  n: '1',
+                  t: t('stampDonePage.stepFingerprint'),
+                  d: t('stampDonePage.stepFingerprintDesc'),
+                  tip: t('stampDonePage.stepFingerprintTip')
+                },
+                {
+                  n: '2',
+                  t: t('stampDonePage.stepCalendars'),
+                  d: t('stampDonePage.stepCalendarsDesc'),
+                  tip: t('stampDonePage.stepCalendarsTip')
+                },
+                {
+                  n: '3',
+                  t: t('stampDonePage.stepBitcoin'),
+                  d: confirmed
+                    ? hasBlockHeight
+                      ? t('stampDonePage.stepBitcoinBlock', {
+                          block: heightNum.toLocaleString(i18n.language)
+                        })
+                      : t('stampDonePage.stepBitcoinFolded')
+                    : t('stampDonePage.stepBitcoinWaiting'),
+                  tip: t('stampDonePage.stepBitcoinTip')
+                }
+              ].map((s) => (
+                <li key={s.n} className="min-w-0">
+                  <p
+                    className="flex items-center gap-2 text-[9px] font-black tracking-widest uppercase"
+                    style={{ color: 'var(--accent-gold)' }}
+                  >
+                    <span
+                      className="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[10px] font-black"
+                      style={{ background: 'var(--accent-gold)', color: '#141b25' }}
+                      aria-hidden
+                    >
+                      {s.n}
+                    </span>
+                    <span>
+                      {s.n} · {s.t}
+                      <Tooltip
+                        title={t('stampDonePage.stepTipTitle', { n: s.n, title: s.t })}
+                        content={s.tip}
+                      />
+                    </span>
+                  </p>
+                  <p className="mt-1.5 text-xs" style={{ color: 'var(--text-secondary)' }}>
+                    {s.d}
+                  </p>
+                </li>
+              ))}
+            </ol>
+          )}
+        </article>
 
         <div className="flex justify-center">
           <StampSuccessActions

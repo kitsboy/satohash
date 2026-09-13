@@ -173,29 +173,41 @@ export async function onRequestGet({ params }) {
     header img{width:36px;height:36px}
     header .brand{font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
     header .sub{font-size:11px;color:var(--muted);margin-top:.15rem}
-    .card{border:1px solid var(--line);border-radius:1.25rem;padding:1.35rem 1.25rem;background:var(--card);
-      box-shadow:0 0 0 1px rgba(240,180,41,.08),0 24px 48px -24px rgba(0,0,0,.7)}
-    .k{letter-spacing:.16em;text-transform:uppercase;font-size:10px;color:var(--gold);font-weight:800;margin:0 0 .75rem}
+    .card{position:relative;border:1px solid var(--line);border-radius:1.25rem;padding:1.35rem 1.25rem;
+      background:linear-gradient(165deg,rgba(56,189,248,.08) 0%,var(--card) 55%,rgba(240,180,41,.06) 100%);
+      box-shadow:0 0 0 1px rgba(240,180,41,.1),0 24px 48px -24px rgba(0,0,0,.7);overflow:hidden}
+    .card:before{content:"";position:absolute;inset:0 0 auto;height:2px;background:linear-gradient(90deg,#38bdf8,#f0b429)}
+    .mast{display:flex;align-items:flex-start;gap:.85rem;margin:0 0 .85rem}
+    .seal{width:56px;height:56px;flex:0 0 56px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+      background:linear-gradient(165deg,rgba(240,180,41,.26),var(--card));
+      box-shadow:0 0 0 1.15px rgba(255,255,255,.28),0 0 28px rgba(240,180,41,.28)}
+    .seal.ok{background:linear-gradient(165deg,rgba(34,211,165,.26),var(--card));
+      box-shadow:0 0 0 1.15px rgba(255,255,255,.28),0 0 28px rgba(34,211,165,.28)}
+    .seal:after{content:"◷";font-size:1.35rem;color:var(--gold);line-height:1}
+    .seal.ok:after{content:"✓";color:var(--ok)}
+    .k{letter-spacing:.16em;text-transform:uppercase;font-size:10px;color:var(--gold);font-weight:800;margin:0 0 .55rem}
+    .fp{letter-spacing:.16em;text-transform:uppercase;font-size:9px;color:var(--gold);font-weight:800;margin:0 0 .4rem}
     .status{display:inline-block;border-radius:.5rem;padding:.4rem .8rem;font-size:12px;font-weight:800;
-      letter-spacing:.12em;text-transform:uppercase;margin:0 0 .55rem}
+      letter-spacing:.12em;text-transform:uppercase;margin:0}
     .status.ok{background:rgba(34,211,165,.12);color:var(--ok);border:1px solid rgba(34,211,165,.35)}
     .status.wait{background:rgba(240,180,41,.1);color:var(--gold);border:1px solid var(--line)}
     a.njump{color:var(--gold);font-weight:800;letter-spacing:.08em;text-transform:uppercase;font-size:12px}
-    h1{font-size:1.35rem;line-height:1.2;margin:.7rem 0 .85rem;letter-spacing:-.03em}
-    .h{font-family:ui-monospace,"JetBrains Mono",monospace;font-size:12px;word-break:break-all;-webkit-text-size-adjust:100%;}
-      background:#141b25;border:1px solid rgba(255,255,255,.06);border-radius:.75rem;padding:.75rem;margin:0 0 1rem}
+    a.njump:focus-visible,a.btn:focus-visible,footer a:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+    h1{font-size:1.35rem;line-height:1.2;margin:.15rem 0 .85rem;letter-spacing:-.03em}
+    .h{font-family:ui-monospace,"JetBrains Mono",monospace;font-size:12px;word-break:break-all;-webkit-text-size-adjust:100%;
+      background:#141b25;border:1px solid rgba(240,180,41,.22);border-radius:.75rem;padding:.75rem;margin:0 0 1rem;-webkit-user-select:all;user-select:all}
     p{line-height:1.55;font-size:.95rem;margin:0 0 .75rem}
     .muted{color:var(--muted);font-size:.82rem}
     .cals{font-size:11px;color:var(--muted);margin:1rem 0 0}
     .cals strong{color:var(--gold);font-weight:800;letter-spacing:.08em}
     .actions{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.15rem}
-    a.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:.6rem 1rem;
+    a.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:.6rem 1rem;
       border-radius:.85rem;text-decoration:none;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
     a.gold{background:var(--gold);color:#141b25}
     a.ghost{border:1px solid var(--line);color:var(--gold)}
     footer{margin-top:1.25rem;font-size:11px;color:var(--muted)}
     footer a{color:var(--gold)}
-    @media (max-width:420px){h1{font-size:1.2rem}.actions{flex-direction:column}a.btn{width:100%}}
+    @media (max-width:420px){h1{font-size:1.2rem}.actions{flex-direction:column}a.btn{width:100%}.seal{width:48px;height:48px;flex-basis:48px}}
   </style>
 </head>
 <body>
@@ -208,9 +220,15 @@ export async function onRequestGet({ params }) {
       </div>
     </header>
     <article class="card">
-      <p class="k">Zero-JS proof card</p>
-      <p class="status ${confirmed ? 'ok' : 'wait'}" role="status">${esc(statusLine)}</p>
+      <div class="mast">
+        <div class="seal ${confirmed ? 'ok' : ''}" aria-hidden="true"></div>
+        <div>
+          <p class="k">Zero-JS proof card</p>
+          <p class="status ${confirmed ? 'ok' : 'wait'}" role="status">${esc(statusLine)}</p>
+        </div>
+      </div>
       <h1>${confirmed ? 'Confirmed on Bitcoin' : 'Pending is not confirmed'}</h1>
+      <p class="fp">SHA-256 fingerprint</p>
       <p class="h">${esc(hash)}</p>
       <p>Satohash recorded this fingerprint${proof.created_at ? ` at ${utc(proof.created_at)}` : ''}.
       ${
