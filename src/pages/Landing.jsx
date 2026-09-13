@@ -517,6 +517,7 @@ export default function Landing() {
                   <img
                     src={HERO_POSTER}
                     alt=""
+                    aria-hidden="true"
                     width={1200}
                     height={630}
                     fetchPriority="high"
