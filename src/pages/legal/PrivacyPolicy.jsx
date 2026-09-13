@@ -277,10 +277,10 @@ const SECTIONS = [
         <p className="mt-5 rounded-xl border border-[var(--border)] bg-[var(--surface-raised)] px-5 py-4 text-sm text-[var(--text-secondary)]">
           To exercise any of these rights, email{' '}
           <a
-            href="mailto:privacy@satohash.com"
+            href="mailto:hello@giveabit.io"
             className="font-bold text-[var(--accent-active)] hover:underline"
           >
-            privacy@satohash.com
+            hello@giveabit.io
           </a>
           . We respond within 30 days.
         </p>
@@ -295,41 +295,20 @@ const SECTIONS = [
     content: (
       <>
         <p className="mb-5 leading-relaxed text-[var(--text-secondary)]">
-          We use minimal cookies — only what's necessary for the application to function. No
-          tracking pixels. No fingerprinting. No third-party advertising cookies.
+          We set no cookies of our own — no analytics cookie, no advertising cookie, no login cookie
+          (we have no logins). Our analytics is self-hosted and cookie-less: it counts page views,
+          not people.
         </p>
-        <div className="space-y-3">
-          {[
-            {
-              name: 'session_token',
-              purpose: 'Keeps you logged in during a session',
-              tracking: false
-            },
-            {
-              name: 'theme_preference',
-              purpose: 'Remembers your light/dark mode preference',
-              tracking: false
-            },
-            {
-              name: 'Analytics (anonymised)',
-              purpose: 'Counts page views with no user identifier attached',
-              tracking: false
-            }
-          ].map((cookie, i) => (
-            <div
-              key={i}
-              className="flex items-start justify-between gap-4 rounded-xl border border-[var(--border)] bg-[var(--surface-raised)] px-5 py-4"
-            >
-              <div>
-                <code className="text-xs font-bold text-[var(--accent-purple)]">{cookie.name}</code>
-                <p className="mt-0.5 text-sm text-[var(--text-secondary)]">{cookie.purpose}</p>
-              </div>
-              <span className="shrink-0 rounded-full border border-[var(--accent-success)]/25 bg-[var(--accent-success)]/8 px-3 py-1 text-[10px] font-black tracking-wide text-[var(--accent-success)] uppercase">
-                Not tracking
-              </span>
-            </div>
-          ))}
-        </div>
+        <p className="mb-5 leading-relaxed text-[var(--text-secondary)]">
+          We do keep one thing in your browser: a local visit count (
+          <code className="text-xs font-bold text-[var(--accent-purple)]">satohash_analytics</code>
+          ), stored in your browser's localStorage, not in a cookie. It never leaves your device, it
+          is not readable by us, and clearing your browsing data removes it.
+        </p>
+        <p className="leading-relaxed text-[var(--text-secondary)]">
+          If we ever add a cookie of our own, or a third-party tracker, this policy changes first
+          and a real consent banner ships with it.
+        </p>
       </>
     )
   },
@@ -486,11 +465,11 @@ export default function PrivacyPolicy() {
                     Questions or requests?
                   </p>
                   <a
-                    href="mailto:privacy@satohash.com"
+                    href="mailto:hello@giveabit.io"
                     className="flex items-center gap-2 text-sm font-bold text-indigo-600 hover:underline"
                   >
                     <Mail size={14} />
-                    privacy@satohash.com
+                    hello@giveabit.io
                   </a>
                 </div>
                 <div className="flex items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-xs font-bold text-slate-500">

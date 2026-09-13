@@ -67,7 +67,8 @@ const COMPLIANCE_ROWS = [
     framework: 'GDPR',
     jurisdiction: 'European Union',
     status: 'By design',
-    standard: 'Zero personal data stored'
+    standard:
+      'No account data · transient IP for abuse prevention (24 h) · hash and optional label only'
   },
   {
     framework: 'Common Law',
@@ -439,8 +440,9 @@ export default function TrustCenter() {
             <ShieldCheck size={18} className="mb-3 text-[var(--accent-success)]" />
             <p className="text-sm leading-relaxed text-[var(--text-secondary)]">
               <strong className="text-[var(--text-primary)]">GDPR Article 11 compliance:</strong> We
-              cannot identify you from a hash alone. There is no personal data to delete, breach, or
-              sell. Your privacy is not a promise — it is a cryptographic constraint.
+              cannot identify you from a hash alone. What we hold is a hash, an optional label, and
+              a 24-hour IP record for abuse prevention — nothing that builds a profile of you. Your
+              privacy is not a promise — it is a cryptographic constraint.
             </p>
           </motion.div>
         </motion.section>
@@ -610,16 +612,16 @@ export default function TrustCenter() {
               icon={Mail}
               title="Questions About a Proof?"
               description="Reach our legal team for any questions about proof validity, court submissions, or compliance documentation."
-              cta="legal@satohash.com"
-              href="mailto:legal@satohash.com"
+              cta="hello@giveabit.io"
+              href="mailto:hello@giveabit.io"
               color="var(--accent-active)"
             />
             <ContactCard
               icon={Shield}
               title="Data Deletion Requests"
               description="To request deletion of your metadata (hashes and filenames), contact our privacy team. Note: Bitcoin-anchored data is permanent by nature."
-              cta="privacy@satohash.com"
-              href="mailto:privacy@satohash.com"
+              cta="hello@giveabit.io"
+              href="mailto:hello@giveabit.io"
               color="var(--accent-purple)"
               border
             />

@@ -50,8 +50,8 @@ const SECTIONS = [
         <div className="rounded-xl border border-blue-200 bg-blue-50 px-5 py-4 text-sm text-blue-900">
           <strong>Plain language:</strong> By using Satohash, you're agreeing to these rules. If
           anything is unclear, email us at{' '}
-          <a href="mailto:legal@satohash.com" className="font-bold underline">
-            legal@satohash.com
+          <a href="mailto:hello@giveabit.io" className="font-bold underline">
+            hello@giveabit.io
           </a>{' '}
           and we'll explain it.
         </div>
@@ -727,11 +727,11 @@ export default function TermsOfService() {
                     Questions about these terms?
                   </p>
                   <a
-                    href="mailto:legal@satohash.com"
+                    href="mailto:hello@giveabit.io"
                     className="flex items-center gap-2 text-sm font-bold text-indigo-600 hover:underline"
                   >
                     <Mail size={14} />
-                    legal@satohash.com
+                    hello@giveabit.io
                   </a>
                 </div>
                 <div className="flex items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-xs font-bold text-slate-500">

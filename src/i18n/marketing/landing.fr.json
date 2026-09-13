@@ -11,7 +11,7 @@
     "titleLine1": "Prouvez qu'un fichier",
     "titleLine2": "a existé.",
     "titleHighlight": "Pour toujours.",
-    "subtitle": "Déposez n'importe quel fichier. Obtenez un horodatage permanent, ancré sur Bitcoin. Valable en justice. Sans avocat. Sans confiance requise.",
+    "subtitle": "Preuve vérifiable de façon indépendante. Sans notaire.",
     "description": "Satohash calcule l'empreinte de votre fichier localement dans votre navigateur — votre document ne quitte jamais votre appareil. Seule une empreinte cryptographique est inscrite dans la blockchain Bitcoin, créant une preuve d'existence immuable pour tout fichier, contrat, photo ou jeu de données.",
     "ctaStamp": "Horodater un fichier — C'est gratuit",
     "ctaWatch": "Voir l'explainer",
