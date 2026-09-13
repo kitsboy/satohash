@@ -1588,5 +1588,31 @@
     "proofCard": "证明卡",
     "otsLocal": "本地 .ots",
     "shared": "已分享"
+  },
+  "donatePage": {
+    "back": "返回 Satohash",
+    "titleBefore": "支持",
+    "lede": "Satohash 让文件证明保持免费并锚定比特币。若 Satohash 帮到你，一点小费就能维持日历、节点和 API。每一聪都直接进入 Satohash 钱包 — 从不经过中间人。",
+    "lightning": "闪电网络",
+    "lightningMeta": "即时 · 近乎零手续费",
+    "lightningAddress": "闪电地址",
+    "lightningHelp": "用任意闪电钱包扫描二维码（Phoenix、Wallet of Satoshi、Alby、Zeus…），或打到上方地址。任意金额均可。闪电像发短信转账 — 数秒到账，费用只有几分之一美分。经 Breez Spark 非托管 — 无中间人，密钥由我们持有。",
+    "bitcoin": "比特币",
+    "bitcoinMeta": "链上 · 约 10 分钟确认",
+    "bitcoinAddress": "比特币地址",
+    "viewMempool": "在 mempool.space 查看",
+    "bitcoinHelp": "链上适用于任意金额。这是由家族主种子支持的 Breez 链上充值地址 — 即便服务器宕机也可恢复。确认约需 10 分钟。",
+    "whereTitle": "聪用在何处",
+    "freeTitle": "盖戳保持免费。",
+    "freeBody": "小费资助免费公共盖戳档 — 不会把它变成付费墙。",
+    "infraTitle": "基础设施。",
+    "infraBody": "OpenTimestamps 日历、THOR 节点和 API，让证明永远可核验。",
+    "noMiddleTitle": "无中间人。",
+    "noMiddleBody": "聪直接进入 Breez Spark 上的 Satohash 钱包 — 非托管，无平台抽成。",
+    "stampFree": "免费盖戳",
+    "contributeBefore": "更想贡献代码？",
+    "contributeLink": "查看贡献页",
+    "copy": "复制",
+    "copied": "已复制"
   }
 }

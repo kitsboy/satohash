@@ -1598,5 +1598,31 @@
     "proofCard": "Kadi ya ushahidi",
     "otsLocal": ".ots ya kifaa",
     "shared": "Imeshirikiwa"
+  },
+  "donatePage": {
+    "back": "Rudi Satohash",
+    "titleBefore": "Saidia",
+    "lede": "Satohash inaweka ushahidi wa nyaraka bure na umetiwa nanga kwenye Bitcoin. Ikiwa Satohash inakusaidia, bakshishi ndogo inaendesha kalenda, nodo na API. Kila sat inaenda moja kwa moja kwenye pochi ya Satohash — kamwe kwa mtu wa kati.",
+    "lightning": "Lightning",
+    "lightningMeta": "papo hapo · ada karibu sifuri",
+    "lightningAddress": "Anwani ya Lightning",
+    "lightningHelp": "Changanua QR kwa pochi yoyote ya Lightning (Phoenix, Wallet of Satoshi, Alby, Zeus…), au tuma kwa anwani hapo juu. Kiasi chochote kinafaa. Lightning ni kama ujumbe mfupi wa pesa — inafika kwa sekunde na hugharimu sehemu ya senti. Si custodial kupitia Breez Spark — hakuna mtu wa kati, funguo ziko kwetu.",
+    "bitcoin": "Bitcoin",
+    "bitcoinMeta": "kwenye mnyororo · ~dakika 10 kuthibitisha",
+    "bitcoinAddress": "Anwani ya Bitcoin",
+    "viewMempool": "Tazama kwenye mempool.space",
+    "bitcoinHelp": "On-chain inafanya kazi kwa kiasi chochote. Ni anwani ya amana ya Breez inayoungwa mkono na mbegu kuu ya familia — inayoweza kurejeshwa hata seva ikishindwa. Uthibitisho huchukua ~dakika 10.",
+    "whereTitle": "Sats zako zinaenda wapi",
+    "freeTitle": "Migongo inabaki bure.",
+    "freeBody": "Bakshishi zako zinafadhili kiwango cha umma bure — hazifanyi paywall.",
+    "infraTitle": "Miundombinu.",
+    "infraBody": "Kalenda za OpenTimestamps, nodo ya THOR, na API zinazoweka ushahidi ukithibitishwa milele.",
+    "noMiddleTitle": "Hakuna mtu wa kati.",
+    "noMiddleBody": "Sats zinaingia moja kwa moja kwenye pochi ya Satohash kwenye Breez Spark — si custodial, hakuna kata ya jukwaa.",
+    "stampFree": "Gonga bure",
+    "contributeBefore": "Unapendelea kuchangia msimbo?",
+    "contributeLink": "Tazama ukurasa wa kuchangia",
+    "copy": "Nakili",
+    "copied": "Imenakiliwa"
   }
 }

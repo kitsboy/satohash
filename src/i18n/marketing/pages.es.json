@@ -1598,5 +1598,31 @@
     "proofCard": "Tarjeta de prueba",
     "otsLocal": ".ots local",
     "shared": "Compartido"
+  },
+  "donatePage": {
+    "back": "Volver a Satohash",
+    "titleBefore": "Apoya",
+    "lede": "Satohash mantiene la prueba de documentos gratuita y anclada a Bitcoin. Si Satohash te sirve, una propina pequeña mantiene los calendarios, el nodo y la API. Cada sat va directo al monedero Satohash — nunca a un intermediario.",
+    "lightning": "Lightning",
+    "lightningMeta": "instantáneo · comisión casi nula",
+    "lightningAddress": "Dirección Lightning",
+    "lightningHelp": "Escanea el QR con cualquier monedero Lightning (Phoenix, Wallet of Satoshi, Alby, Zeus…), o envía a la dirección de arriba. Cualquier cantidad vale. Lightning es como un mensaje de texto para el dinero — llega en segundos y cuesta fracciones de céntimo. No custodial vía Breez Spark — sin intermediario, las claves las tenemos nosotros.",
+    "bitcoin": "Bitcoin",
+    "bitcoinMeta": "en cadena · ~10 min de confirmación",
+    "bitcoinAddress": "Dirección Bitcoin",
+    "viewMempool": "Ver en mempool.space",
+    "bitcoinHelp": "On-chain sirve para cualquier cantidad. Es una dirección de depósito Breez respaldada por la semilla maestra de la familia — recuperable aunque el servidor fallara. Las confirmaciones tardan ~10 minutos.",
+    "whereTitle": "A dónde van tus sats",
+    "freeTitle": "Los sellos siguen siendo gratis.",
+    "freeBody": "Tus propinas financian el nivel público gratuito — no lo convierten en paywall.",
+    "infraTitle": "Infraestructura.",
+    "infraBody": "Los calendarios OpenTimestamps, el nodo THOR y la API que mantienen las pruebas verificables para siempre.",
+    "noMiddleTitle": "Sin intermediario.",
+    "noMiddleBody": "Los sats llegan directo al monedero Satohash en Breez Spark — no custodial, sin recorte de plataforma.",
+    "stampFree": "Sellar gratis",
+    "contributeBefore": "¿Prefieres aportar código?",
+    "contributeLink": "Ver la página de contribución",
+    "copy": "Copiar",
+    "copied": "Copiado"
   }
 }

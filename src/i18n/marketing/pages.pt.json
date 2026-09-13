@@ -1598,5 +1598,31 @@
     "proofCard": "Cartão de prova",
     "otsLocal": ".ots local",
     "shared": "Partilhado"
+  },
+  "donatePage": {
+    "back": "Voltar ao Satohash",
+    "titleBefore": "Apoiar",
+    "lede": "O Satohash mantém a prova de documentos grátis e ancorada no Bitcoin. Se o Satohash o ajuda, uma gorjeta pequena mantém os calendários, o nó e a API. Cada sat vai direto para a carteira Satohash — nunca a um intermediário.",
+    "lightning": "Lightning",
+    "lightningMeta": "instantâneo · taxa quase nula",
+    "lightningAddress": "Endereço Lightning",
+    "lightningHelp": "Leia o QR com qualquer carteira Lightning (Phoenix, Wallet of Satoshi, Alby, Zeus…), ou envie para o endereço acima. Qualquer quantia serve. Lightning é como uma mensagem de texto para dinheiro — chega em segundos e custa frações de cêntimo. Não custodial via Breez Spark — sem intermediário, as chaves connosco.",
+    "bitcoin": "Bitcoin",
+    "bitcoinMeta": "on-chain · ~10 min de confirmação",
+    "bitcoinAddress": "Endereço Bitcoin",
+    "viewMempool": "Ver no mempool.space",
+    "bitcoinHelp": "On-chain serve para qualquer quantia. É um endereço de depósito Breez apoiado na semente-mestra da família — recuperável mesmo se o servidor falhasse. As confirmações demoram ~10 minutos.",
+    "whereTitle": "Para onde vão os seus sats",
+    "freeTitle": "Os selos continuam grátis.",
+    "freeBody": "As gorjetas financiam o nível público grátis — não o transformam em paywall.",
+    "infraTitle": "Infraestrutura.",
+    "infraBody": "Os calendários OpenTimestamps, o nó THOR e a API que mantêm as provas verificáveis para sempre.",
+    "noMiddleTitle": "Sem intermediário.",
+    "noMiddleBody": "Os sats chegam direto à carteira Satohash no Breez Spark — não custodial, sem corte de plataforma.",
+    "stampFree": "Selar grátis",
+    "contributeBefore": "Prefere contribuir com código?",
+    "contributeLink": "Ver a página de contribuição",
+    "copy": "Copiar",
+    "copied": "Copiado"
   }
 }

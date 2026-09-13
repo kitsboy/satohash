@@ -1,3 +1,9 @@
+## 2026-09-13 (Grok M3 — i18n /donate)
+
+`/donate` wired to `donatePage` in all 7 locales (LN + on-chain copy, where sats go, stamp CTA). Next: Proof Pack, then About.
+
+---
+
 ## 2026-09-13 (Grok M3 — product-loop i18n slice A)
 
 Wired leftover English on the public product loop into `pages.*.json` for en/es/fr/de/pt/sw/zh: proof card (SPA + zero-JS `?lang=`/cookie/Accept-Language), counsel, watch, status chrome, stamp-done leftovers, receipt/calendars/share sheet, verify shield/public leftovers, nav + footer labels. `i18n:check` green (~1084 marketing page keys). Spot-checked `/counsel?lang=es`, `/watch?lang=es`, `/status?lang=es`, `/p/<hash>?lang=es`. Next: remaining public marketing pages (slice B). Do not add Arabic until A+B are done.

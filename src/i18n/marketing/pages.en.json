@@ -1598,5 +1598,31 @@
     "proofCard": "Proof card",
     "otsLocal": ".ots local",
     "shared": "Shared"
+  },
+  "donatePage": {
+    "back": "Back to Satohash",
+    "titleBefore": "Support",
+    "lede": "Satohash keeps document proof free and anchored to Bitcoin. If Satohash helps you, a small tip keeps the calendars, the node, and the API running. Every sat goes straight to the Satohash Wallet — never a middleman.",
+    "lightning": "Lightning",
+    "lightningMeta": "instant · near-zero fee",
+    "lightningAddress": "Lightning address",
+    "lightningHelp": "Scan the QR with any Lightning wallet (Phoenix, Wallet of Satoshi, Alby, Zeus…), or send to the address above. Any amount works. Lightning is like a text message for money — it arrives in seconds and costs fractions of a cent. Non-custodial via Breez Spark — no middleman, keys held by us.",
+    "bitcoin": "Bitcoin",
+    "bitcoinMeta": "on-chain · ~10 min confirm",
+    "bitcoinAddress": "Bitcoin address",
+    "viewMempool": "View on mempool.space",
+    "bitcoinHelp": "On-chain works for any amount. It's a Breez on-chain deposit address backed by the family master seed — recoverable even if the server ever failed. Confirmations take ~10 minutes.",
+    "whereTitle": "Where your sats go",
+    "freeTitle": "Stamps stay free.",
+    "freeBody": "Your tips fund the free public stamping tier — they don't paywall it.",
+    "infraTitle": "Infrastructure.",
+    "infraBody": "The OpenTimestamps calendars, THOR node, and API that keep proofs verifiable forever.",
+    "noMiddleTitle": "No middleman.",
+    "noMiddleBody": "Sats land directly in the Satohash wallet on Breez Spark — non-custodial, no platform cut.",
+    "stampFree": "Stamp for free",
+    "contributeBefore": "Prefer to contribute code instead?",
+    "contributeLink": "See the contribute page",
+    "copy": "Copy",
+    "copied": "Copied"
   }
 }

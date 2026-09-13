@@ -1598,5 +1598,31 @@
     "proofCard": "Beweiskarte",
     "otsLocal": ".ots lokal",
     "shared": "Geteilt"
+  },
+  "donatePage": {
+    "back": "Zurück zu Satohash",
+    "titleBefore": "Unterstützen Sie",
+    "lede": "Satohash hält Dokumentenbeweise kostenlos und an Bitcoin verankert. Wenn Satohash Ihnen hilft, hält ein kleines Trinkgeld Kalender, Knoten und API am Laufen. Jeder Sat geht direkt ins Satohash-Wallet — nie an einen Mittelsmann.",
+    "lightning": "Lightning",
+    "lightningMeta": "sofort · fast gebührenfrei",
+    "lightningAddress": "Lightning-Adresse",
+    "lightningHelp": "Scannen Sie den QR mit jeder Lightning-Wallet (Phoenix, Wallet of Satoshi, Alby, Zeus…), oder senden Sie an die Adresse oben. Jeder Betrag geht. Lightning ist wie eine SMS für Geld — es kommt in Sekunden und kostet Bruchteile eines Cents. Nicht-kustodial über Breez Spark — kein Mittelsmann, Schlüssel bei uns.",
+    "bitcoin": "Bitcoin",
+    "bitcoinMeta": "on-chain · ~10 Min. Bestätigung",
+    "bitcoinAddress": "Bitcoin-Adresse",
+    "viewMempool": "Auf mempool.space ansehen",
+    "bitcoinHelp": "On-chain geht für jeden Betrag. Es ist eine Breez-On-Chain-Einzahladresse, hinterlegt mit dem Familien-Master-Seed — auch dann wiederherstellbar, wenn der Server ausfiele. Bestätigungen dauern ~10 Minuten.",
+    "whereTitle": "Wohin Ihre Sats gehen",
+    "freeTitle": "Stempel bleiben kostenlos.",
+    "freeBody": "Ihre Trinkgelder finanzieren die kostenlose öffentliche Stufe — sie machen daraus keine Paywall.",
+    "infraTitle": "Infrastruktur.",
+    "infraBody": "Die OpenTimestamps-Kalender, der THOR-Knoten und die API, die Beweise für immer prüfbar halten.",
+    "noMiddleTitle": "Kein Mittelsmann.",
+    "noMiddleBody": "Sats landen direkt im Satohash-Wallet auf Breez Spark — nicht-kustodial, ohne Plattformabzug.",
+    "stampFree": "Kostenlos stempeln",
+    "contributeBefore": "Lieber Code beisteuern?",
+    "contributeLink": "Zur Contribute-Seite",
+    "copy": "Kopieren",
+    "copied": "Kopiert"
   }
 }

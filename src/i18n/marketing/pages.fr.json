@@ -1598,5 +1598,31 @@
     "proofCard": "Carte de preuve",
     "otsLocal": ".ots local",
     "shared": "Partagé"
+  },
+  "donatePage": {
+    "back": "Retour à Satohash",
+    "titleBefore": "Soutenir",
+    "lede": "Satohash garde la preuve de documents gratuite et ancrée à Bitcoin. Si Satohash vous aide, un petit pourboire fait tourner les calendriers, le nœud et l’API. Chaque sat va directement au portefeuille Satohash — jamais à un intermédiaire.",
+    "lightning": "Lightning",
+    "lightningMeta": "instantané · frais quasi nuls",
+    "lightningAddress": "Adresse Lightning",
+    "lightningHelp": "Scannez le QR avec n’importe quel portefeuille Lightning (Phoenix, Wallet of Satoshi, Alby, Zeus…), ou envoyez à l’adresse ci-dessus. Tout montant convient. Lightning, c’est comme un SMS pour l’argent — ça arrive en secondes et coûte des fractions de centime. Non-custodial via Breez Spark — pas d’intermédiaire, les clés chez nous.",
+    "bitcoin": "Bitcoin",
+    "bitcoinMeta": "on-chain · ~10 min de confirmation",
+    "bitcoinAddress": "Adresse Bitcoin",
+    "viewMempool": "Voir sur mempool.space",
+    "bitcoinHelp": "On-chain convient à tout montant. C’est une adresse de dépôt Breez adossée à la graine maître de la famille — récupérable même si le serveur tombait. Les confirmations prennent ~10 minutes.",
+    "whereTitle": "Où vont vos sats",
+    "freeTitle": "Les sceaux restent gratuits.",
+    "freeBody": "Vos pourboires financent le palier public gratuit — ils ne le paywallent pas.",
+    "infraTitle": "Infrastructure.",
+    "infraBody": "Les calendriers OpenTimestamps, le nœud THOR et l’API qui gardent les preuves vérifiables pour toujours.",
+    "noMiddleTitle": "Pas d’intermédiaire.",
+    "noMiddleBody": "Les sats arrivent directement dans le portefeuille Satohash sur Breez Spark — non-custodial, sans commission de plateforme.",
+    "stampFree": "Horodater gratuitement",
+    "contributeBefore": "Vous préférez contribuer du code ?",
+    "contributeLink": "Voir la page contribuer",
+    "copy": "Copier",
+    "copied": "Copié"
   }
 }

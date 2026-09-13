@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { QRCodeSVG } from 'qrcode.react'
 import { Zap, Copy, Check, ExternalLink, Shield, Lock, ArrowLeft } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import usePageMeta from '../hooks/usePageMeta'
 import Footer from '../components/layout/Footer'
 
@@ -12,6 +13,7 @@ const ONCHAIN = 'bc1p25zw4rh6s6fjqzxe8yzkpj4klf59v5yyzc4nqf0x6d3twu8qvq9qurdlsr'
 const EXPLORER = `https://mempool.space/address/${ONCHAIN}`
 
 function CopyField({ label, value, mono = true }) {
+  const { t } = useTranslation()
   const [copied, setCopied] = useState(false)
   const copy = async () => {
     try {
@@ -36,13 +38,14 @@ function CopyField({ label, value, mono = true }) {
         className="inline-flex shrink-0 items-center gap-1 rounded-lg border border-[var(--border)] px-2.5 py-1.5 text-xs font-semibold transition-colors hover:border-[var(--accent-gold)]"
       >
         {copied ? <Check size={14} className="text-emerald-400" /> : <Copy size={14} />}
-        {copied ? 'Copied' : 'Copy'}
+        {copied ? t('donatePage.copied') : t('donatePage.copy')}
       </button>
     </div>
   )
 }
 
 export default function Donate() {
+  const { t } = useTranslation()
   usePageMeta({ page: 'donate' })
 
   // Prefetch /stamp on mount so the Stamp-for-free CTA is instant.
@@ -67,7 +70,7 @@ export default function Donate() {
           to="/"
           className="inline-flex items-center gap-1.5 text-sm text-[var(--text-secondary)] transition-colors hover:text-[var(--accent-gold)]"
         >
-          <ArrowLeft size={15} /> Back to Satohash
+          <ArrowLeft size={15} /> {t('donatePage.back')}
         </Link>
 
         <div className="text-center">
@@ -76,12 +79,11 @@ export default function Donate() {
             animate={{ opacity: 1, y: 0 }}
             className="text-4xl font-bold sm:text-5xl"
           >
-            Support <span className="text-[var(--accent-gold)]">Satohash</span>
+            {t('donatePage.titleBefore')}{' '}
+            <span className="text-[var(--accent-gold)]">Satohash</span>
           </motion.h1>
           <p className="mx-auto mt-3 max-w-2xl text-[var(--text-secondary)]">
-            Satohash keeps document proof free and anchored to Bitcoin. If Satohash helps you, a
-            small tip keeps the calendars, the node, and the API running. Every sat goes straight to
-            the Satohash Wallet — never a middleman.
+            {t('donatePage.lede')}
           </p>
         </div>
 
@@ -95,21 +97,20 @@ export default function Donate() {
           >
             <div className="mb-3 flex items-center gap-2">
               <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-500/15 px-3 py-1 text-xs font-bold text-amber-400">
-                <Zap size={13} /> Lightning
+                <Zap size={13} /> {t('donatePage.lightning')}
               </span>
-              <span className="text-xs text-[var(--text-muted)]">instant · near-zero fee</span>
+              <span className="text-xs text-[var(--text-muted)]">
+                {t('donatePage.lightningMeta')}
+              </span>
             </div>
             <div className="mb-4 flex justify-center">
               <div className="rounded-xl border border-[var(--border)] bg-white p-3">
                 <QRCodeSVG value={`lightning:${LUD16}`} size={168} level="M" />
               </div>
             </div>
-            <CopyField label="Lightning address" value={LUD16} />
+            <CopyField label={t('donatePage.lightningAddress')} value={LUD16} />
             <p className="mt-3 text-xs leading-relaxed text-[var(--text-muted)]">
-              Scan the QR with any Lightning wallet (Phoenix, Wallet of Satoshi, Alby, Zeus…), or
-              send to the address above. Any amount works. Lightning is like a text message for
-              money — it arrives in seconds and costs fractions of a cent. Non-custodial via Breez
-              Spark — no middleman, keys held by us.
+              {t('donatePage.lightningHelp')}
             </p>
           </motion.div>
 
@@ -122,11 +123,13 @@ export default function Donate() {
           >
             <div className="mb-3 flex items-center gap-2">
               <span className="inline-flex items-center gap-1.5 rounded-full bg-orange-500/15 px-3 py-1 text-xs font-bold text-orange-400">
-                ₿ Bitcoin
+                ₿ {t('donatePage.bitcoin')}
               </span>
-              <span className="text-xs text-[var(--text-muted)]">on-chain · ~10 min confirm</span>
+              <span className="text-xs text-[var(--text-muted)]">
+                {t('donatePage.bitcoinMeta')}
+              </span>
             </div>
-            <CopyField label="Bitcoin address" value={ONCHAIN} />
+            <CopyField label={t('donatePage.bitcoinAddress')} value={ONCHAIN} />
             <div className="mt-3">
               <a
                 href={EXPLORER}
@@ -134,13 +137,11 @@ export default function Donate() {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1 text-xs text-[var(--accent-gold)] hover:underline"
               >
-                View on mempool.space <ExternalLink size={12} />
+                {t('donatePage.viewMempool')} <ExternalLink size={12} />
               </a>
             </div>
             <p className="mt-3 text-xs leading-relaxed text-[var(--text-muted)]">
-              On-chain works for any amount. It&apos;s a Breez on-chain deposit address backed by
-              the family master seed — recoverable even if the server ever failed. Confirmations
-              take ~10 minutes.
+              {t('donatePage.bitcoinHelp')}
             </p>
           </motion.div>
         </div>
@@ -153,28 +154,30 @@ export default function Donate() {
           className="rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] p-5"
         >
           <h2 className="mb-3 flex items-center gap-2 text-lg font-bold">
-            <Shield size={18} className="text-[var(--accent-gold)]" /> Where your sats go
+            <Shield size={18} className="text-[var(--accent-gold)]" /> {t('donatePage.whereTitle')}
           </h2>
           <ul className="space-y-2 text-sm text-[var(--text-secondary)]">
             <li className="flex items-start gap-2">
               <Lock size={14} className="mt-0.5 shrink-0 text-[var(--accent-gold)]" />
               <span>
-                <strong className="text-[var(--text-primary)]">Stamps stay free.</strong> Your tips
-                fund the free public stamping tier — they don&apos;t paywall it.
+                <strong className="text-[var(--text-primary)]">{t('donatePage.freeTitle')}</strong>{' '}
+                {t('donatePage.freeBody')}
               </span>
             </li>
             <li className="flex items-start gap-2">
               <Lock size={14} className="mt-0.5 shrink-0 text-[var(--accent-gold)]" />
               <span>
-                <strong className="text-[var(--text-primary)]">Infrastructure.</strong> The
-                OpenTimestamps calendars, THOR node, and API that keep proofs verifiable forever.
+                <strong className="text-[var(--text-primary)]">{t('donatePage.infraTitle')}</strong>{' '}
+                {t('donatePage.infraBody')}
               </span>
             </li>
             <li className="flex items-start gap-2">
               <Lock size={14} className="mt-0.5 shrink-0 text-[var(--accent-gold)]" />
               <span>
-                <strong className="text-[var(--text-primary)]">No middleman.</strong> Sats land
-                directly in the Satohash wallet on Breez Spark — non-custodial, no platform cut.
+                <strong className="text-[var(--text-primary)]">
+                  {t('donatePage.noMiddleTitle')}
+                </strong>{' '}
+                {t('donatePage.noMiddleBody')}
               </span>
             </li>
           </ul>
@@ -186,12 +189,12 @@ export default function Donate() {
             data-testid="donate-stamp-cta"
             className="inline-flex min-h-[44px] items-center justify-center rounded-xl border border-[var(--accent-gold)] px-5 text-sm font-bold text-[var(--accent-gold)]"
           >
-            Stamp for free
+            {t('donatePage.stampFree')}
           </Link>
           <div className="text-center text-xs text-[var(--text-muted)]">
-            Prefer to contribute code instead?{' '}
+            {t('donatePage.contributeBefore')}{' '}
             <Link to="/contribute" className="text-[var(--accent-gold)] hover:underline">
-              See the contribute page
+              {t('donatePage.contributeLink')}
             </Link>
             .
           </div>
