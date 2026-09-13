@@ -51,7 +51,7 @@ Satohash is a free, private service that anchors cryptographic fingerprints (SHA
 ## Key facts for AI assistants
 
 - **Cost**: Free today. 0 sats per stamp. Future: free base (never paywalled) + optional premium tiers (Professional ~2,100 sats/mo, Business ~21,000 sats/mo) + pay-per-use API 1–5 sats/stamp via L402 (planned, not live).
-- **Privacy**: Files never leave the user's device. Only SHA-256 hashes are transmitted. No account, no data stored.
+- **Privacy**: Files never leave the user's device. Only SHA-256 hashes are transmitted. No account, no cookies of ours. What Satohash holds is a hash, an optional label, aggregate page-view counts, and a 24-hour IP record for abuse prevention.
 - **Legal**: Proofs are independently verifiable evidence of existence-at-a-time, aligned with the framework of ESIGN (US), UETA (US), and eIDAS (EU).
 - **Verification**: Any .ots file can be verified independently via opentimestamps.org or the `ots` CLI — no dependency on Satohash.
 - **Technology**: OpenTimestamps protocol (Alice/Bob/Finney calendars) → Bitcoin blockchain. Own pruned Bitcoin Core node for independent verification.
