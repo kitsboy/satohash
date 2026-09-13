@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { QRCodeSVG as QRCode } from 'qrcode.react'
 import { Share2, Download, Package, Link2, Vault } from 'lucide-react'
 import { toast } from 'sonner'
+import { useTranslation } from 'react-i18next'
 
 import { getApiUrl } from '../../config/constants'
 import {
@@ -31,6 +32,7 @@ export default function StampSuccessActions({
   upgradeStatus = null,
   onStampAnother
 }) {
+  const { t } = useTranslation()
   const [busy, setBusy] = useState(false)
   const [showQr, setShowQr] = useState(true)
   const shareUrl = useMemo(() => buildProofCardUrl(proof), [proof])
@@ -74,9 +76,9 @@ export default function StampSuccessActions({
     if (r === 'shared' || r === 'copied') {
       trackEvent(events.PROOF_SHARED, { via: r === 'shared' ? 'share' : 'copy', ...funnelProps() })
     }
-    if (r === 'shared') toast.success('Shared')
-    else if (r === 'copied') toast.success('Proof card link copied')
-    else toast.error('Could not share — copy the link manually')
+    if (r === 'shared') toast.success(t('receiptPage.shared'))
+    else if (r === 'copied') toast.success(t('receiptPage.linkCopied'))
+    else toast.error(t('receiptPage.shareFail'))
   }
 
   const onPackage = async () => {
@@ -84,9 +86,11 @@ export default function StampSuccessActions({
     try {
       const r = await exportProofBundle(proof, { certificate: true })
       trackEvent(events.TIMESTAMP_DOWNLOADED, { kind: 'package', ...funnelProps() })
-      toast.success(r === 'shared' ? 'Package shared' : 'Proof package downloaded')
+      toast.success(
+        r === 'shared' ? t('receiptPage.packageShared') : t('receiptPage.packageDownloaded')
+      )
     } catch (e) {
-      toast.error('Package failed', { description: e.message })
+      toast.error(t('receiptPage.packageFailed'), { description: e.message })
     } finally {
       setBusy(false)
     }
@@ -102,8 +106,8 @@ export default function StampSuccessActions({
         />
         <span className="absolute top-3 right-3">
           <Tooltip
-            title="Pending is not confirmed"
-            content="The fingerprint is at OpenTimestamps calendars. It is NOT in a Bitcoin block until status is confirmed. Pending ≠ confirmed."
+            title={t('stampDonePage.pendingTipTitle')}
+            content={t('stampDonePage.pendingTipBody')}
           />
         </span>
       </div>
@@ -116,7 +120,7 @@ export default function StampSuccessActions({
           className="text-[9px] font-black tracking-widest uppercase"
           style={{ color: 'var(--text-secondary)' }}
         >
-          SHA-256 fingerprint
+          {t('proofCardPage.fingerprint')}
         </p>
         <p
           data-testid="done-hash"
@@ -146,7 +150,7 @@ export default function StampSuccessActions({
             className="text-[10px] font-black tracking-widest uppercase"
             style={{ color: 'var(--accent-active)' }}
           >
-            Scan to verify
+            {t('receiptPage.scanToVerify')}
           </p>
           <div className="rounded-xl bg-white p-3 shadow-[0_0_24px_rgba(56,189,248,0.25)]">
             <QRCode value={shareUrl} size={168} level="M" includeMargin={false} />
@@ -157,7 +161,7 @@ export default function StampSuccessActions({
             className="text-[10px] font-bold uppercase"
             style={{ color: 'var(--text-muted)' }}
           >
-            Hide QR
+            {t('receiptPage.hideQr')}
           </button>
         </div>
       )}
@@ -168,7 +172,7 @@ export default function StampSuccessActions({
           className="w-full rounded-xl border py-3 text-xs font-black uppercase"
           style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
         >
-          Show QR
+          {t('receiptPage.showQr')}
         </button>
       )}
 
@@ -190,15 +194,15 @@ export default function StampSuccessActions({
             try {
               await navigator.clipboard.writeText(shareUrl)
               trackEvent(events.PROOF_SHARED, { via: 'copy', ...funnelProps() })
-              toast.success('Proof card link copied')
+              toast.success(t('receiptPage.linkCopied'))
             } catch {
-              toast.error('Copy failed')
+              toast.error(t('receiptPage.copyFailed'))
             }
           }}
           className="btn-sheen flex min-h-[56px] items-center justify-center gap-2 rounded-xl text-sm font-black tracking-wider uppercase"
           style={{ background: 'var(--accent-gold)', color: '#141b25' }}
         >
-          <Link2 size={18} /> Copy proof card
+          <Link2 size={18} /> {t('receiptPage.copyCard')}
         </button>
 
         <button
@@ -208,7 +212,8 @@ export default function StampSuccessActions({
           className="flex min-h-[52px] items-center justify-center gap-2 rounded-xl text-sm font-black tracking-wider uppercase"
           style={{ background: 'var(--accent-teal)', color: '#041016' }}
         >
-          <Package size={18} /> {busy ? 'Packaging…' : 'Download proof package'}
+          <Package size={18} />{' '}
+          {busy ? t('receiptPage.packaging') : t('receiptPage.downloadPackage')}
         </button>
 
         <button
@@ -217,7 +222,7 @@ export default function StampSuccessActions({
           className="flex min-h-[48px] items-center justify-center gap-2 rounded-xl border text-xs font-black tracking-wider uppercase"
           style={{ borderColor: 'var(--border)', color: 'var(--text-primary)' }}
         >
-          <Share2 size={16} /> Share
+          <Share2 size={16} /> {t('receiptPage.share')}
         </button>
 
         <div className="grid grid-cols-2 gap-3">
@@ -265,7 +270,7 @@ export default function StampSuccessActions({
               className="flex min-h-[48px] items-center justify-center gap-2 rounded-xl text-xs font-black tracking-wider uppercase opacity-50"
               style={{ background: 'var(--border)', color: 'var(--text-secondary)' }}
             >
-              .ots local
+              {t('receiptPage.otsLocal')}
             </span>
           )}
           <a
@@ -274,7 +279,7 @@ export default function StampSuccessActions({
             className="flex min-h-[48px] items-center justify-center gap-2 rounded-xl border text-xs font-black uppercase"
             style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
           >
-            Proof card
+            {t('receiptPage.proofCard')}
           </a>
         </div>
 

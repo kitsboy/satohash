@@ -208,8 +208,8 @@ export default function StampDone() {
                   ? t('stampDonePage.foldedIntoBitcoin')
                   : t('stampDonePage.submittedNotConfirmed')}
               <Tooltip
-                title="Pending is not confirmed"
-                content="The fingerprint is at OpenTimestamps calendars. It is NOT in a Bitcoin block until status is confirmed. Pending ≠ confirmed."
+                title={t('stampDonePage.pendingTipTitle')}
+                content={t('stampDonePage.pendingTipBody')}
               />
             </h1>
             {confirmed && hasBlockHeight ? (
@@ -237,12 +237,12 @@ export default function StampDone() {
                   className="inline-flex min-h-[44px] items-center text-sm underline underline-offset-2"
                   style={{ color: 'var(--text-secondary)' }}
                 >
-                  View on mempool.space
+                  {t('stampDonePage.viewMempool')}
                 </a>
               </div>
             ) : confirmed ? (
               <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
-                Block height not stored yet — pending ≠ the issue; confirmation is recorded.
+                {t('stampDonePage.blockHeightMissing')}
               </p>
             ) : (
               <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>

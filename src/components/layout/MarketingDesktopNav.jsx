@@ -52,18 +52,18 @@ export default function MarketingDesktopNav({ onDonate }) {
         hash: true,
         icon: LayoutGrid
       },
-      { label: 'Explainer', href: '/watch', icon: Fingerprint },
+      { label: t('nav.explainer'), href: '/watch', icon: Fingerprint },
       {
         label: t('nav.comparison', { defaultValue: 'Compare' }),
         href: '/comparison',
         icon: GitCompare
       },
-      { label: 'Government', href: '/government', icon: Building2 },
+      { label: t('nav.government'), href: '/government', icon: Building2 },
       { label: t('landingPage.nav.legal', { defaultValue: 'Trust' }), href: '/trust', icon: Scale },
-      { label: 'Docs', href: '/docs', icon: BookOpen },
-      { label: 'Status', href: '/status', icon: ShieldCheck },
-      { label: 'For counsel', href: '/counsel', icon: Scale },
-      { label: 'Exec summary', href: '/docs/executive-summary', icon: FileText }
+      { label: t('nav.docs'), href: '/docs', icon: BookOpen },
+      { label: t('nav.status'), href: '/status', icon: ShieldCheck },
+      { label: t('nav.counsel'), href: '/counsel', icon: Scale },
+      { label: t('nav.execSummary'), href: '/docs/executive-summary', icon: FileText }
     ],
     [t]
   )
@@ -153,13 +153,13 @@ export default function MarketingDesktopNav({ onDonate }) {
                   className="mt-0.5 text-[9px] font-medium tracking-[0.12em] uppercase"
                   style={{ color: 'var(--text-tertiary)' }}
                 >
-                  Bitcoin notary
+                  {t('nav.bitcoinNotary')}
                 </span>
               </span>
             </Link>
           }
           center={
-            <nav aria-label="Primary" className="flex items-center">
+            <nav aria-label={t('nav.primary')} className="flex items-center">
               {primary.map((link) => (
                 <NavTab key={link.href} to={link.href} active={isActive(link.href)}>
                   {link.label}
@@ -241,7 +241,7 @@ export default function MarketingDesktopNav({ onDonate }) {
             style={{ background: 'var(--accent-gold)', color: '#141b25' }}
             onClick={() => setNavOpen(false)}
           >
-            Stamp
+            {t('nav.stamp')}
           </Link>
           <button
             type="button"
@@ -253,7 +253,7 @@ export default function MarketingDesktopNav({ onDonate }) {
             }}
             onClick={() => setNavOpen((o) => !o)}
             aria-expanded={navOpen}
-            aria-label={navOpen ? 'Close menu' : 'Open menu'}
+            aria-label={navOpen ? t('nav.closeMenu') : t('nav.openMenu')}
           >
             {navOpen ? <X size={20} /> : <Menu size={20} />}
           </button>

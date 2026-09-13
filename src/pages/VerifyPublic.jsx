@@ -66,7 +66,7 @@ export default function VerifyPublic() {
       if (isStaticOnlyMode()) {
         if (local) setProof(local)
         else if (hashOnly) setProof(hashOnly)
-        else setError('Proof not found in local vault')
+        else setError(t('verifyPublicPage.proofNotFoundVault'))
         if (!silent) setLoading(false)
         return
       }
@@ -125,7 +125,7 @@ export default function VerifyPublic() {
           setProof(hashOnly)
           return
         }
-        throw new Error('Proof not found')
+        throw new Error(t('verifyPublicPage.proofNotFound'))
       } catch (err) {
         if (local) {
           setProof(local)
@@ -252,7 +252,7 @@ export default function VerifyPublic() {
             icon="🔍"
             title={t('verifyPublicPage.notFound')}
             description={error}
-            actionLabel="Stamp a file"
+            actionLabel={t('verifyPublicPage.stampFile')}
             actionTo="/stamp"
             secondaryLabel={t('verifyPublicPage.returnHome')}
             secondaryTo="/"
@@ -288,8 +288,8 @@ export default function VerifyPublic() {
               onClick={async () => {
                 const r = await shareProofLink(proof)
                 if (r === 'shared') toast.success('Shared')
-                else if (r === 'copied') toast.success('Link copied')
-                else toast.error('Share failed')
+                else if (r === 'copied') toast.success(t('verifyPublicPage.toasts.linkCopied'))
+                else toast.error(t('verifyPublicPage.shareFailed'))
               }}
               className="flex min-h-[48px] items-center justify-center gap-2 rounded-xl text-xs font-black tracking-wider uppercase"
               style={{ background: 'var(--accent-gold)', color: '#141b25' }}

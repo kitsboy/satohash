@@ -2,12 +2,17 @@
  * Signed-style receipt: Satohash saw hash at T; Bitcoin later at T+n.
  * Not a legal signature — a portable attestation of what this plane recorded.
  */
+import { useTranslation } from 'react-i18next'
+
 export default function ProofReceipt({ proof }) {
+  const { t } = useTranslation()
   if (!proof?.hash) return null
   const submitted = proof.created_at || proof.createdAt
   const confirmedAt = proof.confirmed_at
   const block = proof.bitcoin_block_height
   const pending = proof.status !== 'confirmed'
+  const at = (raw) => (raw ? t('receiptPage.at', { time: new Date(raw).toISOString() }) : '')
+  const short = `${String(proof.hash).slice(0, 16)}…`
 
   return (
     <div
@@ -19,23 +24,23 @@ export default function ProofReceipt({ proof }) {
         className="text-[9px] font-black tracking-widest uppercase"
         style={{ color: 'var(--accent-gold)' }}
       >
-        Receipt
+        {t('receiptPage.kicker')}
       </p>
       <p className="mt-2 text-sm leading-relaxed" style={{ color: 'var(--text-primary)' }}>
-        Satohash recorded SHA-256{' '}
-        <span className="font-mono text-xs break-all">{String(proof.hash).slice(0, 16)}…</span>
-        {submitted ? ` at ${new Date(submitted).toISOString()}` : ''}.
+        {t('receiptPage.recorded', { short, at: at(submitted) })}
       </p>
       <p className="mt-2 text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
         {pending
-          ? 'Bitcoin has not confirmed this stamp yet. Pending is not the same as anchored.'
-          : `Bitcoin anchored this fingerprint${block ? ` in block ${Number(block).toLocaleString()}` : ''}${
-              confirmedAt ? ` at ${new Date(confirmedAt).toISOString()}` : ''
-            }.`}
+          ? t('receiptPage.pending')
+          : t('receiptPage.anchored', {
+              block: block
+                ? t('receiptPage.inBlock', { block: Number(block).toLocaleString() })
+                : '',
+              at: at(confirmedAt)
+            })}
       </p>
       <p className="mt-3 text-[10px]" style={{ color: 'var(--text-muted)' }}>
-        This receipt is what Satohash saw. Independent verify uses OpenTimestamps + Bitcoin — you do
-        not need to trust this page.
+        {t('receiptPage.disclaimer')}
       </p>
     </div>
   )

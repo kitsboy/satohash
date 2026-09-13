@@ -2,6 +2,8 @@
  * Zero-JS public proof card. Does not change /api/* paths.
  * Hard open / refresh / share hits this Function on CF Pages.
  */
+import { LANGS, STRINGS } from './proof-i18n.js'
+
 const API = 'https://api.satohash.io'
 const EMPTY_SHA256 = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'
 /** iMessage/OG unfurl — JPEG only, never PNG/SVG. Absolute https. */
@@ -39,6 +41,36 @@ function realNostrEventId(...candidates) {
   return ''
 }
 
+function pickLang(request) {
+  if (!request) return 'en'
+  try {
+    const url = new URL(request.url)
+    const q = String(url.searchParams.get('lang') || '')
+      .split('-')[0]
+      .toLowerCase()
+    if (LANGS.includes(q)) return q
+  } catch {
+    /* ignore */
+  }
+  const cookie = request.headers.get('Cookie') || ''
+  const m = cookie.match(/(?:^|; )satohash_lang=([a-z]{2})/i)
+  if (m && LANGS.includes(m[1].toLowerCase())) return m[1].toLowerCase()
+  const al = request.headers.get('Accept-Language') || ''
+  for (const part of al.split(',')) {
+    const code = part.trim().split(';')[0].split('-')[0].toLowerCase()
+    if (LANGS.includes(code)) return code
+  }
+  return 'en'
+}
+
+function tr(dict, key, vars = {}) {
+  let s = dict[key] || STRINGS.en[key] || key
+  for (const [k, v] of Object.entries(vars)) {
+    s = s.split(`{{${k}}}`).join(String(v ?? ''))
+  }
+  return s
+}
+
 function pickNostrEventId(proof) {
   if (!proof || typeof proof !== 'object') return ''
   const chains = proof.chains && typeof proof.chains === 'object' ? proof.chains : {}
@@ -51,7 +83,7 @@ function pickNostrEventId(proof) {
   )
 }
 
-export async function onRequestGet({ params }) {
+export async function onRequestGet({ params, request }) {
   const raw = String(params.hash || '').trim()
   const hex = /^[a-f0-9]{64}$/i.test(raw) ? raw.toLowerCase() : raw
   let proof = { hash: hex, status: 'unknown' }
@@ -95,14 +127,18 @@ export async function onRequestGet({ params }) {
     block != null && block !== '' && Number.isFinite(Number(block))
       ? Number(block).toLocaleString()
       : ''
+  const lang = pickLang(request)
+  const L = STRINGS[lang] || STRINGS.en
   const statusLine = confirmed
-    ? `CONFIRMED${blockLabel ? ` · block ${blockLabel}` : ''}`
+    ? blockLabel
+      ? tr(L, 'confirmedBlock', { block: blockLabel })
+      : tr(L, 'confirmed')
     : String(status).toLowerCase() === 'pending'
-      ? 'PENDING ≠ CONFIRMED'
-      : `${String(status || 'unknown').toUpperCase()} · not confirmed`
+      ? tr(L, 'pendingNe')
+      : tr(L, 'notConfirmed', { status: String(status || 'unknown').toUpperCase() })
   const njumpId = pickNostrEventId(proof)
   const njump = njumpId
-    ? `<p><a class="njump" href="https://njump.me/${encodeURIComponent(njumpId)}" rel="noopener noreferrer">njump</a></p>`
+    ? `<p><a class="njump" href="https://njump.me/${encodeURIComponent(njumpId)}" rel="noopener noreferrer">${esc(tr(L, 'njump'))}</a></p>`
     : ''
   const title = confirmed
     ? `Confirmed Bitcoin proof ${short}… — Satohash`
@@ -113,7 +149,7 @@ export async function onRequestGet({ params }) {
   const canon = `https://satohash.io/p/${esc(hex)}`
   const emptyNote =
     String(hash).toLowerCase() === EMPTY_SHA256
-      ? '<p class="muted">This digest is the SHA-256 of an empty file — a valid fingerprint, often used as a smoke test.</p>'
+      ? `<p class="muted">${esc(tr(L, 'emptyFile'))}</p>`
       : ''
   const jsonLd = JSON.stringify({
     '@context': 'https://schema.org',
@@ -128,7 +164,7 @@ export async function onRequestGet({ params }) {
   })
 
   const html = `<!doctype html>
-<html lang="en">
+<html lang="${esc(lang)}">
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
@@ -216,41 +252,50 @@ export async function onRequestGet({ params }) {
       <img src="https://satohash.io/logo.png" alt=""/>
       <div>
         <div class="brand">Satohash</div>
-        <div class="sub">Bitcoin proof of existence</div>
+        <div class="sub">${esc(tr(L, 'brandSub'))}</div>
       </div>
     </header>
     <article class="card">
       <div class="mast">
         <div class="seal ${confirmed ? 'ok' : ''}" aria-hidden="true"></div>
         <div>
-          <p class="k">Zero-JS proof card</p>
+          <p class="k">${esc(tr(L, 'zeroJsKicker'))}</p>
           <p class="status ${confirmed ? 'ok' : 'wait'}" role="status">${esc(statusLine)}</p>
         </div>
       </div>
-      <h1>${confirmed ? 'Confirmed on Bitcoin' : 'Pending is not confirmed'}</h1>
-      <p class="fp">SHA-256 fingerprint</p>
+      <h1>${esc(confirmed ? tr(L, 'titleConfirmed') : tr(L, 'titlePending'))}</h1>
+      <p class="fp">${esc(tr(L, 'fingerprint'))}</p>
       <p class="h">${esc(hash)}</p>
-      <p>Satohash recorded this fingerprint${proof.created_at ? ` at ${utc(proof.created_at)}` : ''}.
+      <p>${
+        proof.created_at
+          ? esc(tr(L, 'recordedAt', { time: utc(proof.created_at) }))
+          : esc(tr(L, 'recorded'))
+      }
       ${
         confirmed
-          ? `Bitcoin has anchored it${blockLabel ? ` in <a href="https://mempool.space/block/${esc(block)}">block ${esc(blockLabel)}</a>` : ''}.`
-          : 'Calendars have the digest. A Bitcoin block has not included it yet. Pending is not confirmed.'
+          ? blockLabel
+            ? `${esc(tr(L, 'anchoredBlock', { block: blockLabel })).replace(
+                esc(blockLabel),
+                `<a href="https://mempool.space/block/${esc(block)}">${esc(blockLabel)}</a>`
+              )}`
+            : esc(tr(L, 'anchored'))
+          : esc(tr(L, 'calendarsHave'))
       }</p>
       ${emptyNote}
-      <p class="muted">Only a SHA-256 fingerprint was submitted. The original file never needed to leave the device. You do not need to trust Satohash — verify with OpenTimestamps.</p>
-      <p class="muted">Share this page in iMessage — the preview is a photo, not the app.</p>
+      <p class="muted">${esc(tr(L, 'neverLeaves'))}</p>
+      <p class="muted">${esc(tr(L, 'imessage'))}</p>
       ${njump}
-      <p><code>ots-cli verify proof.ots</code></p>
-      <p class="cals"><strong>Calendars</strong> · alice · bob · finney</p>
+      <p><code>${esc(tr(L, 'otsCli'))}</code></p>
+      <p class="cals">${esc(tr(L, 'calendarsLine'))}</p>
       <div class="actions">
-        <a class="btn gold" href="https://satohash.io/verify/${esc(hex)}">Interactive verify</a>
-        <a class="btn ghost" href="https://satohash.io/stamp">Stamp a file</a>
-        <a class="btn ghost" href="https://satohash.io/counsel">For counsel</a>
+        <a class="btn gold" href="https://satohash.io/verify/${esc(hex)}">${esc(tr(L, 'interactiveVerify'))}</a>
+        <a class="btn ghost" href="https://satohash.io/stamp">${esc(tr(L, 'stampFile'))}</a>
+        <a class="btn ghost" href="https://satohash.io/counsel">${esc(tr(L, 'forCounsel'))}</a>
       </div>
     </article>
     <footer>
-      Independent math · OpenTimestamps → Bitcoin ·
-      <a href="https://satohash.io/status">Status</a>
+      ${esc(tr(L, 'footer'))}
+      <a href="https://satohash.io/status">${esc(tr(L, 'statusLink'))}</a>
     </footer>
   </div>
 </body>

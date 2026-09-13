@@ -1602,7 +1602,7 @@ export default function Stamp() {
                             className="px-2 text-xs leading-snug text-balance"
                             style={{ color: 'var(--text-muted)' }}
                           >
-                            File never leaves this device. We send a SHA-256.
+                            {tp('stampPage.fileNeverLeavesSend')}
                           </p>
                           <p className="px-2 font-medium text-balance text-[var(--text-secondary)]">
                             {isCapsuleMode

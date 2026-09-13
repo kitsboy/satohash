@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { Play, Pause, Volume2, VolumeX, ArrowRight, RotateCcw } from 'lucide-react'
 import MarketingDesktopNav from '../components/layout/MarketingDesktopNav'
 import Footer from '../components/layout/Footer'
@@ -13,8 +14,8 @@ const CUTS = {
     file: 'satohash-explainer-with-vo2.mp4',
     seconds: 84,
     label: '~84s',
-    title: 'Full cut',
-    aria: 'Satohash 80-second explainer with voiceover'
+    titleKey: 'watchPage.fullTitle',
+    ariaKey: 'watchPage.fullAria'
   },
   short: {
     id: 'short',
@@ -22,77 +23,57 @@ const CUTS = {
     file: 'satohash-explainer-with-vo.mp4',
     seconds: 10,
     label: '10s',
-    title: 'Teaser',
-    aria: 'Satohash 10-second explainer with voiceover'
+    titleKey: 'watchPage.teaserTitle',
+    ariaKey: 'watchPage.teaserAria'
   }
 }
 
 const POSTER_SRC = '/media/video/kimi-teacher.jpg'
 
 const FULL_BEATS = [
-  {
-    id: 'hook',
-    t: '0:00',
-    title: 'Hook',
-    line: 'Got a file that needs to exist right now — and be provable forever? Satohash stamps it onto Bitcoin. Permanently. For free.'
-  },
+  { id: 'hook', t: '0:00', titleKey: 'watchPage.fullHookTitle', lineKey: 'watchPage.fullHookLine' },
   {
     id: 'problem',
     t: '0:07',
-    title: 'Problem',
-    line: 'Emailing yourself a copy is not proof. Satohash fingerprints the file and gives you a receipt that cannot be faked.'
+    titleKey: 'watchPage.fullProblemTitle',
+    lineKey: 'watchPage.fullProblemLine'
   },
-  {
-    id: 'how',
-    t: '0:19',
-    title: 'How it works',
-    line: 'One click. No account. No wallet. Independent calendars, then one Bitcoin block. The proof is yours forever.'
-  },
+  { id: 'how', t: '0:19', titleKey: 'watchPage.fullHowTitle', lineKey: 'watchPage.fullHowLine' },
   {
     id: 'batch',
     t: '0:33',
-    title: 'Batch',
-    line: 'A folder of documents? Batch stamp them. Every file gets its own independent proof.'
+    titleKey: 'watchPage.fullBatchTitle',
+    lineKey: 'watchPage.fullBatchLine'
   },
   {
     id: 'verify',
     t: '0:43',
-    title: 'Verify',
-    line: 'Come back later, enter the stamp. Calendars and Bitcoin agree — green badge. Trust, but verify.'
+    titleKey: 'watchPage.fullVerifyTitle',
+    lineKey: 'watchPage.fullVerifyLine'
   },
-  {
-    id: 'cta',
-    t: '0:52',
-    title: 'CTA',
-    line: 'Nothing to install. Nothing to buy. Stamp your first file free at satohash.io.'
-  }
+  { id: 'cta', t: '0:52', titleKey: 'watchPage.fullCtaTitle', lineKey: 'watchPage.fullCtaLine' }
 ]
 
 const SHORT_BEATS = [
   {
     id: 'hook',
     t: '0:00',
-    title: 'Hook',
-    line: 'Got a file that must exist — and be provable forever?'
+    titleKey: 'watchPage.shortHookTitle',
+    lineKey: 'watchPage.shortHookLine'
   },
   {
     id: 'privacy',
     t: '0:03',
-    title: 'Privacy',
-    line: 'Your file never leaves your device. Only a fingerprint is timestamped.'
+    titleKey: 'watchPage.shortPrivacyTitle',
+    lineKey: 'watchPage.shortPrivacyLine'
   },
   {
     id: 'anchor',
     t: '0:06',
-    title: 'Bitcoin',
-    line: 'Independent calendars. One Bitcoin block. A proof no one can fake.'
+    titleKey: 'watchPage.shortAnchorTitle',
+    lineKey: 'watchPage.shortAnchorLine'
   },
-  {
-    id: 'cta',
-    t: '0:08',
-    title: 'CTA',
-    line: 'Free. No account. Stamp it at satohash.io.'
-  }
+  { id: 'cta', t: '0:08', titleKey: 'watchPage.shortCtaTitle', lineKey: 'watchPage.shortCtaLine' }
 ]
 
 function fmt(s) {
@@ -103,6 +84,7 @@ function fmt(s) {
 }
 
 export default function ExplainerWatch() {
+  const { t: tw } = useTranslation()
   usePageMeta({
     page: 'watch'
   })
@@ -238,21 +220,21 @@ export default function ExplainerWatch() {
             className="mb-2 text-[10px] font-black tracking-[0.25em] uppercase"
             style={{ color: 'var(--accent-gold)' }}
           >
-            ~{Math.round(total)}s · Kimi
+            {tw('watchPage.kicker', { seconds: Math.round(total) })}
           </p>
           <h1 className="font-display text-2xl font-black tracking-tight sm:text-4xl">
-            Stamp it onto <span className="gold-text">Bitcoin</span>
+            {tw('watchPage.titleBefore')}{' '}
+            <span className="gold-text">{tw('watchPage.titleHighlight')}</span>
           </h1>
           <p className="mx-auto mt-2 max-w-lg text-sm" style={{ color: 'var(--text-secondary)' }}>
-            File stays local. Fingerprint timestamps. Bitcoin anchors the proof. Full educational
-            cut is primary; 10s teaser still here.
+            {tw('watchPage.subtitle')}
           </p>
         </div>
 
         <div
           className="mb-4 flex flex-wrap items-center justify-center gap-2"
           role="tablist"
-          aria-label="Explainer length"
+          aria-label={tw('watchPage.lengthAria')}
         >
           {Object.values(CUTS).map((c) => {
             const active = c.id === cutId
@@ -270,7 +252,7 @@ export default function ExplainerWatch() {
                   background: active ? 'var(--accent-gold)' : 'transparent'
                 }}
               >
-                {c.title} ({c.label})
+                {tw(c.titleKey)} ({c.label})
               </button>
             )
           })}
@@ -292,7 +274,7 @@ export default function ExplainerWatch() {
             preload="none"
             className="absolute inset-0 h-full w-full bg-black object-contain"
             onClick={toggle}
-            aria-label={cut.aria}
+            aria-label={tw(cut.ariaKey)}
           />
 
           {(!playing || !ready) && !ended && t < 0.15 && (
@@ -300,7 +282,7 @@ export default function ExplainerWatch() {
               type="button"
               onClick={toggle}
               className="group absolute inset-0 flex items-center justify-center bg-black/30 transition-colors hover:bg-black/40"
-              aria-label="Play explainer"
+              aria-label={tw('watchPage.playExplainer')}
             >
               <span
                 className="flex h-16 min-h-[44px] w-16 min-w-[44px] items-center justify-center rounded-full transition-all group-hover:scale-105 group-hover:shadow-[0_0_28px_var(--accent-gold-glow)] sm:h-20 sm:w-20"
@@ -313,7 +295,9 @@ export default function ExplainerWatch() {
 
           {ended && (
             <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-black/55 p-6 text-center">
-              <p className="text-lg font-black text-white sm:text-xl">Ready to stamp?</p>
+              <p className="text-lg font-black text-white sm:text-xl">
+                {tw('watchPage.readyToStamp')}
+              </p>
               <div className="flex flex-wrap items-center justify-center gap-3">
                 <button
                   type="button"
@@ -321,14 +305,14 @@ export default function ExplainerWatch() {
                   className="inline-flex min-h-[48px] items-center gap-2 rounded-2xl px-5 text-sm font-black uppercase"
                   style={{ background: 'var(--accent-gold)', color: '#141b25' }}
                 >
-                  <Play size={16} fill="currentColor" /> Play again
+                  <Play size={16} fill="currentColor" /> {tw('watchPage.playAgain')}
                 </button>
                 <Link
                   to="/stamp"
                   className="inline-flex min-h-[48px] items-center gap-2 rounded-2xl border px-5 text-sm font-black uppercase"
                   style={{ borderColor: 'rgba(240,180,41,0.55)', color: 'var(--accent-gold)' }}
                 >
-                  Stamp free <ArrowRight size={16} />
+                  {tw('watchPage.stampFree')} <ArrowRight size={16} />
                 </Link>
               </div>
             </div>
@@ -344,12 +328,17 @@ export default function ExplainerWatch() {
             className="text-[10px] font-black tracking-widest uppercase"
             style={{ color: 'var(--accent-gold)' }}
           >
-            Pending ≠ confirmed
+            {tw('watchPage.pendingNe')}
           </p>
           <p className="mt-2" style={{ color: 'var(--text-secondary)' }}>
-            <strong style={{ color: 'var(--text-primary)' }}>Pending</strong> means calendars have
-            the fingerprint. <strong style={{ color: 'var(--accent-success)' }}>Confirmed</strong>{' '}
-            means a Bitcoin block includes it. Do not treat pending as final.
+            <strong style={{ color: 'var(--text-primary)' }}>
+              {tw('watchPage.pendingBodyBefore')}
+            </strong>{' '}
+            {tw('watchPage.pendingBodyMid')}{' '}
+            <strong style={{ color: 'var(--accent-success)' }}>
+              {tw('watchPage.confirmedWord')}
+            </strong>{' '}
+            {tw('watchPage.pendingBodyAfter')}
           </p>
         </div>
 
@@ -383,7 +372,11 @@ export default function ExplainerWatch() {
             style={{ background: 'var(--accent-gold)', color: '#141b25' }}
           >
             {playing ? <Pause size={18} /> : <Play size={18} />}
-            {playing ? 'Pause' : ended || t >= total - 0.2 ? 'Play again' : 'Play'}
+            {playing
+              ? tw('watchPage.pause')
+              : ended || t >= total - 0.2
+                ? tw('watchPage.playAgain')
+                : tw('watchPage.play')}
           </button>
           <button
             type="button"
@@ -391,17 +384,17 @@ export default function ExplainerWatch() {
             className="inline-flex min-h-[48px] items-center gap-2 rounded-2xl border px-4 text-sm font-bold"
             style={{ borderColor: 'var(--border)', color: 'var(--text-primary)' }}
           >
-            <RotateCcw size={16} /> Restart
+            <RotateCcw size={16} /> {tw('watchPage.restart')}
           </button>
           <button
             type="button"
             onClick={() => setMuted((m) => !m)}
             className="inline-flex min-h-[48px] items-center gap-2 rounded-2xl border px-4 text-sm font-bold"
             style={{ borderColor: 'var(--border)', color: 'var(--text-primary)' }}
-            title="Mute / unmute video audio"
+            title={tw('watchPage.muteTitle')}
           >
             {muted ? <VolumeX size={16} /> : <Volume2 size={16} />}
-            {muted ? 'Sound off' : 'Sound on'}
+            {muted ? tw('watchPage.soundOff') : tw('watchPage.soundOn')}
           </button>
         </div>
 
@@ -420,10 +413,12 @@ export default function ExplainerWatch() {
           style={{ borderColor: 'var(--border)', background: 'var(--surface-raised)' }}
         >
           <h2 className="font-display text-lg font-black sm:text-xl">
-            {cut.title} board <span className="gold-text">(~{Math.round(total)}s)</span>
+            {tw('watchPage.board', { title: tw(cut.titleKey) })}{' '}
+            <span className="gold-text">(~{Math.round(total)}s)</span>
           </h2>
           <p className="mt-1 text-xs" style={{ color: 'var(--text-secondary)' }}>
-            Video file: <code className="text-[11px]">{cut.file}</code> — VO baked in.
+            {tw('watchPage.videoFile')} <code className="text-[11px]">{cut.file}</code> —{' '}
+            {tw('watchPage.voBaked')}
           </p>
           <ol className="mt-6 space-y-4">
             {beats.map((b) => (
@@ -443,9 +438,9 @@ export default function ExplainerWatch() {
                 </span>
                 <div>
                   <p className="text-xs font-bold" style={{ color: 'var(--text-secondary)' }}>
-                    {b.title}
+                    {tw(b.titleKey)}
                   </p>
-                  <p className="mt-0.5 text-sm leading-relaxed sm:text-[15px]">{b.line}</p>
+                  <p className="mt-0.5 text-sm leading-relaxed sm:text-[15px]">{tw(b.lineKey)}</p>
                 </div>
               </li>
             ))}

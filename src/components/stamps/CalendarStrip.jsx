@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import Tooltip from '../ui/Tooltip'
 
 const CALENDARS = [
@@ -6,12 +7,13 @@ const CALENDARS = [
   {
     id: 'finney',
     host: 'finney.calendar.eternitywall.com',
-    note: 'often flaky — Alice + Bob are enough'
+    noteKey: 'receiptPage.finneyNote'
   }
 ]
 
 /** Pending-card jewelry: which public OTS calendars attest the stamp. */
 export default function CalendarStrip({ compact = false }) {
+  const { t } = useTranslation()
   return (
     <div
       data-testid="calendar-strip"
@@ -26,11 +28,8 @@ export default function CalendarStrip({ compact = false }) {
         className="text-[9px] font-black tracking-widest uppercase"
         style={{ color: 'var(--accent-active)' }}
       >
-        Timestamp servers
-        <Tooltip
-          title="What are these servers?"
-          content="Independent, free OpenTimestamps servers that record your fingerprint so more than one party agrees on the time. No account, no KYC — that is what keeps the proof honest. (The protocol calls them “calendars.”)"
-        />
+        {t('receiptPage.servers')}
+        <Tooltip title={t('receiptPage.serversTipTitle')} content={t('receiptPage.serversTip')} />
       </p>
       <ul className={`mt-2 ${compact ? 'space-y-1' : 'space-y-1.5'}`}>
         {CALENDARS.map((c) => (
@@ -47,7 +46,7 @@ export default function CalendarStrip({ compact = false }) {
               title={c.host}
             >
               {compact ? c.host.split('.')[0] : c.host}
-              {c.note ? ` · ${c.note}` : ''}
+              {c.noteKey ? ` · ${t(c.noteKey)}` : ''}
             </span>
           </li>
         ))}

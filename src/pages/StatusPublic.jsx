@@ -22,6 +22,7 @@ import {
   Copy,
   Check
 } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import Footer from '../components/layout/Footer'
 import LiveNodeChip from '../components/shared/LiveNodeChip'
 import usePageMeta from '../hooks/usePageMeta'
@@ -40,15 +41,15 @@ function fetchJson(url) {
     .catch(() => null)
 }
 
-function fmtTime(iso) {
+function fmtTime(iso, locale = 'en') {
   if (!iso) return '—'
   const d = iso instanceof Date ? iso : new Date(iso)
   if (Number.isNaN(d.getTime())) return String(iso)
-  return d.toLocaleString('en-GB', { dateStyle: 'medium', timeStyle: 'medium' })
+  return d.toLocaleString(locale, { dateStyle: 'medium', timeStyle: 'medium' })
 }
 
-function fmtNum(n) {
-  return Number(n).toLocaleString('en-US')
+function fmtNum(n, locale = 'en') {
+  return Number(n).toLocaleString(locale)
 }
 
 /** Small green/amber/red status dot. */
@@ -145,16 +146,19 @@ function Detail({ label, value, muted = false }) {
   )
 }
 
-function Unavailable({ message = 'Unavailable — live endpoint did not respond.' }) {
+function Unavailable({ message }) {
+  const { t } = useTranslation()
+  const text = message || t('statusPage.unavailable')
   return (
     <p className="flex items-center gap-2 text-xs" style={{ color: 'var(--text-muted)' }}>
       <AlertTriangle size={13} style={{ color: 'var(--accent-danger)' }} />
-      {message}
+      {text}
     </p>
   )
 }
 
 function CopyShaButton({ sha }) {
+  const { t } = useTranslation()
   const [copied, setCopied] = useState(false)
   if (!sha || sha === '—') return null
   const full = String(sha)
@@ -173,14 +177,16 @@ function CopyShaButton({ sha }) {
       type="button"
       onClick={copy}
       title={full}
-      aria-label={`Copy git SHA ${full}`}
+      aria-label={t('statusPage.copyGitSha', { sha: full })}
       className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center gap-1 rounded px-1 font-mono font-bold whitespace-nowrap transition-colors hover:text-[var(--accent-gold)]"
       style={{ color: copied ? 'var(--accent-success)' : 'var(--text-muted)' }}
     >
       <span className="tabular-nums">{short}</span>
       {copied ? <Check size={12} aria-hidden /> : <Copy size={12} aria-hidden />}
       {copied ? (
-        <span className="text-[10px] font-bold tracking-wider uppercase">Copied</span>
+        <span className="text-[10px] font-bold tracking-wider uppercase">
+          {t('statusPage.copied')}
+        </span>
       ) : null}
     </button>
   )
@@ -201,11 +207,11 @@ function LoadingRows({ count = 3 }) {
 }
 
 export default function StatusPublic() {
+  const { t, i18n } = useTranslation()
   usePageMeta({
     page: 'status',
-    title: 'Live status',
-    description:
-      'Live Satohash transparency dashboard — Bitcoin node, OTS calendars, Nostr relays, Lightning, and recent stamps.'
+    title: t('statusPage.metaTitle'),
+    description: t('statusPage.metaDesc')
   })
 
   const [data, setData] = useState({
@@ -349,14 +355,14 @@ export default function StatusPublic() {
             className="text-[10px] font-black tracking-widest uppercase"
             style={{ color: 'var(--accent-gold)' }}
           >
-            Public status · Transparency dashboard
+            {t('statusPage.kicker')}
           </p>
           <h1 className="font-display text-3xl font-black tracking-tight sm:text-4xl">
             {loading
-              ? 'Checking live status…'
+              ? t('statusPage.checking')
               : live
-                ? 'Satohash is live'
-                : 'Satohash status: degraded'}
+                ? t('statusPage.live')
+                : t('statusPage.degraded')}
           </h1>
           <div className="flex flex-wrap items-center gap-3">
             <LiveNodeChip />
@@ -366,7 +372,7 @@ export default function StatusPublic() {
                 style={{ color: 'var(--text-secondary)' }}
               >
                 <Timer size={12} style={{ color: 'var(--accent-gold)' }} />
-                Updated {fmtTime(updatedAt)} · auto-refreshes every 60s
+                {t('statusPage.updated', { time: fmtTime(updatedAt, i18n.language) })}
               </span>
             ) : null}
             <button
@@ -376,7 +382,7 @@ export default function StatusPublic() {
               style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
             >
               <RefreshCcw size={12} className={loading ? 'animate-spin' : ''} />
-              Refresh
+              {t('statusPage.refresh')}
             </button>
           </div>
         </header>
@@ -384,8 +390,14 @@ export default function StatusPublic() {
         {/* ── Service overview ─────────────────────────── */}
         <Section
           icon={Server}
-          title="Service overview"
-          right={live ? <Pill ok>Operational</Pill> : <Pill pending>Degraded</Pill>}
+          title={t('statusPage.overview')}
+          right={
+            live ? (
+              <Pill ok>{t('statusPage.operational')}</Pill>
+            ) : (
+              <Pill pending>{t('statusPage.degradedPill')}</Pill>
+            )
+          }
         >
           {loading ? (
             <LoadingRows count={2} />
@@ -393,7 +405,7 @@ export default function StatusPublic() {
             <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
               <Stat
                 icon={GitBranch}
-                label="Git SHA"
+                label={t('statusPage.gitSha')}
                 value={
                   gitSha ? (
                     <span className="inline-flex max-w-full items-center gap-1 whitespace-nowrap">
@@ -406,16 +418,22 @@ export default function StatusPublic() {
                 sub={
                   gitSha
                     ? gitShaFromHealth
-                      ? 'from /health'
-                      : 'from /api/public/status'
-                    : 'from /health or /api/public/status'
+                      ? t('statusPage.fromHealth')
+                      : t('statusPage.fromStatus')
+                    : t('statusPage.fromHealthOrStatus')
                 }
                 mono
               />
               <Stat
                 icon={Activity}
-                label="Mode"
-                value={mode === 'free_open' ? 'Free open' : mode === 'paid' ? 'Paid (LN)' : '—'}
+                label={t('statusPage.mode')}
+                value={
+                  mode === 'free_open'
+                    ? t('statusPage.freeOpen')
+                    : mode === 'paid'
+                      ? t('statusPage.paidLn')
+                      : '—'
+                }
                 sub={
                   mode === 'free_open'
                     ? 'REQUIRE_LIGHTNING=false'
@@ -426,14 +444,20 @@ export default function StatusPublic() {
               />
               <Stat
                 icon={CheckCircle2}
-                label="Family free tier"
-                value={familyFree === true ? 'Yes' : familyFree === false ? 'No' : '—'}
-                sub="Give A Bit suite clients"
+                label={t('statusPage.familyFree')}
+                value={
+                  familyFree === true
+                    ? t('statusPage.yes')
+                    : familyFree === false
+                      ? t('statusPage.no')
+                      : '—'
+                }
+                sub={t('statusPage.familySub')}
               />
               <Stat
                 icon={Stamp}
-                label="Stamps stored"
-                value={stampsTotal != null ? fmtNum(stampsTotal) : '—'}
+                label={t('statusPage.stampsStored')}
+                value={stampsTotal != null ? fmtNum(stampsTotal, i18n.language) : '—'}
                 sub={
                   data.stats?.stamps_created != null
                     ? `${fmtNum(data.stats.stamps_created)} in last 24h`
@@ -449,12 +473,12 @@ export default function StatusPublic() {
         {/* ── Bitcoin node ─────────────────────────────── */}
         <Section
           icon={Bitcoin}
-          title="Bitcoin node"
+          title={t('statusPage.bitcoinNode')}
           right={
             readyToVerify == null ? null : readyToVerify ? (
-              <Pill ok>Ready to verify</Pill>
+              <Pill ok>{t('statusPage.readyToVerify')}</Pill>
             ) : (
-              <Pill pending>Not ready</Pill>
+              <Pill pending>{t('statusPage.notReady')}</Pill>
             )
           }
         >
@@ -463,19 +487,25 @@ export default function StatusPublic() {
           ) : btc || btcFallback ? (
             <>
               <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
-                <Detail label="Block height" value={height != null ? `#${fmtNum(height)}` : '—'} />
                 <Detail
-                  label="Chain"
-                  value={chain ? (chain === 'main' ? 'Mainnet' : chain) : '—'}
+                  label={t('statusPage.blockHeight')}
+                  value={height != null ? `#${fmtNum(height, i18n.language)}` : '—'}
                 />
-                <Detail label="Node source" value={btc?.source || btcFallback?.source || '—'} />
                 <Detail
-                  label="Peers"
+                  label={t('statusPage.chain')}
+                  value={chain ? (chain === 'main' ? t('statusPage.mainnet') : chain) : '—'}
+                />
+                <Detail
+                  label={t('statusPage.nodeSource')}
+                  value={btc?.source || btcFallback?.source || '—'}
+                />
+                <Detail
+                  label={t('statusPage.peers')}
                   value={peers != null ? fmtNum(peers) : '—'}
                   muted={peers == null}
                 />
                 <Detail
-                  label="Pruned"
+                  label={t('statusPage.pruned')}
                   value={
                     pruned == null
                       ? '—'
@@ -487,8 +517,14 @@ export default function StatusPublic() {
                   }
                 />
                 <Detail
-                  label="Sync"
-                  value={btc?.ibd === false ? 'Synced' : btc?.ibd === true ? 'IBD' : '—'}
+                  label={t('statusPage.sync')}
+                  value={
+                    btc?.ibd === false
+                      ? t('statusPage.synced')
+                      : btc?.ibd === true
+                        ? t('statusPage.ibd')
+                        : '—'
+                  }
                   muted={btc?.ibd == null}
                 />
               </div>
@@ -518,11 +554,11 @@ export default function StatusPublic() {
         {/* ── OTS calendars ────────────────────────────── */}
         <Section
           icon={CalendarClock}
-          title="OTS calendars"
+          title={t('statusPage.otsCalendars')}
           right={
             ots ? (
               ots.status === 'healthy' || ots.status === 'ok' ? (
-                <Pill ok>Healthy</Pill>
+                <Pill ok>{t('statusPage.healthy')}</Pill>
               ) : (
                 <Pill pending>{ots.status || 'degraded'}</Pill>
               )
@@ -569,7 +605,7 @@ export default function StatusPublic() {
         {/* ── Nostr relays ─────────────────────────────── */}
         <Section
           icon={Radio}
-          title="Nostr relays"
+          title={t('statusPage.nostrRelays')}
           right={
             nostr ? (
               <Pill ok={nostrAllUp} pending={nostrSomeUp || (!nostrAllUp && nostrOk !== 0)}>
@@ -632,16 +668,16 @@ export default function StatusPublic() {
         {/* ── Lightning / LNURL ────────────────────────── */}
         <Section
           icon={Zap}
-          title="Lightning / LNURL"
+          title={t('statusPage.lightning')}
           right={
             lightning?.lnbits?.configured ? (
               lightning.status === 'healthy' || lightning.status === 'ok' ? (
-                <Pill ok>Configured</Pill>
+                <Pill ok>{t('statusPage.configured')}</Pill>
               ) : (
                 <Pill pending>{lightning.status || 'degraded'}</Pill>
               )
             ) : (
-              <Pill pending>Not configured</Pill>
+              <Pill pending>{t('statusPage.notConfigured')}</Pill>
             )
           }
         >
@@ -693,13 +729,13 @@ export default function StatusPublic() {
         {/* ── Recent stamps ────────────────────────────── */}
         <Section
           icon={Database}
-          title="Recent stamps"
+          title={t('statusPage.recentStamps')}
           right={
             <span
               className="text-[10px] font-bold tracking-widest uppercase"
               style={{ color: 'var(--text-muted)' }}
             >
-              {recent.length} latest
+              {t('statusPage.latest', { count: recent.length })}
             </span>
           }
         >
@@ -745,14 +781,12 @@ export default function StatusPublic() {
               })}
             </ul>
           ) : (
-            <Unavailable message="No stamps available right now." />
+            <Unavailable message={t('statusPage.noStamps')} />
           )}
         </Section>
 
         <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
-          Public transparency surface. Every section is read-only and fetched from public endpoints
-          — this page never writes stamps and requires no authentication. Sources:{' '}
-          <span className="font-mono">/health</span>,{' '}
+          {t('statusPage.transparency')} <span className="font-mono">/health</span>,{' '}
           <span className="font-mono">/metrics.json</span>,{' '}
           <span className="font-mono">/api/public/status</span>,{' '}
           <span className="font-mono">/health?deep=true</span>,{' '}
@@ -771,7 +805,7 @@ export default function StatusPublic() {
             }}
           >
             <Loader2 size={14} className="animate-spin" />
-            Live endpoints are not responding — try the refresh button in a moment.
+            {t('statusPage.endpointsDown')}
           </p>
         )}
 
@@ -780,7 +814,7 @@ export default function StatusPublic() {
           style={{ color: 'var(--text-muted)' }}
         >
           <CircleDot size={12} style={{ color: 'var(--accent-success)' }} />
-          All systems reported from API plane ‘proof’ · git{' '}
+          {t('statusPage.allSystems')}{' '}
           <span className="inline-flex items-center gap-1 font-mono whitespace-nowrap tabular-nums">
             {gitSha ? <CopyShaButton sha={gitSha} /> : '—'}
           </span>

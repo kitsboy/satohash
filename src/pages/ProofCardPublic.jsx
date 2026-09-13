@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { Copy, Check, Share2, ShieldCheck, Clock } from 'lucide-react'
 import usePageMeta from '../hooks/usePageMeta'
 import { getApiUrl, PUBLIC_API_URL } from '../config/constants'
@@ -31,6 +32,7 @@ function pickNostrEventId(proof) {
 
 /** Lightweight public card — also mirrored by functions/p/[hash].js for zero-JS. */
 export default function ProofCardPublic() {
+  const { t } = useTranslation()
   const { hash } = useParams()
   const hex = normalizeSha256(hash) || hash
   const [proof, setProof] = useState(null)
@@ -39,10 +41,12 @@ export default function ProofCardPublic() {
   const short = String(hex || '').slice(0, 12)
   const hashPreview = String(hex || '').slice(0, 16)
   usePageMeta({
-    title: confirmed ? `Confirmed Bitcoin proof ${short}…` : `Bitcoin proof ${short}…`,
+    title: confirmed
+      ? t('proofCardPage.titleConfirmed') + ` ${short}…`
+      : t('proofCardPage.titlePending') + ` ${short}…`,
     description: confirmed
-      ? `SHA-256 ${hashPreview}… is Bitcoin-confirmed via OpenTimestamps. Independently verifiable. File never left the device.`
-      : `OpenTimestamps proof card for SHA-256 ${hashPreview}…. Pending is not confirmed.`,
+      ? `SHA-256 ${hashPreview}… — OpenTimestamps → Bitcoin.`
+      : t('proofCardPage.titlePending'),
     image: 'https://satohash.io/media/video/01-stamp-hero.jpg',
     url: `https://satohash.io/p/${hex || ''}`
   })
@@ -110,10 +114,14 @@ export default function ProofCardPublic() {
       ? Number(proof.bitcoin_block_height).toLocaleString()
       : ''
   const statusLine = confirmed
-    ? `CONFIRMED${blockLabel ? ` · block ${blockLabel}` : ''}`
+    ? blockLabel
+      ? t('proofCardPage.confirmedBlock', { block: blockLabel })
+      : t('proofCardPage.confirmed')
     : String(proof?.status || 'pending').toLowerCase() === 'pending'
-      ? 'PENDING ≠ CONFIRMED'
-      : `${String(proof?.status || 'unknown').toUpperCase()} · not confirmed`
+      ? t('proofCardPage.pendingNe')
+      : t('proofCardPage.notConfirmed', {
+          status: String(proof?.status || 'unknown').toUpperCase()
+        })
   const njumpId = pickNostrEventId(proof)
   const emptyHash =
     String(hex || '').toLowerCase() ===
@@ -127,7 +135,7 @@ export default function ProofCardPublic() {
   return (
     <div className="min-h-screen bg-[var(--bg-primary)] px-4 py-10 text-[var(--text-primary)] sm:px-6 sm:py-14">
       <noscript>
-        <p>Hard-open this URL on satohash.io for the zero-JS card, or use ots-cli.</p>
+        <p>{t('proofCardPage.noscript')}</p>
       </noscript>
       <div className="mx-auto max-w-lg space-y-5">
         <header className="flex items-center gap-3">
@@ -140,7 +148,7 @@ export default function ProofCardPublic() {
               Satohash
             </p>
             <p className="text-[11px]" style={{ color: 'var(--text-muted)' }}>
-              Bitcoin proof of existence
+              {t('proofCardPage.brandSub')}
             </p>
           </div>
         </header>
@@ -178,7 +186,7 @@ export default function ProofCardPublic() {
                 className="text-[10px] font-black tracking-widest uppercase"
                 style={{ color: 'var(--accent-gold)' }}
               >
-                Public proof card
+                {t('proofCardPage.kicker')}
               </p>
               {proof ? (
                 <p
@@ -199,14 +207,14 @@ export default function ProofCardPublic() {
           {proof ? (
             <div className="mt-4 space-y-4">
               <h1 className="font-display text-2xl font-black tracking-tight sm:text-[1.65rem]">
-                {confirmed ? 'Confirmed on Bitcoin' : 'Pending is not confirmed'}
+                {confirmed ? t('proofCardPage.titleConfirmed') : t('proofCardPage.titlePending')}
               </h1>
               <div>
                 <p
                   className="text-[9px] font-black tracking-widest uppercase"
                   style={{ color: 'var(--accent-gold)' }}
                 >
-                  SHA-256 fingerprint
+                  {t('proofCardPage.fingerprint')}
                 </p>
                 <p
                   className="mt-1.5 rounded-xl border p-3 font-mono text-[11px] leading-relaxed break-all select-all sm:text-xs"
@@ -222,16 +230,14 @@ export default function ProofCardPublic() {
               <ProofReceipt proof={proof} />
               {emptyHash ? (
                 <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
-                  This digest is the SHA-256 of an empty file — a valid fingerprint, often used as a
-                  smoke test.
+                  {t('proofCardPage.emptyFile')}
                 </p>
               ) : null}
               <p className="text-xs leading-relaxed" style={{ color: 'var(--text-muted)' }}>
-                Only a SHA-256 fingerprint was submitted. The original file never needed to leave
-                the device. You do not need to trust Satohash — verify with OpenTimestamps.
+                {t('proofCardPage.neverLeaves')}
               </p>
               <p className="text-xs leading-relaxed" style={{ color: 'var(--text-muted)' }}>
-                Share this page in iMessage — the preview is a photo, not the app.
+                {t('proofCardPage.imessage')}
               </p>
               {njumpId ? (
                 <p>
@@ -241,16 +247,16 @@ export default function ProofCardPublic() {
                     className={`text-xs font-black tracking-widest uppercase ${focusRing} rounded-sm`}
                     style={{ color: 'var(--accent-gold)' }}
                   >
-                    njump
+                    {t('proofCardPage.njump')}
                   </a>
                 </p>
               ) : null}
               <p className="font-mono text-[11px]" style={{ color: 'var(--text-secondary)' }}>
-                ots-cli verify proof.ots
+                {t('proofCardPage.otsCli')}
               </p>
             </div>
           ) : (
-            <p className="mt-4">Loading…</p>
+            <p className="mt-4">{t('proofCardPage.loading')}</p>
           )}
           {proof && !confirmed && (
             <div className="mt-4">
@@ -264,28 +270,28 @@ export default function ProofCardPublic() {
               className={btnGold}
               style={{ background: 'var(--accent-gold)', color: '#141b25' }}
             >
-              Interactive verify
+              {t('proofCardPage.interactiveVerify')}
             </Link>
             <a
               href={`/p/${hex}`}
               className={btnGhost}
               style={{ borderColor: 'var(--border-gold)', color: 'var(--accent-gold)' }}
             >
-              Hard-open card
+              {t('proofCardPage.hardOpen')}
             </a>
             <Link
               to="/stamp"
               className={btnGhost}
               style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
             >
-              Stamp a file
+              {t('proofCardPage.stampFile')}
             </Link>
             <Link
               to="/counsel"
               className={btnGhost}
               style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
             >
-              For counsel
+              {t('proofCardPage.forCounsel')}
             </Link>
           </div>
           <div className="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-2">
@@ -296,7 +302,7 @@ export default function ProofCardPublic() {
               style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
             >
               {copied ? <Check size={14} className="text-emerald-400" /> : <Copy size={14} />}
-              {copied ? 'Copied' : 'Copy proof link'}
+              {copied ? t('proofCardPage.copied') : t('proofCardPage.copyLink')}
             </button>
             <button
               type="button"
@@ -304,15 +310,15 @@ export default function ProofCardPublic() {
               className={`${btnGhost} gap-2 transition-colors hover:border-[var(--accent-gold)]`}
               style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
             >
-              <Share2 size={14} /> Share
+              <Share2 size={14} /> {t('proofCardPage.share')}
             </button>
           </div>
         </article>
 
         <footer className="text-[11px]" style={{ color: 'var(--text-muted)' }}>
-          Independent math · OpenTimestamps → Bitcoin ·{' '}
+          {t('proofCardPage.footer')}{' '}
           <Link to="/status" className="rounded-sm" style={{ color: 'var(--accent-gold)' }}>
-            Status
+            {t('proofCardPage.statusLink')}
           </Link>
         </footer>
       </div>

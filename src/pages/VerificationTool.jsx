@@ -247,11 +247,11 @@ export default function VerificationTool() {
         })
       }
     } catch (e) {
-      toast.error('Verification service unavailable')
+      toast.error(tv('verifyToolPage.serviceUnavailable'))
       setResult('error')
       setVerifyData({
         verified: false,
-        details: 'Verification service unavailable. Please ensure the server is running.'
+        details: tv('verifyToolPage.serviceUnavailableBody')
       })
     } finally {
       setVerifying(false)
@@ -283,11 +283,10 @@ export default function VerificationTool() {
             <LiveNodeChip />
           </div>
           <h1 className="text-3xl font-bold tracking-tighter text-[var(--text-primary)] uppercase sm:text-5xl">
-            The Verification Shield
+            {tv('verifyToolPage.title')}
           </h1>
           <p className="mx-auto max-w-2xl font-medium text-[var(--text-secondary)]">
-            Independently verify the provenance of any digital artifact. Our engine parses .ots
-            proofs and traverses the Merkle path directly to the Bitcoin blockchain.
+            {tv('verifyToolPage.subtitle')}
           </p>
         </header>
 
@@ -382,7 +381,7 @@ export default function VerificationTool() {
                 </div>
                 <button
                   type="button"
-                  aria-label="Drop an .ots proof"
+                  aria-label={tv('verifyToolPage.dropOts')}
                   onClick={() => fileRef.current?.click()}
                   className={`flex min-h-[48px] cursor-pointer flex-col items-center justify-center gap-2 rounded-2xl border bg-[var(--bg-primary)] p-5 text-center transition-colors hover:border-[color-mix(in_srgb,var(--accent-gold)_70%,white)] hover:shadow-[0_0_16px_var(--accent-gold-glow)] ${
                     isDragOver
@@ -391,7 +390,9 @@ export default function VerificationTool() {
                   }`}
                 >
                   <Upload size={22} className="text-[var(--text-secondary)]" />
-                  <p className="text-sm font-bold text-[var(--text-primary)]">Drop an .ots proof</p>
+                  <p className="text-sm font-bold text-[var(--text-primary)]">
+                    {tv('verifyToolPage.dropOts')}
+                  </p>
                   {otsFile ? (
                     <p className="text-xs font-medium text-[var(--accent-gold)]">{otsFile.name}</p>
                   ) : (
@@ -538,7 +539,7 @@ export default function VerificationTool() {
                       <span className="inline-flex items-center text-xs font-medium text-[var(--text-secondary)]">
                         Status
                         <Tooltip
-                          title="Pending is not confirmed"
+                          title={tv('verifyToolPage.pendingNe')}
                           content="The fingerprint is at OpenTimestamps calendars. It is NOT in a Bitcoin block until status is confirmed. Pending ≠ confirmed."
                         />
                       </span>
@@ -634,7 +635,7 @@ export default function VerificationTool() {
             <span className="inline-flex items-center text-[10px] font-bold tracking-[0.2em] text-[var(--accent-active)] uppercase">
               Independent verification
               <Tooltip
-                title="Pending is not confirmed"
+                title={tv('verifyToolPage.pendingNe')}
                 content="The fingerprint is at OpenTimestamps calendars. It is NOT in a Bitcoin block until status is confirmed. Pending ≠ confirmed."
               />
             </span>
@@ -654,7 +655,7 @@ export default function VerificationTool() {
 
         <section
           className="grid grid-cols-1 gap-8 border-t border-[var(--border)] pt-12 md:grid-cols-3"
-          aria-label="Global witnesses"
+          aria-label={tv('verifyToolPage.globalWitnesses')}
         >
           <div className="space-y-3">
             <div className="flex items-center gap-2 text-[var(--accent-active)]">

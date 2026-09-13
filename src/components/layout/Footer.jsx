@@ -58,17 +58,17 @@ const LINK_GROUPS = [
   {
     id: 'product',
     links: [
-      { key: 'stamp', path: '/stamp', label: 'Stamp' },
-      { key: 'verify', path: '/verify', label: 'Verify' },
+      { key: 'stamp', path: '/stamp' },
+      { key: 'verify', path: '/verify' },
       { key: 'templates', path: '/templates' },
-      { key: 'watch', path: '/watch', label: 'Explainer' },
+      { key: 'watch', path: '/watch' },
       { key: 'pricing', path: '/pricing' },
       { key: 'faq', path: '/faq' },
       { key: 'guides', path: '/guides' },
       { key: 'glossary', path: '/glossary' },
       { key: 'comparison', path: '/comparison' },
       { key: 'widgets', path: '/widgets' },
-      { key: 'proofPack', path: '/proof-pack', label: 'Proof Pack waitlist' },
+      { key: 'proofPack', path: '/proof-pack' },
       { key: 'integrations', path: '/integrations' }
     ]
   },
@@ -80,7 +80,7 @@ const LINK_GROUPS = [
       { key: 'trustCenter', path: '/trust' },
       { key: 'documentation', path: '/docs' },
       { key: 'status', path: '/status' },
-      { key: 'counsel', path: '/counsel', label: 'For counsel' },
+      { key: 'counsel', path: '/counsel' },
       { key: 'security', path: '/security' },
       { key: 'identity', path: '/identity' },
       { key: 'contribute', path: '/contribute' }
@@ -90,16 +90,12 @@ const LINK_GROUPS = [
     id: 'government',
     titleKey: 'government',
     links: [
-      { key: 'government', path: '/government', label: 'Government' },
-      { key: 'motopassVerify', path: '/motopass-verify', label: 'MotoPass verify' },
-      {
-        key: 'evidenceAdmissibility',
-        path: '/evidence-admissibility',
-        label: 'Evidence'
-      },
-      { key: 'chainOfCustody', path: '/chain-of-custody', label: 'Chain of custody' },
-      { key: 'network', path: '/network', label: 'Network' },
-      { key: 'proofOfExistence', path: '/proof-of-existence', label: 'Proof explorer' }
+      { key: 'government', path: '/government' },
+      { key: 'motopassVerify', path: '/motopass-verify' },
+      { key: 'evidenceAdmissibility', path: '/evidence-admissibility' },
+      { key: 'chainOfCustody', path: '/chain-of-custody' },
+      { key: 'network', path: '/network' },
+      { key: 'proofOfExistence', path: '/proof-of-existence' }
     ]
   },
   {
@@ -109,13 +105,8 @@ const LINK_GROUPS = [
       { key: 'terms', path: '/legal/terms' },
       { key: 'cryptoNotice', path: '/legal/crypto-notice' },
       { key: 'github', path: 'https://github.com/kitsboy/satohash', external: true },
-      { key: 'x', path: 'https://x.com/give_bit', external: true, label: 'X / Twitter' },
-      {
-        key: 'giveabit',
-        path: 'https://giveabit.io',
-        external: true,
-        label: 'Give A Bit'
-      }
+      { key: 'x', path: 'https://x.com/give_bit', external: true },
+      { key: 'giveabit', path: 'https://giveabit.io', external: true }
     ]
   }
 ]
@@ -156,7 +147,7 @@ function FooterLink({ link, label }) {
         href={link.path}
         target="_blank"
         rel="noopener noreferrer"
-        aria-label={`${label} (opens in new tab)`}
+        aria-label={label}
         className={linkClass}
       >
         <span className="truncate">{label}</span>
@@ -296,11 +287,12 @@ function DonationModal({ open, onClose, t }) {
 }
 
 function CompactFooter() {
+  const { t } = useTranslation()
   const compactLinks = [
-    { to: '/stamp', label: 'Stamp' },
-    { to: '/verify', label: 'Verify' },
-    { to: '/docs', label: 'Docs' },
-    { to: '/legal/terms', label: 'Terms' }
+    { to: '/stamp', label: t('footerPage.links.stamp', { defaultValue: 'Stamp' }) },
+    { to: '/verify', label: t('footerPage.links.verify', { defaultValue: 'Verify' }) },
+    { to: '/docs', label: t('nav.docs', { defaultValue: 'Docs' }) },
+    { to: '/legal/terms', label: t('footerPage.links.terms', { defaultValue: 'Terms' }) }
   ]
   const build = typeof __BUILD_NUMBER__ !== 'undefined' ? String(__BUILD_NUMBER__) : ''
   const spaBuild =
@@ -318,7 +310,7 @@ function CompactFooter() {
     >
       <div className="mx-auto flex h-11 max-w-6xl flex-nowrap items-center justify-between gap-x-2 overflow-hidden px-3 sm:gap-x-4 sm:px-8">
         <nav
-          aria-label="Stamp and verify"
+          aria-label={t('footerPage.compactNav')}
           className="flex min-w-0 flex-nowrap items-center overflow-hidden"
         >
           {compactLinks.map((link, i) => (
@@ -432,7 +424,7 @@ function FullFooter() {
                     Satohash
                   </span>
                   <span className="mt-1 text-[9px] font-semibold tracking-[0.16em] text-[var(--text-tertiary)] uppercase">
-                    Bitcoin proof · Free stamps
+                    {t('footerPage.proofFree')}
                   </span>
                 </span>
               </Link>
