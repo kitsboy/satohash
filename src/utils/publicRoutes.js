@@ -34,6 +34,7 @@ const MARKETING_PREFIXES = [
   '/bitcoin',
   '/status',
   '/counsel',
+  '/thank-you',
   '/p/'
 ]
 

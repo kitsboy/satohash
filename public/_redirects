@@ -10,6 +10,14 @@
 # cached SPA fallback HTML under asset URLs (System Desync / Unexpected token '<').
 # Bundles use /b/*; stale recovery is PWA cleanup + ErrorBoundary hard reset.
 
+# Thank-you pages — real static pages (200, not the SPA shell) so donors/leads
+# never bounce to the homepage or a dead end. Served before the SPA catch-all.
+/thank-you      /thank-you.html   200
+/thanks         /thank-you.html   200
+/thankyou       /thank-you.html   200
+/success        /thank-you.html   200
+/donate/thank-you /thank-you.html 200
+
 # SPA fallback — BrowserRouter requires all routes to serve index.html
 # Static files at the site root (incl. Google Search Console HTML) are served first.
 /*    /index.html   200

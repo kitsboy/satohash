@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark" />
+    <title>Thank you — Satohash</title>
+    <meta name="description" content="Your Satohash request is received. Here is what happens next: your proof anchors to Bitcoin via OpenTimestamps, and your support keeps the free stamping tier running. Verify anytime." />
+    <link rel="canonical" href="https://satohash.io/thank-you" />
+    <link rel="icon" type="image/png" href="/logo.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <style>
+      :root {
+        --bg: #0e1c2a;
+        --panel: #12273a;
+        --border: rgba(56, 189, 248, 0.18);
+        --text: #e8f4fb;
+        --muted: #93a9bb;
+        --gold: #f0b429;
+        --sky: #38bdf8;
+        --success: #34d399;
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; min-height: 100%; background: var(--bg); color: var(--text);
+        font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; line-height: 1.6; }
+      a { color: var(--gold); text-decoration: none; }
+      a:hover { text-decoration: underline; }
+      header { position: sticky; top: 0; z-index: 10; background: rgba(14,28,42,0.92);
+        backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); }
+      .nav { max-width: 72rem; margin: 0 auto; padding: 0.9rem 1.5rem; display: flex;
+        align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+      .brand { display: flex; align-items: center; gap: 0.6rem; font-weight: 800; letter-spacing: 0.01em; color: var(--text); }
+      .brand img { height: 1.9rem; width: 1.9rem; object-fit: contain; }
+      .nav-links { display: flex; gap: 1.25rem; font-size: 0.9rem; flex-wrap: wrap; }
+      main { max-width: 46rem; margin: 0 auto; padding: 3.5rem 1.5rem 4rem; }
+      .mark { width: 3.4rem; height: 3.4rem; border-radius: 1rem; margin: 0 auto 1.25rem;
+        background: rgba(240,180,41,0.12); border: 1px solid rgba(240,180,41,0.35);
+        display: grid; place-items: center; color: var(--gold); font-size: 1.5rem; font-weight: 800; }
+      h1 { font-size: 2rem; margin: 0 0 0.75rem; letter-spacing: -0.01em; text-align: center; }
+      .lede { text-align: center; color: var(--muted); margin: 0 0 2.25rem; font-size: 1.05rem; }
+      .card { background: linear-gradient(165deg,#16304a 0%, var(--panel) 100%);
+        border: 1px solid var(--border); border-radius: 1.25rem; padding: 1.6rem 1.5rem; margin-bottom: 1.25rem; }
+      .card h2 { margin: 0 0 0.75rem; font-size: 1.1rem; color: var(--gold); }
+      .card p, .card li { color: var(--text); margin: 0.4rem 0; }
+      .card ul { padding-left: 1.15rem; margin: 0.5rem 0; }
+      .badge { display: inline-block; border: 1px solid rgba(52,211,153,0.4); background: rgba(52,211,153,0.1);
+        color: var(--success); padding: 0.2rem 0.8rem; border-radius: 999px; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.06em; }
+      .cta-row { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.5rem; }
+      .btn { display: inline-block; min-height: 44px; padding: 0.65rem 1.35rem; border-radius: 0.8rem;
+        font-weight: 700; font-size: 0.9rem; border: 1px solid var(--gold); color: var(--gold); }
+      .btn--solid { background: var(--gold); color: #141b25; }
+      footer { border-top: 1px solid var(--border); background: var(--panel); }
+      .foot { max-width: 72rem; margin: 0 auto; padding: 1.6rem 1.5rem; display: flex;
+        flex-wrap: wrap; gap: 0.5rem 1.4rem; justify-content: space-between; color: var(--muted); font-size: 0.85rem; }
+      .foot a { color: var(--muted); }
+      .foot a:hover { color: var(--gold); }
+      @media (max-width: 560px) { h1 { font-size: 1.6rem; } .cta-row { flex-direction: column; } .btn { text-align: center; } }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="nav">
+        <a class="brand" href="/"><img src="/logo.png" alt="" width="30" height="30" /> Satohash</a>
+        <nav class="nav-links" aria-label="Satohash">
+          <a href="/stamp">Stamp</a>
+          <a href="/verify">Verify</a>
+          <a href="/pricing">Pricing</a>
+          <a href="/docs">Docs</a>
+          <a href="/donate">Support</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="mark" aria-hidden="true">✓</div>
+      <span class="badge">Request received</span>
+      <h1>Thank you.</h1>
+      <p class="lede">
+        Your request is with Satohash and has been handled. Here is what happens next — and how to
+        check it whenever you like.
+      </p>
+
+      <div class="card">
+        <h2>Your file is stamped — here is your proof</h2>
+        <p>
+          After you stamp a file, Satohash keeps only a SHA-256 fingerprint — the file never leaves
+          your device. That fingerprint is anchored to the Bitcoin blockchain through OpenTimestamps
+          calendars, typically within one block (~60 minutes).
+        </p>
+        <ul>
+          <li><strong>Check status</strong> — open the proof card you received, or paste its hash into the
+            <a href="/verify">verify tool</a>.</li>
+          <li><strong>Download your proof</strong> — grab your portable <code>.ots</code> receipt and PDF
+            certificate so it is safe on your own device.</li>
+          <li><strong>Independent forever</strong> — even if Satohash ceased to exist, your proof checks out
+            against Bitcoin with any OTS tool.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>Pending is not confirmed — yet</h2>
+        <p>
+          A stamp that says <em>pending</em> has been submitted to the calendars. <em>Confirmed</em> means a
+          Bitcoin block actually includes the attestation. That confirmation is what makes your proof
+          permanent. Check back on the card, or <a href="/network">watch our live node</a> as new blocks land.
+        </p>
+      </div>
+
+      <div class="card">
+        <h2>Your support keeps free stamping alive</h2>
+        <p>
+          If you made a donation, thank you — the sats go straight to the Satohash wallet and fund the
+          OpenTimestamps calendars, the node, and the API that keep document proof free and verifiable for
+          everyone. Stamps stay free; tipping never paywalls the trust anchor.
+        </p>
+        <p class="badge" style="margin-top:0.4rem">Bitcoin-only · no KYC · no middleman</p>
+      </div>
+
+      <div class="cta-row">
+        <a class="btn btn--solid" href="/stamp">Stamp another file</a>
+        <a class="btn" href="/verify">Verify a proof</a>
+        <a class="btn" href="/donate">Support again</a>
+      </div>
+    </main>
+
+    <footer>
+      <div class="foot">
+        <span>© Give A Bit — Satohash · free Bitcoin document stamping</span>
+        <span>
+          <a href="/legal/privacy">Privacy</a> · <a href="/legal/terms">Terms</a> ·
+          <a href="/status">Status</a> · <a href="https://giveabit.io">Give A Bit</a>
+        </span>
+      </div>
+    </footer>
+  </body>
+</html>
