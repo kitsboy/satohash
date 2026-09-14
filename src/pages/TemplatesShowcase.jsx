@@ -76,6 +76,12 @@ function addRecentView(id) {
 export default function TemplatesShowcase() {
   usePageMeta({ page: 'templates' })
   const { t } = useTranslation()
+  const catalogTitle = (id, fallback) =>
+    t(`templateCatalog.items.${id}.title`, { defaultValue: fallback })
+  const catalogDesc = (id, fallback) =>
+    t(`templateCatalog.items.${id}.description`, { defaultValue: fallback })
+  const catalogCat = (id, fallback) =>
+    t(`templateCatalog.categories.${id}`, { defaultValue: fallback })
   const navigate = useNavigate()
   const location = useLocation()
 
@@ -239,10 +245,10 @@ export default function TemplatesShowcase() {
   if (searchQuery) {
     const q = searchQuery.toLowerCase()
     filteredTemplates = filteredTemplates.filter(
-      (t) =>
-        t.title.toLowerCase().includes(q) ||
-        t.description.toLowerCase().includes(q) ||
-        t.category.toLowerCase().includes(q)
+      (item) =>
+        catalogTitle(item.id, item.title).toLowerCase().includes(q) ||
+        catalogDesc(item.id, item.description).toLowerCase().includes(q) ||
+        catalogCat(item.category, item.category).toLowerCase().includes(q)
     )
   }
 
@@ -250,11 +256,13 @@ export default function TemplatesShowcase() {
   if (sortBy === 'popular') {
     filteredTemplates.sort((a, b) => (BADGE_ORDER[a.badge] ?? 99) - (BADGE_ORDER[b.badge] ?? 99))
   } else if (sortBy === 'alpha') {
-    filteredTemplates.sort((a, b) => a.title.localeCompare(b.title))
+    filteredTemplates.sort((a, b) =>
+      catalogTitle(a.id, a.title).localeCompare(catalogTitle(b.id, b.title))
+    )
   }
 
   const activeCatLabel = manifest
-    ? manifest.categories.find((c) => c.id === activeCategory)?.label ||
+    ? catalogCat(activeCategory, manifest.categories.find((c) => c.id === activeCategory)?.label) ||
       t('templatesPage.allCategory')
     : t('templatesPage.allCategory')
 
@@ -395,7 +403,11 @@ export default function TemplatesShowcase() {
               {showSuggestions && searchQuery && (
                 <div className="absolute top-full right-0 left-0 z-50 mt-1 max-h-60 overflow-y-auto rounded-xl border border-[var(--border)] bg-[var(--surface-overlay)] shadow-2xl">
                   {manifest.templates
-                    .filter((tpl) => tpl.title.toLowerCase().includes(searchQuery.toLowerCase()))
+                    .filter((tpl) =>
+                      catalogTitle(tpl.id, tpl.title)
+                        .toLowerCase()
+                        .includes(searchQuery.toLowerCase())
+                    )
                     .slice(0, 6)
                     .map((tpl) => {
                       const Icon = ICON_MAP[tpl.icon] || FileText
@@ -411,9 +423,11 @@ export default function TemplatesShowcase() {
                           className="flex min-h-[48px] w-full items-center gap-3 px-4 py-3 text-left text-xs text-[var(--text-secondary)] transition-colors hover:bg-[var(--surface-raised)] hover:text-[var(--text-primary)]"
                         >
                           <Icon size={14} className="shrink-0 text-[var(--accent-gold)]" />
-                          <span className="min-w-0 truncate font-bold">{tpl.title}</span>
+                          <span className="min-w-0 truncate font-bold">
+                            {catalogTitle(tpl.id, tpl.title)}
+                          </span>
                           <span className="ml-auto shrink-0 text-[10px] text-[var(--text-tertiary)] uppercase">
-                            {tpl.category}
+                            {catalogCat(tpl.category, tpl.category)}
                           </span>
                         </button>
                       )
@@ -460,7 +474,7 @@ export default function TemplatesShowcase() {
                         : 'border border-[var(--border)] bg-[var(--surface-raised)]/60 text-[var(--text-secondary)] hover:border-[var(--accent-gold)]/50 hover:text-[var(--text-primary)]'
                     }`}
                   >
-                    <span>{cat.label}</span>
+                    <span>{catalogCat(cat.id, cat.label)}</span>
                     <span
                       className={`inline-flex h-5 min-w-[1.25rem] items-center justify-center rounded-full px-1.5 text-[10px] font-black tabular-nums ${
                         selected
@@ -586,10 +600,10 @@ export default function TemplatesShowcase() {
                     <Icon size={22} className="text-[var(--accent-gold)]" />
                   </div>
                   <h3 className="mb-2 text-base font-bold text-[var(--text-primary)] group-hover:text-[var(--accent-gold)]">
-                    {template.title}
+                    {catalogTitle(template.id, template.title)}
                   </h3>
                   <p className="mb-4 text-xs leading-relaxed text-[var(--text-secondary)]">
-                    {template.description}
+                    {catalogDesc(template.id, template.description)}
                   </p>
                   <div className="flex flex-wrap gap-2">
                     <Link

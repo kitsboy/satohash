@@ -1,6 +1,7 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { EyeOff, Share2, ShieldCheck, Info, X, Hash, RotateCcw, AlertTriangle } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import Button from '../ui/Button'
 
 async function sha256(text) {
@@ -14,6 +15,7 @@ async function sha256(text) {
 const BLOCK = '█'
 
 export default function ZKRedactionTool({ isOpen, onClose, contract }) {
+  const { t } = useTranslation()
   const original = contract?.content || ''
   const [segments, setSegments] = useState([])
   const [liveHash, setLiveHash] = useState('')
@@ -160,10 +162,20 @@ export default function ZKRedactionTool({ isOpen, onClose, contract }) {
                     color: 'var(--text-primary)'
                   }}
                 >
-                  ZK Privacy Shield
+                  {t('zkRedactionPage.title')}
                 </h2>
                 <p style={{ fontSize: '11px', color: 'var(--text-secondary)', marginTop: '2px' }}>
-                  Select text or click segments to redact — hash updates live
+                  <span
+                    className="mr-2 inline-block rounded-full border px-2 py-0.5 font-mono text-[9px] font-black tracking-[0.16em] uppercase"
+                    style={{
+                      borderColor: 'rgba(240,180,41,0.55)',
+                      background: 'rgba(240,180,41,0.16)',
+                      color: 'var(--accent-gold)'
+                    }}
+                  >
+                    {t('zkRedactionPage.demoChip')}
+                  </span>
+                  {t('zkRedactionPage.subtitle')}
                 </p>
               </div>
             </div>
@@ -184,7 +196,7 @@ export default function ZKRedactionTool({ isOpen, onClose, contract }) {
                   fontWeight: '700'
                 }}
               >
-                <RotateCcw size={12} /> Reset
+                <RotateCcw size={12} /> {t('zkRedactionPage.reset')}
               </button>
               <button
                 onClick={onClose}
@@ -226,7 +238,7 @@ export default function ZKRedactionTool({ isOpen, onClose, contract }) {
                   letterSpacing: '0.12em'
                 }}
               >
-                Live SHA-256
+                {t('zkRedactionPage.liveHash')}
               </span>
               <p
                 style={{
@@ -264,7 +276,7 @@ export default function ZKRedactionTool({ isOpen, onClose, contract }) {
                     letterSpacing: '0.1em'
                   }}
                 >
-                  Hash Changed
+                  {t('zkRedactionPage.hashChanged')}
                 </span>
               </div>
             )}
@@ -296,7 +308,7 @@ export default function ZKRedactionTool({ isOpen, onClose, contract }) {
                     <span
                       key={i}
                       onClick={() => toggleSeg(i)}
-                      title="Click to un-redact"
+                      title={t('zkRedactionPage.clickUnredact')}
                       style={{
                         background: 'rgba(0,0,0,0.85)',
                         color: 'transparent',
@@ -316,7 +328,7 @@ export default function ZKRedactionTool({ isOpen, onClose, contract }) {
                     <span
                       key={i}
                       onClick={() => toggleSeg(i)}
-                      title="Click to redact"
+                      title={t('zkRedactionPage.clickRedact')}
                       style={{ cursor: 'crosshair' }}
                     >
                       {seg.text}
@@ -340,7 +352,7 @@ export default function ZKRedactionTool({ isOpen, onClose, contract }) {
                 <span
                   style={{ fontSize: '11px', fontWeight: '600', color: 'var(--text-secondary)' }}
                 >
-                  Select text for precision redaction, or click any segment to toggle
+                  {t('zkRedactionPage.hint')}
                 </span>
               </div>
             </div>
@@ -368,13 +380,16 @@ export default function ZKRedactionTool({ isOpen, onClose, contract }) {
                     color: 'var(--text-secondary)'
                   }}
                 >
-                  Stats
+                  {t('zkRedactionPage.stats')}
                 </h3>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
                   {[
-                    ['Segments Hidden', segments.filter((s) => s.redacted).length],
-                    ['Chars Redacted', `${redactedChars}/${totalChars}`],
-                    ['Privacy Level', `${pct}%`]
+                    [
+                      t('zkRedactionPage.segmentsHidden'),
+                      segments.filter((s) => s.redacted).length
+                    ],
+                    [t('zkRedactionPage.charsRedacted'), `${redactedChars}/${totalChars}`],
+                    [t('zkRedactionPage.privacyLevel'), `${pct}%`]
                   ].map(([l, v]) => (
                     <div
                       key={l}
@@ -415,7 +430,7 @@ export default function ZKRedactionTool({ isOpen, onClose, contract }) {
                       letterSpacing: '0.1em'
                     }}
                   >
-                    Privacy
+                    {t('zkRedactionPage.privacy')}
                   </span>
                   <span style={{ fontSize: '10px', fontWeight: '800', color: '#818cf8' }}>
                     {pct}%
@@ -453,7 +468,7 @@ export default function ZKRedactionTool({ isOpen, onClose, contract }) {
                   <div
                     style={{ fontSize: '11px', fontWeight: '700', color: 'var(--text-primary)' }}
                   >
-                    Selective Disclosure
+                    {t('zkRedactionPage.selectiveTitle')}
                   </div>
                 </div>
                 <p
@@ -464,8 +479,7 @@ export default function ZKRedactionTool({ isOpen, onClose, contract }) {
                     margin: 0
                   }}
                 >
-                  Merkle inclusion proofs let you prove the original Bitcoin anchor without
-                  revealing redacted content.
+                  {t('zkRedactionPage.selectiveBody')}
                 </p>
               </div>
               <div style={{ marginTop: 'auto' }}>
@@ -497,7 +511,7 @@ export default function ZKRedactionTool({ isOpen, onClose, contract }) {
                   loading={isGen}
                 >
                   <Share2 size={16} />
-                  Generate Private Share
+                  {t('zkRedactionPage.generate')}
                 </Button>
               </div>
             </div>

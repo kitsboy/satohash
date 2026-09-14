@@ -637,13 +637,13 @@ export function AiHubPage() {
             className="mt-3 w-full rounded border border-white/15 bg-black/40 px-3 py-2 font-mono text-sm"
             value={sumStampId}
             onChange={(e) => setSumStampId(e.target.value)}
-            placeholder="Optional stamp id to attach summary"
+            placeholder={t('v5Page.aiHub.stampIdPlaceholder')}
           />
           <textarea
             className="mt-2 min-h-[88px] w-full rounded border border-white/15 bg-black/40 px-3 py-2 text-sm"
             value={sumText}
             onChange={(e) => setSumText(e.target.value)}
-            placeholder="Paste text to summarize (or leave blank if stampId has metadata)…"
+            placeholder={t('v5Page.aiHub.pasteTextPlaceholder')}
           />
           <button
             type="button"

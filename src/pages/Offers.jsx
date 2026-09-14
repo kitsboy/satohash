@@ -15,6 +15,7 @@ import {
   Lock,
   Activity
 } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { sendPaymentRequest } from '../utils/nwc'
 import { toast } from 'sonner'
 import { QRCodeSVG } from 'qrcode.react'
@@ -22,10 +23,11 @@ import usePageMeta from '../hooks/usePageMeta'
 import { getApiUrl } from '../config/constants'
 
 export default function Bolt12Offers() {
+  const { t } = useTranslation()
   usePageMeta({
     page: 'pricing',
-    title: 'BOLT-12 Offers',
-    description: 'Lightning BOLT-12 offers for Satohash Pro and institutional tiers.'
+    title: t('offersPage.metaTitle'),
+    description: t('offersPage.metaDescription')
   })
   const [isPaid, setIsPaid] = useState(false)
   const [nwcUrl, setNwcUrl] = useState('')
@@ -37,7 +39,7 @@ export default function Bolt12Offers() {
 
   const fetchOffer = async () => {
     if (!selectedPlan) {
-      toast.error('Please point to a Settlement Mesh plan first.')
+      toast.error(t('offersPage.toastNeedPlan'))
       return
     }
     try {
@@ -50,7 +52,7 @@ export default function Bolt12Offers() {
       setBolt12Offer(data.offer)
       setInvoiceId(data.invoiceId)
     } catch (e) {
-      toast.error('Failed to generate network offer context.')
+      toast.error(t('offersPage.toastOfferFail'))
     }
   }
 
@@ -65,30 +67,30 @@ export default function Bolt12Offers() {
             setIsPaid(true)
             setBolt12Offer('')
             clearInterval(intervalId)
-            toast.success('Zero-knowledge settlement confirmed.', { icon: <CheckCircle /> })
+            toast.success(t('offersPage.toastPaid'), { icon: <CheckCircle /> })
           }
         } catch (e) {
           console.error('Error fetching lightning status:', e)
-          toast.error('Lightning status check failed', { description: e.message })
+          toast.error(t('offersPage.toastStatusFail'), { description: e.message })
         }
       }, 2000)
     }
     return () => clearInterval(intervalId)
-  }, [invoiceId, isPaid])
+  }, [invoiceId, isPaid, t])
 
   const handleNwcPayment = async () => {
     if (!nwcUrl) {
-      toast.error('Please enter a valid NWC connection string.')
+      toast.error(t('offersPage.toastNeedNwc'))
       return
     }
     setIsPaying(true)
     try {
-      toast.info('Demo mode — NWC payment uses a simulated invoice.', { duration: 4000 })
+      toast.info(t('offersPage.toastDemoNwc'), { duration: 4000 })
       await sendPaymentRequest(nwcUrl, 'mock_invoice_for_500k_sats')
       setIsPaid(true)
-      toast.success('Sovereign payment successful!')
+      toast.success(t('offersPage.toastPayOk'))
     } catch (e) {
-      toast.error('Payment failed: ' + e.message)
+      toast.error(t('offersPage.toastPayFail', { message: e.message }))
     } finally {
       setIsPaying(false)
     }
@@ -102,32 +104,37 @@ export default function Bolt12Offers() {
       <div className="layout-container">
         {/* Plain-English Explainer */}
         <div className="mb-8 space-y-3 rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] p-6">
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-3">
             <span className="text-2xl">⚡</span>
             <h2
               className="text-lg font-black tracking-tight uppercase"
               style={{ color: 'var(--text-primary)' }}
             >
-              What are Lightning Offers?
+              {t('offersPage.explainerTitle')}
             </h2>
+            <span
+              className="rounded-full border px-3 py-1 font-mono text-[10px] font-black tracking-[0.18em] uppercase"
+              style={{
+                borderColor: 'rgba(240,180,41,0.55)',
+                background: 'rgba(240,180,41,0.16)',
+                color: 'var(--accent-gold)'
+              }}
+            >
+              {t('offersPage.stagedChip')}
+            </span>
           </div>
           <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-            A Lightning Offer (BOLT-12) is a reusable Bitcoin payment link — like a QR code that
-            works forever. Instead of generating a new invoice every time, you create one Offer that
-            anyone can pay, any number of times, from any Lightning wallet.
+            {t('offersPage.explainerP1')}
           </p>
           <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-            On Satohash, Offers power{' '}
-            <strong style={{ color: 'var(--text-primary)' }}>L402 API access</strong> — pay-per-use
-            stamping via Lightning instead of a subscription. Perfect for developers and power
-            users.
+            {t('offersPage.explainerP2')}
           </p>
           <div className="flex flex-wrap gap-2 pt-1">
             {[
-              'Reusable payment link',
-              'No expiry',
-              'Works with any Lightning wallet',
-              'Pay-per-stamp API access'
+              t('offersPage.tagReusable'),
+              t('offersPage.tagNoExpiry'),
+              t('offersPage.tagAnyWallet'),
+              t('offersPage.tagPayPerStamp')
             ].map((tag) => (
               <span
                 key={tag}
@@ -154,14 +161,14 @@ export default function Bolt12Offers() {
               className="mb-6 text-6xl leading-none font-black tracking-tighter uppercase italic md:text-8xl"
               style={{ color: 'var(--text-primary)' }}
             >
-              Sovereign <br /> <span className="text-amber-600">SETTLEMENT.</span>
+              {t('offersPage.heroTitle')} <br />{' '}
+              <span className="text-amber-600">{t('offersPage.heroHighlight')}</span>
             </h1>
             <p
               className="max-w-xl font-sans text-lg leading-relaxed font-bold italic"
               style={{ color: 'var(--text-secondary)' }}
             >
-              Non-custodial protocol settlement via the Lightning Network. Use static **BOLT-12**
-              offers or **Nostr Wallet Connect** for automated institutional anchoring.
+              {t('offersPage.heroLede')}
             </p>
           </div>
 
@@ -178,10 +185,10 @@ export default function Bolt12Offers() {
                 className="text-[10px] font-black uppercase italic"
                 style={{ color: 'var(--text-primary)' }}
               >
-                Settlement Mesh
+                {t('offersPage.meshTitle')}
               </h4>
               <p className="text-[10px] leading-none font-bold tracking-widest text-amber-600 uppercase">
-                BOLT-12 Offering Active
+                {t('offersPage.meshStatus')}
               </p>
             </div>
           </div>
@@ -202,23 +209,23 @@ export default function Bolt12Offers() {
                 className="mb-12 text-xs font-black tracking-[0.4em] uppercase italic"
                 style={{ color: 'var(--text-secondary)' }}
               >
-                Subscription Inventory
+                {t('offersPage.inventoryTitle')}
               </h3>
 
               <div className="mb-12 space-y-6">
                 {[
                   {
                     id: 'pro',
-                    title: 'Oracle Pro Mesh',
-                    desc: '10,000 Anchors / mo',
-                    price: '500k sats',
+                    title: t('offersPage.planProTitle'),
+                    desc: t('offersPage.planProDesc'),
+                    price: t('offersPage.planProPrice'),
                     color: 'indigo'
                   },
                   {
                     id: 'ent',
-                    title: 'Institutional Sovereign',
-                    desc: 'Unlimited Witnessing',
-                    price: '2M sats',
+                    title: t('offersPage.planEntTitle'),
+                    desc: t('offersPage.planEntDesc'),
+                    price: t('offersPage.planEntPrice'),
                     color: 'amber'
                   }
                 ].map((plan) => (
@@ -284,7 +291,7 @@ export default function Bolt12Offers() {
                       style={{ background: 'var(--bg-secondary)' }}
                     >
                       <h4 className="mb-6 flex items-center gap-2 text-[10px] font-black tracking-widest text-amber-600 uppercase">
-                        <Zap size={14} className="fill-amber-600" /> SCAN TO ACTIVATE MESH
+                        <Zap size={14} className="fill-amber-600" /> {t('offersPage.scanTitle')}
                       </h4>
                       <div
                         className="mb-6 rounded-2xl p-4 shadow-sm"
@@ -313,14 +320,14 @@ export default function Bolt12Offers() {
                         {bolt12Offer}
                       </div>
                       <p className="mt-6 animate-pulse text-[10px] font-bold tracking-widest text-amber-500/60 uppercase italic">
-                        Awaiting network propagation...
+                        {t('offersPage.awaiting')}
                       </p>
                       <button
                         onClick={() => setBolt12Offer('')}
                         className="mt-4 text-[9px] font-black tracking-widest uppercase transition-opacity hover:opacity-80"
                         style={{ color: 'var(--text-secondary)' }}
                       >
-                        Cancel Offer
+                        {t('offersPage.cancel')}
                       </button>
                     </div>
                   ) : (
@@ -334,7 +341,7 @@ export default function Bolt12Offers() {
                         }}
                       >
                         <Lock size={16} className="text-amber-400" />
-                        Sync Nostr Wallet (NWC)
+                        {t('offersPage.syncNwc')}
                       </button>
                       <div className="relative">
                         <div className="absolute inset-0 flex items-center">
@@ -350,7 +357,7 @@ export default function Bolt12Offers() {
                             color: 'var(--text-secondary)'
                           }}
                         >
-                          OFFER_V4_SECURE
+                          {t('offersPage.divider')}
                         </div>
                       </div>
                       <button
@@ -359,7 +366,7 @@ export default function Bolt12Offers() {
                         style={{ background: 'var(--bg-secondary)' }}
                       >
                         <Link2 size={16} className="transition-colors group-hover:text-white" />
-                        Fetch Static BOLT-12 Offer
+                        {t('offersPage.fetchOffer')}
                       </button>
                     </>
                   )}
@@ -376,13 +383,13 @@ export default function Bolt12Offers() {
                     className="mb-2 text-3xl font-black tracking-tighter uppercase italic"
                     style={{ color: 'var(--accent-success)' }}
                   >
-                    Settlement Active.
+                    {t('offersPage.settledTitle')}
                   </h3>
                   <p
                     className="text-[10px] font-black tracking-widest uppercase italic"
                     style={{ color: 'var(--text-secondary)' }}
                   >
-                    Protocol Witness Node Subscribed
+                    {t('offersPage.settledSub')}
                   </p>
                 </motion.div>
               )}
@@ -397,17 +404,15 @@ export default function Bolt12Offers() {
               <div className="mb-6 flex items-center gap-3 text-amber-600">
                 <Terminal size={16} />
                 <span className="font-black tracking-[0.4em] uppercase">
-                  Settlement_Kernel::v4_PRO
+                  {t('offersPage.terminalTitle')}
                 </span>
               </div>
               <div className="space-y-2 italic opacity-60">
-                <p>[AUTH] NIP-47 Handshake successful...</p>
-                <p>[PAYMENT] Fetching settlement metadata for BOLT-12 offer...</p>
-                <p>[MESH] Verifying witness node capacity in Japan, EU, and US...</p>
+                <p>{t('offersPage.logAuth')}</p>
+                <p>{t('offersPage.logPayment')}</p>
+                <p>{t('offersPage.logMesh')}</p>
                 {isPaying && (
-                  <p className="animate-pulse text-emerald-400">
-                    [NWC] Automated budget approval received. Anchoring...
-                  </p>
+                  <p className="animate-pulse text-emerald-400">{t('offersPage.logNwc')}</p>
                 )}
               </div>
             </div>
@@ -426,33 +431,36 @@ export default function Bolt12Offers() {
                 className="mb-10 text-2xl leading-none font-black tracking-tighter uppercase italic"
                 style={{ color: 'var(--text-primary)' }}
               >
-                Security <br /> <span style={{ color: 'var(--accent-active)' }}>MANIFESTO.</span>
+                {t('offersPage.manifestoTitle')} <br />{' '}
+                <span style={{ color: 'var(--accent-active)' }}>
+                  {t('offersPage.manifestoHighlight')}
+                </span>
               </h3>
               <div className="relative z-10 space-y-10">
                 <GuideItem
                   icon={Lock}
-                  title="Non-Custodial"
-                  desc="Satohash never holds your sats. Payments go directly to the protocol witness mesh."
+                  title={t('offersPage.guideNonCustodialTitle')}
+                  desc={t('offersPage.guideNonCustodialDesc')}
                 />
                 <GuideItem
                   icon={Smartphone}
-                  title="Native NWC"
-                  desc="Manage your spending budgets directly from your Alby, Mutiny, or Amethyst wallet."
+                  title={t('offersPage.guideNwcTitle')}
+                  desc={t('offersPage.guideNwcDesc')}
                 />
                 <GuideItem
                   icon={Activity}
-                  title="Proof-of-Anchor"
-                  desc="Funds are only drawn as the protocol verifies individual batch confirmations on Bitcoin."
+                  title={t('offersPage.guideAnchorTitle')}
+                  desc={t('offersPage.guideAnchorDesc')}
                 />
               </div>
             </div>
 
             <div className="glass-card border-amber-100 bg-amber-50 p-10 italic">
               <p className="mb-6 text-[11px] leading-relaxed font-bold text-amber-900/40 italic">
-                Looking for high-volume enterprise billing with fiat-to-Bitcoin settlement?
+                {t('offersPage.enterpriseAsk')}
               </p>
               <button className="flex items-center gap-2 text-[10px] font-black tracking-widest text-amber-600 uppercase transition-all hover:gap-4">
-                Institutional Onboarding <ArrowRight size={14} />
+                {t('offersPage.enterpriseCta')} <ArrowRight size={14} />
               </button>
             </div>
           </div>
@@ -491,13 +499,13 @@ export default function Bolt12Offers() {
                   className="text-4xl font-black tracking-tighter uppercase italic"
                   style={{ color: 'var(--text-primary)' }}
                 >
-                  Connect NWC.
+                  {t('offersPage.nwcTitle')}
                 </h2>
                 <p
                   className="mt-3 text-[10px] font-black tracking-[0.4em] uppercase"
                   style={{ color: 'var(--text-secondary)' }}
                 >
-                  Nostr Wallet Connect Protocol
+                  {t('offersPage.nwcSub')}
                 </p>
               </div>
 
@@ -507,13 +515,13 @@ export default function Bolt12Offers() {
                     className="mb-4 block text-[10px] font-black tracking-widest uppercase italic"
                     style={{ color: 'var(--text-secondary)' }}
                   >
-                    ENTER CONNECTION STRING
+                    {t('offersPage.nwcLabel')}
                   </label>
                   <input
                     type="text"
                     value={nwcUrl}
                     onChange={(e) => setNwcUrl(e.target.value)}
-                    placeholder="nostr+walletconnect://..."
+                    placeholder={t('offersPage.nwcPlaceholder')}
                     className="w-full rounded-2xl px-6 py-6 font-mono text-sm shadow-inner transition-all focus:outline-none"
                     style={{
                       background: 'var(--surface-raised)',
@@ -526,9 +534,7 @@ export default function Bolt12Offers() {
                 <div className="flex gap-6 rounded-3xl border border-amber-100 bg-amber-50 p-8">
                   <Info size={24} className="shrink-0 text-amber-600" />
                   <p className="text-[11px] leading-relaxed font-bold text-amber-900/60 italic">
-                    Paste your NWC connection string from your Alby, Mutiny, or Amethyst wallet.
-                    This allows one-click, automated payments for global anchors via your Nostr
-                    public key.
+                    {t('offersPage.nwcHint')}
                   </p>
                 </div>
 
@@ -536,7 +542,7 @@ export default function Bolt12Offers() {
                   onClick={handleNwcPayment}
                   className="w-full rounded-2xl bg-amber-500 py-6 text-[12px] font-black tracking-[0.3em] text-white uppercase shadow-2xl shadow-amber-500/30 transition-all hover:scale-[1.02] active:scale-95"
                 >
-                  Authorize & Pay
+                  {t('offersPage.nwcPay')}
                 </button>
               </div>
             </motion.div>

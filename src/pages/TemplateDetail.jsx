@@ -9,7 +9,9 @@ export default function TemplateDetail() {
   const [template, setTemplate] = useState(null)
   usePageMeta({
     page: 'templateDetail',
-    title: template ? `${template.title} — ${t('templateDetailPage.demoPreview')}` : undefined
+    title: template
+      ? `${t(`templateCatalog.items.${template.id}.title`, { defaultValue: template.title })} — ${t('templateDetailPage.demoPreview')}`
+      : undefined
   })
   const { templateId } = useParams()
   const navigate = useNavigate()

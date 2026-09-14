@@ -1,4 +1,5 @@
 import { ShieldCheck, Clock, CheckCircle2, Hash, GitBranch, Blocks } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -28,6 +29,7 @@ function seedHash(base, suffix) {
 // ─── Merkle Tree ──────────────────────────────────────────────────────────────
 
 function MerkleTree({ contract }) {
+  const { t } = useTranslation()
   const docHash = deriveDocHash(contract)
   const siblingHash = seedHash(docHash, 'sibling')
   const branchHash = seedHash(docHash, 'branch')
@@ -77,13 +79,13 @@ function MerkleTree({ contract }) {
       {/* Level 1 — Leaves */}
       <div style={{ ...connectorH, gap: '16px' }}>
         <div style={{ flex: 1, textAlign: 'center' }}>
-          <div style={labelStyle}>Document Hash</div>
+          <div style={labelStyle}>{t('proofExplorerPage.docHash')}</div>
           <div style={nodeStyle('#6366f1')} title={docHash || ''}>
             {truncateHash(docHash, 6, 6)}
           </div>
         </div>
         <div style={{ flex: 1, textAlign: 'center' }}>
-          <div style={labelStyle}>Sibling Hash</div>
+          <div style={labelStyle}>{t('proofExplorerPage.siblingHash')}</div>
           <div style={nodeStyle('#64748b')} title={siblingHash}>
             {truncateHash(siblingHash, 6, 6)}
           </div>
@@ -117,7 +119,7 @@ function MerkleTree({ contract }) {
 
       {/* Level 2 — Merkle Branch */}
       <div style={{ textAlign: 'center' }}>
-        <div style={labelStyle}>Merkle Branch</div>
+        <div style={labelStyle}>{t('proofExplorerPage.merkleBranch')}</div>
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           <div style={nodeStyle('#0d9488')} title={branchHash}>
             {truncateHash(branchHash, 6, 6)}
@@ -132,7 +134,7 @@ function MerkleTree({ contract }) {
 
       {/* Level 3 — Bitcoin Block */}
       <div style={{ textAlign: 'center' }}>
-        <div style={labelStyle}>Bitcoin Block (Merkle Root)</div>
+        <div style={labelStyle}>{t('proofExplorerPage.bitcoinMerkleRoot')}</div>
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           <div
             style={{
@@ -153,29 +155,30 @@ function MerkleTree({ contract }) {
 // ─── Verification Steps ───────────────────────────────────────────────────────
 
 function VerificationSteps({ isTimestamped }) {
+  const { t } = useTranslation()
   const steps = [
     {
-      label: 'Document hashed locally (SHA-256)',
+      label: t('proofExplorerPage.stepHashed'),
       done: true,
       color: '#22c55e'
     },
     {
-      label: 'Hash submitted to OpenTimestamps',
+      label: t('proofExplorerPage.stepSubmitted'),
       done: true,
       color: '#22c55e'
     },
     {
-      label: 'Merkle branch computed',
+      label: t('proofExplorerPage.stepMerkle'),
       done: true,
       color: '#22c55e'
     },
     {
-      label: 'Anchored in Bitcoin block header',
+      label: t('proofExplorerPage.stepAnchored'),
       done: isTimestamped,
       color: isTimestamped ? '#22c55e' : '#f0b429'
     },
     {
-      label: 'Proof independently verifiable',
+      label: t('proofExplorerPage.stepVerifiable'),
       done: isTimestamped,
       color: isTimestamped ? '#22c55e' : '#64748b'
     }
@@ -231,6 +234,7 @@ function VerificationSteps({ isTimestamped }) {
 // ─── Pending State ────────────────────────────────────────────────────────────
 
 function PendingState() {
+  const { t } = useTranslation()
   return (
     <div
       style={{
@@ -256,12 +260,10 @@ function PendingState() {
       />
       <div>
         <div style={{ fontSize: '14px', fontWeight: '700', color: '#f0b429', marginBottom: '4px' }}>
-          Pending Bitcoin Confirmation
+          {t('proofExplorerPage.pendingTitle')}
         </div>
         <div style={{ fontSize: '12px', color: '#94a3b8', lineHeight: 1.6 }}>
-          Your proof has been submitted to OpenTimestamps and is awaiting inclusion in the next
-          Bitcoin block — typically within 60 minutes. Once anchored, this proof becomes
-          mathematically non-repudiable and can be verified by anyone, forever.
+          {t('proofExplorerPage.pendingBody')}
         </div>
       </div>
     </div>
@@ -271,14 +273,16 @@ function PendingState() {
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 const ProofExplorer = ({ isOpen, onClose, contract, timestamp }) => {
+  const { t, i18n } = useTranslation()
   if (!isOpen) return null
 
   const isTimestamped = contract?.status === 'timestamped'
   const docHash = deriveDocHash(contract)
   const displayHash = timestamp?.hash || docHash
   const blockHeight = contract?.bitcoin_block_height || timestamp?.blockHeight || null
+  const locale = i18n.language === 'zh' ? 'zh-CN' : i18n.language || 'en'
   const createdAt = contract?.createdAt
-    ? new Date(contract.createdAt).toLocaleString('en-US', {
+    ? new Date(contract.createdAt).toLocaleString(locale, {
         year: 'numeric',
         month: 'short',
         day: 'numeric',
@@ -286,6 +290,15 @@ const ProofExplorer = ({ isOpen, onClose, contract, timestamp }) => {
         minute: '2-digit'
       })
     : null
+  const pathLabel = contract?.name
+    ? t('proofExplorerPage.quotedName', { name: contract.name })
+    : t('proofExplorerPage.pathFallback')
+  const headerSub = blockHeight
+    ? t('proofExplorerPage.pathWithBlock', {
+        path: pathLabel,
+        height: blockHeight.toLocaleString(locale)
+      })
+    : pathLabel
 
   return (
     <div
@@ -356,12 +369,9 @@ const ProofExplorer = ({ isOpen, onClose, contract, timestamp }) => {
             </div>
             <div>
               <h2 style={{ fontSize: '18px', fontWeight: '800', color: '#f8fafc', margin: 0 }}>
-                Proof Explorer
+                {t('proofExplorerPage.title')}
               </h2>
-              <p style={{ fontSize: '12px', color: '#64748b', marginTop: '2px' }}>
-                {contract?.name ? `"${contract.name}"` : 'Cryptographic path to Bitcoin'}
-                {blockHeight ? ` · Block #${blockHeight.toLocaleString()}` : ''}
-              </p>
+              <p style={{ fontSize: '12px', color: '#64748b', marginTop: '2px' }}>{headerSub}</p>
             </div>
           </div>
           <button
@@ -380,7 +390,7 @@ const ProofExplorer = ({ isOpen, onClose, contract, timestamp }) => {
             onMouseEnter={(e) => (e.target.style.borderColor = '#64748b')}
             onMouseLeave={(e) => (e.target.style.borderColor = '#334155')}
           >
-            Close
+            {t('proofExplorerPage.close')}
           </button>
         </div>
 
@@ -422,7 +432,7 @@ const ProofExplorer = ({ isOpen, onClose, contract, timestamp }) => {
                       marginBottom: '4px'
                     }}
                   >
-                    Proof ID
+                    {t('proofExplorerPage.proofId')}
                   </div>
                   <div
                     style={{
@@ -457,7 +467,7 @@ const ProofExplorer = ({ isOpen, onClose, contract, timestamp }) => {
                       marginBottom: '4px'
                     }}
                   >
-                    Stamped At
+                    {t('proofExplorerPage.stampedAt')}
                   </div>
                   <div
                     style={{
@@ -480,7 +490,7 @@ const ProofExplorer = ({ isOpen, onClose, contract, timestamp }) => {
           <Section
             icon={<Hash size={16} color="#6366f1" />}
             iconBg="rgba(99,102,241,0.12)"
-            label="1. Document Fingerprint (SHA-256)"
+            label={t('proofExplorerPage.fingerprint')}
           >
             <div
               style={{
@@ -497,7 +507,7 @@ const ProofExplorer = ({ isOpen, onClose, contract, timestamp }) => {
             >
               {displayHash || (
                 <span style={{ color: '#475569', fontStyle: 'italic' }}>
-                  Hash computed client-side — not stored on server
+                  {t('proofExplorerPage.hashLocal')}
                 </span>
               )}
             </div>
@@ -509,7 +519,7 @@ const ProofExplorer = ({ isOpen, onClose, contract, timestamp }) => {
           <Section
             icon={<GitBranch size={16} color="#0d9488" />}
             iconBg="rgba(13,148,136,0.12)"
-            label="2. Merkle Tree Path"
+            label={t('proofExplorerPage.merklePath')}
           >
             <div
               style={{
@@ -529,7 +539,7 @@ const ProofExplorer = ({ isOpen, onClose, contract, timestamp }) => {
           <Section
             icon={<Blocks size={16} color="#f0b429" />}
             iconBg="rgba(240,180,41,0.12)"
-            label="3. Bitcoin Block Anchor"
+            label={t('proofExplorerPage.blockAnchor')}
           >
             <div
               style={{
@@ -566,7 +576,9 @@ const ProofExplorer = ({ isOpen, onClose, contract, timestamp }) => {
                     textTransform: 'uppercase'
                   }}
                 >
-                  {isTimestamped ? 'Block Header Anchor' : 'Awaiting Bitcoin Block'}
+                  {isTimestamped
+                    ? t('proofExplorerPage.blockHeaderAnchor')
+                    : t('proofExplorerPage.awaitingBlock')}
                 </div>
                 <div
                   style={{
@@ -577,8 +589,10 @@ const ProofExplorer = ({ isOpen, onClose, contract, timestamp }) => {
                   }}
                 >
                   {blockHeight
-                    ? `Block #${blockHeight.toLocaleString()}`
-                    : 'Pending — proof submitted to OTS calendar'}
+                    ? t('proofExplorerPage.blockNum', {
+                        height: blockHeight.toLocaleString(locale)
+                      })
+                    : t('proofExplorerPage.pendingOts')}
                 </div>
               </div>
             </div>
@@ -604,7 +618,7 @@ const ProofExplorer = ({ isOpen, onClose, contract, timestamp }) => {
                 marginBottom: '14px'
               }}
             >
-              Verification Steps
+              {t('proofExplorerPage.verificationSteps')}
             </div>
             <VerificationSteps contract={contract} isTimestamped={isTimestamped} />
           </div>
@@ -648,12 +662,14 @@ const ProofExplorer = ({ isOpen, onClose, contract, timestamp }) => {
                     color: isTimestamped ? '#f8fafc' : '#94a3b8'
                   }}
                 >
-                  {isTimestamped ? 'Verified Authentic' : 'Proof Submitted'}
+                  {isTimestamped
+                    ? t('proofExplorerPage.verifiedAuthentic')
+                    : t('proofExplorerPage.proofSubmitted')}
                 </div>
                 <div style={{ fontSize: '12px', color: '#64748b', marginTop: '2px' }}>
                   {isTimestamped
-                    ? 'Mathematically linked to Bitcoin Mainnet'
-                    : 'Awaiting Bitcoin block confirmation'}
+                    ? t('proofExplorerPage.linkedMainnet')
+                    : t('proofExplorerPage.awaitingConfirm')}
                 </div>
               </div>
             </div>
@@ -666,10 +682,10 @@ const ProofExplorer = ({ isOpen, onClose, contract, timestamp }) => {
                   color: isTimestamped ? '#f0b429' : '#475569'
                 }}
               >
-                {blockHeight ? blockHeight.toLocaleString() : '—'}
+                {blockHeight ? blockHeight.toLocaleString(locale) : '—'}
               </div>
               <div style={{ fontSize: '10px', color: '#475569', letterSpacing: '0.08em' }}>
-                BLOCK HEIGHT
+                {t('proofExplorerPage.blockHeight')}
               </div>
             </div>
           </div>

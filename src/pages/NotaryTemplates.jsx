@@ -1251,6 +1251,24 @@ const BADGE_STYLES = {
   Compliance: 'bg-violet-400/20 text-violet-300 border border-violet-400/30'
 }
 
+/** Titles, descriptions, field labels from templateCatalog. Demo values stay English. */
+export function localizeTemplate(template, t) {
+  if (!template?.id || typeof t !== 'function') return template
+  const base = `templateCatalog.items.${template.id}`
+  return {
+    ...template,
+    title: t(`${base}.title`, { defaultValue: template.title }),
+    description: t(`${base}.description`, { defaultValue: template.description }),
+    category: t(`templateCatalog.categories.${template.category}`, {
+      defaultValue: template.category
+    }),
+    fields: (template.fields || []).map((f) => ({
+      ...f,
+      label: t(`${base}.fields.${f.id}`, { defaultValue: f.label })
+    }))
+  }
+}
+
 // ─── PDF GENERATION ─────────────────────────────────────────────────────────────
 
 const BITCOIN_ORANGE = '#F7931A'
@@ -1593,6 +1611,7 @@ const generatePDF = async (template, data) => {
 
 function PreviewModal({ template, data, onClose, onDownloadPDF, onEmail }) {
   const { t, i18n } = useTranslation()
+  const loc = localizeTemplate(template, t)
   const catColor = CATEGORY_COLORS[template.category] || {}
 
   // Prevent body scroll while modal is open
@@ -1651,7 +1670,7 @@ function PreviewModal({ template, data, onClose, onDownloadPDF, onEmail }) {
                   border: `1px solid ${catColor.border}`
                 }}
               >
-                {template.category}
+                {loc.category}
               </span>
             </div>
             <div className="flex items-center gap-2">
@@ -1719,7 +1738,7 @@ function PreviewModal({ template, data, onClose, onDownloadPDF, onEmail }) {
                   className="text-2xl font-black tracking-tight md:text-3xl"
                   style={{ color: '#0f172a' }}
                 >
-                  {template.title.toUpperCase()}
+                  {loc.title.toUpperCase()}
                 </h2>
                 <div className="mt-1.5 flex flex-wrap items-center gap-3">
                   <span
@@ -1730,7 +1749,7 @@ function PreviewModal({ template, data, onClose, onDownloadPDF, onEmail }) {
                       border: `1px solid ${catColor.border}`
                     }}
                   >
-                    {template.category}
+                    {loc.category}
                   </span>
                   <span className="text-xs" style={{ color: '#94a3b8' }}>
                     {new Date().toLocaleDateString(i18n.language, {
@@ -1754,7 +1773,7 @@ function PreviewModal({ template, data, onClose, onDownloadPDF, onEmail }) {
 
             {/* Read-only fields */}
             <div className="flex flex-col gap-6">
-              {template.fields.map((field) => (
+              {loc.fields.map((field) => (
                 <div key={field.id}>
                   <p
                     className="mb-1 text-[10px] font-black tracking-[0.18em] uppercase"
@@ -1816,6 +1835,7 @@ function PreviewModal({ template, data, onClose, onDownloadPDF, onEmail }) {
 
 function TemplateCard({ template, onOpen }) {
   const { t } = useTranslation()
+  const loc = localizeTemplate(template, t)
   const Icon = template.icon
   const catColor = CATEGORY_COLORS[template.category] || {}
 
@@ -1858,17 +1878,17 @@ function TemplateCard({ template, onOpen }) {
           className="text-[11px] font-bold tracking-widest uppercase"
           style={{ color: catColor.text }}
         >
-          {template.category}
+          {loc.category}
         </span>
 
         {/* Title */}
         <h3 className="text-base leading-snug font-bold" style={{ color: 'var(--text-primary)' }}>
-          {template.title}
+          {loc.title}
         </h3>
 
         {/* Description */}
         <p className="flex-1 text-sm leading-relaxed" style={{ color: 'var(--text-muted)' }}>
-          {template.description}
+          {loc.description}
         </p>
       </div>
 
@@ -2028,6 +2048,7 @@ const MAX_HISTORY_SNAPSHOTS = 5
 
 export function TemplateEditor({ template, onBack, demoMode = false }) {
   const { t, i18n } = useTranslation()
+  const loc = localizeTemplate(template, t)
   const navigate = useNavigate()
   const documentRef = useRef(null)
   const [data, setData] = useState(() => ({ ...template.demoData }))
@@ -2100,7 +2121,7 @@ export function TemplateEditor({ template, onBack, demoMode = false }) {
 
   // Dynamic SEO meta tags
   useEffect(() => {
-    document.title = t('notaryEditorPage.documentTitle', { title: template.title })
+    document.title = t('notaryEditorPage.documentTitle', { title: loc.title })
 
     const setMeta = (selector, attrName, attrValue, content) => {
       let el = document.querySelector(selector)
@@ -2112,9 +2133,9 @@ export function TemplateEditor({ template, onBack, demoMode = false }) {
       el.setAttribute('content', content)
     }
 
-    setMeta('meta[name="description"]', 'name', 'description', template.description)
-    setMeta('meta[property="og:title"]', 'property', 'og:title', template.title)
-    setMeta('meta[property="og:description"]', 'property', 'og:description', template.description)
+    setMeta('meta[name="description"]', 'name', 'description', loc.description)
+    setMeta('meta[property="og:title"]', 'property', 'og:title', loc.title)
+    setMeta('meta[property="og:description"]', 'property', 'og:description', loc.description)
 
     return () => {
       document.title = 'Satohash — Sovereign Notary Protocol'
@@ -2162,13 +2183,13 @@ export function TemplateEditor({ template, onBack, demoMode = false }) {
     }
   }, [data, t])
 
-  const completedFields = template.fields.filter((f) => data[f.id]?.trim?.())
-  const progress = Math.round((completedFields.length / template.fields.length) * 100)
+  const completedFields = loc.fields.filter((f) => data[f.id]?.trim?.())
+  const progress = Math.round((completedFields.length / loc.fields.length) * 100)
 
   const handleAnchor = async () => {
     try {
       const hash = await sha256HexFromObject(data)
-      navigate(`/stamp?hash=${hash}&label=${encodeURIComponent(template.title)}`)
+      navigate(`/stamp?hash=${hash}&label=${encodeURIComponent(loc.title)}`)
     } catch {
       toast.error(t('notaryEditorPage.toastStampFail'))
     }
@@ -2180,13 +2201,13 @@ export function TemplateEditor({ template, onBack, demoMode = false }) {
       upsertLocalStamp({
         id: hash,
         hash,
-        filename: template.title,
+        filename: loc.title,
         status: 'pending',
         created_at: new Date().toISOString(),
         source: 'notary-template'
       })
       toast.success(t('notaryEditorPage.toastVaultOk'), {
-        description: t('notaryEditorPage.toastVaultDesc', { title: template.title })
+        description: t('notaryEditorPage.toastVaultDesc', { title: loc.title })
       })
     } catch {
       toast.error(t('notaryEditorPage.toastVaultFail'))
@@ -2195,7 +2216,7 @@ export function TemplateEditor({ template, onBack, demoMode = false }) {
 
   const handlePDF = async () => {
     try {
-      await generatePDF(template, data)
+      await generatePDF(loc, data)
       toast.success(t('notaryEditorPage.toastPdfOk'))
     } catch {
       toast.error(t('notaryEditorPage.toastPdfFail'))
@@ -2205,11 +2226,11 @@ export function TemplateEditor({ template, onBack, demoMode = false }) {
   const handleEmail = async () => {
     const hash = await sha256HexFromObject(data)
     const proofUrl = buildCanonicalProofCardUrl(hash)
-    const subject = t('notaryEditorPage.emailSubject', { title: template.title })
-    const fieldLines = template.fields.map((f) => `${f.label}: ${data[f.id] || '—'}`).join('\n')
+    const subject = t('notaryEditorPage.emailSubject', { title: loc.title })
+    const fieldLines = loc.fields.map((f) => `${f.label}: ${data[f.id] || '—'}`).join('\n')
     const body =
-      `${template.title}\n` +
-      `${t('notaryEditorPage.emailCategory', { category: template.category })}\n` +
+      `${loc.title}\n` +
+      `${t('notaryEditorPage.emailCategory', { category: loc.category })}\n` +
       `${t('notaryEditorPage.emailDate', {
         date: new Date().toLocaleDateString(i18n.language, {
           year: 'numeric',
@@ -2348,7 +2369,7 @@ export function TemplateEditor({ template, onBack, demoMode = false }) {
                     className="text-2xl font-black tracking-tight md:text-3xl"
                     style={{ color: darkDoc ? '#f8fafc' : '#0f172a' }}
                   >
-                    {template.title.toUpperCase()}
+                    {loc.title.toUpperCase()}
                   </h1>
                   <div className="mt-1.5 flex items-center gap-3">
                     <span
@@ -2359,7 +2380,7 @@ export function TemplateEditor({ template, onBack, demoMode = false }) {
                         border: `1px solid ${catColor.border}`
                       }}
                     >
-                      {template.category}
+                      {loc.category}
                     </span>
                     <span className="text-xs" style={{ color: '#94a3b8' }}>
                       {new Date().toLocaleDateString(i18n.language, {
@@ -2383,7 +2404,7 @@ export function TemplateEditor({ template, onBack, demoMode = false }) {
 
               {/* Fields */}
               <div className="flex flex-col gap-6">
-                {template.fields.map((field) => (
+                {loc.fields.map((field) => (
                   <div key={field.id}>
                     <label
                       htmlFor={field.id}
@@ -2576,7 +2597,7 @@ export function TemplateEditor({ template, onBack, demoMode = false }) {
               <p className="mt-2 text-xs" style={{ color: 'var(--text-muted)' }}>
                 {t('notaryEditorPage.fieldsFilled', {
                   filled: completedFields.length,
-                  total: template.fields.length
+                  total: loc.fields.length
                 })}
               </p>
             </div>
@@ -2733,7 +2754,7 @@ export function TemplateEditor({ template, onBack, demoMode = false }) {
                 className="flex max-h-52 flex-col gap-1.5 overflow-y-auto pr-1"
                 style={{ scrollbarWidth: 'thin' }}
               >
-                {template.fields.map((field) => {
+                {loc.fields.map((field) => {
                   const filled = !!data[field.id]?.trim?.()
                   return (
                     <div key={field.id} className="flex items-center gap-2">
