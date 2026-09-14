@@ -1875,7 +1875,11 @@
     "confirmedLineNoBlock": "Bitcoin-confirmed — pakua .ots",
     "otsPending": "Pending .ots — kalenda pekee",
     "otsConfirmed": "Bitcoin-confirmed .ots",
-    "viewProofCard": "Tazama kadi ya uthibitisho"
+    "viewProofCard": "Tazama kadi ya uthibitisho",
+    "notifyTitle": "Imethibitishwa kwenye Bitcoin",
+    "notifyBody": "Risiti yako ya OpenTimestamps iko tayari. Pakua .ots.",
+    "confirmedToast": "Bitcoin imethibitishwa",
+    "confirmedToastHint": "Pakua .ots. Pending imeisha."
   },
   "vaultPage": {
     "securityAge": {

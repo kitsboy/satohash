@@ -1618,7 +1618,11 @@
     "confirmedLineNoBlock": "Bitcoin-confirmed — download .ots",
     "otsPending": "Pending .ots — calendars only",
     "otsConfirmed": "Bitcoin-confirmed .ots",
-    "viewProofCard": "View proof card"
+    "viewProofCard": "View proof card",
+    "notifyTitle": "Confirmed on Bitcoin",
+    "notifyBody": "Your OpenTimestamps receipt is ready. Download the .ots.",
+    "confirmedToast": "Bitcoin confirmed",
+    "confirmedToastHint": "Download the .ots. Pending is over."
   },
   "trustPage": {
     "backSecurity": "← Security overview",

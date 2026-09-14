@@ -1875,7 +1875,11 @@
     "confirmedLineNoBlock": "Bitcoin-confirmed — .ots herunterladen",
     "otsPending": "Pending .ots — nur Kalender",
     "otsConfirmed": "Bitcoin-confirmed .ots",
-    "viewProofCard": "Proof-Karte ansehen"
+    "viewProofCard": "Proof-Karte ansehen",
+    "notifyTitle": "Auf Bitcoin bestätigt",
+    "notifyBody": "Ihr OpenTimestamps-Beleg ist bereit. .ots herunterladen.",
+    "confirmedToast": "Bitcoin bestätigt",
+    "confirmedToastHint": ".ots herunterladen. Pending ist vorbei."
   },
   "vaultPage": {
     "securityAge": {

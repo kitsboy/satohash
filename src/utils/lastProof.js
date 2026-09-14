@@ -11,6 +11,13 @@ export function persistLastProof(proof) {
   } catch {
     /* quota / private mode */
   }
+  try {
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('satohash-proof-updated'))
+    }
+  } catch {
+    /* ignore */
+  }
 }
 
 export function readLastProof() {

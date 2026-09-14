@@ -13,6 +13,7 @@ import LiveNodeChip from '../components/shared/LiveNodeChip'
 import Footer from '../components/layout/Footer'
 import Tooltip from '../components/ui/Tooltip'
 import events, { trackEvent } from '../utils/analytics'
+import { requestConfirmNotifyPermission } from '../utils/notifyConfirmed'
 
 function sha256Hex(value) {
   const hex = String(value || '')
@@ -135,6 +136,15 @@ export default function StampDone() {
       clearInterval(timer)
     }
   }, [proof?.id, proof?.status, proof?.hash, proof?.source])
+
+  useEffect(() => {
+    if (!proof) return undefined
+    const s = String(proof.status || '').toLowerCase()
+    if (s === 'confirmed' || s === 'verified' || s === 'failed' || proof.isConfirmed)
+      return undefined
+    requestConfirmNotifyPermission()
+    return undefined
+  }, [proof?.id, proof?.status])
 
   if (loading) {
     return (

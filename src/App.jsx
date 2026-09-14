@@ -24,6 +24,7 @@ import { isMvpDeferredPath } from './config/mvp'
 import { isMarketingPublicPath, needsMarketingShell } from './utils/publicRoutes'
 import useAppHotkeys from './hooks/useAppHotkeys'
 import { useOfflineSync } from './hooks/useOfflineSync'
+import { usePendingProofWatch } from './hooks/usePendingProofWatch'
 
 import { lazyWithReload } from './utils/lazyWithReload'
 
@@ -161,6 +162,7 @@ const TimestampVerificationHelp = lazyWithReload(() => import('./pages/timestamp
 function AppContent() {
   const location = useLocation()
   useAppHotkeys()
+  usePendingProofWatch()
 
   const reduceMotion =
     typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
