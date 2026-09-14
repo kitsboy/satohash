@@ -6,6 +6,14 @@
 
 ---
 
+## 2026-09-14 — Git paste is not a stamp
+
+Widgets exist in **git** on Katoa, MotoPass, SherpaCarta, TadBuy, Give A Bit. HQ `raw.familyClients` still stays **0** until a stamp **completes** on the **live** host with `X-Satohash-Client`.
+
+Kimi: deploy the family site if the widget is missing in production HTML, then complete **one** stamp. Check `https://api.satohash.io/metrics.json`. Do **not** rebuild Satohash API. Table: `docs/FAMILY-API.md`.
+
+---
+
 ## What Cam saw
 
 “Stamp it” on Sherpa opened something that felt broken. First diagnosis blamed deep-link UX; **real root cause on production SPA** was worse:

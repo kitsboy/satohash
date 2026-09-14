@@ -6,6 +6,12 @@ SPA/docs only. **Do not commit / do not push** this wave unless Cam asks. Pitch 
 
 ---
 
+## 2026-09-14 (Grok M3 — Pending→Confirmed notify + Kimi family push)
+
+SPA: last Pending proof is watched; browser notification + toast when Confirmed; .ots ready. Kimi: **do not rebuild API**. Family widgets are in git — push **live** Katoa / MotoPass / SherpaCarta / TadBuy / Give A Bit to complete one stamp so `familyClients` > 0. SoT `docs/FAMILY-API.md`.
+
+---
+
 ## 2026-09-14 (Grok M3 — finish list: template catalog + leftover chrome)
 
 SPA only. 25 templates: titles, descriptions, field labels in en/es/fr/de/pt/sw/zh. Demo party names stay English. Offers chrome staged (nav still deferred). Lifecycle / proof explorer / ZK demo chrome. Kimi: **do not rebuild API**.

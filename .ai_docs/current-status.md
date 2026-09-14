@@ -1,7 +1,7 @@
 # Current Status — Satohash
 
 **Version:** **5.0.0-ELITE** (Build 331+)  
-**Last Updated:** 2026-09-14 (manuals/pitch/exec match live product — Grok SPA; API still `5ec7756`)  
+**Last Updated:** 2026-09-14 (Pending→Confirmed notify; Kimi family widget push — Grok SPA; API still `5ec7756`)  
 **Frontend:** https://satohash.io · www · CF Pages project **`satohash`** — Grok lane, `assetsDir: 'b'`  
 **API:** https://api.satohash.io ✅ LIVE (THOR Docker). Confirm SHA with `GET /health` (`gitSha`). **Live now: `5ec7756`** — Kimi rebuilt; keep-alive 65s/66s/120s. `Cache-Control: no-store`, Caddy OK, paywall off, ~316 stamps. Do **not** rebuild again unless HEAD moves.  
 **Metrics SoT:** `https://api.satohash.io/metrics.json`  
@@ -81,10 +81,13 @@
 - [x] PITCH-DECK honesty slides: camera QR, Pending vs Confirmed, family widget POST — no fake traction
 - [x] Light-touch: LAWYER-ONEPAGER, INVESTOR-ONEPAGER, README `/p/{hash}` QR
 - [x] I18N / roadmap one-liners; `docs:sync`
+- [x] Pending→Confirmed: browser notify + toast (last proof watch)
+- [x] Kimi handoff: live family widgets must complete one stamp (`docs/FAMILY-API.md`)
 - [ ] Offers stay deferred
 - [ ] Snapper stays scaffold — do not sell as judiciary-ready
 - [ ] Cam still: pin `/watch` on **`@give_bit`**; iPhone `/p/` unfurl
 - [ ] API: **do not rebuild** for copy
+- [ ] Kimi: family live stamps (katoa / motopass / sherpacarta / tadbuy / giveabit > 0)
 
 ## This session (2026-09-14 — docs truth + tool-belt + About/Pitch/Network)
 

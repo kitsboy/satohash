@@ -1,3 +1,24 @@
+## Latest Session Summary (Grok M3, 2026-09-14 — confirm notify + family push)
+
+**Lane:** SPA. **Kimi: do not rebuild the API.**
+
+SPA now asks for a browser notification and toasts when the last Pending stamp becomes **Confirmed** (poll `/api/stamps/:hash/by-hash`). Bookmark `/p/{hash}`.
+
+**Kimi DO THIS — family distribution (not Satohash API):**
+
+Widgets are already in **git** on Katoa, MotoPass, SherpaCarta, TadBuy, Give A Bit. HQ `familyClients` only counts **completed** stamps. Until someone stamps from the **live** site, we have no distribution story.
+
+For each: https://katoa.org (`katoa`) · https://motopass.giveabit.io (`motopass`) · https://sherpacarta.org (`sherpacarta`) · https://tadbuy.giveabit.io (`tadbuy`) · https://giveabit.io (`giveabit`)
+
+1. Confirm production HTML has `data-satohash-stamp` + `https://satohash.io/widgets/stamp.js` (no `data-mode="spa"`).
+2. If missing on live, **deploy that family site**.
+3. Complete **one** stamp from the live widget.
+4. `curl -sS https://api.satohash.io/metrics.json` → `raw.familyClients` for that id **> 0**.
+
+Full table: `docs/FAMILY-API.md` § Kimi — live family stamps. Paste: `docs/MASTER-BRAIN-INGEST.md`. Vault = THOR Obsidian, not M4. Pages = Grok.
+
+---
+
 ## Latest Session Summary (Grok M3, 2026-09-14 — manuals / pitch / exec)
 
 **Lane:** SPA/docs only. **Kimi: ingest THOR. Do not rebuild the API. Pages = Grok.**

@@ -49,6 +49,33 @@ Swap `data-client` for the exact product id: `katoa` · `motopass` · `sherpacar
 
 Do **not** invent new API paths. Stamp remains `POST /api/stamp`.
 
+## Kimi — live family stamps (do this)
+
+Widgets are **already in git** on Katoa, MotoPass, SherpaCarta, TadBuy, and Give A Bit. Git paste is **not** HQ attribution. `raw.familyClients` only increments when a stamp **completes** with that `X-Satohash-Client`.
+
+**Push each live site to finish one stamp.** Do not rebuild the Satohash API for this. Pages = Grok. Widget default is API POST (no `data-mode="spa"`).
+
+| Client id | Live site | Git widget |
+|-----------|-----------|------------|
+| `katoa` | https://katoa.org | `SatohashStampWidget` `data-client="katoa"` |
+| `motopass` | https://motopass.giveabit.io | `data-client="motopass"` |
+| `sherpacarta` | https://sherpacarta.org | `data-client="sherpacarta"` |
+| `tadbuy` | https://tadbuy.giveabit.io | `data-client="tadbuy"` |
+| `giveabit` | https://giveabit.io | `data-client="giveabit"` |
+
+On each production page:
+
+1. View-source / DevTools: `data-satohash-stamp` + `https://satohash.io/widgets/stamp.js` is present.
+2. Do **not** ship `data-mode="spa"` unless you intend the SPA tab. Default completes on-site.
+3. Stamp **one** small file (empty-file hash is fine). Open proof → `https://satohash.io/p/<hash>`.
+4. Check HQ:
+
+```bash
+curl -sS https://api.satohash.io/metrics.json | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('raw',{}).get('familyClients'))"
+```
+
+**Done when** that client id is **> 0**. Until then we have no family distribution story. If the widget is in git but missing on the live host, **deploy that family site** (their Pages/host — not Satohash API).
+
 **Proof card / camera QR:** after a stamp, share `https://satohash.io/p/<hash>`. Phone cameras cannot read `.ots`; they open that URL (QR on PDFs and email). **Pending ≠ Confirmed** — calendars have the hash vs a Bitcoin block (~60 minutes).
 
 ## Architecture

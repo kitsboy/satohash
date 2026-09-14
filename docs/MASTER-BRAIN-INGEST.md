@@ -6,6 +6,35 @@
 
 ---
 
+## Paste block (2026-09-14 — family widgets must complete a stamp)
+
+```markdown
+### Satohash 2026-09-14 family distribution (Kimi DO THIS)
+
+Grok SPA: Pending→Confirmed browser notify + toast. Do **not** rebuild Satohash API.
+
+Widgets are in git on Katoa / MotoPass / SherpaCarta / TadBuy / Give A Bit.
+HQ familyClients only counts **completed** stamps. Git paste ≠ live attribution.
+
+Kimi: on each LIVE site, confirm widget HTML, deploy the family host if missing, complete ONE stamp, then:
+
+curl -sS https://api.satohash.io/metrics.json
+
+Done when raw.familyClients shows katoa, motopass, sherpacarta, tadbuy, giveabit > 0.
+
+Live:
+- https://katoa.org data-client=katoa
+- https://motopass.giveabit.io data-client=motopass
+- https://sherpacarta.org data-client=sherpacarta
+- https://tadbuy.giveabit.io data-client=tadbuy
+- https://giveabit.io data-client=giveabit
+
+No data-mode=spa. File never uploaded. POST /api/stamp with X-Satohash-Client.
+SoT: docs/FAMILY-API.md. Vault = THOR, not M4. Pages = Grok.
+```
+
+---
+
 ## Paste block (2026-09-14 — manuals match live product)
 
 ```markdown

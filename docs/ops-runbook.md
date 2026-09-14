@@ -191,6 +191,8 @@ Self-hosting Sentry on THOR is **not** recommended (kafka + clickhouse ~8GB RAM)
 
 ## Kimi — API image rebuild (**DONE 2026-08-31**, Grok on THOR)
 
+**Family widgets (2026-09-14):** do **not** rebuild Satohash API for attribution. Widgets are in family git. Push **live** Katoa / MotoPass / SherpaCarta / TadBuy / Give A Bit to complete one stamp so `raw.familyClients` > 0. SoT: `docs/FAMILY-API.md`.
+
 Live SHA is **`GET https://api.satohash.io/health` → `gitSha`** (do not trust this paragraph’s hash). Last Grok check 2026-09-08: `7cc0932`, image ~818MB, `Cache-Control: no-store`, Caddy `OK  caddy reload --config /etc/caddy/Caddyfile`. `REQUIRE_LIGHTNING=false`. Metrics still have `raw.last10` + `raw.familyClients`. Recipe: `cd /root/satohash && git fetch origin && git reset --hard origin/main && GIT_SHA=$(git rev-parse --short HEAD) bash scripts/vps-deploy-api.sh`. Do **not** change `/api/*` paths.
 
 Confirm (should already pass):
