@@ -1,3 +1,13 @@
+## Latest Session Summary (Grok M3, 2026-09-14)
+
+**Lane:** SPA/docs only. **Kimi: ingest THOR Obsidian. Do not rebuild the API. Do not Tailscale-sync to M4. Pages = Grok.**
+
+Docs truth pass + tool-belt (CLI shim, tadbuy widget, developer terminal path) + i18n About/Pitch/Network. Stamp widget family clients: Katoa, MotoPass, SherpaCarta, Give A Bit, TadBuy (not OpenStrata). Slice B done: donate, proof-pack, about, pitch, network. Next: Explorer → Atlas → remaining public. Catalog debt still open. Do not mark localization complete.
+
+Cam still: pin `/watch` on `@give_bit`; iPhone `/p/` unfurl.
+
+---
+
 ## Latest Session Summary (from 2026-09-13 goodbye)
 
 **Chat Topic:** Proof-card polish, then start finishing all seven languages.

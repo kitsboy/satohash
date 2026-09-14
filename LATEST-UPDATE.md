@@ -1,5 +1,5 @@
-# satohash — Last Updated 2026-09-13 by Grok (M3)
+# satohash — Last Updated 2026-09-14 by Grok (M3)
 
-**Brief:** Session closed. Next `/whatsup` → `/about` i18n. SoT `docs/I18N.md`. API still `5ec7756`.
+**Brief:** Docs truth + About/Pitch/Network i18n + CLI/widget belt. Next: Explorer i18n or Cam pin `/watch`.
 
-Pickup: `.ai_docs/current-status.md` · `docs/handoff-log.md` · `docs/archive/SESSION-SUMMARY-2026-09-13-goodbye.md`
+Pickup: `.ai_docs/current-status.md` · `docs/handoff-log.md`

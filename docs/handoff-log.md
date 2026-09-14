@@ -1,3 +1,11 @@
+## 2026-09-14 (Grok M3 — docs truth + About/Pitch/Network i18n)
+
+SPA/docs only. Docs truth pass + tool-belt (CLI shim, tadbuy widget, developer terminal path) + i18n About/Pitch/Network. Stamp widget copy names Katoa, MotoPass, SherpaCarta, Give A Bit, TadBuy — not OpenStrata. Slice B done: donate, proof-pack, about, pitch, network. Next: Explorer → Atlas (label as demos if they stay public). Catalog debt still open. Localization **not** complete.
+
+**Kimi:** ingest THOR Obsidian; **do not rebuild API**; do not Tailscale-sync to M4; Pages = Grok.
+
+---
+
 ## 2026-09-13 (Grok M3 — goodbye)
 
 Session closed. Summary: `docs/archive/SESSION-SUMMARY-2026-09-13-goodbye.md`. Next chat `/whatsup` → code `/about` in all 7 locales, commit+push that page. Kimi: ingest on **THOR** Obsidian; **do not rebuild API**; do not Tailscale-sync to M4.
