@@ -1,16 +1,34 @@
-# Satohash v5.0.0-ELITE
+# Satohash 5.0.0-ELITE
 
 [![Version](https://img.shields.io/badge/version-5.0.0--ELITE-indigo.svg)](https://github.com/kitsboy/satohash)
 [![License](https://img.shields.io/badge/license-MIT-black.svg)](LICENSE)
 [![Protocol](https://img.shields.io/badge/protocol-OpenTimestamps-orange.svg)](https://opentimestamps.org)
 [![Parent Studio](https://img.shields.io/badge/studio-Give_A_Bit-orange.svg)](https://giveabit.io)
 
-**Sovereign Proof-of-Existence Layer & Cryptographic Settlement Mesh.** Satohash is a high-fidelity, zero-knowledge platform for verifiable document provenance, multi-party contract signatures, forensic web capture, and automated cryptographic evidence gathering — anchored immutably to the Bitcoin blockchain via OpenTimestamps. Built as Free and Open Source (F.O.S.S.) Bitcoin software by [Give A Bit](https://giveabit.io).
+> **Prove a file existed. Never show the file. Bitcoin keeps the receipt forever.**
 
-> **Agents:** start at **[AGENTS.md](AGENTS.md)** · status **[.ai_docs/current-status.md](.ai_docs/current-status.md)** · handoff **[docs/handoff-log.md](docs/handoff-log.md)** · MASTER-BRAIN paste **[docs/MASTER-BRAIN-INGEST.md](docs/MASTER-BRAIN-INGEST.md)**.  
-> **Live:** https://satohash.io · API https://api.satohash.io · free stamps · `REQUIRE_LIGHTNING=false`.
+Hash a file on your device. Stamp the fingerprint. Download a portable `.ots` receipt. Bitcoin keeps it.
 
-### 📖 Documentation & Pitch
+**Live loop:** [satohash.io/stamp](https://satohash.io/stamp) → [verify](https://satohash.io/verify) → share [`/p/<hash>`](https://satohash.io/p/). No account. Free stamps. The file never leaves the device.
+
+**API:** [https://api.satohash.io](https://api.satohash.io) · **Watch:** [satohash.io/watch](https://satohash.io/watch) (~84s)
+
+> **Agents:** start at **[AGENTS.md](AGENTS.md)** · status **[.ai_docs/current-status.md](.ai_docs/current-status.md)** · handoff **[docs/handoff-log.md](docs/handoff-log.md)**.
+
+### What is live vs later
+
+| Live today | Later (cathedral) |
+|------------|-------------------|
+| Stamp, download `.ots`, verify, share `/p/<hash>` | Private-key authorship (proves *who*, not only *when*) |
+| Free stamps — paywall off | Lightning paywall / BOLT-12 / L402 |
+| File hashed on-device; only the SHA-256 leaves | Multi-party contracts |
+| Production API at `api.satohash.io` + own `bitcoind` at tip | Snapper Chrome extension (store-shipped) |
+| Family widget + CLI | Native store apps |
+| Explainer at `/watch` | ZK redaction as a product |
+
+Today Satohash proves **when** a file existed, not **who** made it. Confirmation waits for the next Bitcoin block (~60 minutes). Bitcoin-only — no other chain.
+
+### Documentation & pitch
 
 | Resource | Path |
 |----------|------|
@@ -19,109 +37,106 @@
 | **Live pitch deck** | [/pitch](https://satohash.io/pitch) |
 | Executive summary (md) | [docs/marketing/EXECUTIVE-SUMMARY.md](docs/marketing/EXECUTIVE-SUMMARY.md) |
 | Product pitch | [docs/marketing/PITCH.md](docs/marketing/PITCH.md) |
+| Brand voice | [docs/marketing/BRAND-VOICE.md](docs/marketing/BRAND-VOICE.md) |
+| Mission & scope | [docs/MISSION-SCOPE-v3.md](docs/MISSION-SCOPE-v3.md) |
 | Architecture | [docs/architecture.md](docs/architecture.md) |
-| Deploy (canonical) | [docs/deploy.md](docs/deploy.md) |
-| Explainer music/VO | [docs/EXPLAINER-MUSIC-AND-VO.md](docs/EXPLAINER-MUSIC-AND-VO.md) |
+| Deploy | [docs/deploy.md](docs/deploy.md) |
 | Quickstart | [docs/QUICKSTART.md](docs/QUICKSTART.md) |
+| Family widget / API | [docs/FAMILY-API.md](docs/FAMILY-API.md) |
 
 ---
 
-## 🏛 The Elite Standard
-Satohash **5.0.0-ELITE** is the **Sovereign Settlement Layer** — a complete four-plane system (Proof / Identity / Settlement / Atlas) for independently verifiable Bitcoin-anchored proof of existence. Designed by [Give A Bit](https://giveabit.io) for law firms, compliance teams, creators, journalists, AI pipelines, and autonomous agents who need absolute, portable, independently verifiable truth.
+## How it works
 
-### 🚀 Core Protocol Features (Current)
-- **Bitcoin Anchoring via OpenTimestamps (OTS)** — SHA-256 client-side hash → three public calendars → permanent Bitcoin block commitment. Portable `.ots` proofs.
-- **BOLT-12 Lightning Settlement** — Native reusable offers + L402 paywalls for volume/API use (no credit cards).
-- **Forensic Web Capture ("Snapper")** — One-click judiciary-ready web evidence with browser fingerprint + immediate OTS stamp.
-- **Nostr Cryptographic Identity (NIP-05 / NIP-07)** — Passwordless signer provenance for multi-party contracts and audit trails.
-- **Multi-Party Orchestration** — Co-signing flows with drawn seals + typed signatures, all anchored together.
-- **Verification Shield + 3D Merkle** — Real-time cryptographic verification with beautiful path visualization.
-- **ZK Redaction** — Redact while keeping the original Bitcoin anchor valid.
-- **Courtroom PDF Exports** — Custom watermarks, metadata, attestation blocks, injected proof via PdfCustomizer.
-- **Git + Batch + Offline** — Notarize entire repos or directories; work offline and auto-sync later.
-- **Live Mempool & Atlas** — Real-time fees, block height, chain intelligence always in the UI.
-- **Zero-Knowledge by Design** — Documents never leave the device. Only hashes are ever transmitted.
+1. Your browser (or the CLI) computes SHA-256 locally. The original bytes never upload.
+2. Only the 64-character hash is sent to the API, which submits it to public OpenTimestamps calendars.
+3. Calendars aggregate hashes and commit a Merkle root to Bitcoin.
+4. After ~60 minutes a block seals the receipt. Download the `.ots`. Share `https://satohash.io/p/<hash>`.
 
-See the full feature set and positioning in [docs/EXECUTIVE_SUMMARY.md](docs/EXECUTIVE_SUMMARY.md) and [docs/MARKETING.md](docs/MARKETING.md).
+Verify at [satohash.io/verify](https://satohash.io/verify) or with open OpenTimestamps tools. A hash of a short, guessable input can theoretically be reverse-matched — fine for real documents, not a privacy shield for trivial files.
 
-## 🛠 Technical Architecture
+---
 
-**Local-first + privacy-first.** Client-side hashing (Web Crypto) before any network call. Server only ever sees hashes + metadata.
+## Use it
 
-- **Frontend**: React 18 + Vite 6 + Tailwind CSS 4 + Framer Motion (Institutional Noir)
-- **Shell**: `AppShellNoir` (desktop left rail, top signal bar, mobile nav, ⌘K palette)
-- **State/Routing**: React Router 6 + lightweight Zustand + localStorage/IndexedDB
-- **Cryptography & Anchoring**: OpenTimestamps + bitcoinjs-lib
-- **Identity**: Nostr tools (NIP-07 browser + NIP-05)
-- **Settlement**: BOLT-12 + L402
-- **Backend**: Express 5 + Socket.io + better-sqlite3 + Knex (migrations in `server/migrations/`)
-- **Observability**: Sentry (Node + React), Pino, Prometheus
-- **Real-time**: Socket.io events for stamp lifecycle
-- **Build / Deploy**: `npm run build` → `dist/` → Cloudflare Pages (`./deploy.sh`). Express is **local dev only**.
+**Browser** — [https://satohash.io/stamp](https://satohash.io/stamp)
 
-Full operational details (endpoints, env vars, known token inconsistencies, daemon behavior) live in [CLAUDE.md](CLAUDE.md).
+**CLI** — from this repo (`packages/satohash-cli`; not `bin/satohash.js`, which is stale):
 
-## 📂 Project Structure (Key Paths)
-
-```
-├── src/
-│   ├── components/     # High-fidelity "Institutional Noir" UI (AppShellNoir, Bolt12..., NostrSigner, ZKRedaction, PdfCustomizer, Merkle*, etc.)
-│   ├── pages/          # All major surfaces (Stamp, Verify, Vault, Contracts, Snapper, Atlas, Developer, Identity, onboarding, legal, etc.)
-│   ├── utils/          # crypto, opentimestamps, merkle, pdfGenerator, mempool, nwc, storage, etc.
-│   ├── hooks/          # useSocket, useOfflineSync, useNWC...
-│   └── i18n/           # en es fr de pt sw zh — finish remaining pages: docs/I18N.md
-├── server/
-│   ├── index.js        # Express + Socket.io + routes + daemons
-│   ├── db.js + migrations/   # SQLite + Knex (multi-tenancy, webhooks, referrals, etc.)
-│   ├── upgrade-daemon.js, nostr.js, mesh.js, pdf-injector.js, git.js, collaboration.js...
-│   └── routes/         # lightning, anchor, nft
-├── extension/satohash-snapper/   # Browser "Snap & Stamp" forensic capture tool (MV3)
-├── public/             # Static assets + openapi.json + pre-generated PDFs
-├── docs/               # Business handoff docs + technical references (see DOCS_INDEX.md)
-├── bin/satohash.js     # Starter CLI
-└── tests/              # Vitest + Playwright E2E
+```bash
+node packages/satohash-cli/bin/satohash.js status
+node packages/satohash-cli/bin/satohash.js stamp ./file.pdf
 ```
 
-See [docs/DOCS_INDEX.md](docs/DOCS_INDEX.md) for the complete documentation map and [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for the synthesized four-plane technical view.
+`SATOHASH_API_URL` defaults to `https://api.satohash.io`. Every request sends `X-Satohash-Client: cli`. See [packages/satohash-cli/README.md](packages/satohash-cli/README.md).
 
-## 🏗 Common Commands
+**Family widget** — Katoa, MotoPass, Sherpa, Give A Bit, TadBuy. Hashes on-device, then opens `/stamp?hash=…&ref=…`:
+
+```html
+<div data-satohash-stamp data-client="katoa" data-theme="jewel"></div>
+<script src="https://satohash.io/widgets/stamp.js" async></script>
+```
+
+Source: [`public/widgets/stamp.js`](public/widgets/stamp.js). Contract: [docs/FAMILY-API.md](docs/FAMILY-API.md).
+
+---
+
+## Technical architecture
+
+Local-first hashing. The server only ever sees hashes and metadata.
+
+- **SPA:** React 18 + Vite 6 on Cloudflare Pages (`satohash.io` / `www` / `pages.dev`). Bundles at `/b/*`.
+- **API:** Express 5 on THOR Docker at **`https://api.satohash.io`** (production). Local `npm run dev` is for development; the live SPA always calls the public API.
+- **Proofs:** OpenTimestamps → Bitcoin. Own pruned `bitcoind` at tip.
+- **Hashing:** Web Crypto in the browser; Node crypto in the CLI.
+- **Identity (optional):** Nostr NIP-05 / NIP-07 — public keys only. `nsec` never in git.
+- **Metrics:** `https://api.satohash.io/metrics.json` (SPA `/metrics.json` is a Cloudflare Function proxy).
+
+Full map: [docs/architecture.md](docs/architecture.md). Deploy: [docs/deploy.md](docs/deploy.md).
+
+---
+
+## Project structure (key paths)
+
+```
+├── src/                  # SPA (stamp, verify, /p/<hash>, network, watch, …)
+├── server/               # Express API (live at api.satohash.io)
+├── packages/satohash-cli # CLI — default API https://api.satohash.io
+├── public/widgets/       # Family stamp widget (stamp.js)
+├── public/media/video/   # Explainer cuts
+├── functions/            # Cloudflare Pages Functions (proof card, metrics proxy)
+├── extension/satohash-snapper/  # Unpacked MV3 scaffold — not store-shipped
+├── docs/                 # Humans: architecture.md, deploy.md, marketing/, diligence/
+├── AGENTS.md             # Agent entry
+└── tests/                # Vitest + Playwright
+```
+
+---
+
+## Common commands
 
 ```bash
 npm install                 # Install
-npm run dev                 # Concurrent dev (Vite 3000 + Express 3001)
+npm run dev                 # Local Vite (:3000) + Express (:3001)
 npm run build               # Production build to dist/
-npm run production          # Build + serve locally (Express + dist)
-npm run server              # Backend only (local dev)
-./deploy.sh                 # Deploy static site to Cloudflare Pages
-npm run start:pm2           # PM2 local/self-host (optional)
 npm test                    # Vitest
 npm run test:e2e            # Playwright
 npm run lint && npm run format
 ```
 
-Frontend dev server: **3000**  
-Backend API + Swagger: **3001**
+Live site: **https://satohash.io** (Cloudflare Pages). Live API: **https://api.satohash.io**.
 
-**CLI** — from the repo, no extra install: `node packages/satohash-cli/bin/satohash.js status|stamp|verify|watch` (or `npx --prefix packages/satohash-cli satohash`). Always sends `X-Satohash-Client: cli`. Env: `SATOHASH_API_URL`, `SATOHASH_KEY`. See [packages/satohash-cli/README.md](packages/satohash-cli/README.md).
-
-Full setup, env, and troubleshooting: [docs/QUICKSTART.md](docs/QUICKSTART.md)
-
-## 📜 Legal & Compliance
-
-Satohash provides cryptographic evidence and specialized tooling. It does **not** provide legal advice. The protocol is engineered to supply non-repudiable, mathematically verifiable timestamps that can help satisfy requirements under the **ESIGN Act (US)**, **UETA (US)**, and **eIDAS (EU)** "best evidence" standards when properly used.
+Full setup: [docs/QUICKSTART.md](docs/QUICKSTART.md)
 
 ---
-© 2026 Satahash Institutional Division. All Rights Reserved.
 
+## Legal & compliance
 
-## Diligence / partner pack
-Full disclosure for technical & financial partners: **[docs/diligence/](./docs/diligence/)**  
-Portfolio map: [Family of 8](https://giveabit.io/family)
+Satohash provides cryptographic evidence of a **date** — not legal advice, and not proof of authorship. Frameworks such as the US ESIGN Act and UETA, and the EU's eIDAS regulation, recognize timestamped electronic records as admissible evidence. Admissibility is not the same as a court accepting a specific legal conclusion. A Satohash proof is independently checkable evidence of *when*; a court still weighs it in context.
 
+---
 
-**Uniformity note (added 2026-08-03 via Hermes/Kimi):** 
-Read AGENTS.md first. Handoff protocol: cat docs/KIMI-HANDOFF.md (latest) + KIMI-GROK-HANDOFF.md or equiv. 
-Plausible: https://github.com/plausible/analytics (light self-evolving analytics). 
-Full structure: ~/MASTER-BRAIN/01-Architecture/STRUCTURE-MAP.md + PROJECT-TEMPLATE.md. 
-Kimi vault: **THOR VPS Obsidian / MASTER-BRAIN** (not M4). Code: M3 → git push. Ops: Kimi on THOR.
+© 2026 Give A Bit. MIT License — see [LICENSE](LICENSE).
 
+**Diligence / partner pack:** [docs/diligence/](docs/diligence/)  
+Portfolio: [Family of 8](https://giveabit.io/family)

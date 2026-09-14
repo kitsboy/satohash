@@ -1,59 +1,63 @@
-# Satohash Snapper — Browser Extension (Forensic Web Capture)
+# Satohash Snapper — Browser Extension (scaffold)
 
-The "Snapper" lets users capture a screenshot (or page snapshot) of any public web URL together with rich browser fingerprint metadata, then immediately anchor a cryptographic hash of that evidence to the Bitcoin blockchain via Satohash.
+Unpacked **Manifest V3** scaffold for capturing a public page and hashing the evidence package for a Satohash stamp.
 
-This produces **judiciary-ready web evidence** — a timestamped, independently verifiable record that a particular webpage looked a certain way at a specific moment.
+This is **not** store-shipped. It is **not** judiciary-ready. Load it unpacked for development only. Do not pitch it as a forensic product.
 
-## Current Files
-- `manifest.json` — Chrome/Edge extension manifest (MV3)
-- `popup.html` + `styles/popup.css` — Simple capture UI
-- `scripts/background.js` + `popup.js` — Capture + hash + POST to `/api/capture/snapper`
+The live product loop is the SPA: [satohash.io/stamp](https://satohash.io/stamp) → verify → `/p/<hash>`. File hashing already happens on-device there. This folder is cathedral work.
 
-## How It Works (high level)
-1. User opens the extension on any tab.
-2. Chooses "Capture" (visible area or full page via content script if implemented).
-3. Extension collects:
-   - Screenshot (PNG or JPEG data URL / blob)
-   - URL, title, timestamp
-   - Basic navigator / screen fingerprint (user agent, languages, etc.)
-   - Optional additional headers or DOM signals
-4. Hashes the canonical evidence package client-side (or sends minimal metadata + hash).
-5. POSTs to the Satohash backend snapper endpoint (authenticated via `SNAPPER_KEY` or user session).
-6. Returns a normal Satohash stamp ID + `.ots` proof.
+## Current files
 
-The resulting proof can be exported as PDF with injected judicial metadata (see main app `PdfCustomizer`).
+- `manifest.json` — Chrome/Edge MV3 (host permissions still list localhost / a stale API host — treat as unfinished)
+- `popup.html` + `styles/popup.css` — Capture UI
+- `scripts/background.js` + `popup.js` — Capture + hash + POST toward a snapper endpoint
 
-## Integration Notes
-- Backend handler lives in `server/` (search for `snapper` or `/api/capture/snapper`).
-- Requires the `SNAPPER_KEY` env var on the server for extension auth in some configurations.
-- Designed for **public pages only** — do not use on authenticated or private content without legal basis.
+Icons may be missing from this tree; the manifest references `icons/`. Expect a load warning until those exist.
 
-## Future Enhancements (roadmap ideas)
-- Full-page capture with scrolling
-- PDF export directly from extension
-- Nostr-signed capture attestations
-- Configurable metadata fields for different legal jurisdictions
-- Manifest V3 service worker hardening + permissions review
+## What it is trying to do
+
+1. User opens the unpacked extension on a tab.
+2. Chooses capture (visible area; full-page scroll is not built).
+3. Collects a screenshot plus URL, title, timestamp, and basic navigator/screen fields.
+4. Hashes the evidence package (or a hash of it) on-device.
+5. POSTs to a Satohash snapper route if the API and auth (`SNAPPER_KEY` / session) exist.
+
+That last step is scaffold, not a guaranteed live contract. Search `server/` for `snapper` / `/api/capture/snapper` before assuming the endpoint is on. Do not invent new `/api/*` paths.
+
+Public pages only. Do not use this on authenticated or private content without a legal basis.
 
 ## Development
+
 Load unpacked in Chrome:
+
 1. `chrome://extensions/`
 2. Enable Developer mode
-3. "Load unpacked" → point at this `extension/satohash-snapper/` folder
+3. “Load unpacked” → this `extension/satohash-snapper/` folder
 
-The popup currently talks to the local or production Satohash API depending on build config.
+Popup target (local vs `https://api.satohash.io`) depends on whatever is hardcoded in the scripts. Confirm before testing against production. Free stamps on the live API; do not flip `REQUIRE_LIGHTNING`.
 
-## Relationship to Main App
-The Snapper is a first-class "Web Capture" surface inside the Satohash product (route `/snapper` or similar in the SPA also exists for non-extension users). The extension gives power users one-click access from anywhere.
+## Honest status
 
-See main docs:
-- [../docs/AI_INTEGRATION.md](../docs/AI_INTEGRATION.md) (for API patterns)
-- Root [../CLAUDE.md](../CLAUDE.md)
-- [../docs/EXECUTIVE_SUMMARY.md](../docs/EXECUTIVE_SUMMARY.md) (mentions Web Capture / Snap & Stamp)
+| Claim | Status |
+|-------|--------|
+| Unpacked MV3 scaffold | Yes |
+| Chrome Web Store / Edge Add-ons | No |
+| Judiciary-ready / chain-of-custody product | No |
+| Full-page capture, PDF export from the extension, Nostr-signed attestations | Not built |
+
+Native store apps are also later (`docs/STORE-APPS.md`). Authorship (proves *who*) is the next product chapter — this extension does not provide it.
+
+## Docs
+
+- Agents: [../../AGENTS.md](../../AGENTS.md)
+- Architecture: [../../docs/architecture.md](../../docs/architecture.md)
+- Exec summary: [../../docs/marketing/EXECUTIVE-SUMMARY.md](../../docs/marketing/EXECUTIVE-SUMMARY.md)
+- Family stamp widget (live, on-site): [`public/widgets/stamp.js`](../../public/widgets/stamp.js)
 
 ## License
-Part of the Satohash project — MIT (see root LICENSE).
+
+Part of the Satohash project — MIT (see root [LICENSE](../../LICENSE)).
 
 ---
 
-Built by Give A Bit for forensic-grade, Bitcoin-anchored web evidence.
+Built by Give A Bit. Bitcoin-anchored proof of *when* a file existed — the extension is not that product yet.

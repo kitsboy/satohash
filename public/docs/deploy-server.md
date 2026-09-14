@@ -1,8 +1,7 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 376) · **Updated:** 2026-09-14
+> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 367) · **Updated:** 2026-09-14
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
-<<<<<<< Updated upstream
 # Satohash API Server Deploy Guide
 
 > **Status:** 🟢 **Packaged for VPS** — `docker-compose.vps.yml` + `scripts/vps-deploy-api.sh` + family free tier (`FAMILY_API_KEYS`). Public DNS/`api.satohash.io` still needs host bring-up by Kimi/VPS.  

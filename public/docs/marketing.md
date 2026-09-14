@@ -1,8 +1,7 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 376) · **Updated:** 2026-09-14
+> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 367) · **Updated:** 2026-09-14
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
-<<<<<<< Updated upstream
 # Satohash — Marketing Strategy
 
 **Platform:** https://satohash.io  
