@@ -783,12 +783,12 @@
     "nip05Cta": "Configurer l'identité NIP-05",
     "stampWidget": {
       "title": "Stamp on Satohash",
-      "body": "Les clients de la famille hachent le fichier sur l’appareil — il ne quitte pas le navigateur. Le tampon ouvre /stamp?hash=&ref= pour que le SPA envoie X-Satohash-Client depuis data-client. Katoa, MotoPass, SherpaCarta, Give A Bit et TadBuy utilisent le même widget.",
+      "body": "Les clients de la famille hachent le fichier sur l’appareil — il ne quitte pas le navigateur — puis envoient un POST à api.satohash.io/api/stamp avec X-Satohash-Client depuis data-client pour que le tampon se termine sur le site de la famille. Utilisez data-mode=spa pour ouvrir /stamp?hash=&ref= à la place. Katoa, MotoPass, SherpaCarta, Give A Bit et TadBuy utilisent le même widget.",
       "embedLabel": "Widget de stamp"
     },
     "family": {
       "title": "Sites de la famille",
-      "body": "Un collage par identifiant de produit. Le widget calcule le SHA-256 du fichier sur l’appareil — le fichier ne quitte pas le navigateur. Le tampon ouvre /stamp?hash=&ref= pour que le SPA envoie X-Satohash-Client depuis data-client. HQ metrics.json familyClients ne compte que les tampons réellement terminés avec cet id. Katoa, MotoPass, SherpaCarta, Give A Bit et TadBuy ont déjà le collage ; les compteurs restent à zéro tant qu’un site de la famille n’a pas réellement tamponné."
+      "body": "Un collage par identifiant de produit. Le widget calcule le SHA-256 du fichier sur l’appareil — le fichier ne quitte pas le navigateur — puis envoie un POST à api.satohash.io/api/stamp avec X-Satohash-Client depuis data-client pour que le tampon se termine sur le site de la famille. Utilisez data-mode=spa pour ouvrir /stamp?hash=&ref= à la place. HQ metrics.json familyClients ne compte que les tampons réellement terminés avec cet id. Katoa, MotoPass, SherpaCarta, Give A Bit et TadBuy ont déjà le collage ; les compteurs restent à zéro tant qu’un site de la famille n’a pas réellement tamponné."
     }
   },
   "docsPage": {
@@ -1867,7 +1867,15 @@
     "viewMempool": "Voir sur mempool.space",
     "blockHeightMissing": "Hauteur de bloc pas encore enregistrée — pending ≠ le problème ; la confirmation est enregistrée.",
     "pendingTipTitle": "Pending n’est pas confirmed",
-    "pendingTipBody": "L’empreinte est chez les calendriers OpenTimestamps. Elle N’EST PAS dans un bloc Bitcoin tant que le statut n’est pas confirmed. Pending ≠ confirmed."
+    "pendingTipBody": "L’empreinte est chez les calendriers OpenTimestamps. Elle N’EST PAS dans un bloc Bitcoin tant que le statut n’est pas confirmed. Pending ≠ confirmed.",
+    "statusPending": "Pending",
+    "statusConfirmed": "Confirmed",
+    "pendingLine": "Les calendriers OpenTimestamps l’ont. Pas encore dans un bloc Bitcoin — généralement ~60 min.",
+    "confirmedLine": "Bloc Bitcoin {{block}} — télécharger .ots",
+    "confirmedLineNoBlock": "Bitcoin-confirmed — télécharger .ots",
+    "otsPending": "Pending .ots — calendriers seulement",
+    "otsConfirmed": "Bitcoin-confirmed .ots",
+    "viewProofCard": "Voir la carte de preuve"
   },
   "vaultPage": {
     "securityAge": {
@@ -1981,7 +1989,12 @@
     "anchored": "Bitcoin l’a ancrée.",
     "anchoredBlock": "Bitcoin l’a ancrée dans le bloc {{block}}.",
     "calendarsHave": "Les calendriers ont le condensé. Un bloc Bitcoin ne l’a pas encore inclus. Pending n’est pas confirmed.",
-    "calendarsLine": "Calendars · alice · bob · finney"
+    "calendarsLine": "Calendars · alice · bob · finney",
+    "notStampedYet": "Pas encore horodaté",
+    "notStampedBody": "Cette empreinte n’est pas dans le registre Satohash. Horodatez-la pour démarrer OpenTimestamps.",
+    "stampThisFingerprint": "Horodater cette empreinte",
+    "downloadOts": "Télécharger .ots",
+    "waitingBlock": "Les calendriers ont le condensé ; un bloc Bitcoin ne l’a pas encore inclus (~60 min)."
   },
   "counselPage": {
     "metaTitle": "Pour les juristes",

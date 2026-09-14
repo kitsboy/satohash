@@ -33,7 +33,12 @@ export const STRINGS = {
     "anchored": "Bitcoin has anchored it.",
     "anchoredBlock": "Bitcoin has anchored it in block {{block}}.",
     "calendarsHave": "Calendars have the digest. A Bitcoin block has not included it yet. Pending is not confirmed.",
-    "calendarsLine": "Calendars · alice · bob · finney"
+    "calendarsLine": "Calendars · alice · bob · finney",
+    "notStampedYet": "Not stamped yet",
+    "notStampedBody": "This fingerprint is not in the Satohash registry. Stamp it to start OpenTimestamps.",
+    "stampThisFingerprint": "Stamp this fingerprint",
+    "downloadOts": "Download .ots",
+    "waitingBlock": "Calendars have the digest; Bitcoin block has not included it (~60 min)."
   },
   "es": {
     "kicker": "Tarjeta pública de prueba",
@@ -67,7 +72,12 @@ export const STRINGS = {
     "anchored": "Bitcoin la ha anclado.",
     "anchoredBlock": "Bitcoin la ha anclado en el bloque {{block}}.",
     "calendarsHave": "Los calendarios tienen el resumen. Un bloque Bitcoin aún no lo incluye. Pending no es confirmed.",
-    "calendarsLine": "Calendars · alice · bob · finney"
+    "calendarsLine": "Calendars · alice · bob · finney",
+    "notStampedYet": "Aún no sellado",
+    "notStampedBody": "Esta huella no está en el registro Satohash. Séllala para iniciar OpenTimestamps.",
+    "stampThisFingerprint": "Sellar esta huella",
+    "downloadOts": "Descargar .ots",
+    "waitingBlock": "Los calendarios tienen el resumen; un bloque Bitcoin aún no lo incluye (~60 min)."
   },
   "fr": {
     "kicker": "Carte de preuve publique",
@@ -101,7 +111,12 @@ export const STRINGS = {
     "anchored": "Bitcoin l’a ancrée.",
     "anchoredBlock": "Bitcoin l’a ancrée dans le bloc {{block}}.",
     "calendarsHave": "Les calendriers ont le condensé. Un bloc Bitcoin ne l’a pas encore inclus. Pending n’est pas confirmed.",
-    "calendarsLine": "Calendars · alice · bob · finney"
+    "calendarsLine": "Calendars · alice · bob · finney",
+    "notStampedYet": "Pas encore horodaté",
+    "notStampedBody": "Cette empreinte n’est pas dans le registre Satohash. Horodatez-la pour démarrer OpenTimestamps.",
+    "stampThisFingerprint": "Horodater cette empreinte",
+    "downloadOts": "Télécharger .ots",
+    "waitingBlock": "Les calendriers ont le condensé ; un bloc Bitcoin ne l’a pas encore inclus (~60 min)."
   },
   "de": {
     "kicker": "Öffentliche Beweiskarte",
@@ -135,7 +150,12 @@ export const STRINGS = {
     "anchored": "Bitcoin hat ihn verankert.",
     "anchoredBlock": "Bitcoin hat ihn in Block {{block}} verankert.",
     "calendarsHave": "Kalender haben den Digest. Ein Bitcoin-Block enthält ihn noch nicht. Pending ist nicht confirmed.",
-    "calendarsLine": "Calendars · alice · bob · finney"
+    "calendarsLine": "Calendars · alice · bob · finney",
+    "notStampedYet": "Noch nicht gestempelt",
+    "notStampedBody": "Dieser Fingerabdruck ist nicht im Satohash-Register. Stempeln Sie ihn, um OpenTimestamps zu starten.",
+    "stampThisFingerprint": "Diesen Fingerabdruck stempeln",
+    "downloadOts": ".ots herunterladen",
+    "waitingBlock": "Kalender haben den Digest; ein Bitcoin-Block enthält ihn noch nicht (~60 Min.)."
   },
   "pt": {
     "kicker": "Cartão público de prova",
@@ -169,7 +189,12 @@ export const STRINGS = {
     "anchored": "O Bitcoin ancorou-a.",
     "anchoredBlock": "O Bitcoin ancorou-a no bloco {{block}}.",
     "calendarsHave": "Os calendários têm o resumo. Um bloco Bitcoin ainda não o inclui. Pending não é confirmed.",
-    "calendarsLine": "Calendars · alice · bob · finney"
+    "calendarsLine": "Calendars · alice · bob · finney",
+    "notStampedYet": "Ainda não selado",
+    "notStampedBody": "Esta impressão não está no registo Satohash. Sele-a para iniciar OpenTimestamps.",
+    "stampThisFingerprint": "Selar esta impressão",
+    "downloadOts": "Descarregar .ots",
+    "waitingBlock": "Os calendários têm o resumo; um bloco Bitcoin ainda não o inclui (~60 min)."
   },
   "sw": {
     "kicker": "Kadi ya ushahidi wa umma",
@@ -203,7 +228,12 @@ export const STRINGS = {
     "anchored": "Bitcoin imeitia nanga.",
     "anchoredBlock": "Bitcoin imeitia nanga kwenye bloku {{block}}.",
     "calendarsHave": "Kalenda zina muhtasari. Bloku ya Bitcoin bado haijauingiza. Pending si confirmed.",
-    "calendarsLine": "Calendars · alice · bob · finney"
+    "calendarsLine": "Calendars · alice · bob · finney",
+    "notStampedYet": "Bado haijagongwa",
+    "notStampedBody": "Alama hii haiko kwenye daftari la Satohash. Igonge ili kuanza OpenTimestamps.",
+    "stampThisFingerprint": "Gonga alama hii",
+    "downloadOts": "Pakua .ots",
+    "waitingBlock": "Kalenda zina muhtasari; bloku ya Bitcoin bado haijauingiza (~dakika 60)."
   },
   "zh": {
     "kicker": "公开证明卡",
@@ -237,6 +267,11 @@ export const STRINGS = {
     "anchored": "比特币已锚定它。",
     "anchoredBlock": "比特币已将其锚定在区块 {{block}}。",
     "calendarsHave": "日历已有该摘要。比特币区块尚未包含它。Pending 不是 confirmed。",
-    "calendarsLine": "Calendars · alice · bob · finney"
+    "calendarsLine": "Calendars · alice · bob · finney",
+    "notStampedYet": "尚未盖戳",
+    "notStampedBody": "此指纹不在 Satohash 登记中。盖戳以启动 OpenTimestamps。",
+    "stampThisFingerprint": "盖戳此指纹",
+    "downloadOts": "下载 .ots",
+    "waitingBlock": "日历已有该摘要；Bitcoin 区块尚未包含它（约 60 分钟）。"
   }
 }

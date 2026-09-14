@@ -14,6 +14,49 @@ import Footer from '../components/layout/Footer'
 import Tooltip from '../components/ui/Tooltip'
 import events, { trackEvent } from '../utils/analytics'
 
+function sha256Hex(value) {
+  const hex = String(value || '')
+    .toLowerCase()
+    .replace(/^0x/, '')
+  return /^[a-f0-9]{64}$/.test(hex) ? hex : ''
+}
+
+function hostedStampId(id) {
+  if (!id) return ''
+  const s = String(id)
+  if (s.startsWith('ots-')) return ''
+  return s
+}
+
+function stampFromByHashBody(body, hex) {
+  const row = Array.isArray(body?.stamps) ? body.stamps[0] : body
+  if (!row || typeof row !== 'object') return null
+  return { ...row, hash: row.hash || hex, source: 'api' }
+}
+
+/** GET /api/stamps/:id, then GET /api/stamps/:hash/by-hash if id misses. */
+async function fetchStampFromApi({ id, hash }) {
+  const api = getApiUrl()
+  const hosted = hostedStampId(id)
+  if (hosted) {
+    try {
+      const res = await fetch(`${api}/api/stamps/${encodeURIComponent(hosted)}`)
+      if (res.ok) return { ...(await res.json()), source: 'api' }
+    } catch {
+      /* fall through to by-hash */
+    }
+  }
+  const hex = sha256Hex(hash)
+  if (!hex) return null
+  try {
+    const res = await fetch(`${api}/api/stamps/${hex}/by-hash`)
+    if (!res.ok) return null
+    return stampFromByHashBody(await res.json(), hex)
+  } catch {
+    return null
+  }
+}
+
 /**
  * Dedicated success route so browser Back does not re-submit a stamp.
  */
@@ -35,15 +78,14 @@ export default function StampDone() {
       const hash = searchParams.get('hash')
       let p = readLastProof()
 
-      if (id && isApiExplicitlyConfigured()) {
-        try {
-          const res = await fetch(`${getApiUrl()}/api/stamps/${encodeURIComponent(id)}`)
-          if (res.ok) {
-            p = { ...(await res.json()), source: 'api' }
-            persistLastProof(p)
-          }
-        } catch {
-          /* keep session proof */
+      if (isApiExplicitlyConfigured()) {
+        const fetched = await fetchStampFromApi({
+          id: id || p?.id,
+          hash: hash || p?.hash
+        })
+        if (fetched) {
+          p = fetched
+          persistLastProof(p)
         }
       }
 
@@ -62,32 +104,37 @@ export default function StampDone() {
   }, [searchParams])
 
   useEffect(() => {
-    const stampId = proof?.id
+    if (!proof) return undefined
+    const queuedPoll =
+      proof.source === 'offline-queue' || proof.status === 'queued' || proof.status === 'offline'
     if (
-      !stampId ||
+      queuedPoll ||
       proof.status === 'confirmed' ||
       proof.status === 'verified' ||
       proof.status === 'failed'
     )
       return undefined
     if (!isApiExplicitlyConfigured()) return undefined
+    const stampId = hostedStampId(proof.id)
+    const hex = sha256Hex(proof.hash)
+    if (!stampId && !hex) return undefined
+    let cancelled = false
     const tick = async () => {
-      try {
-        const res = await fetch(`${getApiUrl()}/api/stamps/${encodeURIComponent(stampId)}`)
-        if (!res.ok) return
-        const data = await res.json()
-        setProof((prev) => {
-          const next = { ...prev, ...data, source: 'api' }
-          persistLastProof(next)
-          return next
-        })
-      } catch {
-        /* keep showing last known */
-      }
+      const data = await fetchStampFromApi({ id: stampId, hash: hex })
+      if (!data || cancelled) return
+      setProof((prev) => {
+        const next = { ...prev, ...data, source: 'api' }
+        persistLastProof(next)
+        return next
+      })
     }
-    const id = setInterval(tick, 8000)
-    return () => clearInterval(id)
-  }, [proof?.id, proof?.status])
+    tick()
+    const timer = setInterval(tick, 8000)
+    return () => {
+      cancelled = true
+      clearInterval(timer)
+    }
+  }, [proof?.id, proof?.status, proof?.hash, proof?.source])
 
   if (loading) {
     return (
@@ -144,23 +191,7 @@ export default function StampDone() {
           }}
         >
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <div className="flex flex-wrap items-center gap-2">
-              <p
-                className="inline-flex items-center text-[11px] font-black tracking-widest uppercase"
-                style={{ color: confirmed ? 'var(--accent-success)' : 'var(--accent-gold)' }}
-              >
-                {queued
-                  ? t('stampDonePage.queuedReceipt')
-                  : confirmed
-                    ? t('stampDonePage.receipt')
-                    : t('stampDonePage.receiptPending')}
-                <Tooltip
-                  title="Pending is not confirmed"
-                  content="The fingerprint is at OpenTimestamps calendars. It is NOT in a Bitcoin block until status is confirmed. Pending ≠ confirmed."
-                />
-              </p>
-              <LiveNodeChip compact />
-            </div>
+            <LiveNodeChip compact />
             <Link
               to={proof.hash ? `/verify?hash=${encodeURIComponent(proof.hash)}` : '/verify'}
               data-testid="done-verify"
@@ -197,6 +228,8 @@ export default function StampDone() {
               )}
             </div>
             <h1
+              role="status"
+              data-testid="stamp-status"
               className={`inline-flex items-center justify-center gap-1 text-2xl font-black tracking-tight uppercase ${
                 confirmed ? '' : 'text-gradient'
               }`}
@@ -205,48 +238,46 @@ export default function StampDone() {
               {queued
                 ? t('stampDonePage.queuedTitle')
                 : confirmed
-                  ? t('stampDonePage.foldedIntoBitcoin')
-                  : t('stampDonePage.submittedNotConfirmed')}
+                  ? t('stampDonePage.statusConfirmed')
+                  : t('stampDonePage.statusPending')}
               <Tooltip
                 title={t('stampDonePage.pendingTipTitle')}
                 content={t('stampDonePage.pendingTipBody')}
               />
             </h1>
-            {confirmed && hasBlockHeight ? (
+            {queued ? (
+              <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+                {t('stampDonePage.queuedBody')}
+              </p>
+            ) : confirmed ? (
               <div>
                 <p
-                  className="font-mono text-sm tabular-nums"
-                  style={{ color: 'var(--accent-success)' }}
+                  className="text-sm"
+                  style={{ color: hasBlockHeight ? 'var(--accent-success)' : 'var(--text-muted)' }}
                 >
-                  {t('stampDonePage.bitcoinBlock')}{' '}
+                  {hasBlockHeight
+                    ? t('stampDonePage.confirmedLine', {
+                        block: heightNum.toLocaleString(i18n.language)
+                      })
+                    : t('stampDonePage.confirmedLineNoBlock')}
+                </p>
+                {hasBlockHeight ? (
                   <a
                     href={`https://mempool.space/block/${heightNum}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={`Bitcoin block ${heightNum} on mempool.space`}
                     title={`Bitcoin block ${heightNum}`}
-                    className="inline-flex min-h-[44px] items-center underline underline-offset-2"
+                    className="inline-flex min-h-[44px] items-center text-sm underline underline-offset-2"
+                    style={{ color: 'var(--text-secondary)' }}
                   >
-                    {heightNum.toLocaleString(i18n.language)}
+                    {t('stampDonePage.viewMempool')}
                   </a>
-                </p>
-                <a
-                  href={`https://mempool.space/block/${heightNum}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex min-h-[44px] items-center text-sm underline underline-offset-2"
-                  style={{ color: 'var(--text-secondary)' }}
-                >
-                  {t('stampDonePage.viewMempool')}
-                </a>
+                ) : null}
               </div>
-            ) : confirmed ? (
-              <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
-                {t('stampDonePage.blockHeightMissing')}
-              </p>
             ) : (
               <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-                {queued ? t('stampDonePage.queuedBody') : t('stampDonePage.pendingExplainer')}
+                {t('stampDonePage.pendingLine')}
               </p>
             )}
           </header>

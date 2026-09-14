@@ -783,12 +783,12 @@
     "nip05Cta": "NIP-05-Identität einrichten",
     "stampWidget": {
       "title": "Stamp on Satohash",
-      "body": "Family-Clients hashen die Datei lokal — sie verlässt den Browser nicht. Stamp öffnet /stamp?hash=&ref=, damit die SPA X-Satohash-Client aus data-client sendet. Katoa, MotoPass, SherpaCarta, Give A Bit und TadBuy nutzen dasselbe Drop-in.",
+      "body": "Family-Clients hashen die Datei lokal — sie verlässt den Browser nicht — und senden dann POST an api.satohash.io/api/stamp mit X-Satohash-Client aus data-client, damit der Stamp auf der Family-Site abgeschlossen wird. Mit data-mode=spa öffnet sich stattdessen /stamp?hash=&ref=. Katoa, MotoPass, SherpaCarta, Give A Bit und TadBuy nutzen dasselbe Drop-in.",
       "embedLabel": "Stamp-Widget"
     },
     "family": {
       "title": "Family-Sites",
-      "body": "Ein Paste pro Produkt-ID. Das Widget berechnet SHA-256 lokal — die Datei verlässt den Browser nicht. Stamp öffnet /stamp?hash=&ref=, damit die SPA X-Satohash-Client aus data-client sendet. HQ metrics.json familyClients zählt nur Stamps, die mit dieser ID wirklich abgeschlossen werden. Katoa, MotoPass, SherpaCarta, Give A Bit und TadBuy haben das Paste; die Zähler bleiben ehrliche Nullen, bis eine Family-Site tatsächlich stempelt."
+      "body": "Ein Paste pro Produkt-ID. Das Widget berechnet SHA-256 lokal — die Datei verlässt den Browser nicht — und sendet dann POST an api.satohash.io/api/stamp mit X-Satohash-Client aus data-client, damit der Stamp auf der Family-Site abgeschlossen wird. Mit data-mode=spa öffnet sich stattdessen /stamp?hash=&ref=. HQ metrics.json familyClients zählt nur Stamps, die mit dieser ID wirklich abgeschlossen werden. Katoa, MotoPass, SherpaCarta, Give A Bit und TadBuy haben das Paste; die Zähler bleiben ehrliche Nullen, bis eine Family-Site tatsächlich stempelt."
     }
   },
   "docsPage": {
@@ -1867,7 +1867,15 @@
     "viewMempool": "Auf mempool.space ansehen",
     "blockHeightMissing": "Blockhöhe noch nicht gespeichert — pending ≠ das Problem; die Bestätigung ist erfasst.",
     "pendingTipTitle": "Pending ist nicht confirmed",
-    "pendingTipBody": "Der Fingerabdruck liegt bei OpenTimestamps-Kalendern. Er ist NICHT in einem Bitcoin-Block, bis der Status confirmed ist. Pending ≠ confirmed."
+    "pendingTipBody": "Der Fingerabdruck liegt bei OpenTimestamps-Kalendern. Er ist NICHT in einem Bitcoin-Block, bis der Status confirmed ist. Pending ≠ confirmed.",
+    "statusPending": "Pending",
+    "statusConfirmed": "Confirmed",
+    "pendingLine": "OpenTimestamps-Kalender haben ihn. Noch nicht in einem Bitcoin-Block — meist ~60 Min.",
+    "confirmedLine": "Bitcoin-Block {{block}} — .ots herunterladen",
+    "confirmedLineNoBlock": "Bitcoin-confirmed — .ots herunterladen",
+    "otsPending": "Pending .ots — nur Kalender",
+    "otsConfirmed": "Bitcoin-confirmed .ots",
+    "viewProofCard": "Proof-Karte ansehen"
   },
   "vaultPage": {
     "securityAge": {
@@ -1981,7 +1989,12 @@
     "anchored": "Bitcoin hat ihn verankert.",
     "anchoredBlock": "Bitcoin hat ihn in Block {{block}} verankert.",
     "calendarsHave": "Kalender haben den Digest. Ein Bitcoin-Block enthält ihn noch nicht. Pending ist nicht confirmed.",
-    "calendarsLine": "Calendars · alice · bob · finney"
+    "calendarsLine": "Calendars · alice · bob · finney",
+    "notStampedYet": "Noch nicht gestempelt",
+    "notStampedBody": "Dieser Fingerabdruck ist nicht im Satohash-Register. Stempeln Sie ihn, um OpenTimestamps zu starten.",
+    "stampThisFingerprint": "Diesen Fingerabdruck stempeln",
+    "downloadOts": ".ots herunterladen",
+    "waitingBlock": "Kalender haben den Digest; ein Bitcoin-Block enthält ihn noch nicht (~60 Min.)."
   },
   "counselPage": {
     "metaTitle": "Für Anwälte",

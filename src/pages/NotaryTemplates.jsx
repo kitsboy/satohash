@@ -1406,7 +1406,7 @@ const generatePDF = async (template, data) => {
     doc.setFontSize(6)
     doc.setTextColor(100, 116, 139)
     doc.text(
-      'Opens satohash.io/p/… — verify the .ots stamp in the browser',
+      'After stamp, this QR shows Pending then Confirmed on satohash.io/p/',
       margin + p1 + 6,
       y + 22
     )
@@ -1419,7 +1419,11 @@ const generatePDF = async (template, data) => {
   doc.setFontSize(7)
   doc.setTextColor(148, 163, 184)
   doc.setFont('helvetica', 'normal')
-  doc.text('Scan the QR with any phone camera to open this proof', margin, pageH - 14)
+  doc.text(
+    'After stamp, the same QR shows Pending then Confirmed on satohash.io/p/',
+    margin,
+    pageH - 14
+  )
   doc.text(proofUrl, margin, pageH - 10)
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -1534,7 +1538,7 @@ const generatePDF = async (template, data) => {
   doc.setFont('helvetica', 'bold')
   doc.text('SCAN WITH ANY CAMERA', qrX + qrBoxSize / 2, cy + qrBoxSize + 4, { align: 'center' })
   doc.setFont('helvetica', 'normal')
-  doc.text('iPhone · Android · satohash.io/p/', qrX + qrBoxSize / 2, cy + qrBoxSize + 8, {
+  doc.text('Pending then Confirmed · satohash.io/p/', qrX + qrBoxSize / 2, cy + qrBoxSize + 8, {
     align: 'center'
   })
 
@@ -2243,6 +2247,7 @@ export function TemplateEditor({ template, onBack, demoMode = false }) {
       `${t('notaryEditorPage.emailVerifyHeader')}\n\n` +
       `${t('notaryEditorPage.emailBody')}\n` +
       `${t('notaryEditorPage.emailScanHint')}\n` +
+      `After stamp, the same QR shows Pending then Confirmed on satohash.io/p/.\n` +
       `${proofUrl}\n` +
       `SHA-256: ${hash}\n`
     window.location.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`

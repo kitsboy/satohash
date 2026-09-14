@@ -783,12 +783,12 @@
     "nip05Cta": "Sanidi Utambulisho wa NIP-05",
     "stampWidget": {
       "title": "Stamp on Satohash",
-      "body": "Wateja wa familia huhesabu hash ya faili kwenye kifaa — faili haitoki kwenye kivinjari. Stamp hufungua /stamp?hash=&ref= ili SPA itume X-Satohash-Client kutoka data-client. Katoa, MotoPass, SherpaCarta, Give A Bit na TadBuy hutumia widget ile ile.",
+      "body": "Wateja wa familia huhesabu hash ya faili kwenye kifaa — faili haitoki kwenye kivinjari — kisha wanatuma POST kwa api.satohash.io/api/stamp na X-Satohash-Client kutoka data-client ili muhuri ukamilike kwenye tovuti ya familia. Tumia data-mode=spa kufungua /stamp?hash=&ref= badala yake. Katoa, MotoPass, SherpaCarta, Give A Bit na TadBuy hutumia widget ile ile.",
       "embedLabel": "Widget ya stamp"
     },
     "family": {
       "title": "Tovuti za familia",
-      "body": "Bandiko moja kwa kila kitambulisho cha bidhaa. Widget inahesabu SHA-256 ya faili kwenye kifaa — faili haitoki kwenye kivinjari. Stamp hufungua /stamp?hash=&ref= ili SPA itume X-Satohash-Client kutoka data-client. HQ metrics.json familyClients inahesabu muhuri zilizokamilika tu na kitambulisho hicho. Katoa, MotoPass, SherpaCarta, Give A Bit na TadBuy tayari wana bandiko; hesabu zinabaki sifuri hadi tovuti ya familia ikamilishe muhuri."
+      "body": "Bandiko moja kwa kila kitambulisho cha bidhaa. Widget inahesabu SHA-256 ya faili kwenye kifaa — faili haitoki kwenye kivinjari — kisha inatuma POST kwa api.satohash.io/api/stamp na X-Satohash-Client kutoka data-client ili muhuri ukamilike kwenye tovuti ya familia. Tumia data-mode=spa kufungua /stamp?hash=&ref= badala yake. HQ metrics.json familyClients inahesabu muhuri zilizokamilika tu na kitambulisho hicho. Katoa, MotoPass, SherpaCarta, Give A Bit na TadBuy tayari wana bandiko; hesabu zinabaki sifuri hadi tovuti ya familia ikamilishe muhuri."
     }
   },
   "docsPage": {
@@ -1867,7 +1867,15 @@
     "viewMempool": "Tazama kwenye mempool.space",
     "blockHeightMissing": "Kimo cha bloku bado hakijahifadhiwa — pending ≠ tatizo; uthibitisho umerekodiwa.",
     "pendingTipTitle": "Pending si confirmed",
-    "pendingTipBody": "Alama iko kwenye kalenda za OpenTimestamps. HAIMO kwenye bloku ya Bitcoin hadi hali iwe confirmed. Pending ≠ confirmed."
+    "pendingTipBody": "Alama iko kwenye kalenda za OpenTimestamps. HAIMO kwenye bloku ya Bitcoin hadi hali iwe confirmed. Pending ≠ confirmed.",
+    "statusPending": "Pending",
+    "statusConfirmed": "Confirmed",
+    "pendingLine": "Kalenda za OpenTimestamps zinayo. Bado haijamo kwenye bloku ya Bitcoin — kawaida ~dakika 60.",
+    "confirmedLine": "Bloku ya Bitcoin {{block}} — pakua .ots",
+    "confirmedLineNoBlock": "Bitcoin-confirmed — pakua .ots",
+    "otsPending": "Pending .ots — kalenda pekee",
+    "otsConfirmed": "Bitcoin-confirmed .ots",
+    "viewProofCard": "Tazama kadi ya uthibitisho"
   },
   "vaultPage": {
     "securityAge": {
@@ -1981,7 +1989,12 @@
     "anchored": "Bitcoin imeitia nanga.",
     "anchoredBlock": "Bitcoin imeitia nanga kwenye bloku {{block}}.",
     "calendarsHave": "Kalenda zina muhtasari. Bloku ya Bitcoin bado haijauingiza. Pending si confirmed.",
-    "calendarsLine": "Calendars · alice · bob · finney"
+    "calendarsLine": "Calendars · alice · bob · finney",
+    "notStampedYet": "Bado haijagongwa",
+    "notStampedBody": "Alama hii haiko kwenye daftari la Satohash. Igonge ili kuanza OpenTimestamps.",
+    "stampThisFingerprint": "Gonga alama hii",
+    "downloadOts": "Pakua .ots",
+    "waitingBlock": "Kalenda zina muhtasari; bloku ya Bitcoin bado haijauingiza (~dakika 60)."
   },
   "counselPage": {
     "metaTitle": "Kwa mawakili",

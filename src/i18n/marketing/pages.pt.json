@@ -783,12 +783,12 @@
     "nip05Cta": "Configurar identidade NIP-05",
     "stampWidget": {
       "title": "Stamp on Satohash",
-      "body": "Os clientes da família fazem o hash do arquivo no dispositivo — ele não sai do navegador. O stamp abre /stamp?hash=&ref= para a SPA enviar X-Satohash-Client a partir de data-client. Katoa, MotoPass, SherpaCarta, Give A Bit e TadBuy usam o mesmo widget.",
+      "body": "Os clientes da família fazem o hash do arquivo no dispositivo — ele não sai do navegador — e então fazem POST para api.satohash.io/api/stamp com X-Satohash-Client a partir de data-client para o stamp concluir no site da família. Use data-mode=spa para abrir /stamp?hash=&ref= em vez disso. Katoa, MotoPass, SherpaCarta, Give A Bit e TadBuy usam o mesmo widget.",
       "embedLabel": "Widget de stamp"
     },
     "family": {
       "title": "Sites da família",
-      "body": "Um paste por id de produto. O widget calcula o SHA-256 do arquivo no dispositivo — o arquivo não sai do navegador. O stamp abre /stamp?hash=&ref= para a SPA enviar X-Satohash-Client a partir de data-client. HQ metrics.json familyClients conta só os stamps realmente concluídos com esse id. Katoa, MotoPass, SherpaCarta, Give A Bit e TadBuy já têm o paste; as contagens ficam em zeros honestos até um site da família completar um stamp."
+      "body": "Um paste por id de produto. O widget calcula o SHA-256 do arquivo no dispositivo — o arquivo não sai do navegador — e então faz POST para api.satohash.io/api/stamp com X-Satohash-Client a partir de data-client para o stamp concluir no site da família. Use data-mode=spa para abrir /stamp?hash=&ref= em vez disso. HQ metrics.json familyClients conta só os stamps realmente concluídos com esse id. Katoa, MotoPass, SherpaCarta, Give A Bit e TadBuy já têm o paste; as contagens ficam em zeros honestos até um site da família completar um stamp."
     }
   },
   "docsPage": {
@@ -1867,7 +1867,15 @@
     "viewMempool": "Ver no mempool.space",
     "blockHeightMissing": "Altura do bloco ainda não guardada — pending ≠ o problema; a confirmação está registada.",
     "pendingTipTitle": "Pending não é confirmed",
-    "pendingTipBody": "A impressão está nos calendários OpenTimestamps. NÃO está num bloco Bitcoin até o estado ser confirmed. Pending ≠ confirmed."
+    "pendingTipBody": "A impressão está nos calendários OpenTimestamps. NÃO está num bloco Bitcoin até o estado ser confirmed. Pending ≠ confirmed.",
+    "statusPending": "Pending",
+    "statusConfirmed": "Confirmed",
+    "pendingLine": "Os calendários OpenTimestamps já a têm. Ainda não está num bloco Bitcoin — costuma levar ~60 min.",
+    "confirmedLine": "Bloco Bitcoin {{block}} — descarregar .ots",
+    "confirmedLineNoBlock": "Bitcoin-confirmed — descarregar .ots",
+    "otsPending": "Pending .ots — só calendários",
+    "otsConfirmed": "Bitcoin-confirmed .ots",
+    "viewProofCard": "Ver cartão de prova"
   },
   "vaultPage": {
     "securityAge": {
@@ -1981,7 +1989,12 @@
     "anchored": "O Bitcoin ancorou-a.",
     "anchoredBlock": "O Bitcoin ancorou-a no bloco {{block}}.",
     "calendarsHave": "Os calendários têm o resumo. Um bloco Bitcoin ainda não o inclui. Pending não é confirmed.",
-    "calendarsLine": "Calendars · alice · bob · finney"
+    "calendarsLine": "Calendars · alice · bob · finney",
+    "notStampedYet": "Ainda não selado",
+    "notStampedBody": "Esta impressão não está no registo Satohash. Sele-a para iniciar OpenTimestamps.",
+    "stampThisFingerprint": "Selar esta impressão",
+    "downloadOts": "Descarregar .ots",
+    "waitingBlock": "Os calendários têm o resumo; um bloco Bitcoin ainda não o inclui (~60 min)."
   },
   "counselPage": {
     "metaTitle": "Para advogados",

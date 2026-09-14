@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { Copy, Check, Share2, ShieldCheck, Clock } from 'lucide-react'
+import { Copy, Check, Share2, ShieldCheck, Clock, Hash, Download } from 'lucide-react'
 import usePageMeta from '../hooks/usePageMeta'
 import { getApiUrl, PUBLIC_API_URL } from '../config/constants'
 import { isSha256Hex, normalizeSha256 } from '../utils/hashUtils'
@@ -30,29 +30,76 @@ function pickNostrEventId(proof) {
   )
 }
 
+function apiBase() {
+  const rawApi = getApiUrl()
+  return /localhost|127\.0\.0\.1/.test(rawApi) ? PUBLIC_API_URL : rawApi
+}
+
+function hasStampId(proof) {
+  return proof?.id != null && String(proof.id) !== ''
+}
+
+function hasCreatedAt(proof) {
+  return Boolean(proof?.created_at || proof?.createdAt)
+}
+
+/** unstamped | pending | confirmed | unknown — never call unstamped "Pending". */
+function classifyProof(proof, validHash) {
+  if (!proof) return 'loading'
+  const status = String(proof.status || '').toLowerCase()
+  if (status === 'confirmed' || status === 'verified' || proof.isConfirmed) return 'confirmed'
+  if (status === 'failed') return 'unknown'
+  if (hasStampId(proof) || hasCreatedAt(proof) || status === 'pending') return 'pending'
+  if (validHash && !hasStampId(proof) && !hasCreatedAt(proof)) return 'unstamped'
+  return 'unknown'
+}
+
 /** Lightweight public card — also mirrored by functions/p/[hash].js for zero-JS. */
 export default function ProofCardPublic() {
   const { t } = useTranslation()
   const { hash } = useParams()
   const hex = normalizeSha256(hash) || hash
+  const validHash = isSha256Hex(hex)
   const [proof, setProof] = useState(null)
   const [copied, setCopied] = useState(false)
-  const confirmed = proof?.status === 'confirmed'
+  const kind = classifyProof(proof, validHash)
+  const confirmed = kind === 'confirmed'
+  const unstamped = kind === 'unstamped'
+  const pending = kind === 'pending'
   const short = String(hex || '').slice(0, 12)
   const hashPreview = String(hex || '').slice(0, 16)
-  usePageMeta({
-    title: confirmed
-      ? t('proofCardPage.titleConfirmed') + ` ${short}…`
-      : t('proofCardPage.titlePending') + ` ${short}…`,
-    description: confirmed
+  const pageTitle =
+    kind === 'loading'
+      ? `Satohash ${short}…`
+      : unstamped
+        ? `${t('proofCardPage.notStampedYet')} ${short}…`
+        : confirmed
+          ? `${t('proofCardPage.titleConfirmed')} ${short}…`
+          : pending
+            ? `${t('proofCardPage.titlePending')} ${short}…`
+            : `Satohash ${short}…`
+  const pageDesc = unstamped
+    ? t('proofCardPage.notStampedBody')
+    : confirmed
       ? `SHA-256 ${hashPreview}… — OpenTimestamps → Bitcoin.`
-      : t('proofCardPage.titlePending'),
+      : pending
+        ? t('proofCardPage.waitingBlock')
+        : t('proofCardPage.notStampedBody')
+  usePageMeta({
+    title: pageTitle,
+    description: pageDesc,
     image: 'https://satohash.io/media/video/01-stamp-hero.jpg',
     url: `https://satohash.io/p/${hex || ''}`
   })
 
   const cardUrl =
     typeof window !== 'undefined' ? window.location.href : `https://satohash.io/p/${hex || ''}`
+  const API = apiBase()
+  const stampHref = validHash ? `/stamp?hash=${hex}` : '/stamp'
+  const otsHref =
+    confirmed && hasStampId(proof)
+      ? `${API}/api/stamps/${encodeURIComponent(proof.id)}?download=true`
+      : ''
 
   const copyLink = async () => {
     try {
@@ -78,8 +125,7 @@ export default function ProofCardPublic() {
 
   useEffect(() => {
     if (!hex) return
-    const rawApi = getApiUrl()
-    const API = /localhost|127\.0\.0\.1/.test(rawApi) ? PUBLIC_API_URL : rawApi
+    let cancelled = false
     const path = isSha256Hex(hex)
       ? `${API}/api/stamps/${hex}/by-hash`
       : `${API}/api/stamps/${encodeURIComponent(hex)}`
@@ -87,9 +133,7 @@ export default function ProofCardPublic() {
       .then((r) => (r.ok ? r.json() : null))
       .then(async (body) => {
         const row = Array.isArray(body?.stamps) ? body.stamps[0] : body
-        const next = row
-          ? { ...row, hash: row.hash || hex }
-          : { hash: hex, status: 'unknown', filename: 'Fingerprint' }
+        const next = row ? { ...row, hash: row.hash || hex } : { hash: hex, status: 'unknown' }
         if (next.id && !pickNostrEventId(next)) {
           try {
             const ch = await fetch(`${API}/api/stamps/${encodeURIComponent(next.id)}/chains`)
@@ -102,10 +146,44 @@ export default function ProofCardPublic() {
             /* omit njump */
           }
         }
-        setProof(next)
+        if (!cancelled) setProof(next)
       })
-      .catch(() => setProof({ hash: hex, status: 'unknown', filename: 'Fingerprint' }))
-  }, [hex])
+      .catch(() => {
+        if (!cancelled) setProof({ hash: hex, status: 'unknown' })
+      })
+    return () => {
+      cancelled = true
+    }
+  }, [hex, API])
+
+  useEffect(() => {
+    if (!hex || !isSha256Hex(hex)) return undefined
+    const status = String(proof?.status || '').toLowerCase()
+    const stamped =
+      (proof?.id != null && String(proof.id) !== '') ||
+      Boolean(proof?.created_at || proof?.createdAt) ||
+      status === 'pending'
+    if (!stamped) return undefined
+    if (status === 'confirmed' || status === 'verified' || status === 'failed') return undefined
+    let cancelled = false
+    const tick = async () => {
+      try {
+        const r = await fetch(`${API}/api/stamps/${hex}/by-hash`)
+        if (!r.ok || cancelled) return
+        const body = await r.json()
+        const row = Array.isArray(body?.stamps) ? body.stamps[0] : body
+        if (!row || cancelled) return
+        setProof((prev) => ({ ...prev, ...row, hash: row.hash || hex }))
+      } catch {
+        /* keep last known */
+      }
+    }
+    const id = setInterval(tick, 8000)
+    return () => {
+      cancelled = true
+      clearInterval(id)
+    }
+  }, [hex, API, proof?.id, proof?.status, proof?.created_at, proof?.createdAt])
 
   const blockLabel =
     proof?.bitcoin_block_height != null &&
@@ -117,11 +195,22 @@ export default function ProofCardPublic() {
     ? blockLabel
       ? t('proofCardPage.confirmedBlock', { block: blockLabel })
       : t('proofCardPage.confirmed')
-    : String(proof?.status || 'pending').toLowerCase() === 'pending'
+    : pending
       ? t('proofCardPage.pendingNe')
-      : t('proofCardPage.notConfirmed', {
-          status: String(proof?.status || 'unknown').toUpperCase()
-        })
+      : unstamped
+        ? t('proofCardPage.notStampedYet')
+        : t('proofCardPage.notConfirmed', {
+            status: String(proof?.status || 'unknown').toUpperCase()
+          })
+  const heading = unstamped
+    ? t('proofCardPage.notStampedYet')
+    : confirmed
+      ? t('proofCardPage.titleConfirmed')
+      : pending
+        ? t('proofCardPage.titlePending')
+        : t('proofCardPage.notConfirmed', {
+            status: String(proof?.status || 'unknown').toUpperCase()
+          })
   const njumpId = pickNostrEventId(proof)
   const emptyHash =
     String(hex || '').toLowerCase() ===
@@ -129,7 +218,7 @@ export default function ProofCardPublic() {
   const focusRing =
     'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--surface-raised)]'
   const btnGhost = `inline-flex min-h-[48px] items-center justify-center rounded-xl border px-3 text-xs font-black uppercase ${focusRing}`
-  const btnGold = `btn-sheen inline-flex min-h-[48px] items-center justify-center rounded-xl px-3 text-xs font-black uppercase ${focusRing}`
+  const btnGold = `btn-sheen inline-flex min-h-[48px] items-center justify-center gap-2 rounded-xl px-3 text-xs font-black uppercase ${focusRing}`
   const sealTone = confirmed ? 'var(--accent-success, #22d3a5)' : 'var(--accent-gold)'
 
   return (
@@ -173,12 +262,14 @@ export default function ProofCardPublic() {
             >
               {confirmed ? (
                 <ShieldCheck size={28} style={{ color: sealTone }} />
-              ) : (
+              ) : pending ? (
                 <Clock
                   size={28}
                   className="motion-safe:animate-pulse"
                   style={{ color: sealTone }}
                 />
+              ) : (
+                <Hash size={28} style={{ color: sealTone }} />
               )}
             </div>
             <div className="min-w-0 flex-1 space-y-2">
@@ -188,7 +279,7 @@ export default function ProofCardPublic() {
               >
                 {t('proofCardPage.kicker')}
               </p>
-              {proof ? (
+              {proof && !unstamped ? (
                 <p
                   role="status"
                   className="inline-block rounded-lg px-3 py-1.5 text-xs font-black tracking-[0.12em] uppercase"
@@ -207,7 +298,7 @@ export default function ProofCardPublic() {
           {proof ? (
             <div className="mt-4 space-y-4">
               <h1 className="font-display text-2xl font-black tracking-tight sm:text-[1.65rem]">
-                {confirmed ? t('proofCardPage.titleConfirmed') : t('proofCardPage.titlePending')}
+                {heading}
               </h1>
               <div>
                 <p
@@ -227,15 +318,28 @@ export default function ProofCardPublic() {
                   {hex}
                 </p>
               </div>
-              <ProofReceipt proof={proof} />
+              {unstamped ? (
+                <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                  {t('proofCardPage.notStampedBody')}
+                </p>
+              ) : (
+                <ProofReceipt proof={proof} />
+              )}
+              {pending ? (
+                <p className="text-xs leading-relaxed" style={{ color: 'var(--text-muted)' }}>
+                  {t('proofCardPage.waitingBlock')}
+                </p>
+              ) : null}
               {emptyHash ? (
                 <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
                   {t('proofCardPage.emptyFile')}
                 </p>
               ) : null}
-              <p className="text-xs leading-relaxed" style={{ color: 'var(--text-muted)' }}>
-                {t('proofCardPage.neverLeaves')}
-              </p>
+              {!unstamped ? (
+                <p className="text-xs leading-relaxed" style={{ color: 'var(--text-muted)' }}>
+                  {t('proofCardPage.neverLeaves')}
+                </p>
+              ) : null}
               <p className="text-xs leading-relaxed" style={{ color: 'var(--text-muted)' }}>
                 {t('proofCardPage.imessage')}
               </p>
@@ -251,27 +355,48 @@ export default function ProofCardPublic() {
                   </a>
                 </p>
               ) : null}
-              <p className="font-mono text-[11px]" style={{ color: 'var(--text-secondary)' }}>
-                {t('proofCardPage.otsCli')}
-              </p>
+              {!unstamped ? (
+                <p className="font-mono text-[11px]" style={{ color: 'var(--text-secondary)' }}>
+                  {t('proofCardPage.otsCli')}
+                </p>
+              ) : null}
             </div>
           ) : (
             <p className="mt-4">{t('proofCardPage.loading')}</p>
           )}
-          {proof && !confirmed && (
+          {pending ? (
             <div className="mt-4">
               <CalendarStrip />
             </div>
-          )}
+          ) : null}
 
           <div className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-2">
-            <Link
-              to={`/verify/${hex}`}
-              className={btnGold}
-              style={{ background: 'var(--accent-gold)', color: '#141b25' }}
-            >
-              {t('proofCardPage.interactiveVerify')}
-            </Link>
+            {unstamped ? (
+              <Link
+                to={stampHref}
+                className={btnGold}
+                style={{ background: 'var(--accent-gold)', color: '#141b25' }}
+              >
+                {t('proofCardPage.stampThisFingerprint')}
+              </Link>
+            ) : (
+              <Link
+                to={`/verify/${hex}`}
+                className={btnGold}
+                style={{ background: 'var(--accent-gold)', color: '#141b25' }}
+              >
+                {t('proofCardPage.interactiveVerify')}
+              </Link>
+            )}
+            {otsHref ? (
+              <a
+                href={otsHref}
+                className={btnGold}
+                style={{ background: 'var(--accent-gold)', color: '#141b25' }}
+              >
+                <Download size={14} /> {t('proofCardPage.downloadOts')}
+              </a>
+            ) : null}
             <a
               href={`/p/${hex}`}
               className={btnGhost}
@@ -279,13 +404,15 @@ export default function ProofCardPublic() {
             >
               {t('proofCardPage.hardOpen')}
             </a>
-            <Link
-              to="/stamp"
-              className={btnGhost}
-              style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
-            >
-              {t('proofCardPage.stampFile')}
-            </Link>
+            {!unstamped ? (
+              <Link
+                to="/stamp"
+                className={btnGhost}
+                style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
+              >
+                {t('proofCardPage.stampFile')}
+              </Link>
+            ) : null}
             <Link
               to="/counsel"
               className={btnGhost}

@@ -783,12 +783,12 @@
     "nip05Cta": "Set Up NIP-05 Identity",
     "stampWidget": {
       "title": "Stamp on Satohash",
-      "body": "Family clients hash the file on-device — it never leaves the browser. Stamp then opens /stamp?hash=&ref= so the SPA sends X-Satohash-Client from data-client. Katoa, MotoPass, SherpaCarta, Give A Bit, and TadBuy use the same drop-in.",
+      "body": "Family clients hash the file on-device — it never leaves the browser — then POST to api.satohash.io/api/stamp with X-Satohash-Client from data-client so the stamp completes on the family site. Use data-mode=spa to open /stamp?hash=&ref= instead. Katoa, MotoPass, SherpaCarta, Give A Bit, and TadBuy use the same drop-in.",
       "embedLabel": "Stamp widget"
     },
     "family": {
       "title": "Family sites",
-      "body": "One paste per product id. The widget SHA-256s the file on-device — the file never leaves the browser. Stamp then opens /stamp?hash=&ref= so the SPA sends X-Satohash-Client from data-client. HQ metrics.json familyClients counts only stamps that actually complete with that id. Katoa, MotoPass, SherpaCarta, Give A Bit, and TadBuy paste exists; counts stay honest zeros until a family site actually completes a stamp."
+      "body": "One paste per product id. The widget SHA-256s the file on-device — the file never leaves the browser — then POSTs to api.satohash.io/api/stamp with X-Satohash-Client from data-client so the stamp completes on the family site. Use data-mode=spa to open /stamp?hash=&ref= instead. HQ metrics.json familyClients counts only stamps that actually complete with that id. Katoa, MotoPass, SherpaCarta, Give A Bit, and TadBuy paste exists; counts stay honest zeros until a family site actually completes a stamp."
     }
   },
   "docsPage": {
@@ -1610,7 +1610,15 @@
     "viewMempool": "View on mempool.space",
     "blockHeightMissing": "Block height not stored yet — pending ≠ the issue; confirmation is recorded.",
     "pendingTipTitle": "Pending is not confirmed",
-    "pendingTipBody": "The fingerprint is at OpenTimestamps calendars. It is NOT in a Bitcoin block until status is confirmed. Pending ≠ confirmed."
+    "pendingTipBody": "The fingerprint is at OpenTimestamps calendars. It is NOT in a Bitcoin block until status is confirmed. Pending ≠ confirmed.",
+    "statusPending": "Pending",
+    "statusConfirmed": "Confirmed",
+    "pendingLine": "OpenTimestamps calendars have it. Not in a Bitcoin block yet — usually ~60 min.",
+    "confirmedLine": "Bitcoin block {{block}} — download .ots",
+    "confirmedLineNoBlock": "Bitcoin-confirmed — download .ots",
+    "otsPending": "Pending .ots — calendars only",
+    "otsConfirmed": "Bitcoin-confirmed .ots",
+    "viewProofCard": "View proof card"
   },
   "trustPage": {
     "backSecurity": "← Security overview",
@@ -1981,7 +1989,12 @@
     "anchored": "Bitcoin has anchored it.",
     "anchoredBlock": "Bitcoin has anchored it in block {{block}}.",
     "calendarsHave": "Calendars have the digest. A Bitcoin block has not included it yet. Pending is not confirmed.",
-    "calendarsLine": "Calendars · alice · bob · finney"
+    "calendarsLine": "Calendars · alice · bob · finney",
+    "notStampedYet": "Not stamped yet",
+    "notStampedBody": "This fingerprint is not in the Satohash registry. Stamp it to start OpenTimestamps.",
+    "stampThisFingerprint": "Stamp this fingerprint",
+    "downloadOts": "Download .ots",
+    "waitingBlock": "Calendars have the digest; Bitcoin block has not included it (~60 min)."
   },
   "counselPage": {
     "metaTitle": "For counsel",

@@ -253,17 +253,20 @@ export default function StampSuccessActions({
           })}
         </div>
 
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           {hasHostedId ? (
             <a
               href={`${getApiUrl()}/api/stamps/${proof.id}?download=true`}
               onClick={() =>
                 trackEvent(events.TIMESTAMP_DOWNLOADED, { kind: 'ots', ...funnelProps() })
               }
-              className="flex min-h-[48px] items-center justify-center gap-2 rounded-xl text-xs font-black tracking-wider uppercase"
+              className="flex min-h-[48px] items-center justify-center gap-2 rounded-xl px-2 text-center text-[11px] leading-tight font-black tracking-wider uppercase"
               style={{ background: 'var(--accent-active)', color: '#041016' }}
             >
-              <Download size={16} /> .ots
+              <Download size={16} className="shrink-0" />
+              {isConfirmed || proof?.status === 'confirmed'
+                ? t('stampDonePage.otsConfirmed')
+                : t('stampDonePage.otsPending')}
             </a>
           ) : (
             <span
@@ -273,14 +276,25 @@ export default function StampSuccessActions({
               {t('receiptPage.otsLocal')}
             </span>
           )}
-          <a
-            href={proof?.hash ? `/p/${String(proof.hash).toLowerCase()}` : '/verify'}
-            data-testid="proof-card-link"
-            className="flex min-h-[48px] items-center justify-center gap-2 rounded-xl border text-xs font-black uppercase"
-            style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
-          >
-            {t('receiptPage.proofCard')}
-          </a>
+          {proof?.hash && /^[a-f0-9]{64}$/i.test(proof.hash) ? (
+            <Link
+              to={`/p/${String(proof.hash).toLowerCase()}`}
+              data-testid="proof-card-link"
+              className="flex min-h-[48px] items-center justify-center gap-2 rounded-xl border px-2 text-center text-[11px] leading-tight font-black uppercase"
+              style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
+            >
+              {t('stampDonePage.viewProofCard')}
+            </Link>
+          ) : (
+            <Link
+              to="/verify"
+              data-testid="proof-card-link"
+              className="flex min-h-[48px] items-center justify-center gap-2 rounded-xl border px-2 text-center text-[11px] leading-tight font-black uppercase"
+              style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
+            >
+              {t('stampDonePage.viewProofCard')}
+            </Link>
+          )}
         </div>
 
         <button

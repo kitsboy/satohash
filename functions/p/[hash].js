@@ -83,6 +83,25 @@ function pickNostrEventId(proof) {
   )
 }
 
+function hasStampId(proof) {
+  return proof?.id != null && String(proof.id) !== ''
+}
+
+function hasCreatedAt(proof) {
+  return Boolean(proof?.created_at || proof?.createdAt)
+}
+
+/** unstamped | pending | confirmed | unknown — never call unstamped "Pending". */
+function classifyProof(proof, validHash) {
+  if (!proof) return 'unknown'
+  const status = String(proof.status || '').toLowerCase()
+  if (status === 'confirmed' || status === 'verified' || proof.isConfirmed) return 'confirmed'
+  if (status === 'failed') return 'unknown'
+  if (hasStampId(proof) || hasCreatedAt(proof) || status === 'pending') return 'pending'
+  if (validHash && !hasStampId(proof) && !hasCreatedAt(proof)) return 'unstamped'
+  return 'unknown'
+}
+
 export async function onRequestGet({ params, request }) {
   const raw = String(params.hash || '').trim()
   const hex = /^[a-f0-9]{64}$/i.test(raw) ? raw.toLowerCase() : raw
@@ -118,8 +137,10 @@ export async function onRequestGet({ params, request }) {
   }
 
   const validHash = /^[a-f0-9]{64}$/i.test(hex)
-  const status = proof.status || 'pending'
-  const confirmed = status === 'confirmed'
+  const kind = classifyProof(proof, validHash)
+  const confirmed = kind === 'confirmed'
+  const unstamped = kind === 'unstamped'
+  const pending = kind === 'pending'
   const block = proof.bitcoin_block_height
   const hash = proof.hash || hex
   const short = String(hash).slice(0, 12)
@@ -133,35 +154,88 @@ export async function onRequestGet({ params, request }) {
     ? blockLabel
       ? tr(L, 'confirmedBlock', { block: blockLabel })
       : tr(L, 'confirmed')
-    : String(status).toLowerCase() === 'pending'
+    : pending
       ? tr(L, 'pendingNe')
-      : tr(L, 'notConfirmed', { status: String(status || 'unknown').toUpperCase() })
+      : unstamped
+        ? tr(L, 'notStampedYet')
+        : tr(L, 'notConfirmed', { status: String(proof.status || 'unknown').toUpperCase() })
+  const heading = unstamped
+    ? tr(L, 'notStampedYet')
+    : confirmed
+      ? tr(L, 'titleConfirmed')
+      : pending
+        ? tr(L, 'titlePending')
+        : tr(L, 'notConfirmed', { status: String(proof.status || 'unknown').toUpperCase() })
   const njumpId = pickNostrEventId(proof)
   const njump = njumpId
     ? `<p><a class="njump" href="https://njump.me/${encodeURIComponent(njumpId)}" rel="noopener noreferrer">${esc(tr(L, 'njump'))}</a></p>`
     : ''
-  const title = confirmed
-    ? `Confirmed Bitcoin proof ${short}… — Satohash`
-    : `Satohash proof ${short}… (${esc(status)})`
-  const desc = confirmed
-    ? `SHA-256 ${short}… is Bitcoin-confirmed via OpenTimestamps.${block ? ` Block ${block}.` : ''} Independently verifiable. File never left the device.`
-    : `SHA-256 ${short}… recorded by Satohash. Status: ${esc(status)}. Pending is not Bitcoin confirmed.`
+  const title = unstamped
+    ? `${tr(L, 'notStampedYet')} ${short}… — Satohash`
+    : confirmed
+      ? `Confirmed Bitcoin proof ${short}… — Satohash`
+      : `Satohash proof ${short}… (${esc(pending ? 'pending' : String(proof.status || 'unknown'))})`
+  const desc = unstamped
+    ? tr(L, 'notStampedBody')
+    : confirmed
+      ? `SHA-256 ${short}… is Bitcoin-confirmed via OpenTimestamps.${block ? ` Block ${block}.` : ''} Independently verifiable. File never left the device.`
+      : pending
+        ? `SHA-256 ${short}… recorded by Satohash. PENDING ≠ CONFIRMED. ${tr(L, 'waitingBlock')}`
+        : tr(L, 'notStampedBody')
   const canon = `https://satohash.io/p/${esc(hex)}`
   const emptyNote =
     String(hash).toLowerCase() === EMPTY_SHA256
       ? `<p class="muted">${esc(tr(L, 'emptyFile'))}</p>`
       : ''
+  const refresh = pending ? '<meta http-equiv="refresh" content="45"/>' : ''
+  const bodyCopy = unstamped
+    ? `<p>${esc(tr(L, 'notStampedBody'))}</p>`
+    : `<p>${
+        proof.created_at
+          ? esc(tr(L, 'recordedAt', { time: utc(proof.created_at) }))
+          : esc(tr(L, 'recorded'))
+      }
+      ${
+        confirmed
+          ? blockLabel
+            ? `${esc(tr(L, 'anchoredBlock', { block: blockLabel })).replace(
+                esc(blockLabel),
+                `<a href="https://mempool.space/block/${esc(block)}">${esc(blockLabel)}</a>`
+              )}`
+            : esc(tr(L, 'anchored'))
+          : pending
+            ? esc(tr(L, 'waitingBlock'))
+            : ''
+      }</p>`
+  const otsBtn =
+    confirmed && hasStampId(proof)
+      ? `<a class="btn gold" href="${API}/api/stamps/${esc(encodeURIComponent(proof.id))}?download=true">${esc(tr(L, 'downloadOts'))}</a>`
+      : ''
+  const primaryCta = unstamped
+    ? `<a class="btn gold" href="https://satohash.io/stamp?hash=${esc(hex)}">${esc(tr(L, 'stampThisFingerprint'))}</a>`
+    : `<a class="btn gold" href="https://satohash.io/verify/${esc(hex)}">${esc(tr(L, 'interactiveVerify'))}</a>`
+  const stampFileBtn = unstamped
+    ? ''
+    : `<a class="btn ghost" href="https://satohash.io/stamp">${esc(tr(L, 'stampFile'))}</a>`
   const jsonLd = JSON.stringify({
     '@context': 'https://schema.org',
     '@type': 'CreativeWork',
     name: title,
     url: canon,
     identifier: hash,
-    dateCreated: proof.created_at || undefined,
+    dateCreated: unstamped ? undefined : proof.created_at || undefined,
     creativeWorkStatus: confirmed ? 'Official' : 'Incomplete',
     description: desc,
     publisher: { '@type': 'Organization', name: 'Satohash', url: 'https://satohash.io' }
   })
+  const sealClass = confirmed ? 'ok' : pending ? '' : 'none'
+  const statusClass = confirmed ? 'ok' : 'wait'
+  const statusHtml = unstamped
+    ? ''
+    : `<p class="status ${statusClass}" role="status">${esc(statusLine)}</p>`
+  const neverLeaves = unstamped ? '' : `<p class="muted">${esc(tr(L, 'neverLeaves'))}</p>`
+  const otsCli = unstamped ? '' : `<p><code>${esc(tr(L, 'otsCli'))}</code></p>`
+  const cals = pending ? `<p class="cals">${esc(tr(L, 'calendarsLine'))}</p>` : ''
 
   const html = `<!doctype html>
 <html lang="${esc(lang)}">
@@ -172,6 +246,7 @@ export async function onRequestGet({ params, request }) {
   <meta name="theme-color" content="#141b25"/>
   <meta name="apple-mobile-web-app-capable" content="yes"/>
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  ${refresh}
   <title>${esc(title)}</title>
   <meta name="description" content="${esc(desc)}"/>
   <meta name="robots" content="${validHash ? 'index,follow' : 'noindex,follow'}"/>
@@ -221,6 +296,7 @@ export async function onRequestGet({ params, request }) {
       box-shadow:0 0 0 1.15px rgba(255,255,255,.28),0 0 28px rgba(34,211,165,.28)}
     .seal:after{content:"◷";font-size:1.35rem;color:var(--gold);line-height:1}
     .seal.ok:after{content:"✓";color:var(--ok)}
+    .seal.none:after{content:"#";color:var(--gold)}
     .k{letter-spacing:.16em;text-transform:uppercase;font-size:10px;color:var(--gold);font-weight:800;margin:0 0 .55rem}
     .fp{letter-spacing:.16em;text-transform:uppercase;font-size:9px;color:var(--gold);font-weight:800;margin:0 0 .4rem}
     .status{display:inline-block;border-radius:.5rem;padding:.4rem .8rem;font-size:12px;font-weight:800;
@@ -257,39 +333,26 @@ export async function onRequestGet({ params, request }) {
     </header>
     <article class="card">
       <div class="mast">
-        <div class="seal ${confirmed ? 'ok' : ''}" aria-hidden="true"></div>
+        <div class="seal ${sealClass}" aria-hidden="true"></div>
         <div>
           <p class="k">${esc(tr(L, 'zeroJsKicker'))}</p>
-          <p class="status ${confirmed ? 'ok' : 'wait'}" role="status">${esc(statusLine)}</p>
+          ${statusHtml}
         </div>
       </div>
-      <h1>${esc(confirmed ? tr(L, 'titleConfirmed') : tr(L, 'titlePending'))}</h1>
+      <h1>${esc(heading)}</h1>
       <p class="fp">${esc(tr(L, 'fingerprint'))}</p>
       <p class="h">${esc(hash)}</p>
-      <p>${
-        proof.created_at
-          ? esc(tr(L, 'recordedAt', { time: utc(proof.created_at) }))
-          : esc(tr(L, 'recorded'))
-      }
-      ${
-        confirmed
-          ? blockLabel
-            ? `${esc(tr(L, 'anchoredBlock', { block: blockLabel })).replace(
-                esc(blockLabel),
-                `<a href="https://mempool.space/block/${esc(block)}">${esc(blockLabel)}</a>`
-              )}`
-            : esc(tr(L, 'anchored'))
-          : esc(tr(L, 'calendarsHave'))
-      }</p>
+      ${bodyCopy}
       ${emptyNote}
-      <p class="muted">${esc(tr(L, 'neverLeaves'))}</p>
+      ${neverLeaves}
       <p class="muted">${esc(tr(L, 'imessage'))}</p>
       ${njump}
-      <p><code>${esc(tr(L, 'otsCli'))}</code></p>
-      <p class="cals">${esc(tr(L, 'calendarsLine'))}</p>
+      ${otsCli}
+      ${cals}
       <div class="actions">
-        <a class="btn gold" href="https://satohash.io/verify/${esc(hex)}">${esc(tr(L, 'interactiveVerify'))}</a>
-        <a class="btn ghost" href="https://satohash.io/stamp">${esc(tr(L, 'stampFile'))}</a>
+        ${primaryCta}
+        ${otsBtn}
+        ${stampFileBtn}
         <a class="btn ghost" href="https://satohash.io/counsel">${esc(tr(L, 'forCounsel'))}</a>
       </div>
     </article>
@@ -304,7 +367,7 @@ export async function onRequestGet({ params, request }) {
   return new Response(html, {
     headers: {
       'content-type': 'text/html; charset=utf-8',
-      'cache-control': 'public, max-age=60',
+      'cache-control': pending ? 'public, max-age=15' : 'public, max-age=60',
       'x-robots-tag': 'index, follow'
     }
   })

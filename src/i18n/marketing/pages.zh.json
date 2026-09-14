@@ -758,12 +758,12 @@
     "nip05Cta": "设置 NIP-05 身份",
     "stampWidget": {
       "title": "Stamp on Satohash",
-      "body": "家族客户端在设备上计算文件哈希——文件不会离开浏览器。盖章后打开 /stamp?hash=&ref=，由 SPA 根据 data-client 发送 X-Satohash-Client。Katoa、MotoPass、SherpaCarta、Give A Bit 和 TadBuy 共用同一嵌入组件。",
+      "body": "家族客户端在设备上计算文件哈希——文件不会离开浏览器——然后向 api.satohash.io/api/stamp 发送 POST，并带上来自 data-client 的 X-Satohash-Client，以便在家族站点上完成盖章。使用 data-mode=spa 则改为打开 /stamp?hash=&ref=。Katoa、MotoPass、SherpaCarta、Give A Bit 和 TadBuy 共用同一嵌入组件。",
       "embedLabel": "Stamp 组件"
     },
     "family": {
       "title": "家族站点",
-      "body": "每个产品 id 粘贴一次。组件在设备上计算文件的 SHA-256——文件不会离开浏览器。盖章后打开 /stamp?hash=&ref=，由 SPA 根据 data-client 发送 X-Satohash-Client。HQ 的 metrics.json familyClients 只统计真正以该 id 完成的盖章。Katoa、MotoPass、SherpaCarta、Give A Bit 和 TadBuy 已有粘贴代码；在家族站点真正完成盖章之前，计数保持诚实的零。"
+      "body": "每个产品 id 粘贴一次。组件在设备上计算文件的 SHA-256——文件不会离开浏览器——然后向 api.satohash.io/api/stamp 发送 POST，并带上来自 data-client 的 X-Satohash-Client，以便在家族站点上完成盖章。使用 data-mode=spa 则改为打开 /stamp?hash=&ref=。HQ 的 metrics.json familyClients 只统计真正以该 id 完成的盖章。Katoa、MotoPass、SherpaCarta、Give A Bit 和 TadBuy 已有粘贴代码；在家族站点真正完成盖章之前，计数保持诚实的零。"
     }
   },
   "docsPage": {
@@ -1842,7 +1842,15 @@
     "viewMempool": "在 mempool.space 查看",
     "blockHeightMissing": "尚未存储区块高度 — pending ≠ 问题本身；确认已被记录。",
     "pendingTipTitle": "Pending 不是 confirmed",
-    "pendingTipBody": "指纹已在 OpenTimestamps 日历上。在状态变为 confirmed 之前，它不在比特币区块中。Pending ≠ confirmed。"
+    "pendingTipBody": "指纹已在 OpenTimestamps 日历上。在状态变为 confirmed 之前，它不在比特币区块中。Pending ≠ confirmed。",
+    "statusPending": "Pending",
+    "statusConfirmed": "Confirmed",
+    "pendingLine": "OpenTimestamps 日历已收录。尚未进入 Bitcoin 区块 — 通常约 60 分钟。",
+    "confirmedLine": "Bitcoin 区块 {{block}} — 下载 .ots",
+    "confirmedLineNoBlock": "Bitcoin-confirmed — 下载 .ots",
+    "otsPending": "Pending .ots — 仅日历",
+    "otsConfirmed": "Bitcoin-confirmed .ots",
+    "viewProofCard": "查看证明卡"
   },
   "vaultPage": {
     "securityAge": {
@@ -1956,7 +1964,12 @@
     "anchored": "比特币已锚定它。",
     "anchoredBlock": "比特币已将其锚定在区块 {{block}}。",
     "calendarsHave": "日历已有该摘要。比特币区块尚未包含它。Pending 不是 confirmed。",
-    "calendarsLine": "Calendars · alice · bob · finney"
+    "calendarsLine": "Calendars · alice · bob · finney",
+    "notStampedYet": "尚未盖戳",
+    "notStampedBody": "此指纹不在 Satohash 登记中。盖戳以启动 OpenTimestamps。",
+    "stampThisFingerprint": "盖戳此指纹",
+    "downloadOts": "下载 .ots",
+    "waitingBlock": "日历已有该摘要；Bitcoin 区块尚未包含它（约 60 分钟）。"
   },
   "counselPage": {
     "metaTitle": "致律师",
