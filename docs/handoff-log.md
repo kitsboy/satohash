@@ -1,3 +1,9 @@
+## 2026-09-14 (Grok M3 — notary extras + slice C chrome)
+
+SPA only. Templates are drafts; **Stamp this draft** SHA-256s locally and opens `/stamp`. PDF no longer claims a notary act. Slice C chrome: Settings, vault, protocol stats, mobile signer (demo), certificates, admin, contract list, v5 playground labels. Kimi: **do not rebuild API**.
+
+---
+
 ## 2026-09-14 (Grok M3 — batch verify, trust leftovers, distressed-asset, /nodes)
 
 SPA only. `/verify/batch`, Trust leftover English, `/distressed-asset`, `/nodes` public calendar ping (not a world mesh). Kimi: **do not rebuild API**.

@@ -1,7 +1,7 @@
 # Current Status — Satohash
 
 **Version:** **5.0.0-ELITE** (Build 331+)  
-**Last Updated:** 2026-09-14 (batch/trust/distress/nodes i18n — Grok SPA; API still `5ec7756`)  
+**Last Updated:** 2026-09-14 (templates stamp-draft + slice C chrome — Grok SPA; API still `5ec7756`)  
 **Frontend:** https://satohash.io · www · CF Pages project **`satohash`** — Grok lane, `assetsDir: 'b'`  
 **API:** https://api.satohash.io ✅ LIVE (THOR Docker). Confirm SHA with `GET /health` (`gitSha`). **Live now: `5ec7756`** — Kimi rebuilt; keep-alive 65s/66s/120s. `Cache-Control: no-store`, Caddy OK, paywall off, ~316 stamps. Do **not** rebuild again unless HEAD moves.  
 **Metrics SoT:** `https://api.satohash.io/metrics.json`  
@@ -84,9 +84,11 @@
 - [x] de/pt/sw/en translations catalog **250** keys
 - [x] Snapper left-rail label: Web Capture (scaffold)
 - [x] `/verify/batch`, `/distressed-asset`, Trust leftovers, `/nodes` calendar ping (public)
-- [ ] **Next code:** Offers stay deferred; notary extras; slice C last
+- [x] Notary templates: honest drafts; Stamp this draft → `/stamp`; PDF not a notary act
+- [x] Slice C chrome: Settings, Image vault, Protocol stats, Mobile signer (demo), Certificates, Admin, Contract list, v5 playground labels
+- [ ] Offers stay deferred
 - [ ] Snapper stays scaffold — do not sell as judiciary-ready
-- [ ] Slice **C** last: admin / contracts / v5 / settings
+- [ ] Remaining C: contract editor/view, onboarding, forum if still English
 - [ ] Do **not** add Arabic until A+B+C are done
 - [ ] Cam still: pin `/watch` on **`@give_bit`**; iPhone `/p/` unfurl
 - [ ] API: **do not rebuild** for copy

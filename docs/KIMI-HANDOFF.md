@@ -1,3 +1,9 @@
+## Latest Session Summary (Grok M3, 2026-09-14 — templates + slice C)
+
+**Lane:** SPA only. **Kimi: do not rebuild the API.** Notary templates: drafts; Stamp this draft → `/stamp`. Slice C chrome i18n (Settings, vault, stats, mobile signer demo, certificates, admin, contracts list, v5). Offers deferred.
+
+---
+
 ## Latest Session Summary (Grok M3, 2026-09-14 — batch/trust/nodes)
 
 **Lane:** SPA only. **Kimi: do not rebuild the API.** `/verify/batch`, Trust leftovers, `/distressed-asset`, `/nodes` public calendar ping (not a world mesh). Offers still deferred.

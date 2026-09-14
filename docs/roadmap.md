@@ -34,8 +34,8 @@ Cam: whole site in the seven languages we already offer. Commit + push after eac
 | Slice | Status | Surfaces |
 |-------|--------|----------|
 | **A — product loop** | **[x]** `89262b1` | Stamp leftovers, Verify, `/stamp/done`, `/p/<hash>` SPA + zero-JS, Counsel, Status, Watch, nav/footer |
-| **B — public marketing** | **[~]** | **Done:** … developer, exec summary, batch verify, trust leftovers, distressed-asset, `/nodes` calendar ping. Offers still deferred. |
-| **C — app / ops** | **[ ]** | Admin, contracts, v5, Settings, Image vault, Protocol stats |
+| **B — public marketing** | **[~]** | Templates extras done (drafts; stamp-this-draft). Offers still deferred. |
+| **C — app / ops** | **[~]** | Settings, Image vault, Protocol stats, Mobile signer demo, Certificates, Admin, Contract list, v5 chrome. Remaining: contract editor, onboarding, forum. |
 | Catalog debt | **[x]** | en/es/fr/de/pt/sw/zh `translations/*.json` **250** keys. Stop growing inline `index.jsx` |
 
 Gate: `npm run i18n:check`. Keep Bitcoin / OpenTimestamps / `ots-cli` / hash hex / Pending·Confirmed in English.
