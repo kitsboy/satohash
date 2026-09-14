@@ -34,14 +34,14 @@ Anyone who needs a date they can check: journalists, creators, legal and complia
 
 ## Stage
 
-Working MVP (`5.0.0-ELITE`). A stranger can stamp, download `.ots`, verify, and share `/p/<hash>` — no account.
+Working MVP (`5.0.0-ELITE`). A stranger can stamp, download `.ots`, verify, and share `/p/<hash>` — no account. Phone cameras open `https://satohash.io/p/{hash}`. **Pending ≠ Confirmed** (~60 min). Family widget default POSTs `/api/stamp`.
 
 ## Traction (honest)
 
 - Live SPA: [satohash.io](https://satohash.io)
 - Live API: [api.satohash.io](https://api.satohash.io) (THOR Docker; own `bitcoind` at tip)
-- Family widgets on Katoa, MotoPass, Sherpa, Give A Bit (`public/widgets/stamp.js`)
-- ~316+ stamps historically (2026-08 snapshot). **Do not treat that as a current KPI** — live count is on [/network](https://satohash.io/network) and `https://api.satohash.io/metrics.json`
+- Family widgets on Katoa, MotoPass, Sherpa, Give A Bit, TadBuy (`public/widgets/stamp.js`) — default **POST** `/api/stamp` (hash on-device)
+- Live stamp count is on [/network](https://satohash.io/network) and `https://api.satohash.io/metrics.json` — **do not invent a KPI here**
 
 ## Model / value flow
 
@@ -55,7 +55,7 @@ Free base (stamp / verify / `.ots` + client-side hashing) is the permanent trust
 | ~60-minute confirmation | Anchoring waits for the next Bitcoin block. Strength, not a bug. |
 | Bitcoin-only | No multi-chain anchoring, ever. |
 | Hash confidentiality has edges | Fine for real documents; not a privacy shield for trivial, guessable inputs. |
-| Cathedral not shipped | Multi-party contracts, store-shipped Snapper, native store apps, ZK redaction as a product. |
+| Cathedral not shipped | Multi-party contracts, store-shipped Snapper, native store apps, ZK redaction, 3D Merkle, BOLT-12 billing. |
 
 ## Why Give A Bit
 
@@ -63,7 +63,7 @@ Part of an interlocking Bitcoin-sovereignty suite. Shared brand, Safe Harbour, o
 
 ## 90-day north star (default)
 
-Measurable usage on the live URL, one more family or distribution partnership, i18n of remaining public pages (About / Pitch / Network), pin `/watch` on @give_bit, keep this pack honest.
+Measurable usage on the live URL, one more family or distribution partnership, pin `/watch` on @give_bit, physical iPhone `/p/` unfurl, keep this pack honest. Localization of the seven locales is in progress (`docs/I18N.md`) — not complete.
 
 ## Risks & mitigations
 
@@ -81,7 +81,7 @@ Protocol collaborators, legal design partners, distribution through the Give A B
 
 1. Open [https://satohash.io/stamp](https://satohash.io/stamp) — no account.
 2. Drop a file. Hash stays on-device. Download the `.ots`.
-3. Verify, then share `/p/<hash>`.
+3. Verify — **Pending ≠ Confirmed**. Share `/p/<hash>` (camera QR).
 4. Point to this pack: `docs/diligence/`
 
 ## Related pack files

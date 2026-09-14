@@ -13,7 +13,7 @@ The public in-app guide is [`public/docs/quickstart.md`](../public/docs/quicksta
 1. Open [https://satohash.io/stamp](https://satohash.io/stamp) — no account.
 2. Drop a PDF, image, or any file. The browser computes SHA-256 locally (Web Crypto). The original bytes never upload.
 3. Only the hash is sent to [https://api.satohash.io](https://api.satohash.io).
-4. Download the `.ots` receipt. Share `https://satohash.io/p/<hash>`.
+4. Download the `.ots` receipt. Share `https://satohash.io/p/<hash>` — that is the proof card. Phone cameras cannot read `.ots`; they open this URL (QR on PDFs and email).
 5. Verify at [https://satohash.io/verify](https://satohash.io/verify), or with open tools:
 
 ```bash
@@ -21,7 +21,7 @@ pip install opentimestamps-client
 ots verify mydoc.pdf.ots -f mydoc.pdf
 ```
 
-Pending means calendars have the hash; confirmed means a Bitcoin block has sealed it. Explainer: [https://satohash.io/watch](https://satohash.io/watch).
+**Pending ≠ Confirmed.** Pending = calendars have the hash. Confirmed = a Bitcoin block has sealed it (~60 minutes). Explainer: [https://satohash.io/watch](https://satohash.io/watch).
 
 ---
 
@@ -49,12 +49,14 @@ node packages/satohash-cli/bin/satohash.js verify <64hex>
 
 On stamp success the CLI prints `https://satohash.io/p/<hash>`. Full command list: [packages/satohash-cli/README.md](../packages/satohash-cli/README.md).
 
-Family sites can embed the same loop without a CLI:
+Family sites can embed the same loop without a CLI. The file is hashed on-device (never uploaded). Default **completes** the stamp: `POST https://api.satohash.io/api/stamp` (`X-Satohash-Client`) and returns the proof card. Opt-in `data-mode="spa"` opens `/stamp?hash=&ref=` instead.
 
 ```html
 <div data-satohash-stamp data-client="katoa" data-theme="jewel"></div>
 <script src="https://satohash.io/widgets/stamp.js" async></script>
 ```
+
+Contract: [docs/FAMILY-API.md](./FAMILY-API.md). Do not invent `/api/*` paths.
 
 ---
 
@@ -104,18 +106,18 @@ Deploy: [docs/deploy.md](./deploy.md). Architecture: [docs/architecture.md](./ar
 | `/stamp` | Hash on-device, stamp, download `.ots` |
 | `/stamp/done` | Receipt + share `/p/<hash>` |
 | `/verify` | Public verify |
-| `/p/<hash>` | Zero-JS proof card |
+| `/p/<hash>` | Zero-JS proof card — camera QR target |
 | `/watch` | Explainer |
 | `/network` | Live calendars, bitcoind tip, recent stamps |
 
-Contracts, Snapper-as-store-extension, native store apps, and private-key authorship are **later** — not the happy path.
+Contracts, Snapper-as-store-extension, ZK redaction, BOLT-12, native store apps, and private-key authorship are **later** — not the happy path.
 
 ---
 
 ## Troubleshooting
 
 - **CLI talking to localhost:** you ran `bin/satohash.js`. Use `packages/satohash-cli/bin/satohash.js`.
-- **Pending for ~60 min:** expected. Bitcoin block time is the confirmation.
+- **Pending for ~60 min:** expected. Bitcoin block time is the confirmation. Pending is not Confirmed.
 - **429 on stamp:** public rate limit 5/min. Wait for `Retry-After`.
 - **Local port conflict:** change `PORT` / Vite port. Live SPA always calls `https://api.satohash.io`.
 - **Agents:** [AGENTS.md](../AGENTS.md).

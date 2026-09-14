@@ -11,6 +11,8 @@ Hash a file on your device. Stamp the fingerprint. Download a portable `.ots` re
 
 **Live loop:** [satohash.io/stamp](https://satohash.io/stamp) → [verify](https://satohash.io/verify) → share [`/p/<hash>`](https://satohash.io/p/). No account. Free stamps. The file never leaves the device.
 
+Phone cameras cannot read `.ots` files. Proof cards encode **`https://satohash.io/p/{hash}`** as a QR (PDFs and email too) — scanning it opens the zero-JS receipt. **Pending** means calendars have the hash; **Confirmed** means a Bitcoin block has sealed it (~60 minutes). They are not the same.
+
 **API:** [https://api.satohash.io](https://api.satohash.io) · **Watch:** [satohash.io/watch](https://satohash.io/watch) (~84s)
 
 > **Agents:** start at **[AGENTS.md](AGENTS.md)** · status **[.ai_docs/current-status.md](.ai_docs/current-status.md)** · handoff **[docs/handoff-log.md](docs/handoff-log.md)**.
@@ -20,10 +22,10 @@ Hash a file on your device. Stamp the fingerprint. Download a portable `.ots` re
 | Live today | Later (cathedral) |
 |------------|-------------------|
 | Stamp, download `.ots`, verify, share `/p/<hash>` | Private-key authorship (proves *who*, not only *when*) |
-| Free stamps — paywall off | Lightning paywall / BOLT-12 / L402 |
+| Camera QR → `https://satohash.io/p/{hash}` · Pending ≠ Confirmed | Lightning paywall / BOLT-12 / L402 |
 | File hashed on-device; only the SHA-256 leaves | Multi-party contracts |
 | Production API at `api.satohash.io` + own `bitcoind` at tip | Snapper Chrome extension (store-shipped) |
-| Family widget + CLI | Native store apps |
+| Family widget POST `/api/stamp` + CLI | Native store apps |
 | Explainer at `/watch` | ZK redaction as a product |
 
 Today Satohash proves **when** a file existed, not **who** made it. Confirmation waits for the next Bitcoin block (~60 minutes). Bitcoin-only — no other chain.
@@ -70,7 +72,7 @@ node packages/satohash-cli/bin/satohash.js stamp ./file.pdf
 
 `SATOHASH_API_URL` defaults to `https://api.satohash.io`. Every request sends `X-Satohash-Client: cli`. See [packages/satohash-cli/README.md](packages/satohash-cli/README.md).
 
-**Family widget** — Katoa, MotoPass, Sherpa, Give A Bit, TadBuy. Hashes on-device, then opens `/stamp?hash=…&ref=…`:
+**Family widget** — Katoa, MotoPass, Sherpa, Give A Bit, TadBuy. Hashes on-device, then **POST**s `/api/stamp` (completes the stamp; `data-mode="spa"` still opens `/stamp?hash=…&ref=…`):
 
 ```html
 <div data-satohash-stamp data-client="katoa" data-theme="jewel"></div>

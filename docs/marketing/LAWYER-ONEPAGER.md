@@ -55,7 +55,10 @@ Proving *"what existed, when, unaltered"* has become harder, not easier — gene
 
 - **Free stamps today** — `REQUIRE_LIGHTNING=false`. Bitcoin + OTS anchoring live, own node at tip.
 - **Proves "when," not "who"** — stated plainly. Proof of authorship (private-key signing) is the next chapter, on the roadmap, not claimed as shipped.
+- **Pending ≠ Confirmed** — calendars have the hash vs a Bitcoin block (~60 minutes). Do not treat them as the same.
+- **Camera QR** — share `https://satohash.io/p/{hash}`; phone cameras open that URL (they cannot read `.ots`).
 - **Portable `.ots`** — verifiable with open tools. Independent client-side verify (zero server trust) is on the roadmap; we say so until it ships.
+- **Snapper / ZK redaction / BOLT-12 / 3D Merkle** — not current features. Cathedral or staged; do not cite them as shipped evidence tools.
 - **Verify this yourself** — on every proof: free, open tools, no account, no KYC.
 - **Freshness, not guesswork** — every claim surfaces when it was last confirmed. Honest stale beats confident wrong.
 

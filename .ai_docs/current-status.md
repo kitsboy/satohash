@@ -1,7 +1,7 @@
 # Current Status — Satohash
 
 **Version:** **5.0.0-ELITE** (Build 331+)  
-**Last Updated:** 2026-09-14 (template catalog 7 locales — Grok SPA; API still `5ec7756`)  
+**Last Updated:** 2026-09-14 (manuals/pitch/exec match live product — Grok SPA; API still `5ec7756`)  
 **Frontend:** https://satohash.io · www · CF Pages project **`satohash`** — Grok lane, `assetsDir: 'b'`  
 **API:** https://api.satohash.io ✅ LIVE (THOR Docker). Confirm SHA with `GET /health` (`gitSha`). **Live now: `5ec7756`** — Kimi rebuilt; keep-alive 65s/66s/120s. `Cache-Control: no-store`, Caddy OK, paywall off, ~316 stamps. Do **not** rebuild again unless HEAD moves.  
 **Metrics SoT:** `https://api.satohash.io/metrics.json`  
@@ -72,6 +72,19 @@
 | `raw.familyClients` | **17** rows (list; zeros for unused family ids) |
 | Family with counts | live `raw.familyClients` — do not invent zeros; read metrics.json |
 | Sherpa / Katoa / Giveabit | attributed stamps exist (honest live counts; not 0) |
+
+## This session (2026-09-14 — manuals, pitch, exec, handoff)
+
+- [x] Pitch + exec match **live** loop: stamp → `.ots` → `/p/{hash}` camera QR; Pending ≠ Confirmed (~60 min); family widget POST `/api/stamp`; CLI
+- [x] Cut cathedral as current features (ZK redaction, Snapper judiciary-ready, 3D Merkle, BOLT-12)
+- [x] QUICKSTART + `public/docs/quickstart.md`; FAMILY-API proof-card QR; MVP remaining = QR/proof states, not VPS
+- [x] PITCH-DECK honesty slides: camera QR, Pending vs Confirmed, family widget POST — no fake traction
+- [x] Light-touch: LAWYER-ONEPAGER, INVESTOR-ONEPAGER, README `/p/{hash}` QR
+- [x] I18N / roadmap one-liners; `docs:sync`
+- [ ] Offers stay deferred
+- [ ] Snapper stays scaffold — do not sell as judiciary-ready
+- [ ] Cam still: pin `/watch` on **`@give_bit`**; iPhone `/p/` unfurl
+- [ ] API: **do not rebuild** for copy
 
 ## This session (2026-09-14 — docs truth + tool-belt + About/Pitch/Network)
 

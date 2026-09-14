@@ -245,10 +245,10 @@
         <div class="cell"><div class="icon">1️⃣</div><h3>Hash</h3><p>Your browser computes the fingerprint. The original bytes <b>never leave your device</b>.</p></div>
         <div class="cell"><div class="icon">2️⃣</div><h3>Stamp</h3><p>Only the 64-char hash goes to three independent OpenTimestamps calendars.</p></div>
         <div class="cell"><div class="icon">3️⃣</div><h3>Anchor</h3><p>Calendars merge hashes into a Merkle tree, committed to Bitcoin.</p></div>
-        <div class="cell"><div class="icon">4️⃣</div><h3>Confirm</h3><p>~10 minutes later, a Bitcoin block permanently seals the commitment.</p></div>
+        <div class="cell"><div class="icon">4️⃣</div><h3>Confirm</h3><p>~60 minutes later, a Bitcoin block seals it. <b>Pending ≠ Confirmed</b> — calendars vs the chain.</p></div>
       </div>
       <div class="grid-2" style="margin-top:10px;">
-        <div class="cell"><div class="icon">5️⃣</div><h3>Prove</h3><p>Download the <span style="font-family:var(--font-mono)">.ots</span>. Verify with open tools + a block explorer — forever.</p></div>
+        <div class="cell"><div class="icon">5️⃣</div><h3>Prove</h3><p>Download the <span style="font-family:var(--font-mono)">.ots</span>. Share <span style="font-family:var(--font-mono)">satohash.io/p/{hash}</span> — phone cameras open that URL.</p></div>
         <div class="cell" style="border-color: var(--jewel-sky);"><div class="icon" style="background: color-mix(in srgb, var(--jewel-sky) 18%, transparent);">🧾</div><h3>No trust required</h3><p>The security comes from Bitcoin's proof-of-work — not from any company.</p></div>
       </div>
     </div>
@@ -261,10 +261,10 @@
       <h2>A sovereign stack, <span class="grad">four planes deep</span></h2>
       <p class="small">Higher planes evolve without ever invalidating the proofs beneath them.</p>
       <div class="plane-stack" style="margin-top:12px;">
-        <div class="plane"><span class="plane-tag">P4 · ATLAS</span><div><div class="plane-name">Chain intelligence</div><div class="plane-desc">Mempool, node mesh, protocol stats, jurisdiction signals</div></div></div>
+        <div class="plane"><span class="plane-tag">P4 · ATLAS</span><div><div class="plane-name">Chain intelligence</div><div class="plane-desc">Chrome / demos — not a world index <span class="pill warn">not current</span></div></div></div>
         <div class="plane"><span class="plane-tag">P3 · SETTLEMENT</span><div><div class="plane-name">Lightning micro-payments</div><div class="plane-desc">BOLT-12 offers + L402 — <span class="pill warn">built · staged</span></div></div></div>
-        <div class="plane"><span class="plane-tag">P2 · IDENTITY</span><div><div class="plane-name">Nostr NIP-05 / NIP-07</div><div class="plane-desc">Cryptographic signer identity &amp; multi-party provenance</div></div></div>
-        <div class="plane"><span class="plane-tag">P1 · PROOF</span><div><div class="plane-name">OpenTimestamps → Bitcoin PoW</div><div class="plane-desc">The eternal foundation — SHA-256 + calendar aggregation</div></div></div>
+        <div class="plane"><span class="plane-tag">P2 · IDENTITY</span><div><div class="plane-name">Nostr NIP-05 / NIP-07</div><div class="plane-desc">Lookup today — proves <em>when</em>, not <em>who</em> <span class="pill warn">authorship later</span></div></div></div>
+        <div class="plane"><span class="plane-tag">P1 · PROOF</span><div><div class="plane-name">OpenTimestamps → Bitcoin PoW</div><div class="plane-desc">Live — SHA-256 on-device + calendars + <span style="font-family:var(--font-mono)">/p/{hash}</span> <span class="pill ok">live</span></div></div></div>
       </div>
     </div>
   </div>
@@ -317,12 +317,12 @@
       <h2>An <span class="grad">honesty contract</span>, not a promise</h2>
       <p class="lead" style="font-size:clamp(15px,1.7vw,19px); max-width:900px;">We show you exactly what is live, what is staged, and how to check every claim yourself.</p>
       <div class="grid-3" style="margin-top:8px; width:min(1020px,96%);">
-        <div class="cell"><div class="icon">✅</div><h3>Free stamps · live</h3><p>Bitcoin + OTS anchoring, zero-knowledge hashing — true today.</p><span class="pill ok">Live</span></div>
-        <div class="cell"><div class="icon">🧾</div><h3>Portable .ots proofs</h3><p>Verify with open tools forever. Independent client-side verify on the roadmap.</p><span class="pill warn">On roadmap</span></div>
-        <div class="cell"><div class="icon">✍️</div><h3>Multi-party signing</h3><p>Partial today; verified non-repudiation on the roadmap. We say so.</p><span class="pill warn">Roadmap</span></div>
-        <div class="cell"><div class="icon">⚡</div><h3>Lightning billing</h3><p>Built &amp; staged; launched only when the rails are funded and tested.</p><span class="pill warn">Staged</span></div>
-        <div class="cell"><div class="icon">⛓️</div><h3>Bitcoin only</h3><p>Ethereum / cross-chain is out of scope. Bitcoin is the truth layer.</p><span class="pill ok">Bitcoin</span></div>
-        <div class="cell"><div class="icon">🛡️</div><h3>Verify this yourself</h3><p>Every proof carries a standing invitation to check with open tools.</p><span class="pill ok">Always</span></div>
+        <div class="cell"><div class="icon">✅</div><h3>Free stamps · live</h3><p>Bitcoin + OTS, hash on-device. Paywall off. Family widget POSTs <span style="font-family:var(--font-mono)">/api/stamp</span>.</p><span class="pill ok">Live</span></div>
+        <div class="cell"><div class="icon">📷</div><h3>Camera QR</h3><p>Phone cameras open <span style="font-family:var(--font-mono)">satohash.io/p/{hash}</span>. They cannot read <span style="font-family:var(--font-mono)">.ots</span>.</p><span class="pill ok">Live</span></div>
+        <div class="cell"><div class="icon">⏳</div><h3>Pending ≠ Confirmed</h3><p>Calendars have the hash vs a Bitcoin block (~60 min). Do not treat them as the same.</p><span class="pill ok">Honest</span></div>
+        <div class="cell"><div class="icon">⚡</div><h3>Lightning / Snapper / ZK</h3><p>BOLT-12 staged. Snapper scaffold. ZK redaction &amp; 3D Merkle are cathedral — not current features.</p><span class="pill warn">Not live</span></div>
+        <div class="cell"><div class="icon">⛓️</div><h3>Bitcoin only</h3><p>Ethereum / cross-chain is out of scope. Bitcoin is the truth layer. Proves <em>when</em>, not <em>who</em>.</p><span class="pill ok">Bitcoin</span></div>
+        <div class="cell"><div class="icon">🛡️</div><h3>Verify this yourself</h3><p>Every proof carries a standing invitation to check with open tools. No fake traction numbers.</p><span class="pill ok">Always</span></div>
       </div>
     </div>
   </div>

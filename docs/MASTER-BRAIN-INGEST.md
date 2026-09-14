@@ -6,6 +6,18 @@
 
 ---
 
+## Paste block (2026-09-14 — manuals match live product)
+
+```markdown
+### Satohash 2026-09-14 manuals / pitch / exec
+Grok SPA/docs: pitch + exec + quickstart + FAMILY-API + MVP + pitch-deck honesty now match live loop.
+Live: hash on-device → stamp → .ots → camera QR https://satohash.io/p/{hash}. Pending ≠ Confirmed (~60 min). Family widget default POST /api/stamp. CLI prints proof card.
+NOT current features: Snapper, ZK redaction, 3D Merkle, BOLT-12.
+Remaining MVP = QR/proof states shipping, not VPS. API still 5ec7756. **Do not rebuild the API.** Pages = Grok. Vault = THOR Obsidian, not M4.
+```
+
+---
+
 ## Paste block (2026-09-13 — finish all seven languages)
 
 ```markdown

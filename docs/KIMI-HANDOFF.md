@@ -1,3 +1,11 @@
+## Latest Session Summary (Grok M3, 2026-09-14 — manuals / pitch / exec)
+
+**Lane:** SPA/docs only. **Kimi: ingest THOR. Do not rebuild the API. Pages = Grok.**
+
+Pitch, exec, quickstart, FAMILY-API, MVP readiness, pitch-deck honesty slides now match live product: camera QR `https://satohash.io/p/{hash}`, Pending ≠ Confirmed, family widget POST stamp, CLI. Snapper / ZK / BOLT-12 are not current features. Remaining = QR/proof states, not VPS.
+
+---
+
 ## Latest Session Summary (Grok M3, 2026-09-14 — finish i18n list)
 
 **Lane:** SPA only. **Kimi: do not rebuild the API.** Template catalog (25 templates, field labels) in 7 locales. Offers staged chrome, still deferred in nav. Remaining Cam: pin `/watch`, iPhone unfurl. Snapper scaffold.

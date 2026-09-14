@@ -1,3 +1,11 @@
+## 2026-09-14 (Grok M3 — manuals / pitch / exec match live product)
+
+SPA/docs only. **Do not commit / do not push** this wave unless Cam asks. Pitch + exec + quickstart + family API + MVP readiness + pitch deck honesty slides now match the **live** loop: hash on-device → stamp → `.ots` → camera QR `https://satohash.io/p/{hash}`; **Pending ≠ Confirmed** (~60 min); family widget default **POST** `/api/stamp`; CLI. Cut ZK redaction / Snapper-as-judiciary-ready / 3D Merkle / BOLT-12 as current features. Remaining MVP = QR/proof states shipping, not a VPS wait.
+
+**Kimi:** ingest THOR Obsidian. **Do not rebuild the API.** Do not Tailscale-sync to M4. Pages = Grok.
+
+---
+
 ## 2026-09-14 (Grok M3 — finish list: template catalog + leftover chrome)
 
 SPA only. 25 templates: titles, descriptions, field labels in en/es/fr/de/pt/sw/zh. Demo party names stay English. Offers chrome staged (nav still deferred). Lifecycle / proof explorer / ZK demo chrome. Kimi: **do not rebuild API**.

@@ -1,6 +1,8 @@
 # Satohash Protocol Roadmap
 
-This roadmap tracks the evolution of Satohash from a standalone notary tool to a **Global Sovereign Settlement Mesh**.
+> **Live product (2026-09-14):** stamp → `.ots` → verify → camera QR `https://satohash.io/p/{hash}`. Pending ≠ Confirmed (~60 min). Family widget POSTs `/api/stamp`. Snapper, ZK redaction, 3D Merkle, and BOLT-12 are **not** current features (cathedral / staged). Kimi: do not rebuild the API.
+
+This roadmap tracks the evolution of Satohash from a standalone notary tool to a **Global Sovereign Settlement Mesh**. Phase checkmarks below include cathedral items that are **not live** — do not pitch them as shipped.
 
 ## ✅ PHASE I: THE BASE CASE (COMPLETED)
 1.  **[x] Bitcoin Anchoring**: Core OpenTimestamps integration.
