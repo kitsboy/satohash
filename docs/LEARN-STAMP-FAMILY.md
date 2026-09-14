@@ -6,11 +6,13 @@
 
 ---
 
+## 2026-09-15 — Live family stamps (closed)
+
+Kimi completed a live widget stamp on all five family hosts. HQ was **not** zeros (those ids already had 1–2). After: katoa/motopass/sherpacarta/tadbuy **2**, giveabit **3**. Give A Bit widget lives at **`/tools`**, not the homepage. File input is in the widget **shadow root**. Do not rebuild Satohash API.
+
 ## 2026-09-14 — Git paste is not a stamp
 
-Widgets exist in **git** on Katoa, MotoPass, SherpaCarta, TadBuy, Give A Bit. HQ `raw.familyClients` still stays **0** until a stamp **completes** on the **live** host with `X-Satohash-Client`.
-
-Kimi: deploy the family site if the widget is missing in production HTML, then complete **one** stamp. Check `https://api.satohash.io/metrics.json`. Do **not** rebuild Satohash API. Table: `docs/FAMILY-API.md`.
+Widgets in git are not HQ attribution. `raw.familyClients` only increments when a stamp **completes** on the **live** host with `X-Satohash-Client`. Closed 2026-09-15 (see above). Table: `docs/FAMILY-API.md`.
 
 ---
 

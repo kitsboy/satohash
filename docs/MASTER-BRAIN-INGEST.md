@@ -6,31 +6,27 @@
 
 ---
 
+## Paste block (2026-09-15 — family live stamps DONE)
+
+```markdown
+### Satohash 2026-09-15 family widgets (DONE — do not repeat wrong claims)
+
+Kimi completed live stamps from all five family widgets. API not rebuilt (gitSha 6c1be90).
+HQ was not zeros before: katoa/motopass/sherpacarta/tadbuy 1→2, giveabit 2→3.
+Give A Bit widget is https://giveabit.io/tools not the homepage.
+Shadow-root: widget file input is inside shadow DOM — naive querySelector misses it.
+Family leftovers: tadbuy own /api 404s; motopass useProgramsContext ErrorBoundary (widget still stamps).
+Do not rebuild Satohash API. Pages = Grok. Vault = THOR.
+```
+
+---
+
 ## Paste block (2026-09-14 — family widgets must complete a stamp)
 
 ```markdown
-### Satohash 2026-09-14 family distribution (Kimi DO THIS)
+### Satohash 2026-09-14 family distribution (superseded 2026-09-15)
 
-Grok SPA: Pending→Confirmed browser notify + toast. Do **not** rebuild Satohash API.
-
-Widgets are in git on Katoa / MotoPass / SherpaCarta / TadBuy / Give A Bit.
-HQ familyClients only counts **completed** stamps. Git paste ≠ live attribution.
-
-Kimi: on each LIVE site, confirm widget HTML, deploy the family host if missing, complete ONE stamp, then:
-
-curl -sS https://api.satohash.io/metrics.json
-
-Done when raw.familyClients shows katoa, motopass, sherpacarta, tadbuy, giveabit > 0.
-
-Live:
-- https://katoa.org data-client=katoa
-- https://motopass.giveabit.io data-client=motopass
-- https://sherpacarta.org data-client=sherpacarta
-- https://tadbuy.giveabit.io data-client=tadbuy
-- https://giveabit.io data-client=giveabit
-
-No data-mode=spa. File never uploaded. POST /api/stamp with X-Satohash-Client.
-SoT: docs/FAMILY-API.md. Vault = THOR, not M4. Pages = Grok.
+Original ask: complete one live stamp per family widget. **Closed 2026-09-15** — see paste above. Do not claim HQ zeros. Giveabit widget = /tools.
 ```
 
 ---

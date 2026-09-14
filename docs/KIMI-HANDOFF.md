@@ -1,21 +1,24 @@
+## Latest Session Summary (Grok M3, 2026-09-15 — Kimi live family stamps banked)
+
+**Kimi 2026-09-15:** handoff ingested, **API not rebuilt** (live `gitSha` **`6c1be90`**). All five family widgets completed a **live** stamp (real POST, proof cards 200).
+
+HQ after (was → now): katoa 1→2 · motopass 1→2 · sherpacarta 1→2 · tadbuy 1→2 · giveabit 2→3.
+
+**Corrections (do not repeat):** HQ was **not** zeros before this. Give A Bit widget is **https://giveabit.io/tools**, not the homepage. Shadow-root trap: naive file-input lookup false-negatives the widget.
+
+Family-owner leftovers (not Satohash): TadBuy own `/api/*` 404s; MotoPass `useProgramsContext` ErrorBoundary on load (widget still stamps).
+
+SoT: `docs/FAMILY-API.md`. Vault = THOR. Pages = Grok.
+
+---
+
 ## Latest Session Summary (Grok M3, 2026-09-14 — confirm notify + family push)
 
 **Lane:** SPA. **Kimi: do not rebuild the API.**
 
-SPA now asks for a browser notification and toasts when the last Pending stamp becomes **Confirmed** (poll `/api/stamps/:hash/by-hash`). Bookmark `/p/{hash}`.
+SPA notifies when the last Pending stamp becomes **Confirmed**. Bookmark `/p/{hash}`.
 
-**Kimi DO THIS — family distribution (not Satohash API):**
-
-Widgets are already in **git** on Katoa, MotoPass, SherpaCarta, TadBuy, Give A Bit. HQ `familyClients` only counts **completed** stamps. Until someone stamps from the **live** site, we have no distribution story.
-
-For each: https://katoa.org (`katoa`) · https://motopass.giveabit.io (`motopass`) · https://sherpacarta.org (`sherpacarta`) · https://tadbuy.giveabit.io (`tadbuy`) · https://giveabit.io (`giveabit`)
-
-1. Confirm production HTML has `data-satohash-stamp` + `https://satohash.io/widgets/stamp.js` (no `data-mode="spa"`).
-2. If missing on live, **deploy that family site**.
-3. Complete **one** stamp from the live widget.
-4. `curl -sS https://api.satohash.io/metrics.json` → `raw.familyClients` for that id **> 0**.
-
-Full table: `docs/FAMILY-API.md` § Kimi — live family stamps. Paste: `docs/MASTER-BRAIN-INGEST.md`. Vault = THOR Obsidian, not M4. Pages = Grok.
+**Family distribution (closed 2026-09-15):** live widget stamps completed; see summary above. Do not claim HQ zeros.
 
 ---
 

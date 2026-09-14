@@ -6,6 +6,12 @@ SPA/docs only. **Do not commit / do not push** this wave unless Cam asks. Pitch 
 
 ---
 
+## 2026-09-15 (Grok M3 — bank Kimi live family stamps)
+
+Kimi ingested c8a1919, **did not rebuild API** (`gitSha` **6c1be90**). Five live widget stamps verified. HQ was not zeros; giveabit widget is `/tools`. Shadow-root trap noted. Family leftovers: tadbuy `/api` 404s, motopass ErrorBoundary. SoT `docs/FAMILY-API.md`.
+
+---
+
 ## 2026-09-14 (Grok M3 — Pending→Confirmed notify + Kimi family push)
 
 SPA: last Pending proof is watched; browser notification + toast when Confirmed; .ots ready. Kimi: **do not rebuild API**. Family widgets are in git — push **live** Katoa / MotoPass / SherpaCarta / TadBuy / Give A Bit to complete one stamp so `familyClients` > 0. SoT `docs/FAMILY-API.md`.

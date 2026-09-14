@@ -1,9 +1,9 @@
 # Current Status — Satohash
 
 **Version:** **5.0.0-ELITE** (Build 331+)  
-**Last Updated:** 2026-09-14 (Pending→Confirmed notify; Kimi family widget push — Grok SPA; API still `5ec7756`)  
+**Last Updated:** 2026-09-15 (Kimi live family stamps banked; API `6c1be90` — do not rebuild)  
 **Frontend:** https://satohash.io · www · CF Pages project **`satohash`** — Grok lane, `assetsDir: 'b'`  
-**API:** https://api.satohash.io ✅ LIVE (THOR Docker). Confirm SHA with `GET /health` (`gitSha`). **Live now: `5ec7756`** — Kimi rebuilt; keep-alive 65s/66s/120s. `Cache-Control: no-store`, Caddy OK, paywall off, ~316 stamps. Do **not** rebuild again unless HEAD moves.  
+**API:** https://api.satohash.io ✅ LIVE (THOR Docker). Confirm SHA with `GET /health` (`gitSha`). **Live now: `6c1be90`** (Kimi 2026-09-15; do **not** rebuild for copy). Paywall off. Family widget stamps verified (katoa/motopass/sherpacarta/tadbuy=2, giveabit=3).  
 **Metrics SoT:** `https://api.satohash.io/metrics.json`  
 **HQ:** https://hq.giveabit.io  
 **Git:** `main` (this push)  
@@ -82,12 +82,12 @@
 - [x] Light-touch: LAWYER-ONEPAGER, INVESTOR-ONEPAGER, README `/p/{hash}` QR
 - [x] I18N / roadmap one-liners; `docs:sync`
 - [x] Pending→Confirmed: browser notify + toast (last proof watch)
-- [x] Kimi handoff: live family widgets must complete one stamp (`docs/FAMILY-API.md`)
+- [x] Kimi 2026-09-15: live family widget stamps (katoa/motopass/sherpa/tadbuy=2, giveabit=3). Widget on giveabit.io/**tools**. HQ was not zeros.
 - [ ] Offers stay deferred
 - [ ] Snapper stays scaffold — do not sell as judiciary-ready
 - [ ] Cam still: pin `/watch` on **`@give_bit`**; iPhone `/p/` unfurl
 - [ ] API: **do not rebuild** for copy
-- [ ] Kimi: family live stamps (katoa / motopass / sherpacarta / tadbuy / giveabit > 0)
+- [x] Kimi: family live stamps verified 2026-09-15 (API not rebuilt)
 
 ## This session (2026-09-14 — docs truth + tool-belt + About/Pitch/Network)
 

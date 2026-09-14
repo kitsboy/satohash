@@ -49,32 +49,27 @@ Swap `data-client` for the exact product id: `katoa` · `motopass` · `sherpacar
 
 Do **not** invent new API paths. Stamp remains `POST /api/stamp`.
 
-## Kimi — live family stamps (do this)
+## Kimi — live family stamps
 
-Widgets are **already in git** on Katoa, MotoPass, SherpaCarta, TadBuy, and Give A Bit. Git paste is **not** HQ attribution. `raw.familyClients` only increments when a stamp **completes** with that `X-Satohash-Client`.
+`raw.familyClients` only increments when a stamp **completes** with that `X-Satohash-Client`. Git paste is not HQ attribution.
 
-**Push each live site to finish one stamp.** Do not rebuild the Satohash API for this. Pages = Grok. Widget default is API POST (no `data-mode="spa"`).
+**Verified 2026-09-15 (Kimi, live Chromium POST, API untouched):** all five family widgets stamped. Proof cards `https://satohash.io/p/<hash>` returned 200. Live `/health` `gitSha` **`6c1be90`**.
 
-| Client id | Live site | Git widget |
-|-----------|-----------|------------|
-| `katoa` | https://katoa.org | `SatohashStampWidget` `data-client="katoa"` |
-| `motopass` | https://motopass.giveabit.io | `data-client="motopass"` |
-| `sherpacarta` | https://sherpacarta.org | `data-client="sherpacarta"` |
-| `tadbuy` | https://tadbuy.giveabit.io | `data-client="tadbuy"` |
-| `giveabit` | https://giveabit.io | `data-client="giveabit"` |
+| Client id | Live widget page | HQ after Kimi (was → now) |
+|-----------|------------------|---------------------------|
+| `katoa` | https://katoa.org | 1 → **2** |
+| `motopass` | https://motopass.giveabit.io | 1 → **2** |
+| `sherpacarta` | https://sherpacarta.org | 1 → **2** |
+| `tadbuy` | https://tadbuy.giveabit.io | 1 → **2** |
+| `giveabit` | https://giveabit.io/**tools** (not the homepage) | 2 → **3** |
 
-On each production page:
+**Do not repeat:** HQ was **not** zeros before this (those five already had 1 or 2). Give A Bit’s widget is **`/tools`**, not `giveabit.io` home.
 
-1. View-source / DevTools: `data-satohash-stamp` + `https://satohash.io/widgets/stamp.js` is present.
-2. Do **not** ship `data-mode="spa"` unless you intend the SPA tab. Default completes on-site.
-3. Stamp **one** small file (empty-file hash is fine). Open proof → `https://satohash.io/p/<hash>`.
-4. Check HQ:
+**Agent trap:** the widget file input lives in a **shadow root**. A naive `input[type=file]` query reports a false “no widget.” Use the host `data-satohash-stamp` + shadow root.
 
-```bash
-curl -sS https://api.satohash.io/metrics.json | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('raw',{}).get('familyClients'))"
-```
+Unrelated family defects (not Satohash API): TadBuy 404s some of its own `/api/*`; MotoPass logs a `useProgramsContext` ErrorBoundary on load — widget still stamps.
 
-**Done when** that client id is **> 0**. Until then we have no family distribution story. If the widget is in git but missing on the live host, **deploy that family site** (their Pages/host — not Satohash API).
+Do not rebuild Satohash API for attribution. Pages = Grok. Widget default is API POST (no `data-mode="spa"` unless you want the SPA tab).
 
 **Proof card / camera QR:** after a stamp, share `https://satohash.io/p/<hash>`. Phone cameras cannot read `.ots`; they open that URL (QR on PDFs and email). **Pending ≠ Confirmed** — calendars have the hash vs a Bitcoin block (~60 minutes).
 
