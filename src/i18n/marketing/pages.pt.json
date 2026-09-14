@@ -598,8 +598,12 @@
     "nip05Cta": "Configurar identidade NIP-05",
     "stampWidget": {
       "title": "Stamp on Satohash",
-      "body": "Os apps da família fazem o hash no dispositivo e abrem satohash.io/stamp?hash=&ref= para a SPA enviar X-Satohash-Client. Katoa, Sherpa, Tadbuy e OpenStrata usam o mesmo widget — o arquivo nunca é enviado.",
+      "body": "Os clientes da família fazem o hash do arquivo no dispositivo — ele não sai do navegador. O stamp abre /stamp?hash=&ref= para a SPA enviar X-Satohash-Client a partir de data-client. Katoa, MotoPass, SherpaCarta, Give A Bit e TadBuy usam o mesmo widget.",
       "embedLabel": "Widget de stamp"
+    },
+    "family": {
+      "title": "Sites da família",
+      "body": "Um paste por id de produto. O widget calcula o SHA-256 do arquivo no dispositivo — o arquivo não sai do navegador. O stamp abre /stamp?hash=&ref= para a SPA enviar X-Satohash-Client a partir de data-client. HQ metrics.json familyClients conta só os stamps realmente concluídos com esse id. Katoa, MotoPass, SherpaCarta, Give A Bit e TadBuy já têm o paste; as contagens ficam em zeros honestos até um site da família completar um stamp."
     }
   },
   "docsPage": {
@@ -1642,5 +1646,154 @@
     "stampNow": "Selar grátis agora",
     "listed": "Está na lista local — anunciaremos em @give_bit",
     "imIn": "I'm in"
+  },
+  "aboutPage": {
+    "kicker": "Sobre · Whitepaper lite",
+    "titleBefore": "O",
+    "titleHighlight": "Satohash",
+    "titleAfter": "protocolo",
+    "lede": "Prova de existência gratuita e privada no Bitcoin — concebida pela Give A Bit. Faça hash localmente. Ancore em aberto. Verifique para sempre.",
+    "stampCta": "Selar grátis",
+    "watchCta": "Ver explicação",
+    "governmentCta": "Governo",
+    "quote": "«A verdade não deveria depender de uma empresa permanecer online. Ancore a história digital na rede de computação mais segura que os humanos operam: Bitcoin.»",
+    "quoteAttr": "Give A Bit · Satohash · 2026",
+    "principlesKicker": "Princípios",
+    "principlesTitle": "Por que isto existe",
+    "pillars": {
+      "zeroKnowledge": {
+        "title": "Zero-conhecimento por desenho",
+        "body": "Os documentos nunca saem do seu dispositivo. Só se sela uma impressão SHA-256. Não podemos ler o que nunca recebemos."
+      },
+      "bitcoin": {
+        "title": "Bitcoin como finalidade",
+        "body": "OpenTimestamps compromete-se a calendários públicos e depois ao Bitcoin. As provas sobrevivem a qualquer base de dados de uma só empresa."
+      },
+      "portable": {
+        "title": "Provas .ots portáteis",
+        "body": "Descarregue provas abertas. Verifique com ferramentas abertas. Sem lock-in de fornecedor no momento que mais importa."
+      },
+      "mission": {
+        "title": "Missão Give A Bit",
+        "body": "Selos grátis para famílias e a verdade do dia a dia. Os caminhos institucionais financiam o comum — não o contrário."
+      }
+    },
+    "chapterLabel": "Capítulo",
+    "chapters": {
+      "crisis": {
+        "num": "01",
+        "title": "O problema da verdade digital",
+        "p1": "A maior parte da «prova» ainda vive na base de um fornecedor. Se essa empresa falha, pivota ou é forçada, o registo só é tão forte quanto a disponibilidade e a honestidade dela.",
+        "p2": "Deepfakes e media generativa tornam marcas temporais e provas de integridade mais importantes, não menos. O Satohash existe para que existência e integridade sejam factos matemáticos — não slogans de marketing."
+      },
+      "how": {
+        "num": "02",
+        "title": "Como o Satohash funciona",
+        "p1": "Faz hash localmente (Web Crypto do browser ou um worker). Nunca vemos o ficheiro. A impressão é submetida a calendários OpenTimestamps e agregada rumo ao Bitcoin.",
+        "p2": "Fica com uma prova .ots portátil. Qualquer pessoa pode re-verificar a estrutura no browser e seguir o caminho de confirmação no Bitcoin — sem confiar em nós para sempre."
+      },
+      "mission": {
+        "num": "03",
+        "title": "Give A Bit",
+        "p1": "O Satohash é concebido pela Give A Bit — uma missão para pôr a máquina de confiança do Bitcoin ao serviço de pessoas reais: independentes, famílias, jornalistas e instituições que precisam de integridade sem ceder a privacidade.",
+        "p2": "O nível grátis é intencional. Paywalls, quando forem ativados mais tarde, financiam a infraestrutura — não redefinem a cadeia de prova (continua Bitcoin + OTS)."
+      },
+      "courts": {
+        "num": "04",
+        "title": "Tribunais e evidência",
+        "p1": "Um hash não substitui juízes. Prova que um fluxo de bytes concreto existiu até um limite temporal, com verificabilidade pública.",
+        "p2": "Combine selos com processo de cadeia de custódia e assessoria. Veja a nossa matriz educativa de admissibilidade de evidência para orientação de enquadramentos — não é aconselhamento jurídico."
+      }
+    },
+    "stackTitle": "A stack em linguagem simples",
+    "stack": {
+      "hash": { "t": "Hash", "d": "SHA-256 no dispositivo" },
+      "calendars": { "t": "Calendários", "d": "OpenTimestamps" },
+      "bitcoin": { "t": "Bitcoin", "d": "Âncora na mainnet" },
+      "keep": { "t": "Você guarda", "d": ".ots + original" }
+    },
+    "chip1": "Privado",
+    "chip2": "Grátis hoje",
+    "chip3": "Provas abertas",
+    "chip4": "Finalidade Bitcoin",
+    "chip5": "Espírito FOSS",
+    "ctaTitle": "Junte-se ao registo final",
+    "ctaBody": "Sele um ficheiro grátis. Explore as páginas de governo e evidência. Fale com a equipa quando estiver pronto para profundidade institucional.",
+    "evidenceCta": "Matriz de evidência",
+    "pitchCta": "Hub de pitch",
+    "contactKicker": "Contacto · Give A Bit"
+  },
+  "pitchPage": {
+    "kicker": "Hub de investidores e parceiros",
+    "h1": "Pitch, resumo e finanças",
+    "proofsLine": "{{count}} provas ancoradas no Bitcoin emitidas neste plano —",
+    "liveNetwork": "rede ao vivo ↗",
+    "govTitle": "Programas de governo e migração",
+    "govBody": "Provas só-hash, cadeias de custódia e padrões discretos de I&D (incluindo um conceito inicial de deep-link ao estilo MotoPass). Não é venda agressiva — material de workshop na página Governo.",
+    "govCta": "Governo",
+    "tabsAria": "Secções do documento",
+    "tabs": {
+      "pitch": "Pitch",
+      "exec": "Resumo executivo",
+      "marketing": "Marketing",
+      "financials": "Finanças"
+    },
+    "stampCta": "Experimentar selo grátis",
+    "execCta": "Resumo executivo ao vivo",
+    "loading": "A carregar…",
+    "unavailable": "# Documento indisponível\n\nO conteúdo do pitch não pôde ser carregado. Tente mais tarde.",
+    "talkHeading": "Fale com a equipa"
+  },
+  "networkPage": {
+    "kicker": "Plano do protocolo",
+    "title": "Estado da rede",
+    "lede": "Vista ao vivo do plano de provas: selos, servidores de carimbo temporal, clientes família e o próprio nó Bitcoin (na ponta). Selos grátis. Paywall desligado.",
+    "refresh": "Atualizar",
+    "retry": "Tentar de novo",
+    "loadError": "Falha ao carregar o estado da rede",
+    "stat24h": "Selos 24 h",
+    "stat24hHint": "Agregado da API",
+    "statBitcoin": "Fonte Bitcoin",
+    "statBlockHeight": "Altura do bloco",
+    "statCalendars": "Calendários OTS",
+    "loading": "A carregar…",
+    "bitcoinLoadError": "Não foi possível carregar o nó Bitcoin",
+    "ibdProgress": "IBD ~{{pct}}%",
+    "heightHint": "Altura {{height}}",
+    "noHeight": "Nenhuma altura reportada",
+    "noNodeData": "Nenhum dado de nó reportado",
+    "syncingHeaders": "Cabeçalhos sincronizados",
+    "liveTip": "Ponta ao vivo",
+    "calendarsUp": "{{up}}/{{total}} ativos",
+    "calendarsLoadError": "Não foi possível carregar os calendários OTS",
+    "noCalendarStatus": "Nenhum estado de calendário reportado",
+    "finneyHint": "Finney costuma falhar — Alice + Bob bastam",
+    "calendarHealth": "Saúde dos calendários públicos",
+    "timestampServers": "Servidores de carimbo temporal",
+    "loadingCalendars": "A carregar servidores de carimbo temporal…",
+    "noCalendarStatusBody": "Nenhum estado de calendário reportado. Calendários públicos continuam a ser usados na hora de selar.",
+    "finneyFlaky": "costuma falhar — Alice + Bob bastam",
+    "down": "indisponível",
+    "recentStamps": "Selos recentes",
+    "loadingRecent": "A carregar selos recentes…",
+    "noRecent": "Sem amostras públicas recentes — experimente um selo grátis.",
+    "proofAria": "Prova {{hash}}",
+    "nostrTitle": "Notas no Nostr",
+    "nostrEmptyBefore": "Nenhum selo recente inclui um event id Nostr. Os selos continuam a publicar quando a API devolve",
+    "nostrEmptyAfter": ". Esta página não inventa ids.",
+    "njump": "njump",
+    "familyTitle": "Clientes família (X-Satohash-Client)",
+    "familyLoadingAria": "A carregar clientes família",
+    "familyLoadError": "Não foi possível carregar os clientes família",
+    "noFamilyBefore": "Ainda não há selos de família atribuídos. Deep-link com",
+    "noFamilyAfter": "ou o cabeçalho do cliente.",
+    "noWidgetStamps": "Ainda sem selos através deste widget",
+    "attributedOne": "1 selo atribuído",
+    "attributed": "{{count}} selos atribuídos",
+    "ctaTitle": "Use a rede",
+    "ctaBody": "Sele grátis, verifique provas ou leia como a evidência encaixa em enquadramentos legais.",
+    "stampCta": "Selo grátis",
+    "verifyCta": "Verificar",
+    "explorerCta": "Explorador de provas"
   }
 }

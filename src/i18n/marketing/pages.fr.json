@@ -598,8 +598,12 @@
     "nip05Cta": "Configurer l'identité NIP-05",
     "stampWidget": {
       "title": "Stamp on Satohash",
-      "body": "Les apps de la famille hachent sur l’appareil, puis ouvrent satohash.io/stamp?hash=&ref= pour que le SPA envoie X-Satohash-Client. Katoa, Sherpa, Tadbuy et OpenStrata utilisent le même widget — le fichier n’est jamais envoyé.",
+      "body": "Les clients de la famille hachent le fichier sur l’appareil — il ne quitte pas le navigateur. Le tampon ouvre /stamp?hash=&ref= pour que le SPA envoie X-Satohash-Client depuis data-client. Katoa, MotoPass, SherpaCarta, Give A Bit et TadBuy utilisent le même widget.",
       "embedLabel": "Widget de stamp"
+    },
+    "family": {
+      "title": "Sites de la famille",
+      "body": "Un collage par identifiant de produit. Le widget calcule le SHA-256 du fichier sur l’appareil — le fichier ne quitte pas le navigateur. Le tampon ouvre /stamp?hash=&ref= pour que le SPA envoie X-Satohash-Client depuis data-client. HQ metrics.json familyClients ne compte que les tampons réellement terminés avec cet id. Katoa, MotoPass, SherpaCarta, Give A Bit et TadBuy ont déjà le collage ; les compteurs restent à zéro tant qu’un site de la famille n’a pas réellement tamponné."
     }
   },
   "docsPage": {
@@ -1642,5 +1646,154 @@
     "stampNow": "Horodater gratuitement maintenant",
     "listed": "Vous êtes sur la liste locale — nous annoncerons sur @give_bit",
     "imIn": "I'm in"
+  },
+  "aboutPage": {
+    "kicker": "À propos · Whitepaper lite",
+    "titleBefore": "Le",
+    "titleHighlight": "Satohash",
+    "titleAfter": "protocole",
+    "lede": "Preuve d’existence gratuite et privée sur Bitcoin — conçue par Give A Bit. Hachez en local. Ancrez au grand jour. Vérifiez pour toujours.",
+    "stampCta": "Horodater gratuitement",
+    "watchCta": "Voir l’explication",
+    "governmentCta": "Gouvernement",
+    "quote": "« La vérité ne devrait pas dépendre d’une entreprise restée en ligne. Ancrez l’histoire numérique au réseau informatique le plus sûr que les humains font tourner : Bitcoin. »",
+    "quoteAttr": "Give A Bit · Satohash · 2026",
+    "principlesKicker": "Principes",
+    "principlesTitle": "Pourquoi cela existe",
+    "pillars": {
+      "zeroKnowledge": {
+        "title": "Zéro connaissance par conception",
+        "body": "Les documents ne quittent jamais votre appareil. Seule une empreinte SHA-256 est horodatée. Nous ne pouvons pas lire ce que nous ne recevons jamais."
+      },
+      "bitcoin": {
+        "title": "Bitcoin comme finalité",
+        "body": "OpenTimestamps s’engage d’abord auprès de calendriers publics, puis Bitcoin. Les preuves survivent à n’importe quelle base d’une seule entreprise."
+      },
+      "portable": {
+        "title": "Preuves .ots portables",
+        "body": "Téléchargez des preuves ouvertes. Vérifiez avec des outils ouverts. Pas de verrouillage fournisseur au moment qui compte le plus."
+      },
+      "mission": {
+        "title": "Mission Give A Bit",
+        "body": "Horodatages gratuits pour les familles et la vérité du quotidien. Les parcours institutionnels financent le commun — pas l’inverse."
+      }
+    },
+    "chapterLabel": "Chapitre",
+    "chapters": {
+      "crisis": {
+        "num": "01",
+        "title": "Le problème de la vérité numérique",
+        "p1": "La plupart des « preuves » vivent encore dans la base d’un fournisseur. Si cette entreprise échoue, pivote ou est contrainte, le registre n’est aussi fort que sa disponibilité et son honnêteté.",
+        "p2": "Les deepfakes et les médias génératifs rendent les horodatages et les preuves d’intégrité plus importants, pas moins. Satohash existe pour que l’existence et l’intégrité soient des faits mathématiques — pas des slogans marketing."
+      },
+      "how": {
+        "num": "02",
+        "title": "Comment Satohash fonctionne",
+        "p1": "Vous hachez en local (Web Crypto du navigateur ou un worker). Nous ne voyons jamais le fichier. L’empreinte est soumise aux calendriers OpenTimestamps et agrégée vers Bitcoin.",
+        "p2": "Vous conservez une preuve .ots portable. N’importe qui peut revérifier la structure dans le navigateur et suivre le chemin de confirmation Bitcoin — sans nous faire confiance pour toujours."
+      },
+      "mission": {
+        "num": "03",
+        "title": "Give A Bit",
+        "p1": "Satohash est conçu par Give A Bit — une mission pour mettre la machine de confiance de Bitcoin au service de vraies personnes : indépendants, familles, journalistes et institutions qui ont besoin d’intégrité sans céder la vie privée.",
+        "p2": "Le palier gratuit est volontaire. Les péages, s’ils sont activés plus tard, financent l’infrastructure — ils ne redéfinissent pas la chaîne de preuve (toujours Bitcoin + OTS)."
+      },
+      "courts": {
+        "num": "04",
+        "title": "Tribunaux et preuves",
+        "p1": "Un hash ne remplace pas les juges. Il prouve qu’un flux d’octets précis existait dans une borne temporelle, avec une vérifiabilité publique.",
+        "p2": "Associez les horodatages à une chaîne de custody et à un conseil. Consultez notre matrice éducative d’admissibilité des preuves pour l’orientation des cadres — pas un avis juridique."
+      }
+    },
+    "stackTitle": "La pile en langage simple",
+    "stack": {
+      "hash": { "t": "Hash", "d": "SHA-256 sur l’appareil" },
+      "calendars": { "t": "Calendriers", "d": "OpenTimestamps" },
+      "bitcoin": { "t": "Bitcoin", "d": "Ancre mainnet" },
+      "keep": { "t": "Vous gardez", "d": ".ots + original" }
+    },
+    "chip1": "Privé",
+    "chip2": "Gratuit aujourd’hui",
+    "chip3": "Preuves ouvertes",
+    "chip4": "Finalité Bitcoin",
+    "chip5": "Esprit FOSS",
+    "ctaTitle": "Rejoindre le registre final",
+    "ctaBody": "Horodatez un fichier gratuitement. Explorez les pages gouvernement et preuves. Parlez à l’équipe quand vous serez prêt pour la profondeur institutionnelle.",
+    "evidenceCta": "Matrice des preuves",
+    "pitchCta": "Hub pitch",
+    "contactKicker": "Contact · Give A Bit"
+  },
+  "pitchPage": {
+    "kicker": "Hub investisseurs & partenaires",
+    "h1": "Pitch, synthèse et finances",
+    "proofsLine": "{{count}} preuves ancrées sur Bitcoin émises via ce plan —",
+    "liveNetwork": "réseau en direct ↗",
+    "govTitle": "Programmes gouvernementaux et de migration",
+    "govBody": "Preuves hash-only, chaînes de custody et motifs discrets de R&D (y compris un concept précoce de deep-link façon MotoPass). Pas une vente forcée — matériel d’atelier sur la page Gouvernement.",
+    "govCta": "Gouvernement",
+    "tabsAria": "Sections du document",
+    "tabs": {
+      "pitch": "Pitch",
+      "exec": "Synthèse exécutive",
+      "marketing": "Marketing",
+      "financials": "Finances"
+    },
+    "stampCta": "Essayer un horodatage gratuit",
+    "execCta": "Synthèse exécutive en direct",
+    "loading": "Chargement…",
+    "unavailable": "# Document indisponible\n\nLe contenu du pitch n’a pas pu être chargé. Réessayez plus tard.",
+    "talkHeading": "Parler à l’équipe"
+  },
+  "networkPage": {
+    "kicker": "Plan du protocole",
+    "title": "État du réseau",
+    "lede": "Vue en direct du plan de preuve : horodatages, serveurs d’horodatage, clients famille et le nœud Bitcoin maison (à la pointe). Horodatages gratuits. Péage désactivé.",
+    "refresh": "Actualiser",
+    "retry": "Réessayer",
+    "loadError": "Impossible de charger l’état du réseau",
+    "stat24h": "Horodatages 24 h",
+    "stat24hHint": "Agrégat API",
+    "statBitcoin": "Source Bitcoin",
+    "statBlockHeight": "Hauteur de bloc",
+    "statCalendars": "Calendriers OTS",
+    "loading": "Chargement…",
+    "bitcoinLoadError": "Impossible de charger le nœud Bitcoin",
+    "ibdProgress": "IBD ~{{pct}} %",
+    "heightHint": "Hauteur {{height}}",
+    "noHeight": "Aucune hauteur signalée",
+    "noNodeData": "Aucune donnée de nœud",
+    "syncingHeaders": "En-têtes synchronisés",
+    "liveTip": "Pointe en direct",
+    "calendarsUp": "{{up}}/{{total}} actifs",
+    "calendarsLoadError": "Impossible de charger les calendriers OTS",
+    "noCalendarStatus": "Aucun état de calendrier",
+    "finneyHint": "Finney souvent instable — Alice + Bob suffisent",
+    "calendarHealth": "Santé des calendriers publics",
+    "timestampServers": "Serveurs d’horodatage",
+    "loadingCalendars": "Chargement des serveurs d’horodatage…",
+    "noCalendarStatusBody": "Aucun état de calendrier. Les calendriers publics restent utilisés au moment de l’horodatage.",
+    "finneyFlaky": "souvent instable — Alice + Bob suffisent",
+    "down": "hors service",
+    "recentStamps": "Horodatages récents",
+    "loadingRecent": "Chargement des horodatages récents…",
+    "noRecent": "Pas d’échantillons publics récents — essayez un horodatage gratuit.",
+    "proofAria": "Preuve {{hash}}",
+    "nostrTitle": "Notes sur Nostr",
+    "nostrEmptyBefore": "Aucun horodatage récent n’inclut d’event id Nostr. Les horodatages sont toujours publiés lorsque l’API renvoie",
+    "nostrEmptyAfter": ". Cette page n’invente pas d’ids.",
+    "njump": "njump",
+    "familyTitle": "Clients famille (X-Satohash-Client)",
+    "familyLoadingAria": "Chargement des clients famille",
+    "familyLoadError": "Impossible de charger les clients famille",
+    "noFamilyBefore": "Pas encore d’horodatages famille attribués. Deep-link avec",
+    "noFamilyAfter": "ou l’en-tête client.",
+    "noWidgetStamps": "Pas encore d’horodatages via ce widget",
+    "attributedOne": "1 horodatage attribué",
+    "attributed": "{{count}} horodatages attribués",
+    "ctaTitle": "Utiliser le réseau",
+    "ctaBody": "Horodatez gratuitement, vérifiez des preuves, ou lisez comment les preuves s’insèrent dans les cadres juridiques.",
+    "stampCta": "Horodatage gratuit",
+    "verifyCta": "Vérifier",
+    "explorerCta": "Explorateur de preuves"
   }
 }

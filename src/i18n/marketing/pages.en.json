@@ -564,8 +564,8 @@
     }
   },
   "developerPage": {
-    "cliTitle": "CLI",
-    "cliHint": "Hash stays on the machine; only SHA-256 is POSTed. Always sends X-Satohash-Client: cli. Proof card",
+    "cliTitle": "Stamp from the terminal",
+    "cliHint": "The file never leaves the machine; only SHA-256 hex is POSTed. Proof card prints",
     "cliSource": "CLI source on GitHub"
   },
   "widgetsPage": {
@@ -598,8 +598,12 @@
     "nip05Cta": "Set Up NIP-05 Identity",
     "stampWidget": {
       "title": "Stamp on Satohash",
-      "body": "Family apps hash on-device, then open satohash.io/stamp?hash=&ref= so the SPA sets X-Satohash-Client. Katoa, Sherpa, Tadbuy, and OpenStrata use the same drop-in — never upload the file.",
+      "body": "Family clients hash the file on-device — it never leaves the browser. Stamp then opens /stamp?hash=&ref= so the SPA sends X-Satohash-Client from data-client. Katoa, MotoPass, SherpaCarta, Give A Bit, and TadBuy use the same drop-in.",
       "embedLabel": "Stamp widget"
+    },
+    "family": {
+      "title": "Family sites",
+      "body": "One paste per product id. The widget SHA-256s the file on-device — the file never leaves the browser. Stamp then opens /stamp?hash=&ref= so the SPA sends X-Satohash-Client from data-client. HQ metrics.json familyClients counts only stamps that actually complete with that id. Katoa, MotoPass, SherpaCarta, Give A Bit, and TadBuy paste exists; counts stay honest zeros until a family site actually completes a stamp."
     }
   },
   "docsPage": {
@@ -1642,5 +1646,154 @@
     "stampNow": "Stamp free now",
     "listed": "You're on the local list — we'll announce on @give_bit",
     "imIn": "I'm in"
+  },
+  "aboutPage": {
+    "kicker": "About · Whitepaper lite",
+    "titleBefore": "The",
+    "titleHighlight": "Satohash",
+    "titleAfter": "protocol",
+    "lede": "Free, private proof of existence on Bitcoin — engineered by Give A Bit. Hash locally. Anchor openly. Verify forever.",
+    "stampCta": "Stamp free",
+    "watchCta": "Watch explainer",
+    "governmentCta": "Government",
+    "quote": "“Truth should not depend on a company staying online. Anchor digital history to the most secure computer network humans run: Bitcoin.”",
+    "quoteAttr": "Give A Bit · Satohash · 2026",
+    "principlesKicker": "Principles",
+    "principlesTitle": "Why this exists",
+    "pillars": {
+      "zeroKnowledge": {
+        "title": "Zero-knowledge by design",
+        "body": "Documents never leave your device. Only a SHA-256 fingerprint is stamped. We cannot read what we never receive."
+      },
+      "bitcoin": {
+        "title": "Bitcoin as finality",
+        "body": "OpenTimestamps commits to public calendars, then Bitcoin. Proofs outlive any single company database."
+      },
+      "portable": {
+        "title": "Portable .ots proofs",
+        "body": "Download open proofs. Verify with open tools. No vendor lock-in for the moment that matters most."
+      },
+      "mission": {
+        "title": "Give A Bit mission",
+        "body": "Free stamps for families and everyday truth. Institutional paths fund the commons — not the other way around."
+      }
+    },
+    "chapterLabel": "Chapter",
+    "chapters": {
+      "crisis": {
+        "num": "01",
+        "title": "The problem with digital truth",
+        "p1": "Most “proof” still lives in a vendor’s database. If that company fails, pivots, or is compelled, the record is only as strong as their uptime and honesty.",
+        "p2": "Deepfakes and generative media make timestamps and integrity proofs more important, not less. Satohash exists so existence and integrity are mathematical facts — not marketing claims."
+      },
+      "how": {
+        "num": "02",
+        "title": "How Satohash works",
+        "p1": "You hash locally (browser Web Crypto or worker). We never see the file. The fingerprint is submitted to OpenTimestamps calendars and aggregated toward Bitcoin.",
+        "p2": "You keep a portable .ots proof. Anyone can re-verify structure in the browser and follow the upgrade path to Bitcoin confirmation — without trusting us forever."
+      },
+      "mission": {
+        "num": "03",
+        "title": "Give A Bit",
+        "p1": "Satohash is engineered by Give A Bit — a mission to put Bitcoin’s trust machine in service of real people: freelancers, families, journalists, and institutions that need integrity without surrendering privacy.",
+        "p2": "The free tier is intentional. Paywalls, when enabled later, fund infrastructure — they do not redefine the chain of proof (still Bitcoin + OTS)."
+      },
+      "courts": {
+        "num": "04",
+        "title": "Courts & evidence",
+        "p1": "A hash does not replace judges. It proves a specific byte stream existed by a time bound, with public verifiability.",
+        "p2": "Pair stamps with chain-of-custody process and counsel. See our educational matrix on evidence admissibility for framework orientation — not legal advice."
+      }
+    },
+    "stackTitle": "The stack in plain language",
+    "stack": {
+      "hash": { "t": "Hash", "d": "SHA-256 on device" },
+      "calendars": { "t": "Calendars", "d": "OpenTimestamps" },
+      "bitcoin": { "t": "Bitcoin", "d": "Mainnet anchor" },
+      "keep": { "t": "You keep", "d": ".ots + original" }
+    },
+    "chip1": "Private",
+    "chip2": "Free today",
+    "chip3": "Open proofs",
+    "chip4": "Bitcoin finality",
+    "chip5": "FOSS spirit",
+    "ctaTitle": "Join the final record",
+    "ctaBody": "Stamp a file free. Explore government and evidence pages. Talk to the team when you are ready for institutional depth.",
+    "evidenceCta": "Evidence matrix",
+    "pitchCta": "Pitch hub",
+    "contactKicker": "Contact · Give A Bit"
+  },
+  "pitchPage": {
+    "kicker": "Investor & Partner Hub",
+    "h1": "Pitch, summary & financials",
+    "proofsLine": "{{count}} Bitcoin-anchored proofs issued through this plane —",
+    "liveNetwork": "live network ↗",
+    "govTitle": "Government & migration programs",
+    "govBody": "Hash-only proofs, custody chains, and quiet R&D patterns (including an early MotoPass-style deep-link concept). Not a hard sell — workshop material on the Government page.",
+    "govCta": "Government",
+    "tabsAria": "Document sections",
+    "tabs": {
+      "pitch": "Pitch",
+      "exec": "Executive Summary",
+      "marketing": "Marketing",
+      "financials": "Financials"
+    },
+    "stampCta": "Try free stamp",
+    "execCta": "Live exec summary",
+    "loading": "Loading…",
+    "unavailable": "# Document unavailable\n\nThe pitch content could not be loaded. Please try again later.",
+    "talkHeading": "Talk to the team"
+  },
+  "networkPage": {
+    "kicker": "Protocol plane",
+    "title": "Network status",
+    "lede": "Live view of the proof plane: stamps, timestamp servers, family clients, and the own Bitcoin node (at tip). Free stamps. Paywall off.",
+    "refresh": "Refresh",
+    "retry": "Retry",
+    "loadError": "Failed to load network status",
+    "stat24h": "24h stamps",
+    "stat24hHint": "API aggregate",
+    "statBitcoin": "Bitcoin source",
+    "statBlockHeight": "Block height",
+    "statCalendars": "OTS calendars",
+    "loading": "Loading…",
+    "bitcoinLoadError": "Could not load Bitcoin node",
+    "ibdProgress": "IBD ~{{pct}}%",
+    "heightHint": "Height {{height}}",
+    "noHeight": "No height reported",
+    "noNodeData": "No node data reported",
+    "syncingHeaders": "Syncing headers complete",
+    "liveTip": "Live tip",
+    "calendarsUp": "{{up}}/{{total}} up",
+    "calendarsLoadError": "Could not load OTS calendars",
+    "noCalendarStatus": "No calendar status reported",
+    "finneyHint": "Finney often flaky — Alice + Bob are enough",
+    "calendarHealth": "Public calendar health",
+    "timestampServers": "Timestamp servers",
+    "loadingCalendars": "Loading timestamp servers…",
+    "noCalendarStatusBody": "No calendar status reported. Public calendars still used at stamp time.",
+    "finneyFlaky": "often flaky — Alice + Bob are enough",
+    "down": "down",
+    "recentStamps": "Recent stamps",
+    "loadingRecent": "Loading recent stamps…",
+    "noRecent": "No recent public samples — try a free stamp yourself.",
+    "proofAria": "Proof {{hash}}",
+    "nostrTitle": "Notes on Nostr",
+    "nostrEmptyBefore": "No recent stamps include a Nostr event id. Stamps still publish when the API returns",
+    "nostrEmptyAfter": ". This page does not invent ids.",
+    "njump": "njump",
+    "familyTitle": "Family clients (X-Satohash-Client)",
+    "familyLoadingAria": "Loading family clients",
+    "familyLoadError": "Could not load family clients",
+    "noFamilyBefore": "No attributed family stamps yet. Deep-link with",
+    "noFamilyAfter": "or the client header.",
+    "noWidgetStamps": "No stamps through this widget yet",
+    "attributedOne": "1 attributed stamp",
+    "attributed": "{{count}} attributed stamps",
+    "ctaTitle": "Use the network",
+    "ctaBody": "Stamp free, verify proofs, or read how evidence fits legal frameworks.",
+    "stampCta": "Free stamp",
+    "verifyCta": "Verify",
+    "explorerCta": "Proof explorer"
   }
 }

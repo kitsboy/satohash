@@ -13,7 +13,8 @@ const FAMILY_WIDGETS = [
   { id: 'katoa', label: 'katoa' },
   { id: 'motopass', label: 'motopass' },
   { id: 'sherpacarta', label: 'sherpacarta' },
-  { id: 'giveabit', label: 'giveabit' }
+  { id: 'giveabit', label: 'giveabit' },
+  { id: 'tadbuy', label: 'tadbuy' }
 ]
 
 function familyStampSnippet(client) {
@@ -183,18 +184,10 @@ export default function Widgets() {
       <section className="border-t border-[var(--border)] px-4 py-10 sm:px-6 sm:py-16">
         <div className="mx-auto max-w-3xl space-y-6">
           <h2 className="text-xl font-black tracking-tight text-[var(--text-primary)] uppercase">
-            Family sites
+            {t('widgetsPage.family.title')}
           </h2>
           <p className="text-sm leading-relaxed text-[var(--text-secondary)]">
-            One paste per product id. The widget SHA-256s the file on-device — the file never leaves
-            the browser. Stamp then opens{' '}
-            <code className="font-mono text-[11px]">/stamp?hash=&amp;ref=</code> so the SPA sends{' '}
-            <code className="font-mono text-[11px]">X-Satohash-Client</code> from{' '}
-            <code className="font-mono text-[11px]">data-client</code>. HQ{' '}
-            <code className="font-mono text-[11px]">metrics.json</code>{' '}
-            <code className="font-mono text-[11px]">familyClients</code> counts only stamps that
-            actually complete with that id. Katoa, SherpaCarta, and Give A Bit paste exists; counts
-            stay honest zeros until a family site actually completes a stamp.
+            {t('widgetsPage.family.body')}
           </p>
           {FAMILY_WIDGETS.map((item) => (
             <CopyBlock

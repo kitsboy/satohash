@@ -588,8 +588,12 @@
     "nip05Cta": "设置 NIP-05 身份",
     "stampWidget": {
       "title": "Stamp on Satohash",
-      "body": "家族应用在本机计算哈希，然后打开 satohash.io/stamp?hash=&ref=，由 SPA 设置 X-Satohash-Client。Katoa、Sherpa、Tadbuy 与 OpenStrata 共用同一嵌入组件——文件不会上传。",
+      "body": "家族客户端在设备上计算文件哈希——文件不会离开浏览器。盖章后打开 /stamp?hash=&ref=，由 SPA 根据 data-client 发送 X-Satohash-Client。Katoa、MotoPass、SherpaCarta、Give A Bit 和 TadBuy 共用同一嵌入组件。",
       "embedLabel": "Stamp 组件"
+    },
+    "family": {
+      "title": "家族站点",
+      "body": "每个产品 id 粘贴一次。组件在设备上计算文件的 SHA-256——文件不会离开浏览器。盖章后打开 /stamp?hash=&ref=，由 SPA 根据 data-client 发送 X-Satohash-Client。HQ 的 metrics.json familyClients 只统计真正以该 id 完成的盖章。Katoa、MotoPass、SherpaCarta、Give A Bit 和 TadBuy 已有粘贴代码；在家族站点真正完成盖章之前，计数保持诚实的零。"
     }
   },
   "docsPage": {
@@ -1632,5 +1636,154 @@
     "stampNow": "立即免费盖戳",
     "listed": "你已在本地名单上 — 我们将在 @give_bit 公布",
     "imIn": "I'm in"
+  },
+  "aboutPage": {
+    "kicker": "关于 · 白皮书精简",
+    "titleBefore": "",
+    "titleHighlight": "Satohash",
+    "titleAfter": "协议",
+    "lede": "在 Bitcoin 上免费、私密的存在证明 — 由 Give A Bit 打造。本地哈希。公开锚定。永久核验。",
+    "stampCta": "免费盖戳",
+    "watchCta": "观看讲解",
+    "governmentCta": "政务",
+    "quote": "“真相不应取决于一家公司是否在线。把数字历史锚定到人类运行的最安全计算机网络：Bitcoin。”",
+    "quoteAttr": "Give A Bit · Satohash · 2026",
+    "principlesKicker": "原则",
+    "principlesTitle": "为何存在",
+    "pillars": {
+      "zeroKnowledge": {
+        "title": "天生零知识",
+        "body": "文件从不离开你的设备。盖戳的只有 SHA-256 指纹。我们从未收到的内容，也无法阅读。"
+      },
+      "bitcoin": {
+        "title": "Bitcoin 作为终局",
+        "body": "OpenTimestamps 先提交到公共日历，再进入 Bitcoin。证明比任何一家公司的数据库都活得更久。"
+      },
+      "portable": {
+        "title": "可携带的 .ots 证明",
+        "body": "下载开放证明。用开放工具核验。在最关键的时刻，没有供应商锁定。"
+      },
+      "mission": {
+        "title": "Give A Bit 使命",
+        "body": "为家庭和日常真相提供免费盖戳。机构路径资助公地 — 而不是反过来。"
+      }
+    },
+    "chapterLabel": "章节",
+    "chapters": {
+      "crisis": {
+        "num": "01",
+        "title": "数字真相的问题",
+        "p1": "大多数“证明”仍住在供应商的数据库里。若那家公司失败、转向或被强制，记录只和他们的在线率与诚实度一样强。",
+        "p2": "深度伪造和生成式媒体让时间戳与完整性证明更重要，而不是更不重要。Satohash 存在，是为了让存在与完整性成为数学事实 — 而不是营销口号。"
+      },
+      "how": {
+        "num": "02",
+        "title": "Satohash 如何运作",
+        "p1": "你在本地哈希（浏览器 Web Crypto 或 worker）。我们从不看到文件。指纹提交到 OpenTimestamps 日历，并聚合通向 Bitcoin。",
+        "p2": "你保留可携带的 .ots 证明。任何人都可以在浏览器中重新核验结构，并沿升级路径走到 Bitcoin 确认 — 不必永远信任我们。"
+      },
+      "mission": {
+        "num": "03",
+        "title": "Give A Bit",
+        "p1": "Satohash 由 Give A Bit 打造 — 使命是把 Bitcoin 的信任机器服务于真实的人：自由职业者、家庭、记者，以及需要完整性又不放弃隐私的机构。",
+        "p2": "免费档是刻意的。日后若启用付费墙，是为资助基础设施 — 并不重定义证明链（仍是 Bitcoin + OTS）。"
+      },
+      "courts": {
+        "num": "04",
+        "title": "法庭与证据",
+        "p1": "哈希不能取代法官。它证明特定字节流在某一时间界之前已经存在，并且可被公开核验。",
+        "p2": "把盖戳与保管链流程及律师意见配对。参阅我们的证据可采性教育矩阵，用于框架定向 — 并非法律意见。"
+      }
+    },
+    "stackTitle": "用白话说清这套栈",
+    "stack": {
+      "hash": { "t": "哈希", "d": "设备上的 SHA-256" },
+      "calendars": { "t": "日历", "d": "OpenTimestamps" },
+      "bitcoin": { "t": "Bitcoin", "d": "主网锚定" },
+      "keep": { "t": "你保留", "d": ".ots + 原件" }
+    },
+    "chip1": "私密",
+    "chip2": "今日免费",
+    "chip3": "开放证明",
+    "chip4": "Bitcoin 终局",
+    "chip5": "FOSS 精神",
+    "ctaTitle": "加入最终记录",
+    "ctaBody": "免费盖戳一份文件。浏览政务与证据页面。准备好机构级深度时，再与团队交谈。",
+    "evidenceCta": "证据矩阵",
+    "pitchCta": "路演中心",
+    "contactKicker": "联系 · Give A Bit"
+  },
+  "pitchPage": {
+    "kicker": "投资者与合作伙伴中心",
+    "h1": "路演、摘要与财务",
+    "proofsLine": "本平面已签发 {{count}} 份 Bitcoin 锚定证明 —",
+    "liveNetwork": "实时网络 ↗",
+    "govTitle": "政务与迁移项目",
+    "govBody": "仅哈希证明、保管链，以及低调的研发模式（包括早期 MotoPass 风格的深链概念）。不是强卖 — 政务页上的研讨材料。",
+    "govCta": "政务",
+    "tabsAria": "文档分区",
+    "tabs": {
+      "pitch": "路演",
+      "exec": "执行摘要",
+      "marketing": "市场",
+      "financials": "财务"
+    },
+    "stampCta": "试用免费盖戳",
+    "execCta": "实时执行摘要",
+    "loading": "加载中…",
+    "unavailable": "# 文档不可用\n\n路演内容无法加载。请稍后再试。",
+    "talkHeading": "与团队交谈"
+  },
+  "networkPage": {
+    "kicker": "协议平面",
+    "title": "网络状态",
+    "lede": "证明平面的实时视图：盖戳、时间戳服务器、家族客户端，以及自有 Bitcoin 节点（已到尖端）。免费盖戳。付费墙关闭。",
+    "refresh": "刷新",
+    "retry": "重试",
+    "loadError": "无法加载网络状态",
+    "stat24h": "24 小时盖戳",
+    "stat24hHint": "API 汇总",
+    "statBitcoin": "Bitcoin 来源",
+    "statBlockHeight": "区块高度",
+    "statCalendars": "OTS 日历",
+    "loading": "加载中…",
+    "bitcoinLoadError": "无法加载 Bitcoin 节点",
+    "ibdProgress": "IBD ~{{pct}}%",
+    "heightHint": "高度 {{height}}",
+    "noHeight": "未报告高度",
+    "noNodeData": "未报告节点数据",
+    "syncingHeaders": "区块头同步完成",
+    "liveTip": "实时尖端",
+    "calendarsUp": "{{up}}/{{total}} 在线",
+    "calendarsLoadError": "无法加载 OTS 日历",
+    "noCalendarStatus": "未报告日历状态",
+    "finneyHint": "Finney 经常不稳 — Alice + Bob 已足够",
+    "calendarHealth": "公共日历健康",
+    "timestampServers": "时间戳服务器",
+    "loadingCalendars": "正在加载时间戳服务器…",
+    "noCalendarStatusBody": "未报告日历状态。盖戳时仍使用公共日历。",
+    "finneyFlaky": "经常不稳 — Alice + Bob 已足够",
+    "down": "离线",
+    "recentStamps": "最近盖戳",
+    "loadingRecent": "正在加载最近盖戳…",
+    "noRecent": "暂无最近的公开样本 — 自己免费盖一枚试试。",
+    "proofAria": "证明 {{hash}}",
+    "nostrTitle": "Nostr 上的笔记",
+    "nostrEmptyBefore": "最近盖戳不含 Nostr event id。当 API 返回",
+    "nostrEmptyAfter": " 时仍会发布。本页不会编造 id。",
+    "njump": "njump",
+    "familyTitle": "家族客户端（X-Satohash-Client）",
+    "familyLoadingAria": "正在加载家族客户端",
+    "familyLoadError": "无法加载家族客户端",
+    "noFamilyBefore": "尚无已归因的家族盖戳。用深链",
+    "noFamilyAfter": "或客户端标头。",
+    "noWidgetStamps": "此组件尚无盖戳",
+    "attributedOne": "1 次归因盖戳",
+    "attributed": "{{count}} 次归因盖戳",
+    "ctaTitle": "使用网络",
+    "ctaBody": "免费盖戳、核验证明，或阅读证据如何契合法律框架。",
+    "stampCta": "免费盖戳",
+    "verifyCta": "核验",
+    "explorerCta": "证明浏览器"
   }
 }

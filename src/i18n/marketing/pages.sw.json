@@ -598,8 +598,12 @@
     "nip05Cta": "Sanidi Utambulisho wa NIP-05",
     "stampWidget": {
       "title": "Stamp on Satohash",
-      "body": "Programu za familia huhesabu hash kwenye kifaa, kisha hufungua satohash.io/stamp?hash=&ref= ili SPA iweke X-Satohash-Client. Katoa, Sherpa, Tadbuy na OpenStrata hutumia widget ile ile — faili haiwasilishwi.",
+      "body": "Wateja wa familia huhesabu hash ya faili kwenye kifaa — faili haitoki kwenye kivinjari. Stamp hufungua /stamp?hash=&ref= ili SPA itume X-Satohash-Client kutoka data-client. Katoa, MotoPass, SherpaCarta, Give A Bit na TadBuy hutumia widget ile ile.",
       "embedLabel": "Widget ya stamp"
+    },
+    "family": {
+      "title": "Tovuti za familia",
+      "body": "Bandiko moja kwa kila kitambulisho cha bidhaa. Widget inahesabu SHA-256 ya faili kwenye kifaa — faili haitoki kwenye kivinjari. Stamp hufungua /stamp?hash=&ref= ili SPA itume X-Satohash-Client kutoka data-client. HQ metrics.json familyClients inahesabu muhuri zilizokamilika tu na kitambulisho hicho. Katoa, MotoPass, SherpaCarta, Give A Bit na TadBuy tayari wana bandiko; hesabu zinabaki sifuri hadi tovuti ya familia ikamilishe muhuri."
     }
   },
   "docsPage": {
@@ -1642,5 +1646,154 @@
     "stampNow": "Gonga bure sasa",
     "listed": "Uko kwenye orodha ya kifaa — tutatangaza kwenye @give_bit",
     "imIn": "I'm in"
+  },
+  "aboutPage": {
+    "kicker": "Kuhusu · Whitepaper lite",
+    "titleBefore": "Itifaki ya",
+    "titleHighlight": "Satohash",
+    "titleAfter": "",
+    "lede": "Uthibitisho wa kuwepo bila malipo na wa faragha kwenye Bitcoin — uliotengenezwa na Give A Bit. Hashi kifaa chako. Ankari wazi. Thibitisha milele.",
+    "stampCta": "Gonga bure",
+    "watchCta": "Tazama maelezo",
+    "governmentCta": "Serikali",
+    "quote": "“Ukweli haupaswi kutegemea kampuni kubaki mtandaoni. Ankari historia ya kidijitali kwenye mtandao salama zaidi wa kompyuta unaoendeshwa na binadamu: Bitcoin.”",
+    "quoteAttr": "Give A Bit · Satohash · 2026",
+    "principlesKicker": "Kanuni",
+    "principlesTitle": "Kwa nini hii ipo",
+    "pillars": {
+      "zeroKnowledge": {
+        "title": "Ujuzi-sifuri kwa muundo",
+        "body": "Nyaraka hazitoki kwenye kifaa chako. Ni alama ya SHA-256 tu inayogongwa. Hatuwezi kusoma kile tusichopokea."
+      },
+      "bitcoin": {
+        "title": "Bitcoin kama uamuzi wa mwisho",
+        "body": "OpenTimestamps inajitolea kwa kalenda za umma, kisha Bitcoin. Uthibitisho unaishi zaidi ya hifadhidata ya kampuni moja."
+      },
+      "portable": {
+        "title": "Uthibitisho .ots unaohamishika",
+        "body": "Pakua uthibitisho wazi. Thibitisha kwa zana wazi. Hakuna kufungwa kwa muuzaji wakati unaohitaji zaidi."
+      },
+      "mission": {
+        "title": "Dhamira ya Give A Bit",
+        "body": "Migongo ya bure kwa familia na ukweli wa kila siku. Njia za kitaasisi zinafadhili mali ya pamoja — si kinyume chake."
+      }
+    },
+    "chapterLabel": "Sura",
+    "chapters": {
+      "crisis": {
+        "num": "01",
+        "title": "Tatizo la ukweli wa kidijitali",
+        "p1": "“Uthibitisho” mwingi bado unaishi katika hifadhidata ya muuzaji. Kampuni ikishindwa, ikibadilisha mwelekeo, au ikilazimishwa, rekodi ni imara kama upatikanaji na uaminifu wao tu.",
+        "p2": "Deepfakes na midia ya kuzalisha hufanya alama za wakati na uthibitisho wa uadilifu kuwa muhimu zaidi, si pungufu. Satohash ipo ili kuwepo na uadilifu viwe ukweli wa hisabati — si madai ya masoko."
+      },
+      "how": {
+        "num": "02",
+        "title": "Jinsi Satohash inavyofanya kazi",
+        "p1": "Unafanya hash kwenye kifaa (Web Crypto ya kivinjari au worker). Hatuoni faili kamwe. Alama inawasilishwa kwa kalenda za OpenTimestamps na kukusanywa kuelekea Bitcoin.",
+        "p2": "Unahifadhi uthibitisho .ots unaohamishika. Mtu yeyote anaweza kuthibitisha tena muundo kwenye kivinjari na kufuata njia ya uthibitisho wa Bitcoin — bila kututumainia milele."
+      },
+      "mission": {
+        "num": "03",
+        "title": "Give A Bit",
+        "p1": "Satohash inatengenezwa na Give A Bit — dhamira ya kuweka mashine ya uaminifu ya Bitcoin katika huduma ya watu halisi: wafanyakazi huru, familia, waandishi wa habari, na taasisi zinazohitaji uadilifu bila kutoa faragha.",
+        "p2": "Kiwango cha bure ni cha makusudi. Paywalls, zikiwashwa baadaye, zinafadhili miundombinu — hazibadilishi mnyororo wa uthibitisho (bado Bitcoin + OTS)."
+      },
+      "courts": {
+        "num": "04",
+        "title": "Mahakama na ushahidi",
+        "p1": "Hash haichukui nafasi ya majaji. Inathibitisha mkondo mahususi wa baiti ulikuwepo kufikia muda, kwa uwezo wa kuthibitishwa hadharani.",
+        "p2": "Unganisha migongo na mchakato wa mnyororo wa ulinzi na ushauri wa kisheria. Tazama jedwali letu la kielimu la kukubalika kwa ushahidi kwa mwelekeo wa mifumo — si ushauri wa kisheria."
+      }
+    },
+    "stackTitle": "Stack kwa lugha rahisi",
+    "stack": {
+      "hash": { "t": "Hash", "d": "SHA-256 kwenye kifaa" },
+      "calendars": { "t": "Kalenda", "d": "OpenTimestamps" },
+      "bitcoin": { "t": "Bitcoin", "d": "Nanga ya mainnet" },
+      "keep": { "t": "Wewe huhifadhi", "d": ".ots + asili" }
+    },
+    "chip1": "Faragha",
+    "chip2": "Bure leo",
+    "chip3": "Uthibitisho wazi",
+    "chip4": "Uamuzi wa Bitcoin",
+    "chip5": "Roho ya FOSS",
+    "ctaTitle": "Jiunge na rekodi ya mwisho",
+    "ctaBody": "Gonga faili bure. Chunguza kurasa za serikali na ushahidi. Ongea na timu unapokuwa tayari kwa kina cha kitaasisi.",
+    "evidenceCta": "Jedwali la ushahidi",
+    "pitchCta": "Kituo cha pitch",
+    "contactKicker": "Wasiliana · Give A Bit"
+  },
+  "pitchPage": {
+    "kicker": "Kituo cha wawekezaji na washirika",
+    "h1": "Pitch, muhtasari na fedha",
+    "proofsLine": "Uthibitisho {{count}} uliofungwa kwenye Bitcoin uliotolewa kupitia ndege hii —",
+    "liveNetwork": "mtandao hai ↗",
+    "govTitle": "Programu za serikali na uhamiaji",
+    "govBody": "Uthibitisho wa hash pekee, minyororo ya ulinzi, na mifumo tulivu ya R&D (ikiwa ni pamoja na dhana ya mapema ya deep-link ya mtindo wa MotoPass). Si uuzaji mkali — nyenzo za warsha kwenye ukurasa wa Serikali.",
+    "govCta": "Serikali",
+    "tabsAria": "Sehemu za waraka",
+    "tabs": {
+      "pitch": "Pitch",
+      "exec": "Muhtasari mkuu",
+      "marketing": "Masoko",
+      "financials": "Fedha"
+    },
+    "stampCta": "Jaribu gongo bure",
+    "execCta": "Muhtasari mkuu hai",
+    "loading": "Inapakia…",
+    "unavailable": "# Waraka haupatikani\n\nMaudhui ya pitch hayakuweza kupakiwa. Tafadhali jaribu tena baadaye.",
+    "talkHeading": "Ongea na timu"
+  },
+  "networkPage": {
+    "kicker": "Ndege ya itifaki",
+    "title": "Hali ya mtandao",
+    "lede": "Mwonekano hai wa ndege ya uthibitisho: migongo, seva za alama za wakati, wateja wa familia, na nodi yetu ya Bitcoin (kwenye ncha). Migongo bure. Paywall imezimwa.",
+    "refresh": "Onyesha upya",
+    "retry": "Jaribu tena",
+    "loadError": "Imeshindwa kupakia hali ya mtandao",
+    "stat24h": "Migongo ya saa 24",
+    "stat24hHint": "Jumla ya API",
+    "statBitcoin": "Chanzo cha Bitcoin",
+    "statBlockHeight": "Kimo cha bloku",
+    "statCalendars": "Kalenda za OTS",
+    "loading": "Inapakia…",
+    "bitcoinLoadError": "Imeshindwa kupakia nodi ya Bitcoin",
+    "ibdProgress": "IBD ~{{pct}}%",
+    "heightHint": "Kimo {{height}}",
+    "noHeight": "Hakuna kimo kilichoripotiwa",
+    "noNodeData": "Hakuna data ya nodi iliyoripotiwa",
+    "syncingHeaders": "Vichwa vimesawazishwa",
+    "liveTip": "Ncha hai",
+    "calendarsUp": "{{up}}/{{total}} zinafanya kazi",
+    "calendarsLoadError": "Imeshindwa kupakia kalenda za OTS",
+    "noCalendarStatus": "Hakuna hali ya kalenda iliyoripotiwa",
+    "finneyHint": "Finney mara nyingi hulegea — Alice + Bob zinatosha",
+    "calendarHealth": "Afya ya kalenda za umma",
+    "timestampServers": "Seva za alama za wakati",
+    "loadingCalendars": "Inapakia seva za alama za wakati…",
+    "noCalendarStatusBody": "Hakuna hali ya kalenda iliyoripotiwa. Kalenda za umma bado zinatumika wakati wa kugonga.",
+    "finneyFlaky": "mara nyingi hulegea — Alice + Bob zinatosha",
+    "down": "imezimwa",
+    "recentStamps": "Migongo ya hivi karibuni",
+    "loadingRecent": "Inapakia migongo ya hivi karibuni…",
+    "noRecent": "Hakuna sampuli za umma za hivi karibuni — jaribu gongo bure mwenyewe.",
+    "proofAria": "Uthibitisho {{hash}}",
+    "nostrTitle": "Maelezo kwenye Nostr",
+    "nostrEmptyBefore": "Hakuna migongo ya hivi karibuni yenye event id ya Nostr. Migongo bado huchapishwa API inaporudisha",
+    "nostrEmptyAfter": ". Ukurasa huu hautengenezi ids.",
+    "njump": "njump",
+    "familyTitle": "Wateja wa familia (X-Satohash-Client)",
+    "familyLoadingAria": "Inapakia wateja wa familia",
+    "familyLoadError": "Imeshindwa kupakia wateja wa familia",
+    "noFamilyBefore": "Bado hakuna migongo ya familia iliyohusishwa. Deep-link na",
+    "noFamilyAfter": "au kichwa cha mteja.",
+    "noWidgetStamps": "Bado hakuna migongo kupitia wijeti hii",
+    "attributedOne": "gongo 1 lililohusishwa",
+    "attributed": "migongo {{count}} iliyohusishwa",
+    "ctaTitle": "Tumia mtandao",
+    "ctaBody": "Gonga bure, thibitisha uthibitisho, au soma jinsi ushahidi unavyoingia kwenye mifumo ya kisheria.",
+    "stampCta": "Gongo bure",
+    "verifyCta": "Thibitisha",
+    "explorerCta": "Kichunguzi cha uthibitisho"
   }
 }

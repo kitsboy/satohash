@@ -11,6 +11,7 @@ import {
   Radio,
   Zap
 } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import Footer from '../components/layout/Footer'
 import usePageMeta from '../hooks/usePageMeta'
 import { getApiUrl } from '../config/constants'
@@ -42,7 +43,7 @@ function isSha256Hex(h) {
   return typeof h === 'string' && /^[0-9a-f]{64}$/i.test(h)
 }
 
-function InlineRetry({ onRetry, loading, large = false }) {
+function InlineRetry({ onRetry, loading, large = false, label }) {
   return (
     <button
       type="button"
@@ -53,7 +54,7 @@ function InlineRetry({ onRetry, loading, large = false }) {
       }`}
       style={{ color: 'var(--text-secondary)' }}
     >
-      Retry
+      {label}
     </button>
   )
 }
@@ -111,7 +112,8 @@ function StatCard({
 }
 
 export default function Network() {
-  usePageMeta({ page: 'network', title: 'Network · Satohash' })
+  const { t } = useTranslation()
+  usePageMeta({ page: 'network' })
 
   useEffect(() => {
     const added = []
@@ -200,7 +202,7 @@ export default function Network() {
         setFamily(met?.raw?.familyClients || met?.segments || [])
       }
     } catch (e) {
-      setErr(e.message || 'Failed to load network status')
+      setErr(e.message || t('networkPage.loadError'))
       setFamilyError(true)
       setBitcoinError(true)
       setCalsError(true)
@@ -233,6 +235,10 @@ export default function Network() {
     }
   }, [])
 
+  const retryBtn = (large = false) => (
+    <InlineRetry onRetry={load} loading={loading} large={large} label={t('networkPage.retry')} />
+  )
+
   const calendars = cals?.calendars || []
   const calendarsUp = calendars.filter((c) => c.ok).length
   const finneyDown = calendars.some((c) => isFinneyCalendar(c) && !c.ok)
@@ -264,14 +270,15 @@ export default function Network() {
             className="mb-2 text-[10px] font-black tracking-[0.22em] uppercase"
             style={{ color: 'var(--accent-gold)' }}
           >
-            Protocol plane
+            {t('networkPage.kicker')}
           </p>
           <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <h1 className="text-3xl font-black tracking-tight sm:text-4xl">Network status</h1>
+              <h1 className="text-3xl font-black tracking-tight sm:text-4xl">
+                {t('networkPage.title')}
+              </h1>
               <p className="mt-2 max-w-xl text-sm" style={{ color: 'var(--text-secondary)' }}>
-                Live view of the proof plane: stamps, timestamp servers, family clients, and the own
-                Bitcoin node (at tip). Free stamps. Paywall off.
+                {t('networkPage.lede')}
               </p>
             </div>
             <button
@@ -281,13 +288,14 @@ export default function Network() {
               className="inline-flex min-h-[44px] items-center gap-2 self-start rounded-xl border px-4 py-2 text-[11px] font-black uppercase sm:self-auto"
               style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
             >
-              <RefreshCw size={14} className={loading ? 'animate-spin' : ''} /> Refresh
+              <RefreshCw size={14} className={loading ? 'animate-spin' : ''} />{' '}
+              {t('networkPage.refresh')}
             </button>
           </div>
           {err && (
             <p className="mt-4 text-sm" style={{ color: 'var(--accent-danger)' }}>
               {err}
-              <InlineRetry onRetry={load} loading={loading} />
+              {retryBtn()}
             </p>
           )}
         </div>
@@ -296,30 +304,30 @@ export default function Network() {
       <section className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <StatCard
-            label="24h stamps"
+            label={t('networkPage.stat24h')}
             value={stats?.stamps_created ?? stats?.stamps24h ?? '—'}
-            hint="API aggregate"
+            hint={t('networkPage.stat24hHint')}
             icon={Fingerprint}
           />
           <StatCard
-            label="Bitcoin source"
+            label={t('networkPage.statBitcoin')}
             value={bitcoinError ? '—' : bitcoin?.source || '—'}
             hint={
               bitcoinError ? (
                 <>
-                  Could not load Bitcoin node
-                  <InlineRetry onRetry={load} loading={loading} />
+                  {t('networkPage.bitcoinLoadError')}
+                  {retryBtn()}
                 </>
               ) : loading && !bitcoin ? (
-                'Loading…'
+                t('networkPage.loading')
               ) : bitcoin?.status === 'syncing' ? (
-                `IBD ~${bitcoin.progress_pct ?? '—'}%`
+                t('networkPage.ibdProgress', { pct: bitcoin.progress_pct ?? '—' })
               ) : bitcoin?.block_height != null ? (
-                `Height ${bitcoin.block_height}`
+                t('networkPage.heightHint', { height: bitcoin.block_height })
               ) : bitcoin ? (
-                'No height reported'
+                t('networkPage.noHeight')
               ) : (
-                'No node data reported'
+                t('networkPage.noNodeData')
               )
             }
             hintDanger={bitcoinError}
@@ -327,24 +335,24 @@ export default function Network() {
             color="#f97316"
           />
           <StatCard
-            label="Block height"
+            label={t('networkPage.statBlockHeight')}
             value={bitcoinError ? '—' : (bitcoin?.block_height ?? bitcoin?.headers ?? '—')}
             hint={
               bitcoinError ? (
                 <>
-                  Could not load Bitcoin node
-                  <InlineRetry onRetry={load} loading={loading} />
+                  {t('networkPage.bitcoinLoadError')}
+                  {retryBtn()}
                 </>
               ) : loading && !bitcoin ? (
-                'Loading…'
+                t('networkPage.loading')
               ) : bitcoin?.ibd ? (
-                'Syncing headers complete'
+                t('networkPage.syncingHeaders')
               ) : bitcoin?.block_height != null ? (
-                'Live tip'
+                t('networkPage.liveTip')
               ) : bitcoin ? (
-                'No height reported'
+                t('networkPage.noHeight')
               ) : (
-                'No node data reported'
+                t('networkPage.noNodeData')
               )
             }
             hintDanger={bitcoinError}
@@ -352,24 +360,28 @@ export default function Network() {
             color="#0ea5e9"
           />
           <StatCard
-            label="OTS calendars"
+            label={t('networkPage.statCalendars')}
             value={
-              calsError ? '—' : calendars.length ? `${calendarsUp}/${calendars.length} up` : '—'
+              calsError
+                ? '—'
+                : calendars.length
+                  ? t('networkPage.calendarsUp', { up: calendarsUp, total: calendars.length })
+                  : '—'
             }
             hint={
               calsError ? (
                 <>
-                  Could not load OTS calendars
-                  <InlineRetry onRetry={load} loading={loading} />
+                  {t('networkPage.calendarsLoadError')}
+                  {retryBtn()}
                 </>
               ) : loading && !cals ? (
-                'Loading…'
+                t('networkPage.loading')
               ) : calendars.length === 0 ? (
-                'No calendar status reported'
+                t('networkPage.noCalendarStatus')
               ) : finneyDown ? (
-                'Finney often flaky — Alice + Bob are enough'
+                t('networkPage.finneyHint')
               ) : (
-                'Public calendar health'
+                t('networkPage.calendarHealth')
               )
             }
             hintDanger={calsError}
@@ -387,20 +399,20 @@ export default function Network() {
           >
             <div className="mb-4 flex items-center gap-2">
               <Calendar size={16} style={{ color: 'var(--accent-gold)' }} />
-              <h2 className="text-sm font-black">Timestamp servers</h2>
+              <h2 className="text-sm font-black">{t('networkPage.timestampServers')}</h2>
             </div>
             {loading && calendars.length === 0 && !calsError ? (
               <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>
-                Loading timestamp servers…
+                {t('networkPage.loadingCalendars')}
               </p>
             ) : calsError ? (
               <p className="text-xs" style={{ color: 'var(--accent-danger)' }}>
-                Could not load OTS calendars
-                <InlineRetry onRetry={load} loading={loading} />
+                {t('networkPage.calendarsLoadError')}
+                {retryBtn()}
               </p>
             ) : calendars.length === 0 ? (
               <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>
-                No calendar status reported. Public calendars still used at stamp time.
+                {t('networkPage.noCalendarStatusBody')}
               </p>
             ) : (
               <ul className="space-y-2">
@@ -425,7 +437,7 @@ export default function Network() {
                             color: c.ok ? 'var(--accent-success)' : 'var(--accent-danger)'
                           }}
                         >
-                          {c.ok ? `${c.response_time_ms ?? '—'}ms` : 'down'}
+                          {c.ok ? `${c.response_time_ms ?? '—'}ms` : t('networkPage.down')}
                         </span>
                       </div>
                       {finney ? (
@@ -433,7 +445,7 @@ export default function Network() {
                           className="mt-1 text-[10px] leading-snug"
                           style={{ color: 'var(--text-muted)' }}
                         >
-                          often flaky — Alice + Bob are enough
+                          {t('networkPage.finneyFlaky')}
                         </p>
                       ) : null}
                     </li>
@@ -449,15 +461,15 @@ export default function Network() {
           >
             <div className="mb-4 flex items-center gap-2">
               <Zap size={16} style={{ color: 'var(--accent-gold)' }} />
-              <h2 className="text-sm font-black">Recent stamps</h2>
+              <h2 className="text-sm font-black">{t('networkPage.recentStamps')}</h2>
             </div>
             {loading && recent.length === 0 ? (
               <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>
-                Loading recent stamps…
+                {t('networkPage.loadingRecent')}
               </p>
             ) : recent.length === 0 ? (
               <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>
-                No recent public samples — try a free stamp yourself.
+                {t('networkPage.noRecent')}
               </p>
             ) : (
               <ul className="max-h-56 space-y-2 overflow-y-auto">
@@ -484,7 +496,7 @@ export default function Network() {
                         <Link
                           to={`/p/${hex}`}
                           title={titleHash}
-                          aria-label={`Proof ${titleHash}`}
+                          aria-label={t('networkPage.proofAria', { hash: titleHash })}
                           className="inline-flex min-h-[44px] min-w-[44px] items-center truncate font-mono text-[10px]"
                           style={{ color: 'var(--text-secondary)' }}
                         >
@@ -520,12 +532,12 @@ export default function Network() {
         >
           <div className="mb-4 flex items-center gap-2">
             <Radio size={16} style={{ color: 'var(--accent-gold)' }} />
-            <h2 className="text-sm font-black">Notes on Nostr</h2>
+            <h2 className="text-sm font-black">{t('networkPage.nostrTitle')}</h2>
           </div>
           {nostrNotes.length === 0 ? (
             <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>
-              No recent stamps include a Nostr event id. Stamps still publish when the API returns{' '}
-              <code>nostr_event_id</code>. This page does not invent ids.
+              {t('networkPage.nostrEmptyBefore')} <code>nostr_event_id</code>
+              {t('networkPage.nostrEmptyAfter')}
             </p>
           ) : (
             <ul className="space-y-2">
@@ -558,7 +570,7 @@ export default function Network() {
                     className="inline-flex min-h-[44px] items-center text-[10px] font-black uppercase"
                     style={{ color: 'var(--accent-gold)' }}
                   >
-                    njump
+                    {t('networkPage.njump')}
                   </a>
                 </li>
               ))}
@@ -568,9 +580,13 @@ export default function Network() {
       </section>
 
       <section className="mx-auto max-w-5xl px-4 pb-10 sm:px-6" data-testid="family-clients">
-        <h2 className="mb-3 text-sm font-black">Family clients (X-Satohash-Client)</h2>
+        <h2 className="mb-3 text-sm font-black">{t('networkPage.familyTitle')}</h2>
         {loading && family.length === 0 && !familyError ? (
-          <ul className="space-y-2" aria-busy="true" aria-label="Loading family clients">
+          <ul
+            className="space-y-2"
+            aria-busy="true"
+            aria-label={t('networkPage.familyLoadingAria')}
+          >
             {[0, 1, 2, 3].map((i) => (
               <li
                 key={i}
@@ -580,13 +596,13 @@ export default function Network() {
           </ul>
         ) : familyError ? (
           <p className="text-xs" style={{ color: 'var(--accent-danger)' }}>
-            Could not load family clients
-            <InlineRetry onRetry={load} loading={loading} large />
+            {t('networkPage.familyLoadError')}
+            {retryBtn(true)}
           </p>
         ) : family.length === 0 ? (
           <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>
-            No attributed family stamps yet. Deep-link with <code>?ref=motopass</code> or the client
-            header.
+            {t('networkPage.noFamilyBefore')} <code>?ref=motopass</code>{' '}
+            {t('networkPage.noFamilyAfter')}
           </p>
         ) : (
           <ul className="grid gap-2 sm:grid-cols-2">
@@ -604,14 +620,16 @@ export default function Network() {
                       className="text-right text-[10px]"
                       style={{ color: 'var(--text-tertiary)' }}
                     >
-                      No stamps through this widget yet
+                      {t('networkPage.noWidgetStamps')}
                     </span>
                   ) : (
                     <span
                       className="text-right text-[10px]"
                       style={{ color: 'var(--text-secondary)' }}
                     >
-                      {count === 1 ? '1 attributed stamp' : `${count} attributed stamps`}
+                      {count === 1
+                        ? t('networkPage.attributedOne')
+                        : t('networkPage.attributed', { count })}
                     </span>
                   )}
                 </li>
@@ -624,9 +642,9 @@ export default function Network() {
       <section className="border-t px-4 py-12 sm:px-6" style={{ borderColor: 'var(--border)' }}>
         <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
           <Globe2 size={28} className="mb-3" style={{ color: 'var(--accent-gold)' }} />
-          <h2 className="text-xl font-black">Use the network</h2>
+          <h2 className="text-xl font-black">{t('networkPage.ctaTitle')}</h2>
           <p className="mt-2 text-sm" style={{ color: 'var(--text-secondary)' }}>
-            Stamp free, verify proofs, or read how evidence fits legal frameworks.
+            {t('networkPage.ctaBody')}
           </p>
           <div className="mt-6 flex flex-wrap justify-center gap-3">
             <Link
@@ -634,21 +652,21 @@ export default function Network() {
               className="inline-flex min-h-[48px] items-center gap-2 rounded-xl px-6 py-3 text-xs font-black uppercase"
               style={{ background: 'var(--accent-gold)', color: '#141b25' }}
             >
-              Free stamp <ArrowRight size={14} />
+              {t('networkPage.stampCta')} <ArrowRight size={14} />
             </Link>
             <Link
               to="/verify"
               className="inline-flex min-h-[48px] items-center rounded-xl border px-6 py-3 text-xs font-black uppercase"
               style={{ borderColor: 'var(--border)' }}
             >
-              Verify
+              {t('networkPage.verifyCta')}
             </Link>
             <Link
               to="/proof-of-existence"
               className="inline-flex min-h-[48px] items-center rounded-xl border px-6 py-3 text-xs font-black uppercase"
               style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
             >
-              Proof explorer
+              {t('networkPage.explorerCta')}
             </Link>
           </div>
         </div>

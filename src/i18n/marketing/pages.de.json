@@ -598,8 +598,12 @@
     "nip05Cta": "NIP-05-Identität einrichten",
     "stampWidget": {
       "title": "Stamp on Satohash",
-      "body": "Family-Apps hashen lokal und öffnen satohash.io/stamp?hash=&ref=, damit die SPA X-Satohash-Client setzt. Katoa, Sherpa, Tadbuy und OpenStrata nutzen dasselbe Drop-in — die Datei wird nicht hochgeladen.",
+      "body": "Family-Clients hashen die Datei lokal — sie verlässt den Browser nicht. Stamp öffnet /stamp?hash=&ref=, damit die SPA X-Satohash-Client aus data-client sendet. Katoa, MotoPass, SherpaCarta, Give A Bit und TadBuy nutzen dasselbe Drop-in.",
       "embedLabel": "Stamp-Widget"
+    },
+    "family": {
+      "title": "Family-Sites",
+      "body": "Ein Paste pro Produkt-ID. Das Widget berechnet SHA-256 lokal — die Datei verlässt den Browser nicht. Stamp öffnet /stamp?hash=&ref=, damit die SPA X-Satohash-Client aus data-client sendet. HQ metrics.json familyClients zählt nur Stamps, die mit dieser ID wirklich abgeschlossen werden. Katoa, MotoPass, SherpaCarta, Give A Bit und TadBuy haben das Paste; die Zähler bleiben ehrliche Nullen, bis eine Family-Site tatsächlich stempelt."
     }
   },
   "docsPage": {
@@ -1642,5 +1646,154 @@
     "stampNow": "Jetzt kostenlos stempeln",
     "listed": "Sie stehen auf der lokalen Liste — wir kündigen auf @give_bit an",
     "imIn": "I'm in"
+  },
+  "aboutPage": {
+    "kicker": "Über uns · Whitepaper lite",
+    "titleBefore": "Das",
+    "titleHighlight": "Satohash",
+    "titleAfter": "Protokoll",
+    "lede": "Kostenloser, privater Existenznachweis auf Bitcoin — entwickelt von Give A Bit. Lokal hashen. Offen verankern. Für immer prüfen.",
+    "stampCta": "Kostenlos stempeln",
+    "watchCta": "Erklärung ansehen",
+    "governmentCta": "Behörden",
+    "quote": "„Wahrheit sollte nicht davon abhängen, dass ein Unternehmen online bleibt. Verankern Sie digitale Geschichte im sichersten Rechnernetz, das Menschen betreiben: Bitcoin.“",
+    "quoteAttr": "Give A Bit · Satohash · 2026",
+    "principlesKicker": "Prinzipien",
+    "principlesTitle": "Warum es das gibt",
+    "pillars": {
+      "zeroKnowledge": {
+        "title": "Zero-Knowledge by Design",
+        "body": "Dokumente verlassen Ihr Gerät nie. Nur ein SHA-256-Fingerabdruck wird gestempelt. Wir können nicht lesen, was wir nie empfangen."
+      },
+      "bitcoin": {
+        "title": "Bitcoin als Finalität",
+        "body": "OpenTimestamps committet zuerst an öffentliche Kalender, dann an Bitcoin. Beweise überleben jede einzelne Unternehmensdatenbank."
+      },
+      "portable": {
+        "title": "Portable .ots-Beweise",
+        "body": "Laden Sie offene Beweise herunter. Prüfen Sie mit offenen Werkzeugen. Kein Vendor-Lock-in im Moment, der zählt."
+      },
+      "mission": {
+        "title": "Give-A-Bit-Mission",
+        "body": "Kostenlose Stempel für Familien und Alltagswahrheit. Institutionelle Pfade finanzieren die Commons — nicht umgekehrt."
+      }
+    },
+    "chapterLabel": "Kapitel",
+    "chapters": {
+      "crisis": {
+        "num": "01",
+        "title": "Das Problem digitaler Wahrheit",
+        "p1": "Die meiste „Beweis“-Lage lebt noch in der Datenbank eines Anbieters. Scheitert, schwenkt oder wird das Unternehmen gezwungen, ist der Datensatz nur so stark wie seine Verfügbarkeit und Ehrlichkeit.",
+        "p2": "Deepfakes und generative Medien machen Zeitstempel und Integritätsbeweise wichtiger, nicht unwichtiger. Satohash existiert, damit Existenz und Integrität mathematische Fakten sind — keine Marketingbehauptungen."
+      },
+      "how": {
+        "num": "02",
+        "title": "Wie Satohash funktioniert",
+        "p1": "Sie hashen lokal (Browser-Web-Crypto oder Worker). Wir sehen die Datei nie. Der Fingerabdruck geht an OpenTimestamps-Kalender und wird Richtung Bitcoin aggregiert.",
+        "p2": "Sie behalten einen portablen .ots-Beweis. Jeder kann die Struktur im Browser erneut prüfen und den Weg zur Bitcoin-Bestätigung gehen — ohne uns für immer zu vertrauen."
+      },
+      "mission": {
+        "num": "03",
+        "title": "Give A Bit",
+        "p1": "Satohash wird von Give A Bit entwickelt — eine Mission, Bitcoins Vertrauensmaschine in den Dienst echter Menschen zu stellen: Freiberufler, Familien, Journalisten und Institutionen, die Integrität brauchen, ohne Privatsphäre aufzugeben.",
+        "p2": "Die kostenlose Stufe ist Absicht. Paywalls finanzieren später Infrastruktur — sie definieren die Beweiskette nicht neu (weiterhin Bitcoin + OTS)."
+      },
+      "courts": {
+        "num": "04",
+        "title": "Gerichte & Beweise",
+        "p1": "Ein Hash ersetzt keine Richter. Er beweist, dass ein bestimmter Bytestrom bis zu einer Zeitgrenze existierte — öffentlich nachprüfbar.",
+        "p2": "Kombinieren Sie Stempel mit Beweiskette und Anwalt. Unsere Bildungsmatrix zur Beweiszulässigkeit dient der Orientierung in Rahmenwerken — keine Rechtsberatung."
+      }
+    },
+    "stackTitle": "Der Stack in klarer Sprache",
+    "stack": {
+      "hash": { "t": "Hash", "d": "SHA-256 auf dem Gerät" },
+      "calendars": { "t": "Kalender", "d": "OpenTimestamps" },
+      "bitcoin": { "t": "Bitcoin", "d": "Mainnet-Anker" },
+      "keep": { "t": "Sie behalten", "d": ".ots + Original" }
+    },
+    "chip1": "Privat",
+    "chip2": "Heute kostenlos",
+    "chip3": "Offene Beweise",
+    "chip4": "Bitcoin-Finalität",
+    "chip5": "FOSS-Geist",
+    "ctaTitle": "Dem finalen Register beitreten",
+    "ctaBody": "Stempeln Sie eine Datei kostenlos. Erkunden Sie Behörden- und Beweis-Seiten. Sprechen Sie mit dem Team, wenn Sie institutionelle Tiefe brauchen.",
+    "evidenceCta": "Beweis-Matrix",
+    "pitchCta": "Pitch-Hub",
+    "contactKicker": "Kontakt · Give A Bit"
+  },
+  "pitchPage": {
+    "kicker": "Investoren- & Partner-Hub",
+    "h1": "Pitch, Zusammenfassung & Finanzen",
+    "proofsLine": "{{count}} Bitcoin-verankerte Beweise über diese Ebene —",
+    "liveNetwork": "Live-Netzwerk ↗",
+    "govTitle": "Behörden- und Migrationsprogramme",
+    "govBody": "Nur-Hash-Beweise, Beweisketten und ruhige F&E-Muster (einschließlich eines frühen Deep-Link-Konzepts im MotoPass-Stil). Kein Hard Sell — Workshop-Material auf der Behörden-Seite.",
+    "govCta": "Behörden",
+    "tabsAria": "Dokumentabschnitte",
+    "tabs": {
+      "pitch": "Pitch",
+      "exec": "Executive Summary",
+      "marketing": "Marketing",
+      "financials": "Finanzen"
+    },
+    "stampCta": "Kostenlosen Stempel testen",
+    "execCta": "Live-Executive-Summary",
+    "loading": "Laden…",
+    "unavailable": "# Dokument nicht verfügbar\n\nDer Pitch-Inhalt konnte nicht geladen werden. Bitte später erneut versuchen.",
+    "talkHeading": "Mit dem Team sprechen"
+  },
+  "networkPage": {
+    "kicker": "Protokollebene",
+    "title": "Netzwerkstatus",
+    "lede": "Live-Ansicht der Beweisebene: Stempel, Zeitstempel-Server, Familien-Clients und der eigene Bitcoin-Knoten (an der Spitze). Kostenlose Stempel. Paywall aus.",
+    "refresh": "Aktualisieren",
+    "retry": "Erneut",
+    "loadError": "Netzwerkstatus konnte nicht geladen werden",
+    "stat24h": "24-h-Stempel",
+    "stat24hHint": "API-Aggregat",
+    "statBitcoin": "Bitcoin-Quelle",
+    "statBlockHeight": "Blockhöhe",
+    "statCalendars": "OTS-Kalender",
+    "loading": "Laden…",
+    "bitcoinLoadError": "Bitcoin-Knoten konnte nicht geladen werden",
+    "ibdProgress": "IBD ~{{pct}}%",
+    "heightHint": "Höhe {{height}}",
+    "noHeight": "Keine Höhe gemeldet",
+    "noNodeData": "Keine Knotendaten gemeldet",
+    "syncingHeaders": "Header-Sync abgeschlossen",
+    "liveTip": "Live-Spitze",
+    "calendarsUp": "{{up}}/{{total}} aktiv",
+    "calendarsLoadError": "OTS-Kalender konnten nicht geladen werden",
+    "noCalendarStatus": "Kein Kalenderstatus gemeldet",
+    "finneyHint": "Finney oft unzuverlässig — Alice + Bob reichen",
+    "calendarHealth": "Gesundheit öffentlicher Kalender",
+    "timestampServers": "Zeitstempel-Server",
+    "loadingCalendars": "Zeitstempel-Server werden geladen…",
+    "noCalendarStatusBody": "Kein Kalenderstatus gemeldet. Öffentliche Kalender werden beim Stempeln weiter genutzt.",
+    "finneyFlaky": "oft unzuverlässig — Alice + Bob reichen",
+    "down": "offline",
+    "recentStamps": "Aktuelle Stempel",
+    "loadingRecent": "Aktuelle Stempel werden geladen…",
+    "noRecent": "Keine aktuellen öffentlichen Beispiele — stempeln Sie selbst kostenlos.",
+    "proofAria": "Beweis {{hash}}",
+    "nostrTitle": "Notizen auf Nostr",
+    "nostrEmptyBefore": "Keine aktuellen Stempel enthalten eine Nostr-Event-ID. Stempel werden weiter veröffentlicht, wenn die API",
+    "nostrEmptyAfter": " zurückgibt. Diese Seite erfindet keine IDs.",
+    "njump": "njump",
+    "familyTitle": "Familien-Clients (X-Satohash-Client)",
+    "familyLoadingAria": "Familien-Clients werden geladen",
+    "familyLoadError": "Familien-Clients konnten nicht geladen werden",
+    "noFamilyBefore": "Noch keine zugeordneten Familien-Stempel. Deep-Link mit",
+    "noFamilyAfter": "oder dem Client-Header.",
+    "noWidgetStamps": "Noch keine Stempel über dieses Widget",
+    "attributedOne": "1 zugeordneter Stempel",
+    "attributed": "{{count}} zugeordnete Stempel",
+    "ctaTitle": "Das Netzwerk nutzen",
+    "ctaBody": "Kostenlos stempeln, Beweise prüfen oder lesen, wie Evidenz in Rechtsrahmen passt.",
+    "stampCta": "Kostenloser Stempel",
+    "verifyCta": "Prüfen",
+    "explorerCta": "Beweis-Explorer"
   }
 }
