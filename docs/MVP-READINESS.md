@@ -1,5 +1,5 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 391) · **Updated:** 2026-09-14
+> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 392) · **Updated:** 2026-09-14
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Satohash MVP Readiness
@@ -18,7 +18,7 @@ That loop is live:
 3. [satohash.io/verify](https://satohash.io/verify) — check the receipt.
 4. Share `https://satohash.io/p/<hash>` — zero-JS proof card.
 
-The remaining work below is for a *marketable* MVP (copy, pin, unfurl) — **not** “wait for the VPS.” The API is already live.
+The remaining work below is **QR / proof-state polish shipping in the SPA** — **not** “wait for the VPS.” The API is already live.
 
 ## Live planes
 
@@ -42,15 +42,17 @@ The remaining work below is for a *marketable* MVP (copy, pin, unfurl) — **not
 
 ## Remaining for a *marketable* MVP
 
-The stranger-stamps loop does not wait on these. They are polish and distribution:
+The stranger-stamps loop does not wait on these. They are **QR and proof-state shipping** (SPA), plus Cam distribution — **not** a VPS wait:
 
 | Item | Status |
 |------|--------|
-| i18n of **About → Pitch → Network** (then Explorer, Atlas) | **In progress** — 7 locales (en es fr de pt sw zh). Product loop (Slice A) is done. Do not add Arabic. See `docs/I18N.md`. |
+| Camera QR → `https://satohash.io/p/{hash}` | **Shipping** — template/contract PDFs and email encode this URL so iPhone/Android cameras open the proof card (cameras cannot read `.ots`). Physical iPhone unfurl still needs a device check. |
+| Proof states: **Pending ≠ Confirmed** | **Shipping** — verify, stamp-done, and `/p/<hash>` distinguish calendars-have-it from Bitcoin-sealed (~60 min). Do not treat Pending as Confirmed. |
+| Family widget completing stamps | **Live** — default POSTs `/api/stamp` on the family site; `data-mode="spa"` is the SPA deep-link. |
 | Cam pin `/watch` on **@give_bit** | Open — paste-ready in `docs/marketing/GIVE-BIT-X-PACK.md` |
-| Physical iPhone `/p/<hash>` unfurl | Open — HTML already uses JPEG `01-stamp-hero.jpg`; needs a device check |
+| i18n | Slice A+B+C chrome done; localization **not** complete (offers deferred). See `docs/I18N.md`. Do not add Arabic. |
 
-Not a gate: VPS deploy, IBD, first public `/health`. Those shipped.
+Not a gate: VPS deploy, IBD, first public `/health`. Those shipped. Snapper / ZK / BOLT-12 / 3D Merkle are cathedral — not MVP remaining.
 
 ## NIP-05 / Kimi identity — do we need NSEC?
 
@@ -90,6 +92,7 @@ Frontend only **verifies** NIP-05 (fetch public JSON, compare pubkey). Signing i
 
 | Date | Build | Change |
 |------|-------|--------|
+| 2026-09-14 | 391 | Remaining = QR / proof states shipping (camera → `/p/{hash}`, Pending ≠ Confirmed). VPS is not the gate. |
 | 2026-09-14 | 366 | Docs match live product: API live, bitcoind at tip, free stamps. VPS is no longer the gate. |
 | 2026-08-31 | — | Stamp/Verify hang fixed (eager chunks). Pages deploy live. |
 | 2026-08-17 | — | Metrics SoT on API; family clients attributed. |

@@ -36,9 +36,11 @@ Inbound deep-link stays `/stamp?hash=&ref=`. HQ `metrics.json` `raw.last10` + `r
 
 ## Drop-in widget
 
-Family sites can paste this instead of wiring the deep-link by hand. The script SHA-256s the file **on-device** (the file is never uploaded), then opens `/stamp?hash=<64hex>&ref=<productId>`. The SPA sends `X-Satohash-Client` from `data-client`. HQ `metrics.json` `raw.familyClients` counts only stamps that complete with that id — paste is not live attribution.
+Family sites can paste this instead of wiring the deep-link by hand. The script SHA-256s the file **on-device** (the file is never uploaded), then **POSTs** `https://api.satohash.io/api/stamp` with `X-Satohash-Client` from `data-client` so the stamp **completes on the family site**. Success shows a hash prefix + **Open proof** (`https://satohash.io/p/<hash>`) and, when the response has `id`, **Download .ots** (`GET https://api.satohash.io/api/stamps/:id?download=true`). On 4xx/5xx it falls back to opening `/stamp?hash=&ref=`. HQ `metrics.json` `raw.familyClients` counts **completed stamps only** with that id — paste is not live attribution.
 
-Swap `data-client` for the exact product id: `katoa` · `motopass` · `sherpacarta` · `giveabit`. Theme: `jewel`.
+Opt-in `data-mode="spa"` still opens `/stamp?hash=<64hex>&ref=<productId>` (SPA completes the stamp).
+
+Swap `data-client` for the exact product id: `katoa` · `motopass` · `sherpacarta` · `giveabit` · `tadbuy`. Theme: `jewel`.
 
 ```html
 <div data-satohash-stamp data-client="katoa" data-theme="jewel"></div>
@@ -46,6 +48,8 @@ Swap `data-client` for the exact product id: `katoa` · `motopass` · `sherpacar
 ```
 
 Do **not** invent new API paths. Stamp remains `POST /api/stamp`.
+
+**Proof card / camera QR:** after a stamp, share `https://satohash.io/p/<hash>`. Phone cameras cannot read `.ots`; they open that URL (QR on PDFs and email). **Pending ≠ Confirmed** — calendars have the hash vs a Bitcoin block (~60 minutes).
 
 ## Architecture
 
@@ -139,7 +143,7 @@ Glass: https://hq.giveabit.io
 
 ## Stable connection
 
-Additive client resilience only — **do not invent or rename `/api/*` paths.** Prefer `packages/satohash-client` (or match this policy). Widget default remains the SPA deep-link; `data-mode="api"` is opt-in and still hashes on-device (file is never uploaded).
+Additive client resilience only — **do not invent or rename `/api/*` paths.** Prefer `packages/satohash-client` (or match this policy). Widget default is API complete (`POST /api/stamp`); `data-mode="spa"` opens `/stamp?hash=&ref=`. File is never uploaded.
 
 ### Timeouts
 
@@ -156,7 +160,7 @@ Server socket: keep-alive 65s (headers 66s), request timeout 120s. OTS stamp bud
 
 - Network failure and HTTP **502 / 503 / 504**: up to **2** retries (fresh timeout each attempt).
 - HTTP **429**: honor `Retry-After` (cap **10s**), then **one** retry.
-- Widget `data-mode="api"`: **one** retry on 429 / 5xx, then fall back to `/stamp?hash=&ref=`.
+- Widget (default API mode): **one** retry on 429 / 5xx, then fall back to `/stamp?hash=&ref=`.
 
 ### Headers
 

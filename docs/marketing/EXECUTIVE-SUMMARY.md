@@ -1,11 +1,11 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 391) · **Updated:** 2026-09-14
+> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 392) · **Updated:** 2026-09-14
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Satohash — Executive Summary
 
 **Version:** 5.0.0-ELITE  
-**Date:** 2026-08-16 (creative refresh 2026-08-29, aligned to Mission & Scope v3)  
+**Date:** 2026-09-14 (aligned to the live product; Mission & Scope v3)  
 **Live at:** https://satohash.io (primary) · API https://api.satohash.io  
 **Built by:** Give A Bit (https://giveabit.io)  
 **GitHub:** https://github.com/kitsboy/satohash  
@@ -15,22 +15,17 @@
 
 ## What Is Satohash?
 
-Satohash is the **Bitcoin-native sovereign proof layer for digital truth.** It lets anyone — individuals, law firms, enterprises, journalists, AI agents, and developers — create cryptographic, tamper-proof, independently verifiable proof that a digital artifact (document, photo, contract, code state, AI output, or web capture) existed at a precise moment in time, anchored permanently to the Bitcoin blockchain via the OpenTimestamps (OTS) protocol.
+> **Prove a file existed. Never show the file. Bitcoin keeps the receipt forever.**
 
-**Core value:** Upload (or hash locally) a file → receive a portable, self-contained `.ots` proof file. Any third party can verify it forever using only open-source tools and a Bitcoin node or public explorer. **No trust in Satohash is required after the proof is issued.** No Bitcoin wallet is needed for basic use. **Documents never leave the user's device.**
+Satohash is a Bitcoin-anchored proof-of-existence workbench. Anyone — a person, a family app, or a CLI — can hash a file on-device, stamp only the fingerprint, and receive a portable `.ots` receipt. Third parties verify it with open OpenTimestamps tools and a Bitcoin block. **No account. No KYC. Stamps are free today.** The document **never leaves the device.**
 
-**The founding idea (v3):** for centuries, proving "who did what, when" meant a notary, lawyer, or registry — some trusted third party to vouch for a date. Satohash's bet is that this middleman is no longer necessary. OpenTimestamps anchors a fingerprint into Bitcoin permanently and verifiably, with no company between your document and the proof. Add a private-key signature and "this file existed" becomes *"this file existed, and I am the one who created it."*
+**Core loop (live):** hash locally → stamp the SHA-256 → download `.ots` → share the proof card at `https://satohash.io/p/{hash}` → verify. Phone cameras cannot read `.ots` files; they open the QR, which is that URL.
 
-Satohash is not "blockchain notarization theater." It is a production-grade, four-plane cryptographic system:
+**Pending is not Confirmed.** Pending means public calendars have the hash. Confirmed means a Bitcoin block has sealed it (~60 minutes — the price of strength, not a bug). Today Satohash proves **when** a file existed, not **who** made it.
 
-```
-Plane 4: ATLAS — Live chain intelligence, mempool, node mesh, protocol stats, jurisdiction signals
-Plane 3: SETTLEMENT — Native BOLT-12 Lightning offers + L402 micropayment metering (built; staged)
-Plane 2: IDENTITY — Nostr NIP-05 / NIP-07 cryptographic signer identity & multi-party provenance
-Plane 1: PROOF — SHA-256 + OpenTimestamps calendar aggregation → Bitcoin PoW commitment (the eternal foundation)
-```
+**The founding idea (v3):** for centuries, proving a date meant a notary, lawyer, or registry. Satohash's bet is that this middleman is no longer necessary for *existence-at-a-time*. OpenTimestamps anchors a fingerprint into Bitcoin, with no company between the document and the proof. Private-key authorship — *"this file existed, and I am the one who created it"* — is the next chapter, not a current claim.
 
-Higher planes can evolve rapidly without ever invalidating historical proofs on Plane 1.
+Higher planes (identity, Lightning settlement, atlas chrome) can evolve later without invalidating Plane 1 proofs. **They are not current features.** Snapper, ZK redaction, 3D Merkle theatre, and BOLT-12 billing are cathedral / staged — do not sell them as live.
 
 ---
 
@@ -45,9 +40,9 @@ Proving that something existed *before* a specific date has enormous legal, comm
 | Investigative journalism    | Sources alter or deny content         | Immutable forensic snapshot + OTS          |
 | Smart contract / escrow evidence | Custodial third parties            | Self-sovereign, portable mathematical proof|
 | AI model / output provenance| No standard, easy to contest later    | Hash at generation time → Bitcoin block    |
-| Web content preservation    | Archives can be edited or taken down  | Snapper + browser fingerprint + OTS        |
-| Multi-party contracts       | Signature chains, repudiation risk    | Nostr-linked co-signing + drawn seals      |
-| Compliance / audit trails   | Expensive manual processes            | API + webhooks + independent evidence exports |
+| Web content preservation    | Archives can be edited or taken down  | Hash a capture on-device, stamp the fingerprint (Snapper store extension is later) |
+| Multi-party contracts       | Signature chains, repudiation risk    | Existence-at-a-time today; verified co-sign is the authorship chapter |
+| Compliance / audit trails   | Expensive manual processes            | Family API + CLI + portable `.ots` (not a replacement for retention law) |
 
 ---
 
@@ -56,45 +51,55 @@ Proving that something existed *before* a specific date has enormous legal, comm
 1. **Hash** — The browser (or CLI) computes the SHA-256 fingerprint of your file using the Web Crypto API. The original bytes **never leave your device**.
 2. **Stamp** — Only the 64-character hex hash is sent to Satohash, which forwards it to three independent public OpenTimestamps calendars (alice, bob, finney).
 3. **Anchor** — Calendars aggregate thousands of hashes into a Merkle tree and commit the root to Bitcoin in an OP_RETURN (or Taproot) transaction.
-4. **Confirm** — Within ~60 minutes a Bitcoin block permanently seals the commitment (the price of strength — block time is what makes the proof durable). Satohash's background upgrade daemon detects this and upgrades the local proof record.
-5. **Prove** — Download the final `.ots` file. Verification is completely independent: `ots verify`, the official OTS website, or any compatible tool + a Bitcoin block explorer. The proof is valid even if Satohash never existed again.
+4. **Confirm** — Within ~**60 minutes** a Bitcoin block permanently seals the commitment (block time is what makes the proof durable). **Pending ≠ Confirmed.** Pending = calendars have the hash. Confirmed = a Bitcoin block has sealed it.
+5. **Prove** — Download the `.ots`. Share `https://satohash.io/p/{hash}` (QR on PDFs and email; phone cameras open that URL). Verify in the SPA, with `ots verify`, or any compatible tool + a Bitcoin explorer. The receipt remains valid even if Satohash vanished.
 
 **No trust required.** The security comes from Bitcoin's proof-of-work, not from any company or server.
 
 ---
 
-## Platform Features (v5 ELITE)
+## What is live (v5 ELITE — 2026-09-14)
 
-### Core Proof
-- One-click / drag-and-drop timestamping (SPA, CLI, REST API)
-- Batch timestamping (hundreds of files in one Bitcoin commitment)
-- Verification Shield with 3D Merkle tree visualization and path explorer
-- Personal Vault with searchable history and bulk actions
-- Full OpenTimestamps compatibility + portable `.ots` files
+Cathedral chrome (ZK redaction, Snapper-as-judiciary-ready, 3D Merkle theatre, BOLT-12 billing) is **not** the current product. This is:
 
-### Advanced / Institutional
-- **ZK Redaction Tool** — Redact sections of a document while preserving a valid Bitcoin anchor for the unredacted hash
-- **Evidence-Ready PDF Customizer** — Watermarks, variable paper sizes, judicial metadata blocks, attestation language, injected OTS proof (aids evidence presentation; admissibility remains a court's call)
-- **Forensic Web Capture (Snapper)** — Screenshot any public URL + rich browser fingerprint metadata; immediately stamp the evidence package
-- **Git State Notarization** — One-click anchoring of current repo state (tags, commit, tree)
-- **Offline Sync Queue** — Create stamps while offline; automatically reconcile when connectivity returns
-- **Real-Time Mempool Ticker** — Live fee rates and block height always visible in the signal bar
-- **Global Command Palette (⌘K)** — Keyboard-first navigation everywhere
+### Core loop
+- Drag-and-drop stamp on [satohash.io/stamp](https://satohash.io/stamp) — no account
+- SHA-256 on-device (Web Crypto). Only the 64-hex hash is submitted
+- Portable `.ots` download
+- Public verify at `/verify` — **Pending** vs **Confirmed** are different states
+- Zero-JS proof card at `https://satohash.io/p/{hash}` — cameras open this URL; they cannot read `.ots`
 
-### Identity & Collaboration *(authorship upgrade — the next chapter)*
-- **Nostr Signer (NIP-07)** — Passwordless cryptographic identity via browser extension (Alby, etc.)
-- **Multi-Party Contract Signing** — Add co-signers by npub, collect drawn + typed seals, produce a single anchored proof package *(verified, non-repudiable signatures on the roadmap)*
-- **Proof DNA / Badge Generator** — Embeddable, verifiable visual attestations for assets
+### Family widget (completes stamps)
+Family sites (Katoa, MotoPass, SherpaCarta, Give A Bit, TadBuy) paste:
 
-### Settlement *(built & staged — switched on when the rails are real)*
-- **BOLT-12 Lightning Invoices** — Reusable, privacy-preserving offers presented in-drawer
-- **L402 Paywalling** — Native HTTP 402 + Lightning for high-volume or automated API usage (no credit cards)
+```html
+<div data-satohash-stamp data-client="katoa" data-theme="jewel"></div>
+<script src="https://satohash.io/widgets/stamp.js" async></script>
+```
 
-### Developer & Automation
-- Full REST API + OpenAPI 3.0 spec + interactive playground in-app
-- Webhook subscriptions for stamp lifecycle events (`stamped`, `collaborated`, `revoked`)
-- Rich SDK examples (Python, Node, curl) and AI agent integration guides (Claude tool_use, GPT Actions, Make, Zapier, n8n)
-- Mesh / peer witness verification endpoints
+The file is hashed on-device (never uploaded). Default **POST**s `https://api.satohash.io/api/stamp` (`X-Satohash-Client`) and returns the proof card. Opt-in `data-mode="spa"` opens `/stamp?hash=&ref=`. Contract: `docs/FAMILY-API.md`. Do not invent `/api/*` paths.
+
+### CLI
+From the repo (`packages/satohash-cli` — not the stale `bin/satohash.js`):
+
+```bash
+node packages/satohash-cli/bin/satohash.js stamp ./file.pdf
+```
+
+Defaults to `https://api.satohash.io`. Sends `X-Satohash-Client: cli`. Prints `https://satohash.io/p/<hash>` on success.
+
+### Also live
+- Free stamps (`REQUIRE_LIGHTNING=false`). Paywall off.
+- Production API at `api.satohash.io` + own pruned `bitcoind` at tip
+- Explainer at `/watch` (~84s)
+- Batch stamp in the SPA (rate-limited; public 5/min)
+
+### Not current features (cathedral / staged)
+- **ZK redaction** — demo chrome, not a shipped redaction product
+- **Snapper** — unpacked MV3 scaffold; not store-shipped, not judiciary-ready
+- **3D Merkle explorer** — public demo, not a live block explorer
+- **BOLT-12 / L402** — built and staged; Lightning not configured
+- **Multi-party signing / authorship** — next chapter; today proves *when*, not *who*
 
 ---
 
@@ -106,8 +111,8 @@ Proving that something existed *before* a specific date has enormous legal, comm
 | Shell & UX     | AppShellNoir (LeftRail + TopSignal + Mobile), Institutional Noir design tokens |
 | Cryptography   | Web Crypto (client) + opentimestamps (server) + bitcoinjs-lib |
 | Blockchain     | Bitcoin Mainnet via 3 public OTS calendars      |
-| Payments       | Lightning Network (BOLT-12 offers + L402)       |
-| Identity       | Nostr (NIP-05 publishing + NIP-07 browser auth) |
+| Payments       | Off (`REQUIRE_LIGHTNING=false`). BOLT-12 / L402 built & staged, not live |
+| Identity       | Optional Nostr NIP-05 lookup / NIP-07 — proves *when*, not *who* |
 | Backend        | Node 20+ + Express 5 + Socket.io + better-sqlite3 + Knex |
 | Persistence    | SQLite (metadata only) + client IndexedDB / LocalStorage for local-first |
 | Observability  | Sentry (full-stack), Pino, Prometheus           |
@@ -169,9 +174,9 @@ The **privacy-preserving integrity anchor** — hash on-chain, file never leaves
 2. **True Zero-Knowledge** — We literally cannot see or store your documents.
 3. **Bitcoin Security** — The hardest, most decentralized timestamping root in existence.
 4. **Open Standard** — Any OTS verifier in the world works; no vendor lock-in.
-5. **Lightning-Native Economics** — Sub-cent, sub-second settlement for volume (when live).
-6. **Self-Sovereign Identity** — Nostr, not email or corporate accounts.
-7. **Full Sovereign Stack** — Self-hostable, auditable F.O.S.S., multi-plane extensibility.
+5. **Lightning-ready economics (staged)** — Sub-cent settlement for volume *when* rails are funded. Not live today.
+6. **Self-Sovereign Identity (next chapter)** — Optional Nostr lookup today; authorship signing is the roadmap.
+7. **Open stack** — F.O.S.S., self-hostable. Higher planes do not rewrite Plane 1 proofs.
 
 ---
 
@@ -189,11 +194,14 @@ Technical / developer: satohash.giveabit.io/developer or the in-app API playgrou
 
 This executive summary is a report, not a promise. Every claim carries its honest state:
 
-- ✅ **Free stamps, Bitcoin+OTS anchoring, zero-knowledge hashing** — live and true today.
+- ✅ **Free stamps, Bitcoin+OTS anchoring, on-device hashing** — live and true today.
+- ✅ **Proof card + camera QR** — `https://satohash.io/p/{hash}`. Phone cameras open that URL.
+- ✅ **Pending ≠ Confirmed** — ~60 minutes to a Bitcoin block. Do not treat them as the same.
+- ✅ **Family widget + CLI** — widget can complete `POST /api/stamp`; CLI prints the proof card.
 - ✅ **Proves "when," not "who"** — stated plainly; authorship via private-key signing is the next chapter (v3).
 - ⚠️ **Independent client-side verify (zero server trust)** — on the roadmap; until it ships we say so.
 - ⚠️ **Verified multi-party signing** — partial today (unverified cosign); real non-repudiation on the roadmap.
-- ⚠️ **Paid tiers / Lightning billing** — built and staged; launched only when the rails are funded and tested.
+- ⚠️ **Paid tiers / Lightning / BOLT-12** — built and staged; not live. Snapper, ZK redaction, 3D Merkle are cathedral — not current features.
 - ❌ **Ethereum / cross-chain** — out of scope, forever. Bitcoin is the truth layer.
 - 🛡 **Verify this yourself** — every proof carries a standing invitation to check with open tools, no account, no KYC.
 - ⏱ **Freshness, not guesswork** — every fact surfaces when it was last confirmed. Honest stale beats confident wrong.

@@ -4,8 +4,10 @@
  *   <div data-satohash-stamp data-client="katoa"></div>
  *   <script src="https://satohash.io/widgets/stamp.js" async></script>
  *
- * Optional: data-label, data-theme="noir|jewel", data-mode="api"
- * Hashes on-device (SHA-256). Never uploads the file.
+ * Optional: data-label, data-theme="noir|jewel", data-mode="spa"
+ * Default data-mode is api: POST https://api.satohash.io/api/stamp
+ * with X-Satohash-Client from data-client. File is never uploaded.
+ * data-mode="spa" opens /stamp?hash=&ref= instead.
  */
 ;(function () {
   var PRODUCTION = 'https://satohash.io'
@@ -124,6 +126,43 @@
     return hash.slice(0, 12) + '…'
   }
 
+  function proofHash(raw, fallback) {
+    var s = String(raw || '')
+      .trim()
+      .toLowerCase()
+    if (/^[0-9a-f]{64}$/.test(s)) return s
+    s = String(fallback || '')
+      .trim()
+      .toLowerCase()
+    return /^[0-9a-f]{64}$/.test(s) ? s : ''
+  }
+
+  function stampId(raw) {
+    var s = String(raw || '').trim()
+    if (!/^[0-9a-f-]{8,64}$/i.test(s)) return ''
+    return s
+  }
+
+  function successHtml(origin, hex, id) {
+    var html =
+      '<span class="hash">' +
+      prefixHash(hex) +
+      '</span> · <a href="' +
+      origin +
+      '/p/' +
+      hex +
+      '" target="_blank" rel="noopener noreferrer">Open proof</a>'
+    if (id) {
+      html +=
+        ' · <a href="' +
+        API_ORIGIN +
+        '/api/stamps/' +
+        encodeURIComponent(id) +
+        '?download=true" target="_blank" rel="noopener noreferrer">Download .ots</a>'
+    }
+    return html
+  }
+
   function filenameFor(file, label) {
     var name = (label || (file && file.name) || 'document').replace(/[/\\]/g, '')
     return name.slice(0, 255) || 'document'
@@ -180,7 +219,7 @@
     var labelAttr = (host.getAttribute('data-label') || '').trim()
     var themeKey = String(host.getAttribute('data-theme') || 'jewel').toLowerCase()
     var theme = THEMES[themeKey] || THEMES.jewel
-    var apiMode = String(host.getAttribute('data-mode') || '').toLowerCase() === 'api'
+    var spaMode = String(host.getAttribute('data-mode') || 'api').toLowerCase() === 'spa'
 
     var root = host.attachShadow({ mode: 'open' })
     var style = document.createElement('style')
@@ -231,7 +270,7 @@
       sha256File(file)
         .then(function (hash) {
           var short = '<span class="hash">' + prefixHash(hash) + '</span>'
-          if (!apiMode) {
+          if (spaMode) {
             openStamp(origin, hash, client, stampLabel)
             setStatus(status, short)
             busy = false
@@ -248,16 +287,9 @@
               })
             })
             .then(function (data) {
-              var hex = (data && data.hash) || hash
-              var proof = origin + '/p/' + hex
-              setStatus(
-                status,
-                '<span class="hash">' +
-                  prefixHash(hex) +
-                  '</span> · <a href="' +
-                  proof +
-                  '" target="_blank" rel="noopener noreferrer">Open proof</a>'
-              )
+              var hex = proofHash(data && data.hash, hash)
+              var id = stampId(data && data.id)
+              setStatus(status, successHtml(origin, hex || hash, id))
             })
             .catch(function () {
               openStamp(origin, hash, client, stampLabel)

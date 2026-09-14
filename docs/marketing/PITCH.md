@@ -1,12 +1,16 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 391) · **Updated:** 2026-09-14
+> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 392) · **Updated:** 2026-09-14
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Satohash — The Sovereign Provenance Pitch
 
-**Family pitch (2026-08-26):** Prove a file existed. Never show the file. Bitcoin as a civic notary — `.ots` receipts that outlive any company. Lives in the Give A Bit suite: https://agents.giveabit.io/#suite
+**Family pitch:** Prove a file existed. Never show the file. Bitcoin as a civic notary — `.ots` receipts that outlive any company. Lives in the Give A Bit suite: https://agents.giveabit.io/#suite
 
-**Status (August 2026):** Live at **https://satohash.io**. Version **5.0.0-ELITE**. Stamps are **free** (`REQUIRE_LIGHTNING=false`). Own pruned bitcoind is at tip. Proofs stay Bitcoin + OpenTimestamps. Paid/Lightning rails are built but **not yet switched on** — we launch them only when the rails are real (see Honesty Gates). Canonical mission: **`docs/MISSION-SCOPE-v3.md`** — *Proof of truth, on Bitcoin.*
+**Status (2026-09-14):** Live at **https://satohash.io**. Version **5.0.0-ELITE**. Stamps are **free** (`REQUIRE_LIGHTNING=false`). Own pruned bitcoind is at tip. Proofs stay Bitcoin + OpenTimestamps.
+
+**Live product (not the cathedral):** hash on-device → stamp → download `.ots` → share `https://satohash.io/p/{hash}` (phone cameras open that URL) → verify. **Pending ≠ Confirmed** (~60 minutes to a Bitcoin block). Family widget can complete `POST /api/stamp`. CLI prints the proof card. Snapper, ZK redaction, 3D Merkle, and BOLT-12 are **not** current features.
+
+Paid/Lightning rails are built but **not yet switched on** — we launch them only when the rails are real (see Honesty Gates). Canonical mission: **`docs/MISSION-SCOPE-v3.md`** — *Proof of truth, on Bitcoin.*
 
 ---
 
@@ -18,40 +22,37 @@ Every dispute over "who did what, when" comes down to one question: can you prov
 
 **Satohash's founding bet is that this middleman is no longer necessary.** OpenTimestamps anchors a fingerprint of your file into the Bitcoin blockchain — permanently and verifiable, with no company standing between your document and the proof. Add a private-key signature, and "this file existed" becomes *"this file existed, and I am the one who created it"* — proof of existence upgraded to **proof of authorship**, with nobody's permission required.
 
-**Instantly. For free. With zero account setup. And absolute privacy.**
+**No account. Free today. Absolute privacy. Confirmation waits for the next Bitcoin block (~60 minutes).**
 
 > **Your document. Your hash. Bitcoin's permanence.**
 
 ---
 
-## 💎 What Makes Satohash Unique
+## 💎 What is live (and what is not)
 
-Satohash is the flagship sovereign notary workbench — a multi-planar cryptographic stack where each plane can evolve without ever invalidating the proofs beneath it:
+The workbench is Plane 1. Higher planes may evolve later without invalidating proofs beneath them — they are **not** the product we sell today:
 
 ```
-  PLANE 4: ATLAS (Chain Intelligence & Block Analytics)
-    ↑
-  PLANE 3: SETTLEMENT (L402 / BOLT-12 Lightning Micropayments)
-    ↑
-  PLANE 2: IDENTITY (Nostr Cryptographic Profiles — NIP-05 & NIP-07)
-    ↑
-  PLANE 1: PROOF OF EXISTENCE (OpenTimestamps / Bitcoin Proof-of-Work)
+  PLANE 4: ATLAS     — chrome / demos (not a world index)
+  PLANE 3: SETTLEMENT — L402 / BOLT-12  — built · staged · not live
+  PLANE 2: IDENTITY  — Nostr lookup     — proves when, not who
+  PLANE 1: PROOF     — OpenTimestamps → Bitcoin  — LIVE
 ```
 
-### 1. Zero-Knowledge, Client-Side Hashing by Design
-Privacy is non-negotiable. Your document **never leaves your machine**. Satohash computes a cryptographically secure SHA-256 fingerprint locally, in your browser, using the Web Crypto API. Only the 64-character hash is sent to us. We cannot read, leak, or sell your documents — **because we never receive them.**
+### 1. Client-side hashing — the file never leaves the device
+Privacy is non-negotiable. Your document **never leaves your machine**. The browser (or CLI, or family widget) computes SHA-256 locally. Only the 64-character hash is sent. We cannot read, leak, or sell your documents — **because we never receive them.**
 
-### 2. Built on Free, Open-Source Protocols (OpenTimestamps)
-Satohash uses the OpenTimestamps (OTS) protocol — the same standard the open-source world uses to prove code existed. Hashes are aggregated into a Merkle tree and committed to Bitcoin in a single transaction, which keeps timestamps **permanently free** for everyday users.
+### 2. OpenTimestamps on Bitcoin
+Hashes go to public OTS calendars, aggregate into a Merkle tree, and commit to Bitcoin. **Pending** = calendars have the hash. **Confirmed** = a Bitcoin block has sealed it (~60 minutes). They are not the same.
 
-### 3. Portable Proofs — No Vendor Lock-In
-Stamp a file and you receive a self-contained `.ots` proof file: the complete Merkle path from your document's hash to a confirmed Bitcoin block. Anyone can verify it, offline, forever, with standard open-source tools. **If Satohash vanished tomorrow, your proofs remain 100% valid and globally verifiable.**
+### 3. Portable `.ots` + camera QR
+You download a self-contained `.ots` receipt. Share `https://satohash.io/p/{hash}` — the zero-JS proof card. Phone cameras cannot read `.ots`; they open that URL. **If Satohash vanished tomorrow, the `.ots` remains verifiable with open tools.**
 
-### 4. Cryptographic Identity (Nostr NIP-05 & NIP-07)
-Instead of fragile email addresses, Satohash uses the Nostr protocol for secure, decentralized identity. Signers authenticate via browser extensions (Alby, Damus) using public-key cryptography — adding mathematical certainty to *who* created or signed a document. *(Verified, non-repudiable signature verification is on the roadmap — the authorship upgrade — before we market it as such.)*
+### 4. Family widget + CLI (complete the stamp)
+Family sites paste `stamp.js` (Katoa, MotoPass, SherpaCarta, Give A Bit, TadBuy). Hash on-device. Default **POST**s `/api/stamp` and returns the proof card. Opt-in `data-mode="spa"` opens `/stamp?hash=&ref=`. CLI: `node packages/satohash-cli/bin/satohash.js stamp ./file.pdf` → prints `/p/<hash>`.
 
-### 5. Lightning-Settlement-Ready (L402 & BOLT-12)
-Satohash carries native L402 billing — HTTP `402 Payment Required` + Lightning Network invoices — and reusable BOLT-12 offers, for sub-cent, sub-second settlement with no subscriptions or credit cards. **Built and staged, switched on when the rails are funded and tested — we don't charge for what isn't real.**
+### 5. Authorship & Lightning — next, not now
+Nostr NIP-05/NIP-07 is optional lookup. Verified, non-repudiable signatures are the authorship chapter — we do not market them as shipped. L402 / BOLT-12 are **built and staged**. Snapper, ZK redaction, and 3D Merkle theatre are cathedral — **not current features.**
 
 ---
 
@@ -160,9 +161,13 @@ This pitch is not a promise — it is a *report*. We show you exactly what is li
 *   **Free stamps** — live and true today. `REQUIRE_LIGHTNING=false`. Free base is the never-paywalled trust anchor (no daily quota; 5 req/min public abuse guard).
 *   **Pricing (Cam-locked 2026-08-29)** — free base + optional premium tiers (Professional ~2,100 sats/mo ~$29, Business ~21,000 sats/mo ~$299) + pay-per-use API (1–5 sats/stamp). Premium rails built but not yet switched on.
 *   **Bitcoin + OTS anchoring** — live, verified, own node at tip.
-*   **Zero-knowledge** — your file never leaves your device. Core promise.
+*   **File never leaves the device** — only the SHA-256 is submitted. Core promise.
+*   **Pending ≠ Confirmed** — calendars vs a Bitcoin block (~60 minutes). Do not treat them as the same.
+*   **Camera QR** — PDFs and email encode `https://satohash.io/p/{hash}` so phone cameras open the proof card.
+*   **Family widget POST + CLI** — widget can complete `/api/stamp`; CLI prints the proof card.
 *   **Proves "when," not "who"** — stated plainly; authorship is the next chapter.
 *   **Portable `.ots`** — verifiable with open tools. Independent client-side verify (zero server trust) is on the roadmap — we'll say so until it ships.
+*   **Snapper / ZK / BOLT-12 / 3D Merkle** — not current features. Cathedral or staged.
 *   **Verify this yourself** — on every proof: free, open tools, no account, no KYC.
 *   **Freshness, not guesswork** — every claim we surface carries when it was last confirmed. Honest stale beats confident wrong.
 
