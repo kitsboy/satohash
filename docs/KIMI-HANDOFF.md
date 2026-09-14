@@ -1,8 +1,16 @@
+## Latest Session Summary (Grok M3, 2026-09-14 — demos + identity)
+
+**Lane:** SPA only. **Kimi: ingest THOR Obsidian. Do not rebuild the API. Do not Tailscale-sync to M4. Pages = Grok.**
+
+`/explorer` is a public Merkle **demo** (not a live block explorer). `/atlas` is a public search **demo** (this plane only). `/identity` says Satohash proves *when*, not *who*; NIP-05 is lookup. Next code: `/developer` i18n. Cam X pin / iPhone unfurl later.
+
+---
+
 ## Latest Session Summary (Grok M3, 2026-09-14)
 
 **Lane:** SPA/docs only. **Kimi: ingest THOR Obsidian. Do not rebuild the API. Do not Tailscale-sync to M4. Pages = Grok.**
 
-Docs truth pass + tool-belt (CLI shim, tadbuy widget, developer terminal path) + i18n About/Pitch/Network. Stamp widget family clients: Katoa, MotoPass, SherpaCarta, Give A Bit, TadBuy (not OpenStrata). Slice B done: donate, proof-pack, about, pitch, network. Next: Explorer → Atlas → remaining public. Catalog debt still open. Do not mark localization complete.
+Docs truth pass + tool-belt (CLI shim, tadbuy widget, developer terminal path) + i18n About/Pitch/Network. Stamp widget family clients: Katoa, MotoPass, SherpaCarta, Give A Bit, TadBuy (not OpenStrata). Slice B: donate, proof-pack, about, pitch, network, then explorer/atlas/identity demos. Catalog debt still open. Do not mark localization complete.
 
 Cam still: pin `/watch` on `@give_bit`; iPhone `/p/` unfurl.
 

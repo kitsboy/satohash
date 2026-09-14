@@ -1,7 +1,7 @@
 # Current Status — Satohash
 
 **Version:** **5.0.0-ELITE** (Build 331+)  
-**Last Updated:** 2026-09-14 (docs truth + About/Pitch/Network i18n — Grok SPA; API still `5ec7756`)  
+**Last Updated:** 2026-09-14 (Explorer/Atlas demos + Identity honesty — Grok SPA; API still `5ec7756`)  
 **Frontend:** https://satohash.io · www · CF Pages project **`satohash`** — Grok lane, `assetsDir: 'b'`  
 **API:** https://api.satohash.io ✅ LIVE (THOR Docker). Confirm SHA with `GET /health` (`gitSha`). **Live now: `5ec7756`** — Kimi rebuilt; keep-alive 65s/66s/120s. `Cache-Control: no-store`, Caddy OK, paywall off, ~316 stamps. Do **not** rebuild again unless HEAD moves.  
 **Metrics SoT:** `https://api.satohash.io/metrics.json`  
@@ -61,7 +61,7 @@
 | `/network` | Live calendars, bitcoind tip, recent stamps, family tiles, Notes on Nostr |
 | `/status` · `/counsel` | Public status · counsel one-pager |
 | `/watch` | ~84s Kimi/Pippa · 10s teaser · `?v=kimi-noir-20260819` |
-| Language | **7 locales** en es fr de pt sw zh — **not finished.** SoT `docs/I18N.md`. Next public: Explorer → Atlas (label as demos if they stay public). Do not add Arabic. |
+| Language | **7 locales** en es fr de pt sw zh — **not finished.** SoT `docs/I18N.md`. `/explorer` = Merkle **demo**; `/atlas` = search **demo**; `/identity` = lookup, not authorship. Next public: Developer. Do not add Arabic. |
 
 ## Metrics (verified live 2026-08-17)
 
@@ -78,7 +78,9 @@
 - [x] Docs truth pass + tool-belt (CLI shim, tadbuy widget, developer terminal path)
 - [x] Slice **B** i18n: About, Pitch, Network (plus donate + proof-pack already done)
 - [x] Stamp widget copy: family clients are Katoa, MotoPass, SherpaCarta, Give A Bit, TadBuy — not OpenStrata
-- [ ] **Next code:** Explorer then Atlas if they stay public demos (label as demos) — commit + push **each page**
+- [x] Explorer / Atlas labeled as **demos**, public, 7 locales; Identity honesty (when, not who)
+- [ ] **Next code:** `/developer` leftover English, then Mesh/Offers/exec summary; de/pt/sw catalog 175→250
+- [ ] Snapper stays scaffold — do not sell as judiciary-ready
 - [ ] de/pt/sw `translations/*.json` catch up to en (175 → ~250 keys)
 - [ ] Slice **C** last: admin / contracts / v5 / settings
 - [ ] Do **not** add Arabic until A+B+C are done

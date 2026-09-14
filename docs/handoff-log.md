@@ -1,3 +1,9 @@
+## 2026-09-14 (Grok M3 — Explorer/Atlas demos + Identity honesty)
+
+SPA only. `/explorer` is a public **Merkle demo** (not a live block explorer). `/atlas` is a public **search demo** (this plane, not a world index). `/identity` states: proves *when*, not *who*; NIP-05 is lookup. Network/footer no longer send people to deferred `/proof-of-existence`. Cam X pin / iPhone unfurl still later. **Kimi: do not rebuild API.** Pages = Grok.
+
+---
+
 ## 2026-09-14 (Grok M3 — docs truth + About/Pitch/Network i18n)
 
 SPA/docs only. Docs truth pass + tool-belt (CLI shim, tadbuy widget, developer terminal path) + i18n About/Pitch/Network. Stamp widget copy names Katoa, MotoPass, SherpaCarta, Give A Bit, TadBuy — not OpenStrata. Slice B done: donate, proof-pack, about, pitch, network. Next: Explorer → Atlas (label as demos if they stay public). Catalog debt still open. Localization **not** complete.

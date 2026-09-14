@@ -1,5 +1,5 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 380) · **Updated:** 2026-09-14
+> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 381) · **Updated:** 2026-09-14
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Satohash Rollback Procedure

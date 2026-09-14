@@ -19,6 +19,8 @@ describe('mvp config', () => {
     expect(MVP_PUBLIC_PATHS).toContain('/counsel')
     expect(MVP_PUBLIC_PATHS).toContain('/proof-pack')
     expect(MVP_PUBLIC_PATHS).toContain('/developer')
+    expect(MVP_PUBLIC_PATHS).toContain('/explorer')
+    expect(MVP_PUBLIC_PATHS).toContain('/atlas')
   })
 
   it('isMvpPublicPath allows stamp without login', () => {
@@ -60,7 +62,6 @@ describe('mvp config', () => {
         '/contracts',
         '/offers',
         '/admin',
-        '/explorer',
         '/protocol-stats',
         '/proof-of-existence',
         '/stamp/live-feed',
@@ -70,6 +71,9 @@ describe('mvp config', () => {
         '/image-vault'
       ])
     )
+    expect(MVP_DEFERRED_PATHS).not.toContain('/explorer')
+    expect(MVP_DEFERRED_PATHS).not.toContain('/atlas')
+    expect(MVP_PUBLIC_PATHS).toEqual(expect.arrayContaining(['/explorer', '/atlas']))
     expect(MVP_PUBLIC_PATHS).not.toContain('/proof-of-existence')
   })
 
