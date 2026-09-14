@@ -14,14 +14,19 @@ import {
   Sun
 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useTranslation } from 'react-i18next'
 import Button from '../../components/ui/Button'
 import { getTemplate } from '../../templates'
 import { generateSHA256Hash } from '../../utils/crypto'
-import usePageMetaOnboarding from '../../hooks/usePageMetaOnboarding'
+import usePageMeta from '../../hooks/usePageMeta'
 import { clientId } from '../../utils/id'
 
 export default function ContractEditor() {
-  usePageMetaOnboarding('contract-editor')
+  const { t } = useTranslation()
+  usePageMeta({
+    title: t('contractEditorPage.metaTitle'),
+    description: t('contractEditorPage.metaDescription')
+  })
   const navigate = useNavigate()
   const { contractId, templateType } = useParams()
 
@@ -113,6 +118,10 @@ export default function ContractEditor() {
     }, 800)
   }
 
+  const statusKey = ['draft', 'signed', 'timestamped'].includes(contract.status)
+    ? `contractEditorPage.status.${contract.status}`
+    : null
+
   return (
     <div
       className="relative flex min-h-screen flex-col overflow-hidden"
@@ -133,7 +142,7 @@ export default function ContractEditor() {
           </Button>
           <div className="hidden h-5 w-px sm:block" style={{ background: 'var(--border)' }} />
           <h1 className="text-noir-primary max-w-[180px] truncate text-sm font-black tracking-tight uppercase italic sm:max-w-none">
-            {contract.name || 'Untitled Document'}
+            {contract.name || t('contractEditorPage.untitled')}
           </h1>
         </div>
 
@@ -142,7 +151,10 @@ export default function ContractEditor() {
             className="mr-2 hidden text-[10px] font-bold tracking-widest uppercase sm:block"
             style={{ color: 'var(--text-muted)' }}
           >
-            Status: <span style={{ color: 'var(--accent-active)' }}>{contract.status}</span>
+            {t('contractEditorPage.statusLabel')}:{' '}
+            <span style={{ color: 'var(--accent-active)' }}>
+              {statusKey ? t(statusKey) : contract.status}
+            </span>
           </span>
 
           {/* Mobile panel toggle */}
@@ -150,12 +162,14 @@ export default function ContractEditor() {
             className="flex h-9 w-9 items-center justify-center rounded-xl md:hidden"
             style={{ border: '1px solid var(--border)', color: 'var(--text-secondary)' }}
             onClick={() => setIsMobilePanelOpen(true)}
+            aria-label={t('contractEditorPage.inspector')}
           >
             <Layout size={16} />
           </button>
 
           <Button variant="primary" size="small" onClick={handleSave} loading={isSaving}>
-            <Save size={14} /> <span className="hidden sm:inline">Save</span>
+            <Save size={14} />{' '}
+            <span className="hidden sm:inline">{t('contractEditorPage.save')}</span>
           </Button>
         </div>
       </nav>
@@ -170,13 +184,13 @@ export default function ContractEditor() {
             icon={Layout}
             active={activeTab === 'editor'}
             onClick={() => setActiveTab('editor')}
-            label="Inspector"
+            label={t('contractEditorPage.inspector')}
           />
           <SidebarIcon
             icon={Settings}
             active={activeTab === 'settings'}
             onClick={() => setActiveTab('settings')}
-            label="Settings"
+            label={t('contractEditorPage.settings')}
           />
           {/* Dark Mode Toggle */}
           <button
@@ -191,11 +205,11 @@ export default function ContractEditor() {
                   }
                 : { color: 'var(--text-secondary)' }
             }
-            title={darkDoc ? 'Light Mode' : 'Dark Mode'}
+            title={darkDoc ? t('contractEditorPage.lightMode') : t('contractEditorPage.darkMode')}
           >
             {darkDoc ? <Sun size={18} /> : <Moon size={18} />}
             <div className="pointer-events-none absolute left-full z-[100] ml-3 rounded-lg bg-slate-900 px-2.5 py-1 text-[10px] font-bold tracking-wide whitespace-nowrap text-white opacity-0 transition-opacity group-hover:opacity-100">
-              {darkDoc ? 'Light Mode' : 'Dark Mode'}
+              {darkDoc ? t('contractEditorPage.lightMode') : t('contractEditorPage.darkMode')}
             </div>
           </button>
         </div>
@@ -223,7 +237,7 @@ export default function ContractEditor() {
               <div className="grid-pattern-slate pointer-events-none absolute inset-0 opacity-[0.02]" />
               {/* Watermark */}
               <div className="document-watermark">
-                <img src="/logo.png" alt="Satohash Watermark" />
+                <img src="/logo.png" alt={t('contractEditorPage.watermarkAlt')} />
               </div>
 
               <textarea
@@ -235,7 +249,7 @@ export default function ContractEditor() {
                 }}
                 value={contract.content}
                 onChange={(e) => setContract({ ...contract, content: e.target.value })}
-                placeholder="Start drafting your legal document..."
+                placeholder={t('contractEditorPage.placeholder')}
               />
             </motion.div>
           </div>
@@ -303,6 +317,7 @@ export default function ContractEditor() {
                     onClick={() => setIsMobilePanelOpen(false)}
                     className="flex h-8 w-8 items-center justify-center rounded-lg"
                     style={{ color: 'var(--text-secondary)' }}
+                    aria-label={t('contractEditorPage.closePanel')}
                   >
                     <X size={16} />
                   </button>
@@ -325,7 +340,7 @@ export default function ContractEditor() {
                         : { color: 'var(--text-secondary)' }
                     }
                   >
-                    Inspector
+                    {t('contractEditorPage.inspector')}
                   </button>
                   <button
                     onClick={() => setActiveTab('settings')}
@@ -340,7 +355,7 @@ export default function ContractEditor() {
                         : { color: 'var(--text-secondary)' }
                     }
                   >
-                    Settings
+                    {t('contractEditorPage.settings')}
                   </button>
                 </div>
                 <SidebarContent
@@ -365,6 +380,7 @@ export default function ContractEditor() {
           whileTap={{ scale: 0.95 }}
           onClick={handleSave}
           disabled={isSaving}
+          aria-label={t('contractEditorPage.save')}
           className="flex h-14 w-14 items-center justify-center rounded-2xl text-white shadow-xl"
           style={{
             background: 'var(--accent-active)',
@@ -415,6 +431,7 @@ function SidebarContent({
   localHash,
   navigate
 }) {
+  const { t } = useTranslation()
   return (
     <>
       {activeTab === 'editor' && (
@@ -424,17 +441,24 @@ function SidebarContent({
             style={{ borderBottom: '1px solid var(--border)', color: 'var(--text-primary)' }}
           >
             <Layout size={16} style={{ color: 'var(--accent-active)' }} />
-            <h3 className="text-sm font-extrabold tracking-tight">Inspector</h3>
+            <h3 className="text-sm font-extrabold tracking-tight">
+              {t('contractEditorPage.inspector')}
+            </h3>
           </div>
 
           <div className="space-y-6">
+            <div className="edu-callout text-[12px]">
+              <span className="edu-callout-title">{t('contractEditorPage.honestyTitle')}</span>
+              {t('contractEditorPage.honestyBody')}
+            </div>
+
             {/* BASIC INFO */}
             <section className="space-y-3">
               <label
                 className="block text-[10px] font-bold tracking-widest uppercase"
                 style={{ color: 'var(--text-muted)' }}
               >
-                Document Name
+                {t('contractEditorPage.documentName')}
               </label>
               <input
                 type="text"
@@ -455,13 +479,12 @@ function SidebarContent({
                 <div className="flex items-center gap-2" style={{ color: 'var(--accent-active)' }}>
                   <Sparkles size={14} fill="currentColor" />
                   <h4 className="text-[10px] font-bold tracking-widest uppercase">
-                    Document Variables
+                    {t('contractEditorPage.variables')}
                   </h4>
                 </div>
                 <div className="edu-callout text-[12px]">
-                  <span className="edu-callout-title">What are these?</span>
-                  Variables in [brackets] are placeholders. Fill them in below and they&apos;ll be
-                  automatically replaced in your document.
+                  <span className="edu-callout-title">{t('contractEditorPage.variablesWhat')}</span>
+                  {t('contractEditorPage.variablesHelp')}
                 </div>
                 <div className="space-y-3">
                   {placeholders.map((p) => (
@@ -474,7 +497,7 @@ function SidebarContent({
                       </label>
                       <input
                         type="text"
-                        placeholder={`Value for [${p}]...`}
+                        placeholder={t('contractEditorPage.valueFor', { name: p })}
                         className="w-full rounded-xl px-4 py-3 text-sm font-medium transition-all outline-none"
                         style={{
                           border: '1px solid var(--border)',
@@ -495,7 +518,7 @@ function SidebarContent({
                 className="block text-[10px] font-bold tracking-widest uppercase"
                 style={{ color: 'var(--text-muted)' }}
               >
-                Protocol Extensions
+                {t('contractEditorPage.extensions')}
               </label>
               <div className="space-y-2">
                 {templateType === 'domain-notary' && (
@@ -504,7 +527,7 @@ function SidebarContent({
                     size="small"
                     fullWidth
                     onClick={() => {
-                      const domains = prompt('Enter domains separated by commas:')
+                      const domains = prompt(t('contractEditorPage.domainPrompt'))
                       if (domains) {
                         const list = domains
                           .split(',')
@@ -519,7 +542,7 @@ function SidebarContent({
                       }
                     }}
                   >
-                    <Layers size={14} /> Add Domain Batch
+                    <Layers size={14} /> {t('contractEditorPage.addDomainBatch')}
                   </Button>
                 )}
                 {templateType === 'web-archive' && (
@@ -528,13 +551,13 @@ function SidebarContent({
                     size="small"
                     fullWidth
                     onClick={() => {
-                      const url = prompt('Enter URL to capture:')
+                      const url = prompt(t('contractEditorPage.urlPrompt'))
                       if (url) {
                         navigate(`/snapper?url=${encodeURIComponent(url)}`)
                       }
                     }}
                   >
-                    <Globe size={14} /> Capture via Snapper
+                    <Globe size={14} /> {t('contractEditorPage.captureSnapper')}
                   </Button>
                 )}
                 <Button
@@ -552,7 +575,7 @@ function SidebarContent({
                     })
                   }}
                 >
-                  <PlusCircle size={14} /> Append Proof Seal
+                  <PlusCircle size={14} /> {t('contractEditorPage.appendSeal')}
                 </Button>
               </div>
             </section>
@@ -567,7 +590,7 @@ function SidebarContent({
             >
               <div className="flex items-center justify-between text-[10px] font-medium">
                 <span className="tracking-widest uppercase" style={{ color: 'var(--text-muted)' }}>
-                  Created
+                  {t('contractEditorPage.created')}
                 </span>
                 <span style={{ color: 'var(--text-secondary)' }}>
                   {new Date(contract.createdAt).toLocaleDateString()}
@@ -575,13 +598,13 @@ function SidebarContent({
               </div>
               <div className="flex items-center justify-between text-[10px] font-medium">
                 <span className="tracking-widest uppercase" style={{ color: 'var(--text-muted)' }}>
-                  Protocol Type
+                  {t('contractEditorPage.protocolType')}
                 </span>
                 <span
                   className="font-bold tracking-widest uppercase"
                   style={{ color: 'var(--accent-active)' }}
                 >
-                  {contract.templateType || 'Custom'}
+                  {contract.templateType || t('contractEditorPage.custom')}
                 </span>
               </div>
               <div
@@ -592,10 +615,10 @@ function SidebarContent({
                   className="text-[9px] font-bold tracking-widest uppercase"
                   style={{ color: 'var(--text-muted)' }}
                 >
-                  Live Client Hashing (Zero-Knowledge)
+                  {t('contractEditorPage.liveHash')}
                 </span>
                 <span className="truncate font-mono text-[9px] font-bold text-emerald-600">
-                  {localHash || 'Awaiting content...'}
+                  {localHash || t('contractEditorPage.awaitingContent')}
                 </span>
               </div>
             </div>
@@ -607,14 +630,16 @@ function SidebarContent({
         <div className="p-5 md:p-6">
           <div className="mb-5 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
             <Settings size={16} />
-            <h3 className="text-sm font-extrabold tracking-tight">Settings</h3>
+            <h3 className="text-sm font-extrabold tracking-tight">
+              {t('contractEditorPage.settings')}
+            </h3>
           </div>
           <div className="space-y-4">
             <label
               className="block text-[10px] font-bold tracking-widest uppercase"
               style={{ color: 'var(--text-muted)' }}
             >
-              Body font size
+              {t('contractEditorPage.fontSize')}
             </label>
             <select
               className="w-full rounded-xl border px-4 py-3 text-sm"
@@ -637,7 +662,7 @@ function SidebarContent({
               className="block text-[10px] font-bold tracking-widest uppercase"
               style={{ color: 'var(--text-muted)' }}
             >
-              Page margins (mm)
+              {t('contractEditorPage.margins')}
             </label>
             <input
               type="number"
@@ -654,7 +679,7 @@ function SidebarContent({
               }
             />
             <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>
-              Settings apply to PDF export and are saved with this contract.
+              {t('contractEditorPage.settingsNote')}
             </p>
           </div>
         </div>

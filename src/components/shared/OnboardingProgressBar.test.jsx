@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import { describe, it, expect } from 'vitest'
+import '../../i18n/setup'
 import OnboardingProgressBar from './OnboardingProgressBar'
 
 describe('OnboardingProgressBar', () => {

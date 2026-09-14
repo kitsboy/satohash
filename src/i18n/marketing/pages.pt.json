@@ -1081,6 +1081,185 @@
         "body": "Uma vez confirmada no Bitcoin, sua prova é permanente e pública. Compartilhe o link — qualquer pessoa pode verificá-la sem conta.",
         "action": "Vamos lá →"
       }
+    },
+    "howItWorks": {
+      "deepDive": "Imersão no protocolo",
+      "step1Title": "1. Hash local",
+      "step1Text": "O seu documento é processado numa impressão digital SHA-256 de 64 caracteres. Ninguém, incluindo o Satohash, pode ver o seu conteúdo.",
+      "step2Title": "2. Agrupamento Merkle",
+      "step2Text": "Várias impressões digitais são combinadas numa Merkle Tree. Isto permite escala massiva e provas de privacidade.",
+      "step3Title": "3. Ancoragem Bitcoin",
+      "step3Text": "A Merkle Root é incorporada numa transação Bitcoin. A data da transação torna-se o seu carimbo temporal permanente."
+    },
+    "account": {
+      "subtitle": "Crie a sua conta para começar com o Satohash"
+    },
+    "chooseTemplate": {
+      "kicker": "Onboarding do protocolo",
+      "title": "Escolha o seu",
+      "titleHighlight": "tipo de artefacto.",
+      "subtitle": "Selecione um modelo especializado ou carregue um documento personalizado para iniciar a ancoragem criptográfica.",
+      "browseLibrary": "Ver a biblioteca completa de modelos",
+      "batchDemo": "Experimentar a demo de prova em lote",
+      "disclaimerTitle": "Aviso do protocolo",
+      "disclaimer": "O Satohash é um serviço de notariado criptográfico. Fornecemos prova matemática de existência através da blockchain Bitcoin. Não somos um escritório de advogados e não prestamos aconselhamento jurídico. Todas as provas geradas são verificáveis globalmente via OpenTimestamps.",
+      "aboutTemplate": "Sobre este modelo",
+      "tooltip": "Este modelo está otimizado para {{title}}. Inclui campos de metadados personalizados e ancoragem criptográfica específica para artefactos de {{category}}.",
+      "categories": {
+        "legal": "Jurídico",
+        "personal": "Pessoal",
+        "ip": "Propriedade intelectual",
+        "credentials": "Credenciais",
+        "general": "Geral"
+      },
+      "items": {
+        "prenup": {
+          "title": "Acordo pré-nupcial",
+          "description": "Liga matematicamente declarações de bens pré-matrimoniais à blockchain."
+        },
+        "photo-archive": {
+          "title": "Cofre de fotos iPhone",
+          "description": "Carimbe temporalmente memórias digitais privadas para provar as datas originais de captura."
+        },
+        "creative-ip": {
+          "title": "Música e PI criativa",
+          "description": "Proteja canções, letras e arte antes de as partilhar com o mundo."
+        },
+        "academic-credential": {
+          "title": "Prova académica e de doutoramento",
+          "description": "Verificação imutável de diplomas, teses e artigos de investigação."
+        },
+        "power-of-attorney": {
+          "title": "Procuração",
+          "description": "Conceda direitos legais com finalidade criptográfica."
+        },
+        "custom": {
+          "title": "Artefacto personalizado",
+          "description": "Carregue qualquer ficheiro para o ancorar diretamente na camada de liquidação Bitcoin."
+        }
+      }
+    },
+    "batchProof": {
+      "title": "Gestor de provas em lote",
+      "subtitle": "Ancore bibliotecas inteiras de documentos ao Bitcoin numa única operação criptográfica.",
+      "dropActive": "Largue a sua biblioteca aqui",
+      "dropIdle": "Largue pastas ou vários ficheiros",
+      "dropHint": "Selecione vários ficheiros PDF, JPG ou DOCX para proteger em simultâneo.",
+      "queue": "Fila de documentos ({{count}})",
+      "clearAll": "Limpar tudo",
+      "hashLabel": "Hash",
+      "verified": "Verificado",
+      "visualization": "Visualização do protocolo",
+      "stats": "Estatísticas do lote",
+      "totalFiles": "Total de ficheiros",
+      "networkFee": "Taxa de rede",
+      "merkleRoot": "Merkle Root",
+      "processing": "A processar lote...",
+      "anchorAll": "Ancorar tudo agora",
+      "startNew": "Iniciar novo lote",
+      "efficiency": "Eficiência de rede",
+      "efficiencyBody": "A ancoragem em lote poupa até 98% em taxas de rede ao gravar milhares de documentos numa única transação Merkle Tree.",
+      "removeAria": "Remover ficheiro"
+    },
+    "templateLibrary": {
+      "title": "Biblioteca de modelos jurídicos",
+      "subtitle": "Acordos criptográficos redigidos profissionalmente. Ancorados ao Bitcoin para imutabilidade absoluta.",
+      "searchAria": "Pesquisar modelos jurídicos",
+      "searchPlaceholder": "Pesquisar modelos jurídicos (ex. NDA, propriedade)...",
+      "choose": "Escolher modelo",
+      "categories": {
+        "all": "Todos os modelos",
+        "personal": "Pessoal e família",
+        "business": "Negócios e empresa",
+        "legal": "Jurídico e judiciário",
+        "property": "Imobiliário"
+      },
+      "items": {
+        "prenup": {
+          "title": "Acordo pré-nupcial",
+          "description": "Proteja bens e clarifique expectativas financeiras antes do casamento.",
+          "jurisdiction": "Global / vários estados",
+          "difficulty": "Avançado",
+          "tag": "Popular"
+        },
+        "property": {
+          "title": "Transferência de propriedade",
+          "description": "Documentação para vendas privadas de imóveis e transferências de titularidade.",
+          "jurisdiction": "US / UE — evidência de apoio",
+          "difficulty": "Jurídico",
+          "tag": "Padrão"
+        },
+        "powerOfAttorney": {
+          "title": "Procuração",
+          "description": "Conceda autoridade legal a uma pessoa de confiança para decisões.",
+          "jurisdiction": "ESIGN — evidência de apoio",
+          "difficulty": "Padrão",
+          "tag": "Essencial"
+        },
+        "nda": {
+          "title": "NDA (confidencialidade)",
+          "description": "Proteja informação confidencial de negócio durante negociações.",
+          "jurisdiction": "Padrão global",
+          "difficulty": "Universal",
+          "tag": "Seguro"
+        },
+        "will": {
+          "title": "Testamento",
+          "description": "Defina a distribuição de bens e a tutela de menores com prova carimbada no tempo.",
+          "jurisdiction": "Common Law / global",
+          "difficulty": "Crítico",
+          "tag": "Essencial"
+        },
+        "affidavit": {
+          "title": "Declaração de verdade",
+          "description": "Uma declaração de factos sob compromisso, ancorada à altura do bloco, para respaldo jurídico.",
+          "jurisdiction": "Universal / judiciário",
+          "difficulty": "Avançado",
+          "tag": "Alt. notarial"
+        },
+        "commercial-lease": {
+          "title": "Arrendamento comercial",
+          "description": "Acordo vinculativo para instalações comerciais com prova imutável de início.",
+          "jurisdiction": "Imobiliário / global",
+          "difficulty": "Padrão",
+          "tag": "Negócio"
+        },
+        "child-travel": {
+          "title": "Autorização de viagem para menores",
+          "description": "Permissão documentada para menores que viajam sem ambos os tutores.",
+          "jurisdiction": "Internacional / fronteira",
+          "difficulty": "Padrão",
+          "tag": "Viagem"
+        },
+        "consulting": {
+          "title": "Contrato de consultoria",
+          "description": "Termos de contratação profissional para serviços de consultoria.",
+          "jurisdiction": "Global / B2B",
+          "difficulty": "Profissional",
+          "tag": "Novo"
+        },
+        "ip-assignment": {
+          "title": "Cessão de PI",
+          "description": "Transfira eficazmente a titularidade de direitos de propriedade intelectual.",
+          "jurisdiction": "US / global — evidência de apoio",
+          "difficulty": "Avançado",
+          "tag": "Novo"
+        },
+        "domain-notary": {
+          "title": "Notário de propriedade de domínio",
+          "description": "Prova imutável de controlo do nome de domínio e historial de titularidade.",
+          "jurisdiction": "ICANN / global",
+          "difficulty": "Suporte em lote",
+          "tag": "Novo"
+        },
+        "web-archive": {
+          "title": "Arquivo Snap & Stamp",
+          "description": "Recolha de evidência digital para websites e conteúdo online.",
+          "jurisdiction": "Pronto para o judiciário",
+          "difficulty": "Alta profundidade",
+          "tag": "Novo"
+        }
+      }
     }
   },
   "accessPage": {
@@ -2712,7 +2891,7 @@
     "stampTooltip": "O hash é calculado no dispositivo. /stamp envia apenas a impressão SHA-256. A confirmação espera um bloco Bitcoin (~60 min). Isto é um rascunho de modelo, não um acto notarial.",
     "draftLabel": "Rascunho de modelo",
     "hashPending": "HASH PENDING",
-    "scanToVerify": "Digitalizar para verificar",
+    "scanToVerify": "Qualquer câmara",
     "openVerify": "Abrir página de verificação",
     "verifyQrAlt": "Digitalizar para verificar no Satohash",
     "fieldsComplete": "Campos preenchidos",
@@ -2749,7 +2928,8 @@
     "emailFieldsHeader": "--- CAMPOS DO DOCUMENTO ---",
     "emailVerifyHeader": "--- VERIFICAÇÃO ---",
     "emailBody": "Isto é um rascunho de modelo Satohash, não um documento notariado. Sele a impressão SHA-256 em Bitcoin para provar que esses bytes existiram num momento.",
-    "emailVerifyAt": "Verificar em: {{url}}"
+    "emailVerifyAt": "Verificar em: {{url}}",
+    "emailScanHint": "Leia o QR do PDF com a câmara de qualquer iPhone ou Android, ou abra este cartão de prova:"
   },
   "imageVaultPage": {
     "metaTitle": "Cofre de imagens",
@@ -2986,6 +3166,123 @@
     "verifiableDesc": "Qualquer pessoa pode verificar de forma independente",
     "createFirst": "Criar a primeira prova"
   },
+  "contractEditorPage": {
+    "metaTitle": "Editor de rascunho",
+    "metaDescription": "Edite um rascunho local Satohash. Carimbe depois para provar quando uma impressão SHA-256 existiu — não quem assinou.",
+    "untitled": "Rascunho sem título",
+    "statusLabel": "Estado",
+    "status": {
+      "draft": "rascunho",
+      "signed": "assinado (local)",
+      "timestamped": "carimbado"
+    },
+    "save": "Guardar",
+    "inspector": "Inspetor",
+    "settings": "Definições",
+    "lightMode": "Modo claro",
+    "darkMode": "Modo escuro",
+    "watermarkAlt": "Marca de água Satohash",
+    "placeholder": "Comece um rascunho local. Carimbe depois para provar quando estes bytes existiram — não quem assinou.",
+    "closePanel": "Fechar painel",
+    "honestyTitle": "Rascunho até carimbar",
+    "honestyBody": "Este ficheiro fica neste browser até carimbar. Um carimbo prova quando uma impressão SHA-256 existiu — não quem assinou. A assinatura multipartidária não é produto em direto.",
+    "documentName": "Nome do documento",
+    "variables": "Variáveis do documento",
+    "variablesWhat": "O que são isto?",
+    "variablesHelp": "Texto em [parênteses] é um marcador. Preencha os valores abaixo e substituem neste rascunho local.",
+    "valueFor": "Valor para [{{name}}]...",
+    "extensions": "Extensões de protocolo",
+    "domainPrompt": "Introduza domínios separados por vírgulas:",
+    "addDomainBatch": "Adicionar lote de domínios",
+    "urlPrompt": "Introduza o URL a capturar:",
+    "captureSnapper": "Capturar via Snapper",
+    "appendSeal": "Anexar selo de prova",
+    "created": "Criado",
+    "protocolType": "Tipo de protocolo",
+    "custom": "Personalizado",
+    "liveHash": "SHA-256 neste browser",
+    "awaitingContent": "A aguardar conteúdo...",
+    "fontSize": "Tamanho da fonte do corpo",
+    "margins": "Margens da página (mm)",
+    "settingsNote": "As definições aplicam-se à exportação PDF e são guardadas com este rascunho local."
+  },
+  "contractViewPage": {
+    "metaTitle": "Vista do rascunho",
+    "metaDescription": "Veja um rascunho local Satohash. Um carimbo prova quando, não quem. A assinatura multipartidária não está em direto.",
+    "qrFail": "Não foi possível gerar o QR de verificação",
+    "signerN": "Signatário {{n}}",
+    "ref": "Ref: {{id}}",
+    "edit": "Editar",
+    "shareEmailTitle": "Partilhar por e-mail",
+    "shareXTitle": "Partilhar no X",
+    "shareLinkedInTitle": "Partilhar no LinkedIn",
+    "shareEmailSubject": "Prova Satohash",
+    "shareEmailBody": "Carimbo SHA-256 no Satohash (quando, não quem): {{url}}",
+    "shareEmailSubjectDraft": "Rascunho local Satohash",
+    "shareEmailBodyDraft": "Rascunho local Satohash (não carimbado): {{url}}",
+    "shareXText": "Carimbo SHA-256 no Satohash",
+    "shareXTextDraft": "Rascunho local Satohash — não carimbado",
+    "pdfWarn": "PDF guardado com problemas menores",
+    "pdfOk": "PDF descarregado",
+    "pdfFail": "Não foi possível gerar o PDF",
+    "tryAgain": "Tente de novo",
+    "watermarkAlt": "Marca de água Satohash",
+    "createdBy": "Criado por",
+    "giveABitAlt": "Give A Bit",
+    "sealStamped": "Âncora Bitcoin",
+    "sealLocal": "Rascunho local",
+    "tabInfo": "Info",
+    "tabSigners": "Partes",
+    "tabLogs": "Registos",
+    "proofTitle": "O que um carimbo prova",
+    "proofBodyDraft": "Isto é um rascunho local. Carimbe para provar quando uma impressão SHA-256 existiu — não quem assinou. A assinatura multipartidária não é produto em direto.",
+    "proofBodyStamped": "Este rascunho foi carimbado. SHA-256 mais OpenTimestamps no Bitcoin prova quando esses bytes existiram — não quem assinou.",
+    "readyTitle": "Pronto a carimbar",
+    "readyBody": "Uma assinatura local foi registada neste browser. Carimbe para provar quando — não quem. A assinatura multipartidária não está em direto.",
+    "stampNow": "Carimbar agora",
+    "verifiedProofs": "Provas verificadas",
+    "proofPackage": "Pacote de prova",
+    "proofPackageSub": "PDF + detalhes Bitcoin",
+    "emailPackage": "Pacote de e-mail",
+    "emailPackageSub": "Partilhar por e-mail",
+    "emailSubject": "Carimbo Satohash: {{name}}",
+    "emailBody": "Documento Satohash\nNome: {{name}}\nCriado: {{date}}\nReferência: {{id}}\nEstado: Carimbado no Bitcoin\n\nVerifique esta impressão SHA-256 (quando, não quem):\n{{url}}\n\nProva OpenTimestamps no Bitcoin via Satohash. Um carimbo prova quando esses bytes existiram — não quem assinou.",
+    "mempool": "Mempool.space",
+    "viewAnchor": "Ver âncora",
+    "otsQr": "QR OpenTimestamps",
+    "qrAlt": "QR de verificação para satohash.io/p/",
+    "qrHost": "satohash.io/p/",
+    "advanced": "Ferramentas avançadas",
+    "deepExplorer": "Explorador profundo",
+    "privacyShield": "Escudo de privacidade",
+    "metadata": "Metadados",
+    "created": "Criado",
+    "modified": "Modificado",
+    "type": "Tipo",
+    "hash": "Hash",
+    "custom": "Personalizado",
+    "partiesTitle": "Partes (local)",
+    "noSigners": "Sem co-signatários neste browser. A assinatura multipartidária não está em direto — simule localmente abaixo.",
+    "copyInviteAria": "Copiar ligação local de convite para assinar",
+    "inviteCopied": "Ligação de convite copiada (demo local)",
+    "copyInvite": "Copiar ligação local de convite",
+    "simulateAria": "Simular assinatura de parceiro localmente",
+    "partnerSimulated": "Parceiro (simulado)",
+    "simulateToast": "Assinatura de parceiro registada localmente",
+    "simulateToastDesc": "Guardada neste browser — carimbe quando quiser. A assinatura multipartidária não está em direto.",
+    "simulate": "Simular assinatura de parceiro",
+    "auditTrail": "Rasto de auditoria (este browser)",
+    "logCreated": "Rascunho criado",
+    "logHash": "Hash SHA-256 gerado",
+    "logAwaiting": "A aguardar carimbo Bitcoin",
+    "logStamped": "Carimbado — confirmar no Bitcoin",
+    "pending": "Pending",
+    "signerStatus": {
+      "idle": "inativo",
+      "viewing": "a ver",
+      "signed": "assinado (local)"
+    }
+  },
   "v5Page": {
     "back": "← Satohash",
     "demoChip": "Playground / demo",
@@ -3053,5 +3350,64 @@
       "confirm": "Confirmar carimbo",
       "viewProof": "Ver prova →"
     }
+  },
+  "onboardingWelcomePage": {
+    "resume": "Retome o onboarding onde parou.",
+    "continueSetup": "Continuar configuração",
+    "securedBy": "Protegido pela rede Bitcoin • Bloco #{{height}}",
+    "heroTitle": "O notário digital",
+    "heroHighlight": "para um mundo verificado.",
+    "heroSubtitle": "O Satohash fornece prova de existência matematicamente indiscutível para os seus documentos mais críticos. Privacidade local, imutabilidade global.",
+    "startCta": "Iniciar novo acordo",
+    "exploreCta": "Explorar o protocolo",
+    "educationalInsight": "Nota educativa",
+    "protocolDepth": "Profundidade mecânica do protocolo",
+    "features": {
+      "proof": {
+        "insight": "Hash SHA-256: cada documento recebe uma «impressão digital» única de 64 caracteres. Até uma alteração de um pixel cria um ID totalmente diferente.",
+        "protocol": "Encriptação local-first"
+      },
+      "timestamp": {
+        "insight": "Ancoragem Merkle: agrupamos hashes numa Merkle Tree e ancoramos a «raiz» ao Bitcoin. Um bloco confirma milhares de documentos.",
+        "protocol": "OpenTimestamps"
+      },
+      "verify": {
+        "insight": "Auditoria matemática: a verificação não precisa do Satohash. Qualquer pessoa com o ficheiro de prova e um nó Bitcoin pode verificar o carimbo temporal.",
+        "protocol": "Evidência pronta para ZK"
+      }
+    },
+    "protocol": {
+      "hashingTitle": "01 / Hash local",
+      "hashingText": "O seu documento é processado localmente numa impressão digital SHA-256 de 64 caracteres. Ninguém, incluindo o Satohash, vê o seu conteúdo.",
+      "merkleTitle": "02 / Agrupamento Merkle",
+      "merkleText": "Várias impressões digitais são combinadas numa Merkle Tree. Isto permite escala massiva e privacidade absoluta na prova.",
+      "anchorTitle": "03 / Ancoragem Bitcoin",
+      "anchorText": "A Merkle Root é incorporada na blockchain Bitcoin. A altura do bloco da transação torna-se o seu carimbo temporal permanente e infalsificável."
+    },
+    "abyss": {
+      "kicker": "O abismo do protocolo",
+      "title": "Confiança descentralizada.",
+      "title2": "Sem exceções.",
+      "body": "O Satohash não é apenas uma ferramenta de assinatura. É uma ponte entre a sua intenção jurídica e a certeza matemática da blockchain."
+    },
+    "trust": {
+      "privacyTitle": "Privacidade local",
+      "privacyDesc": "O conteúdo nunca sai do seu navegador.",
+      "proofTitle": "Prova eterna",
+      "proofDesc": "Sobrevive a empresas e servidores.",
+      "standardTitle": "Padronizado",
+      "standardDesc": "Usa provas .ots de padrão aberto.",
+      "cta": "Entrar no Trust Center"
+    }
+  },
+  "forumPage": {
+    "anonymous": "Anónimo",
+    "byOn": "Por {{author}} em {{date}}",
+    "byDash": "Por {{author}} — {{date}}",
+    "emptyDesc": "Seja o primeiro a iniciar uma conversa sobre carimbos temporais Bitcoin, casos de uso ou o protocolo.",
+    "loadThreadsFail": "Falha ao carregar os tópicos do fórum.",
+    "loadThreadFail": "Falha ao carregar o tópico.",
+    "createFail": "Falha ao criar o tópico.",
+    "replyFail": "Falha ao enviar a resposta."
   }
 }

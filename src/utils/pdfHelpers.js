@@ -1,7 +1,7 @@
 /** Shared PDF asset helpers — used by pdfGenerator and ContractView. */
 import { jsPDF } from 'jspdf'
 import QRCode from 'qrcode'
-import { getVerifyUrl } from '../config/constants'
+import { buildCanonicalProofCardUrl } from './shareProof'
 
 export async function loadLogoDataUrl(src = '/logo.png') {
   return new Promise((resolve) => {
@@ -19,12 +19,25 @@ export async function loadLogoDataUrl(src = '/logo.png') {
   })
 }
 
-export async function qrDataUrlForVerify(contractId) {
-  return QRCode.toDataURL(`${getVerifyUrl()}/${contractId}`, {
-    width: 200,
+export async function qrDataUrlForProof(hash) {
+  return QRCode.toDataURL(buildCanonicalProofCardUrl(hash), {
+    width: 280,
     margin: 1,
-    color: { dark: '#F7931A', light: '#ffffff' }
+    errorCorrectionLevel: 'M',
+    color: { dark: '#0f172a', light: '#ffffff' }
   })
+}
+
+/** @deprecated use qrDataUrlForProof(sha256Hex) */
+export async function qrDataUrlForVerify(contractId) {
+  return qrDataUrlForProof(contractId)
+}
+
+async function sha256HexUtf8(text) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(String(text || '')))
+  return Array.from(new Uint8Array(buf))
+    .map((b) => b.toString(16).padStart(2, '0'))
+    .join('')
 }
 
 /**
@@ -35,6 +48,11 @@ export async function generateContractPdf(contract) {
   const warnings = []
   const isSigned = contract.status === 'signed'
   const isTimestamped = contract.status === 'timestamped'
+  const hash =
+    typeof contract.hash === 'string' && /^[a-f0-9]{64}$/i.test(contract.hash)
+      ? contract.hash.toLowerCase()
+      : await sha256HexUtf8(contract.content || contract.id || '')
+  const proofUrl = buildCanonicalProofCardUrl(hash)
   const doc = new jsPDF()
   const pageWidth = doc.internal.pageSize.getWidth()
 
@@ -70,6 +88,18 @@ export async function generateContractPdf(contract) {
   doc.setDrawColor(200, 200, 200)
   doc.line(20, 52, pageWidth - 20, 52)
 
+  try {
+    const qr = await qrDataUrlForProof(hash)
+    doc.addImage(qr, 'PNG', pageWidth - 38, 12, 22, 22)
+    doc.link(pageWidth - 38, 12, 22, 22, { url: proofUrl })
+    doc.setFontSize(6)
+    doc.setTextColor(100, 100, 100)
+    doc.text('Scan camera', pageWidth - 27, 37, { align: 'center' })
+    doc.setTextColor(0, 0, 0)
+  } catch {
+    warnings.push('QR could not be embedded on page 1')
+  }
+
   doc.setFont('helvetica', 'normal')
   doc.setFontSize(11)
   const splitContent = doc.splitTextToSize(contract.content, pageWidth - 40)
@@ -102,10 +132,12 @@ export async function generateContractPdf(contract) {
     doc.setTextColor(255, 255, 255)
     doc.setFont('helvetica', 'bold')
     doc.setFontSize(16)
-    doc.text('CERTIFICATE OF AUTHENTICITY', pageWidth / 2, 22, { align: 'center' })
+    doc.text('PROOF CARD — SCAN TO VERIFY', pageWidth / 2, 22, { align: 'center' })
     doc.setFontSize(9)
     doc.setFont('helvetica', 'normal')
-    doc.text('Powered by Satohash Protocol v4.0', pageWidth / 2, 30, { align: 'center' })
+    doc.text('Any iPhone or Android camera · satohash.io/p/', pageWidth / 2, 30, {
+      align: 'center'
+    })
 
     doc.setTextColor(0, 0, 0)
     doc.setFontSize(10)
@@ -126,10 +158,14 @@ export async function generateContractPdf(contract) {
     const details = [
       ['Document Name', contract.name],
       ['Created At', new Date(contract.createdAt).toLocaleString()],
-      ['SHA-256 Hash', contract.id.replace('contract_', '')],
+      ['SHA-256 Hash', hash],
       ['Network', 'Bitcoin Mainnet'],
-      ['Protocol', 'OpenTimestamps v1.0'],
-      ['Status', 'VERIFIED & IMMUTABLE']
+      ['Protocol', 'OpenTimestamps'],
+      [
+        'Status',
+        isTimestamped ? 'Stamped — confirm on Bitcoin' : String(contract.status || 'draft')
+      ],
+      ['Proof URL', proofUrl]
     ]
 
     doc.setFontSize(10)
@@ -151,21 +187,22 @@ export async function generateContractPdf(contract) {
     doc.setTextColor(79, 70, 229)
     doc.setFont('helvetica', 'bold')
     doc.text('SATOHASH', margin + 30, currentY + 25, { align: 'center' })
-    doc.text('OFFICIAL SEAL', margin + 30, currentY + 32, { align: 'center' })
+    doc.text('DRAFT / STAMP', margin + 30, currentY + 32, { align: 'center' })
     doc.setFont('helvetica', 'normal')
     doc.setFontSize(7)
-    doc.text('v4.0-ELITE', margin + 30, currentY + 38, { align: 'center' })
+    doc.text('5.0.0-ELITE', margin + 30, currentY + 38, { align: 'center' })
 
     try {
-      const pdfQrDataUrl = await qrDataUrlForVerify(contract.id)
+      const pdfQrDataUrl = await qrDataUrlForProof(hash)
       doc.addImage(pdfQrDataUrl, 'PNG', pageWidth - margin - 60, currentY, 60, 60)
+      doc.link(pageWidth - margin - 60, currentY, 60, 60, { url: proofUrl })
       doc.setTextColor(100, 100, 100)
       doc.setFontSize(7)
-      doc.text('SCAN TO VERIFY ON-CHAIN', pageWidth - margin - 30, currentY + 65, {
+      doc.text('SCAN WITH ANY CAMERA', pageWidth - margin - 30, currentY + 65, {
         align: 'center'
       })
     } catch (err) {
-      warnings.push('QR code could not be embedded — verify link is in footer text.')
+      warnings.push('QR code could not be embedded — proof URL is in footer text.')
       console.error('QR generation failed', err)
     }
 
@@ -173,7 +210,7 @@ export async function generateContractPdf(contract) {
     doc.setFontSize(8)
     doc.setFont('helvetica', 'italic')
     doc.setTextColor(120, 120, 120)
-    const footerText = `This document is cryptographically anchored to the Bitcoin blockchain via Satohash. The content is identified by SHA-256 hashing. Changing even a single character in the original file invalidates this proof. Verify at ${getVerifyUrl()}/${contract.id} or scan the QR code above.`
+    const footerText = `Scan the QR with any iPhone or Android camera to open ${proofUrl}. After you stamp, that page shows the OpenTimestamps / Bitcoin proof. Changing a character changes the SHA-256 and the QR no longer matches.`
     const splitFooter = doc.splitTextToSize(footerText, pageWidth - margin * 2)
     doc.text(splitFooter, margin, currentY)
   }

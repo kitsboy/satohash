@@ -1081,6 +1081,185 @@
         "body": "Una vez confirmada en Bitcoin, tu prueba es permanente y pública. Comparte el enlace — cualquiera puede verificarla sin cuenta.",
         "action": "Vamos →"
       }
+    },
+    "howItWorks": {
+      "deepDive": "Inmersión en el protocolo",
+      "step1Title": "1. Hash local",
+      "step1Text": "Tu documento se convierte en una huella SHA-256 de 64 caracteres. Nadie, incluido Satohash, puede ver tu contenido.",
+      "step2Title": "2. Agrupación Merkle",
+      "step2Text": "Varias huellas se combinan en un Merkle Tree. Eso permite escalar a gran escala y pruebas de privacidad.",
+      "step3Title": "3. Anclaje a Bitcoin",
+      "step3Text": "La Merkle Root se incrusta en una transacción Bitcoin. La fecha de la transacción se convierte en tu sello de tiempo permanente."
+    },
+    "account": {
+      "subtitle": "Crea tu cuenta para empezar con Satohash"
+    },
+    "chooseTemplate": {
+      "kicker": "Onboarding del protocolo",
+      "title": "Elige tu",
+      "titleHighlight": "tipo de artefacto.",
+      "subtitle": "Selecciona una plantilla especializada o sube un documento personalizado para iniciar el anclaje criptográfico.",
+      "browseLibrary": "Ver la biblioteca completa de plantillas",
+      "batchDemo": "Probar la demo de prueba por lotes",
+      "disclaimerTitle": "Aviso del protocolo",
+      "disclaimer": "Satohash es un servicio de notaría criptográfica. Ofrecemos prueba matemática de existencia a través de la blockchain de Bitcoin. No somos un bufete y no damos asesoramiento legal. Todas las pruebas generadas se pueden verificar globalmente con OpenTimestamps.",
+      "aboutTemplate": "Sobre esta plantilla",
+      "tooltip": "Esta plantilla está optimizada para {{title}}. Incluye campos de metadatos personalizados y anclaje criptográfico específico para artefactos de {{category}}.",
+      "categories": {
+        "legal": "Legal",
+        "personal": "Personal",
+        "ip": "Propiedad intelectual",
+        "credentials": "Credenciales",
+        "general": "General"
+      },
+      "items": {
+        "prenup": {
+          "title": "Acuerdo prenupcial",
+          "description": "Vincula matemáticamente las declaraciones de bienes prematrimoniales a la blockchain."
+        },
+        "photo-archive": {
+          "title": "Bóveda de fotos de iPhone",
+          "description": "Pon sello de tiempo a tus recuerdos digitales privados para probar las fechas originales de captura."
+        },
+        "creative-ip": {
+          "title": "Música y PI creativa",
+          "description": "Protege tus canciones, letras y arte antes de compartirlos con el mundo."
+        },
+        "academic-credential": {
+          "title": "Prueba académica y de doctorado",
+          "description": "Verificación inmutable de diplomas, tesis y artículos de investigación."
+        },
+        "power-of-attorney": {
+          "title": "Poder notarial",
+          "description": "Otorga derechos legales con finalidad criptográfica."
+        },
+        "custom": {
+          "title": "Artefacto personalizado",
+          "description": "Sube cualquier archivo para anclarlo directamente a la capa de liquidación de Bitcoin."
+        }
+      }
+    },
+    "batchProof": {
+      "title": "Gestor de pruebas masivas",
+      "subtitle": "Ancla bibliotecas enteras de documentos a Bitcoin en una sola operación criptográfica.",
+      "dropActive": "Suelta tu biblioteca aquí",
+      "dropIdle": "Suelta carpetas o varios archivos",
+      "dropHint": "Selecciona varios archivos PDF, JPG o DOCX para protegerlos a la vez.",
+      "queue": "Cola de documentos ({{count}})",
+      "clearAll": "Borrar todo",
+      "hashLabel": "Hash",
+      "verified": "Verificado",
+      "visualization": "Visualización del protocolo",
+      "stats": "Estadísticas del lote",
+      "totalFiles": "Archivos totales",
+      "networkFee": "Tarifa de red",
+      "merkleRoot": "Merkle Root",
+      "processing": "Procesando lote...",
+      "anchorAll": "Anclar todo ahora",
+      "startNew": "Empezar un lote nuevo",
+      "efficiency": "Eficiencia de red",
+      "efficiencyBody": "El anclaje por lotes ahorra hasta un 98% en tarifas de red al comprometer miles de documentos en una sola transacción de Merkle Tree.",
+      "removeAria": "Quitar archivo"
+    },
+    "templateLibrary": {
+      "title": "Biblioteca de plantillas legales",
+      "subtitle": "Acuerdos criptográficos redactados profesionalmente. Anclados a Bitcoin para inmutabilidad absoluta.",
+      "searchAria": "Buscar plantillas legales",
+      "searchPlaceholder": "Buscar plantillas legales (p. ej. NDA, propiedad)...",
+      "choose": "Elegir plantilla",
+      "categories": {
+        "all": "Todas las plantillas",
+        "personal": "Personal y familia",
+        "business": "Empresa y corporativo",
+        "legal": "Legal y judicial",
+        "property": "Inmuebles"
+      },
+      "items": {
+        "prenup": {
+          "title": "Acuerdo prenupcial",
+          "description": "Protege bienes y aclara expectativas financieras antes del matrimonio.",
+          "jurisdiction": "Global / varios estados",
+          "difficulty": "Avanzado",
+          "tag": "Popular"
+        },
+        "property": {
+          "title": "Transferencia de propiedad",
+          "description": "Documentación para ventas privadas de inmuebles y transferencias de titularidad.",
+          "jurisdiction": "US / EU — evidencia de apoyo",
+          "difficulty": "Legal",
+          "tag": "Estándar"
+        },
+        "powerOfAttorney": {
+          "title": "Poder notarial",
+          "description": "Otorga autoridad legal a una persona de confianza para tomar decisiones.",
+          "jurisdiction": "ESIGN — evidencia de apoyo",
+          "difficulty": "Estándar",
+          "tag": "Esencial"
+        },
+        "nda": {
+          "title": "NDA (confidencialidad)",
+          "description": "Protege información confidencial de negocio durante las negociaciones.",
+          "jurisdiction": "Estándar global",
+          "difficulty": "Universal",
+          "tag": "Seguro"
+        },
+        "will": {
+          "title": "Testamento",
+          "description": "Define la distribución de bienes y la tutela de menores con prueba con sello de tiempo.",
+          "jurisdiction": "Common Law / global",
+          "difficulty": "Crítico",
+          "tag": "Esencial"
+        },
+        "affidavit": {
+          "title": "Declaración jurada de verdad",
+          "description": "Una declaración jurada de hechos anclada a la altura de bloque para respaldo legal.",
+          "jurisdiction": "Universal / judicial",
+          "difficulty": "Avanzado",
+          "tag": "Alt. notarial"
+        },
+        "commercial-lease": {
+          "title": "Arrendamiento comercial",
+          "description": "Acuerdo vinculante para locales comerciales con prueba inmutable de inicio.",
+          "jurisdiction": "Inmuebles / global",
+          "difficulty": "Estándar",
+          "tag": "Negocio"
+        },
+        "child-travel": {
+          "title": "Consentimiento de viaje de menores",
+          "description": "Permiso documentado para menores que viajan sin ambos tutores.",
+          "jurisdiction": "Internacional / frontera",
+          "difficulty": "Estándar",
+          "tag": "Viaje"
+        },
+        "consulting": {
+          "title": "Contrato de consultoría",
+          "description": "Términos de encargo profesional para servicios de consultoría.",
+          "jurisdiction": "Global / B2B",
+          "difficulty": "Profesional",
+          "tag": "Nuevo"
+        },
+        "ip-assignment": {
+          "title": "Cesión de PI",
+          "description": "Transfiere de forma efectiva la titularidad de derechos de propiedad intelectual.",
+          "jurisdiction": "US / global — evidencia de apoyo",
+          "difficulty": "Avanzado",
+          "tag": "Nuevo"
+        },
+        "domain-notary": {
+          "title": "Notaría de titularidad de dominio",
+          "description": "Prueba inmutable de control del nombre de dominio e historial de titularidad.",
+          "jurisdiction": "ICANN / global",
+          "difficulty": "Soporte por lotes",
+          "tag": "Nuevo"
+        },
+        "web-archive": {
+          "title": "Archivo Snap & Stamp",
+          "description": "Recolector de evidencia digital para sitios web y contenido en línea.",
+          "jurisdiction": "Listo para judicatura",
+          "difficulty": "Alta profundidad",
+          "tag": "Nuevo"
+        }
+      }
     }
   },
   "accessPage": {
@@ -2712,7 +2891,7 @@
     "stampTooltip": "El hash se calcula en el dispositivo. /stamp envía solo la huella SHA-256. La confirmación espera un bloque de Bitcoin (~60 min). Esto es un borrador de plantilla, no un acto notarial.",
     "draftLabel": "Borrador de plantilla",
     "hashPending": "HASH PENDING",
-    "scanToVerify": "Escanear para verificar",
+    "scanToVerify": "Cualquier cámara",
     "openVerify": "Abrir página de verificación",
     "verifyQrAlt": "Escanear para verificar en Satohash",
     "fieldsComplete": "Campos completados",
@@ -2749,7 +2928,8 @@
     "emailFieldsHeader": "--- CAMPOS DEL DOCUMENTO ---",
     "emailVerifyHeader": "--- VERIFICACIÓN ---",
     "emailBody": "Esto es un borrador de plantilla Satohash, no un documento notarizado. Sella la huella SHA-256 en Bitcoin para probar que esos bytes existieron en un momento.",
-    "emailVerifyAt": "Verificar en: {{url}}"
+    "emailVerifyAt": "Verificar en: {{url}}",
+    "emailScanHint": "Escanea el QR del PDF con la cámara de cualquier iPhone o Android, o abre esta tarjeta de prueba:"
   },
   "imageVaultPage": {
     "metaTitle": "Bóveda de imágenes",
@@ -2986,6 +3166,123 @@
     "verifiableDesc": "Cualquiera puede verificar de forma independiente",
     "createFirst": "Crea tu primera prueba"
   },
+  "contractEditorPage": {
+    "metaTitle": "Editor de borrador",
+    "metaDescription": "Edita un borrador local de Satohash. Sella después para probar cuándo existió una huella SHA-256 — no quién firmó.",
+    "untitled": "Borrador sin título",
+    "statusLabel": "Estado",
+    "status": {
+      "draft": "borrador",
+      "signed": "firmado (local)",
+      "timestamped": "sellado"
+    },
+    "save": "Guardar",
+    "inspector": "Inspector",
+    "settings": "Ajustes",
+    "lightMode": "Modo claro",
+    "darkMode": "Modo oscuro",
+    "watermarkAlt": "Marca de agua Satohash",
+    "placeholder": "Empieza un borrador local. Sella después para probar cuándo existieron estos bytes — no quién firmó.",
+    "closePanel": "Cerrar panel",
+    "honestyTitle": "Borrador hasta sellar",
+    "honestyBody": "Este archivo vive en este navegador hasta que selles. Un sello prueba cuándo existió una huella SHA-256 — no quién firmó. La firma multipartita no es producto en vivo.",
+    "documentName": "Nombre del documento",
+    "variables": "Variables del documento",
+    "variablesWhat": "¿Qué son estas?",
+    "variablesHelp": "El texto entre [corchetes] es un marcador. Rellena los valores abajo y se sustituyen en este borrador local.",
+    "valueFor": "Valor para [{{name}}]...",
+    "extensions": "Extensiones de protocolo",
+    "domainPrompt": "Introduce dominios separados por comas:",
+    "addDomainBatch": "Añadir lote de dominios",
+    "urlPrompt": "Introduce la URL a capturar:",
+    "captureSnapper": "Capturar con Snapper",
+    "appendSeal": "Añadir sello de prueba",
+    "created": "Creado",
+    "protocolType": "Tipo de protocolo",
+    "custom": "Personalizado",
+    "liveHash": "SHA-256 en este navegador",
+    "awaitingContent": "Esperando contenido...",
+    "fontSize": "Tamaño de fuente del cuerpo",
+    "margins": "Márgenes de página (mm)",
+    "settingsNote": "Los ajustes se aplican a la exportación PDF y se guardan con este borrador local."
+  },
+  "contractViewPage": {
+    "metaTitle": "Vista de borrador",
+    "metaDescription": "Consulta un borrador local de Satohash. Un sello prueba cuándo, no quién. La firma multipartita no está en vivo.",
+    "qrFail": "No se pudo generar el QR de verificación",
+    "signerN": "Firmante {{n}}",
+    "ref": "Ref: {{id}}",
+    "edit": "Editar",
+    "shareEmailTitle": "Compartir por correo",
+    "shareXTitle": "Compartir en X",
+    "shareLinkedInTitle": "Compartir en LinkedIn",
+    "shareEmailSubject": "Prueba Satohash",
+    "shareEmailBody": "Sello SHA-256 en Satohash (cuándo, no quién): {{url}}",
+    "shareEmailSubjectDraft": "Borrador local Satohash",
+    "shareEmailBodyDraft": "Borrador local Satohash (sin sellar): {{url}}",
+    "shareXText": "Sello SHA-256 en Satohash",
+    "shareXTextDraft": "Borrador local Satohash — sin sellar",
+    "pdfWarn": "PDF guardado con incidencias menores",
+    "pdfOk": "PDF descargado",
+    "pdfFail": "No se pudo generar el PDF",
+    "tryAgain": "Inténtalo de nuevo",
+    "watermarkAlt": "Marca de agua Satohash",
+    "createdBy": "Creado por",
+    "giveABitAlt": "Give A Bit",
+    "sealStamped": "Ancla Bitcoin",
+    "sealLocal": "Borrador local",
+    "tabInfo": "Info",
+    "tabSigners": "Partes",
+    "tabLogs": "Registros",
+    "proofTitle": "Qué prueba un sello",
+    "proofBodyDraft": "Esto es un borrador local. Sella para probar cuándo existió una huella SHA-256 — no quién firmó. La firma multipartita no es producto en vivo.",
+    "proofBodyStamped": "Este borrador se ha sellado. SHA-256 más OpenTimestamps en Bitcoin prueba cuándo existieron esos bytes — no quién firmó.",
+    "readyTitle": "Listo para sellar",
+    "readyBody": "Se registró una firma local en este navegador. Sella para probar cuándo — no quién. La firma multipartita no está en vivo.",
+    "stampNow": "Sellar ahora",
+    "verifiedProofs": "Pruebas verificadas",
+    "proofPackage": "Paquete de prueba",
+    "proofPackageSub": "PDF + detalles Bitcoin",
+    "emailPackage": "Paquete por correo",
+    "emailPackageSub": "Compartir por correo",
+    "emailSubject": "Sello Satohash: {{name}}",
+    "emailBody": "Documento Satohash\nNombre: {{name}}\nCreado: {{date}}\nReferencia: {{id}}\nEstado: Sellado en Bitcoin\n\nVerifica esta huella SHA-256 (cuándo, no quién):\n{{url}}\n\nPrueba OpenTimestamps en Bitcoin vía Satohash. Un sello prueba cuándo existieron esos bytes — no quién firmó.",
+    "mempool": "Mempool.space",
+    "viewAnchor": "Ver ancla",
+    "otsQr": "QR OpenTimestamps",
+    "qrAlt": "QR de verificación para satohash.io/p/",
+    "qrHost": "satohash.io/p/",
+    "advanced": "Herramientas avanzadas",
+    "deepExplorer": "Explorador profundo",
+    "privacyShield": "Escudo de privacidad",
+    "metadata": "Metadatos",
+    "created": "Creado",
+    "modified": "Modificado",
+    "type": "Tipo",
+    "hash": "Hash",
+    "custom": "Personalizado",
+    "partiesTitle": "Partes (local)",
+    "noSigners": "No hay cofirmantes en este navegador. La firma multipartita no está en vivo — simula en local abajo.",
+    "copyInviteAria": "Copiar enlace local de invitación a firmar",
+    "inviteCopied": "Enlace de invitación copiado (demo local)",
+    "copyInvite": "Copiar enlace local de invitación",
+    "simulateAria": "Simular firma de socio en local",
+    "partnerSimulated": "Socio (simulado)",
+    "simulateToast": "Firma de socio registrada en local",
+    "simulateToastDesc": "Guardada en este navegador — sella cuando quieras. La firma multipartita no está en vivo.",
+    "simulate": "Simular firma de socio",
+    "auditTrail": "Pista de auditoría (este navegador)",
+    "logCreated": "Borrador creado",
+    "logHash": "Hash SHA-256 generado",
+    "logAwaiting": "Esperando sello Bitcoin",
+    "logStamped": "Sellado — confirmar en Bitcoin",
+    "pending": "Pending",
+    "signerStatus": {
+      "idle": "inactivo",
+      "viewing": "viendo",
+      "signed": "firmado (local)"
+    }
+  },
   "v5Page": {
     "back": "← Satohash",
     "demoChip": "Playground / demo",
@@ -3053,5 +3350,64 @@
       "confirm": "Confirmar sello",
       "viewProof": "Ver prueba →"
     }
+  },
+  "onboardingWelcomePage": {
+    "resume": "Retoma el onboarding donde lo dejaste.",
+    "continueSetup": "Continuar configuración",
+    "securedBy": "Asegurado por la red Bitcoin • Bloque #{{height}}",
+    "heroTitle": "El notario digital",
+    "heroHighlight": "para un mundo verificado.",
+    "heroSubtitle": "Satohash ofrece prueba de existencia matemáticamente indiscutible para tus documentos más críticos. Privacidad local, inmutabilidad global.",
+    "startCta": "Empezar un nuevo acuerdo",
+    "exploreCta": "Explorar el protocolo",
+    "educationalInsight": "Dato educativo",
+    "protocolDepth": "Profundidad mecánica del protocolo",
+    "features": {
+      "proof": {
+        "insight": "Hash SHA-256: cada documento recibe una «huella» única de 64 caracteres. Incluso un cambio de un píxel crea un ID totalmente distinto.",
+        "protocol": "Cifrado local-first"
+      },
+      "timestamp": {
+        "insight": "Anclaje Merkle: agrupamos hashes en un Merkle Tree y anclamos la «raíz» a Bitcoin. Un bloque confirma miles de documentos.",
+        "protocol": "OpenTimestamps"
+      },
+      "verify": {
+        "insight": "Auditoría matemática: la verificación no necesita Satohash. Cualquiera con el archivo de prueba y un nodo Bitcoin puede verificar el sello de tiempo.",
+        "protocol": "Evidencia lista para ZK"
+      }
+    },
+    "protocol": {
+      "hashingTitle": "01 / Hash local",
+      "hashingText": "Tu documento se convierte localmente en una huella SHA-256 de 64 caracteres. Nadie, incluido Satohash, ve tu contenido.",
+      "merkleTitle": "02 / Agrupación Merkle",
+      "merkleText": "Varias huellas se combinan en un Merkle Tree. Eso permite escalar a gran escala y garantiza privacidad absoluta en la prueba.",
+      "anchorTitle": "03 / Anclaje a Bitcoin",
+      "anchorText": "La Merkle Root se incrusta en la blockchain de Bitcoin. La altura del bloque de la transacción se convierte en tu sello de tiempo permanente e infalsificable."
+    },
+    "abyss": {
+      "kicker": "El abismo del protocolo",
+      "title": "Confianza descentralizada.",
+      "title2": "Sin excepciones.",
+      "body": "Satohash no es solo una herramienta de firma. Es un puente entre tu intención legal y la certeza matemática de la blockchain."
+    },
+    "trust": {
+      "privacyTitle": "Privacidad local",
+      "privacyDesc": "El contenido nunca sale de tu navegador.",
+      "proofTitle": "Prueba eterna",
+      "proofDesc": "Sobrevive a empresas y servidores.",
+      "standardTitle": "Estandarizado",
+      "standardDesc": "Usa pruebas .ots de estándar abierto.",
+      "cta": "Entrar al Trust Center"
+    }
+  },
+  "forumPage": {
+    "anonymous": "Anónimo",
+    "byOn": "Por {{author}} el {{date}}",
+    "byDash": "Por {{author}} — {{date}}",
+    "emptyDesc": "Sé el primero en iniciar una conversación sobre sellos de tiempo Bitcoin, casos de uso o el protocolo.",
+    "loadThreadsFail": "No se pudieron cargar los hilos del foro.",
+    "loadThreadFail": "No se pudo cargar el hilo.",
+    "createFail": "No se pudo crear el hilo.",
+    "replyFail": "No se pudo enviar la respuesta."
   }
 }

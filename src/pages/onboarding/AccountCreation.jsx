@@ -117,7 +117,7 @@ export default function AccountCreation() {
               fontSize: 'var(--text-lg)'
             }}
           >
-            Create your account to get started with Satohash
+            {t('onboardingPage.account.subtitle')}
           </p>
         </div>
 

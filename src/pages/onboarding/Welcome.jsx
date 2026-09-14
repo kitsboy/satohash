@@ -42,10 +42,8 @@ const FEATURE_DATA = [
     color: 'var(--accent-gold)',
     bgGradient: 'linear-gradient(135deg, rgba(240,180,41,0.08) 0%, rgba(240,180,41,0.15) 100%)',
     accent: 'var(--accent-gold)',
-    educationalInsight:
-      "SHA-256 Hashing: Every document gets a unique 64-character 'fingerprint'. Even a one-pixel change creates a totally different ID.",
-    spec: 'Hash Algorithm: SHA-256',
-    protocol: 'Local-First Encryption'
+    titleKey: 'welcome.features.cryptoProof',
+    descKey: 'welcome.features.cryptoProofDesc'
   },
   {
     id: 'timestamp',
@@ -54,10 +52,8 @@ const FEATURE_DATA = [
     color: '#10b981',
     bgGradient: 'linear-gradient(135deg, #10b98108 0%, #10b98115 100%)',
     accent: '#34d399',
-    educationalInsight:
-      "Merkle Anchoring: We bundle hashes into a Merkle Tree and anchor the 'root' to Bitcoin. One block confirms thousands of documents.",
-    spec: 'Anchor: Bitcoin L1',
-    protocol: 'OpenTimestamps'
+    titleKey: 'welcome.features.timestamp',
+    descKey: 'welcome.features.timestampDesc'
   },
   {
     id: 'verify',
@@ -66,12 +62,18 @@ const FEATURE_DATA = [
     color: '#f59e0b',
     bgGradient: 'linear-gradient(135deg, #f59e0b08 0%, #f59e0b15 100%)',
     accent: '#fbbf24',
-    educationalInsight:
-      "Mathematical Audit: Verification doesn't need Satohash. Anyone with the proof file and a Bitcoin node can verify the timestamp.",
-    spec: 'Verification: Permissionless',
-    protocol: 'ZK-Ready Evidence'
+    titleKey: 'welcome.features.verify',
+    descKey: 'welcome.features.verifyDesc'
   }
 ]
+
+const TRUST_ITEMS = [
+  { titleKey: 'privacyTitle', descKey: 'privacyDesc', icon: Lock },
+  { titleKey: 'proofTitle', descKey: 'proofDesc', icon: Database },
+  { titleKey: 'standardTitle', descKey: 'standardDesc', icon: Share2 }
+]
+
+const PROTOCOL_TAGS = ['SHA-256', 'Bitcoin L1', 'Merkle Trees', 'OTS Standard']
 
 export default function Welcome() {
   usePageMetaOnboarding('welcome')
@@ -173,10 +175,10 @@ export default function Welcome() {
               className="mx-auto mb-8 flex max-w-lg flex-col items-center gap-3 rounded-2xl border border-indigo-100 bg-indigo-50/80 px-6 py-4 text-center sm:flex-row sm:text-left"
             >
               <p className="flex-1 text-sm font-bold text-indigo-900">
-                Pick up where you left off in onboarding.
+                {t('onboardingWelcomePage.resume')}
               </p>
               <Button type="button" onClick={() => navigate(resumePath)}>
-                Continue setup
+                {t('onboardingWelcomePage.continueSetup')}
               </Button>
             </motion.div>
           )}
@@ -190,8 +192,10 @@ export default function Welcome() {
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-indigo-400 opacity-75"></span>
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-indigo-500"></span>
               </span>
-              Secured by Bitcoin Network • Block #
-              {blockHeight != null ? Number(blockHeight).toLocaleString() : '—'}
+              {t('onboardingWelcomePage.securedBy', {
+                height:
+                  blockHeight != null ? Number(blockHeight).toLocaleString(i18n.language) : '—'
+              })}
             </motion.div>
 
             <motion.h1
@@ -207,9 +211,9 @@ export default function Welcome() {
                 marginBottom: '32px'
               }}
             >
-              The Digital Notary
+              {t('onboardingWelcomePage.heroTitle')}
               <br />
-              <span className="text-gradient">for a Verified World.</span>
+              <span className="text-gradient">{t('onboardingWelcomePage.heroHighlight')}</span>
             </motion.h1>
 
             <motion.p
@@ -225,8 +229,7 @@ export default function Welcome() {
                 lineHeight: '1.5'
               }}
             >
-              SatoHash provides mathematically indisputable proof of existence for your most
-              critical documents. Local privacy, global immutability.
+              {t('onboardingWelcomePage.heroSubtitle')}
             </motion.p>
 
             <motion.div
@@ -249,7 +252,7 @@ export default function Welcome() {
                   boxShadow: '0 20px 40px rgba(99, 102, 241, 0.25)'
                 }}
               >
-                Start New Agreement
+                {t('onboardingWelcomePage.startCta')}
                 <ArrowRight size={20} strokeWidth={3} />
               </Button>
               <Button
@@ -270,7 +273,7 @@ export default function Welcome() {
                   background: 'white'
                 }}
               >
-                Exploring Protocol
+                {t('onboardingWelcomePage.exploreCta')}
               </Button>
             </motion.div>
           </div>
@@ -354,9 +357,7 @@ export default function Welcome() {
                           color: '#0f172a'
                         }}
                       >
-                        {t(
-                          `welcome.features.${feature.id === 'proof' ? 'cryptoProof' : feature.id === 'timestamp' ? 'timestamp' : 'verify'}`
-                        )}
+                        {t(feature.titleKey)}
                       </h3>
 
                       <p
@@ -368,9 +369,7 @@ export default function Welcome() {
                           marginBottom: '24px'
                         }}
                       >
-                        {t(
-                          `welcome.features.${feature.id === 'proof' ? 'cryptoProofDesc' : feature.id === 'timestamp' ? 'timestampDesc' : 'verifyDesc'}`
-                        )}
+                        {t(feature.descKey)}
                       </p>
 
                       {/* Live Education Layer - Visible on Hover */}
@@ -405,7 +404,7 @@ export default function Welcome() {
                                 }}
                               >
                                 <TechIcon size={16} />
-                                Educational Insight
+                                {t('onboardingWelcomePage.educationalInsight')}
                               </div>
                               <p
                                 style={{
@@ -415,7 +414,7 @@ export default function Welcome() {
                                   margin: 0
                                 }}
                               >
-                                {feature.educationalInsight}
+                                {t(`onboardingWelcomePage.features.${feature.id}.insight`)}
                               </p>
                             </div>
                           </motion.div>
@@ -445,7 +444,7 @@ export default function Welcome() {
                           letterSpacing: '1.5px'
                         }}
                       >
-                        {feature.protocol}
+                        {t(`onboardingWelcomePage.features.${feature.id}.protocol`)}
                       </div>
                       <Activity
                         size={14}
@@ -476,20 +475,20 @@ export default function Welcome() {
                   color: '#0f172a'
                 }}
               >
-                Protocol Mechanical Depth
+                {t('onboardingWelcomePage.protocolDepth')}
               </h2>
               <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
                 <ProtocolStep
-                  title="01 / Local Hashing"
-                  text="Your document is processed into a 64-character SHA-256 fingerprint locally. No one, including Satohash, ever sees your content."
+                  title={t('onboardingWelcomePage.protocol.hashingTitle')}
+                  text={t('onboardingWelcomePage.protocol.hashingText')}
                 />
                 <ProtocolStep
-                  title="02 / Merkle Bundling"
-                  text="Multiple fingerprints are combined into a Merkle Tree. This allows for massive scaling and ensures absolute privacy in the proof."
+                  title={t('onboardingWelcomePage.protocol.merkleTitle')}
+                  text={t('onboardingWelcomePage.protocol.merkleText')}
                 />
                 <ProtocolStep
-                  title="03 / Bitcoin Anchoring"
-                  text="The Merkle Root is embedded into the Bitcoin blockchain. The transaction block height becomes your permanent, unforgeable timestamp."
+                  title={t('onboardingWelcomePage.protocol.anchorTitle')}
+                  text={t('onboardingWelcomePage.protocol.anchorText')}
                 />
               </div>
             </div>
@@ -532,7 +531,7 @@ export default function Welcome() {
                     marginBottom: '16px'
                   }}
                 >
-                  The Protocol Abyss
+                  {t('onboardingWelcomePage.abyss.kicker')}
                 </h3>
                 <h2
                   style={{
@@ -542,9 +541,9 @@ export default function Welcome() {
                     letterSpacing: '-0.03em'
                   }}
                 >
-                  Decentralized Trust.
+                  {t('onboardingWelcomePage.abyss.title')}
                   <br />
-                  No Exceptions.
+                  {t('onboardingWelcomePage.abyss.title2')}
                 </h2>
                 <p
                   style={{
@@ -555,11 +554,10 @@ export default function Welcome() {
                     marginBottom: '40px'
                   }}
                 >
-                  Satohash isn&apos;t just a signing tool. It&apos;s a bridge between your legal
-                  intent and the mathematical certainty of the blockchain.
+                  {t('onboardingWelcomePage.abyss.body')}
                 </p>
                 <div className="flex flex-wrap gap-4">
-                  {['SHA-256', 'Bitcoin L1', 'Merkle Trees', 'OTS Standard'].map((tag) => (
+                  {PROTOCOL_TAGS.map((tag) => (
                     <div
                       key={tag}
                       style={{
@@ -589,27 +587,11 @@ export default function Welcome() {
                   }}
                 >
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-                    {[
-                      {
-                        title: 'Local Privacy',
-                        desc: 'Content never leaves your browser.',
-                        icon: Lock
-                      },
-                      {
-                        title: 'Eternal Proof',
-                        desc: 'Outlives companies and servers.',
-                        icon: Database
-                      },
-                      {
-                        title: 'Standardized',
-                        desc: 'Uses open standard .ots proofs.',
-                        icon: Share2
-                      }
-                    ].map((item, i) => {
+                    {TRUST_ITEMS.map((item) => {
                       const ItemIcon = item.icon
                       return (
                         <div
-                          key={i}
+                          key={item.titleKey}
                           style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}
                         >
                           <div
@@ -631,7 +613,7 @@ export default function Welcome() {
                             <h4
                               style={{ fontSize: '18px', fontWeight: '950', marginBottom: '4px' }}
                             >
-                              {item.title}
+                              {t(`onboardingWelcomePage.trust.${item.titleKey}`)}
                             </h4>
                             <p
                               style={{
@@ -641,7 +623,7 @@ export default function Welcome() {
                                 margin: 0
                               }}
                             >
-                              {item.desc}
+                              {t(`onboardingWelcomePage.trust.${item.descKey}`)}
                             </p>
                           </div>
                         </div>
@@ -658,7 +640,7 @@ export default function Welcome() {
                       borderRadius: '14px'
                     }}
                   >
-                    Enter Trust Center
+                    {t('onboardingWelcomePage.trust.cta')}
                   </Button>
                 </div>
               </div>

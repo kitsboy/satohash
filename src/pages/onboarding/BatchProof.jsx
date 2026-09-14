@@ -97,7 +97,7 @@ export default function BatchProof() {
               color: 'var(--color-text-primary)'
             }}
           >
-            Bulk Proof Manager
+            {t('onboardingPage.batchProof.title')}
           </h1>
           <p
             style={{
@@ -108,7 +108,7 @@ export default function BatchProof() {
               fontWeight: '600'
             }}
           >
-            Anchor entire document libraries to Bitcoin in a single cryptographic operation.
+            {t('onboardingPage.batchProof.subtitle')}
           </p>
         </div>
 
@@ -153,10 +153,12 @@ export default function BatchProof() {
                   <UploadCloud size={40} />
                 </div>
                 <h3 style={{ fontSize: '24px', fontWeight: '850', marginBottom: '12px' }}>
-                  {isDragActive ? 'Drop your library here' : 'Drop folders or multiple files'}
+                  {isDragActive
+                    ? t('onboardingPage.batchProof.dropActive')
+                    : t('onboardingPage.batchProof.dropIdle')}
                 </h3>
                 <p style={{ color: '#64748b', fontSize: '16px', fontWeight: '500' }}>
-                  Select multiple PDF, JPG, or DOCX files to secure simultaneously.
+                  {t('onboardingPage.batchProof.dropHint')}
                 </p>
               </div>
             )}
@@ -173,7 +175,7 @@ export default function BatchProof() {
                   }}
                 >
                   <h3 style={{ margin: 0, fontSize: '20px', fontWeight: '850' }}>
-                    Document Queue ({files.length})
+                    {t('onboardingPage.batchProof.queue', { count: files.length })}
                   </h3>
                   {!showResults && (
                     <button
@@ -187,7 +189,7 @@ export default function BatchProof() {
                         cursor: 'pointer'
                       }}
                     >
-                      Clear All
+                      {t('onboardingPage.batchProof.clearAll')}
                     </button>
                   )}
                 </div>
@@ -231,7 +233,7 @@ export default function BatchProof() {
                           fontWeight: '700'
                         }}
                       >
-                        Hash: {file.hash.substring(0, 16)}...
+                        {t('onboardingPage.batchProof.hashLabel')}: {file.hash.substring(0, 16)}...
                       </div>
                     </div>
                     <div
@@ -248,6 +250,7 @@ export default function BatchProof() {
                       {!showResults ? (
                         <button
                           onClick={() => removeFile(file.id)}
+                          aria-label={t('onboardingPage.batchProof.removeAria')}
                           style={{
                             background: 'none',
                             border: 'none',
@@ -269,7 +272,7 @@ export default function BatchProof() {
                             fontWeight: '700'
                           }}
                         >
-                          <Zap size={14} /> Verified
+                          <Zap size={14} /> {t('onboardingPage.batchProof.verified')}
                         </div>
                       )}
                     </div>
@@ -291,7 +294,7 @@ export default function BatchProof() {
                 >
                   <Binary size={20} className="text-indigo-600" />
                   <h3 style={{ margin: 0, fontSize: '20px', fontWeight: '850' }}>
-                    Protocol Visualization
+                    {t('onboardingPage.batchProof.visualization')}
                   </h3>
                 </div>
                 <MerkleExplorer tree={merkleTree} />
@@ -313,15 +316,19 @@ export default function BatchProof() {
                     marginBottom: '24px'
                   }}
                 >
-                  Batch Stats
+                  {t('onboardingPage.batchProof.stats')}
                 </h3>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <span style={{ color: '#94a3b8', fontWeight: '500' }}>Total Files</span>
+                    <span style={{ color: '#94a3b8', fontWeight: '500' }}>
+                      {t('onboardingPage.batchProof.totalFiles')}
+                    </span>
                     <span style={{ fontWeight: '700' }}>{files.length}</span>
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <span style={{ color: '#94a3b8', fontWeight: '500' }}>Network Fee</span>
+                    <span style={{ color: '#94a3b8', fontWeight: '500' }}>
+                      {t('onboardingPage.batchProof.networkFee')}
+                    </span>
                     <span style={{ color: '#fbbf24', fontWeight: '800' }}>0.00045 BTC</span>
                   </div>
                   <div
@@ -342,7 +349,7 @@ export default function BatchProof() {
                         letterSpacing: '1px'
                       }}
                     >
-                      Merkle Root
+                      {t('onboardingPage.batchProof.merkleRoot')}
                     </div>
                     <div
                       style={{
@@ -366,7 +373,9 @@ export default function BatchProof() {
                     disabled={isProcessing}
                     style={{ marginTop: '32px', height: '60px' }}
                   >
-                    {isProcessing ? 'Processing Batch...' : 'Anchor All Now'}
+                    {isProcessing
+                      ? t('onboardingPage.batchProof.processing')
+                      : t('onboardingPage.batchProof.anchorAll')}
                     {!isProcessing && <ChevronRight size={20} />}
                   </Button>
                 ) : (
@@ -386,7 +395,7 @@ export default function BatchProof() {
                       color: 'white'
                     }}
                   >
-                    Start New Batch
+                    {t('onboardingPage.batchProof.startNew')}
                   </Button>
                 )}
               </Card>
@@ -409,11 +418,12 @@ export default function BatchProof() {
                   }}
                 >
                   <Activity size={20} />
-                  <span style={{ fontWeight: '800', fontSize: '14px' }}>Network Efficiency</span>
+                  <span style={{ fontWeight: '800', fontSize: '14px' }}>
+                    {t('onboardingPage.batchProof.efficiency')}
+                  </span>
                 </div>
                 <p style={{ fontSize: '13px', color: '#64748b', lineHeight: '1.5', margin: 0 }}>
-                  Batch anchoring saves up to 98% in network fees by committing thousands of
-                  documents in a single Merkle Tree transaction.
+                  {t('onboardingPage.batchProof.efficiencyBody')}
                 </p>
               </div>
             </div>

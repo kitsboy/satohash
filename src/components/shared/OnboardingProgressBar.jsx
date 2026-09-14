@@ -1,6 +1,8 @@
+import { useTranslation } from 'react-i18next'
 import { ONBOARDING_STEPS } from '../../utils/onboardingFlow'
 
 export default function OnboardingProgressBar({ currentStepId }) {
+  const { t } = useTranslation()
   const idx = ONBOARDING_STEPS.findIndex((s) => s.id === currentStepId)
   if (idx < 0) return null
   const pct = Math.round(((idx + 1) / ONBOARDING_STEPS.length) * 100)
@@ -14,7 +16,11 @@ export default function OnboardingProgressBar({ currentStepId }) {
     >
       <div className="mb-2 flex justify-between text-[10px] font-bold tracking-widest text-[var(--text-secondary)] uppercase">
         <span>
-          Step {idx + 1} of {ONBOARDING_STEPS.length}
+          {t('onboardingPage.stepOf', {
+            current: idx + 1,
+            total: ONBOARDING_STEPS.length,
+            defaultValue: 'Step {{current}} of {{total}}'
+          })}
         </span>
         <span>{pct}%</span>
       </div>

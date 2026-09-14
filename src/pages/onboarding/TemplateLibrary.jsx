@@ -28,146 +28,26 @@ import OnboardingProgressBar from '../../components/shared/OnboardingProgressBar
 import usePageMetaOnboarding from '../../hooks/usePageMetaOnboarding'
 
 const categories = [
-  { id: 'all', name: 'All Templates', icon: Library },
-  { id: 'personal', name: 'Personal & Family', icon: Heart },
-  { id: 'business', name: 'Business & Corp', icon: Briefcase },
-  { id: 'legal', name: 'Legal & Judiciary', icon: Scale },
-  { id: 'property', name: 'Real Estate', icon: Building }
+  { id: 'all', icon: Library },
+  { id: 'personal', icon: Heart },
+  { id: 'business', icon: Briefcase },
+  { id: 'legal', icon: Scale },
+  { id: 'property', icon: Building }
 ]
 
 const templates = [
-  {
-    id: 'prenup',
-    title: 'Prenuptial Agreement',
-    category: 'personal',
-    description: 'Protect assets and clarify financial expectations before marriage.',
-    jurisdiction: 'Global / Multi-state',
-    difficulty: 'Advanced',
-    icon: Heart,
-    color: '#ec4899',
-    tag: 'Popular'
-  },
-  {
-    id: 'property',
-    title: 'Property Transfer',
-    category: 'property',
-    description: 'Documentation for private property sales and ownership transfers.',
-    jurisdiction: 'US / EU — supporting evidence',
-    difficulty: 'Legal',
-    icon: Building,
-    color: '#3b82f6',
-    tag: 'Standard'
-  },
-  {
-    id: 'powerOfAttorney',
-    title: 'Power of Attorney',
-    category: 'legal',
-    description: 'Grant legal authority to a trusted individual for decision making.',
-    jurisdiction: 'ESIGN — supporting evidence',
-    difficulty: 'Standard',
-    icon: Scale,
-    color: '#f59e0b',
-    tag: 'Essential'
-  },
-  {
-    id: 'nda',
-    title: 'NDA (Non-Disclosure)',
-    category: 'business',
-    description: 'Secure confidential business information during negotiations.',
-    jurisdiction: 'Global Standard',
-    difficulty: 'Universal',
-    icon: ShieldCheck,
-    color: '#10b981',
-    tag: 'Secure'
-  },
-  {
-    id: 'will',
-    title: 'Last Will & Testament',
-    category: 'personal',
-    description: 'Define asset distribution and guardianship of minors with timestamped proof.',
-    jurisdiction: 'Common Law / Global',
-    difficulty: 'Critical',
-    icon: FileText,
-    color: '#8b5cf6',
-    tag: 'Essential'
-  },
-  {
-    id: 'affidavit',
-    title: 'Affidavit of Truth',
-    category: 'legal',
-    description: 'A sworn statement of fact anchored to the block height for legal standing.',
-    jurisdiction: 'Universal / Judiciary',
-    difficulty: 'Advanced',
-    icon: UserCheck,
-    color: '#2563eb',
-    tag: 'Notary Alt'
-  },
-  {
-    id: 'commercial-lease',
-    title: 'Commercial Lease',
-    category: 'property',
-    description: 'Binding agreement for business premises with immutable commencement proof.',
-    jurisdiction: 'Real Estate / Global',
-    difficulty: 'Standard',
-    icon: Building,
-    color: '#475569',
-    tag: 'Business'
-  },
-  {
-    id: 'child-travel',
-    title: 'Child Travel Consent',
-    category: 'personal',
-    description: 'Documented permission for minors traveling without both guardians.',
-    jurisdiction: 'International/Border',
-    difficulty: 'Standard',
-    icon: Plane,
-    color: '#06b6d4',
-    tag: 'Travel'
-  },
-  {
-    id: 'consulting',
-    title: 'Consulting Agreement',
-    category: 'business',
-    description: 'Professional engagement terms for consulting services.',
-    jurisdiction: 'Global / B2B',
-    difficulty: 'Professional',
-    icon: Users,
-    color: '#8b5cf6',
-    tag: 'New'
-  },
-  {
-    id: 'ip-assignment',
-    title: 'IP Assignment',
-    category: 'business',
-    description: 'Transfer ownership of intellectual property rights effectively.',
-    jurisdiction: 'US / Global — supporting evidence',
-    difficulty: 'Advanced',
-    icon: ShieldCheck,
-    color: '#0f172a',
-    tag: 'New'
-  },
-  {
-    id: 'domain-notary',
-    title: 'Domain Ownership Notary',
-    category: 'business',
-    description: 'Immutable proof of domain name control and ownership history.',
-    jurisdiction: 'ICANN / Global',
-    difficulty: 'Batch Support',
-    icon: Globe,
-    color: '#2563eb',
-    tag: 'New'
-  },
-  {
-    id: 'web-archive',
-    title: 'Snap & Stamp Archive',
-    category: 'business',
-    description: 'Digital evidence collector for websites and online content.',
-    jurisdiction: 'Judiciary Ready',
-    difficulty: 'High Depth',
-    icon: PenTool,
-    color: '#f43f5e',
-    tag: 'New'
-  }
+  { id: 'prenup', category: 'personal', icon: Heart, color: '#ec4899' },
+  { id: 'property', category: 'property', icon: Building, color: '#3b82f6' },
+  { id: 'powerOfAttorney', category: 'legal', icon: Scale, color: '#f59e0b' },
+  { id: 'nda', category: 'business', icon: ShieldCheck, color: '#10b981' },
+  { id: 'will', category: 'personal', icon: FileText, color: '#8b5cf6' },
+  { id: 'affidavit', category: 'legal', icon: UserCheck, color: '#2563eb' },
+  { id: 'commercial-lease', category: 'property', icon: Building, color: '#475569' },
+  { id: 'child-travel', category: 'personal', icon: Plane, color: '#06b6d4' },
+  { id: 'consulting', category: 'business', icon: Users, color: '#8b5cf6' },
+  { id: 'ip-assignment', category: 'business', icon: ShieldCheck, color: '#0f172a' },
+  { id: 'domain-notary', category: 'business', icon: Globe, color: '#2563eb' },
+  { id: 'web-archive', category: 'business', icon: PenTool, color: '#f43f5e' }
 ]
 
 export default function TemplateLibrary() {
@@ -177,11 +57,15 @@ export default function TemplateLibrary() {
   const [activeCategory, setActiveCategory] = useState('all')
   const [searchQuery, setSearchQuery] = useState('')
 
+  const itemKey = (id, field) => `onboardingPage.templateLibrary.items.${id}.${field}`
+
   const filteredTemplates = templates.filter((temp) => {
     const matchesCategory = activeCategory === 'all' || temp.category === activeCategory
+    const q = searchQuery.toLowerCase()
+    const title = t(itemKey(temp.id, 'title'))
+    const description = t(itemKey(temp.id, 'description'))
     const matchesSearch =
-      temp.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      temp.description.toLowerCase().includes(searchQuery.toLowerCase())
+      !q || title.toLowerCase().includes(q) || description.toLowerCase().includes(q)
     return matchesCategory && matchesSearch
   })
 
@@ -196,11 +80,10 @@ export default function TemplateLibrary() {
             className="text-shimmer mb-6 leading-tight tracking-tighter"
             style={{ fontSize: 'clamp(2.5rem, 8vw, 4.5rem)', fontWeight: '950' }}
           >
-            Legal Template Library
+            {t('onboardingPage.templateLibrary.title')}
           </motion.h1>
           <p className="mx-auto max-w-2xl text-xl leading-relaxed font-bold text-slate-500">
-            Professionally drafted cryptographic agreements. Anchored to Bitcoin for absolute
-            immutability.
+            {t('onboardingPage.templateLibrary.subtitle')}
           </p>
         </div>
 
@@ -212,8 +95,8 @@ export default function TemplateLibrary() {
             </div>
             <input
               type="search"
-              aria-label="Search legal templates"
-              placeholder="Search legal templates (e.g. NDA, Property)..."
+              aria-label={t('onboardingPage.templateLibrary.searchAria')}
+              placeholder={t('onboardingPage.templateLibrary.searchPlaceholder')}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="shadow-premium w-full rounded-2xl border-2 border-slate-200 bg-white py-6 pr-8 pl-16 text-lg font-bold text-slate-900 transition-all outline-none focus:border-indigo-600 focus:ring-4 focus:ring-indigo-50"
@@ -236,7 +119,9 @@ export default function TemplateLibrary() {
                   )}
                 >
                   <Icon size={18} />
-                  {cat.name.toUpperCase()}
+                  <span className="uppercase">
+                    {t(`onboardingPage.templateLibrary.categories.${cat.id}`)}
+                  </span>
                 </button>
               )
             })}
@@ -266,28 +151,26 @@ export default function TemplateLibrary() {
                       <template.icon size={32} strokeWidth={2.5} />
                     </div>
                     <div className="flex flex-col items-end gap-2">
-                      {template.tag && (
-                        <span className="rounded-full bg-indigo-50 px-3 py-1 text-[10px] font-black tracking-widest text-indigo-600 uppercase">
-                          {template.tag}
-                        </span>
-                      )}
+                      <span className="rounded-full bg-indigo-50 px-3 py-1 text-[10px] font-black tracking-widest text-indigo-600 uppercase">
+                        {t(itemKey(template.id, 'tag'))}
+                      </span>
                       <span className="rounded-full bg-slate-100 px-3 py-1 text-[10px] font-black tracking-widest text-slate-500 uppercase">
-                        {template.difficulty}
+                        {t(itemKey(template.id, 'difficulty'))}
                       </span>
                     </div>
                   </div>
 
                   <h3 className="mb-4 text-2xl font-black text-slate-900 transition-colors group-hover:text-indigo-600">
-                    {template.title}
+                    {t(itemKey(template.id, 'title'))}
                   </h3>
                   <p className="mb-8 flex-grow leading-relaxed font-bold text-slate-500">
-                    {template.description}
+                    {t(itemKey(template.id, 'description'))}
                   </p>
 
                   <div className="mb-8 flex items-center gap-3 rounded-xl border border-slate-100 bg-slate-50 px-4 py-3">
                     <Globe size={16} className="text-slate-400" />
                     <span className="text-xs font-black tracking-wide text-slate-400 uppercase">
-                      {template.jurisdiction}
+                      {t(itemKey(template.id, 'jurisdiction'))}
                     </span>
                   </div>
 
@@ -297,7 +180,7 @@ export default function TemplateLibrary() {
                     onClick={() => navigate(`/contracts/new/${template.id}`)}
                     className="h-14 font-black"
                   >
-                    CHOOSE TEMPLATE <ChevronRight size={18} />
+                    {t('onboardingPage.templateLibrary.choose')} <ChevronRight size={18} />
                   </Button>
                 </Card>
               </motion.div>

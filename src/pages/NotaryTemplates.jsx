@@ -1,7 +1,7 @@
 import { useState, useMemo, useEffect, useRef, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Tooltip from '../components/ui/Tooltip'
-import { getVerifyUrl } from '../config/constants'
+import { buildCanonicalProofCardUrl } from '../utils/shareProof'
 import usePageMetaOnboarding from '../hooks/usePageMetaOnboarding'
 import { useSearchParams, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
@@ -1261,7 +1261,8 @@ const ORANGE_LOGO_STYLE = {
 }
 
 const generatePDF = async (template, data) => {
-  const verifyUrl = getVerifyUrl()
+  const hash = await sha256HexFromObject(data)
+  const proofUrl = buildCanonicalProofCardUrl(hash)
   const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' })
   const pageW = 210,
     pageH = 297,
@@ -1300,7 +1301,12 @@ const generatePDF = async (template, data) => {
   // ── Pre-load logo & QR ────────────────────────────────────────────────────
   const [satohashImg, qrDataUrl] = await Promise.all([
     loadImg('/logo.png', { tint: BITCOIN_ORANGE }),
-    QRCode.toDataURL(verifyUrl, { width: 200, margin: 1, errorCorrectionLevel: 'M' })
+    QRCode.toDataURL(proofUrl, {
+      width: 280,
+      margin: 1,
+      errorCorrectionLevel: 'M',
+      color: { dark: '#0f172a', light: '#ffffff' }
+    })
   ])
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -1370,12 +1376,33 @@ const generatePDF = async (template, data) => {
     doc.line(margin, y - 4, pageW - margin, y - 4)
   })
 
+  if (y < 230 && qrDataUrl) {
+    const p1 = 32
+    doc.addImage(qrDataUrl, 'PNG', margin, y + 4, p1, p1)
+    doc.link(margin, y + 4, p1, p1, { url: proofUrl })
+    doc.setFontSize(7)
+    doc.setTextColor(30, 58, 138)
+    doc.setFont('helvetica', 'bold')
+    doc.text('Scan with any phone camera', margin + p1 + 6, y + 16)
+    doc.setFont('helvetica', 'normal')
+    doc.setFontSize(6)
+    doc.setTextColor(100, 116, 139)
+    doc.text(
+      'Opens satohash.io/p/… — verify the .ots stamp in the browser',
+      margin + p1 + 6,
+      y + 22
+    )
+    doc.setFont('courier', 'normal')
+    doc.setFontSize(6)
+    doc.text(hash, margin + p1 + 6, y + 28)
+  }
+
   // ── Page 1 footer ──────────────────────────────────────────────────────────
   doc.setFontSize(7)
   doc.setTextColor(148, 163, 184)
   doc.setFont('helvetica', 'normal')
-  doc.text('Satohash template draft — stamp the hash to prove existence', margin, pageH - 10)
-  doc.text(`Verify: ${verifyUrl}`, pageW - margin, pageH - 10, { align: 'right' })
+  doc.text('Scan the QR with any phone camera to open this proof', margin, pageH - 14)
+  doc.text(proofUrl, margin, pageH - 10)
 
   // ═══════════════════════════════════════════════════════════════════════════
   // PAGE 2 — Certificate of Authenticity
@@ -1437,10 +1464,10 @@ const generatePDF = async (template, data) => {
       })
     },
     { label: 'TOTAL FIELDS', value: `${template.fields.length} fields` },
-    { label: 'DOCUMENT HASH (SHA-256)', value: '[Computed on /stamp — not in this PDF]' },
+    { label: 'DOCUMENT HASH (SHA-256)', value: hash },
     { label: 'BITCOIN BLOCK HEIGHT', value: '[After you stamp and Bitcoin confirms]' },
     { label: 'PROTOCOL', value: 'Satohash — OpenTimestamps / Bitcoin' },
-    { label: 'VERIFY URL', value: verifyUrl }
+    { label: 'PROOF CARD', value: proofUrl }
   ]
 
   const colW = contentW / 2 - 4
@@ -1482,12 +1509,16 @@ const generatePDF = async (template, data) => {
   doc.rect(qrX, cy, qrBoxSize, qrBoxSize + 10, 'S')
   if (qrDataUrl) {
     doc.addImage(qrDataUrl, 'PNG', qrX + 4, cy + 4, qrBoxSize - 8, qrBoxSize - 8)
-    doc.link(qrX, cy, qrBoxSize, qrBoxSize, { url: verifyUrl })
+    doc.link(qrX, cy, qrBoxSize, qrBoxSize, { url: proofUrl })
   }
-  doc.setFontSize(6)
+  doc.setFontSize(5.5)
   doc.setTextColor(30, 58, 138)
   doc.setFont('helvetica', 'bold')
-  doc.text('SCAN TO VERIFY', qrX + qrBoxSize / 2, cy + qrBoxSize + 6, { align: 'center' })
+  doc.text('SCAN WITH ANY CAMERA', qrX + qrBoxSize / 2, cy + qrBoxSize + 4, { align: 'center' })
+  doc.setFont('helvetica', 'normal')
+  doc.text('iPhone · Android · satohash.io/p/', qrX + qrBoxSize / 2, cy + qrBoxSize + 8, {
+    align: 'center'
+  })
 
   // Official Seal box (right side)
   const sealX = pageW - margin - 64
@@ -1547,8 +1578,8 @@ const generatePDF = async (template, data) => {
   doc.setFontSize(7)
   doc.setTextColor(148, 163, 184)
   doc.setFont('helvetica', 'normal')
-  doc.text('Satohash — Sovereign Notary Protocol', margin, pageH - 10)
-  doc.text(`Verify this document at: ${verifyUrl}`, pageW - margin, pageH - 10, { align: 'right' })
+  doc.text('Scan QR with any camera · satohash.io/p/', margin, pageH - 10)
+  doc.text(proofUrl, pageW - margin, pageH - 10, { align: 'right' })
   // Gold footer bar
   doc.setFillColor(240, 180, 41)
   doc.rect(0, pageH - 4, pageW / 2, 4, 'F')
@@ -2001,6 +2032,7 @@ export function TemplateEditor({ template, onBack, demoMode = false }) {
   const documentRef = useRef(null)
   const [data, setData] = useState(() => ({ ...template.demoData }))
   const [qrUrl, setQrUrl] = useState('')
+  const [draftHash, setDraftHash] = useState('')
   const [darkDoc, setDarkDoc] = useState(false)
   const [showPreview, setShowPreview] = useState(false)
 
@@ -2108,11 +2140,27 @@ export function TemplateEditor({ template, onBack, demoMode = false }) {
   }, [template, t])
 
   useEffect(() => {
-    const verifyUrl = getVerifyUrl()
-    QRCode.toDataURL(verifyUrl, { width: 120, margin: 1, errorCorrectionLevel: 'M' })
-      .then(setQrUrl)
-      .catch(() => toast.error(t('notaryEditorPage.toastQrFail')))
-  }, [t])
+    let cancelled = false
+    sha256HexFromObject(data)
+      .then((hash) => {
+        if (!cancelled) setDraftHash(hash)
+        return QRCode.toDataURL(buildCanonicalProofCardUrl(hash), {
+          width: 160,
+          margin: 1,
+          errorCorrectionLevel: 'M',
+          color: { dark: '#0f172a', light: '#ffffff' }
+        })
+      })
+      .then((url) => {
+        if (!cancelled) setQrUrl(url)
+      })
+      .catch(() => {
+        if (!cancelled) toast.error(t('notaryEditorPage.toastQrFail'))
+      })
+    return () => {
+      cancelled = true
+    }
+  }, [data, t])
 
   const completedFields = template.fields.filter((f) => data[f.id]?.trim?.())
   const progress = Math.round((completedFields.length / template.fields.length) * 100)
@@ -2154,7 +2202,9 @@ export function TemplateEditor({ template, onBack, demoMode = false }) {
     }
   }
 
-  const handleEmail = () => {
+  const handleEmail = async () => {
+    const hash = await sha256HexFromObject(data)
+    const proofUrl = buildCanonicalProofCardUrl(hash)
     const subject = t('notaryEditorPage.emailSubject', { title: template.title })
     const fieldLines = template.fields.map((f) => `${f.label}: ${data[f.id] || '—'}`).join('\n')
     const body =
@@ -2171,7 +2221,9 @@ export function TemplateEditor({ template, onBack, demoMode = false }) {
       `${fieldLines}\n\n` +
       `${t('notaryEditorPage.emailVerifyHeader')}\n\n` +
       `${t('notaryEditorPage.emailBody')}\n` +
-      `${t('notaryEditorPage.emailVerifyAt', { url: getVerifyUrl() })}\n`
+      `${t('notaryEditorPage.emailScanHint')}\n` +
+      `${proofUrl}\n` +
+      `SHA-256: ${hash}\n`
     window.location.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
   }
 
@@ -2425,7 +2477,7 @@ export function TemplateEditor({ template, onBack, demoMode = false }) {
                     style={{ background: '#f1f5f9' }}
                   >
                     <span className="text-[9px] font-bold" style={{ color: '#94a3b8' }}>
-                      {t('notaryEditorPage.hashPending')}
+                      {draftHash ? `${draftHash.slice(0, 8)}…` : t('notaryEditorPage.hashPending')}
                     </span>
                   </div>
                 </div>
@@ -2434,7 +2486,7 @@ export function TemplateEditor({ template, onBack, demoMode = false }) {
                 <div className="flex flex-shrink-0 flex-col items-center gap-1">
                   {qrUrl ? (
                     <a
-                      href={getVerifyUrl()}
+                      href={buildCanonicalProofCardUrl(draftHash)}
                       target="_blank"
                       rel="noopener noreferrer"
                       title={t('notaryEditorPage.openVerify')}

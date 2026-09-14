@@ -24,6 +24,18 @@ export function buildProofCardUrl(proof) {
   return buildVerifyUrl(proof)
 }
 
+/**
+ * Proof card URL for PDFs / email / camera QR.
+ * Always apex satohash.io so a phone camera never opens localhost or pages.dev.
+ */
+export function buildCanonicalProofCardUrl(hash) {
+  const h = String(hash || '')
+    .trim()
+    .toLowerCase()
+  if (!/^[a-f0-9]{64}$/.test(h)) return 'https://satohash.io/verify'
+  return `https://satohash.io/p/${h}`
+}
+
 export function buildShareText(proof) {
   const status = (proof?.status || 'pending').toLowerCase()
   const label = proof?.filename || 'document'

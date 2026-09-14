@@ -1081,6 +1081,185 @@
         "body": "Mara tu unapothibitishwa kwenye Bitcoin, uthibitisho wako ni wa kudumu na wa umma. Shiriki kiungo — mtu yeyote anaweza kuthibitisha bila akaunti.",
         "action": "Twende →"
       }
+    },
+    "howItWorks": {
+      "deepDive": "Kina cha itifaki",
+      "step1Title": "1. Hash ya ndani",
+      "step1Text": "Hati yako inachakatwa kuwa alama ya kidole ya SHA-256 ya herufi 64. Hakuna mtu, pamoja na Satohash, anayeweza kuona maudhui yako.",
+      "step2Title": "2. Kufunganisha Merkle",
+      "step2Text": "Alama nyingi za kidole zinaunganishwa kwenye Merkle Tree. Hii inaruhusu kupanuka kwa kiasi kikubwa na uthibitisho wa faragha.",
+      "step3Title": "3. Kufungwa kwenye Bitcoin",
+      "step3Text": "Merkle Root inaingizwa kwenye muamala wa Bitcoin. Tarehe ya muamala inakuwa muhuri wako wa muda wa kudumu."
+    },
+    "account": {
+      "subtitle": "Unda akaunti yako ili kuanza na Satohash"
+    },
+    "chooseTemplate": {
+      "kicker": "Onboarding ya itifaki",
+      "title": "Chagua",
+      "titleHighlight": "aina ya kitu.",
+      "subtitle": "Chagua kiolezo maalum au pakia hati maalum ili kuanza mchakato wa kufungwa kwa kriptografia.",
+      "browseLibrary": "Tazama maktaba kamili ya violezo",
+      "batchDemo": "Jaribu onyesho la uthibitisho kwa kundi",
+      "disclaimerTitle": "Onyo la itifaki",
+      "disclaimer": "Satohash ni huduma ya notari ya kriptografia. Tunatoa uthibitisho wa hisabati wa kuwepo kupitia blockchain ya Bitcoin. Sisi si kampuni ya sheria na hatutoa ushauri wa kisheria. Uthibitisho wote unaozalishwa unaweza kuthibitishwa duniani kote kupitia OpenTimestamps.",
+      "aboutTemplate": "Kuhusu kiolezo hiki",
+      "tooltip": "Kiolezo hiki kimeboreshwa kwa {{title}}. Kina sehemu maalum za metadata na kufungwa kwa kriptografia kwa vitu vya {{category}}.",
+      "categories": {
+        "legal": "Kisheria",
+        "personal": "Binafsi",
+        "ip": "Haki miliki",
+        "credentials": "Vyeti",
+        "general": "Jumla"
+      },
+      "items": {
+        "prenup": {
+          "title": "Makubaliano ya kabla ya ndoa",
+          "description": "Funga kimathesai tamko la mali kabla ya ndoa kwenye blockchain."
+        },
+        "photo-archive": {
+          "title": "Hifadhi ya picha za iPhone",
+          "description": "Weka muhuri wa muda kwenye kumbukumbu zako za kidijitali ili kuthibitisha tarehe asili za picha."
+        },
+        "creative-ip": {
+          "title": "Muziki na haki miliki za ubunifu",
+          "description": "Linda nyimbo, maneno, na sanaa kabla ya kushiriki na dunia."
+        },
+        "academic-credential": {
+          "title": "Uthibitisho wa PhD na kitaaluma",
+          "description": "Uthibitishaji usiobadilika wa stashahada, tasnifu, na karatasi za utafiti."
+        },
+        "power-of-attorney": {
+          "title": "Mamlaka ya mwakilishi",
+          "description": "Toa haki za kisheria zenye ukomo wa kriptografia."
+        },
+        "custom": {
+          "title": "Kitu maalum",
+          "description": "Pakia faili yoyote ili kuifungia moja kwa moja kwenye tabaka la malipo la Bitcoin."
+        }
+      }
+    },
+    "batchProof": {
+      "title": "Meneja wa uthibitisho kwa kundi",
+      "subtitle": "Funga maktaba nzima za hati kwenye Bitcoin katika operesheni moja ya kriptografia.",
+      "dropActive": "Weka maktaba yako hapa",
+      "dropIdle": "Weka folda au faili nyingi",
+      "dropHint": "Chagua faili nyingi za PDF, JPG, au DOCX ili kulinda pamoja.",
+      "queue": "Foleni ya hati ({{count}})",
+      "clearAll": "Futa zote",
+      "hashLabel": "Hash",
+      "verified": "Imethibitishwa",
+      "visualization": "Onyesho la itifaki",
+      "stats": "Takwimu za kundi",
+      "totalFiles": "Jumla ya faili",
+      "networkFee": "Ada ya mtandao",
+      "merkleRoot": "Merkle Root",
+      "processing": "Inachakata kundi...",
+      "anchorAll": "Funga zote sasa",
+      "startNew": "Anza kundi jipya",
+      "efficiency": "Ufanisi wa mtandao",
+      "efficiencyBody": "Kufungwa kwa kundi kunaokoa hadi 98% ya ada za mtandao kwa kuandika maelfu ya hati katika muamala mmoja wa Merkle Tree.",
+      "removeAria": "Ondoa faili"
+    },
+    "templateLibrary": {
+      "title": "Maktaba ya violezo vya kisheria",
+      "subtitle": "Makubaliano ya kriptografia yaliyoandaliwa kitaalamu. Yamefungwa kwenye Bitcoin kwa kutobadilika kamili.",
+      "searchAria": "Tafuta violezo vya kisheria",
+      "searchPlaceholder": "Tafuta violezo vya kisheria (k.m. NDA, mali)...",
+      "choose": "Chagua kiolezo",
+      "categories": {
+        "all": "Violezo vyote",
+        "personal": "Binafsi na familia",
+        "business": "Biashara na kampuni",
+        "legal": "Kisheria na mahakama",
+        "property": "Mali isiyohamishika"
+      },
+      "items": {
+        "prenup": {
+          "title": "Makubaliano ya kabla ya ndoa",
+          "description": "Linda mali na fafanua matarajio ya kifedha kabla ya ndoa.",
+          "jurisdiction": "Kimataifa / majimbo mengi",
+          "difficulty": "Ya juu",
+          "tag": "Maarufu"
+        },
+        "property": {
+          "title": "Uhamisho wa mali",
+          "description": "Nyaraka za mauzo ya mali binafsi na uhamisho wa umiliki.",
+          "jurisdiction": "US / EU — ushahidi wa kusaidia",
+          "difficulty": "Kisheria",
+          "tag": "Kawaida"
+        },
+        "powerOfAttorney": {
+          "title": "Mamlaka ya mwakilishi",
+          "description": "Toa mamlaka ya kisheria kwa mtu unayemwamini kwa maamuzi.",
+          "jurisdiction": "ESIGN — ushahidi wa kusaidia",
+          "difficulty": "Kawaida",
+          "tag": "Muhimu"
+        },
+        "nda": {
+          "title": "NDA (usiri)",
+          "description": "Linda taarifa za siri za biashara wakati wa mazungumzo.",
+          "jurisdiction": "Kiwango cha kimataifa",
+          "difficulty": "Universal",
+          "tag": "Salama"
+        },
+        "will": {
+          "title": "Wasia",
+          "description": "Bainisha mgawanyo wa mali na uangalizi wa watoto wadogo kwa uthibitisho wenye muhuri wa muda.",
+          "jurisdiction": "Common Law / kimataifa",
+          "difficulty": "Muhimu sana",
+          "tag": "Muhimu"
+        },
+        "affidavit": {
+          "title": "Taarifa ya ukweli chini ya kiapo",
+          "description": "Tamko la ukweli lililoapa, limefungwa kwenye urefu wa kizuizi kwa msimamo wa kisheria.",
+          "jurisdiction": "Universal / mahakama",
+          "difficulty": "Ya juu",
+          "tag": "Badala ya notari"
+        },
+        "commercial-lease": {
+          "title": "Mkataba wa kukodisha biashara",
+          "description": "Makubaliano yanayofunga kwa majengo ya biashara yenye uthibitisho usiobadilika wa kuanza.",
+          "jurisdiction": "Mali / kimataifa",
+          "difficulty": "Kawaida",
+          "tag": "Biashara"
+        },
+        "child-travel": {
+          "title": "Idhini ya kusafiri kwa mtoto",
+          "description": "Ruhusa iliyoandikwa kwa watoto wadogo wanaosafiri bila walezi wote wawili.",
+          "jurisdiction": "Kimataifa / mpaka",
+          "difficulty": "Kawaida",
+          "tag": "Safari"
+        },
+        "consulting": {
+          "title": "Makubaliano ya ushauri",
+          "description": "Masharti ya kazi ya kitaalamu kwa huduma za ushauri.",
+          "jurisdiction": "Kimataifa / B2B",
+          "difficulty": "Kitaalamu",
+          "tag": "Mpya"
+        },
+        "ip-assignment": {
+          "title": "Uhamisho wa haki miliki",
+          "description": "Hamisha umiliki wa haki miliki kwa ufanisi.",
+          "jurisdiction": "US / kimataifa — ushahidi wa kusaidia",
+          "difficulty": "Ya juu",
+          "tag": "Mpya"
+        },
+        "domain-notary": {
+          "title": "Notari wa umiliki wa kikoa",
+          "description": "Uthibitisho usiobadilika wa udhibiti wa jina la kikoa na historia ya umiliki.",
+          "jurisdiction": "ICANN / kimataifa",
+          "difficulty": "Msaada wa kundi",
+          "tag": "Mpya"
+        },
+        "web-archive": {
+          "title": "Hifadhi ya Snap & Stamp",
+          "description": "Mkusanyaji wa ushahidi wa kidijitali kwa tovuti na maudhui mtandaoni.",
+          "jurisdiction": "Tayari kwa mahakama",
+          "difficulty": "Kina cha juu",
+          "tag": "Mpya"
+        }
+      }
     }
   },
   "accessPage": {
@@ -2712,7 +2891,7 @@
     "stampTooltip": "Hash inafanyika kwenye kifaa. /stamp inawasilisha alama ya SHA-256 tu. Uthibitisho unasubiri bloku ya Bitcoin (~dakika 60). Hiki ni rasimu ya kiolezo, si tendo la notari.",
     "draftLabel": "Rasimu ya kiolezo",
     "hashPending": "HASH PENDING",
-    "scanToVerify": "Changanua ili kuthibitisha",
+    "scanToVerify": "Kamera yoyote",
     "openVerify": "Fungua ukurasa wa uthibitisho",
     "verifyQrAlt": "Changanua ili kuthibitisha kwenye Satohash",
     "fieldsComplete": "Sehemu zilizojazwa",
@@ -2749,7 +2928,8 @@
     "emailFieldsHeader": "--- SEHEMU ZA WARAKA ---",
     "emailVerifyHeader": "--- UTHIBITISHO ---",
     "emailBody": "Hiki ni rasimu ya kiolezo cha Satohash, si waraka uliothibitishwa na notari. Stempu alama ya SHA-256 kwenye Bitcoin ili kuthibitisha kwamba baiti hizo zilikuwepo wakati fulani.",
-    "emailVerifyAt": "Thibitisha katika: {{url}}"
+    "emailVerifyAt": "Thibitisha katika: {{url}}",
+    "emailScanHint": "Changanua QR kwenye PDF kwa kamera ya iPhone au Android, au fungua kadi hii ya uthibitisho:"
   },
   "imageVaultPage": {
     "metaTitle": "Hazina ya picha",
@@ -2986,6 +3166,123 @@
     "verifiableDesc": "Mtu yeyote anaweza kuthibitisha peke yake",
     "createFirst": "Tengeneza ushahidi wako wa kwanza"
   },
+  "contractEditorPage": {
+    "metaTitle": "Kihariri cha rasimu",
+    "metaDescription": "Hariri rasimu ya ndani ya Satohash. Gongesha baadaye ili kuthibitisha lini alama ya SHA-256 ilikuwepo — si nani aliyetia saini.",
+    "untitled": "Rasimu isiyo na kichwa",
+    "statusLabel": "Hali",
+    "status": {
+      "draft": "rasimu",
+      "signed": "imesainiwa (ndani)",
+      "timestamped": "imegongwa muhuri"
+    },
+    "save": "Hifadhi",
+    "inspector": "Kikaguzi",
+    "settings": "Mipangilio",
+    "lightMode": "Hali angavu",
+    "darkMode": "Hali ya giza",
+    "watermarkAlt": "Alama ya maji ya Satohash",
+    "placeholder": "Anza rasimu ya ndani. Gongesha baadaye ili kuthibitisha lini baiti hizi zilikuwepo — si nani aliyetia saini.",
+    "closePanel": "Funga paneli",
+    "honestyTitle": "Rasimu hadi kugongwa muhuri",
+    "honestyBody": "Faili hii inakaa kwenye kivinjari hiki hadi ugonge muhuri. Muhuri unathibitisha lini alama ya SHA-256 ilikuwepo — si nani aliyetia saini. Saini ya pande nyingi si bidhaa hai.",
+    "documentName": "Jina la waraka",
+    "variables": "Vigezo vya waraka",
+    "variablesWhat": "Hivi ni nini?",
+    "variablesHelp": "Maandishi katika [mabano] ni nafasi. Jaza thamani hapa chini na zinabadilisha katika rasimu hii ya ndani.",
+    "valueFor": "Thamani ya [{{name}}]...",
+    "extensions": "Viendelezi vya itifaki",
+    "domainPrompt": "Ingiza vikoa vilivyotenganishwa kwa koma:",
+    "addDomainBatch": "Ongeza kundi la vikoa",
+    "urlPrompt": "Ingiza URL ya kunasa:",
+    "captureSnapper": "Nasa kupitia Snapper",
+    "appendSeal": "Ambatanisha muhuri wa ushahidi",
+    "created": "Imetengenezwa",
+    "protocolType": "Aina ya itifaki",
+    "custom": "Maalum",
+    "liveHash": "SHA-256 kwenye kivinjari hiki",
+    "awaitingContent": "Inasubiri maudhui...",
+    "fontSize": "Ukubwa wa fonti ya mwili",
+    "margins": "Pambizo za ukurasa (mm)",
+    "settingsNote": "Mipangilio inatumika kwa uhamishaji wa PDF na inahifadhiwa na rasimu hii ya ndani."
+  },
+  "contractViewPage": {
+    "metaTitle": "Mwonekano wa rasimu",
+    "metaDescription": "Tazama rasimu ya ndani ya Satohash. Muhuri unathibitisha lini, si nani. Saini ya pande nyingi haijaishi.",
+    "qrFail": "Imeshindwa kutengeneza QR ya uthibitisho",
+    "signerN": "Msaini {{n}}",
+    "ref": "Ref: {{id}}",
+    "edit": "Hariri",
+    "shareEmailTitle": "Shiriki kwa barua pepe",
+    "shareXTitle": "Shiriki kwenye X",
+    "shareLinkedInTitle": "Shiriki kwenye LinkedIn",
+    "shareEmailSubject": "Ushahidi wa Satohash",
+    "shareEmailBody": "Muhuri wa SHA-256 kwenye Satohash (lini, si nani): {{url}}",
+    "shareEmailSubjectDraft": "Rasimu ya ndani ya Satohash",
+    "shareEmailBodyDraft": "Rasimu ya ndani ya Satohash (haijagongwa muhuri): {{url}}",
+    "shareXText": "Muhuri wa SHA-256 kwenye Satohash",
+    "shareXTextDraft": "Rasimu ya ndani ya Satohash — haijagongwa muhuri",
+    "pdfWarn": "PDF imehifadhiwa na masuala madogo",
+    "pdfOk": "PDF imepakuliwa",
+    "pdfFail": "Imeshindwa kutengeneza PDF",
+    "tryAgain": "Jaribu tena",
+    "watermarkAlt": "Alama ya maji ya Satohash",
+    "createdBy": "Imetengenezwa na",
+    "giveABitAlt": "Give A Bit",
+    "sealStamped": "Nanga ya Bitcoin",
+    "sealLocal": "Rasimu ya ndani",
+    "tabInfo": "Habari",
+    "tabSigners": "Pande",
+    "tabLogs": "Kumbukumbu",
+    "proofTitle": "Muhuri unathibitisha nini",
+    "proofBodyDraft": "Hii ni rasimu ya ndani. Gongesha ili kuthibitisha lini alama ya SHA-256 ilikuwepo — si nani aliyetia saini. Saini ya pande nyingi si bidhaa hai.",
+    "proofBodyStamped": "Rasimu hii imegongwa muhuri. SHA-256 pamoja na OpenTimestamps kwenye Bitcoin inathibitisha lini baiti hizo zilikuwepo — si nani aliyetia saini.",
+    "readyTitle": "Tayari kugongwa muhuri",
+    "readyBody": "Saini ya ndani ilirekodiwa kwenye kivinjari hiki. Gongesha ili kuthibitisha lini — si nani. Saini ya pande nyingi haijaishi.",
+    "stampNow": "Gongesha sasa",
+    "verifiedProofs": "Ushahidi uliothibitishwa",
+    "proofPackage": "Kifurushi cha ushahidi",
+    "proofPackageSub": "PDF + maelezo ya Bitcoin",
+    "emailPackage": "Kifurushi cha barua pepe",
+    "emailPackageSub": "Shiriki kwa barua pepe",
+    "emailSubject": "Muhuri wa Satohash: {{name}}",
+    "emailBody": "Waraka wa Satohash\nJina: {{name}}\nImetengenezwa: {{date}}\nRejea: {{id}}\nHali: Imegongwa muhuri kwenye Bitcoin\n\nThibitisha alama hii ya SHA-256 (lini, si nani):\n{{url}}\n\nUshahidi wa OpenTimestamps kwenye Bitcoin kupitia Satohash. Muhuri unathibitisha lini baiti hizo zilikuwepo — si nani aliyetia saini.",
+    "mempool": "Mempool.space",
+    "viewAnchor": "Tazama nanga",
+    "otsQr": "QR ya OpenTimestamps",
+    "qrAlt": "QR ya uthibitisho kwa satohash.io/p/",
+    "qrHost": "satohash.io/p/",
+    "advanced": "Zana za juu",
+    "deepExplorer": "Kichunguzi kirefu",
+    "privacyShield": "Ngao ya faragha",
+    "metadata": "Metadata",
+    "created": "Imetengenezwa",
+    "modified": "Imebadilishwa",
+    "type": "Aina",
+    "hash": "Hash",
+    "custom": "Maalum",
+    "partiesTitle": "Pande (ndani)",
+    "noSigners": "Hakuna wasaini wenza kwenye kivinjari hiki. Saini ya pande nyingi haijaishi — igize ndani hapa chini.",
+    "copyInviteAria": "Nakili kiungo cha mwaliko wa saini cha ndani",
+    "inviteCopied": "Kiungo cha mwaliko kimenakiliwa (demo ya ndani)",
+    "copyInvite": "Nakili kiungo cha mwaliko cha ndani",
+    "simulateAria": "Igiza saini ya mshirika ndani",
+    "partnerSimulated": "Mshirika (imeigizwa)",
+    "simulateToast": "Saini ya mshirika imerekodiwa ndani",
+    "simulateToastDesc": "Imehifadhiwa kwenye kivinjari hiki — gongesha unapokuwa tayari. Saini ya pande nyingi haijaishi.",
+    "simulate": "Igiza saini ya mshirika",
+    "auditTrail": "Njia ya ukaguzi (kivinjari hiki)",
+    "logCreated": "Rasimu imetengenezwa",
+    "logHash": "Hash ya SHA-256 imetengenezwa",
+    "logAwaiting": "Inasubiri muhuri wa Bitcoin",
+    "logStamped": "Imegongwa muhuri — thibitisha kwenye Bitcoin",
+    "pending": "Pending",
+    "signerStatus": {
+      "idle": "haitumiki",
+      "viewing": "inaangalia",
+      "signed": "imesainiwa (ndani)"
+    }
+  },
   "v5Page": {
     "back": "← Satohash",
     "demoChip": "Playground / demo",
@@ -3053,5 +3350,64 @@
       "confirm": "Thibitisha muhuri",
       "viewProof": "Tazama ushahidi →"
     }
+  },
+  "onboardingWelcomePage": {
+    "resume": "Endelea onboarding mahali ulipoacha.",
+    "continueSetup": "Endelea usanidi",
+    "securedBy": "Imelindwa na mtandao wa Bitcoin • Kizuizi #{{height}}",
+    "heroTitle": "Notari wa kidijitali",
+    "heroHighlight": "kwa dunia iliyothibitishwa.",
+    "heroSubtitle": "Satohash hutoa uthibitisho wa kuwepo usiopingika kimathesai kwa hati zako muhimu zaidi. Faragha ya ndani, kutobadilika kwa kimataifa.",
+    "startCta": "Anza makubaliano mapya",
+    "exploreCta": "Chunguza itifaki",
+    "educationalInsight": "Maelezo ya kielimu",
+    "protocolDepth": "Kina cha kiufundi cha itifaki",
+    "features": {
+      "proof": {
+        "insight": "Hash ya SHA-256: kila hati hupata «alama ya kidole» ya kipekee ya herufi 64. Hata mabadiliko ya pikseli moja huunda kitambulisho tofauti kabisa.",
+        "protocol": "Usimbaji fiche wa local-first"
+      },
+      "timestamp": {
+        "insight": "Kufungwa kwa Merkle: tunaunganisha hash kwenye Merkle Tree na kufunga «mzizi» kwenye Bitcoin. Kizuizi kimoja kinathibitisha maelfu ya hati.",
+        "protocol": "OpenTimestamps"
+      },
+      "verify": {
+        "insight": "Ukaguzi wa hisabati: uthibitishaji hauhitaji Satohash. Mtu yeyote aliye na faili ya uthibitisho na nodi ya Bitcoin anaweza kuthibitisha muhuri wa muda.",
+        "protocol": "Ushahidi tayari kwa ZK"
+      }
+    },
+    "protocol": {
+      "hashingTitle": "01 / Hash ya ndani",
+      "hashingText": "Hati yako inachakatwa ndani kuwa alama ya kidole ya SHA-256 ya herufi 64. Hakuna mtu, pamoja na Satohash, anayeona maudhui yako.",
+      "merkleTitle": "02 / Kufunganisha Merkle",
+      "merkleText": "Alama nyingi za kidole zinaunganishwa kwenye Merkle Tree. Hii inaruhusu kupanuka kwa kiasi kikubwa na faragha kamili katika uthibitisho.",
+      "anchorTitle": "03 / Kufungwa kwenye Bitcoin",
+      "anchorText": "Merkle Root inaingizwa kwenye blockchain ya Bitcoin. Urefu wa kizuizi cha muamala unakuwa muhuri wako wa muda wa kudumu usioweza kughushiwa."
+    },
+    "abyss": {
+      "kicker": "Kilindi cha itifaki",
+      "title": "Uaminifu uliogatuliwa.",
+      "title2": "Bila ubaguzi.",
+      "body": "Satohash si zana ya kusaini tu. Ni daraja kati ya nia yako ya kisheria na uhakika wa hisabati wa blockchain."
+    },
+    "trust": {
+      "privacyTitle": "Faragha ya ndani",
+      "privacyDesc": "Maudhui hayaondoki kwenye kivinjari chako.",
+      "proofTitle": "Uthibitisho wa milele",
+      "proofDesc": "Hudumu zaidi ya kampuni na seva.",
+      "standardTitle": "Kiwango sanifu",
+      "standardDesc": "Inatumia uthibitisho .ots wa kiwango huria.",
+      "cta": "Ingia kwenye Trust Center"
+    }
+  },
+  "forumPage": {
+    "anonymous": "Haijatajwa",
+    "byOn": "Na {{author}} tarehe {{date}}",
+    "byDash": "Na {{author}} — {{date}}",
+    "emptyDesc": "Kuwa wa kwanza kuanza mazungumzo kuhusu muhuri wa muda wa Bitcoin, matumizi, au itifaki.",
+    "loadThreadsFail": "Imeshindwa kupakia mada za jukwaa.",
+    "loadThreadFail": "Imeshindwa kupakia mada.",
+    "createFail": "Imeshindwa kuunda mada.",
+    "replyFail": "Imeshindwa kutuma jibu."
   }
 }

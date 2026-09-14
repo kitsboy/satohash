@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import {
   ArrowLeft,
@@ -18,6 +18,7 @@ import {
 import QRCode from 'qrcode'
 import { motion, AnimatePresence } from 'framer-motion'
 import { toast } from 'sonner'
+import { useTranslation } from 'react-i18next'
 import Button from '../../components/ui/Button'
 import StatusPill from '../../components/ui/StatusPill'
 import ProofExplorer from '../../components/stamps/ProofExplorer'
@@ -25,15 +26,24 @@ import ZKRedactionTool from '../../components/stamps/ZKRedactionTool'
 import Card from '../../components/ui/Card'
 import { clsx } from 'clsx'
 import usePageMeta from '../../hooks/usePageMeta'
-import { getVerifyUrl } from '../../config/constants'
 import { loadContracts, updateContract } from '../../utils/contractStorage'
-import { buildProofCardUrl, buildXIntent } from '../../utils/shareProof'
+import { buildProofCardUrl, buildXIntent, buildCanonicalProofCardUrl } from '../../utils/shareProof'
+import { generateSHA256Hash } from '../../utils/crypto'
 import ContractLifecycleBar from '../../components/stamps/ContractLifecycleBar'
 import SignerIdentityBadge from '../../components/stamps/SignerIdentityBadge'
 import { generateContractPdf } from '../../utils/pdfHelpers'
 
+function isSha256Hex(value) {
+  return typeof value === 'string' && /^[a-f0-9]{64}$/i.test(value)
+}
+
 export default function ContractView() {
-  usePageMeta({ page: 'contracts' })
+  const { t } = useTranslation()
+  usePageMeta({
+    page: 'contracts',
+    title: t('contractViewPage.metaTitle'),
+    description: t('contractViewPage.metaDescription')
+  })
   const navigate = useNavigate()
   const { contractId } = useParams()
   const [contract, setContract] = useState(null)
@@ -41,16 +51,40 @@ export default function ContractView() {
   const [isZKToolOpen, setIsZKToolOpen] = useState(false)
   const [activePanel, setActivePanel] = useState('summary')
   const [qrDataUrl, setQrDataUrl] = useState(null)
+  const [contentHash, setContentHash] = useState('')
 
   useEffect(() => {
     const found = loadContracts().find((c) => c.id === contractId)
     setContract(found)
   }, [contractId])
 
-  // Generate QR code for the verification URL when the document is timestamped
   useEffect(() => {
-    if (!contract || contract.status !== 'timestamped') return
-    QRCode.toDataURL(`${getVerifyUrl()}/${contract.id}`, {
+    if (!contract) {
+      setContentHash('')
+      return
+    }
+    const existing = contract.hash || contract.timestamp?.hash
+    if (isSha256Hex(existing)) {
+      setContentHash(String(existing).toLowerCase())
+      return
+    }
+    if (contract.content) {
+      generateSHA256Hash(contract.content).then((hash) => setContentHash(hash))
+    } else {
+      setContentHash('')
+    }
+  }, [contract])
+
+  const proofHash = isSha256Hex(contentHash) ? contentHash : ''
+  const canonicalProofUrl = proofHash ? buildCanonicalProofCardUrl(proofHash) : ''
+
+  // Camera QR always points at satohash.io/p/{hash} when a SHA-256 hex is present
+  useEffect(() => {
+    if (!contract || contract.status !== 'timestamped' || !proofHash) {
+      setQrDataUrl(null)
+      return
+    }
+    QRCode.toDataURL(canonicalProofUrl, {
       width: 200,
       margin: 1,
       color: { dark: '#4f46e5', light: '#ffffff' }
@@ -58,22 +92,36 @@ export default function ContractView() {
       .then((url) => setQrDataUrl(url))
       .catch((err) => {
         console.error('QR generation failed', err)
-        toast.error('Could not generate verification QR')
+        toast.error(t('contractViewPage.qrFail'))
       })
-  }, [contract])
+  }, [contract, proofHash, canonicalProofUrl, t])
 
-  // Derive active signers from contract.signers if available, else use display mock
+  // Derive active signers from contract.signers if available — local/demo only
   const activeSigners = (() => {
     if (contract?.signers && contract.signers.length > 0) {
       return contract.signers.map((s, i) => ({
         id: i + 1,
-        name: s.name || s.npub || `Signer ${i + 1}`,
+        name: s.name || s.npub || t('contractViewPage.signerN', { n: i + 1 }),
         status: s.status || 'idle',
-        color: i === 0 ? '#10b981' : '#6366f1'
+        color: i === 0 ? '#10b981' : '#6366f1',
+        nip05: s.nip05,
+        verified: s.verified
       }))
     }
     return []
   })()
+
+  const shareUrl = useMemo(() => {
+    if (canonicalProofUrl) return canonicalProofUrl
+    if (!contract) return ''
+    const fallback = buildProofCardUrl({
+      hash: contract.hash || contract.timestamp?.hash,
+      id: contract.id
+    })
+    if (fallback) return fallback
+    if (typeof window !== 'undefined') return window.location.href
+    return ''
+  }, [canonicalProofUrl, contract])
 
   if (!contract) {
     return (
@@ -94,12 +142,8 @@ export default function ContractView() {
   const isDraft = contract.status === 'draft'
   const isSigned = contract.status === 'signed'
   const isTimestamped = contract.status === 'timestamped'
-  const shareUrl = buildProofCardUrl({
-    hash: contract.hash || contract.timestamp?.hash,
-    id: contract.id
-  })
   const xIntent = buildXIntent({
-    text: 'Cryptographic Proof on Satohash',
+    text: isTimestamped ? t('contractViewPage.shareXText') : t('contractViewPage.shareXTextDraft'),
     url: shareUrl
   })
 
@@ -107,15 +151,39 @@ export default function ContractView() {
     try {
       const { warnings } = await generateContractPdf(contract)
       if (warnings.length) {
-        toast.warning('PDF saved with minor issues', { description: warnings.join(' ') })
+        toast.warning(t('contractViewPage.pdfWarn'), { description: warnings.join(' ') })
       } else {
-        toast.success('PDF downloaded')
+        toast.success(t('contractViewPage.pdfOk'))
       }
     } catch (err) {
       console.error('PDF export failed', err)
-      toast.error('Could not generate PDF', { description: err?.message || 'Try again' })
+      toast.error(t('contractViewPage.pdfFail'), {
+        description: err?.message || t('contractViewPage.tryAgain')
+      })
     }
   }
+
+  const auditLogs = [
+    {
+      action: t('contractViewPage.logCreated'),
+      time: new Date(contract.createdAt).toLocaleString()
+    },
+    {
+      action: t('contractViewPage.logHash'),
+      time: proofHash ? `${proofHash.slice(0, 12)}…` : t('contractViewPage.pending')
+    },
+    isTimestamped
+      ? {
+          action: t('contractViewPage.logStamped'),
+          time: 'OpenTimestamps'
+        }
+      : {
+          action: t('contractViewPage.logAwaiting'),
+          time: t('contractViewPage.pending')
+        }
+  ]
+
+  const hashDisplay = proofHash ? `${proofHash.slice(0, 16)}...` : '—'
 
   return (
     <div
@@ -144,7 +212,7 @@ export default function ContractView() {
               className="hidden text-[10px] font-medium tracking-wide sm:block"
               style={{ color: 'var(--text-muted)' }}
             >
-              Ref: {contract.id.substring(0, 8)}
+              {t('contractViewPage.ref', { id: contract.id.substring(0, 8) })}
             </span>
           </div>
         </div>
@@ -157,19 +225,27 @@ export default function ContractView() {
               size="small"
               onClick={() => navigate(`/contracts/${contractId}/edit`)}
             >
-              <Edit size={14} /> <span className="hidden sm:inline">Edit</span>
+              <Edit size={14} />{' '}
+              <span className="hidden sm:inline">{t('contractViewPage.edit')}</span>
             </Button>
           )}
-          {/* Share links — uses window.location.origin for correct host in all environments */}
           <div
             className="hidden gap-0.5 rounded-xl p-1 sm:flex"
             style={{ border: '1px solid var(--border)', background: 'var(--surface-raised)' }}
           >
             <a
-              href={`mailto:?subject=Satohash Proof&body=Check out this cryptographic proof: ${window.location.origin}/verify/${contractId}`}
+              href={`mailto:?subject=${encodeURIComponent(
+                isTimestamped
+                  ? t('contractViewPage.shareEmailSubject')
+                  : t('contractViewPage.shareEmailSubjectDraft')
+              )}&body=${encodeURIComponent(
+                isTimestamped
+                  ? t('contractViewPage.shareEmailBody', { url: shareUrl })
+                  : t('contractViewPage.shareEmailBodyDraft', { url: shareUrl })
+              )}`}
               className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg p-2 transition-colors"
               style={{ color: 'var(--text-secondary)' }}
-              title="Share via Email"
+              title={t('contractViewPage.shareEmailTitle')}
             >
               <Mail size={14} />
             </a>
@@ -179,17 +255,17 @@ export default function ContractView() {
               rel="noreferrer"
               className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg p-2 transition-colors hover:text-blue-500"
               style={{ color: 'var(--text-secondary)' }}
-              title="Share on X"
+              title={t('contractViewPage.shareXTitle')}
             >
               <Twitter size={14} />
             </a>
             <a
-              href={`https://www.linkedin.com/sharing/share-offsite/?url=${window.location.origin}/verify/${contractId}`}
+              href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`}
               target="_blank"
               rel="noreferrer"
               className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg p-2 transition-colors hover:text-blue-700"
               style={{ color: 'var(--text-secondary)' }}
-              title="Share on LinkedIn"
+              title={t('contractViewPage.shareLinkedInTitle')}
             >
               <Linkedin size={14} />
             </a>
@@ -213,7 +289,7 @@ export default function ContractView() {
               <div className="grid-pattern-slate pointer-events-none absolute inset-0 opacity-[0.02]" />
               {/* Watermark */}
               <div className="document-watermark">
-                <img src="/logo.png" alt="Satohash Watermark" />
+                <img src="/logo.png" alt={t('contractViewPage.watermarkAlt')} />
               </div>
 
               {/* Give A Bit branding — subtle top-right of document paper */}
@@ -228,11 +304,11 @@ export default function ContractView() {
                     fontFamily: "'Plus Jakarta Sans', sans-serif"
                   }}
                 >
-                  Created by
+                  {t('contractViewPage.createdBy')}
                 </span>
                 <img
                   src="/giveabit.png"
-                  alt="Give A Bit"
+                  alt={t('contractViewPage.giveABitAlt')}
                   style={{ height: '20px', width: 'auto' }}
                 />
               </div>
@@ -273,7 +349,9 @@ export default function ContractView() {
                           <ShieldCheck size={28} />
                         </div>
                         <span className="text-noir-primary text-[10px] font-black tracking-widest uppercase italic">
-                          {isTimestamped ? 'Bitcoin Anchor' : 'Satohash Signed'}
+                          {isTimestamped
+                            ? t('contractViewPage.sealStamped')
+                            : t('contractViewPage.sealLocal')}
                         </span>
                         <div
                           className="mx-auto mt-2 h-px w-12"
@@ -308,19 +386,19 @@ export default function ContractView() {
               active={activePanel === 'summary'}
               onClick={() => setActivePanel('summary')}
               icon={Info}
-              label="Info"
+              label={t('contractViewPage.tabInfo')}
             />
             <PanelTab
               active={activePanel === 'participants'}
               onClick={() => setActivePanel('participants')}
               icon={Users}
-              label="Signers"
+              label={t('contractViewPage.tabSigners')}
             />
             <PanelTab
               active={activePanel === 'history'}
               onClick={() => setActivePanel('history')}
               icon={History}
-              label="Logs"
+              label={t('contractViewPage.tabLogs')}
             />
           </div>
 
@@ -334,23 +412,20 @@ export default function ContractView() {
                   exit={{ opacity: 0, x: -10 }}
                   className="space-y-6"
                 >
-                  {/* Educational Callout */}
                   <div className="edu-callout">
-                    <span className="edu-callout-title">Understanding Your Proof</span>
-                    This document is secured using SHA-256 hashing and Bitcoin blockchain
-                    timestamps. Once anchored, it becomes mathematically impossible to alter without
-                    detection.
+                    <span className="edu-callout-title">{t('contractViewPage.proofTitle')}</span>
+                    {isTimestamped
+                      ? t('contractViewPage.proofBodyStamped')
+                      : t('contractViewPage.proofBodyDraft')}
                   </div>
 
-                  {/* Action Banner */}
                   {isSigned && (
                     <Card variant="glass" className="border-indigo-100 bg-indigo-50/50">
                       <h4 className="mb-2 text-xs font-extrabold text-indigo-900 uppercase">
-                        Ready to Anchor
+                        {t('contractViewPage.readyTitle')}
                       </h4>
                       <p className="mb-4 text-[12px] leading-relaxed font-medium text-indigo-700">
-                        This document is fully signed. Anchor it to the Bitcoin blockchain to create
-                        mathematical proof of existence.
+                        {t('contractViewPage.readyBody')}
                       </p>
                       <Button
                         variant="primary"
@@ -358,7 +433,7 @@ export default function ContractView() {
                         fullWidth
                         onClick={() => navigate(`/contracts/${contractId}/timestamp/review`)}
                       >
-                        <Clock size={14} /> Timestamp Now
+                        <Clock size={14} /> {t('contractViewPage.stampNow')}
                       </Button>
                     </Card>
                   )}
@@ -369,41 +444,38 @@ export default function ContractView() {
                         className="text-[10px] font-bold tracking-[0.15em] uppercase"
                         style={{ color: 'var(--text-muted)' }}
                       >
-                        Verified Proofs
+                        {t('contractViewPage.verifiedProofs')}
                       </h4>
                       <div className="grid grid-cols-1 gap-3">
                         <QuickAction
                           icon={Download}
-                          label="Proof Package"
-                          subLabel="PDF + Blockchain Details"
+                          label={t('contractViewPage.proofPackage')}
+                          subLabel={t('contractViewPage.proofPackageSub')}
                           onClick={handleDownload}
                         />
                         <QuickAction
                           icon={Mail}
-                          label="Email Package"
-                          subLabel="Share via Email"
+                          label={t('contractViewPage.emailPackage')}
+                          subLabel={t('contractViewPage.emailPackageSub')}
                           onClick={() => {
                             const subject = encodeURIComponent(
-                              `Notarized Document: ${contract.name}`
+                              t('contractViewPage.emailSubject', { name: contract.name })
                             )
                             const body = encodeURIComponent(
-                              `Notarized Document Details\n` +
-                                `──────────────────────────\n` +
-                                `Name:       ${contract.name}\n` +
-                                `Created:    ${new Date(contract.createdAt).toLocaleString()}\n` +
-                                `Reference:  ${contract.id}\n` +
-                                `Status:     Timestamped on Bitcoin\n\n` +
-                                `Verify this document on-chain:\n` +
-                                `${getVerifyUrl()}/${contract.id}\n\n` +
-                                `This document is cryptographically anchored to the Bitcoin blockchain via the Satohash Protocol. Its authenticity can be independently verified at any time using the link above.`
+                              t('contractViewPage.emailBody', {
+                                name: contract.name,
+                                date: new Date(contract.createdAt).toLocaleString(),
+                                id: contract.id,
+                                url: canonicalProofUrl || shareUrl
+                              })
                             )
                             window.location.href = `mailto:?subject=${subject}&body=${body}`
                           }}
                         />
                         <QuickAction
                           icon={ExternalLink}
-                          label="Mempool.space"
-                          subLabel="View Anchor"
+                          label={t('contractViewPage.mempool')}
+                          subLabel={t('contractViewPage.viewAnchor')}
                           highlight
                           onClick={() => {
                             const block =
@@ -416,7 +488,6 @@ export default function ContractView() {
                         />
                       </div>
 
-                      {/* Inline QR Code panel */}
                       {qrDataUrl && (
                         <div
                           className="rounded-2xl p-4"
@@ -429,12 +500,12 @@ export default function ContractView() {
                             className="mb-3 text-[10px] font-bold tracking-[0.15em] uppercase"
                             style={{ color: 'var(--text-muted)' }}
                           >
-                            OTS Verification QR
+                            {t('contractViewPage.otsQr')}
                           </p>
                           <div className="flex flex-col items-center gap-2">
                             <img
                               src={qrDataUrl}
-                              alt="Verification QR Code"
+                              alt={t('contractViewPage.qrAlt')}
                               className="rounded-xl"
                               style={{ width: 120, height: 120 }}
                             />
@@ -442,7 +513,7 @@ export default function ContractView() {
                               className="font-mono text-[9px] font-medium tracking-wide"
                               style={{ color: 'var(--text-muted)' }}
                             >
-                              {getVerifyUrl().replace(/^https?:\/\//, '')}
+                              {t('contractViewPage.qrHost')}
                             </span>
                           </div>
                         </div>
@@ -454,17 +525,17 @@ export default function ContractView() {
                         className="text-[10px] font-bold tracking-[0.15em] uppercase"
                         style={{ color: 'var(--text-muted)' }}
                       >
-                        Advanced Tools
+                        {t('contractViewPage.advanced')}
                       </h4>
                       <div className="grid grid-cols-2 gap-3">
                         <ToolCard
                           icon={ShieldCheck}
-                          label="Deep Explorer"
+                          label={t('contractViewPage.deepExplorer')}
                           onClick={() => setIsProofExplorerOpen(true)}
                         />
                         <ToolCard
                           icon={EyeOff}
-                          label="Privacy Shield"
+                          label={t('contractViewPage.privacyShield')}
                           onClick={() => setIsZKToolOpen(true)}
                         />
                       </div>
@@ -476,7 +547,7 @@ export default function ContractView() {
                       className="mb-3 text-[10px] font-bold tracking-[0.15em] uppercase"
                       style={{ color: 'var(--text-muted)' }}
                     >
-                      Metadata
+                      {t('contractViewPage.metadata')}
                     </h4>
                     <div
                       className="space-y-3 rounded-2xl p-4"
@@ -486,15 +557,18 @@ export default function ContractView() {
                       }}
                     >
                       <MetaItem
-                        label="Created"
+                        label={t('contractViewPage.created')}
                         value={new Date(contract.createdAt).toLocaleString()}
                       />
                       <MetaItem
-                        label="Modified"
+                        label={t('contractViewPage.modified')}
                         value={new Date(contract.updatedAt).toLocaleString()}
                       />
-                      <MetaItem label="Type" value={contract.templateType || 'Custom'} />
-                      <MetaItem label="Hash" value={contract.id.substring(0, 16) + '...'} mono />
+                      <MetaItem
+                        label={t('contractViewPage.type')}
+                        value={contract.templateType || t('contractViewPage.custom')}
+                      />
+                      <MetaItem label={t('contractViewPage.hash')} value={hashDisplay} mono />
                     </div>
                   </div>
                 </motion.div>
@@ -512,12 +586,12 @@ export default function ContractView() {
                     className="text-[10px] font-bold tracking-[0.15em] uppercase"
                     style={{ color: 'var(--text-muted)' }}
                   >
-                    Live Activity
+                    {t('contractViewPage.partiesTitle')}
                   </h4>
                   <div className="space-y-3">
                     {activeSigners.length === 0 && (
                       <p className="py-6 text-center text-sm text-[var(--text-secondary)]">
-                        No co-signers yet. Invite partners from Settings or simulate below.
+                        {t('contractViewPage.noSigners')}
                       </p>
                     )}
                     {activeSigners.map((signer) => (
@@ -566,7 +640,9 @@ export default function ContractView() {
                               className="text-[9px] font-medium tracking-widest uppercase"
                               style={{ color: 'var(--text-muted)' }}
                             >
-                              {signer.status}
+                              {['idle', 'viewing', 'signed'].includes(signer.status)
+                                ? t(`contractViewPage.signerStatus.${signer.status}`)
+                                : signer.status}
                             </span>
                           </div>
                         </div>
@@ -579,27 +655,27 @@ export default function ContractView() {
                       <Button
                         variant="ghost"
                         fullWidth
-                        aria-label="Copy signing invite link"
+                        aria-label={t('contractViewPage.copyInviteAria')}
                         onClick={() => {
                           const url = `${window.location.origin}/signatures/${contractId}`
-                          navigator.clipboard
-                            .writeText(url)
-                            .then(() =>
-                              toast.success('Signing invite copied', { description: url })
-                            )
+                          navigator.clipboard.writeText(url).then(() =>
+                            toast.success(t('contractViewPage.inviteCopied'), {
+                              description: url
+                            })
+                          )
                         }}
                       >
-                        Copy Signing Invite Link
+                        {t('contractViewPage.copyInvite')}
                       </Button>
                       <Button
                         variant="outline"
                         fullWidth
-                        aria-label="Simulate partner signature"
+                        aria-label={t('contractViewPage.simulateAria')}
                         onClick={() => {
                           const signers = [
                             ...(contract.signers || []),
                             {
-                              name: 'Partner (simulated)',
+                              name: t('contractViewPage.partnerSimulated'),
                               status: 'signed',
                               signedAt: new Date().toISOString()
                             }
@@ -610,12 +686,12 @@ export default function ContractView() {
                             updatedAt: new Date().toISOString()
                           })
                           if (updated) setContract(updated)
-                          toast.success('Partner signature recorded', {
-                            description: 'Co-signer saved locally — timestamp when ready'
+                          toast.success(t('contractViewPage.simulateToast'), {
+                            description: t('contractViewPage.simulateToastDesc')
                           })
                         }}
                       >
-                        Simulate Partner Signature
+                        {t('contractViewPage.simulate')}
                       </Button>
                     </div>
                   </div>
@@ -634,13 +710,9 @@ export default function ContractView() {
                       className="text-xs font-semibold tracking-widest uppercase"
                       style={{ color: 'var(--text-muted)' }}
                     >
-                      Audit Trail
+                      {t('contractViewPage.auditTrail')}
                     </p>
-                    {[
-                      { action: 'Document Created', time: 'Just now' },
-                      { action: 'SHA-256 Hash Generated', time: 'Just now' },
-                      { action: 'Awaiting Bitcoin Anchor', time: 'Pending' }
-                    ].map((log, i) => (
+                    {auditLogs.map((log, i) => (
                       <div
                         key={i}
                         className="flex items-center justify-between rounded-xl px-4 py-3"

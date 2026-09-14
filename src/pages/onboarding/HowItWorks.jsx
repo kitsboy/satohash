@@ -372,7 +372,7 @@ export default function HowItWorks() {
               color: '#0f172a'
             }}
           >
-            Protocol Deep-Dive
+            {t('onboardingPage.howItWorks.deepDive')}
           </h2>
           <div
             style={{
@@ -382,16 +382,16 @@ export default function HowItWorks() {
             }}
           >
             <ProtocolStep
-              title="1. Local Hashing"
-              text="Your document is processed into a 64-character SHA-256 fingerprint. No one, including Satohash, can see your content."
+              title={t('onboardingPage.howItWorks.step1Title')}
+              text={t('onboardingPage.howItWorks.step1Text')}
             />
             <ProtocolStep
-              title="2. Merkle Bundling"
-              text="Multiple fingerprints are combined into a Merkle Tree. This allows for massive scaling and privacy proofs."
+              title={t('onboardingPage.howItWorks.step2Title')}
+              text={t('onboardingPage.howItWorks.step2Text')}
             />
             <ProtocolStep
-              title="3. Bitcoin Anchoring"
-              text="The Merkle Root is embedded into a Bitcoin transaction. The transaction date becomes your permanent timestamp."
+              title={t('onboardingPage.howItWorks.step3Title')}
+              text={t('onboardingPage.howItWorks.step3Text')}
             />
           </div>
         </div>

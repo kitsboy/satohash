@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { Plus, Send, MessageSquare, RefreshCw, AlertCircle } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { toast } from 'sonner'
+import { useTranslation } from 'react-i18next'
 import { useI18n } from '../i18n'
 import EmptyState from '../components/ui/EmptyState'
 import usePageMeta from '../hooks/usePageMeta'
@@ -28,6 +29,8 @@ function forumHeaders() {
 const Forum = () => {
   usePageMeta({ page: 'forum' })
   const { t } = useI18n()
+  const { t: tp, i18n } = useTranslation()
+  const anonymous = tp('forumPage.anonymous')
 
   const requireForumNpub = () => {
     if (!getForumNpub()) {
@@ -39,9 +42,9 @@ const Forum = () => {
   const [threads, setThreads] = useState([])
   const [selectedThread, setSelectedThread] = useState(null)
   const [newThreadTitle, setNewThreadTitle] = useState('')
-  const [newAuthor, setNewAuthor] = useState('Anonymous')
+  const [newAuthor, setNewAuthor] = useState(anonymous)
   const [newPostContent, setNewPostContent] = useState('')
-  const [newPostAuthor, setNewPostAuthor] = useState('Anonymous')
+  const [newPostAuthor, setNewPostAuthor] = useState(anonymous)
   const [loading, setLoading] = useState(false)
   const [fetchError, setFetchError] = useState(null)
   const navigate = useNavigate()
@@ -57,12 +60,12 @@ const Forum = () => {
       setThreads(data.threads ?? [])
     } catch (err) {
       console.error('Error fetching threads:', err)
-      setFetchError(t('errors', 'loadFailed') || 'Failed to load forum threads')
-      toast.error(t('errors', 'loadFailed') || 'Failed to load forum threads.')
+      setFetchError(tp('forumPage.loadThreadsFail'))
+      toast.error(tp('forumPage.loadThreadsFail'))
     } finally {
       setLoading(false)
     }
-  }, [t])
+  }, [tp])
 
   const fetchThread = useCallback(
     async (threadId) => {
@@ -75,13 +78,13 @@ const Forum = () => {
         setSelectedThread({ ...data.thread, posts: data.posts ?? [] })
       } catch (err) {
         console.error('Error fetching thread:', err)
-        setFetchError(t('errors', 'loadFailed') || 'Failed to load thread')
-        toast.error(t('errors', 'loadFailed') || 'Failed to load thread.')
+        setFetchError(tp('forumPage.loadThreadFail'))
+        toast.error(tp('forumPage.loadThreadFail'))
       } finally {
         setLoading(false)
       }
     },
-    [t]
+    [tp]
   )
 
   useEffect(() => {
@@ -112,11 +115,11 @@ const Forum = () => {
       const thread = data.thread ?? data
       setThreads((prev) => [thread, ...prev])
       setNewThreadTitle('')
-      setNewAuthor('Anonymous')
+      setNewAuthor(anonymous)
       navigate(`/forum/${thread.id}`)
     } catch (err) {
       console.error('Error creating thread:', err)
-      toast.error(t('errors', 'generic') || 'Failed to create thread.')
+      toast.error(tp('forumPage.createFail'))
     } finally {
       setLoading(false)
     }
@@ -140,10 +143,10 @@ const Forum = () => {
         setSelectedThread({ ...selectedThread, posts: [...(selectedThread.posts ?? []), post] })
       }
       setNewPostContent('')
-      setNewPostAuthor('Anonymous')
+      setNewPostAuthor(anonymous)
     } catch (err) {
       console.error('Error creating post:', err)
-      toast.error(t('errors', 'generic') || 'Failed to submit reply.')
+      toast.error(tp('forumPage.replyFail'))
     } finally {
       setLoading(false)
     }
@@ -181,7 +184,10 @@ const Forum = () => {
             {selectedThread.title}
           </h1>
           <p className="mb-4 text-sm" style={{ color: 'var(--text-secondary)' }}>
-            By {selectedThread.author} on {new Date(selectedThread.created_at).toLocaleDateString()}
+            {tp('forumPage.byOn', {
+              author: selectedThread.author,
+              date: new Date(selectedThread.created_at).toLocaleDateString(i18n.language)
+            })}
           </p>
           <div className="mb-6 space-y-4">
             {(selectedThread.posts ?? []).map((post) => (
@@ -191,7 +197,10 @@ const Forum = () => {
                 style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border)' }}
               >
                 <p className="mb-1 text-sm" style={{ color: 'var(--text-secondary)' }}>
-                  By {post.author} on {new Date(post.created_at).toLocaleDateString()}
+                  {tp('forumPage.byOn', {
+                    author: post.author,
+                    date: new Date(post.created_at).toLocaleDateString(i18n.language)
+                  })}
                 </p>
                 <p className="whitespace-pre-wrap" style={{ color: 'var(--text-primary)' }}>
                   {post.content}
@@ -319,7 +328,7 @@ const Forum = () => {
             <EmptyState
               icon="💬"
               title={t('forum', 'noDiscussions')}
-              description="Be the first to start a conversation about Bitcoin timestamping, use cases, or the protocol."
+              description={tp('forumPage.emptyDesc')}
             />
           ) : (
             threads.map((thread) => (
@@ -342,7 +351,10 @@ const Forum = () => {
                   {thread.title}
                 </h2>
                 <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-                  By {thread.author} - {new Date(thread.created_at).toLocaleDateString()}
+                  {tp('forumPage.byDash', {
+                    author: thread.author,
+                    date: new Date(thread.created_at).toLocaleDateString(i18n.language)
+                  })}
                 </p>
               </motion.div>
             ))

@@ -3,6 +3,7 @@ import {
   buildVerifyUrl,
   buildShareText,
   buildProofCardUrl,
+  buildCanonicalProofCardUrl,
   buildXIntent,
   buildNostrShareLinks,
   realNostrEventId
@@ -37,6 +38,12 @@ describe('shareProof', () => {
     expect(buildProofCardUrl({ hash, id: 'uuid-1', source: 'api' })).toMatch(
       new RegExp(`/p/${hash}$`)
     )
+  })
+
+  it('canonical camera QR always uses satohash.io/p/{hash}', () => {
+    const hash = 'ab'.repeat(32)
+    expect(buildCanonicalProofCardUrl(hash)).toBe(`https://satohash.io/p/${hash}`)
+    expect(buildCanonicalProofCardUrl('not-a-hash')).toBe('https://satohash.io/verify')
   })
 
   it('honest pending vs confirmed share text', () => {

@@ -1081,6 +1081,185 @@
         "body": "Sobald er in Bitcoin bestätigt ist, ist Ihr Nachweis dauerhaft und öffentlich. Teilen Sie den Link — jeder kann ihn ohne Konto verifizieren.",
         "action": "Los geht's →"
       }
+    },
+    "howItWorks": {
+      "deepDive": "Protokoll-Tiefenanalyse",
+      "step1Title": "1. Lokales Hashing",
+      "step1Text": "Ihr Dokument wird in einen 64-Zeichen-SHA-256-Fingerabdruck umgewandelt. Niemand, auch Satohash nicht, kann Ihren Inhalt sehen.",
+      "step2Title": "2. Merkle-Bündelung",
+      "step2Text": "Mehrere Fingerabdrücke werden in einem Merkle Tree kombiniert. Das ermöglicht massive Skalierung und Privatsphäre-Nachweise.",
+      "step3Title": "3. Bitcoin-Verankerung",
+      "step3Text": "Die Merkle Root wird in eine Bitcoin-Transaktion eingebettet. Das Transaktionsdatum wird Ihr dauerhafter Zeitstempel."
+    },
+    "account": {
+      "subtitle": "Erstellen Sie Ihr Konto, um mit Satohash zu starten"
+    },
+    "chooseTemplate": {
+      "kicker": "Protokoll-Onboarding",
+      "title": "Wählen Sie Ihren",
+      "titleHighlight": "Artefakttyp.",
+      "subtitle": "Wählen Sie eine spezialisierte Vorlage oder laden Sie ein eigenes Dokument hoch, um die kryptografische Verankerung zu starten.",
+      "browseLibrary": "Vollständige Vorlagenbibliothek durchsuchen",
+      "batchDemo": "Batch-Proof-Demo ausprobieren",
+      "disclaimerTitle": "Protokoll-Hinweis",
+      "disclaimer": "Satohash ist ein kryptografischer Notarservice. Wir liefern mathematischen Existenznachweis über die Bitcoin-Blockchain. Wir sind keine Kanzlei und geben keine Rechtsberatung. Alle erzeugten Nachweise sind weltweit über OpenTimestamps verifizierbar.",
+      "aboutTemplate": "Über diese Vorlage",
+      "tooltip": "Diese Vorlage ist für {{title}} optimiert. Sie enthält eigene Metadatenfelder und kryptografische Verankerung für {{category}}-Artefakte.",
+      "categories": {
+        "legal": "Recht",
+        "personal": "Persönlich",
+        "ip": "Geistiges Eigentum",
+        "credentials": "Nachweise",
+        "general": "Allgemein"
+      },
+      "items": {
+        "prenup": {
+          "title": "Ehevertrag",
+          "description": "Bindet vorheiratliche Vermögenserklärungen mathematisch an die Blockchain."
+        },
+        "photo-archive": {
+          "title": "iPhone-Foto-Tresor",
+          "description": "Zeitstempeln Sie private digitale Erinnerungen, um originale Aufnahmedaten zu beweisen."
+        },
+        "creative-ip": {
+          "title": "Musik und kreatives IP",
+          "description": "Sichern Sie Songs, Texte und Kunst, bevor Sie sie mit der Welt teilen."
+        },
+        "academic-credential": {
+          "title": "Promotion und akademischer Nachweis",
+          "description": "Unveränderliche Verifizierung von Diplomen, Abschlussarbeiten und Forschungsarbeiten."
+        },
+        "power-of-attorney": {
+          "title": "Vollmacht",
+          "description": "Gewähren Sie rechtliche Befugnisse mit kryptografischer Endgültigkeit."
+        },
+        "custom": {
+          "title": "Eigenes Artefakt",
+          "description": "Laden Sie jede Datei hoch, um sie direkt in der Bitcoin-Settlement-Schicht zu verankern."
+        }
+      }
+    },
+    "batchProof": {
+      "title": "Bulk-Proof-Manager",
+      "subtitle": "Verankern Sie ganze Dokumentenbibliotheken in Bitcoin in einem einzigen kryptografischen Vorgang.",
+      "dropActive": "Bibliothek hier ablegen",
+      "dropIdle": "Ordner oder mehrere Dateien ablegen",
+      "dropHint": "Wählen Sie mehrere PDF-, JPG- oder DOCX-Dateien, um sie gleichzeitig zu sichern.",
+      "queue": "Dokumentenwarteschlange ({{count}})",
+      "clearAll": "Alle löschen",
+      "hashLabel": "Hash",
+      "verified": "Verifiziert",
+      "visualization": "Protokollvisualisierung",
+      "stats": "Batch-Statistik",
+      "totalFiles": "Dateien gesamt",
+      "networkFee": "Netzwerkgebühr",
+      "merkleRoot": "Merkle Root",
+      "processing": "Batch wird verarbeitet...",
+      "anchorAll": "Alle jetzt verankern",
+      "startNew": "Neuen Batch starten",
+      "efficiency": "Netzwerkeffizienz",
+      "efficiencyBody": "Batch-Verankerung spart bis zu 98 % Netzwerkgebühren, indem Tausende Dokumente in einer einzigen Merkle-Tree-Transaktion festgeschrieben werden.",
+      "removeAria": "Datei entfernen"
+    },
+    "templateLibrary": {
+      "title": "Juristische Vorlagenbibliothek",
+      "subtitle": "Professionell formulierte kryptografische Vereinbarungen. In Bitcoin verankert für absolute Unveränderlichkeit.",
+      "searchAria": "Juristische Vorlagen suchen",
+      "searchPlaceholder": "Juristische Vorlagen suchen (z. B. NDA, Immobilie)...",
+      "choose": "Vorlage wählen",
+      "categories": {
+        "all": "Alle Vorlagen",
+        "personal": "Persönlich und Familie",
+        "business": "Business und Unternehmen",
+        "legal": "Recht und Justiz",
+        "property": "Immobilien"
+      },
+      "items": {
+        "prenup": {
+          "title": "Ehevertrag",
+          "description": "Schützt Vermögen und klärt finanzielle Erwartungen vor der Ehe.",
+          "jurisdiction": "Global / mehrere Staaten",
+          "difficulty": "Fortgeschritten",
+          "tag": "Beliebt"
+        },
+        "property": {
+          "title": "Eigentumsübertragung",
+          "description": "Dokumentation für private Immobilienverkäufe und Eigentumsübertragungen.",
+          "jurisdiction": "US / EU — unterstützender Nachweis",
+          "difficulty": "Rechtlich",
+          "tag": "Standard"
+        },
+        "powerOfAttorney": {
+          "title": "Vollmacht",
+          "description": "Übertragen Sie rechtliche Entscheidungsbefugnis auf eine Vertrauensperson.",
+          "jurisdiction": "ESIGN — unterstützender Nachweis",
+          "difficulty": "Standard",
+          "tag": "Wesentlich"
+        },
+        "nda": {
+          "title": "NDA (Geheimhaltung)",
+          "description": "Sichern Sie vertrauliche Geschäftsinformationen während Verhandlungen.",
+          "jurisdiction": "Globaler Standard",
+          "difficulty": "Universal",
+          "tag": "Sicher"
+        },
+        "will": {
+          "title": "Letzter Wille und Testament",
+          "description": "Legen Sie Vermögensverteilung und Vormundschaft für Minderjährige mit zeitgestempeltem Nachweis fest.",
+          "jurisdiction": "Common Law / global",
+          "difficulty": "Kritisch",
+          "tag": "Wesentlich"
+        },
+        "affidavit": {
+          "title": "Eidesstattliche Wahrheit",
+          "description": "Eine eidesstattliche Tatsachenerklärung, verankert an der Blockhöhe, für rechtliche Tragfähigkeit.",
+          "jurisdiction": "Universal / Justiz",
+          "difficulty": "Fortgeschritten",
+          "tag": "Notar-Alt"
+        },
+        "commercial-lease": {
+          "title": "Gewerbemietvertrag",
+          "description": "Bindende Vereinbarung für Geschäftsräume mit unveränderlichem Beginn-Nachweis.",
+          "jurisdiction": "Immobilien / global",
+          "difficulty": "Standard",
+          "tag": "Business"
+        },
+        "child-travel": {
+          "title": "Reiseeinwilligung für Minderjährige",
+          "description": "Dokumentierte Erlaubnis für Minderjährige, die ohne beide Sorgeberechtigte reisen.",
+          "jurisdiction": "International / Grenze",
+          "difficulty": "Standard",
+          "tag": "Reise"
+        },
+        "consulting": {
+          "title": "Beratungsvertrag",
+          "description": "Professionelle Auftragsbedingungen für Beratungsleistungen.",
+          "jurisdiction": "Global / B2B",
+          "difficulty": "Professionell",
+          "tag": "Neu"
+        },
+        "ip-assignment": {
+          "title": "IP-Übertragung",
+          "description": "Übertragen Sie das Eigentum an geistigen Eigentumsrechten wirksam.",
+          "jurisdiction": "US / global — unterstützender Nachweis",
+          "difficulty": "Fortgeschritten",
+          "tag": "Neu"
+        },
+        "domain-notary": {
+          "title": "Domain-Eigentumsnotar",
+          "description": "Unveränderlicher Nachweis über Domainkontrolle und Eigentumshistorie.",
+          "jurisdiction": "ICANN / global",
+          "difficulty": "Batch-Unterstützung",
+          "tag": "Neu"
+        },
+        "web-archive": {
+          "title": "Snap & Stamp Archiv",
+          "description": "Digitaler Beweissammler für Websites und Online-Inhalte.",
+          "jurisdiction": "Justizbereit",
+          "difficulty": "Hohe Tiefe",
+          "tag": "Neu"
+        }
+      }
     }
   },
   "accessPage": {
@@ -2712,7 +2891,7 @@
     "stampTooltip": "Das Hashing erfolgt auf dem Gerät. /stamp sendet nur den SHA-256-Fingerabdruck. Die Bestätigung wartet auf einen Bitcoin-Block (~60 Min.). Dies ist ein Vorlagenentwurf, kein Notariatsakt.",
     "draftLabel": "Vorlagenentwurf",
     "hashPending": "HASH PENDING",
-    "scanToVerify": "Zum Prüfen scannen",
+    "scanToVerify": "Jede Kamera",
     "openVerify": "Prüfseite öffnen",
     "verifyQrAlt": "Zum Prüfen auf Satohash scannen",
     "fieldsComplete": "Felder ausgefüllt",
@@ -2749,7 +2928,8 @@
     "emailFieldsHeader": "--- DOKUMENTFELDER ---",
     "emailVerifyHeader": "--- PRÜFUNG ---",
     "emailBody": "Dies ist ein Satohash-Vorlagenentwurf, kein notariell beurkundetes Dokument. Stempeln Sie den SHA-256-Fingerabdruck auf Bitcoin, um zu beweisen, dass diese Bytes zu einem Zeitpunkt existierten.",
-    "emailVerifyAt": "Prüfen unter: {{url}}"
+    "emailVerifyAt": "Prüfen unter: {{url}}",
+    "emailScanHint": "Scannen Sie den QR-Code auf dem PDF mit einer iPhone- oder Android-Kamera, oder öffnen Sie diese Proof-Karte:"
   },
   "imageVaultPage": {
     "metaTitle": "Bildtresor",
@@ -2986,6 +3166,123 @@
     "verifiableDesc": "Jeder kann unabhängig prüfen",
     "createFirst": "Ersten Nachweis erstellen"
   },
+  "contractEditorPage": {
+    "metaTitle": "Entwurfseditor",
+    "metaDescription": "Bearbeiten Sie einen lokalen Satohash-Entwurf. Stempeln Sie später, um zu beweisen, wann ein SHA-256-Fingerabdruck existierte — nicht wer unterschrieben hat.",
+    "untitled": "Unbenannter Entwurf",
+    "statusLabel": "Status",
+    "status": {
+      "draft": "Entwurf",
+      "signed": "signiert (lokal)",
+      "timestamped": "gestempelt"
+    },
+    "save": "Speichern",
+    "inspector": "Inspektor",
+    "settings": "Einstellungen",
+    "lightMode": "Heller Modus",
+    "darkMode": "Dunkler Modus",
+    "watermarkAlt": "Satohash-Wasserzeichen",
+    "placeholder": "Starten Sie einen lokalen Entwurf. Stempeln Sie später, um zu beweisen, wann diese Bytes existierten — nicht wer unterschrieben hat.",
+    "closePanel": "Panel schließen",
+    "honestyTitle": "Entwurf bis zum Stempel",
+    "honestyBody": "Diese Datei bleibt in diesem Browser, bis Sie stempeln. Ein Stempel beweist, wann ein SHA-256-Fingerabdruck existierte — nicht wer unterschrieben hat. Mehrparteien-Signatur ist kein Live-Produkt.",
+    "documentName": "Dokumentname",
+    "variables": "Dokumentvariablen",
+    "variablesWhat": "Was ist das?",
+    "variablesHelp": "Text in [Klammern] ist ein Platzhalter. Werte unten eintragen — sie ersetzen im lokalen Entwurf.",
+    "valueFor": "Wert für [{{name}}]...",
+    "extensions": "Protokollerweiterungen",
+    "domainPrompt": "Domains durch Kommas getrennt eingeben:",
+    "addDomainBatch": "Domain-Batch hinzufügen",
+    "urlPrompt": "URL zum Erfassen eingeben:",
+    "captureSnapper": "Über Snapper erfassen",
+    "appendSeal": "Nachweissiegel anhängen",
+    "created": "Erstellt",
+    "protocolType": "Protokolltyp",
+    "custom": "Benutzerdefiniert",
+    "liveHash": "SHA-256 in diesem Browser",
+    "awaitingContent": "Warte auf Inhalt...",
+    "fontSize": "Schriftgröße des Fließtexts",
+    "margins": "Seitenränder (mm)",
+    "settingsNote": "Einstellungen gelten für den PDF-Export und werden mit diesem lokalen Entwurf gespeichert."
+  },
+  "contractViewPage": {
+    "metaTitle": "Entwurfsansicht",
+    "metaDescription": "Lokalen Satohash-Entwurf ansehen. Ein Stempel beweist wann, nicht wer. Mehrparteien-Signatur ist nicht live.",
+    "qrFail": "Verifikations-QR konnte nicht erzeugt werden",
+    "signerN": "Unterzeichner {{n}}",
+    "ref": "Ref: {{id}}",
+    "edit": "Bearbeiten",
+    "shareEmailTitle": "Per E-Mail teilen",
+    "shareXTitle": "Auf X teilen",
+    "shareLinkedInTitle": "Auf LinkedIn teilen",
+    "shareEmailSubject": "Satohash-Nachweis",
+    "shareEmailBody": "SHA-256-Stempel auf Satohash (wann, nicht wer): {{url}}",
+    "shareEmailSubjectDraft": "Lokaler Satohash-Entwurf",
+    "shareEmailBodyDraft": "Lokaler Satohash-Entwurf (nicht gestempelt): {{url}}",
+    "shareXText": "SHA-256-Stempel auf Satohash",
+    "shareXTextDraft": "Lokaler Satohash-Entwurf — nicht gestempelt",
+    "pdfWarn": "PDF mit kleinen Problemen gespeichert",
+    "pdfOk": "PDF heruntergeladen",
+    "pdfFail": "PDF konnte nicht erzeugt werden",
+    "tryAgain": "Erneut versuchen",
+    "watermarkAlt": "Satohash-Wasserzeichen",
+    "createdBy": "Erstellt von",
+    "giveABitAlt": "Give A Bit",
+    "sealStamped": "Bitcoin-Anker",
+    "sealLocal": "Lokaler Entwurf",
+    "tabInfo": "Info",
+    "tabSigners": "Parteien",
+    "tabLogs": "Protokolle",
+    "proofTitle": "Was ein Stempel beweist",
+    "proofBodyDraft": "Das ist ein lokaler Entwurf. Stempeln Sie, um zu beweisen, wann ein SHA-256-Fingerabdruck existierte — nicht wer unterschrieben hat. Mehrparteien-Signatur ist kein Live-Produkt.",
+    "proofBodyStamped": "Dieser Entwurf wurde gestempelt. SHA-256 plus OpenTimestamps auf Bitcoin beweist, wann diese Bytes existierten — nicht wer unterschrieben hat.",
+    "readyTitle": "Bereit zum Stempeln",
+    "readyBody": "Eine lokale Signatur wurde in diesem Browser gespeichert. Stempeln Sie, um wann zu beweisen — nicht wer. Mehrparteien-Signatur ist nicht live.",
+    "stampNow": "Jetzt stempeln",
+    "verifiedProofs": "Geprüfte Nachweise",
+    "proofPackage": "Nachweispaket",
+    "proofPackageSub": "PDF + Bitcoin-Details",
+    "emailPackage": "E-Mail-Paket",
+    "emailPackageSub": "Per E-Mail teilen",
+    "emailSubject": "Satohash-Stempel: {{name}}",
+    "emailBody": "Satohash-Dokument\nName: {{name}}\nErstellt: {{date}}\nReferenz: {{id}}\nStatus: Gestempelt auf Bitcoin\n\nDiesen SHA-256-Fingerabdruck prüfen (wann, nicht wer):\n{{url}}\n\nOpenTimestamps-Nachweis auf Bitcoin über Satohash. Ein Stempel beweist, wann diese Bytes existierten — nicht wer unterschrieben hat.",
+    "mempool": "Mempool.space",
+    "viewAnchor": "Anker ansehen",
+    "otsQr": "OpenTimestamps-QR",
+    "qrAlt": "Verifikations-QR für satohash.io/p/",
+    "qrHost": "satohash.io/p/",
+    "advanced": "Erweiterte Werkzeuge",
+    "deepExplorer": "Deep Explorer",
+    "privacyShield": "Privatsphäre-Schild",
+    "metadata": "Metadaten",
+    "created": "Erstellt",
+    "modified": "Geändert",
+    "type": "Typ",
+    "hash": "Hash",
+    "custom": "Benutzerdefiniert",
+    "partiesTitle": "Parteien (lokal)",
+    "noSigners": "Keine Mitunterzeichner in diesem Browser. Mehrparteien-Signatur ist nicht live — unten lokal simulieren.",
+    "copyInviteAria": "Lokalen Signatur-Einladungslink kopieren",
+    "inviteCopied": "Einladungslink kopiert (lokale Demo)",
+    "copyInvite": "Lokalen Einladungslink kopieren",
+    "simulateAria": "Partnersignatur lokal simulieren",
+    "partnerSimulated": "Partner (simuliert)",
+    "simulateToast": "Partnersignatur lokal gespeichert",
+    "simulateToastDesc": "In diesem Browser gespeichert — stempeln, wenn bereit. Mehrparteien-Signatur ist nicht live.",
+    "simulate": "Partnersignatur simulieren",
+    "auditTrail": "Prüfpfad (dieser Browser)",
+    "logCreated": "Entwurf erstellt",
+    "logHash": "SHA-256-Hash erzeugt",
+    "logAwaiting": "Warte auf Bitcoin-Stempel",
+    "logStamped": "Gestempelt — auf Bitcoin bestätigen",
+    "pending": "Pending",
+    "signerStatus": {
+      "idle": "inaktiv",
+      "viewing": "ansicht",
+      "signed": "signiert (lokal)"
+    }
+  },
   "v5Page": {
     "back": "← Satohash",
     "demoChip": "Playground / Demo",
@@ -3053,5 +3350,64 @@
       "confirm": "Stempel bestätigen",
       "viewProof": "Nachweis ansehen →"
     }
+  },
+  "onboardingWelcomePage": {
+    "resume": "Machen Sie beim Onboarding dort weiter, wo Sie aufgehört haben.",
+    "continueSetup": "Einrichtung fortsetzen",
+    "securedBy": "Gesichert durch das Bitcoin-Netzwerk • Block #{{height}}",
+    "heroTitle": "Der digitale Notar",
+    "heroHighlight": "für eine verifizierte Welt.",
+    "heroSubtitle": "Satohash liefert mathematisch unbestreitbaren Existenznachweis für Ihre wichtigsten Dokumente. Lokale Privatsphäre, globale Unveränderlichkeit.",
+    "startCta": "Neue Vereinbarung starten",
+    "exploreCta": "Protokoll erkunden",
+    "educationalInsight": "Lernhinweis",
+    "protocolDepth": "Mechanische Tiefe des Protokolls",
+    "features": {
+      "proof": {
+        "insight": "SHA-256-Hashing: Jedes Dokument erhält einen eindeutigen 64-Zeichen-Fingerabdruck. Schon eine Pixeländerung erzeugt eine völlig andere ID.",
+        "protocol": "Local-First-Verschlüsselung"
+      },
+      "timestamp": {
+        "insight": "Merkle-Verankerung: Wir bündeln Hashes in einem Merkle Tree und verankern die Root in Bitcoin. Ein Block bestätigt Tausende Dokumente.",
+        "protocol": "OpenTimestamps"
+      },
+      "verify": {
+        "insight": "Mathematisches Audit: Die Verifizierung braucht Satohash nicht. Jeder mit der Beweisdatei und einem Bitcoin-Knoten kann den Zeitstempel prüfen.",
+        "protocol": "ZK-bereite Evidenz"
+      }
+    },
+    "protocol": {
+      "hashingTitle": "01 / Lokales Hashing",
+      "hashingText": "Ihr Dokument wird lokal in einen 64-Zeichen-SHA-256-Fingerabdruck umgewandelt. Niemand, auch Satohash nicht, sieht jemals Ihren Inhalt.",
+      "merkleTitle": "02 / Merkle-Bündelung",
+      "merkleText": "Mehrere Fingerabdrücke werden in einem Merkle Tree kombiniert. Das ermöglicht massive Skalierung und absolute Privatsphäre im Nachweis.",
+      "anchorTitle": "03 / Bitcoin-Verankerung",
+      "anchorText": "Die Merkle Root wird in die Bitcoin-Blockchain eingebettet. Die Blockhöhe der Transaktion wird Ihr dauerhafter, unfälschbarer Zeitstempel."
+    },
+    "abyss": {
+      "kicker": "Der Protokollabgrund",
+      "title": "Dezentrales Vertrauen.",
+      "title2": "Keine Ausnahmen.",
+      "body": "Satohash ist nicht nur ein Signaturwerkzeug. Es ist eine Brücke zwischen Ihrer rechtlichen Absicht und der mathematischen Gewissheit der Blockchain."
+    },
+    "trust": {
+      "privacyTitle": "Lokale Privatsphäre",
+      "privacyDesc": "Der Inhalt verlässt nie Ihren Browser.",
+      "proofTitle": "Ewiger Nachweis",
+      "proofDesc": "Überlebt Unternehmen und Server.",
+      "standardTitle": "Standardisiert",
+      "standardDesc": "Nutzt offene .ots-Nachweise.",
+      "cta": "Trust Center öffnen"
+    }
+  },
+  "forumPage": {
+    "anonymous": "Anonym",
+    "byOn": "Von {{author}} am {{date}}",
+    "byDash": "Von {{author}} — {{date}}",
+    "emptyDesc": "Starten Sie als Erste:r eine Diskussion über Bitcoin-Zeitstempel, Anwendungsfälle oder das Protokoll.",
+    "loadThreadsFail": "Forenthemen konnten nicht geladen werden.",
+    "loadThreadFail": "Thema konnte nicht geladen werden.",
+    "createFail": "Thema konnte nicht erstellt werden.",
+    "replyFail": "Antwort konnte nicht gesendet werden."
   }
 }

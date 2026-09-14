@@ -1056,6 +1056,185 @@
         "body": "一旦在 Bitcoin 上确认，您的证明即永久且公开。分享链接——任何人无需账户即可验证。",
         "action": "开始吧 →"
       }
+    },
+    "howItWorks": {
+      "deepDive": "协议深潜",
+      "step1Title": "1. 本地哈希",
+      "step1Text": "您的文件被处理成 64 字符的 SHA-256 指纹。包括 Satohash 在内，任何人都看不到您的内容。",
+      "step2Title": "2. Merkle 打包",
+      "step2Text": "多个指纹被组合成 Merkle Tree。这既可大规模扩展，也能提供隐私证明。",
+      "step3Title": "3. Bitcoin 锚定",
+      "step3Text": "Merkle Root 被写入 Bitcoin 交易。交易日期成为您的永久时间戳。"
+    },
+    "account": {
+      "subtitle": "创建账户以开始使用 Satohash"
+    },
+    "chooseTemplate": {
+      "kicker": "协议引导",
+      "title": "选择您的",
+      "titleHighlight": "工件类型。",
+      "subtitle": "选择专用模板或上传自定义文件，开始加密锚定。",
+      "browseLibrary": "浏览完整模板库",
+      "batchDemo": "试用批量证明演示",
+      "disclaimerTitle": "协议声明",
+      "disclaimer": "Satohash 是加密公证服务。我们通过 Bitcoin 区块链提供数学上的存在证明。我们不是律师事务所，不提供法律建议。所有生成的证明均可经由 OpenTimestamps 在全球验证。",
+      "aboutTemplate": "关于此模板",
+      "tooltip": "此模板针对 {{title}} 优化。它包含自定义元数据字段，以及适用于 {{category}} 工件的加密锚定。",
+      "categories": {
+        "legal": "法律",
+        "personal": "个人",
+        "ip": "知识产权",
+        "credentials": "凭证",
+        "general": "通用"
+      },
+      "items": {
+        "prenup": {
+          "title": "婚前协议",
+          "description": "将婚前资产声明以数学方式绑定到区块链。"
+        },
+        "photo-archive": {
+          "title": "iPhone 照片保险库",
+          "description": "为私人数字回忆加盖时间戳，以证明原始拍摄日期。"
+        },
+        "creative-ip": {
+          "title": "音乐与创意知识产权",
+          "description": "在与世界分享之前保护您的歌曲、歌词和艺术作品。"
+        },
+        "academic-credential": {
+          "title": "博士与学术证明",
+          "description": "对文凭、论文和研究论文进行不可篡改的验证。"
+        },
+        "power-of-attorney": {
+          "title": "授权委托书",
+          "description": "以加密终局性授予权威法律权利。"
+        },
+        "custom": {
+          "title": "自定义工件",
+          "description": "上传任意文件，直接锚定到 Bitcoin 结算层。"
+        }
+      }
+    },
+    "batchProof": {
+      "title": "批量证明管理器",
+      "subtitle": "在一次加密操作中将整座文件库锚定到 Bitcoin。",
+      "dropActive": "把文件库拖到这里",
+      "dropIdle": "拖放文件夹或多个文件",
+      "dropHint": "选择多个 PDF、JPG 或 DOCX 文件同时保护。",
+      "queue": "文件队列（{{count}}）",
+      "clearAll": "全部清除",
+      "hashLabel": "Hash",
+      "verified": "已验证",
+      "visualization": "协议可视化",
+      "stats": "批次统计",
+      "totalFiles": "文件总数",
+      "networkFee": "网络费用",
+      "merkleRoot": "Merkle Root",
+      "processing": "正在处理批次…",
+      "anchorAll": "立即全部锚定",
+      "startNew": "开始新批次",
+      "efficiency": "网络效率",
+      "efficiencyBody": "批量锚定通过在单笔 Merkle Tree 交易中提交成千上万份文件，最多可节省 98% 的网络费用。",
+      "removeAria": "移除文件"
+    },
+    "templateLibrary": {
+      "title": "法律模板库",
+      "subtitle": "专业起草的加密协议。锚定到 Bitcoin，绝对不可篡改。",
+      "searchAria": "搜索法律模板",
+      "searchPlaceholder": "搜索法律模板（例如 NDA、房产）…",
+      "choose": "选择模板",
+      "categories": {
+        "all": "全部模板",
+        "personal": "个人与家庭",
+        "business": "商业与公司",
+        "legal": "法律与司法",
+        "property": "不动产"
+      },
+      "items": {
+        "prenup": {
+          "title": "婚前协议",
+          "description": "在结婚前保护资产并明确财务预期。",
+          "jurisdiction": "全球 / 多州",
+          "difficulty": "高级",
+          "tag": "热门"
+        },
+        "property": {
+          "title": "产权转让",
+          "description": "私人房产出售与所有权转让的文件。",
+          "jurisdiction": "US / EU — 佐证",
+          "difficulty": "法律",
+          "tag": "标准"
+        },
+        "powerOfAttorney": {
+          "title": "授权委托书",
+          "description": "向可信个人授予法律决策权。",
+          "jurisdiction": "ESIGN — 佐证",
+          "difficulty": "标准",
+          "tag": "必要"
+        },
+        "nda": {
+          "title": "NDA（保密协议）",
+          "description": "在谈判期间保护机密商业信息。",
+          "jurisdiction": "全球标准",
+          "difficulty": "通用",
+          "tag": "安全"
+        },
+        "will": {
+          "title": "遗嘱",
+          "description": "用带时间戳的证明定义资产分配和未成年人监护。",
+          "jurisdiction": "Common Law / 全球",
+          "difficulty": "关键",
+          "tag": "必要"
+        },
+        "affidavit": {
+          "title": "事实宣誓书",
+          "description": "锚定到区块高度的宣誓事实陈述，用于法律依据。",
+          "jurisdiction": "通用 / 司法",
+          "difficulty": "高级",
+          "tag": "公证替代"
+        },
+        "commercial-lease": {
+          "title": "商业租赁",
+          "description": "商业场所的约束性协议，带有不可篡改的起始证明。",
+          "jurisdiction": "不动产 / 全球",
+          "difficulty": "标准",
+          "tag": "商业"
+        },
+        "child-travel": {
+          "title": "儿童旅行同意书",
+          "description": "未成年人在没有双方监护人陪同下旅行的书面许可。",
+          "jurisdiction": "国际 / 边境",
+          "difficulty": "标准",
+          "tag": "旅行"
+        },
+        "consulting": {
+          "title": "咨询协议",
+          "description": "咨询服务的专业聘用条款。",
+          "jurisdiction": "全球 / B2B",
+          "difficulty": "专业",
+          "tag": "新"
+        },
+        "ip-assignment": {
+          "title": "知识产权转让",
+          "description": "有效转移知识产权所有权。",
+          "jurisdiction": "US / 全球 — 佐证",
+          "difficulty": "高级",
+          "tag": "新"
+        },
+        "domain-notary": {
+          "title": "域名所有权公证",
+          "description": "域名控制与所有权历史的不可篡改证明。",
+          "jurisdiction": "ICANN / 全球",
+          "difficulty": "批量支持",
+          "tag": "新"
+        },
+        "web-archive": {
+          "title": "Snap & Stamp 档案",
+          "description": "网站与在线内容的数字证据收集器。",
+          "jurisdiction": "司法就绪",
+          "difficulty": "高深度",
+          "tag": "新"
+        }
+      }
     }
   },
   "accessPage": {
@@ -2687,7 +2866,7 @@
     "stampTooltip": "哈希在本机计算。/stamp 只提交 SHA-256 指纹。确认需等待一个 Bitcoin 区块（约 60 分钟）。这是模板草稿，不是公证行为。",
     "draftLabel": "模板草稿",
     "hashPending": "HASH PENDING",
-    "scanToVerify": "扫码验证",
+    "scanToVerify": "任意相机",
     "openVerify": "打开验证页",
     "verifyQrAlt": "扫码在 Satohash 验证",
     "fieldsComplete": "已完成字段",
@@ -2724,7 +2903,8 @@
     "emailFieldsHeader": "--- 文档字段 ---",
     "emailVerifyHeader": "--- 验证 ---",
     "emailBody": "这是 Satohash 模板草稿，不是已公证文件。在 Bitcoin 上为 SHA-256 指纹盖戳，以证明这些字节在某一时刻存在。",
-    "emailVerifyAt": "验证地址：{{url}}"
+    "emailVerifyAt": "验证地址：{{url}}",
+    "emailScanHint": "用任何 iPhone 或 Android 相机扫描 PDF 上的二维码，或打开此证明卡："
   },
   "imageVaultPage": {
     "metaTitle": "图像库",
@@ -2961,6 +3141,123 @@
     "verifiableDesc": "任何人都能独立核验",
     "createFirst": "创建你的第一份证明"
   },
+  "contractEditorPage": {
+    "metaTitle": "草稿编辑器",
+    "metaDescription": "编辑本地 Satohash 草稿。稍后盖章，证明 SHA-256 指纹何时存在 — 不证明谁签了名。",
+    "untitled": "未命名草稿",
+    "statusLabel": "状态",
+    "status": {
+      "draft": "草稿",
+      "signed": "已签（本地）",
+      "timestamped": "已盖章"
+    },
+    "save": "保存",
+    "inspector": "检查器",
+    "settings": "设置",
+    "lightMode": "浅色模式",
+    "darkMode": "深色模式",
+    "watermarkAlt": "Satohash 水印",
+    "placeholder": "开始一份本地草稿。稍后盖章，证明这些字节何时存在 — 不证明谁签了名。",
+    "closePanel": "关闭面板",
+    "honestyTitle": "盖章前只是草稿",
+    "honestyBody": "这份文件在盖章前只存在于此浏览器。盖章证明 SHA-256 指纹何时存在 — 不证明谁签了名。多方签署不是上线产品。",
+    "documentName": "文档名称",
+    "variables": "文档变量",
+    "variablesWhat": "这些是什么？",
+    "variablesHelp": "[方括号] 里的文字是占位符。在下方填写后，会替换到这份本地草稿中。",
+    "valueFor": "[{{name}}] 的值...",
+    "extensions": "协议扩展",
+    "domainPrompt": "输入域名，用逗号分隔：",
+    "addDomainBatch": "添加域名批次",
+    "urlPrompt": "输入要捕获的 URL：",
+    "captureSnapper": "通过 Snapper 捕获",
+    "appendSeal": "追加证明封印",
+    "created": "创建时间",
+    "protocolType": "协议类型",
+    "custom": "自定义",
+    "liveHash": "此浏览器中的 SHA-256",
+    "awaitingContent": "等待内容...",
+    "fontSize": "正文字号",
+    "margins": "页边距（mm）",
+    "settingsNote": "这些设置用于 PDF 导出，并与这份本地草稿一起保存。"
+  },
+  "contractViewPage": {
+    "metaTitle": "草稿查看",
+    "metaDescription": "查看本地 Satohash 草稿。盖章证明何时，不证明谁。多方签署尚未上线。",
+    "qrFail": "无法生成核验二维码",
+    "signerN": "签署人 {{n}}",
+    "ref": "编号：{{id}}",
+    "edit": "编辑",
+    "shareEmailTitle": "通过电子邮件分享",
+    "shareXTitle": "分享到 X",
+    "shareLinkedInTitle": "分享到 LinkedIn",
+    "shareEmailSubject": "Satohash 证明",
+    "shareEmailBody": "Satohash 上的 SHA-256 盖章（何时，不是谁）：{{url}}",
+    "shareEmailSubjectDraft": "Satohash 本地草稿",
+    "shareEmailBodyDraft": "Satohash 本地草稿（尚未盖章）：{{url}}",
+    "shareXText": "Satohash 上的 SHA-256 盖章",
+    "shareXTextDraft": "Satohash 本地草稿 — 尚未盖章",
+    "pdfWarn": "PDF 已保存，但有小问题",
+    "pdfOk": "PDF 已下载",
+    "pdfFail": "无法生成 PDF",
+    "tryAgain": "请重试",
+    "watermarkAlt": "Satohash 水印",
+    "createdBy": "创建者",
+    "giveABitAlt": "Give A Bit",
+    "sealStamped": "Bitcoin 锚定",
+    "sealLocal": "本地草稿",
+    "tabInfo": "信息",
+    "tabSigners": "各方",
+    "tabLogs": "日志",
+    "proofTitle": "盖章证明什么",
+    "proofBodyDraft": "这是一份本地草稿。盖章以证明 SHA-256 指纹何时存在 — 不证明谁签了名。多方签署不是上线产品。",
+    "proofBodyStamped": "这份草稿已盖章。SHA-256 加上 Bitcoin 上的 OpenTimestamps，证明这些字节何时存在 — 不证明谁签了名。",
+    "readyTitle": "可以盖章",
+    "readyBody": "此浏览器已记录一次本地签名。盖章证明何时 — 不证明谁。多方签署尚未上线。",
+    "stampNow": "立即盖章",
+    "verifiedProofs": "已核验证明",
+    "proofPackage": "证明包",
+    "proofPackageSub": "PDF + Bitcoin 详情",
+    "emailPackage": "邮件包",
+    "emailPackageSub": "通过电子邮件分享",
+    "emailSubject": "Satohash 盖章：{{name}}",
+    "emailBody": "Satohash 文档\n名称：{{name}}\n创建：{{date}}\n编号：{{id}}\n状态：已盖章到 Bitcoin\n\n核验此 SHA-256 指纹（何时，不是谁）：\n{{url}}\n\n经由 Satohash 的 Bitcoin OpenTimestamps 证明。盖章证明这些字节何时存在 — 不证明谁签了名。",
+    "mempool": "Mempool.space",
+    "viewAnchor": "查看锚定",
+    "otsQr": "OpenTimestamps 二维码",
+    "qrAlt": "核验二维码，指向 satohash.io/p/",
+    "qrHost": "satohash.io/p/",
+    "advanced": "高级工具",
+    "deepExplorer": "深度浏览器",
+    "privacyShield": "隐私盾",
+    "metadata": "元数据",
+    "created": "创建时间",
+    "modified": "修改时间",
+    "type": "类型",
+    "hash": "Hash",
+    "custom": "自定义",
+    "partiesTitle": "各方（本地）",
+    "noSigners": "此浏览器中没有共同签署人。多方签署尚未上线 — 可在下方本地模拟。",
+    "copyInviteAria": "复制本地签署邀请链接",
+    "inviteCopied": "邀请链接已复制（本地演示）",
+    "copyInvite": "复制本地邀请链接",
+    "simulateAria": "在本地模拟合作方签名",
+    "partnerSimulated": "合作方（模拟）",
+    "simulateToast": "合作方签名已在本地记录",
+    "simulateToastDesc": "已保存在此浏览器 — 准备好后再盖章。多方签署尚未上线。",
+    "simulate": "模拟合作方签名",
+    "auditTrail": "审计轨迹（此浏览器）",
+    "logCreated": "草稿已创建",
+    "logHash": "已生成 SHA-256 hash",
+    "logAwaiting": "等待 Bitcoin 盖章",
+    "logStamped": "已盖章 — 在 Bitcoin 上确认",
+    "pending": "Pending",
+    "signerStatus": {
+      "idle": "空闲",
+      "viewing": "查看中",
+      "signed": "已签（本地）"
+    }
+  },
   "v5Page": {
     "back": "← Satohash",
     "demoChip": "Playground / 演示",
@@ -3028,5 +3325,64 @@
       "confirm": "确认盖章",
       "viewProof": "查看证明 →"
     }
+  },
+  "onboardingWelcomePage": {
+    "resume": "从上次中断的引导处继续。",
+    "continueSetup": "继续设置",
+    "securedBy": "由 Bitcoin 网络保障 • 区块 #{{height}}",
+    "heroTitle": "数字公证",
+    "heroHighlight": "面向已验证的世界。",
+    "heroSubtitle": "Satohash 为您最关键的文件提供数学上无可争议的存在证明。本地隐私，全球不可篡改。",
+    "startCta": "开始新协议",
+    "exploreCta": "探索协议",
+    "educationalInsight": "学习要点",
+    "protocolDepth": "协议机械深度",
+    "features": {
+      "proof": {
+        "insight": "SHA-256 哈希：每份文件都会得到唯一的 64 字符「指纹」。哪怕改一个像素，也会生成完全不同的 ID。",
+        "protocol": "本地优先加密"
+      },
+      "timestamp": {
+        "insight": "Merkle 锚定：我们将哈希打包进 Merkle Tree，并把「根」锚定到 Bitcoin。一个区块即可确认成千上万份文件。",
+        "protocol": "OpenTimestamps"
+      },
+      "verify": {
+        "insight": "数学审计：验证不需要 Satohash。任何人只要有证明文件和 Bitcoin 节点，都能验证时间戳。",
+        "protocol": "ZK 就绪证据"
+      }
+    },
+    "protocol": {
+      "hashingTitle": "01 / 本地哈希",
+      "hashingText": "您的文件在本地处理成 64 字符的 SHA-256 指纹。包括 Satohash 在内，任何人都看不到您的内容。",
+      "merkleTitle": "02 / Merkle 打包",
+      "merkleText": "多个指纹被组合成 Merkle Tree。这既可大规模扩展，又能保证证明中的绝对隐私。",
+      "anchorTitle": "03 / Bitcoin 锚定",
+      "anchorText": "Merkle Root 被写入 Bitcoin 区块链。交易的区块高度成为您永久、不可伪造的时间戳。"
+    },
+    "abyss": {
+      "kicker": "协议深渊",
+      "title": "去中心化信任。",
+      "title2": "没有例外。",
+      "body": "Satohash 不只是签名工具。它是您的法律意图与区块链数学确定性之间的桥梁。"
+    },
+    "trust": {
+      "privacyTitle": "本地隐私",
+      "privacyDesc": "内容永不离开您的浏览器。",
+      "proofTitle": "永久证明",
+      "proofDesc": "比公司和服务器更长久。",
+      "standardTitle": "标准化",
+      "standardDesc": "使用开放标准的 .ots 证明。",
+      "cta": "进入 Trust Center"
+    }
+  },
+  "forumPage": {
+    "anonymous": "匿名",
+    "byOn": "{{author}} 发布于 {{date}}",
+    "byDash": "{{author}} — {{date}}",
+    "emptyDesc": "率先发起关于 Bitcoin 时间戳、用例或协议的讨论。",
+    "loadThreadsFail": "无法加载论坛主题。",
+    "loadThreadFail": "无法加载该主题。",
+    "createFail": "无法创建主题。",
+    "replyFail": "无法提交回复。"
   }
 }
