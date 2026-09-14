@@ -208,7 +208,11 @@
     "copied": "Kopiert!"
   },
   "footer": {
-    "supportDevelopers": "Unterstützen Sie unsere Entwickler"
+    "supportDevelopers": "Unterstützen Sie unsere Entwickler",
+    "verifyAt": "Dieses Dokument verifizieren unter",
+    "poweredBy": "Unterstützt von OpenTimestamps und Bitcoin",
+    "createdBy": "Erstellt von",
+    "rights": "Alle Rechte vorbehalten"
   },
   "common": {
     "back": "Zurück",
@@ -221,5 +225,94 @@
     "loading": "Wird geladen...",
     "error": "Fehler",
     "success": "Erfolg"
+  },
+  "landing": {
+    "heroTitle": "Verankern Sie Ihre Dokumente auf Bitcoin — für immer",
+    "heroSubtitle": "Erstellen Sie einen kryptografischen Nachweis, dass Ihre Dokumente zu einem bestimmten Zeitpunkt existierten. Zero-Knowledge. Manipulationssicher. Durch die Bitcoin-Blockchain verifiziert.",
+    "heroCta": "Jetzt ein Dokument stempeln",
+    "heroCta2": "So funktioniert es",
+    "step1": "Lokal hashen",
+    "step2": "Auf Bitcoin verankern",
+    "step3": "Dauerhaft nachweisen",
+    "socialProof": "Hashen Sie auf Ihrem Gerät. Bitcoin bewahrt die Quittung.",
+    "tryTemplate": "Vorlage kostenlos ausprobieren",
+    "features": {
+      "title": "Alles für manipulationssichere Dokumente",
+      "subtitle": "Professionelle Notarisierung mit Bitcoin und offenen Standards"
+    }
+  },
+  "templates": {
+    "pageTitle": "Notarvorlagen",
+    "subtitle": "Wählen Sie eine Vorlage, um Ihr Dokument vorab auszufüllen und auf Bitcoin zu verankern",
+    "searchPlaceholder": "Vorlagen suchen…",
+    "downloadPdf": "PDF herunterladen",
+    "emailPackage": "Paket per E-Mail",
+    "anchorBitcoin": "Auf Bitcoin verankern",
+    "saveVault": "Im Tresor speichern",
+    "print": "Dokument drucken",
+    "backToTemplates": "← Zurück zu Vorlagen",
+    "preview": "Vorschau",
+    "shareLink": "Link kopieren",
+    "darkMode": "Dunkelmodus",
+    "fieldsComplete": "Felder ausgefüllt",
+    "checklist": "Checkliste",
+    "versionHistory": "Versionsverlauf",
+    "restore": "Wiederherstellen",
+    "zeroKnowledge": "Zero-Knowledge",
+    "zeroKnowledgeDesc": "Der Inhalt Ihres Dokuments verlässt niemals Ihr Gerät — nur der SHA-256-Hash wird an den Server gesendet.",
+    "progress": "der Felder ausgefüllt"
+  },
+  "verify": {
+    "pageTitle": "Dokument verifizieren",
+    "subtitle": "Laden Sie ein Dokument und die zugehörige .ots-Nachweisdatei hoch, um die Echtheit auf der Bitcoin-Blockchain zu bestätigen",
+    "verified": "Verifiziert",
+    "invalid": "Ungültig",
+    "pending": "Pending",
+    "copyHash": "Hash kopieren",
+    "viewOnChain": "On-Chain ansehen"
+  },
+  "forum": {
+    "pageTitle": "Forum",
+    "subtitle": "Diskutieren Sie Notarisierung, Bitcoin-Nachweise und manipulationssichere Dokumente.",
+    "newThread": "Neues Thema starten",
+    "threadTitle": "Thementitel",
+    "yourName": "Ihr Name",
+    "createThread": "Erstellen",
+    "writePost": "Beitrag schreiben…",
+    "postReply": "Antwort veröffentlichen",
+    "backToForum": "← Zurück zum Forum",
+    "noDiscussions": "Noch keine Diskussionen"
+  },
+  "dashboard": {
+    "welcome": "Willkommen bei Satohash",
+    "welcomeSubtitle": "Ihre Zentrale für manipulationssichere Dokumente. Stempeln, verifizieren und verwalten Sie alle Ihre notarisierten Dokumente an einem Ort.",
+    "dismiss": "Schließen",
+    "recentActivity": "Letzte Aktivität",
+    "quickActions": "Schnellaktionen"
+  },
+  "settings": {
+    "pageTitle": "Einstellungen",
+    "theme": "Design",
+    "language": "Sprache",
+    "account": "Konto",
+    "notifications": "Benachrichtigungen",
+    "save": "Änderungen speichern",
+    "darkMode": "Dunkelmodus",
+    "lightMode": "Hellmodus"
+  },
+  "access": {
+    "signIn": "Anmelden",
+    "title": "Willkommen bei Satohash",
+    "subtitle": "Der professionelle Standard für auf Bitcoin verankerte Dokumentennotarisierung",
+    "getStarted": "Loslegen",
+    "learnMore": "Mehr erfahren"
+  },
+  "errors": {
+    "generic": "Etwas ist schiefgelaufen",
+    "network": "Netzwerkfehler — bitte versuchen Sie es erneut",
+    "hashFailed": "Hash-Generierung fehlgeschlagen",
+    "stampFailed": "Dokument konnte nicht gestempelt werden",
+    "verifyFailed": "Verifizierung fehlgeschlagen",
+    "loadFailed": "Laden fehlgeschlagen"
   }
 }

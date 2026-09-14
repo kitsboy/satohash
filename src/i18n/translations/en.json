@@ -208,7 +208,11 @@
     "copied": "Copied!"
   },
   "footer": {
-    "supportDevelopers": "Support our developers"
+    "supportDevelopers": "Support our developers",
+    "verifyAt": "Verify this document at",
+    "poweredBy": "Powered by OpenTimestamps & Bitcoin",
+    "createdBy": "Created by",
+    "rights": "All rights reserved"
   },
   "common": {
     "back": "Back",
@@ -221,5 +225,94 @@
     "loading": "Loading...",
     "error": "Error",
     "success": "Success"
+  },
+  "landing": {
+    "heroTitle": "Anchor Your Documents to Bitcoin — Forever",
+    "heroSubtitle": "Create cryptographic proof that your documents existed at a specific time. Zero-knowledge. Tamper-proof. Verified by the Bitcoin blockchain.",
+    "heroCta": "Stamp a Document Now",
+    "heroCta2": "See How It Works",
+    "step1": "Hash locally",
+    "step2": "Anchor to Bitcoin",
+    "step3": "Prove forever",
+    "socialProof": "Hash on your device. Bitcoin keeps the receipt.",
+    "tryTemplate": "Try a template for free",
+    "features": {
+      "title": "Everything You Need for Tamper-Proof Documents",
+      "subtitle": "Professional-grade notarization powered by Bitcoin and open standards"
+    }
+  },
+  "templates": {
+    "pageTitle": "Notary Templates",
+    "subtitle": "Choose a template to pre-fill your document and anchor it to Bitcoin",
+    "searchPlaceholder": "Search templates…",
+    "downloadPdf": "Download PDF",
+    "emailPackage": "Email Package",
+    "anchorBitcoin": "Anchor to Bitcoin",
+    "saveVault": "Save to Vault",
+    "print": "Print Document",
+    "backToTemplates": "← Back to Templates",
+    "preview": "Preview",
+    "shareLink": "Copy Share Link",
+    "darkMode": "Dark Mode",
+    "fieldsComplete": "Fields Complete",
+    "checklist": "Checklist",
+    "versionHistory": "Version History",
+    "restore": "Restore",
+    "zeroKnowledge": "Zero-Knowledge",
+    "zeroKnowledgeDesc": "Your document contents never leave your device — only the SHA-256 hash is sent to the server.",
+    "progress": "of fields filled"
+  },
+  "verify": {
+    "pageTitle": "Verify Document",
+    "subtitle": "Upload a document and its .ots proof file to confirm authenticity against the Bitcoin blockchain",
+    "verified": "Verified",
+    "invalid": "Invalid",
+    "pending": "Pending Confirmation",
+    "copyHash": "Copy Hash",
+    "viewOnChain": "View on Chain"
+  },
+  "forum": {
+    "pageTitle": "Forum",
+    "subtitle": "Discuss notarization, Bitcoin proofs, and tamper-proof documents.",
+    "newThread": "Start a New Thread",
+    "threadTitle": "Thread title",
+    "yourName": "Your name",
+    "createThread": "Create",
+    "writePost": "Write your post…",
+    "postReply": "Post Reply",
+    "backToForum": "← Back to Forum",
+    "noDiscussions": "No discussions yet"
+  },
+  "dashboard": {
+    "welcome": "Welcome to Satohash",
+    "welcomeSubtitle": "Your hub for tamper-proof document management. Stamp, verify, and manage all your notarized documents in one place.",
+    "dismiss": "Dismiss",
+    "recentActivity": "Recent Activity",
+    "quickActions": "Quick Actions"
+  },
+  "settings": {
+    "pageTitle": "Settings",
+    "theme": "Theme",
+    "language": "Language",
+    "account": "Account",
+    "notifications": "Notifications",
+    "save": "Save Changes",
+    "darkMode": "Dark Mode",
+    "lightMode": "Light Mode"
+  },
+  "access": {
+    "signIn": "Sign In",
+    "title": "Welcome to Satohash",
+    "subtitle": "The professional standard for Bitcoin-anchored document notarization",
+    "getStarted": "Get Started",
+    "learnMore": "Learn More"
+  },
+  "errors": {
+    "generic": "Something went wrong",
+    "network": "Network error — please try again",
+    "hashFailed": "Hash generation failed",
+    "stampFailed": "Failed to stamp document",
+    "verifyFailed": "Verification failed",
+    "loadFailed": "Failed to load"
   }
 }
