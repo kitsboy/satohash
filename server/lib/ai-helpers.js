@@ -1,5 +1,3 @@
-import logger from '../logger.js'
-
 export async function runClaudeOrMock(anthropicClient, prompt, mockJson, maxTokens = 800) {
   if (anthropicClient) {
     const response = await anthropicClient.messages.create({

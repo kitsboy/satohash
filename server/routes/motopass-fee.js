@@ -16,7 +16,6 @@
  * CORS is family-scoped (CORS_ORIGIN) — no secrets in responses.
  */
 
-import crypto from 'crypto'
 import logger from '../logger.js'
 
 export function register(app, deps) {

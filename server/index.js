@@ -122,7 +122,6 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 // IPFS disabled — ipfs-http-client is not ESM-compatible; using mock CIDs
-let ipfs = null
 
 // Mock Nodemailer transporter
 let emailTransporter
@@ -163,7 +162,7 @@ if (config.ANTHROPIC_API_KEY) {
   // Mock: log and return fake response
   anthropicClient = {
     messages: {
-      create: async ({ model = 'claude-haiku-4-5', max_tokens = 1000, messages = [] }) => {
+      create: async ({ messages = [] }) => {
         const prompt = messages[0]?.content?.[0]?.text || 'No prompt'
         console.log('[MOCK CLAUDE] Prompt:', prompt)
         // Simple heuristic response
@@ -188,7 +187,7 @@ if (config.SENTRY_DSN?.trim()) {
     dsn: config.SENTRY_DSN.trim(),
     environment: config.NODE_ENV,
     tracesSampleRate: 0.3,
-    beforeSend(event, hint) {
+    beforeSend(event) {
       // httpContext removed — use Sentry's own request context
       return event
     }

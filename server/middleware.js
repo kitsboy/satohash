@@ -2,7 +2,6 @@ import { v4 as uuidv4 } from 'uuid'
 import rateLimit from 'express-rate-limit'
 import logger from './logger.js'
 import redis from './cache.js'
-import * as Sentry from '@sentry/node'
 import { hashClientIp } from './security.js'
 
 /**

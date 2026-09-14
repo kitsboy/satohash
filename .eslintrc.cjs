@@ -21,7 +21,13 @@ module.exports = {
       { allowConstantExport: true },
     ],
     'react/prop-types': 'off',
-    'no-unused-vars': 'warn',
+    'no-unused-vars': [
+      'warn',
+      // A leading underscore marks a binding kept for interface/compat reasons
+      // (e.g. Express error handlers must keep 4 params; mock signatures mirror
+      // the real API). Everything else unused is a genuine smell.
+      { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }
+    ],
     'react-hooks/set-state-in-effect': 'off'
   },
   overrides: [

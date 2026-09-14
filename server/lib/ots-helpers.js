@@ -8,8 +8,6 @@ export const loadOtsFile = (buffer) => {
   }
 }
 
-const VERIFY_BASE_URL = 'https://satohash.giveabit.io'
-
 // Working public OTS aggregator pools. Verified live from THOR on 2026-08-26:
 // a/b.pool.opentimestamps.org and a.pool.eternitywall.com accept POST /digest
 // and return a real pending attestation in <1.5s. These aggregate up to the

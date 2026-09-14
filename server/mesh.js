@@ -58,7 +58,7 @@ class NotaryMesh {
     }
   }
 
-  async queryPeer(peer, hash) {
+  async queryPeer(peer, _hash) {
     // Mocking peer response
     return { verified: true, peer }
   }

@@ -4,63 +4,11 @@
  * @param {object} deps
  */
 export function register(app, deps) {
-  const {
-    express,
-    db,
-    logger,
-    config,
-    stripe,
-    io,
-    upload,
-    multer,
-    anthropicClient,
-    emailTransporter,
-    jwt,
-    z,
-    OpenTimestamps,
-    rateLimit,
-    paywallMiddleware,
-    authMiddleware,
-    searchRateLimiter,
-    requireBearerAdmin,
-    requireNpub,
-    ERROR_CODES,
-    sendError,
-    parseHash,
-    parseUuid,
-    webhookEventsSchema,
-    snapperBodySchema,
-    stampCounter,
-    confirmationCounter,
-    forumPostsCounter,
-    register: promRegister,
-    buildMetricsPayload,
-    buildPublicDirectory,
-    injectMetadata,
-    getGitMetadata,
-    publishTimestampToNostr,
-    pingRelays,
-    addSignerToProof,
-    redis,
-    performBackup,
-    uuidv4,
-    crypto,
-    fs,
-    path,
-    runClaudeOrMock,
-    parseJsonObject,
-    loadOtsFile,
-    stampWithTimeout,
-    validateWebhookUrl,
-    sanitizeGitPath,
-    nip19,
-    fetchNostrProfile,
-    DOC_SLUGS
-  } = deps
+  const { db, stampCounter, confirmationCounter, pingRelays, redis, fs, path } = deps
 
   app.get('/health/ui', async (req, res) => {
     try {
-      const { renderHealthDashboardHtml } = await import('./health-dashboard.js')
+      const { renderHealthDashboardHtml } = await import('../health-dashboard.js')
       let stamps = 0
       try {
         stamps = db.prepare('SELECT COUNT(*) AS n FROM timestamps').get()?.n || 0

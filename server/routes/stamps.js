@@ -21,55 +21,32 @@ function authoredFromCosignatures(raw) {
 
 export function register(app, deps) {
   const {
-    express,
     db,
     logger,
-    config,
-    stripe,
     io,
     upload,
-    multer,
-    anthropicClient,
     emailTransporter,
-    jwt,
     z,
     OpenTimestamps,
     rateLimit,
     paywallMiddleware,
     authMiddleware,
-    searchRateLimiter,
-    requireBearerAdmin,
     requireNpub,
     ERROR_CODES,
     sendError,
-    parseHash,
     parseUuid,
-    webhookEventsSchema,
     snapperBodySchema,
     stampCounter,
     confirmationCounter,
-    forumPostsCounter,
-    register: promRegister,
-    buildMetricsPayload,
-    buildPublicDirectory,
-    injectMetadata,
     getGitMetadata,
     publishTimestampToNostr,
-    pingRelays,
     addSignerToProof,
     redis,
-    performBackup,
     uuidv4,
     crypto,
-    fs,
-    path,
     loadOtsFile,
     stampWithTimeout,
-    validateWebhookUrl,
-    sanitizeGitPath,
-    nip19,
-    fetchNostrProfile,
-    DOC_SLUGS
+    sanitizeGitPath
   } = deps
 
   const VERIFY_BASE_URL = process.env.VERIFY_BASE_URL || 'https://satohash.io'
@@ -139,7 +116,7 @@ export function register(app, deps) {
         })
       }
 
-      const { hash, filename, email, nostr_pubkey, authored } = validation.data
+      const { hash, filename, email, authored } = validation.data
       let authoredBinding = null
       if (authored) {
         authoredBinding = assertAuthoredStamp({ hash, authored })
@@ -497,7 +474,7 @@ export function register(app, deps) {
           details: validation.error.issues.map((i) => i.message)
         })
       }
-      const { hash, url, metadata, title } = validation.data
+      const { hash, url, title } = validation.data
       const auth = req.headers['x-snapper-key']
       if (auth !== process.env.SNAPPER_KEY && process.env.NODE_ENV === 'production') {
         return res.status(401).json({ error: 'Invalid Snapper extension key.' })

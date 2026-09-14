@@ -4,59 +4,7 @@
  * @param {object} deps
  */
 export function register(app, deps) {
-  const {
-    express,
-    db,
-    logger,
-    config,
-    stripe,
-    io,
-    upload,
-    multer,
-    anthropicClient,
-    emailTransporter,
-    jwt,
-    z,
-    OpenTimestamps,
-    rateLimit,
-    paywallMiddleware,
-    authMiddleware,
-    searchRateLimiter,
-    requireBearerAdmin,
-    requireNpub,
-    ERROR_CODES,
-    sendError,
-    parseHash,
-    parseUuid,
-    webhookEventsSchema,
-    snapperBodySchema,
-    stampCounter,
-    confirmationCounter,
-    forumPostsCounter,
-    register: promRegister,
-    buildMetricsPayload,
-    buildPublicDirectory,
-    injectMetadata,
-    getGitMetadata,
-    publishTimestampToNostr,
-    pingRelays,
-    addSignerToProof,
-    redis,
-    performBackup,
-    uuidv4,
-    crypto,
-    fs,
-    path,
-    runClaudeOrMock,
-    parseJsonObject,
-    loadOtsFile,
-    stampWithTimeout,
-    validateWebhookUrl,
-    sanitizeGitPath,
-    nip19,
-    fetchNostrProfile,
-    DOC_SLUGS
-  } = deps
+  const { db, logger, anthropicClient, runClaudeOrMock, parseJsonObject } = deps
 
   app.post('/api/ai/summarize', async (req, res) => {
     try {
@@ -161,7 +109,7 @@ export function register(app, deps) {
   /** GET /api/ai/search?q= — lexical + local embedding semantic rank */
   app.get('/api/ai/search', async (req, res) => {
     try {
-      const { embedText, cosineSimilarity, semanticRank } = await import('./ai-ml.js')
+      const { embedText, semanticRank } = await import('../ai-ml.js')
       const q = String(req.query.q || '').trim()
       if (!q || q.length < 2) {
         return res.status(400).json({ error: 'q query param required (min 2 chars)' })
@@ -249,7 +197,7 @@ export function register(app, deps) {
   /** POST /api/ai/embed — local embedding vector */
   app.post('/api/ai/embed', async (req, res) => {
     try {
-      const { embedText } = await import('./ai-ml.js')
+      const { embedText } = await import('../ai-ml.js')
       const text = typeof req.body?.text === 'string' ? req.body.text : ''
       if (!text.trim()) return res.status(400).json({ error: 'text required' })
       const vector = embedText(text)
@@ -262,7 +210,7 @@ export function register(app, deps) {
   /** POST /api/ai/fraud — local fraud/change ML (+ optional LLM note) */
   app.post('/api/ai/fraud', async (req, res) => {
     try {
-      const { fraudScore } = await import('./ai-ml.js')
+      const { fraudScore } = await import('../ai-ml.js')
       const a = typeof req.body?.a === 'string' ? req.body.a : ''
       const b = typeof req.body?.b === 'string' ? req.body.b : ''
       if (!a.trim() || !b.trim()) {
