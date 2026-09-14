@@ -1,3 +1,9 @@
+## Latest Session Summary (Grok M3, 2026-09-14 — finish i18n list)
+
+**Lane:** SPA only. **Kimi: do not rebuild the API.** Template catalog (25 templates, field labels) in 7 locales. Offers staged chrome, still deferred in nav. Remaining Cam: pin `/watch`, iPhone unfurl. Snapper scaffold.
+
+---
+
 ## Latest Session Summary (Grok M3, 2026-09-14 — camera QR)
 
 **Lane:** SPA only. **Kimi: do not rebuild the API.** PDFs/email QR → `https://satohash.io/p/{hash}` (phone cameras). Remaining C: contract editor/view, onboarding, forum chrome.

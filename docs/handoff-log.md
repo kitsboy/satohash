@@ -1,3 +1,9 @@
+## 2026-09-14 (Grok M3 — finish list: template catalog + leftover chrome)
+
+SPA only. 25 templates: titles, descriptions, field labels in en/es/fr/de/pt/sw/zh. Demo party names stay English. Offers chrome staged (nav still deferred). Lifecycle / proof explorer / ZK demo chrome. Kimi: **do not rebuild API**.
+
+---
+
 ## 2026-09-14 (Grok M3 — camera QR on PDF/email + remaining C)
 
 SPA only. Template and contract PDFs encode `https://satohash.io/p/{hash}` so iPhone/Android cameras open the proof card (they cannot read `.ots` natively). Email includes the same URL. Contract editor/view, onboarding leftovers, forum chrome i18n. Kimi: **do not rebuild API**.

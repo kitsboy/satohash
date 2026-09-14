@@ -35,7 +35,7 @@ Cam: whole site in the seven languages we already offer. Commit + push after eac
 |-------|--------|----------|
 | **A — product loop** | **[x]** `89262b1` | Stamp leftovers, Verify, `/stamp/done`, `/p/<hash>` SPA + zero-JS, Counsel, Status, Watch, nav/footer |
 | **B — public marketing** | **[~]** | Templates extras done (drafts; stamp-this-draft). Offers still deferred. |
-| **C — app / ops** | **[~]** | Settings, vault, stats, mobile signer demo, certificates, admin, contract list/editor/view, v5, onboarding, forum. Remaining: template field labels. |
+| **C — app / ops** | **[x]** | Chrome + template catalog field labels in 7 locales. Offers deferred. Snapper scaffold. |
 | Catalog debt | **[x]** | en/es/fr/de/pt/sw/zh `translations/*.json` **250** keys. Stop growing inline `index.jsx` |
 
 Gate: `npm run i18n:check`. Keep Bitcoin / OpenTimestamps / `ots-cli` / hash hex / Pending·Confirmed in English.

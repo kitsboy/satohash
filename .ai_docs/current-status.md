@@ -1,7 +1,7 @@
 # Current Status — Satohash
 
 **Version:** **5.0.0-ELITE** (Build 331+)  
-**Last Updated:** 2026-09-14 (proof QR on PDF/email + remaining C chrome — Grok SPA; API still `5ec7756`)  
+**Last Updated:** 2026-09-14 (template catalog 7 locales — Grok SPA; API still `5ec7756`)  
 **Frontend:** https://satohash.io · www · CF Pages project **`satohash`** — Grok lane, `assetsDir: 'b'`  
 **API:** https://api.satohash.io ✅ LIVE (THOR Docker). Confirm SHA with `GET /health` (`gitSha`). **Live now: `5ec7756`** — Kimi rebuilt; keep-alive 65s/66s/120s. `Cache-Control: no-store`, Caddy OK, paywall off, ~316 stamps. Do **not** rebuild again unless HEAD moves.  
 **Metrics SoT:** `https://api.satohash.io/metrics.json`  
@@ -90,7 +90,10 @@
 - [ ] Snapper stays scaffold — do not sell as judiciary-ready
 - [x] Camera QR on template/contract PDF + email → satohash.io/p/{hash}
 - [x] Contract editor/view, onboarding leftovers, forum chrome
-- [ ] Remaining: template field labels; Offers deferred
+- [x] Template catalog titles/descriptions/field labels in 7 locales (demo names stay English)
+- [x] Offers chrome i18n (still deferred / staged Lightning)
+- [x] Lifecycle bar, proof explorer, ZK redaction demo chrome
+- [ ] Snapper stays scaffold; Cam X pin / iPhone unfurl later
 - [ ] Do **not** add Arabic until A+B+C are done
 - [ ] Cam still: pin `/watch` on **`@give_bit`**; iPhone `/p/` unfurl
 - [ ] API: **do not rebuild** for copy
