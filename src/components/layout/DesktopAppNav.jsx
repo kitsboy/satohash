@@ -40,7 +40,7 @@ export default function DesktopAppNav({ onOpenSearch }) {
     { name: t('nav', 'contracts'), path: '/contracts' },
     { name: 'Forum', path: '/forum' },
     { name: t('nav', 'settings'), path: '/settings' },
-    { name: 'Explorer', path: '/explorer' }
+    { name: 'Merkle demo', path: '/explorer' }
   ])
 
   const isActive = (path) =>

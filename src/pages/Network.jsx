@@ -662,7 +662,7 @@ export default function Network() {
               {t('networkPage.verifyCta')}
             </Link>
             <Link
-              to="/proof-of-existence"
+              to="/explorer"
               className="inline-flex min-h-[48px] items-center rounded-xl border px-6 py-3 text-xs font-black uppercase"
               style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
             >

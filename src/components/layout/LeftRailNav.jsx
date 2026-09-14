@@ -30,7 +30,7 @@ const MORE_ITEMS = [
   { name: 'Government', path: '/government' },
   { name: 'Evidence admissibility', path: '/evidence-admissibility' },
   { name: 'Protocol Stats', path: '/protocol-stats' },
-  { name: 'Explorer', path: '/explorer' },
+  { name: 'Merkle demo', path: '/explorer' },
   { name: 'Offers', path: '/offers' }
 ]
 
@@ -227,7 +227,7 @@ export default function LeftRailNav() {
           {advancedOpen && (
             <div className="mt-1 space-y-0.5">
               <NavItem item={{ name: 'Node Mesh', path: '/nodes', icon: Network }} />
-              <NavItem item={{ name: 'Block Explorer', path: '/explorer', icon: Search }} />
+              <NavItem item={{ name: 'Merkle demo', path: '/explorer', icon: Search }} />
               <NavItem item={{ name: 'Web Capture', path: '/snapper', icon: Camera }} />
               <NavItem
                 item={{ name: t('nav', 'templates'), path: '/templates', icon: LayoutTemplate }}

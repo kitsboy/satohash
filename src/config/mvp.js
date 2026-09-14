@@ -39,7 +39,9 @@ export const MVP_PUBLIC_PATHS = [
   '/legal/privacy',
   '/legal/crypto-notice',
   '/status',
-  '/counsel'
+  '/counsel',
+  '/explorer',
+  '/atlas'
 ]
 
 /** Sub-paths allowed in MVP mode (e.g. /verify/:hash from MotoPass) */
@@ -107,7 +109,6 @@ export const MVP_DEFERRED_PATHS = [
   '/contracts',
   '/offers',
   '/admin',
-  '/explorer',
   '/protocol-stats',
   '/proof-of-existence',
   '/stamp/live-feed',

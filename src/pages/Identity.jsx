@@ -13,8 +13,10 @@ import {
   Zap,
   Loader2
 } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import { nip19 } from 'nostr-tools'
 import { toast } from 'sonner'
+import { useTranslation } from 'react-i18next'
 import usePageMeta from '../hooks/usePageMeta'
 import {
   verifyNip05,
@@ -25,6 +27,7 @@ import {
 import { KIMI_NOSTR, SATOHASH_NOSTR } from '../config/mvp'
 
 export default function IdentityVerification() {
+  const { t } = useTranslation()
   usePageMeta({ page: 'identity' })
 
   const [npub, setNpub] = useState('')
@@ -90,7 +93,7 @@ export default function IdentityVerification() {
       const result = await verifyLightningAddress(lightningAddress)
       setIsLnVerified(true)
       persistProfile({ lightning: result.address, lightning_verified: true })
-      toast.success('⚡ Lightning Address Verified!', { description: result.address })
+      toast.success('Lightning address resolved', { description: result.address })
     } catch (e) {
       setIsLnVerified(false)
       toast.error(e.message)
@@ -110,14 +113,13 @@ export default function IdentityVerification() {
       const result = await verifyNip05(nip05Handle, pk)
       setVerifyResult('verified')
       persistProfile({ nip05: result.handle, nip05_verified: true })
-      toast.success('NIP-05 Verified!', { description: result.handle })
+      toast.success('NIP-05 matched', { description: result.handle })
 
-      // Offer @satohash.io registration when API is available
       const [local, domain] = result.handle.split('@')
       if (domain === 'satohash.io' && npub) {
         try {
           await registerSatohashNip05(local, result.pubkeyHex, npub)
-          toast.success('Registered on satohash.io mesh')
+          toast.success('NIP-05 name listed on satohash.io (lookup only — not authorship)')
         } catch {
           /* static site — registration needs backend */
         }
@@ -138,7 +140,7 @@ export default function IdentityVerification() {
       const result = await verifyNip05(handle, pubkeyHex)
       setVerifyResult('verified')
       persistProfile({ nip05: result.handle, nip05_verified: true })
-      toast.success('NIP-05 Verified!', { description: result.handle })
+      toast.success('NIP-05 matched', { description: result.handle })
     } catch (e) {
       setVerifyResult('failed')
       toast.error(e.message)
@@ -153,13 +155,52 @@ export default function IdentityVerification() {
   const handleQuickVerifyKimi = () =>
     handleQuickVerifyHandle(KIMI_NOSTR.nip05, KIMI_NOSTR.pubkeyHex)
 
+  const statusLabel =
+    verifyResult === 'verified'
+      ? t('identityPage.statusVerified')
+      : npub
+        ? t('identityPage.statusKeyLoaded')
+        : t('identityPage.statusWaiting')
+
   return (
     <div
       className="min-h-screen pb-20 selection:bg-[var(--accent-active)]/30"
       style={{ background: 'var(--bg-primary)' }}
     >
       <div className="layout-container max-w-5xl">
-        {/* Institutional Header */}
+        <div
+          className="mb-10 rounded-2xl border p-5 sm:p-6"
+          style={{
+            borderColor: 'rgba(240,180,41,0.5)',
+            background: 'rgba(240,180,41,0.1)'
+          }}
+        >
+          <div
+            className="mb-3 inline-flex w-fit items-center rounded-full border px-3 py-1"
+            style={{
+              borderColor: 'rgba(240,180,41,0.55)',
+              background: 'rgba(240,180,41,0.16)',
+              color: 'var(--accent-gold)'
+            }}
+          >
+            <span className="font-mono text-[10px] font-black tracking-[0.18em] uppercase">
+              {t('identityPage.honestyChip')}
+            </span>
+          </div>
+          <p
+            className="text-base leading-snug font-black sm:text-lg"
+            style={{ color: 'var(--accent-gold)' }}
+          >
+            {t('identityPage.honestyLead')}
+          </p>
+          <p
+            className="mt-2 max-w-2xl text-sm leading-relaxed font-semibold"
+            style={{ color: 'var(--text-primary)' }}
+          >
+            {t('identityPage.honestyBody')}
+          </p>
+        </div>
+
         <div className="mb-20 flex flex-col items-end justify-between gap-12 md:flex-row">
           <div>
             <motion.div
@@ -174,23 +215,26 @@ export default function IdentityVerification() {
               className="mb-6 text-6xl leading-none font-black tracking-tighter uppercase italic md:text-8xl"
               style={{ color: 'var(--text-primary)' }}
             >
-              Sovereign <br /> <span style={{ color: 'var(--accent-active)' }}>IDENTITY.</span>
+              {t('identityPage.titleBefore')} <br />{' '}
+              <span style={{ color: 'var(--accent-active)' }}>
+                {t('identityPage.titleHighlight')}
+              </span>
             </h1>
             <p
               className="max-w-xl text-lg leading-relaxed font-bold italic"
               style={{ color: 'var(--text-secondary)' }}
             >
-              Link your cryptographic presence to real-world attestations. Establish a persistent,
-              verifiable identity across the Nostr and Bitcoin meshes.
+              {t('identityPage.lede')}
             </p>
             <p
               className="mt-4 max-w-xl text-sm leading-relaxed font-semibold"
               style={{ color: 'var(--text-secondary)' }}
             >
-              Product NIP-05{' '}
+              {t('identityPage.productNip05Label')}{' '}
               <span style={{ color: 'var(--accent-active)' }}>{SATOHASH_NOSTR.nip05}</span>
               {' — '}
-              verifies against satohash.io/.well-known/nostr.json. Human: {KIMI_NOSTR.nip05}.
+              {t('identityPage.productNip05Hint')}{' '}
+              {t('identityPage.humanNip05', { handle: KIMI_NOSTR.nip05 })}
             </p>
           </div>
 
@@ -206,7 +250,7 @@ export default function IdentityVerification() {
                 className="text-[10px] font-black uppercase italic"
                 style={{ color: 'var(--text-primary)' }}
               >
-                Identity Status
+                {t('identityPage.statusTitle')}
               </h4>
               <p
                 className="text-[10px] font-bold tracking-widest uppercase"
@@ -215,18 +259,13 @@ export default function IdentityVerification() {
                     verifyResult === 'verified' ? 'var(--accent-success)' : 'var(--text-secondary)'
                 }}
               >
-                {verifyResult === 'verified'
-                  ? 'NIP-05 Verified'
-                  : npub
-                    ? 'Key Loaded'
-                    : 'Awaiting Verification'}
+                {statusLabel}
               </p>
             </div>
           </div>
         </div>
 
         <div className="grid gap-12 lg:grid-cols-5">
-          {/* Identity Console */}
           <div className="space-y-8 lg:col-span-3">
             <div
               className="glass-card relative overflow-hidden p-12 shadow-2xl"
@@ -240,7 +279,7 @@ export default function IdentityVerification() {
                 className="mb-10 text-xs font-black tracking-[0.3em] uppercase italic"
                 style={{ color: 'var(--text-secondary)' }}
               >
-                Cross-Mesh Attestation
+                {t('identityPage.consoleTitle')}
               </h3>
 
               <div className="space-y-10">
@@ -249,7 +288,7 @@ export default function IdentityVerification() {
                     className="mb-4 block text-[10px] font-black tracking-[0.2em] uppercase italic"
                     style={{ color: 'var(--text-primary)' }}
                   >
-                    Nostr Public Key (npub)
+                    {t('identityPage.npubLabel')}
                   </label>
                   <div className="group relative">
                     <input
@@ -261,24 +300,26 @@ export default function IdentityVerification() {
                         background: 'var(--surface-raised)',
                         color: 'var(--accent-active)'
                       }}
-                      placeholder="npub1..."
+                      placeholder={t('identityPage.npubPlaceholder')}
                     />
                     <button
+                      type="button"
                       className="absolute top-1/2 right-6 -translate-y-1/2 transition-colors"
                       style={{ color: 'var(--text-secondary)' }}
+                      aria-hidden="true"
+                      tabIndex={-1}
                     >
                       <Link2 size={20} />
                     </button>
                   </div>
                 </div>
 
-                {/* NIP-05 handle input + verify */}
                 <div>
                   <label
                     className="mb-4 block text-[10px] font-black tracking-[0.2em] uppercase italic"
                     style={{ color: 'var(--text-primary)' }}
                   >
-                    NIP-05 Handle
+                    {t('identityPage.nip05Label')}
                   </label>
                   <div className="flex gap-3">
                     <input
@@ -293,7 +334,7 @@ export default function IdentityVerification() {
                         background: 'var(--surface-raised)',
                         color: 'var(--text-primary)'
                       }}
-                      placeholder="you@domain.com"
+                      placeholder={t('identityPage.nip05Placeholder')}
                       onKeyDown={(e) => e.key === 'Enter' && handleVerifyNip05()}
                     />
                     <button
@@ -302,7 +343,11 @@ export default function IdentityVerification() {
                       className="flex items-center gap-2 rounded-2xl px-5 py-2 text-[10px] font-black tracking-widest uppercase transition-all hover:opacity-90 disabled:opacity-40"
                       style={{ background: 'var(--accent-active)', color: '#fff' }}
                     >
-                      {isVerifying ? <Loader2 size={14} className="animate-spin" /> : 'Verify'}
+                      {isVerifying ? (
+                        <Loader2 size={14} className="animate-spin" />
+                      ) : (
+                        t('identityPage.verifyBtn')
+                      )}
                     </button>
                   </div>
                   {verifyResult && (
@@ -314,7 +359,7 @@ export default function IdentityVerification() {
                             className="text-[10px] font-black tracking-widest uppercase"
                             style={{ color: 'var(--accent-success)' }}
                           >
-                            NIP-05 Verified ✓
+                            {t('identityPage.nip05Ok')}
                           </span>
                         </>
                       ) : (
@@ -324,7 +369,7 @@ export default function IdentityVerification() {
                             className="text-[10px] font-black tracking-widest uppercase"
                             style={{ color: 'var(--accent-danger)' }}
                           >
-                            Verification Failed ✗
+                            {t('identityPage.nip05Fail')}
                           </span>
                         </>
                       )}
@@ -332,13 +377,12 @@ export default function IdentityVerification() {
                   )}
                 </div>
 
-                {/* Lightning Address Verification */}
                 <div>
                   <label
                     className="mb-4 block text-[10px] font-black tracking-[0.2em] uppercase italic"
                     style={{ color: 'var(--text-primary)' }}
                   >
-                    Lightning Address
+                    {t('identityPage.lnLabel')}
                   </label>
                   <div className="flex gap-3">
                     <input
@@ -353,7 +397,7 @@ export default function IdentityVerification() {
                         background: 'var(--surface-raised)',
                         color: 'var(--text-primary)'
                       }}
-                      placeholder="you@getalby.com"
+                      placeholder={t('identityPage.lnPlaceholder')}
                       onKeyDown={(e) => e.key === 'Enter' && handleVerifyLightningAddress()}
                     />
                     <button
@@ -362,14 +406,18 @@ export default function IdentityVerification() {
                       className="flex items-center gap-2 rounded-2xl px-5 py-2 text-[10px] font-black tracking-widest uppercase transition-all hover:opacity-90 disabled:opacity-40"
                       style={{ background: 'var(--accent-gold)', color: '#141b25' }}
                     >
-                      {isVerifyingLn ? <Loader2 size={14} className="animate-spin" /> : 'Link'}
+                      {isVerifyingLn ? (
+                        <Loader2 size={14} className="animate-spin" />
+                      ) : (
+                        t('identityPage.lnBtn')
+                      )}
                     </button>
                   </div>
                   {isLnVerified && (
                     <div className="mt-3 flex items-center gap-2">
                       <Zap size={14} style={{ color: 'var(--accent-gold)' }} />
                       <span className="text-[10px] font-black tracking-widest text-[var(--accent-gold)] uppercase">
-                        ⚡ Lightning Check Badge Awarded ✓
+                        {t('identityPage.lnOk')}
                       </span>
                     </div>
                   )}
@@ -391,19 +439,19 @@ export default function IdentityVerification() {
                       className="mb-1 text-[9px] font-black tracking-widest uppercase"
                       style={{ color: 'var(--text-secondary)' }}
                     >
-                      Product NIP-05
+                      {t('identityPage.productNip05Label')}
                     </div>
                     <div
                       className="mb-4 text-[10px] font-bold"
                       style={{ color: 'var(--text-secondary)' }}
                     >
-                      Verify {SATOHASH_NOSTR.nip05} via satohash.io/.well-known/nostr.json
+                      {t('identityPage.productCardBody', { handle: SATOHASH_NOSTR.nip05 })}
                     </div>
                     <span
                       className="text-[10px] font-black uppercase italic group-hover:underline"
                       style={{ color: 'var(--accent-active)' }}
                     >
-                      Run Check <ExternalLink size={10} className="inline" />
+                      {t('identityPage.runCheck')} <ExternalLink size={10} className="inline" />
                     </span>
                   </button>
                   <button
@@ -421,19 +469,19 @@ export default function IdentityVerification() {
                       className="mb-1 text-[9px] font-black tracking-widest uppercase"
                       style={{ color: 'var(--text-secondary)' }}
                     >
-                      Human NIP-05
+                      {t('identityPage.humanCardTitle')}
                     </div>
                     <div
                       className="mb-4 text-[10px] font-bold"
                       style={{ color: 'var(--text-secondary)' }}
                     >
-                      Verify {KIMI_NOSTR.nip05} (Give A Bit)
+                      {t('identityPage.humanCardBody', { handle: KIMI_NOSTR.nip05 })}
                     </div>
                     <span
                       className="text-[10px] font-black uppercase italic group-hover:underline"
                       style={{ color: 'var(--accent-active)' }}
                     >
-                      Run Check <ExternalLink size={10} className="inline" />
+                      {t('identityPage.runCheck')} <ExternalLink size={10} className="inline" />
                     </span>
                   </button>
                 </div>
@@ -448,7 +496,7 @@ export default function IdentityVerification() {
                     color: 'var(--accent-active)'
                   }}
                 >
-                  Open profile on njump <ExternalLink size={12} />
+                  {t('identityPage.njump')} <ExternalLink size={12} />
                 </a>
 
                 <button
@@ -458,12 +506,12 @@ export default function IdentityVerification() {
                 >
                   {isConnecting ? (
                     <>
-                      <Loader2 size={16} className="animate-spin" /> Connecting...
+                      <Loader2 size={16} className="animate-spin" /> {t('identityPage.connecting')}
                     </>
                   ) : extensionAvailable ? (
-                    'Anchor Identity Protocol'
+                    t('identityPage.connect')
                   ) : (
-                    'Anchor Identity Protocol (No Extension Found)'
+                    t('identityPage.connectNoExt')
                   )}
                 </button>
 
@@ -489,7 +537,13 @@ export default function IdentityVerification() {
                           className="text-sm font-black uppercase italic"
                           style={{ color: 'var(--accent-success)' }}
                         >
-                          Identity Witnessed
+                          {t('identityPage.connectedTitle')}
+                        </p>
+                        <p
+                          className="mt-1 text-[10px] font-semibold"
+                          style={{ color: 'var(--text-secondary)' }}
+                        >
+                          {t('identityPage.connectedHint')}
                         </p>
                         <p
                           className="mt-1 truncate font-mono text-[10px]"
@@ -504,7 +558,6 @@ export default function IdentityVerification() {
               </div>
             </div>
 
-            {/* Terminal Trace */}
             <div
               className="relative rounded-[2.5rem] p-10 font-mono text-[10px] shadow-2xl"
               style={{
@@ -519,32 +572,31 @@ export default function IdentityVerification() {
                 style={{ color: 'var(--accent-active)' }}
               >
                 <Terminal size={16} />
-                <span className="font-bold tracking-[0.4em] uppercase">Mesh_Auth_Kernel::v3</span>
+                <span className="font-bold tracking-[0.4em] uppercase">
+                  {t('identityPage.termTitle')}
+                </span>
               </div>
               <div className="space-y-2 opacity-60">
                 <p>
-                  <span style={{ color: 'var(--accent-active)' }}>[SYSTEM]</span>{' '}
-                  {extensionAvailable
-                    ? 'NIP-07 extension detected.'
-                    : 'Awaiting NIP-07 extension signature...'}
+                  <span style={{ color: 'var(--accent-active)' }}>[NIP-07]</span>{' '}
+                  {extensionAvailable ? t('identityPage.termExtYes') : t('identityPage.termExtNo')}
                 </p>
                 <p>
-                  <span style={{ color: 'var(--accent-success)' }}>[NOSTR]</span> Global relay
-                  discovery initiated (wss://relay.satohash.io)
+                  <span style={{ color: 'var(--accent-success)' }}>[NIP-05]</span>{' '}
+                  {t('identityPage.termNip05')}
                 </p>
                 <p>
-                  <span style={{ color: 'var(--accent-active)' }}>[MESH]</span> Synchronizing
-                  identity state with witness mesh nodes...
+                  <span style={{ color: 'var(--accent-active)' }}>[STAMP]</span>{' '}
+                  {t('identityPage.termStamp')}
                 </p>
                 <p>
-                  <span style={{ color: 'var(--accent-active)' }}>[PROOF]</span> Constructing Merkle
-                  branch for pubkey attestation.
+                  <span style={{ color: 'var(--accent-active)' }}>[LOOKUP]</span>{' '}
+                  {t('identityPage.termLocal')}
                 </p>
               </div>
             </div>
           </div>
 
-          {/* Sidebar Guidelines */}
           <div className="space-y-8 lg:col-span-2">
             <div
               className="glass-card relative overflow-hidden p-10 shadow-2xl"
@@ -557,23 +609,23 @@ export default function IdentityVerification() {
                 className="mb-8 text-xl font-black tracking-tight uppercase italic"
                 style={{ color: 'var(--text-primary)' }}
               >
-                Identity <br /> Protocol Guide
+                {t('identityPage.guideTitle')}
               </h3>
               <div className="relative z-10 space-y-8">
                 <GuideItem
                   num="01"
-                  title="Local Generation"
-                  desc="Your keys remain on your device. We only request signatures via NIP-07 extensions."
+                  title={t('identityPage.guide1Title')}
+                  desc={t('identityPage.guide1Body')}
                 />
                 <GuideItem
                   num="02"
-                  title="Relay Broadcast"
-                  desc="Once verified, your identity attestation is propagated across the global Nostr network."
+                  title={t('identityPage.guide2Title')}
+                  desc={t('identityPage.guide2Body')}
                 />
                 <GuideItem
                   num="03"
-                  title="Bitcoin Anchor"
-                  desc="Permanent identity anchoring is available for institutions requiring judicial-grade proof."
+                  title={t('identityPage.guide3Title')}
+                  desc={t('identityPage.guide3Body')}
                 />
               </div>
             </div>
@@ -587,9 +639,15 @@ export default function IdentityVerification() {
                 style={{ color: 'var(--text-secondary)' }}
               >
                 <Zap size={14} className="mr-2 inline" style={{ color: 'var(--accent-active)' }} />
-                Connecting your identity allows for automated &ldquo;One-Click&rdquo; notarization
-                via the Satohash API Mesh. Establish your reputation today.
+                {t('identityPage.aside')}
               </p>
+              <Link
+                to="/stamp"
+                className="mt-6 inline-flex min-h-[44px] items-center rounded-xl px-5 text-[10px] font-black tracking-widest uppercase"
+                style={{ background: 'var(--accent-gold)', color: '#141b25' }}
+              >
+                {t('identityPage.stampCta')}
+              </Link>
             </div>
           </div>
         </div>

@@ -94,7 +94,7 @@ export default function MobileBottomNav() {
 
               <div className="max-h-[inherit] overflow-y-auto overscroll-contain">
                 {[
-                  { name: t('nav', 'explorer') || 'Explorer', path: '/explorer' },
+                  { name: t('nav', 'explorer') || 'Merkle demo', path: '/explorer' },
                   { name: t('nav', 'dashboard'), path: '/dashboard' },
                   { name: t('nav.government') || 'Government', path: '/government' },
                   { name: t('nav.batchHash') || 'Batch hash', path: '/batch-hash' },

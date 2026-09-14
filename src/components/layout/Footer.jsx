@@ -95,7 +95,7 @@ const LINK_GROUPS = [
       { key: 'evidenceAdmissibility', path: '/evidence-admissibility' },
       { key: 'chainOfCustody', path: '/chain-of-custody' },
       { key: 'network', path: '/network' },
-      { key: 'proofOfExistence', path: '/proof-of-existence' }
+      { key: 'proofOfExistence', path: '/explorer' }
     ]
   },
   {

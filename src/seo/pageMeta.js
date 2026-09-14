@@ -459,39 +459,39 @@ export const pageMeta = {
   },
   identity: {
     en: {
-      title: 'NIP-05 Identity — Verifiable Nostr Signer',
+      title: 'Identity lookup — NIP-05 / NIP-07 (not authorship)',
       description:
-        'Link your Nostr key to a human-readable NIP-05 handle. Verify kimi@giveabit.io or register yourname@satohash.io.'
+        'Optional NIP-05 handle and Lightning address lookup. Satohash today proves when a file existed, not who made it. Connecting an extension does not turn a stamp into authorship.'
     },
     es: {
-      title: 'Identidad NIP-05 — Firmante Nostr Verificable',
+      title: 'Consulta de identidad — NIP-05 / NIP-07 (no es autoría)',
       description:
-        'Vincule su clave Nostr a un identificador NIP-05. Verifique kimi@giveabit.io o registre tunombre@satohash.io.'
+        'Consulta opcional de identificador NIP-05 y Lightning address. Satohash hoy prueba cuándo existió un archivo, no quién lo hizo.'
     },
     fr: {
-      title: 'Identité NIP-05 — Signataire Nostr Vérifiable',
+      title: 'Recherche d’identité — NIP-05 / NIP-07 (pas l’auteur)',
       description:
-        'Liez votre clé Nostr à un identifiant NIP-05. Vérifiez kimi@giveabit.io ou enregistrez votrenom@satohash.io.'
+        'Recherche optionnelle d’identifiant NIP-05 et d’adresse Lightning. Satohash prouve aujourd’hui quand un fichier a existé, pas qui l’a fait.'
     },
     de: {
-      title: 'NIP-05-Identität — Verifizierbarer Nostr-Signer',
+      title: 'Identitätsabfrage — NIP-05 / NIP-07 (keine Urheberschaft)',
       description:
-        'Verknüpfen Sie Ihren Nostr-Schlüssel mit einem NIP-05-Handle. Verifizieren Sie kimi@giveabit.io oder registrieren Sie ihrname@satohash.io.'
+        'Optionale NIP-05-Handle- und Lightning-Address-Abfrage. Satohash beweist heute, wann eine Datei existierte — nicht wer sie gemacht hat.'
     },
     pt: {
-      title: 'Identidade NIP-05 — Signatário Nostr Verificável',
+      title: 'Consulta de identidade — NIP-05 / NIP-07 (não é autoria)',
       description:
-        'Vincule sua chave Nostr a um identificador NIP-05. Verifique kimi@giveabit.io ou registre seunome@satohash.io.'
+        'Consulta opcional de identificador NIP-05 e Lightning address. Satohash hoje prova quando um ficheiro existiu, não quem o fez.'
     },
     sw: {
-      title: 'Utambulisho wa NIP-05 — Saini ya Nostr Inayothibitishwa',
+      title: 'Utafutaji wa utambulisho — NIP-05 / NIP-07 (si uandishi)',
       description:
-        'Unganisha ufunguo wako wa Nostr na kitambulisho cha NIP-05. Thibitisha kimi@giveabit.io au sajili jina@satohash.io.'
+        'Utafutaji wa hiari wa NIP-05 na anwani ya Lightning. Satohash leo inathibitisha lini faili ilikuwepo, si nani aliyeifanya.'
     },
     zh: {
-      title: 'NIP-05 身份 — 可验证的 Nostr 签名者',
+      title: '身份查询 — NIP-05 / NIP-07（不是作者证明）',
       description:
-        '将您的 Nostr 密钥链接到可读的 NIP-05 标识。验证 kimi@giveabit.io 或注册 yourname@satohash.io。'
+        '可选的 NIP-05 与 Lightning 地址查询。Satohash 今天证明文件何时存在，不证明是谁做的。'
     }
   },
   widgets: {
@@ -951,67 +951,76 @@ export const pageMeta = {
   },
   explorer: {
     en: {
-      title: 'Block Explorer — Bitcoin Proof Chain',
+      title: 'Merkle demo — how an OpenTimestamps tree works',
       description:
-        'Explore stamped proofs chronologically, by Merkle tree, or verification path. Noir institutional chain intelligence.'
+        'Educational demo of a Merkle tree with sample files. Not a live Bitcoin explorer. Live proofs: /network and /p/<hash>.'
     },
     es: {
-      title: 'Explorador de Bloques — Cadena de Pruebas Bitcoin',
+      title: 'Demo Merkle — cómo funciona un árbol OpenTimestamps',
       description:
-        'Explore pruebas selladas cronológicamente, por árbol Merkle o ruta de verificación.'
+        'Demo educativa de un árbol Merkle con archivos de ejemplo. No es un explorador Bitcoin en vivo. Pruebas reales: /network y /p/<hash>.'
     },
     fr: {
-      title: 'Explorateur — Chaîne de Preuves Bitcoin',
+      title: 'Démo Merkle — comment fonctionne un arbre OpenTimestamps',
       description:
-        'Explorez les preuves tamponnées chronologiquement, par arbre Merkle ou chemin de vérification.'
+        'Démo éducative d’un arbre Merkle avec des fichiers d’exemple. Pas un explorateur Bitcoin en direct. Preuves live : /network et /p/<hash>.'
     },
     de: {
-      title: 'Block-Explorer — Bitcoin-Beweiskette',
+      title: 'Merkle-Demo — so funktioniert ein OpenTimestamps-Baum',
       description:
-        'Erkunden Sie gestempelte Beweise chronologisch, per Merkle-Baum oder Verifizierungspfad.'
+        'Lehr-Demo eines Merkle-Baums mit Beispieldateien. Kein Live-Bitcoin-Explorer. Live-Nachweise: /network und /p/<hash>.'
     },
     pt: {
-      title: 'Explorador — Cadeia de Provas Bitcoin',
+      title: 'Demo Merkle — como funciona uma árvore OpenTimestamps',
       description:
-        'Explore provas carimbadas cronologicamente, por árvore Merkle ou caminho de verificação.'
+        'Demo educativa de uma árvore Merkle com ficheiros de exemplo. Não é um explorador Bitcoin ao vivo. Provas reais: /network e /p/<hash>.'
     },
     sw: {
-      title: 'Kichunguzi — Mnyororo wa Ushahidi wa Bitcoin',
+      title: 'Onyesho la Merkle — jinsi mti wa OpenTimestamps unavyofanya kazi',
       description:
-        'Chunguza ushahidi uliofungwa kwa wakati, kwa mti wa Merkle au njia ya uthibitishaji.'
+        'Onyesho la elimu la mti wa Merkle na faili za mfano. Si kichunguzi hai cha Bitcoin. Uthibitisho hai: /network na /p/<hash>.'
     },
     zh: {
-      title: '区块浏览器 — 比特币证明链',
-      description: '按时间、Merkle 树或验证路径探索已盖章证明。'
+      title: 'Merkle 演示 — OpenTimestamps 树如何工作',
+      description:
+        '用示例文件讲解 Merkle 树。不是实时比特币浏览器。真实证明见 /network 与 /p/<hash>。'
     }
   },
   atlas: {
     en: {
-      title: 'Atlas — Global Proof Map',
+      title: 'Atlas demo — search stamps on this plane',
       description:
-        'Geographic visualization of Bitcoin-anchored proofs worldwide. Jurisdiction intelligence and network coverage.'
+        'Demo search UI for stamps this Satohash plane already knows. Not a global ledger. Live calendars and tip: /network.'
     },
     es: {
-      title: 'Atlas — Mapa Global de Pruebas',
-      description: 'Visualización geográfica de pruebas ancladas en Bitcoin en todo el mundo.'
+      title: 'Demo Atlas — buscar sellos en este plano',
+      description:
+        'Interfaz de búsqueda de demostración para sellos que este plano Satohash ya conoce. No es un libro mayor global. Calendarios y punta: /network.'
     },
     fr: {
-      title: 'Atlas — Carte Mondiale des Preuves',
-      description: 'Visualisation géographique des preuves ancrées sur Bitcoin dans le monde.'
+      title: 'Démo Atlas — chercher des tampons sur ce plan',
+      description:
+        'Interface de recherche démo pour les tampons déjà connus de ce plan Satohash. Pas un registre mondial. Calendriers et pointe : /network.'
     },
     de: {
-      title: 'Atlas — Globale Beweiskarte',
-      description: 'Geografische Visualisierung Bitcoin-verankerter Beweise weltweit.'
+      title: 'Atlas-Demo — Stempel auf dieser Ebene suchen',
+      description:
+        'Demo-Suche für Stempel, die diese Satohash-Ebene bereits kennt. Kein Weltregister. Kalender und Tip: /network.'
     },
     pt: {
-      title: 'Atlas — Mapa Global de Provas',
-      description: 'Visualização geográfica de provas ancoradas no Bitcoin mundialmente.'
+      title: 'Demo Atlas — procurar selos neste plano',
+      description:
+        'UI de pesquisa de demonstração para selos que este plano Satohash já conhece. Não é um livro-razão global. Calendários e ponta: /network.'
     },
     sw: {
-      title: 'Atlasi — Ramani ya Ushahidi Duniani',
-      description: 'Uonyeshaji wa kijiografia wa ushahidi uliofungwa kwenye Bitcoin duniani kote.'
+      title: 'Onyesho la Atlasi — tafuta stempu kwenye ndege hii',
+      description:
+        'Kiolesura cha onyesho cha kutafuta stempu ambazo ndege hii ya Satohash tayari inazijua. Si daftari la dunia. Kalenda na ncha: /network.'
     },
-    zh: { title: '地图集 — 全球证明地图', description: '全球比特币锚定证明的地理可视化。' }
+    zh: {
+      title: 'Atlas 演示 — 搜索本平面上的戳记',
+      description: '演示搜索：仅限本 Satohash 平面已知的戳记。不是全球账本。日历与链尖见 /network。'
+    }
   },
   contracts: {
     en: {

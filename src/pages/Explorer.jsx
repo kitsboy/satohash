@@ -10,6 +10,8 @@ import {
   ShieldCheck
 } from 'lucide-react'
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import MerkleHeart from '../components/stamps/MerkleHeart'
 import usePageMeta from '../hooks/usePageMeta'
 
@@ -55,7 +57,11 @@ const PARENT_DATA = {
 
 const ROOT_HASH = '3f7a8b9c2d1e0f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a'
 
+const ctaClass =
+  'inline-flex min-h-[44px] items-center justify-center rounded-xl px-4 text-[10px] font-black tracking-widest uppercase'
+
 export default function Explorer() {
+  const { t } = useTranslation()
   usePageMeta({ page: 'explorer' })
   const [view, setView] = useState('chrono') // chrono, merkle, path
   const [selectedLeaf, setSelectedLeaf] = useState('A')
@@ -63,49 +69,98 @@ export default function Explorer() {
   const currentLeaf = LEAF_DATA[selectedLeaf]
   const currentSibling = LEAF_DATA[currentLeaf.sibling]
   const currentParent = PARENT_DATA[currentLeaf.parent]
+  const parentLeft = currentLeaf.parent === 'AB' ? 'A' : 'C'
+  const parentRight = currentLeaf.parent === 'AB' ? 'B' : 'D'
 
   return (
-    <div className="flex h-full w-full max-w-full flex-col overflow-hidden pb-20 select-none">
-      <header className="z-10 flex flex-col justify-between gap-4 border-b border-[var(--border)] bg-[var(--bg-primary)]/50 p-4 backdrop-blur-md sm:flex-row sm:items-center sm:gap-0 sm:p-8">
-        <div className="flex items-center gap-4">
-          <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl border border-[var(--accent-active)]/30 bg-[var(--accent-active)]/10 text-[var(--accent-active)]">
-            <Compass size={20} />
+    <div className="flex min-h-screen w-full max-w-full flex-col overflow-x-hidden pb-16 select-none">
+      <header className="z-10 flex flex-col gap-4 border-b border-[var(--border)] bg-[var(--bg-primary)]/50 p-4 backdrop-blur-md sm:p-8">
+        <div
+          className="inline-flex w-fit items-center rounded-full border px-3 py-1"
+          style={{
+            borderColor: 'rgba(240,180,41,0.35)',
+            background: 'rgba(240,180,41,0.1)',
+            color: 'var(--accent-gold)'
+          }}
+        >
+          <span className="font-mono text-[10px] font-bold tracking-[0.18em] uppercase">
+            {t('explorerPage.demoChip')}
+          </span>
+        </div>
+
+        <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
+          <div className="flex items-center gap-4">
+            <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl border border-[var(--accent-active)]/30 bg-[var(--accent-active)]/10 text-[var(--accent-active)]">
+              <Compass size={20} />
+            </div>
+            <div className="min-w-0">
+              <h1 className="truncate text-xl font-bold tracking-tighter uppercase sm:text-2xl">
+                {t('explorerPage.title')}
+              </h1>
+              <p className="text-[9px] font-bold tracking-widest break-words text-[var(--text-secondary)] uppercase sm:text-[10px]">
+                {t('explorerPage.subtitle')}
+              </p>
+              <p className="mt-1 text-[9px] font-bold tracking-widest text-[var(--text-secondary)] uppercase sm:text-[10px]">
+                {t('explorerPage.liveProofs')}{' '}
+                <Link
+                  to="/network"
+                  className="text-[var(--accent-gold)] underline-offset-2 hover:underline"
+                >
+                  /network
+                </Link>
+                {' · '}
+                <Link
+                  to="/stamp"
+                  className="text-[var(--accent-gold)] underline-offset-2 hover:underline"
+                >
+                  /stamp
+                </Link>
+              </p>
+            </div>
           </div>
-          <div className="min-w-0">
-            <h1 className="truncate text-xl font-bold tracking-tighter uppercase sm:text-2xl">
-              Noir Explorer
-            </h1>
-            <p className="text-[9px] font-bold tracking-widest break-words text-[var(--text-secondary)] uppercase sm:text-[10px] sm:whitespace-nowrap">
-              Experiential Discovery & Temporal Navigation
-            </p>
+
+          <div className="flex self-start rounded-xl border border-[var(--border)] bg-[var(--bg-secondary)] p-1 sm:self-auto">
+            <button
+              type="button"
+              aria-pressed={view === 'chrono'}
+              onClick={() => setView('chrono')}
+              className={`flex items-center gap-2 rounded-lg px-3 py-1.5 text-[9px] font-bold tracking-widest uppercase transition-all sm:px-4 sm:py-2 sm:text-[10px] ${view === 'chrono' ? 'bg-[var(--bg-primary)] text-[var(--text-primary)] shadow-lg' : 'text-[var(--text-secondary)] hover:text-white'}`}
+            >
+              <Clock size={12} className="sm:h-3.5 sm:w-3.5" /> {t('explorerPage.tabChrono')}
+            </button>
+            <button
+              type="button"
+              aria-pressed={view === 'merkle'}
+              onClick={() => setView('merkle')}
+              className={`flex items-center gap-2 rounded-lg px-3 py-1.5 text-[9px] font-bold tracking-widest uppercase transition-all sm:px-4 sm:py-2 sm:text-[10px] ${view === 'merkle' ? 'bg-[var(--bg-primary)] text-[var(--text-primary)] shadow-lg' : 'text-[var(--text-secondary)] hover:text-white'}`}
+            >
+              <TreePine size={12} className="sm:h-3.5 sm:w-3.5" /> {t('explorerPage.tabMerkle')}
+            </button>
+            <button
+              type="button"
+              aria-pressed={view === 'path'}
+              onClick={() => setView('path')}
+              className={`flex items-center gap-2 rounded-lg px-3 py-1.5 text-[9px] font-bold tracking-widest uppercase transition-all sm:px-4 sm:py-2 sm:text-[10px] ${view === 'path' ? 'bg-[var(--bg-primary)] text-[var(--text-primary)] shadow-lg' : 'text-[var(--text-secondary)] hover:text-white'}`}
+            >
+              <GitMerge size={12} className="sm:h-3.5 sm:w-3.5" /> {t('explorerPage.tabPath')}
+            </button>
           </div>
         </div>
 
-        <div className="flex self-start rounded-xl border border-[var(--border)] bg-[var(--bg-secondary)] p-1 sm:self-auto">
-          <button
-            type="button"
-            aria-pressed={view === 'chrono'}
-            onClick={() => setView('chrono')}
-            className={`flex items-center gap-2 rounded-lg px-3 py-1.5 text-[9px] font-bold tracking-widest uppercase transition-all sm:px-4 sm:py-2 sm:text-[10px] ${view === 'chrono' ? 'bg-[var(--bg-primary)] text-[var(--text-primary)] shadow-lg' : 'text-[var(--text-secondary)] hover:text-white'}`}
+        <div className="flex flex-wrap gap-2">
+          <Link
+            to="/network"
+            className={`${ctaClass} border border-[var(--border)] text-[var(--text-primary)]`}
           >
-            <Clock size={12} className="sm:h-3.5 sm:w-3.5" /> Chrono
-          </button>
-          <button
-            type="button"
-            aria-pressed={view === 'merkle'}
-            onClick={() => setView('merkle')}
-            className={`flex items-center gap-2 rounded-lg px-3 py-1.5 text-[9px] font-bold tracking-widest uppercase transition-all sm:px-4 sm:py-2 sm:text-[10px] ${view === 'merkle' ? 'bg-[var(--bg-primary)] text-[var(--text-primary)] shadow-lg' : 'text-[var(--text-secondary)] hover:text-white'}`}
+            {t('explorerPage.networkCta')}
+          </Link>
+          <Link
+            to="/stamp"
+            className={ctaClass}
+            style={{ background: 'var(--accent-gold)', color: '#141b25' }}
           >
-            <TreePine size={12} className="sm:h-3.5 sm:w-3.5" /> Merkle Heart
-          </button>
-          <button
-            type="button"
-            aria-pressed={view === 'path'}
-            onClick={() => setView('path')}
-            className={`flex items-center gap-2 rounded-lg px-3 py-1.5 text-[9px] font-bold tracking-widest uppercase transition-all sm:px-4 sm:py-2 sm:text-[10px] ${view === 'path' ? 'bg-[var(--bg-primary)] text-[var(--text-primary)] shadow-lg' : 'text-[var(--text-secondary)] hover:text-white'}`}
-          >
-            <GitMerge size={12} className="sm:h-3.5 sm:w-3.5" /> Path Trace
-          </button>
+            {t('explorerPage.stampCta')}
+          </Link>
         </div>
       </header>
 
@@ -131,42 +186,45 @@ export default function Explorer() {
                 className="space-y-4 sm:space-y-6"
               >
                 <h2 className="text-4xl leading-none font-extrabold tracking-tighter sm:text-6xl">
-                  ChronoExplorer
+                  {t('explorerPage.chronoTitle')}
                 </h2>
                 <p className="mx-auto max-w-2xl text-base text-[var(--text-secondary)] sm:text-xl">
-                  A temporal search engine for the Bitcoin blockchain. Locate proofs by date, block
-                  height, or era.
+                  {t('explorerPage.chronoBody')}{' '}
+                  <Link
+                    to="/network"
+                    className="text-[var(--accent-gold)] underline-offset-2 hover:underline"
+                  >
+                    /network
+                  </Link>
+                  .
                 </p>
                 <div className="relative mx-auto max-w-xl px-2">
                   <Search className="absolute top-1/2 left-6 h-5 w-5 -translate-y-1/2 text-[var(--text-secondary)] sm:left-6 sm:h-6 sm:w-6" />
                   <input
                     type="search"
-                    aria-label="Search block height or date"
-                    placeholder="Enter block height or date (e.g. 2009-01-03)"
-                    className="h-14 w-full rounded-[1.75rem] border border-white/10 bg-white/5 pr-4 pl-12 text-sm font-medium transition-all outline-none focus:border-[var(--accent-active)] focus:bg-white/10 sm:h-20 sm:rounded-[2.5rem] sm:pr-8 sm:pl-16 sm:text-xl"
+                    disabled
+                    readOnly
+                    aria-disabled="true"
+                    aria-label={t('explorerPage.searchAria')}
+                    placeholder={t('explorerPage.searchPlaceholder')}
+                    className="h-14 w-full cursor-not-allowed rounded-[1.75rem] border border-white/10 bg-white/5 pr-4 pl-12 text-sm font-medium opacity-60 outline-none sm:h-20 sm:rounded-[2.5rem] sm:pr-8 sm:pl-16 sm:text-xl"
                   />
                 </div>
               </motion.div>
 
-              <div className="grid grid-cols-1 gap-4 px-2 sm:grid-cols-3 sm:gap-6">
-                {[
-                  { label: 'Halving Era', value: '4th', desc: 'Current Block Era' },
-                  { label: 'Time Travel', value: 'Enabled', desc: 'Sync Active' },
-                  { label: 'Historical Depth', value: '841K', desc: 'Blocks Indexed' }
-                ].map((stat, i) => (
-                  <div
-                    key={i}
-                    className="space-y-1 rounded-2xl border border-white/10 bg-white/5 p-5 text-left sm:space-y-2 sm:rounded-3xl sm:p-6"
-                  >
-                    <p className="text-[9px] font-bold tracking-widest text-[var(--text-secondary)] uppercase sm:text-[10px]">
-                      {stat.label}
-                    </p>
-                    <p className="font-mono text-2xl font-bold sm:text-3xl">{stat.value}</p>
-                    <p className="text-[9px] font-medium text-white/40 sm:text-[10px]">
-                      {stat.desc}
-                    </p>
-                  </div>
-                ))}
+              <div className="flex flex-wrap justify-center gap-3 px-2">
+                <span className="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-4 py-2 text-[10px] font-bold tracking-widest text-white uppercase">
+                  {t('explorerPage.chipLeaves')}
+                </span>
+                <span className="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-4 py-2 text-[10px] font-bold tracking-widest text-white uppercase">
+                  {t('explorerPage.chipTeaching')}
+                </span>
+                <Link
+                  to="/network"
+                  className="inline-flex items-center rounded-full border border-[var(--accent-gold)]/30 bg-[var(--accent-gold)]/10 px-4 py-2 text-[10px] font-bold tracking-widest text-[var(--accent-gold)] uppercase"
+                >
+                  {t('explorerPage.chipLive')}
+                </Link>
               </div>
             </div>
           </div>
@@ -180,11 +238,10 @@ export default function Explorer() {
               className="relative z-10 mb-8 space-y-2 px-4 text-center sm:mb-20 sm:space-y-4"
             >
               <h2 className="text-2xl font-bold tracking-tighter uppercase sm:text-4xl">
-                The Merkle Heart
+                {t('explorerPage.merkleTitle')}
               </h2>
               <p className="max-w-md text-xs text-[var(--text-secondary)] sm:text-sm">
-                A 3D visualization of the current Bitcoin Merkle tree. Every proof is a leaf
-                climbing into the root of finality.
+                {t('explorerPage.merkleBody')}
               </p>
             </motion.div>
 
@@ -200,10 +257,10 @@ export default function Explorer() {
             <div className="relative flex min-h-[350px] flex-1 flex-col items-center justify-center p-6">
               <div className="absolute top-6 left-6 z-10 space-y-1">
                 <h3 className="text-xs font-black tracking-[0.2em] text-[var(--accent-active)] uppercase italic">
-                  Interactive Path Tracer
+                  {t('explorerPage.pathLabel')}
                 </h3>
                 <p className="text-[10px] text-[var(--text-secondary)] uppercase">
-                  Select a leaf node to trace sibling hash paths to the root
+                  {t('explorerPage.pathHint')}
                 </p>
               </div>
 
@@ -532,7 +589,7 @@ export default function Explorer() {
                 <div className="flex items-center gap-3">
                   <Binary size={18} className="text-[var(--accent-active)]" />
                   <h3 className="text-sm font-black tracking-widest text-white uppercase italic">
-                    Path Audit Ledger
+                    {t('explorerPage.pathLedger')}
                   </h3>
                 </div>
 
@@ -540,12 +597,13 @@ export default function Explorer() {
                 <div className="space-y-3 rounded-xl border border-[var(--border)] bg-white/5 p-4">
                   <div className="flex items-center gap-2 text-xs font-bold text-white">
                     <FileText size={14} className="text-[var(--accent-active)]" />
-                    <span>Target Leaf {selectedLeaf}</span>
+                    <span>{t('explorerPage.targetLeaf', { leaf: selectedLeaf })}</span>
                   </div>
                   <div className="text-[10px] leading-relaxed font-medium text-[var(--text-secondary)]">
-                    Name: <strong className="text-white">{currentLeaf.name}</strong>
+                    {t('explorerPage.nameLabel')}:{' '}
+                    <strong className="text-white">{currentLeaf.name}</strong>
                     <br />
-                    Hash:{' '}
+                    {t('explorerPage.hashLabel')}:{' '}
                     <span className="font-mono text-[9px] break-all text-[var(--accent-active)]">
                       {currentLeaf.hash}
                     </span>
@@ -555,11 +613,11 @@ export default function Explorer() {
                 {/* Cryptographic Proof Step 1: Leaf + Sibling */}
                 <div className="space-y-2">
                   <h4 className="text-[9px] font-black tracking-widest text-[var(--text-secondary)] uppercase">
-                    Step 1: Partner Sibling Combination
+                    {t('explorerPage.step1')}
                   </h4>
                   <div className="space-y-2 rounded-xl border border-[#4f46e5]/30 bg-[#4f46e5]/5 p-4 font-mono text-[9px]">
                     <p className="text-[8px] font-black text-white/40 uppercase">
-                      Partner Sibling ({currentLeaf.sibling})
+                      {t('explorerPage.partnerSibling', { sibling: currentLeaf.sibling })}
                     </p>
                     <p className="truncate text-white">{currentSibling.name}</p>
                     <p className="break-all text-[#4f46e5]">{currentSibling.hash}</p>
@@ -569,16 +627,14 @@ export default function Explorer() {
                 {/* Cryptographic Proof Step 2: Parent hash math */}
                 <div className="space-y-2">
                   <h4 className="text-[9px] font-black tracking-widest text-[var(--text-secondary)] uppercase">
-                    Step 2: Parent Node Hash Execution
+                    {t('explorerPage.step2')}
                   </h4>
                   <div className="space-y-2 rounded-xl border border-[var(--border)] bg-white/5 p-4 font-mono text-[9px]">
                     <p className="text-[8px] font-black text-[var(--accent-active)] uppercase">
-                      H_{currentLeaf.parent} = SHA256(Leaf_{currentLeaf.parent === 'AB' ? 'A' : 'C'}{' '}
-                      + Leaf_{currentLeaf.parent === 'AB' ? 'B' : 'D'})
+                      H_{currentLeaf.parent} = SHA256(Leaf_{parentLeft} + Leaf_{parentRight})
                     </p>
                     <p className="truncate text-[var(--text-secondary)]">
-                      Left: {currentLeaf.parent === 'AB' ? 'A' : 'C'} | Right:{' '}
-                      {currentLeaf.parent === 'AB' ? 'B' : 'D'}
+                      {t('explorerPage.leftRight', { left: parentLeft, right: parentRight })}
                     </p>
                     <p className="break-all text-[var(--accent-active)]">{currentParent.hash}</p>
                   </div>
@@ -587,7 +643,7 @@ export default function Explorer() {
                 {/* Cryptographic Proof Step 3: Root confirmation */}
                 <div className="space-y-2">
                   <h4 className="text-[9px] font-black tracking-widest text-[var(--text-secondary)] uppercase">
-                    Step 3: Block Root Reconciliation
+                    {t('explorerPage.step3')}
                   </h4>
                   <div className="space-y-2 rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-4 font-mono text-[9px]">
                     <p className="text-[8px] font-black text-emerald-400 uppercase">
@@ -602,7 +658,11 @@ export default function Explorer() {
               <div className="flex items-center gap-3 rounded-xl border border-emerald-500/30 bg-emerald-500/5 p-4">
                 <ShieldCheck size={18} className="shrink-0 text-emerald-400" />
                 <p className="text-[9px] leading-snug font-bold text-emerald-400 uppercase italic">
-                  Path verifies successfully up to Bitcoin Anchor Block #842,402conf.
+                  {t('explorerPage.shield')}{' '}
+                  <Link to="/verify" className="underline underline-offset-2">
+                    /verify
+                  </Link>
+                  .
                 </p>
               </div>
             </div>

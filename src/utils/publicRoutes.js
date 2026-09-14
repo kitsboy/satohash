@@ -30,6 +30,8 @@ const MARKETING_PREFIXES = [
   '/watch',
   '/explainer',
   '/network',
+  '/explorer',
+  '/atlas',
   '/proof-of-existence',
   '/bitcoin',
   '/status',
