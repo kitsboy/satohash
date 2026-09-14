@@ -78,8 +78,10 @@ print(f"Stamp ID: {data['id']} — Status: {data['status']}")`
 
 const CLI_COMMANDS = [
   'node packages/satohash-cli/bin/satohash.js help',
+  'node packages/satohash-cli/bin/satohash.js status',
   'node packages/satohash-cli/bin/satohash.js stamp ./file.pdf'
 ]
+const CLI_API_ENV = 'SATOHASH_API_URL=https://api.satohash.io'
 
 const BITCOIN_STEPS = [
   {
@@ -604,14 +606,20 @@ export default function Developer() {
                     </div>
                   </div>
 
-                  {/* CLI — repo-local; hash stays on the machine */}
+                  {/* CLI — gold terminal path; file never leaves the machine */}
                   <div
                     className="space-y-4 rounded-2xl border p-5 sm:p-6"
                     style={{
-                      borderColor: 'var(--border-bright)',
+                      borderColor: 'var(--accent-gold)',
                       background: 'var(--bg-secondary)'
                     }}
                   >
+                    <p
+                      className="text-[10px] font-bold tracking-[0.25em] uppercase"
+                      style={{ color: 'var(--accent-gold)' }}
+                    >
+                      Terminal path
+                    </p>
                     <div className="flex items-center gap-3">
                       <Terminal size={18} style={{ color: 'var(--accent-gold)' }} />
                       <h2
@@ -634,8 +642,20 @@ export default function Developer() {
                       </code>
                       .
                     </p>
+                    <p
+                      className="text-xs leading-relaxed"
+                      style={{ color: 'var(--text-secondary)' }}
+                    >
+                      Default API (already set in the real CLI):{' '}
+                      <code
+                        className="font-mono text-[11px]"
+                        style={{ color: 'var(--text-primary)' }}
+                      >
+                        {CLI_API_ENV}
+                      </code>
+                    </p>
                     <div className="space-y-2">
-                      {CLI_COMMANDS.map((cmd) => (
+                      {[CLI_API_ENV, ...CLI_COMMANDS].map((cmd) => (
                         <div
                           key={cmd}
                           className="flex items-center gap-2 rounded-xl border px-3"
@@ -697,8 +717,7 @@ export default function Developer() {
                     <span
                       className="rounded-full border px-3 py-1 text-[9px] font-black tracking-widest uppercase"
                       style={{
-                        borderColor:
-                          'color-mix(in srgb, var(--accent-success) 30%, transparent)',
+                        borderColor: 'color-mix(in srgb, var(--accent-success) 30%, transparent)',
                         color: 'var(--accent-success)',
                         background: 'color-mix(in srgb, var(--accent-success) 10%, transparent)'
                       }}
@@ -713,17 +732,18 @@ export default function Developer() {
                       accent="var(--accent-success)"
                     >
                       Send <code className="font-mono">POST /api/stamp</code> with{' '}
-                      <code className="font-mono">{'{"hash":"<64-char sha256>"}'}</code> and you get a
-                      proof ID back. Open to everyone, rate-limited — no account, no signup, no key.
+                      <code className="font-mono">{'{"hash":"<64-char sha256>"}'}</code> and you get
+                      a proof ID back. Open to everyone, rate-limited — no account, no signup, no
+                      key.
                     </AuthCard>
                     <AuthCard
                       icon={Building2}
                       title="Suite apps (internal)"
                       accent="var(--accent-purple)"
                     >
-                      Give A Bit family apps send <code className="font-mono">X-Satohash-Key</code> —
-                      a key we provision server-side. It is not self-serve: ask at hello@giveabit.io
-                      and we issue one by hand.
+                      Give A Bit family apps send <code className="font-mono">X-Satohash-Key</code>{' '}
+                      — a key we provision server-side. It is not self-serve: ask at
+                      hello@giveabit.io and we issue one by hand.
                     </AuthCard>
                     <AuthCard icon={Zap} title="If paid mode is on" accent="var(--accent-pending)">
                       The API answers <code className="font-mono">HTTP 402</code> with a Lightning
@@ -751,10 +771,7 @@ export default function Developer() {
   -d '{"hash":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"}'`}
                     </pre>
                   </div>
-                  <p
-                    className="text-xs leading-relaxed"
-                    style={{ color: 'var(--text-secondary)' }}
-                  >
+                  <p className="text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
                     Self-serve API keys are not available. This page previously offered a key
                     manager that called an endpoint which never existed, and minted keys that no
                     server ever checked — so it was removed rather than faked. Stamping does not

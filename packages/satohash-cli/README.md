@@ -1,5 +1,7 @@
 # @satohash/cli
 
+This is the canonical CLI. Ignore repo-root `bin/satohash.js` (deprecated shim).
+
 Stamp, verify, and watch Bitcoin-anchored proofs against the Satohash API. The file never leaves the machine — only a SHA-256 hex is POSTed.
 
 ## Install (from this repo)
