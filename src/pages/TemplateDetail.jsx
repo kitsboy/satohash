@@ -9,7 +9,7 @@ export default function TemplateDetail() {
   const [template, setTemplate] = useState(null)
   usePageMeta({
     page: 'templateDetail',
-    title: template ? `${template.title} — Demo Preview` : undefined
+    title: template ? `${template.title} — ${t('templateDetailPage.demoPreview')}` : undefined
   })
   const { templateId } = useParams()
   const navigate = useNavigate()
@@ -79,11 +79,12 @@ export default function TemplateDetail() {
   return (
     <div className="min-h-screen bg-[var(--bg-primary)]">
       <div className="mx-auto flex max-w-7xl flex-col gap-3 px-4 pt-6 sm:flex-row sm:items-center sm:justify-between md:px-8">
-        <p className="text-xs text-[var(--text-secondary)]">
-          {t('templateDetailPage.demoHint', {
-            defaultValue: 'Demo editor — sample data only. Stamp a real file for a Bitcoin proof.'
-          })}
-        </p>
+        <div className="min-w-0">
+          <p className="mb-1 text-[10px] font-black tracking-[0.18em] text-[var(--accent-gold)] uppercase">
+            {t('templateDetailPage.demoPreview')}
+          </p>
+          <p className="text-xs text-[var(--text-secondary)]">{t('templateDetailPage.demoHint')}</p>
+        </div>
         <Link
           to={`/stamp?template=${encodeURIComponent(template.id)}`}
           className="inline-flex min-h-[44px] shrink-0 items-center justify-center rounded-xl bg-[var(--accent-gold)] px-5 text-xs font-black tracking-wider text-black uppercase"

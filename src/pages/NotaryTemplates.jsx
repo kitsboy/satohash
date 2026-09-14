@@ -3,8 +3,11 @@ import { motion, AnimatePresence } from 'framer-motion'
 import Tooltip from '../components/ui/Tooltip'
 import { getVerifyUrl } from '../config/constants'
 import usePageMetaOnboarding from '../hooks/usePageMetaOnboarding'
-import { useSearchParams } from 'react-router-dom'
+import { useSearchParams, useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
+import { sha256HexFromObject } from '../utils/canonicalJson'
+import { upsertLocalStamp } from '../utils/vaultLocal'
 import { jsPDF } from 'jspdf'
 import QRCode from 'qrcode'
 import {
@@ -1334,7 +1337,7 @@ const generatePDF = async (template, data) => {
   doc.setTextColor(100, 116, 139)
   doc.setFont('helvetica', 'normal')
   doc.text(
-    `${template.category} • Bitcoin-Anchored • ${new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}`,
+    `${template.category} • Satohash template draft • ${new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}`,
     margin,
     38
   )
@@ -1371,7 +1374,7 @@ const generatePDF = async (template, data) => {
   doc.setFontSize(7)
   doc.setTextColor(148, 163, 184)
   doc.setFont('helvetica', 'normal')
-  doc.text('Generated via Satohash — Sovereign Notary Protocol', margin, pageH - 10)
+  doc.text('Satohash template draft — stamp the hash to prove existence', margin, pageH - 10)
   doc.text(`Verify: ${verifyUrl}`, pageW - margin, pageH - 10, { align: 'right' })
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -1390,13 +1393,13 @@ const generatePDF = async (template, data) => {
   doc.setTextColor(255, 255, 255)
   doc.setFontSize(10)
   doc.setFont('helvetica', 'bold')
-  doc.text('CERTIFICATE OF AUTHENTICITY', margin, 11)
+  doc.text('TEMPLATE DRAFT — NOT A NOTARY ACT', margin, 11)
   doc.setFontSize(7)
   doc.setFont('helvetica', 'normal')
-  doc.text('SATOHASH NOTARY PROTOCOL', margin, 17)
+  doc.text('SATOHASH', margin, 17)
   doc.setFontSize(6)
   doc.setTextColor(147, 197, 253) // light blue
-  doc.text('Bitcoin-Anchored • Cryptographically Verified • Tamper-Evident', margin, 23)
+  doc.text('Stamp the SHA-256 on /stamp to prove when this draft existed', margin, 23)
 
   // ── Certificate body ───────────────────────────────────────────────────────
   let cy = headerH + 14
@@ -1406,10 +1409,9 @@ const generatePDF = async (template, data) => {
   doc.setFontSize(9)
   doc.setFont('helvetica', 'italic')
   const introParagraph =
-    `This Certificate of Authenticity confirms that the document titled "${template.title}" has been ` +
-    `processed through the Satohash Sovereign Notary Protocol. The cryptographic hash of this document ` +
-    `has been immutably anchored to the Bitcoin blockchain, providing irrefutable proof of existence ` +
-    `and integrity at the time of notarization.`
+    `This PDF is a Satohash template draft titled "${template.title}". ` +
+    `It is not a notary act and is not yet a Bitcoin proof. Hash the fields on-device and stamp ` +
+    `the SHA-256 fingerprint at satohash.io/stamp to prove when this exact draft existed.`
   const introLines = doc.splitTextToSize(introParagraph, contentW)
   doc.text(introLines, margin, cy)
   cy += introLines.length * 5 + 8
@@ -1426,7 +1428,7 @@ const generatePDF = async (template, data) => {
     { label: 'TEMPLATE CATEGORY', value: template.category },
     { label: 'BADGE / TIER', value: template.badge },
     {
-      label: 'DATE OF NOTARIZATION',
+      label: 'DRAFT DATE',
       value: new Date().toLocaleDateString('en-US', {
         weekday: 'long',
         year: 'numeric',
@@ -1435,9 +1437,9 @@ const generatePDF = async (template, data) => {
       })
     },
     { label: 'TOTAL FIELDS', value: `${template.fields.length} fields` },
-    { label: 'DOCUMENT HASH (SHA-256)', value: '[Computed client-side — hash pending anchor]' },
-    { label: 'BITCOIN BLOCK HEIGHT', value: '[Pending — OTS upgrade in progress]' },
-    { label: 'NOTARY PROTOCOL', value: 'Satohash v1 — OpenTimestamps (OTS) / Bitcoin' },
+    { label: 'DOCUMENT HASH (SHA-256)', value: '[Computed on /stamp — not in this PDF]' },
+    { label: 'BITCOIN BLOCK HEIGHT', value: '[After you stamp and Bitcoin confirms]' },
+    { label: 'PROTOCOL', value: 'Satohash — OpenTimestamps / Bitcoin' },
     { label: 'VERIFY URL', value: verifyUrl }
   ]
 
@@ -1501,13 +1503,13 @@ const generatePDF = async (template, data) => {
   doc.setFontSize(7)
   doc.setTextColor(15, 23, 42)
   doc.setFont('helvetica', 'bold')
-  doc.text('OFFICIAL SEAL', sealX + 32, cy + 13, { align: 'center' })
+  doc.text('DRAFT SEAL', sealX + 32, cy + 13, { align: 'center' })
   doc.setFontSize(6)
   doc.setFont('helvetica', 'normal')
   doc.setTextColor(100, 116, 139)
   doc.text('SATOHASH', sealX + 32, cy + 20, { align: 'center' })
-  doc.text('SOVEREIGN NOTARY', sealX + 32, cy + 26, { align: 'center' })
-  doc.text('PROTOCOL', sealX + 32, cy + 32, { align: 'center' })
+  doc.text('TEMPLATE DRAFT', sealX + 32, cy + 26, { align: 'center' })
+  doc.text('NOT A NOTARY', sealX + 32, cy + 32, { align: 'center' })
   // Satohash logo in seal
   if (satohashImg) {
     const sLogoH = 8
@@ -1534,9 +1536,9 @@ const generatePDF = async (template, data) => {
   doc.setFont('helvetica', 'normal')
   doc.setTextColor(30, 64, 175)
   const disclaimer =
-    'This certificate is generated by the Satohash Sovereign Notary Protocol. The Bitcoin-anchored ' +
-    'timestamp provides cryptographic proof of document existence at the time of notarization. ' +
-    'This certificate does not constitute legal advice. Consult qualified legal counsel for binding agreements.'
+    'This PDF is a Satohash template draft, not a notary act and not a Bitcoin proof. ' +
+    'Stamp the SHA-256 fingerprint at satohash.io/stamp to prove when this exact draft existed. ' +
+    'This is not legal advice. Consult qualified counsel for binding agreements.'
   const disclaimerLines = doc.splitTextToSize(disclaimer, contentW - 6)
   doc.text(disclaimerLines, margin + 3, cy + 12)
   cy += 26
@@ -1559,6 +1561,7 @@ const generatePDF = async (template, data) => {
 // ─── PREVIEW MODAL ───────────────────────────────────────────────────────────────
 
 function PreviewModal({ template, data, onClose, onDownloadPDF, onEmail }) {
+  const { t, i18n } = useTranslation()
   const catColor = CATEGORY_COLORS[template.category] || {}
 
   // Prevent body scroll while modal is open
@@ -1607,7 +1610,7 @@ function PreviewModal({ template, data, onClose, onDownloadPDF, onEmail }) {
             <div className="flex items-center gap-2">
               <Eye size={15} style={{ color: '#64748b' }} />
               <span className="text-sm font-bold" style={{ color: '#0f172a' }}>
-                Document Preview
+                {t('notaryEditorPage.previewTitle')}
               </span>
               <span
                 className="ml-1 rounded-full px-2 py-0.5 text-[10px] font-bold"
@@ -1633,7 +1636,7 @@ function PreviewModal({ template, data, onClose, onDownloadPDF, onEmail }) {
                 onMouseLeave={(e) => (e.currentTarget.style.borderColor = 'var(--border)')}
               >
                 <Mail size={13} style={{ color: 'var(--accent-purple)' }} />
-                Email Package
+                {t('notaryEditorPage.emailPackage')}
               </button>
               <button
                 onClick={onDownloadPDF}
@@ -1644,7 +1647,7 @@ function PreviewModal({ template, data, onClose, onDownloadPDF, onEmail }) {
                 }}
               >
                 <Download size={13} />
-                Download PDF
+                {t('notaryEditorPage.downloadPdf')}
               </button>
               <button
                 onClick={onClose}
@@ -1699,7 +1702,7 @@ function PreviewModal({ template, data, onClose, onDownloadPDF, onEmail }) {
                     {template.category}
                   </span>
                   <span className="text-xs" style={{ color: '#94a3b8' }}>
-                    {new Date().toLocaleDateString('en-US', {
+                    {new Date().toLocaleDateString(i18n.language, {
                       year: 'numeric',
                       month: 'long',
                       day: 'numeric'
@@ -1737,7 +1740,7 @@ function PreviewModal({ template, data, onClose, onDownloadPDF, onEmail }) {
                       fontStyle: data[field.id]?.trim() ? 'normal' : 'italic'
                     }}
                   >
-                    {data[field.id]?.trim() || '— not filled —'}
+                    {data[field.id]?.trim() || t('notaryEditorPage.notFilled')}
                   </p>
                 </div>
               ))}
@@ -1753,10 +1756,10 @@ function PreviewModal({ template, data, onClose, onDownloadPDF, onEmail }) {
                   className="text-[10px] font-bold tracking-widest uppercase"
                   style={{ color: '#94a3b8' }}
                 >
-                  Generated via
+                  {t('notaryEditorPage.generatedVia')}
                 </p>
                 <p className="text-sm font-black" style={{ color: '#0f172a' }}>
-                  Satohash — Sovereign Notary Protocol
+                  {t('notaryEditorPage.protocolName')}
                 </p>
                 <p className="text-[10px]" style={{ color: '#94a3b8' }}>
                   {window.location.hostname}
@@ -1767,7 +1770,7 @@ function PreviewModal({ template, data, onClose, onDownloadPDF, onEmail }) {
                 style={{ background: '#f1f5f9' }}
               >
                 <span className="text-[9px] font-bold" style={{ color: '#94a3b8' }}>
-                  READ-ONLY PREVIEW
+                  {t('notaryEditorPage.readOnlyPreview')}
                 </span>
               </div>
             </div>
@@ -1781,6 +1784,7 @@ function PreviewModal({ template, data, onClose, onDownloadPDF, onEmail }) {
 // ─── TEMPLATE CARD ───────────────────────────────────────────────────────────────
 
 function TemplateCard({ template, onOpen }) {
+  const { t } = useTranslation()
   const Icon = template.icon
   const catColor = CATEGORY_COLORS[template.category] || {}
 
@@ -1811,8 +1815,8 @@ function TemplateCard({ template, onOpen }) {
             </span>
             {template.badge === 'Legal-Grade' && (
               <Tooltip
-                title="Multi-Party"
-                content="Contracts that require signatures from two or more independent parties before being considered valid and anchored to Bitcoin."
+                title={t('notaryEditorPage.multiPartyTitle')}
+                content={t('notaryEditorPage.multiPartyTooltip')}
               />
             )}
           </span>
@@ -1843,13 +1847,13 @@ function TemplateCard({ template, onOpen }) {
         style={{ borderColor: 'var(--border)', background: 'var(--bg-primary)' }}
       >
         <span className="text-xs font-semibold" style={{ color: 'var(--text-muted)' }}>
-          {template.fields.length} fields
+          {t('notaryEditorPage.fieldsCount', { count: template.fields.length })}
         </span>
         <span
           className="flex items-center gap-1 text-sm font-bold transition-all group-hover:gap-2"
           style={{ color: 'var(--accent-gold)' }}
         >
-          Open Template <ChevronRight size={14} />
+          {t('notaryEditorPage.openTemplate')} <ChevronRight size={14} />
         </span>
       </div>
     </motion.div>
@@ -1859,13 +1863,14 @@ function TemplateCard({ template, onOpen }) {
 // ─── LIST VIEW ───────────────────────────────────────────────────────────────────
 
 function TemplateList({ onSelect }) {
+  const { t } = useTranslation()
   const [search, setSearch] = useState('')
   const [category, setCategory] = useState('All')
   const [searchParams] = useSearchParams()
 
   useEffect(() => {
-    document.title = 'Notary Templates — Satohash'
-  }, [])
+    document.title = t('notaryEditorPage.listDocumentTitle')
+  }, [t])
 
   // Auto-select template from ?t= or ?type= URL param
   useEffect(() => {
@@ -1899,22 +1904,21 @@ function TemplateList({ onSelect }) {
               className="text-xs font-bold tracking-[0.2em] uppercase"
               style={{ color: 'var(--accent-gold)' }}
             >
-              Sovereign Notary
+              {t('notaryEditorPage.listKicker')}
             </span>
           </div>
           <h1
             className="mb-3 flex items-center text-3xl font-black md:text-4xl"
             style={{ color: 'var(--text-primary)' }}
           >
-            Notary Templates
+            {t('notaryEditorPage.listTitle')}
             <Tooltip
-              title="Notary Template"
-              content="A pre-built legal document structure. Fill in the variables and the system generates a Bitcoin-anchored, multi-party signable agreement."
+              title={t('notaryEditorPage.listTooltipTitle')}
+              content={t('notaryEditorPage.listTooltip')}
             />
           </h1>
           <p className="max-w-xl text-base" style={{ color: 'var(--text-muted)' }}>
-            Professional legal documents anchored to the Bitcoin blockchain. Fill, sign, and
-            immortalise your agreements.
+            {t('notaryEditorPage.listSubtitle')}
           </p>
         </div>
 
@@ -1929,7 +1933,7 @@ function TemplateList({ onSelect }) {
             <input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search templates…"
+              placeholder={t('notaryEditorPage.searchPlaceholder')}
               className="w-full rounded-xl py-2.5 pr-4 pl-10 text-sm outline-none"
               style={{
                 background: 'var(--bg-secondary)',
@@ -1957,7 +1961,7 @@ function TemplateList({ onSelect }) {
                     border: active ? '1px solid var(--accent-gold)' : '1px solid var(--border)'
                   }}
                 >
-                  {cat}
+                  {cat === 'All' ? t('notaryEditorPage.allCategory') : cat}
                 </button>
               )
             })}
@@ -1968,7 +1972,7 @@ function TemplateList({ onSelect }) {
         {filtered.length === 0 ? (
           <div className="py-20 text-center" style={{ color: 'var(--text-muted)' }}>
             <FileText size={32} className="mx-auto mb-3 opacity-30" />
-            <p>No templates match your search.</p>
+            <p>{t('notaryEditorPage.empty')}</p>
           </div>
         ) : (
           <motion.div
@@ -1976,8 +1980,8 @@ function TemplateList({ onSelect }) {
             layout
           >
             <AnimatePresence mode="popLayout">
-              {filtered.map((t) => (
-                <TemplateCard key={t.id} template={t} onOpen={onSelect} />
+              {filtered.map((tmpl) => (
+                <TemplateCard key={tmpl.id} template={tmpl} onOpen={onSelect} />
               ))}
             </AnimatePresence>
           </motion.div>
@@ -1992,6 +1996,8 @@ function TemplateList({ onSelect }) {
 const MAX_HISTORY_SNAPSHOTS = 5
 
 export function TemplateEditor({ template, onBack, demoMode = false }) {
+  const { t, i18n } = useTranslation()
+  const navigate = useNavigate()
   const documentRef = useRef(null)
   const [data, setData] = useState(() => ({ ...template.demoData }))
   const [qrUrl, setQrUrl] = useState('')
@@ -2048,14 +2054,21 @@ export function TemplateEditor({ template, onBack, demoMode = false }) {
     return () => clearTimeout(debounceRef.current)
   }, [data, saveSnapshot, demoMode])
 
-  const restoreSnapshot = useCallback((snap) => {
-    setData({ ...snap.data })
-    toast.success('Restored snapshot from ' + new Date(snap.timestamp).toLocaleTimeString())
-  }, [])
+  const restoreSnapshot = useCallback(
+    (snap) => {
+      setData({ ...snap.data })
+      toast.success(
+        t('notaryEditorPage.toastRestored', {
+          time: new Date(snap.timestamp).toLocaleTimeString(i18n.language)
+        })
+      )
+    },
+    [t, i18n.language]
+  )
 
   // Dynamic SEO meta tags
   useEffect(() => {
-    document.title = `${template.title} — Satohash Notary Templates`
+    document.title = t('notaryEditorPage.documentTitle', { title: template.title })
 
     const setMeta = (selector, attrName, attrValue, content) => {
       let el = document.querySelector(selector)
@@ -2092,51 +2105,73 @@ export function TemplateEditor({ template, onBack, demoMode = false }) {
         'Drop a file. Get permanent, tamper-proof Bitcoin proof of existence in 60 seconds. Free. Private. No lawyers. Your document never leaves your device.'
       )
     }
-  }, [template])
+  }, [template, t])
 
   useEffect(() => {
     const verifyUrl = getVerifyUrl()
     QRCode.toDataURL(verifyUrl, { width: 120, margin: 1, errorCorrectionLevel: 'M' })
       .then(setQrUrl)
-      .catch(() => toast.error('Could not generate verification QR code.'))
-  }, [])
+      .catch(() => toast.error(t('notaryEditorPage.toastQrFail')))
+  }, [t])
 
   const completedFields = template.fields.filter((f) => data[f.id]?.trim?.())
   const progress = Math.round((completedFields.length / template.fields.length) * 100)
 
-  const handleAnchor = () => {
-    toast.success('⚡ Document anchored to Bitcoin!', {
-      description: `Tx hash pending confirmation on the Satohash protocol.`
-    })
+  const handleAnchor = async () => {
+    try {
+      const hash = await sha256HexFromObject(data)
+      navigate(`/stamp?hash=${hash}&label=${encodeURIComponent(template.title)}`)
+    } catch {
+      toast.error(t('notaryEditorPage.toastStampFail'))
+    }
   }
 
-  const handleVault = () => {
-    toast.success('🔒 Saved to your Vault', {
-      description: `${template.title} is securely stored.`
-    })
+  const handleVault = async () => {
+    try {
+      const hash = await sha256HexFromObject(data)
+      upsertLocalStamp({
+        id: hash,
+        hash,
+        filename: template.title,
+        status: 'pending',
+        created_at: new Date().toISOString(),
+        source: 'notary-template'
+      })
+      toast.success(t('notaryEditorPage.toastVaultOk'), {
+        description: t('notaryEditorPage.toastVaultDesc', { title: template.title })
+      })
+    } catch {
+      toast.error(t('notaryEditorPage.toastVaultFail'))
+    }
   }
 
   const handlePDF = async () => {
     try {
       await generatePDF(template, data)
-      toast.success('📄 PDF downloaded!')
+      toast.success(t('notaryEditorPage.toastPdfOk'))
     } catch {
-      toast.error('PDF generation failed. Please try again.')
+      toast.error(t('notaryEditorPage.toastPdfFail'))
     }
   }
 
   const handleEmail = () => {
-    const subject = `Notarized Document: ${template.title}`
+    const subject = t('notaryEditorPage.emailSubject', { title: template.title })
     const fieldLines = template.fields.map((f) => `${f.label}: ${data[f.id] || '—'}`).join('\n')
     const body =
       `${template.title}\n` +
-      `Category: ${template.category}\n` +
-      `Date: ${new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}\n\n` +
-      `--- DOCUMENT FIELDS ---\n\n` +
+      `${t('notaryEditorPage.emailCategory', { category: template.category })}\n` +
+      `${t('notaryEditorPage.emailDate', {
+        date: new Date().toLocaleDateString(i18n.language, {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        })
+      })}\n\n` +
+      `${t('notaryEditorPage.emailFieldsHeader')}\n\n` +
       `${fieldLines}\n\n` +
-      `--- VERIFICATION ---\n\n` +
-      `This document has been notarized via the Satohash Sovereign Notary Protocol.\n` +
-      `Verify at: ${getVerifyUrl()}\n`
+      `${t('notaryEditorPage.emailVerifyHeader')}\n\n` +
+      `${t('notaryEditorPage.emailBody')}\n` +
+      `${t('notaryEditorPage.emailVerifyAt', { url: getVerifyUrl() })}\n`
     window.location.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
   }
 
@@ -2144,11 +2179,11 @@ export function TemplateEditor({ template, onBack, demoMode = false }) {
     const url = `${window.location.origin}/templates?t=${template.id}`
     try {
       await navigator.clipboard.writeText(url)
-      toast.success('Share link copied!', {
-        description: 'Recipients can open this template directly.'
+      toast.success(t('notaryEditorPage.toastShareOk'), {
+        description: t('notaryEditorPage.toastShareDesc')
       })
     } catch {
-      toast.error('Could not copy to clipboard.')
+      toast.error(t('notaryEditorPage.toastShareFail'))
     }
   }
 
@@ -2156,7 +2191,7 @@ export function TemplateEditor({ template, onBack, demoMode = false }) {
 
   const resetDemoData = () => {
     setData({ ...template.demoData })
-    toast.success('Demo data restored')
+    toast.success(t('notaryEditorPage.toastDemoReset'))
   }
 
   return (
@@ -2184,11 +2219,10 @@ export function TemplateEditor({ template, onBack, demoMode = false }) {
                 className="text-[10px] font-black tracking-[0.2em] uppercase"
                 style={{ color: 'var(--accent-gold)' }}
               >
-                Demo Preview
+                {t('notaryEditorPage.demoKicker')}
               </p>
               <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>
-                Pre-filled with sample data. Edit fields, export PDF, or sign in to anchor to
-                Bitcoin.
+                {t('notaryEditorPage.demoBody')}
               </p>
             </div>
             <button
@@ -2201,7 +2235,7 @@ export function TemplateEditor({ template, onBack, demoMode = false }) {
               }}
             >
               <RotateCcw size={12} />
-              Reset Demo Data
+              {t('notaryEditorPage.resetDemo')}
             </button>
           </div>
         )}
@@ -2216,7 +2250,7 @@ export function TemplateEditor({ template, onBack, demoMode = false }) {
         >
           <ArrowLeft size={16} />
           <span className="text-sm font-semibold">
-            {demoMode ? 'Back to Template Library' : 'Back to Templates'}
+            {demoMode ? t('notaryEditorPage.backLibrary') : t('notaryEditorPage.backTemplates')}
           </span>
         </button>
 
@@ -2276,7 +2310,7 @@ export function TemplateEditor({ template, onBack, demoMode = false }) {
                       {template.category}
                     </span>
                     <span className="text-xs" style={{ color: '#94a3b8' }}>
-                      {new Date().toLocaleDateString('en-US', {
+                      {new Date().toLocaleDateString(i18n.language, {
                         year: 'numeric',
                         month: 'long',
                         day: 'numeric'
@@ -2361,13 +2395,13 @@ export function TemplateEditor({ template, onBack, demoMode = false }) {
                     className="text-[10px] font-bold tracking-widest uppercase"
                     style={{ color: '#94a3b8' }}
                   >
-                    Generated via
+                    {t('notaryEditorPage.generatedVia')}
                   </p>
                   <p
                     className="text-sm font-black"
                     style={{ color: darkDoc ? '#f8fafc' : '#0f172a' }}
                   >
-                    Satohash — Sovereign Notary Protocol
+                    {t('notaryEditorPage.protocolName')}
                   </p>
                   <p className="text-[10px]" style={{ color: '#94a3b8' }}>
                     {window.location.hostname}
@@ -2380,10 +2414,10 @@ export function TemplateEditor({ template, onBack, demoMode = false }) {
                     className="flex items-center text-[10px] tracking-widest uppercase"
                     style={{ color: '#94a3b8' }}
                   >
-                    Bitcoin-Anchored Document
+                    {t('notaryEditorPage.draftLabel')}
                     <Tooltip
-                      title="Bitcoin Anchored"
-                      content="This document's hash has been permanently written into the Bitcoin blockchain. It can never be altered or backdated."
+                      title={t('notaryEditorPage.stampTooltipTitle')}
+                      content={t('notaryEditorPage.stampTooltip')}
                     />
                   </p>
                   <div
@@ -2391,7 +2425,7 @@ export function TemplateEditor({ template, onBack, demoMode = false }) {
                     style={{ background: '#f1f5f9' }}
                   >
                     <span className="text-[9px] font-bold" style={{ color: '#94a3b8' }}>
-                      HASH PENDING
+                      {t('notaryEditorPage.hashPending')}
                     </span>
                   </div>
                 </div>
@@ -2403,13 +2437,13 @@ export function TemplateEditor({ template, onBack, demoMode = false }) {
                       href={getVerifyUrl()}
                       target="_blank"
                       rel="noopener noreferrer"
-                      title="Open verification page"
+                      title={t('notaryEditorPage.openVerify')}
                       className="rounded transition-opacity hover:opacity-100"
                       style={{ opacity: 0.85 }}
                     >
                       <img
                         src={qrUrl}
-                        alt="Scan to verify at Satohash"
+                        alt={t('notaryEditorPage.verifyQrAlt')}
                         style={{ width: 56, height: 56 }}
                       />
                     </a>
@@ -2427,7 +2461,7 @@ export function TemplateEditor({ template, onBack, demoMode = false }) {
                     className="text-[8px] font-bold tracking-widest uppercase"
                     style={{ color: '#94a3b8' }}
                   >
-                    Scan to verify
+                    {t('notaryEditorPage.scanToVerify')}
                   </span>
                 </div>
               </div>
@@ -2441,8 +2475,9 @@ export function TemplateEditor({ template, onBack, demoMode = false }) {
             transition={{ duration: 0.35, delay: 0.1 }}
             className="flex w-full flex-col gap-4 lg:w-72 xl:w-80"
           >
-            {/* Anchor to Bitcoin */}
+            {/* Stamp this draft → /stamp with on-device SHA-256 */}
             <button
+              type="button"
               onClick={handleAnchor}
               className="flex w-full items-center justify-center gap-2.5 rounded-xl px-5 py-3.5 text-sm font-bold shadow-lg transition-all active:scale-95"
               style={{
@@ -2452,10 +2487,10 @@ export function TemplateEditor({ template, onBack, demoMode = false }) {
               }}
             >
               <Zap size={16} />
-              Anchor to Bitcoin
+              {t('notaryEditorPage.stampDraft')}
               <Tooltip
-                title="Bitcoin Anchored"
-                content="This document's hash has been permanently written into the Bitcoin blockchain. It can never be altered or backdated."
+                title={t('notaryEditorPage.stampTooltipTitle')}
+                content={t('notaryEditorPage.stampTooltip')}
                 className="ml-1"
               />
             </button>
@@ -2467,7 +2502,7 @@ export function TemplateEditor({ template, onBack, demoMode = false }) {
             >
               <div className="mb-3 flex items-center justify-between">
                 <span className="text-xs font-bold" style={{ color: 'var(--text-secondary)' }}>
-                  Fields Complete
+                  {t('notaryEditorPage.fieldsComplete')}
                 </span>
                 <span className="text-sm font-black" style={{ color: 'var(--accent-gold)' }}>
                   {progress}%
@@ -2487,7 +2522,10 @@ export function TemplateEditor({ template, onBack, demoMode = false }) {
                 />
               </div>
               <p className="mt-2 text-xs" style={{ color: 'var(--text-muted)' }}>
-                {completedFields.length} of {template.fields.length} fields filled
+                {t('notaryEditorPage.fieldsFilled', {
+                  filled: completedFields.length,
+                  total: template.fields.length
+                })}
               </p>
             </div>
 
@@ -2506,7 +2544,7 @@ export function TemplateEditor({ template, onBack, demoMode = false }) {
               ) : (
                 <Moon size={15} style={{ color: 'var(--text-muted)' }} />
               )}
-              {darkDoc ? 'Light Mode' : 'Dark Mode'}
+              {darkDoc ? t('notaryEditorPage.lightMode') : t('notaryEditorPage.darkMode')}
             </button>
 
             {/* Action buttons */}
@@ -2523,7 +2561,7 @@ export function TemplateEditor({ template, onBack, demoMode = false }) {
                 onMouseLeave={(e) => (e.currentTarget.style.borderColor = 'var(--border)')}
               >
                 <Download size={15} style={{ color: 'var(--accent-gold)' }} />
-                Download PDF
+                {t('notaryEditorPage.downloadPdf')}
               </button>
 
               <button
@@ -2538,7 +2576,7 @@ export function TemplateEditor({ template, onBack, demoMode = false }) {
                 onMouseLeave={(e) => (e.currentTarget.style.borderColor = 'var(--border)')}
               >
                 <Eye size={15} style={{ color: 'var(--accent-active)' }} />
-                Preview
+                {t('notaryEditorPage.preview')}
               </button>
 
               <button
@@ -2553,7 +2591,7 @@ export function TemplateEditor({ template, onBack, demoMode = false }) {
                 onMouseLeave={(e) => (e.currentTarget.style.borderColor = 'var(--border)')}
               >
                 <Printer size={15} style={{ color: 'var(--accent-teal)' }} />
-                Print Document
+                {t('notaryEditorPage.print')}
               </button>
 
               <button
@@ -2568,7 +2606,7 @@ export function TemplateEditor({ template, onBack, demoMode = false }) {
                 onMouseLeave={(e) => (e.currentTarget.style.borderColor = 'var(--border)')}
               >
                 <Vault size={15} style={{ color: 'var(--accent-success)' }} />
-                Save to Vault
+                {t('notaryEditorPage.saveVault')}
               </button>
 
               <button
@@ -2583,7 +2621,7 @@ export function TemplateEditor({ template, onBack, demoMode = false }) {
                 onMouseLeave={(e) => (e.currentTarget.style.borderColor = 'var(--border)')}
               >
                 <Mail size={15} style={{ color: 'var(--accent-purple)' }} />
-                Email Package
+                {t('notaryEditorPage.emailPackage')}
               </button>
 
               <button
@@ -2598,7 +2636,7 @@ export function TemplateEditor({ template, onBack, demoMode = false }) {
                 onMouseLeave={(e) => (e.currentTarget.style.borderColor = 'var(--border)')}
               >
                 <Link2 size={15} style={{ color: 'var(--accent-active)' }} />
-                Copy Share Link
+                {t('notaryEditorPage.copyShare')}
               </button>
             </div>
 
@@ -2616,19 +2654,18 @@ export function TemplateEditor({ template, onBack, demoMode = false }) {
                   className="text-xs font-black tracking-wide uppercase"
                   style={{ color: 'var(--accent-gold)' }}
                 >
-                  Zero-Knowledge
+                  {t('notaryEditorPage.zeroKnowledge')}
                 </span>
               </div>
               <p className="mb-3 text-xs leading-relaxed" style={{ color: 'var(--text-muted)' }}>
-                Your document contents never leave your device. Only a cryptographic hash is
-                anchored to Bitcoin — provable without exposure.
+                {t('notaryEditorPage.zeroKnowledgeBody')}
               </p>
               <a
                 href="/trust"
                 className="flex items-center gap-1 text-xs font-semibold transition-opacity hover:opacity-70"
                 style={{ color: 'var(--accent-gold)' }}
               >
-                Learn how it works <ExternalLink size={11} />
+                {t('notaryEditorPage.learnHow')} <ExternalLink size={11} />
               </a>
             </div>
 
@@ -2638,7 +2675,7 @@ export function TemplateEditor({ template, onBack, demoMode = false }) {
               style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border)' }}
             >
               <p className="mb-3 text-xs font-bold" style={{ color: 'var(--text-secondary)' }}>
-                Checklist
+                {t('notaryEditorPage.checklist')}
               </p>
               <div
                 className="flex max-h-52 flex-col gap-1.5 overflow-y-auto pr-1"
@@ -2683,7 +2720,7 @@ export function TemplateEditor({ template, onBack, demoMode = false }) {
               >
                 <div className="flex items-center gap-2">
                   <History size={13} style={{ color: 'var(--accent-active)' }} />
-                  <span className="text-xs font-bold">Version History</span>
+                  <span className="text-xs font-bold">{t('notaryEditorPage.versionHistory')}</span>
                   {snapshots.length > 0 && (
                     <span
                       className="rounded-full px-1.5 py-0.5 text-[9px] font-black"
@@ -2724,16 +2761,16 @@ export function TemplateEditor({ template, onBack, demoMode = false }) {
                           className="py-2 text-center text-[10px]"
                           style={{ color: 'var(--text-muted)' }}
                         >
-                          No snapshots yet — edits auto-save after 2 s.
+                          {t('notaryEditorPage.noSnapshots')}
                         </p>
                       ) : (
                         snapshots.map((snap, idx) => {
                           const d = new Date(snap.timestamp)
-                          const label = d.toLocaleDateString('en-US', {
+                          const label = d.toLocaleDateString(i18n.language, {
                             month: 'short',
                             day: 'numeric'
                           })
-                          const time = d.toLocaleTimeString('en-US', {
+                          const time = d.toLocaleTimeString(i18n.language, {
                             hour: '2-digit',
                             minute: '2-digit',
                             second: '2-digit'
@@ -2762,7 +2799,7 @@ export function TemplateEditor({ template, onBack, demoMode = false }) {
                                     className="text-[9px]"
                                     style={{ color: 'var(--accent-active)' }}
                                   >
-                                    Latest
+                                    {t('notaryEditorPage.latest')}
                                   </p>
                                 )}
                               </div>
@@ -2778,7 +2815,7 @@ export function TemplateEditor({ template, onBack, demoMode = false }) {
                                 }}
                               >
                                 <RotateCcw size={10} />
-                                Restore
+                                {t('notaryEditorPage.restore')}
                               </button>
                             </div>
                           )

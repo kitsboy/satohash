@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import {
   Activity,
@@ -16,13 +17,19 @@ import {
   RefreshCcw,
   Bell
 } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { getBlockHeight, getMempoolStats, getFeeEstimates } from '../utils/mempool'
 import usePageMeta from '../hooks/usePageMeta'
 import { getApiUrl } from '../config/constants'
 
 const API_URL = getApiUrl()
 
+function isUnknown(v) {
+  return v == null || v === '' || v === '—'
+}
+
 export default function ProtocolStats() {
+  const { t } = useTranslation()
   usePageMeta({ page: 'protocolStats' })
   const [stats, setStats] = useState({
     network: 'Bitcoin Mainnet',
@@ -35,9 +42,10 @@ export default function ProtocolStats() {
     lastBlockTime: '—',
     witnessQuorum: '—'
   })
-  const [isAuditing, setIsAuditing] = useState(false)
   const [loading, setLoading] = useState(true)
   const [isLive, setIsLive] = useState(false)
+  const unknown = t('protocolStatsPage.unknown')
+  const display = (v) => (isUnknown(v) ? unknown : v)
 
   useEffect(() => {
     const fetchHeight = async () => {
@@ -208,11 +216,13 @@ export default function ProtocolStats() {
               <Activity size={24} />
             </motion.div>
             <h1 className="mb-6 text-6xl leading-none font-black tracking-tighter text-[var(--text-primary)] uppercase italic md:text-8xl">
-              Mesh <span className="text-[var(--accent-active)]">OBSERVABILITY.</span>
+              {t('protocolStatsPage.title')}{' '}
+              <span className="text-[var(--accent-active)]">
+                {t('protocolStatsPage.titleHighlight')}
+              </span>
             </h1>
             <p className="max-w-xl font-sans text-lg leading-relaxed font-bold text-[var(--text-secondary)] italic">
-              Real-time telemetry from the global Witness Mesh and Bitcoin PoW consensus layer.
-              Monitor bridge health and forensic finality.
+              {t('protocolStatsPage.lede')}
             </p>
             <span
               className="mt-4 inline-flex rounded-full border px-3 py-1 text-[10px] font-bold tracking-widest uppercase"
@@ -221,7 +231,7 @@ export default function ProtocolStats() {
                 color: isLive ? 'var(--accent-success)' : 'var(--accent-pending)'
               }}
             >
-              {isLive ? 'Live feed' : 'Cached'}
+              {isLive ? t('protocolStatsPage.liveFeed') : t('protocolStatsPage.mempoolFallback')}
             </span>
           </div>
 
@@ -232,10 +242,10 @@ export default function ProtocolStats() {
             </div>
             <div>
               <h4 className="text-[10px] font-black text-[var(--text-primary)] uppercase italic">
-                Oracles Active
+                {t('protocolStatsPage.bitcoinTitle')}
               </h4>
               <p className="text-[10px] font-bold tracking-widest text-[var(--accent-success)] uppercase">
-                Protocol Sync Nominal
+                {t('protocolStatsPage.bitcoinSub')}
               </p>
             </div>
           </div>
@@ -245,30 +255,30 @@ export default function ProtocolStats() {
         <div className="mb-24 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           <VividStatCard
             icon={Database}
-            label="Block Height"
-            value={`#${stats.height}`}
-            sub="L1_FINALITY_SYNCED"
+            label={t('protocolStatsPage.blockHeight')}
+            value={stats.height ? `#${stats.height}` : unknown}
+            sub={stats.height ? t('protocolStatsPage.blockHeightSub') : unknown}
             color="indigo"
           />
           <VividStatCard
             icon={TrendingDown}
-            label="Network Fee"
-            value={stats.averageFee != null ? `${stats.averageFee} sat/vB` : '—'}
-            sub="ESTIMATED_NEXT_BLOCK"
+            label={t('protocolStatsPage.networkFee')}
+            value={stats.averageFee != null ? `${stats.averageFee} sat/vB` : unknown}
+            sub={stats.averageFee != null ? t('protocolStatsPage.networkFeeSub') : unknown}
             color="emerald"
           />
           <VividStatCard
             icon={Boxes}
-            label="Anchored Claims"
-            value={stats.totalAnchored}
-            sub="PROTOCOL_FORENIC_POOL"
+            label={t('protocolStatsPage.anchored')}
+            value={display(stats.totalAnchored)}
+            sub={isUnknown(stats.totalAnchored) ? unknown : t('protocolStatsPage.anchoredSub')}
             color="amber"
           />
           <VividStatCard
             icon={Zap}
-            label="Mempool Health"
-            value={stats.unconfirmedTxs != null ? stats.unconfirmedTxs.toLocaleString() : '—'}
-            sub="PENDING_WITNESS_TASKS"
+            label={t('protocolStatsPage.mempool')}
+            value={stats.unconfirmedTxs != null ? stats.unconfirmedTxs.toLocaleString() : unknown}
+            sub={stats.unconfirmedTxs != null ? t('protocolStatsPage.mempoolSub') : unknown}
             color="rose"
           />
         </div>
@@ -280,10 +290,10 @@ export default function ProtocolStats() {
             <div className="mb-12 flex items-center justify-between">
               <div>
                 <h3 className="mb-1 text-2xl font-black tracking-tighter text-[var(--text-primary)] uppercase italic">
-                  Anchor Efficiency.
+                  {t('protocolStatsPage.chartTitle')}
                 </h3>
                 <p className="text-[9px] font-black tracking-widest text-[var(--text-secondary)] uppercase italic">
-                  Temporal Merkle Propagation 24H
+                  {t('protocolStatsPage.chartSub')}
                 </p>
               </div>
               <BarChart3
@@ -305,9 +315,9 @@ export default function ProtocolStats() {
             </div>
 
             <div className="flex items-center justify-between border-t border-[var(--border)] pt-8 text-[9px] font-black tracking-widest text-[var(--text-secondary)]/50 uppercase italic">
-              <span>GENESIS_BLOCK_DELTA</span>
-              <span className="text-[var(--accent-active)]">PEAK_MESH_THROUGHPUT_REACHED</span>
-              <span>REALTIME_ORACLE_SNAP</span>
+              <span>{t('protocolStatsPage.chartLeft')}</span>
+              <span className="text-[var(--accent-active)]">{t('protocolStatsPage.chartMid')}</span>
+              <span>{t('protocolStatsPage.chartRight')}</span>
             </div>
           </div>
 
@@ -326,51 +336,41 @@ export default function ProtocolStats() {
 
             <div className="relative z-10 mb-12">
               <h3 className="mb-8 text-xl font-black tracking-tight text-[var(--text-primary)] uppercase italic">
-                Node <span className="text-[var(--accent-active)]">Inventory.</span>
+                {t('protocolStatsPage.inventoryTitle')}{' '}
+                <span className="text-[var(--accent-active)]">
+                  {t('protocolStatsPage.inventoryHighlight')}
+                </span>
               </h3>
               <div className="space-y-6">
-                <HealthMetric icon={Globe} label="Ots Calendar Nodes" value="Connected_03" />
-                <HealthMetric icon={Clock} label="Last Witness Sync" value={stats.lastBlockTime} />
-                <HealthMetric icon={Cpu} label="Bitcoin Hashrate" value="685.2 EH/s" pulse />
+                <HealthMetric
+                  icon={Globe}
+                  label={t('protocolStatsPage.calendars')}
+                  value={unknown}
+                />
+                <HealthMetric
+                  icon={Clock}
+                  label={t('protocolStatsPage.lastSync')}
+                  value={display(stats.lastBlockTime)}
+                />
+                <HealthMetric icon={Cpu} label={t('protocolStatsPage.hashrate')} value={unknown} />
                 <HealthMetric
                   icon={ShieldCheck}
-                  label="Witness Quorum"
-                  value={stats.witnessQuorum}
-                  emerald
+                  label={t('protocolStatsPage.quorum')}
+                  value={display(stats.witnessQuorum)}
                 />
               </div>
             </div>
 
             <div className="relative z-10 rounded-3xl border border-[var(--border)] bg-[var(--surface-raised)] p-6 italic">
               <p className="mb-4 text-[11px] leading-relaxed font-bold text-[var(--text-secondary)] italic">
-                The Satohash mesh is leveraging persistent blinded-paths for redundant verification
-                across 4 distinct jurisdictions.
+                {t('protocolStatsPage.meshBody')}
               </p>
-              <button
-                onClick={() => {
-                  setIsAuditing(true)
-                  setTimeout(() => setIsAuditing(false), 5000)
-                }}
-                disabled={isAuditing}
-                className={`flex items-center gap-2 text-[9px] font-black tracking-widest uppercase transition-all ${isAuditing ? 'text-[var(--accent-success)]' : 'text-[var(--accent-active)] hover:text-[var(--text-primary)]'}`}
+              <Link
+                to="/network"
+                className="flex items-center gap-2 text-[9px] font-black tracking-widest text-[var(--accent-active)] uppercase transition-all hover:text-[var(--text-primary)]"
               >
-                {isAuditing ? (
-                  <>
-                    <RefreshCcw size={12} className="animate-spin" /> RUNNING_FULL_AUDIT...
-                  </>
-                ) : (
-                  <>
-                    Request Full Audit <ArrowUpRight size={12} />
-                  </>
-                )}
-              </button>
-              {isAuditing && (
-                <motion.div
-                  initial={{ width: 0 }}
-                  animate={{ width: '100%' }}
-                  className="mt-4 h-1 rounded-full bg-[var(--accent-success)] shadow-[0_0_8px_var(--accent-success)]"
-                />
-              )}
+                {t('protocolStatsPage.networkCta')} <ArrowUpRight size={12} />
+              </Link>
             </div>
           </div>
         </div>
@@ -381,21 +381,42 @@ export default function ProtocolStats() {
             <div className="flex items-center gap-4">
               <Bell className="animate-bounce text-[var(--accent-danger)]" size={24} />
               <h3 className="text-4xl font-black tracking-tighter text-[var(--text-primary)] uppercase italic">
-                Live <span className="text-[var(--accent-danger)]">ATTESATION STREAM.</span>
+                {t('protocolStatsPage.streamTitle')}{' '}
+                <span className="text-[var(--accent-danger)]">
+                  {t('protocolStatsPage.streamHighlight')}
+                </span>
               </h3>
             </div>
             <div className="flex items-center gap-3 rounded-full border border-[var(--border)] bg-[var(--surface-raised)] px-6 py-2">
-              <RefreshCcw size={14} className="animate-spin text-[var(--accent-active)]/50" />
+              <RefreshCcw size={14} className="text-[var(--accent-active)]/50" />
               <span className="text-[9px] font-black tracking-widest text-[var(--text-primary)] uppercase italic">
-                Syncing Nostr Stream...
+                {t('protocolStatsPage.streamSync')}
               </span>
             </div>
           </div>
 
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            <ActivityItem label="NIP-05_ID" hash="af29...e12b" time="2s ago" type="IDENTITY" />
-            <ActivityItem label="ENTERPRISE_BATCH" hash="3c91...f92a" time="14s ago" type="BATCH" />
-            <ActivityItem label="JUDICIAL_ENTRY" hash="7e11...902x" time="1m ago" type="FORENSIC" />
+            <ActivityItem
+              label={t('protocolStatsPage.sampleIdentity')}
+              hash="af29...e12b"
+              time={t('protocolStatsPage.sampleTime2s')}
+              type={t('protocolStatsPage.typeIdentity')}
+              badge={t('protocolStatsPage.sample')}
+            />
+            <ActivityItem
+              label={t('protocolStatsPage.sampleBatch')}
+              hash="3c91...f92a"
+              time={t('protocolStatsPage.sampleTime14s')}
+              type={t('protocolStatsPage.typeBatch')}
+              badge={t('protocolStatsPage.sample')}
+            />
+            <ActivityItem
+              label={t('protocolStatsPage.sampleForensic')}
+              hash="7e11...902x"
+              time={t('protocolStatsPage.sampleTime1m')}
+              type={t('protocolStatsPage.typeForensic')}
+              badge={t('protocolStatsPage.sample')}
+            />
           </div>
         </section>
       </div>
@@ -473,7 +494,7 @@ function HealthMetric({ icon: Icon, label, value, pulse, emerald }) {
   )
 }
 
-function ActivityItem({ label, hash, time, type }) {
+function ActivityItem({ label, hash, time, type, badge }) {
   return (
     <motion.div
       initial={{ opacity: 0, x: -10 }}
@@ -482,7 +503,7 @@ function ActivityItem({ label, hash, time, type }) {
     >
       <div className="absolute top-0 right-0 flex flex-col items-end p-6">
         <span className="mb-2 rounded-full bg-[var(--accent-danger)]/10 px-2.5 py-1 text-[8px] font-black tracking-tighter text-[var(--accent-danger)] uppercase italic">
-          Witnessed
+          {badge}
         </span>
         <span className="text-[8px] font-black text-[var(--text-secondary)] uppercase italic">
           {time}

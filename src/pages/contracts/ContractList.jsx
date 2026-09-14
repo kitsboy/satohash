@@ -26,6 +26,7 @@ import { useState, useEffect } from 'react'
 import { jsPDF } from 'jspdf'
 import JSZip from 'jszip'
 import { toast } from 'sonner'
+import { useTranslation } from 'react-i18next'
 import usePageMeta from '../../hooks/usePageMeta'
 import { SkeletonList } from '../../components/ui/Skeletons'
 import SharedTooltip from '../../components/ui/Tooltip'
@@ -33,6 +34,7 @@ import { getContractStats, getContractActivity } from '../../utils/contractStora
 import { useContractStore } from '../../store/contractStore'
 
 export default function ContractList() {
+  const { t } = useTranslation()
   usePageMeta({ page: 'contracts' })
   const navigate = useNavigate()
   const contracts = useContractStore((s) => s.contracts)
@@ -56,14 +58,13 @@ export default function ContractList() {
 
   const handleDelete = (e, id) => {
     e.stopPropagation()
-    if (!confirm('Are you sure you want to delete this agreement? This action cannot be undone.'))
-      return
+    if (!confirm(t('contractsPage.confirmDelete'))) return
 
     deleteContract(id)
   }
 
   const handleDownloadAll = async () => {
-    toast.info('Preparing your archive...')
+    toast.info(t('contractsPage.preparing'))
     try {
       const zip = new JSZip()
       for (const contract of contracts) {
@@ -92,7 +93,7 @@ export default function ContractList() {
         doc.setFontSize(8)
         doc.setTextColor(100, 116, 139)
         doc.setFont('helvetica', 'normal')
-        doc.text('Satohash — Sovereign Notary Protocol', margin, 35)
+        doc.text(t('contractsPage.pdfSubtitle'), margin, 35)
 
         // Divider
         doc.setDrawColor(240, 180, 41)
@@ -124,23 +125,23 @@ export default function ContractList() {
           doc.line(margin, y - 2, pageW - margin, y - 2)
         }
 
-        addRow('Contract Name', contract.name)
-        addRow('Status', contract.status)
+        addRow(t('contractsPage.pdfName'), contract.name)
+        addRow(t('contractsPage.pdfStatus'), contract.status)
         addRow(
-          'Created',
+          t('contractsPage.pdfCreated'),
           contract.createdAt ? new Date(contract.createdAt).toLocaleDateString() : '—'
         )
         addRow(
-          'Last Updated',
+          t('contractsPage.pdfUpdated'),
           contract.updatedAt ? new Date(contract.updatedAt).toLocaleDateString() : '—'
         )
-        if (contract.content) addRow('Content', contract.content)
+        if (contract.content) addRow(t('contractsPage.pdfContent'), contract.content)
 
         // Footer
         doc.setFontSize(7)
         doc.setTextColor(148, 163, 184)
         doc.setFont('helvetica', 'normal')
-        doc.text('Generated via Satohash — Sovereign Notary Protocol', margin, 287)
+        doc.text(t('contractsPage.pdfFooter'), margin, 287)
 
         // Footer bar
         doc.setFillColor(240, 180, 41)
@@ -159,9 +160,9 @@ export default function ContractList() {
       a.download = `Satohash_Contracts_${new Date().toISOString().split('T')[0]}.zip`
       a.click()
       URL.revokeObjectURL(url)
-      toast.success(`Downloaded ${contracts.length} contract${contracts.length !== 1 ? 's' : ''}`)
+      toast.success(t('contractsPage.downloaded', { count: contracts.length }))
     } catch {
-      toast.error('Failed to generate archive. Please try again.')
+      toast.error(t('contractsPage.downloadFail'))
     }
   }
 
@@ -194,19 +195,21 @@ export default function ContractList() {
                     className="text-[10px] font-black tracking-[0.4em] uppercase italic"
                     style={{ color: 'var(--accent-active)' }}
                   >
-                    Sovereign_Records
+                    {t('contractsPage.kicker')}
                   </span>
                   <div className="h-px w-8" style={{ background: 'var(--border-bright)' }} />
                 </div>
                 <h1 className="text-noir-primary text-4xl font-black tracking-tighter uppercase italic md:text-6xl">
-                  Protocol <br /> <span style={{ color: 'var(--accent-active)' }}>Dashboard.</span>
+                  {t('contractsPage.title')} <br />{' '}
+                  <span style={{ color: 'var(--accent-active)' }}>
+                    {t('contractsPage.titleHighlight')}
+                  </span>
                 </h1>
                 <p
                   className="max-w-md text-sm leading-relaxed font-bold italic"
                   style={{ color: 'var(--text-secondary)' }}
                 >
-                  Managing {contracts.length} active cryptographic proofs anchored to the Bitcoin
-                  settlement layer.
+                  {t('contractsPage.lede', { count: contracts.length })}
                 </p>
               </div>
               <div className="flex flex-col items-start gap-4 md:items-end">
@@ -215,10 +218,10 @@ export default function ContractList() {
                     className="text-[8px] font-black tracking-widest uppercase"
                     style={{ color: 'var(--text-muted)' }}
                   >
-                    Archive_Status
+                    {t('contractsPage.archiveStatus')}
                   </p>
                   <p className="text-[10px] font-bold text-emerald-500 uppercase">
-                    Verifiable_Nominal
+                    {t('contractsPage.archiveOk')}
                   </p>
                 </div>
                 <div className="flex gap-4">
@@ -234,7 +237,7 @@ export default function ContractList() {
                     >
                       <span className="relative z-10 flex items-center gap-2">
                         <FolderDown size={16} />
-                        Download All
+                        {t('contractsPage.downloadAll')}
                       </span>
                     </button>
                   )}
@@ -249,12 +252,12 @@ export default function ContractList() {
                     >
                       <div className="absolute inset-0 bg-linear-to-r from-transparent via-white/10 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
                       <span className="relative z-10 flex items-center gap-3">
-                        Create New Artifact <Plus size={16} />
+                        {t('contractsPage.createNew')} <Plus size={16} />
                       </span>
                     </button>
                   </Link>
                   <div className="flex items-center">
-                    <Tooltip text="Begin the process of anchoring a new document or asset to the Bitcoin blockchain. Choose from specialized templates or upload a custom artifact." />
+                    <Tooltip text={t('contractsPage.createTooltip')} />
                   </div>
                 </div>
               </div>
@@ -274,16 +277,21 @@ export default function ContractList() {
             <div className="space-y-8">
               {/* Stats */}
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-                <StatCard icon={Zap} label="Total Anchors" value={stats.total} color="accent" />
+                <StatCard
+                  icon={Zap}
+                  label={t('contractsPage.statTotal')}
+                  value={stats.total}
+                  color="accent"
+                />
                 <StatCard
                   icon={ShieldCheck}
-                  label="Secured Proofs"
+                  label={t('contractsPage.statSecured')}
                   value={stats.secured}
                   color="emerald"
                 />
                 <StatCard
                   icon={Globe}
-                  label="Node Integrity"
+                  label={t('contractsPage.statIntegrity')}
                   value={`${stats.avgHealth}%`}
                   color="blue"
                 />
@@ -299,8 +307,8 @@ export default function ContractList() {
                   />
                   <input
                     type="search"
-                    aria-label="Search agreements"
-                    placeholder="Search agreements..."
+                    aria-label={t('contractsPage.searchAria')}
+                    placeholder={t('contractsPage.searchPlaceholder')}
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className="w-full rounded-2xl py-3 pr-4 pl-11 text-sm font-medium transition-all outline-none"
@@ -318,7 +326,7 @@ export default function ContractList() {
                       type="button"
                       role="button"
                       aria-pressed={filterStatus === status}
-                      aria-label={`Filter ${status} agreements`}
+                      aria-label={t('contractsPage.filterAria', { status })}
                       onClick={() => setFilterStatus(status)}
                       className="rounded-xl px-4 py-2.5 text-[10px] font-bold tracking-widest whitespace-nowrap uppercase transition-all"
                       style={
@@ -337,7 +345,7 @@ export default function ContractList() {
                             }
                       }
                     >
-                      {status}
+                      {t(`contractsPage.filters.${status}`)}
                     </button>
                   ))}
                 </div>
@@ -378,7 +386,7 @@ export default function ContractList() {
                     className="text-sm font-extrabold tracking-tight"
                     style={{ color: 'var(--text-primary)' }}
                   >
-                    Protocol Feed
+                    {t('contractsPage.feedTitle')}
                   </h3>
                 </div>
 
@@ -389,7 +397,7 @@ export default function ContractList() {
                   />
                   {activity.length === 0 ? (
                     <p className="pl-10 text-xs text-[var(--text-secondary)]">
-                      No contract activity yet. Create your first agreement to see updates here.
+                      {t('contractsPage.feedEmpty')}
                     </p>
                   ) : (
                     activity.map((item) => (
@@ -398,7 +406,11 @@ export default function ContractList() {
                         icon={item.status === 'timestamped' ? Globe : Lock}
                         title={`${item.name} — ${item.status}`}
                         time={item.at ? new Date(item.at).toLocaleString() : '—'}
-                        status={item.status === 'timestamped' ? 'immutable' : 'processed'}
+                        status={
+                          item.status === 'timestamped'
+                            ? t('contractsPage.feedStamped')
+                            : t('contractsPage.feedDraft')
+                        }
                       />
                     ))
                   )}
@@ -413,12 +425,12 @@ export default function ContractList() {
                       className="text-[10px] font-bold tracking-widest uppercase"
                       style={{ color: 'var(--text-muted)' }}
                     >
-                      Global Ops
+                      {t('contractsPage.ops')}
                     </span>
                     <div className="flex items-center gap-2">
                       <div className="h-2 w-2 animate-pulse rounded-full bg-emerald-500" />
                       <span className="text-[10px] font-medium text-emerald-600">
-                        All Systems Nominal
+                        {t('contractsPage.opsOk')}
                       </span>
                     </div>
                   </div>
@@ -432,18 +444,17 @@ export default function ContractList() {
               >
                 <Sparkles className="absolute -top-4 -right-4 h-24 w-24 rotate-12 text-white/10" />
                 <h4 className="relative z-10 mb-2 text-sm font-extrabold text-white">
-                  Security Tip
+                  {t('contractsPage.securityTitle')}
                 </h4>
                 <p className="relative z-10 mb-4 text-[12px] leading-relaxed font-medium text-slate-300">
-                  For high-value agreements, wait for at least 6 Bitcoin confirmations (~1 hour)
-                  before generating the final proof package.
+                  {t('contractsPage.securityBody')}
                 </p>
                 <Button
                   variant="ghost"
                   size="small"
                   className="p-0 text-[10px] font-bold tracking-widest text-white uppercase hover:bg-white/10"
                 >
-                  Learn More <ArrowRight size={12} className="ml-2" />
+                  {t('contractsPage.learnMore')} <ArrowRight size={12} className="ml-2" />
                 </Button>
               </Card>
             </aside>
@@ -455,6 +466,7 @@ export default function ContractList() {
 }
 
 function StatCard({ icon: Icon, label, value, color }) {
+  const { t } = useTranslation()
   const styles = {
     accent: {
       icon: {
@@ -493,9 +505,7 @@ function StatCard({ icon: Icon, label, value, color }) {
           >
             {label}
           </p>
-          <Tooltip
-            text={`This metric tracks the ${label.toLowerCase()} across the sovereign mesh network.`}
-          />
+          <Tooltip text={t('contractsPage.statTooltip', { label })} />
         </div>
         <p className="text-noir-primary text-xl font-extrabold tracking-tighter">{value}</p>
       </div>
@@ -504,6 +514,7 @@ function StatCard({ icon: Icon, label, value, color }) {
 }
 
 function ContractCard({ contract, onClick, onDelete }) {
+  const { t } = useTranslation()
   const isTimestamped = contract.status === 'timestamped'
 
   return (
@@ -547,8 +558,8 @@ function ContractCard({ contract, onClick, onDelete }) {
           <Tooltip
             text={
               contract.status === 'timestamped'
-                ? 'This artifact is fully verified and anchored to the Bitcoin blockchain. It is mathematically immutable.'
-                : 'This artifact is in draft state. It has not yet been submitted to the Bitcoin network for anchoring.'
+                ? t('contractsPage.cardTimestamped')
+                : t('contractsPage.cardDraft')
             }
           />
         </div>
@@ -577,7 +588,7 @@ function ContractCard({ contract, onClick, onDelete }) {
           style={{ color: 'var(--text-secondary)' }}
         >
           <Clock size={11} style={{ color: 'var(--accent-active)' }} />{' '}
-          {isTimestamped ? 'Verified' : 'Pending'}
+          {isTimestamped ? t('contractsPage.verified') : t('contractsPage.pending')}
         </div>
       </div>
 
@@ -623,10 +634,12 @@ function ActivityItem({ icon: Icon, title, time, status }) {
 }
 
 function Tooltip({ text }) {
-  return <SharedTooltip title="About this action" content={text} />
+  const { t } = useTranslation()
+  return <SharedTooltip title={t('contractsPage.tooltipTitle')} content={text} />
 }
 
 function EmptyState({ onAction }) {
+  const { t } = useTranslation()
   return (
     <div className="space-y-10">
       {/* Empty state card */}
@@ -655,20 +668,20 @@ function EmptyState({ onAction }) {
           className="mb-3 text-2xl font-extrabold tracking-tighter"
           style={{ color: 'var(--text-primary)' }}
         >
-          Your Control Center is Ready
+          {t('contractsPage.emptyTitle')}
         </h2>
         <p
           className="mx-auto mb-10 max-w-sm text-sm leading-relaxed font-medium"
           style={{ color: 'var(--text-muted)' }}
         >
-          Launch your first cryptographic agreement anchored to the Bitcoin network.
+          {t('contractsPage.emptyBody')}
         </p>
         <div className="flex flex-col justify-center gap-3 sm:flex-row">
           <Button variant="primary" size="large" onClick={onAction}>
-            Launch Agreement
+            {t('contractsPage.launch')}
           </Button>
           <Button variant="outline" size="large">
-            View Network Stats
+            {t('contractsPage.viewNetwork')}
           </Button>
         </div>
       </div>
@@ -687,28 +700,38 @@ function EmptyState({ onAction }) {
             className="text-[11px] font-bold tracking-[0.12em] uppercase"
             style={{ color: 'var(--accent-active)' }}
           >
-            Learn
+            {t('contractsPage.learn')}
           </span>
         </div>
         <h3
           className="mb-4 text-2xl font-extrabold tracking-tight"
           style={{ color: 'var(--text-primary)' }}
         >
-          What is Cryptographic Timestamping?
+          {t('contractsPage.learnTitle')}
         </h3>
         <p
           className="mb-6 max-w-2xl text-sm leading-relaxed font-medium"
           style={{ color: 'var(--text-secondary)' }}
         >
-          Cryptographic timestamping creates permanent, tamper-proof evidence that a document
-          existed at a specific moment in time. By anchoring a mathematical fingerprint (hash) of
-          your document to the Bitcoin blockchain, you create proof that is:
+          {t('contractsPage.learnBody')}
         </p>
         <div className="mb-8 grid gap-4 sm:grid-cols-3">
           {[
-            { icon: Lock, title: 'Tamper-Proof', desc: 'Impossible to alter without detection' },
-            { icon: Globe, title: 'Decentralized', desc: 'No single point of failure or trust' },
-            { icon: CheckCircle2, title: 'Verifiable', desc: 'Anyone can verify independently' }
+            {
+              icon: Lock,
+              title: t('contractsPage.tamperTitle'),
+              desc: t('contractsPage.tamperDesc')
+            },
+            {
+              icon: Globe,
+              title: t('contractsPage.decentralizedTitle'),
+              desc: t('contractsPage.decentralizedDesc')
+            },
+            {
+              icon: CheckCircle2,
+              title: t('contractsPage.verifiableTitle'),
+              desc: t('contractsPage.verifiableDesc')
+            }
           ].map((item, i) => (
             <div
               key={i}
@@ -735,7 +758,7 @@ function EmptyState({ onAction }) {
           ))}
         </div>
         <Button variant="primary" size="default" onClick={onAction}>
-          <Plus size={16} /> Create Your First Proof
+          <Plus size={16} /> {t('contractsPage.createFirst')}
         </Button>
       </div>
     </div>

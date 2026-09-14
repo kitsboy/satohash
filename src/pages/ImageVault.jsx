@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
+import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   Image as ImageIcon,
@@ -13,6 +14,7 @@ import {
   Fingerprint
 } from 'lucide-react'
 import { toast } from 'sonner'
+import { useTranslation } from 'react-i18next'
 import usePageMeta from '../hooks/usePageMeta'
 import { getApiUrl } from '../config/constants'
 import { getBlockHeight } from '../utils/mempool'
@@ -40,15 +42,16 @@ function loadImageStamps() {
 }
 
 export default function ImageVault() {
+  const { t } = useTranslation()
   usePageMeta({
     page: 'vault',
-    title: 'Image Vault',
-    description: 'Browse and manage image proofs anchored to Bitcoin.'
+    title: t('imageVaultPage.metaTitle'),
+    description: t('imageVaultPage.metaDescription')
   })
   const [images, setImages] = useState(loadImageStamps)
   const [isLoading, setIsLoading] = useState(false)
   const [usingCache, setUsingCache] = useState(false)
-  const [fetchError, setFetchError] = useState(null)
+  const [fetchFailed, setFetchFailed] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const [viewMode, setViewMode] = useState('grid') // grid, list
   const [blockHeight, setBlockHeight] = useState(null)
@@ -67,7 +70,7 @@ export default function ImageVault() {
 
   const fetchImages = useCallback(async () => {
     setIsLoading(true)
-    setFetchError(null)
+    setFetchFailed(false)
     try {
       const res = await fetch(`${API_URL}/api/vault/images`)
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
@@ -80,12 +83,12 @@ export default function ImageVault() {
       }
     } catch (e) {
       setUsingCache(true)
-      setFetchError('Could not reach image vault API — showing cached proofs.')
-      toast.error('Image vault sync failed', { description: e.message })
+      setFetchFailed(true)
+      toast.error(t('imageVaultPage.toastFail'), { description: e.message })
     } finally {
       setIsLoading(false)
     }
-  }, [])
+  }, [t])
 
   useEffect(() => {
     const local = loadImageStamps()
@@ -101,6 +104,9 @@ export default function ImageVault() {
       img.filename.toLowerCase().includes(searchQuery.toLowerCase()) ||
       img.hash.toLowerCase().includes(searchQuery.toLowerCase())
   )
+
+  const heightLabel =
+    blockHeight != null ? blockHeight.toLocaleString() : t('imageVaultPage.unknown')
 
   return (
     <div
@@ -123,27 +129,29 @@ export default function ImageVault() {
               className="mb-6 text-6xl leading-none font-black tracking-tighter uppercase italic md:text-8xl"
               style={{ color: 'var(--text-primary)' }}
             >
-              Image <br /> <span style={{ color: 'var(--accent-active)' }}>VAULT.</span>
+              {t('imageVaultPage.title')} <br />{' '}
+              <span style={{ color: 'var(--accent-active)' }}>
+                {t('imageVaultPage.titleHighlight')}
+              </span>
             </h1>
             <p
               className="max-w-xl font-sans text-lg leading-relaxed font-bold italic"
               style={{ color: 'var(--text-secondary)' }}
             >
-              Institutional-grade cryptographic storage for every visual asset notarized by the
-              mesh. Search and verify forensic provenance instantly.
+              {t('imageVaultPage.lede')}
             </p>
-            {(usingCache || fetchError) && (
+            {(usingCache || fetchFailed) && (
               <div className="mt-4 flex flex-wrap items-center gap-3" role="alert">
                 <p className="text-xs font-bold tracking-widest text-[var(--accent-pending)] uppercase">
-                  {fetchError || 'Showing cached image proofs from this browser'}
+                  {fetchFailed ? t('imageVaultPage.cacheError') : t('imageVaultPage.cacheLocal')}
                 </p>
-                {fetchError && (
+                {fetchFailed && (
                   <button
                     type="button"
                     onClick={fetchImages}
                     className="rounded-lg border border-[var(--border)] px-3 py-1 text-[10px] font-black tracking-widest uppercase"
                   >
-                    Retry sync
+                    {t('imageVaultPage.retry')}
                   </button>
                 )}
               </div>
@@ -159,8 +167,8 @@ export default function ImageVault() {
               />
               <input
                 type="search"
-                aria-label="Filter images by hash or filename"
-                placeholder="FILTER_BY_HASH_OR_NAME..."
+                aria-label={t('imageVaultPage.searchAria')}
+                placeholder={t('imageVaultPage.searchPlaceholder')}
                 className="w-full rounded-2xl px-14 py-5 text-xs font-black tracking-widest uppercase italic shadow-sm transition-all outline-none"
                 style={{
                   background: 'var(--bg-secondary)',
@@ -179,13 +187,13 @@ export default function ImageVault() {
                 active={viewMode === 'grid'}
                 onClick={() => setViewMode('grid')}
                 icon={LayoutGrid}
-                label="Grid view"
+                label={t('imageVaultPage.gridView')}
               />
               <ControlButton
                 active={viewMode === 'list'}
                 onClick={() => setViewMode('list')}
                 icon={List}
-                label="List view"
+                label={t('imageVaultPage.listView')}
               />
             </div>
           </div>
@@ -202,7 +210,7 @@ export default function ImageVault() {
               className="text-[10px] font-black tracking-[0.4em] uppercase italic"
               style={{ color: 'var(--text-secondary)' }}
             >
-              Scanning Protocol Mesh...
+              {t('imageVaultPage.scanning')}
             </p>
           </div>
         ) : filteredImages.length === 0 ? (
@@ -223,21 +231,21 @@ export default function ImageVault() {
               className="mb-6 text-4xl font-black tracking-tighter uppercase italic"
               style={{ color: 'var(--text-primary)' }}
             >
-              Vault Buffer Empty.
+              {t('imageVaultPage.emptyTitle')}
             </h3>
             <p
               className="mb-12 max-w-md leading-relaxed font-bold italic"
               style={{ color: 'var(--text-secondary)' }}
             >
-              Your institutional asset vault is awaiting its first cryptographic anchor. Notarize a
-              document via the dashboard to establish provenance.
+              {t('imageVaultPage.emptyBody')}
             </p>
-            <button
+            <Link
+              to="/stamp"
               className="rounded-2xl px-12 py-5 text-[11px] font-black tracking-widest uppercase shadow-2xl transition-all hover:scale-105 active:scale-95"
               style={{ background: 'var(--accent-active)', color: '#fff' }}
             >
-              NOTARIZE_FIRST_ASSET
-            </button>
+              {t('imageVaultPage.stampCta')}
+            </Link>
           </div>
         ) : (
           <div
@@ -279,21 +287,26 @@ export default function ImageVault() {
                 className="text-xl font-black tracking-tighter uppercase italic"
                 style={{ color: 'var(--text-primary)' }}
               >
-                Active Witness <span style={{ color: 'var(--accent-active)' }}>SYNC.</span>
+                {t('imageVaultPage.syncTitle')}{' '}
+                <span style={{ color: 'var(--accent-active)' }}>
+                  {t('imageVaultPage.syncHighlight')}
+                </span>
               </h4>
               <p
                 className="text-[10px] font-black tracking-widest uppercase italic"
                 style={{ color: 'var(--text-secondary)' }}
               >
-                All assets synchronized with Bitcoin Block #
-                {blockHeight != null ? blockHeight.toLocaleString() : '—'}
+                {t('imageVaultPage.blockSync', { height: heightLabel })}
               </p>
             </div>
           </div>
           <div className="relative z-10 flex gap-12">
-            <StatItem label="Total Provenance" value="1.2k" />
-            <StatItem label="Verifiable" value="100%" />
-            <StatItem label="Storage" value="0.0kb" />
+            <StatItem label={t('imageVaultPage.statProofs')} value={String(images.length)} />
+            <StatItem
+              label={t('imageVaultPage.statHeight')}
+              value={blockHeight != null ? String(blockHeight) : t('imageVaultPage.unknown')}
+            />
+            <StatItem label={t('imageVaultPage.statStorage')} value={t('imageVaultPage.unknown')} />
           </div>
         </div>
       </div>
@@ -302,6 +315,7 @@ export default function ImageVault() {
 }
 
 function VaultItem({ image, viewMode, idx }) {
+  const { t } = useTranslation()
   const isGrid = viewMode === 'grid'
 
   return (
@@ -336,7 +350,9 @@ function VaultItem({ image, viewMode, idx }) {
             style={{ color: 'var(--text-secondary)' }}
           >
             <Clock size={12} />
-            NOTARIZED_{new Date(image.created_at).toLocaleDateString()}
+            {t('imageVaultPage.stampedOn', {
+              date: new Date(image.created_at).toLocaleDateString()
+            })}
           </div>
           {image.fullHash && (
             <p
@@ -366,6 +382,7 @@ function VaultItem({ image, viewMode, idx }) {
 
         <div className={`flex gap-3 px-1 ${isGrid ? '' : 'ml-auto'}`}>
           <button
+            type="button"
             className="flex min-w-[100px] flex-1 items-center justify-center gap-3 rounded-xl py-4 text-[9px] font-black tracking-widest uppercase shadow-lg transition-all hover:scale-105 active:scale-95"
             style={{
               background: 'var(--accent-active)',
@@ -373,9 +390,11 @@ function VaultItem({ image, viewMode, idx }) {
               border: '1px solid var(--accent-active)'
             }}
           >
-            <Download size={14} className="text-amber-400" /> PROOF
+            <Download size={14} className="text-amber-400" /> {t('imageVaultPage.proof')}
           </button>
           <button
+            type="button"
+            aria-label={t('imageVaultPage.openProof')}
             className="flex h-12 w-12 items-center justify-center rounded-xl transition-all"
             style={{
               background: 'var(--bg-secondary)',

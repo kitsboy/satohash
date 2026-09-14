@@ -340,6 +340,9 @@ export default function TemplatesShowcase() {
             <p className="mb-3 text-[11px] font-bold tracking-[0.25em] text-[var(--accent-gold)] uppercase">
               {t('templatesPage.hero.eyebrow')}
             </p>
+            <p className="mb-4 inline-flex items-center rounded-full border border-[var(--accent-gold)]/40 bg-[var(--accent-gold)]/10 px-3 py-1 text-[10px] font-black tracking-[0.18em] text-[var(--accent-gold)] uppercase">
+              {t('templatesPage.honesty.chip')}
+            </p>
             <h1 className="mb-4 text-4xl font-black tracking-tight text-[var(--text-primary)] sm:text-5xl">
               {t('templatesPage.hero.title')}{' '}
               <span className="text-[var(--accent-gold)]">
@@ -348,6 +351,9 @@ export default function TemplatesShowcase() {
             </h1>
             <p className="mx-auto max-w-2xl text-[15px] leading-relaxed text-[var(--text-secondary)]">
               {t('templatesPage.hero.subtitle')}
+            </p>
+            <p className="mx-auto mt-3 max-w-2xl text-xs leading-relaxed font-semibold text-[var(--text-tertiary)]">
+              {t('templatesPage.honesty.note')}
             </p>
           </div>
         </div>
@@ -376,7 +382,7 @@ export default function TemplatesShowcase() {
               {searchQuery && (
                 <button
                   type="button"
-                  aria-label="Clear search"
+                  aria-label={t('templatesPage.clearSearch')}
                   onClick={() => {
                     setSearchQuery('')
                     setShowSuggestions(false)
@@ -416,7 +422,7 @@ export default function TemplatesShowcase() {
               )}
             </div>
             <label className="sr-only" htmlFor="templates-sort">
-              {t('templatesPage.sort.default')}
+              {t('templatesPage.sort.label')}
             </label>
             <select
               id="templates-sort"
@@ -434,9 +440,7 @@ export default function TemplatesShowcase() {
           <div className="relative">
             <div
               role="tablist"
-              aria-label={t('templatesPage.categoriesAria', {
-                defaultValue: 'Filter templates by category'
-              })}
+              aria-label={t('templatesPage.categoriesAria')}
               className="templates-category-scroll flex gap-2 overflow-x-auto overscroll-x-contain pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
             >
               {visibleCategories.map((cat) => {
@@ -485,8 +489,7 @@ export default function TemplatesShowcase() {
           {(activeCategory !== 'all' || searchQuery) && (
             <div className="flex flex-wrap items-center gap-2 text-[11px] text-[var(--text-tertiary)]">
               <span>
-                {filteredTemplates.length}{' '}
-                {t('templatesPage.results', { defaultValue: 'result(s)' })}
+                {t('templatesPage.results', { count: filteredTemplates.length })}
                 {activeCategory !== 'all' ? ` · ${activeCatLabel}` : ''}
               </span>
               <button
@@ -663,7 +666,9 @@ export default function TemplatesShowcase() {
                     </div>
                     {section.badge && (
                       <span className="mb-2 inline-block rounded-full border border-[var(--accent-gold)]/30 bg-[var(--accent-gold)]/10 px-2.5 py-0.5 text-[9px] font-black tracking-widest text-[var(--accent-gold)] uppercase">
-                        {section.badge}
+                        {t(`templatesPage.badges.${section.badge}`, {
+                          defaultValue: section.badge
+                        })}
                       </span>
                     )}
                     <h3 className="mb-2 text-xl font-bold text-[var(--text-primary)]">
@@ -688,7 +693,9 @@ export default function TemplatesShowcase() {
                     <div className="mb-0 flex flex-wrap items-center gap-3">
                       {section.usageCount != null && features.length === 0 && (
                         <span className="text-[10px] font-bold tracking-wider text-[var(--text-tertiary)] uppercase">
-                          {section.usageCount.toLocaleString()} uses
+                          {t('templatesPage.uses', {
+                            count: section.usageCount.toLocaleString()
+                          })}
                         </span>
                       )}
                       <button
@@ -748,7 +755,7 @@ export default function TemplatesShowcase() {
           >
             <button
               type="button"
-              aria-label="Close preview"
+              aria-label={t('templatesPage.preview.close')}
               onClick={closePreview}
               className="absolute top-4 right-4 flex h-8 w-8 items-center justify-center rounded-lg text-[var(--text-tertiary)] transition-colors hover:bg-[var(--surface-raised)] hover:text-[var(--text-primary)]"
             >
@@ -837,11 +844,11 @@ export default function TemplatesShowcase() {
               </button>
               <button
                 type="button"
-                aria-label="Copy template link"
+                aria-label={t('templatesPage.preview.copyLink')}
                 onClick={() => {
                   const url = `${window.location.origin}/templates/${previewTemplate.id}`
                   navigator.clipboard?.writeText(url)
-                  toast.success('Template link copied')
+                  toast.success(t('templatesPage.preview.linkCopied'))
                 }}
                 className="flex items-center gap-2 rounded-xl border border-[var(--border)] px-5 py-3 text-xs font-bold tracking-wider text-[var(--text-secondary)] uppercase transition-all hover:border-[var(--accent-gold)]"
               >

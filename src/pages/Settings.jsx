@@ -17,12 +17,15 @@ import {
   Copy,
   X,
   Layers,
-  Bell
+  Bell,
+  Globe
 } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 import { useTheme } from '../components/shared/ThemeProvider'
+import LanguageSwitcher from '../components/forms/LanguageSwitcher'
 import usePageMeta from '../hooks/usePageMeta'
 import { downloadAuditLog } from '../utils/auditExport'
 import { inviteTeamMember } from '../utils/orgTeam'
@@ -47,23 +50,27 @@ const SettingSection = ({ icon: Icon, title, description, children }) => (
   </motion.div>
 )
 
-const Toggle = ({ active, onToggle, label }) => (
-  <button
-    type="button"
-    role="switch"
-    aria-checked={active}
-    aria-label={label || 'Toggle setting'}
-    onClick={onToggle}
-    className={`relative h-6 w-11 rounded-full transition-all duration-300 ${active ? 'bg-[var(--accent-active)] shadow-[0_0_15px_var(--accent-active-glow)]' : 'bg-white/10'}`}
-  >
-    <motion.div
-      animate={{ x: active ? 22 : 2 }}
-      className="absolute top-1 h-4 w-4 rounded-full bg-white shadow-sm"
-    />
-  </button>
-)
+const Toggle = ({ active, onToggle, label }) => {
+  const { t } = useTranslation()
+  return (
+    <button
+      type="button"
+      role="switch"
+      aria-checked={active}
+      aria-label={label || t('settingsPage.toggleAria')}
+      onClick={onToggle}
+      className={`relative h-6 w-11 rounded-full transition-all duration-300 ${active ? 'bg-[var(--accent-active)] shadow-[0_0_15px_var(--accent-active-glow)]' : 'bg-white/10'}`}
+    >
+      <motion.div
+        animate={{ x: active ? 22 : 2 }}
+        className="absolute top-1 h-4 w-4 rounded-full bg-white shadow-sm"
+      />
+    </button>
+  )
+}
 
 export default function Settings() {
+  const { t } = useTranslation()
   usePageMeta({ page: 'settings' })
   const navigate = useNavigate()
   const { theme, toggleTheme } = useTheme()
@@ -220,13 +227,13 @@ export default function Settings() {
         }
         setPushEnabled(false)
         setNotifPrefs((prev) => ({ ...prev, push: false }))
-        toast.success('Notifications disabled')
+        toast.success(t('settingsPage.toasts.pushOff'))
       } else {
         const keyRes = await fetch(`${API}/api/push/vapid-key`)
         const { publicKey } = await keyRes.json()
         const permission = await Notification.requestPermission()
         if (permission !== 'granted') {
-          toast.error('Notification permission denied')
+          toast.error(t('settingsPage.toasts.pushDenied'))
           return
         }
         const sub = await reg.pushManager.subscribe({
@@ -243,12 +250,12 @@ export default function Settings() {
         })
         setPushEnabled(true)
         setNotifPrefs((prev) => ({ ...prev, push: true }))
-        toast.success('Notifications enabled!', {
-          description: "You'll get notified when stamps confirm on Bitcoin."
+        toast.success(t('settingsPage.toasts.pushOn'), {
+          description: t('settingsPage.toasts.pushOnDesc')
         })
       }
     } catch (e) {
-      toast.error('Push notification error: ' + e.message)
+      toast.error(t('settingsPage.toasts.pushError', { message: e.message }))
     } finally {
       setPushLoading(false)
     }
@@ -295,7 +302,7 @@ export default function Settings() {
 
   const addWebhook = async () => {
     if (!newWebhookUrl.startsWith('https://') && !newWebhookUrl.startsWith('http://')) {
-      toast.error('URL must start with http:// or https://')
+      toast.error(t('settingsPage.toasts.webhookUrl'))
       return
     }
     setWebhookLoading(true)
@@ -314,12 +321,12 @@ export default function Settings() {
         const data = await res.json()
         setWebhooks((prev) => [...prev, data.webhook || data])
         setNewWebhookUrl('')
-        toast.success('Webhook added!')
+        toast.success(t('settingsPage.toasts.webhookAdded'))
       } else {
-        toast.error('Failed to add webhook')
+        toast.error(t('settingsPage.toasts.webhookAddFail'))
       }
     } catch (e) {
-      toast.error('Error: ' + e.message)
+      toast.error(t('settingsPage.toasts.webhookError', { message: e.message }))
     } finally {
       setWebhookLoading(false)
     }
@@ -334,9 +341,9 @@ export default function Settings() {
         headers: token ? { Authorization: `Bearer ${token}` } : {}
       })
       setWebhooks((prev) => prev.filter((w) => w.id !== id))
-      toast.success('Webhook removed')
+      toast.success(t('settingsPage.toasts.webhookRemoved'))
     } catch (_err) {
-      toast.error('Failed to remove webhook')
+      toast.error(t('settingsPage.toasts.webhookRemoveFail'))
     }
   }
 
@@ -353,29 +360,29 @@ export default function Settings() {
         const data = await res.json()
         toast.success(
           data.ok
-            ? `Test ping delivered (${data.latency}ms)`
-            : 'Test ping failed — endpoint returned an error'
+            ? t('settingsPage.toasts.webhookTestOk', { latency: data.latency })
+            : t('settingsPage.toasts.webhookTestFail')
         )
         await fetchWebhooks()
       } else {
-        toast.error('Test failed')
+        toast.error(t('settingsPage.toasts.webhookTestFailed'))
       }
     } catch (e) {
-      toast.error('Test error: ' + e.message)
+      toast.error(t('settingsPage.toasts.webhookTestError', { message: e.message }))
     } finally {
       setWebhookTestId(null)
     }
   }
 
   const handleSave = () => {
-    toast.success('Protocol configuration updated', {
-      description: 'Your sovereign profile has been synced with the mesh.',
+    toast.success(t('settingsPage.toasts.saved'), {
+      description: t('settingsPage.toasts.savedDesc'),
       icon: <Check className="text-[var(--accent-success)]" />
     })
   }
 
   const resetSettings = () => {
-    if (confirm('Are you sure you want to purge all sovereign preferences?')) {
+    if (confirm(t('settingsPage.alerts.purgeConfirm'))) {
       localStorage.removeItem('satohash_profile')
       localStorage.removeItem('satohash_security')
       localStorage.removeItem('satohash_theme')
@@ -408,46 +415,28 @@ export default function Settings() {
                   className="fill-[var(--accent-active)] text-[var(--accent-active)]"
                 />
                 <h3 className="text-[10px] font-black tracking-widest text-[var(--text-primary)] uppercase">
-                  L402 Settlement
+                  {t('settingsPage.invoice.title')}
                 </h3>
-                <button onClick={() => setIsInvoiceOpen(false)}>
+                <button type="button" onClick={() => setIsInvoiceOpen(false)}>
                   <X size={20} className="text-[var(--text-secondary)]" />
                 </button>
               </div>
 
-              <div className="group relative mx-auto h-48 w-48 rounded-3xl bg-white p-4 shadow-inner">
-                <div className="absolute inset-0 flex items-center justify-center bg-black/5 opacity-0 transition-opacity group-hover:opacity-100">
-                  <Copy size={24} className="text-black" />
-                </div>
-                <img
-                  src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=lnbc1...&bgcolor=ffffff`}
-                  alt="QR"
-                  className="h-full w-full"
-                />
-              </div>
-
               <div className="space-y-4">
-                <div className="space-y-1">
-                  <p className="text-3xl font-black tracking-tighter text-[var(--text-primary)]">
-                    500,000 SATS
+                <div className="space-y-2">
+                  <p className="text-lg font-black tracking-tight text-[var(--text-primary)]">
+                    {t('settingsPage.invoice.subtitle')}
                   </p>
-                  <p className="text-[9px] font-black tracking-[0.2em] text-[var(--text-secondary)] uppercase">
-                    Institutional Credit Deposit
+                  <p className="text-sm leading-relaxed text-[var(--text-secondary)]">
+                    {t('settingsPage.invoice.body')}
                   </p>
-                </div>
-                <div className="rounded-xl border border-white/5 bg-black/20 p-4 text-left font-mono text-[9px] break-all text-[var(--text-secondary)]">
-                  lnbc500u1p3...v9m2
                 </div>
                 <button
-                  onClick={() => {
-                    setIsInvoiceOpen(false)
-                    toast.success('Payment Received', {
-                      description: 'Mesh credits updated (+500k SATS)'
-                    })
-                  }}
+                  type="button"
+                  onClick={() => setIsInvoiceOpen(false)}
                   className="h-14 w-full rounded-2xl bg-[var(--accent-active)] text-[11px] font-black tracking-widest text-[var(--bg-primary)] uppercase transition-all hover:scale-105"
                 >
-                  Paid with WebLN
+                  {t('settingsPage.invoice.close')}
                 </button>
               </div>
             </motion.div>
@@ -460,18 +449,18 @@ export default function Settings() {
           <div className="inline-flex items-center gap-2 rounded-full border border-[var(--border-bright)] bg-white/5 px-4 py-1.5">
             <User size={14} className="shrink-0 text-[var(--text-secondary)]" />
             <span className="font-mono text-[10px] font-bold tracking-[0.2em] text-[var(--text-secondary)] uppercase">
-              {`Sovereign Console // CONFIGURATION_MODE`}
+              {t('settingsPage.kicker')}
             </span>
           </div>
           <h1 className="text-4xl leading-[0.85] font-black tracking-tighter uppercase sm:text-5xl md:text-7xl">
-            Global <br />
-            <span className="text-[var(--text-secondary)]">Preferences.</span>
+            {t('settingsPage.title')} <br />
+            <span className="text-[var(--text-secondary)]">{t('settingsPage.titleMuted')}</span>
           </h1>
         </div>
 
         <div
           role="tablist"
-          aria-label="Settings sections"
+          aria-label={t('settingsPage.tabsAria')}
           className="scrollbar-hide flex shrink-0 overflow-x-auto rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] p-1 shadow-2xl lg:p-1.5"
         >
           {['profile', 'security', 'billing'].map((tab) => (
@@ -485,7 +474,7 @@ export default function Settings() {
               onClick={() => setActiveTab(tab)}
               className={`rounded-xl px-3 py-2 text-[10px] font-black tracking-widest whitespace-nowrap uppercase transition-all sm:px-6 lg:px-4 lg:py-3 ${activeTab === tab ? 'border border-[var(--border-bright)] bg-[var(--bg-primary)] text-[var(--text-primary)] shadow-lg' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}
             >
-              {tab}
+              {t(`settingsPage.tabs.${tab}`)}
             </button>
           ))}
         </div>
@@ -507,8 +496,8 @@ export default function Settings() {
               >
                 <SettingSection
                   icon={User}
-                  title="Sovereign Identity"
-                  description="Update your public reputation across the Satohash mesh."
+                  title={t('settingsPage.identity.title')}
+                  description={t('settingsPage.identity.desc')}
                 >
                   <div className="flex flex-col items-center gap-6 md:flex-row md:items-start md:gap-12">
                     <div className="group relative shrink-0">
@@ -523,7 +512,7 @@ export default function Settings() {
                       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                         <div className="space-y-2">
                           <label className="text-[10px] font-black tracking-widest text-[var(--text-secondary)] uppercase">
-                            Sovereign Name
+                            {t('settingsPage.identity.name')}
                           </label>
                           <input
                             type="text"
@@ -534,7 +523,7 @@ export default function Settings() {
                         </div>
                         <div className="space-y-2">
                           <label className="text-[10px] font-black tracking-widest text-[var(--text-secondary)] uppercase">
-                            NIP-05 Handle
+                            {t('settingsPage.identity.nip05')}
                           </label>
                           <input
                             type="text"
@@ -546,14 +535,14 @@ export default function Settings() {
                       </div>
                       <div className="space-y-2 rounded-2xl border border-[var(--border)] p-4">
                         <label className="text-[10px] font-black tracking-widest text-[var(--text-secondary)] uppercase">
-                          Invite team member
+                          {t('settingsPage.identity.inviteLabel')}
                         </label>
                         <div className="flex gap-2">
                           <input
                             type="email"
                             value={teamInviteEmail}
                             onChange={(e) => setTeamInviteEmail(e.target.value)}
-                            placeholder="signer@firm.com"
+                            placeholder={t('settingsPage.identity.invitePlaceholder')}
                             className="h-12 min-w-0 flex-1 rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] px-4 text-sm"
                           />
                           <button
@@ -561,21 +550,21 @@ export default function Settings() {
                             onClick={() => {
                               if (!teamInviteEmail.trim()) return
                               inviteTeamMember({ email: teamInviteEmail.trim(), role: 'signer' })
-                              toast.success('Invite saved locally', {
-                                description: 'Org sync activates when backend teams API ships.'
+                              toast.success(t('settingsPage.identity.inviteToast'), {
+                                description: t('settingsPage.identity.inviteToastDesc')
                               })
                               setTeamInviteEmail('')
                             }}
                             className="rounded-xl px-4 text-[10px] font-black tracking-widest uppercase"
                             style={{ background: 'var(--accent-active)', color: '#fff' }}
                           >
-                            Invite
+                            {t('settingsPage.identity.invite')}
                           </button>
                         </div>
                       </div>
                       <div className="space-y-2">
                         <label className="text-[10px] font-black tracking-widest text-[var(--text-secondary)] uppercase">
-                          Sovereign Pubkey (NIP-19)
+                          {t('settingsPage.identity.pubkey')}
                         </label>
                         <div className="flex min-w-0 gap-3">
                           <input
@@ -587,7 +576,7 @@ export default function Settings() {
                           <button
                             onClick={() => {
                               navigator.clipboard.writeText(profile.pubkey)
-                              toast.success('Identity Key Copied')
+                              toast.success(t('settingsPage.identity.copied'))
                             }}
                             className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-[var(--border)] bg-[var(--bg-primary)] text-[var(--text-secondary)] transition-all hover:border-[var(--accent-active)] hover:text-[var(--accent-active)]"
                           >
@@ -597,7 +586,7 @@ export default function Settings() {
                       </div>
                       <div className="space-y-2">
                         <label className="text-[10px] font-black tracking-widest text-[var(--text-secondary)] uppercase">
-                          Bio / Mission
+                          {t('settingsPage.identity.bio')}
                         </label>
                         <textarea
                           value={profile.bio}
@@ -611,7 +600,7 @@ export default function Settings() {
                             className="text-[10px] font-bold tracking-widest uppercase"
                             style={{ color: 'var(--text-secondary)' }}
                           >
-                            Nostr Public Key
+                            {t('settingsPage.identity.npub')}
                           </label>
                           <div className="flex h-14 items-center gap-3 rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] px-4">
                             <span
@@ -627,7 +616,7 @@ export default function Settings() {
                         onClick={handleSave}
                         className="h-14 rounded-2xl bg-[var(--text-primary)] px-10 text-[11px] font-black tracking-widest text-[var(--bg-primary)] uppercase transition-all hover:scale-[1.02] active:scale-[0.98]"
                       >
-                        Sync Changes
+                        {t('settingsPage.identity.sync')}
                       </button>
                     </div>
                   </div>
@@ -635,8 +624,8 @@ export default function Settings() {
 
                 <SettingSection
                   icon={Layers}
-                  title="Sovereign Display"
-                  description="Customize the visual signature of your terminal."
+                  title={t('settingsPage.display.title')}
+                  description={t('settingsPage.display.desc')}
                 >
                   <div className="space-y-4">
                     <div className="group flex items-center justify-between rounded-3xl border border-[var(--border)] bg-[var(--bg-primary)] p-8 transition-all hover:border-[var(--accent-active)]/50">
@@ -646,10 +635,10 @@ export default function Settings() {
                         </div>
                         <div>
                           <p className="text-lg font-bold text-[var(--text-primary)]">
-                            Elite Signature Theme
+                            {t('settingsPage.display.eliteTitle')}
                           </p>
                           <p className="text-[10px] font-bold tracking-widest text-[var(--text-secondary)] uppercase">
-                            Toggle Sovereign Light Mode
+                            {t('settingsPage.display.eliteDesc')}
                           </p>
                         </div>
                       </div>
@@ -662,9 +651,13 @@ export default function Settings() {
                       style={{ borderColor: 'var(--border)', background: 'var(--bg-primary)' }}
                     >
                       <div className="space-y-0.5">
-                        <p className="font-black tracking-tight">Interface Theme</p>
+                        <p className="font-black tracking-tight">
+                          {t('settingsPage.display.themeTitle')}
+                        </p>
                         <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-                          {isDark ? 'Dark mode active' : 'Light mode active'}
+                          {isDark
+                            ? t('settingsPage.display.darkActive')
+                            : t('settingsPage.display.lightActive')}
                         </p>
                       </div>
                       <button
@@ -675,8 +668,30 @@ export default function Settings() {
                           color: 'var(--text-primary)'
                         }}
                       >
-                        {isDark ? '☀️ Light' : '🌙 Dark'}
+                        {isDark
+                          ? `☀️ ${t('settingsPage.display.light')}`
+                          : `🌙 ${t('settingsPage.display.dark')}`}
                       </button>
+                    </div>
+
+                    <div
+                      className="flex items-center justify-between gap-4 rounded-2xl border p-5"
+                      style={{ borderColor: 'var(--border)', background: 'var(--bg-primary)' }}
+                    >
+                      <div className="flex min-w-0 items-start gap-4">
+                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-[var(--accent-active)]/20 bg-[var(--accent-active)]/10 text-[var(--accent-active)]">
+                          <Globe size={18} />
+                        </div>
+                        <div className="min-w-0 space-y-0.5">
+                          <p className="font-black tracking-tight">
+                            {t('settingsPage.display.languageTitle')}
+                          </p>
+                          <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+                            {t('settingsPage.display.languageDesc')}
+                          </p>
+                        </div>
+                      </div>
+                      <LanguageSwitcher />
                     </div>
 
                     <div className="group flex items-center justify-between rounded-3xl border border-[var(--border)] bg-[var(--bg-primary)] p-8 transition-all hover:border-[var(--accent-active)]/50">
@@ -686,10 +701,12 @@ export default function Settings() {
                         </div>
                         <div>
                           <p className="text-lg font-bold text-[var(--text-primary)]">
-                            Network Selection
+                            {t('settingsPage.display.networkTitle')}
                           </p>
                           <p className="text-[10px] font-bold tracking-widest text-[var(--text-secondary)] uppercase">
-                            Current: {security.network.toUpperCase()}
+                            {t('settingsPage.display.networkCurrent', {
+                              network: security.network.toUpperCase()
+                            })}
                           </p>
                         </div>
                       </div>
@@ -698,8 +715,8 @@ export default function Settings() {
                         onChange={(e) => setSecurity({ ...security, network: e.target.value })}
                         className="h-10 rounded-xl border border-[var(--border-bright)] bg-[var(--bg-primary)] px-4 text-[10px] font-black tracking-widest text-[var(--text-primary)] uppercase outline-none"
                       >
-                        <option value="mainnet">Mainnet</option>
-                        <option value="testnet">Testnet (Signet)</option>
+                        <option value="mainnet">{t('settingsPage.display.mainnet')}</option>
+                        <option value="testnet">{t('settingsPage.display.testnet')}</option>
                       </select>
                     </div>
                   </div>
@@ -707,19 +724,19 @@ export default function Settings() {
 
                 <SettingSection
                   icon={Activity}
-                  title="Alert Protocol"
-                  description="Choose how the truth reaches you."
+                  title={t('settingsPage.alerts.title')}
+                  description={t('settingsPage.alerts.desc')}
                 >
                   <div className="space-y-4">
                     <AlertToggle
                       icon={Mail}
-                      label="Email Reports"
+                      label={t('settingsPage.alerts.emailReports')}
                       active={security.alerts}
                       onToggle={() => setSecurity({ ...security, alerts: !security.alerts })}
                     />
                     <AlertToggle
                       icon={Smartphone}
-                      label="Experimental Features"
+                      label={t('settingsPage.alerts.experimental')}
                       active={security.experimental}
                       onToggle={() =>
                         setSecurity({ ...security, experimental: !security.experimental })
@@ -733,15 +750,17 @@ export default function Settings() {
                       <div className="space-y-1 border-b border-[var(--border)] pb-4">
                         <div className="flex items-center gap-2">
                           <Bell size={16} className="text-[var(--accent-active)]" />
-                          <h3 className="font-black tracking-tight">Notification Preferences</h3>
+                          <h3 className="font-black tracking-tight">
+                            {t('settingsPage.alerts.prefsTitle')}
+                          </h3>
                         </div>
                         <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-                          Saved locally on this device via localStorage.
+                          {t('settingsPage.alerts.prefsDesc')}
                         </p>
                       </div>
                       <AlertToggle
                         icon={Mail}
-                        label="Email Alerts"
+                        label={t('settingsPage.alerts.emailAlerts')}
                         active={notifPrefs.emailAlerts}
                         onToggle={() =>
                           setNotifPrefs((prev) => ({ ...prev, emailAlerts: !prev.emailAlerts }))
@@ -749,7 +768,7 @@ export default function Settings() {
                       />
                       <AlertToggle
                         icon={Bell}
-                        label="Confirmed Proofs Only"
+                        label={t('settingsPage.alerts.confirmedOnly')}
                         active={notifPrefs.confirmedOnly}
                         onToggle={() =>
                           setNotifPrefs((prev) => ({
@@ -760,7 +779,7 @@ export default function Settings() {
                       />
                       <AlertToggle
                         icon={Activity}
-                        label="Pending Stamp Alerts"
+                        label={t('settingsPage.alerts.pendingAlerts')}
                         active={notifPrefs.pendingAlerts}
                         onToggle={() =>
                           setNotifPrefs((prev) => ({
@@ -773,17 +792,21 @@ export default function Settings() {
                         <div className="space-y-1">
                           <div className="flex items-center gap-2">
                             <Smartphone size={16} className="text-[var(--accent-active)]" />
-                            <h3 className="font-black tracking-tight">Push Notifications</h3>
+                            <h3 className="font-black tracking-tight">
+                              {t('settingsPage.alerts.pushTitle')}
+                            </h3>
                           </div>
                           <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-                            Browser push when proofs confirm on Bitcoin.
+                            {t('settingsPage.alerts.pushDesc')}
                           </p>
                         </div>
                         <button
                           onClick={togglePushNotifications}
                           disabled={pushLoading || !('PushManager' in window)}
                           aria-label={
-                            pushEnabled ? 'Disable push notifications' : 'Enable push notifications'
+                            pushEnabled
+                              ? t('settingsPage.alerts.pushDisableAria')
+                              : t('settingsPage.alerts.pushEnableAria')
                           }
                           className="relative h-7 w-12 rounded-full transition-colors disabled:opacity-40"
                           style={{
@@ -799,8 +822,7 @@ export default function Settings() {
                       </div>
                       {!('PushManager' in window) && (
                         <p className="text-xs" style={{ color: 'var(--accent-pending)' }}>
-                          Push notifications not supported in this browser. Preferences are still
-                          saved locally.
+                          {t('settingsPage.alerts.pushUnsupported')}
                         </p>
                       )}
                     </div>
@@ -810,7 +832,7 @@ export default function Settings() {
                         onClick={resetSettings}
                         className="text-[10px] font-black tracking-widest text-[var(--accent-danger)] uppercase transition-colors hover:opacity-80"
                       >
-                        Purge All Sovereign Preferences
+                        {t('settingsPage.alerts.purgePrefs')}
                       </button>
                     </div>
                   </div>
@@ -831,19 +853,19 @@ export default function Settings() {
               >
                 <SettingSection
                   icon={Lock}
-                  title="Hardened Access"
-                  description="Absolute security for your forensic data."
+                  title={t('settingsPage.security.title')}
+                  description={t('settingsPage.security.desc')}
                 >
                   <div className="mb-6 flex flex-wrap gap-3">
                     <button
                       type="button"
                       onClick={() => {
                         downloadAuditLog()
-                        toast.success('Audit log exported')
+                        toast.success(t('settingsPage.security.auditToast'))
                       }}
                       className="rounded-xl border border-[var(--border)] px-4 py-2 text-[10px] font-black tracking-widest uppercase"
                     >
-                      Export audit log (JSON)
+                      {t('settingsPage.security.exportAudit')}
                     </button>
                   </div>
                   <div className="space-y-6">
@@ -854,10 +876,10 @@ export default function Settings() {
                         </div>
                         <div>
                           <p className="text-lg font-bold text-[var(--text-primary)]">
-                            Biometric Sign-In
+                            {t('settingsPage.security.biometric')}
                           </p>
                           <p className="text-[10px] font-bold tracking-widest text-[var(--text-secondary)] uppercase">
-                            FIDO2 / PASSKEY ENABLED
+                            {t('settingsPage.security.fido')}
                           </p>
                         </div>
                       </div>
@@ -872,21 +894,19 @@ export default function Settings() {
                     <div className="space-y-4 rounded-3xl border border-[var(--border)] bg-[var(--bg-primary)] p-8">
                       <div className="flex items-center gap-4 text-[var(--accent-active)]">
                         <Key size={24} />
-                        <h4 className="text-xl font-bold text-[var(--text-primary)]">API Access</h4>
+                        <h4 className="text-xl font-bold text-[var(--text-primary)]">
+                          {t('settingsPage.security.apiTitle')}
+                        </h4>
                       </div>
                       <p className="text-sm leading-relaxed text-[var(--text-secondary)]">
-                        You do not need an API key. Stamping is open — send a SHA-256 hash to{' '}
-                        <span className="font-mono text-[11px]">POST /api/stamp</span> and you get a
-                        proof back. Suite apps receive a scoped{' '}
-                        <span className="font-mono text-[11px]">X-Satohash-Key</span> from the team
-                        by hand, so there is nothing to generate or revoke here.
+                        {t('settingsPage.security.apiBody')}
                       </p>
                       <a
                         href="/developer"
                         className="inline-flex text-xs font-black tracking-widest uppercase"
                         style={{ color: 'var(--accent-active)' }}
                       >
-                        Authentication guide
+                        {t('settingsPage.security.authGuide')}
                       </a>
                     </div>
                   </div>
@@ -906,8 +926,8 @@ export default function Settings() {
               >
                 <SettingSection
                   icon={Zap}
-                  title="Settlement Plane"
-                  description="Automated L402 Lightning settlement."
+                  title={t('settingsPage.billing.title')}
+                  description={t('settingsPage.billing.desc')}
                 >
                   <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
                     <div className="relative space-y-8 overflow-hidden rounded-[2.5rem] border border-[var(--accent-active)]/30 bg-gradient-to-br from-[var(--accent-active)]/20 to-transparent p-10 shadow-2xl">
@@ -924,13 +944,15 @@ export default function Settings() {
                             className={`h-1.5 w-1.5 rounded-full ${balance !== null ? 'animate-pulse bg-[var(--accent-success)] shadow-[0_0_10px_var(--accent-success)]' : 'bg-white/20'}`}
                           />
                           <span className="text-[10px] font-black tracking-widest text-[var(--text-secondary)] uppercase">
-                            {balance !== null ? 'Node Connected' : 'Not Connected'}
+                            {balance !== null
+                              ? t('settingsPage.billing.nodeConnected')
+                              : t('settingsPage.billing.notConnected')}
                           </span>
                         </div>
                       </div>
                       <div className="relative z-10 space-y-1">
                         <p className="text-[10px] font-black tracking-widest text-[var(--text-secondary)] uppercase">
-                          Available Credits
+                          {t('settingsPage.billing.credits')}
                         </p>
                         {balanceLoading ? (
                           <div className="h-12 w-48 animate-pulse rounded-xl bg-white/10" />
@@ -941,16 +963,14 @@ export default function Settings() {
                           </h4>
                         ) : (
                           <button
-                            onClick={() =>
-                              toast.info('Connect your Lightning node to see live balance')
-                            }
+                            onClick={() => toast.info(t('settingsPage.billing.connectToast'))}
                             className="flex items-center gap-2 rounded-xl border px-4 py-2 text-[11px] font-black tracking-widest uppercase transition-all hover:scale-[1.02]"
                             style={{
                               borderColor: 'var(--accent-gold)',
                               color: 'var(--accent-gold)'
                             }}
                           >
-                            <Zap size={14} /> Connect Lightning Wallet
+                            <Zap size={14} /> {t('settingsPage.billing.connectWallet')}
                           </button>
                         )}
                       </div>
@@ -958,7 +978,7 @@ export default function Settings() {
                         onClick={() => setIsInvoiceOpen(true)}
                         className="relative z-10 h-14 w-full rounded-2xl bg-[var(--text-primary)] text-[11px] font-black tracking-widest text-[var(--bg-primary)] uppercase transition-all hover:scale-[1.02] active:scale-[0.98]"
                       >
-                        Deposit SATS
+                        {t('settingsPage.billing.deposit')}
                       </button>
                     </div>
                     <div className="flex flex-col justify-center space-y-6 rounded-[2.5rem] border border-[var(--border)] bg-[var(--bg-primary)] p-10 text-center">
@@ -967,11 +987,10 @@ export default function Settings() {
                         className="mx-auto text-[var(--text-secondary)] opacity-20"
                       />
                       <h4 className="text-xl font-bold text-[var(--text-primary)]">
-                        Legacy Payments
+                        {t('settingsPage.billing.legacyTitle')}
                       </h4>
-                      <p className="mx-auto max-w-[200px] text-xs leading-relaxed text-[var(--text-secondary)]">
-                        Satohash only accepts sovereign settlement via L402 Lightning. Legacy fiat
-                        systems are unsupported.
+                      <p className="mx-auto max-w-[240px] text-xs leading-relaxed text-[var(--text-secondary)]">
+                        {t('settingsPage.billing.legacyBody')}
                       </p>
                     </div>
                   </div>
@@ -982,18 +1001,17 @@ export default function Settings() {
                     className="text-sm font-black tracking-widest uppercase"
                     style={{ color: 'var(--text-primary)' }}
                   >
-                    Developer Tools
+                    {t('settingsPage.billing.devTitle')}
                   </h3>
                   <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>
-                    Webhook endpoints, peer node configuration, and API access are managed in the
-                    Developer section.
+                    {t('settingsPage.billing.devBody')}
                   </p>
                   <a
                     href="/developer"
                     className="inline-flex items-center gap-2 rounded-xl border border-[var(--accent-active)] px-4 py-2 text-xs font-black uppercase"
                     style={{ color: 'var(--accent-active)' }}
                   >
-                    Go to Developer Settings →
+                    {t('settingsPage.billing.devCta')}
                   </a>
                 </div>
               </motion.div>
@@ -1008,7 +1026,7 @@ export default function Settings() {
               <div className="flex items-center gap-3">
                 <Activity size={20} className="text-[var(--accent-success)]" />
                 <h4 className="text-[10px] font-black tracking-widest text-[var(--text-primary)] uppercase">
-                  Mesh Status
+                  {t('settingsPage.mesh.title')}
                 </h4>
               </div>
               <RefreshCw size={14} className="animate-spin-slow text-[var(--text-secondary)]" />
@@ -1022,21 +1040,31 @@ export default function Settings() {
                 }}
                 role="status"
               >
-                Degraded — mesh API unreachable; showing last known status
+                {t('settingsPage.mesh.degraded')}
               </p>
             )}
             <div className="space-y-6">
               <StatusRow
-                label="API Mesh"
-                status={meshDegraded ? 'Cached' : 'Online'}
+                label={t('settingsPage.mesh.apiMesh')}
+                status={
+                  meshDegraded ? t('settingsPage.mesh.cached') : t('settingsPage.mesh.online')
+                }
                 latency={meshDegraded ? '—' : '42ms'}
               />
-              <StatusRow label="Witness Chain" status="Online" latency="1.2s" />
-              <StatusRow label="Vault Sync" status="Operational" latency="Synced" />
+              <StatusRow
+                label={t('settingsPage.mesh.witness')}
+                status={t('settingsPage.mesh.online')}
+                latency="1.2s"
+              />
+              <StatusRow
+                label={t('settingsPage.mesh.vault')}
+                status={t('settingsPage.mesh.operational')}
+                latency={t('settingsPage.mesh.synced')}
+              />
             </div>
             {meshNodes.length > 0 && (
               <p className="text-[10px] text-[var(--text-secondary)]">
-                {meshNodes.length} peer node{meshNodes.length === 1 ? '' : 's'} in mesh registry
+                {t('settingsPage.mesh.peerCount', { count: meshNodes.length })}
               </p>
             )}
           </div>
@@ -1045,20 +1073,19 @@ export default function Settings() {
             <div className="flex items-center gap-3">
               <History size={18} className="text-[var(--text-secondary)]" />
               <h4 className="text-[10px] font-black tracking-widest text-[var(--text-primary)] uppercase">
-                Telemetry Log
+                {t('settingsPage.telemetry.title')}
               </h4>
             </div>
             <div className="space-y-4">
               <p className="text-[11px] leading-relaxed text-[var(--text-secondary)]">
-                Activity will appear here once your node is synced with the mesh. Use the same npub
-                on another browser and import your encrypted vault backup for cross-device sync.
+                {t('settingsPage.telemetry.empty')}
               </p>
             </div>
           </div>
 
           <button
             onClick={() => {
-              if (confirm('Purge all session keys and return to access gateway?')) {
+              if (confirm(t('settingsPage.logout.confirm'))) {
                 localStorage.removeItem('satohash_authed')
                 localStorage.removeItem('satohash_nsec')
                 localStorage.removeItem('satohash_npub')
@@ -1072,7 +1099,7 @@ export default function Settings() {
             }}
             className="flex h-16 w-full items-center justify-center gap-3 rounded-2xl border border-[var(--accent-danger)]/30 bg-[var(--accent-danger)]/5 text-[10px] font-black tracking-widest text-[var(--accent-danger)] uppercase shadow-lg transition-all hover:bg-[var(--accent-danger)] hover:text-white hover:shadow-[0_4px_20px_var(--accent-danger)]"
           >
-            <LogOut size={18} /> Purge Sovereign Session
+            <LogOut size={18} /> {t('settingsPage.logout.button')}
           </button>
         </div>
       </div>

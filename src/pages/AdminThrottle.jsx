@@ -13,15 +13,17 @@ import {
 } from 'recharts'
 import { AlertCircle, Activity, Database, TrendingUp, ChevronRight } from 'lucide-react'
 import { toast } from 'sonner'
+import { useTranslation } from 'react-i18next'
 import usePageMeta from '../hooks/usePageMeta'
 import { getApiUrl } from '../config/constants'
 
 const API_URL = getApiUrl()
 
 export default function AdminThrottle() {
+  const { t } = useTranslation()
   usePageMeta({
-    title: 'Admin Throttle',
-    description: 'Satohash admin rate-limit and system metrics dashboard.'
+    title: t('adminPage.throttle.metaTitle'),
+    description: t('adminPage.throttle.metaDescription')
   })
   const [metrics, setMetrics] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -40,7 +42,7 @@ export default function AdminThrottle() {
       const data = await response.json()
       setMetrics(data)
     } catch (err) {
-      toast.error('Failed to load throttling metrics')
+      toast.error(t('adminPage.throttle.fetchFail'))
     } finally {
       setLoading(false)
     }
@@ -49,7 +51,7 @@ export default function AdminThrottle() {
   const simulateLoad = async () => {
     const token = localStorage.getItem('satohash_token') || localStorage.getItem('adminKey')
     if (!token) {
-      toast.error('Admin login required — sign in via Access with your admin key')
+      toast.error(t('adminPage.throttle.loginRequired'))
       return
     }
     try {
@@ -62,13 +64,13 @@ export default function AdminThrottle() {
         body: JSON.stringify({ iterations: 500, type: 'public' })
       })
       if (response.ok) {
-        toast.success('Load simulation started!')
+        toast.success(t('adminPage.throttle.simStarted'))
         setTimeout(fetchMetrics, 5000)
       } else {
-        toast.error('Simulation failed')
+        toast.error(t('adminPage.throttle.simFailed'))
       }
     } catch (err) {
-      toast.error('Simulation error')
+      toast.error(t('adminPage.throttle.simError'))
     }
   }
 
@@ -89,7 +91,7 @@ export default function AdminThrottle() {
         className="flex min-h-screen items-center justify-center p-8 pb-20"
         style={{ background: 'var(--bg-primary)', color: 'var(--text-primary)' }}
       >
-        Error loading metrics
+        {t('adminPage.throttle.loadError')}
       </div>
     )
   }
@@ -119,7 +121,7 @@ export default function AdminThrottle() {
               className="text-2xl font-black tracking-tight uppercase"
               style={{ color: 'var(--text-primary)' }}
             >
-              Throttling Dashboard
+              {t('adminPage.throttle.title')}
             </h1>
           </div>
           <button
@@ -131,7 +133,7 @@ export default function AdminThrottle() {
             }}
           >
             <TrendingUp className="h-4 w-4" />
-            Simulate Load
+            {t('adminPage.throttle.simulate')}
           </button>
         </div>
 
@@ -147,7 +149,7 @@ export default function AdminThrottle() {
               className="mb-3 text-[10px] font-black tracking-widest uppercase"
               style={{ color: 'var(--text-secondary)' }}
             >
-              Total Hits
+              {t('adminPage.throttle.totalHits')}
             </h3>
             <p className="text-2xl font-black" style={{ color: 'var(--accent-active)' }}>
               {metrics.metrics.hits}
@@ -165,7 +167,7 @@ export default function AdminThrottle() {
               className="mb-3 text-[10px] font-black tracking-widest uppercase"
               style={{ color: 'var(--text-secondary)' }}
             >
-              Blocks
+              {t('adminPage.throttle.blocks')}
             </h3>
             <p className="text-2xl font-black" style={{ color: 'var(--accent-danger)' }}>
               {metrics.metrics.blocks}
@@ -183,7 +185,7 @@ export default function AdminThrottle() {
               className="mb-3 text-[10px] font-black tracking-widest uppercase"
               style={{ color: 'var(--text-secondary)' }}
             >
-              Avg Hits / Hour
+              {t('adminPage.throttle.avgHits')}
             </h3>
             <p className="text-2xl font-black" style={{ color: 'var(--accent-success)' }}>
               {metrics.avgHitsPerHour?.toFixed(0)}
@@ -205,7 +207,7 @@ export default function AdminThrottle() {
               style={{ color: 'var(--text-secondary)' }}
             >
               <Database className="h-4 w-4" style={{ color: 'var(--accent-active)' }} />
-              Hourly Hits
+              {t('adminPage.throttle.hourlyHits')}
             </h3>
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={metrics.timeSeries.slice(0, 24)}>
@@ -236,7 +238,7 @@ export default function AdminThrottle() {
               className="mb-4 text-[10px] font-black tracking-widest uppercase"
               style={{ color: 'var(--text-secondary)' }}
             >
-              Peak Load Trends
+              {t('adminPage.throttle.peakTrends')}
             </h3>
             <ResponsiveContainer width="100%" height={300}>
               <LineChart
@@ -270,7 +272,7 @@ export default function AdminThrottle() {
 
         {/* Expandable Analytics */}
         <div className="space-y-3">
-          {['Redis Health', 'User Tiers', 'Error Logs'].map((section) => (
+          {['redis', 'tiers', 'errors'].map((section) => (
             <motion.button
               key={section}
               onClick={() => setExpanded((prev) => ({ ...prev, [section]: !prev[section] }))}
@@ -287,7 +289,7 @@ export default function AdminThrottle() {
                   }}
                 />
                 <span className="text-sm font-bold" style={{ color: 'var(--text-primary)' }}>
-                  {section}
+                  {t(`adminPage.throttle.${section}`)}
                 </span>
               </div>
               <ChevronRight
@@ -306,7 +308,7 @@ export default function AdminThrottle() {
           className="text-center text-[10px] tracking-widest uppercase"
           style={{ color: 'var(--text-secondary)' }}
         >
-          For full visualisations, ensure recharts is installed: npm i recharts
+          {t('adminPage.throttle.rechartsNote')}
         </p>
       </div>
     </div>

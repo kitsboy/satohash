@@ -17,8 +17,9 @@ import {
   Link as LinkIcon
 } from 'lucide-react'
 import { toast } from 'sonner'
+import { useTranslation } from 'react-i18next'
 import { calculateCarbonFootprint } from '../utils/carbon.js'
-import usePageMetaOnboarding from '../hooks/usePageMetaOnboarding'
+import usePageMeta from '../hooks/usePageMeta'
 import { getApiUrl } from '../config/constants'
 
 const API_URL = getApiUrl()
@@ -93,6 +94,7 @@ const HealthCard = ({ icon: Icon, label, value, sub, accent = 'var(--accent-acti
 // ─── STAMPS BAR CHART ─────────────────────────────────────────────────────────
 
 const StampsBarChart = ({ recent }) => {
+  const { t } = useTranslation()
   const days = React.useMemo(() => {
     if (recent && recent.length > 0) {
       return recent.slice(-7).map((d) => ({
@@ -108,10 +110,10 @@ const StampsBarChart = ({ recent }) => {
       <div className="flex h-full flex-col items-center justify-center gap-3 py-12 text-center">
         <BarChart2 size={28} style={{ color: 'var(--text-secondary)', opacity: 0.4 }} />
         <p className="text-sm font-bold" style={{ color: 'var(--text-secondary)' }}>
-          No stamp activity in the last 7 days
+          {t('adminPage.noActivity')}
         </p>
         <p className="text-xs" style={{ color: 'var(--text-secondary)', opacity: 0.7 }}>
-          Chart populates when admin stats include daily counts.
+          {t('adminPage.chartEmpty')}
         </p>
       </div>
     )
@@ -127,10 +129,10 @@ const StampsBarChart = ({ recent }) => {
             className="text-[10px] font-black tracking-widest uppercase"
             style={{ color: 'var(--text-secondary)' }}
           >
-            Stamps per day
+            {t('adminPage.stampsPerDay')}
           </p>
           <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>
-            Last 7 days
+            {t('adminPage.last7')}
           </p>
         </div>
         <BarChart2 size={16} style={{ color: 'var(--accent-active)' }} />
@@ -153,7 +155,7 @@ const StampsBarChart = ({ recent }) => {
                   zIndex: 10
                 }}
               >
-                {day.count} stamps
+                {t('adminPage.stampsCount', { count: day.count })}
               </div>
               {/* Bar */}
               <motion.div
@@ -270,48 +272,52 @@ const ActivityFeedItem = ({ item, idx }) => {
 // ─── MAIN COMPONENT ───────────────────────────────────────────────────────────
 
 const Admin = () => {
-  usePageMetaOnboarding('admin')
+  const { t } = useTranslation()
+  usePageMeta({ page: 'admin', title: t('adminPage.metaTitle') })
   const [stats, setStats] = useState({})
   const [history, setHistory] = useState([])
   const [loading, setLoading] = useState(true)
   const [refreshing, setRefreshing] = useState(false)
   const [statsDegraded, setStatsDegraded] = useState(false)
 
-  const fetchAll = useCallback(async (isRefresh = false) => {
-    if (isRefresh) setRefreshing(true)
-    const adminKey = localStorage.getItem('adminKey') || ''
-    const headers = adminKey ? { Authorization: `Bearer ${adminKey}` } : {}
+  const fetchAll = useCallback(
+    async (isRefresh = false) => {
+      if (isRefresh) setRefreshing(true)
+      const adminKey = localStorage.getItem('adminKey') || ''
+      const headers = adminKey ? { Authorization: `Bearer ${adminKey}` } : {}
 
-    try {
-      const [statsRes, historyRes] = await Promise.all([
-        fetch(`${API_URL}/admin/stats`, { headers }),
-        fetch(`${API_URL}/api/history`, { headers })
-      ])
+      try {
+        const [statsRes, historyRes] = await Promise.all([
+          fetch(`${API_URL}/admin/stats`, { headers }),
+          fetch(`${API_URL}/api/history`, { headers })
+        ])
 
-      if (!statsRes.ok) throw new Error('Failed to load admin stats')
-      const statsData = await statsRes.json()
-      setStats(statsData)
+        if (!statsRes.ok) throw new Error('Failed to load admin stats')
+        const statsData = await statsRes.json()
+        setStats(statsData)
 
-      if (historyRes.ok) {
-        const histData = await historyRes.json()
-        const items = Array.isArray(histData)
-          ? histData
-          : Array.isArray(histData?.stamps)
-            ? histData.stamps
-            : []
-        setHistory(items.slice(0, 10))
+        if (historyRes.ok) {
+          const histData = await historyRes.json()
+          const items = Array.isArray(histData)
+            ? histData
+            : Array.isArray(histData?.stamps)
+              ? histData.stamps
+              : []
+          setHistory(items.slice(0, 10))
+        }
+
+        setStatsDegraded(false)
+        if (isRefresh) toast.success(t('adminPage.refreshed'))
+      } catch {
+        setStatsDegraded(true)
+        toast.error(t('adminPage.loadError'))
+      } finally {
+        setLoading(false)
+        setRefreshing(false)
       }
-
-      setStatsDegraded(false)
-      if (isRefresh) toast.success('Dashboard refreshed')
-    } catch {
-      setStatsDegraded(true)
-      toast.error('Failed to load admin stats — check your admin key.')
-    } finally {
-      setLoading(false)
-      setRefreshing(false)
-    }
-  }, [])
+    },
+    [t]
+  )
 
   useEffect(() => {
     fetchAll(false)
@@ -376,7 +382,7 @@ const Admin = () => {
             }}
           >
             <AlertCircle size={18} />
-            Admin stats unavailable — showing last known values. Check your admin key and retry.
+            {t('adminPage.degraded')}
           </div>
         )}
         {/* ── Header ── */}
@@ -399,10 +405,10 @@ const Admin = () => {
                 className="text-2xl font-black tracking-tight uppercase"
                 style={{ color: 'var(--text-primary)' }}
               >
-                Admin Dashboard
+                {t('adminPage.title')}
               </h1>
               <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>
-                Sovereign system overview
+                {t('adminPage.subtitle')}
               </p>
             </div>
           </div>
@@ -421,7 +427,7 @@ const Admin = () => {
             onMouseLeave={(e) => (e.currentTarget.style.borderColor = 'var(--border)')}
           >
             <RefreshCw size={13} className={refreshing ? 'animate-spin' : ''} />
-            Refresh
+            {t('adminPage.refresh')}
           </button>
         </div>
 
@@ -429,19 +435,19 @@ const Admin = () => {
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
           <StatCard
             icon={BarChart2}
-            label="Total Stamps"
+            label={t('adminPage.totalStamps')}
             value={stats.total ?? '—'}
             accent="var(--accent-active)"
           />
           <StatCard
             icon={Leaf}
-            label="Carbon (kg CO₂)"
+            label={t('adminPage.carbon')}
             value={carbon.totalKgCO2?.toFixed(3) ?? '—'}
             accent="var(--accent-success)"
           />
           <StatCard
             icon={Activity}
-            label="Per Stamp"
+            label={t('adminPage.perStamp')}
             value={carbon.breakdown?.perStamp ?? '—'}
             accent="var(--accent-pending)"
           />
@@ -463,7 +469,7 @@ const Admin = () => {
             }}
           >
             <Leaf size={16} />
-            Offset Carbon Footprint
+            {t('adminPage.offset')}
             <ExternalLink size={14} />
           </motion.a>
         )}
@@ -499,10 +505,10 @@ const Admin = () => {
                   className="text-[10px] font-black tracking-widest uppercase"
                   style={{ color: 'var(--text-secondary)' }}
                 >
-                  Activity Feed
+                  {t('adminPage.activityFeed')}
                 </p>
                 <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>
-                  Last 10 stamps
+                  {t('adminPage.last10')}
                 </p>
               </div>
               <Activity size={16} style={{ color: 'var(--accent-active)' }} />
@@ -512,7 +518,7 @@ const Admin = () => {
               <div className="flex flex-col items-center justify-center gap-2 py-10">
                 <Hash size={28} style={{ color: 'var(--text-secondary)', opacity: 0.3 }} />
                 <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>
-                  No recent activity
+                  {t('adminPage.noRecent')}
                 </p>
               </div>
             ) : (
@@ -539,10 +545,10 @@ const Admin = () => {
                 className="text-[10px] font-black tracking-widest uppercase"
                 style={{ color: 'var(--text-secondary)' }}
               >
-                System Health
+                {t('adminPage.systemHealth')}
               </p>
               <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>
-                Infrastructure overview
+                {t('adminPage.infra')}
               </p>
             </div>
             <div
@@ -559,30 +565,30 @@ const Admin = () => {
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
             <HealthCard
               icon={Database}
-              label="DB Size"
+              label={t('adminPage.dbSize')}
               value={dbSize}
-              sub="SQLite / better-sqlite3"
+              sub={t('adminPage.dbSub')}
               accent="var(--accent-active)"
             />
             <HealthCard
               icon={Clock}
-              label="Uptime"
+              label={t('adminPage.uptime')}
               value={uptime}
-              sub="Process uptime"
+              sub={t('adminPage.uptimeSub')}
               accent="var(--accent-success)"
             />
             <HealthCard
               icon={Hourglass}
-              label="Pending OTS"
+              label={t('adminPage.pendingOts')}
               value={pending}
-              sub="Awaiting block confirmation"
+              sub={t('adminPage.pendingSub')}
               accent="var(--accent-pending)"
             />
             <HealthCard
               icon={BarChart2}
-              label="Total Stamps"
+              label={t('adminPage.totalStamps')}
               value={totalStamps}
-              sub="All-time notarizations"
+              sub={t('adminPage.totalSub')}
               accent="var(--accent-active)"
             />
           </div>

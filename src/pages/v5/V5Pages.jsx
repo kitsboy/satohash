@@ -4,18 +4,25 @@
  */
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useParams, useSearchParams } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { getApiUrl } from '../../config/constants'
 
 const API = () => getApiUrl() || 'https://api.satohash.io'
 
-function Shell({ title, children, subtitle }) {
+function Shell({ title, children, subtitle, demo = false }) {
+  const { t } = useTranslation()
   return (
     <div className="min-h-screen bg-[var(--void,#0a0c10)] text-[var(--ink,#e8e6e1)]">
       <div className="mx-auto max-w-5xl px-4 py-10">
         <Link to="/" className="text-xs text-amber-500/80 hover:text-amber-400">
-          ← Satohash
+          {t('v5Page.back')}
         </Link>
-        <h1 className="mt-4 text-3xl font-bold tracking-tight">{title}</h1>
+        {demo && (
+          <p className="mt-4 text-[10px] font-bold tracking-widest text-amber-500/80 uppercase">
+            {t('v5Page.demoChip')}
+          </p>
+        )}
+        <h1 className={`${demo ? 'mt-2' : 'mt-4'} text-3xl font-bold tracking-tight`}>{title}</h1>
         {subtitle && <p className="mt-2 max-w-2xl text-sm opacity-70">{subtitle}</p>}
         <div className="mt-8">{children}</div>
       </div>
@@ -33,6 +40,7 @@ function Card({ children, className = '' }) {
 
 /** 22 — Proof of existence explorer */
 export function ProofOfExistencePage() {
+  const { t } = useTranslation()
   const [hash, setHash] = useState('')
   const [data, setData] = useState(null)
   const [err, setErr] = useState(null)
@@ -57,13 +65,14 @@ export function ProofOfExistencePage() {
 
   return (
     <Shell
-      title="Proof of Existence"
-      subtitle="Enter a SHA-256 hash to walk the OTS proof chain and custody timeline."
+      title={t('v5Page.proofOfExistence.title')}
+      subtitle={t('v5Page.proofOfExistence.subtitle')}
+      demo
     >
       <div className="flex flex-col gap-2 sm:flex-row">
         <input
           className="flex-1 rounded border border-white/15 bg-black/40 px-3 py-2 font-mono text-sm"
-          placeholder="64-char hex hash"
+          placeholder={t('v5Page.proofOfExistence.placeholder')}
           value={hash}
           onChange={(e) => setHash(e.target.value)}
         />
@@ -73,7 +82,7 @@ export function ProofOfExistencePage() {
           disabled={loading || hash.length < 64}
           className="rounded bg-amber-600 px-4 py-2 font-semibold text-black hover:bg-amber-500 disabled:opacity-40"
         >
-          {loading ? '…' : 'Trace'}
+          {loading ? '…' : t('v5Page.proofOfExistence.trace')}
         </button>
       </div>
       {err && <p className="mt-4 text-sm text-red-400">{err}</p>}
@@ -85,10 +94,14 @@ export function ProofOfExistencePage() {
               <div className="mt-2 flex flex-wrap gap-2 text-sm">
                 <span className="rounded bg-white/10 px-2 py-0.5">{s.status}</span>
                 <span>{s.created_at}</span>
-                {s.bitcoin_block_height != null && <span>block {s.bitcoin_block_height}</span>}
+                {s.bitcoin_block_height != null && (
+                  <span>
+                    {t('v5Page.proofOfExistence.block', { height: s.bitcoin_block_height })}
+                  </span>
+                )}
               </div>
               <Link className="mt-2 inline-block text-sm text-amber-400" to={`/verify/${s.id}`}>
-                Open verify →
+                {t('v5Page.proofOfExistence.openVerify')}
               </Link>
             </Card>
           ))}
@@ -103,6 +116,7 @@ export { default as NetworkPage } from '../Network'
 
 /** 27 — Batch verify */
 export function BatchVerifyPage() {
+  const { t } = useTranslation()
   const [text, setText] = useState('')
   const [rows, setRows] = useState([])
   const [busy, setBusy] = useState(false)
@@ -146,7 +160,7 @@ export function BatchVerifyPage() {
   }
 
   return (
-    <Shell title="Batch Verify" subtitle="Paste up to 50 hashes. Export results as CSV.">
+    <Shell title={t('v5Page.batchVerify.title')} subtitle={t('v5Page.batchVerify.subtitle')} demo>
       <textarea
         className="h-40 w-full rounded border border-white/15 bg-black/40 p-3 font-mono text-xs"
         value={text}
@@ -194,6 +208,7 @@ export function BatchVerifyPage() {
 
 /** 29 — Live stamp feed (SSE) */
 export function StampLiveFeedPage() {
+  const { t } = useTranslation()
   const [items, setItems] = useState([])
   const [paused, setPaused] = useState(false)
   const pausedRef = useRef(false)
@@ -216,7 +231,7 @@ export function StampLiveFeedPage() {
   }, [])
 
   return (
-    <Shell title="Live stamp feed" subtitle="Server-Sent Events from the proof plane.">
+    <Shell title={t('v5Page.liveFeed.title')} subtitle={t('v5Page.liveFeed.subtitle')} demo>
       <button
         type="button"
         onClick={() => setPaused((p) => !p)}
@@ -238,6 +253,7 @@ export function StampLiveFeedPage() {
 
 /** 33 — Compare two hashes */
 export function CompareProofsPage() {
+  const { t } = useTranslation()
   const [a, setA] = useState('')
   const [b, setB] = useState('')
   const [left, setLeft] = useState(null)
@@ -253,7 +269,7 @@ export function CompareProofsPage() {
   }
 
   return (
-    <Shell title="Compare proofs" subtitle="Side-by-side proof chains for two hashes.">
+    <Shell title={t('v5Page.compare.title')} subtitle={t('v5Page.compare.subtitle')} demo>
       <div className="grid gap-2 sm:grid-cols-2">
         <input
           className="rounded border border-white/15 bg-black/40 px-3 py-2 font-mono text-xs"
@@ -293,6 +309,7 @@ export function CompareProofsPage() {
 
 /** 36 — API playground */
 export function DeveloperPlaygroundPage() {
+  const { t } = useTranslation()
   const [spec, setSpec] = useState(null)
   const [path, setPath] = useState('/api/public/status')
   const [out, setOut] = useState('')
@@ -315,7 +332,7 @@ export function DeveloperPlaygroundPage() {
   }
 
   return (
-    <Shell title="API Playground" subtitle="Try public endpoints against the live proof plane.">
+    <Shell title={t('v5Page.playground.title')} subtitle={t('v5Page.playground.subtitle')} demo>
       <Card className="mb-4">
         <div className="mb-1 text-xs opacity-60">OpenAPI paths</div>
         <pre className="max-h-32 overflow-auto text-xs">
@@ -345,11 +362,9 @@ export function DeveloperPlaygroundPage() {
 
 /** 50 — Bitcoin education */
 export function BitcoinExplainPage() {
+  const { t } = useTranslation()
   return (
-    <Shell
-      title="Bitcoin timestamps"
-      subtitle="How OpenTimestamps locks a document fingerprint into Bitcoin without uploading the file."
-    >
+    <Shell title={t('v5Page.bitcoin.title')} subtitle={t('v5Page.bitcoin.subtitle')}>
       <div className="prose prose-invert max-w-none space-y-4 text-sm opacity-90">
         <p>
           Satohash hashes your file in the browser (SHA-256). Only the hash is submitted to public
@@ -376,6 +391,7 @@ export function BitcoinExplainPage() {
 
 /** 52 — Block explorer lite */
 export function BlockPage() {
+  const { t } = useTranslation()
   const { height } = useParams()
   const [info, setInfo] = useState(null)
   useEffect(() => {
@@ -389,7 +405,11 @@ export function BlockPage() {
       .catch((e) => setInfo({ error: e.message }))
   }, [height])
   return (
-    <Shell title={`Block ${height || ''}`} subtitle="Block metadata via mempool.space (public).">
+    <Shell
+      title={t('v5Page.block.title', { height: height || '' })}
+      subtitle={t('v5Page.block.subtitle')}
+      demo
+    >
       <pre className="overflow-auto rounded border border-white/10 bg-black/40 p-3 text-xs">
         {JSON.stringify(info, null, 2)}
       </pre>
@@ -399,6 +419,7 @@ export function BlockPage() {
 
 /** 63 — Cross-chain verify */
 export function CrossChainVerifyPage() {
+  const { t } = useTranslation()
   const [id, setId] = useState('')
   const [data, setData] = useState(null)
   const run = async () => {
@@ -406,7 +427,7 @@ export function CrossChainVerifyPage() {
     setData(await res.json())
   }
   return (
-    <Shell title="Cross-chain verify" subtitle="Bitcoin OTS + bridge stubs + Nostr event id.">
+    <Shell title={t('v5Page.crossChain.title')} subtitle={t('v5Page.crossChain.subtitle')} demo>
       <div className="flex gap-2">
         <input
           className="flex-1 rounded border border-white/15 bg-black/40 px-3 py-2 font-mono text-sm"
@@ -438,6 +459,7 @@ export function CrossChainVerifyPage() {
 
 /** AI Notary hub — summarize, diff, search, compliance, templates (keys server-side) */
 export function AiHubPage() {
+  const { t } = useTranslation()
   const [templateId, setTemplateId] = useState('nda')
   const [templateContent, setTemplateContent] = useState('')
   const [suggestOut, setSuggestOut] = useState(null)
@@ -604,10 +626,7 @@ export function AiHubPage() {
   }
 
   return (
-    <Shell
-      title="AI Notary"
-      subtitle="Summarize, compare, search, and scan — Anthropic keys stay on the API host, never in this SPA. Works with mock heuristics when no key is set."
-    >
+    <Shell title={t('v5Page.aiHub.title')} subtitle={t('v5Page.aiHub.subtitle')} demo>
       <div className="grid gap-4">
         <Card>
           <h3 className="font-semibold">Content summary</h3>
@@ -825,6 +844,7 @@ export function AiHubPage() {
 }
 
 export function ProofWallPage() {
+  const { t } = useTranslation()
   const [stamps, setStamps] = useState([])
   useEffect(() => {
     fetch(`${API()}/api/stamps/recent`)
@@ -833,10 +853,7 @@ export function ProofWallPage() {
       .catch(() => {})
   }, [])
   return (
-    <Shell
-      title="Proof wall"
-      subtitle="Confirmed Bitcoin-anchored stamps only (hash, never the file)."
-    >
+    <Shell title={t('v5Page.proofWall.title')} subtitle={t('v5Page.proofWall.subtitle')} demo>
       <div className="grid gap-2 sm:grid-cols-2">
         {stamps.map((s) => (
           <Card key={s.id} className="font-mono text-xs">
@@ -851,6 +868,7 @@ export function ProofWallPage() {
 }
 
 export function LeaderboardPage() {
+  const { t } = useTranslation()
   const [rows, setRows] = useState([])
   useEffect(() => {
     fetch(`${API()}/api/stamps?limit=100`)
@@ -870,10 +888,7 @@ export function LeaderboardPage() {
       .catch(() => {})
   }, [])
   return (
-    <Shell
-      title="Leaderboard"
-      subtitle="Anonymized client prefixes by stamp count (sample window)."
-    >
+    <Shell title={t('v5Page.leaderboard.title')} subtitle={t('v5Page.leaderboard.subtitle')} demo>
       <ol className="space-y-2">
         {rows.map(([k, n], i) => (
           <li
@@ -893,6 +908,7 @@ export function LeaderboardPage() {
 
 /** 26 — embeddable proof widget */
 export function ProofWidgetPage() {
+  const { t } = useTranslation()
   const { hash } = useParams()
   const [status, setStatus] = useState('…')
   useEffect(() => {
@@ -915,7 +931,7 @@ export function ProofWidgetPage() {
         target="_blank"
         rel="noreferrer"
       >
-        Verify →
+        {t('v5Page.widget.verify')}
       </a>
     </div>
   )
@@ -923,6 +939,7 @@ export function ProofWidgetPage() {
 
 /** 39 — printable report */
 export function StampReportPage() {
+  const { t } = useTranslation()
   const { id } = useParams()
   const [pkg, setPkg] = useState(null)
   useEffect(() => {
@@ -939,10 +956,10 @@ export function StampReportPage() {
         className="no-print mb-4 text-sm underline"
         onClick={() => window.print()}
       >
-        Print
+        {t('v5Page.report.print')}
       </button>
-      <h1 className="text-2xl font-bold">Satohash Proof Report</h1>
-      <p className="text-sm opacity-70">Chain of custody package</p>
+      <h1 className="text-2xl font-bold">{t('v5Page.report.title')}</h1>
+      <p className="text-sm opacity-70">{t('v5Page.report.subtitle')}</p>
       <pre className="mt-6 border p-4 text-xs whitespace-pre-wrap">
         {JSON.stringify(pkg, null, 2)}
       </pre>
@@ -952,6 +969,7 @@ export function StampReportPage() {
 
 /** 34 — Wizard pro (compact) */
 export function StampWizardProPage() {
+  const { t } = useTranslation()
   const [step, setStep] = useState(1)
   const [hash, setHash] = useState('')
   const [fileName, setFileName] = useState('')
@@ -977,14 +995,14 @@ export function StampWizardProPage() {
   }
 
   return (
-    <Shell title="Stamp wizard" subtitle="File → hash → review → stamp.">
+    <Shell title={t('v5Page.wizard.title')} subtitle={t('v5Page.wizard.subtitle')} demo>
       <div className="mb-4 flex gap-2 text-xs">
         {[1, 2, 3, 4].map((n) => (
           <span
             key={n}
             className={`rounded px-2 py-1 ${step === n ? 'bg-amber-600 text-black' : 'bg-white/10'}`}
           >
-            Step {n}
+            {t('v5Page.wizard.step', { n })}
           </span>
         ))}
       </div>
@@ -998,7 +1016,7 @@ export function StampWizardProPage() {
       )}
       {step === 2 && (
         <button type="button" className="rounded bg-white/10 px-4 py-2" onClick={() => setStep(3)}>
-          Continue
+          {t('v5Page.wizard.continue')}
         </button>
       )}
       {step === 3 && (
@@ -1007,7 +1025,7 @@ export function StampWizardProPage() {
           className="rounded bg-amber-600 px-4 py-2 font-semibold text-black"
           onClick={stamp}
         >
-          Confirm stamp
+          {t('v5Page.wizard.confirm')}
         </button>
       )}
       {step === 4 && result && (
@@ -1015,7 +1033,7 @@ export function StampWizardProPage() {
           <pre className="text-xs">{JSON.stringify(result, null, 2)}</pre>
           {result.id && (
             <Link className="text-sm text-amber-400" to={`/verify/${result.id}`}>
-              View proof →
+              {t('v5Page.wizard.viewProof')}
             </Link>
           )}
         </Card>

@@ -14,9 +14,11 @@ import {
   ChevronRight,
   Activity
 } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import usePageMeta from '../hooks/usePageMeta'
 
 export default function MobileSigner() {
+  const { t } = useTranslation()
   usePageMeta({ page: 'mobileSigner' })
   const [isPaired, setIsPaired] = useState(
     () => localStorage.getItem('satohash_mobile_paired') === 'true'
@@ -48,9 +50,15 @@ export default function MobileSigner() {
     localStorage.setItem('satohash_mobile_paired', 'true')
     localStorage.setItem('satohash_mobile_device_id', deviceId)
     setIsPaired(true)
-    toast.success('Demo device paired', {
-      description: 'Pairing saved locally until Mobile Signer Pro ships.'
+    toast.success(t('mobileSignerPage.toastTitle'), {
+      description: t('mobileSignerPage.toastBody')
     })
+  }
+
+  const handleUnpair = () => {
+    localStorage.removeItem('satohash_mobile_paired')
+    localStorage.removeItem('satohash_mobile_device_id')
+    setIsPaired(false)
   }
 
   return (
@@ -76,35 +84,51 @@ export default function MobileSigner() {
             >
               <Fingerprint size={28} />
             </div>
+            <div
+              className="mb-6 inline-flex w-fit items-center rounded-full border px-3 py-1"
+              style={{
+                borderColor: 'rgba(240,180,41,0.55)',
+                background: 'rgba(240,180,41,0.16)',
+                color: 'var(--accent-gold)'
+              }}
+            >
+              <span className="font-mono text-[10px] font-black tracking-[0.18em] uppercase">
+                {t('mobileSignerPage.demoChip')}
+              </span>
+            </div>
             <h1
               className="mb-6 text-6xl font-black tracking-tighter uppercase italic md:text-7xl"
               style={{ color: 'var(--text-primary)' }}
             >
-              BIOMETRIC <br />
-              <span style={{ color: 'var(--accent-active)' }}>SIGNER.</span>
+              {t('mobileSignerPage.title')} <br />
+              <span style={{ color: 'var(--accent-active)' }}>
+                {t('mobileSignerPage.titleHighlight')}
+              </span>
             </h1>
             <p
               className="mb-8 text-lg leading-relaxed font-medium italic"
               style={{ color: 'var(--text-secondary)' }}
             >
-              Authorize protocol actions using your mobile device&apos;s Secure Enclave. The
-              Satohash Signer app turns your phone into a high-security hardware security module
-              (HSM).
+              {t('mobileSignerPage.lede')}
             </p>
 
             <div className="flex flex-col gap-4">
               {[
                 {
                   icon: Shield,
-                  label: 'Zero-Knowledge Pairing',
-                  desc: 'Secure Handshake via WebRTC'
+                  label: t('mobileSignerPage.featPairLabel'),
+                  desc: t('mobileSignerPage.featPairDesc')
                 },
                 {
                   icon: Lock,
-                  label: 'Hardware-Level Security',
-                  desc: 'Protected by Apple/Android Secure Core'
+                  label: t('mobileSignerPage.featStoreLabel'),
+                  desc: t('mobileSignerPage.featStoreDesc')
                 },
-                { icon: Activity, label: 'Real-time Authority', desc: 'Instant push-notarization' }
+                {
+                  icon: Activity,
+                  label: t('mobileSignerPage.featPushLabel'),
+                  desc: t('mobileSignerPage.featPushDesc')
+                }
               ].map((item, i) => (
                 <div key={i} className="group flex items-start gap-4">
                   <div
@@ -185,50 +209,66 @@ export default function MobileSigner() {
                     className="text-center text-[10px] font-black tracking-[0.3em] uppercase"
                     style={{ color: 'var(--text-muted)' }}
                   >
-                    Scan with Satohash Signer App
+                    {t('mobileSignerPage.scanHint')}
                   </p>
                 </div>
 
                 <div className="space-y-3">
                   <p className="text-center text-[10px] font-bold tracking-widest text-amber-500 uppercase">
-                    Demo pairing — production app in development
+                    {t('mobileSignerPage.demoNote')}
                   </p>
                   <button
                     type="button"
                     onClick={handlePair}
                     className="btn-holographic w-full py-5 text-[10px]"
                   >
-                    Simulate Device Pairing
+                    {t('mobileSignerPage.simulate')}
                   </button>
                   <div className="flex gap-3">
                     <div
-                      className="flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-2xl p-3 opacity-60 grayscale transition-all hover:opacity-100 hover:grayscale-0"
+                      className="flex flex-1 flex-col items-center justify-center gap-1 rounded-2xl p-3 opacity-60 grayscale"
                       style={{
                         backgroundColor: 'var(--surface-raised)',
                         border: '1px solid var(--border)'
                       }}
                     >
-                      <Smartphone size={14} style={{ color: 'var(--text-secondary)' }} />
+                      <div className="flex items-center gap-2">
+                        <Smartphone size={14} style={{ color: 'var(--text-secondary)' }} />
+                        <span
+                          className="text-[8px] font-black uppercase"
+                          style={{ color: 'var(--text-secondary)' }}
+                        >
+                          {t('mobileSignerPage.storeIos')}
+                        </span>
+                      </div>
                       <span
-                        className="text-[8px] font-black uppercase"
-                        style={{ color: 'var(--text-secondary)' }}
+                        className="text-[7px] font-bold tracking-widest uppercase"
+                        style={{ color: 'var(--text-muted)' }}
                       >
-                        App Store
+                        {t('mobileSignerPage.notShipped')}
                       </span>
                     </div>
                     <div
-                      className="flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-2xl p-3 opacity-60 grayscale transition-all hover:opacity-100 hover:grayscale-0"
+                      className="flex flex-1 flex-col items-center justify-center gap-1 rounded-2xl p-3 opacity-60 grayscale"
                       style={{
                         backgroundColor: 'var(--surface-raised)',
                         border: '1px solid var(--border)'
                       }}
                     >
-                      <Tablet size={14} style={{ color: 'var(--text-secondary)' }} />
+                      <div className="flex items-center gap-2">
+                        <Tablet size={14} style={{ color: 'var(--text-secondary)' }} />
+                        <span
+                          className="text-[8px] font-black uppercase"
+                          style={{ color: 'var(--text-secondary)' }}
+                        >
+                          {t('mobileSignerPage.storeAndroid')}
+                        </span>
+                      </div>
                       <span
-                        className="text-[8px] font-black uppercase"
-                        style={{ color: 'var(--text-secondary)' }}
+                        className="text-[7px] font-bold tracking-widest uppercase"
+                        style={{ color: 'var(--text-muted)' }}
                       >
-                        Play Store
+                        {t('mobileSignerPage.notShipped')}
                       </span>
                     </div>
                   </div>
@@ -258,19 +298,21 @@ export default function MobileSigner() {
                     >
                       <CheckCircle size={24} />
                     </div>
-                    <span className="pill-emerald text-[9px]">ENCRYPTED CONTEXT</span>
+                    <span className="pill-emerald text-[9px]">
+                      {t('mobileSignerPage.pairedBadge')}
+                    </span>
                   </div>
                   <h3
                     className="text-xl font-black tracking-tighter uppercase italic"
                     style={{ color: 'var(--text-primary)' }}
                   >
-                    Device Synchronized
+                    {t('mobileSignerPage.pairedTitle')}
                   </h3>
                   <p
                     className="mt-1 text-[9px] font-bold tracking-widest uppercase"
                     style={{ color: 'var(--accent-success)' }}
                   >
-                    iPhone 16 Pro · Authorizing Node-01
+                    {t('mobileSignerPage.pairedSub')}
                   </p>
                 </div>
 
@@ -292,14 +334,14 @@ export default function MobileSigner() {
                         className="text-[10px] font-black uppercase"
                         style={{ color: 'var(--text-primary)' }}
                       >
-                        Awaiting Signature
+                        {t('mobileSignerPage.awaiting')}
                       </h4>
                     </div>
                     <span
                       className="text-[10px] font-bold uppercase"
                       style={{ color: 'var(--text-muted)' }}
                     >
-                      {pendingRequests.length} Tasks
+                      {t('mobileSignerPage.tasks', { count: pendingRequests.length })}
                     </span>
                   </div>
                   <div style={{ borderColor: 'var(--border)' }}>
@@ -322,13 +364,14 @@ export default function MobileSigner() {
                               className="mb-1 text-[8px] font-black uppercase"
                               style={{ color: 'var(--text-muted)' }}
                             >
-                              {req.type} REQUEST
+                              {req.demo ? t('mobileSignerPage.sampleType') : req.type}{' '}
+                              {t('mobileSignerPage.requestSuffix')}
                             </p>
                             <p
                               className="max-w-[180px] truncate text-xs font-bold"
                               style={{ color: 'var(--text-primary)' }}
                             >
-                              {req.doc}
+                              {req.demo ? t('mobileSignerPage.sampleDoc') : req.doc}
                             </p>
                           </div>
                           <div className="flex items-center gap-4">
@@ -336,7 +379,7 @@ export default function MobileSigner() {
                               className="text-[9px] font-bold uppercase italic"
                               style={{ color: 'var(--text-muted)' }}
                             >
-                              {req.time}
+                              {req.demo ? t('mobileSignerPage.sampleTime') : req.time}
                             </span>
                             <div
                               className="flex h-8 w-8 items-center justify-center rounded-lg transition-all"
@@ -355,13 +398,14 @@ export default function MobileSigner() {
                 </div>
 
                 <button
-                  onClick={() => setIsPaired(false)}
+                  type="button"
+                  onClick={handleUnpair}
                   className="w-full py-4 text-[9px] font-black tracking-[0.4em] uppercase transition-colors"
                   style={{ color: 'var(--text-muted)' }}
                   onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--accent-active)')}
                   onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-muted)')}
                 >
-                  Revoke Device Access
+                  {t('mobileSignerPage.revoke')}
                 </button>
               </motion.div>
             )}
