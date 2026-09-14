@@ -554,9 +554,179 @@
     }
   },
   "developerPage": {
-    "cliTitle": "CLI",
-    "cliHint": "哈希留在本机，仅提交 SHA-256。始终发送 X-Satohash-Client: cli。证明卡片",
-    "cliSource": "GitHub 上的 CLI 源码"
+    "cliTitle": "从终端盖戳",
+    "cliHint": "文件不离开设备，仅 POST SHA-256 hex。始终发送 X-Satohash-Client: cli。证明卡片打印于",
+    "cliSource": "GitHub 上的 CLI 源码",
+    "cliPath": "终端路径",
+    "cliDefaultApi": "默认 API（真实 CLI 中已设置）：",
+    "copyAria": "复制 {{cmd}}",
+    "localCalls": "本机 API 调用：{{count}}",
+    "localStamps": "此浏览器的盖戳：{{count}}",
+    "chip": "开发者 API — {{host}}",
+    "simulated": "模拟",
+    "title": "用它构建",
+    "titleBrand": "Satohash.",
+    "lede": "一次 API 调用即可把任何文档、文件或数据盖戳到 Bitcoin。文件不离开设备——只 POST SHA-256 hex。不需要区块链知识。",
+    "tabs": {
+      "overview": "概览",
+      "auth": "访问",
+      "docs": "文档",
+      "strategy": "策略"
+    },
+    "quick": {
+      "hash": {
+        "title": "哈希你的文件",
+        "desc": "SHA-256 在浏览器中运行。文件不离开你的设备。"
+      },
+      "post": {
+        "title": "POST 哈希",
+        "desc": "把 64 字符指纹发送到 /api/stamp。无需账户。今天盖戳免费。"
+      },
+      "confirm": {
+        "title": "Bitcoin 确认",
+        "desc": "确认要等一个 Bitcoin 区块——通常大约一小时（下一个区块）。下载你的 .ots 文件。"
+      }
+    },
+    "stats": {
+      "rateLabel": "公开速率限制",
+      "rateValue": "5/min",
+      "rateSub": "无每日配额",
+      "availLabel": "可用性",
+      "availValue": "高可用",
+      "availSub": "3 个 OTS 日历实时探测",
+      "batchLabel": "批量盖戳",
+      "batchValue": "最多 100",
+      "batchSub": "每批文件数"
+    },
+    "howTitle": "盖戳如何到达 Bitcoin",
+    "steps": {
+      "hash": {
+        "title": "你在本地哈希文件",
+        "desc": "SHA-256 在浏览器中运行。文件不离开你的设备。"
+      },
+      "send": {
+        "title": "Hash 发送到 Satohash",
+        "desc": "只传输 64 字符指纹——不是你的文档。"
+      },
+      "bundle": {
+        "title": "与其他 hash 打包",
+        "desc": "Satohash 把许多 hash 组成 Merkle 树以节省空间。"
+      },
+      "commit": {
+        "title": "写入 Bitcoin",
+        "desc": "Merkle 根通过 OpenTimestamps 日历写入一笔 Bitcoin 交易。"
+      },
+      "proof": {
+        "title": "永久证明",
+        "desc": "在下一个 Bitcoin 区块确认后（通常大约一小时），你的 .ots 文件证明该文档在该区块时间已存在——永远。"
+      }
+    },
+    "tryIt": "试试看",
+    "auth": {
+      "title": "身份验证",
+      "tooltipTitle": "我需要 API key 吗？",
+      "tooltipBody": "不需要。今天盖戳是开放的——发送 SHA-256 hash 即可得到证明。密钥只存在于我们亲手发放的套件应用。你永远不必自己创建或保存一把。",
+      "badge": "无需密钥",
+      "noKeyTitle": "今天不需要密钥",
+      "noKeyBody": "发送 POST /api/stamp，附带 {\"hash\":\"<64-char sha256>\"}，即可得到证明 ID。对所有人开放、有速率限制——无账户、无注册、无密钥。今天盖戳免费。",
+      "suiteTitle": "套件应用（内部）",
+      "suiteBody": "Give A Bit 家族应用发送 X-Satohash-Key——由我们在服务端发放。不是自助：写信到 hello@giveabit.io，我们手工签发。",
+      "paidTitle": "付费模式仍在 staging",
+      "paidBody": "未上线。付费墙打开时，API 以 HTTP 402 返回 Lightning 发票。按次支付后用 Authorization: L402 <token> 重试。仍然无账户、无 KYC。今天盖戳免费，Lightning 计费关闭。",
+      "tryNow": "现在就试 — {{host}}",
+      "removed": "没有自助 API 密钥。此页曾提供密钥管理器，调用一个从未存在的端点，并铸造从未被服务器校验的密钥——因此被移除而不是伪造。盖戳不需要密钥：发送 hash，得到证明。今天盖戳免费。"
+    },
+    "docs": {
+      "aiTitle": "连接 AI 与自动化",
+      "aiLede": "任何能发 HTTP 请求的工具都能用 Satohash。不需要专用 SDK。",
+      "ai": {
+        "chatgpt": {
+          "title": "ChatGPT / GPT-4",
+          "desc": "用 Custom GPT Action 直接从 ChatGPT 对话中盖戳文档。"
+        },
+        "claude": {
+          "title": "Claude (Anthropic)",
+          "desc": "在 Claude 的 system prompt 中把 Satohash 加为工具。Claude 可按请求哈希并盖戳文件。"
+        },
+        "zapier": {
+          "title": "Zapier / Make",
+          "desc": "无需代码。用 Webhook 动作在文件创建或签名时调用 /api/stamp。"
+        },
+        "n8n": {
+          "title": "n8n",
+          "desc": "在任何工作流中放入 HTTP Request 节点。用 Code 节点哈希，用 HTTP 盖戳。"
+        }
+      },
+      "apiRef": "API 参考",
+      "apiRefBody": "通过 Swagger UI 提供完整交互文档。REST API，JSON 请求体。",
+      "webhooks": "Webhooks",
+      "webhooksTip": "你服务器上的 URL，Satohash 在盖戳确认或撤销时会调用。无需轮询。",
+      "rateLimits": "速率限制",
+      "rateLimitsTip": "无每日配额。公开路径限制为每分钟 5 次请求以保持服务健康。不需要 Lightning 钱包。今天盖戳免费。",
+      "bearer": "Bearer token",
+      "bearerTip": "我们发放的套件应用可发送 X-Satohash-Key。没有自助 Bearer 密钥。请保密我们签发的任何密钥。",
+      "openSwagger": "打开 Swagger UI →",
+      "endpoints": {
+        "stamp": "提交 SHA-256 hash。返回盖戳 ID 和 .ots 证明文件。",
+        "verify": "核验 .ots 证明文件。返回 verified: true/false 以及 Bitcoin 区块高度。",
+        "history": "列出你最近 50 次盖戳。",
+        "stamps": "获取盖戳详情或下载原始 .ots 二进制。",
+        "upgrade": "检查 pending 盖戳是否已在 Bitcoin 上确认。",
+        "fees": "来自 mempool.space 的实时 Bitcoin 手续费估算。"
+      }
+    },
+    "strategy": {
+      "title": "简单、诚实的",
+      "titleHighlight": "定价。",
+      "lede": "今天盖戳免费——无每日配额、无信用卡、无 Lightning 发票。唯一限制是每分钟 5 次请求的防护。付费 API 点数、Pro 和 Lightning 计费已构建并处于 staging；并未上线。见 /pricing 了解诚实草图。",
+      "stagedBadge": "Staging",
+      "seePricing": "查看 /pricing",
+      "contactCta": "联系",
+      "free": {
+        "name": "免费",
+        "price": "$0",
+        "unit": "现已上线",
+        "features": ["无每日配额", "OTS Bitcoin 证明", "下载 .ots 文件", "社区支持"]
+      },
+      "pro": {
+        "name": "Pro",
+        "price": "Staging",
+        "unit": "未上线",
+        "features": ["今天不计费", "付费墙关闭", "付费上线后才有 Webhooks", "见 /pricing"]
+      },
+      "enterprise": {
+        "name": "Enterprise",
+        "price": "联系",
+        "unit": "合作伙伴通道",
+        "features": ["不是上线的付费 API", "合作伙伴通道", "写信 hello@giveabit.io", "见 /pricing"]
+      },
+      "creditsTitle": "什么是 API 点数？",
+      "creditsBody": "API 点数是面向日后付费盖戳的 staging 预付设想——未上线。今天每次盖戳都免费。Lightning / L402 计费已构建，但在通道注资前关闭。",
+      "creditsStrong": "使用 Satohash 不需要 Lightning 钱包。"
+    },
+    "sidebar": {
+      "credits": "API 点数",
+      "creditsTip": "今天每次盖戳都免费。点数和 Lightning 充值处于 staging，未上线。免费路径没有每日配额——无需付款。",
+      "noQuota": "无每日配额",
+      "guard": "每分钟 5 次滥用防护 · 无需信用卡",
+      "rateLabel": "公开速率限制",
+      "rateValue": "5 / min",
+      "rateNote": "这是滥用防护，不是配额。盖戳从不以日为上限。今天盖戳免费。",
+      "seePricing": "查看 /pricing",
+      "resources": "资源",
+      "apiRef": "API 参考（Swagger）",
+      "aiGuide": "AI 集成指南",
+      "nostr": "Nostr 身份（NIP-05）",
+      "nostrTipTitle": "NIP-05 身份",
+      "nostrTip": "把可读名称（如 user@satohash.io）关联到密码学密钥，从而在不信任中心权威的情况下核验签名者。",
+      "security": "安全与隐私",
+      "ots": "OTS 日历",
+      "otsNote": "免费公开日历——不需要 API key。",
+      "webhooks": "Webhooks",
+      "webhooksBody": "注册一个 URL，Satohash 会在盖戳确认、升级或撤销时自动调用。",
+      "events": "事件：",
+      "webhookDocs": "Webhook 文档"
+    }
   },
   "widgetsPage": {
     "nav": "Proof DNA Widgets",
@@ -1911,5 +2081,200 @@
     "guide3Body": "OpenTimestamps → Bitcoin 证明文件何时存在。此处的身份查询是可选且分开的。",
     "aside": "连接扩展不会开启一键公证或声誉 mesh。盖戳一个文件才能得到锚定到 Bitcoin 的存在证明。",
     "stampCta": "免费盖戳"
+  },
+  "execSummaryPage": {
+    "eyebrow": "今日免费 · Bitcoin 永久",
+    "h1": "证明它存在过。",
+    "h1Highlight": "不到一分钟。",
+    "lede": "Satohash 用 OpenTimestamps 在 Bitcoin 上免费为你的文件指纹盖时间戳。免费基础档是永久、永不付费墙的信任锚。可选付费档（Professional 约 2,100 sats/月，Business 约 21,000 sats/月）和按次计费 API 已经建好并处于 staging；只有在 Lightning 通道完成注资和测试后才会开始收费 — 无论哪种方式，证明都锚定到 Bitcoin。",
+    "stampCta": "免费盖戳一份文件",
+    "verifyCta": "验证一份证明",
+    "mobileNote": "为一手持机设计 · 适配 Pixel 与 iPhone",
+    "honesty": "证明文件何时存在 — 而不是谁创建了它。",
+    "kpis": {
+      "cost": {
+        "k": "0 sats",
+        "v": "今日用户成本"
+      },
+      "pending": {
+        "k": "< 60s",
+        "v": "获得待确认证明"
+      },
+      "hash": {
+        "k": "SHA-256",
+        "v": "仅本地哈希"
+      },
+      "chain": {
+        "k": "BTC",
+        "v": "记录之链"
+      }
+    },
+    "briefKicker": "面向管理层 · 法务 · 合规",
+    "briefTitle": "执行",
+    "briefTitleHighlight": "摘要",
+    "briefFooter": "机密产品概述 · Satohash by Give A Bit · 非法律意见",
+    "brief": {
+      "what": {
+        "label": "01 — 我们做什么",
+        "title": "我们做什么",
+        "p1": "Satohash 为任何数字文件提供独立的密码学存在证明—合同、照片、源代码、AI 模型输出、网页截取或审计包。我们不存储、也不审阅底层内容。我们让组织和个人通过开放的 OpenTimestamps 协议，把该内容的数学指纹绑定到 Bitcoin 区块链，生成第三方无需把 Satohash 当作真相托管方即可验证的可携证明。",
+        "p2": "实际而言：当一份文件、交付包或数字制品日后必须经受对手方、监管机构、法院或内部审计的审视时，Satohash 提供一份耐久、不可否认的记录——该制品曾以特定形态存在于特定时刻。这项服务是为日常工作边缘（法律、创作、调查与运营）设计的，而不是一次性的新鲜玩意。"
+      },
+      "how": {
+        "label": "02 — 如何运作",
+        "title": "如何运作",
+        "p1": "流程刻意保持简单并保护隐私。首先，用户的浏览器（或获准的客户端）用标准 Web 密码学计算文件的 SHA-256 哈希；原始字节不必离开设备。其次，只有这 64 字符哈希被提交到 OpenTimestamps 日历，日历把许多哈希聚合成 Merkle 树，并定期把根写入一笔 Bitcoin 交易。第三，当一个 Bitcoin 区块确认该承诺时——通常约 60 分钟——生成的 .ots 证明即可下载、归档，并用开源工具和公开链数据独立验证。",
+        "p2": "今天，盖戳对用户免费。Bitcoin 网络费的经济模型通过批量在日历和协议层被吸收；Satohash 的产品成本是托管与运营。引入商业档时，结算预计通过 Lightning 付给 Satohash——不是换一条账本。证明无论哪种方式都仍锚定到 Bitcoin。"
+      },
+      "truth": {
+        "label": "03 — 真相",
+        "title": "为何这对真相重要",
+        "p1": "在生成式媒体、深度伪造、有争议的邮件和被改写的“记录来源”环境里，最难的问题往往不是有人声称了什么，而是某个具体数字状态何时首次存在、此后是否被改过。机构信任——品牌声明、截图和“我们的系统这么说”——在对抗场景中越来越不够用。密码学时间戳不裁决有罪或无罪；它恢复一份共享的、机器可核验的时间真相基线：这个精确指纹在这一区块高度被写入一份公开、改写成本极高的账本。",
+        "p2": "这条基线对言论自由、新闻、知识产权优先权和民事诉讼至关重要。没有它，历史可以谈判。有了它，各方仍可对含义有分歧——但不能否认字节曾经存在。Satohash 的存在，是为了把 Bitcoin 的这一属性交给非专家，作为日常的完整性工具。它证明何时，而不是谁。"
+      },
+      "enterprises": {
+        "label": "04 — 企业",
+        "title": "面向公司与机构指标",
+        "p1": "企业在审计轨迹、供应商争议、监管检查和多方工作流需要可携证据、且不能困在单一 SaaS 孤岛时采用 Satohash。典型做法包括：在签署时盖戳已执行协议和董事会材料；为变更控制密封软件发布和配置快照；锚定调查导出和客户通信；为 API 做仪表，使自动化系统把证明作为一等制品发出。因为验证不需要持续访问 Satohash 基础设施，供应商变更——或 Satohash 自身不可用——时，组织仍保持韧性。",
+        "p2": "从指标角度看，管理层可以把证明覆盖当作运营 KPI：高风险文件在 SLA 内盖戳的比例；从文件定稿到已确认 Bitcoin 锚的中位时间；以可验证 .ots 包结案的争议占比；以及按业务单元或客户系统归属的家族产品盖戳量。这些指标把法律准备与工程实践对齐——从“我们保存记录”变成“我们可以独立证明当时存在过什么”。本页图表是示意，不是实时计费指标。"
+      }
+    },
+    "habitTitle": "让证明成为",
+    "habitTitleHighlight": "日常习惯",
+    "habitLede": "每份合同、草稿、照片、AI 导出或截图，都可以在信任变成问题之前被密封。",
+    "reasons": {
+      "seconds": {
+        "title": "以秒计，不是以周计",
+        "body": "在争论开始之前，就给合同、截图和 AI 输出盖戳。"
+      },
+      "private": {
+        "title": "天生私密",
+        "body": "零知识哈希。我们从不需要文件本身 — 只要指纹。文件不离开设备。"
+      },
+      "verify": {
+        "title": "可独立验证的证明",
+        "body": "OpenTimestamps + Bitcoin PoW 是独立的数学，不是公司承诺。"
+      },
+      "offline": {
+        "title": "离线优先",
+        "body": "随处哈希。重新上线后再同步。永久可携。"
+      }
+    },
+    "chartsTitle": "证明最要紧的",
+    "chartsTitleHighlight": "地方",
+    "chartsLede": "示意性的需求构成，以及相对传统路径的出证时间（产品故事示意 — 不是实时计费指标）。",
+    "useCases": {
+      "creators": "创作者与 IP",
+      "legal": "法律 / 法庭",
+      "journalism": "新闻",
+      "enterprise": "企业审计",
+      "ai": "AI 来源"
+    },
+    "friction": {
+      "paper": "纸本公证",
+      "legal": "法律呈件",
+      "email": "邮件“证明”",
+      "satohash": "Satohash"
+    },
+    "days": {
+      "mon": "一",
+      "tue": "二",
+      "wed": "三",
+      "thu": "四",
+      "fri": "五",
+      "sat": "六",
+      "sun": "日"
+    },
+    "charts": {
+      "pieTitle": "用例构成",
+      "pieSub": "谁在盖戳、为何盖戳 — 示意",
+      "barTitle": "到可用证明的时间",
+      "barSub": "天数（对数友好视图 — Satohash 是秒级）。示意，不是实时 KPI。",
+      "areaTitle": "每周盖戳节奏（示意）",
+      "areaSub": "当每次交付都被密封时，团队的“证明习惯”看起来如何",
+      "daysUnit": " 天"
+    },
+    "howTitle": "免费盖戳",
+    "howTitleHighlight": "实际如何运作",
+    "stepLabel": "步骤 0{{n}}",
+    "steps": {
+      "hash": {
+        "title": "在手机上哈希",
+        "body": "SHA-256 在浏览器中运行。你的文件不离开设备。"
+      },
+      "stamp": {
+        "title": "免费盖戳",
+        "body": "只有指纹进入 OpenTimestamps 日历。今天不需要钱包。"
+      },
+      "bitcoin": {
+        "title": "Bitcoin 密封",
+        "body": "日历把许多证明批量写入一次 Bitcoin 承诺。确认通常约 60 分钟。永久。"
+      },
+      "verify": {
+        "title": "随处验证",
+        "body": "分享一份 .ots 证明。任何人都可以核验，无需信任 Satohash。"
+      }
+    },
+    "planesTitle": "四个平面 ·",
+    "planesTitleHighlight": "一个 Bitcoin 底座",
+    "planesLede": "上层平面可以演进。第 1 层证明永远有效。",
+    "planes": {
+      "atlas": {
+        "name": "Atlas",
+        "desc": "实时链情报、mempool、网络健康"
+      },
+      "settlement": {
+        "name": "Settlement",
+        "desc": "付费墙开启后的 Lightning / L402"
+      },
+      "identity": {
+        "name": "Identity",
+        "desc": "Nostr 签名者、多方来源"
+      },
+      "proof": {
+        "name": "Proof",
+        "desc": "SHA-256 + OpenTimestamps → Bitcoin PoW"
+      }
+    },
+    "pricingTitle": "定价",
+    "pricingTitleHighlight": "说明",
+    "pricingLede": "免费档现在已上线。未来的 Lightning 费用付给我们 — 不是另一条链。",
+    "tiers": {
+      "free": {
+        "name": "免费",
+        "price": "0 sats",
+        "tag": "现已上线",
+        "p1": "OTS on Bitcoin",
+        "p2": "本地哈希",
+        "p3": "永久验证",
+        "p4": "无需账户",
+        "p5": "永不付费墙"
+      },
+      "pro": {
+        "name": "Professional",
+        "price": "~2,100 sats",
+        "tag": "已建成，staging",
+        "p1": "~$29/月",
+        "p2": "不限量盖戳",
+        "p3": "完整保险库",
+        "p4": "API + PDF 导出"
+      },
+      "biz": {
+        "name": "Business / Studio",
+        "price": "~21,000 sats",
+        "tag": "已建成，staging",
+        "p1": "~$299/月",
+        "p2": "团队与工作室",
+        "p3": "White-label",
+        "p4": "SLA + 体量"
+      }
+    },
+    "ctaTitle": "你的下一份文件值得一张",
+    "ctaTitleHighlight": "Bitcoin 收据",
+    "ctaBody": "无需账户。无需银行卡。本地哈希，免费盖戳，终身验证。",
+    "ctaStamp": "现在免费开始",
+    "ctaPricing": "定价",
+    "ctaDocs": "全部文档",
+    "ctaCompare": "对比"
   }
 }

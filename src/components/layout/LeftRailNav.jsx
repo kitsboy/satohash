@@ -228,7 +228,7 @@ export default function LeftRailNav() {
             <div className="mt-1 space-y-0.5">
               <NavItem item={{ name: 'Node Mesh', path: '/nodes', icon: Network }} />
               <NavItem item={{ name: 'Merkle demo', path: '/explorer', icon: Search }} />
-              <NavItem item={{ name: 'Web Capture', path: '/snapper', icon: Camera }} />
+              <NavItem item={{ name: 'Web Capture (scaffold)', path: '/snapper', icon: Camera }} />
               <NavItem
                 item={{ name: t('nav', 'templates'), path: '/templates', icon: LayoutTemplate }}
               />

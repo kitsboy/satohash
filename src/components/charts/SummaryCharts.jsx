@@ -1,4 +1,5 @@
 import { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   PieChart,
   Pie,
@@ -18,7 +19,7 @@ import {
 // lazily-loaded chunk instead of living in the eager (inlined) landing bundle.
 // This file is the ONLY recharts importer on the marketing path.
 
-function ChartTooltip({ active, payload, label }) {
+function ChartTooltip({ active, payload, label, daysUnit }) {
   if (!active || !payload?.length) return null
   return (
     <div
@@ -34,13 +35,15 @@ function ChartTooltip({ active, payload, label }) {
       <p className="font-bold">{label || payload[0]?.name}</p>
       <p className="text-gradient-sky font-black">
         {payload[0]?.value}
-        {payload[0]?.payload?.days != null ? ' days' : payload[0]?.name ? '%' : ''}
+        {payload[0]?.payload?.days != null ? daysUnit : payload[0]?.name ? '%' : ''}
       </p>
     </div>
   )
 }
 
 export default function SummaryCharts({ pieData, barData, dailyData }) {
+  const { t } = useTranslation()
+  const daysUnit = t('execSummaryPage.charts.daysUnit')
   const cards = useMemo(
     () => ({ pie: pieData || [], bar: barData || [], daily: dailyData || [] }),
     [pieData, barData, dailyData]
@@ -54,9 +57,9 @@ export default function SummaryCharts({ pieData, barData, dailyData }) {
           className="rounded-2xl border p-4 sm:p-6"
           style={{ borderColor: 'var(--border)', background: 'var(--surface-raised)' }}
         >
-          <h3 className="mb-1 text-sm font-black">Use-case mix</h3>
+          <h3 className="mb-1 text-sm font-black">{t('execSummaryPage.charts.pieTitle')}</h3>
           <p className="mb-4 text-[11px]" style={{ color: 'var(--text-secondary)' }}>
-            Who stamps, and why
+            {t('execSummaryPage.charts.pieSub')}
           </p>
           <div className="h-[220px] w-full sm:h-[260px]">
             <ResponsiveContainer width="100%" height="100%">
@@ -76,7 +79,7 @@ export default function SummaryCharts({ pieData, barData, dailyData }) {
                     <Cell key={e.name} fill={e.color} />
                   ))}
                 </Pie>
-                <Tooltip content={<ChartTooltip />} />
+                <Tooltip content={<ChartTooltip daysUnit={daysUnit} />} />
               </PieChart>
             </ResponsiveContainer>
           </div>
@@ -100,9 +103,9 @@ export default function SummaryCharts({ pieData, barData, dailyData }) {
           className="rounded-2xl border p-4 sm:p-6"
           style={{ borderColor: 'var(--border)', background: 'var(--surface-raised)' }}
         >
-          <h3 className="mb-1 text-sm font-black">Time to usable proof</h3>
+          <h3 className="mb-1 text-sm font-black">{t('execSummaryPage.charts.barTitle')}</h3>
           <p className="mb-4 text-[11px]" style={{ color: 'var(--text-secondary)' }}>
-            Days (log-friendly view — Satohash is seconds)
+            {t('execSummaryPage.charts.barSub')}
           </p>
           <div className="h-[220px] w-full sm:h-[260px]">
             <ResponsiveContainer width="100%" height="100%">
@@ -123,7 +126,7 @@ export default function SummaryCharts({ pieData, barData, dailyData }) {
                   width={88}
                   tick={{ fill: 'var(--text-secondary)', fontSize: 10 }}
                 />
-                <Tooltip content={<ChartTooltip />} />
+                <Tooltip content={<ChartTooltip daysUnit={daysUnit} />} />
                 <Bar dataKey="days" radius={[0, 6, 6, 0]}>
                   {cards.bar.map((e) => (
                     <Cell key={e.label} fill={e.fill} />
@@ -140,9 +143,9 @@ export default function SummaryCharts({ pieData, barData, dailyData }) {
         className="mt-4 rounded-2xl border p-4 sm:p-6"
         style={{ borderColor: 'var(--border)', background: 'var(--surface-raised)' }}
       >
-        <h3 className="mb-1 text-sm font-black">Weekly stamp rhythm (illustrative)</h3>
+        <h3 className="mb-1 text-sm font-black">{t('execSummaryPage.charts.areaTitle')}</h3>
         <p className="mb-4 text-[11px]" style={{ color: 'var(--text-secondary)' }}>
-          What a team&apos;s &quot;proof habit&quot; looks like when every delivery is sealed
+          {t('execSummaryPage.charts.areaSub')}
         </p>
         <div className="h-[200px] w-full sm:h-[240px]">
           <ResponsiveContainer width="100%" height="100%">
@@ -156,7 +159,7 @@ export default function SummaryCharts({ pieData, barData, dailyData }) {
               <CartesianGrid strokeDasharray="3 3" stroke="rgba(148,163,184,0.12)" />
               <XAxis dataKey="day" tick={{ fill: 'var(--text-secondary)', fontSize: 11 }} />
               <YAxis tick={{ fill: 'var(--text-secondary)', fontSize: 10 }} width={28} />
-              <Tooltip content={<ChartTooltip />} />
+              <Tooltip content={<ChartTooltip daysUnit={daysUnit} />} />
               <Area
                 type="monotone"
                 dataKey="stamps"

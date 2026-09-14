@@ -564,9 +564,194 @@
     }
   },
   "developerPage": {
-    "cliTitle": "CLI",
-    "cliHint": "El hash permanece en la máquina; solo se envía el SHA-256. Siempre envía X-Satohash-Client: cli. Tarjeta de prueba",
-    "cliSource": "Código de la CLI en GitHub"
+    "cliTitle": "Sellar desde la terminal",
+    "cliHint": "El archivo no sale del dispositivo; solo se envía el SHA-256 en hex. Siempre envía X-Satohash-Client: cli. La tarjeta de prueba se imprime en",
+    "cliSource": "Código de la CLI en GitHub",
+    "cliPath": "Ruta de terminal",
+    "cliDefaultApi": "API por defecto (ya configurada en la CLI real):",
+    "copyAria": "Copiar {{cmd}}",
+    "localCalls": "Llamadas API locales: {{count}}",
+    "localStamps": "Sellos en este navegador: {{count}}",
+    "chip": "API para desarrolladores — {{host}}",
+    "simulated": "Simulado",
+    "title": "Construye con",
+    "titleBrand": "Satohash.",
+    "lede": "Sella cualquier documento, archivo o dato en Bitcoin con una llamada API. El archivo no sale del dispositivo — solo se envía el SHA-256 en hex. No hace falta saber de blockchain.",
+    "tabs": {
+      "overview": "Resumen",
+      "auth": "Acceso",
+      "docs": "Documentación",
+      "strategy": "Estrategia"
+    },
+    "quick": {
+      "hash": {
+        "title": "Hashea tu archivo",
+        "desc": "SHA-256 se ejecuta en tu navegador. El archivo no sale de tu dispositivo."
+      },
+      "post": {
+        "title": "POST del hash",
+        "desc": "Envía la huella de 64 caracteres a /api/stamp. Sin cuenta. Los sellos son gratis hoy."
+      },
+      "confirm": {
+        "title": "Bitcoin confirma",
+        "desc": "La confirmación espera un bloque Bitcoin — unos 60 minutos de típico (el siguiente bloque). Descarga tu archivo .ots."
+      }
+    },
+    "stats": {
+      "rateLabel": "Límite público",
+      "rateValue": "5/min",
+      "rateSub": "Sin cuota diaria",
+      "availLabel": "Disponibilidad",
+      "availValue": "Alta disponibilidad",
+      "availSub": "3 calendarios OTS en vivo",
+      "batchLabel": "Sellado por lotes",
+      "batchValue": "Hasta 100",
+      "batchSub": "Archivos por lote"
+    },
+    "howTitle": "Cómo tu sello llega a Bitcoin",
+    "steps": {
+      "hash": {
+        "title": "Hasheas tu archivo",
+        "desc": "SHA-256 se ejecuta en tu navegador. El archivo no sale de tu dispositivo."
+      },
+      "send": {
+        "title": "Hash enviado a Satohash",
+        "desc": "Solo se transmite la huella de 64 caracteres — no tu documento."
+      },
+      "bundle": {
+        "title": "Agrupado con otros hashes",
+        "desc": "Satohash agrupa muchos hashes en un árbol Merkle para ahorrar espacio."
+      },
+      "commit": {
+        "title": "Anclado a Bitcoin",
+        "desc": "La raíz Merkle se escribe en una transacción Bitcoin a través de calendarios OpenTimestamps."
+      },
+      "proof": {
+        "title": "Prueba permanente",
+        "desc": "Cuando se confirma en el siguiente bloque Bitcoin (típicamente alrededor de una hora), tu archivo .ots prueba que el documento existía en ese momento de bloque — para siempre."
+      }
+    },
+    "tryIt": "Pruébalo",
+    "auth": {
+      "title": "Autenticación",
+      "tooltipTitle": "¿Necesito una API key?",
+      "tooltipBody": "No. El sellado está abierto hoy — envía un hash SHA-256 y recibes una prueba. Las claves solo existen para apps de la suite que entregamos nosotros. Nunca tienes que crear ni guardar una.",
+      "badge": "Sin clave",
+      "noKeyTitle": "Hoy no hace falta clave",
+      "noKeyBody": "Envía POST /api/stamp con {\"hash\":\"<64-char sha256>\"} y recibes un ID de prueba. Abierto a todos, con límite de ritmo — sin cuenta, sin registro, sin clave. Los sellos son gratis hoy.",
+      "suiteTitle": "Apps de la suite (interno)",
+      "suiteBody": "Las apps de la familia Give A Bit envían X-Satohash-Key — una clave que provisionamos en el servidor. No es autoservicio: escribe a hello@giveabit.io y la emitimos a mano.",
+      "paidTitle": "El modo de pago está en staging",
+      "paidBody": "No está en vivo. Cuando el paywall esté activo, la API responde HTTP 402 con una factura Lightning. Paga por llamada y reintenta con Authorization: L402 <token>. Sigue sin cuenta y sin KYC. Hoy los sellos son gratis y la facturación Lightning está apagada.",
+      "tryNow": "Pruébalo ahora — {{host}}",
+      "removed": "No hay claves API de autoservicio. Esta página ofrecía un gestor de claves que llamaba a un endpoint que nunca existió, y acuñaba claves que ningún servidor comprobaba — se retiró en lugar de fingirlo. El sellado no necesita clave: envía un hash, recibe una prueba. Los sellos son gratis hoy."
+    },
+    "docs": {
+      "aiTitle": "Conecta IA y automatización",
+      "aiLede": "Satohash funciona con cualquier herramienta que haga una petición HTTP. No hace falta un SDK especial.",
+      "ai": {
+        "chatgpt": {
+          "title": "ChatGPT / GPT-4",
+          "desc": "Usa una Custom GPT Action para sellar documentos desde una conversación de ChatGPT."
+        },
+        "claude": {
+          "title": "Claude (Anthropic)",
+          "desc": "Añade Satohash como herramienta en el system prompt de Claude. Claude puede hashear y sellar archivos bajo petición."
+        },
+        "zapier": {
+          "title": "Zapier / Make",
+          "desc": "Sin código. Usa la acción Webhook para llamar a /api/stamp cuando se crea o firma un archivo."
+        },
+        "n8n": {
+          "title": "n8n",
+          "desc": "Añade un nodo HTTP Request a cualquier flujo. Hashea con el nodo Code, sella con HTTP."
+        }
+      },
+      "apiRef": "Referencia de la API",
+      "apiRefBody": "Documentación interactiva completa vía Swagger UI. REST API con cuerpos JSON.",
+      "webhooks": "Webhooks",
+      "webhooksTip": "Una URL en tu servidor que Satohash llama cuando un sello se confirma o se revoca. Sin sondeo.",
+      "rateLimits": "Límites de ritmo",
+      "rateLimitsTip": "Sin cuota diaria. La ruta pública está limitada a 5 peticiones por minuto para mantener el servicio sano. No hace falta cartera Lightning. Los sellos son gratis hoy.",
+      "bearer": "Bearer token",
+      "bearerTip": "Las apps de la suite que provisionamos pueden enviar X-Satohash-Key. No hay claves Bearer de autoservicio. Guarda en secreto cualquier clave que emitamos.",
+      "openSwagger": "Abrir Swagger UI →",
+      "endpoints": {
+        "stamp": "Envía un hash SHA-256. Devuelve un ID de sello y el archivo de prueba .ots.",
+        "verify": "Verifica un archivo .ots. Devuelve verified: true/false y la altura de bloque Bitcoin.",
+        "history": "Lista tus últimos 50 sellos.",
+        "stamps": "Obtén detalles del sello o descarga el binario .ots.",
+        "upgrade": "Comprueba si un sello pending se ha confirmado en Bitcoin.",
+        "fees": "Estimaciones de comisión Bitcoin en vivo desde mempool.space."
+      }
+    },
+    "strategy": {
+      "title": "Precios simples y",
+      "titleHighlight": "honestos.",
+      "lede": "Los sellos son gratis hoy — sin cuota diaria, sin tarjeta, sin factura Lightning. El único límite es un guardia de 5 peticiones por minuto. Los créditos de API de pago, Pro y la facturación Lightning están construidos y en staging; no están en vivo. Mira /pricing para el esquema honesto.",
+      "stagedBadge": "En staging",
+      "seePricing": "Ver /pricing",
+      "contactCta": "Contactar",
+      "free": {
+        "name": "Gratis",
+        "price": "$0",
+        "unit": "en vivo ahora",
+        "features": [
+          "Sin cuota diaria",
+          "Prueba OTS Bitcoin",
+          "Descarga del archivo .ots",
+          "Soporte de la comunidad"
+        ]
+      },
+      "pro": {
+        "name": "Pro",
+        "price": "Staging",
+        "unit": "no en vivo",
+        "features": [
+          "Hoy no se factura",
+          "El paywall está apagado",
+          "Webhooks cuando se lance el pago",
+          "Ver /pricing"
+        ]
+      },
+      "enterprise": {
+        "name": "Enterprise",
+        "price": "Contactar",
+        "unit": "con socio",
+        "features": [
+          "No es una API de pago en vivo",
+          "Acceso con socio",
+          "Escribe a hello@giveabit.io",
+          "Ver /pricing"
+        ]
+      },
+      "creditsTitle": "¿Qué son los créditos de API?",
+      "creditsBody": "Los créditos de API son una idea prepago en staging para sellos de pago posteriores — no están en vivo. Cada sello es gratis hoy. La facturación Lightning / L402 está construida pero apagada hasta que los raíles estén financiados.",
+      "creditsStrong": "No necesitas una cartera Lightning para usar Satohash."
+    },
+    "sidebar": {
+      "credits": "Créditos de API",
+      "creditsTip": "Cada sello es gratis hoy. Los créditos y recargas Lightning están en staging, no en vivo. La ruta gratis no tiene cuota diaria — no hace falta pagar.",
+      "noQuota": "Sin cuota diaria",
+      "guard": "Guardia de abuso 5 peticiones / min · sin tarjeta",
+      "rateLabel": "Límite público",
+      "rateValue": "5 / min",
+      "rateNote": "Un guardia de abuso, no una cuota. El sellado no se tope por día. Los sellos son gratis hoy.",
+      "seePricing": "Ver /pricing",
+      "resources": "Recursos",
+      "apiRef": "Referencia de la API (Swagger)",
+      "aiGuide": "Guía de integración de IA",
+      "nostr": "Identidad Nostr (NIP-05)",
+      "nostrTipTitle": "Identidad NIP-05",
+      "nostrTip": "Vincula tu nombre legible (como user@satohash.io) a una clave criptográfica, para que los firmantes se verifiquen sin confiar en una autoridad central.",
+      "security": "Seguridad y privacidad",
+      "ots": "Calendarios OTS",
+      "otsNote": "Calendarios públicos gratis — no hace falta API key.",
+      "webhooks": "Webhooks",
+      "webhooksBody": "Registra una URL y Satohash la llamará cuando tus sellos se confirmen, actualicen o revoquen.",
+      "events": "Eventos:",
+      "webhookDocs": "Docs de webhooks"
+    }
   },
   "widgetsPage": {
     "nav": "Proof DNA Widgets",
@@ -1921,5 +2106,200 @@
     "guide3Body": "OpenTimestamps → Bitcoin prueba cuándo existió un archivo. La consulta de identidad aquí es opcional y aparte.",
     "aside": "Conectar una extensión no activa una notarización de un clic ni una malla de reputación. Sella un archivo para una prueba de existencia anclada a Bitcoin.",
     "stampCta": "Sellar gratis"
+  },
+  "execSummaryPage": {
+    "eyebrow": "Gratis hoy · Bitcoin para siempre",
+    "h1": "Prueba que existió.",
+    "h1Highlight": "En menos de un minuto.",
+    "lede": "Satohash sella gratis la huella de tu archivo con OpenTimestamps en Bitcoin. El nivel base gratuito es el ancla de confianza permanente, nunca de pago. Los niveles premium opcionales (Professional ~2.100 sats/mes, Business ~21.000 sats/mes) y una API de pago por uso están construidos y en staging; se lanzan de pago solo cuando los raíles Lightning estén financiados y probados — la prueba se ancla a Bitcoin de cualquier modo.",
+    "stampCta": "Sellar un archivo gratis",
+    "verifyCta": "Verificar una prueba",
+    "mobileNote": "Hecho para móvil a una mano · listo para Pixel e iPhone",
+    "honesty": "Prueba cuándo existió un archivo — no quién lo hizo.",
+    "kpis": {
+      "cost": {
+        "k": "0 sats",
+        "v": "Coste para el usuario hoy"
+      },
+      "pending": {
+        "k": "< 60s",
+        "v": "Para una prueba pendiente"
+      },
+      "hash": {
+        "k": "SHA-256",
+        "v": "Hash solo local"
+      },
+      "chain": {
+        "k": "BTC",
+        "v": "Cadena de registro"
+      }
+    },
+    "briefKicker": "Para dirección · asesoría · cumplimiento",
+    "briefTitle": "Resumen",
+    "briefTitleHighlight": "ejecutivo",
+    "briefFooter": "Resumen confidencial de producto · Satohash by Give A Bit · No es asesoramiento legal",
+    "brief": {
+      "what": {
+        "label": "01 — Qué hacemos",
+        "title": "Qué hacemos",
+        "p1": "Satohash ofrece prueba de existencia independiente y criptográfica para cualquier archivo digital—contratos, fotografías, código fuente, salidas de modelos de IA, capturas web o paquetes de auditoría. No almacenamos ni revisamos el contenido subyacente. En su lugar, permitimos a organizaciones y personas vincular una huella matemática de ese contenido a la cadena Bitcoin mediante el protocolo abierto OpenTimestamps, produciendo una prueba portátil que terceros pueden verificar sin confiar en Satohash como custodio de la verdad.",
+        "p2": "En la práctica: cuando un documento, un paquete de entrega o un artefacto digital debe resistir más tarde el escrutinio—de contrapartes, reguladores, tribunales o auditoría interna—Satohash aporta un registro duradero y no repudiable de que el artefacto existió en una forma concreta en un momento concreto. El servicio está pensado para el uso cotidiano en el borde del trabajo (legal, creativo, de investigación y operativo), no como una novedad puntual."
+      },
+      "how": {
+        "label": "02 — Cómo funciona",
+        "title": "Cómo funciona",
+        "p1": "El proceso es deliberadamente simple y respeta la privacidad. Primero, el navegador del usuario (o un cliente aprobado) calcula un hash SHA-256 del archivo con criptografía web estándar; los bytes originales no tienen que salir del dispositivo. Segundo, solo ese hash de 64 caracteres se envía a calendarios OpenTimestamps, que agregan muchos hashes en un árbol de Merkle y comprometen periódicamente la raíz en una transacción Bitcoin. Tercero, cuando un bloque Bitcoin confirma ese compromiso — normalmente unos 60 minutos — la prueba .ots resultante se puede descargar, archivar y verificar de forma independiente con herramientas de código abierto y datos públicos de la cadena.",
+        "p2": "Hoy el sellado se ofrece sin cargo para el usuario. El modelo económico de las comisiones de red Bitcoin se absorbe en la capa de calendarios y protocolo mediante el agrupamiento; el coste de producto de Satohash es hosting y operaciones. Cuando se introduzcan niveles comerciales, se espera el asentamiento vía Lightning hacia Satohash—no un cambio de libro. La prueba sigue anclada a Bitcoin de cualquier modo."
+      },
+      "truth": {
+        "label": "03 — Verdad",
+        "title": "Por qué importa para la verdad",
+        "p1": "En un entorno de medios generativos, deepfakes, correos disputados y “fuentes de registro” reescritas, la pregunta más dura suele no ser qué afirma alguien, sino cuándo existió por primera vez un estado digital concreto y si se ha alterado desde entonces. La confianza institucional—declaraciones de marca, capturas de pantalla y “nuestro sistema lo dice”—es cada vez menos suficiente en contextos adversarios. El sellado criptográfico de tiempo no decide culpabilidad o inocencia; restaura una base compartida y comprobable por máquina de verdad temporal: esta huella exacta se comprometió a un libro público, caro de reescribir, en esta altura de bloque.",
+        "p2": "Esa base es esencial para la libre expresión, el periodismo, la prioridad de propiedad intelectual y el proceso civil. Sin ella, la historia es negociable. Con ella, las partes pueden discrepar sobre el significado—pero no sobre si los bytes estuvieron presentes en el pasado. Satohash existe para que esa propiedad de Bitcoin esté al alcance de no especialistas como instrumento cotidiano de integridad. Prueba el cuándo, no el quién."
+      },
+      "enterprises": {
+        "label": "04 — Empresas",
+        "title": "Para compañías y métricas institucionales",
+        "p1": "Las empresas adoptan Satohash donde las pistas de auditoría, las disputas con proveedores, los exámenes regulatorios y los flujos multipartita exigen evidencia portable fuera de cualquier silo SaaS. Los patrones típicos incluyen sellar acuerdos firmados y materiales de consejo en la firma; cerrar versiones de software y capturas de configuración para control de cambios; anclar exportaciones de investigación y comunicaciones con clientes; e instrumentar APIs para que los sistemas automáticos emitan pruebas como artefactos de primer orden. Como la verificación no exige acceso continuo a la infraestructura de Satohash, la organización conserva resiliencia si cambian los proveedores—o si Satohash no está disponible.",
+        "p2": "Desde las métricas, la dirección puede tratar la cobertura de pruebas como un KPI operativo: porcentaje de documentos de alto riesgo sellados dentro del SLA; tiempo mediano desde la finalización del documento hasta el ancla Bitcoin confirmada; cuota de disputas cerradas con un paquete .ots verificable; y atribución de volumen de sellos por unidad de negocio o sistema cliente. Estos indicadores alinean la preparación legal con la práctica de ingeniería—de “guardamos registros” a “podemos probar, de forma independiente, qué existió cuándo”. Los gráficos de esta página son ilustraciones, no métricas de facturación en vivo."
+      }
+    },
+    "habitTitle": "Haz de la prueba un",
+    "habitTitleHighlight": "hábito diario",
+    "habitLede": "Cada contrato, borrador, foto, exportación de IA o captura puede sellarse antes de que la confianza se convierta en un problema.",
+    "reasons": {
+      "seconds": {
+        "title": "Segundos, no semanas",
+        "body": "Sella contratos, capturas y salidas de IA antes de que empiece la discusión."
+      },
+      "private": {
+        "title": "Privado por diseño",
+        "body": "Hash de conocimiento cero. Nunca necesitamos el documento — solo la huella. El archivo no sale del dispositivo."
+      },
+      "verify": {
+        "title": "Pruebas verificables de forma independiente",
+        "body": "OpenTimestamps + Bitcoin PoW es matemática independiente, no una promesa de empresa."
+      },
+      "offline": {
+        "title": "Funciona offline-first",
+        "body": "Hashea en cualquier sitio. Sincroniza al volver a estar en línea. Portable para siempre."
+      }
+    },
+    "chartsTitle": "Dónde más",
+    "chartsTitleHighlight": "importa la prueba",
+    "chartsLede": "Mezcla ilustrativa de demanda y tiempo-hasta-prueba frente a vías tradicionales (historia de producto ilustrativa — no métricas de facturación en vivo).",
+    "useCases": {
+      "creators": "Creadores e IP",
+      "legal": "Legal / Tribunales",
+      "journalism": "Periodismo",
+      "enterprise": "Auditoría empresarial",
+      "ai": "Procedencia de IA"
+    },
+    "friction": {
+      "paper": "Notario en papel",
+      "legal": "Presentación legal",
+      "email": "“Prueba” por email",
+      "satohash": "Satohash"
+    },
+    "days": {
+      "mon": "Lun",
+      "tue": "Mar",
+      "wed": "Mié",
+      "thu": "Jue",
+      "fri": "Vie",
+      "sat": "Sáb",
+      "sun": "Dom"
+    },
+    "charts": {
+      "pieTitle": "Mezcla de casos de uso",
+      "pieSub": "Quién sella, y por qué — ilustración",
+      "barTitle": "Tiempo hasta una prueba usable",
+      "barSub": "Días (vista logarítmica — Satohash son segundos). Ilustración, no KPI en vivo.",
+      "areaTitle": "Ritmo semanal de sellos (ilustrativo)",
+      "areaSub": "Cómo se ve el “hábito de prueba” de un equipo cuando cada entrega se sella",
+      "daysUnit": " días"
+    },
+    "howTitle": "Cómo el sellado gratis",
+    "howTitleHighlight": "funciona de verdad",
+    "stepLabel": "Paso 0{{n}}",
+    "steps": {
+      "hash": {
+        "title": "Hashea en el teléfono",
+        "body": "SHA-256 corre en el navegador. Tu archivo no sale del dispositivo."
+      },
+      "stamp": {
+        "title": "Sella gratis",
+        "body": "Solo la huella va a los calendarios OpenTimestamps. Hoy no hace falta monedero."
+      },
+      "bitcoin": {
+        "title": "Bitcoin lo sella",
+        "body": "Los calendarios agrupan muchas pruebas en un compromiso Bitcoin. La confirmación suele tardar unos 60 minutos. Permanente."
+      },
+      "verify": {
+        "title": "Verifica en cualquier sitio",
+        "body": "Comparte una prueba .ots. Cualquiera puede comprobarla sin confiar en Satohash."
+      }
+    },
+    "planesTitle": "Cuatro planos ·",
+    "planesTitleHighlight": "una base Bitcoin",
+    "planesLede": "Los planos superiores pueden evolucionar. Las pruebas del plano 1 siguen válidas para siempre.",
+    "planes": {
+      "atlas": {
+        "name": "Atlas",
+        "desc": "Intel de cadena en vivo, mempool, salud de red"
+      },
+      "settlement": {
+        "name": "Settlement",
+        "desc": "Lightning / L402 cuando se active el paywall"
+      },
+      "identity": {
+        "name": "Identity",
+        "desc": "Firmantes Nostr, procedencia multipartita"
+      },
+      "proof": {
+        "name": "Proof",
+        "desc": "SHA-256 + OpenTimestamps → Bitcoin PoW"
+      }
+    },
+    "pricingTitle": "Claridad de",
+    "pricingTitleHighlight": "precios",
+    "pricingLede": "Nivel gratuito en vivo ahora. Las futuras comisiones Lightning nos pagan a nosotros — no a otra cadena.",
+    "tiers": {
+      "free": {
+        "name": "Gratis",
+        "price": "0 sats",
+        "tag": "En vivo ahora",
+        "p1": "OTS en Bitcoin",
+        "p2": "Hash local",
+        "p3": "Verifica para siempre",
+        "p4": "Sin cuenta",
+        "p5": "Nunca de pago"
+      },
+      "pro": {
+        "name": "Professional",
+        "price": "~2.100 sats",
+        "tag": "Construido, en staging",
+        "p1": "~29 $/mes",
+        "p2": "Sellado ilimitado",
+        "p3": "Bóveda completa",
+        "p4": "API + exportaciones PDF"
+      },
+      "biz": {
+        "name": "Business / Studio",
+        "price": "~21.000 sats",
+        "tag": "Construido, en staging",
+        "p1": "~299 $/mes",
+        "p2": "Equipos y estudios",
+        "p3": "Marca blanca",
+        "p4": "SLA + volumen"
+      }
+    },
+    "ctaTitle": "Tu próximo archivo merece un",
+    "ctaTitleHighlight": "recibo Bitcoin",
+    "ctaBody": "Sin cuenta. Sin tarjeta. Hashea en local, sella gratis, verifica de por vida.",
+    "ctaStamp": "Empieza gratis ahora",
+    "ctaPricing": "Precios",
+    "ctaDocs": "Toda la docs",
+    "ctaCompare": "Comparar"
   }
 }

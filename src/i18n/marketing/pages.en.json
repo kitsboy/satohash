@@ -565,8 +565,193 @@
   },
   "developerPage": {
     "cliTitle": "Stamp from the terminal",
-    "cliHint": "The file never leaves the machine; only SHA-256 hex is POSTed. Proof card prints",
-    "cliSource": "CLI source on GitHub"
+    "cliHint": "The file never leaves the machine; only SHA-256 hex is POSTed. Always sends X-Satohash-Client: cli. Proof card prints",
+    "cliSource": "CLI source on GitHub",
+    "cliPath": "Terminal path",
+    "cliDefaultApi": "Default API (already set in the real CLI):",
+    "copyAria": "Copy {{cmd}}",
+    "localCalls": "Local API calls: {{count}}",
+    "localStamps": "Stamps this browser: {{count}}",
+    "chip": "Developer API — {{host}}",
+    "simulated": "Simulated",
+    "title": "Build with",
+    "titleBrand": "Satohash.",
+    "lede": "Stamp any document, file, or data to Bitcoin in one API call. The file never leaves the device — only SHA-256 hex is POSTed. No blockchain knowledge required.",
+    "tabs": {
+      "overview": "Overview",
+      "auth": "Auth",
+      "docs": "Docs",
+      "strategy": "Strategy"
+    },
+    "quick": {
+      "hash": {
+        "title": "Hash your file",
+        "desc": "SHA-256 runs in your browser. The file never leaves your device."
+      },
+      "post": {
+        "title": "POST the hash",
+        "desc": "Send the 64-char fingerprint to /api/stamp. No account needed. Stamps are free today."
+      },
+      "confirm": {
+        "title": "Bitcoin confirms",
+        "desc": "Confirmation waits for a Bitcoin block — typically about an hour (the next block). Download your .ots file."
+      }
+    },
+    "stats": {
+      "rateLabel": "Public rate limit",
+      "rateValue": "5/min",
+      "rateSub": "No daily quota",
+      "availLabel": "Availability",
+      "availValue": "High availability",
+      "availSub": "3 OTS calendars pinged live",
+      "batchLabel": "Batch stamping",
+      "batchValue": "Up to 100",
+      "batchSub": "Files per batch"
+    },
+    "howTitle": "How your stamp reaches Bitcoin",
+    "steps": {
+      "hash": {
+        "title": "You hash your file",
+        "desc": "SHA-256 runs in your browser. The file never leaves your device."
+      },
+      "send": {
+        "title": "Hash sent to Satohash",
+        "desc": "Only the 64-character fingerprint is transmitted — not your document."
+      },
+      "bundle": {
+        "title": "Bundled with other hashes",
+        "desc": "Satohash groups many hashes together into a Merkle tree to save space."
+      },
+      "commit": {
+        "title": "Committed to Bitcoin",
+        "desc": "The Merkle root is written into a Bitcoin transaction via OpenTimestamps calendars."
+      },
+      "proof": {
+        "title": "Permanent proof",
+        "desc": "Once confirmed on the next Bitcoin block (typically about an hour), your .ots file proves your document existed at that block time — forever."
+      }
+    },
+    "tryIt": "Try it",
+    "auth": {
+      "title": "Authentication",
+      "tooltipTitle": "Do I need an API key?",
+      "tooltipBody": "No. Stamping is open today — send a SHA-256 hash and get a proof back. Keys only exist for suite apps we hand out ourselves. You never have to create or store one.",
+      "badge": "No key required",
+      "noKeyTitle": "No key needed today",
+      "noKeyBody": "Send POST /api/stamp with {\"hash\":\"<64-char sha256>\"} and you get a proof ID back. Open to everyone, rate-limited — no account, no signup, no key. Stamps are free today.",
+      "suiteTitle": "Suite apps (internal)",
+      "suiteBody": "Give A Bit family apps send X-Satohash-Key — a key we provision server-side. It is not self-serve: ask at hello@giveabit.io and we issue one by hand.",
+      "paidTitle": "Paid mode is staged",
+      "paidBody": "Not live. When the paywall is on, the API answers HTTP 402 with a Lightning invoice. Pay per call, then retry with Authorization: L402 <token>. Still no account and no KYC. Today stamps are free and Lightning billing is off.",
+      "tryNow": "Try it right now — {{host}}",
+      "removed": "Self-serve API keys are not available. This page previously offered a key manager that called an endpoint which never existed, and minted keys that no server ever checked — so it was removed rather than faked. Stamping does not need a key: send a hash, get a proof. Stamps are free today."
+    },
+    "docs": {
+      "aiTitle": "Connect AI & automation",
+      "aiLede": "Satohash works with any tool that can make an HTTP request. No special SDK needed.",
+      "ai": {
+        "chatgpt": {
+          "title": "ChatGPT / GPT-4",
+          "desc": "Use a Custom GPT Action to stamp documents directly from a ChatGPT conversation."
+        },
+        "claude": {
+          "title": "Claude (Anthropic)",
+          "desc": "Add Satohash as a tool in your Claude system prompt. Claude can hash and stamp files on request."
+        },
+        "zapier": {
+          "title": "Zapier / Make",
+          "desc": "No code needed. Use the Webhook action to call /api/stamp whenever a file is created or signed."
+        },
+        "n8n": {
+          "title": "n8n",
+          "desc": "Drop an HTTP Request node into any workflow. Hash with the Code node, stamp with HTTP."
+        }
+      },
+      "apiRef": "API reference",
+      "apiRefBody": "Full interactive docs via Swagger UI. REST API with JSON bodies.",
+      "webhooks": "Webhooks",
+      "webhooksTip": "A URL on your server that Satohash calls when a stamp is confirmed or revoked. No polling needed.",
+      "rateLimits": "Rate limits",
+      "rateLimitsTip": "No daily quota. The public path is rate-limited to 5 requests per minute to keep the service healthy. No Lightning wallet needed. Stamps are free today.",
+      "bearer": "Bearer token",
+      "bearerTip": "Suite apps we provision may send X-Satohash-Key. Self-serve Bearer keys are not available. Keep any key we issue secret.",
+      "openSwagger": "Open Swagger UI →",
+      "endpoints": {
+        "stamp": "Submit a SHA-256 hash. Returns a stamp ID and .ots proof file.",
+        "verify": "Verify a .ots proof file. Returns verified: true/false and the Bitcoin block height.",
+        "history": "List your last 50 stamps.",
+        "stamps": "Get stamp details or download the raw .ots binary.",
+        "upgrade": "Check if a pending stamp has been confirmed on Bitcoin.",
+        "fees": "Live Bitcoin fee estimates from mempool.space."
+      }
+    },
+    "strategy": {
+      "title": "Simple, honest",
+      "titleHighlight": "pricing.",
+      "lede": "Stamps are free today — no daily quota, no credit card, no Lightning invoice. The only limit is a 5-requests-per-minute guard. Paid API credits, Pro, and Lightning billing are built and staged; they are not live. See /pricing for the honest sketch.",
+      "stagedBadge": "Staged",
+      "seePricing": "See /pricing",
+      "contactCta": "Contact",
+      "free": {
+        "name": "Free",
+        "price": "$0",
+        "unit": "live now",
+        "features": [
+          "No daily quota",
+          "OTS Bitcoin proof",
+          ".ots file download",
+          "Community support"
+        ]
+      },
+      "pro": {
+        "name": "Pro",
+        "price": "Staged",
+        "unit": "not live",
+        "features": [
+          "Not billed today",
+          "Paywall is off",
+          "Webhooks when paid launches",
+          "See /pricing"
+        ]
+      },
+      "enterprise": {
+        "name": "Enterprise",
+        "price": "Contact",
+        "unit": "partner-gated",
+        "features": [
+          "Not a live paid API",
+          "Partner-gated",
+          "Ask hello@giveabit.io",
+          "See /pricing"
+        ]
+      },
+      "creditsTitle": "What are API credits?",
+      "creditsBody": "API credits are a staged prepaid idea for later paid stamps — not live. Each stamp is free today. Lightning / L402 billing is built but off until rails are funded.",
+      "creditsStrong": "You do not need a Lightning wallet to use Satohash."
+    },
+    "sidebar": {
+      "credits": "API credits",
+      "creditsTip": "Each stamp is free today. Credits and Lightning top-ups are staged, not live. The free path has no daily quota — no payment needed.",
+      "noQuota": "No daily quota",
+      "guard": "5 requests / min abuse guard · no credit card",
+      "rateLabel": "Public rate limit",
+      "rateValue": "5 / min",
+      "rateNote": "An abuse guard, not a quota. Stamping is never capped by the day. Stamps are free today.",
+      "seePricing": "See /pricing",
+      "resources": "Resources",
+      "apiRef": "API reference (Swagger)",
+      "aiGuide": "AI integration guide",
+      "nostr": "Nostr identity (NIP-05)",
+      "nostrTipTitle": "NIP-05 identity",
+      "nostrTip": "Links your human-readable name (like user@satohash.io) to a cryptographic key, so signers can be verified without trusting a central authority.",
+      "security": "Security & privacy",
+      "ots": "OTS calendars",
+      "otsNote": "Free public calendars — no API key required.",
+      "webhooks": "Webhooks",
+      "webhooksBody": "Register a URL and Satohash will call it automatically when your stamps are confirmed, upgraded, or revoked.",
+      "events": "Events:",
+      "webhookDocs": "Webhook docs"
+    }
   },
   "widgetsPage": {
     "nav": "Proof DNA Widgets",
@@ -1921,5 +2106,200 @@
     "guide3Body": "OpenTimestamps → Bitcoin proves when a file existed. Identity lookup here is optional and separate.",
     "aside": "Connecting an extension does not enable one-click notarization or a reputation mesh. Stamp a file for a Bitcoin-anchored proof of existence.",
     "stampCta": "Stamp free"
+  },
+  "execSummaryPage": {
+    "eyebrow": "Free today · Bitcoin forever",
+    "h1": "Prove it existed.",
+    "h1Highlight": "In under a minute.",
+    "lede": "Satohash free-timestamps a fingerprint of your file using OpenTimestamps on Bitcoin. The free base tier is the permanent, never-paywalled trust anchor. Optional premium tiers (Professional ~2,100 sats/mo, Business ~21,000 sats/mo) and a pay-per-use API are built and staged; they launch paid only once the Lightning rails are funded and tested — the proof still anchors to Bitcoin either way.",
+    "stampCta": "Stamp a file free",
+    "verifyCta": "Verify a proof",
+    "mobileNote": "Built for one-hand mobile · Pixel & iPhone ready",
+    "honesty": "Proves when a file existed — not who made it.",
+    "kpis": {
+      "cost": {
+        "k": "0 sats",
+        "v": "User cost today"
+      },
+      "pending": {
+        "k": "< 60s",
+        "v": "To get a pending proof"
+      },
+      "hash": {
+        "k": "SHA-256",
+        "v": "Local hash only"
+      },
+      "chain": {
+        "k": "BTC",
+        "v": "Chain of record"
+      }
+    },
+    "briefKicker": "For leadership · counsel · compliance",
+    "briefTitle": "Executive",
+    "briefTitleHighlight": "brief",
+    "briefFooter": "Confidential product overview · Satohash by Give A Bit · Not legal advice",
+    "brief": {
+      "what": {
+        "label": "01 — What we do",
+        "title": "What we do",
+        "p1": "Satohash provides independent, cryptographic proof of existence for any digital file—contracts, photographs, source code, AI model outputs, web captures, or audit packages. We do not store or review the underlying content. Instead, we enable organizations and individuals to bind a mathematical fingerprint of that content to the Bitcoin blockchain via the open OpenTimestamps protocol, producing a portable proof that third parties can verify without trusting Satohash as a custodian of truth.",
+        "p2": "In practical terms: when a document, delivery package, or digital artifact must later withstand scrutiny—from counterparties, regulators, courts, or internal audit—Satohash supplies a durable, non-repudiable record that the artifact existed in a specific form at a specific time. The service is designed for everyday use at the edge of work (legal, creative, investigative, and operational), not as a one-off novelty."
+      },
+      "how": {
+        "label": "02 — How it works",
+        "title": "How it works",
+        "p1": "The process is deliberately simple and privacy-preserving. First, the user’s browser (or approved client) computes a SHA-256 hash of the file using standard web cryptography; the original bytes need never leave the device. Second, only that 64-character hash is submitted to OpenTimestamps calendars, which aggregate many hashes into a Merkle tree and periodically commit the root into a Bitcoin transaction. Third, once a Bitcoin block confirms that commitment — typically about 60 minutes — the resulting .ots proof can be downloaded, archived, and independently verified with open-source tools and public chain data.",
+        "p2": "Today, stamping is offered at no charge to the user. The economic model for Bitcoin network fees is absorbed at the calendar and protocol layer through batching; Satohash’s product cost is hosting and operations. When commercial tiers are introduced, settlement is expected via Lightning to Satohash—not a change of ledger. The proof remains anchored to Bitcoin either way."
+      },
+      "truth": {
+        "label": "03 — Truth",
+        "title": "Why this matters for truth",
+        "p1": "In an environment of generative media, deepfakes, disputed emails, and rewritten “sources of record,” the hardest question is often not what someone claims, but when a specific digital state first existed and whether it has been altered since. Institutional trust—brand statements, screenshots, and “our system says so”—is increasingly insufficient for adversarial settings. Cryptographic timestamping does not decide guilt or innocence; it restores a shared, machine-checkable baseline of temporal truth: this exact fingerprint was committed to a public, high-cost-to-rewrite ledger at this block height.",
+        "p2": "That baseline is essential for free expression, journalism, intellectual property priority, and civil process. Without it, history is negotiable. With it, parties may still disagree on meaning—but not on whether the bytes were present in the past. Satohash exists to make that property of Bitcoin available to non-specialists as a daily instrument of integrity. It proves when, not who."
+      },
+      "enterprises": {
+        "label": "04 — Enterprises",
+        "title": "For companies and institutional metrics",
+        "p1": "Enterprises adopt Satohash where audit trails, vendor disputes, regulatory examinations, and multi-party workflows demand evidence that is portable outside any single SaaS silo. Typical patterns include stamping executed agreements and board materials at signature; sealing software releases and configuration snapshots for change-control; anchoring investigative exports and customer communications; and instrumenting APIs so automated systems emit proofs as first-class artifacts. Because verification does not require ongoing access to Satohash infrastructure, the organization retains resilience if vendors change—or if Satohash itself is unavailable.",
+        "p2": "From a metrics perspective, leadership can treat proof coverage as an operational KPI: percentage of high-risk documents stamped within SLA; median time from document finalization to confirmed Bitcoin anchor; share of disputes closed with a verifiable .ots package; and family-product attribution of stamp volume by business unit or client system. These indicators align legal readiness with engineering practice—turning “we keep records” into “we can prove, independently, what existed when.” Charts on this page are illustrations, not live billing metrics."
+      }
+    },
+    "habitTitle": "Make proof a",
+    "habitTitleHighlight": "daily habit",
+    "habitLede": "Every contract, draft, photo, AI export, or screenshot can be sealed before trust becomes a problem.",
+    "reasons": {
+      "seconds": {
+        "title": "Seconds, not weeks",
+        "body": "Stamp contracts, screenshots, and AI outputs before the argument starts."
+      },
+      "private": {
+        "title": "Private by design",
+        "body": "Zero-knowledge hashing. We never need the document — only the fingerprint. The file never leaves the device."
+      },
+      "verify": {
+        "title": "Independently verifiable proofs",
+        "body": "OpenTimestamps + Bitcoin PoW is independent math, not a company promise."
+      },
+      "offline": {
+        "title": "Works offline-first",
+        "body": "Hash anywhere. Sync when you’re back online. Portable forever."
+      }
+    },
+    "chartsTitle": "Where proof",
+    "chartsTitleHighlight": "matters most",
+    "chartsLede": "Illustrative demand mix and time-to-proof vs traditional paths (illustrative product story — not live billing metrics).",
+    "useCases": {
+      "creators": "Creators & IP",
+      "legal": "Legal / Courts",
+      "journalism": "Journalism",
+      "enterprise": "Enterprise audit",
+      "ai": "AI provenance"
+    },
+    "friction": {
+      "paper": "Paper notary",
+      "legal": "Legal filing",
+      "email": "Email “proof”",
+      "satohash": "Satohash"
+    },
+    "days": {
+      "mon": "Mon",
+      "tue": "Tue",
+      "wed": "Wed",
+      "thu": "Thu",
+      "fri": "Fri",
+      "sat": "Sat",
+      "sun": "Sun"
+    },
+    "charts": {
+      "pieTitle": "Use-case mix",
+      "pieSub": "Who stamps, and why — illustration",
+      "barTitle": "Time to usable proof",
+      "barSub": "Days (log-friendly view — Satohash is seconds). Illustration, not live KPIs.",
+      "areaTitle": "Weekly stamp rhythm (illustrative)",
+      "areaSub": "What a team’s “proof habit” looks like when every delivery is sealed",
+      "daysUnit": " days"
+    },
+    "howTitle": "How free stamping",
+    "howTitleHighlight": "actually works",
+    "stepLabel": "Step 0{{n}}",
+    "steps": {
+      "hash": {
+        "title": "Hash on your phone",
+        "body": "SHA-256 runs in the browser. Your file never leaves the device."
+      },
+      "stamp": {
+        "title": "Stamp for free",
+        "body": "Only the fingerprint goes to OpenTimestamps calendars. No wallet needed today."
+      },
+      "bitcoin": {
+        "title": "Bitcoin seals it",
+        "body": "Calendars batch many proofs into one Bitcoin commitment. Confirmation is typically about 60 minutes. Permanent."
+      },
+      "verify": {
+        "title": "Verify anywhere",
+        "body": "Share a .ots proof. Anyone can check it without trusting Satohash."
+      }
+    },
+    "planesTitle": "Four planes ·",
+    "planesTitleHighlight": "one Bitcoin base",
+    "planesLede": "Higher planes can evolve. Plane 1 proofs stay valid forever.",
+    "planes": {
+      "atlas": {
+        "name": "Atlas",
+        "desc": "Live chain intel, mempool, network health"
+      },
+      "settlement": {
+        "name": "Settlement",
+        "desc": "Lightning / L402 when paywall flips on"
+      },
+      "identity": {
+        "name": "Identity",
+        "desc": "Nostr signers, multi-party provenance"
+      },
+      "proof": {
+        "name": "Proof",
+        "desc": "SHA-256 + OpenTimestamps → Bitcoin PoW"
+      }
+    },
+    "pricingTitle": "Pricing",
+    "pricingTitleHighlight": "clarity",
+    "pricingLede": "Live free tier now. Future Lightning fees pay us — not a different chain.",
+    "tiers": {
+      "free": {
+        "name": "Free",
+        "price": "0 sats",
+        "tag": "Live now",
+        "p1": "OTS on Bitcoin",
+        "p2": "Local hash",
+        "p3": "Verify forever",
+        "p4": "No account",
+        "p5": "Never paywalled"
+      },
+      "pro": {
+        "name": "Professional",
+        "price": "~2,100 sats",
+        "tag": "Built, staged",
+        "p1": "~$29/mo",
+        "p2": "Unlimited stamping",
+        "p3": "Full vault",
+        "p4": "API + PDF exports"
+      },
+      "biz": {
+        "name": "Business / Studio",
+        "price": "~21,000 sats",
+        "tag": "Built, staged",
+        "p1": "~$299/mo",
+        "p2": "Teams & studios",
+        "p3": "White-label",
+        "p4": "SLA + volume"
+      }
+    },
+    "ctaTitle": "Your next file deserves a",
+    "ctaTitleHighlight": "Bitcoin receipt",
+    "ctaBody": "No account. No card. Hash locally, stamp free, verify for life.",
+    "ctaStamp": "Start free now",
+    "ctaPricing": "Pricing",
+    "ctaDocs": "All docs",
+    "ctaCompare": "Compare"
   }
 }

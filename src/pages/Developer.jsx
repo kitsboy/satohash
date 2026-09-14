@@ -12,7 +12,6 @@ import {
   Cpu,
   Globe,
   Database,
-  Smartphone,
   Building2,
   Copy,
   CheckCircle2,
@@ -32,6 +31,8 @@ import { isApiExplicitlyConfigured } from '../config/mvp'
 import Footer from '../components/layout/Footer'
 
 const API_URL = getApiUrl()
+const API_HOST = API_URL.replace(/^https?:\/\//, '')
+const PROOF_CARD_URL = 'https://satohash.io/p/<hash>'
 
 const CODE_EXAMPLES = {
   curl: `# Step 1: hash your file locally (nothing leaves your machine)
@@ -83,64 +84,73 @@ const CLI_COMMANDS = [
 ]
 const CLI_API_ENV = 'SATOHASH_API_URL=https://api.satohash.io'
 
+const TABS = ['overview', 'auth', 'docs', 'strategy']
+
+const QUICK_STEPS = [
+  { n: '1', icon: '🔒', key: 'hash' },
+  { n: '2', icon: '📡', key: 'post' },
+  { n: '3', icon: '⛓️', key: 'confirm' }
+]
+
 const BITCOIN_STEPS = [
-  {
-    emoji: '📄',
-    title: 'You hash your file',
-    desc: 'SHA-256 runs in your browser. The file never leaves your device.'
-  },
-  {
-    emoji: '📡',
-    title: 'Hash sent to Satohash',
-    desc: 'Only the 64-character fingerprint is transmitted — not your document.'
-  },
-  {
-    emoji: '🔗',
-    title: 'Bundled with other hashes',
-    desc: 'Satohash groups many hashes together into a Merkle tree to save space.'
-  },
-  {
-    emoji: '⛓️',
-    title: 'Committed to Bitcoin',
-    desc: 'The Merkle root is written into a Bitcoin transaction via OpenTimestamps calendars.'
-  },
-  {
-    emoji: '✅',
-    title: 'Permanent proof',
-    desc: 'Once confirmed (1–2 hours), your .ots file proves your document existed at that block time — forever.'
-  }
+  { emoji: '📄', key: 'hash' },
+  { emoji: '📡', key: 'send' },
+  { emoji: '🔗', key: 'bundle' },
+  { emoji: '⛓️', key: 'commit' },
+  { emoji: '✅', key: 'proof' }
 ]
 
 const AI_INTEGRATIONS = [
   {
     icon: Bot,
-    title: 'ChatGPT / GPT-4',
-    desc: 'Use a Custom GPT Action to stamp documents directly from a ChatGPT conversation.',
+    key: 'chatgpt',
     code: 'POST /api/stamp with {"hash":"..."}',
     color: 'var(--accent-success)'
   },
   {
     icon: Bot,
-    title: 'Claude (Anthropic)',
-    desc: 'Add Satohash as a tool in your Claude system prompt. Claude can hash and stamp files on request.',
+    key: 'claude',
     code: 'Tool: satohash_stamp(hash: string)',
     color: 'var(--accent-purple)'
   },
   {
     icon: Workflow,
-    title: 'Zapier / Make',
-    desc: 'No code needed. Use the Webhook action to call /api/stamp whenever a file is created or signed.',
+    key: 'zapier',
     code: 'Webhook → POST /api/stamp',
     color: 'var(--accent-pending)'
   },
   {
     icon: Workflow,
-    title: 'n8n',
-    desc: 'Drop an HTTP Request node into any workflow. Hash with the Code node, stamp with HTTP.',
+    key: 'n8n',
     code: 'HTTP Request → /api/stamp',
     color: 'var(--accent-active)'
   }
 ]
+
+const ENDPOINTS = [
+  { method: 'POST', path: '/api/stamp', key: 'stamp' },
+  { method: 'POST', path: '/api/verify', key: 'verify' },
+  { method: 'GET', path: '/api/history', key: 'history' },
+  { method: 'GET', path: '/api/stamps/:id', key: 'stamps' },
+  { method: 'POST', path: '/api/upgrade', key: 'upgrade' },
+  { method: 'GET', path: '/api/system/fees', key: 'fees' }
+]
+
+const DOC_CHIPS = [
+  { labelKey: 'webhooks', tipKey: 'webhooksTip' },
+  { labelKey: 'rateLimits', tipKey: 'rateLimitsTip' },
+  { labelKey: 'bearer', tipKey: 'bearerTip' }
+]
+
+const OTS_CALENDARS = [
+  'alice.btc.calendar.opentimestamps.org',
+  'bob.btc.calendar.opentimestamps.org',
+  'finney.calendar.eternitywall.com'
+]
+
+function asList(value) {
+  return Array.isArray(value) ? value : []
+}
 
 // ─── SUB-COMPONENTS ───────────────────────────────────────────────────────────
 
@@ -200,7 +210,10 @@ function StatCard({ icon: Icon, label, value, sub, color }) {
 
 function ResourceLink({ icon: Icon, label }) {
   return (
-    <button className="group flex w-full items-center justify-between rounded-xl p-4 transition-colors hover:bg-white/5">
+    <button
+      type="button"
+      className="group flex w-full items-center justify-between rounded-xl p-4 transition-colors hover:bg-white/5"
+    >
       <div className="flex items-center gap-4">
         <Icon
           size={16}
@@ -223,19 +236,19 @@ function ResourceLink({ icon: Icon, label }) {
   )
 }
 
-function PricingTier({ tier, price, unit, features, accent, recommended, onSelect }) {
+function PricingTier({ name, price, unit, features, accent, recommended, badge, cta, onSelect }) {
   return (
     <div
       className={`relative flex flex-col space-y-6 rounded-2xl border p-8 transition-all hover:shadow-2xl ${recommended ? 'border-[var(--accent-purple)] bg-[var(--accent-purple)]/5 sm:scale-105' : 'border-[var(--border)] bg-[var(--bg-secondary)]'}`}
     >
-      {recommended && (
+      {recommended && badge && (
         <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[var(--accent-purple)] px-4 py-1.5 text-[9px] font-black tracking-widest text-white uppercase">
-          Most Popular
+          {badge}
         </div>
       )}
       <div className="space-y-1">
         <h3 className="text-[10px] font-black tracking-widest uppercase" style={{ color: accent }}>
-          {tier} Tier
+          {name}
         </h3>
         <div className="flex items-baseline gap-2">
           <span
@@ -274,7 +287,7 @@ function PricingTier({ tier, price, unit, features, accent, recommended, onSelec
           color: 'white'
         }}
       >
-        {tier === 'Enterprise' ? 'Contact Sales' : 'Get Started'}
+        {cta}
       </button>
     </div>
   )
@@ -316,6 +329,11 @@ export default function Developer() {
     return () => clearInterval(interval)
   }, [])
 
+  const copyCmd = (cmd) => {
+    navigator.clipboard.writeText(cmd)
+    toast.success(t('common.copied'))
+  }
+
   return (
     <div
       className="min-h-screen pb-20"
@@ -326,8 +344,8 @@ export default function Developer() {
           className="flex flex-wrap gap-4 rounded-2xl border px-4 py-3 text-xs font-bold tracking-widest uppercase"
           style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
         >
-          <span>Local API calls: {apiUsage.calls ?? 0}</span>
-          <span>Stamps this browser: {apiUsage.stamps ?? 0}</span>
+          <span>{t('developerPage.localCalls', { count: apiUsage.calls ?? 0 })}</span>
+          <span>{t('developerPage.localStamps', { count: apiUsage.stamps ?? 0 })}</span>
         </div>
         {/* ── Header ── */}
         <header
@@ -347,7 +365,7 @@ export default function Developer() {
                 className="font-mono text-[10px] font-bold tracking-widest uppercase"
                 style={{ color: 'var(--accent-active)' }}
               >
-                Developer API — {API_URL.replace(/^https?:\/\//, '')}
+                {t('developerPage.chip', { host: API_HOST })}
                 {!isApiExplicitlyConfigured() && (
                   <span
                     className="ml-2 rounded-full px-2 py-0.5 text-[8px] font-black uppercase"
@@ -356,7 +374,7 @@ export default function Developer() {
                       color: 'var(--accent-pending)'
                     }}
                   >
-                    Simulated
+                    {t('developerPage.simulated')}
                   </span>
                 )}
               </span>
@@ -365,16 +383,17 @@ export default function Developer() {
               className="text-4xl font-black tracking-tight uppercase md:text-6xl"
               style={{ color: 'var(--text-primary)' }}
             >
-              Build with
+              {t('developerPage.title')}
               <br />
-              <span style={{ color: 'var(--text-secondary)' }}>Satohash.</span>
+              <span style={{ color: 'var(--text-secondary)' }}>
+                {t('developerPage.titleBrand')}
+              </span>
             </h1>
             <p
               className="max-w-xl text-base leading-relaxed"
               style={{ color: 'var(--text-secondary)' }}
             >
-              Stamp any document, file, or data to the Bitcoin blockchain in one API call. No
-              blockchain knowledge required — just send a hash, get a proof.
+              {t('developerPage.lede')}
             </p>
           </div>
           <div className="overflow-x-auto">
@@ -382,9 +401,10 @@ export default function Developer() {
               className="flex min-w-max rounded-2xl border p-1.5"
               style={{ borderColor: 'var(--border)', background: 'var(--bg-secondary)' }}
             >
-              {['overview', 'auth', 'docs', 'strategy'].map((tab) => (
+              {TABS.map((tab) => (
                 <button
                   key={tab}
+                  type="button"
                   onClick={() => setActiveTab(tab)}
                   className={`flex-shrink-0 rounded-xl px-5 py-2.5 text-[10px] font-black tracking-widest uppercase transition-all ${activeTab === tab ? 'border shadow-lg' : ''}`}
                   style={
@@ -397,7 +417,7 @@ export default function Developer() {
                       : { color: 'var(--text-secondary)' }
                   }
                 >
-                  {tab}
+                  {t(`developerPage.tabs.${tab}`)}
                 </button>
               ))}
             </div>
@@ -406,26 +426,7 @@ export default function Developer() {
 
         {/* ── Quick Start Banner ── */}
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-          {[
-            {
-              n: '1',
-              icon: '🔒',
-              title: 'Hash your file',
-              desc: 'SHA-256 runs in your browser. Your document never leaves your device.'
-            },
-            {
-              n: '2',
-              icon: '📡',
-              title: 'POST the hash',
-              desc: 'Send the 64-char fingerprint to /api/stamp. No account needed to start.'
-            },
-            {
-              n: '3',
-              icon: '⛓️',
-              title: 'Bitcoin confirms',
-              desc: 'Within 1–2 hours your proof is anchored to a Bitcoin block. Download your .ots file.'
-            }
-          ].map((step) => (
+          {QUICK_STEPS.map((step) => (
             <div
               key={step.n}
               className="flex items-start gap-4 rounded-2xl border p-5"
@@ -442,13 +443,13 @@ export default function Developer() {
               </div>
               <div>
                 <p className="text-sm font-black" style={{ color: 'var(--text-primary)' }}>
-                  {step.icon} {step.title}
+                  {step.icon} {t(`developerPage.quick.${step.key}.title`)}
                 </p>
                 <p
                   className="mt-1 text-xs leading-relaxed"
                   style={{ color: 'var(--text-secondary)' }}
                 >
-                  {step.desc}
+                  {t(`developerPage.quick.${step.key}.desc`)}
                 </p>
               </div>
             </div>
@@ -471,23 +472,23 @@ export default function Developer() {
                   <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
                     <StatCard
                       icon={Activity}
-                      label="Public Rate Limit"
-                      value="5/min"
-                      sub="No daily quota"
+                      label={t('developerPage.stats.rateLabel')}
+                      value={t('developerPage.stats.rateValue')}
+                      sub={t('developerPage.stats.rateSub')}
                       color="var(--accent-active)"
                     />
                     <StatCard
                       icon={ShieldCheck}
-                      label="Availability"
-                      value="High availability"
-                      sub="3 OTS calendars pinged live"
+                      label={t('developerPage.stats.availLabel')}
+                      value={t('developerPage.stats.availValue')}
+                      sub={t('developerPage.stats.availSub')}
                       color="var(--accent-success)"
                     />
                     <StatCard
                       icon={Zap}
-                      label="Batch Stamping"
-                      value="Up to 100"
-                      sub="Files per batch"
+                      label={t('developerPage.stats.batchLabel')}
+                      value={t('developerPage.stats.batchValue')}
+                      sub={t('developerPage.stats.batchSub')}
                       color="var(--accent-pending)"
                     />
                   </div>
@@ -500,13 +501,13 @@ export default function Developer() {
                         className="text-lg font-black tracking-tight uppercase"
                         style={{ color: 'var(--text-primary)' }}
                       >
-                        How your stamp reaches Bitcoin
+                        {t('developerPage.howTitle')}
                       </h2>
                     </div>
                     <div className="space-y-3">
-                      {BITCOIN_STEPS.map((s, i) => (
+                      {BITCOIN_STEPS.map((s) => (
                         <div
-                          key={i}
+                          key={s.key}
                           className="flex items-start gap-4 rounded-xl border p-4"
                           style={{
                             borderColor: 'var(--border)',
@@ -519,13 +520,13 @@ export default function Developer() {
                               className="text-sm font-black"
                               style={{ color: 'var(--text-primary)' }}
                             >
-                              {s.title}
+                              {t(`developerPage.steps.${s.key}.title`)}
                             </p>
                             <p
                               className="text-xs leading-relaxed"
                               style={{ color: 'var(--text-secondary)' }}
                             >
-                              {s.desc}
+                              {t(`developerPage.steps.${s.key}.desc`)}
                             </p>
                           </div>
                         </div>
@@ -540,7 +541,7 @@ export default function Developer() {
                         className="text-lg font-black tracking-tight uppercase"
                         style={{ color: 'var(--text-primary)' }}
                       >
-                        Try it
+                        {t('developerPage.tryIt')}
                       </h2>
                       <div
                         className="flex gap-1 rounded-xl border p-1"
@@ -549,6 +550,7 @@ export default function Developer() {
                         {Object.keys(CODE_EXAMPLES).map((lang) => (
                           <button
                             key={lang}
+                            type="button"
                             onClick={() => setCodeLang(lang)}
                             className="rounded-lg px-4 py-1.5 text-[9px] font-black tracking-widest uppercase transition-all"
                             style={
@@ -618,7 +620,7 @@ export default function Developer() {
                       className="text-[10px] font-bold tracking-[0.25em] uppercase"
                       style={{ color: 'var(--accent-gold)' }}
                     >
-                      Terminal path
+                      {t('developerPage.cliPath')}
                     </p>
                     <div className="flex items-center gap-3">
                       <Terminal size={18} style={{ color: 'var(--accent-gold)' }} />
@@ -638,7 +640,7 @@ export default function Developer() {
                         className="font-mono text-[11px]"
                         style={{ color: 'var(--text-primary)' }}
                       >
-                        https://satohash.io/p/&lt;hash&gt;
+                        {PROOF_CARD_URL}
                       </code>
                       .
                     </p>
@@ -646,7 +648,7 @@ export default function Developer() {
                       className="text-xs leading-relaxed"
                       style={{ color: 'var(--text-secondary)' }}
                     >
-                      Default API (already set in the real CLI):{' '}
+                      {t('developerPage.cliDefaultApi')}{' '}
                       <code
                         className="font-mono text-[11px]"
                         style={{ color: 'var(--text-primary)' }}
@@ -669,13 +671,10 @@ export default function Developer() {
                           </pre>
                           <button
                             type="button"
-                            onClick={() => {
-                              navigator.clipboard.writeText(cmd)
-                              toast.success('Copied')
-                            }}
+                            onClick={() => copyCmd(cmd)}
                             className="inline-flex min-h-[44px] min-w-[44px] shrink-0 items-center justify-center rounded-lg"
                             style={{ color: 'var(--text-secondary)' }}
-                            aria-label={`Copy ${cmd}`}
+                            aria-label={t('developerPage.copyAria', { cmd })}
                           >
                             <Copy size={16} />
                           </button>
@@ -708,10 +707,10 @@ export default function Developer() {
                       className="flex items-center text-2xl font-black tracking-tight uppercase"
                       style={{ color: 'var(--text-primary)' }}
                     >
-                      Authentication
+                      {t('developerPage.auth.title')}
                       <Tooltip
-                        title="Do I need an API key?"
-                        content="No. Stamping is open today — send a SHA-256 hash and get a proof back. Keys only exist for suite apps we hand out ourselves. You never have to create or store one."
+                        title={t('developerPage.auth.tooltipTitle')}
+                        content={t('developerPage.auth.tooltipBody')}
                       />
                     </h2>
                     <span
@@ -722,34 +721,30 @@ export default function Developer() {
                         background: 'color-mix(in srgb, var(--accent-success) 10%, transparent)'
                       }}
                     >
-                      No key required
+                      {t('developerPage.auth.badge')}
                     </span>
                   </div>
                   <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
                     <AuthCard
                       icon={Bitcoin}
-                      title="No key needed today"
+                      title={t('developerPage.auth.noKeyTitle')}
                       accent="var(--accent-success)"
                     >
-                      Send <code className="font-mono">POST /api/stamp</code> with{' '}
-                      <code className="font-mono">{'{"hash":"<64-char sha256>"}'}</code> and you get
-                      a proof ID back. Open to everyone, rate-limited — no account, no signup, no
-                      key.
+                      {t('developerPage.auth.noKeyBody')}
                     </AuthCard>
                     <AuthCard
                       icon={Building2}
-                      title="Suite apps (internal)"
+                      title={t('developerPage.auth.suiteTitle')}
                       accent="var(--accent-purple)"
                     >
-                      Give A Bit family apps send <code className="font-mono">X-Satohash-Key</code>{' '}
-                      — a key we provision server-side. It is not self-serve: ask at
-                      hello@giveabit.io and we issue one by hand.
+                      {t('developerPage.auth.suiteBody')}
                     </AuthCard>
-                    <AuthCard icon={Zap} title="If paid mode is on" accent="var(--accent-pending)">
-                      The API answers <code className="font-mono">HTTP 402</code> with a Lightning
-                      invoice. Pay per call, then retry with{' '}
-                      <code className="font-mono">Authorization: L402 &lt;token&gt;</code>. Still no
-                      account and no KYC — keys are never required.
+                    <AuthCard
+                      icon={Zap}
+                      title={t('developerPage.auth.paidTitle')}
+                      accent="var(--accent-pending)"
+                    >
+                      {t('developerPage.auth.paidBody')}
                     </AuthCard>
                   </div>
                   <div
@@ -760,7 +755,7 @@ export default function Developer() {
                       className="text-sm font-black tracking-widest uppercase"
                       style={{ color: 'var(--text-primary)' }}
                     >
-                      Try it right now — {API_URL.replace(/^https?:\/\//, '')}
+                      {t('developerPage.auth.tryNow', { host: API_HOST })}
                     </h3>
                     <pre
                       className="overflow-x-auto rounded-xl p-4 font-mono text-[11px] leading-relaxed"
@@ -772,10 +767,7 @@ export default function Developer() {
                     </pre>
                   </div>
                   <p className="text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                    Self-serve API keys are not available. This page previously offered a key
-                    manager that called an endpoint which never existed, and minted keys that no
-                    server ever checked — so it was removed rather than faked. Stamping does not
-                    need a key: send a hash, get a proof.
+                    {t('developerPage.auth.removed')}
                   </p>
                 </motion.div>
               )}
@@ -796,20 +788,19 @@ export default function Developer() {
                         className="text-lg font-black tracking-tight uppercase"
                         style={{ color: 'var(--text-primary)' }}
                       >
-                        Connect AI &amp; Automation
+                        {t('developerPage.docs.aiTitle')}
                       </h3>
                     </div>
                     <p
                       className="text-sm leading-relaxed"
                       style={{ color: 'var(--text-secondary)' }}
                     >
-                      Satohash works with any tool that can make an HTTP request. No special SDK
-                      needed.
+                      {t('developerPage.docs.aiLede')}
                     </p>
                     <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                       {AI_INTEGRATIONS.map((ai) => (
                         <div
-                          key={ai.title}
+                          key={ai.key}
                           className="rounded-xl border p-4"
                           style={{
                             borderColor: 'var(--border)',
@@ -822,14 +813,14 @@ export default function Developer() {
                               className="text-sm font-black"
                               style={{ color: 'var(--text-primary)' }}
                             >
-                              {ai.title}
+                              {t(`developerPage.docs.ai.${ai.key}.title`)}
                             </span>
                           </div>
                           <p
                             className="mb-2 text-xs leading-relaxed"
                             style={{ color: 'var(--text-secondary)' }}
                           >
-                            {ai.desc}
+                            {t(`developerPage.docs.ai.${ai.key}.desc`)}
                           </p>
                           <code
                             className="rounded px-2 py-0.5 font-mono text-[10px]"
@@ -851,38 +842,31 @@ export default function Developer() {
                       className="text-sm font-black tracking-widest uppercase"
                       style={{ color: 'var(--text-primary)' }}
                     >
-                      API Reference
+                      {t('developerPage.docs.apiRef')}
                     </h3>
                     <p
                       className="text-sm leading-relaxed"
                       style={{ color: 'var(--text-secondary)' }}
                     >
-                      Full interactive docs via Swagger UI. REST API with JSON bodies.
+                      {t('developerPage.docs.apiRefBody')}
                     </p>
                     <div className="flex flex-wrap gap-3">
-                      {[
-                        {
-                          label: 'Webhooks',
-                          tip: 'A URL on your server that Satohash calls when a stamp is confirmed or revoked. No polling needed.'
-                        },
-                        {
-                          label: 'Rate Limits',
-                          tip: 'No daily quota on the free tier. The public path is rate-limited to 5 requests per minute to keep the service healthy. No Lightning wallet needed for the free tier.'
-                        },
-                        {
-                          label: 'Bearer Token',
-                          tip: 'Include your API key in the Authorization header: "Authorization: Bearer YOUR_KEY". Keep it secret.'
-                        }
-                      ].map((item) => (
-                        <span
-                          key={item.label}
-                          className="flex items-center text-[10px] font-black tracking-widest uppercase"
-                          style={{ color: 'var(--text-secondary)' }}
-                        >
-                          {item.label}
-                          <Tooltip title={item.label} content={item.tip} />
-                        </span>
-                      ))}
+                      {DOC_CHIPS.map((item) => {
+                        const label = t(`developerPage.docs.${item.labelKey}`)
+                        return (
+                          <span
+                            key={item.labelKey}
+                            className="flex items-center text-[10px] font-black tracking-widest uppercase"
+                            style={{ color: 'var(--text-secondary)' }}
+                          >
+                            {label}
+                            <Tooltip
+                              title={label}
+                              content={t(`developerPage.docs.${item.tipKey}`)}
+                            />
+                          </span>
+                        )
+                      })}
                     </div>
                     <a
                       href={`${API_URL}/api-docs`}
@@ -891,39 +875,12 @@ export default function Developer() {
                       className="inline-flex items-center gap-2 rounded-xl border px-5 py-2.5 text-xs font-black tracking-widest uppercase transition-all"
                       style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
                     >
-                      Open Swagger UI →
+                      {t('developerPage.docs.openSwagger')}
                     </a>
                   </div>
 
                   {/* Endpoint list */}
-                  {[
-                    {
-                      method: 'POST',
-                      path: '/api/stamp',
-                      desc: 'Submit a SHA-256 hash. Returns a stamp ID and .ots proof file.'
-                    },
-                    {
-                      method: 'POST',
-                      path: '/api/verify',
-                      desc: 'Verify a .ots proof file. Returns verified: true/false and the Bitcoin block height.'
-                    },
-                    { method: 'GET', path: '/api/history', desc: 'List your last 50 stamps.' },
-                    {
-                      method: 'GET',
-                      path: '/api/stamps/:id',
-                      desc: 'Get stamp details or download the raw .ots binary.'
-                    },
-                    {
-                      method: 'POST',
-                      path: '/api/upgrade',
-                      desc: 'Check if a pending stamp has been confirmed on Bitcoin.'
-                    },
-                    {
-                      method: 'GET',
-                      path: '/api/system/fees',
-                      desc: 'Live Bitcoin fee estimates from mempool.space.'
-                    }
-                  ].map(({ method, path, desc }) => (
+                  {ENDPOINTS.map(({ method, path, key }) => (
                     <div
                       key={path}
                       className="flex gap-4 rounded-xl border p-4"
@@ -955,7 +912,7 @@ export default function Developer() {
                           {path}
                         </p>
                         <p className="mt-1 text-[11px]" style={{ color: 'var(--text-secondary)' }}>
-                          {desc}
+                          {t(`developerPage.docs.endpoints.${key}`)}
                         </p>
                       </div>
                     </div>
@@ -976,57 +933,52 @@ export default function Developer() {
                       className="text-3xl font-black tracking-tight uppercase"
                       style={{ color: 'var(--text-primary)' }}
                     >
-                      Simple, honest <span style={{ color: 'var(--accent-active)' }}>pricing.</span>
+                      {t('developerPage.strategy.title')}{' '}
+                      <span style={{ color: 'var(--accent-active)' }}>
+                        {t('developerPage.strategy.titleHighlight')}
+                      </span>
                     </h2>
                     <p
                       className="text-base leading-relaxed"
                       style={{ color: 'var(--text-secondary)' }}
                     >
-                      Start free — no daily quota, no credit card. The only limit is a
-                      5-requests-per-minute guard that keeps the service healthy for everyone. When
-                      you need more throughput, top up with API credits. Heavy users can pay via
-                      Bitcoin Lightning for per-request billing.
+                      {t('developerPage.strategy.lede')}
                     </p>
                   </div>
                   <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
                     <PricingTier
-                      tier="Free"
-                      price="$0"
-                      unit="/ month"
-                      features={[
-                        'No daily quota',
-                        'OTS Bitcoin proof',
-                        '.ots file download',
-                        'Community support'
-                      ]}
+                      name={t('developerPage.strategy.free.name')}
+                      price={t('developerPage.strategy.free.price')}
+                      unit={t('developerPage.strategy.free.unit')}
+                      features={asList(
+                        t('developerPage.strategy.free.features', { returnObjects: true })
+                      )}
                       accent="var(--accent-active)"
+                      cta={t('developerPage.strategy.seePricing')}
                       onSelect={() => navigate('/pricing')}
                     />
                     <PricingTier
-                      tier="Pro"
-                      price="$19"
-                      unit="/ month"
-                      features={[
-                        'Unlimited stamps',
-                        'Priority confirmation',
-                        'Webhook notifications',
-                        'Email support'
-                      ]}
+                      name={t('developerPage.strategy.pro.name')}
+                      price={t('developerPage.strategy.pro.price')}
+                      unit={t('developerPage.strategy.pro.unit')}
+                      features={asList(
+                        t('developerPage.strategy.pro.features', { returnObjects: true })
+                      )}
                       accent="var(--accent-purple)"
                       recommended
+                      badge={t('developerPage.strategy.stagedBadge')}
+                      cta={t('developerPage.strategy.seePricing')}
                       onSelect={() => navigate('/pricing')}
                     />
                     <PricingTier
-                      tier="Enterprise"
-                      price="Contact"
-                      unit="Sales"
-                      features={[
-                        'White-label portal',
-                        'On-premise deployment',
-                        'SLA guarantee',
-                        'Dedicated support'
-                      ]}
+                      name={t('developerPage.strategy.enterprise.name')}
+                      price={t('developerPage.strategy.enterprise.price')}
+                      unit={t('developerPage.strategy.enterprise.unit')}
+                      features={asList(
+                        t('developerPage.strategy.enterprise.features', { returnObjects: true })
+                      )}
                       accent="var(--accent-success)"
+                      cta={t('developerPage.strategy.contactCta')}
                       onSelect={() => {
                         window.location.href =
                           'mailto:hello@giveabit.io?subject=Satohash%20Enterprise%20API'
@@ -1048,20 +1000,17 @@ export default function Developer() {
                         className="text-sm font-black tracking-widest uppercase"
                         style={{ color: 'var(--accent-active)' }}
                       >
-                        What are API Credits?
+                        {t('developerPage.strategy.creditsTitle')}
                       </h3>
                     </div>
                     <p
                       className="text-sm leading-relaxed"
                       style={{ color: 'var(--text-secondary)' }}
                     >
-                      API Credits are like a prepaid balance for stamps. Each stamp costs 1 credit.
-                      You can top up with a regular card payment, or pay per-request using Bitcoin
-                      Lightning (the L402 standard) — whichever suits you.{' '}
+                      {t('developerPage.strategy.creditsBody')}{' '}
                       <strong style={{ color: 'var(--text-primary)' }}>
-                        You do not need a Lightning wallet to use Satohash
-                      </strong>{' '}
-                      — it is only needed if you choose Lightning payments over the free/Pro tier.
+                        {t('developerPage.strategy.creditsStrong')}
+                      </strong>
                     </p>
                   </div>
                 </motion.div>
@@ -1084,10 +1033,10 @@ export default function Developer() {
                   >
                     <Zap size={18} className="fill-current" />
                     <span className="flex items-center text-[10px] font-black tracking-widest uppercase">
-                      API Credits
+                      {t('developerPage.sidebar.credits')}
                       <Tooltip
-                        title="API Credits"
-                        content="Each stamp costs 1 credit. Top up with a card or with Bitcoin Lightning. The free tier carries no daily quota — no payment needed to get started."
+                        title={t('developerPage.sidebar.credits')}
+                        content={t('developerPage.sidebar.creditsTip')}
                       />
                     </span>
                   </div>
@@ -1104,13 +1053,13 @@ export default function Developer() {
                     className="font-mono text-2xl font-black tracking-tight"
                     style={{ color: 'var(--text-primary)' }}
                   >
-                    No daily quota
+                    {t('developerPage.sidebar.noQuota')}
                   </h3>
                   <p
                     className="mt-1 text-[10px] font-bold tracking-widest uppercase"
                     style={{ color: 'var(--text-secondary)' }}
                   >
-                    5 requests / min abuse guard · no credit card
+                    {t('developerPage.sidebar.guard')}
                   </p>
                 </div>
                 <div
@@ -1118,21 +1067,27 @@ export default function Developer() {
                   style={{ borderColor: 'var(--border)', background: 'var(--bg-primary)' }}
                 >
                   <div className="flex justify-between text-[10px] font-black tracking-widest uppercase">
-                    <span style={{ color: 'var(--text-secondary)' }}>Public rate limit</span>
-                    <span style={{ color: 'var(--text-primary)' }}>5 / min</span>
+                    <span style={{ color: 'var(--text-secondary)' }}>
+                      {t('developerPage.sidebar.rateLabel')}
+                    </span>
+                    <span style={{ color: 'var(--text-primary)' }}>
+                      {t('developerPage.sidebar.rateValue')}
+                    </span>
                   </div>
                   <p
                     className="text-[11px] leading-relaxed"
                     style={{ color: 'var(--text-secondary)' }}
                   >
-                    An abuse guard, not a quota. Stamping is never capped by the day.
+                    {t('developerPage.sidebar.rateNote')}
                   </p>
                 </div>
                 <button
+                  type="button"
+                  onClick={() => navigate('/pricing')}
                   className="flex h-12 w-full items-center justify-center gap-2 rounded-xl text-[11px] font-black tracking-widest uppercase transition-all hover:scale-[1.02]"
                   style={{ background: 'var(--text-primary)', color: 'var(--bg-primary)' }}
                 >
-                  Top Up Credits <ChevronRight size={14} />
+                  {t('developerPage.sidebar.seePricing')} <ChevronRight size={14} />
                 </button>
               </div>
             </div>
@@ -1146,10 +1101,10 @@ export default function Developer() {
                 className="mb-3 text-[10px] font-black tracking-widest uppercase"
                 style={{ color: 'var(--text-secondary)' }}
               >
-                Resources
+                {t('developerPage.sidebar.resources')}
               </h3>
-              <ResourceLink icon={Code2} label="API Reference (Swagger)" />
-              <ResourceLink icon={Globe} label="AI Integration Guide" />
+              <ResourceLink icon={Code2} label={t('developerPage.sidebar.apiRef')} />
+              <ResourceLink icon={Globe} label={t('developerPage.sidebar.aiGuide')} />
               <div className="group flex w-full items-center justify-between rounded-xl p-4 transition-colors hover:bg-white/5">
                 <div className="flex items-center gap-4">
                   <Database size={16} style={{ color: 'var(--text-secondary)' }} />
@@ -1157,10 +1112,10 @@ export default function Developer() {
                     className="flex items-center text-sm font-medium transition-colors group-hover:text-white"
                     style={{ color: 'var(--text-secondary)' }}
                   >
-                    Nostr Identity (NIP-05)
+                    {t('developerPage.sidebar.nostr')}
                     <Tooltip
-                      title="NIP-05 Identity"
-                      content="Links your human-readable name (like user@satohash.io) to a cryptographic key, so signers can be verified without trusting a central authority."
+                      title={t('developerPage.sidebar.nostrTipTitle')}
+                      content={t('developerPage.sidebar.nostrTip')}
                     />
                   </span>
                 </div>
@@ -1170,7 +1125,7 @@ export default function Developer() {
                   style={{ color: 'var(--text-secondary)' }}
                 />
               </div>
-              <ResourceLink icon={Lock} label="Security & Privacy" />
+              <ResourceLink icon={Lock} label={t('developerPage.sidebar.security')} />
             </div>
 
             {/* OTS Status */}
@@ -1184,14 +1139,10 @@ export default function Developer() {
                   className="text-[10px] font-black tracking-widest uppercase"
                   style={{ color: 'var(--text-primary)' }}
                 >
-                  OTS Calendars
+                  {t('developerPage.sidebar.ots')}
                 </span>
               </div>
-              {[
-                'alice.btc.calendar.opentimestamps.org',
-                'bob.btc.calendar.opentimestamps.org',
-                'finney.calendar.eternitywall.com'
-              ].map((cal) => (
+              {OTS_CALENDARS.map((cal) => (
                 <div key={cal} className="flex items-center gap-2">
                   <div
                     className="h-1.5 w-1.5 rounded-full"
@@ -1206,7 +1157,7 @@ export default function Developer() {
                 </div>
               ))}
               <p className="text-[10px]" style={{ color: 'var(--text-secondary)' }}>
-                Free public calendars — no API key required.
+                {t('developerPage.sidebar.otsNote')}
               </p>
             </div>
 
@@ -1221,15 +1172,14 @@ export default function Developer() {
                   className="text-[10px] font-black tracking-widest uppercase"
                   style={{ color: 'var(--text-primary)' }}
                 >
-                  Webhooks
+                  {t('developerPage.sidebar.webhooks')}
                 </span>
               </div>
               <p className="text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                Register a URL and Satohash will call it automatically when your stamps are
-                confirmed, upgraded, or revoked.
+                {t('developerPage.sidebar.webhooksBody')}
               </p>
               <div className="font-mono text-[10px]" style={{ color: 'var(--text-secondary)' }}>
-                Events:{' '}
+                {t('developerPage.sidebar.events')}{' '}
                 <span style={{ color: 'var(--text-primary)' }}>confirmed · upgraded · revoked</span>
               </div>
               <a
@@ -1239,7 +1189,7 @@ export default function Developer() {
                 className="inline-flex items-center gap-2 rounded-xl border px-4 py-2 text-[10px] font-black tracking-widest uppercase transition-all hover:border-[var(--accent-active)]"
                 style={{ borderColor: 'var(--border-bright)', color: 'var(--text-secondary)' }}
               >
-                Webhook Docs <ArrowRight size={11} />
+                {t('developerPage.sidebar.webhookDocs')} <ArrowRight size={11} />
               </a>
             </div>
           </div>

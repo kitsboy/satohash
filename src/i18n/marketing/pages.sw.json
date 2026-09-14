@@ -564,9 +564,194 @@
     }
   },
   "developerPage": {
-    "cliTitle": "CLI",
-    "cliHint": "Hash inabaki kwenye mashine; SHA-256 pekee hutumwa. Daima hutuma X-Satohash-Client: cli. Kadi ya uthibitisho",
-    "cliSource": "Chanzo cha CLI kwenye GitHub"
+    "cliTitle": "Gonga kutoka kwenye terminal",
+    "cliHint": "Faili haiondoki kwenye kifaa; SHA-256 hex pekee hutumwa. Daima hutuma X-Satohash-Client: cli. Kadi ya uthibitisho huchapisha",
+    "cliSource": "Chanzo cha CLI kwenye GitHub",
+    "cliPath": "Njia ya terminal",
+    "cliDefaultApi": "API chaguomsingi (tayari imewekwa kwenye CLI halisi):",
+    "copyAria": "Nakili {{cmd}}",
+    "localCalls": "Simu za API za hapa: {{count}}",
+    "localStamps": "Migongo kwenye kivinjari hiki: {{count}}",
+    "chip": "API ya wasanidi — {{host}}",
+    "simulated": "Imeigizwa",
+    "title": "Jenga na",
+    "titleBrand": "Satohash.",
+    "lede": "Gonga waraka, faili, au data yoyote kwenye Bitcoin kwa simu moja ya API. Faili haiondoki kwenye kifaa — SHA-256 hex pekee hutumwa. Hakuna haja ya kujua blockchain.",
+    "tabs": {
+      "overview": "Muhtasari",
+      "auth": "Uthibitishaji",
+      "docs": "Nyaraka",
+      "strategy": "Mkakati"
+    },
+    "quick": {
+      "hash": {
+        "title": "Hash faili yako",
+        "desc": "SHA-256 inafanya kazi kwenye kivinjari chako. Faili haiondoki kwenye kifaa chako."
+      },
+      "post": {
+        "title": "POST hash",
+        "desc": "Tuma alama ya herufi 64 kwa /api/stamp. Hakuna akaunti. Migongo ni bure leo."
+      },
+      "confirm": {
+        "title": "Bitcoin inathibitisha",
+        "desc": "Uthibitisho unasubiri bloku ya Bitcoin — kawaida kama saa moja (bloku inayofuata). Pakua faili yako ya .ots."
+      }
+    },
+    "stats": {
+      "rateLabel": "Kikomo cha umma",
+      "rateValue": "5/min",
+      "rateSub": "Hakuna mgao wa siku",
+      "availLabel": "Upatikanaji",
+      "availValue": "Upatikanaji wa juu",
+      "availSub": "Kalenda 3 za OTS zina pingwa moja kwa moja",
+      "batchLabel": "Kugonga kwa kundi",
+      "batchValue": "Hadi 100",
+      "batchSub": "Faili kwa kundi"
+    },
+    "howTitle": "Jinsi gongo lako linavyofika Bitcoin",
+    "steps": {
+      "hash": {
+        "title": "Unahash faili yako",
+        "desc": "SHA-256 inafanya kazi kwenye kivinjari chako. Faili haiondoki kwenye kifaa chako."
+      },
+      "send": {
+        "title": "Hash imetumwa kwa Satohash",
+        "desc": "Alama ya herufi 64 pekee inatumwa — si waraka wako."
+      },
+      "bundle": {
+        "title": "Imeunganishwa na hash nyingine",
+        "desc": "Satohash inaunganisha hash nyingi katika mti wa Merkle kuokoa nafasi."
+      },
+      "commit": {
+        "title": "Imewekwa kwenye Bitcoin",
+        "desc": "Mzizi wa Merkle unaandikwa katika muamala wa Bitcoin kupitia kalenda za OpenTimestamps."
+      },
+      "proof": {
+        "title": "Uthibitisho wa kudumu",
+        "desc": "Baada ya kuthibitishwa kwenye bloku inayofuata ya Bitcoin (kawaida kama saa moja), faili yako ya .ots inathibitisha waraka ulikuwepo wakati huo wa bloku — milele."
+      }
+    },
+    "tryIt": "Jaribu",
+    "auth": {
+      "title": "Uthibitishaji",
+      "tooltipTitle": "Je, nahitaji API key?",
+      "tooltipBody": "Hapana. Kugonga ni wazi leo — tuma hash ya SHA-256 na upate uthibitisho. Funguo zipo tu kwa programu za suite tunazotoa sisi wenyewe. Huna haja ya kuunda au kuhifadhi moja.",
+      "badge": "Hakuna ufunguo",
+      "noKeyTitle": "Leo hakuna ufunguo unahitajika",
+      "noKeyBody": "Tuma POST /api/stamp na {\"hash\":\"<64-char sha256>\"} na unapata ID ya uthibitisho. Wazi kwa kila mtu, yenye kikomo cha kasi — hakuna akaunti, hakuna usajili, hakuna ufunguo. Migongo ni bure leo.",
+      "suiteTitle": "Programu za suite (ndani)",
+      "suiteBody": "Programu za familia ya Give A Bit hutuma X-Satohash-Key — ufunguo tunaotoa upande wa seva. Si kujihudumia: andika hello@giveabit.io nasi tutatoa moja kwa mkono.",
+      "paidTitle": "Hali ya malipo iko kwenye staging",
+      "paidBody": "Si hai. Paywall ikisha washa, API inajibu HTTP 402 na ankara ya Lightning. Lipa kwa simu, kisha jaribu tena na Authorization: L402 <token>. Bado hakuna akaunti wala KYC. Leo migongo ni bure na malipo ya Lightning yamezimwa.",
+      "tryNow": "Jaribu sasa — {{host}}",
+      "removed": "Hakuna funguo za API za kujihudumia. Ukurasa huu ulikuwa na kidhibiti cha funguo kilichopiga endpoint ambayo haikuwahi kuwepo, na kutoa funguo ambazo seva yoyote haikukagua — kiliondolewa badala ya kuficha. Kugonga hakuhitaji ufunguo: tuma hash, pata uthibitisho. Migongo ni bure leo."
+    },
+    "docs": {
+      "aiTitle": "Unganisha AI na otomatiki",
+      "aiLede": "Satohash inafanya kazi na zana yoyote inayoweza kutuma ombi la HTTP. Hakuna SDK maalum inahitajika.",
+      "ai": {
+        "chatgpt": {
+          "title": "ChatGPT / GPT-4",
+          "desc": "Tumia Custom GPT Action kugonga waraka moja kwa moja kutoka mazungumzo ya ChatGPT."
+        },
+        "claude": {
+          "title": "Claude (Anthropic)",
+          "desc": "Ongeza Satohash kama zana katika system prompt ya Claude. Claude inaweza kuhash na kugonga faili ukiomba."
+        },
+        "zapier": {
+          "title": "Zapier / Make",
+          "desc": "Hakuna msimbo. Tumia kitendo cha Webhook kuita /api/stamp kila faili inapoundwa au kutiwa saini."
+        },
+        "n8n": {
+          "title": "n8n",
+          "desc": "Weka nodi ya HTTP Request katika mtiririko wowote. Hash kwa nodi ya Code, gonga kwa HTTP."
+        }
+      },
+      "apiRef": "Rejea ya API",
+      "apiRefBody": "Nyaraka kamili zinazoingiliana kupitia Swagger UI. REST API yenye miili ya JSON.",
+      "webhooks": "Webhooks",
+      "webhooksTip": "URL kwenye seva yako ambayo Satohash inaita gongo linapothibitishwa au kufutwa. Hakuna uchunguzi wa mara kwa mara.",
+      "rateLimits": "Vikomo vya kasi",
+      "rateLimitsTip": "Hakuna mgao wa siku. Njia ya umma ina kikomo cha maombi 5 kwa dakika ili huduma ibaki nzuri. Hakuna pochi ya Lightning inahitajika. Migongo ni bure leo.",
+      "bearer": "Bearer token",
+      "bearerTip": "Programu za suite tunazotoa zinaweza kutuma X-Satohash-Key. Hakuna funguo za Bearer za kujihudumia. Weka siri ufunguo wowote tunaotoa.",
+      "openSwagger": "Fungua Swagger UI →",
+      "endpoints": {
+        "stamp": "Wasilisha hash ya SHA-256. Inarudisha ID ya gongo na faili ya uthibitisho ya .ots.",
+        "verify": "Thibitisha faili ya .ots. Inarudisha verified: true/false na urefu wa bloku ya Bitcoin.",
+        "history": "Orodhesha migongo yako 50 ya mwisho.",
+        "stamps": "Pata maelezo ya gongo au pakua binary ghafi ya .ots.",
+        "upgrade": "Angalia kama gongo pending limethibitishwa kwenye Bitcoin.",
+        "fees": "Makadirio hai ya ada za Bitcoin kutoka mempool.space."
+      }
+    },
+    "strategy": {
+      "title": "Bei rahisi na",
+      "titleHighlight": "za uaminifu.",
+      "lede": "Migongo ni bure leo — hakuna mgao wa siku, hakuna kadi, hakuna ankara ya Lightning. Kikomo pekee ni ulinzi wa maombi 5 kwa dakika. Mikopo ya API inayolipwa, Pro, na malipo ya Lightning yamejengwa na yako kwenye staging; si hai. Tazama /pricing kwa mchoro wa uaminifu.",
+      "stagedBadge": "Staging",
+      "seePricing": "Tazama /pricing",
+      "contactCta": "Wasiliana",
+      "free": {
+        "name": "Bure",
+        "price": "$0",
+        "unit": "hai sasa",
+        "features": [
+          "Hakuna mgao wa siku",
+          "Uthibitisho wa OTS Bitcoin",
+          "Upakuaji wa faili ya .ots",
+          "Msaada wa jamii"
+        ]
+      },
+      "pro": {
+        "name": "Pro",
+        "price": "Staging",
+        "unit": "si hai",
+        "features": [
+          "Halitozwi leo",
+          "Paywall imezimwa",
+          "Webhooks malipo yanapoanza",
+          "Tazama /pricing"
+        ]
+      },
+      "enterprise": {
+        "name": "Enterprise",
+        "price": "Wasiliana",
+        "unit": "kwa mshirika",
+        "features": [
+          "Si API ya malipo hai",
+          "Ufikiaji wa mshirika",
+          "Andika hello@giveabit.io",
+          "Tazama /pricing"
+        ]
+      },
+      "creditsTitle": "Mikopo ya API ni nini?",
+      "creditsBody": "Mikopo ya API ni wazo la kulipia mapema kwenye staging kwa migongo ya baadaye inayolipwa — si hai. Kila gongo ni bure leo. Malipo ya Lightning / L402 yamejengwa lakini yamezimwa hadi njia zifadhiliwe.",
+      "creditsStrong": "Huhitaji pochi ya Lightning kutumia Satohash."
+    },
+    "sidebar": {
+      "credits": "Mikopo ya API",
+      "creditsTip": "Kila gongo ni bure leo. Mikopo na kujaza Lightning viko kwenye staging, si hai. Njia ya bure haina mgao wa siku — hakuna malipo yanahitajika.",
+      "noQuota": "Hakuna mgao wa siku",
+      "guard": "Ulinzi wa matumizi mabaya maombi 5 / min · hakuna kadi",
+      "rateLabel": "Kikomo cha umma",
+      "rateValue": "5 / min",
+      "rateNote": "Ulinzi wa matumizi mabaya, si mgao. Kugonga hakuzuiwi kwa siku. Migongo ni bure leo.",
+      "seePricing": "Tazama /pricing",
+      "resources": "Rasilimali",
+      "apiRef": "Rejea ya API (Swagger)",
+      "aiGuide": "Mwongozo wa kuunganisha AI",
+      "nostr": "Utambulisho wa Nostr (NIP-05)",
+      "nostrTipTitle": "Utambulisho wa NIP-05",
+      "nostrTip": "Inaunganisha jina lako linalosomeka (kama user@satohash.io) na ufunguo wa kriptografia, ili watia saini wathibitishwe bila kuamini mamlaka kuu.",
+      "security": "Usalama na faragha",
+      "ots": "Kalenda za OTS",
+      "otsNote": "Kalenda za umma bure — hakuna API key inahitajika.",
+      "webhooks": "Webhooks",
+      "webhooksBody": "Sajili URL na Satohash itaita moja kwa moja migongo yako inapothibitishwa, kuboreshwa, au kufutwa.",
+      "events": "Matukio:",
+      "webhookDocs": "Nyaraka za webhook"
+    }
   },
   "widgetsPage": {
     "nav": "Proof DNA Widgets",
@@ -1921,5 +2106,200 @@
     "guide3Body": "OpenTimestamps → Bitcoin inathibitisha lini faili lilikuwepo. Utafutaji wa utambulisho hapa ni wa hiari na tofauti.",
     "aside": "Kuunganisha kiendelezi hakuwashi uthibitisho wa kubofya mara moja wala mesh ya sifa. Gonga faili kwa uthibitisho wa kuwepo uliotiwa nanga kwenye Bitcoin.",
     "stampCta": "Gonga bure"
+  },
+  "execSummaryPage": {
+    "eyebrow": "Bure leo · Bitcoin milele",
+    "h1": "Thibitisha kwamba lilikuwepo.",
+    "h1Highlight": "Chini ya dakika moja.",
+    "lede": "Satohash inaweka muhuri bure wa alama ya faili lako kwa OpenTimestamps kwenye Bitcoin. Kiwango cha msingi bure ndicho nanga ya uaminifu ya kudumu, isiyowahi kufungiwa kwa malipo. Viwango vya ziada vya hiari (Professional ~2,100 sats/mwezi, Business ~21,000 sats/mwezi) na API ya kulipa-kwa-matumizi vimejengwa na viko staging; vinalipishwa tu baada ya njia za Lightning kufadhiliwa na kujaribiwa — uthibitisho bado unafungwa kwenye Bitcoin hivi au hivyo.",
+    "stampCta": "Gonga faili bure",
+    "verifyCta": "Thibitisha uthibitisho",
+    "mobileNote": "Imejengwa kwa simu ya mkono mmoja · tayari kwa Pixel na iPhone",
+    "honesty": "Inathibitisha lini faili lilikuwepo — si nani alilifanya.",
+    "kpis": {
+      "cost": {
+        "k": "0 sats",
+        "v": "Gharama ya mtumiaji leo"
+      },
+      "pending": {
+        "k": "< 60s",
+        "v": "Kupata uthibitisho unaosubiri"
+      },
+      "hash": {
+        "k": "SHA-256",
+        "v": "Hash ya ndani tu"
+      },
+      "chain": {
+        "k": "BTC",
+        "v": "Mnyororo wa kumbukumbu"
+      }
+    },
+    "briefKicker": "Kwa uongozi · ushauri · uzingatiaji",
+    "briefTitle": "Muhtasari",
+    "briefTitleHighlight": "wa uongozi",
+    "briefFooter": "Muhtasari wa siri wa bidhaa · Satohash by Give A Bit · Si ushauri wa kisheria",
+    "brief": {
+      "what": {
+        "label": "01 — Tunachofanya",
+        "title": "Tunachofanya",
+        "p1": "Satohash hutoa uthibitisho huru, wa kriptografia wa kuwepo kwa faili lolote la kidijitali—mikataba, picha, msimbo wa chanzo, matokeo ya modeli za AI, picha za wavuti, au vifurushi vya ukaguzi. Hatuwezi kuhifadhi wala kukagua maudhui yenyewe. Badala yake, tunawezesha mashirika na watu kuunganisha alama ya hisabati ya maudhui hayo kwenye blockchain ya Bitcoin kupitia itifaki huria ya OpenTimestamps, na kutoa uthibitisho unaobebeka ambao wahusika wengine wanaweza kuuthibitisha bila kuamini Satohash kama mlezi wa ukweli.",
+        "p2": "Kwa vitendo: wakati waraka, kifurushi cha uwasilishaji, au kitu cha kidijitali lazima baadaye kistahimili uchunguzi—kutoka kwa wenza, wadhibiti, mahakama, au ukaguzi wa ndani—Satohash hutoa kumbukumbu thabiti, isiyoweza kukataliwa kwamba kitu hicho kilikuwepo katika umbo mahususi wakati mahususi. Huduma imeundwa kwa matumizi ya kila siku kwenye ukingo wa kazi (kisheria, ubunifu, uchunguzi, na uendeshaji), si kama kitu kipya cha mara moja."
+      },
+      "how": {
+        "label": "02 — Jinsi inavyofanya kazi",
+        "title": "Jinsi inavyofanya kazi",
+        "p1": "Mchakato umeundwa kuwa rahisi na kulinda faragha. Kwanza, kivinjari cha mtumiaji (au mteja aliyeidhinishwa) huhesabu hash ya SHA-256 ya faili kwa kriptografia ya kawaida ya wavuti; baiti asili hazihitaji kuondoka kwenye kifaa. Pili, hash hiyo ya herufi 64 pekee ndiyo inayowasilishwa kwa kalenda za OpenTimestamps, zinazokusanya hash nyingi kwenye mti wa Merkle na mara kwa mara kuweka mzizi katika muamala wa Bitcoin. Tatu, mara tu block ya Bitcoin inapothibitisha ahadi hiyo — kwa kawaida kama dakika 60 — uthibitisho wa .ots unaotokana unaweza kupakuliwa, kuhifadhiwa, na kuthibitishwa kwa kujitegemea kwa zana huria na data ya mnyororo ya umma.",
+        "p2": "Leo, kugonga kunatolewa bila malipo kwa mtumiaji. Mfano wa kiuchumi wa ada za mtandao wa Bitcoin unachukuliwa kwenye tabaka la kalenda na itifaki kupitia kukusanya pamoja; gharama ya bidhaa ya Satohash ni uhosti na uendeshaji. Viwango vya kibiashara vikiletwa, malipo yanatarajiwa kupitia Lightning kwenda Satohash—si mabadiliko ya daftari. Uthibitisho unabaki umetiwa nanga kwenye Bitcoin hivi au hivyo."
+      },
+      "truth": {
+        "label": "03 — Ukweli",
+        "title": "Kwa nini hii ni muhimu kwa ukweli",
+        "p1": "Katika mazingira ya midia inayozalishwa, deepfakes, barua pepe zinazobishaniwa, na “vyanzo vya kumbukumbu” vilivyoandikwa upya, swali gumu zaidi mara nyingi si nini mtu anadai, bali lini hali mahususi ya kidijitali ilikuwepo kwanza na kama imebadilishwa tangu wakati huo. Uaminifu wa taasisi—kauli za chapa, picha za skrini, na “mfumo wetu unasema hivyo”—unazidi kutotosheleza katika mazingira ya upinzani. Muhuri wa muda wa kriptografia hauamui hatia au kutokuwa na hatia; unarejesha msingi wa pamoja, unaoweza kukaguliwa na mashine, wa ukweli wa wakati: alama hii hasa iliwekwa kwenye daftari la umma, gumu na ghali kuandika upya, kwenye urefu huu wa block.",
+        "p2": "Msingi huo ni muhimu kwa uhuru wa kujieleza, uandishi wa habari, kipaumbele cha mali miliki, na mchakato wa kiraia. Bila huo, historia inajadiliwa. Pamoja nao, wahusika wanaweza bado kutokubaliana kuhusu maana—lakini si kuhusu kama baiti zilikuwepo zamani. Satohash ipo kufanya sifa hiyo ya Bitcoin ipatikane kwa wasio wataalamu kama chombo cha kila siku cha uadilifu. Inathibitisha lini, si nani."
+      },
+      "enterprises": {
+        "label": "04 — Biashara",
+        "title": "Kwa kampuni na vipimo vya taasisi",
+        "p1": "Biashara zinachukua Satohash pale nyimbo za ukaguzi, migogoro ya wauzaji, mitihani ya udhibiti, na mtiririko wa wahusika wengi zinapohitaji ushahidi unaobebeka nje ya silo lolote la SaaS. Mifumo ya kawaida ni pamoja na kugonga mikataba iliyosainiwa na nyenzo za bodi wakati wa saini; kufunga matoleo ya programu na picha za usanidi kwa udhibiti wa mabadiliko; kutiwa nanga kwa uhamishaji wa uchunguzi na mawasiliano ya wateja; na kuweka vyombo vya API ili mifumo otomatiki itoe uthibitisho kama vitu vya daraja la kwanza. Kwa sababu uthibitishaji hauhitaji ufikiaji endelevu wa miundombinu ya Satohash, shirika linabaki imara ikiwa wauzaji wanabadilika—au ikiwa Satohash yenyewe haipatikani.",
+        "p2": "Kutoka mtazamo wa vipimo, uongozi unaweza kuchukua chanjo ya uthibitisho kama KPI ya uendeshaji: asilimia ya waraka hatari yaliyogoa ndani ya SLA; muda wa kati kutoka kukamilika kwa waraka hadi nanga ya Bitcoin iliyothibitishwa; sehemu ya migogoro iliyofungwa kwa kifurushi cha .ots kinachoweza kuthibitishwa; na mgawanyo wa kiasi cha mihuri kwa kitengo cha biashara au mfumo wa mteja. Viashiria hivi vinaunganisha utayari wa kisheria na mazoezi ya uhandisi—kutoka “tunaweka kumbukumbu” hadi “tunaweza kuthibitisha, kwa kujitegemea, kilichokuwepo lini.” Chati kwenye ukurasa huu ni vielelezo, si vipimo vya bili vilivyo hai."
+      }
+    },
+    "habitTitle": "Fanya uthibitisho kuwa",
+    "habitTitleHighlight": "tabia ya kila siku",
+    "habitLede": "Kila mkataba, rasimu, picha, uhamishaji wa AI, au picha ya skrini inaweza kufungwa kabla uaminifu haujawa tatizo.",
+    "reasons": {
+      "seconds": {
+        "title": "Sekunde, si wiki",
+        "body": "Gonga mikataba, picha za skrini, na matokeo ya AI kabla mzozo haujaanza."
+      },
+      "private": {
+        "title": "Faragha kwa muundo",
+        "body": "Hash ya ujuzi-sifuri. Hatuhitaji waraka — alama tu. Faili haliondoki kwenye kifaa."
+      },
+      "verify": {
+        "title": "Uthibitisho unaoweza kuthibitishwa kwa kujitegemea",
+        "body": "OpenTimestamps + Bitcoin PoW ni hisabati huru, si ahadi ya kampuni."
+      },
+      "offline": {
+        "title": "Inafanya kazi offline-first",
+        "body": "Hash popote. Sawazisha unaporudi mtandaoni. Inabebeka milele."
+      }
+    },
+    "chartsTitle": "Mahali uthibitisho",
+    "chartsTitleHighlight": "unahitajika zaidi",
+    "chartsLede": "Mchanganyiko wa mahitaji wa mfano na muda-hadi-uthibitisho dhidi ya njia za kawaida (hadithi ya bidhaa ya mfano — si vipimo vya bili vilivyo hai).",
+    "useCases": {
+      "creators": "Waumbaji & IP",
+      "legal": "Kisheria / Mahakama",
+      "journalism": "Uandishi wa habari",
+      "enterprise": "Ukaguzi wa biashara",
+      "ai": "Asili ya AI"
+    },
+    "friction": {
+      "paper": "Notari wa karatasi",
+      "legal": "Uwasilishaji wa kisheria",
+      "email": "“Uthibitisho” wa barua pepe",
+      "satohash": "Satohash"
+    },
+    "days": {
+      "mon": "Jtt",
+      "tue": "Jnn",
+      "wed": "Jtn",
+      "thu": "Alh",
+      "fri": "Ijm",
+      "sat": "Jms",
+      "sun": "Jpl"
+    },
+    "charts": {
+      "pieTitle": "Mchanganyiko wa matumizi",
+      "pieSub": "Nani anagonga, na kwa nini — kielelezo",
+      "barTitle": "Muda hadi uthibitisho unaotumika",
+      "barSub": "Siku (mwonekano wa logi — Satohash ni sekunde). Kielelezo, si KPI hai.",
+      "areaTitle": "Mdundo wa kila wiki wa mihuri (mfano)",
+      "areaSub": "Jinsi “tabia ya uthibitisho” ya timu inavyoonekana kila uwasilishaji unapofungwa",
+      "daysUnit": " siku"
+    },
+    "howTitle": "Jinsi kugonga bure",
+    "howTitleHighlight": "kunavyofanya kazi",
+    "stepLabel": "Hatua 0{{n}}",
+    "steps": {
+      "hash": {
+        "title": "Hash kwenye simu yako",
+        "body": "SHA-256 inaendeshwa kwenye kivinjari. Faili lako haliondoki kwenye kifaa."
+      },
+      "stamp": {
+        "title": "Gonga bure",
+        "body": "Alama pekee ndiyo inayoenda kwa kalenda za OpenTimestamps. Hakuna pochi inayohitajika leo."
+      },
+      "bitcoin": {
+        "title": "Bitcoin inafunga",
+        "body": "Kalenda zinakusanya uthibitisho mwingi katika ahadi moja ya Bitcoin. Uthibitisho wa block kwa kawaida huchukua kama dakika 60. Kudumu."
+      },
+      "verify": {
+        "title": "Thibitisha popote",
+        "body": "Shiriki uthibitisho wa .ots. Yeyote anaweza kuukagua bila kuamini Satohash."
+      }
+    },
+    "planesTitle": "Tabaka nne ·",
+    "planesTitleHighlight": "msingi mmoja wa Bitcoin",
+    "planesLede": "Tabaka za juu zinaweza kubadilika. Uthibitisho wa tabaka 1 unabaki halali milele.",
+    "planes": {
+      "atlas": {
+        "name": "Atlas",
+        "desc": "Taarifa hai ya mnyororo, mempool, afya ya mtandao"
+      },
+      "settlement": {
+        "name": "Settlement",
+        "desc": "Lightning / L402 paywall inapowashwa"
+      },
+      "identity": {
+        "name": "Identity",
+        "desc": "Wasaini wa Nostr, asili ya wahusika wengi"
+      },
+      "proof": {
+        "name": "Proof",
+        "desc": "SHA-256 + OpenTimestamps → Bitcoin PoW"
+      }
+    },
+    "pricingTitle": "Uwazi wa",
+    "pricingTitleHighlight": "bei",
+    "pricingLede": "Kiwango bure kiko hai sasa. Ada za Lightning zijazo zinatulipa sisi — si mnyororo mwingine.",
+    "tiers": {
+      "free": {
+        "name": "Bure",
+        "price": "0 sats",
+        "tag": "Hai sasa",
+        "p1": "OTS kwenye Bitcoin",
+        "p2": "Hash ya ndani",
+        "p3": "Thibitisha milele",
+        "p4": "Hakuna akaunti",
+        "p5": "Haijafungiwa kwa malipo"
+      },
+      "pro": {
+        "name": "Professional",
+        "price": "~2,100 sats",
+        "tag": "Imejengwa, staging",
+        "p1": "~$29/mwezi",
+        "p2": "Kugonga bila kikomo",
+        "p3": "Vault kamili",
+        "p4": "API + uhamishaji wa PDF"
+      },
+      "biz": {
+        "name": "Business / Studio",
+        "price": "~21,000 sats",
+        "tag": "Imejengwa, staging",
+        "p1": "~$299/mwezi",
+        "p2": "Timu na studio",
+        "p3": "White-label",
+        "p4": "SLA + kiasi"
+      }
+    },
+    "ctaTitle": "Faili lako linalofuata linastahili",
+    "ctaTitleHighlight": "risiti ya Bitcoin",
+    "ctaBody": "Hakuna akaunti. Hakuna kadi. Hash ndani, gonga bure, thibitisha maisha yote.",
+    "ctaStamp": "Anza bure sasa",
+    "ctaPricing": "Bei",
+    "ctaDocs": "Docs zote",
+    "ctaCompare": "Linganisha"
   }
 }

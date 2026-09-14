@@ -564,9 +564,194 @@
     }
   },
   "developerPage": {
-    "cliTitle": "CLI",
-    "cliHint": "Der Hash bleibt auf dem Gerät; nur SHA-256 wird gesendet. Sendet immer X-Satohash-Client: cli. Proof-Karte",
-    "cliSource": "CLI-Quellcode auf GitHub"
+    "cliTitle": "Vom Terminal stempeln",
+    "cliHint": "Die Datei verlässt das Gerät nicht; nur SHA-256-Hex wird gesendet. Sendet immer X-Satohash-Client: cli. Proof-Karte druckt",
+    "cliSource": "CLI-Quellcode auf GitHub",
+    "cliPath": "Terminalpfad",
+    "cliDefaultApi": "Standard-API (in der echten CLI bereits gesetzt):",
+    "copyAria": "{{cmd}} kopieren",
+    "localCalls": "Lokale API-Aufrufe: {{count}}",
+    "localStamps": "Stempel in diesem Browser: {{count}}",
+    "chip": "Entwickler-API — {{host}}",
+    "simulated": "Simuliert",
+    "title": "Bauen mit",
+    "titleBrand": "Satohash.",
+    "lede": "Stempeln Sie jedes Dokument, jede Datei oder Daten mit einem API-Aufruf nach Bitcoin. Die Datei verlässt das Gerät nicht — nur SHA-256-Hex wird gesendet. Kein Blockchain-Wissen nötig.",
+    "tabs": {
+      "overview": "Überblick",
+      "auth": "Zugang",
+      "docs": "Dokumentation",
+      "strategy": "Strategie"
+    },
+    "quick": {
+      "hash": {
+        "title": "Datei hashen",
+        "desc": "SHA-256 läuft in Ihrem Browser. Die Datei verlässt Ihr Gerät nicht."
+      },
+      "post": {
+        "title": "Hash per POST",
+        "desc": "Senden Sie den 64-Zeichen-Fingerabdruck an /api/stamp. Kein Konto nötig. Stempel sind heute kostenlos."
+      },
+      "confirm": {
+        "title": "Bitcoin bestätigt",
+        "desc": "Die Bestätigung wartet auf einen Bitcoin-Block — typisch etwa eine Stunde (der nächste Block). Laden Sie Ihre .ots-Datei herunter."
+      }
+    },
+    "stats": {
+      "rateLabel": "Öffentliches Limit",
+      "rateValue": "5/min",
+      "rateSub": "Kein Tageskontingent",
+      "availLabel": "Verfügbarkeit",
+      "availValue": "Hohe Verfügbarkeit",
+      "availSub": "3 OTS-Kalender live angepingt",
+      "batchLabel": "Stapel-Stempeln",
+      "batchValue": "Bis zu 100",
+      "batchSub": "Dateien pro Stapel"
+    },
+    "howTitle": "So erreicht Ihr Stempel Bitcoin",
+    "steps": {
+      "hash": {
+        "title": "Sie hashen Ihre Datei",
+        "desc": "SHA-256 läuft in Ihrem Browser. Die Datei verlässt Ihr Gerät nicht."
+      },
+      "send": {
+        "title": "Hash an Satohash gesendet",
+        "desc": "Nur der 64-Zeichen-Fingerabdruck wird übertragen — nicht Ihr Dokument."
+      },
+      "bundle": {
+        "title": "Mit anderen Hashes gebündelt",
+        "desc": "Satohash fasst viele Hashes in einem Merkle-Baum zusammen, um Platz zu sparen."
+      },
+      "commit": {
+        "title": "In Bitcoin verankert",
+        "desc": "Die Merkle-Wurzel wird über OpenTimestamps-Kalender in eine Bitcoin-Transaktion geschrieben."
+      },
+      "proof": {
+        "title": "Dauerhafter Nachweis",
+        "desc": "Sobald der nächste Bitcoin-Block bestätigt (typisch etwa eine Stunde), beweist Ihre .ots-Datei, dass das Dokument zu dieser Blockzeit existierte — für immer."
+      }
+    },
+    "tryIt": "Ausprobieren",
+    "auth": {
+      "title": "Authentifizierung",
+      "tooltipTitle": "Brauche ich einen API-Schlüssel?",
+      "tooltipBody": "Nein. Stempeln ist heute offen — senden Sie einen SHA-256-Hash und erhalten Sie einen Nachweis. Schlüssel gibt es nur für Suite-Apps, die wir selbst ausgeben. Sie müssen nie einen anlegen oder speichern.",
+      "badge": "Kein Schlüssel nötig",
+      "noKeyTitle": "Heute kein Schlüssel nötig",
+      "noKeyBody": "Senden Sie POST /api/stamp mit {\"hash\":\"<64-char sha256>\"} und Sie erhalten eine Nachweis-ID. Offen für alle, ratenbegrenzt — kein Konto, keine Anmeldung, kein Schlüssel. Stempel sind heute kostenlos.",
+      "suiteTitle": "Suite-Apps (intern)",
+      "suiteBody": "Give-A-Bit-Family-Apps senden X-Satohash-Key — einen Schlüssel, den wir serverseitig provisionieren. Kein Self-Serve: schreiben Sie an hello@giveabit.io, wir stellen einen von Hand aus.",
+      "paidTitle": "Bezahlmodus ist Staging",
+      "paidBody": "Nicht live. Wenn die Paywall an ist, antwortet die API mit HTTP 402 und einer Lightning-Rechnung. Zahlen Sie pro Aufruf, dann erneut mit Authorization: L402 <token>. Weiterhin kein Konto und kein KYC. Heute sind Stempel kostenlos und Lightning-Abrechnung ist aus.",
+      "tryNow": "Jetzt ausprobieren — {{host}}",
+      "removed": "Self-Serve-API-Schlüssel gibt es nicht. Diese Seite bot einen Schlüsselmanager, der einen Endpunkt aufrief, der nie existierte, und Schlüssel prägte, die kein Server prüfte — entfernt statt gefälscht. Stempeln braucht keinen Schlüssel: Hash senden, Nachweis erhalten. Stempel sind heute kostenlos."
+    },
+    "docs": {
+      "aiTitle": "KI und Automatisierung anbinden",
+      "aiLede": "Satohash funktioniert mit jedem Tool, das eine HTTP-Anfrage senden kann. Kein spezielles SDK nötig.",
+      "ai": {
+        "chatgpt": {
+          "title": "ChatGPT / GPT-4",
+          "desc": "Nutzen Sie eine Custom GPT Action, um Dokumente direkt aus einem ChatGPT-Gespräch zu stempeln."
+        },
+        "claude": {
+          "title": "Claude (Anthropic)",
+          "desc": "Fügen Sie Satohash als Tool in Ihrem Claude-Systemprompt hinzu. Claude kann Dateien auf Anfrage hashen und stempeln."
+        },
+        "zapier": {
+          "title": "Zapier / Make",
+          "desc": "Kein Code. Nutzen Sie die Webhook-Aktion, um /api/stamp aufzurufen, wenn eine Datei erstellt oder signiert wird."
+        },
+        "n8n": {
+          "title": "n8n",
+          "desc": "Setzen Sie einen HTTP-Request-Knoten in jeden Workflow. Hashen mit dem Code-Knoten, stempeln per HTTP."
+        }
+      },
+      "apiRef": "API-Referenz",
+      "apiRefBody": "Vollständige interaktive Docs über Swagger UI. REST-API mit JSON-Bodies.",
+      "webhooks": "Webhooks",
+      "webhooksTip": "Eine URL auf Ihrem Server, die Satohash aufruft, wenn ein Stempel bestätigt oder widerrufen wird. Kein Polling nötig.",
+      "rateLimits": "Ratenlimits",
+      "rateLimitsTip": "Kein Tageskontingent. Der öffentliche Pfad ist auf 5 Anfragen pro Minute begrenzt, damit der Dienst gesund bleibt. Kein Lightning-Wallet nötig. Stempel sind heute kostenlos.",
+      "bearer": "Bearer token",
+      "bearerTip": "Suite-Apps, die wir provisionieren, können X-Satohash-Key senden. Self-Serve-Bearer-Schlüssel gibt es nicht. Halten Sie jeden von uns ausgegebenen Schlüssel geheim.",
+      "openSwagger": "Swagger UI öffnen →",
+      "endpoints": {
+        "stamp": "Einen SHA-256-Hash einreichen. Liefert eine Stempel-ID und die .ots-Proof-Datei.",
+        "verify": "Eine .ots-Proof-Datei prüfen. Liefert verified: true/false und die Bitcoin-Blockhöhe.",
+        "history": "Ihre letzten 50 Stempel auflisten.",
+        "stamps": "Stempeldetails holen oder die rohe .ots-Binärdatei herunterladen.",
+        "upgrade": "Prüfen, ob ein pending-Stempel auf Bitcoin bestätigt wurde.",
+        "fees": "Live-Bitcoin-Gebührenschätzungen von mempool.space."
+      }
+    },
+    "strategy": {
+      "title": "Einfache, ehrliche",
+      "titleHighlight": "Preise.",
+      "lede": "Stempel sind heute kostenlos — kein Tageskontingent, keine Kreditkarte, keine Lightning-Rechnung. Das einzige Limit ist eine 5-Anfragen-pro-Minute-Sperre. Bezahlte API-Credits, Pro und Lightning-Abrechnung sind gebaut und im Staging; sie sind nicht live. Siehe /pricing für die ehrliche Skizze.",
+      "stagedBadge": "Staging",
+      "seePricing": "/pricing ansehen",
+      "contactCta": "Kontakt",
+      "free": {
+        "name": "Kostenlos",
+        "price": "$0",
+        "unit": "jetzt live",
+        "features": [
+          "Kein Tageskontingent",
+          "OTS-Bitcoin-Nachweis",
+          ".ots-Datei-Download",
+          "Community-Support"
+        ]
+      },
+      "pro": {
+        "name": "Pro",
+        "price": "Staging",
+        "unit": "nicht live",
+        "features": [
+          "Heute nicht abgerechnet",
+          "Paywall ist aus",
+          "Webhooks, wenn Bezahlung startet",
+          "Siehe /pricing"
+        ]
+      },
+      "enterprise": {
+        "name": "Enterprise",
+        "price": "Kontakt",
+        "unit": "Partnerzugang",
+        "features": [
+          "Keine live bezahlte API",
+          "Partnerzugang",
+          "hello@giveabit.io schreiben",
+          "Siehe /pricing"
+        ]
+      },
+      "creditsTitle": "Was sind API-Credits?",
+      "creditsBody": "API-Credits sind eine gestagte Prepaid-Idee für spätere bezahlte Stempel — nicht live. Jeder Stempel ist heute kostenlos. Lightning- / L402-Abrechnung ist gebaut, aber aus, bis die Rails finanziert sind.",
+      "creditsStrong": "Sie brauchen kein Lightning-Wallet, um Satohash zu nutzen."
+    },
+    "sidebar": {
+      "credits": "API-Credits",
+      "creditsTip": "Jeder Stempel ist heute kostenlos. Credits und Lightning-Aufladungen sind Staging, nicht live. Der kostenlose Pfad hat kein Tageskontingent — keine Zahlung nötig.",
+      "noQuota": "Kein Tageskontingent",
+      "guard": "Missbrauchsschutz 5 Anfragen / min · keine Kreditkarte",
+      "rateLabel": "Öffentliches Limit",
+      "rateValue": "5 / min",
+      "rateNote": "Ein Missbrauchsschutz, kein Kontingent. Stempeln wird nie tagesweise gedeckelt. Stempel sind heute kostenlos.",
+      "seePricing": "/pricing ansehen",
+      "resources": "Ressourcen",
+      "apiRef": "API-Referenz (Swagger)",
+      "aiGuide": "KI-Integrationsleitfaden",
+      "nostr": "Nostr-Identität (NIP-05)",
+      "nostrTipTitle": "NIP-05-Identität",
+      "nostrTip": "Verknüpft Ihren lesbaren Namen (wie user@satohash.io) mit einem kryptografischen Schlüssel, damit Signierer ohne zentrale Instanz geprüft werden können.",
+      "security": "Sicherheit & Datenschutz",
+      "ots": "OTS-Kalender",
+      "otsNote": "Kostenlose öffentliche Kalender — kein API-Schlüssel nötig.",
+      "webhooks": "Webhooks",
+      "webhooksBody": "Registrieren Sie eine URL, und Satohash ruft sie auf, wenn Ihre Stempel bestätigt, aktualisiert oder widerrufen werden.",
+      "events": "Ereignisse:",
+      "webhookDocs": "Webhook-Docs"
+    }
   },
   "widgetsPage": {
     "nav": "Proof DNA Widgets",
@@ -1921,5 +2106,200 @@
     "guide3Body": "OpenTimestamps → Bitcoin beweist, wann eine Datei existierte. Die Identitätsabfrage hier ist optional und getrennt.",
     "aside": "Eine Extension zu verbinden aktiviert weder Ein-Klick-Notarisierung noch ein Reputations-Mesh. Stempeln Sie eine Datei für einen Bitcoin-verankerten Existenznachweis.",
     "stampCta": "Kostenlos stempeln"
+  },
+  "execSummaryPage": {
+    "eyebrow": "Heute kostenlos · Bitcoin für immer",
+    "h1": "Beweisen Sie, dass es existierte.",
+    "h1Highlight": "In unter einer Minute.",
+    "lede": "Satohash stempelt kostenlos den Fingerabdruck Ihrer Datei mit OpenTimestamps auf Bitcoin. Die kostenlose Basisstufe ist der dauerhafte, nie hinter einer Bezahlschranke liegende Vertrauensanker. Optionale Premium-Stufen (Professional ~2.100 sats/Monat, Business ~21.000 sats/Monat) und eine Pay-per-Use-API sind gebaut und gestaged; sie gehen erst in den kostenpflichtigen Betrieb, wenn die Lightning-Schienen finanziert und getestet sind — der Nachweis verankert sich in jedem Fall in Bitcoin.",
+    "stampCta": "Datei kostenlos stempeln",
+    "verifyCta": "Nachweis prüfen",
+    "mobileNote": "Für Einhand-Mobil · bereit für Pixel und iPhone",
+    "honesty": "Beweist, wann eine Datei existierte — nicht, wer sie gemacht hat.",
+    "kpis": {
+      "cost": {
+        "k": "0 sats",
+        "v": "Nutzerkosten heute"
+      },
+      "pending": {
+        "k": "< 60s",
+        "v": "Bis zum ausstehenden Nachweis"
+      },
+      "hash": {
+        "k": "SHA-256",
+        "v": "Nur lokaler Hash"
+      },
+      "chain": {
+        "k": "BTC",
+        "v": "Kette der Aufzeichnung"
+      }
+    },
+    "briefKicker": "Für Führung · Counsel · Compliance",
+    "briefTitle": "Executive",
+    "briefTitleHighlight": "Kurzfassung",
+    "briefFooter": "Vertraulicher Produktüberblick · Satohash by Give A Bit · Keine Rechtsberatung",
+    "brief": {
+      "what": {
+        "label": "01 — Was wir tun",
+        "title": "Was wir tun",
+        "p1": "Satohash liefert unabhängigen, kryptografischen Existenznachweis für jede digitale Datei—Verträge, Fotografien, Quellcode, KI-Modellausgaben, Web-Captures oder Audit-Pakete. Wir speichern oder prüfen den zugrunde liegenden Inhalt nicht. Stattdessen ermöglichen wir Organisationen und Einzelpersonen, einen mathematischen Fingerabdruck dieses Inhalts über das offene OpenTimestamps-Protokoll an die Bitcoin-Blockchain zu binden und so einen portablen Nachweis zu erzeugen, den Dritte prüfen können, ohne Satohash als Hüter der Wahrheit zu vertrauen.",
+        "p2": "Praktisch: Wenn ein Dokument, ein Lieferpaket oder ein digitales Artefakt später der Prüfung standhalten muss—durch Gegenparteien, Regulatoren, Gerichte oder interne Revision—liefert Satohash eine dauerhafte, nicht bestreitbare Aufzeichnung, dass das Artefakt in einer bestimmten Form zu einer bestimmten Zeit existierte. Der Dienst ist für den Alltag am Rand der Arbeit gedacht (rechtlich, kreativ, investigativ und operativ), nicht als einmalige Spielerei."
+      },
+      "how": {
+        "label": "02 — So funktioniert es",
+        "title": "So funktioniert es",
+        "p1": "Der Ablauf ist bewusst einfach und privatsphärenschonend. Zuerst berechnet der Browser des Nutzers (oder ein zugelassener Client) einen SHA-256-Hash der Datei mit Standard-Web-Kryptografie; die Originalbytes müssen das Gerät nie verlassen. Zweitens wird nur dieser 64-Zeichen-Hash an OpenTimestamps-Kalender übermittelt, die viele Hashes in einem Merkle-Baum bündeln und die Wurzel periodisch in eine Bitcoin-Transaktion schreiben. Drittens, sobald ein Bitcoin-Block diese Verpflichtung bestätigt — typischerweise etwa 60 Minuten — kann der resultierende .ots-Nachweis heruntergeladen, archiviert und unabhängig mit Open-Source-Werkzeugen und öffentlichen Kettendaten geprüft werden.",
+        "p2": "Heute wird das Stempeln dem Nutzer kostenlos angeboten. Das Wirtschaftsmodell der Bitcoin-Netzwerkgebühren wird auf Kalender- und Protokollebene durch Bündelung absorbiert; die Produktkosten von Satohash sind Hosting und Betrieb. Wenn kommerzielle Stufen eingeführt werden, wird die Abrechnung über Lightning an Satohash erwartet—kein Wechsel des Ledgers. Der Nachweis bleibt in jedem Fall in Bitcoin verankert."
+      },
+      "truth": {
+        "label": "03 — Wahrheit",
+        "title": "Warum das für Wahrheit zählt",
+        "p1": "In einer Umgebung generativer Medien, Deepfakes, bestrittenen E-Mails und umgeschriebener „Quellen der Aufzeichnung“ ist die härteste Frage oft nicht, was jemand behauptet, sondern wann ein bestimmter digitaler Zustand zuerst existierte und ob er seither verändert wurde. Institutionelles Vertrauen—Markenaussagen, Screenshots und „unser System sagt das“—reicht in adversen Lagen immer weniger. Kryptografisches Zeitstempeln entscheidet nicht über Schuld oder Unschuld; es stellt eine gemeinsame, maschinenprüfbare Basis zeitlicher Wahrheit wieder her: genau dieser Fingerabdruck wurde in ein öffentliches, teuer umzuschreibendes Ledger auf dieser Blockhöhe geschrieben.",
+        "p2": "Diese Basis ist wesentlich für freie Meinungsäußerung, Journalismus, Priorität geistigen Eigentums und Zivilverfahren. Ohne sie ist Geschichte verhandelbar. Mit ihr können Parteien über die Bedeutung streiten—aber nicht darüber, ob die Bytes in der Vergangenheit vorhanden waren. Satohash existiert, damit diese Eigenschaft von Bitcoin Nicht-Spezialisten als tägliches Instrument der Integrität zur Verfügung steht. Es beweist wann, nicht wer."
+      },
+      "enterprises": {
+        "label": "04 — Unternehmen",
+        "title": "Für Firmen und institutionelle Kennzahlen",
+        "p1": "Unternehmen übernehmen Satohash dort, wo Audit-Trails, Lieferantenstreitigkeiten, regulatorische Prüfungen und Mehrparteien-Workflows Evidenz verlangen, die außerhalb jedes einzelnen SaaS-Silos portabel ist. Typische Muster: ausgeführte Verträge und Board-Unterlagen bei der Unterschrift stempeln; Software-Releases und Konfigurations-Snapshots für Change-Control versiegeln; investigative Exporte und Kundenkommunikation verankern; APIs so instrumentieren, dass automatisierte Systeme Nachweise als erstklassige Artefakte ausgeben. Weil die Prüfung keinen fortlaufenden Zugang zur Satohash-Infrastruktur braucht, bleibt die Organisation resilient, wenn Anbieter wechseln—oder Satohash selbst nicht erreichbar ist.",
+        "p2": "Aus Kennzahlensicht kann die Führung die Nachweisabdeckung als operativen KPI behandeln: Anteil hochriskanter Dokumente, die innerhalb des SLA gestempelt wurden; Medianzeit von der Dokumentfinalisierung zum bestätigten Bitcoin-Anker; Anteil der Streitfälle, die mit einem prüfbaren .ots-Paket geschlossen wurden; und familienproduktbezogene Zuordnung des Stempelvolumens nach Geschäftseinheit oder Client-System. Diese Indikatoren verbinden rechtliche Bereitschaft mit Engineering-Praxis—aus „wir führen Akten“ wird „wir können unabhängig beweisen, was wann existierte“. Diagramme auf dieser Seite sind Illustrationen, keine Live-Abrechnungskennzahlen."
+      }
+    },
+    "habitTitle": "Machen Sie den Nachweis zur",
+    "habitTitleHighlight": "täglichen Gewohnheit",
+    "habitLede": "Jeder Vertrag, Entwurf, jedes Foto, jeder KI-Export oder Screenshot kann versiegelt werden, bevor Vertrauen zum Problem wird.",
+    "reasons": {
+      "seconds": {
+        "title": "Sekunden, nicht Wochen",
+        "body": "Stempeln Sie Verträge, Screenshots und KI-Ausgaben, bevor der Streit beginnt."
+      },
+      "private": {
+        "title": "Privat by design",
+        "body": "Zero-Knowledge-Hashing. Wir brauchen das Dokument nie — nur den Fingerabdruck. Die Datei verlässt das Gerät nicht."
+      },
+      "verify": {
+        "title": "Unabhängig prüfbare Nachweise",
+        "body": "OpenTimestamps + Bitcoin PoW ist unabhängige Mathematik, kein Firmenversprechen."
+      },
+      "offline": {
+        "title": "Funktioniert offline-first",
+        "body": "Hashen Sie überall. Synchronisieren Sie, wenn Sie wieder online sind. Für immer portabel."
+      }
+    },
+    "chartsTitle": "Wo Nachweis am",
+    "chartsTitleHighlight": "meisten zählt",
+    "chartsLede": "Illustrativer Nachfragemix und Zeit-bis-Nachweis gegenüber klassischen Wegen (illustrative Produktgeschichte — keine Live-Abrechnungskennzahlen).",
+    "useCases": {
+      "creators": "Creator & IP",
+      "legal": "Recht / Gerichte",
+      "journalism": "Journalismus",
+      "enterprise": "Enterprise-Audit",
+      "ai": "KI-Provenienz"
+    },
+    "friction": {
+      "paper": "Papiernotar",
+      "legal": "Rechtliche Einreichung",
+      "email": "E-Mail-„Beweis“",
+      "satohash": "Satohash"
+    },
+    "days": {
+      "mon": "Mo",
+      "tue": "Di",
+      "wed": "Mi",
+      "thu": "Do",
+      "fri": "Fr",
+      "sat": "Sa",
+      "sun": "So"
+    },
+    "charts": {
+      "pieTitle": "Use-Case-Mix",
+      "pieSub": "Wer stempelt, und warum — Illustration",
+      "barTitle": "Zeit bis zum nutzbaren Nachweis",
+      "barSub": "Tage (log-freundliche Sicht — Satohash sind Sekunden). Illustration, keine Live-KPIs.",
+      "areaTitle": "Wöchentlicher Stempelrhythmus (illustrativ)",
+      "areaSub": "Wie die „Nachweis-Gewohnheit“ eines Teams aussieht, wenn jede Lieferung versiegelt wird",
+      "daysUnit": " Tage"
+    },
+    "howTitle": "Wie kostenloses Stempeln",
+    "howTitleHighlight": "wirklich funktioniert",
+    "stepLabel": "Schritt 0{{n}}",
+    "steps": {
+      "hash": {
+        "title": "Auf dem Telefon hashen",
+        "body": "SHA-256 läuft im Browser. Ihre Datei verlässt das Gerät nicht."
+      },
+      "stamp": {
+        "title": "Kostenlos stempeln",
+        "body": "Nur der Fingerabdruck geht an OpenTimestamps-Kalender. Heute keine Wallet nötig."
+      },
+      "bitcoin": {
+        "title": "Bitcoin versiegelt es",
+        "body": "Kalender bündeln viele Nachweise in eine Bitcoin-Verpflichtung. Die Bestätigung dauert typischerweise etwa 60 Minuten. Permanent."
+      },
+      "verify": {
+        "title": "Überall prüfen",
+        "body": "Teilen Sie einen .ots-Nachweis. Jeder kann ihn prüfen, ohne Satohash zu vertrauen."
+      }
+    },
+    "planesTitle": "Vier Ebenen ·",
+    "planesTitleHighlight": "eine Bitcoin-Basis",
+    "planesLede": "Höhere Ebenen können sich weiterentwickeln. Nachweise der Ebene 1 bleiben für immer gültig.",
+    "planes": {
+      "atlas": {
+        "name": "Atlas",
+        "desc": "Live-Chain-Intel, Mempool, Netzgesundheit"
+      },
+      "settlement": {
+        "name": "Settlement",
+        "desc": "Lightning / L402, wenn die Bezahlschranke aktiv wird"
+      },
+      "identity": {
+        "name": "Identity",
+        "desc": "Nostr-Signer, Mehrparteien-Provenienz"
+      },
+      "proof": {
+        "name": "Proof",
+        "desc": "SHA-256 + OpenTimestamps → Bitcoin PoW"
+      }
+    },
+    "pricingTitle": "Klare",
+    "pricingTitleHighlight": "Preise",
+    "pricingLede": "Kostenlose Stufe jetzt live. Künftige Lightning-Gebühren zahlen uns — nicht eine andere Kette.",
+    "tiers": {
+      "free": {
+        "name": "Kostenlos",
+        "price": "0 sats",
+        "tag": "Jetzt live",
+        "p1": "OTS auf Bitcoin",
+        "p2": "Lokaler Hash",
+        "p3": "Für immer prüfen",
+        "p4": "Kein Konto",
+        "p5": "Nie hinter einer Bezahlschranke"
+      },
+      "pro": {
+        "name": "Professional",
+        "price": "~2.100 sats",
+        "tag": "Gebaut, gestaged",
+        "p1": "~29 $/Monat",
+        "p2": "Unbegrenztes Stempeln",
+        "p3": "Volles Vault",
+        "p4": "API + PDF-Exporte"
+      },
+      "biz": {
+        "name": "Business / Studio",
+        "price": "~21.000 sats",
+        "tag": "Gebaut, gestaged",
+        "p1": "~299 $/Monat",
+        "p2": "Teams und Studios",
+        "p3": "White-Label",
+        "p4": "SLA + Volumen"
+      }
+    },
+    "ctaTitle": "Ihre nächste Datei verdient eine",
+    "ctaTitleHighlight": "Bitcoin-Quittung",
+    "ctaBody": "Kein Konto. Keine Karte. Lokal hashen, kostenlos stempeln, lebenslang prüfen.",
+    "ctaStamp": "Jetzt kostenlos starten",
+    "ctaPricing": "Preise",
+    "ctaDocs": "Alle Docs",
+    "ctaCompare": "Vergleichen"
   }
 }

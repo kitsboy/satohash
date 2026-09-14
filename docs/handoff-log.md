@@ -1,3 +1,9 @@
+## 2026-09-14 (Grok M3 — developer + exec summary i18n + catalog 250)
+
+SPA only. `/developer` and `/docs/executive-summary` in 7 locales. translations/*.json all **250** keys. Snapper rail: scaffold. Kimi: **do not rebuild API**. Pages = Grok.
+
+---
+
 ## 2026-09-14 (Grok M3 — Explorer/Atlas demos + Identity honesty)
 
 SPA only. `/explorer` is a public **Merkle demo** (not a live block explorer). `/atlas` is a public **search demo** (this plane, not a world index). `/identity` states: proves *when*, not *who*; NIP-05 is lookup. Network/footer no longer send people to deferred `/proof-of-existence`. Cam X pin / iPhone unfurl still later. **Kimi: do not rebuild API.** Pages = Grok.

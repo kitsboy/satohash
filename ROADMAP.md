@@ -34,9 +34,9 @@ Cam: whole site in the seven languages we already offer. Commit + push after eac
 | Slice | Status | Surfaces |
 |-------|--------|----------|
 | **A — product loop** | **[x]** `89262b1` | Stamp leftovers, Verify, `/stamp/done`, `/p/<hash>` SPA + zero-JS, Counsel, Status, Watch, nav/footer |
-| **B — public marketing** | **[~]** | **Done:** donate, proof-pack, about, pitch, network, explorer (Merkle **demo**), atlas (search **demo**), identity (lookup, not authorship). **Next:** Developer → remaining public |
+| **B — public marketing** | **[~]** | **Done:** donate, proof-pack, about, pitch, network, explorer (Merkle **demo**), atlas (search **demo**), identity (lookup), developer, exec summary. **Next:** remaining public (Mesh/Offers if un-gated) |
 | **C — app / ops** | **[ ]** | Admin, contracts, v5, Settings, Image vault, Protocol stats |
-| Catalog debt | **[ ]** | de/pt/sw `translations/*.json` 175 keys → match en (~250). Stop growing inline `index.jsx` |
+| Catalog debt | **[x]** | en/es/fr/de/pt/sw/zh `translations/*.json` **250** keys. Stop growing inline `index.jsx` |
 
 Gate: `npm run i18n:check`. Keep Bitcoin / OpenTimestamps / `ots-cli` / hash hex / Pending·Confirmed in English.
 

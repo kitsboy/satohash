@@ -1,3 +1,9 @@
+## Latest Session Summary (Grok M3, 2026-09-14 — developer + catalog)
+
+**Lane:** SPA only. **Kimi: ingest THOR. Do not rebuild the API.** `/developer` and exec summary in 7 locales. `translations/*.json` 250 keys each. Next remaining public is sparse (Mesh/Offers still deferred). Cam X/iPhone later.
+
+---
+
 ## Latest Session Summary (Grok M3, 2026-09-14 — demos + identity)
 
 **Lane:** SPA only. **Kimi: ingest THOR Obsidian. Do not rebuild the API. Do not Tailscale-sync to M4. Pages = Grok.**

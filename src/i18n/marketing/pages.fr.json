@@ -564,9 +564,194 @@
     }
   },
   "developerPage": {
-    "cliTitle": "CLI",
-    "cliHint": "Le hash reste sur la machine ; seul le SHA-256 est envoyé. Envoie toujours X-Satohash-Client: cli. Carte de preuve",
-    "cliSource": "Code source de la CLI sur GitHub"
+    "cliTitle": "Horodater depuis le terminal",
+    "cliHint": "Le fichier ne quitte pas l’appareil ; seul le SHA-256 hex est envoyé. Envoie toujours X-Satohash-Client: cli. La carte de preuve s’imprime sur",
+    "cliSource": "Code source de la CLI sur GitHub",
+    "cliPath": "Chemin terminal",
+    "cliDefaultApi": "API par défaut (déjà définie dans la vraie CLI) :",
+    "copyAria": "Copier {{cmd}}",
+    "localCalls": "Appels API locaux : {{count}}",
+    "localStamps": "Horodatages de ce navigateur : {{count}}",
+    "chip": "API développeur — {{host}}",
+    "simulated": "Simulé",
+    "title": "Construire avec",
+    "titleBrand": "Satohash.",
+    "lede": "Horodatez n’importe quel document, fichier ou donnée sur Bitcoin en un appel API. Le fichier ne quitte pas l’appareil — seul le SHA-256 hex est envoyé. Aucune connaissance blockchain requise.",
+    "tabs": {
+      "overview": "Aperçu",
+      "auth": "Accès",
+      "docs": "Documentation",
+      "strategy": "Stratégie"
+    },
+    "quick": {
+      "hash": {
+        "title": "Hachez votre fichier",
+        "desc": "SHA-256 s’exécute dans votre navigateur. Le fichier ne quitte pas votre appareil."
+      },
+      "post": {
+        "title": "POST du hash",
+        "desc": "Envoyez l’empreinte de 64 caractères à /api/stamp. Pas de compte. Les horodatages sont gratuits aujourd’hui."
+      },
+      "confirm": {
+        "title": "Bitcoin confirme",
+        "desc": "La confirmation attend un bloc Bitcoin — typiquement environ une heure (le bloc suivant). Téléchargez votre fichier .ots."
+      }
+    },
+    "stats": {
+      "rateLabel": "Limite publique",
+      "rateValue": "5/min",
+      "rateSub": "Pas de quota quotidien",
+      "availLabel": "Disponibilité",
+      "availValue": "Haute disponibilité",
+      "availSub": "3 calendriers OTS pingés en direct",
+      "batchLabel": "Horodatage par lots",
+      "batchValue": "Jusqu’à 100",
+      "batchSub": "Fichiers par lot"
+    },
+    "howTitle": "Comment votre horodatage atteint Bitcoin",
+    "steps": {
+      "hash": {
+        "title": "Vous hachez votre fichier",
+        "desc": "SHA-256 s’exécute dans votre navigateur. Le fichier ne quitte pas votre appareil."
+      },
+      "send": {
+        "title": "Hash envoyé à Satohash",
+        "desc": "Seule l’empreinte de 64 caractères est transmise — pas votre document."
+      },
+      "bundle": {
+        "title": "Regroupé avec d’autres hash",
+        "desc": "Satohash regroupe de nombreux hash dans un arbre de Merkle pour économiser de l’espace."
+      },
+      "commit": {
+        "title": "Ancré dans Bitcoin",
+        "desc": "La racine Merkle est écrite dans une transaction Bitcoin via les calendriers OpenTimestamps."
+      },
+      "proof": {
+        "title": "Preuve permanente",
+        "desc": "Une fois confirmé sur le bloc Bitcoin suivant (typiquement environ une heure), votre fichier .ots prouve que le document existait à ce moment de bloc — pour toujours."
+      }
+    },
+    "tryIt": "Essayez",
+    "auth": {
+      "title": "Authentification",
+      "tooltipTitle": "Ai-je besoin d’une API key ?",
+      "tooltipBody": "Non. L’horodatage est ouvert aujourd’hui — envoyez un hash SHA-256 et recevez une preuve. Les clés n’existent que pour les apps de la suite que nous délivrons nous-mêmes. Vous n’avez jamais à en créer ni en stocker une.",
+      "badge": "Pas de clé",
+      "noKeyTitle": "Pas de clé aujourd’hui",
+      "noKeyBody": "Envoyez POST /api/stamp avec {\"hash\":\"<64-char sha256>\"} et vous recevez un ID de preuve. Ouvert à tous, limité en débit — pas de compte, pas d’inscription, pas de clé. Les horodatages sont gratuits aujourd’hui.",
+      "suiteTitle": "Apps de la suite (interne)",
+      "suiteBody": "Les apps de la famille Give A Bit envoient X-Satohash-Key — une clé que nous provisionnons côté serveur. Ce n’est pas en libre-service : écrivez à hello@giveabit.io et nous en émettons une à la main.",
+      "paidTitle": "Le mode payant est en staging",
+      "paidBody": "Pas en production. Quand le paywall est actif, l’API répond HTTP 402 avec une facture Lightning. Payez par appel, puis réessayez avec Authorization: L402 <token>. Toujours pas de compte ni de KYC. Aujourd’hui les horodatages sont gratuits et la facturation Lightning est éteinte.",
+      "tryNow": "Essayez maintenant — {{host}}",
+      "removed": "Les clés API en libre-service n’existent pas. Cette page proposait un gestionnaire de clés qui appelait un endpoint qui n’a jamais existé, et émettait des clés qu’aucun serveur ne vérifiait — retiré plutôt que simulé. L’horodatage n’a pas besoin de clé : envoyez un hash, recevez une preuve. Les horodatages sont gratuits aujourd’hui."
+    },
+    "docs": {
+      "aiTitle": "Connecter IA et automatisation",
+      "aiLede": "Satohash fonctionne avec tout outil capable d’une requête HTTP. Aucun SDK spécial n’est nécessaire.",
+      "ai": {
+        "chatgpt": {
+          "title": "ChatGPT / GPT-4",
+          "desc": "Utilisez une Custom GPT Action pour horodater des documents depuis une conversation ChatGPT."
+        },
+        "claude": {
+          "title": "Claude (Anthropic)",
+          "desc": "Ajoutez Satohash comme outil dans le system prompt de Claude. Claude peut hacher et horodater des fichiers sur demande."
+        },
+        "zapier": {
+          "title": "Zapier / Make",
+          "desc": "Pas de code. Utilisez l’action Webhook pour appeler /api/stamp quand un fichier est créé ou signé."
+        },
+        "n8n": {
+          "title": "n8n",
+          "desc": "Ajoutez un nœud HTTP Request à n’importe quel flux. Hachez avec le nœud Code, horodatez avec HTTP."
+        }
+      },
+      "apiRef": "Référence API",
+      "apiRefBody": "Documentation interactive complète via Swagger UI. REST API avec corps JSON.",
+      "webhooks": "Webhooks",
+      "webhooksTip": "Une URL sur votre serveur que Satohash appelle quand un horodatage est confirmé ou révoqué. Pas de polling.",
+      "rateLimits": "Limites de débit",
+      "rateLimitsTip": "Pas de quota quotidien. Le chemin public est limité à 5 requêtes par minute pour garder le service sain. Pas de portefeuille Lightning nécessaire. Les horodatages sont gratuits aujourd’hui.",
+      "bearer": "Bearer token",
+      "bearerTip": "Les apps de la suite que nous provisionnons peuvent envoyer X-Satohash-Key. Les clés Bearer en libre-service n’existent pas. Gardez secrète toute clé que nous émettons.",
+      "openSwagger": "Ouvrir Swagger UI →",
+      "endpoints": {
+        "stamp": "Soumettez un hash SHA-256. Renvoie un ID d’horodatage et le fichier de preuve .ots.",
+        "verify": "Vérifiez un fichier .ots. Renvoie verified: true/false et la hauteur de bloc Bitcoin.",
+        "history": "Liste vos 50 derniers horodatages.",
+        "stamps": "Obtenez les détails de l’horodatage ou téléchargez le binaire .ots.",
+        "upgrade": "Vérifiez si un horodatage pending a été confirmé sur Bitcoin.",
+        "fees": "Estimations de frais Bitcoin en direct depuis mempool.space."
+      }
+    },
+    "strategy": {
+      "title": "Des tarifs simples et",
+      "titleHighlight": "honnêtes.",
+      "lede": "Les horodatages sont gratuits aujourd’hui — pas de quota quotidien, pas de carte, pas de facture Lightning. La seule limite est un garde de 5 requêtes par minute. Les crédits API payants, Pro et la facturation Lightning sont construits et en staging ; ils ne sont pas en production. Voir /pricing pour le schéma honnête.",
+      "stagedBadge": "En staging",
+      "seePricing": "Voir /pricing",
+      "contactCta": "Contacter",
+      "free": {
+        "name": "Gratuit",
+        "price": "$0",
+        "unit": "en direct",
+        "features": [
+          "Pas de quota quotidien",
+          "Preuve OTS Bitcoin",
+          "Téléchargement du fichier .ots",
+          "Support communautaire"
+        ]
+      },
+      "pro": {
+        "name": "Pro",
+        "price": "Staging",
+        "unit": "pas en production",
+        "features": [
+          "Non facturé aujourd’hui",
+          "Le paywall est éteint",
+          "Webhooks quand le payant sera lancé",
+          "Voir /pricing"
+        ]
+      },
+      "enterprise": {
+        "name": "Enterprise",
+        "price": "Contacter",
+        "unit": "partenaires",
+        "features": [
+          "Pas une API payante en production",
+          "Accès partenaire",
+          "Écrire à hello@giveabit.io",
+          "Voir /pricing"
+        ]
+      },
+      "creditsTitle": "Que sont les crédits API ?",
+      "creditsBody": "Les crédits API sont une idée prépayée en staging pour de futurs horodatages payants — pas en production. Chaque horodatage est gratuit aujourd’hui. La facturation Lightning / L402 est construite mais éteinte jusqu’à ce que les rails soient financés.",
+      "creditsStrong": "Vous n’avez pas besoin d’un portefeuille Lightning pour utiliser Satohash."
+    },
+    "sidebar": {
+      "credits": "Crédits API",
+      "creditsTip": "Chaque horodatage est gratuit aujourd’hui. Les crédits et recharges Lightning sont en staging, pas en production. Le chemin gratuit n’a pas de quota quotidien — aucun paiement n’est nécessaire.",
+      "noQuota": "Pas de quota quotidien",
+      "guard": "Garde d’abus 5 requêtes / min · pas de carte",
+      "rateLabel": "Limite publique",
+      "rateValue": "5 / min",
+      "rateNote": "Un garde d’abus, pas un quota. L’horodatage n’est jamais plafonné par jour. Les horodatages sont gratuits aujourd’hui.",
+      "seePricing": "Voir /pricing",
+      "resources": "Ressources",
+      "apiRef": "Référence API (Swagger)",
+      "aiGuide": "Guide d’intégration IA",
+      "nostr": "Identité Nostr (NIP-05)",
+      "nostrTipTitle": "Identité NIP-05",
+      "nostrTip": "Relie votre nom lisible (comme user@satohash.io) à une clé cryptographique, pour que les signataires soient vérifiés sans faire confiance à une autorité centrale.",
+      "security": "Sécurité et confidentialité",
+      "ots": "Calendriers OTS",
+      "otsNote": "Calendriers publics gratuits — pas d’API key requise.",
+      "webhooks": "Webhooks",
+      "webhooksBody": "Enregistrez une URL et Satohash l’appellera automatiquement quand vos horodatages sont confirmés, mis à niveau ou révoqués.",
+      "events": "Événements :",
+      "webhookDocs": "Docs webhooks"
+    }
   },
   "widgetsPage": {
     "nav": "Proof DNA Widgets",
@@ -1921,5 +2106,200 @@
     "guide3Body": "OpenTimestamps → Bitcoin prouve quand un fichier a existé. La recherche d’identité ici est facultative et séparée.",
     "aside": "Connecter une extension n’active pas une notarisation en un clic ni un mesh de réputation. Horodatez un fichier pour une preuve d’existence ancrée à Bitcoin.",
     "stampCta": "Horodatage gratuit"
+  },
+  "execSummaryPage": {
+    "eyebrow": "Gratuit aujourd’hui · Bitcoin pour toujours",
+    "h1": "Prouvez que ça existait.",
+    "h1Highlight": "En moins d’une minute.",
+    "lede": "Satohash horodate gratuitement l’empreinte de votre fichier avec OpenTimestamps sur Bitcoin. Le palier de base gratuit est l’ancre de confiance permanente, jamais paywallée. Les paliers premium optionnels (Professional ~2 100 sats/mois, Business ~21 000 sats/mois) et une API à l’usage sont construits et en staging ; ils ne passent en payant que lorsque les rails Lightning sont financés et testés — la preuve s’ancre à Bitcoin dans tous les cas.",
+    "stampCta": "Horodater un fichier gratuitement",
+    "verifyCta": "Vérifier une preuve",
+    "mobileNote": "Conçu pour le mobile à une main · prêt pour Pixel et iPhone",
+    "honesty": "Prouve quand un fichier a existé — pas qui l’a créé.",
+    "kpis": {
+      "cost": {
+        "k": "0 sats",
+        "v": "Coût utilisateur aujourd’hui"
+      },
+      "pending": {
+        "k": "< 60s",
+        "v": "Pour une preuve en attente"
+      },
+      "hash": {
+        "k": "SHA-256",
+        "v": "Hash local uniquement"
+      },
+      "chain": {
+        "k": "BTC",
+        "v": "Chaîne d’enregistrement"
+      }
+    },
+    "briefKicker": "Pour la direction · le conseil · la conformité",
+    "briefTitle": "Note",
+    "briefTitleHighlight": "exécutive",
+    "briefFooter": "Aperçu produit confidentiel · Satohash by Give A Bit · Pas un avis juridique",
+    "brief": {
+      "what": {
+        "label": "01 — Ce que nous faisons",
+        "title": "Ce que nous faisons",
+        "p1": "Satohash fournit une preuve d’existence indépendante et cryptographique pour tout fichier numérique—contrats, photographies, code source, sorties de modèles d’IA, captures web ou dossiers d’audit. Nous ne stockons ni n’examinons le contenu sous-jacent. Nous permettons aux organisations et aux personnes de lier une empreinte mathématique de ce contenu à la blockchain Bitcoin via le protocole ouvert OpenTimestamps, produisant une preuve portable que des tiers peuvent vérifier sans faire confiance à Satohash comme gardien de la vérité.",
+        "p2": "Concrètement : lorsqu’un document, un livrable ou un artefact numérique doit plus tard résister à l’examen—contreparties, régulateurs, tribunaux ou audit interne—Satohash fournit un enregistrement durable et non répudiable que l’artefact existait sous une forme précise à un moment précis. Le service est conçu pour un usage quotidien au bord du travail (juridique, créatif, d’enquête et opérationnel), pas comme une nouveauté ponctuelle."
+      },
+      "how": {
+        "label": "02 — Comment ça marche",
+        "title": "Comment ça marche",
+        "p1": "Le processus est volontairement simple et respectueux de la vie privée. D’abord, le navigateur de l’utilisateur (ou un client approuvé) calcule un hash SHA-256 du fichier avec la cryptographie web standard ; les octets d’origine n’ont jamais besoin de quitter l’appareil. Ensuite, seul ce hash de 64 caractères est soumis aux calendriers OpenTimestamps, qui agrègent de nombreux hash dans un arbre de Merkle et engagent périodiquement la racine dans une transaction Bitcoin. Enfin, une fois qu’un bloc Bitcoin confirme cet engagement — typiquement environ 60 minutes — la preuve .ots résultante peut être téléchargée, archivée et vérifiée indépendamment avec des outils open source et les données publiques de la chaîne.",
+        "p2": "Aujourd’hui, l’horodatage est offert sans frais pour l’utilisateur. Le modèle économique des frais de réseau Bitcoin est absorbé au niveau des calendriers et du protocole par le regroupement ; le coût produit de Satohash est l’hébergement et l’exploitation. Quand des paliers commerciaux seront introduits, le règlement est prévu via Lightning vers Satohash—pas un changement de registre. La preuve reste ancrée à Bitcoin dans tous les cas."
+      },
+      "truth": {
+        "label": "03 — Vérité",
+        "title": "Pourquoi c’est important pour la vérité",
+        "p1": "Dans un environnement de médias génératifs, de deepfakes, d’e-mails contestés et de « sources de référence » réécrites, la question la plus dure n’est souvent pas ce que quelqu’un affirme, mais quand un état numérique précis a existé pour la première fois et s’il a été altéré depuis. La confiance institutionnelle—déclarations de marque, captures d’écran et « notre système le dit »—est de moins en moins suffisante en contexte adversarial. L’horodatage cryptographique ne tranche pas la culpabilité ou l’innocence ; il rétablit une base partagée, vérifiable par machine, de vérité temporelle : cette empreinte exacte a été engagée sur un registre public, coûteux à réécrire, à cette hauteur de bloc.",
+        "p2": "Cette base est essentielle à la libre expression, au journalisme, à la priorité de propriété intellectuelle et à la procédure civile. Sans elle, l’histoire est négociable. Avec elle, les parties peuvent encore diverger sur le sens—mais pas sur la présence des octets dans le passé. Satohash existe pour rendre cette propriété de Bitcoin accessible aux non-spécialistes comme instrument quotidien d’intégrité. Cela prouve le quand, pas le qui."
+      },
+      "enterprises": {
+        "label": "04 — Entreprises",
+        "title": "Pour les sociétés et les métriques institutionnelles",
+        "p1": "Les entreprises adoptent Satohash là où les pistes d’audit, les litiges fournisseurs, les examens réglementaires et les flux multipartites exigent une preuve portable hors de tout silo SaaS. Les schémas typiques : horodater les accords signés et les documents de conseil à la signature ; sceller les versions logicielles et les instantanés de configuration pour le contrôle des changements ; ancrer les exports d’enquête et les communications clients ; instrumenter les API pour que les systèmes automatisés émettent des preuves comme artefacts de premier rang. Comme la vérification n’exige pas un accès continu à l’infrastructure Satohash, l’organisation reste résiliente si les fournisseurs changent—ou si Satohash est indisponible.",
+        "p2": "Du point de vue des métriques, la direction peut traiter la couverture de preuves comme un KPI opérationnel : pourcentage de documents à haut risque horodatés dans le SLA ; temps médian de la finalisation du document à l’ancre Bitcoin confirmée ; part des litiges clos avec un paquet .ots vérifiable ; et attribution du volume d’horodatages par unité métier ou système client. Ces indicateurs alignent la préparation juridique et la pratique d’ingénierie—passer de « nous conservons des dossiers » à « nous pouvons prouver, indépendamment, ce qui existait quand ». Les graphiques de cette page sont des illustrations, pas des métriques de facturation en direct."
+      }
+    },
+    "habitTitle": "Faire de la preuve une",
+    "habitTitleHighlight": "habitude quotidienne",
+    "habitLede": "Chaque contrat, brouillon, photo, export d’IA ou capture peut être scellé avant que la confiance ne devienne un problème.",
+    "reasons": {
+      "seconds": {
+        "title": "Des secondes, pas des semaines",
+        "body": "Horodatez contrats, captures et sorties d’IA avant que le conflit ne commence."
+      },
+      "private": {
+        "title": "Privé par conception",
+        "body": "Hachage en connaissance nulle. Nous n’avons jamais besoin du document — seulement de l’empreinte. Le fichier ne quitte pas l’appareil."
+      },
+      "verify": {
+        "title": "Preuves vérifiables indépendamment",
+        "body": "OpenTimestamps + Bitcoin PoW est une mathématique indépendante, pas une promesse d’entreprise."
+      },
+      "offline": {
+        "title": "Conçu offline-first",
+        "body": "Hashez n’importe où. Synchronisez une fois de retour en ligne. Portable pour toujours."
+      }
+    },
+    "chartsTitle": "Là où la preuve",
+    "chartsTitleHighlight": "compte le plus",
+    "chartsLede": "Mix de demande illustratif et délai-jusqu’à-preuve vs chemins traditionnels (récit produit illustratif — pas des métriques de facturation en direct).",
+    "useCases": {
+      "creators": "Créateurs & PI",
+      "legal": "Juridique / Tribunaux",
+      "journalism": "Journalisme",
+      "enterprise": "Audit d’entreprise",
+      "ai": "Provenance IA"
+    },
+    "friction": {
+      "paper": "Notaire papier",
+      "legal": "Dépôt juridique",
+      "email": "« Preuve » e-mail",
+      "satohash": "Satohash"
+    },
+    "days": {
+      "mon": "Lun",
+      "tue": "Mar",
+      "wed": "Mer",
+      "thu": "Jeu",
+      "fri": "Ven",
+      "sat": "Sam",
+      "sun": "Dim"
+    },
+    "charts": {
+      "pieTitle": "Mix des cas d’usage",
+      "pieSub": "Qui horodate, et pourquoi — illustration",
+      "barTitle": "Délai jusqu’à une preuve utilisable",
+      "barSub": "Jours (vue log — Satohash, ce sont des secondes). Illustration, pas des KPI en direct.",
+      "areaTitle": "Rythme hebdomadaire d’horodatage (illustratif)",
+      "areaSub": "À quoi ressemble l’« habitude de preuve » d’une équipe quand chaque livrable est scellé",
+      "daysUnit": " jours"
+    },
+    "howTitle": "Comment l’horodatage gratuit",
+    "howTitleHighlight": "fonctionne vraiment",
+    "stepLabel": "Étape 0{{n}}",
+    "steps": {
+      "hash": {
+        "title": "Hashez sur votre téléphone",
+        "body": "SHA-256 s’exécute dans le navigateur. Votre fichier ne quitte pas l’appareil."
+      },
+      "stamp": {
+        "title": "Horodatez gratuitement",
+        "body": "Seule l’empreinte va aux calendriers OpenTimestamps. Pas de portefeuille nécessaire aujourd’hui."
+      },
+      "bitcoin": {
+        "title": "Bitcoin le scelle",
+        "body": "Les calendriers regroupent de nombreuses preuves en un engagement Bitcoin. La confirmation prend typiquement environ 60 minutes. Permanent."
+      },
+      "verify": {
+        "title": "Vérifiez n’importe où",
+        "body": "Partagez une preuve .ots. N’importe qui peut la contrôler sans faire confiance à Satohash."
+      }
+    },
+    "planesTitle": "Quatre plans ·",
+    "planesTitleHighlight": "une base Bitcoin",
+    "planesLede": "Les plans supérieurs peuvent évoluer. Les preuves du plan 1 restent valides pour toujours.",
+    "planes": {
+      "atlas": {
+        "name": "Atlas",
+        "desc": "Intel de chaîne en direct, mempool, santé du réseau"
+      },
+      "settlement": {
+        "name": "Settlement",
+        "desc": "Lightning / L402 quand le paywall s’active"
+      },
+      "identity": {
+        "name": "Identity",
+        "desc": "Signataires Nostr, provenance multipartite"
+      },
+      "proof": {
+        "name": "Proof",
+        "desc": "SHA-256 + OpenTimestamps → Bitcoin PoW"
+      }
+    },
+    "pricingTitle": "Clarté des",
+    "pricingTitleHighlight": "prix",
+    "pricingLede": "Palier gratuit en direct maintenant. Les futurs frais Lightning nous paient — pas une autre chaîne.",
+    "tiers": {
+      "free": {
+        "name": "Gratuit",
+        "price": "0 sats",
+        "tag": "En direct maintenant",
+        "p1": "OTS sur Bitcoin",
+        "p2": "Hash local",
+        "p3": "Vérifier pour toujours",
+        "p4": "Sans compte",
+        "p5": "Jamais paywallé"
+      },
+      "pro": {
+        "name": "Professional",
+        "price": "~2 100 sats",
+        "tag": "Construit, en staging",
+        "p1": "~29 $/mois",
+        "p2": "Horodatage illimité",
+        "p3": "Coffre complet",
+        "p4": "API + exports PDF"
+      },
+      "biz": {
+        "name": "Business / Studio",
+        "price": "~21 000 sats",
+        "tag": "Construit, en staging",
+        "p1": "~299 $/mois",
+        "p2": "Équipes et studios",
+        "p3": "Marque blanche",
+        "p4": "SLA + volume"
+      }
+    },
+    "ctaTitle": "Votre prochain fichier mérite un",
+    "ctaTitleHighlight": "reçu Bitcoin",
+    "ctaBody": "Pas de compte. Pas de carte. Hashez en local, horodatez gratuitement, vérifiez à vie.",
+    "ctaStamp": "Commencer gratuitement",
+    "ctaPricing": "Tarifs",
+    "ctaDocs": "Toute la docs",
+    "ctaCompare": "Comparer"
   }
 }
