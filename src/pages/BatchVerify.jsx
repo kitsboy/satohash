@@ -2,19 +2,22 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ClipboardPaste, Search, CheckCircle2, XCircle, Loader2, ArrowLeft } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import usePageMeta from '../hooks/usePageMeta'
 import Footer from '../components/layout/Footer'
 import { getApiUrl } from '../config/constants'
 import { isSha256Hex, normalizeSha256 } from '../utils/hashUtils'
 
 const BATCH_LIMIT = 50
+const EXAMPLE_HASHES = `9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08
+2c26b46b68ffc68ff99b453c1d30413413422d706483bfa0f98a5e886266e7ae`
 
 export default function BatchVerify() {
+  const { t } = useTranslation()
   usePageMeta({
     page: 'verify',
-    title: 'Batch Verify — Check 50 hashes at once',
-    description:
-      'Paste up to 50 SHA-256 hashes and check them all against the Satohash registry in one click.'
+    title: t('batchVerifyPage.metaTitle'),
+    description: t('batchVerifyPage.metaDescription')
   })
   const [input, setInput] = useState('')
   const [results, setResults] = useState(null)
@@ -31,12 +34,12 @@ export default function BatchVerify() {
   const onVerify = async () => {
     const hashes = parseHashes()
     if (!hashes.length) {
-      setError('No valid SHA-256 hashes found. Paste one per line (or comma/space separated).')
+      setError(t('batchVerifyPage.errorNone'))
       setResults(null)
       return
     }
     if (hashes.length > BATCH_LIMIT) {
-      setError(`Too many hashes — max ${BATCH_LIMIT}. You pasted ${hashes.length}.`)
+      setError(t('batchVerifyPage.errorTooMany', { max: BATCH_LIMIT, count: hashes.length }))
       return
     }
     setLoading(true)
@@ -83,14 +86,13 @@ export default function BatchVerify() {
           to="/verify"
           className="inline-flex items-center gap-1.5 text-sm text-[var(--text-secondary)] hover:text-[var(--accent-gold)]"
         >
-          <ArrowLeft size={15} /> Back to Verify
+          <ArrowLeft size={15} /> {t('batchVerifyPage.back')}
         </Link>
 
         <div>
-          <h1 className="text-3xl font-bold">Batch Verify</h1>
+          <h1 className="text-3xl font-bold">{t('batchVerifyPage.title')}</h1>
           <p className="mt-2 text-[var(--text-secondary)]">
-            Paste up to {BATCH_LIMIT} SHA-256 hashes (one per line) and check them all against the
-            Satohash registry at once.
+            {t('batchVerifyPage.lede', { max: BATCH_LIMIT })}
           </p>
         </div>
 
@@ -102,9 +104,7 @@ export default function BatchVerify() {
           <textarea
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder={
-              'Paste hashes here…\n9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08\n2c26b46b68ffc68ff99b453c1d30413413422d706483bfa0f98a5e886266e7ae'
-            }
+            placeholder={`${t('batchVerifyPage.placeholder')}\n${EXAMPLE_HASHES}`}
             rows={8}
             className="w-full rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] p-3 font-mono text-sm"
           />
@@ -118,8 +118,10 @@ export default function BatchVerify() {
             >
               {loading ? <Loader2 size={16} className="animate-spin" /> : <Search size={16} />}
               {loading
-                ? 'Checking…'
-                : `Verify ${parseHashes().length ? parseHashes().length : ''} hashes`}
+                ? t('batchVerifyPage.checking')
+                : parseHashes().length
+                  ? t('batchVerifyPage.verifyCount', { count: parseHashes().length })
+                  : t('batchVerifyPage.verify')}
             </button>
             {input && (
               <button
@@ -127,11 +129,11 @@ export default function BatchVerify() {
                 onClick={() => setInput('')}
                 className="rounded-lg border border-[var(--border)] px-3 py-2 text-xs font-semibold text-[var(--text-secondary)]"
               >
-                Clear
+                {t('batchVerifyPage.clear')}
               </button>
             )}
             <span className="text-xs text-[var(--text-muted)]">
-              {parseHashes().length} valid hash(es) parsed
+              {t('batchVerifyPage.parsed', { count: parseHashes().length })}
             </span>
           </div>
           {error && (
@@ -145,13 +147,14 @@ export default function BatchVerify() {
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-4">
             <div className="flex flex-wrap gap-3 text-sm">
               <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/15 px-3 py-1 font-bold text-emerald-400">
-                <CheckCircle2 size={14} /> {confirmed.length} confirmed
+                <CheckCircle2 size={14} />{' '}
+                {t('batchVerifyPage.confirmed', { count: confirmed.length })}
               </span>
               <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-500/15 px-3 py-1 font-bold text-amber-400">
-                <Loader2 size={14} /> {pending.length} pending
+                <Loader2 size={14} /> {t('batchVerifyPage.pending', { count: pending.length })}
               </span>
               <span className="inline-flex items-center gap-1.5 rounded-full bg-rose-500/15 px-3 py-1 font-bold text-rose-400">
-                <XCircle size={14} /> {missing.length} not found
+                <XCircle size={14} /> {t('batchVerifyPage.missing', { count: missing.length })}
               </span>
             </div>
             <div className="space-y-2">
@@ -169,10 +172,16 @@ export default function BatchVerify() {
                     </div>
                     <div className="text-[11px] text-[var(--text-muted)]">
                       {r.found
-                        ? `${r.status}${r.block ? ` · block ${r.block}` : ''}${r.filename ? ` · ${r.filename}` : ''}`
+                        ? [
+                            r.status,
+                            r.block ? t('batchVerifyPage.block', { block: r.block }) : null,
+                            r.filename
+                          ]
+                            .filter(Boolean)
+                            .join(' · ')
                         : r.error
-                          ? `error: ${r.error}`
-                          : 'not in registry'}
+                          ? t('batchVerifyPage.errorPrefix', { message: r.error })
+                          : t('batchVerifyPage.notInRegistry')}
                     </div>
                   </div>
                   {r.found && (
@@ -180,7 +189,7 @@ export default function BatchVerify() {
                       to={`/verify/${r.hash}`}
                       className="shrink-0 text-xs text-[var(--accent-gold)] hover:underline"
                     >
-                      Details →
+                      {t('batchVerifyPage.details')}
                     </Link>
                   )}
                 </div>

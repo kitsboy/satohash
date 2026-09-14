@@ -17,8 +17,10 @@ describe('publicRoutes', () => {
     expect(isMarketingPublicPath('/chain-of-custody')).toBe(true)
     expect(isMarketingPublicPath('/explorer')).toBe(true)
     expect(isMarketingPublicPath('/atlas')).toBe(true)
+    expect(isMarketingPublicPath('/nodes')).toBe(true)
     expect(needsMarketingShell('/explorer')).toBe(true)
     expect(needsMarketingShell('/atlas')).toBe(true)
+    expect(needsMarketingShell('/nodes')).toBe(true)
   })
 
   it('excludes authenticated app routes', () => {

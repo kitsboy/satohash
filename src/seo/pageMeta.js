@@ -1089,33 +1089,39 @@ export const pageMeta = {
   },
   mesh: {
     en: {
-      title: 'Witness Mesh — Distributed Anchoring',
+      title: 'OpenTimestamps calendars — live ping demo',
       description:
-        'Peer-to-peer witness network for redundant Bitcoin proof anchoring. Node status and mesh verification.'
+        'This page pings OpenTimestamps calendars via GET /api/mesh/nodes. Not a world mesh map. Live Bitcoin tip and calendars also on /network.'
     },
     es: {
-      title: 'Malla de Testigos — Anclaje Distribuido',
-      description: 'Red de testigos P2P para anclaje redundante de pruebas Bitcoin.'
+      title: 'Calendarios OpenTimestamps — demo de ping en vivo',
+      description:
+        'Esta página hace ping a calendarios OpenTimestamps vía GET /api/mesh/nodes. No es un mapa mundial de nodos. Punta Bitcoin y calendarios también en /network.'
     },
     fr: {
-      title: 'Maillage de Témoins — Ancrage Distribué',
-      description: 'Réseau P2P de témoins pour ancrage redondant de preuves Bitcoin.'
+      title: 'Calendriers OpenTimestamps — démo de ping en direct',
+      description:
+        'Cette page interroge les calendriers OpenTimestamps via GET /api/mesh/nodes. Pas une carte mondiale de nœuds. Pointe Bitcoin et calendriers aussi sur /network.'
     },
     de: {
-      title: 'Witness-Mesh — Verteiltes Verankern',
-      description: 'P2P-Zeugennetzwerk für redundante Bitcoin-Beweisverankerung.'
+      title: 'OpenTimestamps-Kalender — Live-Ping-Demo',
+      description:
+        'Diese Seite pingt OpenTimestamps-Kalender über GET /api/mesh/nodes. Keine Weltkarte von Nodes. Live-Bitcoin-Tip und Kalender auch auf /network.'
     },
     pt: {
-      title: 'Malha de Testemunhas — Ancoragem Distribuída',
-      description: 'Rede P2P de testemunhas para ancoragem redundante de provas Bitcoin.'
+      title: 'Calendários OpenTimestamps — demo de ping ao vivo',
+      description:
+        'Esta página faz ping aos calendários OpenTimestamps via GET /api/mesh/nodes. Não é um mapa mundial de nós. Ponta Bitcoin e calendários também em /network.'
     },
     sw: {
-      title: 'Mtandao wa Mashahidi — Kufungia Kilichosambazwa',
-      description: 'Mtandao wa mashahidi wa P2P kwa kufungia ushahidi wa Bitcoin kwa njia ya ziada.'
+      title: 'Kalenda za OpenTimestamps — onyesho la ping hai',
+      description:
+        'Ukurasa huu hupiga ping kalenda za OpenTimestamps kupitia GET /api/mesh/nodes. Si ramani ya dunia ya nodi. Ncha ya Bitcoin na kalenda pia kwenye /network.'
     },
     zh: {
-      title: '见证网格 — 分布式锚定',
-      description: '点对点见证网络，实现冗余的比特币证明锚定。'
+      title: 'OpenTimestamps 日历 — 实时 ping 演示',
+      description:
+        '本页通过 GET /api/mesh/nodes ping OpenTimestamps 日历。不是全球节点地图。Bitcoin 链尖与日历也在 /network。'
     }
   },
   forum: {

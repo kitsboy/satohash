@@ -21,6 +21,7 @@ describe('mvp config', () => {
     expect(MVP_PUBLIC_PATHS).toContain('/developer')
     expect(MVP_PUBLIC_PATHS).toContain('/explorer')
     expect(MVP_PUBLIC_PATHS).toContain('/atlas')
+    expect(MVP_PUBLIC_PATHS).toContain('/nodes')
   })
 
   it('isMvpPublicPath allows stamp without login', () => {

@@ -41,7 +41,8 @@ export const MVP_PUBLIC_PATHS = [
   '/status',
   '/counsel',
   '/explorer',
-  '/atlas'
+  '/atlas',
+  '/nodes'
 ]
 
 /** Sub-paths allowed in MVP mode (e.g. /verify/:hash from MotoPass) */

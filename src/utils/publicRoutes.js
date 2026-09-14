@@ -32,6 +32,7 @@ const MARKETING_PREFIXES = [
   '/network',
   '/explorer',
   '/atlas',
+  '/nodes',
   '/proof-of-existence',
   '/bitcoin',
   '/status',

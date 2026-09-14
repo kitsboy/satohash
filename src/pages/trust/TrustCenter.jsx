@@ -37,74 +37,60 @@ const stagger = {
   visible: { transition: { staggerChildren: 0.1 } }
 }
 
-/* ─── Data ────────────────────────────────────────────────── */
+/* Framework names stay English (legal / protocol names). */
 const COMPLIANCE_ROWS = [
-  {
-    framework: 'ESIGN Act',
-    jurisdiction: 'United States',
-    status: 'Supporting evidence',
-    standard: 'Electronic record'
-  },
-  {
-    framework: 'UETA',
-    jurisdiction: 'United States (47 states)',
-    status: 'Supporting evidence',
-    standard: 'Electronic record'
-  },
-  {
-    framework: 'eIDAS Regulation',
-    jurisdiction: 'European Union',
-    status: 'Evidentiary',
-    standard: 'Cryptographic evidence of existence'
-  },
-  {
-    framework: 'Swiss eIDAS',
-    jurisdiction: 'Switzerland',
-    status: 'Evidentiary',
-    standard: 'Federal Act on Electronic Signatures'
-  },
-  {
-    framework: 'GDPR',
-    jurisdiction: 'European Union',
-    status: 'By design',
-    standard:
-      'No account data · transient IP for abuse prevention (24 h) · hash and optional label only'
-  },
-  {
-    framework: 'Common Law',
-    jurisdiction: 'UK / Commonwealth',
-    status: 'Evidentiary',
-    standard: 'Hash-based evidence admissible'
-  }
+  { id: 'esign', framework: 'ESIGN Act', status: 'supporting' },
+  { id: 'ueta', framework: 'UETA', status: 'supporting', tooltip: 'ueta' },
+  { id: 'eidas', framework: 'eIDAS Regulation', status: 'evidentiary', tooltip: 'eidas' },
+  { id: 'swiss', framework: 'Swiss eIDAS', status: 'evidentiary' },
+  { id: 'gdpr', framework: 'GDPR', status: 'byDesign' },
+  { id: 'commonLaw', framework: 'Common Law', status: 'evidentiary' }
 ]
 
 const BITCOIN_FACTS = [
+  { id: 'uptime', icon: Link2, color: 'var(--accent-active)' },
+  { id: 'nodes', icon: Globe, color: 'var(--accent-purple)' },
+  { id: 'rewrite', icon: Lock, color: 'var(--accent-success)' },
+  { id: 'consensus', icon: Clock, color: 'var(--accent-pending)' },
+  { id: 'ots', icon: FileCheck, color: 'var(--text-secondary)', tooltip: true }
+]
+
+const FLOW_STEPS = [
+  { id: 'document', color: 'var(--text-secondary)' },
+  { id: 'hash', color: 'var(--accent-active)' },
+  { id: 'bitcoin', color: 'var(--accent-pending)' },
+  { id: 'proof', color: 'var(--accent-success)' }
+]
+
+const PRIVACY_COLS = [
   {
-    icon: Link2,
-    text: 'Bitcoin has operated without downtime since January 3, 2009',
-    color: 'var(--accent-active)'
+    id: 'receive',
+    icon: Eye,
+    color: 'var(--accent-active)',
+    titleKey: 'privacyReceiveTitle',
+    itemsKey: 'privacyReceive',
+    itemIds: ['hash', 'noBytes', 'noMeta', 'noId']
   },
   {
-    icon: Globe,
-    text: '~18,000 full nodes globally validate every transaction',
-    color: 'var(--accent-purple)'
+    id: 'store',
+    icon: Database,
+    color: 'var(--accent-purple)',
+    titleKey: 'privacyStoreTitle',
+    itemsKey: 'privacyStore',
+    itemIds: ['hash', 'filename', 'timestamp', 'proofId', 'noContent']
   },
   {
-    icon: Lock,
-    text: 'Rewriting a Bitcoin block would require 51% of global mining power — economically impossible',
-    color: 'var(--accent-success)'
-  },
-  {
-    icon: Clock,
-    text: 'Each block is timestamped by global consensus — not by any single server',
-    color: 'var(--accent-pending)'
-  },
-  {
-    icon: FileCheck,
-    text: 'OpenTimestamps (opentimestamps.org) is an open protocol — not a Satohash product',
-    color: 'var(--text-secondary)'
+    id: 'bitcoin',
+    icon: Bitcoin,
+    color: 'var(--accent-pending)',
+    titleKey: 'privacyBitcoinTitle',
+    itemsKey: 'privacyBitcoin',
+    itemIds: ['hash', 'public', 'immutable', 'verifiable']
   }
 ]
+
+const IS_IDS = ['timestamping', 'evidence', 'privacy', 'anchoring']
+const IS_NOT_IDS = ['firm', 'counsel', 'authenticity', 'liable']
 
 /* ─── Component ──────────────────────────────────────────── */
 export default function TrustCenter() {
@@ -147,11 +133,15 @@ export default function TrustCenter() {
                     health.status === 'ok' ? 'var(--accent-success)' : 'var(--accent-pending)'
                 }}
               />
-              {health.status === 'ok' ? 'Network Active' : 'Cached / Degraded'}
-              {health.blockHeight ? ` · Block ${health.blockHeight.toLocaleString()}` : ''}
+              {health.status === 'ok'
+                ? t('trustPage.networkActive')
+                : t('trustPage.networkDegraded')}
+              {health.blockHeight
+                ? ` · ${t('trustPage.blockLine', { height: health.blockHeight.toLocaleString() })}`
+                : ''}
             </span>
             <span className="text-[var(--border-bright)]">·</span>
-            <span>Last reviewed: August 16, 2026</span>
+            <span>{t('trustPage.lastReviewed')}</span>
             <span className="text-[var(--border-bright)]">·</span>
             <span>5.0.0-ELITE</span>
           </motion.div>
@@ -162,10 +152,10 @@ export default function TrustCenter() {
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="mb-6 text-4xl leading-[0.95] font-extrabold tracking-tighter uppercase sm:text-6xl md:text-8xl lg:text-9xl"
           >
-            Built on Math.
+            {t('trustPage.heroH1Line1')}
             <br />
             <span className="bg-gradient-to-r from-[var(--accent-active)] via-[var(--accent-purple)] to-[var(--accent-success)] bg-clip-text text-transparent">
-              Not Trust.
+              {t('trustPage.heroH1Line2')}
             </span>
           </motion.h1>
 
@@ -214,8 +204,8 @@ export default function TrustCenter() {
             transition={{ delay: 0.5 }}
             className="flex flex-wrap items-center justify-center gap-3"
           >
-            <HeroPill icon={Cpu} label="Zero-Knowledge Architecture" />
-            <HeroPill icon={Bitcoin} label="Bitcoin-Anchored Proof" gold />
+            <HeroPill icon={Cpu} label={t('trustPage.pillZk')} />
+            <HeroPill icon={Bitcoin} label={t('trustPage.pillBitcoin')} gold />
           </motion.div>
         </section>
 
@@ -228,14 +218,14 @@ export default function TrustCenter() {
           className="mb-28"
         >
           <motion.div variants={fadeUp} className="mb-4">
-            <SectionLabel icon={EyeOff} label="Zero-Knowledge Architecture" />
+            <SectionLabel icon={EyeOff} label={t('trustPage.zkLabel')} />
           </motion.div>
           <motion.h2
             variants={fadeUp}
             className="mb-6 text-3xl font-bold tracking-tight md:text-4xl"
           >
-            What Is Zero-Knowledge?{' '}
-            <span className="text-[var(--text-secondary)]">Why Does It Matter?</span>
+            {t('trustPage.zkTitle')}{' '}
+            <span className="text-[var(--text-secondary)]">{t('trustPage.zkTitleRest')}</span>
           </motion.h2>
 
           <div className="grid gap-8 lg:grid-cols-2">
@@ -244,21 +234,16 @@ export default function TrustCenter() {
               variants={fadeUp}
               className="rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] p-8 leading-relaxed text-[var(--text-secondary)]"
             >
+              <p className="mb-5 text-base">{t('trustPage.zkP1')}</p>
               <p className="mb-5 text-base">
-                In traditional notarization, you hand your document to someone who reads it and
-                stamps it. You&apos;re trusting that person — and every system they use.
-              </p>
-              <p className="mb-5 text-base">
-                With Satohash, we use a mathematical technique called a{' '}
-                <strong className="text-[var(--text-primary)]">cryptographic hash</strong>. Your
-                document is converted to a unique 64-character fingerprint (SHA-256). We never see,
-                store, or transmit your actual document. Only the fingerprint is sent to Bitcoin.
+                {t('trustPage.zkP2Before')}{' '}
+                <strong className="text-[var(--text-primary)]">{t('trustPage.zkP2Strong')}</strong>
+                {t('trustPage.zkP2After')}
               </p>
               <p className="text-base">
-                This is called{' '}
-                <strong className="text-[var(--text-primary)]">Zero-Knowledge architecture</strong>:
-                we can prove your document existed at a specific time without ever knowing
-                what&apos;s in it.
+                {t('trustPage.zkP3Before')}{' '}
+                <strong className="text-[var(--text-primary)]">{t('trustPage.zkP3Strong')}</strong>
+                {t('trustPage.zkP3After')}
               </p>
             </motion.div>
 
@@ -266,21 +251,20 @@ export default function TrustCenter() {
             <motion.div variants={fadeUp} className="flex flex-col justify-between gap-6">
               <div className="rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] p-6">
                 <p className="mb-3 text-[10px] font-black tracking-[0.2em] text-[var(--text-secondary)] uppercase">
-                  Example SHA-256 fingerprint
+                  {t('trustPage.zkExampleLabel')}
                 </p>
                 <code className="block font-mono text-xs leading-relaxed break-all text-[var(--accent-active)]">
                   a3f8d2c1e9b4756f0a1d3e7c2b5f8a9d0e6c3b2a1f4e7d8c9b0a2e5f1d3c6b4
                 </code>
                 <p className="mt-3 text-xs text-[var(--text-secondary)]">
-                  This 64-character string is all we ever receive. Your document itself never leaves
-                  your device.
+                  {t('trustPage.zkExampleCaption')}
                 </p>
               </div>
 
               {/* Flow diagram */}
               <div className="rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] p-6">
                 <p className="mb-5 text-[10px] font-black tracking-[0.2em] text-[var(--text-secondary)] uppercase">
-                  How it flows
+                  {t('trustPage.zkFlowLabel')}
                 </p>
                 <FlowDiagram />
               </div>
@@ -297,17 +281,16 @@ export default function TrustCenter() {
           className="mb-28"
         >
           <motion.div variants={fadeUp} className="mb-4">
-            <SectionLabel icon={Scale} label="Legal Compliance" />
+            <SectionLabel icon={Scale} label={t('trustPage.legalLabel')} />
           </motion.div>
           <motion.h2
             variants={fadeUp}
             className="mb-2 text-3xl font-bold tracking-tight md:text-4xl"
           >
-            International Standards
+            {t('trustPage.legalTitle')}
           </motion.h2>
           <motion.p variants={fadeUp} className="mb-8 text-[var(--text-secondary)]">
-            How Satohash proofs relate to major global legal frameworks — as supporting
-            cryptographic evidence, not regulatory certification.
+            {t('trustPage.legalIntro')}
           </motion.p>
 
           {/* Horizontal scroll wrapper keeps desktop layout intact on mobile */}
@@ -316,43 +299,47 @@ export default function TrustCenter() {
               <div className="min-w-[560px] overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)]">
                 {/* Table header */}
                 <div className="grid grid-cols-4 border-b border-[var(--border)] bg-[var(--surface-raised)] px-6 py-4 text-[10px] font-black tracking-[0.2em] text-[var(--text-secondary)] uppercase">
-                  <span>Framework</span>
-                  <span>Jurisdiction</span>
-                  <span>Status</span>
+                  <span>{t('trustPage.colFramework')}</span>
+                  <span>{t('trustPage.colJurisdiction')}</span>
+                  <span>{t('trustPage.colStatus')}</span>
                   <span className="flex items-center">
-                    Posture
+                    {t('trustPage.colPosture')}
                     <Tooltip
-                      title="NIP-05 Identity"
-                      content="A Nostr protocol standard linking a human-readable handle (like user@domain.com) to a cryptographic public key. Used for tamper-proof signer identity."
+                      title={t('trustPage.nip05TooltipTitle')}
+                      content={t('trustPage.nip05Tooltip')}
                     />
                   </span>
                 </div>
 
-                {COMPLIANCE_ROWS.map((row, i) => (
+                {COMPLIANCE_ROWS.map((row) => (
                   <div
-                    key={i}
+                    key={row.id}
                     className="grid grid-cols-4 items-center border-b border-[var(--border)] px-6 py-5 transition-colors last:border-0 hover:bg-[var(--surface-raised)]"
                   >
                     <span className="inline-flex items-center text-sm font-bold text-[var(--text-primary)]">
                       {row.framework}
-                      {row.framework === 'UETA' && (
+                      {row.tooltip === 'ueta' && (
                         <Tooltip
-                          title="UETA"
-                          content="Uniform Electronic Transactions Act — a US law giving electronic signatures the same legal weight as handwritten ones in most states."
+                          title={t('trustPage.uetaTooltipTitle')}
+                          content={t('trustPage.uetaTooltip')}
                         />
                       )}
-                      {row.framework === 'eIDAS Regulation' && (
+                      {row.tooltip === 'eidas' && (
                         <Tooltip
-                          title="eIDAS"
-                          content="EU regulation establishing a legal framework for electronic signatures and electronic time stamps across EU member states. Satohash evidence is supporting cryptographic evidence — it is not a qualified electronic time stamp."
+                          title={t('trustPage.eidasTooltipTitle')}
+                          content={t('trustPage.eidasTooltip')}
                         />
                       )}
                     </span>
-                    <span className="text-sm text-[var(--text-secondary)]">{row.jurisdiction}</span>
+                    <span className="text-sm text-[var(--text-secondary)]">
+                      {t(`trustPage.rows.${row.id}.jurisdiction`)}
+                    </span>
                     <span>
-                      <StatusBadge label={row.status} />
+                      <StatusBadge statusKey={row.status} />
                     </span>
-                    <span className="text-sm text-[var(--text-secondary)]">{row.standard}</span>
+                    <span className="text-sm text-[var(--text-secondary)]">
+                      {t(`trustPage.rows.${row.id}.standard`)}
+                    </span>
                   </div>
                 ))}
               </div>
@@ -364,9 +351,7 @@ export default function TrustCenter() {
             className="mt-5 rounded-xl border border-[var(--border)] bg-[var(--surface-raised)] px-5 py-4 text-sm leading-relaxed text-[var(--text-secondary)]"
           >
             <AlertCircle size={14} className="mr-2 inline-block text-[var(--accent-pending)]" />
-            Satohash proofs are cryptographic evidence that supports electronic-record and evidence
-            frameworks. They do not constitute legal advice, regulatory certification, or a notarial
-            act. For legal proceedings, consult qualified counsel.
+            {t('trustPage.legalDisclaimer')}
           </motion.p>
         </motion.section>
 
@@ -379,58 +364,30 @@ export default function TrustCenter() {
           className="mb-28"
         >
           <motion.div variants={fadeUp} className="mb-4">
-            <SectionLabel icon={Lock} label="Privacy by Architecture" />
+            <SectionLabel icon={Lock} label={t('trustPage.privacyLabel')} />
           </motion.div>
           <motion.h2
             variants={fadeUp}
             className="mb-2 text-3xl font-bold tracking-tight md:text-4xl"
           >
-            We Can&apos;t See Your Documents.{' '}
-            <span className="text-[var(--text-secondary)]">That&apos;s the Point.</span>
+            {t('trustPage.privacyTitle')}{' '}
+            <span className="text-[var(--text-secondary)]">{t('trustPage.privacyTitleRest')}</span>
           </motion.h2>
           <motion.p variants={fadeUp} className="mb-8 text-[var(--text-secondary)]">
-            Our architecture is designed so that privacy isn&apos;t a policy decision — it&apos;s a
-            mathematical impossibility to violate it.
+            {t('trustPage.privacyIntro')}
           </motion.p>
 
           <div className="grid gap-6 md:grid-cols-3">
-            <PrivacyColumn
-              index={0}
-              icon={Eye}
-              title="What We Receive"
-              color="var(--accent-active)"
-              items={[
-                'SHA-256 hash only (64 hex chars)',
-                'No file bytes',
-                'No metadata from the file itself',
-                'No identifying information'
-              ]}
-            />
-            <PrivacyColumn
-              index={1}
-              icon={Database}
-              title="What We Store"
-              color="var(--accent-purple)"
-              items={[
-                'Hash string',
-                'Filename (you provide)',
-                'Timestamp of submission',
-                'Proof ID',
-                'No file content — ever'
-              ]}
-            />
-            <PrivacyColumn
-              index={2}
-              icon={Bitcoin}
-              title="What Bitcoin Stores"
-              color="var(--accent-pending)"
-              items={[
-                'Your hash, embedded in a block',
-                'Publicly visible forever',
-                'Immutable and tamper-proof',
-                'Verifiable by anyone, anywhere'
-              ]}
-            />
+            {PRIVACY_COLS.map((col, index) => (
+              <PrivacyColumn
+                key={col.id}
+                index={index}
+                icon={col.icon}
+                title={t(`trustPage.${col.titleKey}`)}
+                color={col.color}
+                items={col.itemIds.map((itemId) => t(`trustPage.${col.itemsKey}.${itemId}`))}
+              />
+            ))}
           </div>
 
           <motion.div
@@ -439,10 +396,10 @@ export default function TrustCenter() {
           >
             <ShieldCheck size={18} className="mb-3 text-[var(--accent-success)]" />
             <p className="text-sm leading-relaxed text-[var(--text-secondary)]">
-              <strong className="text-[var(--text-primary)]">GDPR Article 11 compliance:</strong> We
-              cannot identify you from a hash alone. What we hold is a hash, an optional label, and
-              a 24-hour IP record for abuse prevention — nothing that builds a profile of you. Your
-              privacy is not a promise — it is a cryptographic constraint.
+              <strong className="text-[var(--text-primary)]">
+                {t('trustPage.gdprNoteStrong')}
+              </strong>{' '}
+              {t('trustPage.gdprNote')}
             </p>
           </motion.div>
         </motion.section>
@@ -456,24 +413,23 @@ export default function TrustCenter() {
           className="mb-28"
         >
           <motion.div variants={fadeUp} className="mb-4">
-            <SectionLabel icon={Globe} label="Permanence" />
+            <SectionLabel icon={Globe} label={t('trustPage.permanenceLabel')} />
           </motion.div>
           <motion.h2
             variants={fadeUp}
             className="mb-2 text-3xl font-bold tracking-tight md:text-4xl"
           >
-            Why Bitcoin?{' '}
-            <span className="text-[var(--text-secondary)]">Because No One Controls It.</span>
+            {t('trustPage.bitcoinTitle')}{' '}
+            <span className="text-[var(--text-secondary)]">{t('trustPage.bitcoinTitleRest')}</span>
           </motion.h2>
           <motion.p variants={fadeUp} className="mb-8 text-[var(--text-secondary)]">
-            Any central server can be hacked, shut down, or pressured to delete records. Bitcoin
-            cannot be.
+            {t('trustPage.bitcoinIntro')}
           </motion.p>
 
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {BITCOIN_FACTS.map((fact, i) => (
+            {BITCOIN_FACTS.map((fact) => (
               <motion.div
-                key={i}
+                key={fact.id}
                 variants={fadeUp}
                 className="flex items-start gap-4 rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] p-6 transition-colors hover:border-[var(--border-bright)]"
               >
@@ -487,11 +443,11 @@ export default function TrustCenter() {
                   <fact.icon size={18} />
                 </div>
                 <p className="flex items-start text-sm leading-relaxed text-[var(--text-secondary)]">
-                  <span>{fact.text}</span>
-                  {fact.icon === FileCheck && (
+                  <span>{t(`trustPage.facts.${fact.id}`)}</span>
+                  {fact.tooltip && (
                     <Tooltip
-                      title="OpenTimestamps (OTS)"
-                      content="An open protocol that hashes your document and anchors it into a Bitcoin block. Proves your file existed at a specific point in time, immutably."
+                      title={t('trustPage.otsTooltipTitle')}
+                      content={t('trustPage.otsTooltip')}
                     />
                   )}
                 </p>
@@ -509,14 +465,14 @@ export default function TrustCenter() {
           className="mb-28"
         >
           <motion.div variants={fadeUp} className="mb-4">
-            <SectionLabel icon={AlertCircle} label="Scope of Service" />
+            <SectionLabel icon={AlertCircle} label={t('trustPage.scopeLabel')} />
           </motion.div>
           <motion.h2
             variants={fadeUp}
             className="mb-8 text-3xl font-bold tracking-tight md:text-4xl"
           >
-            What Our Service Is{' '}
-            <span className="text-[var(--text-secondary)]">(And Isn&apos;t)</span>
+            {t('trustPage.scopeTitle')}{' '}
+            <span className="text-[var(--text-secondary)]">{t('trustPage.scopeTitleRest')}</span>
           </motion.h2>
 
           <div className="grid gap-6 md:grid-cols-2">
@@ -530,25 +486,20 @@ export default function TrustCenter() {
                   <CheckCircle size={20} />
                 </div>
                 <h3 className="text-lg font-bold tracking-tight text-[var(--text-primary)]">
-                  Satohash IS
+                  {t('trustPage.isHeading')}
                 </h3>
               </div>
               <ul className="space-y-3">
-                {[
-                  'Cryptographic timestamping service',
-                  'Evidence-generation tool',
-                  'Privacy-preserving document notarization',
-                  'Bitcoin blockchain anchoring'
-                ].map((item, i) => (
+                {IS_IDS.map((id) => (
                   <li
-                    key={i}
+                    key={id}
                     className="flex items-start gap-3 text-sm text-[var(--text-secondary)]"
                   >
                     <CheckCircle
                       size={15}
                       className="mt-0.5 shrink-0 text-[var(--accent-success)]"
                     />
-                    {item}
+                    {t(`trustPage.is.${id}`)}
                   </li>
                 ))}
               </ul>
@@ -564,25 +515,20 @@ export default function TrustCenter() {
                   <AlertCircle size={20} />
                 </div>
                 <h3 className="text-lg font-bold tracking-tight text-[var(--text-primary)]">
-                  Satohash IS NOT
+                  {t('trustPage.isNotHeading')}
                 </h3>
               </div>
               <ul className="space-y-3">
-                {[
-                  'A legal services firm',
-                  'A substitute for legal counsel',
-                  'A guarantor of document authenticity (only existence)',
-                  'Liable for how proofs are used'
-                ].map((item, i) => (
+                {IS_NOT_IDS.map((id) => (
                   <li
-                    key={i}
+                    key={id}
                     className="flex items-start gap-3 text-sm text-[var(--text-secondary)]"
                   >
                     <AlertCircle
                       size={15}
                       className="mt-0.5 shrink-0 text-[var(--accent-danger)]"
                     />
-                    {item}
+                    {t(`trustPage.isNot.${id}`)}
                   </li>
                 ))}
               </ul>
@@ -610,16 +556,16 @@ export default function TrustCenter() {
           <div className="relative grid gap-px md:grid-cols-2">
             <ContactCard
               icon={Mail}
-              title="Questions About a Proof?"
-              description="Reach our legal team for any questions about proof validity, court submissions, or compliance documentation."
+              title={t('trustPage.contactProofTitle')}
+              description={t('trustPage.contactProofBody')}
               cta="hello@giveabit.io"
               href="mailto:hello@giveabit.io"
               color="var(--accent-active)"
             />
             <ContactCard
               icon={Shield}
-              title="Data Deletion Requests"
-              description="To request deletion of your metadata (hashes and filenames), contact our privacy team. Note: Bitcoin-anchored data is permanent by nature."
+              title={t('trustPage.contactDeleteTitle')}
+              description={t('trustPage.contactDeleteBody')}
               cta="hello@giveabit.io"
               href="mailto:hello@giveabit.io"
               color="var(--accent-purple)"
@@ -641,7 +587,7 @@ export default function TrustCenter() {
             className="text-sm font-semibold transition-opacity hover:opacity-70"
             style={{ color: 'var(--accent-active)' }}
           >
-            Terms of Service
+            {t('trustPage.terms')}
           </Link>
           <span style={{ color: 'var(--border-bright)' }}>·</span>
           <Link
@@ -649,7 +595,7 @@ export default function TrustCenter() {
             className="text-sm font-semibold transition-opacity hover:opacity-70"
             style={{ color: 'var(--accent-active)' }}
           >
-            Privacy Policy
+            {t('trustPage.privacyPolicy')}
           </Link>
           <span style={{ color: 'var(--border-bright)' }}>·</span>
           <Link
@@ -657,7 +603,7 @@ export default function TrustCenter() {
             className="text-sm font-semibold transition-opacity hover:opacity-70"
             style={{ color: 'var(--accent-active)' }}
           >
-            Cryptographic Notice
+            {t('trustPage.cryptoNotice')}
           </Link>
         </motion.div>
       </div>
@@ -698,24 +644,21 @@ function HeroPill({ icon: Icon, label, gold }) {
 }
 
 function FlowDiagram() {
-  const steps = [
-    { label: 'Your Document', sub: 'Stays on your device', color: 'var(--text-secondary)' },
-    { label: 'SHA-256 Hash', sub: '64-char fingerprint', color: 'var(--accent-active)' },
-    { label: 'Bitcoin', sub: 'Anchored in a block', color: 'var(--accent-pending)' },
-    { label: 'Immutable Proof', sub: 'Forever verifiable', color: 'var(--accent-success)' }
-  ]
+  const { t } = useTranslation()
 
   return (
     <div className="flex flex-wrap items-center gap-2">
-      {steps.map((step, i) => (
-        <div key={i} className="flex items-center gap-2">
+      {FLOW_STEPS.map((step, i) => (
+        <div key={step.id} className="flex items-center gap-2">
           <div className="rounded-xl border border-[var(--border)] bg-[var(--surface-raised)] px-3 py-2 text-center">
             <div className="text-xs font-bold" style={{ color: step.color }}>
-              {step.label}
+              {t(`trustPage.flow.${step.id}.label`)}
             </div>
-            <div className="text-[10px] text-[var(--text-secondary)]">{step.sub}</div>
+            <div className="text-[10px] text-[var(--text-secondary)]">
+              {t(`trustPage.flow.${step.id}.sub`)}
+            </div>
           </div>
-          {i < steps.length - 1 && (
+          {i < FLOW_STEPS.length - 1 && (
             <ArrowRight size={14} className="shrink-0 text-[var(--text-secondary)]" />
           )}
         </div>
@@ -724,13 +667,14 @@ function FlowDiagram() {
   )
 }
 
-function StatusBadge({ label }) {
+function StatusBadge({ statusKey }) {
+  const { t } = useTranslation()
   const colorMap = {
-    'Supporting evidence': { bg: 'var(--accent-pending)', text: '#000' },
-    Evidentiary: { bg: 'var(--accent-pending)', text: '#000' },
-    'By design': { bg: 'var(--accent-purple)', text: '#fff' }
+    supporting: { bg: 'var(--accent-pending)', text: '#000' },
+    evidentiary: { bg: 'var(--accent-pending)', text: '#000' },
+    byDesign: { bg: 'var(--accent-purple)', text: '#fff' }
   }
-  const c = colorMap[label] ?? { bg: 'var(--surface-raised)', text: 'var(--text-secondary)' }
+  const c = colorMap[statusKey] ?? { bg: 'var(--surface-raised)', text: 'var(--text-secondary)' }
 
   return (
     <span
@@ -738,7 +682,7 @@ function StatusBadge({ label }) {
       style={{ backgroundColor: `color-mix(in srgb, ${c.bg} 18%, transparent)`, color: c.bg }}
     >
       <CheckCircle size={10} />
-      {label}
+      {t(`trustPage.status.${statusKey}`)}
     </span>
   )
 }

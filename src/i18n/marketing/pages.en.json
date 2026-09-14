@@ -1424,7 +1424,156 @@
     "procurementTitle": "Procurement & diligence",
     "procurementBody": "Download the executive pitch, security overview, and MotoPass integration guide for vendor review.",
     "procurementCta": "View diligence pack",
-    "printGuide": "Print verification guide for officials"
+    "printGuide": "Print verification guide for officials",
+    "networkActive": "Network Active",
+    "networkDegraded": "Cached / Degraded",
+    "blockLine": "Block {{height}}",
+    "lastReviewed": "Last reviewed: August 16, 2026",
+    "heroH1Line1": "Built on Math.",
+    "heroH1Line2": "Not Trust.",
+    "pillZk": "Zero-Knowledge Architecture",
+    "pillBitcoin": "Bitcoin-Anchored Proof",
+    "zkLabel": "Zero-Knowledge Architecture",
+    "zkTitle": "What Is Zero-Knowledge?",
+    "zkTitleRest": "Why Does It Matter?",
+    "zkP1": "In traditional notarization, you hand your document to someone who reads it and stamps it. You're trusting that person — and every system they use.",
+    "zkP2Before": "With Satohash, we use a mathematical technique called a",
+    "zkP2Strong": "cryptographic hash",
+    "zkP2After": ". Your document is converted to a unique 64-character fingerprint (SHA-256). We never see, store, or transmit your actual document. Only the fingerprint is sent to Bitcoin.",
+    "zkP3Before": "This is called",
+    "zkP3Strong": "Zero-Knowledge architecture",
+    "zkP3After": ": we can prove your document existed at a specific time without ever knowing what's in it.",
+    "zkExampleLabel": "Example SHA-256 fingerprint",
+    "zkExampleCaption": "This 64-character string is all we ever receive. Your document itself never leaves your device.",
+    "zkFlowLabel": "How it flows",
+    "flow": {
+      "document": {
+        "label": "Your Document",
+        "sub": "Stays on your device"
+      },
+      "hash": {
+        "label": "SHA-256 Hash",
+        "sub": "64-char fingerprint"
+      },
+      "bitcoin": {
+        "label": "Bitcoin",
+        "sub": "Anchored in a block"
+      },
+      "proof": {
+        "label": "Immutable Proof",
+        "sub": "Forever verifiable"
+      }
+    },
+    "legalLabel": "Legal Compliance",
+    "legalTitle": "International Standards",
+    "legalIntro": "How Satohash proofs relate to major global legal frameworks — as supporting cryptographic evidence, not regulatory certification.",
+    "colFramework": "Framework",
+    "colJurisdiction": "Jurisdiction",
+    "colStatus": "Status",
+    "colPosture": "Posture",
+    "nip05TooltipTitle": "NIP-05 Identity",
+    "nip05Tooltip": "A Nostr protocol standard linking a human-readable handle (like user@domain.com) to a cryptographic public key. Used for tamper-proof signer identity.",
+    "uetaTooltipTitle": "UETA",
+    "uetaTooltip": "Uniform Electronic Transactions Act — a US law giving electronic signatures the same legal weight as handwritten ones in most states.",
+    "eidasTooltipTitle": "eIDAS",
+    "eidasTooltip": "EU regulation establishing a legal framework for electronic signatures and electronic time stamps across EU member states. Satohash evidence is supporting cryptographic evidence — it is not a qualified electronic time stamp.",
+    "legalDisclaimer": "Satohash proofs are cryptographic evidence that supports electronic-record and evidence frameworks. They do not constitute legal advice, regulatory certification, or a notarial act. For legal proceedings, consult qualified counsel.",
+    "status": {
+      "supporting": "Supporting evidence",
+      "evidentiary": "Evidentiary",
+      "byDesign": "By design"
+    },
+    "rows": {
+      "esign": {
+        "jurisdiction": "United States",
+        "standard": "Electronic record"
+      },
+      "ueta": {
+        "jurisdiction": "United States (47 states)",
+        "standard": "Electronic record"
+      },
+      "eidas": {
+        "jurisdiction": "European Union",
+        "standard": "Cryptographic evidence of existence"
+      },
+      "swiss": {
+        "jurisdiction": "Switzerland",
+        "standard": "Federal Act on Electronic Signatures"
+      },
+      "gdpr": {
+        "jurisdiction": "European Union",
+        "standard": "No account data · transient IP for abuse prevention (24 h) · hash and optional label only"
+      },
+      "commonLaw": {
+        "jurisdiction": "UK / Commonwealth",
+        "standard": "Hash-based evidence admissible"
+      }
+    },
+    "privacyLabel": "Privacy by Architecture",
+    "privacyTitle": "We Can't See Your Documents.",
+    "privacyTitleRest": "That's the Point.",
+    "privacyIntro": "Our architecture is designed so that privacy isn't a policy decision — it's a mathematical impossibility to violate it.",
+    "privacyReceiveTitle": "What We Receive",
+    "privacyReceive": {
+      "hash": "SHA-256 hash only (64 hex chars)",
+      "noBytes": "No file bytes",
+      "noMeta": "No metadata from the file itself",
+      "noId": "No identifying information"
+    },
+    "privacyStoreTitle": "What We Store",
+    "privacyStore": {
+      "hash": "Hash string",
+      "filename": "Filename (you provide)",
+      "timestamp": "Timestamp of submission",
+      "proofId": "Proof ID",
+      "noContent": "No file content — ever"
+    },
+    "privacyBitcoinTitle": "What Bitcoin Stores",
+    "privacyBitcoin": {
+      "hash": "Your hash, embedded in a block",
+      "public": "Publicly visible forever",
+      "immutable": "Immutable and tamper-proof",
+      "verifiable": "Verifiable by anyone, anywhere"
+    },
+    "gdprNoteStrong": "GDPR Article 11 compliance:",
+    "gdprNote": "We cannot identify you from a hash alone. What we hold is a hash, an optional label, and a 24-hour IP record for abuse prevention — nothing that builds a profile of you. Your privacy is not a promise — it is a cryptographic constraint.",
+    "permanenceLabel": "Permanence",
+    "bitcoinTitle": "Why Bitcoin?",
+    "bitcoinTitleRest": "Because No One Controls It.",
+    "bitcoinIntro": "Any central server can be hacked, shut down, or pressured to delete records. Bitcoin cannot be.",
+    "facts": {
+      "uptime": "Bitcoin has operated without downtime since January 3, 2009",
+      "nodes": "~18,000 full nodes globally validate every transaction",
+      "rewrite": "Rewriting a Bitcoin block would require 51% of global mining power — economically impossible",
+      "consensus": "Each block is timestamped by global consensus — not by any single server",
+      "ots": "OpenTimestamps (opentimestamps.org) is an open protocol — not a Satohash product"
+    },
+    "otsTooltipTitle": "OpenTimestamps (OTS)",
+    "otsTooltip": "An open protocol that hashes your document and anchors it into a Bitcoin block. Proves your file existed at a specific point in time, immutably.",
+    "scopeLabel": "Scope of Service",
+    "scopeTitle": "What Our Service Is",
+    "scopeTitleRest": "(And Isn't)",
+    "isHeading": "Satohash IS",
+    "isNotHeading": "Satohash IS NOT",
+    "is": {
+      "timestamping": "Cryptographic timestamping service",
+      "evidence": "Evidence-generation tool",
+      "privacy": "Privacy-preserving document notarization",
+      "anchoring": "Bitcoin blockchain anchoring"
+    },
+    "isNot": {
+      "firm": "A legal services firm",
+      "counsel": "A substitute for legal counsel",
+      "authenticity": "A guarantor of document authenticity (only existence)",
+      "liable": "Liable for how proofs are used"
+    },
+    "contactProofTitle": "Questions About a Proof?",
+    "contactProofBody": "Reach our legal team for any questions about proof validity, court submissions, or compliance documentation.",
+    "contactDeleteTitle": "Data Deletion Requests",
+    "contactDeleteBody": "To request deletion of your metadata (hashes and filenames), contact our privacy team. Note: Bitcoin-anchored data is permanent by nature.",
+    "terms": "Terms of Service",
+    "privacyPolicy": "Privacy Policy",
+    "cryptoNotice": "Cryptographic Notice"
   },
   "governmentPage": {
     "backTrust": "← Trust Center",
@@ -1474,7 +1623,34 @@
     "placeholder": "One SHA-256 per line…",
     "register": "Register hashes",
     "exportCsv": "Export CSV",
-    "importCsv": "Import CSV"
+    "importCsv": "Import CSV",
+    "toastSaved": "{{count}} hashes saved to vault",
+    "toastNoCsv": "No valid hashes in CSV",
+    "vaultCount": "{{count}} hashes in vault —",
+    "openVault": "open vault"
+  },
+  "batchVerifyPage": {
+    "metaTitle": "Batch Verify — Check 50 hashes at once",
+    "metaDescription": "Paste up to 50 SHA-256 hashes and check them against the Satohash registry — not a world index.",
+    "back": "Back to Verify",
+    "title": "Batch Verify",
+    "lede": "Paste up to {{max}} SHA-256 hashes (one per line) and check them against the Satohash registry — not a world index.",
+    "placeholder": "Paste hashes here…",
+    "errorNone": "No valid SHA-256 hashes found. Paste one per line (or comma/space separated).",
+    "errorTooMany": "Too many hashes — max {{max}}. You pasted {{count}}.",
+    "checking": "Checking…",
+    "verify": "Verify hashes",
+    "verifyCount": "Verify {{count}} hashes",
+    "clear": "Clear",
+    "parsed": "{{count}} valid hash(es) parsed",
+    "found": "{{count}} found",
+    "confirmed": "{{count}} Confirmed",
+    "pending": "{{count}} Pending",
+    "missing": "{{count}} not found",
+    "notInRegistry": "not in registry",
+    "errorPrefix": "error: {{message}}",
+    "block": "block {{block}}",
+    "details": "Details →"
   },
   "chainOfCustodyPage": {
     "title": "Chain of custody",
@@ -1493,11 +1669,20 @@
     "subtitle": "Jurisdiction matrix for hash-based evidence under UETA, eIDAS, UK, and cross-border law."
   },
   "distressedAssetPage": {
+    "back": "← Government use",
     "title": "Distressed asset attestation",
-    "subtitle": "Hash listing metadata for sovereign asset trades. Pair with hosted .ots from MotoPass distressed listings.",
+    "lede": "Hash listing metadata locally for sovereign asset trades. Stamping still happens on /stamp. Pairing with a hosted MotoPass .ots is optional.",
+    "honesty": "This is not a legal title registry. A SHA-256 of listing fields proves those bytes existed — it does not transfer title or replace counsel.",
+    "fields": {
+      "asset": "Asset",
+      "jurisdiction": "Jurisdiction",
+      "seller": "Seller",
+      "terms": "Terms"
+    },
+    "computeHash": "Compute listing hash",
     "stampListing": "Stamp listing hash",
-    "compareHosted": "Compare to hosted proof",
-    "hostedPlaceholder": "Hosted .ots URL on motopass or CDN"
+    "hostedPlaceholder": "Hosted .ots URL on motopass or CDN",
+    "compareHosted": "Compare to hosted proof"
   },
   "templateDetailPage": {
     "notFound": "Template not found",
@@ -1892,10 +2077,22 @@
     },
     "stackTitle": "The stack in plain language",
     "stack": {
-      "hash": { "t": "Hash", "d": "SHA-256 on device" },
-      "calendars": { "t": "Calendars", "d": "OpenTimestamps" },
-      "bitcoin": { "t": "Bitcoin", "d": "Mainnet anchor" },
-      "keep": { "t": "You keep", "d": ".ots + original" }
+      "hash": {
+        "t": "Hash",
+        "d": "SHA-256 on device"
+      },
+      "calendars": {
+        "t": "Calendars",
+        "d": "OpenTimestamps"
+      },
+      "bitcoin": {
+        "t": "Bitcoin",
+        "d": "Mainnet anchor"
+      },
+      "keep": {
+        "t": "You keep",
+        "d": ".ots + original"
+      }
     },
     "chip1": "Private",
     "chip2": "Free today",
@@ -2301,5 +2498,31 @@
     "ctaPricing": "Pricing",
     "ctaDocs": "All docs",
     "ctaCompare": "Compare"
+  },
+  "meshPage": {
+    "chip": "Live calendar ping",
+    "title": "OpenTimestamps",
+    "titleHighlight": "calendars",
+    "lede": "This page pings calendars via GET /api/mesh/nodes. The decorative globe is illustration, not node GPS.",
+    "ledeNetwork": "Live Bitcoin tip and calendars also on /network.",
+    "reachableLabel": "Calendars reachable",
+    "pingedBy": "pinged live by api.satohash.io",
+    "globeCaption": "Illustration — not GPS",
+    "globeHint": "Pinging {{n}} OpenTimestamps calendars — status and latency below.",
+    "globeEmpty": "No calendar pings returned yet — live status will appear here.",
+    "networkCta": "Live calendars on /network",
+    "metricsTitle": "This ping",
+    "calendarsReachable": "Calendars reachable",
+    "avgLatency": "Avg. ping latency",
+    "livePing": "Live ping",
+    "reachTitle": "Calendar reachability",
+    "reachBody": "Proofs go to independent OpenTimestamps calendars, so one calendar outage does not stop anchoring. This bar is the current GET /api/mesh/nodes reading — not a promised uptime figure.",
+    "gridTitle": "OpenTimestamps calendars",
+    "source": "Source: GET /api/mesh/nodes",
+    "calendarKind": "OpenTimestamps calendar",
+    "pingLatency": "Ping latency",
+    "endpoint": "Endpoint",
+    "error": "Could not reach GET /api/mesh/nodes — no live calendar readings to show. Nothing is displayed rather than a stale or invented node list.",
+    "empty": "GET /api/mesh/nodes returned no calendars. Live readings will appear here on the next successful ping."
   }
 }

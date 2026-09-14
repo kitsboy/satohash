@@ -1320,7 +1320,156 @@
     "procurementTitle": "Aquisições",
     "procurementBody": "Baixe o pitch executivo e guia MotoPass.",
     "procurementCta": "Pacote de diligência",
-    "printGuide": "Guia para agentes"
+    "printGuide": "Guia para agentes",
+    "networkActive": "Rede ativa",
+    "networkDegraded": "Em cache / degradado",
+    "blockLine": "Bloco {{height}}",
+    "lastReviewed": "Última revisão: 16 de agosto de 2026",
+    "heroH1Line1": "Construído sobre matemática.",
+    "heroH1Line2": "Não sobre confiança.",
+    "pillZk": "Arquitetura de conhecimento zero",
+    "pillBitcoin": "Prova ancorada no Bitcoin",
+    "zkLabel": "Arquitetura de conhecimento zero",
+    "zkTitle": "O que é conhecimento zero?",
+    "zkTitleRest": "Por que isso importa?",
+    "zkP1": "Na notarização tradicional, você entrega o documento a alguém que o lê e o carimba. Você confia nessa pessoa — e em cada sistema que ela usa.",
+    "zkP2Before": "Com o Satohash usamos uma técnica matemática chamada",
+    "zkP2Strong": "hash criptográfico",
+    "zkP2After": ". Seu documento vira uma impressão única de 64 caracteres (SHA-256). Nunca vemos, armazenamos ou transmitimos o documento. Só a impressão é enviada ao Bitcoin.",
+    "zkP3Before": "Isso se chama",
+    "zkP3Strong": "arquitetura de conhecimento zero",
+    "zkP3After": ": podemos provar que seu documento existiu num momento específico sem nunca saber o que há nele.",
+    "zkExampleLabel": "Exemplo de impressão SHA-256",
+    "zkExampleCaption": "Esta cadeia de 64 caracteres é tudo o que recebemos. O documento em si nunca sai do seu dispositivo.",
+    "zkFlowLabel": "Como flui",
+    "flow": {
+      "document": {
+        "label": "Seu documento",
+        "sub": "Fica no seu dispositivo"
+      },
+      "hash": {
+        "label": "Hash SHA-256",
+        "sub": "Impressão de 64 caracteres"
+      },
+      "bitcoin": {
+        "label": "Bitcoin",
+        "sub": "Ancorado num bloco"
+      },
+      "proof": {
+        "label": "Prova imutável",
+        "sub": "Verificável para sempre"
+      }
+    },
+    "legalLabel": "Conformidade legal",
+    "legalTitle": "Padrões internacionais",
+    "legalIntro": "Como as provas Satohash se relacionam com os principais marcos legais — como evidência criptográfica de apoio, não como certificação regulatória.",
+    "colFramework": "Marco",
+    "colJurisdiction": "Jurisdição",
+    "colStatus": "Status",
+    "colPosture": "Postura",
+    "nip05TooltipTitle": "Identidade NIP-05",
+    "nip05Tooltip": "Um padrão do protocolo Nostr que liga um identificador legível (como user@domain.com) a uma chave pública criptográfica. Usado para identidade do signatário à prova de adulteração.",
+    "uetaTooltipTitle": "UETA",
+    "uetaTooltip": "Uniform Electronic Transactions Act — lei dos EUA que dá às assinaturas eletrônicas o mesmo peso legal das manuscritas na maioria dos estados.",
+    "eidasTooltipTitle": "eIDAS",
+    "eidasTooltip": "Regulamento da UE que estabelece um marco legal para assinaturas eletrônicas e carimbos de tempo eletrônicos nos Estados-membros. A evidência Satohash é evidência criptográfica de apoio — não é um carimbo de tempo eletrônico qualificado.",
+    "legalDisclaimer": "As provas Satohash são evidência criptográfica que apoia marcos de registro eletrônico e de prova. Não constituem aconselhamento jurídico, certificação regulatória nem ato notarial. Para processos, consulte um advogado qualificado.",
+    "status": {
+      "supporting": "Evidência de apoio",
+      "evidentiary": "Probatório",
+      "byDesign": "Por conceção"
+    },
+    "rows": {
+      "esign": {
+        "jurisdiction": "Estados Unidos",
+        "standard": "Registro eletrônico"
+      },
+      "ueta": {
+        "jurisdiction": "Estados Unidos (47 estados)",
+        "standard": "Registro eletrônico"
+      },
+      "eidas": {
+        "jurisdiction": "União Europeia",
+        "standard": "Evidência criptográfica de existência"
+      },
+      "swiss": {
+        "jurisdiction": "Suíça",
+        "standard": "Lei federal sobre assinaturas eletrônicas"
+      },
+      "gdpr": {
+        "jurisdiction": "União Europeia",
+        "standard": "Sem dados de conta · IP transitório para prevenção de abuso (24 h) · apenas hash e rótulo opcional"
+      },
+      "commonLaw": {
+        "jurisdiction": "Reino Unido / Commonwealth",
+        "standard": "Evidência baseada em hash admissível"
+      }
+    },
+    "privacyLabel": "Privacidade por arquitetura",
+    "privacyTitle": "Não vemos os seus documentos.",
+    "privacyTitleRest": "Esse é o ponto.",
+    "privacyIntro": "A nossa arquitetura é desenhada para que a privacidade não seja uma decisão de política — seja matematicamente impossível violá-la.",
+    "privacyReceiveTitle": "O que recebemos",
+    "privacyReceive": {
+      "hash": "Apenas o hash SHA-256 (64 caracteres hex)",
+      "noBytes": "Nenhum byte do ficheiro",
+      "noMeta": "Nenhum metadado do próprio ficheiro",
+      "noId": "Nenhuma informação identificadora"
+    },
+    "privacyStoreTitle": "O que armazenamos",
+    "privacyStore": {
+      "hash": "Cadeia de hash",
+      "filename": "Nome do ficheiro (você fornece)",
+      "timestamp": "Marca de tempo do envio",
+      "proofId": "ID da prova",
+      "noContent": "Nenhum conteúdo do ficheiro — nunca"
+    },
+    "privacyBitcoinTitle": "O que o Bitcoin armazena",
+    "privacyBitcoin": {
+      "hash": "O seu hash, embutido num bloco",
+      "public": "Visível publicamente para sempre",
+      "immutable": "Imutável e à prova de adulteração",
+      "verifiable": "Verificável por qualquer pessoa, em qualquer lugar"
+    },
+    "gdprNoteStrong": "Conformidade com o artigo 11.º do GDPR:",
+    "gdprNote": "Não o podemos identificar só com um hash. Guardamos um hash, um rótulo opcional e um registo de IP de 24 horas para prevenção de abuso — nada que construa um perfil. A sua privacidade não é uma promessa — é uma restrição criptográfica.",
+    "permanenceLabel": "Permanência",
+    "bitcoinTitle": "Porquê Bitcoin?",
+    "bitcoinTitleRest": "Porque ninguém o controla.",
+    "bitcoinIntro": "Qualquer servidor central pode ser invadido, desligado ou pressionado a apagar registos. O Bitcoin não.",
+    "facts": {
+      "uptime": "O Bitcoin opera sem interrupção desde 3 de janeiro de 2009",
+      "nodes": "~18.000 nós completos no mundo validam cada transação",
+      "rewrite": "Reescrever um bloco Bitcoin exigiria 51% do poder de mineração mundial — economicamente impossível",
+      "consensus": "Cada bloco é carimbado por consenso global — não por um único servidor",
+      "ots": "OpenTimestamps (opentimestamps.org) é um protocolo aberto — não um produto Satohash"
+    },
+    "otsTooltipTitle": "OpenTimestamps (OTS)",
+    "otsTooltip": "Um protocolo aberto que faz hash do seu documento e o ancora num bloco Bitcoin. Prova que o ficheiro existiu num momento específico, de forma imutável.",
+    "scopeLabel": "Âmbito do serviço",
+    "scopeTitle": "O que o nosso serviço é",
+    "scopeTitleRest": "(e o que não é)",
+    "isHeading": "Satohash É",
+    "isNotHeading": "Satohash NÃO É",
+    "is": {
+      "timestamping": "Serviço de carimbo de tempo criptográfico",
+      "evidence": "Ferramenta de geração de evidência",
+      "privacy": "Notarização de documentos que preserva a privacidade",
+      "anchoring": "Ancoragem na blockchain Bitcoin"
+    },
+    "isNot": {
+      "firm": "Um escritório de serviços jurídicos",
+      "counsel": "Um substituto de aconselhamento jurídico",
+      "authenticity": "Um garante da autenticidade do documento (apenas existência)",
+      "liable": "Responsável pelo uso das provas"
+    },
+    "contactProofTitle": "Perguntas sobre uma prova?",
+    "contactProofBody": "Fale com a nossa equipa jurídica sobre validade de provas, submissões em tribunal ou documentação de conformidade.",
+    "contactDeleteTitle": "Pedidos de eliminação de dados",
+    "contactDeleteBody": "Para pedir a eliminação dos seus metadados (hashes e nomes de ficheiro), contacte a nossa equipa de privacidade. Nota: dados ancorados no Bitcoin são permanentes por natureza.",
+    "terms": "Termos de serviço",
+    "privacyPolicy": "Política de privacidade",
+    "cryptoNotice": "Aviso criptográfico"
   },
   "governmentPage": {
     "backTrust": "← Centro de Confiança",
@@ -1370,7 +1519,34 @@
     "placeholder": "Um SHA-256 por linha…",
     "register": "Registrar",
     "exportCsv": "Exportar CSV",
-    "importCsv": "Importar CSV"
+    "importCsv": "Importar CSV",
+    "toastSaved": "{{count}} hashes guardados no cofre",
+    "toastNoCsv": "Nenhum hash válido no CSV",
+    "vaultCount": "{{count}} hashes no cofre —",
+    "openVault": "abrir cofre"
+  },
+  "batchVerifyPage": {
+    "metaTitle": "Verificação em lote — Confira 50 hashes de uma vez",
+    "metaDescription": "Cole até 50 hashes SHA-256 e confira-os no registo Satohash — não é um índice mundial.",
+    "back": "Voltar a Verificar",
+    "title": "Verificação em lote",
+    "lede": "Cole até {{max}} hashes SHA-256 (um por linha) e confira-os no registo Satohash — não é um índice mundial.",
+    "placeholder": "Cole os hashes aqui…",
+    "errorNone": "Nenhum hash SHA-256 válido. Cole um por linha (ou separados por vírgula/espaço).",
+    "errorTooMany": "Demasiados hashes — máximo {{max}}. Colou {{count}}.",
+    "checking": "A verificar…",
+    "verify": "Verificar hashes",
+    "verifyCount": "Verificar {{count}} hashes",
+    "clear": "Limpar",
+    "parsed": "{{count}} hash(es) válido(s) analisado(s)",
+    "found": "{{count}} encontrados",
+    "confirmed": "{{count}} Confirmed",
+    "pending": "{{count}} Pending",
+    "missing": "{{count}} não encontrados",
+    "notInRegistry": "não está no registo",
+    "errorPrefix": "error: {{message}}",
+    "block": "bloco {{block}}",
+    "details": "Detalhes →"
   },
   "legalPages": {
     "termsTitle": "Termos de Serviço",
@@ -1553,11 +1729,20 @@
     "subtitle": "Matriz de jurisdições para provas baseadas em hash sob UETA, eIDAS, Reino Unido e direito transfronteiriço."
   },
   "distressedAssetPage": {
+    "back": "← Uso governamental",
     "title": "Atestação de ativos em dificuldade",
-    "subtitle": "Hasheie metadados de listagens para operações soberanas. Combine com .ots hospedados de listagens MotoPass.",
+    "lede": "Hasheie metadados da listagem localmente para operações soberanas. O carimbo continua em /stamp. Emparelhar com um .ots hospedado do MotoPass é opcional.",
+    "honesty": "Isto não é um registro legal de títulos. Um SHA-256 dos campos da listagem prova que esses bytes existiram — não transfere a titularidade nem substitui aconselhamento jurídico.",
+    "fields": {
+      "asset": "Ativo",
+      "jurisdiction": "Jurisdição",
+      "seller": "Vendedor",
+      "terms": "Termos"
+    },
+    "computeHash": "Calcular hash da listagem",
     "stampListing": "Carimbar hash da listagem",
-    "compareHosted": "Comparar com prova hospedada",
-    "hostedPlaceholder": "URL de .ots hospedado em motopass ou CDN"
+    "hostedPlaceholder": "URL de .ots hospedado em motopass ou CDN",
+    "compareHosted": "Comparar com prova hospedada"
   },
   "templateDetailPage": {
     "notFound": "Modelo não encontrado",
@@ -1892,10 +2077,22 @@
     },
     "stackTitle": "A stack em linguagem simples",
     "stack": {
-      "hash": { "t": "Hash", "d": "SHA-256 no dispositivo" },
-      "calendars": { "t": "Calendários", "d": "OpenTimestamps" },
-      "bitcoin": { "t": "Bitcoin", "d": "Âncora na mainnet" },
-      "keep": { "t": "Você guarda", "d": ".ots + original" }
+      "hash": {
+        "t": "Hash",
+        "d": "SHA-256 no dispositivo"
+      },
+      "calendars": {
+        "t": "Calendários",
+        "d": "OpenTimestamps"
+      },
+      "bitcoin": {
+        "t": "Bitcoin",
+        "d": "Âncora na mainnet"
+      },
+      "keep": {
+        "t": "Você guarda",
+        "d": ".ots + original"
+      }
     },
     "chip1": "Privado",
     "chip2": "Grátis hoje",
@@ -2301,5 +2498,31 @@
     "ctaPricing": "Preços",
     "ctaDocs": "Toda a docs",
     "ctaCompare": "Comparar"
+  },
+  "meshPage": {
+    "chip": "Ping de calendário ao vivo",
+    "title": "OpenTimestamps",
+    "titleHighlight": "calendários",
+    "lede": "Esta página faz ping aos calendários via GET /api/mesh/nodes. O globo decorativo é ilustração, não GPS de nós.",
+    "ledeNetwork": "Ponta Bitcoin e calendários ao vivo também em /network.",
+    "reachableLabel": "Calendários alcançáveis",
+    "pingedBy": "ping ao vivo por api.satohash.io",
+    "globeCaption": "Ilustração — não GPS",
+    "globeHint": "Ping a {{n}} calendários OpenTimestamps — estado e latência abaixo.",
+    "globeEmpty": "Ainda sem pings de calendário — o estado ao vivo aparecerá aqui.",
+    "networkCta": "Calendários ao vivo em /network",
+    "metricsTitle": "Este ping",
+    "calendarsReachable": "Calendários alcançáveis",
+    "avgLatency": "Latência média de ping",
+    "livePing": "Ping ao vivo",
+    "reachTitle": "Alcance dos calendários",
+    "reachBody": "As provas vão para calendários OpenTimestamps independentes, por isso uma falha num calendário não interrompe a ancoragem. Esta barra é a leitura actual de GET /api/mesh/nodes — não um valor de disponibilidade prometido.",
+    "gridTitle": "Calendários OpenTimestamps",
+    "source": "Fonte: GET /api/mesh/nodes",
+    "calendarKind": "Calendário OpenTimestamps",
+    "pingLatency": "Latência de ping",
+    "endpoint": "Endpoint",
+    "error": "Não foi possível alcançar GET /api/mesh/nodes — sem leituras de calendário ao vivo. Nada é mostrado em vez de uma lista inventada ou desactualizada.",
+    "empty": "GET /api/mesh/nodes não devolveu calendários. As leituras ao vivo aparecerão aqui no próximo ping bem-sucedido."
   }
 }

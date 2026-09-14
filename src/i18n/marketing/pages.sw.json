@@ -1320,7 +1320,156 @@
     "procurementTitle": "Ununuzi",
     "procurementBody": "Pakua pitch na mwongozo wa MotoPass.",
     "procurementCta": "Kifurushi cha diligence",
-    "printGuide": "Mwongozo wa wakuu wa mpaka"
+    "printGuide": "Mwongozo wa wakuu wa mpaka",
+    "networkActive": "Mtandao unafanya kazi",
+    "networkDegraded": "Kwenye kache / umeshuka",
+    "blockLine": "Bloku {{height}}",
+    "lastReviewed": "Ilikaguliwa mwisho: 16 Agosti 2026",
+    "heroH1Line1": "Imejengwa kwenye hisabati.",
+    "heroH1Line2": "Si uaminifu.",
+    "pillZk": "Usanifu wa ujuzi-sifuri",
+    "pillBitcoin": "Uthibitisho uliofungwa kwenye Bitcoin",
+    "zkLabel": "Usanifu wa ujuzi-sifuri",
+    "zkTitle": "Ujuzi-sifuri ni nini?",
+    "zkTitleRest": "Kwa nini ina maana?",
+    "zkP1": "Katika uthibitisho wa kawaida wa noti, unamkabidhi mtu hati yako, anaisoma na kuistampa. Unamwamini mtu huyo — na kila mfumo anaotumia.",
+    "zkP2Before": "Kwa Satohash tunatumia mbinu ya hisabati inayoitwa",
+    "zkP2Strong": "hash ya kriptografia",
+    "zkP2After": ". Hati yako inageuzwa kuwa alama ya vidole ya herufi 64 (SHA-256). Hatuioni, hatuihifadhi, wala hatuitumii hati yenyewe. Ni alama tu inayopelekwa kwa Bitcoin.",
+    "zkP3Before": "Hii inaitwa",
+    "zkP3Strong": "usanifu wa ujuzi-sifuri",
+    "zkP3After": ": tunaweza kuthibitisha kuwa hati yako ilikuwepo wakati fulani bila kujua kamwe kilicho ndani.",
+    "zkExampleLabel": "Mfano wa alama ya SHA-256",
+    "zkExampleCaption": "Mfuatano huu wa herufi 64 ndio tu tunaochokea. Hati yenyewe haiondoki kwenye kifaa chako.",
+    "zkFlowLabel": "Jinsi inavyotiririka",
+    "flow": {
+      "document": {
+        "label": "Hati yako",
+        "sub": "Inabaki kwenye kifaa chako"
+      },
+      "hash": {
+        "label": "Hash ya SHA-256",
+        "sub": "Alama ya herufi 64"
+      },
+      "bitcoin": {
+        "label": "Bitcoin",
+        "sub": "Imefungwa kwenye bloku"
+      },
+      "proof": {
+        "label": "Uthibitisho usiobadilika",
+        "sub": "Unaweza kuthibitishwa milele"
+      }
+    },
+    "legalLabel": "Uzingatiaji wa sheria",
+    "legalTitle": "Viwango vya kimataifa",
+    "legalIntro": "Jinsi uthibitisho wa Satohash unavyohusiana na mifumo mikuu ya kisheria — kama ushahidi wa kriptografia wa kuunga mkono, si uidhinishaji wa udhibiti.",
+    "colFramework": "Mfumo",
+    "colJurisdiction": "Mamlaka ya kisheria",
+    "colStatus": "Hali",
+    "colPosture": "Msimamo",
+    "nip05TooltipTitle": "Utambulisho wa NIP-05",
+    "nip05Tooltip": "Kiwango cha itifaki ya Nostr kinachounganisha jina linalosomeka (kama user@domain.com) na ufunguo wa umma wa kriptografia. Hutumika kwa utambulisho wa msaini usioweza kuchezewa.",
+    "uetaTooltipTitle": "UETA",
+    "uetaTooltip": "Uniform Electronic Transactions Act — sheria ya Marekani inayotoa saini za kielektroniki uzito ule ule wa kisheria kama saini za mkono katika majimbo mengi.",
+    "eidasTooltipTitle": "eIDAS",
+    "eidasTooltip": "Kanuni ya EU inayoweka mfumo wa kisheria wa saini za kielektroniki na muhuri wa muda wa kielektroniki katika nchi wanachama. Ushahidi wa Satohash ni ushahidi wa kriptografia wa kuunga mkono — si muhuri wa muda wa kielektroniki ulioidhinishwa.",
+    "legalDisclaimer": "Uthibitisho wa Satohash ni ushahidi wa kriptografia unaounga mkono mifumo ya kumbukumbu za kielektroniki na ushahidi. Si ushauri wa kisheria, si uidhinishaji wa udhibiti, wala si kitendo cha mthibitishaji. Kwa kesi, wasiliana na wakili aliyehitimu.",
+    "status": {
+      "supporting": "Ushahidi wa kuunga mkono",
+      "evidentiary": "Wa ushahidi",
+      "byDesign": "Kwa usanifu"
+    },
+    "rows": {
+      "esign": {
+        "jurisdiction": "Marekani",
+        "standard": "Kumbukumbu ya kielektroniki"
+      },
+      "ueta": {
+        "jurisdiction": "Marekani (majimbo 47)",
+        "standard": "Kumbukumbu ya kielektroniki"
+      },
+      "eidas": {
+        "jurisdiction": "Umoja wa Ulaya",
+        "standard": "Ushahidi wa kriptografia wa kuwepo"
+      },
+      "swiss": {
+        "jurisdiction": "Uswisi",
+        "standard": "Sheria ya shirikisho kuhusu saini za kielektroniki"
+      },
+      "gdpr": {
+        "jurisdiction": "Umoja wa Ulaya",
+        "standard": "Hakuna data ya akaunti · IP ya muda kwa kuzuia unyanyasaji (saa 24) · hash na lebo ya hiari tu"
+      },
+      "commonLaw": {
+        "jurisdiction": "Uingereza / Commonwealth",
+        "standard": "Ushahidi wa hash unaokubalika"
+      }
+    },
+    "privacyLabel": "Faragha kwa usanifu",
+    "privacyTitle": "Hatuwezi kuona hati zako.",
+    "privacyTitleRest": "Hiyo ndiyo maana.",
+    "privacyIntro": "Usanifu wetu umeundwa ili faragha isiwe uamuzi wa sera — iwe hisabati haiwezi kukiukwa.",
+    "privacyReceiveTitle": "Tunachopokea",
+    "privacyReceive": {
+      "hash": "Hash ya SHA-256 tu (herufi 64 za hex)",
+      "noBytes": "Hakuna baiti za faili",
+      "noMeta": "Hakuna metadata kutoka faili yenyewe",
+      "noId": "Hakuna taarifa zinazokutambulisha"
+    },
+    "privacyStoreTitle": "Tunachohifadhi",
+    "privacyStore": {
+      "hash": "Mfuatano wa hash",
+      "filename": "Jina la faili (wewe unatoa)",
+      "timestamp": "Muhuri wa muda wa kuwasilisha",
+      "proofId": "Kitambulisho cha uthibitisho",
+      "noContent": "Hakuna maudhui ya faili — kamwe"
+    },
+    "privacyBitcoinTitle": "Bitcoin inachohifadhi",
+    "privacyBitcoin": {
+      "hash": "Hash yako, iliyoingizwa kwenye bloku",
+      "public": "Inaonekana kwa umma milele",
+      "immutable": "Haibadiliki na haiwezi kuchezewa",
+      "verifiable": "Inaweza kuthibitishwa na yeyote, popote"
+    },
+    "gdprNoteStrong": "Uzingatiaji wa kifungu cha 11 cha GDPR:",
+    "gdprNote": "Hatuwezi kukutambua kutoka hash peke yake. Tunashika hash, lebo ya hiari, na rekodi ya IP ya saa 24 kwa kuzuia unyanyasaji — hakuna kinachojenga wasifu wako. Faragha yako si ahadi — ni kizuizi cha kriptografia.",
+    "permanenceLabel": "Kudumu",
+    "bitcoinTitle": "Kwa nini Bitcoin?",
+    "bitcoinTitleRest": "Kwa sababu hakuna anayeidhibiti.",
+    "bitcoinIntro": "Seva yoyote ya kati inaweza kudukuliwa, kuzimwa, au kushinikizwa kufuta rekodi. Bitcoin haiwezi.",
+    "facts": {
+      "uptime": "Bitcoin imefanya kazi bila kukatika tangu 3 Januari 2009",
+      "nodes": "Nodi kamili ~18,000 duniani zinathibitisha kila muamala",
+      "rewrite": "Kuandika upya bloku ya Bitcoin kunahitaji 51% ya nguvu ya uchimbaji duniani — haiwezekani kiuchumi",
+      "consensus": "Kila bloku inawekwa muhuri wa muda kwa makubaliano ya kimataifa — si seva moja",
+      "ots": "OpenTimestamps (opentimestamps.org) ni itifaki wazi — si bidhaa ya Satohash"
+    },
+    "otsTooltipTitle": "OpenTimestamps (OTS)",
+    "otsTooltip": "Itifaki wazi inayofanya hash ya hati yako na kuifunga kwenye bloku ya Bitcoin. Inathibitisha faili yako ilikuwepo wakati fulani, bila kubadilika.",
+    "scopeLabel": "Wigo wa huduma",
+    "scopeTitle": "Huduma yetu ni nini",
+    "scopeTitleRest": "(na si nini)",
+    "isHeading": "Satohash NI",
+    "isNotHeading": "Satohash SI",
+    "is": {
+      "timestamping": "Huduma ya muhuri wa muda wa kriptografia",
+      "evidence": "Zana ya kutengeneza ushahidi",
+      "privacy": "Uthibitisho wa hati unaolinda faragha",
+      "anchoring": "Kufunga kwenye blockchain ya Bitcoin"
+    },
+    "isNot": {
+      "firm": "Kampuni ya huduma za kisheria",
+      "counsel": "Mbadala wa ushauri wa kisheria",
+      "authenticity": "Mdhamini wa uhalisi wa hati (uwepo tu)",
+      "liable": "Wajibu wa jinsi uthibitisho unavyotumika"
+    },
+    "contactProofTitle": "Maswali kuhusu uthibitisho?",
+    "contactProofBody": "Wasiliana na timu yetu ya kisheria kuhusu uhalali wa uthibitisho, kuwasilisha mahakamani, au nyaraka za uzingatiaji.",
+    "contactDeleteTitle": "Maombi ya kufuta data",
+    "contactDeleteBody": "Kuomba kufutwa kwa metadata yako (hash na majina ya faili), wasiliana na timu yetu ya faragha. Kumbuka: data iliyofungwa kwenye Bitcoin ni ya kudumu kwa asili.",
+    "terms": "Masharti ya huduma",
+    "privacyPolicy": "Sera ya faragha",
+    "cryptoNotice": "Taarifa ya kriptografia"
   },
   "governmentPage": {
     "backTrust": "← Kituo cha Uaminifu",
@@ -1370,7 +1519,34 @@
     "placeholder": "SHA-256 moja kwa mstari…",
     "register": "Sajili",
     "exportCsv": "Hamisha CSV",
-    "importCsv": "Ingiza CSV"
+    "importCsv": "Ingiza CSV",
+    "toastSaved": "Hashes {{count}} zimehifadhiwa kwenye hazina",
+    "toastNoCsv": "Hakuna hashes halali katika CSV",
+    "vaultCount": "Heshi {{count}} kwenye vault —",
+    "openVault": "fungua vault"
+  },
+  "batchVerifyPage": {
+    "metaTitle": "Thibitisha kwa kundi — Angalia hashes 50 kwa pamoja",
+    "metaDescription": "Bandika hadi hashes 50 za SHA-256 na uzilinganishe na rejista ya Satohash — si faharasa ya dunia.",
+    "back": "Rudi kwa Thibitisha",
+    "title": "Thibitisha kwa kundi",
+    "lede": "Bandika hadi hashes {{max}} za SHA-256 (moja kwa mstari) na uzilinganishe na rejista ya Satohash — si faharasa ya dunia.",
+    "placeholder": "Bandika hashes hapa…",
+    "errorNone": "Hakuna hashes halali za SHA-256. Bandika moja kwa mstari (au zilizotenganishwa kwa koma/nafasi).",
+    "errorTooMany": "Hashes nyingi mno — kiwango cha juu {{max}}. Umebandika {{count}}.",
+    "checking": "Inakagua…",
+    "verify": "Thibitisha hashes",
+    "verifyCount": "Thibitisha hashes {{count}}",
+    "clear": "Futa",
+    "parsed": "Hash(es) {{count}} halali zimechanganuliwa",
+    "found": "{{count}} zimepatikana",
+    "confirmed": "{{count}} Confirmed",
+    "pending": "{{count}} Pending",
+    "missing": "{{count}} hazijapatikana",
+    "notInRegistry": "haipo kwenye rejista",
+    "errorPrefix": "error: {{message}}",
+    "block": "bloku {{block}}",
+    "details": "Maelezo →"
   },
   "legalPages": {
     "termsTitle": "Masharti ya Huduma",
@@ -1553,11 +1729,20 @@
     "subtitle": "Jedwali la mamlaka kwa ushahidi wa hash chini ya UETA, eIDAS, Uingereza, na sheria za kuvuka mipaka."
   },
   "distressedAssetPage": {
+    "back": "← Matumizi ya serikali",
     "title": "Uthibitisho wa mali yenye shida",
-    "subtitle": "Hash metadata ya orodha kwa biashara huru. Unganisha na .ots zilizohifadhiwa kutoka orodha za MotoPass.",
+    "lede": "Hash metadata ya orodha kwenye kifaa chako kwa biashara huru. Muhuri bado unaenda /stamp. Kuunganisha na .ots ya MotoPass iliyohifadhiwa ni hiari.",
+    "honesty": "Hii si daftari rasmi la miliki. SHA-256 ya sehemu za orodha inathibitisha kuwa baiti hizo zilikuwepo — haibadilishi miliki wala haichukui nafasi ya ushauri wa kisheria.",
+    "fields": {
+      "asset": "Mali",
+      "jurisdiction": "Mamlaka",
+      "seller": "Muuzaji",
+      "terms": "Masharti"
+    },
+    "computeHash": "Hesabu hash ya orodha",
     "stampListing": "Weka muhuri wa hash ya orodha",
-    "compareHosted": "Linganisha na uthibitisho uliohifadhiwa",
-    "hostedPlaceholder": "URL ya .ots iliyohifadhiwa kwenye motopass au CDN"
+    "hostedPlaceholder": "URL ya .ots iliyohifadhiwa kwenye motopass au CDN",
+    "compareHosted": "Linganisha na uthibitisho uliohifadhiwa"
   },
   "templateDetailPage": {
     "notFound": "Kiolezo hakijapatikana",
@@ -1892,10 +2077,22 @@
     },
     "stackTitle": "Stack kwa lugha rahisi",
     "stack": {
-      "hash": { "t": "Hash", "d": "SHA-256 kwenye kifaa" },
-      "calendars": { "t": "Kalenda", "d": "OpenTimestamps" },
-      "bitcoin": { "t": "Bitcoin", "d": "Nanga ya mainnet" },
-      "keep": { "t": "Wewe huhifadhi", "d": ".ots + asili" }
+      "hash": {
+        "t": "Hash",
+        "d": "SHA-256 kwenye kifaa"
+      },
+      "calendars": {
+        "t": "Kalenda",
+        "d": "OpenTimestamps"
+      },
+      "bitcoin": {
+        "t": "Bitcoin",
+        "d": "Nanga ya mainnet"
+      },
+      "keep": {
+        "t": "Wewe huhifadhi",
+        "d": ".ots + asili"
+      }
     },
     "chip1": "Faragha",
     "chip2": "Bure leo",
@@ -2301,5 +2498,31 @@
     "ctaPricing": "Bei",
     "ctaDocs": "Docs zote",
     "ctaCompare": "Linganisha"
+  },
+  "meshPage": {
+    "chip": "Ping hai ya kalenda",
+    "title": "OpenTimestamps",
+    "titleHighlight": "kalenda",
+    "lede": "Ukurasa huu hupiga ping kalenda kupitia GET /api/mesh/nodes. Dunia ya mapambo ni mchoro, si GPS ya nodi.",
+    "ledeNetwork": "Ncha ya Bitcoin na kalenda hai pia kwenye /network.",
+    "reachableLabel": "Kalenda zinazofikiwa",
+    "pingedBy": "ping hai kutoka api.satohash.io",
+    "globeCaption": "Mchoro — si GPS",
+    "globeHint": "Ping kwa kalenda {{n}} za OpenTimestamps — hali na latency hapa chini.",
+    "globeEmpty": "Bado hakuna ping za kalenda — hali hai itaonekana hapa.",
+    "networkCta": "Kalenda hai kwenye /network",
+    "metricsTitle": "Ping hii",
+    "calendarsReachable": "Kalenda zinazofikiwa",
+    "avgLatency": "Wastani wa latency ya ping",
+    "livePing": "Ping hai",
+    "reachTitle": "Ufikikaji wa kalenda",
+    "reachBody": "Uthibitisho huenda kwa kalenda huru za OpenTimestamps, kwa hivyo kukatika kwa kalenda moja hakuzuii kufungia. Mstari huu ni somo la sasa la GET /api/mesh/nodes — si asilimia ya upatikanaji iliyoahidiwa.",
+    "gridTitle": "Kalenda za OpenTimestamps",
+    "source": "Chanzo: GET /api/mesh/nodes",
+    "calendarKind": "Kalenda ya OpenTimestamps",
+    "pingLatency": "Latency ya ping",
+    "endpoint": "Endpoint",
+    "error": "GET /api/mesh/nodes haikufikiwa — hakuna somo hai la kalenda. Hakuna kinachoonyeshwa badala ya orodha iliyozua au iliyopitwa.",
+    "empty": "GET /api/mesh/nodes haikurudisha kalenda. Masomo hai yataonekana hapa kwenye ping inayofuata iliyofanikiwa."
   }
 }

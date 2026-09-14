@@ -1295,7 +1295,156 @@
     "procurementTitle": "采购与尽职调查",
     "procurementBody": "下载执行推介和 MotoPass 集成指南。",
     "procurementCta": "查看尽职调查包",
-    "printGuide": "边境官员验证指南"
+    "printGuide": "边境官员验证指南",
+    "networkActive": "网络正常",
+    "networkDegraded": "缓存 / 降级",
+    "blockLine": "区块 {{height}}",
+    "lastReviewed": "上次审阅：2026年8月16日",
+    "heroH1Line1": "建立在数学上。",
+    "heroH1Line2": "而非信任。",
+    "pillZk": "零知识架构",
+    "pillBitcoin": "锚定于 Bitcoin 的证明",
+    "zkLabel": "零知识架构",
+    "zkTitle": "什么是零知识？",
+    "zkTitleRest": "为什么重要？",
+    "zkP1": "在传统公证中，你把文件交给某人阅读并盖章。你信任那个人——以及他使用的每一个系统。",
+    "zkP2Before": "Satohash 使用一种数学方法，称为",
+    "zkP2Strong": "密码学哈希",
+    "zkP2After": "。你的文件会变成唯一的 64 字符指纹（SHA-256）。我们从不查看、存储或传输文件本身。只有指纹被发送到 Bitcoin。",
+    "zkP3Before": "这称为",
+    "zkP3Strong": "零知识架构",
+    "zkP3After": "：我们可以证明你的文件在某一时刻存在，而永远不必知道其中内容。",
+    "zkExampleLabel": "SHA-256 指纹示例",
+    "zkExampleCaption": "这串 64 字符就是我们收到的全部内容。文件本身从不离开你的设备。",
+    "zkFlowLabel": "流程",
+    "flow": {
+      "document": {
+        "label": "你的文件",
+        "sub": "留在你的设备上"
+      },
+      "hash": {
+        "label": "SHA-256 哈希",
+        "sub": "64 字符指纹"
+      },
+      "bitcoin": {
+        "label": "Bitcoin",
+        "sub": "锚定在区块中"
+      },
+      "proof": {
+        "label": "不可变证明",
+        "sub": "永远可核验"
+      }
+    },
+    "legalLabel": "法律合规",
+    "legalTitle": "国际标准",
+    "legalIntro": "Satohash 证明如何对应主要全球法律框架——作为辅助密码学证据，而非监管认证。",
+    "colFramework": "框架",
+    "colJurisdiction": "法域",
+    "colStatus": "状态",
+    "colPosture": "定位",
+    "nip05TooltipTitle": "NIP-05 身份",
+    "nip05Tooltip": "Nostr 协议标准，将可读标识（如 user@domain.com）与密码学公钥绑定。用于防篡改的签署人身份。",
+    "uetaTooltipTitle": "UETA",
+    "uetaTooltip": "Uniform Electronic Transactions Act —— 美国法律，在大多数州赋予电子签名与手写签名同等法律效力。",
+    "eidasTooltipTitle": "eIDAS",
+    "eidasTooltip": "欧盟法规，为成员国电子签名与电子时间戳建立法律框架。Satohash 证据是辅助密码学证据——不是合格电子时间戳。",
+    "legalDisclaimer": "Satohash 证明是支持电子记录与证据框架的密码学证据。不构成法律意见、监管认证或公证行为。如需诉讼，请咨询合格律师。",
+    "status": {
+      "supporting": "辅助证据",
+      "evidentiary": "证据性",
+      "byDesign": "设计使然"
+    },
+    "rows": {
+      "esign": {
+        "jurisdiction": "美国",
+        "standard": "电子记录"
+      },
+      "ueta": {
+        "jurisdiction": "美国（47 个州）",
+        "standard": "电子记录"
+      },
+      "eidas": {
+        "jurisdiction": "欧盟",
+        "standard": "存在性的密码学证据"
+      },
+      "swiss": {
+        "jurisdiction": "瑞士",
+        "standard": "联邦电子签名法"
+      },
+      "gdpr": {
+        "jurisdiction": "欧盟",
+        "standard": "无账户数据 · 用于防滥用的临时 IP（24 小时）· 仅哈希与可选标签"
+      },
+      "commonLaw": {
+        "jurisdiction": "英国 / 英联邦",
+        "standard": "基于哈希的证据可采"
+      }
+    },
+    "privacyLabel": "架构即隐私",
+    "privacyTitle": "我们看不见你的文件。",
+    "privacyTitleRest": "这正是重点。",
+    "privacyIntro": "我们的架构使隐私不是政策选择——从数学上就无法被违反。",
+    "privacyReceiveTitle": "我们收到什么",
+    "privacyReceive": {
+      "hash": "仅 SHA-256 哈希（64 个十六进制字符）",
+      "noBytes": "没有文件字节",
+      "noMeta": "没有来自文件本身的元数据",
+      "noId": "没有身份信息"
+    },
+    "privacyStoreTitle": "我们存储什么",
+    "privacyStore": {
+      "hash": "哈希字符串",
+      "filename": "文件名（由你提供）",
+      "timestamp": "提交时间戳",
+      "proofId": "证明 ID",
+      "noContent": "从不存储文件内容"
+    },
+    "privacyBitcoinTitle": "Bitcoin 存储什么",
+    "privacyBitcoin": {
+      "hash": "你的哈希，嵌入区块中",
+      "public": "永久公开可见",
+      "immutable": "不可变且防篡改",
+      "verifiable": "任何人、任何地点均可核验"
+    },
+    "gdprNoteStrong": "GDPR 第 11 条：",
+    "gdprNote": "仅凭哈希我们无法识别你。我们持有的是哈希、可选标签，以及用于防滥用的 24 小时 IP 记录——不会构建你的画像。隐私不是承诺——而是密码学约束。",
+    "permanenceLabel": "永久性",
+    "bitcoinTitle": "为什么是 Bitcoin？",
+    "bitcoinTitleRest": "因为无人能控制它。",
+    "bitcoinIntro": "任何中心服务器都可能被入侵、关闭或被迫删除记录。Bitcoin 不能。",
+    "facts": {
+      "uptime": "Bitcoin 自 2009 年 1 月 3 日起持续运行、无停机",
+      "nodes": "全球约 18,000 个全节点验证每笔交易",
+      "rewrite": "改写一个 Bitcoin 区块需要全球 51% 的算力——在经济上不可能",
+      "consensus": "每个区块由全球共识打上时间戳——而非任何单一服务器",
+      "ots": "OpenTimestamps（opentimestamps.org）是开放协议——不是 Satohash 产品"
+    },
+    "otsTooltipTitle": "OpenTimestamps (OTS)",
+    "otsTooltip": "开放协议：对文件做哈希并锚定到 Bitcoin 区块。不可变地证明文件在某一时刻存在。",
+    "scopeLabel": "服务范围",
+    "scopeTitle": "我们的服务是什么",
+    "scopeTitleRest": "（以及不是什么）",
+    "isHeading": "Satohash 是",
+    "isNotHeading": "Satohash 不是",
+    "is": {
+      "timestamping": "密码学时间戳服务",
+      "evidence": "证据生成工具",
+      "privacy": "保护隐私的文件存证",
+      "anchoring": "Bitcoin 区块链锚定"
+    },
+    "isNot": {
+      "firm": "法律服务律所",
+      "counsel": "法律顾问的替代品",
+      "authenticity": "文件真实性的担保人（仅证明存在）",
+      "liable": "对证明使用方式承担责任"
+    },
+    "contactProofTitle": "关于证明有疑问？",
+    "contactProofBody": "如有证明效力、法庭提交或合规文件方面的问题，请联系我们的法律团队。",
+    "contactDeleteTitle": "数据删除请求",
+    "contactDeleteBody": "如需删除元数据（哈希与文件名），请联系隐私团队。注意：锚定在 Bitcoin 上的数据本质上是永久的。",
+    "terms": "服务条款",
+    "privacyPolicy": "隐私政策",
+    "cryptoNotice": "密码学声明"
   },
   "governmentPage": {
     "backTrust": "← 信任中心",
@@ -1345,7 +1494,34 @@
     "placeholder": "每行一个 SHA-256…",
     "register": "登记哈希",
     "exportCsv": "导出 CSV",
-    "importCsv": "导入 CSV"
+    "importCsv": "导入 CSV",
+    "toastSaved": "已将 {{count}} 个哈希保存到保险库",
+    "toastNoCsv": "CSV 中没有有效哈希",
+    "vaultCount": "金库中有 {{count}} 个哈希 —",
+    "openVault": "打开金库"
+  },
+  "batchVerifyPage": {
+    "metaTitle": "批量验证 — 一次检查 50 个哈希",
+    "metaDescription": "粘贴最多 50 个 SHA-256 哈希，对照 Satohash 登记处检查 — 不是全球索引。",
+    "back": "返回验证",
+    "title": "批量验证",
+    "lede": "粘贴最多 {{max}} 个 SHA-256 哈希（每行一个），对照 Satohash 登记处检查 — 不是全球索引。",
+    "placeholder": "在此粘贴哈希…",
+    "errorNone": "未找到有效的 SHA-256 哈希。请每行粘贴一个（或用逗号/空格分隔）。",
+    "errorTooMany": "哈希过多 — 最多 {{max}} 个。您粘贴了 {{count}} 个。",
+    "checking": "正在检查…",
+    "verify": "验证哈希",
+    "verifyCount": "验证 {{count}} 个哈希",
+    "clear": "清除",
+    "parsed": "已解析 {{count}} 个有效哈希",
+    "found": "{{count}} 个已找到",
+    "confirmed": "{{count}} Confirmed",
+    "pending": "{{count}} Pending",
+    "missing": "{{count}} 个未找到",
+    "notInRegistry": "不在登记处",
+    "errorPrefix": "error: {{message}}",
+    "block": "区块 {{block}}",
+    "details": "详情 →"
   },
   "legalPages": {
     "termsTitle": "服务条款",
@@ -1528,11 +1704,20 @@
     "subtitle": "在 UETA、eIDAS、英国及跨境法律下基于哈希的证据管辖矩阵。"
   },
   "distressedAssetPage": {
+    "back": "← 政府用途",
     "title": "困境资产证明",
-    "subtitle": "为主权资产交易哈希列表元数据。可与 MotoPass 托管的 .ots 配对。",
+    "lede": "在本地对列表元数据计算哈希，用于主权资产交易。盖章仍前往 /stamp。与 MotoPass 托管的 .ots 配对为可选项。",
+    "honesty": "这不是法定产权登记。对列表字段的 SHA-256 只证明那些字节曾经存在——不转移所有权，也不能替代法律顾问。",
+    "fields": {
+      "asset": "资产",
+      "jurisdiction": "司法管辖区",
+      "seller": "卖方",
+      "terms": "条款"
+    },
+    "computeHash": "计算列表哈希",
     "stampListing": "盖章列表哈希",
-    "compareHosted": "与托管证明比对",
-    "hostedPlaceholder": "motopass 或 CDN 上的托管 .ots URL"
+    "hostedPlaceholder": "motopass 或 CDN 上的托管 .ots URL",
+    "compareHosted": "与托管证明比对"
   },
   "templateDetailPage": {
     "notFound": "未找到模板",
@@ -1867,10 +2052,22 @@
     },
     "stackTitle": "用白话说清这套栈",
     "stack": {
-      "hash": { "t": "哈希", "d": "设备上的 SHA-256" },
-      "calendars": { "t": "日历", "d": "OpenTimestamps" },
-      "bitcoin": { "t": "Bitcoin", "d": "主网锚定" },
-      "keep": { "t": "你保留", "d": ".ots + 原件" }
+      "hash": {
+        "t": "哈希",
+        "d": "设备上的 SHA-256"
+      },
+      "calendars": {
+        "t": "日历",
+        "d": "OpenTimestamps"
+      },
+      "bitcoin": {
+        "t": "Bitcoin",
+        "d": "主网锚定"
+      },
+      "keep": {
+        "t": "你保留",
+        "d": ".ots + 原件"
+      }
     },
     "chip1": "私密",
     "chip2": "今日免费",
@@ -2276,5 +2473,31 @@
     "ctaPricing": "定价",
     "ctaDocs": "全部文档",
     "ctaCompare": "对比"
+  },
+  "meshPage": {
+    "chip": "实时日历 ping",
+    "title": "OpenTimestamps",
+    "titleHighlight": "日历",
+    "lede": "本页通过 GET /api/mesh/nodes ping 日历。装饰地球是示意图，不是节点 GPS。",
+    "ledeNetwork": "实时 Bitcoin 链尖与日历也在 /network。",
+    "reachableLabel": "可到达的日历",
+    "pingedBy": "由 api.satohash.io 实时 ping",
+    "globeCaption": "示意图 — 不是 GPS",
+    "globeHint": "正在 ping {{n}} 个 OpenTimestamps 日历 — 状态与延迟见下方。",
+    "globeEmpty": "尚未返回日历 ping — 实时状态将显示在此。",
+    "networkCta": "/network 上的实时日历",
+    "metricsTitle": "本次 ping",
+    "calendarsReachable": "可到达的日历",
+    "avgLatency": "平均 ping 延迟",
+    "livePing": "实时 ping",
+    "reachTitle": "日历可达性",
+    "reachBody": "证明提交到独立的 OpenTimestamps 日历，单个日历故障不会停止锚定。此条是当前 GET /api/mesh/nodes 读数 — 不是承诺的可用率。",
+    "gridTitle": "OpenTimestamps 日历",
+    "source": "来源：GET /api/mesh/nodes",
+    "calendarKind": "OpenTimestamps 日历",
+    "pingLatency": "Ping 延迟",
+    "endpoint": "Endpoint",
+    "error": "无法访问 GET /api/mesh/nodes — 没有实时日历读数。不显示过期或编造的节点列表。",
+    "empty": "GET /api/mesh/nodes 未返回日历。下次 ping 成功后，实时读数将显示在此。"
   }
 }

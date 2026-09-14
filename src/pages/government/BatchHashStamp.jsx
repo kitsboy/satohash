@@ -43,7 +43,7 @@ export default function BatchHashStamp() {
     }))
     stamped.forEach((r) => upsertLocalStamp(r))
     setRows(stamped)
-    toast.success(`${stamped.length} hashes saved to vault`)
+    toast.success(t('batchHashPage.toastSaved', { count: stamped.length }))
   }
 
   const process = () => saveHashes(parseHashLines(input))
@@ -53,7 +53,7 @@ export default function BatchHashStamp() {
     reader.onload = (e) => {
       const hashes = parseCsvHashes(String(e.target.result || ''))
       if (!hashes.length) {
-        toast.error('No valid hashes in CSV')
+        toast.error(t('batchHashPage.toastNoCsv'))
         return
       }
       setInput(hashes.join('\n'))
@@ -142,9 +142,9 @@ export default function BatchHashStamp() {
         </div>
         {rows.length > 0 && (
           <p className="text-xs" style={{ color: 'var(--accent-success)' }}>
-            {rows.length} hashes in vault —{' '}
+            {t('batchHashPage.vaultCount', { count: rows.length })}{' '}
             <Link to="/vault" className="underline">
-              open vault
+              {t('batchHashPage.openVault')}
             </Link>
           </p>
         )}
