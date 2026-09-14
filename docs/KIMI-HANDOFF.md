@@ -1,3 +1,9 @@
+## Latest Session Summary (Grok M3, 2026-09-14 — batch/trust/nodes)
+
+**Lane:** SPA only. **Kimi: do not rebuild the API.** `/verify/batch`, Trust leftovers, `/distressed-asset`, `/nodes` public calendar ping (not a world mesh). Offers still deferred.
+
+---
+
 ## Latest Session Summary (Grok M3, 2026-09-14 — developer + catalog)
 
 **Lane:** SPA only. **Kimi: ingest THOR. Do not rebuild the API.** `/developer` and exec summary in 7 locales. `translations/*.json` 250 keys each. Next remaining public is sparse (Mesh/Offers still deferred). Cam X/iPhone later.

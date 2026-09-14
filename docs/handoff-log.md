@@ -1,3 +1,9 @@
+## 2026-09-14 (Grok M3 — batch verify, trust leftovers, distressed-asset, /nodes)
+
+SPA only. `/verify/batch`, Trust leftover English, `/distressed-asset`, `/nodes` public calendar ping (not a world mesh). Kimi: **do not rebuild API**.
+
+---
+
 ## 2026-09-14 (Grok M3 — developer + exec summary i18n + catalog 250)
 
 SPA only. `/developer` and `/docs/executive-summary` in 7 locales. translations/*.json all **250** keys. Snapper rail: scaffold. Kimi: **do not rebuild API**. Pages = Grok.

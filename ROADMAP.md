@@ -34,7 +34,7 @@ Cam: whole site in the seven languages we already offer. Commit + push after eac
 | Slice | Status | Surfaces |
 |-------|--------|----------|
 | **A — product loop** | **[x]** `89262b1` | Stamp leftovers, Verify, `/stamp/done`, `/p/<hash>` SPA + zero-JS, Counsel, Status, Watch, nav/footer |
-| **B — public marketing** | **[~]** | **Done:** donate, proof-pack, about, pitch, network, explorer (Merkle **demo**), atlas (search **demo**), identity (lookup), developer, exec summary. **Next:** remaining public (Mesh/Offers if un-gated) |
+| **B — public marketing** | **[~]** | **Done:** … developer, exec summary, batch verify, trust leftovers, distressed-asset, `/nodes` calendar ping. Offers still deferred. |
 | **C — app / ops** | **[ ]** | Admin, contracts, v5, Settings, Image vault, Protocol stats |
 | Catalog debt | **[x]** | en/es/fr/de/pt/sw/zh `translations/*.json` **250** keys. Stop growing inline `index.jsx` |
 
