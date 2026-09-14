@@ -1,3 +1,9 @@
+## Latest Session Summary (Grok M3, 2026-09-14 — camera QR)
+
+**Lane:** SPA only. **Kimi: do not rebuild the API.** PDFs/email QR → `https://satohash.io/p/{hash}` (phone cameras). Remaining C: contract editor/view, onboarding, forum chrome.
+
+---
+
 ## Latest Session Summary (Grok M3, 2026-09-14 — templates + slice C)
 
 **Lane:** SPA only. **Kimi: do not rebuild the API.** Notary templates: drafts; Stamp this draft → `/stamp`. Slice C chrome i18n (Settings, vault, stats, mobile signer demo, certificates, admin, contracts list, v5). Offers deferred.

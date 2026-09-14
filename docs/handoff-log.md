@@ -1,3 +1,9 @@
+## 2026-09-14 (Grok M3 — camera QR on PDF/email + remaining C)
+
+SPA only. Template and contract PDFs encode `https://satohash.io/p/{hash}` so iPhone/Android cameras open the proof card (they cannot read `.ots` natively). Email includes the same URL. Contract editor/view, onboarding leftovers, forum chrome i18n. Kimi: **do not rebuild API**.
+
+---
+
 ## 2026-09-14 (Grok M3 — notary extras + slice C chrome)
 
 SPA only. Templates are drafts; **Stamp this draft** SHA-256s locally and opens `/stamp`. PDF no longer claims a notary act. Slice C chrome: Settings, vault, protocol stats, mobile signer (demo), certificates, admin, contract list, v5 playground labels. Kimi: **do not rebuild API**.
