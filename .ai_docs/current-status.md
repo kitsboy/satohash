@@ -1,7 +1,7 @@
 # Current Status — Satohash
 
 **Version:** **5.0.0-ELITE** (Build 331+)  
-**Last Updated:** 2026-09-15 (Kimi live family stamps banked; API `6c1be90` — do not rebuild)  
+**Last Updated:** 2026-09-15 (goodbye — next-LLM steps below; API `6c1be90` — do not rebuild)  
 **Frontend:** https://satohash.io · www · CF Pages project **`satohash`** — Grok lane, `assetsDir: 'b'`  
 **API:** https://api.satohash.io ✅ LIVE (THOR Docker). Confirm SHA with `GET /health` (`gitSha`). **Live now: `6c1be90`** (Kimi 2026-09-15; do **not** rebuild for copy). Paywall off. Family widget stamps verified (katoa/motopass/sherpacarta/tadbuy=2, giveabit=3).  
 **Metrics SoT:** `https://api.satohash.io/metrics.json`  
@@ -61,7 +61,7 @@
 | `/network` | Live calendars, bitcoind tip, recent stamps, family tiles, Notes on Nostr |
 | `/status` · `/counsel` | Public status · counsel one-pager |
 | `/watch` | ~84s Kimi/Pippa · 10s teaser · `?v=kimi-noir-20260819` |
-| Language | **7 locales** en es fr de pt sw zh — **not finished.** SoT `docs/I18N.md`. Batch verify, trust leftovers, distressed-asset, `/nodes` calendar ping done. Offers deferred. Do not add Arabic. |
+| Language | **7 locales** en es fr de pt sw zh — product loop + public marketing + template catalog largely done. SoT `docs/I18N.md`. Offers deferred. Do not add Arabic. |
 
 ## Metrics (verified live 2026-08-17)
 
@@ -70,8 +70,7 @@
 | `raw.requireLightning` | **false** |
 | `raw.last10` | **10** rows |
 | `raw.familyClients` | **17** rows (list; zeros for unused family ids) |
-| Family with counts | live `raw.familyClients` — do not invent zeros; read metrics.json |
-| Sherpa / Katoa / Giveabit | attributed stamps exist (honest live counts; not 0) |
+| Family with counts | live `raw.familyClients` — **read metrics.json**; do not invent. 2026-09-15: katoa/motopass/sherpacarta/tadbuy=**2**, giveabit=**3** (widget at giveabit.io/**tools**) |
 
 ## This session (2026-09-14 — manuals, pitch, exec, handoff)
 
@@ -83,11 +82,21 @@
 - [x] I18N / roadmap one-liners; `docs:sync`
 - [x] Pending→Confirmed: browser notify + toast (last proof watch)
 - [x] Kimi 2026-09-15: live family widget stamps (katoa/motopass/sherpa/tadbuy=2, giveabit=3). Widget on giveabit.io/**tools**. HQ was not zeros.
+- [x] Kimi: family live stamps verified 2026-09-15 (API not rebuilt)
 - [ ] Offers stay deferred
 - [ ] Snapper stays scaffold — do not sell as judiciary-ready
 - [ ] Cam still: pin `/watch` on **`@give_bit`**; iPhone `/p/` unfurl
 - [ ] API: **do not rebuild** for copy
-- [x] Kimi: family live stamps verified 2026-09-15 (API not rebuilt)
+
+## Next for the next LLM (do in this order)
+
+Pickup: this file → `docs/handoff-log.md` → `docs/I18N.md`. `/whatsup` loads `docs/archive/SESSION-SUMMARY-2026-09-15-goodbye.md`.
+
+1. **Proof of authorship (NIP-07)** — next *product* chapter. Stamp still proves **when**, not **who**. Optional: key-held signature bound to the SHA-256. Do not claim it until it ships. Do not change `/api/*` without Cam.
+2. **Family-owner leftovers (not Satohash API):** TadBuy 404s some of its own `/api/*`; MotoPass `useProgramsContext` ErrorBoundary on load (widget still stamps). Give A Bit widget stays on **`/tools`**.
+3. **Cam marketing (not code):** pin `/watch` on **`@give_bit`** (`docs/marketing/GIVE-BIT-X-PACK.md`); physical iPhone share of `/p/<hash>` (JPEG unfurl).
+4. **Optional builders:** npm-publish `packages/satohash-cli` only if Cam asks. Root `bin/satohash.js` is a shim.
+5. **Do not:** rebuild API for copy; flip `REQUIRE_LIGHTNING`; add Arabic; sell Snapper/ZK/BOLT-12 as live; Tailscale notes to M4. Vault = **THOR** Obsidian. Pages = Grok.
 
 ## This session (2026-09-14 — docs truth + tool-belt + About/Pitch/Network)
 

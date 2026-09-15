@@ -3,7 +3,7 @@ title: Investor / Partner One-Pager
 project: Satohash
 version: 5.0.0-ELITE
 audience: investors, partners, grants
-last_updated: 2026-09-14
+last_updated: 2026-09-15
 owner: Kimi (Orchestrator) + Nova (Docs)
 self_evolving: true
 update_rule: >
@@ -40,8 +40,8 @@ Working MVP (`5.0.0-ELITE`). A stranger can stamp, download `.ots`, verify, and 
 
 - Live SPA: [satohash.io](https://satohash.io)
 - Live API: [api.satohash.io](https://api.satohash.io) (THOR Docker; own `bitcoind` at tip)
-- Family widgets on Katoa, MotoPass, Sherpa, Give A Bit, TadBuy (`public/widgets/stamp.js`) — default **POST** `/api/stamp` (hash on-device)
-- Live stamp count is on [/network](https://satohash.io/network) and `https://api.satohash.io/metrics.json` — **do not invent a KPI here**
+- Family widgets on Katoa, MotoPass, Sherpa, TadBuy, Give A Bit (`/tools`) — default **POST** `/api/stamp`. Live HQ 2026-09-15: those five ids 2–3 (read `metrics.json`; do not invent)
+- Live stamp count is on [/network](https://satohash.io/network) and `https://api.satohash.io/metrics.json`
 
 ## Model / value flow
 
@@ -63,7 +63,7 @@ Part of an interlocking Bitcoin-sovereignty suite. Shared brand, Safe Harbour, o
 
 ## 90-day north star (default)
 
-Measurable usage on the live URL, one more family or distribution partnership, pin `/watch` on @give_bit, physical iPhone `/p/` unfurl, keep this pack honest. Localization of the seven locales is in progress (`docs/I18N.md`) — not complete.
+Authorship (*who*) as the next product chapter. Pin `/watch` on @give_bit. Physical iPhone `/p/` unfurl. Keep this pack honest.
 
 ## Risks & mitigations
 

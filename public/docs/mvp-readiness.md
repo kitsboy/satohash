@@ -1,11 +1,11 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 397) · **Updated:** 2026-09-14
+> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 398) · **Updated:** 2026-09-15
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Satohash MVP Readiness
 
 > **Status:** Core MVP **live**. Frontend on Cloudflare Pages. API at https://api.satohash.io (THOR Docker). Own `bitcoind` at tip. Free stamps. Paywall off.
-> **Updated:** 2026-09-14 · Version `5.0.0-ELITE`
+> **Updated:** 2026-09-15 · Version `5.0.0-ELITE`
 
 ## MVP definition
 
@@ -18,7 +18,7 @@ That loop is live:
 3. [satohash.io/verify](https://satohash.io/verify) — check the receipt.
 4. Share `https://satohash.io/p/<hash>` — zero-JS proof card.
 
-The remaining work below is **QR / proof-state polish shipping in the SPA** — **not** “wait for the VPS.” The API is already live.
+QR / proof-state polish is **shipped** (unstamped vs Pending vs Confirmed; camera QR; notify on confirm). Remaining is **Cam marketing** + **authorship (who)** — **not** a VPS wait. API live `gitSha` **6c1be90**.
 
 ## Live planes
 
@@ -46,8 +46,10 @@ The stranger-stamps loop does not wait on these. They are **QR and proof-state s
 
 | Item | Status |
 |------|--------|
-| Camera QR → `https://satohash.io/p/{hash}` | **Shipping** — template/contract PDFs and email encode this URL so iPhone/Android cameras open the proof card (cameras cannot read `.ots`). Physical iPhone unfurl still needs a device check. |
-| Proof states: **Pending ≠ Confirmed** | **Shipping** — verify, stamp-done, and `/p/<hash>` distinguish calendars-have-it from Bitcoin-sealed (~60 min). Do not treat Pending as Confirmed. |
+| Camera QR → `https://satohash.io/p/{hash}` | **Live** — PDFs/email QR. Physical iPhone unfurl still needs Cam’s device. |
+| Proof states: **Pending ≠ Confirmed** | **Live** — `/p/<hash>`, stamp-done, notify when Confirmed. |
+| Family widgets | **Live** 2026-09-15 — katoa/motopass/sherpacarta/tadbuy=2, giveabit=3 at `/tools`. HQ was not zeros. |
+| Next product | Authorship (NIP-07 *who*). Cam: pin `/watch`. Do not rebuild API. |
 | Family widget completing stamps | **Live** — default POSTs `/api/stamp` on the family site; `data-mode="spa"` is the SPA deep-link. |
 | Cam pin `/watch` on **@give_bit** | Open — paste-ready in `docs/marketing/GIVE-BIT-X-PACK.md` |
 | i18n | Slice A+B+C chrome done; localization **not** complete (offers deferred). See `docs/I18N.md`. Do not add Arabic. |

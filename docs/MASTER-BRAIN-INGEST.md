@@ -6,6 +6,17 @@
 
 ---
 
+## Paste block (2026-09-15 — goodbye)
+
+```markdown
+### Satohash 2026-09-15 goodbye (Grok M3)
+Core MVP live: stamp → .ots → /p/{hash} QR. Pending ≠ Confirmed. Family widgets live (katoa/motopass/sherpa/tadbuy=2, giveabit=3 at /tools). HQ was not zeros.
+Next LLM: (1) NIP-07 authorship who (2) TadBuy /api 404s + MotoPass ErrorBoundary (3) Cam pin /watch + iPhone unfurl.
+Kimi: ingest THOR. Do not rebuild API (gitSha 6c1be90). Pages = Grok. Vault = THOR not M4.
+```
+
+---
+
 ## Paste block (2026-09-15 — family live stamps DONE)
 
 ```markdown

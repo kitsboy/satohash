@@ -1,6 +1,16 @@
 # Satohash Protocol Roadmap
 
-> **Live product (2026-09-14):** stamp → `.ots` → verify → camera QR `https://satohash.io/p/{hash}`. Pending ≠ Confirmed (~60 min). Family widget POSTs `/api/stamp`. Snapper, ZK redaction, 3D Merkle, and BOLT-12 are **not** current features (cathedral / staged). Kimi: do not rebuild the API.
+> **Live product (2026-09-15):** stamp → `.ots` → verify → camera QR `https://satohash.io/p/{hash}`. Pending ≠ Confirmed. Family widgets live (see `docs/FAMILY-API.md`). Cathedral not current. Kimi: do not rebuild the API.
+
+## Next for the next LLM
+
+1. Authorship (NIP-07) — *who*, not only *when*.
+2. Family leftovers: TadBuy `/api` 404s; MotoPass ErrorBoundary; giveabit widget = `/tools`.
+3. Cam: pin `/watch` on `@give_bit`; iPhone `/p/` unfurl.
+4. Optional npm CLI if Cam asks.
+5. Do not rebuild API / flip paywall / add Arabic / sell Snapper as court-ready.
+
+SoT: `.ai_docs/current-status.md`.
 
 This roadmap tracks the evolution of Satohash from a standalone notary tool to a **Global Sovereign Settlement Mesh**. Phase checkmarks below include cathedral items that are **not live** — do not pitch them as shipped.
 
@@ -36,8 +46,8 @@ Cam: whole site in the seven languages we already offer. Commit + push after eac
 | Slice | Status | Surfaces |
 |-------|--------|----------|
 | **A — product loop** | **[x]** `89262b1` | Stamp leftovers, Verify, `/stamp/done`, `/p/<hash>` SPA + zero-JS, Counsel, Status, Watch, nav/footer |
-| **B — public marketing** | **[~]** | Templates extras done (drafts; stamp-this-draft). Offers still deferred. |
-| **C — app / ops** | **[x]** | Chrome + template catalog field labels in 7 locales. Offers deferred. Snapper scaffold. |
+| **B — public marketing** | **[x]** | Public marketing + demos + templates. Offers deferred. |
+| **C — app / ops** | **[x]** | Chrome + template catalog. Offers deferred. Snapper scaffold. |
 | Catalog debt | **[x]** | en/es/fr/de/pt/sw/zh `translations/*.json` **250** keys. Stop growing inline `index.jsx` |
 
 Gate: `npm run i18n:check`. Keep Bitcoin / OpenTimestamps / `ots-cli` / hash hex / Pending·Confirmed in English.

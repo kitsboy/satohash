@@ -1,3 +1,22 @@
+## Latest Session Summary (from 2026-09-15 goodbye)
+
+**Chat topic:** Marketable MVP honesty, i18n, camera QR, family widgets, live stamps.
+
+**Finished:** Honest docs; 7-locale product loop + marketing + template catalog; Stamp-this-draft; camera QR `/p/{hash}`; unstamped vs Pending vs Confirmed; notify on confirm; widget POST; Kimi live stamps (not zeros; giveabit = `/tools`).
+
+**Still to do (next LLM, in order):**
+1. Authorship (NIP-07) — *who*, not only *when*.
+2. Family leftovers: TadBuy `/api` 404s; MotoPass ErrorBoundary.
+3. Cam: pin `/watch` on `@give_bit`; iPhone `/p/` unfurl.
+4. Optional npm CLI if Cam asks.
+5. Do **not** rebuild API, flip paywall, add Arabic, sell Snapper as court-ready, Tailscale to M4.
+
+**Next for Kimi:** Ingest this goodbye into THOR Obsidian / MASTER-BRAIN. **Do not rebuild the API** (`gitSha` **6c1be90**). Pages = Grok. Vault = THOR, not M4.
+
+Pickup: `.ai_docs/current-status.md` § Next for the next LLM · `docs/archive/SESSION-SUMMARY-2026-09-15-goodbye.md`.
+
+---
+
 ## Latest Session Summary (Grok M3, 2026-09-15 — Kimi live family stamps banked)
 
 **Kimi 2026-09-15:** handoff ingested, **API not rebuilt** (live `gitSha` **`6c1be90`**). All five family widgets completed a **live** stamp (real POST, proof cards 200).

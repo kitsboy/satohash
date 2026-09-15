@@ -1,6 +1,16 @@
 # Satohash Protocol Roadmap
 
-> **Live product (2026-09-14):** stamp → `.ots` → verify → camera QR `https://satohash.io/p/{hash}`. Pending ≠ Confirmed (~60 min). Family widget POSTs `/api/stamp`. Snapper, ZK redaction, 3D Merkle, and BOLT-12 are **not** current features (cathedral / staged). Kimi: do not rebuild the API.
+> **Live product (2026-09-15):** stamp → `.ots` → verify → camera QR `https://satohash.io/p/{hash}`. Pending ≠ Confirmed (~60 min). Family widgets POST `/api/stamp` (live HQ: katoa/motopass/sherpacarta/tadbuy=2, giveabit=3 at `/tools`). Snapper, ZK, 3D Merkle, BOLT-12 are **not** current features. Kimi: do not rebuild the API.
+
+## Next for the next LLM
+
+1. **Authorship (NIP-07)** — prove *who* held a key, not only *when*. Optional; do not claim until shipped.
+2. **Family leftovers** (their repos): TadBuy `/api` 404s; MotoPass ErrorBoundary. Widget on giveabit.io/**tools**.
+3. **Cam:** pin `/watch` on `@give_bit`; iPhone `/p/` unfurl.
+4. **Optional:** npm `@satohash/cli` if Cam asks.
+5. **Do not:** API rebuild for copy; paywall; Arabic; Snapper-as-court-ready; M4 vault.
+
+SoT: `.ai_docs/current-status.md`.
 
 This roadmap tracks the evolution of Satohash from a standalone notary tool to a **Global Sovereign Settlement Mesh**. Phase checkmarks below include cathedral items that are **not live** — do not pitch them as shipped.
 
@@ -36,7 +46,7 @@ Cam: whole site in the seven languages we already offer. Commit + push after eac
 | Slice | Status | Surfaces |
 |-------|--------|----------|
 | **A — product loop** | **[x]** `89262b1` | Stamp leftovers, Verify, `/stamp/done`, `/p/<hash>` SPA + zero-JS, Counsel, Status, Watch, nav/footer |
-| **B — public marketing** | **[~]** | Templates extras done (drafts; stamp-this-draft). Offers still deferred. |
+| **B — public marketing** | **[x]** | Donate, proof-pack, about, pitch, network, explorer/atlas **demos**, identity lookup, developer, exec, batch, trust, distressed-asset, `/nodes`, templates. Offers deferred. |
 | **C — app / ops** | **[x]** | Chrome + template catalog field labels in 7 locales. Offers deferred. Snapper scaffold. |
 | Catalog debt | **[x]** | en/es/fr/de/pt/sw/zh `translations/*.json` **250** keys. Stop growing inline `index.jsx` |
 

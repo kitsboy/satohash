@@ -15,7 +15,7 @@ Phone cameras cannot read `.ots` files. Proof cards encode **`https://satohash.i
 
 **API:** [https://api.satohash.io](https://api.satohash.io) · **Watch:** [satohash.io/watch](https://satohash.io/watch) (~84s)
 
-> **Agents:** start at **[AGENTS.md](AGENTS.md)** · status **[.ai_docs/current-status.md](.ai_docs/current-status.md)** · handoff **[docs/handoff-log.md](docs/handoff-log.md)**.
+> **Agents:** start at **[AGENTS.md](AGENTS.md)** · status **[.ai_docs/current-status.md](.ai_docs/current-status.md)** (next-LLM steps) · handoff **[docs/handoff-log.md](docs/handoff-log.md)**.
 
 ### What is live vs later
 

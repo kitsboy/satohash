@@ -6,6 +6,12 @@ SPA/docs only. **Do not commit / do not push** this wave unless Cam asks. Pitch 
 
 ---
 
+## 2026-09-15 (Grok M3 — goodbye)
+
+Marketable MVP session closed. Core loop live. Family widgets live-stamped. Next LLM: (1) NIP-07 authorship, (2) TadBuy/MotoPass family bugs, (3) Cam pin `/watch` + iPhone unfurl. Kimi: ingest THOR, **do not rebuild API**. Summary: `docs/archive/SESSION-SUMMARY-2026-09-15-goodbye.md`.
+
+---
+
 ## 2026-09-15 (Grok M3 — bank Kimi live family stamps)
 
 Kimi ingested c8a1919, **did not rebuild API** (`gitSha` **6c1be90**). Five live widget stamps verified. HQ was not zeros; giveabit widget is `/tools`. Shadow-root trap noted. Family leftovers: tadbuy `/api` 404s, motopass ErrorBoundary. SoT `docs/FAMILY-API.md`.
