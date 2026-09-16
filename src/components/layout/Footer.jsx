@@ -434,6 +434,9 @@ function FullFooter() {
               <p className="text-xs leading-relaxed text-[var(--text-tertiary)]">
                 {t('footerPage.legal.p1')}
               </p>
+              <p className="text-xs leading-relaxed text-[var(--text-tertiary)]">
+                No cookies. We use self-hosted, cookie-less analytics. Nothing to consent to.
+              </p>
               <div
                 className="flex flex-wrap gap-2 pt-1"
                 aria-label={t('footerPage.trust', { defaultValue: 'Trust' })}
