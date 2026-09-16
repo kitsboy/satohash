@@ -1,7 +1,7 @@
 {
   "version": "5.0.0-ELITE",
-  "build": 398,
-  "date": "2026-09-15",
+  "build": 399,
+  "date": "2026-09-16",
   "live": "https://satohash.io",
   "github": "https://github.com/kitsboy/satohash",
   "docs": [
@@ -44,10 +44,6 @@
     {
       "slug": "rollback",
       "path": "docs/ROLLBACK.md"
-    },
-    {
-      "slug": "architecture",
-      "path": "docs/architecture.md"
     }
   ]
 }

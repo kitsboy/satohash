@@ -413,25 +413,36 @@ const SECTIONS = [
     content: (
       <div className="space-y-4 text-slate-700">
         <p className="leading-relaxed">
+          <em>Forward-looking only.</em> This SLA describes how availability would be measured if
+          and when Enterprise services launch. Satohash is currently a free, non-commercial service:
+          no Enterprise fee is billed today and no obligation under this section is in effect.
+        </p>
+        <p className="leading-relaxed">
           For Enterprise accounts, we offer a best-efforts service availability target of{' '}
-          <strong>99.5% monthly uptime</strong>, measured against the public status of the core
-          stamping and verification endpoints, excluding scheduled maintenance and force majeure.
+          <strong>99.5% monthly uptime</strong>, measured by our availability monitoring against the
+          core stamping and verification endpoints as published on our public status page (
+          <code className="rounded bg-slate-100 px-1 py-0.5 font-mono text-[0.9em] break-all">
+            satohash.io/status
+          </code>
+          ), excluding (a) scheduled maintenance, (b) force majeure, and (c) unavailability caused
+          by third-party dependencies outside our reasonable control — including OpenTimestamps
+          calendar services, the Bitcoin network, Nostr relays, and our hosting, DNS, and CDN
+          providers.
         </p>
         <div className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3">
           <p className="mb-1 text-sm font-bold text-slate-800">Remedy</p>
           <p className="text-sm leading-relaxed text-slate-600">
-            If we fail to meet the availability target in a calendar month, you may request a
-            service credit equal to 5% of that month&apos;s Enterprise fee for each full percentage
-            point (or partial) below the target, up to a maximum of 20% of the monthly fee. Service
-            credits are applied as a discount to the next billing cycle and are your sole and
-            exclusive remedy for availability failures. This SLA does not guarantee confirmation
-            times for individual stamps, which depend on third-party calendars and the Bitcoin
-            network.
+            If we fail to meet the availability target in a calendar month, you may request, within
+            30 days after the end of that month, a service credit equal to{' '}
+            <strong>5% of the monthly Enterprise fee</strong> for each full percentage point (or
+            partial) below the target, up to a maximum of <strong>20% of the monthly fee</strong>.
+            Where Enterprise is billed other than monthly, the monthly fee is the billing-period fee
+            divided by the number of months in that period. Service credits are applied as a
+            discount to the next billing cycle and are your{' '}
+            <strong>sole and exclusive remedy</strong> for availability failures. This SLA does not
+            guarantee confirmation times for individual stamps, which depend on third-party
+            calendars and the Bitcoin network.
           </p>
-        </div>
-        <div className="rounded-xl border border-emerald-100 bg-emerald-50 px-5 py-4 text-sm text-emerald-900/80">
-          <strong>Plain language:</strong> Enterprise gets a 99.5% uptime promise. If we miss it,
-          you get a discount off the next month — but not cash for any individual stamp delay.
         </div>
       </div>
     )

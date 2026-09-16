@@ -1,5 +1,5 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 398) · **Updated:** 2026-09-15
+> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 399) · **Updated:** 2026-09-16
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Satohash — FINANCIALS (Approximate)
