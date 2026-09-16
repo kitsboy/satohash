@@ -199,10 +199,17 @@ if (config.SENTRY_DSN?.trim()) {
 validateSecrets()
 try {
   runMigrations()
-  if (config.NODE_ENV === 'production') performBackup()
 } catch (migError) {
   logger.fatal(`❌ Startup Failure: ${migError.message}`)
   process.exit(1)
+}
+// Boot backup: run it, but a backup problem must NEVER take the boot down.
+// performBackup() is async (better-sqlite3 backup API) — await it and log the
+// outcome so an unawaited rejection can't kill the worker (~200ms after start).
+if (config.NODE_ENV === 'production') {
+  performBackup()
+    .then((p) => { if (p) logger.info(`💾 Boot DB backup complete: ${p}`) })
+    .catch((e) => logger.error(`⚠️ Boot DB backup failed (non-fatal, server continues): ${e.message}`))
 }
 
 // Initialize Stripe for monetization (1)

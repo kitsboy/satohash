@@ -4,7 +4,12 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
-const dbPath = path.resolve(__dirname, '../data/satohash.db')
+// SATOHASH_DB_PATH lets ops/tests redirect the DB without touching data/.
+// NOTE: read at import time; set it in the process env before node starts
+// (docker-compose env / spawn env), not in .env — dotenv runs after imports.
+const dbPath = process.env.SATOHASH_DB_PATH
+  ? path.resolve(process.env.SATOHASH_DB_PATH)
+  : path.resolve(__dirname, '../data/satohash.db')
 
 // Ensure data directory exists
 import fs from 'fs'

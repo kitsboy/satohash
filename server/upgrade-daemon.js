@@ -17,7 +17,7 @@ const startUpgradeDaemon = (io) => {
   // Daily backup at 2 AM
   cron.schedule('0 2 * * *', async () => {
     try {
-      const backupPath = performBackup()
+      const backupPath = await performBackup()
       logger.info(`💾 Daily DB backup created: ${backupPath}`)
     } catch (e) {
       logger.error(`❌ Daily backup failed: ${e.message}`)

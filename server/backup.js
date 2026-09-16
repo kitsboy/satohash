@@ -7,8 +7,8 @@ import Database from 'better-sqlite3';
 import logger from './logger.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const dbPath = path.resolve(__dirname, '../data/satohash.db');
-const backupDir = path.resolve(__dirname, '../data/backups');
+const defaultDbPath = path.resolve(__dirname, '../data/satohash.db');
+const defaultBackupDir = path.resolve(__dirname, '../data/backups');
 
 // BACKUP_KEY must be set in production. Read lazily at call time (not module load)
 // so dotenv.config() in server/index.js has already run before we read it.
@@ -16,11 +16,23 @@ const IV_LENGTH = 16;
 const MAX_BACKUPS = 10;
 const backupKey = () => (process.env.BACKUP_KEY ? Buffer.from(process.env.BACKUP_KEY, 'hex') : null);
 
-const ensureBackupDir = () => {
+/**
+ * Resolve the source DB path and backup dir, allowing env/tests to redirect them.
+ * SATOHASH_DB_PATH / SATOHASH_BACKUP_DIR are read at call time (like BACKUP_KEY)
+ * so dotenv.config() in server/index.js has already run.
+ */
+const resolvePaths = (opts = {}) => ({
+  dbPath: path.resolve(opts.dbPath || process.env.SATOHASH_DB_PATH || defaultDbPath),
+  backupDir: path.resolve(opts.backupDir || process.env.SATOHASH_BACKUP_DIR || defaultBackupDir)
+});
+
+const ensureBackupDir = (opts = {}) => {
+  const { backupDir } = resolvePaths(opts);
   if (!fs.existsSync(backupDir)) fs.mkdirSync(backupDir, { recursive: true });
 };
 
-const pruneBackups = (suffix) => {
+const pruneBackups = (suffix, opts = {}) => {
+  const { backupDir } = resolvePaths(opts);
   const backups = fs.readdirSync(backupDir)
     .filter((f) => f.endsWith(suffix))
     .sort()
@@ -33,12 +45,16 @@ const pruneBackups = (suffix) => {
 /**
  * Consistent snapshot of the SQLite DB using the online backup API.
  * Opens a read-write handle for the source (better-sqlite3 requires it).
+ * `Database#backup` is ASYNC: it must be awaited before the handle is closed,
+ * otherwise the backup continues against a closed connection and rejects
+ * unhandled — killing the process (~200ms after boot on real-sized DBs).
  */
-function snapshotDb() {
+async function snapshotDb(opts = {}) {
+  const { dbPath, backupDir } = resolvePaths(opts);
   const snap = path.join(backupDir, `.snap-${Date.now()}.db`);
   const src = new Database(dbPath); // rw handle; backup API needs it
   try {
-    src.backup(snap);
+    await src.backup(snap); // async — never close before it resolves
   } finally {
     src.close();
   }
@@ -71,14 +87,15 @@ export function decryptBackup(encryptedPath, key) {
  * Create an encrypted, restorable backup of the real database bytes.
  * Never a path stub — always contains the actual DB.
  */
-export function performBackup() {
-  ensureBackupDir();
+export async function performBackup(opts = {}) {
+  ensureBackupDir(opts);
+  const { dbPath, backupDir } = resolvePaths(opts);
   const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
   let snap = null;
 
   // 1. Consistent snapshot (this is the source of truth for all paths).
   try {
-    snap = snapshotDb();
+    snap = await snapshotDb(opts);
   } catch (e) {
     logger.warn(`⚠️ Snapshot failed: ${e.message}`);
   }
@@ -88,7 +105,7 @@ export function performBackup() {
     const zipPath = path.join(backupDir, `satohash-${timestamp}.zip`);
     try {
       execSync(`cd "${backupDir}" && zip -q "${zipPath}" "${path.basename(snap)}" && rm -f "${path.basename(snap)}"`, { stdio: 'ignore' });
-      pruneBackups('.zip');
+      pruneBackups('.zip', opts);
       logger.info(`💾 Database ZIP backup complete: ${zipPath}`);
       return zipPath;
     } catch (e) {
@@ -109,7 +126,7 @@ export function performBackup() {
     const sealed = encryptBytes(bytes, key);
     fs.writeFileSync(encPath, sealed);
     if (snap && fs.existsSync(snap)) { try { fs.unlinkSync(snap); } catch { /* ok */ } }
-    pruneBackups('.enc');
+    pruneBackups('.enc', opts);
     logger.info(`🔒 Encrypted DB backup complete (${bytes.length} bytes -> ${sealed.length} bytes): ${encPath}`);
     return encPath;
   } catch (e) {
@@ -122,7 +139,7 @@ export function performBackup() {
     try {
       fs.copyFileSync(snap, copyPath);
       fs.unlinkSync(snap);
-      pruneBackups('.db');
+      pruneBackups('.db', opts);
       logger.info(`💾 Plain DB backup complete: ${copyPath}`);
       return copyPath;
     } catch (e) {
