@@ -139,8 +139,10 @@ export function BatchVerifyPage() {
         const j = await res.json()
         out.push({
           hash: h,
-          ok: res.ok && (j.verified || j.status === 'confirmed'),
-          status: j.status || j.error || res.status
+          ok: res.ok && j.verified === true,
+          status: j.verified === true ? `${j.verified_method || 'chain'} · block ${j.bitcoin_block_height ?? '?'}` : (j.error || j.reason || 'not proven'),
+          verdict: j,
+          ots: j.ots_download_url || null
         })
       } catch (e) {
         out.push({ hash: h, ok: false, status: e.message })
@@ -196,7 +198,19 @@ export function BatchVerifyPage() {
               <tr key={r.hash} className="border-t border-white/10 font-mono text-xs">
                 <td className="py-2">{r.ok ? '🟢' : '🔴'}</td>
                 <td className="max-w-[12rem] truncate">{r.hash.slice(0, 20)}…</td>
-                <td>{r.status}</td>
+                <td>
+                  <span>{r.status}</span>
+                  {r.ok && r.ots ? (
+                    <a
+                      href={r.ots}
+                      download
+                      className="ml-2 text-amber-400 underline"
+                      data-testid="batch-verify-ots"
+                    >
+                      .ots ↓
+                    </a>
+                  ) : null}
+                </td>
               </tr>
             ))}
           </tbody>
