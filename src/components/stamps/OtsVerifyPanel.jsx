@@ -21,6 +21,7 @@ import { getApiUrl } from '../../config/constants'
 import { normalizeSha256, isSha256Hex } from '../../utils/hashUtils'
 import { verifyOtsStructurally } from '../../utils/otsBrowser'
 import { interpretOtsResult } from '../../utils/otsInterpret'
+import HowProofWorks, { stateFromVerdict } from '../trust/HowProofWorks'
 
 async function sha256File(file) {
   const buf = await file.arrayBuffer()
@@ -451,6 +452,27 @@ export default function OtsVerifyPanel() {
                       <strong>Verify</strong> again in a few hours or after the next Bitcoin blocks.
                     </p>
                   )}
+                </div>
+
+                {/* The family-wide explainer (t_da054829, deliverable 2). It reads
+                    the same /api/verify response the log above came from, so the
+                    status badge can only ever repeat what the chain resolved —
+                    own bitcoind first, explorer labelled as such, never a DB flag. */}
+                <div className="mt-4">
+                  <HowProofWorks
+                    verdict={result?.api || null}
+                    hash={result?.hash || null}
+                    state={
+                      result?.api
+                        ? stateFromVerdict(result.api)
+                        : interpretation.level === 'success'
+                          ? 'confirmed'
+                          : interpretation.level === 'failed'
+                            ? 'not-proven'
+                            : 'pending'
+                    }
+                    otsUrl={result?.api?.ots_download_url || null}
+                  />
                 </div>
               </>
             )
