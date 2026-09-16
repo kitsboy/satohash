@@ -32,6 +32,9 @@ COPY package*.json ./
 COPY --from=deps /app/node_modules ./node_modules
 COPY vendor ./vendor
 COPY server ./server
+# Ops tooling that must run against the live DB + own bitcoind inside the
+# container: the registry integrity audit (t_da054829).
+COPY scripts/ots-registry-audit.mjs ./scripts/ots-registry-audit.mjs
 COPY ecosystem.config.cjs ./
 
 ENV NODE_ENV=production
