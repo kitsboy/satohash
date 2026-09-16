@@ -4,24 +4,10 @@ import db from './db.js'
 import OpenTimestamps from 'opentimestamps'
 import { dispatchWebhook } from './webhooks.js'
 import { performBackup } from './backup.js'
+import { inspectAttestations, parseOts } from './lib/ots-attestations.js'
+import { verifyDetachedAgainstChain } from './lib/ots-chain-verify.js'
+import { realOtsBuffer } from './lib/ots-verify-result.js'
 import crypto from 'crypto'
-
-function parseBitcoinBlockHeight(info) {
-  if (typeof info !== 'string' || !info) return null
-  const patterns = [
-    /BitcoinBlockHeaderAttestation\((\d+)\)/i,
-    /Bitcoin block (\d+)/,
-    /BitcoinBlock[\s:]*(\d+)/i,
-    /block(?: height)?[:\s#]*(\d{5,7})/i
-  ]
-  for (const re of patterns) {
-    const match = info.match(re)
-    if (!match) continue
-    const n = parseInt(match[1], 10)
-    if (Number.isFinite(n) && n > 0) return n
-  }
-  return null
-}
 
 /**
  *
@@ -156,41 +142,74 @@ const startUpgradeDaemon = (io) => {
 
         if (upgraded) {
           const upgradedBinary = detached.serializeToBytes()
-          const info = OpenTimestamps.info(detached)
+          // F3: the block claim comes from the parsed attestation tree, and a
+          // claim only becomes `confirmed` after it resolves against a real
+          // block header. Text parsing and unresolved claims are both gone.
+          const view = inspectAttestations(detached)
+          let blockHeight = null
 
-          const blockHeight = parseBitcoinBlockHeight(info)
-          if (blockHeight == null) {
-            logger.warn(`confirmed without block height (${stamp.id})`)
+          if (view.bitcoin.length > 0) {
+            const verdict = await verifyDetachedAgainstChain(detached)
+            if (verdict.verified) {
+              blockHeight = verdict.height
+              db.prepare(
+                `
+                UPDATE timestamps
+                SET status = 'confirmed',
+                    upgraded_binary = ?,
+                    bitcoin_block_height = ?,
+                    confirmed_at = CURRENT_TIMESTAMP,
+                    verify_method = ?,
+                    updated_at = CURRENT_TIMESTAMP
+                WHERE id = ?
+              `
+              ).run(
+                Buffer.from(upgradedBinary),
+                blockHeight,
+                `${verdict.method}:${verdict.trust}`,
+                stamp.id
+              )
+            } else {
+              // Store the upgraded bytes but do NOT claim confirmation.
+              db.prepare(
+                'UPDATE timestamps SET upgraded_binary = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?'
+              ).run(Buffer.from(upgradedBinary), stamp.id)
+              logger.warn(
+                `[DAEMON] block claim for ${stamp.id} did not resolve (${verdict.reason}) — staying pending`
+              )
+            }
+          } else {
+            // Upgraded, but still no block attestation in the proof yet.
+            db.prepare(
+              'UPDATE timestamps SET upgraded_binary = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?'
+            ).run(Buffer.from(upgradedBinary), stamp.id)
           }
 
-          db.prepare(
-            `
-            UPDATE timestamps 
-            SET status = 'confirmed', 
-                upgraded_binary = ?, 
-                bitcoin_block_height = ?,
-                confirmed_at = CURRENT_TIMESTAMP,
-                updated_at = CURRENT_TIMESTAMP
-            WHERE id = ?
-          `
-          ).run(Buffer.from(upgradedBinary), blockHeight, stamp.id)
-          upgradedThisPass += 1
+          if (blockHeight != null) {
+            upgradedThisPass += 1
 
-          logger.info(`🎊 [DAEMON] TRUTH_FOUND: ${stamp.id} confirmed at block ${blockHeight}.`)
+            logger.info(`🎊 [DAEMON] TRUTH_FOUND: ${stamp.id} confirmed at block ${blockHeight}.`)
 
-          dispatchWebhook('confirmed', { id: stamp.id, blockHeight })
+            dispatchWebhook('confirmed', { id: stamp.id, blockHeight })
 
-          if (io) {
+            if (io) {
+              io.emit('ots:upgrade:status', {
+                id: stamp.id,
+                hash: stamp.hash,
+                status: 'confirmed',
+                blockHeight
+              })
+              io.emit('ots:confirmed', {
+                id: stamp.id,
+                hash: stamp.hash,
+                blockHeight
+              })
+            }
+          } else if (io) {
             io.emit('ots:upgrade:status', {
               id: stamp.id,
               hash: stamp.hash,
-              status: 'confirmed',
-              blockHeight
-            })
-            io.emit('ots:confirmed', {
-              id: stamp.id,
-              hash: stamp.hash,
-              blockHeight
+              status: 'pending'
             })
           }
         } else if (io) {
@@ -237,7 +256,8 @@ const startUpgradeDaemon = (io) => {
       }
     }
 
-    // Confirmed stamps missing height: parse local OTS only — no calendar upgrade
+    // Confirmed stamps missing height: read the claim from the proof structure
+    // and resolve it against the chain — no calendar upgrade, no text parsing.
     const confirmedMissingHeight = db
       .prepare(
         `
@@ -251,23 +271,82 @@ const startUpgradeDaemon = (io) => {
 
     for (const stamp of confirmedMissingHeight) {
       try {
-        const raw = stamp.upgraded_binary || stamp.ots_binary
-        if (!raw || Buffer.from(raw).toString('utf8', 0, 4) === 'ots:') continue
-        const detached = OpenTimestamps.DetachedTimestampFile.deserialize(Buffer.from(raw))
-        const info = OpenTimestamps.info(detached)
-        const blockHeight = parseBitcoinBlockHeight(info)
-        if (blockHeight == null) continue
+        const raw = realOtsBuffer(stamp)
+        if (!raw) continue
+        const detached = parseOts(raw)
+        const view = inspectAttestations(detached)
+        if (view.bitcoin.length === 0) continue
+        const verdict = await verifyDetachedAgainstChain(detached)
+        if (!verdict.verified) {
+          logger.warn(`[DAEMON] ${stamp.id} is marked confirmed but its proof does not resolve (${verdict.reason})`)
+          continue
+        }
         db.prepare(
           `
           UPDATE timestamps
-          SET bitcoin_block_height = ?, updated_at = CURRENT_TIMESTAMP
+          SET bitcoin_block_height = ?, verify_method = ?, updated_at = CURRENT_TIMESTAMP
           WHERE id = ?
         `
-        ).run(blockHeight, stamp.id)
-        logger.info(`[DAEMON] Backfilled bitcoin_block_height ${blockHeight} for ${stamp.id}`)
+        ).run(verdict.height, `${verdict.method}:${verdict.trust}`, stamp.id)
+        logger.info(`[DAEMON] Backfilled bitcoin_block_height ${verdict.height} for ${stamp.id}`)
       } catch (error) {
         logger.error(`❌ [DAEMON] Height backfill failed for ${stamp.id}: ${error.message}`)
       }
+    }
+
+    // Legacy reconciliation: every `confirmed` row written before the chain
+    // check existed carries verify_method = NULL. Re-resolve a bounded batch so
+    // the registry can state, per row, whether its confirmation was actually
+    // anchored to a Bitcoin block — or is legacy bookkeeping. Status is never
+    // rewritten here; the point is to make the record honest, then surface
+    // anything that fails to a human.
+    const legacyUnverified = db
+      .prepare(
+        `
+      SELECT id, hash, upgraded_binary, ots_binary, bitcoin_block_height
+      FROM timestamps
+      WHERE status = 'confirmed' AND verify_method IS NULL
+      ORDER BY created_at ASC
+      LIMIT 20
+    `
+      )
+      .all()
+
+    if (legacyUnverified.length > 0) {
+      let ok = 0
+      let bad = 0
+      for (const stamp of legacyUnverified) {
+        try {
+          const raw = realOtsBuffer(stamp)
+          if (!raw) {
+            db.prepare("UPDATE timestamps SET verify_method = ? WHERE id = ?").run(
+              'unverified:no-proof-bytes',
+              stamp.id
+            )
+            bad += 1
+            continue
+          }
+          const verdict = await verifyDetachedAgainstChain(parseOts(raw))
+          if (verdict.verified) {
+            db.prepare(
+              'UPDATE timestamps SET verify_method = ?, bitcoin_block_height = COALESCE(bitcoin_block_height, ?) WHERE id = ?'
+            ).run(`${verdict.method}:${verdict.trust}`, verdict.height, stamp.id)
+            ok += 1
+          } else {
+            db.prepare('UPDATE timestamps SET verify_method = ? WHERE id = ?').run(
+              `unverified:${verdict.reason}`,
+              stamp.id
+            )
+            bad += 1
+            logger.warn(
+              `[DAEMON] legacy row ${stamp.id} (${String(stamp.hash).slice(0, 12)}…) is marked confirmed but does not resolve (${verdict.reason})`
+            )
+          }
+        } catch (error) {
+          logger.error(`❌ [DAEMON] legacy reconciliation failed for ${stamp.id}: ${error.message}`)
+        }
+      }
+      logger.info(`[DAEMON] legacy reconciliation: ${ok} chain-verified, ${bad} unresolved`)
     }
 
     // Shrink WAL after a pass that actually confirmed proofs — skip empty ticks

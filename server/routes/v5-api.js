@@ -18,6 +18,9 @@ import { paywallMiddleware } from '../middleware.js'
 import { verifySignature, verifyWebCryptoP256, buildSigningMessage } from '../lib/signing.js'
 import { audit } from '../lib/audit-log.js'
 import { hashClientIp } from '../security.js'
+import { inspectAttestations, parseOts } from '../lib/ots-attestations.js'
+import { checkDigestBinding, verifyDetachedAgainstChain } from '../lib/ots-chain-verify.js'
+import { describeVerifyResult, otsDownloadUrl, realOtsBuffer, safeOtsInfo } from '../lib/ots-verify-result.js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const router = Router()
@@ -129,6 +132,13 @@ function publicStampRow(row) {
     created_at: row.created_at,
     confirmed_at: row.confirmed_at || null,
     bitcoin_block_height: row.bitcoin_block_height ?? null,
+    // How the confirmation was resolved (engine contract v2, t_da054829):
+    // 'bitcoind:self-sovereign' | 'esplora:third-party-explorer' |
+    // 'unverified:<reason>' | null (written before the column existed).
+    // A consumer that wants a chain-resolved verdict must call
+    // POST /api/verify — `status` here is the registry's own bookkeeping.
+    verify_method: row.verify_method ?? null,
+    status_is_registry_only: true,
     client: row.client_id || row.user_npub || null,
     ipfs_cid: row.ipfs_cid || null
   }
@@ -826,43 +836,87 @@ router.post('/stamp/signed', paywallMiddleware, async (req, res) => {
   })
 })
 
-// ─── 8 enhance: POST /api/verify with base64 ots ──────────
-// (primary /api/verify lives in index.js — add parallel JSON path)
+// ─── 8 enhance: POST /api/verify/json with base64 ots ──────────
+// (primary /api/verify lives in stamps.js — this is the JSON twin and must
+//  return the same verdict shape, resolved the same way: against a real block
+//  header, never from the info() text and never from the DB status flag.)
 router.post('/verify/json', async (req, res) => {
   const { hash, ots_base64 } = req.body || {}
   if (ots_base64) {
+    let detached
     try {
       const buf = Buffer.from(ots_base64, 'base64')
-      const detached = OpenTimestamps.DetachedTimestampFile.deserialize(buf)
-      let verified = false
-      let details = ''
-      try {
-        details = OpenTimestamps.info(detached)
-        const vr = await OpenTimestamps.verify(detached)
-        if (vr && Object.keys(vr).length) verified = true
-        if (details.includes('Bitcoin block')) verified = true
-      } catch {
-        /* pending */
-      }
-      return res.json({
-        verified,
-        status: verified ? 'confirmed' : 'pending',
-        details
-      })
+      detached = parseOts(buf)
     } catch (e) {
       return res.status(400).json({ verified: false, error: e.message })
     }
+
+    const view = inspectAttestations(detached)
+    let verdict = await verifyDetachedAgainstChain(detached)
+    let binding = null
+    if (hash && /^[a-f0-9]{64}$/i.test(hash)) {
+      binding = checkDigestBinding(detached, hash)
+      if (!binding.bound) {
+        verdict = { verified: false, method: null, trust: null, chain: 'bitcoin', reason: 'digest_mismatch' }
+      }
+    }
+
+    return res.json(
+      describeVerifyResult({ verdict, view, binding, details: safeOtsInfo(detached) })
+    )
   }
   if (hash && /^[a-f0-9]{64}$/i.test(hash)) {
     const stamp = db.prepare('SELECT * FROM timestamps WHERE hash = ?').get(hash.toLowerCase())
-    if (!stamp) return res.json({ verified: false, status: 'not_found' })
-    return res.json({
-      verified: stamp.status === 'confirmed',
-      status: stamp.status,
-      id: stamp.id,
-      hash: stamp.hash,
-      bitcoin_block_height: stamp.bitcoin_block_height
-    })
+    if (!stamp) {
+      return res.json({
+        verified: false,
+        status: 'not_found',
+        registry_check: true,
+        registry: { found: false, status: null }
+      })
+    }
+
+    // Same rule as the multipart route: the registry tells us a proof exists;
+    // the chain tells us whether it is real.
+    const stored = realOtsBuffer(stamp)
+    let verdict = { verified: false, method: null, trust: null, chain: 'bitcoin', reason: 'no_proof_stored_yet' }
+    let view = null
+    if (stored) {
+      try {
+        const detached = parseOts(stored)
+        view = inspectAttestations(detached)
+        const binding = checkDigestBinding(detached, stamp.hash)
+        verdict = binding.bound
+          ? await verifyDetachedAgainstChain(detached)
+          : { verified: false, method: null, trust: null, chain: 'bitcoin', reason: 'digest_mismatch' }
+      } catch (e) {
+        logger.warn('verify/json: stored proof unreadable for %s: %s', stamp.hash, e.message)
+        verdict = { verified: false, method: null, trust: null, chain: 'bitcoin', reason: 'stored_proof_unreadable' }
+      }
+    }
+
+    return res.json(
+      describeVerifyResult({
+        verdict,
+        view,
+        binding: null,
+        details: null,
+        registry: {
+          found: true,
+          id: stamp.id,
+          status: stamp.status,
+          created_at: stamp.created_at,
+          confirmed_at: stamp.confirmed_at,
+          registry_says_confirmed: stamp.status === 'confirmed',
+          note: "Registry = Satohash's index of proofs. It is not proof."
+        },
+        extra: {
+          id: stamp.id,
+          hash: stamp.hash,
+          ots_download_url: otsDownloadUrl(stamp.id)
+        }
+      })
+    )
   }
   res.status(400).json({ error: 'provide hash or ots_base64' })
 })

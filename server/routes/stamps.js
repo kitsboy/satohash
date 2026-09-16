@@ -1,4 +1,18 @@
 import { assertAuthoredStamp } from '../lib/authored.js'
+import {
+  inspectAttestations,
+  parseOts
+} from '../lib/ots-attestations.js'
+import {
+  checkDigestBinding,
+  verifyDetachedAgainstChain
+} from '../lib/ots-chain-verify.js'
+import {
+  describeVerifyResult,
+  otsDownloadUrl,
+  realOtsBuffer,
+  safeOtsInfo
+} from '../lib/ots-verify-result.js'
 
 /**
  * Extracted from server/index.js — paths preserved.
@@ -733,30 +747,65 @@ export function register(app, deps) {
         const upgradedBinary = detached.serializeToBytes()
 
         if (upgraded) {
-          // Check if the upgrade produced a Bitcoin block attestation
-          const info = OpenTimestamps.info(detached)
-          const blockMatch = info.match(/Bitcoin block (\d+)/i)
-          if (blockMatch) {
-            const blockHeight = parseInt(blockMatch[1], 10)
+          // F3: read the block claim from the parsed attestation tree — never
+          // from the rendered info() text, and never trust the claim itself.
+          const view = inspectAttestations(detached)
+          if (view.bitcoin.length > 0) {
+            const verdict = await verifyDetachedAgainstChain(detached)
+
+            if (verdict.verified) {
+              const blockHeight = verdict.height
+              db.prepare(
+                `
+                          UPDATE timestamps
+                          SET status = 'confirmed',
+                              bitcoin_block_height = ?,
+                              confirmed_at = CURRENT_TIMESTAMP,
+                              upgraded_binary = ?,
+                              verify_method = ?,
+                              updated_at = CURRENT_TIMESTAMP
+                          WHERE id = ?
+                      `
+              ).run(
+                blockHeight,
+                Buffer.from(upgradedBinary),
+                `${verdict.method}:${verdict.trust}`,
+                stamp.id
+              )
+              confirmationCounter.inc()
+              io.emit('ots:confirmed', { id: stamp.id, bitcoin_block_height: blockHeight })
+              return res.json({
+                status: 'confirmed',
+                bitcoin_block_height: blockHeight,
+                verified_method: verdict.method,
+                trust: verdict.trust,
+                block_hash: verdict.block_hash,
+                block_time: verdict.block_time
+              })
+            }
+
+            // The upgrade carried a block claim that did NOT resolve against the
+            // chain. Keep the bytes, stay pending, and say why — a stamp is never
+            // 'confirmed' on an unresolved claim.
+            logger.warn(
+              'upgrade: block claim for %s did not resolve (%s)',
+              stamp.id,
+              verdict.reason
+            )
             db.prepare(
-              `
-                        UPDATE timestamps
-                        SET status = 'confirmed',
-                            bitcoin_block_height = ?,
-                            confirmed_at = CURRENT_TIMESTAMP,
-                            upgraded_binary = ?
-                        WHERE id = ?
-                    `
-            ).run(blockHeight, Buffer.from(upgradedBinary), stamp.id)
-            confirmationCounter.inc()
-            io.emit('ots:confirmed', { id: stamp.id, bitcoin_block_height: blockHeight })
-            return res.json({ status: 'confirmed', bitcoin_block_height: blockHeight })
+              'UPDATE timestamps SET upgraded_binary = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?'
+            ).run(Buffer.from(upgradedBinary), stamp.id)
+            return res.json({
+              status: 'pending',
+              message: 'Bitcoin calendars have not confirmed yet',
+              verification: { verified: false, reason: verdict.reason }
+            })
           }
+
           // Upgraded but no block yet — save the upgraded binary for next poll
-          db.prepare('UPDATE timestamps SET upgraded_binary = ? WHERE id = ?').run(
-            Buffer.from(upgradedBinary),
-            stamp.id
-          )
+          db.prepare(
+            'UPDATE timestamps SET upgraded_binary = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?'
+          ).run(Buffer.from(upgradedBinary), stamp.id)
         }
 
         return res.json({ status: 'pending', message: 'Bitcoin calendars have not confirmed yet' })
@@ -778,63 +827,123 @@ export function register(app, deps) {
 
   app.post('/api/verify', upload.single('otsFile'), async (req, res, next) => {
     try {
-      // --- Hash-based DB lookup path ---
-      if (req.body.hash && !req.file) {
-        const { hash } = req.body
-        if (!/^[a-f0-9]{64}$/i.test(hash)) {
-          return res.status(400).json({ error: 'Invalid hash: must be 64-character hex string.' })
-        }
+      const rawHash = typeof req.body?.hash === 'string' ? req.body.hash.trim().toLowerCase() : null
 
-        const stamp = db.prepare('SELECT * FROM timestamps WHERE hash = ?').get(hash)
-        if (!stamp) {
-          return res.status(404).json({ verified: false, error: 'Hash not found in registry.' })
-        }
-
-        const response = {
-          id: stamp.id,
-          hash: stamp.hash,
-          filename: stamp.original_filename,
-          status: stamp.status,
-          created_at: stamp.created_at,
-          ots_available: !!stamp.ots_binary
-        }
-
-        if (stamp.status === 'confirmed') {
-          response.verified = true
-          response.bitcoin_block_height = stamp.bitcoin_block_height
-          response.confirmed_at = stamp.confirmed_at
-        } else {
-          response.verified = false
-        }
-
-        return res.json(response)
-      }
-
-      // --- .ots file upload verification path ---
-      if (!req.file || !req.file.buffer) {
-        return res
-          .status(400)
-          .json({ error: 'Provide either a "hash" field or an .ots file upload.' })
-      }
-
-      const detached = loadOtsFile(req.file.buffer)
-      let verified = false
-      let details = ''
-      try {
-        const info = OpenTimestamps.info(detached)
-        details = info
+      // ---------------------------------------------------------------
+      // PATH A — .ots upload: the sovereign path. The proof itself is the
+      // evidence, so it is checked against a real Bitcoin block header
+      // (own bitcoind first). No registry involved.
+      // ---------------------------------------------------------------
+      if (req.file && req.file.buffer) {
+        let detached
         try {
-          const verifyResult = await OpenTimestamps.verify(detached)
-          if (verifyResult && Object.keys(verifyResult).length > 0) verified = true
-        } catch (_ve) {
-          /* verification pending */
+          detached = loadOtsFile(req.file.buffer)
+        } catch (_e) {
+          return res.status(400).json({ verified: false, error: 'Invalid OTS file format.' })
         }
-        if (info.includes('Bitcoin block')) verified = true
-        res.json({ verified, details })
-      } catch (e) {
-        logger.error('Verify check error: %o', e)
-        res.json({ verified: false, details: 'Verification failed.' })
+
+        const view = inspectAttestations(detached)
+        let verdict = await verifyDetachedAgainstChain(detached)
+
+        // Optional caller-supplied hash: the .ots is detached over a digest, so
+        // this is what binds "this proof" to "my file".
+        let binding = null
+        if (rawHash) {
+          if (!/^[a-f0-9]{64}$/i.test(rawHash)) {
+            return res.status(400).json({ verified: false, error: 'Invalid hash: must be 64-character hex string.' })
+          }
+          binding = checkDigestBinding(detached, rawHash)
+          if (!binding.bound) {
+            verdict = {
+              verified: false,
+              method: verdict.method,
+              trust: verdict.trust,
+              chain: 'bitcoin',
+              reason: 'digest_mismatch'
+            }
+          }
+        }
+
+        return res.json(describeVerifyResult({ verdict, view, binding, details: safeOtsInfo(detached) }))
       }
+
+      // ---------------------------------------------------------------
+      // PATH B — hash only: a REGISTRY check, not a verdict by itself.
+      // We still verify the stored proof against the chain ourselves, but the
+      // answer is labelled as registry-derived and the .ots is handed back so
+      // the caller can reach the same conclusion without trusting Satohash.
+      // (F1: this path used to return `verified` straight from the DB status.)
+      // ---------------------------------------------------------------
+      if (rawHash) {
+        if (!/^[a-f0-9]{64}$/i.test(rawHash)) {
+          return res.status(400).json({ verified: false, error: 'Invalid hash: must be 64-character hex string.' })
+        }
+
+        const stamp = db.prepare('SELECT * FROM timestamps WHERE hash = ?').get(rawHash)
+        if (!stamp) {
+          return res.status(404).json({
+            verified: false,
+            registry_check: true,
+            registry: { found: false, status: null },
+            error: 'Hash not found in registry.'
+          })
+        }
+
+        const stored = realOtsBuffer(stamp)
+        let verdict = {
+          verified: false,
+          method: null,
+          trust: null,
+          chain: 'bitcoin',
+          reason: 'no_proof_stored_yet'
+        }
+        let view = null
+        let binding = null
+
+        if (stored) {
+          try {
+            const detached = parseOts(stored)
+            view = inspectAttestations(detached)
+            binding = checkDigestBinding(detached, rawHash)
+            verdict = binding.bound
+              ? await verifyDetachedAgainstChain(detached)
+              : { verified: false, method: null, trust: null, chain: 'bitcoin', reason: 'digest_mismatch' }
+          } catch (e) {
+            logger.warn('verify by hash: stored proof unreadable for %s: %s', rawHash, e.message)
+            verdict = { verified: false, method: null, trust: null, chain: 'bitcoin', reason: 'stored_proof_unreadable' }
+          }
+        }
+
+        return res.json(
+          describeVerifyResult({
+            verdict,
+            view,
+            binding,
+            details: null,
+            registry: {
+              id: stamp.id,
+              hash: stamp.hash,
+              found: true,
+              status: stamp.status,
+              created_at: stamp.created_at,
+              confirmed_at: stamp.confirmed_at,
+              client_id: stamp.client_id || null,
+              registry_says_confirmed: stamp.status === 'confirmed',
+              note: 'Registry = Satohash\'s index of proofs. It is not proof. The verdict above is resolved against a Bitcoin block header.'
+            },
+            extra: {
+              id: stamp.id,
+              filename: stamp.original_filename,
+              created_at: stamp.created_at,
+              ots_download_url: otsDownloadUrl(stamp.id)
+            }
+          })
+        )
+      }
+
+      return res
+        .status(400)
+        .json({ verified: false, error: 'Provide either a "hash" field or an .ots file upload.' })
     } catch (error) {
       next(error)
     }

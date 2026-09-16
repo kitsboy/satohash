@@ -29,12 +29,15 @@ export async function bitcoinRpc(method, params = [], { timeoutMs = 8000 } = {})
     body: JSON.stringify({ jsonrpc: '1.0', id: 'satohash', method, params }),
     signal: AbortSignal.timeout(timeoutMs)
   })
-  if (!res.ok) {
-    throw new Error(`HTTP ${res.status}`)
-  }
   const json = await res.json().catch(() => ({}))
+  // Bitcoin Core answers JSON-RPC errors (e.g. "Block height out of range")
+  // with HTTP 500 *and* a JSON error body. Read the body before the status, or
+  // the real reason is flattened into a useless "HTTP 500" for every caller.
   if (json.error) {
     throw new Error(json.error.message || JSON.stringify(json.error))
+  }
+  if (!res.ok) {
+    throw new Error(`HTTP ${res.status}`)
   }
   return json.result
 }
