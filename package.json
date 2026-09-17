@@ -52,7 +52,8 @@
     "lh:live": "BASE_URL=https://satohash.io node scripts/lighthouse-mobile-gate.mjs",
     "bundle:budget": "node scripts/bundle-budget.mjs",
     "watch:node": "node scripts/watch-bitcoind-health.mjs",
-    "qa:shots": "node scripts/qa-screenshots.mjs"
+    "qa:shots": "node scripts/qa-screenshots.mjs",
+    "check:security": "node scripts/check-secret-hygiene.mjs"
   },
   "lint-staged": {
     "src/**/*.{js,jsx}": [
