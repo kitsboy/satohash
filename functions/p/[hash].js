@@ -322,6 +322,18 @@ export async function onRequestGet({ params, request }) {
   const stampFileBtn = unstamped
     ? ''
     : `<a class="btn ghost" href="https://satohash.io/stamp">${esc(tr(L, 'stampFile'))}</a>`
+  const moreBtns = [
+    otsBtn,
+    stampFileBtn,
+    `<a class="btn ghost" href="https://satohash.io/counsel">${esc(tr(L, 'forCounsel'))}</a>`
+  ]
+    .filter(Boolean)
+    .join('\n        ')
+  const moreHtml = moreBtns
+    ? `<details class="more"><summary>${esc(tr(L, 'more'))}</summary>
+        <div class="actions">${moreBtns}</div>
+      </details>`
+    : ''
   const jsonLd = JSON.stringify({
     '@context': 'https://schema.org',
     '@type': 'CreativeWork',
@@ -430,6 +442,8 @@ export async function onRequestGet({ params, request }) {
       border-radius:.85rem;text-decoration:none;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
     a.gold{background:var(--gold);color:#141b25}
     a.ghost{border:1px solid var(--line);color:var(--gold)}
+    details.more{margin-top:.75rem}
+    details.more summary{cursor:pointer;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);min-height:40px;display:flex;align-items:center}
     footer{margin-top:1.25rem;font-size:11px;color:var(--muted)}
     footer a{color:var(--gold)}
     @media (max-width:420px){h1{font-size:1.2rem}.actions{flex-direction:column}a.btn{width:100%}.seal{width:48px;height:48px;flex-basis:48px}}
@@ -467,10 +481,8 @@ export async function onRequestGet({ params, request }) {
       ${cals}
       <div class="actions">
         ${primaryCta}
-        ${otsBtn}
-        ${stampFileBtn}
-        <a class="btn ghost" href="https://satohash.io/counsel">${esc(tr(L, 'forCounsel'))}</a>
       </div>
+      ${moreHtml}
     </article>
     <footer>
       ${esc(tr(L, 'footer'))}

@@ -62,7 +62,8 @@ export const STRINGS = {
       'That this exact file existed at or before that Bitcoin block. Nothing more — it does not prove who made it or that it is true.',
     whoKicker: 'Optional who',
     whoTitle: 'This stamp includes a Nostr signature.',
-    whoBody: 'Open interactive verify to check it. Not a legal name.'
+    whoBody: 'Open interactive verify to check it. Not a legal name.',
+    more: 'More'
   },
   es: {
     kicker: 'Tarjeta pública de prueba',
@@ -127,7 +128,8 @@ export const STRINGS = {
       'Que este archivo exacto existía en o antes de ese bloque Bitcoin. Nada más — no demuestra quién lo hizo ni que sea verdad.',
     whoKicker: 'Quién (opcional)',
     whoTitle: 'Este sello incluye una firma Nostr.',
-    whoBody: 'Abre la verificación interactiva para comprobarla. No es un nombre legal.'
+    whoBody: 'Abre la verificación interactiva para comprobarla. No es un nombre legal.',
+    more: 'Más'
   },
   fr: {
     kicker: 'Carte de preuve publique',
@@ -191,7 +193,8 @@ export const STRINGS = {
       'Que ce fichier exact existait à ou avant ce bloc Bitcoin. Rien de plus — cela ne prouve pas qui l’a fait ni qu’il est vrai.',
     whoKicker: 'Qui (optionnel)',
     whoTitle: 'Ce tampon inclut une signature Nostr.',
-    whoBody: 'Ouvrez la vérification interactive pour la contrôler. Ce n’est pas un nom légal.'
+    whoBody: 'Ouvrez la vérification interactive pour la contrôler. Ce n’est pas un nom légal.',
+    more: 'Plus'
   },
   de: {
     kicker: 'Öffentliche Beweiskarte',
@@ -255,7 +258,8 @@ export const STRINGS = {
       'Dass genau diese Datei zu oder vor diesem Bitcoin-Block existierte. Mehr nicht — es beweist nicht, wer sie gemacht hat oder dass sie wahr ist.',
     whoKicker: 'Wer (optional)',
     whoTitle: 'Dieser Stempel enthält eine Nostr-Signatur.',
-    whoBody: 'Öffne Interactive Verify, um sie zu prüfen. Kein rechtlicher Name.'
+    whoBody: 'Öffne Interactive Verify, um sie zu prüfen. Kein rechtlicher Name.',
+    more: 'Mehr'
   },
   pt: {
     kicker: 'Cartão público de prova',
@@ -318,7 +322,8 @@ export const STRINGS = {
       'Que este ficheiro exacto existia em ou antes daquele bloco Bitcoin. Nada mais — não prova quem o fez nem que é verdade.',
     whoKicker: 'Quem (opcional)',
     whoTitle: 'Este selo inclui uma assinatura Nostr.',
-    whoBody: 'Abre a verificação interativa para a conferir. Não é um nome legal.'
+    whoBody: 'Abre a verificação interativa para a conferir. Não é um nome legal.',
+    more: 'Mais'
   },
   sw: {
     kicker: 'Kadi ya ushahidi wa umma',
@@ -380,7 +385,8 @@ export const STRINGS = {
       'Kwamba faili hii hasa ilikuwepo kwenye au kabla ya bloku hiyo ya Bitcoin. Si zaidi — haithibitishi nani aliifanya wala kwamba ni kweli.',
     whoKicker: 'Nani (si lazima)',
     whoTitle: 'Muhuri huu una saini ya Nostr.',
-    whoBody: 'Fungua uthibitishaji wa kuingiliana kuikagua. Si jina la kisheria.'
+    whoBody: 'Fungua uthibitishaji wa kuingiliana kuikagua. Si jina la kisheria.',
+    more: 'Zaidi'
   },
   zh: {
     kicker: '公开证明卡',
@@ -439,6 +445,7 @@ export const STRINGS = {
       '这份确切文件在该 Bitcoin 区块之时或之前已存在。仅此而已——不证明是谁做的，也不证明内容为真。',
     whoKicker: '可选的谁',
     whoTitle: '此盖印含有 Nostr 签名。',
-    whoBody: '打开交互验证来核对。不是法定姓名。'
+    whoBody: '打开交互验证来核对。不是法定姓名。',
+    more: '更多'
   }
 }

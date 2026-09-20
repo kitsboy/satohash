@@ -486,13 +486,10 @@ export default function Landing() {
             </Link>
             <Link
               to="/watch"
-              className="order-2 flex min-h-[48px] w-full items-center justify-center gap-2 rounded-2xl border px-6 py-3.5 text-base font-bold transition-all hover:text-white sm:w-auto sm:px-8 sm:py-4"
-              style={{
-                borderColor: 'var(--border-gold, var(--accent-gold))',
-                color: 'var(--accent-gold)'
-              }}
+              className="order-2 flex min-h-[44px] w-full items-center justify-center text-sm font-semibold underline-offset-4 hover:underline sm:w-auto"
+              style={{ color: 'var(--text-secondary)' }}
             >
-              {t('landingPage.hero.ctaWatch')} <ArrowRight size={16} />
+              {t('landingPage.hero.ctaWatch')}
             </Link>
           </motion.div>
 
@@ -1081,10 +1078,10 @@ export default function Landing() {
             </Link>
             <Link
               to="/watch"
-              className="inline-flex items-center gap-2 rounded-2xl border px-6 py-3.5 text-sm font-bold transition-colors hover:border-[var(--accent-gold)]"
-              style={{ borderColor: 'rgba(240,180,41,0.4)', color: 'var(--accent-gold)' }}
+              className="inline-flex min-h-[44px] items-center text-sm font-semibold underline-offset-4 hover:underline"
+              style={{ color: 'var(--text-secondary)' }}
             >
-              Watch explainer
+              {t('landingPage.hero.ctaWatch')}
             </Link>
           </motion.div>
         </div>

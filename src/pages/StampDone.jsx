@@ -324,68 +324,6 @@ export default function StampDone() {
               </p>
             )}
           </header>
-
-          {!queued && (
-            <ol
-              className="grid grid-cols-1 gap-3 rounded-xl border p-4 text-left sm:grid-cols-3 sm:gap-4"
-              style={{
-                borderColor: 'color-mix(in srgb, var(--accent-gold) 22%, var(--border))',
-                background: 'color-mix(in srgb, var(--bg-primary) 72%, transparent)'
-              }}
-            >
-              {[
-                {
-                  n: '1',
-                  t: t('stampDonePage.stepFingerprint'),
-                  d: t('stampDonePage.stepFingerprintDesc'),
-                  tip: t('stampDonePage.stepFingerprintTip')
-                },
-                {
-                  n: '2',
-                  t: t('stampDonePage.stepCalendars'),
-                  d: t('stampDonePage.stepCalendarsDesc'),
-                  tip: t('stampDonePage.stepCalendarsTip')
-                },
-                {
-                  n: '3',
-                  t: t('stampDonePage.stepBitcoin'),
-                  d: confirmed
-                    ? hasBlockHeight
-                      ? t('stampDonePage.stepBitcoinBlock', {
-                          block: heightNum.toLocaleString(i18n.language)
-                        })
-                      : t('stampDonePage.stepBitcoinFolded')
-                    : t('stampDonePage.stepBitcoinWaiting'),
-                  tip: t('stampDonePage.stepBitcoinTip')
-                }
-              ].map((s) => (
-                <li key={s.n} className="min-w-0">
-                  <p
-                    className="flex items-center gap-2 text-[9px] font-black tracking-widest uppercase"
-                    style={{ color: 'var(--accent-gold)' }}
-                  >
-                    <span
-                      className="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[10px] font-black"
-                      style={{ background: 'var(--accent-gold)', color: '#141b25' }}
-                      aria-hidden
-                    >
-                      {s.n}
-                    </span>
-                    <span>
-                      {s.n} · {s.t}
-                      <Tooltip
-                        title={t('stampDonePage.stepTipTitle', { n: s.n, title: s.t })}
-                        content={s.tip}
-                      />
-                    </span>
-                  </p>
-                  <p className="mt-1.5 text-xs" style={{ color: 'var(--text-secondary)' }}>
-                    {s.d}
-                  </p>
-                </li>
-              ))}
-            </ol>
-          )}
         </article>
 
         <AuthoredWhoCard authored={proof.authored} stampedHash={proof.hash} />

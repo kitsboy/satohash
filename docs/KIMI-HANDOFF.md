@@ -4,7 +4,9 @@
 
 **Finished:** Optional who on proof card (browser-checked); batch/v5/shield use POST `/api/verify`; HowProofWorks in 7 locales; stamp-done + `/p/` poll until Bitcoin confirms; gold (not purple) who panel; proof-card hero block.
 
-**Kimi — DO THIS NOW:** Rebuild API so `GET /api/stamps/:hash/by-hash` includes `authored`. Copy-paste:
+**Kimi — still not done.** Live `GET /health` is **`gitSha` `910a065`**. That is not `origin/main`. The “four cards / false claim / CI” note is a **different** job. Rebuild the API:
+
+Copy-paste:
 
 ```bash
 cd /root/satohash && git fetch origin && git reset --hard origin/main

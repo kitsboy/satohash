@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Upload, ShieldCheck, Hash, Globe, Database, CheckCircle2, XCircle } from 'lucide-react'
+import { Upload, ShieldCheck, Hash, CheckCircle2, XCircle } from 'lucide-react'
 import { useState, useRef, useCallback, useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { toast } from 'sonner'
@@ -641,38 +641,9 @@ export default function VerificationTool() {
           </a>
         </div>
 
-        <section
-          className="grid grid-cols-1 gap-8 border-t border-[var(--border)] pt-12 md:grid-cols-3"
-          aria-label={tv('verifyToolPage.globalWitnesses')}
-        >
-          <div className="space-y-3">
-            <div className="flex items-center gap-2 text-[var(--accent-active)]">
-              <Globe size={16} />
-              <h5 className="text-[10px] font-bold tracking-widest uppercase">Global Witnesses</h5>
-            </div>
-            <p className="text-xs leading-relaxed text-[var(--text-secondary)]">
-              Proof validity is independently established via the global calendar node mesh.
-            </p>
-          </div>
-          <div className="space-y-3">
-            <div className="flex items-center gap-2 text-[var(--accent-active)]">
-              <Database size={16} />
-              <h5 className="text-[10px] font-bold tracking-widest uppercase">Bitcoin Anchored</h5>
-            </div>
-            <p className="text-xs leading-relaxed text-[var(--text-secondary)]">
-              Finality is mathematically bound to the cumulative work of the Bitcoin network.
-            </p>
-          </div>
-          <div className="space-y-3">
-            <div className="flex items-center gap-2 text-[var(--accent-active)]">
-              <ShieldCheck size={16} />
-              <h5 className="text-[10px] font-bold tracking-widest uppercase">Immutable Truth</h5>
-            </div>
-            <p className="text-xs leading-relaxed text-[var(--text-secondary)]">
-              No central authority can revoke or alter this attestation record once confirmed.
-            </p>
-          </div>
-        </section>
+        <p className="pt-4 text-center text-xs" style={{ color: 'var(--text-muted)' }}>
+          OpenTimestamps calendars, then Bitcoin. Pending is not confirmed.
+        </p>
       </div>
       <Footer compact />
     </>
