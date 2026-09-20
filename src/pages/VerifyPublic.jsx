@@ -9,6 +9,7 @@ import { downloadCertificate } from '../utils/certificate'
 import usePageMeta from '../hooks/usePageMeta'
 import { getApiUrl } from '../config/constants'
 import { isSha256Hex, normalizeSha256 } from '../utils/hashUtils'
+import { fetchChainVerdict, isChainVerdict } from '../utils/fetchChainVerdict'
 import { findStampByHashOrId, localRecordToProof } from '../utils/vaultLocal'
 import { isStaticOnlyMode } from '../utils/staticMode'
 import ProofTimeline from '../components/stamps/ProofTimeline'
@@ -18,6 +19,7 @@ import ProofReceipt from '../components/stamps/ProofReceipt'
 import DonationReceiptShare from '../components/stamps/DonationReceiptShare'
 import CalendarStrip from '../components/stamps/CalendarStrip'
 import VerifyYourselfCard from '../components/stamps/VerifyYourselfCard'
+import HowProofWorks from '../components/trust/HowProofWorks'
 import Tooltip from '../components/ui/Tooltip'
 import { downloadVerifiableCredential } from '../utils/verifiableCredential'
 import { shareProofLink } from '../utils/shareProof'
@@ -30,6 +32,7 @@ export default function VerifyPublic() {
   const { t } = useTranslation()
   const { id } = useParams()
   const [proof, setProof] = useState(null)
+  const [verdict, setVerdict] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const pollRef = useRef(null)
@@ -146,6 +149,19 @@ export default function VerifyPublic() {
     if (id) fetchProof(id)
     return () => stopPoll()
   }, [id, fetchProof, stopPoll])
+
+  useEffect(() => {
+    const hex = normalizeSha256(proof?.hash || id)
+    setVerdict(null)
+    if (!hex) return undefined
+    let cancelled = false
+    fetchChainVerdict(getApiUrl(), hex).then((body) => {
+      if (!cancelled) setVerdict(isChainVerdict(body) ? body : null)
+    })
+    return () => {
+      cancelled = true
+    }
+  }, [proof?.hash, id])
 
   // Poll pending API stamps until confirmed (or terminal fail)
   useEffect(() => {
@@ -277,6 +293,14 @@ export default function VerifyPublic() {
             upgradeStatus={proof.status}
           />
           <ProofReceipt proof={proof} />
+          {(verdict || String(proof.status || '').toLowerCase() !== 'confirmed') && (
+            <HowProofWorks
+              verdict={verdict}
+              state={verdict ? undefined : proof.status === 'failed' ? 'not-proven' : 'pending'}
+              hash={normalizeSha256(proof.hash) || proof.hash || null}
+              otsUrl={verdict?.ots_download_url || null}
+            />
+          )}
           <DonationReceiptShare
             proof={proof}
             isDonation={proof?.client_id === 'donations' || proof?.source === 'donations'}

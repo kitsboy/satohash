@@ -6,6 +6,7 @@ import { toast } from 'sonner'
 import usePageMeta from '../hooks/usePageMeta'
 import { getApiUrl } from '../config/constants'
 import { normalizeSha256 } from '../utils/hashUtils'
+import { fetchChainVerdict, isChainVerdict } from '../utils/fetchChainVerdict'
 import { findStampByHashOrId, localRecordToProof } from '../utils/vaultLocal'
 import { verifyOtsStructurally } from '../utils/otsBrowser'
 import { verifyOtsBrowser } from '../utils/otsClient'
@@ -13,6 +14,7 @@ import { useTranslation } from 'react-i18next'
 import { isStaticOnlyMode } from '../utils/staticMode'
 import StaticModeBanner from '../components/shared/StaticModeBanner'
 import VerifyEli5 from '../components/stamps/VerifyEli5'
+import HowProofWorks from '../components/trust/HowProofWorks'
 import LiveNodeChip from '../components/shared/LiveNodeChip'
 import Footer from '../components/layout/Footer'
 import events, { trackEvent } from '../utils/analytics'
@@ -100,59 +102,55 @@ export default function VerificationTool() {
 
     const normalized = normalizeSha256(hash)
     const local = localRecordToProof(findStampByHashOrId(hash))
-    if (local) {
-      setResult(local.status === 'confirmed' ? 'success' : 'success')
-      setVerifyData({
-        verified: true,
-        details: `Found in local vault — Status: ${local.status}${local.queued ? ' (queued for API sync)' : ''}`,
-        stamp: local,
-        mode: 'local'
-      })
-      trackEvent(events.VERIFICATION_COMPLETED, { path: '/verify', mode: 'local' })
-      setVerifying(false)
-      return
-    }
 
     try {
-      const API = getApiUrl()
-      const res = await fetch(`${API}/api/stamps/${hash.trim()}`)
-      if (res.ok) {
-        const match = await res.json()
-        setResult('success')
-        setVerifyData({
-          verified: true,
-          details: `Found in Satohash DB — Status: ${match.status}`,
-          stamp: match,
-          mode: 'api'
-        })
-        trackEvent(events.VERIFICATION_COMPLETED, { path: '/verify', mode: 'api' })
-      } else if (normalized) {
-        setResult('success')
-        setVerifyData({
-          verified: true,
-          details:
-            'Valid SHA-256 format. No server record yet — upload matching .ots or wait for API deploy.',
-          mode: 'hash-only'
-        })
-      } else {
-        throw new Error('Not found')
-      }
-    } catch {
       if (normalized) {
+        const verdict = await fetchChainVerdict(getApiUrl(), normalized)
+        if (isChainVerdict(verdict)) {
+          const pending =
+            verdict.verified !== true &&
+            (verdict.reason === 'no_block_attestation' || verdict.status === 'pending')
+          setVerifyData({
+            ...verdict,
+            stamp: local || undefined,
+            details: verdict.explainer || verdict.error || verdict.details,
+            mode: 'api'
+          })
+          setResult(verdict.verified === true || pending ? 'success' : 'error')
+          trackEvent(events.VERIFICATION_COMPLETED, { path: '/verify', mode: 'api' })
+          return
+        }
+      }
+
+      if (local) {
         setResult('success')
         setVerifyData({
-          verified: true,
-          details: tv('staticMode.verifyStructural'),
-          mode: 'hash-only'
+          verified: false,
+          details: `Found in local vault — Status: ${local.status}${local.queued ? ' (queued for API sync)' : ''}. Not chain-checked.`,
+          stamp: local,
+          mode: 'local'
         })
-      } else {
-        toast.error('Hash not found on this node')
+        trackEvent(events.VERIFICATION_COMPLETED, { path: '/verify', mode: 'local' })
+        return
+      }
+
+      if (normalized) {
         setResult('error')
         setVerifyData({
           verified: false,
-          details: 'Hash not found in this node. It may be on another node or not yet stamped.'
+          details:
+            'Valid SHA-256 format. No chain-checked proof yet — upload the matching .ots or wait for confirmation.',
+          mode: 'hash-only'
         })
+        return
       }
+
+      toast.error('Hash not found on this node')
+      setResult('error')
+      setVerifyData({
+        verified: false,
+        details: 'Hash not found in this node. It may be on another node or not yet stamped.'
+      })
     } finally {
       setVerifying(false)
     }
@@ -237,7 +235,10 @@ export default function VerificationTool() {
           }
           throw new Error('Server returned an invalid response. Please try again.')
         }
-        setResult(data.verified ? 'success' : 'error')
+        const pending =
+          data.verified !== true &&
+          (data.reason === 'no_block_attestation' || data.status === 'pending')
+        setResult(data.verified || pending ? 'success' : 'error')
         setVerifyData(data)
       } else {
         setResult('error')
@@ -447,6 +448,17 @@ export default function VerificationTool() {
                   {verifyData?.details || 'This hash could not be verified.'}
                 </p>
               </div>
+              <HowProofWorks
+                verdict={isChainVerdict(verifyData) ? verifyData : null}
+                state={isChainVerdict(verifyData) ? undefined : 'not-proven'}
+                hash={
+                  normalizeSha256(hashInput) ||
+                  verifyData?.digest ||
+                  verifyData?.stamp?.hash ||
+                  null
+                }
+                otsUrl={verifyData?.ots_download_url || null}
+              />
               <button
                 onClick={() => {
                   setResult(null)
@@ -468,45 +480,63 @@ export default function VerificationTool() {
               className="grid grid-cols-1 gap-12 text-left lg:grid-cols-2"
             >
               <div className="space-y-8">
-                <div className="space-y-4 rounded-2xl border border-[var(--accent-success)]/20 bg-[var(--accent-success)]/10 p-6">
-                  <div className="flex items-center gap-3 text-[var(--accent-success)]">
-                    <CheckCircle2 size={24} />
-                    <h3 className="text-2xl font-bold tracking-tight">Verified Successfully</h3>
-                  </div>
-                  <p className="text-sm leading-relaxed font-medium text-[var(--text-secondary)]">
-                    This proof attests that the submitted data existed before the anchored Bitcoin
-                    attestation time represented by this OpenTimestamps proof.
-                  </p>
-                  {verifyData?.details && (
-                    <p className="text-xs font-medium text-[var(--text-secondary)]">
-                      {verifyData.details}
+                <HowProofWorks
+                  verdict={isChainVerdict(verifyData) ? verifyData : null}
+                  state={isChainVerdict(verifyData) ? undefined : 'pending'}
+                  hash={
+                    normalizeSha256(hashInput) ||
+                    verifyData?.digest ||
+                    verifyData?.stamp?.hash ||
+                    null
+                  }
+                  otsUrl={verifyData?.ots_download_url || null}
+                />
+                {verifyData?.verified === true && (
+                  <div className="space-y-4 rounded-2xl border border-[var(--accent-success)]/20 bg-[var(--accent-success)]/10 p-6">
+                    <div className="flex items-center gap-3 text-[var(--accent-success)]">
+                      <CheckCircle2 size={24} />
+                      <h3 className="text-2xl font-bold tracking-tight">Verified Successfully</h3>
+                    </div>
+                    <p className="text-sm leading-relaxed font-medium text-[var(--text-secondary)]">
+                      This proof attests that the submitted data existed before the anchored Bitcoin
+                      attestation time represented by this OpenTimestamps proof.
                     </p>
-                  )}
-                  {verifyData?.stamp?.bitcoin_block_height && (
-                    <div className="border-t border-[var(--accent-success)]/20 pt-4">
-                      <p
-                        className="mb-2 text-[10px] font-bold tracking-widest uppercase"
-                        style={{ color: 'var(--text-secondary)' }}
-                      >
-                        Bitcoin Attestation
+                    {verifyData?.details && (
+                      <p className="text-xs font-medium text-[var(--text-secondary)]">
+                        {verifyData.details}
                       </p>
-                      <div
-                        className="flex items-center justify-center gap-3 rounded-2xl px-6 py-4"
-                        style={{ background: 'var(--accent-success)', color: '#fff' }}
-                      >
-                        <CheckCircle2 size={22} />
-                        <div className="text-center">
-                          <p className="text-[10px] font-bold tracking-widest uppercase opacity-80">
-                            Confirmed in Block
-                          </p>
-                          <p className="font-mono text-2xl font-black">
-                            #{verifyData.stamp.bitcoin_block_height.toLocaleString()}
-                          </p>
+                    )}
+                    {(verifyData?.bitcoin_block_height ||
+                      verifyData?.stamp?.bitcoin_block_height) && (
+                      <div className="border-t border-[var(--accent-success)]/20 pt-4">
+                        <p
+                          className="mb-2 text-[10px] font-bold tracking-widest uppercase"
+                          style={{ color: 'var(--text-secondary)' }}
+                        >
+                          Bitcoin Attestation
+                        </p>
+                        <div
+                          className="flex items-center justify-center gap-3 rounded-2xl px-6 py-4"
+                          style={{ background: 'var(--accent-success)', color: '#fff' }}
+                        >
+                          <CheckCircle2 size={22} />
+                          <div className="text-center">
+                            <p className="text-[10px] font-bold tracking-widest uppercase opacity-80">
+                              Confirmed in Block
+                            </p>
+                            <p className="font-mono text-2xl font-black">
+                              #
+                              {Number(
+                                verifyData.bitcoin_block_height ||
+                                  verifyData.stamp?.bitcoin_block_height
+                              ).toLocaleString()}
+                            </p>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  )}
-                </div>
+                    )}
+                  </div>
+                )}
 
                 <div className="space-y-4 rounded-2xl border border-[var(--border)] bg-[var(--bg-primary)] p-6">
                   <h4 className="text-[10px] font-bold tracking-widest text-[var(--text-secondary)] uppercase">
@@ -547,13 +577,13 @@ export default function VerificationTool() {
                         className="font-mono text-xs font-bold uppercase"
                         style={{
                           color:
-                            String(verifyData?.stamp?.status || '').toLowerCase() === 'confirmed' ||
-                            String(verifyData?.stamp?.status || '').toLowerCase() === 'verified'
+                            verifyData?.verified === true
                               ? 'var(--accent-success)'
                               : 'var(--accent-gold)'
                         }}
                       >
-                        {verifyData?.stamp?.status || 'VERIFIED'}
+                        {verifyData?.stamp?.status ||
+                          (verifyData?.verified ? 'confirmed' : verifyData?.status || 'pending')}
                       </span>
                     </div>
                   </div>

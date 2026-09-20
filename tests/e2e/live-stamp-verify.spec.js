@@ -64,7 +64,9 @@ test.describe('Landing → stamp → API → verify', () => {
 
     await expect(page).toHaveURL(/\/verify/, { timeout: 20_000 })
     await expect(
-      page.getByText(/Verified Successfully|Found in Satohash|Found in local vault|SHA-256/i).first()
+      page
+        .getByText(/How does this work|Waiting for Bitcoin|Verified Successfully|SHA-256/i)
+        .first()
     ).toBeVisible({ timeout: 30_000 })
 
     expect(errors).toEqual([])

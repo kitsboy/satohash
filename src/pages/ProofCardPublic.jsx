@@ -5,8 +5,10 @@ import { Copy, Check, Share2, ShieldCheck, Clock, Hash, Download } from 'lucide-
 import usePageMeta from '../hooks/usePageMeta'
 import { getApiUrl, PUBLIC_API_URL } from '../config/constants'
 import { isSha256Hex, normalizeSha256 } from '../utils/hashUtils'
+import { fetchChainVerdict, isChainVerdict } from '../utils/fetchChainVerdict'
 import ProofReceipt from '../components/stamps/ProofReceipt'
 import CalendarStrip from '../components/stamps/CalendarStrip'
+import HowProofWorks from '../components/trust/HowProofWorks'
 
 /** Real Nostr event id only — hex, note1, or nevent1. Never invent. */
 function realNostrEventId(raw) {
@@ -61,6 +63,7 @@ export default function ProofCardPublic() {
   const hex = normalizeSha256(hash) || hash
   const validHash = isSha256Hex(hex)
   const [proof, setProof] = useState(null)
+  const [verdict, setVerdict] = useState(null)
   const [copied, setCopied] = useState(false)
   const kind = classifyProof(proof, validHash)
   const confirmed = kind === 'confirmed'
@@ -151,6 +154,20 @@ export default function ProofCardPublic() {
       .catch(() => {
         if (!cancelled) setProof({ hash: hex, status: 'unknown' })
       })
+    return () => {
+      cancelled = true
+    }
+  }, [hex, API])
+
+  useEffect(() => {
+    if (!isSha256Hex(hex)) {
+      setVerdict(null)
+      return undefined
+    }
+    let cancelled = false
+    fetchChainVerdict(API, hex).then((body) => {
+      if (!cancelled) setVerdict(isChainVerdict(body) ? body : null)
+    })
     return () => {
       cancelled = true
     }
@@ -329,6 +346,14 @@ export default function ProofCardPublic() {
                 <p className="text-xs leading-relaxed" style={{ color: 'var(--text-muted)' }}>
                   {t('proofCardPage.waitingBlock')}
                 </p>
+              ) : null}
+              {!unstamped && (verdict || pending) ? (
+                <HowProofWorks
+                  verdict={verdict}
+                  state={verdict ? undefined : 'pending'}
+                  hash={hex}
+                  otsUrl={verdict?.ots_download_url || otsHref || null}
+                />
               ) : null}
               {emptyHash ? (
                 <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
