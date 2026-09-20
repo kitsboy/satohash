@@ -1,12 +1,6 @@
-import { assertAuthoredStamp } from '../lib/authored.js'
-import {
-  inspectAttestations,
-  parseOts
-} from '../lib/ots-attestations.js'
-import {
-  checkDigestBinding,
-  verifyDetachedAgainstChain
-} from '../lib/ots-chain-verify.js'
+import { assertAuthoredStamp, authoredFromCosignatures } from '../lib/authored.js'
+import { inspectAttestations, parseOts } from '../lib/ots-attestations.js'
+import { checkDigestBinding, verifyDetachedAgainstChain } from '../lib/ots-chain-verify.js'
 import {
   describeVerifyResult,
   otsDownloadUrl,
@@ -19,19 +13,6 @@ import {
  * @param {import('express').Express} app
  * @param {object} deps
  */
-
-function authoredFromCosignatures(raw) {
-  if (!raw) return null
-  try {
-    const list = typeof raw === 'string' ? JSON.parse(raw) : raw
-    if (!Array.isArray(list)) return null
-    const row = list.find((c) => c && c.type === 'authored-v1')
-    if (!row?.file_sha256 || !row.event) return null
-    return { file_sha256: row.file_sha256, event: row.event }
-  } catch {
-    return null
-  }
-}
 
 export function register(app, deps) {
   const {
@@ -850,7 +831,9 @@ export function register(app, deps) {
         let binding = null
         if (rawHash) {
           if (!/^[a-f0-9]{64}$/i.test(rawHash)) {
-            return res.status(400).json({ verified: false, error: 'Invalid hash: must be 64-character hex string.' })
+            return res
+              .status(400)
+              .json({ verified: false, error: 'Invalid hash: must be 64-character hex string.' })
           }
           binding = checkDigestBinding(detached, rawHash)
           if (!binding.bound) {
@@ -864,7 +847,9 @@ export function register(app, deps) {
           }
         }
 
-        return res.json(describeVerifyResult({ verdict, view, binding, details: safeOtsInfo(detached) }))
+        return res.json(
+          describeVerifyResult({ verdict, view, binding, details: safeOtsInfo(detached) })
+        )
       }
 
       // ---------------------------------------------------------------
@@ -876,7 +861,9 @@ export function register(app, deps) {
       // ---------------------------------------------------------------
       if (rawHash) {
         if (!/^[a-f0-9]{64}$/i.test(rawHash)) {
-          return res.status(400).json({ verified: false, error: 'Invalid hash: must be 64-character hex string.' })
+          return res
+            .status(400)
+            .json({ verified: false, error: 'Invalid hash: must be 64-character hex string.' })
         }
 
         const stamp = db.prepare('SELECT * FROM timestamps WHERE hash = ?').get(rawHash)
@@ -907,10 +894,22 @@ export function register(app, deps) {
             binding = checkDigestBinding(detached, rawHash)
             verdict = binding.bound
               ? await verifyDetachedAgainstChain(detached)
-              : { verified: false, method: null, trust: null, chain: 'bitcoin', reason: 'digest_mismatch' }
+              : {
+                  verified: false,
+                  method: null,
+                  trust: null,
+                  chain: 'bitcoin',
+                  reason: 'digest_mismatch'
+                }
           } catch (e) {
             logger.warn('verify by hash: stored proof unreadable for %s: %s', rawHash, e.message)
-            verdict = { verified: false, method: null, trust: null, chain: 'bitcoin', reason: 'stored_proof_unreadable' }
+            verdict = {
+              verified: false,
+              method: null,
+              trust: null,
+              chain: 'bitcoin',
+              reason: 'stored_proof_unreadable'
+            }
           }
         }
 
@@ -929,7 +928,7 @@ export function register(app, deps) {
               confirmed_at: stamp.confirmed_at,
               client_id: stamp.client_id || null,
               registry_says_confirmed: stamp.status === 'confirmed',
-              note: 'Registry = Satohash\'s index of proofs. It is not proof. The verdict above is resolved against a Bitcoin block header.'
+              note: "Registry = Satohash's index of proofs. It is not proof. The verdict above is resolved against a Bitcoin block header."
             },
             extra: {
               id: stamp.id,

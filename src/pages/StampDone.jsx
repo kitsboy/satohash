@@ -8,6 +8,7 @@ import { isApiExplicitlyConfigured } from '../config/mvp'
 import { fetchChainVerdict, isChainVerdict } from '../utils/fetchChainVerdict'
 import StampSuccessActions from '../components/stamps/StampSuccessActions'
 import HowProofWorks from '../components/trust/HowProofWorks'
+import AuthoredWhoCard from '../components/stamps/AuthoredWhoCard'
 import EmptyState from '../components/ui/EmptyState'
 import { findStampByHashOrId, localRecordToProof } from '../utils/vaultLocal'
 import { persistLastProof, readLastProof } from '../utils/lastProof'
@@ -370,6 +371,8 @@ export default function StampDone() {
             </ol>
           )}
         </article>
+
+        <AuthoredWhoCard authored={proof.authored} stampedHash={proof.hash} />
 
         {!queued && (verdict || !confirmed) ? (
           <HowProofWorks

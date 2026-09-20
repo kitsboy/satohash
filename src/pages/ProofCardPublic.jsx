@@ -9,6 +9,7 @@ import { fetchChainVerdict, isChainVerdict } from '../utils/fetchChainVerdict'
 import ProofReceipt from '../components/stamps/ProofReceipt'
 import CalendarStrip from '../components/stamps/CalendarStrip'
 import HowProofWorks from '../components/trust/HowProofWorks'
+import AuthoredWhoCard from '../components/stamps/AuthoredWhoCard'
 
 /** Real Nostr event id only — hex, note1, or nevent1. Never invent. */
 function realNostrEventId(raw) {
@@ -147,6 +148,17 @@ export default function ProofCardPublic() {
             }
           } catch {
             /* omit njump */
+          }
+        }
+        if (next.id && !next.authored) {
+          try {
+            const full = await fetch(`${API}/api/stamps/${encodeURIComponent(next.id)}`)
+            if (full.ok) {
+              const body = await full.json()
+              if (body?.authored) next.authored = body.authored
+            }
+          } catch {
+            /* optional who */
           }
         }
         if (!cancelled) setProof(next)
@@ -342,6 +354,7 @@ export default function ProofCardPublic() {
               ) : (
                 <ProofReceipt proof={proof} />
               )}
+              <AuthoredWhoCard authored={proof.authored} stampedHash={proof.hash || hex} />
               {pending ? (
                 <p className="text-xs leading-relaxed" style={{ color: 'var(--text-muted)' }}>
                   {t('proofCardPage.waitingBlock')}

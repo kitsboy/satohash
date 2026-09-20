@@ -20,6 +20,7 @@ import DonationReceiptShare from '../components/stamps/DonationReceiptShare'
 import CalendarStrip from '../components/stamps/CalendarStrip'
 import VerifyYourselfCard from '../components/stamps/VerifyYourselfCard'
 import HowProofWorks from '../components/trust/HowProofWorks'
+import AuthoredWhoCard from '../components/stamps/AuthoredWhoCard'
 import Tooltip from '../components/ui/Tooltip'
 import { downloadVerifiableCredential } from '../utils/verifiableCredential'
 import { shareProofLink } from '../utils/shareProof'
@@ -293,6 +294,7 @@ export default function VerifyPublic() {
             upgradeStatus={proof.status}
           />
           <ProofReceipt proof={proof} />
+          <AuthoredWhoCard authored={proof.authored} stampedHash={proof.hash} />
           {(verdict || String(proof.status || '').toLowerCase() !== 'confirmed') && (
             <HowProofWorks
               verdict={verdict}

@@ -46,6 +46,20 @@ function tagValue(event, name) {
  * Validate authored binding. Never throws.
  * `authored` = `{ file_sha256, event }`. `hash` must equal authoredDigest.
  */
+/** Pull satohash-authored:v1 out of a stamp's cosignatures JSON. */
+export function authoredFromCosignatures(raw) {
+  if (!raw) return null
+  try {
+    const list = typeof raw === 'string' ? JSON.parse(raw) : raw
+    if (!Array.isArray(list)) return null
+    const row = list.find((c) => c && c.type === 'authored-v1')
+    if (!row?.file_sha256 || !row.event) return null
+    return { file_sha256: row.file_sha256, event: row.event }
+  } catch {
+    return null
+  }
+}
+
 export function assertAuthoredStamp({ hash, authored } = {}) {
   try {
     if (!authored || typeof authored !== 'object') {

@@ -754,7 +754,8 @@ export default function Stamp() {
           hash: stampHash,
           filename,
           status: 'queued',
-          source: 'offline-queue'
+          source: 'offline-queue',
+          ...(bound ? { authored: { file_sha256: bound.fileSha256, event: bound.event } } : {})
         }
         persistLastProof(localProof)
         await releaseWakeLock()
@@ -817,7 +818,8 @@ export default function Stamp() {
         ...data,
         filename: caseLabel || file.name,
         status: data.status || 'pending',
-        size: file.size
+        size: file.size,
+        ...(bound ? { authored: { file_sha256: bound.fileSha256, event: bound.event } } : {})
       }
       setProofResult(proof)
       setStampingStatus('complete')

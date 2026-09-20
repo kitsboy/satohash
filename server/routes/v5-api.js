@@ -20,7 +20,13 @@ import { audit } from '../lib/audit-log.js'
 import { hashClientIp } from '../security.js'
 import { inspectAttestations, parseOts } from '../lib/ots-attestations.js'
 import { checkDigestBinding, verifyDetachedAgainstChain } from '../lib/ots-chain-verify.js'
-import { describeVerifyResult, otsDownloadUrl, realOtsBuffer, safeOtsInfo } from '../lib/ots-verify-result.js'
+import {
+  describeVerifyResult,
+  otsDownloadUrl,
+  realOtsBuffer,
+  safeOtsInfo
+} from '../lib/ots-verify-result.js'
+import { authoredFromCosignatures } from '../lib/authored.js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const router = Router()
@@ -124,6 +130,7 @@ async function cacheSet(key, val, ttl = CACHE_TTL) {
 
 function publicStampRow(row) {
   if (!row) return null
+  const authored = authoredFromCosignatures(row.cosignatures)
   return {
     id: row.id,
     hash: row.hash,
@@ -140,7 +147,8 @@ function publicStampRow(row) {
     verify_method: row.verify_method ?? null,
     status_is_registry_only: true,
     client: row.client_id || row.user_npub || null,
-    ipfs_cid: row.ipfs_cid || null
+    ipfs_cid: row.ipfs_cid || null,
+    ...(authored ? { authored } : {})
   }
 }
 
@@ -857,7 +865,13 @@ router.post('/verify/json', async (req, res) => {
     if (hash && /^[a-f0-9]{64}$/i.test(hash)) {
       binding = checkDigestBinding(detached, hash)
       if (!binding.bound) {
-        verdict = { verified: false, method: null, trust: null, chain: 'bitcoin', reason: 'digest_mismatch' }
+        verdict = {
+          verified: false,
+          method: null,
+          trust: null,
+          chain: 'bitcoin',
+          reason: 'digest_mismatch'
+        }
       }
     }
 
@@ -879,7 +893,13 @@ router.post('/verify/json', async (req, res) => {
     // Same rule as the multipart route: the registry tells us a proof exists;
     // the chain tells us whether it is real.
     const stored = realOtsBuffer(stamp)
-    let verdict = { verified: false, method: null, trust: null, chain: 'bitcoin', reason: 'no_proof_stored_yet' }
+    let verdict = {
+      verified: false,
+      method: null,
+      trust: null,
+      chain: 'bitcoin',
+      reason: 'no_proof_stored_yet'
+    }
     let view = null
     if (stored) {
       try {
@@ -888,10 +908,22 @@ router.post('/verify/json', async (req, res) => {
         const binding = checkDigestBinding(detached, stamp.hash)
         verdict = binding.bound
           ? await verifyDetachedAgainstChain(detached)
-          : { verified: false, method: null, trust: null, chain: 'bitcoin', reason: 'digest_mismatch' }
+          : {
+              verified: false,
+              method: null,
+              trust: null,
+              chain: 'bitcoin',
+              reason: 'digest_mismatch'
+            }
       } catch (e) {
         logger.warn('verify/json: stored proof unreadable for %s: %s', stamp.hash, e.message)
-        verdict = { verified: false, method: null, trust: null, chain: 'bitcoin', reason: 'stored_proof_unreadable' }
+        verdict = {
+          verified: false,
+          method: null,
+          trust: null,
+          chain: 'bitcoin',
+          reason: 'stored_proof_unreadable'
+        }
       }
     }
 
