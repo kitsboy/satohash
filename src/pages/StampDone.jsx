@@ -5,7 +5,9 @@ import { Clock, Lock, ShieldCheck } from 'lucide-react'
 import usePageMeta from '../hooks/usePageMeta'
 import { getApiUrl } from '../config/constants'
 import { isApiExplicitlyConfigured } from '../config/mvp'
+import { fetchChainVerdict, isChainVerdict } from '../utils/fetchChainVerdict'
 import StampSuccessActions from '../components/stamps/StampSuccessActions'
+import HowProofWorks from '../components/trust/HowProofWorks'
 import EmptyState from '../components/ui/EmptyState'
 import { findStampByHashOrId, localRecordToProof } from '../utils/vaultLocal'
 import { persistLastProof, readLastProof } from '../utils/lastProof'
@@ -70,6 +72,7 @@ export default function StampDone() {
   const [searchParams] = useSearchParams()
   const navigate = useNavigate()
   const [proof, setProof] = useState(null)
+  const [verdict, setVerdict] = useState(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -145,6 +148,19 @@ export default function StampDone() {
     requestConfirmNotifyPermission()
     return undefined
   }, [proof?.id, proof?.status])
+
+  useEffect(() => {
+    const hex = sha256Hex(proof?.hash)
+    setVerdict(null)
+    if (!hex) return undefined
+    let cancelled = false
+    fetchChainVerdict(getApiUrl(), hex).then((body) => {
+      if (!cancelled) setVerdict(isChainVerdict(body) ? body : null)
+    })
+    return () => {
+      cancelled = true
+    }
+  }, [proof?.hash, proof?.status])
 
   if (loading) {
     return (
@@ -354,6 +370,15 @@ export default function StampDone() {
             </ol>
           )}
         </article>
+
+        {!queued && (verdict || !confirmed) ? (
+          <HowProofWorks
+            verdict={verdict}
+            state={verdict ? undefined : 'pending'}
+            hash={sha256Hex(proof.hash) || null}
+            otsUrl={verdict?.ots_download_url || null}
+          />
+        ) : null}
 
         <div className="flex justify-center">
           <StampSuccessActions
