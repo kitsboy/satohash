@@ -1835,7 +1835,9 @@
     "browserCalendarsOnly": "Solo calendarios del navegador",
     "deepLink": "Enlace profundo",
     "fileNeverLeavesSend": "El archivo no sale de este dispositivo. Enviamos un SHA-256.",
-    "alsoProveWho": "También probar quién"
+    "alsoProveWho": "También probar quién",
+    "emailWhenConfirmed": "Avísame por email al confirmar",
+    "waitingOnBitcoin": "Esperando a Bitcoin"
   },
   "stampDonePage": {
     "loading": "Cargando prueba…",
@@ -1999,7 +2001,8 @@
     "notStampedBody": "Esta huella no está en el registro Satohash. Séllala para iniciar OpenTimestamps.",
     "stampThisFingerprint": "Sellar esta huella",
     "downloadOts": "Descargar .ots",
-    "waitingBlock": "Los calendarios tienen el resumen; un bloque Bitcoin aún no lo incluye (~60 min)."
+    "waitingBlock": "Los calendarios tienen el resumen; un bloque Bitcoin aún no lo incluye (~60 min).",
+    "more": "Más"
   },
   "counselPage": {
     "metaTitle": "Para abogados",

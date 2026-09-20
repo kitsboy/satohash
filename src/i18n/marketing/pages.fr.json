@@ -1835,7 +1835,9 @@
     "browserCalendarsOnly": "Calendriers du navigateur uniquement",
     "deepLink": "Lien profond",
     "fileNeverLeavesSend": "Le fichier ne quitte pas cet appareil. Nous envoyons un SHA-256.",
-    "alsoProveWho": "Prouver aussi qui"
+    "alsoProveWho": "Prouver aussi qui",
+    "emailWhenConfirmed": "M’écrire quand c’est confirmé",
+    "waitingOnBitcoin": "En attente de Bitcoin"
   },
   "stampDonePage": {
     "loading": "Chargement de la preuve…",
@@ -1999,7 +2001,8 @@
     "notStampedBody": "Cette empreinte n’est pas dans le registre Satohash. Horodatez-la pour démarrer OpenTimestamps.",
     "stampThisFingerprint": "Horodater cette empreinte",
     "downloadOts": "Télécharger .ots",
-    "waitingBlock": "Les calendriers ont le condensé ; un bloc Bitcoin ne l’a pas encore inclus (~60 min)."
+    "waitingBlock": "Les calendriers ont le condensé ; un bloc Bitcoin ne l’a pas encore inclus (~60 min).",
+    "more": "Plus"
   },
   "counselPage": {
     "metaTitle": "Pour les juristes",

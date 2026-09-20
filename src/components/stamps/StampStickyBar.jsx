@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 /**
  * One-thumb sticky primary action above mobile bottom chrome / safe area.
  */
@@ -7,9 +9,11 @@ export default function StampStickyBar({
   disabled = false,
   onClick,
   secondaryLabel,
-  onSecondary
+  onSecondary,
+  pendingTo,
+  pendingLabel
 }) {
-  if (!visible) return null
+  if (!visible && !pendingTo) return null
 
   return (
     <div
@@ -23,31 +27,48 @@ export default function StampStickyBar({
         WebkitBackdropFilter: 'blur(12px)'
       }}
     >
-      <div className="mx-auto flex max-w-lg gap-2">
-        {secondaryLabel && onSecondary && (
-          <button
-            type="button"
-            onClick={onSecondary}
-            className="min-h-[52px] flex-1 rounded-xl border text-xs font-black tracking-widest uppercase"
-            style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
+      <div className="mx-auto max-w-lg space-y-2">
+        {pendingTo && pendingLabel ? (
+          <Link
+            to={pendingTo}
+            data-testid="waiting-bitcoin-chip"
+            className="flex min-h-[40px] items-center justify-center rounded-xl text-[11px] font-black tracking-widest uppercase"
+            style={{
+              color: 'var(--accent-gold)',
+              background: 'color-mix(in srgb, var(--accent-gold) 12%, transparent)'
+            }}
           >
-            {secondaryLabel}
-          </button>
-        )}
-        <button
-          type="button"
-          data-testid="stamp-sticky-cta"
-          disabled={disabled}
-          onClick={onClick}
-          className="btn-sheen min-h-[52px] flex-[2] rounded-xl text-sm font-black tracking-widest uppercase shadow-lg disabled:opacity-50"
-          style={{
-            background: 'var(--accent-gold)',
-            color: '#141b25',
-            boxShadow: '0 8px 28px var(--accent-gold-glow)'
-          }}
-        >
-          {label}
-        </button>
+            {pendingLabel}
+          </Link>
+        ) : null}
+        {visible ? (
+          <div className="flex gap-2">
+            {secondaryLabel && onSecondary && (
+              <button
+                type="button"
+                onClick={onSecondary}
+                className="min-h-[52px] flex-1 rounded-xl border text-xs font-black tracking-widest uppercase"
+                style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
+              >
+                {secondaryLabel}
+              </button>
+            )}
+            <button
+              type="button"
+              data-testid="stamp-sticky-cta"
+              disabled={disabled}
+              onClick={onClick}
+              className="btn-sheen min-h-[52px] flex-[2] rounded-xl text-sm font-black tracking-widest uppercase shadow-lg disabled:opacity-50"
+              style={{
+                background: 'var(--accent-gold)',
+                color: '#141b25',
+                boxShadow: '0 8px 28px var(--accent-gold-glow)'
+              }}
+            >
+              {label}
+            </button>
+          </div>
+        ) : null}
       </div>
     </div>
   )

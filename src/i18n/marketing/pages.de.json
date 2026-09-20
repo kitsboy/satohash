@@ -1835,7 +1835,9 @@
     "browserCalendarsOnly": "Nur Browser-Kalender",
     "deepLink": "Deep-Link",
     "fileNeverLeavesSend": "Die Datei verlässt dieses Gerät nicht. Wir senden einen SHA-256.",
-    "alsoProveWho": "Auch beweisen, wer"
+    "alsoProveWho": "Auch beweisen, wer",
+    "emailWhenConfirmed": "Mailen, wenn bestätigt",
+    "waitingOnBitcoin": "Warten auf Bitcoin"
   },
   "stampDonePage": {
     "loading": "Nachweis wird geladen…",
@@ -1999,7 +2001,8 @@
     "notStampedBody": "Dieser Fingerabdruck ist nicht im Satohash-Register. Stempeln Sie ihn, um OpenTimestamps zu starten.",
     "stampThisFingerprint": "Diesen Fingerabdruck stempeln",
     "downloadOts": ".ots herunterladen",
-    "waitingBlock": "Kalender haben den Digest; ein Bitcoin-Block enthält ihn noch nicht (~60 Min.)."
+    "waitingBlock": "Kalender haben den Digest; ein Bitcoin-Block enthält ihn noch nicht (~60 Min.).",
+    "more": "Mehr"
   },
   "counselPage": {
     "metaTitle": "Für Anwälte",

@@ -40,7 +40,7 @@ import { parseStampDeepLink } from '../utils/stampDeepLink'
 import { createTemplateStampFile } from '../utils/templateStampFile'
 import StampStickyBar from '../components/stamps/StampStickyBar'
 import StampSuccessActions from '../components/stamps/StampSuccessActions'
-import { persistLastProof } from '../utils/lastProof'
+import { persistLastProof, readLastProof } from '../utils/lastProof'
 import { requestWakeLock, releaseWakeLock } from '../utils/wakeLock'
 import LiveNodeChip from '../components/shared/LiveNodeChip'
 import Footer from '../components/layout/Footer'
@@ -79,6 +79,7 @@ export default function Stamp() {
   const [hashFromDeepLink, setHashFromDeepLink] = useState(false)
   const [hashInvalidMsg, setHashInvalidMsg] = useState('')
   const [notifyEmail, setNotifyEmail] = useState('') // optional "email me when confirmed"
+  const [showNotify, setShowNotify] = useState(false)
   const deepLinkHandled = useRef(false)
   const pollRef = useRef(null)
 
@@ -118,6 +119,18 @@ export default function Stamp() {
   const { isOnline, queueStamp, hashFileOffline } = useOfflineSync()
 
   const { lastEvent } = useSocket()
+
+  const waitingDonePath = (() => {
+    const last = readLastProof()
+    if (!last) return ''
+    const s = String(last.status || '').toLowerCase()
+    if (s === 'confirmed' || s === 'verified' || s === 'failed') return ''
+    if (last.id && !String(last.id).startsWith('ots-')) {
+      return `/stamp/done?id=${encodeURIComponent(last.id)}`
+    }
+    if (last.hash) return `/stamp/done?hash=${encodeURIComponent(last.hash)}`
+    return ''
+  })()
 
   useEffect(() => {
     const file = files[0]
@@ -1259,6 +1272,19 @@ export default function Stamp() {
               </h1>
             </div>
             <p className="font-medium text-[var(--text-secondary)]">{t('stamp', 'subtitle')}</p>
+            {waitingDonePath ? (
+              <Link
+                to={waitingDonePath}
+                data-testid="waiting-bitcoin-chip-desktop"
+                className="inline-flex min-h-[40px] items-center rounded-xl px-3 text-[11px] font-black tracking-widest uppercase"
+                style={{
+                  color: 'var(--accent-gold)',
+                  background: 'color-mix(in srgb, var(--accent-gold) 12%, transparent)'
+                }}
+              >
+                {tp('stampPage.waitingOnBitcoin')}
+              </Link>
+            ) : null}
           </div>
         </header>
 
@@ -1904,17 +1930,29 @@ export default function Stamp() {
                 ) : null}
                 {stampingStatus === 'idle' && (
                   <>
-                    <label className="relative z-20 mt-3 flex items-center gap-2 rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] px-3 py-2">
-                      <Mail size={14} className="shrink-0 text-[var(--text-muted)]" />
-                      <input
-                        type="email"
-                        value={notifyEmail}
-                        onChange={(e) => setNotifyEmail(e.target.value)}
-                        placeholder={tp('stampPage.notifyEmailPlaceholder')}
-                        className="w-full bg-transparent text-sm outline-none placeholder:text-[var(--text-muted)]"
-                        aria-label={tp('stampPage.notifyEmailPlaceholder')}
-                      />
-                    </label>
+                    {showNotify ? (
+                      <label className="relative z-20 mt-3 flex items-center gap-2 rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] px-3 py-2">
+                        <Mail size={14} className="shrink-0 text-[var(--text-muted)]" />
+                        <input
+                          type="email"
+                          value={notifyEmail}
+                          onChange={(e) => setNotifyEmail(e.target.value)}
+                          placeholder={tp('stampPage.notifyEmailPlaceholder')}
+                          className="w-full bg-transparent text-sm outline-none placeholder:text-[var(--text-muted)]"
+                          aria-label={tp('stampPage.notifyEmailPlaceholder')}
+                        />
+                      </label>
+                    ) : (
+                      <button
+                        type="button"
+                        data-testid="email-when-confirmed"
+                        onClick={() => setShowNotify(true)}
+                        className="relative z-20 mt-3 flex min-h-[40px] w-full items-center justify-center text-[11px] font-medium tracking-wide uppercase"
+                        style={{ color: 'var(--text-tertiary)' }}
+                      >
+                        {tp('stampPage.emailWhenConfirmed')}
+                      </button>
+                    )}
                     <button
                       type="button"
                       data-testid="stamp-file-button"
@@ -1936,6 +1974,8 @@ export default function Stamp() {
 
           <StampStickyBar
             visible={canStampFile || canStampHash || stampingStatus === 'hashing' || idleFilePick}
+            pendingTo={waitingDonePath || undefined}
+            pendingLabel={waitingDonePath ? tp('stampPage.waitingOnBitcoin') : undefined}
             label={
               stampingStatus === 'hashing'
                 ? `hashing ${hashProgress}%`

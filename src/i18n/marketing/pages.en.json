@@ -1578,7 +1578,9 @@
     "browserCalendarsOnly": "Browser calendars only",
     "deepLink": "Deep link",
     "fileNeverLeavesSend": "File never leaves this device. We send a SHA-256.",
-    "alsoProveWho": "Also prove who"
+    "alsoProveWho": "Also prove who",
+    "emailWhenConfirmed": "Email me when confirmed",
+    "waitingOnBitcoin": "Waiting on Bitcoin"
   },
   "stampDonePage": {
     "loading": "Loading proof…",
@@ -1999,7 +2001,8 @@
     "notStampedBody": "This fingerprint is not in the Satohash registry. Stamp it to start OpenTimestamps.",
     "stampThisFingerprint": "Stamp this fingerprint",
     "downloadOts": "Download .ots",
-    "waitingBlock": "Calendars have the digest; Bitcoin block has not included it (~60 min)."
+    "waitingBlock": "Calendars have the digest; Bitcoin block has not included it (~60 min).",
+    "more": "More"
   },
   "counselPage": {
     "metaTitle": "For counsel",

@@ -66,6 +66,7 @@ export default function ProofCardPublic() {
   const [proof, setProof] = useState(null)
   const [verdict, setVerdict] = useState(null)
   const [copied, setCopied] = useState(false)
+  const [showMore, setShowMore] = useState(false)
   const kind = classifyProof(proof, validHash)
   const confirmed = verdict?.verified === true || (kind === 'confirmed' && !verdict)
   const unstamped = kind === 'unstamped'
@@ -434,58 +435,69 @@ export default function ProofCardPublic() {
                 {t('proofCardPage.interactiveVerify')}
               </Link>
             )}
-            {otsHref ? (
-              <a
-                href={otsHref}
-                className={btnGold}
-                style={{ background: 'var(--accent-gold)', color: '#141b25' }}
-              >
-                <Download size={14} /> {t('proofCardPage.downloadOts')}
-              </a>
-            ) : null}
-            <a
-              href={`/p/${hex}`}
-              className={btnGhost}
-              style={{ borderColor: 'var(--border-gold)', color: 'var(--accent-gold)' }}
-            >
-              {t('proofCardPage.hardOpen')}
-            </a>
-            {!unstamped ? (
-              <Link
-                to="/stamp"
-                className={btnGhost}
-                style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
-              >
-                {t('proofCardPage.stampFile')}
-              </Link>
-            ) : null}
-            <Link
-              to="/counsel"
-              className={btnGhost}
-              style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
-            >
-              {t('proofCardPage.forCounsel')}
-            </Link>
-          </div>
-          <div className="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-2">
             <button
               type="button"
               onClick={copyLink}
               className={`${btnGhost} gap-2 transition-colors hover:border-[var(--accent-gold)]`}
-              style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
+              style={{ borderColor: 'var(--border-gold)', color: 'var(--accent-gold)' }}
             >
               {copied ? <Check size={14} className="text-emerald-400" /> : <Copy size={14} />}
               {copied ? t('proofCardPage.copied') : t('proofCardPage.copyLink')}
             </button>
-            <button
-              type="button"
-              onClick={shareLink}
-              className={`${btnGhost} gap-2 transition-colors hover:border-[var(--accent-gold)]`}
-              style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
-            >
-              <Share2 size={14} /> {t('proofCardPage.share')}
-            </button>
           </div>
+          <button
+            type="button"
+            data-testid="proof-card-more"
+            onClick={() => setShowMore((v) => !v)}
+            className="mt-2 flex min-h-[40px] w-full items-center justify-center text-[11px] font-black tracking-widest uppercase"
+            style={{ color: 'var(--text-tertiary)' }}
+          >
+            {t('proofCardPage.more')}
+          </button>
+          {showMore ? (
+            <div className="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-2">
+              {otsHref ? (
+                <a
+                  href={otsHref}
+                  className={btnGhost}
+                  style={{ borderColor: 'var(--border-gold)', color: 'var(--accent-gold)' }}
+                >
+                  <Download size={14} /> {t('proofCardPage.downloadOts')}
+                </a>
+              ) : null}
+              <a
+                href={`/p/${hex}`}
+                className={btnGhost}
+                style={{ borderColor: 'var(--border-gold)', color: 'var(--accent-gold)' }}
+              >
+                {t('proofCardPage.hardOpen')}
+              </a>
+              {!unstamped ? (
+                <Link
+                  to="/stamp"
+                  className={btnGhost}
+                  style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
+                >
+                  {t('proofCardPage.stampFile')}
+                </Link>
+              ) : null}
+              <Link
+                to="/counsel"
+                className={btnGhost}
+                style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
+              >
+                {t('proofCardPage.forCounsel')}
+              </Link>
+              <button
+                type="button"
+                onClick={shareLink}
+                className={`${btnGhost} gap-2 transition-colors hover:border-[var(--accent-gold)]`}
+                style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
+              >
+                <Share2 size={14} /> {t('proofCardPage.share')}
+              </button>
+            </div>
+          ) : null}
         </article>
 
         <footer className="text-[11px]" style={{ color: 'var(--text-muted)' }}>

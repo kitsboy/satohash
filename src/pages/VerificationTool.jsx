@@ -519,56 +519,80 @@ export default function VerificationTool() {
                   </div>
                 )}
 
-                <div className="space-y-4 rounded-2xl border border-[var(--border)] bg-[var(--bg-primary)] p-6">
-                  <h4 className="text-[10px] font-bold tracking-widest text-[var(--text-secondary)] uppercase">
-                    Forensic Summary
-                  </h4>
-                  <div className="space-y-3">
-                    <div className="flex justify-between border-b border-[var(--border)] pb-2">
-                      <span className="text-xs font-medium text-[var(--text-secondary)]">
-                        Original Hash
-                      </span>
-                      <span className="font-mono text-xs">
-                        {hashInput
-                          ? hashInput.substring(0, 8) + '...' + hashInput.slice(-4)
-                          : verifyData?.stamp?.hash
-                            ? verifyData.stamp.hash.substring(0, 8) + '...'
-                            : '—'}
-                      </span>
+                {(() => {
+                  const factHash =
+                    normalizeSha256(hashInput) ||
+                    verifyData?.digest ||
+                    verifyData?.stamp?.hash ||
+                    null
+                  const factTime = verifyData?.verified
+                    ? verifyData.block_time
+                      ? new Date(verifyData.block_time * 1000)
+                      : verifyData.stamp?.confirmed_at
+                        ? new Date(verifyData.stamp.confirmed_at)
+                        : null
+                    : verifyData?.stamp?.created_at
+                      ? new Date(verifyData.stamp.created_at)
+                      : null
+                  const factStatus = verifyData?.verified
+                    ? 'confirmed'
+                    : verifyData?.status === 'pending' ||
+                        verifyData?.reason === 'no_block_attestation'
+                      ? 'pending'
+                      : verifyData
+                        ? 'unverified'
+                        : null
+                  if (!factHash && !factTime && !factStatus) return null
+                  return (
+                    <div className="space-y-4 rounded-2xl border border-[var(--border)] bg-[var(--bg-primary)] p-6">
+                      <h4 className="text-[10px] font-bold tracking-widest text-[var(--text-secondary)] uppercase">
+                        Facts
+                      </h4>
+                      <div className="space-y-3">
+                        {factHash ? (
+                          <div className="flex justify-between border-b border-[var(--border)] pb-2">
+                            <span className="text-xs font-medium text-[var(--text-secondary)]">
+                              Hash
+                            </span>
+                            <span className="font-mono text-xs">
+                              {factHash.substring(0, 8) + '...' + factHash.slice(-4)}
+                            </span>
+                          </div>
+                        ) : null}
+                        {factTime && !Number.isNaN(factTime.getTime()) ? (
+                          <div className="flex justify-between border-b border-[var(--border)] pb-2">
+                            <span className="text-xs font-medium text-[var(--text-secondary)]">
+                              {verifyData?.verified ? 'Bitcoin time' : 'Recorded'}
+                            </span>
+                            <span className="font-mono text-xs">{factTime.toLocaleString()}</span>
+                          </div>
+                        ) : null}
+                        {factStatus ? (
+                          <div className="flex justify-between">
+                            <span className="inline-flex items-center text-xs font-medium text-[var(--text-secondary)]">
+                              Status
+                              <Tooltip
+                                title={tv('verifyToolPage.pendingNe')}
+                                content="The fingerprint is at OpenTimestamps calendars. It is NOT in a Bitcoin block until status is confirmed. Pending ≠ confirmed."
+                              />
+                            </span>
+                            <span
+                              className="font-mono text-xs font-bold uppercase"
+                              style={{
+                                color:
+                                  factStatus === 'confirmed'
+                                    ? 'var(--accent-success)'
+                                    : 'var(--accent-gold)'
+                              }}
+                            >
+                              {factStatus}
+                            </span>
+                          </div>
+                        ) : null}
+                      </div>
                     </div>
-                    <div className="flex justify-between border-b border-[var(--border)] pb-2">
-                      <span className="text-xs font-medium text-[var(--text-secondary)]">
-                        Anchor Time
-                      </span>
-                      <span className="font-mono text-xs">
-                        {verifyData?.stamp?.created_at
-                          ? new Date(verifyData.stamp.created_at).toLocaleString()
-                          : new Date().toLocaleString()}
-                      </span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="inline-flex items-center text-xs font-medium text-[var(--text-secondary)]">
-                        Status
-                        <Tooltip
-                          title={tv('verifyToolPage.pendingNe')}
-                          content="The fingerprint is at OpenTimestamps calendars. It is NOT in a Bitcoin block until status is confirmed. Pending ≠ confirmed."
-                        />
-                      </span>
-                      <span
-                        className="font-mono text-xs font-bold uppercase"
-                        style={{
-                          color:
-                            verifyData?.verified === true
-                              ? 'var(--accent-success)'
-                              : 'var(--accent-gold)'
-                        }}
-                      >
-                        {verifyData?.stamp?.status ||
-                          (verifyData?.verified ? 'confirmed' : verifyData?.status || 'pending')}
-                      </span>
-                    </div>
-                  </div>
-                </div>
+                  )
+                })()}
 
                 <div className="flex gap-4">
                   <button

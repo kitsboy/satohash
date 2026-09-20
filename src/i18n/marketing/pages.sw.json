@@ -1835,7 +1835,9 @@
     "browserCalendarsOnly": "Kalenda za kivinjari pekee",
     "deepLink": "Kiungo kirefu",
     "fileNeverLeavesSend": "Faili haitoki kwenye kifaa hiki. Tunatuma SHA-256.",
-    "alsoProveWho": "Thibitisha pia nani"
+    "alsoProveWho": "Thibitisha pia nani",
+    "emailWhenConfirmed": "Nitumie barua pepe ikithibitishwa",
+    "waitingOnBitcoin": "Inasubiri Bitcoin"
   },
   "stampDonePage": {
     "loading": "Inapakia uthibitisho…",
@@ -1999,7 +2001,8 @@
     "notStampedBody": "Alama hii haiko kwenye daftari la Satohash. Igonge ili kuanza OpenTimestamps.",
     "stampThisFingerprint": "Gonga alama hii",
     "downloadOts": "Pakua .ots",
-    "waitingBlock": "Kalenda zina muhtasari; bloku ya Bitcoin bado haijauingiza (~dakika 60)."
+    "waitingBlock": "Kalenda zina muhtasari; bloku ya Bitcoin bado haijauingiza (~dakika 60).",
+    "more": "Zaidi"
   },
   "counselPage": {
     "metaTitle": "Kwa mawakili",

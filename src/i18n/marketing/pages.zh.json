@@ -1810,7 +1810,9 @@
     "browserCalendarsOnly": "仅浏览器日历",
     "deepLink": "深度链接",
     "fileNeverLeavesSend": "文件不会离开此设备。我们只发送 SHA-256。",
-    "alsoProveWho": "同时证明是谁"
+    "alsoProveWho": "同时证明是谁",
+    "emailWhenConfirmed": "确认后发邮件通知我",
+    "waitingOnBitcoin": "等待 Bitcoin"
   },
   "stampDonePage": {
     "loading": "正在加载证明…",
@@ -1974,7 +1976,8 @@
     "notStampedBody": "此指纹不在 Satohash 登记中。盖戳以启动 OpenTimestamps。",
     "stampThisFingerprint": "盖戳此指纹",
     "downloadOts": "下载 .ots",
-    "waitingBlock": "日历已有该摘要；Bitcoin 区块尚未包含它（约 60 分钟）。"
+    "waitingBlock": "日历已有该摘要；Bitcoin 区块尚未包含它（约 60 分钟）。",
+    "more": "更多"
   },
   "counselPage": {
     "metaTitle": "致律师",
