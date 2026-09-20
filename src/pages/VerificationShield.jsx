@@ -6,6 +6,8 @@ import { toast } from 'sonner'
 import ProofDNA from '../components/stamps/ProofDNA'
 import usePageMeta from '../hooks/usePageMeta'
 import { getApiUrl } from '../config/constants'
+import { fetchChainVerdict, isChainVerdict } from '../utils/fetchChainVerdict'
+import HowProofWorks from '../components/trust/HowProofWorks'
 
 /**
  * Item 28: Holographic Verification Shield
@@ -15,6 +17,7 @@ export default function PublicVerification() {
   usePageMeta({ page: 'verificationShield' })
   const { id } = useParams()
   const [stamp, setStamp] = useState(null)
+  const [verdict, setVerdict] = useState(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -24,6 +27,11 @@ export default function PublicVerification() {
         if (!res.ok) throw new Error(`HTTP ${res.status}`)
         const data = await res.json()
         setStamp(data)
+        const hex = String(data.hash || '').toLowerCase()
+        if (/^[a-f0-9]{64}$/.test(hex)) {
+          const chain = await fetchChainVerdict(getApiUrl(), hex)
+          setVerdict(isChainVerdict(chain) ? chain : null)
+        }
       } catch (e) {
         console.error(e)
         toast.error('Could not load verification record', { description: e.message })
@@ -85,7 +93,7 @@ export default function PublicVerification() {
               className="mb-6 inline-flex items-center gap-3 rounded-full bg-emerald-500/10 px-6 py-2.5 text-[10px] font-black tracking-[0.4em] text-emerald-400 uppercase italic ring-1 ring-emerald-500/20"
             >
               <ShieldCheck size={14} className="fill-emerald-500/10" />
-              Attestation Verified Stable
+              {verdict?.verified ? 'Anchored to Bitcoin' : 'Pending is not confirmed'}
             </motion.div>
             <h1 className="text-6xl font-black tracking-tighter text-white uppercase italic md:text-8xl">
               Verifiable <br /> <span className="text-emerald-400">EVIDENCE.</span>
@@ -130,10 +138,15 @@ export default function PublicVerification() {
                   {new Date(stamp.created_at).toUTCString()}
                 </p>
                 <p className="mt-2 text-[9px] font-bold tracking-widest text-slate-400 uppercase">
-                  {stamp.status.toUpperCase()} Consensus State
+                  {verdict?.verified ? 'Chain-checked' : 'Registry status is not proof'}
                 </p>
               </div>
             </div>
+            {verdict ? (
+              <div className="mt-8">
+                <HowProofWorks verdict={verdict} hash={stamp.hash} />
+              </div>
+            ) : null}
           </div>
 
           {/* Mesh Verification */}

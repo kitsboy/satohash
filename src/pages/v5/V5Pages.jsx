@@ -6,6 +6,8 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useParams, useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { getApiUrl } from '../../config/constants'
+import { fetchChainVerdict, isChainVerdict } from '../../utils/fetchChainVerdict'
+import HowProofWorks from '../../components/trust/HowProofWorks'
 
 const API = () => getApiUrl() || 'https://api.satohash.io'
 
@@ -52,10 +54,9 @@ export function ProofOfExistencePage() {
     setData(null)
     try {
       const h = hash.trim().toLowerCase()
-      const res = await fetch(`${API()}/api/stamps/${h}/by-hash`)
-      const j = await res.json()
-      if (!res.ok) throw new Error(j.error || res.statusText)
-      setData(j)
+      const verdict = await fetchChainVerdict(API(), h)
+      if (!isChainVerdict(verdict)) throw new Error('verify failed')
+      setData(verdict)
     } catch (e) {
       setErr(e.message)
     } finally {
@@ -88,23 +89,15 @@ export function ProofOfExistencePage() {
       {err && <p className="mt-4 text-sm text-red-400">{err}</p>}
       {data && (
         <div className="mt-6 space-y-3">
-          {(data.stamps || []).map((s) => (
-            <Card key={s.id}>
-              <div className="font-mono text-xs break-all opacity-80">{s.hash}</div>
-              <div className="mt-2 flex flex-wrap gap-2 text-sm">
-                <span className="rounded bg-white/10 px-2 py-0.5">{s.status}</span>
-                <span>{s.created_at}</span>
-                {s.bitcoin_block_height != null && (
-                  <span>
-                    {t('v5Page.proofOfExistence.block', { height: s.bitcoin_block_height })}
-                  </span>
-                )}
-              </div>
-              <Link className="mt-2 inline-block text-sm text-amber-400" to={`/verify/${s.id}`}>
-                {t('v5Page.proofOfExistence.openVerify')}
-              </Link>
-            </Card>
-          ))}
+          <Card>
+            <HowProofWorks verdict={data} hash={hash.trim().toLowerCase()} />
+            <Link
+              className="mt-3 inline-block text-sm text-amber-400"
+              to={`/verify/${hash.trim().toLowerCase()}`}
+            >
+              {t('v5Page.proofOfExistence.openVerify')}
+            </Link>
+          </Card>
         </div>
       )}
     </Shell>
@@ -140,7 +133,10 @@ export function BatchVerifyPage() {
         out.push({
           hash: h,
           ok: res.ok && j.verified === true,
-          status: j.verified === true ? `${j.verified_method || 'chain'} · block ${j.bitcoin_block_height ?? '?'}` : (j.error || j.reason || 'not proven'),
+          status:
+            j.verified === true
+              ? `${j.verified_method || 'chain'} · block ${j.bitcoin_block_height ?? '?'}`
+              : j.error || j.reason || 'not proven',
           verdict: j,
           ots: j.ots_download_url || null
         })
@@ -275,8 +271,9 @@ export function CompareProofsPage() {
 
   const load = async () => {
     const fetchOne = async (h) => {
-      const res = await fetch(`${API()}/api/stamps/${h.trim().toLowerCase()}/by-hash`)
-      return res.json()
+      const verdict = await fetchChainVerdict(API(), h.trim().toLowerCase())
+      if (!isChainVerdict(verdict)) throw new Error('verify failed')
+      return verdict
     }
     setLeft(await fetchOne(a).catch((e) => ({ error: e.message })))
     setRight(await fetchOne(b).catch((e) => ({ error: e.message })))

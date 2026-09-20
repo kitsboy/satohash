@@ -6,7 +6,8 @@ import { useTranslation } from 'react-i18next'
 import usePageMeta from '../hooks/usePageMeta'
 import Footer from '../components/layout/Footer'
 import { getApiUrl } from '../config/constants'
-import { isSha256Hex, normalizeSha256 } from '../utils/hashUtils'
+import { isSha256Hex } from '../utils/hashUtils'
+import { fetchChainVerdict, isChainVerdict } from '../utils/fetchChainVerdict'
 
 const BATCH_LIMIT = 50
 const EXAMPLE_HASHES = `9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08
@@ -48,19 +49,19 @@ export default function BatchVerify() {
     const out = await Promise.all(
       hashes.map(async (h) => {
         try {
-          const r = await fetch(`${API}/api/stamps/${encodeURIComponent(h)}/by-hash`, {
-            signal: AbortSignal.timeout(10000)
-          })
-          if (r.status === 404) return { hash: h, found: false }
-          if (!r.ok) return { hash: h, found: false, error: `HTTP ${r.status}` }
-          const body = await r.json()
-          const row = Array.isArray(body?.stamps) ? body.stamps[0] : body
+          const verdict = await fetchChainVerdict(API, h)
+          if (!isChainVerdict(verdict)) return { hash: h, found: false, error: 'verify failed' }
+          const verified = verdict.verified === true
+          const waiting =
+            !verified && (verdict.reason === 'no_block_attestation' || verdict.status === 'pending')
           return {
             hash: h,
-            found: true,
-            status: row?.status || 'unknown',
-            block: row?.bitcoin_block_height || null,
-            filename: row?.original_filename || row?.filename || null
+            found: Boolean(verdict.registry?.found) || verified || waiting,
+            verified,
+            waiting,
+            status: verified ? 'confirmed' : waiting ? 'pending' : 'unverified',
+            block: verdict.bitcoin_block_height || null,
+            method: verdict.verified_method || null
           }
         } catch (e) {
           return { hash: h, found: false, error: e.message }
@@ -71,13 +72,9 @@ export default function BatchVerify() {
     setLoading(false)
   }
 
-  const confirmed = (results || []).filter(
-    (r) => r.found && (r.status === 'confirmed' || r.status === 'verified')
-  )
-  const pending = (results || []).filter(
-    (r) => r.found && !(r.status === 'confirmed' || r.status === 'verified')
-  )
-  const missing = (results || []).filter((r) => !r.found)
+  const confirmed = (results || []).filter((r) => r.verified)
+  const pending = (results || []).filter((r) => r.waiting)
+  const missing = (results || []).filter((r) => !r.verified && !r.waiting)
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[var(--bg-primary)] to-[var(--bg-secondary)] pb-24">
@@ -164,18 +161,18 @@ export default function BatchVerify() {
                   className="flex items-center gap-3 rounded-xl border border-[var(--border)] bg-[var(--bg-secondary)] p-3"
                 >
                   <span
-                    className={`h-2.5 w-2.5 shrink-0 rounded-full ${r.found ? (r.status === 'confirmed' || r.status === 'verified' ? 'bg-emerald-400' : 'bg-amber-400') : 'bg-rose-400'}`}
+                    className={`h-2.5 w-2.5 shrink-0 rounded-full ${r.verified ? 'bg-emerald-400' : r.waiting ? 'bg-amber-400' : 'bg-rose-400'}`}
                   />
                   <div className="min-w-0 flex-1">
                     <div className="truncate font-mono text-xs">
                       {r.hash.slice(0, 24)}…{r.hash.slice(-8)}
                     </div>
                     <div className="text-[11px] text-[var(--text-muted)]">
-                      {r.found
+                      {r.verified || r.waiting
                         ? [
-                            r.status,
-                            r.block ? t('batchVerifyPage.block', { block: r.block }) : null,
-                            r.filename
+                            r.verified ? 'confirmed' : 'pending',
+                            r.method || null,
+                            r.block ? t('batchVerifyPage.block', { block: r.block }) : null
                           ]
                             .filter(Boolean)
                             .join(' · ')
@@ -184,7 +181,7 @@ export default function BatchVerify() {
                           : t('batchVerifyPage.notInRegistry')}
                     </div>
                   </div>
-                  {r.found && (
+                  {(r.verified || r.waiting) && (
                     <Link
                       to={`/verify/${r.hash}`}
                       className="shrink-0 text-xs text-[var(--accent-gold)] hover:underline"
