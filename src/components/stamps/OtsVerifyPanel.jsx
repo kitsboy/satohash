@@ -21,7 +21,8 @@ import { getApiUrl } from '../../config/constants'
 import { normalizeSha256, isSha256Hex } from '../../utils/hashUtils'
 import { verifyOtsStructurally } from '../../utils/otsBrowser'
 import { interpretOtsResult } from '../../utils/otsInterpret'
-import HowProofWorks, { stateFromVerdict } from '../trust/HowProofWorks'
+import { stateFromVerdict } from '../trust/HowProofWorks'
+import HowProofWorks from '../trust/LocalizedHowProofWorks'
 
 async function sha256File(file) {
   const buf = await file.arrayBuffer()

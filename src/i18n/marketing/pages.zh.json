@@ -4079,5 +4079,26 @@
         }
       }
     }
+  },
+  "howProofWorks": {
+    "title": "这是怎么工作的？",
+    "subtitle": "你不必信任我们。一分钟内该核对的是这些。",
+    "statePendingTitle": "等待 Bitcoin",
+    "statePendingBody": "你的证明已记录并发送到公开时间戳日历。Bitcoin 大约每 10 分钟确认一次，所以这通常会在几小时内变化。",
+    "stateConfirmedTitle": "已锚定到 Bitcoin",
+    "stateNotProvenTitle": "未证明",
+    "blockLabel": "Bitcoin 区块",
+    "methodOwnNode": "对照 Bitcoin 节点核对——没有信任第三方。",
+    "methodExplorer": "对照公开 Bitcoin 浏览器核对。你自己的副本仍可在无人帮助下证明这一点。",
+    "methodUnknown": "已链上核对。",
+    "selfTitle": "自己核对",
+    "selfBody": "你的证明文件（.ots）加上任何 OpenTimestamps 工具就够了。无需账户、无需 API、无需我们。",
+    "selfCommand": "ots verify yourfile.ots",
+    "selfDownload": "下载证明（.ots）",
+    "selfTool": "获取 OpenTimestamps 工具",
+    "whatItProves": "这证明了什么",
+    "whatItProvesBody": "这份确切文件在该 Bitcoin 区块之时或之前已存在。仅此而已——不证明是谁做的，也不证明内容为真。",
+    "showSteps": "告诉我怎么做",
+    "hideSteps": "隐藏"
   }
 }

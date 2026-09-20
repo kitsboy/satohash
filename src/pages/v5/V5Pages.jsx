@@ -7,7 +7,7 @@ import { Link, useParams, useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { getApiUrl } from '../../config/constants'
 import { fetchChainVerdict, isChainVerdict } from '../../utils/fetchChainVerdict'
-import HowProofWorks from '../../components/trust/HowProofWorks'
+import HowProofWorks from '../../components/trust/LocalizedHowProofWorks'
 
 const API = () => getApiUrl() || 'https://api.satohash.io'
 

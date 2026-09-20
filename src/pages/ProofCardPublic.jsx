@@ -8,7 +8,7 @@ import { isSha256Hex, normalizeSha256 } from '../utils/hashUtils'
 import { fetchChainVerdict, isChainVerdict } from '../utils/fetchChainVerdict'
 import ProofReceipt from '../components/stamps/ProofReceipt'
 import CalendarStrip from '../components/stamps/CalendarStrip'
-import HowProofWorks from '../components/trust/HowProofWorks'
+import HowProofWorks from '../components/trust/LocalizedHowProofWorks'
 import AuthoredWhoCard from '../components/stamps/AuthoredWhoCard'
 
 /** Real Nostr event id only — hex, note1, or nevent1. Never invent. */

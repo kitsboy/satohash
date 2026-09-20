@@ -4104,5 +4104,26 @@
         }
       }
     }
+  },
+  "howProofWorks": {
+    "title": "How does this work?",
+    "subtitle": "You do not have to trust us. Here is what to check, in one minute.",
+    "statePendingTitle": "Waiting for Bitcoin",
+    "statePendingBody": "Your proof was recorded and sent to the public timestamp calendars. Bitcoin confirms roughly every 10 minutes, so this usually changes within a few hours.",
+    "stateConfirmedTitle": "Anchored to Bitcoin",
+    "stateNotProvenTitle": "Not proven",
+    "blockLabel": "Bitcoin block",
+    "methodOwnNode": "Checked against a Bitcoin node — no third party was trusted.",
+    "methodExplorer": "Checked against a public Bitcoin explorer. Your own copy still proves this without anyone's help.",
+    "methodUnknown": "Chain-checked.",
+    "selfTitle": "Check it yourself",
+    "selfBody": "Your proof file (.ots) plus any OpenTimestamps tool is enough. No account, no API, nothing from us.",
+    "selfCommand": "ots verify yourfile.ots",
+    "selfDownload": "Download the proof (.ots)",
+    "selfTool": "Get an OpenTimestamps tool",
+    "whatItProves": "What this proves",
+    "whatItProvesBody": "That this exact file existed at or before that Bitcoin block. Nothing more — it does not prove who made it or that it is true.",
+    "showSteps": "Show me how",
+    "hideSteps": "Hide"
   }
 }

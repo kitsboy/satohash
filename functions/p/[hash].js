@@ -117,37 +117,41 @@ async function fetchChainVerdict(hex) {
   }
 }
 
-function howBox(verdict) {
+function howBox(verdict, L) {
   if (!verdict) return ''
   const verified = verdict.verified === true
   const pending =
     !verified &&
     (verdict.reason === 'no_block_attestation' || verdict.status === 'pending')
   const state = verified ? 'confirmed' : pending ? 'pending' : 'not-proven'
-  const badge = verified ? 'Anchored to Bitcoin' : pending ? 'Waiting for Bitcoin' : 'Not proven'
+  const badge = verified
+    ? tr(L, 'howConfirmed')
+    : pending
+      ? tr(L, 'howPending')
+      : tr(L, 'howNotProven')
   const body = verified
     ? verdict.verified_method === 'bitcoind'
-      ? 'Checked against a Bitcoin node — no third party was trusted.'
+      ? tr(L, 'howMethodOwn')
       : verdict.verified_method === 'esplora'
-        ? 'Checked against a public Bitcoin explorer. Your own copy still proves this without anyone\'s help.'
-        : 'Chain-checked.'
+        ? tr(L, 'howMethodExplorer')
+        : tr(L, 'howMethodUnknown')
     : pending
-      ? 'Your proof was recorded and sent to the public timestamp calendars. Bitcoin confirms roughly every 10 minutes, so this usually changes within a few hours.'
-      : verdict.explainer || 'This proof did not resolve against a Bitcoin block.'
+      ? tr(L, 'howPendingBody')
+      : verdict.explainer || tr(L, 'howNotProvenBody')
   const height = verified && verdict.bitcoin_block_height
-    ? `<p class="how-block"><strong>${esc(Number(verdict.bitcoin_block_height).toLocaleString())}</strong> Bitcoin block</p>`
+    ? `<p class="how-block"><strong>${esc(Number(verdict.bitcoin_block_height).toLocaleString())}</strong> ${esc(tr(L, 'howBlock'))}</p>`
     : ''
   const download = verdict.ots_download_url
-    ? `<a class="how-dl" href="${esc(verdict.ots_download_url)}">Download the proof (.ots)</a>`
+    ? `<a class="how-dl" href="${esc(verdict.ots_download_url)}">${esc(tr(L, 'howDownload'))}</a>`
     : ''
   return `<section class="how" data-testid="how-proof-works" data-proof-state="${state}">
-    <p class="k">How does this work?</p>
+    <p class="k">${esc(tr(L, 'howTitle'))}</p>
     <p class="status ${verified ? 'ok' : 'wait'}" role="status">${esc(badge)}</p>
     <p class="muted">${esc(body)}</p>
     ${height}
-    <p class="muted">You do not have to trust us. Here is what to check, in one minute.</p>
-    <p><code>ots verify yourfile.ots</code> ${download}</p>
-    <p class="muted">That this exact file existed at or before that Bitcoin block. Nothing more — it does not prove who made it or that it is true.</p>
+    <p class="muted">${esc(tr(L, 'howSubtitle'))}</p>
+    <p><code>${esc(tr(L, 'howCommand'))}</code> ${download}</p>
+    <p class="muted">${esc(tr(L, 'howProves'))}</p>
   </section>`
 }
 
@@ -203,14 +207,6 @@ export async function onRequestGet({ params, request }) {
   const pending = kind === 'pending'
   const verdict =
     validHash && !unstamped ? await fetchChainVerdict(hex) : null
-  const howHtml = unstamped
-    ? ''
-    : howBox(
-        verdict ||
-          (pending
-            ? { verified: false, reason: 'no_block_attestation', status: 'pending' }
-            : null)
-      )
   const block = proof.bitcoin_block_height
   const hash = proof.hash || hex
   const short = String(hash).slice(0, 12)
@@ -220,6 +216,15 @@ export async function onRequestGet({ params, request }) {
       : ''
   const lang = pickLang(request)
   const L = STRINGS[lang] || STRINGS.en
+  const howHtml = unstamped
+    ? ''
+    : howBox(
+        verdict ||
+          (pending
+            ? { verified: false, reason: 'no_block_attestation', status: 'pending' }
+            : null),
+        L
+      )
   const statusLine = confirmed
     ? blockLabel
       ? tr(L, 'confirmedBlock', { block: blockLabel })

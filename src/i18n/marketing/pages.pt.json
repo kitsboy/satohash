@@ -4104,5 +4104,26 @@
         }
       }
     }
+  },
+  "howProofWorks": {
+    "title": "Como isto funciona?",
+    "subtitle": "Não tens de confiar em nós. Isto é o que verificar, num minuto.",
+    "statePendingTitle": "À espera do Bitcoin",
+    "statePendingBody": "A tua prova foi registada e enviada para os calendários públicos de tempo. O Bitcoin confirma cerca de cada 10 minutos, por isso isto costuma mudar em algumas horas.",
+    "stateConfirmedTitle": "Ancorado no Bitcoin",
+    "stateNotProvenTitle": "Não comprovado",
+    "blockLabel": "Bloco Bitcoin",
+    "methodOwnNode": "Verificado contra um nó Bitcoin — nenhum terceiro foi fiado.",
+    "methodExplorer": "Verificado contra um explorador Bitcoin público. A tua própria cópia continua a prová-lo sem ajuda de ninguém.",
+    "methodUnknown": "Verificado on-chain.",
+    "selfTitle": "Verifica tu próprio",
+    "selfBody": "O teu ficheiro de prova (.ots) mais qualquer ferramenta OpenTimestamps chega. Sem conta, sem API, nada de nós.",
+    "selfCommand": "ots verify yourfile.ots",
+    "selfDownload": "Descarregar a prova (.ots)",
+    "selfTool": "Obter uma ferramenta OpenTimestamps",
+    "whatItProves": "O que isto prova",
+    "whatItProvesBody": "Que este ficheiro exacto existia em ou antes daquele bloco Bitcoin. Nada mais — não prova quem o fez nem que é verdade.",
+    "showSteps": "Mostra-me como",
+    "hideSteps": "Ocultar"
   }
 }

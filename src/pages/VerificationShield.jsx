@@ -7,7 +7,7 @@ import ProofDNA from '../components/stamps/ProofDNA'
 import usePageMeta from '../hooks/usePageMeta'
 import { getApiUrl } from '../config/constants'
 import { fetchChainVerdict, isChainVerdict } from '../utils/fetchChainVerdict'
-import HowProofWorks from '../components/trust/HowProofWorks'
+import HowProofWorks from '../components/trust/LocalizedHowProofWorks'
 
 /**
  * Item 28: Holographic Verification Shield

@@ -4104,5 +4104,26 @@
         }
       }
     }
+  },
+  "howProofWorks": {
+    "title": "Hii inafanyaje kazi?",
+    "subtitle": "Huna haja ya kututumaini. Hii ndiyo ya kuangalia, katika dakika moja.",
+    "statePendingTitle": "Inasubiri Bitcoin",
+    "statePendingBody": "Uthibitisho wako ulirekodiwa na kutumwa kwa kalenda za wakati za umma. Bitcoin inathibitisha takriban kila dakika 10, kwa hivyo hii mara nyingi inabadilika ndani ya saa chache.",
+    "stateConfirmedTitle": "Imefungwa kwenye Bitcoin",
+    "stateNotProvenTitle": "Haijathibitishwa",
+    "blockLabel": "Bloku ya Bitcoin",
+    "methodOwnNode": "Imekaguliwa dhidi ya nodi ya Bitcoin — hakuna mtu wa tatu aliyetumainiwa.",
+    "methodExplorer": "Imekaguliwa dhidi ya kivinjari cha Bitcoin cha umma. Nakala yako bado inathibitisha bila msaada wa mtu.",
+    "methodUnknown": "Imekaguliwa kwenye mnyororo.",
+    "selfTitle": "Jikague mwenyewe",
+    "selfBody": "Faili yako ya uthibitisho (.ots) pamoja na zana yoyote ya OpenTimestamps inatosha. Hakuna akaunti, hakuna API, hakuna kitu kutoka kwetu.",
+    "selfCommand": "ots verify yourfile.ots",
+    "selfDownload": "Pakua uthibitisho (.ots)",
+    "selfTool": "Pata zana ya OpenTimestamps",
+    "whatItProves": "Hii inathibitisha nini",
+    "whatItProvesBody": "Kwamba faili hii hasa ilikuwepo kwenye au kabla ya bloku hiyo ya Bitcoin. Si zaidi — haithibitishi nani aliifanya wala kwamba ni kweli.",
+    "showSteps": "Nionyeshe jinsi",
+    "hideSteps": "Ficha"
   }
 }
