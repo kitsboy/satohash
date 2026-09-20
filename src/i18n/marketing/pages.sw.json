@@ -4125,5 +4125,10 @@
     "whatItProvesBody": "Kwamba faili hii hasa ilikuwepo kwenye au kabla ya bloku hiyo ya Bitcoin. Si zaidi — haithibitishi nani aliifanya wala kwamba ni kweli.",
     "showSteps": "Nionyeshe jinsi",
     "hideSteps": "Ficha"
+  },
+  "authoredWho": {
+    "kicker": "Nani (si lazima)",
+    "title": "Ufunguo wa Nostr ulitia sahihi alama ya faili hii",
+    "body": "Hiyo inathibitisha ufunguo ulitumiwa wakati wa muhuri. Si jina la kisheria, si kitambulisho, wala “nani aliandika faili.” Mtu yeyote anaweza kuhuru faili yoyote."
   }
 }

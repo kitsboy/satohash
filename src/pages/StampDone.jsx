@@ -112,26 +112,27 @@ export default function StampDone() {
     if (!proof) return undefined
     const queuedPoll =
       proof.source === 'offline-queue' || proof.status === 'queued' || proof.status === 'offline'
-    if (
-      queuedPoll ||
-      proof.status === 'confirmed' ||
-      proof.status === 'verified' ||
-      proof.status === 'failed'
-    )
-      return undefined
+    const alreadyChain = verdict?.verified === true
+    if (queuedPoll || alreadyChain || proof.status === 'failed') return undefined
     if (!isApiExplicitlyConfigured()) return undefined
     const stampId = hostedStampId(proof.id)
     const hex = sha256Hex(proof.hash)
     if (!stampId && !hex) return undefined
     let cancelled = false
     const tick = async () => {
-      const data = await fetchStampFromApi({ id: stampId, hash: hex })
-      if (!data || cancelled) return
-      setProof((prev) => {
-        const next = { ...prev, ...data, source: 'api' }
-        persistLastProof(next)
-        return next
-      })
+      const [data, chain] = await Promise.all([
+        fetchStampFromApi({ id: stampId, hash: hex }),
+        hex ? fetchChainVerdict(getApiUrl(), hex) : Promise.resolve(null)
+      ])
+      if (cancelled) return
+      if (isChainVerdict(chain)) setVerdict(chain)
+      if (data) {
+        setProof((prev) => {
+          const next = { ...prev, ...data, source: 'api' }
+          persistLastProof(next)
+          return next
+        })
+      }
     }
     tick()
     const timer = setInterval(tick, 8000)
@@ -139,7 +140,7 @@ export default function StampDone() {
       cancelled = true
       clearInterval(timer)
     }
-  }, [proof?.id, proof?.status, proof?.hash, proof?.source])
+  }, [proof?.id, proof?.status, proof?.hash, proof?.source, verdict?.verified])
 
   useEffect(() => {
     if (!proof) return undefined
@@ -152,16 +153,15 @@ export default function StampDone() {
 
   useEffect(() => {
     const hex = sha256Hex(proof?.hash)
-    setVerdict(null)
     if (!hex) return undefined
     let cancelled = false
     fetchChainVerdict(getApiUrl(), hex).then((body) => {
-      if (!cancelled) setVerdict(isChainVerdict(body) ? body : null)
+      if (!cancelled && isChainVerdict(body)) setVerdict(body)
     })
     return () => {
       cancelled = true
     }
-  }, [proof?.hash, proof?.status])
+  }, [proof?.hash])
 
   if (loading) {
     return (
@@ -199,9 +199,16 @@ export default function StampDone() {
   const queued =
     proof.source === 'offline-queue' || proof.status === 'queued' || proof.status === 'offline'
   const confirmed =
-    !queued &&
-    (proof.status === 'confirmed' || proof.status === 'verified' || Boolean(proof.isConfirmed))
-  const blockHeight = proof.bitcoin_block_height ?? proof.block_height ?? proof.blockHeight ?? null
+    verdict?.verified === true ||
+    (!queued &&
+      !verdict &&
+      (proof.status === 'confirmed' || proof.status === 'verified' || Boolean(proof.isConfirmed)))
+  const blockHeight =
+    verdict?.bitcoin_block_height ??
+    proof.bitcoin_block_height ??
+    proof.block_height ??
+    proof.blockHeight ??
+    null
   const heightNum = Number(blockHeight)
   const hasBlockHeight = blockHeight != null && blockHeight !== '' && Number.isFinite(heightNum)
 
@@ -278,6 +285,15 @@ export default function StampDone() {
               </p>
             ) : confirmed ? (
               <div>
+                {hasBlockHeight ? (
+                  <p
+                    className="font-display text-4xl font-black tracking-tight"
+                    style={{ color: 'var(--accent-success)' }}
+                    data-testid="stamp-block-hero"
+                  >
+                    #{heightNum.toLocaleString(i18n.language)}
+                  </p>
+                ) : null}
                 <p
                   className="text-sm"
                   style={{ color: hasBlockHeight ? 'var(--accent-success)' : 'var(--text-muted)' }}
@@ -380,6 +396,7 @@ export default function StampDone() {
             state={verdict ? undefined : 'pending'}
             hash={sha256Hex(proof.hash) || null}
             otsUrl={verdict?.ots_download_url || null}
+            startOpen={false}
           />
         ) : null}
 

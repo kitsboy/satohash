@@ -1,3 +1,16 @@
+## 2026-09-20 (Grok M3 — Kimi: rebuild API for authored on by-hash)
+
+SPA/docs already on `main`. **Kimi: rebuild the API** so `GET /api/stamps/:hash/by-hash` includes `authored` (additive JSON, no path change). Code is `publicStampRow` in `server/routes/v5-api.js`. Live `gitSha` must move past current HEAD after rebuild.
+
+```bash
+cd /root/satohash && git fetch origin && git reset --hard origin/main
+GIT_SHA=$(git rev-parse --short HEAD) bash scripts/vps-deploy-api.sh
+```
+
+Done when `GET https://api.satohash.io/health` `gitSha` matches `origin/main`. Do **not** flip paywall. Do **not** change `/api/*` paths. Vault = THOR, not M4. Pages = Grok.
+
+---
+
 ## 2026-09-14 (Grok M3 — manuals / pitch / exec match live product)
 
 SPA/docs only. **Do not commit / do not push** this wave unless Cam asks. Pitch + exec + quickstart + family API + MVP readiness + pitch deck honesty slides now match the **live** loop: hash on-device → stamp → `.ots` → camera QR `https://satohash.io/p/{hash}`; **Pending ≠ Confirmed** (~60 min); family widget default **POST** `/api/stamp`; CLI. Cut ZK redaction / Snapper-as-judiciary-ready / 3D Merkle / BOLT-12 as current features. Remaining MVP = QR/proof states shipping, not a VPS wait.

@@ -88,8 +88,8 @@ export default function AuthoredStampPanel({ fileSha256, filename, onBound }) {
         <span
           className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl"
           style={{
-            background: 'color-mix(in srgb, var(--jewel-violet) 16%, transparent)',
-            color: 'var(--jewel-violet)'
+            background: 'color-mix(in srgb, var(--accent-gold) 16%, transparent)',
+            color: 'var(--accent-gold)'
           }}
         >
           <Fingerprint size={20} aria-hidden />
@@ -97,7 +97,7 @@ export default function AuthoredStampPanel({ fileSha256, filename, onBound }) {
         <div className="min-w-0">
           <p
             className="text-[10px] font-black tracking-widest uppercase"
-            style={{ color: 'var(--jewel-violet)' }}
+            style={{ color: 'var(--accent-gold)' }}
           >
             Authored stamp
           </p>
@@ -201,7 +201,7 @@ export default function AuthoredStampPanel({ fileSha256, filename, onBound }) {
                   href="https://getalby.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={{ color: 'var(--jewel-violet)', textDecoration: 'underline' }}
+                  style={{ color: 'var(--accent-gold)', textDecoration: 'underline' }}
                 >
                   Alby
                 </a>{' '}
@@ -210,7 +210,7 @@ export default function AuthoredStampPanel({ fileSha256, filename, onBound }) {
                   href="https://github.com/fiatjaf/nos2x"
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={{ color: 'var(--jewel-violet)', textDecoration: 'underline' }}
+                  style={{ color: 'var(--accent-gold)', textDecoration: 'underline' }}
                 >
                   nos2x
                 </a>{' '}
@@ -228,9 +228,9 @@ export default function AuthoredStampPanel({ fileSha256, filename, onBound }) {
           disabled={!hash || status === 'signing'}
           className="mt-4 flex min-h-[48px] w-full items-center justify-center gap-2 rounded-xl text-sm font-black tracking-wider uppercase transition-all hover:brightness-110 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
           style={{
-            background: 'linear-gradient(135deg, #7c3aed, var(--jewel-violet))',
-            color: '#fff',
-            boxShadow: '0 8px 22px -10px var(--jewel-violet)'
+            background: 'var(--accent-gold)',
+            color: '#141b25',
+            boxShadow: '0 8px 22px -10px color-mix(in srgb, var(--accent-gold) 55%, transparent)'
           }}
         >
           {status === 'signing' ? (

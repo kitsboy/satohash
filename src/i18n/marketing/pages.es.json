@@ -4125,5 +4125,10 @@
     "whatItProvesBody": "Que este archivo exacto existía en o antes de ese bloque Bitcoin. Nada más — no demuestra quién lo hizo ni que sea verdad.",
     "showSteps": "Muéstrame cómo",
     "hideSteps": "Ocultar"
+  },
+  "authoredWho": {
+    "kicker": "Quién (opcional)",
+    "title": "Una clave Nostr firmó la huella de este archivo",
+    "body": "Eso prueba que se usó una clave al sellar. No es un nombre legal, ni un ID, ni “quién escribió el archivo”. Cualquiera puede sellar cualquier archivo."
   }
 }

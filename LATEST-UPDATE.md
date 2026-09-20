@@ -1,5 +1,5 @@
-# satohash — Last Updated 2026-09-15 by Grok (M3)
+# satohash — Last Updated 2026-09-20 by Grok (M3)
 
-**Brief:** Goodbye. Core MVP live. Next LLM: authorship (who), family leftover bugs, Cam `/watch` pin. API 6c1be90, do not rebuild.
+**Brief:** Authorship chip, chain-verify batch, 7-locale explainer, live pending→confirmed, gold who-panel. **Kimi: rebuild API** so by-hash includes `authored`.
 
-Pickup: `.ai_docs/current-status.md` · `docs/handoff-log.md` · `docs/KIMI-HANDOFF.md`
+Pickup: `docs/handoff-log.md` · `.ai_docs/current-status.md`

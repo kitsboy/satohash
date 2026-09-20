@@ -67,9 +67,9 @@ export default function ProofCardPublic() {
   const [verdict, setVerdict] = useState(null)
   const [copied, setCopied] = useState(false)
   const kind = classifyProof(proof, validHash)
-  const confirmed = kind === 'confirmed'
+  const confirmed = verdict?.verified === true || (kind === 'confirmed' && !verdict)
   const unstamped = kind === 'unstamped'
-  const pending = kind === 'pending'
+  const pending = !confirmed && kind === 'pending'
   const short = String(hex || '').slice(0, 12)
   const hashPreview = String(hex || '').slice(0, 16)
   const pageTitle =
@@ -193,12 +193,17 @@ export default function ProofCardPublic() {
       Boolean(proof?.created_at || proof?.createdAt) ||
       status === 'pending'
     if (!stamped) return undefined
-    if (status === 'confirmed' || status === 'verified' || status === 'failed') return undefined
+    if (verdict?.verified === true || status === 'failed') return undefined
     let cancelled = false
     const tick = async () => {
       try {
-        const r = await fetch(`${API}/api/stamps/${hex}/by-hash`)
-        if (!r.ok || cancelled) return
+        const [r, chain] = await Promise.all([
+          fetch(`${API}/api/stamps/${hex}/by-hash`),
+          fetchChainVerdict(API, hex)
+        ])
+        if (cancelled) return
+        if (isChainVerdict(chain)) setVerdict(chain)
+        if (!r.ok) return
         const body = await r.json()
         const row = Array.isArray(body?.stamps) ? body.stamps[0] : body
         if (!row || cancelled) return
@@ -207,19 +212,17 @@ export default function ProofCardPublic() {
         /* keep last known */
       }
     }
+    tick()
     const id = setInterval(tick, 8000)
     return () => {
       cancelled = true
       clearInterval(id)
     }
-  }, [hex, API, proof?.id, proof?.status, proof?.created_at, proof?.createdAt])
+  }, [hex, API, proof?.id, proof?.status, proof?.created_at, proof?.createdAt, verdict?.verified])
 
-  const blockLabel =
-    proof?.bitcoin_block_height != null &&
-    proof.bitcoin_block_height !== '' &&
-    Number.isFinite(Number(proof.bitcoin_block_height))
-      ? Number(proof.bitcoin_block_height).toLocaleString()
-      : ''
+  const heroBlock = Number(verdict?.bitcoin_block_height ?? proof?.bitcoin_block_height ?? '')
+  const hasHeroBlock = Number.isFinite(heroBlock) && heroBlock > 0
+  const blockLabel = hasHeroBlock ? heroBlock.toLocaleString() : ''
   const statusLine = confirmed
     ? blockLabel
       ? t('proofCardPage.confirmedBlock', { block: blockLabel })
@@ -329,6 +332,15 @@ export default function ProofCardPublic() {
               <h1 className="font-display text-2xl font-black tracking-tight sm:text-[1.65rem]">
                 {heading}
               </h1>
+              {confirmed && hasHeroBlock ? (
+                <p
+                  className="font-display text-4xl font-black tracking-tight"
+                  style={{ color: 'var(--accent-success, #22d3a5)' }}
+                  data-testid="proof-block-hero"
+                >
+                  #{blockLabel}
+                </p>
+              ) : null}
               <div>
                 <p
                   className="text-[9px] font-black tracking-widest uppercase"
@@ -355,17 +367,13 @@ export default function ProofCardPublic() {
                 <ProofReceipt proof={proof} />
               )}
               <AuthoredWhoCard authored={proof.authored} stampedHash={proof.hash || hex} />
-              {pending ? (
-                <p className="text-xs leading-relaxed" style={{ color: 'var(--text-muted)' }}>
-                  {t('proofCardPage.waitingBlock')}
-                </p>
-              ) : null}
               {!unstamped && (verdict || pending) ? (
                 <HowProofWorks
                   verdict={verdict}
                   state={verdict ? undefined : 'pending'}
                   hash={hex}
                   otsUrl={verdict?.ots_download_url || otsHref || null}
+                  startOpen={false}
                 />
               ) : null}
               {emptyHash ? (

@@ -3,6 +3,7 @@
  * in the browser. Never upgrades a failed or missing signature into a claim.
  */
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { nip19 } from 'nostr-tools'
 import { KeyRound } from 'lucide-react'
 import { verifyAuthoredBinding } from '../../utils/authoredStamp'
@@ -23,6 +24,7 @@ function shortNpub(npub) {
 }
 
 export default function AuthoredWhoCard({ authored, stampedHash }) {
+  const { t } = useTranslation()
   const [result, setResult] = useState(null)
 
   useEffect(() => {
@@ -55,19 +57,19 @@ export default function AuthoredWhoCard({ authored, stampedHash }) {
       data-testid="authored-who-card"
       className="rounded-2xl border p-4"
       style={{
-        borderColor: 'color-mix(in srgb, var(--jewel-violet, #7c3aed) 35%, var(--border))',
-        background: 'color-mix(in srgb, var(--jewel-violet, #7c3aed) 8%, var(--surface-raised))'
+        borderColor: 'color-mix(in srgb, var(--accent-gold) 35%, var(--border))',
+        background: 'color-mix(in srgb, var(--accent-gold) 8%, var(--surface-raised))'
       }}
     >
       <p
         className="flex items-center gap-2 text-[10px] font-black tracking-widest uppercase"
-        style={{ color: 'var(--jewel-violet, #7c3aed)' }}
+        style={{ color: 'var(--accent-gold)' }}
       >
         <KeyRound size={14} aria-hidden />
-        Optional who
+        {t('authoredWho.kicker')}
       </p>
       <p className="mt-2 text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>
-        A Nostr key signed this file fingerprint
+        {t('authoredWho.title')}
       </p>
       <p
         className="mt-1 font-mono text-[11px] break-all"
@@ -77,8 +79,7 @@ export default function AuthoredWhoCard({ authored, stampedHash }) {
         {shortNpub(npub)}
       </p>
       <p className="mt-2 text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-        That proves a key was used at stamp time. It is not a legal name, not an ID, and not “who
-        wrote the file.” Anyone can stamp any file.
+        {t('authoredWho.body')}
       </p>
     </section>
   )

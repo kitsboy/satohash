@@ -4125,5 +4125,10 @@
     "whatItProvesBody": "That this exact file existed at or before that Bitcoin block. Nothing more — it does not prove who made it or that it is true.",
     "showSteps": "Show me how",
     "hideSteps": "Hide"
+  },
+  "authoredWho": {
+    "kicker": "Optional who",
+    "title": "A Nostr key signed this file fingerprint",
+    "body": "That proves a key was used at stamp time. It is not a legal name, not an ID, and not “who wrote the file.” Anyone can stamp any file."
   }
 }

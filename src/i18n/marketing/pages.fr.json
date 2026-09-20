@@ -4125,5 +4125,10 @@
     "whatItProvesBody": "Que ce fichier exact existait à ou avant ce bloc Bitcoin. Rien de plus — cela ne prouve pas qui l’a fait ni qu’il est vrai.",
     "showSteps": "Montrez-moi comment",
     "hideSteps": "Masquer"
+  },
+  "authoredWho": {
+    "kicker": "Qui (optionnel)",
+    "title": "Une clé Nostr a signé l’empreinte de ce fichier",
+    "body": "Cela prouve qu’une clé a été utilisée au moment du tampon. Ce n’est pas un nom légal, ni une pièce d’identité, ni « qui a écrit le fichier ». N’importe qui peut tamponner n’importe quel fichier."
   }
 }

@@ -31,11 +31,15 @@ describe('stateFromVerdict', () => {
   })
 
   it('treats a bare registry status as pending, never confirmed', () => {
-    expect(stateFromVerdict({ verified: false, status: 'confirmed', reason: 'no_proof_stored_yet' })).toBe('not-proven')
+    expect(
+      stateFromVerdict({ verified: false, status: 'confirmed', reason: 'no_proof_stored_yet' })
+    ).toBe('not-proven')
   })
 
   it('reports a not-yet-anchored proof as pending', () => {
-    expect(stateFromVerdict({ verified: false, reason: 'no_block_attestation', status: 'pending' })).toBe('pending')
+    expect(
+      stateFromVerdict({ verified: false, reason: 'no_block_attestation', status: 'pending' })
+    ).toBe('pending')
   })
 
   it('reports a forged proof as not proven', () => {
@@ -63,14 +67,26 @@ describe('HowProofWorks', () => {
   })
 
   it('shows a pending proof honestly', () => {
-    render(<HowProofWorks verdict={{ verified: false, reason: 'no_block_attestation', status: 'pending' }} />)
+    render(
+      <HowProofWorks
+        verdict={{ verified: false, reason: 'no_block_attestation', status: 'pending' }}
+      />
+    )
     expect(screen.getByTestId('proof-state-badge')).toHaveTextContent(/waiting for bitcoin/i)
     expect(screen.getByTestId('how-proof-works')).toHaveAttribute('data-proof-state', 'pending')
     expect(screen.queryByText(/anchored to bitcoin/i)).not.toBeInTheDocument()
   })
 
   it('never softens a proof that does not resolve', () => {
-    render(<HowProofWorks verdict={{ verified: false, reason: 'merkle_root_mismatch', explainer: 'The proof points at a Bitcoin block that does not commit to this file.' }} />)
+    render(
+      <HowProofWorks
+        verdict={{
+          verified: false,
+          reason: 'merkle_root_mismatch',
+          explainer: 'The proof points at a Bitcoin block that does not commit to this file.'
+        }}
+      />
+    )
     expect(screen.getByTestId('proof-state-badge')).toHaveTextContent(/not proven/i)
     expect(screen.getByText(/does not commit to this file/i)).toBeInTheDocument()
   })
@@ -78,11 +94,26 @@ describe('HowProofWorks', () => {
   it('always offers the independent verification path', () => {
     render(<HowProofWorks verdict={ownNodeVerdict} variant="full" />)
     expect(screen.getByTestId('independent-verify-command')).toHaveTextContent(/ots verify/)
-    expect(screen.getByTestId('ots-download')).toHaveAttribute('href', ownNodeVerdict.ots_download_url)
+    expect(screen.getByTestId('ots-download')).toHaveAttribute(
+      'href',
+      ownNodeVerdict.ots_download_url
+    )
+  })
+
+  it('can start with the steps closed', () => {
+    render(<HowProofWorks verdict={ownNodeVerdict} variant="full" startOpen={false} />)
+    expect(screen.getByTestId('proof-state-badge')).toHaveTextContent(/anchored to bitcoin/i)
+    expect(screen.queryByTestId('independent-verify-command')).not.toBeInTheDocument()
   })
 
   it('lets a host site replace every string', () => {
-    render(<HowProofWorks variant="compact" labels={{ title: 'Come funziona?', stateConfirmedTitle: 'Ancorato a Bitcoin' }} verdict={ownNodeVerdict} />)
+    render(
+      <HowProofWorks
+        variant="compact"
+        labels={{ title: 'Come funziona?', stateConfirmedTitle: 'Ancorato a Bitcoin' }}
+        verdict={ownNodeVerdict}
+      />
+    )
     expect(screen.getByText('Come funziona?')).toBeInTheDocument()
     expect(screen.getByTestId('proof-state-badge')).toHaveTextContent('Ancorato a Bitcoin')
   })

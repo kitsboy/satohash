@@ -47,7 +47,7 @@ export const DEFAULT_LABELS = {
   blockLabel: 'Bitcoin block',
   methodOwnNode: 'Checked against a Bitcoin node — no third party was trusted.',
   methodExplorer:
-    'Checked against a public Bitcoin explorer. Your own copy still proves this without anyone\'s help.',
+    "Checked against a public Bitcoin explorer. Your own copy still proves this without anyone's help.",
   methodUnknown: 'Chain-checked.',
   selfTitle: 'Check it yourself',
   selfBody:
@@ -75,28 +75,29 @@ const GLYPHS = {
 }
 
 /** Derive the honest state from a verify response. Never soften a failure. */
-export function stateFromVerdict (verdict) {
+export function stateFromVerdict(verdict) {
   if (!verdict) return 'pending'
   if (verdict.verified === true) return 'confirmed'
   if (verdict.reason === 'no_block_attestation' || verdict.status === 'pending') return 'pending'
   return 'not-proven'
 }
 
-export default function HowProofWorks ({
+export default function HowProofWorks({
   verdict = null,
   state = null,
   hash = null,
   otsUrl = null,
   variant = 'full',
+  startOpen = null,
   labels = {},
   className = ''
 }) {
-  const [open, setOpen] = useState(variant === 'full')
+  const [open, setOpen] = useState(startOpen ?? variant === 'full')
   const t = { ...DEFAULT_LABELS, ...labels }
 
   const resolved = state || stateFromVerdict(verdict)
   const accent = (STATE_STYLES[resolved] || STATE_STYLES.pending).accent
-  const glyph = (GLYPHS[resolved] || GLYPHS.pending)
+  const glyph = GLYPHS[resolved] || GLYPHS.pending
 
   const method = verdict?.verified_method || null
   const blockHeight = verdict?.bitcoin_block_height || null
@@ -105,15 +106,23 @@ export default function HowProofWorks ({
   const toggle = useCallback(() => setOpen((v) => !v), [])
 
   const title =
-    resolved === 'confirmed' ? t.stateConfirmedTitle
-      : resolved === 'not-proven' ? t.stateNotProvenTitle
+    resolved === 'confirmed'
+      ? t.stateConfirmedTitle
+      : resolved === 'not-proven'
+        ? t.stateNotProvenTitle
         : t.statePendingTitle
 
   const body =
     resolved === 'confirmed'
-      ? method === 'bitcoind' ? t.methodOwnNode : method === 'esplora' ? t.methodExplorer : t.methodUnknown
+      ? method === 'bitcoind'
+        ? t.methodOwnNode
+        : method === 'esplora'
+          ? t.methodExplorer
+          : t.methodUnknown
       : resolved === 'not-proven'
-        ? (verdict?.explainer || t.stateNotProvenBodyFallback || 'This proof did not resolve against a Bitcoin block.')
+        ? verdict?.explainer ||
+          t.stateNotProvenBodyFallback ||
+          'This proof did not resolve against a Bitcoin block.'
         : t.statePendingBody
 
   return (
@@ -124,7 +133,10 @@ export default function HowProofWorks ({
       style={{ borderColor: 'var(--border)', background: 'var(--bg-secondary)' }}
     >
       <header className="flex flex-wrap items-center justify-between gap-2">
-        <p className="text-[10px] font-black tracking-widest uppercase" style={{ color: 'var(--accent-gold)' }}>
+        <p
+          className="text-[10px] font-black tracking-widest uppercase"
+          style={{ color: 'var(--accent-gold)' }}
+        >
           {t.title}
         </p>
         <span
@@ -133,21 +145,37 @@ export default function HowProofWorks ({
           className="inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[10px] font-black tracking-wider uppercase"
           style={{ borderColor: accent, color: accent }}
         >
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" aria-hidden="true">
+          <svg
+            width="12"
+            height="12"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="3"
+            aria-hidden="true"
+          >
             <path d={glyph} strokeLinecap="round" strokeLinejoin="round" />
           </svg>
           {title}
         </span>
       </header>
 
-      <p className="mt-2 text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{body}</p>
+      <p className="mt-2 text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+        {body}
+      </p>
 
       {resolved === 'confirmed' && blockHeight ? (
         <p className="mt-2 flex items-baseline gap-2">
-          <span className="text-2xl font-black tabular-nums" style={{ color: 'var(--text-primary)' }}>
+          <span
+            className="text-2xl font-black tabular-nums"
+            style={{ color: 'var(--text-primary)' }}
+          >
             {Number(blockHeight).toLocaleString()}
           </span>
-          <span className="text-[10px] font-black tracking-widest uppercase" style={{ color: accent }}>
+          <span
+            className="text-[10px] font-black tracking-widest uppercase"
+            style={{ color: accent }}
+          >
             {t.blockLabel}
           </span>
           {verdict?.block_time ? (
@@ -159,7 +187,10 @@ export default function HowProofWorks ({
       ) : null}
 
       {hash ? (
-        <p className="mt-2 break-all font-mono text-[10px]" style={{ color: 'var(--text-secondary)' }}>
+        <p
+          className="mt-2 font-mono text-[10px] break-all"
+          style={{ color: 'var(--text-secondary)' }}
+        >
           {hash}
         </p>
       ) : null}
@@ -178,13 +209,23 @@ export default function HowProofWorks ({
 
           {open ? (
             <div className="mt-3 space-y-3 border-t pt-3" style={{ borderColor: 'var(--border)' }}>
-              <p className="text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{t.subtitle}</p>
+              <p className="text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                {t.subtitle}
+              </p>
 
               <div>
-                <p className="text-[10px] font-black tracking-widest uppercase" style={{ color: 'var(--accent-gold)' }}>
+                <p
+                  className="text-[10px] font-black tracking-widest uppercase"
+                  style={{ color: 'var(--accent-gold)' }}
+                >
                   {t.selfTitle}
                 </p>
-                <p className="mt-1 text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{t.selfBody}</p>
+                <p
+                  className="mt-1 text-xs leading-relaxed"
+                  style={{ color: 'var(--text-secondary)' }}
+                >
+                  {t.selfBody}
+                </p>
                 <code
                   data-testid="independent-verify-command"
                   className="mt-1 inline-block rounded-lg px-2 py-1 font-mono text-[11px]"
@@ -205,10 +246,18 @@ export default function HowProofWorks ({
               </div>
 
               <div>
-                <p className="text-[10px] font-black tracking-widest uppercase" style={{ color: 'var(--accent-gold)' }}>
+                <p
+                  className="text-[10px] font-black tracking-widest uppercase"
+                  style={{ color: 'var(--accent-gold)' }}
+                >
                   {t.whatItProves}
                 </p>
-                <p className="mt-1 text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{t.whatItProvesBody}</p>
+                <p
+                  className="mt-1 text-xs leading-relaxed"
+                  style={{ color: 'var(--text-secondary)' }}
+                >
+                  {t.whatItProvesBody}
+                </p>
               </div>
             </div>
           ) : null}

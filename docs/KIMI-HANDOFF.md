@@ -1,3 +1,20 @@
+## Latest Session Summary (Grok M3, 2026-09-20)
+
+**Chat topic:** Authorship chip, chain-verify everywhere, 7-locale explainer, live pending→confirmed, gold who UI.
+
+**Finished:** Optional who on proof card (browser-checked); batch/v5/shield use POST `/api/verify`; HowProofWorks in 7 locales; stamp-done + `/p/` poll until Bitcoin confirms; gold (not purple) who panel; proof-card hero block.
+
+**Kimi — DO THIS NOW:** Rebuild API so `GET /api/stamps/:hash/by-hash` includes `authored`. Copy-paste:
+
+```bash
+cd /root/satohash && git fetch origin && git reset --hard origin/main
+GIT_SHA=$(git rev-parse --short HEAD) bash scripts/vps-deploy-api.sh
+```
+
+Done when `GET https://api.satohash.io/health` `gitSha` matches HEAD. Do **not** flip paywall. Do **not** change `/api/*` paths. Vault = THOR, not M4. Pages = Grok.
+
+---
+
 ## Latest Session Summary (from 2026-09-15 goodbye)
 
 **Chat topic:** Marketable MVP honesty, i18n, camera QR, family widgets, live stamps.

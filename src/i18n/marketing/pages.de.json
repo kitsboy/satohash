@@ -4125,5 +4125,10 @@
     "whatItProvesBody": "Dass genau diese Datei zu oder vor diesem Bitcoin-Block existierte. Mehr nicht — es beweist nicht, wer sie gemacht hat oder dass sie wahr ist.",
     "showSteps": "Zeig mir wie",
     "hideSteps": "Ausblenden"
+  },
+  "authoredWho": {
+    "kicker": "Wer (optional)",
+    "title": "Ein Nostr-Schlüssel hat den Fingerabdruck dieser Datei signiert",
+    "body": "Das beweist, dass beim Stempeln ein Schlüssel benutzt wurde. Es ist kein rechtlicher Name, keine ID und nicht „wer die Datei geschrieben hat“. Jeder kann jede Datei stempeln."
   }
 }
