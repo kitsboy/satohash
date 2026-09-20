@@ -91,6 +91,66 @@ function hasCreatedAt(proof) {
   return Boolean(proof?.created_at || proof?.createdAt)
 }
 
+/** Chain-resolved /api/verify body — never a registry row. */
+function isChainVerdict(data) {
+  if (!data || typeof data !== 'object') return false
+  if (typeof data.verified !== 'boolean') return false
+  return (
+    data.verified_method != null ||
+    data.reason != null ||
+    data.registry_check === true ||
+    typeof data.explainer === 'string'
+  )
+}
+
+async function fetchChainVerdict(hex) {
+  try {
+    const res = await fetch(`${API}/api/verify`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ hash: hex })
+    })
+    const body = await res.json().catch(() => null)
+    return isChainVerdict(body) ? body : null
+  } catch {
+    return null
+  }
+}
+
+function howBox(verdict) {
+  if (!verdict) return ''
+  const verified = verdict.verified === true
+  const pending =
+    !verified &&
+    (verdict.reason === 'no_block_attestation' || verdict.status === 'pending')
+  const state = verified ? 'confirmed' : pending ? 'pending' : 'not-proven'
+  const badge = verified ? 'Anchored to Bitcoin' : pending ? 'Waiting for Bitcoin' : 'Not proven'
+  const body = verified
+    ? verdict.verified_method === 'bitcoind'
+      ? 'Checked against a Bitcoin node — no third party was trusted.'
+      : verdict.verified_method === 'esplora'
+        ? 'Checked against a public Bitcoin explorer. Your own copy still proves this without anyone\'s help.'
+        : 'Chain-checked.'
+    : pending
+      ? 'Your proof was recorded and sent to the public timestamp calendars. Bitcoin confirms roughly every 10 minutes, so this usually changes within a few hours.'
+      : verdict.explainer || 'This proof did not resolve against a Bitcoin block.'
+  const height = verified && verdict.bitcoin_block_height
+    ? `<p class="how-block"><strong>${esc(Number(verdict.bitcoin_block_height).toLocaleString())}</strong> Bitcoin block</p>`
+    : ''
+  const download = verdict.ots_download_url
+    ? `<a class="how-dl" href="${esc(verdict.ots_download_url)}">Download the proof (.ots)</a>`
+    : ''
+  return `<section class="how" data-testid="how-proof-works" data-proof-state="${state}">
+    <p class="k">How does this work?</p>
+    <p class="status ${verified ? 'ok' : 'wait'}" role="status">${esc(badge)}</p>
+    <p class="muted">${esc(body)}</p>
+    ${height}
+    <p class="muted">You do not have to trust us. Here is what to check, in one minute.</p>
+    <p><code>ots verify yourfile.ots</code> ${download}</p>
+    <p class="muted">That this exact file existed at or before that Bitcoin block. Nothing more — it does not prove who made it or that it is true.</p>
+  </section>`
+}
+
 /** unstamped | pending | confirmed | unknown — never call unstamped "Pending". */
 function classifyProof(proof, validHash) {
   if (!proof) return 'unknown'
@@ -141,6 +201,16 @@ export async function onRequestGet({ params, request }) {
   const confirmed = kind === 'confirmed'
   const unstamped = kind === 'unstamped'
   const pending = kind === 'pending'
+  const verdict =
+    validHash && !unstamped ? await fetchChainVerdict(hex) : null
+  const howHtml = unstamped
+    ? ''
+    : howBox(
+        verdict ||
+          (pending
+            ? { verified: false, reason: 'no_block_attestation', status: 'pending' }
+            : null)
+      )
   const block = proof.bitcoin_block_height
   const hash = proof.hash || hex
   const short = String(hash).slice(0, 12)
@@ -311,6 +381,12 @@ export async function onRequestGet({ params, request }) {
     p{line-height:1.55;font-size:.95rem;margin:0 0 .75rem}
     .muted{color:var(--muted);font-size:.82rem}
     .cals{font-size:11px;color:var(--muted);margin:1rem 0 0}
+    .how{margin:1rem 0 0;padding:.9rem .85rem;border:1px solid var(--line);border-radius:1rem;background:rgba(20,27,37,.55)}
+    .how .status{margin:.35rem 0 .5rem}
+    .how-block{font-size:1.15rem;margin:.35rem 0}
+    .how-block strong{font-size:1.35rem;letter-spacing:-.03em}
+    .how code{font-family:ui-monospace,monospace;font-size:11px;background:#141b25;border-radius:.4rem;padding:.2rem .4rem}
+    a.how-dl{color:var(--gold);font-size:11px;font-weight:800;margin-left:.4rem}
     .cals strong{color:var(--gold);font-weight:800;letter-spacing:.08em}
     .actions{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.15rem}
     a.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:.6rem 1rem;
@@ -348,6 +424,7 @@ export async function onRequestGet({ params, request }) {
       <p class="muted">${esc(tr(L, 'imessage'))}</p>
       ${njump}
       ${otsCli}
+      ${howHtml}
       ${cals}
       <div class="actions">
         ${primaryCta}
