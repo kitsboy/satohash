@@ -1834,7 +1834,8 @@
     "checkExisting": "Verificar prova existente",
     "browserCalendarsOnly": "Somente calendários do navegador",
     "deepLink": "Link profundo",
-    "fileNeverLeavesSend": "O ficheiro não sai deste dispositivo. Enviamos um SHA-256."
+    "fileNeverLeavesSend": "O ficheiro não sai deste dispositivo. Enviamos um SHA-256.",
+    "alsoProveWho": "Também provar quem"
   },
   "stampDonePage": {
     "loading": "Carregando prova…",

@@ -1577,7 +1577,8 @@
     "checkExisting": "Check existing proof",
     "browserCalendarsOnly": "Browser calendars only",
     "deepLink": "Deep link",
-    "fileNeverLeavesSend": "File never leaves this device. We send a SHA-256."
+    "fileNeverLeavesSend": "File never leaves this device. We send a SHA-256.",
+    "alsoProveWho": "Also prove who"
   },
   "stampDonePage": {
     "loading": "Loading proof…",

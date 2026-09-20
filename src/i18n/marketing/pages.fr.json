@@ -1834,7 +1834,8 @@
     "checkExisting": "Vérifier une preuve existante",
     "browserCalendarsOnly": "Calendriers du navigateur uniquement",
     "deepLink": "Lien profond",
-    "fileNeverLeavesSend": "Le fichier ne quitte pas cet appareil. Nous envoyons un SHA-256."
+    "fileNeverLeavesSend": "Le fichier ne quitte pas cet appareil. Nous envoyons un SHA-256.",
+    "alsoProveWho": "Prouver aussi qui"
   },
   "stampDonePage": {
     "loading": "Chargement de la preuve…",

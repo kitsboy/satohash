@@ -20,25 +20,6 @@ import Footer from '../components/layout/Footer'
 import events, { trackEvent } from '../utils/analytics'
 import Tooltip from '../components/ui/Tooltip'
 
-const MerklePathNode = ({ level, hash, active }) => (
-  <div className={`flex items-center gap-4 ${active ? 'opacity-100' : 'opacity-40'}`}>
-    <div className="flex flex-col items-center">
-      <div
-        className={`flex h-8 w-8 items-center justify-center rounded-lg border ${active ? 'border-[var(--accent-active)] bg-[var(--accent-active)] shadow-[0_0_15px_var(--accent-active)]' : 'border-[var(--border)] bg-[var(--bg-secondary)]'}`}
-      >
-        <span className="text-[10px] font-bold text-white">{level}</span>
-      </div>
-      {level > 0 && <div className="h-8 w-px bg-[var(--border)]" />}
-    </div>
-    <div className="flex-1 rounded-xl border border-[var(--border)] bg-[var(--bg-secondary)] p-3">
-      <p className="mb-1 text-[9px] font-bold text-[var(--text-secondary)] uppercase">
-        Level {level} Hash
-      </p>
-      <p className="truncate font-mono text-[10px]">{hash}</p>
-    </div>
-  </div>
-)
-
 export default function VerificationTool() {
   usePageMeta({ page: 'verify' })
   useEffect(() => {
@@ -425,9 +406,9 @@ export default function VerificationTool() {
                 ))}
               </div>
               <div className="space-y-2">
-                <h3 className="text-xl font-bold">Traversing Merkle Path...</h3>
+                <h3 className="text-xl font-bold">Checking Bitcoin…</h3>
                 <p className="font-mono text-xs tracking-widest text-[var(--text-secondary)] uppercase">
-                  Querying Calendar Nodes + Bitcoin Core
+                  OpenTimestamps calendars + block headers
                 </p>
               </div>
             </div>
@@ -477,7 +458,7 @@ export default function VerificationTool() {
               data-testid="verify-result"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="grid grid-cols-1 gap-12 text-left lg:grid-cols-2"
+              className="space-y-8 text-left"
             >
               <div className="space-y-8">
                 <HowProofWorks
@@ -606,53 +587,6 @@ export default function VerificationTool() {
                   >
                     New
                   </button>
-                </div>
-              </div>
-
-              <div className="space-y-6">
-                <h4 className="text-[10px] font-bold tracking-widest text-[var(--text-secondary)] uppercase">
-                  Merkle Path Visualization
-                </h4>
-                <div className="relative space-y-0">
-                  <div className="absolute top-4 bottom-4 left-[15px] -z-10 w-px bg-[var(--border)]" />
-                  <MerklePathNode
-                    level={4}
-                    hash={
-                      hashInput ||
-                      'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'
-                    }
-                    active={true}
-                  />
-                  <MerklePathNode
-                    level={3}
-                    hash="8f92c3a5b6d7e8f90a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f"
-                    active={true}
-                  />
-                  <MerklePathNode
-                    level={2}
-                    hash="c2e8a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2"
-                    active={true}
-                  />
-                  <MerklePathNode
-                    level={1}
-                    hash="d4f1e9c8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0"
-                    active={true}
-                  />
-                  <div className="flex items-center gap-4">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-[var(--accent-active)] bg-[var(--accent-active)] text-white shadow-[0_0_20px_var(--accent-active)]">
-                      <Database size={16} />
-                    </div>
-                    <div className="flex-1 rounded-xl border border-[var(--accent-active)]/30 bg-[var(--accent-active)]/10 p-3">
-                      <p className="mb-1 text-[9px] font-bold text-[var(--accent-active)] uppercase">
-                        Bitcoin Merkle Root
-                      </p>
-                      <p className="font-mono text-[10px] font-bold">
-                        {verifyData?.stamp?.bitcoin_block_height
-                          ? `${verifyData.stamp.bitcoin_block_height}:RootHash...0000`
-                          : '841204:RootHash...0000'}
-                      </p>
-                    </div>
-                  </div>
                 </div>
               </div>
             </motion.div>

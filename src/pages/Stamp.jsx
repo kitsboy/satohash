@@ -112,6 +112,7 @@ export default function Stamp() {
   const [upgradeStatus, setUpgradeStatus] = useState(null) // pending | upgrading | confirmed
   const [lightningInvoice, setLightningInvoice] = useState(null) // { payment_request, amount_msat, expires_at }
   const [authoredBind, setAuthoredBind] = useState(null)
+  const [showWho, setShowWho] = useState(false)
   const { t } = useI18n()
   const { t: tp } = useTranslation()
   const { isOnline, queueStamp, hashFileOffline } = useOfflineSync()
@@ -121,6 +122,7 @@ export default function Stamp() {
   useEffect(() => {
     const file = files[0]
     setAuthoredBind(null)
+    setShowWho(false)
     if (!file || stampMode === 'redact' || stampMode === 'deposition') return undefined
     // Large files: hash on Stamp click so the hashing bar can show real read percent
     if (file.size > 2 * 1024 * 1024) {
@@ -1881,11 +1883,23 @@ export default function Stamp() {
                 </div>
                 {stampingStatus === 'idle' && normalizeSha256(hashValue) ? (
                   <div className="relative z-20 mt-3">
-                    <AuthoredStampPanel
-                      fileSha256={hashValue}
-                      filename={caseLabel || files[0]?.name}
-                      onBound={setAuthoredBind}
-                    />
+                    {showWho || authoredBind ? (
+                      <AuthoredStampPanel
+                        fileSha256={hashValue}
+                        filename={caseLabel || files[0]?.name}
+                        onBound={setAuthoredBind}
+                      />
+                    ) : (
+                      <button
+                        type="button"
+                        data-testid="also-prove-who"
+                        onClick={() => setShowWho(true)}
+                        className="flex min-h-[44px] w-full items-center justify-center rounded-xl border px-3 text-[11px] font-black tracking-widest uppercase"
+                        style={{ borderColor: 'var(--border-gold)', color: 'var(--accent-gold)' }}
+                      >
+                        {tp('stampPage.alsoProveWho')}
+                      </button>
+                    )}
                   </div>
                 ) : null}
                 {stampingStatus === 'idle' && (

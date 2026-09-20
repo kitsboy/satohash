@@ -1834,7 +1834,8 @@
     "checkExisting": "Vorhandenen Nachweis prüfen",
     "browserCalendarsOnly": "Nur Browser-Kalender",
     "deepLink": "Deep-Link",
-    "fileNeverLeavesSend": "Die Datei verlässt dieses Gerät nicht. Wir senden einen SHA-256."
+    "fileNeverLeavesSend": "Die Datei verlässt dieses Gerät nicht. Wir senden einen SHA-256.",
+    "alsoProveWho": "Auch beweisen, wer"
   },
   "stampDonePage": {
     "loading": "Nachweis wird geladen…",

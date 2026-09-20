@@ -1834,7 +1834,8 @@
     "checkExisting": "Angalia uthibitisho uliopo",
     "browserCalendarsOnly": "Kalenda za kivinjari pekee",
     "deepLink": "Kiungo kirefu",
-    "fileNeverLeavesSend": "Faili haitoki kwenye kifaa hiki. Tunatuma SHA-256."
+    "fileNeverLeavesSend": "Faili haitoki kwenye kifaa hiki. Tunatuma SHA-256.",
+    "alsoProveWho": "Thibitisha pia nani"
   },
   "stampDonePage": {
     "loading": "Inapakia uthibitisho…",

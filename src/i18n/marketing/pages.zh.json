@@ -1809,7 +1809,8 @@
     "checkExisting": "查看已有证明",
     "browserCalendarsOnly": "仅浏览器日历",
     "deepLink": "深度链接",
-    "fileNeverLeavesSend": "文件不会离开此设备。我们只发送 SHA-256。"
+    "fileNeverLeavesSend": "文件不会离开此设备。我们只发送 SHA-256。",
+    "alsoProveWho": "同时证明是谁"
   },
   "stampDonePage": {
     "loading": "正在加载证明…",

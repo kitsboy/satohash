@@ -121,8 +121,7 @@ function howBox(verdict, L) {
   if (!verdict) return ''
   const verified = verdict.verified === true
   const pending =
-    !verified &&
-    (verdict.reason === 'no_block_attestation' || verdict.status === 'pending')
+    !verified && (verdict.reason === 'no_block_attestation' || verdict.status === 'pending')
   const state = verified ? 'confirmed' : pending ? 'pending' : 'not-proven'
   const badge = verified
     ? tr(L, 'howConfirmed')
@@ -138,9 +137,10 @@ function howBox(verdict, L) {
     : pending
       ? tr(L, 'howPendingBody')
       : verdict.explainer || tr(L, 'howNotProvenBody')
-  const height = verified && verdict.bitcoin_block_height
-    ? `<p class="how-block"><strong>${esc(Number(verdict.bitcoin_block_height).toLocaleString())}</strong> ${esc(tr(L, 'howBlock'))}</p>`
-    : ''
+  const height =
+    verified && verdict.bitcoin_block_height
+      ? `<p class="how-block"><strong>${esc(Number(verdict.bitcoin_block_height).toLocaleString())}</strong> ${esc(tr(L, 'howBlock'))}</p>`
+      : ''
   const download = verdict.ots_download_url
     ? `<a class="how-dl" href="${esc(verdict.ots_download_url)}">${esc(tr(L, 'howDownload'))}</a>`
     : ''
@@ -152,6 +152,18 @@ function howBox(verdict, L) {
     <p class="muted">${esc(tr(L, 'howSubtitle'))}</p>
     <p><code>${esc(tr(L, 'howCommand'))}</code> ${download}</p>
     <p class="muted">${esc(tr(L, 'howProves'))}</p>
+  </section>`
+}
+
+function whoBox(authored, L) {
+  const pk = authored?.event?.pubkey
+  if (typeof pk !== 'string' || pk.length < 16) return ''
+  const short = `${pk.slice(0, 8)}…${pk.slice(-8)}`
+  return `<section class="who" data-testid="authored-who-card">
+    <p class="k">${esc(tr(L, 'whoKicker'))}</p>
+    <p>${esc(tr(L, 'whoTitle'))}</p>
+    <p class="h" style="margin-bottom:.55rem">${esc(short)}</p>
+    <p class="muted">${esc(tr(L, 'whoBody'))}</p>
   </section>`
 }
 
@@ -184,6 +196,18 @@ export async function onRequestGet({ params, request }) {
     /* hash-only card */
   }
 
+  if (proof.id && !proof.authored) {
+    try {
+      const full = await fetch(`${API}/api/stamps/${encodeURIComponent(proof.id)}`)
+      if (full.ok) {
+        const body = await full.json()
+        if (body?.authored) proof.authored = body.authored
+      }
+    } catch {
+      /* optional who */
+    }
+  }
+
   if (proof.id && !pickNostrEventId(proof)) {
     try {
       const ch = await fetch(`${API}/api/stamps/${encodeURIComponent(proof.id)}/chains`)
@@ -202,12 +226,15 @@ export async function onRequestGet({ params, request }) {
 
   const validHash = /^[a-f0-9]{64}$/i.test(hex)
   const kind = classifyProof(proof, validHash)
-  const confirmed = kind === 'confirmed'
   const unstamped = kind === 'unstamped'
-  const pending = kind === 'pending'
-  const verdict =
-    validHash && !unstamped ? await fetchChainVerdict(hex) : null
-  const block = proof.bitcoin_block_height
+  const verdict = validHash && !unstamped ? await fetchChainVerdict(hex) : null
+  const confirmed = verdict?.verified === true || (kind === 'confirmed' && !verdict)
+  const pending =
+    !confirmed &&
+    (kind === 'pending' ||
+      verdict?.reason === 'no_block_attestation' ||
+      verdict?.status === 'pending')
+  const block = verdict?.bitcoin_block_height ?? proof.bitcoin_block_height
   const hash = proof.hash || hex
   const short = String(hash).slice(0, 12)
   const blockLabel =
@@ -220,11 +247,14 @@ export async function onRequestGet({ params, request }) {
     ? ''
     : howBox(
         verdict ||
-          (pending
-            ? { verified: false, reason: 'no_block_attestation', status: 'pending' }
-            : null),
+          (pending ? { verified: false, reason: 'no_block_attestation', status: 'pending' } : null),
         L
       )
+  const whoHtml = unstamped ? '' : whoBox(proof.authored, L)
+  const heroHtml =
+    confirmed && blockLabel
+      ? `<p class="hero-block" data-testid="proof-block-hero">#${esc(blockLabel)}</p>`
+      : ''
   const statusLine = confirmed
     ? blockLabel
       ? tr(L, 'confirmedBlock', { block: blockLabel })
@@ -262,7 +292,7 @@ export async function onRequestGet({ params, request }) {
     String(hash).toLowerCase() === EMPTY_SHA256
       ? `<p class="muted">${esc(tr(L, 'emptyFile'))}</p>`
       : ''
-  const refresh = pending ? '<meta http-equiv="refresh" content="45"/>' : ''
+  const refresh = pending ? '<meta http-equiv="refresh" content="30"/>' : ''
   const bodyCopy = unstamped
     ? `<p>${esc(tr(L, 'notStampedBody'))}</p>`
     : `<p>${
@@ -392,6 +422,8 @@ export async function onRequestGet({ params, request }) {
     .how-block strong{font-size:1.35rem;letter-spacing:-.03em}
     .how code{font-family:ui-monospace,monospace;font-size:11px;background:#141b25;border-radius:.4rem;padding:.2rem .4rem}
     a.how-dl{color:var(--gold);font-size:11px;font-weight:800;margin-left:.4rem}
+    .hero-block{font-size:2.1rem;font-weight:900;letter-spacing:-.04em;color:var(--ok);margin:.15rem 0 .75rem}
+    .who{margin:1rem 0 0;padding:.9rem .85rem;border:1px solid var(--line);border-radius:1rem;background:rgba(240,180,41,.06)}
     .cals strong{color:var(--gold);font-weight:800;letter-spacing:.08em}
     .actions{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.15rem}
     a.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:.6rem 1rem;
@@ -421,6 +453,7 @@ export async function onRequestGet({ params, request }) {
         </div>
       </div>
       <h1>${esc(heading)}</h1>
+      ${heroHtml}
       <p class="fp">${esc(tr(L, 'fingerprint'))}</p>
       <p class="h">${esc(hash)}</p>
       ${bodyCopy}
@@ -429,6 +462,7 @@ export async function onRequestGet({ params, request }) {
       <p class="muted">${esc(tr(L, 'imessage'))}</p>
       ${njump}
       ${otsCli}
+      ${whoHtml}
       ${howHtml}
       ${cals}
       <div class="actions">
