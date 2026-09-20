@@ -6,7 +6,7 @@ import { describe, it, expect } from 'vitest'
 // inside the test body, so their cost is charged to the test budget — measured at
 // 2s warm / 31s cold on THOR and ~8.4s under vitest, well past vitest's 5s default.
 // The assertion itself is instant; the timeout is for module loading only.
-const MODULE_IMPORT_TIMEOUT_MS = 60_000
+const MODULE_IMPORT_TIMEOUT_MS = 180_000
 
 describe('v5 public surface (smoke)', () => {
   it(
