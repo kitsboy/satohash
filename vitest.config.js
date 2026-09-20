@@ -34,8 +34,14 @@ export default defineConfig({
     }
   },
   resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src')
-    }
+    alias: [
+      { find: '@', replacement: path.resolve(__dirname, './src') },
+      // npm 0.4.9 `main` is missing from the tarball. Exact match only —
+      // `opentimestamps/src/*.js` must keep resolving as a subpath.
+      {
+        find: /^opentimestamps$/,
+        replacement: path.resolve(__dirname, 'node_modules/opentimestamps/index.js')
+      }
+    ]
   }
 })
