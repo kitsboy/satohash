@@ -243,16 +243,32 @@ export default function VerificationTool() {
   const downloadReport = async () => {
     const { jsPDF } = await import('jspdf')
     const doc = new jsPDF()
+    const chainOk = verifyData?.verified === true
+    const waiting =
+      !chainOk &&
+      (verifyData?.reason === 'no_block_attestation' || verifyData?.status === 'pending')
+    const hash =
+      normalizeSha256(hashInput) ||
+      verifyData?.digest ||
+      verifyData?.stamp?.hash ||
+      (otsFile ? otsFile.name : '—')
+    const resultLine = chainOk
+      ? `Result: CONFIRMED on Bitcoin${
+          verifyData.bitcoin_block_height ? ` — block ${verifyData.bitcoin_block_height}` : ''
+        }`
+      : waiting
+        ? 'Result: PENDING — not in a Bitcoin block yet'
+        : 'Result: NOT PROVEN'
     doc.setFontSize(20)
     doc.text('VERIFICATION REPORT', 20, 30)
     doc.setFontSize(12)
-    doc.text(`Hash: ${hashInput || (otsFile ? otsFile.name : 'from .ots file')}`, 20, 50)
-    doc.text(`Result: ${result === 'success' ? 'VERIFIED' : 'NOT VERIFIED'}`, 20, 65)
-    doc.text(`Date: ${new Date().toISOString()}`, 20, 80)
-    const details = verifyData?.details || ''
-    const detailLines = doc.splitTextToSize(`Details: ${details}`, 170)
+    doc.text(`Hash: ${hash}`, 20, 50)
+    doc.text(resultLine, 20, 65)
+    doc.text(`Report generated: ${new Date().toISOString()}`, 20, 80)
+    const details = verifyData?.explainer || verifyData?.details || verifyData?.error || ''
+    const detailLines = doc.splitTextToSize(`Details: ${details || '—'}`, 170)
     doc.text(detailLines, 20, 95)
-    doc.text(`Verified via Satohash — ${window.location.hostname}`, 20, 260)
+    doc.text('Satohash report — not a legal certificate. Check with ots verify.', 20, 260)
     doc.save('Satohash_Verification_Report.pdf')
   }
 

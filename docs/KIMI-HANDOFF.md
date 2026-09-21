@@ -4,9 +4,9 @@
 
 **Finished:** Optional who on proof card (browser-checked); batch/v5/shield use POST `/api/verify`; HowProofWorks in 7 locales; stamp-done + `/p/` poll until Bitcoin confirms; gold (not purple) who panel; proof-card hero block.
 
-**Kimi — still not done.** Live `GET /health` is **`gitSha` `910a065`**. That is not `origin/main`. The “four cards / false claim / CI” note is a **different** job. Rebuild the API:
+**Kimi API rebuild CONFIRMED.** Live `GET /health` is **`gitSha` `21476f8`**. `authored` is served only when a stamp has `authored-v1`. Empty on old stamps is correct.
 
-Copy-paste:
+Previous rebuild request (kept for history):
 
 ```bash
 cd /root/satohash && git fetch origin && git reset --hard origin/main

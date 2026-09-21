@@ -35,6 +35,7 @@ export default function StampSuccessActions({
   const { t } = useTranslation()
   const [busy, setBusy] = useState(false)
   const [showQr, setShowQr] = useState(true)
+  const [showMore, setShowMore] = useState(false)
   const shareUrl = useMemo(() => buildProofCardUrl(proof), [proof])
   const shareText = useMemo(() => buildShareText(proof), [proof])
   const xIntent = useMemo(
@@ -187,169 +188,186 @@ export default function StampSuccessActions({
       <ProofReceipt proof={proof} />
 
       <div className="grid grid-cols-1 gap-3">
-        <button
-          type="button"
-          data-testid="copy-verify-link"
-          onClick={async () => {
-            try {
-              await navigator.clipboard.writeText(shareUrl)
-              trackEvent(events.PROOF_SHARED, { via: 'copy', ...funnelProps() })
-              toast.success(t('receiptPage.linkCopied'))
-            } catch {
-              toast.error(t('receiptPage.copyFailed'))
-            }
-          }}
-          className="btn-sheen flex min-h-[56px] items-center justify-center gap-2 rounded-xl text-sm font-black tracking-wider uppercase"
-          style={{ background: 'var(--accent-gold)', color: '#141b25' }}
-        >
-          <Link2 size={18} /> {t('receiptPage.copyCard')}
-        </button>
-
-        <button
-          type="button"
-          disabled={busy}
-          onClick={onPackage}
-          className="flex min-h-[52px] items-center justify-center gap-2 rounded-xl text-sm font-black tracking-wider uppercase"
-          style={{ background: 'var(--accent-teal)', color: '#041016' }}
-        >
-          <Package size={18} />{' '}
-          {busy ? t('receiptPage.packaging') : t('receiptPage.downloadPackage')}
-        </button>
-
-        <button
-          type="button"
-          onClick={onShare}
-          className="flex min-h-[48px] items-center justify-center gap-2 rounded-xl border text-xs font-black tracking-wider uppercase"
-          style={{ borderColor: 'var(--border)', color: 'var(--text-primary)' }}
-        >
-          <Share2 size={16} /> {t('receiptPage.share')}
-        </button>
-
-        <div className="grid grid-cols-2 gap-3">
-          <a
-            href={xIntent}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => trackEvent(events.PROOF_SHARED, { via: 'x', ...funnelProps() })}
-            className="flex min-h-[44px] items-center justify-center gap-2 rounded-xl border text-xs font-black tracking-wider uppercase"
-            style={{ borderColor: 'var(--border-gold)', color: 'var(--text-primary)' }}
-          >
-            X / Twitter
-          </a>
-          {nostrLinks.map((link) => {
-            const native = link.native || String(link.href).startsWith('nostr:')
-            return (
-              <a
-                key={link.href}
-                href={link.href}
-                {...(native ? {} : { target: '_blank', rel: 'noopener noreferrer' })}
-                onClick={() => trackEvent(events.PROOF_SHARED, { via: 'nostr', ...funnelProps() })}
-                className="flex min-h-[44px] items-center justify-center gap-2 rounded-xl border text-xs font-black tracking-wider uppercase"
-                style={{ borderColor: 'var(--border)', color: 'var(--text-primary)' }}
-              >
-                {link.label}
-              </a>
-            )
-          })}
-        </div>
-
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-          {hasHostedId ? (
-            <a
-              href={`${getApiUrl()}/api/stamps/${proof.id}?download=true`}
-              onClick={() =>
-                trackEvent(events.TIMESTAMP_DOWNLOADED, { kind: 'ots', ...funnelProps() })
-              }
-              className="flex min-h-[48px] items-center justify-center gap-2 rounded-xl px-2 text-center text-[11px] leading-tight font-black tracking-wider uppercase"
-              style={{ background: 'var(--accent-active)', color: '#041016' }}
-            >
-              <Download size={16} className="shrink-0" />
-              {isConfirmed || proof?.status === 'confirmed'
-                ? t('stampDonePage.otsConfirmed')
-                : t('stampDonePage.otsPending')}
-            </a>
-          ) : (
-            <span
-              className="flex min-h-[48px] items-center justify-center gap-2 rounded-xl text-xs font-black tracking-wider uppercase opacity-50"
-              style={{ background: 'var(--border)', color: 'var(--text-secondary)' }}
-            >
-              {t('receiptPage.otsLocal')}
-            </span>
-          )}
-          {proof?.hash && /^[a-f0-9]{64}$/i.test(proof.hash) ? (
-            <Link
-              to={`/p/${String(proof.hash).toLowerCase()}`}
-              data-testid="proof-card-link"
-              className="flex min-h-[48px] items-center justify-center gap-2 rounded-xl border px-2 text-center text-[11px] leading-tight font-black uppercase"
-              style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
-            >
-              {t('stampDonePage.viewProofCard')}
-            </Link>
-          ) : (
-            <Link
-              to="/verify"
-              data-testid="proof-card-link"
-              className="flex min-h-[48px] items-center justify-center gap-2 rounded-xl border px-2 text-center text-[11px] leading-tight font-black uppercase"
-              style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
-            >
-              {t('stampDonePage.viewProofCard')}
-            </Link>
-          )}
-        </div>
-
-        <button
-          type="button"
-          onClick={async () => {
-            const { downloadCertificate } = await import('../../utils/certificate')
-            downloadCertificate({
-              id: proof?.id || 'pending',
-              name: proof?.filename || 'Document',
-              fullHash: proof?.hash,
-              hash: proof?.hash,
-              date: new Date().toISOString().split('T')[0],
-              status: isConfirmed || proof?.status === 'confirmed' ? 'confirmed' : 'pending'
-            })
-          }}
-          className="flex min-h-[48px] items-center justify-center gap-2 rounded-xl border py-3 text-xs font-black uppercase"
-          style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
-        >
-          PDF certificate
-        </button>
-
-        {hasHostedId && (
+        {proof?.hash && /^[a-f0-9]{64}$/i.test(proof.hash) ? (
           <Link
-            to={`/verify/${proof.id}`}
-            className="flex min-h-[48px] items-center justify-center gap-2 rounded-xl py-3 text-xs font-black tracking-wider uppercase"
-            style={{ background: 'var(--accent-success)', color: '#0a0f0c' }}
+            to={`/p/${String(proof.hash).toLowerCase()}`}
+            data-testid="proof-card-link"
+            className="btn-sheen flex min-h-[56px] items-center justify-center gap-2 rounded-xl text-sm font-black tracking-wider uppercase"
+            style={{ background: 'var(--accent-gold)', color: '#141b25' }}
           >
-            Open verify page →
+            {t('stampDonePage.viewProofCard')}
+          </Link>
+        ) : (
+          <Link
+            to="/verify"
+            data-testid="proof-card-link"
+            className="btn-sheen flex min-h-[56px] items-center justify-center gap-2 rounded-xl text-sm font-black tracking-wider uppercase"
+            style={{ background: 'var(--accent-gold)', color: '#141b25' }}
+          >
+            {t('stampDonePage.viewProofCard')}
           </Link>
         )}
 
-        <StampBadgeEmbed proof={proof} />
-
-        <Link
-          to="/vault"
-          className="flex min-h-[48px] items-center justify-center gap-2 rounded-xl border py-3 text-xs font-black uppercase"
-          style={{
-            borderColor: 'var(--accent-active)',
-            color: 'var(--accent-active)',
-            background: 'color-mix(in srgb, var(--accent-active) 8%, transparent)'
-          }}
-        >
-          <Vault size={14} /> Vault
-        </Link>
-
-        {onStampAnother && (
+        {onStampAnother ? (
           <button
             type="button"
             onClick={onStampAnother}
-            className="min-h-[48px] rounded-xl border py-3 text-xs font-bold uppercase"
-            style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
+            className="min-h-[44px] text-xs font-bold uppercase underline-offset-4 hover:underline"
+            style={{ color: 'var(--text-secondary)' }}
           >
             + Stamp another
           </button>
-        )}
+        ) : null}
+
+        <button
+          type="button"
+          data-testid="stamp-done-more"
+          onClick={() => setShowMore((v) => !v)}
+          className="min-h-[40px] text-[11px] font-black tracking-widest uppercase"
+          style={{ color: 'var(--text-tertiary)' }}
+        >
+          {t('proofCardPage.more')}
+        </button>
+
+        {showMore ? (
+          <>
+            <button
+              type="button"
+              data-testid="copy-verify-link"
+              onClick={async () => {
+                try {
+                  await navigator.clipboard.writeText(shareUrl)
+                  trackEvent(events.PROOF_SHARED, { via: 'copy', ...funnelProps() })
+                  toast.success(t('receiptPage.linkCopied'))
+                } catch {
+                  toast.error(t('receiptPage.copyFailed'))
+                }
+              }}
+              className="flex min-h-[48px] items-center justify-center gap-2 rounded-xl border text-xs font-black tracking-wider uppercase"
+              style={{ borderColor: 'var(--border-gold)', color: 'var(--accent-gold)' }}
+            >
+              <Link2 size={18} /> {t('receiptPage.copyCard')}
+            </button>
+
+            <button
+              type="button"
+              disabled={busy}
+              onClick={onPackage}
+              className="flex min-h-[48px] items-center justify-center gap-2 rounded-xl border text-xs font-black tracking-wider uppercase"
+              style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
+            >
+              <Package size={18} />{' '}
+              {busy ? t('receiptPage.packaging') : t('receiptPage.downloadPackage')}
+            </button>
+
+            <button
+              type="button"
+              onClick={onShare}
+              className="flex min-h-[48px] items-center justify-center gap-2 rounded-xl border text-xs font-black tracking-wider uppercase"
+              style={{ borderColor: 'var(--border)', color: 'var(--text-primary)' }}
+            >
+              <Share2 size={16} /> {t('receiptPage.share')}
+            </button>
+
+            <div className="grid grid-cols-2 gap-3">
+              <a
+                href={xIntent}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => trackEvent(events.PROOF_SHARED, { via: 'x', ...funnelProps() })}
+                className="flex min-h-[44px] items-center justify-center gap-2 rounded-xl border text-xs font-black tracking-wider uppercase"
+                style={{ borderColor: 'var(--border-gold)', color: 'var(--text-primary)' }}
+              >
+                X / Twitter
+              </a>
+              {nostrLinks.map((link) => {
+                const native = link.native || String(link.href).startsWith('nostr:')
+                return (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    {...(native ? {} : { target: '_blank', rel: 'noopener noreferrer' })}
+                    onClick={() =>
+                      trackEvent(events.PROOF_SHARED, { via: 'nostr', ...funnelProps() })
+                    }
+                    className="flex min-h-[44px] items-center justify-center gap-2 rounded-xl border text-xs font-black tracking-wider uppercase"
+                    style={{ borderColor: 'var(--border)', color: 'var(--text-primary)' }}
+                  >
+                    {link.label}
+                  </a>
+                )
+              })}
+            </div>
+
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+              {hasHostedId ? (
+                <a
+                  href={`${getApiUrl()}/api/stamps/${proof.id}?download=true`}
+                  onClick={() =>
+                    trackEvent(events.TIMESTAMP_DOWNLOADED, { kind: 'ots', ...funnelProps() })
+                  }
+                  className="flex min-h-[48px] items-center justify-center gap-2 rounded-xl border px-2 text-center text-[11px] leading-tight font-black tracking-wider uppercase"
+                  style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
+                >
+                  <Download size={16} className="shrink-0" />
+                  {isConfirmed || proof?.status === 'confirmed'
+                    ? t('stampDonePage.otsConfirmed')
+                    : t('stampDonePage.otsPending')}
+                </a>
+              ) : (
+                <span
+                  className="flex min-h-[48px] items-center justify-center gap-2 rounded-xl text-xs font-black tracking-wider uppercase opacity-50"
+                  style={{ background: 'var(--border)', color: 'var(--text-secondary)' }}
+                >
+                  {t('receiptPage.otsLocal')}
+                </span>
+              )}
+            </div>
+
+            <button
+              type="button"
+              onClick={async () => {
+                const { downloadCertificate } = await import('../../utils/certificate')
+                downloadCertificate({
+                  id: proof?.id || 'pending',
+                  name: proof?.filename || 'Document',
+                  fullHash: proof?.hash,
+                  hash: proof?.hash,
+                  date: new Date().toISOString().split('T')[0],
+                  status: isConfirmed || proof?.status === 'confirmed' ? 'confirmed' : 'pending'
+                })
+              }}
+              className="flex min-h-[48px] items-center justify-center gap-2 rounded-xl border py-3 text-xs font-black uppercase"
+              style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
+            >
+              PDF certificate
+            </button>
+
+            {hasHostedId && (
+              <Link
+                to={`/verify/${proof.id}`}
+                className="flex min-h-[48px] items-center justify-center gap-2 rounded-xl border py-3 text-xs font-black tracking-wider uppercase"
+                style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
+              >
+                Open verify page →
+              </Link>
+            )}
+
+            <StampBadgeEmbed proof={proof} />
+
+            <Link
+              to="/vault"
+              className="flex min-h-[48px] items-center justify-center gap-2 rounded-xl border py-3 text-xs font-black uppercase"
+              style={{
+                borderColor: 'var(--accent-active)',
+                color: 'var(--accent-active)',
+                background: 'color-mix(in srgb, var(--accent-active) 8%, transparent)'
+              }}
+            >
+              <Vault size={14} /> Vault
+            </Link>
+          </>
+        ) : null}
       </div>
     </div>
   )

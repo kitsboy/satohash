@@ -501,12 +501,11 @@ export default function Landing() {
             className="mx-auto mb-8 w-full max-w-3xl min-w-0"
           >
             <div
-              className="gold-border jewel-edge relative w-full overflow-hidden rounded-2xl"
+              className="relative w-full overflow-hidden rounded-2xl"
               style={{
                 aspectRatio: '16 / 9',
-                borderColor: 'var(--border-gold)',
-                background: '#05070a',
-                boxShadow: '0 0 24px var(--jewel-sky-glow)'
+                border: '1px solid color-mix(in srgb, #fff 10%, transparent)',
+                background: '#05070a'
               }}
             >
               {!heroPlaying ? (
@@ -545,9 +544,8 @@ export default function Landing() {
                     </span>
                     <span className="pointer-events-none absolute right-3 bottom-3 left-3 flex items-end justify-between gap-2">
                       <span
-                        className="rounded-full border px-2.5 py-1 text-[10px] font-black tracking-[0.16em] text-white uppercase"
+                        className="rounded-full px-2.5 py-1 text-[10px] font-black tracking-[0.16em] text-white/80 uppercase"
                         style={{
-                          borderColor: 'color-mix(in srgb, var(--accent-gold) 45%, transparent)',
                           background: 'color-mix(in srgb, #05070a 70%, transparent)'
                         }}
                       >

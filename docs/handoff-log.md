@@ -1,3 +1,9 @@
+## 2026-09-20 (Grok M3 — Kimi API rebuild CONFIRMED)
+
+Live `GET https://api.satohash.io/health` → **`gitSha` `21476f8`**. Matches origin at rebuild. `authored` is served only when a stamp has `authored-v1` — empty on old stamps is correct. Pages = Grok. Vault = THOR.
+
+---
+
 ## 2026-09-20 (Grok M3 — Kimi API rebuild still NOT done)
 
 Checked live `GET https://api.satohash.io/health` → **`gitSha` `910a065`**. Local/origin `main` is far ahead (`b3ea58e`+). `GET /api/stamps/:hash/by-hash` still has **no `authored`**. Kimi's "four cards / false claim / CI" note is a **different** job — it is not this rebuild.
