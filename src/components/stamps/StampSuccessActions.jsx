@@ -34,7 +34,7 @@ export default function StampSuccessActions({
 }) {
   const { t } = useTranslation()
   const [busy, setBusy] = useState(false)
-  const [showQr, setShowQr] = useState(true)
+  const [showQr, setShowQr] = useState(false)
   const [showMore, setShowMore] = useState(false)
   const shareUrl = useMemo(() => buildProofCardUrl(proof), [proof])
   const shareText = useMemo(() => buildShareText(proof), [proof])
@@ -185,8 +185,6 @@ export default function StampSuccessActions({
         <VerifyYourselfCard blockHeight={confirmedBlock || proof.bitcoin_block_height} />
       )}
 
-      <ProofReceipt proof={proof} />
-
       <div className="grid grid-cols-1 gap-3">
         {proof?.hash && /^[a-f0-9]{64}$/i.test(proof.hash) ? (
           <Link
@@ -231,6 +229,7 @@ export default function StampSuccessActions({
 
         {showMore ? (
           <>
+            <ProofReceipt proof={proof} />
             <button
               type="button"
               data-testid="copy-verify-link"

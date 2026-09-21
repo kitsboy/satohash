@@ -288,7 +288,7 @@ export default function VerificationTool() {
           </p>
         </header>
 
-        <VerifyEli5 className="mx-auto max-w-2xl" />
+        {!result && !verifying ? <VerifyEli5 className="mx-auto max-w-2xl" /> : null}
 
         {/* Input Selector */}
         <div
