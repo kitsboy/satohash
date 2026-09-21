@@ -292,23 +292,21 @@ export default function VerificationTool() {
 
         {/* Input Selector */}
         <div
-          className="vault-ring group relative space-y-8 overflow-hidden rounded-[2.5rem] border bg-[var(--bg-secondary)] p-8 text-center md:p-16"
+          className="mx-auto w-full max-w-lg space-y-4 rounded-2xl border bg-[var(--bg-secondary)] p-4 text-left sm:p-5"
           onDragEnter={handleDragEnter}
           onDragLeave={handleDragLeave}
           onDragOver={handleDragOver}
           onDrop={handleDrop}
           style={{
-            borderColor: isDragOver ? 'var(--accent-active)' : 'var(--border)',
+            borderColor: isDragOver ? 'var(--accent-gold)' : 'var(--border)',
             background: isDragOver
-              ? 'color-mix(in srgb, var(--accent-active) 8%, transparent)'
+              ? 'color-mix(in srgb, var(--accent-gold) 8%, var(--bg-secondary))'
               : undefined,
             transition: 'border-color 0.15s, background 0.15s'
           }}
         >
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,var(--accent-active),transparent)] opacity-0 transition-opacity group-hover:opacity-[0.02]" />
-
           {!result && !verifying && (
-            <div className="space-y-6">
+            <div className="space-y-3">
               <input
                 ref={fileRef}
                 type="file"
@@ -316,22 +314,16 @@ export default function VerificationTool() {
                 className="hidden"
                 onChange={handleFileSelect}
               />
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <div
-                  className="flex min-h-[48px] cursor-pointer flex-col justify-center gap-3 rounded-2xl border border-[var(--border)] bg-[var(--bg-primary)] p-5 text-left transition-colors hover:border-[color-mix(in_srgb,var(--accent-gold)_70%,white)] hover:shadow-[0_0_16px_var(--accent-gold-glow)]"
-                  onClick={(e) => {
-                    if (e.target.closest('button, a, input, textarea, select')) return
-                    hashInputRef.current?.focus()
-                  }}
-                >
-                  <p className="text-sm font-bold text-[var(--text-primary)]">
+              <div className="space-y-3">
+                <div className="space-y-2">
+                  <p className="text-xs font-bold text-[var(--text-secondary)]">
                     Paste a SHA-256 hash
                   </p>
-                  <div className="relative flex items-center gap-2">
+                  <div className="flex items-center gap-2">
                     <div className="relative flex-1">
                       <Hash
-                        className="pointer-events-none absolute top-1/2 left-4 -translate-y-1/2 text-[var(--text-secondary)]"
-                        size={18}
+                        className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-[var(--text-secondary)]"
+                        size={16}
                       />
                       <input
                         ref={hashInputRef}
@@ -347,7 +339,7 @@ export default function VerificationTool() {
                         }}
                         aria-label="SHA-256 hash to verify"
                         placeholder="e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-                        className="h-14 w-full rounded-2xl border border-[var(--border)] bg-[var(--bg-primary)] pr-4 pl-12 font-mono text-sm outline-none focus:border-[var(--accent-gold)]"
+                        className="h-12 w-full rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] pr-3 pl-10 font-mono text-sm outline-none focus:border-[var(--accent-gold)]"
                         inputMode="text"
                         autoComplete="off"
                         autoCorrect="off"
@@ -366,9 +358,9 @@ export default function VerificationTool() {
                           toast.error('Could not read clipboard — paste manually')
                         }
                       }}
-                      className="flex-shrink-0 rounded-xl px-3 py-2 text-xs font-bold transition-all hover:border-[var(--accent-gold)] hover:text-[var(--accent-gold)] active:scale-95"
+                      className="h-12 shrink-0 rounded-xl px-3 text-xs font-bold"
                       style={{
-                        background: 'var(--bg-secondary)',
+                        background: 'var(--bg-primary)',
                         color: 'var(--text-secondary)',
                         border: '1px solid var(--border)'
                       }}
@@ -381,36 +373,41 @@ export default function VerificationTool() {
                   type="button"
                   aria-label={tv('verifyToolPage.dropOts')}
                   onClick={() => fileRef.current?.click()}
-                  className={`flex min-h-[48px] cursor-pointer flex-col items-center justify-center gap-2 rounded-2xl border bg-[var(--bg-primary)] p-5 text-center transition-colors hover:border-[color-mix(in_srgb,var(--accent-gold)_70%,white)] hover:shadow-[0_0_16px_var(--accent-gold-glow)] ${
-                    isDragOver
-                      ? 'border-[color-mix(in_srgb,var(--accent-gold)_70%,white)]'
-                      : 'border-[var(--border)]'
+                  className={`flex min-h-[48px] w-full items-center justify-center gap-2 rounded-xl border bg-[var(--bg-primary)] px-3 py-3 text-left text-sm ${
+                    isDragOver ? 'border-[var(--accent-gold)]' : 'border-[var(--border)]'
                   }`}
                 >
-                  <Upload size={22} className="text-[var(--text-secondary)]" />
-                  <p className="text-sm font-bold text-[var(--text-primary)]">
-                    {tv('verifyToolPage.dropOts')}
-                  </p>
-                  {otsFile ? (
-                    <p className="text-xs font-medium text-[var(--accent-gold)]">{otsFile.name}</p>
-                  ) : (
-                    <p className="text-xs text-[var(--text-secondary)]">OpenTimestamps file</p>
-                  )}
+                  <Upload size={16} className="shrink-0 text-[var(--text-secondary)]" />
+                  <span className="min-w-0">
+                    <span className="block font-bold text-[var(--text-primary)]">
+                      {tv('verifyToolPage.dropOts')}
+                    </span>
+                    {otsFile ? (
+                      <span className="block truncate text-xs text-[var(--accent-gold)]">
+                        {otsFile.name}
+                      </span>
+                    ) : (
+                      <span className="block text-xs text-[var(--text-secondary)]">
+                        OpenTimestamps file
+                      </span>
+                    )}
+                  </span>
                 </button>
               </div>
               <button
                 data-testid="verify-submit"
                 onClick={handleVerify}
                 disabled={!hashInput && !otsFile}
-                className="btn-sheen h-14 rounded-xl bg-[var(--text-primary)] px-12 font-bold tracking-widest text-[var(--bg-primary)] uppercase transition-all hover:scale-[1.02] disabled:opacity-40"
+                className="btn-sheen h-12 w-full rounded-xl font-black tracking-widest uppercase disabled:opacity-40"
+                style={{ background: 'var(--accent-gold)', color: '#141b25' }}
               >
-                Initiate Verification
+                Verify
               </button>
             </div>
           )}
 
           {verifying && (
-            <div className="space-y-8 py-12">
+            <div className="space-y-4 py-6 text-center">
               <div className="flex justify-center gap-2">
                 {[0, 1, 2].map((i) => (
                   <motion.div

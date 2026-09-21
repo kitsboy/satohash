@@ -181,10 +181,6 @@ export default function StampSuccessActions({
         <CalendarStrip compact />
       )}
 
-      {(confirmedBlock || proof?.bitcoin_block_height) && (
-        <VerifyYourselfCard blockHeight={confirmedBlock || proof.bitcoin_block_height} />
-      )}
-
       <div className="grid grid-cols-1 gap-3">
         {proof?.hash && /^[a-f0-9]{64}$/i.test(proof.hash) ? (
           <Link
@@ -230,6 +226,9 @@ export default function StampSuccessActions({
         {showMore ? (
           <>
             <ProofReceipt proof={proof} />
+            {(confirmedBlock || proof?.bitcoin_block_height) && (
+              <VerifyYourselfCard blockHeight={confirmedBlock || proof.bitcoin_block_height} />
+            )}
             <button
               type="button"
               data-testid="copy-verify-link"
