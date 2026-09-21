@@ -6,6 +6,19 @@
 
 ---
 
+## Paste block (2026-09-21 — goodbye)
+
+```markdown
+### Satohash 2026-09-21 goodbye (Grok M3)
+Honesty wave: verify asks Bitcoin; optional NIP-07 who shipped (not a legal name); quieter gold.
+SPA dccbc36. API live gitSha 21476f8 (do not rebuild for copy).
+MotoPass context crash guard 4198afc. TadBuy still 404s its own /api/* (other repo).
+Cam: pin /watch on @give_bit; iPhone /p/ unfurl.
+Pages = Grok. Vault = THOR not M4.
+```
+
+---
+
 ## Paste block (2026-09-15 — goodbye)
 
 ```markdown

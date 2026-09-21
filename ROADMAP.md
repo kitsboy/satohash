@@ -1,14 +1,13 @@
 # Satohash Protocol Roadmap
 
-> **Live product (2026-09-15):** stamp → `.ots` → verify → camera QR `https://satohash.io/p/{hash}`. Pending ≠ Confirmed. Family widgets live (see `docs/FAMILY-API.md`). Cathedral not current. Kimi: do not rebuild the API.
+> **Live product (2026-09-21):** stamp → `.ots` → Bitcoin-checked verify → `/p/{hash}`. Optional who shipped (not a legal name). Family widgets live (`docs/FAMILY-API.md`). API `21476f8`. Kimi: do not rebuild for copy.
 
 ## Next for the next LLM
 
-1. Authorship (NIP-07) — *who*, not only *when*.
-2. Family leftovers: TadBuy `/api` 404s; MotoPass ErrorBoundary; giveabit widget = `/tools`.
-3. Cam: pin `/watch` on `@give_bit`; iPhone `/p/` unfurl.
-4. Optional npm CLI if Cam asks.
-5. Do not rebuild API / flip paywall / add Arabic / sell Snapper as court-ready.
+1. TadBuy (other repo): dead `/api/*` on static Pages.
+2. Cam: pin `/watch` on `@give_bit`; iPhone `/p/` unfurl.
+3. Optional npm CLI if Cam asks.
+4. Do not rebuild API / flip paywall / add Arabic / sell Snapper as court-ready.
 
 SoT: `.ai_docs/current-status.md`.
 

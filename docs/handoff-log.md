@@ -1,3 +1,9 @@
+## 2026-09-21 (Grok M3 — goodbye)
+
+Honesty + quieter UX wave closed. SPA `dccbc36`. API live **`21476f8`** (do not rebuild for this docs push). Optional who shipped. Verify asks Bitcoin. HowProofWorks 7 locales. Stamp/proof-card/landing quieter. MotoPass context crash guard in **motopass** `4198afc`. TadBuy `/api` 404s still their repo. Cam: pin `/watch`, iPhone unfurl. Vault = THOR. Pages = Grok. Summary: `docs/archive/SESSION-SUMMARY-2026-09-21-goodbye.md`.
+
+---
+
 ## 2026-09-20 (Grok M3 — Kimi API rebuild CONFIRMED)
 
 Live `GET https://api.satohash.io/health` → **`gitSha` `21476f8`**. Matches origin at rebuild. `authored` is served only when a stamp has `authored-v1` — empty on old stamps is correct. Pages = Grok. Vault = THOR.

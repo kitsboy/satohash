@@ -1,14 +1,13 @@
 # Satohash Protocol Roadmap
 
-> **Live product (2026-09-15):** stamp → `.ots` → verify → camera QR `https://satohash.io/p/{hash}`. Pending ≠ Confirmed (~60 min). Family widgets POST `/api/stamp` (live HQ: katoa/motopass/sherpacarta/tadbuy=2, giveabit=3 at `/tools`). Snapper, ZK, 3D Merkle, BOLT-12 are **not** current features. Kimi: do not rebuild the API.
+> **Live product (2026-09-21):** stamp → `.ots` → verify (Bitcoin, not registry) → camera QR `https://satohash.io/p/{hash}`. Pending ≠ Confirmed. Optional NIP-07 who is shipped (not a legal name). Family widgets POST `/api/stamp`. Snapper, ZK, 3D Merkle, BOLT-12 are **not** current features. API live `21476f8`. Kimi: do not rebuild for copy.
 
 ## Next for the next LLM
 
-1. **Authorship (NIP-07)** — prove *who* held a key, not only *when*. Optional; do not claim until shipped.
-2. **Family leftovers** (their repos): TadBuy `/api` 404s; MotoPass ErrorBoundary. Widget on giveabit.io/**tools**.
-3. **Cam:** pin `/watch` on `@give_bit`; iPhone `/p/` unfurl.
-4. **Optional:** npm `@satohash/cli` if Cam asks.
-5. **Do not:** API rebuild for copy; paywall; Arabic; Snapper-as-court-ready; M4 vault.
+1. **TadBuy (other repo):** dead same-origin `/api/*` on the static Pages demo.
+2. **Cam:** pin `/watch` on `@give_bit`; iPhone `/p/` unfurl.
+3. **Optional:** npm `@satohash/cli` if Cam asks.
+4. **Do not:** API rebuild for copy; paywall; Arabic; Snapper-as-court-ready; M4 vault. Optional who is shipped — do not sell as legal identity.
 
 SoT: `.ai_docs/current-status.md`.
 

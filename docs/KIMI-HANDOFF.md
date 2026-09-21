@@ -1,3 +1,28 @@
+## Latest Session Summary (from 2026-09-21 goodbye)
+
+**Chat topic:** Honesty wave — Bitcoin-checked verify, optional who, quieter gold, then docs/goodbye.
+
+**Finished:**
+- HowProofWorks on `/verify`, `/p/<hash>` (SPA + zero-JS), `/stamp/done`; 7 locales
+- Optional NIP-07 who on proof card (browser-checked; not a legal name)
+- Batch/v5/shield use POST `/api/verify`
+- Live pending→confirmed; hero block; How starts closed
+- Quieter stamp / proof card / landing / stamp-done / compact `/verify`
+- Kimi API rebuild **confirmed** live `gitSha` **`21476f8`**
+- MotoPass context crash guard (`4198afc`)
+
+**Still to do:**
+1. TadBuy (other repo): dead `/api/*` on static Pages
+2. Cam: pin `/watch` on `@give_bit`; iPhone `/p/` unfurl
+3. Optional npm CLI if Cam asks
+4. Do **not** rebuild API for copy; flip paywall; add Arabic; sell Snapper as court-ready; Tailscale to M4
+
+**Next for Kimi:** Ingest this goodbye into **THOR** Obsidian / MASTER-BRAIN. **Do not rebuild the API** (live `21476f8`; SPA is `dccbc36` — docs/UX only after the rebuild). Pages = Grok. Vault = **THOR**, not M4.
+
+Pickup: `.ai_docs/current-status.md` · `docs/archive/SESSION-SUMMARY-2026-09-21-goodbye.md`
+
+---
+
 ## Latest Session Summary (Grok M3, 2026-09-20)
 
 **Chat topic:** Authorship chip, chain-verify everywhere, 7-locale explainer, live pending→confirmed, gold who UI.

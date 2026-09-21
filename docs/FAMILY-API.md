@@ -67,7 +67,7 @@ Do **not** invent new API paths. Stamp remains `POST /api/stamp`.
 
 **Agent trap:** the widget file input lives in a **shadow root**. A naive `input[type=file]` query reports a false “no widget.” Use the host `data-satohash-stamp` + shadow root.
 
-Unrelated family defects (not Satohash API): TadBuy 404s some of its own `/api/*`; MotoPass logs a `useProgramsContext` ErrorBoundary on load — widget still stamps.
+Unrelated family defects (not Satohash API): TadBuy 404s some of its own `/api/*` on the static Pages demo. MotoPass `useProgramsContext` crash guard landed **motopass `4198afc`** (empty bag instead of throw). Widget still stamps.
 
 Do not rebuild Satohash API for attribution. Pages = Grok. Widget default is API POST (no `data-mode="spa"` unless you want the SPA tab).
 

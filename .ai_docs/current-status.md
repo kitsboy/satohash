@@ -1,12 +1,12 @@
 # Current Status — Satohash
 
-**Version:** **5.0.0-ELITE** (Build 331+)  
-**Last Updated:** 2026-09-15 (goodbye — next-LLM steps below; API `6c1be90` — do not rebuild)  
+**Version:** **5.0.0-ELITE** (Build 415)  
+**Last Updated:** 2026-09-21 (goodbye — honesty + quieter UX wave)  
 **Frontend:** https://satohash.io · www · CF Pages project **`satohash`** — Grok lane, `assetsDir: 'b'`  
-**API:** https://api.satohash.io ✅ LIVE (THOR Docker). Confirm SHA with `GET /health` (`gitSha`). **Live now: `6c1be90`** (Kimi 2026-09-15; do **not** rebuild for copy). Paywall off. Family widget stamps verified (katoa/motopass/sherpacarta/tadbuy=2, giveabit=3).  
+**API:** https://api.satohash.io ✅ LIVE (THOR Docker). Confirm SHA with `GET /health` (`gitSha`). **Live now: `21476f8`** (Kimi rebuild 2026-09-20; `authored` on by-hash when a stamp has authored-v1). SPA HEAD **`dccbc36`**. Paywall off. Family widget stamps verified (katoa/motopass/sherpacarta/tadbuy=2, giveabit=3).  
 **Metrics SoT:** `https://api.satohash.io/metrics.json`  
 **HQ:** https://hq.giveabit.io  
-**Git:** `main` (this push)  
+**Git:** `main` (`dccbc36`)  
 **Kimi vault:** **THOR VPS Obsidian** (not M4)  
 **Analytics:** Umami `analytics.giveabit.io` — **not** Google Analytics  
 **Search:** GSC property `https://satohash.io/` **verified**
@@ -52,7 +52,7 @@
 
 | Path | Notes |
 |------|--------|
-| `/` | Landing · live node chip · Watch explainer · hero CTA = Stamp + Watch only |
+| `/` | Landing · live node chip · hero gold = **Stamp only**; Watch is text |
 | `/proof-pack` | Free waitlist (not for sale; no email; localStorage + @give_bit) |
 | `/stamp` | Free stamp · STEP 1–3 · **eager** (no lazy hang) |
 | `/stamp/done` | Success · share `/p/<hash>` · **eager** |
@@ -86,17 +86,30 @@
 - [ ] Offers stay deferred
 - [ ] Snapper stays scaffold — do not sell as judiciary-ready
 - [ ] Cam still: pin `/watch` on **`@give_bit`**; iPhone `/p/` unfurl
-- [ ] API: **do not rebuild** for copy
+- [ ] API: **do not rebuild** for copy (live `21476f8` is the authorship/by-hash rebuild)
 
 ## Next for the next LLM (do in this order)
 
-Pickup: this file → `docs/handoff-log.md` → `docs/I18N.md`. `/whatsup` loads `docs/archive/SESSION-SUMMARY-2026-09-15-goodbye.md`.
+Pickup: this file → `docs/handoff-log.md` → `docs/archive/SESSION-SUMMARY-2026-09-21-goodbye.md`. `/whatsup` loads that goodbye.
 
-1. **Proof of authorship (NIP-07)** — next *product* chapter. Stamp still proves **when**, not **who**. Optional: key-held signature bound to the SHA-256. Do not claim it until it ships. Do not change `/api/*` without Cam.
-2. **Family-owner leftovers (not Satohash API):** TadBuy 404s some of its own `/api/*`; MotoPass `useProgramsContext` ErrorBoundary on load (widget still stamps). Give A Bit widget stays on **`/tools`**.
-3. **Cam marketing (not code):** pin `/watch` on **`@give_bit`** (`docs/marketing/GIVE-BIT-X-PACK.md`); physical iPhone share of `/p/<hash>` (JPEG unfurl).
-4. **Optional builders:** npm-publish `packages/satohash-cli` only if Cam asks. Root `bin/satohash.js` is a shim.
-5. **Do not:** rebuild API for copy; flip `REQUIRE_LIGHTNING`; add Arabic; sell Snapper/ZK/BOLT-12 as live; Tailscale notes to M4. Vault = **THOR** Obsidian. Pages = Grok.
+1. **TadBuy (other repo):** stop calling dead same-origin `/api/*` on the static Pages demo. Not a Satohash API bug.
+2. **Cam marketing (not code):** pin `/watch` on **`@give_bit`** (`docs/marketing/GIVE-BIT-X-PACK.md`); physical iPhone share of `/p/<hash>` (JPEG unfurl).
+3. **Optional builders:** npm-publish `packages/satohash-cli` only if Cam asks. Root `bin/satohash.js` is a shim.
+4. **Do not:** rebuild API for copy; flip `REQUIRE_LIGHTNING`; add Arabic; sell Snapper/ZK/BOLT-12 as live; Tailscale notes to M4. Vault = **THOR** Obsidian. Pages = Grok. Optional who is **shipped** (NIP-07 bind + proof-card chip); do not sell it as a legal name.
+
+## This session (2026-09-20–21 — honesty + quieter UX)
+
+- [x] HowProofWorks on `/verify`, `/p/<hash>`, `/stamp/done`, zero-JS Function; 7 locales
+- [x] Optional who (NIP-07) on proof card / stamp-done / verify — browser-checked only
+- [x] Batch / v5 / shield verify via POST `/api/verify` (not registry)
+- [x] Live pending→confirmed poll; hero block number; HowProofWorks starts closed
+- [x] Quieter stamp (Also prove who / email behind tap; Waiting-on-Bitcoin chip)
+- [x] Proof card: Verify + Copy; rest More. No-JS card same
+- [x] `/verify`: no fake Merkle; facts only; compact gold Verify; ELI-5 hides after verdict; honest PDF
+- [x] Landing: Stamp gold; Watch text; play disc is the only gold on the player
+- [x] Stamp-done: one gold View proof; QR off; verify-yourself in More
+- [x] Kimi API rebuild **confirmed** live `gitSha` **`21476f8`**
+- [x] MotoPass: `useProgramsContext` no longer throws (motopass `4198afc`)
 
 ## This session (2026-09-14 — docs truth + tool-belt + About/Pitch/Network)
 
@@ -166,7 +179,7 @@ Pickup: this file → `docs/handoff-log.md` → `docs/I18N.md`. `/whatsup` loads
 - [ ] Remaining npm advisories (`opentimestamps` tree) — do **not** `--force`  
 - [x] `/stamp` `/verify` System Desync flash  
 - [x] GSC sitemap  
-- [x] THOR API includes authored.js  
+- [x] THOR API includes authored.js · live **`21476f8`** (by-hash can include `authored`)  
 - [x] CSP **enforcing**  
 - [x] Stamp rate limit 5/min public · reuse existing hash  
 - [x] Longer educational MP4 (~84s Kimi cut) **shipped**  

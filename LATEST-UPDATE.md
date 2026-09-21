@@ -1,5 +1,5 @@
-# satohash — Last Updated 2026-09-20 by Grok (M3)
+# satohash — Last Updated 2026-09-21 by Grok (M3)
 
-**Brief:** Authorship chip, chain-verify batch, 7-locale explainer, live pending→confirmed, gold who-panel. **Kimi: rebuild API** so by-hash includes `authored`.
+**Brief:** Goodbye. Honesty + quieter UX shipped. API live `21476f8`. SPA `dccbc36`. Next: TadBuy `/api` 404s (other repo); Cam pin `/watch` + iPhone unfurl. Do not rebuild API for copy.
 
-Pickup: `docs/handoff-log.md` · `.ai_docs/current-status.md`
+Pickup: `.ai_docs/current-status.md` · `docs/handoff-log.md` · `docs/archive/SESSION-SUMMARY-2026-09-21-goodbye.md`
