@@ -1,3 +1,24 @@
+## 2026-10-12 (Grok M3 — stamp first screen, quiet SHA, short developer sample)
+
+SPA only. No `/api/*` change. Paywall stays off. `server/` is still unchanged since `21476f8`.
+
+- `/stamp`: Choose file is the first action on a phone and on a short desktop. Capsule, redact, and deposition open from More. The three steps and the hash-only box are still on the page, under the drop zone. The mobile sticky bar stays for Stamp and for a pasted hash. It no longer duplicates Choose file.
+- `/status`: a non-hex git label reads “Commit label unavailable” in the overview card and the footer. The Cloudflare error text stays off the page.
+- `/developer`: the sample is `shasum`, `POST /api/stamp`, `POST /api/verify`. Under the box: pending is not confirmed.
+
+**Kimi, still open:** rewrite `GIT_SHA` from `git rev-parse --short HEAD` on the next API start. This push does not do that.
+
+```bash
+cd /root/satohash && git fetch origin && git reset --hard origin/main
+GIT_SHA=$(git rev-parse --short HEAD) bash scripts/vps-deploy-api.sh
+```
+
+Done when `gitSha` matches `^[0-9a-f]{7,40}$`. Keep `REQUIRE_LIGHTNING=false`. Vault = THOR. Pages = Grok.
+
+Cam: iPhone `/p/` unfurl stays deferred. `@give_bit` pin stays with Cam.
+
+---
+
 ## 2026-10-12 (Grok M3 — GIT_SHA label is not a commit)
 
 Live `GET https://api.satohash.io/health` is HTTP 200 from Caddy. Uptime was ~8.9 days (process started around 3–4 October). `requireLightning` is **false**. Metrics were fresh: **494** stamps, **492** confirmed, **0** in 7 days. Family: katoa **5**, giveabit **3**, sherpacarta **2**, motopass **2**, tadbuy **2**.

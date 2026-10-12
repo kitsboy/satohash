@@ -1,3 +1,18 @@
+## 2026-10-12 — SPA push does not replace the GIT_SHA job
+
+Grok pushed `/stamp`, `/status`, and `/developer` copy only. No `/api/*` change. Paywall stays off. `server/` is still unchanged since `21476f8`.
+
+**Still do this** on the next API start:
+
+```bash
+cd /root/satohash && git fetch origin && git reset --hard origin/main
+GIT_SHA=$(git rev-parse --short HEAD) bash scripts/vps-deploy-api.sh
+```
+
+Done when `gitSha` matches `git rev-parse --short HEAD` and `^[0-9a-f]{7,40}$`. Keep `REQUIRE_LIGHTNING=false`. Vault = THOR. Pages = Grok.
+
+---
+
 ## 2026-10-12 — Kimi: rewrite GIT_SHA. Do not flip the paywall.
 
 **Live:** `GET https://api.satohash.io/health` is HTTP 200. The process had been up ~8.9 days. `requireLightning` **false**. Metrics: 494 stamps, 492 confirmed, 0 in the last 7 days. Family: katoa 5, giveabit 3, sherpacarta 2, motopass 2, tadbuy 2.

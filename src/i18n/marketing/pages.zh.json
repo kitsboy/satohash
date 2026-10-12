@@ -622,6 +622,7 @@
       }
     },
     "tryIt": "试试看",
+    "pendingNotConfirmed": "Pending 不是 Confirmed。Bitcoin 确认大约需要一小时。",
     "auth": {
       "title": "身份验证",
       "tooltipTitle": "我需要 API key 吗？",
@@ -2066,6 +2067,7 @@
     "fromHealth": "来自 /health",
     "fromStatus": "来自 /api/public/status",
     "fromHealthOrStatus": "来自 /health 或 /api/public/status",
+    "shaUnavailable": "提交标识不可用",
     "mode": "模式",
     "freeOpen": "免费开放",
     "paidLn": "付费（LN）",

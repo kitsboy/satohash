@@ -37,22 +37,18 @@ const PROOF_CARD_URL = 'https://satohash.io/p/<hash>'
 const SAMPLE_HASH = '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08'
 
 const CODE_EXAMPLES = {
-  curl: `# Hash on this machine. Sample below is SHA-256 of the bytes "test".
-# A real file: shasum -a 256 myfile.pdf
-# Pending is not Bitcoin-confirmed. That takes about an hour.
+  curl: `shasum -a 256 myfile.pdf
 
 curl -sS -X POST ${API_URL}/api/stamp \\
   -H "Content-Type: application/json" \\
   -H "X-Satohash-Client: agent" \\
   -d '{"hash":"${SAMPLE_HASH}"}'
 
-# 200 JSON: id, hash, status "pending", verify_url, client_id
-# Proof card: https://satohash.io/p/<hash>
-# .ots file:  GET ${API_URL}/api/stamps/<id>?download=true
-# Confirmed only when POST ${API_URL}/api/verify returns "verified": true`,
+curl -sS -X POST ${API_URL}/api/verify \\
+  -H "Content-Type: application/json" \\
+  -d '{"hash":"${SAMPLE_HASH}"}'`,
 
-  javascript: `// Hash the file here. Send only the 64-character hex.
-async function hashFile(file) {
+  javascript: `async function hashFile(file) {
   const buf = await file.arrayBuffer()
   const digest = await crypto.subtle.digest('SHA-256', buf)
   return Array.from(new Uint8Array(digest))
@@ -60,7 +56,7 @@ async function hashFile(file) {
 }
 
 const hash = await hashFile(myFile)
-const res = await fetch('${API_URL}/api/stamp', {
+const stampRes = await fetch('${API_URL}/api/stamp', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',
@@ -68,22 +64,27 @@ const res = await fetch('${API_URL}/api/stamp', {
   },
   body: JSON.stringify({ hash })
 })
-const stamp = await res.json() // id, hash, status: "pending"
-// Confirmed later: POST ${API_URL}/api/verify { hash } → verified === true
-console.log(stamp.id, stamp.status, 'https://satohash.io/p/' + stamp.hash)`,
+const stamp = await stampRes.json()
+const verifyRes = await fetch('${API_URL}/api/verify', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ hash })
+})
+const verify = await verifyRes.json()
+console.log(stamp, verify)`,
 
   python: `import hashlib, requests
 
 with open('myfile.pdf', 'rb') as f:
     file_hash = hashlib.sha256(f.read()).hexdigest()
 
-r = requests.post('${API_URL}/api/stamp',
+stamp = requests.post('${API_URL}/api/stamp',
     headers={'X-Satohash-Client': 'agent'},
     json={'hash': file_hash})
-stamp = r.json()  # id, hash, status "pending"
-print(stamp['id'], stamp['status'])
-print('https://satohash.io/p/' + stamp['hash'])
-# Confirmed only when POST /api/verify returns verified true.`
+verify = requests.post('${API_URL}/api/verify',
+    json={'hash': file_hash})
+print(stamp.json())
+print(verify.json())`
 }
 
 const CLI_COMMANDS = [
@@ -615,6 +616,13 @@ export default function Developer() {
                         </div>
                       </div>
                     </div>
+                    <p
+                      data-testid="developer-pending-note"
+                      className="text-sm leading-relaxed"
+                      style={{ color: 'var(--text-secondary)' }}
+                    >
+                      {t('developerPage.pendingNotConfirmed')}
+                    </p>
                   </div>
 
                   {/* CLI — gold terminal path; file never leaves the machine */}

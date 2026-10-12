@@ -632,6 +632,7 @@
       }
     },
     "tryIt": "Essayez",
+    "pendingNotConfirmed": "Pending n’est pas Confirmed. La confirmation Bitcoin prend environ une heure.",
     "auth": {
       "title": "Authentification",
       "tooltipTitle": "Ai-je besoin d’une API key ?",
@@ -2091,6 +2092,7 @@
     "fromHealth": "depuis /health",
     "fromStatus": "depuis /api/public/status",
     "fromHealthOrStatus": "depuis /health ou /api/public/status",
+    "shaUnavailable": "Libellé de commit indisponible",
     "mode": "Mode",
     "freeOpen": "Gratuit ouvert",
     "paidLn": "Payant (LN)",

@@ -934,10 +934,6 @@ export default function Stamp() {
   const canStampFile = files.length > 0 && stampingStatus === 'idle'
   const canStampHash =
     !!normalizeSha256(hashValue) && files.length === 0 && stampingStatus === 'idle' && !proofResult
-  const idleFilePick =
-    (stampMode === 'single' || stampMode === 'capsule') &&
-    files.length === 0 &&
-    stampingStatus === 'idle'
 
   return (
     <>
@@ -987,38 +983,6 @@ export default function Stamp() {
             Template: {templateParam}
           </p>
         ) : null}
-
-        {files.length === 0 && stampingStatus === 'idle' && !proofResult && (
-          <div
-            className="vault-ring rounded-2xl border p-5"
-            data-testid="hash-only-card"
-            style={{ borderColor: 'var(--border)', background: 'var(--surface-raised)' }}
-          >
-            <p
-              className="text-[10px] font-black tracking-widest uppercase"
-              style={{ color: 'var(--accent-gold)' }}
-            >
-              {tp('stampPage.hashOnly')}
-            </p>
-            <p className="mt-1 text-sm" style={{ color: 'var(--text-secondary)' }}>
-              {tp('stampPage.hashOnlyBody')}
-            </p>
-            <input
-              data-testid="hash-only-input"
-              value={hashValue}
-              onChange={(e) => setHashValue(e.target.value.trim())}
-              placeholder={tp('stampPage.hashOnlyPlaceholder')}
-              className="mt-3 h-12 w-full rounded-xl border px-3 font-mono text-sm"
-              style={{
-                borderColor: 'var(--border)',
-                background: 'var(--bg-primary)',
-                color: 'var(--text-primary)'
-              }}
-              autoComplete="off"
-              spellCheck={false}
-            />
-          </div>
-        )}
 
         {/* Invalid deep-link hash */}
         {hashInvalidMsg && (
@@ -1199,70 +1163,6 @@ export default function Stamp() {
               </div>
             </div>
           )}
-        {/* ── 3-Step Flow Banner ── */}
-        <div
-          className="jewel-edge mb-8 grid grid-cols-1 gap-0 overflow-hidden rounded-2xl border sm:grid-cols-3"
-          style={{
-            borderColor: 'var(--border)',
-            background:
-              'linear-gradient(165deg, color-mix(in srgb, var(--accent-active) 6%, var(--bg-secondary)) 0%, var(--bg-secondary) 60%, color-mix(in srgb, var(--accent-gold) 5%, var(--bg-secondary)) 100%)'
-          }}
-        >
-          {[
-            {
-              n: '1',
-              icon: '📄',
-              label: tp('stampPage.step1Label'),
-              desc: tp('stampPage.step1Desc')
-            },
-            {
-              n: '2',
-              icon: '🔒',
-              label: tp('stampPage.step2Label'),
-              desc: tp('stampPage.step2Desc')
-            },
-            {
-              n: '3',
-              icon: '₿',
-              label: tp('stampPage.step3Label'),
-              desc: tp('stampPage.step3Desc')
-            }
-          ].map((step, i) => (
-            <div
-              key={step.n}
-              className={`flex flex-col gap-2 p-5 ${i < 2 ? 'border-b sm:border-r sm:border-b-0' : ''}`}
-              style={{
-                background: i === 1 ? 'var(--surface-raised)' : 'var(--bg-secondary)',
-                borderColor: 'var(--border)'
-              }}
-            >
-              <div className="flex items-center gap-2">
-                <span
-                  className="flex h-5 w-5 items-center justify-center rounded-full text-[9px] font-black"
-                  style={{ background: 'var(--accent-gold)', color: '#141b25' }}
-                >
-                  {step.n}
-                </span>
-                <span className="text-[10px] font-black tracking-widest text-[var(--text-secondary)] uppercase">
-                  {tp('stampPage.stepN', { n: step.n })}
-                </span>
-                <span aria-hidden className="ml-auto text-sm">
-                  {step.icon}
-                </span>
-              </div>
-              <p
-                className="text-sm font-black tracking-tight"
-                style={{ color: 'var(--text-primary)' }}
-              >
-                {step.label}
-              </p>
-              <p className="text-[11px] leading-snug" style={{ color: 'var(--text-secondary)' }}>
-                {step.desc}
-              </p>
-            </div>
-          ))}
-        </div>
-
         <header className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
           <div className="space-y-2">
             <div className="flex items-center gap-3">
@@ -1291,159 +1191,6 @@ export default function Stamp() {
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-3">
           {/* ── Main Dropzone ─────────────────────── */}
           <div className="space-y-8 lg:col-span-2">
-            <div className="mb-6 space-y-3">
-              {!showAdvancedModes && stampMode === 'single' && (
-                <button
-                  type="button"
-                  data-testid="more-options"
-                  onClick={() => setShowAdvancedModes(true)}
-                  className="min-h-[44px] self-start px-1 text-[11px] font-medium tracking-wide uppercase"
-                  style={{ color: 'var(--text-tertiary)' }}
-                >
-                  {tp('stampPage.moreOptions')}
-                </button>
-              )}
-              {showAdvancedModes && (
-                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-4">
-                  <button
-                    type="button"
-                    aria-pressed={stampMode === 'single'}
-                    aria-label={tp('stampPage.modes.single')}
-                    data-testid="mode-single"
-                    onClick={() => {
-                      setStampMode('single')
-                      setIsCapsuleMode(false)
-                      setFiles([])
-                    }}
-                    className="rounded-2xl border p-4 text-left transition-all"
-                    style={{
-                      borderColor: stampMode === 'single' ? 'var(--accent-gold)' : 'var(--border)',
-                      background:
-                        stampMode === 'single' ? 'rgba(240,180,41,0.06)' : 'var(--bg-secondary)'
-                    }}
-                  >
-                    <div className="mb-1 text-lg">📄</div>
-                    <div
-                      className="mb-1 text-xs font-black tracking-widest uppercase"
-                      style={{
-                        color: stampMode === 'single' ? 'var(--accent-gold)' : 'var(--text-primary)'
-                      }}
-                    >
-                      {tp('stampPage.modes.single')}
-                    </div>
-                    <div
-                      className="text-[10px] leading-snug"
-                      style={{ color: 'var(--text-secondary)' }}
-                    >
-                      {tp('stampPage.filePhotoOrHash')}
-                    </div>
-                  </button>
-                  <button
-                    type="button"
-                    aria-pressed={stampMode === 'capsule'}
-                    aria-label={tp('stampPage.modes.capsule')}
-                    onClick={() => {
-                      setStampMode('capsule')
-                      setIsCapsuleMode(true)
-                      setFiles([])
-                      setShowAdvancedModes(true)
-                    }}
-                    className="rounded-2xl border p-4 text-left transition-all"
-                    style={{
-                      borderColor: stampMode === 'capsule' ? 'var(--accent-gold)' : 'var(--border)',
-                      background:
-                        stampMode === 'capsule' ? 'rgba(240,180,41,0.06)' : 'var(--bg-secondary)'
-                    }}
-                  >
-                    <div className="mb-1 text-lg">📦</div>
-                    <div
-                      className="mb-1 text-xs font-black tracking-widest uppercase"
-                      style={{
-                        color:
-                          stampMode === 'capsule' ? 'var(--accent-gold)' : 'var(--text-primary)'
-                      }}
-                    >
-                      {tp('stampPage.modes.capsule')}
-                    </div>
-                    <div
-                      className="text-[10px] leading-snug"
-                      style={{ color: 'var(--text-secondary)' }}
-                    >
-                      Multi-file evidence bundle
-                    </div>
-                  </button>
-                  <button
-                    type="button"
-                    aria-pressed={stampMode === 'redact'}
-                    aria-label={tp('stampPage.modes.redact')}
-                    onClick={() => {
-                      setStampMode('redact')
-                      setIsCapsuleMode(false)
-                      setFiles([])
-                      setShowAdvancedModes(true)
-                    }}
-                    className="rounded-2xl border p-4 text-left transition-all"
-                    style={{
-                      borderColor: stampMode === 'redact' ? 'var(--accent-gold)' : 'var(--border)',
-                      background:
-                        stampMode === 'redact' ? 'rgba(240,180,41,0.06)' : 'var(--bg-secondary)'
-                    }}
-                  >
-                    <div className="mb-1 text-lg">🔒</div>
-                    <div
-                      className="mb-1 text-xs font-black tracking-widest uppercase"
-                      style={{
-                        color: stampMode === 'redact' ? 'var(--accent-gold)' : 'var(--text-primary)'
-                      }}
-                    >
-                      {tp('stampPage.modes.redact')}
-                    </div>
-                    <div
-                      className="text-[10px] leading-snug"
-                      style={{ color: 'var(--text-secondary)' }}
-                    >
-                      Redact then stamp
-                    </div>
-                  </button>
-                  <button
-                    type="button"
-                    aria-pressed={stampMode === 'deposition'}
-                    aria-label={tp('stampPage.modes.deposition')}
-                    onClick={() => {
-                      setStampMode('deposition')
-                      setIsCapsuleMode(false)
-                      setFiles([])
-                      setShowAdvancedModes(true)
-                    }}
-                    className="rounded-2xl border p-4 text-left transition-all"
-                    style={{
-                      borderColor:
-                        stampMode === 'deposition' ? 'var(--accent-gold)' : 'var(--border)',
-                      background:
-                        stampMode === 'deposition' ? 'rgba(240,180,41,0.06)' : 'var(--bg-secondary)'
-                    }}
-                  >
-                    <div className="mb-1 text-lg">🎙</div>
-                    <div
-                      className="mb-1 text-xs font-black tracking-widest uppercase"
-                      style={{
-                        color:
-                          stampMode === 'deposition' ? 'var(--accent-gold)' : 'var(--text-primary)'
-                      }}
-                    >
-                      {tp('stampPage.modes.deposition')}
-                    </div>
-                    <div
-                      className="text-[10px] leading-snug"
-                      style={{ color: 'var(--text-secondary)' }}
-                    >
-                      Voice deposition
-                    </div>
-                  </button>
-                </div>
-              )}
-            </div>
-
             <motion.div
               onDragEnter={handleDrag}
               onDragLeave={handleDrag}
@@ -1463,7 +1210,7 @@ export default function Stamp() {
                   ? '0 0 0 1px var(--accent-gold), 0 0 28px var(--accent-gold-glow)'
                   : '0 0 0 0 transparent'
               }}
-              className={`vault-ring group relative flex min-h-[28rem] flex-col items-center justify-start overflow-visible rounded-[2.5rem] border-dashed px-5 pt-10 pb-8 text-center transition-colors sm:min-h-[32rem] sm:justify-center sm:px-10 sm:pt-12 sm:pb-10 md:min-h-[36rem] ${
+              className={`vault-ring group relative flex min-h-0 flex-col items-center justify-start overflow-visible rounded-[2.5rem] border-dashed px-5 pt-8 pb-8 text-center transition-colors sm:px-10 sm:pt-10 sm:pb-10 ${
                 isDragging ? 'border-[3px]' : 'border-2'
               } ${
                 (stampMode === 'single' || stampMode === 'capsule') && stampingStatus === 'idle'
@@ -1628,6 +1375,108 @@ export default function Stamp() {
                           <h3 className="px-2 text-xl font-bold tracking-tight text-balance sm:text-2xl">
                             {isCapsuleMode ? 'Assemble Evidence Capsule' : t('stamp', 'title')}
                           </h3>
+                          <div
+                            className="z-10 flex w-full flex-col gap-3 pt-1"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <label
+                              className="btn-sheen flex min-h-[52px] cursor-pointer items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-black tracking-widest uppercase shadow-lg"
+                              style={{
+                                background: 'var(--accent-gold)',
+                                color: '#141b25',
+                                boxShadow: '0 8px 28px var(--accent-gold-glow)'
+                              }}
+                            >
+                              <input
+                                type="file"
+                                className="hidden"
+                                accept="*/*"
+                                data-testid="choose-file-input"
+                                onChange={(e) => {
+                                  if (e.target.files?.[0]) {
+                                    setFiles(
+                                      isCapsuleMode
+                                        ? [...files, e.target.files[0]]
+                                        : [e.target.files[0]]
+                                    )
+                                  }
+                                }}
+                              />
+                              <FileUp size={16} strokeWidth={2.25} aria-hidden />
+                              {tp('stampPage.chooseFile') || 'Choose file'}
+                            </label>
+                            <label
+                              className="flex min-h-[52px] cursor-pointer items-center justify-center gap-2 rounded-xl border px-4 py-3 text-sm font-bold"
+                              style={{ borderColor: 'var(--border)', color: 'var(--text-primary)' }}
+                            >
+                              <input
+                                type="file"
+                                className="hidden"
+                                accept="image/*"
+                                capture="environment"
+                                data-testid="camera-input"
+                                onChange={(e) => {
+                                  if (e.target.files?.[0]) {
+                                    setFiles(
+                                      isCapsuleMode
+                                        ? [...files, e.target.files[0]]
+                                        : [e.target.files[0]]
+                                    )
+                                  }
+                                }}
+                              />
+                              <Camera size={16} strokeWidth={2.25} aria-hidden />
+                              {tp('stampPage.takePhoto') || 'Take photo'}
+                            </label>
+                            <label
+                              className="flex min-h-[52px] cursor-pointer items-center justify-center gap-2 rounded-xl border px-4 py-3 text-sm font-bold"
+                              style={{ borderColor: 'var(--border)', color: 'var(--text-primary)' }}
+                            >
+                              <input
+                                type="file"
+                                className="hidden"
+                                accept="image/*"
+                                data-testid="gallery-input"
+                                onChange={(e) => {
+                                  if (e.target.files?.[0]) {
+                                    setFiles(
+                                      isCapsuleMode
+                                        ? [...files, e.target.files[0]]
+                                        : [e.target.files[0]]
+                                    )
+                                  }
+                                }}
+                              />
+                              <Image size={16} strokeWidth={2.25} aria-hidden />
+                              {tp('stampPage.photosGallery')}
+                            </label>
+                            {showAdvancedModes && (
+                              <label
+                                className="flex min-h-[52px] cursor-pointer items-center justify-center gap-2 rounded-xl border px-4 py-3 text-sm font-bold"
+                                style={{
+                                  borderColor: 'var(--border)',
+                                  color: 'var(--text-secondary)'
+                                }}
+                              >
+                                <input
+                                  type="file"
+                                  className="hidden"
+                                  multiple
+                                  webkitdirectory=""
+                                  data-testid="folder-input"
+                                  onChange={(e) => {
+                                    const list = Array.from(e.target.files || [])
+                                    if (!list.length) return
+                                    setStampMode('capsule')
+                                    setIsCapsuleMode(true)
+                                    setShowAdvancedModes(true)
+                                    setFiles(list)
+                                  }}
+                                />
+                                📂 {tp('stampPage.folderCapsule')}
+                              </label>
+                            )}
+                          </div>
                           <p
                             className="px-2 text-xs leading-snug text-balance"
                             style={{ color: 'var(--text-muted)' }}
@@ -1672,126 +1521,204 @@ export default function Stamp() {
                       </>
                     )}
 
-                    {/* Camera / gallery / file pickers — always visible for single/capsule */}
                     {(stampMode === 'single' || stampMode === 'capsule') && (
-                      <>
-                        <input
-                          type="file"
-                          id="file-input"
-                          className="hidden"
-                          data-testid="file-input"
-                          onChange={(e) => {
-                            if (e.target.files?.[0]) {
-                              setFiles(
-                                isCapsuleMode ? [...files, e.target.files[0]] : [e.target.files[0]]
-                              )
-                            }
-                          }}
-                        />
-                        <div
-                          className="z-10 flex w-full max-w-sm flex-col gap-3"
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          <label
-                            className="btn-sheen flex min-h-[52px] cursor-pointer items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-black tracking-widest uppercase shadow-lg"
+                      <input
+                        type="file"
+                        id="file-input"
+                        className="hidden"
+                        data-testid="file-input"
+                        onChange={(e) => {
+                          if (e.target.files?.[0]) {
+                            setFiles(
+                              isCapsuleMode ? [...files, e.target.files[0]] : [e.target.files[0]]
+                            )
+                          }
+                        }}
+                      />
+                    )}
+
+                    <div
+                      className="z-10 flex w-full flex-col items-center gap-3"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <button
+                        type="button"
+                        data-testid="more-options"
+                        onClick={() => {
+                          if (showAdvancedModes) {
+                            setShowAdvancedModes(false)
+                            setStampMode('single')
+                            setIsCapsuleMode(false)
+                          } else {
+                            setShowAdvancedModes(true)
+                          }
+                        }}
+                        className="min-h-[44px] px-1 text-[11px] font-medium tracking-wide uppercase"
+                        style={{ color: 'var(--text-tertiary)' }}
+                      >
+                        {tp('nav.more')}
+                      </button>
+                      {showAdvancedModes && (
+                        <div className="grid w-full grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-4">
+                          <button
+                            type="button"
+                            aria-pressed={stampMode === 'single'}
+                            aria-label={tp('stampPage.modes.single')}
+                            data-testid="mode-single"
+                            onClick={() => {
+                              setStampMode('single')
+                              setIsCapsuleMode(false)
+                              setFiles([])
+                            }}
+                            className="rounded-2xl border p-4 text-left transition-all"
                             style={{
-                              background: 'var(--accent-gold)',
-                              color: '#141b25',
-                              boxShadow: '0 8px 28px var(--accent-gold-glow)'
+                              borderColor:
+                                stampMode === 'single' ? 'var(--accent-gold)' : 'var(--border)',
+                              background:
+                                stampMode === 'single'
+                                  ? 'rgba(240,180,41,0.06)'
+                                  : 'var(--bg-secondary)'
                             }}
                           >
-                            <input
-                              type="file"
-                              className="hidden"
-                              accept="*/*"
-                              data-testid="choose-file-input"
-                              onChange={(e) => {
-                                if (e.target.files?.[0]) {
-                                  setFiles(
-                                    isCapsuleMode
-                                      ? [...files, e.target.files[0]]
-                                      : [e.target.files[0]]
-                                  )
-                                }
-                              }}
-                            />
-                            <FileUp size={16} strokeWidth={2.25} aria-hidden />
-                            {tp('stampPage.chooseFile') || 'Choose file'}
-                          </label>
-                          <label
-                            className="flex min-h-[52px] cursor-pointer items-center justify-center gap-2 rounded-xl border px-4 py-3 text-sm font-bold"
-                            style={{ borderColor: 'var(--border)', color: 'var(--text-primary)' }}
-                          >
-                            <input
-                              type="file"
-                              className="hidden"
-                              accept="image/*"
-                              capture="environment"
-                              data-testid="camera-input"
-                              onChange={(e) => {
-                                if (e.target.files?.[0]) {
-                                  setFiles(
-                                    isCapsuleMode
-                                      ? [...files, e.target.files[0]]
-                                      : [e.target.files[0]]
-                                  )
-                                }
-                              }}
-                            />
-                            <Camera size={16} strokeWidth={2.25} aria-hidden />
-                            {tp('stampPage.takePhoto') || 'Take photo'}
-                          </label>
-                          <label
-                            className="flex min-h-[52px] cursor-pointer items-center justify-center gap-2 rounded-xl border px-4 py-3 text-sm font-bold"
-                            style={{ borderColor: 'var(--border)', color: 'var(--text-primary)' }}
-                          >
-                            <input
-                              type="file"
-                              className="hidden"
-                              accept="image/*"
-                              data-testid="gallery-input"
-                              onChange={(e) => {
-                                if (e.target.files?.[0]) {
-                                  setFiles(
-                                    isCapsuleMode
-                                      ? [...files, e.target.files[0]]
-                                      : [e.target.files[0]]
-                                  )
-                                }
-                              }}
-                            />
-                            <Image size={16} strokeWidth={2.25} aria-hidden />
-                            {tp('stampPage.photosGallery')}
-                          </label>
-                          {showAdvancedModes && (
-                            <label
-                              className="flex min-h-[52px] cursor-pointer items-center justify-center gap-2 rounded-xl border px-4 py-3 text-sm font-bold"
+                            <div className="mb-1 text-lg">📄</div>
+                            <div
+                              className="mb-1 text-xs font-black tracking-widest uppercase"
                               style={{
-                                borderColor: 'var(--border)',
-                                color: 'var(--text-secondary)'
+                                color:
+                                  stampMode === 'single'
+                                    ? 'var(--accent-gold)'
+                                    : 'var(--text-primary)'
                               }}
                             >
-                              <input
-                                type="file"
-                                className="hidden"
-                                multiple
-                                webkitdirectory=""
-                                data-testid="folder-input"
-                                onChange={(e) => {
-                                  const list = Array.from(e.target.files || [])
-                                  if (!list.length) return
-                                  setStampMode('capsule')
-                                  setIsCapsuleMode(true)
-                                  setShowAdvancedModes(true)
-                                  setFiles(list)
-                                }}
-                              />
-                              📂 {tp('stampPage.folderCapsule')}
-                            </label>
-                          )}
+                              {tp('stampPage.modes.single')}
+                            </div>
+                            <div
+                              className="text-[10px] leading-snug"
+                              style={{ color: 'var(--text-secondary)' }}
+                            >
+                              {tp('stampPage.filePhotoOrHash')}
+                            </div>
+                          </button>
+                          <button
+                            type="button"
+                            aria-pressed={stampMode === 'capsule'}
+                            aria-label={tp('stampPage.modes.capsule')}
+                            onClick={() => {
+                              setStampMode('capsule')
+                              setIsCapsuleMode(true)
+                              setFiles([])
+                              setShowAdvancedModes(true)
+                            }}
+                            className="rounded-2xl border p-4 text-left transition-all"
+                            style={{
+                              borderColor:
+                                stampMode === 'capsule' ? 'var(--accent-gold)' : 'var(--border)',
+                              background:
+                                stampMode === 'capsule'
+                                  ? 'rgba(240,180,41,0.06)'
+                                  : 'var(--bg-secondary)'
+                            }}
+                          >
+                            <div className="mb-1 text-lg">📦</div>
+                            <div
+                              className="mb-1 text-xs font-black tracking-widest uppercase"
+                              style={{
+                                color:
+                                  stampMode === 'capsule'
+                                    ? 'var(--accent-gold)'
+                                    : 'var(--text-primary)'
+                              }}
+                            >
+                              {tp('stampPage.modes.capsule')}
+                            </div>
+                            <div
+                              className="text-[10px] leading-snug"
+                              style={{ color: 'var(--text-secondary)' }}
+                            >
+                              Multi-file evidence bundle
+                            </div>
+                          </button>
+                          <button
+                            type="button"
+                            aria-pressed={stampMode === 'redact'}
+                            aria-label={tp('stampPage.modes.redact')}
+                            onClick={() => {
+                              setStampMode('redact')
+                              setIsCapsuleMode(false)
+                              setFiles([])
+                              setShowAdvancedModes(true)
+                            }}
+                            className="rounded-2xl border p-4 text-left transition-all"
+                            style={{
+                              borderColor:
+                                stampMode === 'redact' ? 'var(--accent-gold)' : 'var(--border)',
+                              background:
+                                stampMode === 'redact'
+                                  ? 'rgba(240,180,41,0.06)'
+                                  : 'var(--bg-secondary)'
+                            }}
+                          >
+                            <div className="mb-1 text-lg">🔒</div>
+                            <div
+                              className="mb-1 text-xs font-black tracking-widest uppercase"
+                              style={{
+                                color:
+                                  stampMode === 'redact'
+                                    ? 'var(--accent-gold)'
+                                    : 'var(--text-primary)'
+                              }}
+                            >
+                              {tp('stampPage.modes.redact')}
+                            </div>
+                            <div
+                              className="text-[10px] leading-snug"
+                              style={{ color: 'var(--text-secondary)' }}
+                            >
+                              Redact then stamp
+                            </div>
+                          </button>
+                          <button
+                            type="button"
+                            aria-pressed={stampMode === 'deposition'}
+                            aria-label={tp('stampPage.modes.deposition')}
+                            onClick={() => {
+                              setStampMode('deposition')
+                              setIsCapsuleMode(false)
+                              setFiles([])
+                              setShowAdvancedModes(true)
+                            }}
+                            className="rounded-2xl border p-4 text-left transition-all"
+                            style={{
+                              borderColor:
+                                stampMode === 'deposition' ? 'var(--accent-gold)' : 'var(--border)',
+                              background:
+                                stampMode === 'deposition'
+                                  ? 'rgba(240,180,41,0.06)'
+                                  : 'var(--bg-secondary)'
+                            }}
+                          >
+                            <div className="mb-1 text-lg">🎙</div>
+                            <div
+                              className="mb-1 text-xs font-black tracking-widest uppercase"
+                              style={{
+                                color:
+                                  stampMode === 'deposition'
+                                    ? 'var(--accent-gold)'
+                                    : 'var(--text-primary)'
+                              }}
+                            >
+                              {tp('stampPage.modes.deposition')}
+                            </div>
+                            <div
+                              className="text-[10px] leading-snug"
+                              style={{ color: 'var(--text-secondary)' }}
+                            >
+                              Voice deposition
+                            </div>
+                          </button>
                         </div>
-                      </>
-                    )}
+                      )}
+                    </div>
                   </motion.div>
                 ) : stampingStatus === 'complete' && proofResult ? (
                   <motion.div
@@ -1973,7 +1900,7 @@ export default function Stamp() {
           </div>
 
           <StampStickyBar
-            visible={canStampFile || canStampHash || stampingStatus === 'hashing' || idleFilePick}
+            visible={canStampFile || canStampHash || stampingStatus === 'hashing'}
             pendingTo={waitingDonePath || undefined}
             pendingLabel={waitingDonePath ? tp('stampPage.waitingOnBitcoin') : undefined}
             label={
@@ -1996,11 +1923,6 @@ export default function Stamp() {
                   caseLabel || deepLink.displayLabel || 'Linked document',
                   deepLinkClientId || deepLink.clientId
                 )
-              } else if (idleFilePick) {
-                const input =
-                  document.getElementById('file-input') ||
-                  document.querySelector('[data-testid="choose-file-input"]')
-                input?.click()
               }
             }}
           />
@@ -2201,6 +2123,102 @@ export default function Stamp() {
               </p>
             </div>
           </div>
+        </div>
+
+        {files.length === 0 && stampingStatus === 'idle' && !proofResult && (
+          <div
+            className="vault-ring rounded-2xl border p-5"
+            data-testid="hash-only-card"
+            style={{ borderColor: 'var(--border)', background: 'var(--surface-raised)' }}
+          >
+            <p
+              className="text-[10px] font-black tracking-widest uppercase"
+              style={{ color: 'var(--accent-gold)' }}
+            >
+              {tp('stampPage.hashOnly')}
+            </p>
+            <p className="mt-1 text-sm" style={{ color: 'var(--text-secondary)' }}>
+              {tp('stampPage.hashOnlyBody')}
+            </p>
+            <input
+              data-testid="hash-only-input"
+              value={hashValue}
+              onChange={(e) => setHashValue(e.target.value.trim())}
+              placeholder={tp('stampPage.hashOnlyPlaceholder')}
+              className="mt-3 h-12 w-full rounded-xl border px-3 font-mono text-sm"
+              style={{
+                borderColor: 'var(--border)',
+                background: 'var(--bg-primary)',
+                color: 'var(--text-primary)'
+              }}
+              autoComplete="off"
+              spellCheck={false}
+            />
+          </div>
+        )}
+
+        <div
+          className="jewel-edge grid grid-cols-1 gap-0 overflow-hidden rounded-2xl border sm:grid-cols-3"
+          data-testid="stamp-steps"
+          style={{
+            borderColor: 'var(--border)',
+            background:
+              'linear-gradient(165deg, color-mix(in srgb, var(--accent-active) 6%, var(--bg-secondary)) 0%, var(--bg-secondary) 60%, color-mix(in srgb, var(--accent-gold) 5%, var(--bg-secondary)) 100%)'
+          }}
+        >
+          {[
+            {
+              n: '1',
+              icon: '📄',
+              label: tp('stampPage.step1Label'),
+              desc: tp('stampPage.step1Desc')
+            },
+            {
+              n: '2',
+              icon: '🔒',
+              label: tp('stampPage.step2Label'),
+              desc: tp('stampPage.step2Desc')
+            },
+            {
+              n: '3',
+              icon: '₿',
+              label: tp('stampPage.step3Label'),
+              desc: tp('stampPage.step3Desc')
+            }
+          ].map((step, i) => (
+            <div
+              key={step.n}
+              className={`flex flex-col gap-2 p-5 ${i < 2 ? 'border-b sm:border-r sm:border-b-0' : ''}`}
+              style={{
+                background: i === 1 ? 'var(--surface-raised)' : 'var(--bg-secondary)',
+                borderColor: 'var(--border)'
+              }}
+            >
+              <div className="flex items-center gap-2">
+                <span
+                  className="flex h-5 w-5 items-center justify-center rounded-full text-[9px] font-black"
+                  style={{ background: 'var(--accent-gold)', color: '#141b25' }}
+                >
+                  {step.n}
+                </span>
+                <span className="text-[10px] font-black tracking-widest text-[var(--text-secondary)] uppercase">
+                  {tp('stampPage.stepN', { n: step.n })}
+                </span>
+                <span aria-hidden className="ml-auto text-sm">
+                  {step.icon}
+                </span>
+              </div>
+              <p
+                className="text-sm font-black tracking-tight"
+                style={{ color: 'var(--text-primary)' }}
+              >
+                {step.label}
+              </p>
+              <p className="text-[11px] leading-snug" style={{ color: 'var(--text-secondary)' }}>
+                {step.desc}
+              </p>
+            </div>
+          ))}
         </div>
 
         {/* Lightning Payment Modal */}

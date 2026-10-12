@@ -632,6 +632,7 @@
       }
     },
     "tryIt": "Ausprobieren",
+    "pendingNotConfirmed": "Pending ist nicht Confirmed. Die Bitcoin-Bestätigung dauert etwa eine Stunde.",
     "auth": {
       "title": "Authentifizierung",
       "tooltipTitle": "Brauche ich einen API-Schlüssel?",
@@ -2091,6 +2092,7 @@
     "fromHealth": "von /health",
     "fromStatus": "von /api/public/status",
     "fromHealthOrStatus": "von /health oder /api/public/status",
+    "shaUnavailable": "Commit-Kennung nicht verfügbar",
     "mode": "Modus",
     "freeOpen": "Frei offen",
     "paidLn": "Bezahlt (LN)",

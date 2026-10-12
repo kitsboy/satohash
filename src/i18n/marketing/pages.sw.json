@@ -632,6 +632,7 @@
       }
     },
     "tryIt": "Jaribu",
+    "pendingNotConfirmed": "Pending si Confirmed. Uthibitisho wa Bitcoin huchukua karibu saa moja.",
     "auth": {
       "title": "Uthibitishaji",
       "tooltipTitle": "Je, nahitaji API key?",
@@ -2091,6 +2092,7 @@
     "fromHealth": "kutoka /health",
     "fromStatus": "kutoka /api/public/status",
     "fromHealthOrStatus": "kutoka /health au /api/public/status",
+    "shaUnavailable": "Lebo ya commit haipatikani",
     "mode": "Hali",
     "freeOpen": "Bure wazi",
     "paidLn": "Kulipwa (LN)",

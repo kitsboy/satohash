@@ -415,7 +415,9 @@ export default function StatusPublic() {
                       <CopyShaButton sha={gitSha} />
                     </span>
                   ) : (
-                    '—'
+                    <span className="text-sm leading-snug font-semibold normal-case">
+                      {t('statusPage.shaUnavailable')}
+                    </span>
                   )
                 }
                 sub={
@@ -423,9 +425,9 @@ export default function StatusPublic() {
                     ? gitShaFromHealth
                       ? t('statusPage.fromHealth')
                       : t('statusPage.fromStatus')
-                    : t('statusPage.fromHealthOrStatus')
+                    : null
                 }
-                mono
+                mono={Boolean(gitSha)}
               />
               <Stat
                 icon={Activity}
@@ -818,9 +820,15 @@ export default function StatusPublic() {
         >
           <CircleDot size={12} style={{ color: 'var(--accent-success)' }} />
           {t('statusPage.allSystems')}{' '}
-          <span className="inline-flex items-center gap-1 font-mono whitespace-nowrap tabular-nums">
-            {gitSha ? <CopyShaButton sha={gitSha} /> : '—'}
-          </span>
+          {gitSha ? (
+            <span className="inline-flex items-center gap-1 font-mono whitespace-nowrap tabular-nums">
+              <CopyShaButton sha={gitSha} />
+            </span>
+          ) : (
+            <span className="tracking-normal whitespace-normal normal-case">
+              {t('statusPage.shaUnavailable')}
+            </span>
+          )}
           {details?.version ? ` · ${details.version}` : ''}
         </div>
       </div>
