@@ -27,6 +27,7 @@ import Footer from '../components/layout/Footer'
 import LiveNodeChip from '../components/shared/LiveNodeChip'
 import usePageMeta from '../hooks/usePageMeta'
 import { getApiUrl, PUBLIC_API_URL } from '../config/constants'
+import { publicGitSha } from '../utils/gitSha'
 
 function statusApi() {
   const u = getApiUrl()
@@ -323,12 +324,14 @@ export default function StatusPublic() {
     paywall?.mode ||
     (requireLightning === false ? 'free_open' : requireLightning === true ? 'paid' : null)
   const gitSha =
-    data.health?.gitSha ||
-    data.health?.git_sha ||
-    data.status?.git_sha ||
-    data.status?.gitSha ||
+    publicGitSha(data.health?.gitSha) ||
+    publicGitSha(data.health?.git_sha) ||
+    publicGitSha(data.status?.git_sha) ||
+    publicGitSha(data.status?.gitSha) ||
     null
-  const gitShaFromHealth = Boolean(data.health?.gitSha || data.health?.git_sha)
+  const gitShaFromHealth = Boolean(
+    publicGitSha(data.health?.gitSha) || publicGitSha(data.health?.git_sha)
+  )
   const familyFree = data.status?.family_free_tier ?? null
   const recent = Array.isArray(data.recent) ? data.recent.slice(0, 10) : []
 

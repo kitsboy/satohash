@@ -1,11 +1,11 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 416) · **Updated:** 2026-09-21
+> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 417) · **Updated:** 2026-10-12
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Satohash MVP Readiness
 
 > **Status:** Core MVP **live**. Frontend on Cloudflare Pages. API at https://api.satohash.io (THOR Docker). Own `bitcoind` at tip. Free stamps. Paywall off.
-> **Updated:** 2026-09-21 · Version `5.0.0-ELITE` · API `gitSha` **21476f8** · SPA `dccbc36`
+> **Updated:** 2026-10-12 · Version `5.0.0-ELITE` · `/health` is up. `gitSha` label was a Cloudflare error string on 2026-10-12 (last known image content `21476f8`; `server/` unchanged). Kimi rewrites `GIT_SHA` from git.
 
 ## MVP definition
 
@@ -18,7 +18,7 @@ That loop is live:
 3. [satohash.io/verify](https://satohash.io/verify) — check the receipt.
 4. Share `https://satohash.io/p/<hash>` — zero-JS proof card.
 
-QR / proof-state polish is **shipped** (unstamped vs Pending vs Confirmed; camera QR; notify on confirm; Bitcoin-checked verify). Optional NIP-07 who is **shipped** (not a legal name). Remaining is **Cam marketing** + TadBuy’s own `/api` 404s — **not** a VPS wait. API live `gitSha` **21476f8**.
+QR / proof-state polish is **shipped** (unstamped vs Pending vs Confirmed; camera QR; notify on confirm; Bitcoin-checked verify). Optional NIP-07 who is **shipped** (not a legal name). An agent can stamp with `POST /api/stamp` and confirm with `POST /api/verify` (`public/llms.txt`). Remaining outside this repo: TadBuy’s own `/api` 404s, and Cam’s `@give_bit` pin when Cam wants it. iPhone unfurl is deferred. `/health` `gitSha` needs a Kimi label fix.
 
 ## Live planes
 

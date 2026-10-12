@@ -4,7 +4,7 @@
  * Usage:
  *   satohash status [--json]
  *   satohash stamp <file> [--json] [--watch]      (--watch polls until confirmed)
- *   satohash verify <hash> [--json]
+ *   satohash verify <hash> [--json]           (POST /api/verify; verified true = Bitcoin)
  *   satohash watch <hash> [--json] [--interval 15]
  *   satohash help
  * Env: SATOHASH_API_URL SATOHASH_KEY
@@ -12,6 +12,7 @@
 import crypto from 'crypto'
 import fs from 'fs'
 import path from 'path'
+import { chainWatchState } from '../../../src/utils/chainWatch.js'
 
 const API = process.env.SATOHASH_API_URL || 'https://api.satohash.io'
 const KEY = process.env.SATOHASH_KEY || ''
@@ -78,7 +79,7 @@ const HELP = `satohash CLI — Bitcoin-anchored document proof
 Commands:
   status [--json]                 API health
   stamp <file> [--json] [--watch] hash + submit a file, optionally watch until confirmed
-  verify <hash> [--json]          check a hash against the Satohash registry
+  verify <hash> [--json]          POST /api/verify — verified true means a Bitcoin block commits to the hash
   watch <hash> [--json] [--interval N]  poll by-hash every N seconds (default 15)
   help                            this help
 
@@ -173,17 +174,29 @@ async function main() {
 async function watchLoop(hash, args) {
   for (;;) {
     try {
-      const r = await fetch(`${API}/api/stamps/${encodeURIComponent(hash)}/by-hash`)
+      const r = await fetch(`${API}/api/verify`, {
+        method: 'POST',
+        headers: headers(),
+        body: JSON.stringify({ hash })
+      })
       const body = await r.json().catch(() => ({}))
-      const stamp = Array.isArray(body?.stamps) ? body.stamps[0] : body
-      const status = stamp?.status || body?.status || 'unknown'
-      const block = stamp?.bitcoin_block_height || body?.bitcoin_block_height || null
+      const watch = chainWatchState(body)
       if (args.json) {
-        out(args, { ts: new Date().toISOString(), hash, status, block })
+        out(args, {
+          ts: new Date().toISOString(),
+          hash,
+          status: watch.status,
+          verified: watch.verified,
+          block: watch.block
+        })
       } else {
-        console.log(new Date().toISOString(), `status=${status}`, block ? `block=${block}` : '(pending)')
+        console.log(
+          new Date().toISOString(),
+          `status=${watch.status}`,
+          watch.block ? `block=${watch.block}` : '(pending)'
+        )
       }
-      if (status === 'confirmed' || status === 'verified') {
+      if (watch.verified) {
         if (!args.json) console.log('✅ confirmed on Bitcoin')
         process.exit(0)
       }

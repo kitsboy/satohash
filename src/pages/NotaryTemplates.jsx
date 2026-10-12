@@ -2147,7 +2147,7 @@ export function TemplateEditor({ template, onBack, demoMode = false }) {
         'meta[name="description"]',
         'name',
         'description',
-        'Satohash anchors any document to the Bitcoin blockchain in under 60 seconds. Immutable, independently verifiable proof of existence — free, private, no lawyers needed. Your file never leaves your device.'
+        'Hash a file on your device. Satohash stamps only the fingerprint. Free. The file stays on the device. Bitcoin confirmation takes about an hour.'
       )
       setMeta(
         'meta[property="og:title"]',
@@ -2159,7 +2159,7 @@ export function TemplateEditor({ template, onBack, demoMode = false }) {
         'meta[property="og:description"]',
         'property',
         'og:description',
-        'Drop a file. Get permanent, tamper-proof Bitcoin proof of existence in 60 seconds. Free. Private. No lawyers. Your document never leaves your device.'
+        'The file stays on your device. We stamp the fingerprint on Bitcoin. Free. Confirmation takes about an hour. Pending is not confirmed.'
       )
     }
   }, [template, t])

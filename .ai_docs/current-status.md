@@ -1,12 +1,12 @@
 # Current Status — Satohash
 
 **Version:** **5.0.0-ELITE** (Build 415)  
-**Last Updated:** 2026-09-21 (goodbye — honesty + quieter UX wave)  
+**Last Updated:** 2026-10-12 (GIT_SHA label + agent stamp contract)  
 **Frontend:** https://satohash.io · www · CF Pages project **`satohash`** — Grok lane, `assetsDir: 'b'`  
-**API:** https://api.satohash.io ✅ LIVE (THOR Docker). Confirm SHA with `GET /health` (`gitSha`). **Live now: `21476f8`** (Kimi rebuild 2026-09-20; `authored` on by-hash when a stamp has authored-v1). SPA HEAD **`dccbc36`**. Paywall off. Family widget stamps verified (katoa/motopass/sherpacarta/tadbuy=2, giveabit=3).  
+**API:** https://api.satohash.io ✅ LIVE (THOR Docker, HTTP 200). **`gitSha` is not a commit** as of 2026-10-12 — it is a Cloudflare error string in `GIT_SHA`. Last known good image content is **`21476f8`** (`server/` unchanged since then). Kimi: rewrite `GIT_SHA` from `git rev-parse --short HEAD` on the next start. Paywall off. Family counts 2026-10-12: katoa **5**, giveabit **3**, sherpacarta/motopass/tadbuy **2**.  
 **Metrics SoT:** `https://api.satohash.io/metrics.json`  
 **HQ:** https://hq.giveabit.io  
-**Git:** `main` (`dccbc36`)  
+**Git:** `main` (pull before you trust a SHA in this file)  
 **Kimi vault:** **THOR VPS Obsidian** (not M4)  
 **Analytics:** Umami `analytics.giveabit.io` — **not** Google Analytics  
 **Search:** GSC property `https://satohash.io/` **verified**
@@ -92,10 +92,11 @@
 
 Pickup: this file → `docs/handoff-log.md` → `docs/archive/SESSION-SUMMARY-2026-09-21-goodbye.md`. `/whatsup` loads that goodbye.
 
-1. **TadBuy (other repo):** stop calling dead same-origin `/api/*` on the static Pages demo. Not a Satohash API bug.
-2. **Cam marketing (not code):** pin `/watch` on **`@give_bit`** (`docs/marketing/GIVE-BIT-X-PACK.md`); physical iPhone share of `/p/<hash>` (JPEG unfurl).
-3. **Optional builders:** npm-publish `packages/satohash-cli` only if Cam asks. Root `bin/satohash.js` is a shim.
-4. **Do not:** rebuild API for copy; flip `REQUIRE_LIGHTNING`; add Arabic; sell Snapper/ZK/BOLT-12 as live; Tailscale notes to M4. Vault = **THOR** Obsidian. Pages = Grok. Optional who is **shipped** (NIP-07 bind + proof-card chip); do not sell it as a legal name.
+1. **Kimi:** rewrite `GIT_SHA` from `git rev-parse --short HEAD`. `/health` is up; the label is a Cloudflare error string. `server/` unchanged since `21476f8`. Keep `REQUIRE_LIGHTNING=false`.
+2. **TadBuy (other repo):** stop calling dead same-origin `/api/*` on the static Pages demo. Not a Satohash API bug.
+3. **Cam marketing (not code):** pin `/watch` on **`@give_bit`** when Cam wants (`docs/marketing/GIVE-BIT-X-PACK.md`). Grok cannot post as that account. iPhone `/p/` unfurl is deferred (Cam, 2026-10-12).
+4. **Optional builders:** npm-publish `packages/satohash-cli` only if Cam asks. Root `bin/satohash.js` is a shim.
+5. **Do not:** flip `REQUIRE_LIGHTNING`; add Arabic; sell Snapper/ZK/BOLT-12 as live; Tailscale notes to M4. Vault = **THOR** Obsidian. Pages = Grok. Optional who is **shipped** (NIP-07 bind + proof-card chip); do not sell it as a legal name.
 
 ## This session (2026-09-20–21 — honesty + quieter UX)
 

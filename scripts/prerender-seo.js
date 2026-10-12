@@ -203,7 +203,7 @@ function write(name, html) {
 // ---- landing (static version of the hero + key sections) ----
 const landingTitle = 'Stamp Documents on Bitcoin — Free Proof of Existence'
 const landingDesc =
-  'Drop any file. Get a Bitcoin-anchored proof of existence in under 60 seconds. Free, private, zero-knowledge. Your file never leaves your device. OpenTimestamps + Bitcoin = immutable, independently verifiable evidence.'
+  'Hash a file on your device. Satohash stamps only the fingerprint. Free. The file stays on the device. Bitcoin confirmation takes about an hour. Pending is not confirmed.'
 const landingBody = `
 <h1>Prove Any File Existed. Forever.</h1>
 <p>Drop any file. Get a permanent, Bitcoin-backed timestamp. Independently verifiable. No lawyers. No trust required.</p>
@@ -276,7 +276,7 @@ const secondary = {
     title: 'Stamp a Document on Bitcoin — Free & Private',
     desc: 'Stamp any file on the Bitcoin blockchain for free. SHA-256 hashed in your browser, anchored via OpenTimestamps in ~60 minutes.',
     body: `<h1>Stamp a Document on Bitcoin</h1>
-<p>Free, private, zero-knowledge. Drop a file and get a Bitcoin-anchored proof of existence in under 60 seconds.</p>
+<p>Free. The file stays on your device. Stamp the fingerprint now. Bitcoin confirmation takes about an hour. Pending is not confirmed.</p>
 <h2>Three steps</h2>
 <ol><li><strong>Upload</strong> — your file is hashed locally (SHA-256); it never leaves your device.</li>
 <li><strong>Anchor</strong> — the fingerprint is submitted to OpenTimestamps calendars and embedded in the next Bitcoin block (~60 min).</li>

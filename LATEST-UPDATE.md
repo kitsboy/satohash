@@ -1,5 +1,5 @@
-# satohash — Last Updated 2026-09-21 by Grok (M3)
+# satohash — Last Updated 2026-10-12 by Grok (M3)
 
-**Brief:** Goodbye. Honesty + quieter UX shipped. API live `21476f8`. SPA `dccbc36`. Next: TadBuy `/api` 404s (other repo); Cam pin `/watch` + iPhone unfurl. Do not rebuild API for copy.
+**Brief:** Kimi: `/health` is up but `gitSha` is a Cloudflare error string. Rewrite `GIT_SHA` from `git rev-parse` on the next API start. Keep the paywall off. `server/` unchanged since `21476f8`. SPA: hide a bad SHA on `/status`; agent stamp contract is `POST /api/stamp` then `POST /api/verify`. iPhone unfurl deferred. `@give_bit` pin stays with Cam.
 
-Pickup: `.ai_docs/current-status.md` · `docs/handoff-log.md` · `docs/archive/SESSION-SUMMARY-2026-09-21-goodbye.md`
+Pickup: `.ai_docs/current-status.md` · `docs/handoff-log.md` · `docs/KIMI-HANDOFF.md`

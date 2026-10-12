@@ -34,19 +34,24 @@ const API_URL = getApiUrl()
 const API_HOST = API_URL.replace(/^https?:\/\//, '')
 const PROOF_CARD_URL = 'https://satohash.io/p/<hash>'
 
+const SAMPLE_HASH = '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08'
+
 const CODE_EXAMPLES = {
-  curl: `# Step 1: hash your file locally (nothing leaves your machine)
-sha256sum mycontract.pdf
-# => e3b0c44298fc1c149afbf4c8996fb924...
+  curl: `# Hash on this machine. Sample below is SHA-256 of the bytes "test".
+# A real file: shasum -a 256 myfile.pdf
+# Pending is not Bitcoin-confirmed. That takes about an hour.
 
-# Step 2: send only the hash to Satohash
-curl -X POST ${API_URL}/api/stamp \\
+curl -sS -X POST ${API_URL}/api/stamp \\
   -H "Content-Type: application/json" \\
-  -d '{"hash":"e3b0c44298fc1c149afbf4c8996fb924..."}'
+  -H "X-Satohash-Client: agent" \\
+  -d '{"hash":"${SAMPLE_HASH}"}'
 
-# Response: { "id": "abc123", "status": "pending", "ots": "..." }`,
+# 200 JSON: id, hash, status "pending", verify_url, client_id
+# Proof card: https://satohash.io/p/<hash>
+# .ots file:  GET ${API_URL}/api/stamps/<id>?download=true
+# Confirmed only when POST ${API_URL}/api/verify returns "verified": true`,
 
-  javascript: `// Hash the file in the browser — file never uploaded
+  javascript: `// Hash the file here. Send only the 64-character hex.
 async function hashFile(file) {
   const buf = await file.arrayBuffer()
   const digest = await crypto.subtle.digest('SHA-256', buf)
@@ -54,27 +59,31 @@ async function hashFile(file) {
     .map(b => b.toString(16).padStart(2, '0')).join('')
 }
 
-// Send hash to Satohash
 const hash = await hashFile(myFile)
 const res = await fetch('${API_URL}/api/stamp', {
   method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
+  headers: {
+    'Content-Type': 'application/json',
+    'X-Satohash-Client': 'agent'
+  },
   body: JSON.stringify({ hash })
 })
-const { id, status } = await res.json()
-console.log('Stamp created:', id, status)`,
+const stamp = await res.json() // id, hash, status: "pending"
+// Confirmed later: POST ${API_URL}/api/verify { hash } → verified === true
+console.log(stamp.id, stamp.status, 'https://satohash.io/p/' + stamp.hash)`,
 
   python: `import hashlib, requests
 
-# Hash locally — file never leaves your machine
-with open('mycontract.pdf', 'rb') as f:
+with open('myfile.pdf', 'rb') as f:
     file_hash = hashlib.sha256(f.read()).hexdigest()
 
-# Send hash to Satohash
 r = requests.post('${API_URL}/api/stamp',
+    headers={'X-Satohash-Client': 'agent'},
     json={'hash': file_hash})
-data = r.json()
-print(f"Stamp ID: {data['id']} — Status: {data['status']}")`
+stamp = r.json()  # id, hash, status "pending"
+print(stamp['id'], stamp['status'])
+print('https://satohash.io/p/' + stamp['hash'])
+# Confirmed only when POST /api/verify returns verified true.`
 }
 
 const CLI_COMMANDS = [
@@ -104,13 +113,13 @@ const AI_INTEGRATIONS = [
   {
     icon: Bot,
     key: 'chatgpt',
-    code: 'POST /api/stamp with {"hash":"..."}',
+    code: 'POST /api/stamp {"hash":"<64 hex>"}',
     color: 'var(--accent-success)'
   },
   {
     icon: Bot,
     key: 'claude',
-    code: 'Tool: satohash_stamp(hash: string)',
+    code: 'HTTP POST /api/stamp — no built-in tool',
     color: 'var(--accent-purple)'
   },
   {

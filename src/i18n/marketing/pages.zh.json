@@ -642,11 +642,11 @@
       "ai": {
         "chatgpt": {
           "title": "ChatGPT / GPT-4",
-          "desc": "用 Custom GPT Action 直接从 ChatGPT 对话中盖戳文档。"
+          "desc": "没有现成插件。若你自建 Custom GPT Action，应向 /api/stamp POST 64 位 SHA-256。Pending 不是比特币确认。"
         },
         "claude": {
           "title": "Claude (Anthropic)",
-          "desc": "在 Claude 的 system prompt 中把 Satohash 加为工具。Claude 可按请求哈希并盖戳文件。"
+          "desc": "没有内置的 Satohash 工具。能发 HTTP 的代理把哈希 POST 到 /api/stamp，再轮询 POST /api/verify，直到 verified 为 true。"
         },
         "zapier": {
           "title": "Zapier / Make",
@@ -660,16 +660,16 @@
       "apiRef": "API 参考",
       "apiRefBody": "通过 Swagger UI 提供完整交互文档。REST API，JSON 请求体。",
       "webhooks": "Webhooks",
-      "webhooksTip": "你服务器上的 URL，Satohash 在盖戳确认或撤销时会调用。无需轮询。",
+      "webhooksTip": "可选。若已登记 URL，确认时 Satohash 可以回调。公开路径是轮询 POST /api/verify。",
       "rateLimits": "速率限制",
       "rateLimitsTip": "无每日配额。公开路径限制为每分钟 5 次请求以保持服务健康。不需要 Lightning 钱包。今天盖戳免费。",
       "bearer": "Bearer token",
       "bearerTip": "我们发放的套件应用可发送 X-Satohash-Key。没有自助 Bearer 密钥。请保密我们签发的任何密钥。",
       "openSwagger": "打开 Swagger UI →",
       "endpoints": {
-        "stamp": "提交 SHA-256 hash。返回盖戳 ID 和 .ots 证明文件。",
-        "verify": "核验 .ots 证明文件。返回 verified: true/false 以及 Bitcoin 区块高度。",
-        "history": "列出你最近 50 次盖戳。",
+        "stamp": "提交 64 位 SHA-256。返回 id、hash 和 status pending。.ots 需另行下载。",
+        "verify": "POST 哈希或 .ots 文件。只有比特币区块写入该摘要时 verified 才为 true。",
+        "history": "需要套件密钥。不是公开盖章路径。",
         "stamps": "获取盖戳详情或下载原始 .ots 二进制。",
         "upgrade": "检查 pending 盖戳是否已在 Bitcoin 上确认。",
         "fees": "来自 mempool.space 的实时 Bitcoin 手续费估算。"

@@ -1,3 +1,24 @@
+## 2026-10-12 (Grok M3 — GIT_SHA label is not a commit)
+
+Live `GET https://api.satohash.io/health` is HTTP 200 from Caddy. Uptime was ~8.9 days (process started around 3–4 October). `requireLightning` is **false**. Metrics were fresh: **494** stamps, **492** confirmed, **0** in 7 days. Family: katoa **5**, giveabit **3**, sherpacarta **2**, motopass **2**, tadbuy **2**.
+
+`gitSha` is **not** a commit. It is a Cloudflare “no server is currently available” body stored in `GIT_SHA`. The API is serving. The label is wrong, so we cannot tell whether the image is still `21476f8`.
+
+**Kimi:** on the next API start, set `GIT_SHA` from git. Do not put a curl body in that variable. `server/` is unchanged since `21476f8`, so this is a label fix.
+
+```bash
+cd /root/satohash && git fetch origin && git reset --hard origin/main
+GIT_SHA=$(git rev-parse --short HEAD) bash scripts/vps-deploy-api.sh
+```
+
+Done when `GET /health` `gitSha` matches `git rev-parse --short HEAD` and matches `^[0-9a-f]{7,40}$`. Keep `REQUIRE_LIGHTNING=false`. Do not change `/api/*` paths. If `/root/satohash` is dirty, deploy from a clean `origin/main`. Vault = THOR. Pages = Grok.
+
+**Cam:** iPhone `/p/` unfurl is deferred. The `@give_bit` pin stays with Cam. Grok cannot post as that account.
+
+SPA this push: `/status` hides a non-hex `gitSha`. Public stamp samples and `llms.txt` tell an agent the real `POST /api/stamp` then `POST /api/verify` loop. CLI `watch` waits on `verified === true`.
+
+---
+
 ## 2026-09-21 (Grok M3 — goodbye)
 
 Honesty + quieter UX wave closed. SPA `dccbc36`. API live **`21476f8`** (do not rebuild for this docs push). Optional who shipped. Verify asks Bitcoin. HowProofWorks 7 locales. Stamp/proof-card/landing quieter. MotoPass context crash guard in **motopass** `4198afc`. TadBuy `/api` 404s still their repo. Cam: pin `/watch`, iPhone unfurl. Vault = THOR. Pages = Grok. Summary: `docs/archive/SESSION-SUMMARY-2026-09-21-goodbye.md`.

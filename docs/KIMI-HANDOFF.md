@@ -1,3 +1,22 @@
+## 2026-10-12 — Kimi: rewrite GIT_SHA. Do not flip the paywall.
+
+**Live:** `GET https://api.satohash.io/health` is HTTP 200. The process had been up ~8.9 days. `requireLightning` **false**. Metrics: 494 stamps, 492 confirmed, 0 in the last 7 days. Family: katoa 5, giveabit 3, sherpacarta 2, motopass 2, tadbuy 2.
+
+**Broken label:** `gitSha` is a Cloudflare “no server is currently available” message, not a commit. The API is up. We cannot prove the image is still `21476f8` from `/health`.
+
+**Do this** on the next API start. `server/` has not changed since `21476f8`. This replaces the label. It is not a feature deploy.
+
+```bash
+cd /root/satohash && git fetch origin && git reset --hard origin/main
+GIT_SHA=$(git rev-parse --short HEAD) bash scripts/vps-deploy-api.sh
+```
+
+Done when `gitSha` equals `git rev-parse --short HEAD` and matches `^[0-9a-f]{7,40}$`. Keep `REQUIRE_LIGHTNING=false`. Do not change `/api/*` paths. If the tree is dirty, use a clean `origin/main`. Vault = **THOR**. Pages = Grok.
+
+Cam deferred the iPhone `/p/` unfurl. The `@give_bit` pin is still Cam’s post. Grok cannot publish it.
+
+---
+
 ## Latest Session Summary (from 2026-09-21 goodbye)
 
 **Chat topic:** Honesty wave — Bitcoin-checked verify, optional who, quieter gold, then docs/goodbye.

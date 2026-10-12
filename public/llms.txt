@@ -2,7 +2,21 @@
 
 Version: 5.0.0-ELITE
 
-> Free Bitcoin document stamping. Drop any file, get a permanent, Bitcoin-anchored proof of existence in under 60 seconds. Zero-knowledge — your file never leaves your device. OpenTimestamps + Bitcoin = immutable, independently verifiable evidence of existence (aligns with the framework of eIDAS / ESIGN / UETA).
+> Free Bitcoin document stamping. Hash the file on the device, send only the SHA-256, download a `.ots` receipt. Bitcoin confirmation takes about an hour. Pending is not confirmed. OpenTimestamps + Bitcoin. The receipt can be checked without Satohash.
+
+## For agents
+
+No plugin, no API key, no account. Stamps are free today (`REQUIRE_LIGHTNING=false`).
+
+1. Hash the file locally. Send a 64-character hex SHA-256. The file stays on the caller.
+2. `POST https://api.satohash.io/api/stamp` with `Content-Type: application/json`, header `X-Satohash-Client: agent`, body `{"hash":"<64 hex>"}`.
+3. A new stamp returns `id`, `hash`, `status: "pending"`, `verify_url`, `client_id`. A repeat hash returns `reused: true` and the existing row.
+4. Proof card: `https://satohash.io/p/<hash>`. `.ots` download: `GET https://api.satohash.io/api/stamps/<id>?download=true`.
+5. Confirmed only when `POST https://api.satohash.io/api/verify` with `{"hash":"<64 hex>"}` returns `"verified": true` and `bitcoin_block_height`. Registry status is not proof. Expect about an hour.
+6. Public rate limit is 5 requests per minute. Honor `Retry-After` on 429.
+7. CLI in this repo: `node packages/satohash-cli/bin/satohash.js stamp <file>` then `verify <hash>`. `watch` polls `/api/verify`.
+
+Do not claim a built-in ChatGPT Action or Claude tool. Do not treat Snapper, ZK redaction, or BOLT-12 as live. Optional Nostr “who” is a browser-checked binding, not a legal name.
 
 ## What Satohash is
 

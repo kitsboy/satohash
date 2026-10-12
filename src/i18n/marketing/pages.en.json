@@ -652,11 +652,11 @@
       "ai": {
         "chatgpt": {
           "title": "ChatGPT / GPT-4",
-          "desc": "Use a Custom GPT Action to stamp documents directly from a ChatGPT conversation."
+          "desc": "No plugin ships. If you build a Custom GPT Action, it should POST /api/stamp with a 64-character SHA-256. Pending is not Bitcoin-confirmed."
         },
         "claude": {
           "title": "Claude (Anthropic)",
-          "desc": "Add Satohash as a tool in your Claude system prompt. Claude can hash and stamp files on request."
+          "desc": "No Satohash tool is built in. An agent that can send HTTP POSTs the hash to /api/stamp, then polls POST /api/verify until verified is true."
         },
         "zapier": {
           "title": "Zapier / Make",
@@ -670,16 +670,16 @@
       "apiRef": "API reference",
       "apiRefBody": "Full interactive docs via Swagger UI. REST API with JSON bodies.",
       "webhooks": "Webhooks",
-      "webhooksTip": "A URL on your server that Satohash calls when a stamp is confirmed or revoked. No polling needed.",
+      "webhooksTip": "Optional. If a URL is registered, Satohash can call it when a stamp confirms. The public path is to poll POST /api/verify.",
       "rateLimits": "Rate limits",
       "rateLimitsTip": "No daily quota. The public path is rate-limited to 5 requests per minute to keep the service healthy. No Lightning wallet needed. Stamps are free today.",
       "bearer": "Bearer token",
       "bearerTip": "Suite apps we provision may send X-Satohash-Key. Self-serve Bearer keys are not available. Keep any key we issue secret.",
       "openSwagger": "Open Swagger UI →",
       "endpoints": {
-        "stamp": "Submit a SHA-256 hash. Returns a stamp ID and .ots proof file.",
-        "verify": "Verify a .ots proof file. Returns verified: true/false and the Bitcoin block height.",
-        "history": "List your last 50 stamps.",
+        "stamp": "Submit a 64-character SHA-256. Returns id, hash, and status pending. The .ots is a separate download.",
+        "verify": "POST a hash or an .ots file. verified is true only when a Bitcoin block commits to that digest.",
+        "history": "Suite key required. Not the public stamp path.",
         "stamps": "Get stamp details or download the raw .ots binary.",
         "upgrade": "Check if a pending stamp has been confirmed on Bitcoin.",
         "fees": "Live Bitcoin fee estimates from mempool.space."

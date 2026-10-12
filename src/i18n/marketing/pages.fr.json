@@ -652,11 +652,11 @@
       "ai": {
         "chatgpt": {
           "title": "ChatGPT / GPT-4",
-          "desc": "Utilisez une Custom GPT Action pour horodater des documents depuis une conversation ChatGPT."
+          "desc": "Aucun plugin fourni. Si vous créez une Custom GPT Action, elle doit POST /api/stamp avec un SHA-256 de 64 caractères. Pending n’est pas une confirmation Bitcoin."
         },
         "claude": {
           "title": "Claude (Anthropic)",
-          "desc": "Ajoutez Satohash comme outil dans le system prompt de Claude. Claude peut hacher et horodater des fichiers sur demande."
+          "desc": "Aucun outil Satohash n’est intégré. Un agent qui peut envoyer du HTTP poste le hash sur /api/stamp, puis interroge POST /api/verify jusqu’à verified true."
         },
         "zapier": {
           "title": "Zapier / Make",
@@ -670,16 +670,16 @@
       "apiRef": "Référence API",
       "apiRefBody": "Documentation interactive complète via Swagger UI. REST API avec corps JSON.",
       "webhooks": "Webhooks",
-      "webhooksTip": "Une URL sur votre serveur que Satohash appelle quand un horodatage est confirmé ou révoqué. Pas de polling.",
+      "webhooksTip": "Facultatif. Si une URL est enregistrée, Satohash peut l’appeler à la confirmation. Le chemin public est d’interroger POST /api/verify.",
       "rateLimits": "Limites de débit",
       "rateLimitsTip": "Pas de quota quotidien. Le chemin public est limité à 5 requêtes par minute pour garder le service sain. Pas de portefeuille Lightning nécessaire. Les horodatages sont gratuits aujourd’hui.",
       "bearer": "Bearer token",
       "bearerTip": "Les apps de la suite que nous provisionnons peuvent envoyer X-Satohash-Key. Les clés Bearer en libre-service n’existent pas. Gardez secrète toute clé que nous émettons.",
       "openSwagger": "Ouvrir Swagger UI →",
       "endpoints": {
-        "stamp": "Soumettez un hash SHA-256. Renvoie un ID d’horodatage et le fichier de preuve .ots.",
-        "verify": "Vérifiez un fichier .ots. Renvoie verified: true/false et la hauteur de bloc Bitcoin.",
-        "history": "Liste vos 50 derniers horodatages.",
+        "stamp": "Envoyez un SHA-256 de 64 caractères. Réponse : id, hash, et status pending. Le fichier .ots se télécharge à part.",
+        "verify": "POST d’un hash ou d’un fichier .ots. verified est true seulement quand un bloc Bitcoin engage ce digest.",
+        "history": "Clé suite requise. Ce n’est pas le chemin public.",
         "stamps": "Obtenez les détails de l’horodatage ou téléchargez le binaire .ots.",
         "upgrade": "Vérifiez si un horodatage pending a été confirmé sur Bitcoin.",
         "fees": "Estimations de frais Bitcoin en direct depuis mempool.space."

@@ -652,11 +652,11 @@
       "ai": {
         "chatgpt": {
           "title": "ChatGPT / GPT-4",
-          "desc": "Usa uma Custom GPT Action para selar documentos a partir de uma conversa ChatGPT."
+          "desc": "Não há plugin. Se criar uma Custom GPT Action, ela deve fazer POST /api/stamp com um SHA-256 de 64 caracteres. Pending não é confirmação no Bitcoin."
         },
         "claude": {
           "title": "Claude (Anthropic)",
-          "desc": "Adiciona o Satohash como ferramenta no system prompt do Claude. O Claude pode fazer hash e selar ficheiros a pedido."
+          "desc": "Não há ferramenta Satohash embutida. Um agente que envia HTTP faz POST do hash em /api/stamp e consulta POST /api/verify até verified ser true."
         },
         "zapier": {
           "title": "Zapier / Make",
@@ -670,16 +670,16 @@
       "apiRef": "Referência da API",
       "apiRefBody": "Documentação interativa completa via Swagger UI. REST API com corpos JSON.",
       "webhooks": "Webhooks",
-      "webhooksTip": "Um URL no teu servidor que o Satohash chama quando um selo é confirmado ou revogado. Sem polling.",
+      "webhooksTip": "Opcional. Se houver um URL registado, o Satohash pode chamá-lo na confirmação. O caminho público é consultar POST /api/verify.",
       "rateLimits": "Limites de ritmo",
       "rateLimitsTip": "Sem quota diária. O caminho público está limitado a 5 pedidos por minuto para manter o serviço saudável. Não é preciso carteira Lightning. Os selos são grátis hoje.",
       "bearer": "Bearer token",
       "bearerTip": "As apps da suite que provisionamos podem enviar X-Satohash-Key. Não há chaves Bearer self-serve. Guarda em segredo qualquer chave que emitirmos.",
       "openSwagger": "Abrir Swagger UI →",
       "endpoints": {
-        "stamp": "Submete um hash SHA-256. Devolve um ID de selo e o ficheiro de prova .ots.",
-        "verify": "Verifica um ficheiro .ots. Devolve verified: true/false e a altura do bloco Bitcoin.",
-        "history": "Lista os teus últimos 50 selos.",
+        "stamp": "Envie um SHA-256 de 64 caracteres. Devolve id, hash e status pending. O .ots é um download à parte.",
+        "verify": "POST de um hash ou de um ficheiro .ots. verified é true só quando um bloco Bitcoin fixa esse digest.",
+        "history": "Exige chave da suite. Não é o caminho público.",
         "stamps": "Obtém detalhes do selo ou descarrega o binário .ots.",
         "upgrade": "Verifica se um selo pending foi confirmado no Bitcoin.",
         "fees": "Estimativas de taxas Bitcoin em direto a partir de mempool.space."

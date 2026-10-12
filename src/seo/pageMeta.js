@@ -753,36 +753,36 @@ export const pageMeta = {
     en: {
       title: 'Stamp — Bitcoin Document Timestamping',
       description:
-        'Hash and anchor any file to Bitcoin in under 60 seconds. Single file, time capsule, ZK-redact, or deposition modes — your file never leaves your device.'
+        'Hash a file on this device and stamp the fingerprint. Bitcoin confirmation takes about an hour. The file stays here.'
     },
     es: {
       title: 'Sellar — Sellado de Documentos en Bitcoin',
       description:
-        'Hashea y ancla cualquier archivo en Bitcoin en menos de 60 segundos. Modos archivo único, cápsula, ZK-redact o deposición.'
+        'Hashea un archivo en este dispositivo y sella la huella. La confirmación en Bitcoin tarda cerca de una hora. El archivo se queda aquí.'
     },
     fr: {
       title: 'Tamponner — Horodatage Bitcoin',
       description:
-        'Hachez et ancrez tout fichier sur Bitcoin en moins de 60 secondes. Modes fichier unique, capsule, ZK-redact ou déposition.'
+        'Hachez un fichier sur cet appareil et tamponnez l’empreinte. La confirmation Bitcoin prend environ une heure. Le fichier reste ici.'
     },
     de: {
       title: 'Stempeln — Bitcoin-Dokumentenstempel',
       description:
-        'Hashen und verankern Sie jede Datei in unter 60 Sekunden auf Bitcoin. Einzeldatei, Zeitkapsel, ZK-Redact oder Deposition.'
+        'Hashen Sie eine Datei auf diesem Gerät und stempeln Sie den Fingerabdruck. Die Bitcoin-Bestätigung dauert etwa eine Stunde. Die Datei bleibt hier.'
     },
     pt: {
       title: 'Carimbar — Carimbo de Documentos Bitcoin',
       description:
-        'Faça hash e ancore qualquer arquivo no Bitcoin em menos de 60 segundos. Modos arquivo único, cápsula, ZK-redact ou depoimento.'
+        'Faça o hash de um arquivo neste dispositivo e carimbe a impressão. A confirmação no Bitcoin leva cerca de uma hora. O arquivo fica aqui.'
     },
     sw: {
       title: 'Weka Muhuri — Muhuri wa Hati kwenye Bitcoin',
       description:
-        'Hash na fungia faili yoyote kwenye Bitcoin ndani ya sekunde 60. Hali za faili moja, kapsuli, ZK-redact au ushahidi.'
+        'Hash faili kwenye kifaa hiki na ufunge alama. Uthibitisho wa Bitcoin huchukua karibu saa moja. Faili inabaki hapa.'
     },
     zh: {
       title: '盖章 — 比特币文档时间戳',
-      description: '60秒内在比特币上哈希并锚定任意文件。单文件、时间胶囊、ZK脱敏或取证模式。'
+      description: '在本机哈希文件并盖上指纹。比特币确认大约需要一小时。文件留在本机。'
     }
   },
   vault: {

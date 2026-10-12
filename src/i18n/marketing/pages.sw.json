@@ -652,11 +652,11 @@
       "ai": {
         "chatgpt": {
           "title": "ChatGPT / GPT-4",
-          "desc": "Tumia Custom GPT Action kugonga waraka moja kwa moja kutoka mazungumzo ya ChatGPT."
+          "desc": "Hakuna plugin. Ukitengeneza Custom GPT Action, itume POST /api/stamp na SHA-256 ya herufi 64. Pending si uthibitisho wa Bitcoin."
         },
         "claude": {
           "title": "Claude (Anthropic)",
-          "desc": "Ongeza Satohash kama zana katika system prompt ya Claude. Claude inaweza kuhash na kugonga faili ukiomba."
+          "desc": "Hakuna zana ya Satohash iliyojengwa ndani. Wakala anayetuma HTTP anapost hash kwenye /api/stamp, kisha anauliza POST /api/verify hadi verified iwe true."
         },
         "zapier": {
           "title": "Zapier / Make",
@@ -670,16 +670,16 @@
       "apiRef": "Rejea ya API",
       "apiRefBody": "Nyaraka kamili zinazoingiliana kupitia Swagger UI. REST API yenye miili ya JSON.",
       "webhooks": "Webhooks",
-      "webhooksTip": "URL kwenye seva yako ambayo Satohash inaita gongo linapothibitishwa au kufutwa. Hakuna uchunguzi wa mara kwa mara.",
+      "webhooksTip": "Si lazima. URL ikisajiliwa, Satohash inaweza kuiita stamp ikithibitishwa. Njia ya umma ni kuuliza POST /api/verify.",
       "rateLimits": "Vikomo vya kasi",
       "rateLimitsTip": "Hakuna mgao wa siku. Njia ya umma ina kikomo cha maombi 5 kwa dakika ili huduma ibaki nzuri. Hakuna pochi ya Lightning inahitajika. Migongo ni bure leo.",
       "bearer": "Bearer token",
       "bearerTip": "Programu za suite tunazotoa zinaweza kutuma X-Satohash-Key. Hakuna funguo za Bearer za kujihudumia. Weka siri ufunguo wowote tunaotoa.",
       "openSwagger": "Fungua Swagger UI →",
       "endpoints": {
-        "stamp": "Wasilisha hash ya SHA-256. Inarudisha ID ya gongo na faili ya uthibitisho ya .ots.",
-        "verify": "Thibitisha faili ya .ots. Inarudisha verified: true/false na urefu wa bloku ya Bitcoin.",
-        "history": "Orodhesha migongo yako 50 ya mwisho.",
+        "stamp": "Tuma SHA-256 ya herufi 64. Jibu: id, hash, na status pending. Faili ya .ots inapakuliwa kivyake.",
+        "verify": "POST ya hash au faili ya .ots. verified ni true tu wakati block ya Bitcoin inathibitisha digest hiyo.",
+        "history": "Inahitaji ufunguo wa suite. Si njia ya umma.",
         "stamps": "Pata maelezo ya gongo au pakua binary ghafi ya .ots.",
         "upgrade": "Angalia kama gongo pending limethibitishwa kwenye Bitcoin.",
         "fees": "Makadirio hai ya ada za Bitcoin kutoka mempool.space."

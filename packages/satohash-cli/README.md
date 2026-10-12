@@ -29,7 +29,7 @@ npx --prefix packages/satohash-cli satohash status
 | `status [--json]` | `GET /health` |
 | `stamp <file> [--json] [--watch]` | Hash the file, `POST /api/stamp`, print the proof card URL |
 | `verify <hash> [--json]` | `POST /api/verify` |
-| `watch <hash> [--json] [--interval N]` | Poll `GET /api/stamps/:hash/by-hash` until Bitcoin-confirmed |
+| `watch <hash> [--json] [--interval N]` | Poll `POST /api/verify` until `verified` is true |
 
 On stamp success the CLI prints `https://satohash.io/p/<hash>` (the zero-JS proof card). `--watch` on stamp keeps polling until confirmed.
 

@@ -652,11 +652,11 @@
       "ai": {
         "chatgpt": {
           "title": "ChatGPT / GPT-4",
-          "desc": "Nutzen Sie eine Custom GPT Action, um Dokumente direkt aus einem ChatGPT-Gespräch zu stempeln."
+          "desc": "Kein Plugin. Eine eigene Custom GPT Action soll POST /api/stamp mit einem 64-stelligen SHA-256 senden. Pending ist keine Bitcoin-Bestätigung."
         },
         "claude": {
           "title": "Claude (Anthropic)",
-          "desc": "Fügen Sie Satohash als Tool in Ihrem Claude-Systemprompt hinzu. Claude kann Dateien auf Anfrage hashen und stempeln."
+          "desc": "Kein eingebautes Satohash-Tool. Ein Agent mit HTTP sendet den Hash an POST /api/stamp und fragt POST /api/verify ab, bis verified true ist."
         },
         "zapier": {
           "title": "Zapier / Make",
@@ -670,16 +670,16 @@
       "apiRef": "API-Referenz",
       "apiRefBody": "Vollständige interaktive Docs über Swagger UI. REST-API mit JSON-Bodies.",
       "webhooks": "Webhooks",
-      "webhooksTip": "Eine URL auf Ihrem Server, die Satohash aufruft, wenn ein Stempel bestätigt oder widerrufen wird. Kein Polling nötig.",
+      "webhooksTip": "Optional. Ist eine URL registriert, kann Satohash sie bei Bestätigung aufrufen. Öffentlich gilt: POST /api/verify abfragen.",
       "rateLimits": "Ratenlimits",
       "rateLimitsTip": "Kein Tageskontingent. Der öffentliche Pfad ist auf 5 Anfragen pro Minute begrenzt, damit der Dienst gesund bleibt. Kein Lightning-Wallet nötig. Stempel sind heute kostenlos.",
       "bearer": "Bearer token",
       "bearerTip": "Suite-Apps, die wir provisionieren, können X-Satohash-Key senden. Self-Serve-Bearer-Schlüssel gibt es nicht. Halten Sie jeden von uns ausgegebenen Schlüssel geheim.",
       "openSwagger": "Swagger UI öffnen →",
       "endpoints": {
-        "stamp": "Einen SHA-256-Hash einreichen. Liefert eine Stempel-ID und die .ots-Proof-Datei.",
-        "verify": "Eine .ots-Proof-Datei prüfen. Liefert verified: true/false und die Bitcoin-Blockhöhe.",
-        "history": "Ihre letzten 50 Stempel auflisten.",
+        "stamp": "64-stelligen SHA-256 senden. Antwort: id, hash, status pending. Die .ots-Datei ist ein eigener Download.",
+        "verify": "POST eines Hash oder einer .ots-Datei. verified ist true nur, wenn ein Bitcoin-Block diesen Digest festschreibt.",
+        "history": "Suite-Schlüssel nötig. Nicht der öffentliche Stempelweg.",
         "stamps": "Stempeldetails holen oder die rohe .ots-Binärdatei herunterladen.",
         "upgrade": "Prüfen, ob ein pending-Stempel auf Bitcoin bestätigt wurde.",
         "fees": "Live-Bitcoin-Gebührenschätzungen von mempool.space."
