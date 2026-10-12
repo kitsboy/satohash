@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { QRCodeSVG as QRCode } from 'qrcode.react'
-import { Share2, Download, Package, Link2, Vault } from 'lucide-react'
+import { Share2, Package, Link2, Vault } from 'lucide-react'
 import { toast } from 'sonner'
 import { useTranslation } from 'react-i18next'
 
@@ -202,6 +202,22 @@ export default function StampSuccessActions({
           </Link>
         )}
 
+        {hasHostedId ? (
+          <a
+            href={`${getApiUrl()}/api/stamps/${proof.id}?download=true`}
+            data-testid="stamp-done-ots"
+            onClick={() =>
+              trackEvent(events.TIMESTAMP_DOWNLOADED, { kind: 'ots', ...funnelProps() })
+            }
+            className="flex min-h-[44px] items-center justify-center text-xs font-bold underline underline-offset-4"
+            style={{ color: 'var(--text-secondary)' }}
+          >
+            {isConfirmed || proof?.status === 'confirmed'
+              ? t('stampDonePage.otsConfirmed')
+              : t('stampDonePage.otsPending')}
+          </a>
+        ) : null}
+
         {onStampAnother ? (
           <button
             type="button"
@@ -297,30 +313,14 @@ export default function StampSuccessActions({
               })}
             </div>
 
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-              {hasHostedId ? (
-                <a
-                  href={`${getApiUrl()}/api/stamps/${proof.id}?download=true`}
-                  onClick={() =>
-                    trackEvent(events.TIMESTAMP_DOWNLOADED, { kind: 'ots', ...funnelProps() })
-                  }
-                  className="flex min-h-[48px] items-center justify-center gap-2 rounded-xl border px-2 text-center text-[11px] leading-tight font-black tracking-wider uppercase"
-                  style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
-                >
-                  <Download size={16} className="shrink-0" />
-                  {isConfirmed || proof?.status === 'confirmed'
-                    ? t('stampDonePage.otsConfirmed')
-                    : t('stampDonePage.otsPending')}
-                </a>
-              ) : (
-                <span
-                  className="flex min-h-[48px] items-center justify-center gap-2 rounded-xl text-xs font-black tracking-wider uppercase opacity-50"
-                  style={{ background: 'var(--border)', color: 'var(--text-secondary)' }}
-                >
-                  {t('receiptPage.otsLocal')}
-                </span>
-              )}
-            </div>
+            {!hasHostedId ? (
+              <span
+                className="flex min-h-[48px] items-center justify-center gap-2 rounded-xl text-xs font-black tracking-wider uppercase opacity-50"
+                style={{ background: 'var(--border)', color: 'var(--text-secondary)' }}
+              >
+                {t('receiptPage.otsLocal')}
+              </span>
+            ) : null}
 
             <button
               type="button"

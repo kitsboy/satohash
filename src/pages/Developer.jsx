@@ -28,6 +28,7 @@ import Tooltip from '../components/ui/Tooltip'
 
 import { getApiUrl } from '../config/constants'
 import { isApiExplicitlyConfigured } from '../config/mvp'
+import { PUBLIC_PROOF } from '../config/publicProof'
 import Footer from '../components/layout/Footer'
 
 const API_URL = getApiUrl()
@@ -778,9 +779,9 @@ export default function Developer() {
                       className="overflow-x-auto rounded-xl p-4 font-mono text-[11px] leading-relaxed"
                       style={{ background: 'var(--bg-primary)', color: 'var(--text-secondary)' }}
                     >
-                      {`curl -X POST ${API_URL}/api/stamp \\
+                      {`curl -X POST ${API_URL}/api/verify \\
   -H "Content-Type: application/json" \\
-  -d '{"hash":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"}'`}
+  -d '{"hash":"${PUBLIC_PROOF.hash}"}'`}
                     </pre>
                   </div>
                   <p className="text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>

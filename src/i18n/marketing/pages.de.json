@@ -1769,10 +1769,16 @@
   "stampPage": {
     "modes": {
       "single": "Einzeldatei",
-      "capsule": "Kapsel",
-      "redact": "ZK-Redact",
-      "deposition": "Deposition"
+      "capsule": "Kapsel-Demo",
+      "redact": "Schwärzungs-Demo",
+      "deposition": "Sprach-Demo"
     },
+    "modeCapsuleBody": "Demo. Mehrere Dateien bündeln, dann stempeln.",
+    "modeRedactBody": "Demo. Wörter schwärzen, dann stempeln.",
+    "modeDepositionBody": "Demo. Eine Sprachnotiz aufnehmen, dann stempeln.",
+    "redactTitle": "Demo · Wörter schwärzen",
+    "redactHint": "Text eingeben, dann die zu verbergenden Wörter, durch Kommas getrennt.",
+    "calendarWait": "Die Kalender haben nicht geantwortet. Kurz warten und erneut versuchen. Pending bedeutet, ein bereits gesendeter Stempel ist noch auf dem Weg zu Bitcoin.",
     "takePhoto": "Foto aufnehmen",
     "chooseFile": "Datei wählen",
     "confirmedToast": "Auf Bitcoin bestätigt!",
@@ -1811,7 +1817,7 @@
     "fileTooLarge": "Datei ist {{size}} MB — max. {{max}} MB im Browser. Offline hashen und SHA-256 einfügen.",
     "fileTooLargeToast": "Datei zu groß für Browser-Stempel",
     "fileTooLargeToastDesc": "Kleinere Datei verwenden oder einen vorberechneten SHA-256 stempeln",
-    "tooManyRequests": "Zu viele Anfragen — erneut in {{seconds}} s",
+    "tooManyRequests": "Zu viele Stempel (etwa 5 pro Minute). {{seconds}} s warten, dann erneut versuchen. Pending bedeutet, ein bereits gesendeter Stempel ist noch auf dem Weg zu Bitcoin.",
     "notifyEmailPlaceholder": "E-Mail bei Bestätigung (optional)",
     "photosGallery": "Fotos / Galerie",
     "folderCapsule": "Ordner (eine Merkle-Kapsel)",

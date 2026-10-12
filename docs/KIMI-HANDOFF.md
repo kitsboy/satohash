@@ -1,3 +1,18 @@
+## 2026-10-12 — Do not push 6c8ae2e. Fetch before any rebuild.
+
+GitHub `main` is ahead of the copy THOR last fetched (`bfe166f`). THOR HEAD `6c8ae2e` is not on GitHub. Do not push it. Do not `reset` onto the stale `origin/main`.
+
+When you do restart the API, fetch first, then:
+
+```bash
+cd /root/satohash && git fetch origin && git reset --hard origin/main
+GIT_SHA=$(git rev-parse --short HEAD) bash scripts/vps-deploy-api.sh
+```
+
+Keep `REQUIRE_LIGHTNING=false`. Do not change `/api/*`. This website push does not need an API rebuild. `server/` is still unchanged since `21476f8`. The live `gitSha` is still the Cloudflare error string.
+
+---
+
 ## 2026-10-12 — SPA push does not replace the GIT_SHA job
 
 Grok pushed `/stamp`, `/status`, and `/developer` copy only. No `/api/*` change. Paywall stays off. `server/` is still unchanged since `21476f8`.

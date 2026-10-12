@@ -1769,10 +1769,16 @@
   "stampPage": {
     "modes": {
       "single": "Archivo único",
-      "capsule": "Cápsula",
-      "redact": "ZK-Redact",
-      "deposition": "Deposición"
+      "capsule": "Cápsula demo",
+      "redact": "Demo de tachado",
+      "deposition": "Demo de voz"
     },
+    "modeCapsuleBody": "Demo. Junta varios archivos y luego sella.",
+    "modeRedactBody": "Demo. Tacha palabras y luego sella.",
+    "modeDepositionBody": "Demo. Graba una nota de voz y luego sella.",
+    "redactTitle": "Demo · tachar palabras",
+    "redactHint": "Escribe el texto y luego las palabras a ocultar, separadas por comas.",
+    "calendarWait": "Los calendarios no respondieron. Espera un momento y vuelve a intentar. Pending significa que un sello ya enviado sigue en camino a Bitcoin.",
     "takePhoto": "Tomar foto",
     "chooseFile": "Elegir archivo",
     "confirmedToast": "¡Confirmado en Bitcoin!",
@@ -1811,7 +1817,7 @@
     "fileTooLarge": "El archivo pesa {{size}} MB — máximo {{max}} MB en el navegador. Hashea fuera de línea y pega el SHA-256.",
     "fileTooLargeToast": "Archivo demasiado grande para sellar en el navegador",
     "fileTooLargeToastDesc": "Usa un archivo más pequeño o sella un hash SHA-256 ya calculado",
-    "tooManyRequests": "Demasiadas solicitudes — inténtalo de nuevo en {{seconds}} s",
+    "tooManyRequests": "Demasiadas solicitudes de sello (unas 5 por minuto). Espera {{seconds}} s y vuelve a intentar. Pending significa que un sello ya enviado sigue en camino a Bitcoin.",
     "notifyEmailPlaceholder": "Avísame por email al confirmar (opcional)",
     "photosGallery": "Fotos / galería",
     "folderCapsule": "Carpeta (una cápsula Merkle)",

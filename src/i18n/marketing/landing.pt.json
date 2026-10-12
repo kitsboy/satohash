@@ -15,6 +15,7 @@
     "description": "O Satohash calcula o hash do seu ficheiro localmente no seu navegador — o seu documento nunca sai do seu dispositivo. Apenas uma impressão digital criptográfica é escrita na blockchain Bitcoin, criando prova imutável de existência para qualquer ficheiro, contrato, fotografia ou conjunto de dados.",
     "ctaStamp": "Carimbar um ficheiro — É grátis",
     "ctaWatch": "Assistir ao explainer",
+    "seeConfirmed": "Ver uma prova Confirmed · bloco {{block}}",
     "ctaTemplates": "Explorar modelos",
     "socialProof": "{{count}} provas ancoradas no Bitcoin emitidas neste plano",
     "tryTemplate": "Experimente um modelo grátis"
@@ -27,7 +28,7 @@
     "epochProgress": "Progresso da época",
     "satPerVb": "sat/vB",
     "feeNote": "Indicativa · mempool, não é uma taxa Satohash",
-    "zeroKnowledge": "Conhecimento zero (hash local)",
+    "zeroKnowledge": "O arquivo fica neste dispositivo",
     "compliance": "Alinhado com eIDAS e ESIGN",
     "proofsConfirmed": "{{count}} provas confirmadas"
   },
@@ -39,7 +40,7 @@
     "cards": {
       "noServer": {
         "title": "Sem servidor necessário",
-        "body": "O seu documento nunca sai do seu dispositivo. Só vemos um hash criptográfico — como uma impressão digital, não o ficheiro real. Conhecimento zero por conceção."
+        "body": "O seu documento nunca sai do seu dispositivo. Só vemos um hash criptográfico — como uma impressão digital, não o ficheiro real."
       },
       "anchored": {
         "title": "Ancorado em 60 minutos",
@@ -75,7 +76,7 @@
     },
     "cta": "Experimente agora — Grátis",
     "privacyTitle": "Os seus ficheiros nunca saem do seu dispositivo",
-    "privacyBody": "O Satohash só vê um hash SHA-256 — nunca o seu documento original. Conhecimento zero por conceção."
+    "privacyBody": "O Satohash só vê um hash SHA-256 — nunca o seu documento original."
   },
   "useCases": {
     "title": "Quem precisa de uma prova que não possa ser falsificada?",

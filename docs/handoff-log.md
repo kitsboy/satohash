@@ -1,3 +1,23 @@
+## 2026-10-12 (Grok M3 — real confirmed proof on the public pages)
+
+SPA only. Paywall stays off. No `/api/*` change.
+
+Checked with `POST /api/verify`: hash `515b2a393bbffcfe9c3511d04a4349e199dbff1959cc0ac1f76817cd92f53abd` is `verified: true` on Bitcoin block **969627** (bitcoind). The live zero-JS card already shows Confirmed · block 969,627.
+
+- Homepage and `/verify` link to `/p/<that hash>`.
+- Widget samples, the proof-DNA default, and the developer try-now curl use that hash. The try-now curl is `POST /api/verify`.
+- Explorer’s tree is labeled a diagram. The empty-file hash and the invented `a2b1c442…` leaf are gone. A text link opens the real proof.
+- Dashboard will not stamp the empty-file hash when a file hash is missing. Pending is described as pending.
+- `/stamp/done`: Download .ots is text under the gold View proof button.
+- Capsule, redact, and voice are demos in seven languages. The redact panel no longer says Zero-Knowledge. The homepage chip says the file stays on the device.
+- A 429 uses `Retry-After` (or 60 seconds). The page says Pending means a stamp already sent is still on its way to Bitcoin.
+
+**Kimi:** do not push `6c8ae2e`. Do not rebuild from the server’s old `bfe166f`. GitHub main moves forward with this SPA push. `GIT_SHA` is still the long Cloudflare string. Fetch `origin/main` before any API restart. Keep `REQUIRE_LIGHTNING=false`.
+
+Cam’s picture stamp `21007bc2…` was pending at 2026-10-12 23:07:52 UTC. Proof: `/p/21007bc2d3a5a773ba507760a25aa96e39d33bec2196fd0eea7f08fd152aea83`.
+
+---
+
 ## 2026-10-12 (Grok M3 — stamp first screen, quiet SHA, short developer sample)
 
 SPA only. No `/api/*` change. Paywall stays off. `server/` is still unchanged since `21476f8`.

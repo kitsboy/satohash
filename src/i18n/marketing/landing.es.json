@@ -15,6 +15,7 @@
     "description": "Satohash calcula el hash de tu archivo localmente en tu navegador — tu documento nunca abandona tu dispositivo. Solo una huella criptográfica se escribe en la blockchain de Bitcoin, creando una prueba inmutable de existencia para cualquier archivo, contrato, foto o conjunto de datos.",
     "ctaStamp": "Sellar un archivo — Es gratis",
     "ctaWatch": "Ver el explainer",
+    "seeConfirmed": "Ver una prueba Confirmed · bloque {{block}}",
     "ctaTemplates": "Explorar plantillas",
     "socialProof": "{{count}} pruebas ancladas a Bitcoin emitidas en este plano",
     "tryTemplate": "Prueba una plantilla gratis"
@@ -27,7 +28,7 @@
     "epochProgress": "Progreso de la época",
     "satPerVb": "sat/vB",
     "feeNote": "Indicativa · mempool, no es una tarifa de Satohash",
-    "zeroKnowledge": "Conocimiento cero (hash local)",
+    "zeroKnowledge": "El archivo se queda en este dispositivo",
     "compliance": "Alineado con eIDAS y ESIGN",
     "proofsConfirmed": "{{count}} pruebas confirmadas"
   },
@@ -39,7 +40,7 @@
     "cards": {
       "noServer": {
         "title": "Sin servidor necesario",
-        "body": "Tu documento nunca abandona tu dispositivo. Solo vemos un hash criptográfico — como una huella dactilar, no el archivo real. Conocimiento cero por diseño."
+        "body": "Tu documento nunca abandona tu dispositivo. Solo vemos un hash criptográfico — como una huella dactilar, no el archivo real."
       },
       "anchored": {
         "title": "Anclado en 60 minutos",
@@ -75,7 +76,7 @@
     },
     "cta": "Pruébalo ahora — Gratis",
     "privacyTitle": "Tus archivos nunca abandonan tu dispositivo",
-    "privacyBody": "Satohash solo ve un hash SHA-256 — nunca tu documento original. Conocimiento cero por diseño."
+    "privacyBody": "Satohash solo ve un hash SHA-256 — nunca tu documento original."
   },
   "useCases": {
     "title": "¿Quién necesita una prueba que no se pueda falsificar?",

@@ -1,10 +1,8 @@
 import React, { useState, useMemo } from 'react'
 import { motion, useMotionValue, useTransform } from 'framer-motion'
+import { PUBLIC_PROOF } from '../../config/publicProof'
 
-export default function ProofDNA({
-  hash = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
-  size = 'md'
-}) {
+export default function ProofDNA({ hash = PUBLIC_PROOF.hash, size = 'md' }) {
   const [isHovered, setIsHovered] = useState(false)
   const mouseX = useMotionValue(0)
   const mouseY = useMotionValue(0)

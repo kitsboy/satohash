@@ -6,8 +6,9 @@ import Footer from '../components/layout/Footer'
 import ProofDNA from '../components/stamps/ProofDNA'
 import usePageMeta from '../hooks/usePageMeta'
 import { getPublicBaseUrl } from '../config/constants'
+import { PUBLIC_PROOF } from '../config/publicProof'
 
-const DEMO_HASH = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'
+const DEMO_HASH = PUBLIC_PROOF.hash
 const FAMILY_STAMP_SCRIPT = 'https://satohash.io/widgets/stamp.js'
 const FAMILY_WIDGETS = [
   { id: 'katoa', label: 'katoa' },

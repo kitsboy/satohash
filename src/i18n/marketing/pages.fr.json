@@ -1769,10 +1769,16 @@
   "stampPage": {
     "modes": {
       "single": "Fichier unique",
-      "capsule": "Capsule",
-      "redact": "ZK-Redact",
-      "deposition": "Déposition"
+      "capsule": "Capsule démo",
+      "redact": "Démo caviardage",
+      "deposition": "Démo voix"
     },
+    "modeCapsuleBody": "Démo. Regroupez plusieurs fichiers, puis timbrez.",
+    "modeRedactBody": "Démo. Masquez des mots, puis timbrez.",
+    "modeDepositionBody": "Démo. Enregistrez une note vocale, puis timbrez.",
+    "redactTitle": "Démo · masquer des mots",
+    "redactHint": "Écrivez le texte, puis les mots à masquer, séparés par des virgules.",
+    "calendarWait": "Les calendriers n’ont pas répondu. Attendez un moment et réessayez. Pending signifie qu’un timbre déjà envoyé est encore en route vers Bitcoin.",
     "takePhoto": "Prendre photo",
     "chooseFile": "Choisir fichier",
     "confirmedToast": "Confirmé sur Bitcoin !",
@@ -1811,7 +1817,7 @@
     "fileTooLarge": "Fichier de {{size}} Mo — max {{max}} Mo dans le navigateur. Hachez hors ligne et collez le SHA-256.",
     "fileTooLargeToast": "Fichier trop volumineux pour tamponner dans le navigateur",
     "fileTooLargeToastDesc": "Utilisez un fichier plus petit ou tamponnez un hash SHA-256 déjà calculé",
-    "tooManyRequests": "Trop de requêtes — réessayez dans {{seconds}} s",
+    "tooManyRequests": "Trop de timbres (environ 5 par minute). Attendez {{seconds}} s, puis réessayez. Pending signifie qu’un timbre déjà envoyé est encore en route vers Bitcoin.",
     "notifyEmailPlaceholder": "M’envoyer un e-mail à la confirmation (optionnel)",
     "photosGallery": "Photos / galerie",
     "folderCapsule": "Dossier (une capsule Merkle)",

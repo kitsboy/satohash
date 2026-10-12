@@ -1,7 +1,7 @@
 # Current Status — Satohash
 
-**Version:** **5.0.0-ELITE** (Build 418)  
-**Last Updated:** 2026-10-12 (stamp first screen, quiet SHA line, short developer sample)  
+**Version:** **5.0.0-ELITE** (Build 419)  
+**Last Updated:** 2026-10-12 (real confirmed proof on homepage and verify; demos labeled; .ots on the done screen)  
 **Frontend:** https://satohash.io · www · CF Pages project **`satohash`** — Grok lane, `assetsDir: 'b'`  
 **API:** https://api.satohash.io ✅ LIVE (THOR Docker, HTTP 200). **`gitSha` is not a commit** as of 2026-10-12 — it is a Cloudflare error string in `GIT_SHA`. Last known good image content is **`21476f8`** (`server/` unchanged since then). Kimi: rewrite `GIT_SHA` from `git rev-parse --short HEAD` on the next start. Paywall off. Family counts 2026-10-12: katoa **5**, giveabit **3**, sherpacarta/motopass/tadbuy **2**.  
 **Metrics SoT:** `https://api.satohash.io/metrics.json`  

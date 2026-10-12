@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import { Upload, ShieldCheck, Hash, CheckCircle2, XCircle } from 'lucide-react'
 import { useState, useRef, useCallback, useEffect } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { toast } from 'sonner'
 import usePageMeta from '../hooks/usePageMeta'
 import { getApiUrl } from '../config/constants'
@@ -19,6 +19,7 @@ import LiveNodeChip from '../components/shared/LiveNodeChip'
 import Footer from '../components/layout/Footer'
 import events, { trackEvent } from '../utils/analytics'
 import Tooltip from '../components/ui/Tooltip'
+import { PUBLIC_PROOF, PUBLIC_PROOF_PATH } from '../config/publicProof'
 
 export default function VerificationTool() {
   usePageMeta({ page: 'verify' })
@@ -338,7 +339,7 @@ export default function VerificationTool() {
                           }
                         }}
                         aria-label="SHA-256 hash to verify"
-                        placeholder="e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                        placeholder={PUBLIC_PROOF.hash}
                         className="h-12 w-full rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] pr-3 pl-10 font-mono text-sm outline-none focus:border-[var(--accent-gold)]"
                         inputMode="text"
                         autoComplete="off"
@@ -403,6 +404,16 @@ export default function VerificationTool() {
               >
                 Verify
               </button>
+              <Link
+                to={PUBLIC_PROOF_PATH}
+                data-testid="verify-confirmed-proof"
+                className="flex min-h-[44px] items-center justify-center text-center text-xs underline underline-offset-4"
+                style={{ color: 'var(--text-secondary)' }}
+              >
+                {tv('landingPage.hero.seeConfirmed', {
+                  block: PUBLIC_PROOF.blockHeight.toLocaleString()
+                })}
+              </Link>
             </div>
           )}
 

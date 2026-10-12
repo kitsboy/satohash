@@ -32,7 +32,7 @@ export default function GlobalDropzone({ onFileProcessed }) {
       setProcessingMessage(pickRotating(messages, file.name.length + file.size))
 
       const extension = file.name.split('.').pop()?.toLowerCase()
-      let intent = isDarkVault ? 'Zero-Knowledge Archive' : 'Standard Notarization'
+      let intent = isDarkVault ? 'File stays on this device' : 'Standard Notarization'
       if (!isDarkVault) {
         if (extension === 'pdf') intent = 'Legal Watermarking'
         if (['png', 'jpg', 'jpeg', 'webp'].includes(extension)) intent = 'Visual Vaulting'
@@ -136,7 +136,7 @@ export default function GlobalDropzone({ onFileProcessed }) {
             <div className="mt-4 flex items-center justify-center gap-2">
               <ShieldCheck size={11} className="text-rose-400" />
               <span className="text-[9px] font-black tracking-widest text-rose-400 uppercase">
-                Zero-Knowledge Mode Active
+                File stays on this device
               </span>
             </div>
           )}

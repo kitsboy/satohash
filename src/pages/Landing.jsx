@@ -29,6 +29,7 @@ import { buildStampPathFromSearch } from '../utils/stampDeepLink'
 import events, { trackEvent } from '../utils/analytics'
 import LiveNodeChip from '../components/shared/LiveNodeChip'
 import TipButton from '../components/marketing/TipButton'
+import { PUBLIC_PROOF, PUBLIC_PROOF_PATH } from '../config/publicProof'
 
 const HERO_VIDEO =
   'https://videos.giveabit.io/media/video/satohash-explainer-with-vo2.mp4?v=kimi-noir-20260819'
@@ -357,7 +358,7 @@ export default function Landing() {
                 ALGORITHM: SHA-256 CLIENT SECURE
               </text>
               <text x="35" y="85">
-                ZERO-KNOWLEDGE INPUT MODE: ENABLED
+                FILE STAYS ON THIS DEVICE
               </text>
               <text x="35" y="100">
                 CLIENT ENGINE: WEB CRYPTO API
@@ -490,6 +491,16 @@ export default function Landing() {
               style={{ color: 'var(--text-secondary)' }}
             >
               {t('landingPage.hero.ctaWatch')}
+            </Link>
+            <Link
+              to={PUBLIC_PROOF_PATH}
+              data-testid="landing-confirmed-proof"
+              className="order-3 flex min-h-[44px] w-full items-center justify-center text-sm underline underline-offset-4 sm:w-auto"
+              style={{ color: 'var(--text-secondary)' }}
+            >
+              {t('landingPage.hero.seeConfirmed', {
+                block: PUBLIC_PROOF.blockHeight.toLocaleString()
+              })}
             </Link>
           </motion.div>
 

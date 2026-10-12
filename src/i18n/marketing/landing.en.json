@@ -15,6 +15,7 @@
     "description": "Satohash hashes your file locally in your browser — your document never leaves your device. Only a cryptographic fingerprint gets written to the Bitcoin blockchain, creating immutable proof of existence for any file, contract, photo, or dataset.",
     "ctaStamp": "Stamp a File — It's Free",
     "ctaWatch": "Watch explainer",
+    "seeConfirmed": "See a confirmed proof · block {{block}}",
     "ctaTemplates": "Browse Templates",
     "socialProof": "{{count}} Bitcoin-anchored proofs issued through this plane",
     "tryTemplate": "Try a template for free"
@@ -27,7 +28,7 @@
     "epochProgress": "Epoch Progress",
     "satPerVb": "sat/vB",
     "feeNote": "Indicative · mempool, not a Satohash fee",
-    "zeroKnowledge": "Zero-Knowledge (Local Hashing)",
+    "zeroKnowledge": "File stays on this device",
     "compliance": "eIDAS & ESIGN Aligned",
     "proofsConfirmed": "{{count}} Proofs Confirmed"
   },
@@ -39,7 +40,7 @@
     "cards": {
       "noServer": {
         "title": "No Server Required",
-        "body": "Your document never leaves your device. We only see a cryptographic hash — like a fingerprint, not the actual file. Zero-knowledge by design."
+        "body": "Your document never leaves your device. We only see a cryptographic hash — like a fingerprint, not the actual file."
       },
       "anchored": {
         "title": "Anchored in 60 Minutes",
@@ -75,7 +76,7 @@
     },
     "cta": "Try It Now — Free",
     "privacyTitle": "Your files never leave your device",
-    "privacyBody": "Satohash only sees a SHA-256 hash — never your original document. Zero-knowledge by design."
+    "privacyBody": "Satohash only sees a SHA-256 hash — never your original document."
   },
   "useCases": {
     "title": "Who Needs Proof That Can't Be Faked?",

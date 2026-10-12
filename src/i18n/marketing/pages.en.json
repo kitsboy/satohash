@@ -1527,10 +1527,16 @@
     "chooseFile": "Choose file",
     "modes": {
       "single": "Single file",
-      "capsule": "Capsule",
-      "redact": "ZK-Redact",
-      "deposition": "Deposition"
+      "capsule": "Capsule demo",
+      "redact": "Redact demo",
+      "deposition": "Voice demo"
     },
+    "modeCapsuleBody": "Demo. Bundle several files, then stamp.",
+    "modeRedactBody": "Demo. Black out words, then stamp.",
+    "modeDepositionBody": "Demo. Record a voice note, then stamp.",
+    "redactTitle": "Demo · black out words",
+    "redactHint": "Type the text, then the words to hide, separated by commas.",
+    "calendarWait": "The calendars did not answer. Wait a moment and try again. Pending means a stamp already sent is still on its way to Bitcoin.",
     "confirmedToast": "Confirmed on Bitcoin!",
     "stampFailed": "Stamping failed",
     "feeUnavailable": "Fee estimates unavailable",
@@ -1554,7 +1560,7 @@
     "fileTooLarge": "File is {{size}} MB — max {{max}} MB for browser stamp. Hash offline and paste the SHA-256.",
     "fileTooLargeToast": "File too large for browser stamp",
     "fileTooLargeToastDesc": "Use a smaller file or stamp a precomputed SHA-256 hash",
-    "tooManyRequests": "Too many stamp requests (about 5 per minute on the public path). Wait {{seconds}}s, then try again. This is an abuse limit, not a daily quota. Your file was not charged and not lost.",
+    "tooManyRequests": "Too many stamp requests (about 5 per minute on the public path). Wait {{seconds}}s, then try again. Pending means a stamp already sent is still on its way to Bitcoin.",
     "notifyEmailPlaceholder": "Email me when confirmed (optional)",
     "photosGallery": "Photos / gallery",
     "folderCapsule": "Folder (one Merkle capsule)",

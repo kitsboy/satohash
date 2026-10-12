@@ -1769,10 +1769,16 @@
   "stampPage": {
     "modes": {
       "single": "Faili moja",
-      "capsule": "Kapsuli",
-      "redact": "ZK-Redact",
-      "deposition": "Ushahidi"
+      "capsule": "Kapsuli demo",
+      "redact": "Demo ya kuficha",
+      "deposition": "Demo ya sauti"
     },
+    "modeCapsuleBody": "Demo. Kusanya faili kadhaa, kisha weka muhuri.",
+    "modeRedactBody": "Demo. Ficha maneno, kisha weka muhuri.",
+    "modeDepositionBody": "Demo. Rekodi sauti, kisha weka muhuri.",
+    "redactTitle": "Demo · ficha maneno",
+    "redactHint": "Andika maandishi, kisha maneno ya kuficha, yakitenganishwa kwa koma.",
+    "calendarWait": "Kalenda hazikujibu. Subiri kidogo kisha ujaribu tena. Pending inamaanisha muhuri uliotumwa bado uko njiani kuelekea Bitcoin.",
     "takePhoto": "Piga picha",
     "chooseFile": "Chagua faili",
     "confirmedToast": "Imethibitishwa kwenye Bitcoin!",
@@ -1811,7 +1817,7 @@
     "fileTooLarge": "Faili ni MB {{size}} — kiwango cha juu MB {{max}} kwenye kivinjari. Hesabu hash nje ya mtandao kisha bandika SHA-256.",
     "fileTooLargeToast": "Faili ni kubwa mno kwa muhuri wa kivinjari",
     "fileTooLargeToastDesc": "Tumia faili ndogo au weka muhuri wa hash ya SHA-256 iliyohesabiwa",
-    "tooManyRequests": "Maombi mengi mno — jaribu tena baada ya sekunde {{seconds}}",
+    "tooManyRequests": "Mihuri mingi sana (karibu 5 kwa dakika). Subiri sekunde {{seconds}}, kisha ujaribu tena. Pending inamaanisha muhuri uliotumwa bado uko njiani kuelekea Bitcoin.",
     "notifyEmailPlaceholder": "Nitumie barua pepe ikithibitishwa (si lazima)",
     "photosGallery": "Picha / galeria",
     "folderCapsule": "Folda (kapsuli moja ya Merkle)",

@@ -15,6 +15,7 @@
     "description": "Satohash inahesabu hash ya faili yako ndani ya kivinjari chako — hati yako haiondoki kwenye kifaa chako. Alama ya kidole ya kriptografia pekee ndiyo inayoandikwa kwenye blockchain ya Bitcoin, ikitengeneza uthibitisho usiobadilika wa kuwepo kwa faili, mkataba, picha, au seti ya data yoyote.",
     "ctaStamp": "Weka muhuri kwenye faili — Ni bure",
     "ctaWatch": "Tazama maelezo",
+    "seeConfirmed": "Tazama uthibitisho Confirmed · block {{block}}",
     "ctaTemplates": "Vinjari violezo",
     "socialProof": "Uthibitisho {{count}} uliotiwa nanga kwenye Bitcoin kupitia ndege hii",
     "tryTemplate": "Jaribu kiolezo bure"
@@ -27,7 +28,7 @@
     "epochProgress": "Maendeleo ya kipindi",
     "satPerVb": "sat/vB",
     "feeNote": "Makadirio · mempool, si ada ya Satohash",
-    "zeroKnowledge": "Ujuzi wa sifuri (hashing ya ndani)",
+    "zeroKnowledge": "Faili inabaki kwenye kifaa hiki",
     "compliance": "Inalingana na eIDAS na ESIGN",
     "proofsConfirmed": "Uthibitisho {{count}} umethibitishwa"
   },
@@ -39,7 +40,7 @@
     "cards": {
       "noServer": {
         "title": "Hakuna seva inayohitajika",
-        "body": "Hati yako haiondoki kwenye kifaa chako. Tunaona hash ya kriptografia pekee — kama alama ya kidole, si faili halisi. Ujuzi wa sifuri kwa muundo."
+        "body": "Hati yako haiondoki kwenye kifaa chako. Tunaona hash ya kriptografia pekee — kama alama ya kidole, si faili halisi."
       },
       "anchored": {
         "title": "Imeunganishwa ndani ya dakika 60",
@@ -75,7 +76,7 @@
     },
     "cta": "Jaribu sasa — Bure",
     "privacyTitle": "Faili zako haziondoki kwenye kifaa chako",
-    "privacyBody": "Satohash inaona hash ya SHA-256 pekee — kamwe hati yako ya asili. Ujuzi wa sifuri kwa muundo."
+    "privacyBody": "Satohash inaona hash ya SHA-256 pekee — kamwe hati yako ya asili."
   },
   "useCases": {
     "title": "Nani anahitaji uthibitisho usioweza kughushiwa?",

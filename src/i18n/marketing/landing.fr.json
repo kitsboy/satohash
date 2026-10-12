@@ -15,6 +15,7 @@
     "description": "Satohash calcule l'empreinte de votre fichier localement dans votre navigateur — votre document ne quitte jamais votre appareil. Seule une empreinte cryptographique est inscrite dans la blockchain Bitcoin, créant une preuve d'existence immuable pour tout fichier, contrat, photo ou jeu de données.",
     "ctaStamp": "Horodater un fichier — C'est gratuit",
     "ctaWatch": "Voir l'explainer",
+    "seeConfirmed": "Voir une preuve Confirmed · bloc {{block}}",
     "ctaTemplates": "Parcourir les modèles",
     "socialProof": "{{count}} preuves ancrées sur Bitcoin émises sur ce plan",
     "tryTemplate": "Essayer un modèle gratuitement"
@@ -27,7 +28,7 @@
     "epochProgress": "Progression de l'époque",
     "satPerVb": "sat/vB",
     "feeNote": "Indicatif · mempool, pas un frais Satohash",
-    "zeroKnowledge": "Connaissance nulle (hachage local)",
+    "zeroKnowledge": "Le fichier reste sur cet appareil",
     "compliance": "Aligné eIDAS et ESIGN",
     "proofsConfirmed": "{{count}} preuves confirmées"
   },
@@ -39,7 +40,7 @@
     "cards": {
       "noServer": {
         "title": "Aucun serveur requis",
-        "body": "Votre document ne quitte jamais votre appareil. Nous ne voyons qu'un hachage cryptographique — comme une empreinte digitale, pas le fichier lui-même. Connaissance nulle par conception."
+        "body": "Votre document ne quitte jamais votre appareil. Nous ne voyons qu'un hachage cryptographique — comme une empreinte digitale, pas le fichier lui-même."
       },
       "anchored": {
         "title": "Ancré en 60 minutes",
@@ -75,7 +76,7 @@
     },
     "cta": "Essayez maintenant — Gratuit",
     "privacyTitle": "Vos fichiers ne quittent jamais votre appareil",
-    "privacyBody": "Satohash ne voit qu'un hachage SHA-256 — jamais votre document original. Connaissance nulle par conception."
+    "privacyBody": "Satohash ne voit qu'un hachage SHA-256 — jamais votre document original."
   },
   "useCases": {
     "title": "Qui a besoin d'une preuve infalsifiable ?",

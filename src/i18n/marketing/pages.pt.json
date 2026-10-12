@@ -1769,10 +1769,16 @@
   "stampPage": {
     "modes": {
       "single": "Arquivo único",
-      "capsule": "Cápsula",
-      "redact": "ZK-Redact",
-      "deposition": "Deposição"
+      "capsule": "Cápsula demo",
+      "redact": "Demo de redação",
+      "deposition": "Demo de voz"
     },
+    "modeCapsuleBody": "Demo. Junte vários arquivos e depois carimbe.",
+    "modeRedactBody": "Demo. Oculte palavras e depois carimbe.",
+    "modeDepositionBody": "Demo. Grave uma nota de voz e depois carimbe.",
+    "redactTitle": "Demo · ocultar palavras",
+    "redactHint": "Escreva o texto e depois as palavras a ocultar, separadas por vírgulas.",
+    "calendarWait": "Os calendários não responderam. Espere um momento e tente de novo. Pending significa que um carimbo já enviado ainda está a caminho do Bitcoin.",
     "takePhoto": "Tirar foto",
     "chooseFile": "Escolher arquivo",
     "confirmedToast": "Confirmado no Bitcoin!",
@@ -1811,7 +1817,7 @@
     "fileTooLarge": "O arquivo tem {{size}} MB — máximo {{max}} MB no navegador. Hasheie offline e cole o SHA-256.",
     "fileTooLargeToast": "Arquivo grande demais para carimbar no navegador",
     "fileTooLargeToastDesc": "Use um arquivo menor ou carimbe um hash SHA-256 já calculado",
-    "tooManyRequests": "Muitas solicitações — tente de novo em {{seconds}} s",
+    "tooManyRequests": "Muitos carimbos (cerca de 5 por minuto). Espere {{seconds}} s e tente de novo. Pending significa que um carimbo já enviado ainda está a caminho do Bitcoin.",
     "notifyEmailPlaceholder": "Avise-me por e-mail ao confirmar (opcional)",
     "photosGallery": "Fotos / galeria",
     "folderCapsule": "Pasta (uma cápsula Merkle)",

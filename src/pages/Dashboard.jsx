@@ -199,21 +199,31 @@ export default function Dashboard() {
       toast.warning('Free tier limit reached (5 stamps). Upgrade to continue.')
       return
     }
+    const hash = typeof processedFile?.hash === 'string' ? processedFile.hash.trim() : ''
+    if (!/^[0-9a-fA-F]{64}$/.test(hash)) {
+      toast.error('Missing a 64-character file hash.')
+      return
+    }
     try {
       const response = await fetch(`${API_URL}/api/stamp`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          hash:
-            processedFile.hash ||
-            'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
+          hash,
           filename: processedFile.name
         })
       })
       if (!response.ok) throw new Error('Stamping failed')
       const result = await response.json()
       setFile({ ...processedFile, ...result })
-      toast.success('Successfully anchored to Bitcoin!')
+      const confirmed = result.status === 'confirmed' || result.verified === true
+      if (confirmed) {
+        toast.success('Successfully anchored to Bitcoin!')
+      } else if (result.status === 'pending') {
+        toast.success('Stamp is pending. Waiting on Bitcoin.')
+      } else {
+        toast.success('Stamp submitted. Not confirmed on Bitcoin yet.')
+      }
 
       const newCount = stampCount + 1
       localStorage.setItem('satohash_stamp_count', newCount.toString())

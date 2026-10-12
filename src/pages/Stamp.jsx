@@ -43,6 +43,7 @@ import StampSuccessActions from '../components/stamps/StampSuccessActions'
 import { persistLastProof, readLastProof } from '../utils/lastProof'
 import { requestWakeLock, releaseWakeLock } from '../utils/wakeLock'
 import LiveNodeChip from '../components/shared/LiveNodeChip'
+import { retryAfterSeconds } from '../utils/retryAfter'
 import Footer from '../components/layout/Footer'
 import events, { trackEvent } from '../utils/analytics'
 import AuthoredStampPanel from '../components/stamps/AuthoredStampPanel'
@@ -116,6 +117,33 @@ export default function Stamp() {
   const [showWho, setShowWho] = useState(false)
   const { t } = useI18n()
   const { t: tp } = useTranslation()
+  const rateLimitTimer = useRef(null)
+  const beginRateLimitWait = useCallback(
+    (res) => {
+      if (rateLimitTimer.current) clearInterval(rateLimitTimer.current)
+      setStampingStatus('idle')
+      let countdown = retryAfterSeconds(res?.headers?.get?.('Retry-After'))
+      const show = () => setError(tp('stampPage.tooManyRequests', { seconds: countdown }))
+      show()
+      rateLimitTimer.current = setInterval(() => {
+        countdown -= 1
+        if (countdown <= 0) {
+          clearInterval(rateLimitTimer.current)
+          rateLimitTimer.current = null
+          setError('')
+        } else {
+          show()
+        }
+      }, 1000)
+    },
+    [tp]
+  )
+  useEffect(
+    () => () => {
+      if (rateLimitTimer.current) clearInterval(rateLimitTimer.current)
+    },
+    []
+  )
   const { isOnline, queueStamp, hashFileOffline } = useOfflineSync()
 
   const { lastEvent } = useSocket()
@@ -475,18 +503,7 @@ export default function Stamp() {
         })
 
         if (res.status === 429) {
-          setStampingStatus('idle')
-          let countdown = 15
-          setError(tp('stampPage.tooManyRequests', { seconds: countdown }))
-          const timer = setInterval(() => {
-            countdown--
-            if (countdown <= 0) {
-              clearInterval(timer)
-              setError('')
-            } else {
-              setError(tp('stampPage.tooManyRequests', { seconds: countdown }))
-            }
-          }, 1000)
+          beginRateLimitWait(res)
           return
         }
 
@@ -574,14 +591,19 @@ export default function Stamp() {
               'API unavailable. Local .ots only; verify URL needs a durable API stamp id.'
           })
         } catch (otsErr) {
-          const msg = err.message || otsErr.message || 'Failed to stamp'
+          const waited = /timeout|timed out|abort|calendar/i.test(
+            `${err?.message || ''} ${otsErr?.message || ''}`
+          )
+          const msg = waited
+            ? tp('stampPage.calendarWait')
+            : err.message || otsErr.message || 'Failed to stamp'
           setError(msg)
           toast.error(tp('stampPage.stampFailed'), { description: msg })
           setStampingStatus('idle')
         }
       }
     },
-    [stampHashBrowserOnly, startStatusPoll, tp, goToDone]
+    [stampHashBrowserOnly, startStatusPoll, tp, goToDone, beginRateLimitWait]
   )
 
   // Family / MotoPass deep-link: /stamp?hash=&ref=&label=&filename=&campaign=&autostamp=
@@ -779,19 +801,7 @@ export default function Stamp() {
       }
 
       if (res.status === 429) {
-        // Show countdown so user knows when to retry
-        setStampingStatus('idle')
-        let countdown = 15
-        setError(tp('stampPage.tooManyRequests', { seconds: countdown }))
-        const timer = setInterval(() => {
-          countdown--
-          if (countdown <= 0) {
-            clearInterval(timer)
-            setError('')
-          } else {
-            setError(tp('stampPage.tooManyRequests', { seconds: countdown }))
-          }
-        }, 1000)
+        beginRateLimitWait(res)
         return
       }
 
@@ -877,6 +887,18 @@ export default function Stamp() {
           return
         } catch (otsErr) {
           console.warn('Browser OTS fallback failed', otsErr)
+          if (
+            /timeout|timed out|abort|calendar/i.test(
+              `${err?.message || ''} ${otsErr?.message || ''}`
+            )
+          ) {
+            const wait = tp('stampPage.calendarWait')
+            setError(wait)
+            toast.error(tp('stampPage.stampFailed'), { description: wait })
+            setStampingStatus('idle')
+            await releaseWakeLock()
+            return
+          }
         }
       }
 
@@ -915,7 +937,10 @@ export default function Stamp() {
         return
       }
 
-      const msg = err.message || 'Failed to stamp. Try again or use browser calendars.'
+      const waited = /timeout|timed out|abort|calendar/i.test(err?.message || '')
+      const msg = waited
+        ? tp('stampPage.calendarWait')
+        : err.message || 'Failed to stamp. Try again or use browser calendars.'
       setError(msg)
       toast.error(tp('stampPage.stampFailed'), { description: msg })
       setStampingStatus('idle')
@@ -1237,10 +1262,10 @@ export default function Stamp() {
                       >
                         <div className="space-y-1">
                           <h4 className="text-sm font-black tracking-widest text-[var(--accent-gold)] uppercase">
-                            🔒 Zero-Knowledge Redacted Document
+                            {tp('stampPage.redactTitle')}
                           </h4>
                           <p className="text-[10px] text-[var(--text-secondary)] uppercase">
-                            Type your document text and specify terms to redact (comma-separated)
+                            {tp('stampPage.redactHint')}
                           </p>
                         </div>
 
@@ -1635,7 +1660,7 @@ export default function Stamp() {
                               className="text-[10px] leading-snug"
                               style={{ color: 'var(--text-secondary)' }}
                             >
-                              Multi-file evidence bundle
+                              {tp('stampPage.modeCapsuleBody')}
                             </div>
                           </button>
                           <button
@@ -1674,7 +1699,7 @@ export default function Stamp() {
                               className="text-[10px] leading-snug"
                               style={{ color: 'var(--text-secondary)' }}
                             >
-                              Redact then stamp
+                              {tp('stampPage.modeRedactBody')}
                             </div>
                           </button>
                           <button
@@ -1713,7 +1738,7 @@ export default function Stamp() {
                               className="text-[10px] leading-snug"
                               style={{ color: 'var(--text-secondary)' }}
                             >
-                              Voice deposition
+                              {tp('stampPage.modeDepositionBody')}
                             </div>
                           </button>
                         </div>
@@ -2051,7 +2076,7 @@ export default function Stamp() {
                           </button>
                           <button
                             onClick={() => {
-                              const invite = `${window.location.origin}/stamp?cosign=true&hash=${hashValue || 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'}&npub=${localStorage.getItem('satohash_npub') || ''}`
+                              const invite = `${window.location.origin}/stamp?cosign=true&hash=${hashValue || ''}&npub=${localStorage.getItem('satohash_npub') || ''}`
                               navigator.clipboard.writeText(invite)
                               toast.success('✉ Co-Sign DM Invitation Copied!', {
                                 description: 'Send this link to your co-signer.'

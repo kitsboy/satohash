@@ -14,11 +14,12 @@ import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import MerkleHeart from '../components/stamps/MerkleHeart'
 import usePageMeta from '../hooks/usePageMeta'
+import { PUBLIC_PROOF, PUBLIC_PROOF_PATH } from '../config/publicProof'
 
 const LEAF_DATA = {
   A: {
     name: 'estate_deed.pdf',
-    hash: 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
+    hash: '1111111111111111111111111111111111111111111111111111111111111111',
     sibling: 'B',
     parent: 'AB'
   },
@@ -30,7 +31,7 @@ const LEAF_DATA = {
   },
   C: {
     name: 'nostr_key_backup.json',
-    hash: 'a2b1c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b41a',
+    hash: '2222222222222222222222222222222222222222222222222222222222222222',
     sibling: 'D',
     parent: 'CD'
   },
@@ -87,6 +88,16 @@ export default function Explorer() {
             {t('explorerPage.demoChip')}
           </span>
         </div>
+        <p className="text-xs text-[var(--text-secondary)]">
+          This tree is a diagram. It is not a Satohash stamp.
+        </p>
+        <Link
+          to={PUBLIC_PROOF_PATH}
+          data-testid="explorer-confirmed-proof"
+          className="w-fit text-xs text-[var(--text-secondary)] underline underline-offset-2 hover:text-[var(--text-primary)]"
+        >
+          See a confirmed proof · Bitcoin block {PUBLIC_PROOF.blockHeight}
+        </Link>
 
         <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
           <div className="flex items-center gap-4">

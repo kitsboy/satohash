@@ -1744,10 +1744,16 @@
   "stampPage": {
     "modes": {
       "single": "单文件",
-      "capsule": "胶囊",
-      "redact": "ZK-脱敏",
-      "deposition": "证词"
+      "capsule": "胶囊演示",
+      "redact": "涂黑演示",
+      "deposition": "语音演示"
     },
+    "modeCapsuleBody": "演示。打包多个文件，然后盖章。",
+    "modeRedactBody": "演示。涂黑词语，然后盖章。",
+    "modeDepositionBody": "演示。录一段语音，然后盖章。",
+    "redactTitle": "演示 · 涂黑词语",
+    "redactHint": "输入正文，再输入要隐藏的词，用逗号分开。",
+    "calendarWait": "日历没有回应。请稍等再试。Pending 表示已经送出的戳记仍在前往 Bitcoin 的路上。",
     "takePhoto": "拍照",
     "chooseFile": "选择文件",
     "confirmedToast": "已在比特币上确认！",
@@ -1786,7 +1792,7 @@
     "fileTooLarge": "文件为 {{size}} MB — 浏览器盖章上限 {{max}} MB。请离线哈希并粘贴 SHA-256。",
     "fileTooLargeToast": "文件过大，无法在浏览器中盖章",
     "fileTooLargeToastDesc": "请使用更小的文件，或盖章预先计算的 SHA-256",
-    "tooManyRequests": "请求过多 — {{seconds}} 秒后重试",
+    "tooManyRequests": "盖章请求过多（公开路径大约每分钟 5 次）。请等待 {{seconds}} 秒再试。Pending 表示已经送出的戳记仍在前往 Bitcoin 的路上。",
     "notifyEmailPlaceholder": "确认后发邮件通知我（可选）",
     "photosGallery": "照片 / 图库",
     "folderCapsule": "文件夹（一个 Merkle 胶囊）",

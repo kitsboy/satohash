@@ -15,6 +15,7 @@
     "description": "Satohash hasht Ihre Datei lokal in Ihrem Browser — Ihr Dokument verlässt niemals Ihr Gerät. Nur ein kryptografischer Fingerabdruck wird in die Bitcoin-Blockchain geschrieben und erstellt einen unveränderlichen Existenznachweis für jede Datei, jeden Vertrag, jedes Foto oder jeden Datensatz.",
     "ctaStamp": "Datei stempeln — Kostenlos",
     "ctaWatch": "Erklärer ansehen",
+    "seeConfirmed": "Einen Confirmed-Beweis ansehen · Block {{block}}",
     "ctaTemplates": "Vorlagen durchsuchen",
     "socialProof": "{{count}} Bitcoin-verankerte Nachweise über diese Ebene ausgestellt",
     "tryTemplate": "Vorlage kostenlos ausprobieren"
@@ -27,7 +28,7 @@
     "epochProgress": "Epochenfortschritt",
     "satPerVb": "sat/vB",
     "feeNote": "Richtwert · Mempool, keine Satohash-Gebühr",
-    "zeroKnowledge": "Zero-Knowledge (lokales Hashing)",
+    "zeroKnowledge": "Die Datei bleibt auf diesem Gerät",
     "compliance": "eIDAS- und ESIGN-ausgerichtet",
     "proofsConfirmed": "{{count}} Nachweise bestätigt"
   },
@@ -39,7 +40,7 @@
     "cards": {
       "noServer": {
         "title": "Kein Server erforderlich",
-        "body": "Ihr Dokument verlässt niemals Ihr Gerät. Wir sehen nur einen kryptografischen Hash — wie einen Fingerabdruck, nicht die eigentliche Datei. Zero-Knowledge by Design."
+        "body": "Ihr Dokument verlässt niemals Ihr Gerät. Wir sehen nur einen kryptografischen Hash — wie einen Fingerabdruck, nicht die eigentliche Datei."
       },
       "anchored": {
         "title": "In 60 Minuten verankert",
@@ -75,7 +76,7 @@
     },
     "cta": "Jetzt ausprobieren — Kostenlos",
     "privacyTitle": "Ihre Dateien verlassen niemals Ihr Gerät",
-    "privacyBody": "Satohash sieht nur einen SHA-256-Hash — niemals Ihr Originaldokument. Zero-Knowledge by Design."
+    "privacyBody": "Satohash sieht nur einen SHA-256-Hash — niemals Ihr Originaldokument."
   },
   "useCases": {
     "title": "Wer braucht einen nicht fälschbaren Nachweis?",
