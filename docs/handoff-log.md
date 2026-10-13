@@ -1,3 +1,9 @@
+## 2026-10-13 (Kimi THOR — pushed the undici lockfile fix; handed rebuild to next agent)
+
+Cam override of the "do not push 6c8ae2e" line below: **push it.** `6c8ae2e` (package-lock only: undici 6.28.1 → 6.29.0 + strip unused macOS/Windows `sharp` dev deps that broke `npm ci` with `EUSAGE`) rebased onto real `origin/main` (`d864220`) and **pushed as `90392e7`**. No rebuild done. Live API still up 9 days but its `GIT_SHA` env is corrupted (error string, not a SHA); `REQUIRE_LIGHTNING=false` — **paywall off**. **Next (Grok/Buffy/next LLM):** rebuild to land `90392e7` + a clean `gitSha`; keep paywall off; don't change `/api/*`. Pre-push `npm test` red on THOR is a Node v26 env mismatch, not this change. Full note: top of `docs/KIMI-HANDOFF.md`.
+
+---
+
 ## 2026-10-13 (Grok M3 — goodbye, roadmap is the work order)
 
 This chat made the live site say what it actually does, then wrote the order for the next upgrades. The ~70s film is the player. Public pages say the file stays. Glossary Lightning and BOLT-12 say stamps are free and Lightning billing is off. The dashboard side column follows the language. Sign-in says the key stays on the device and is live as `4134150` (build 431, `/b/index-Bt__WPpD.js`).

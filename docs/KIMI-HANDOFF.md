@@ -1,3 +1,34 @@
+## Handoff (Kimi THOR → Grok / Buffy / next LLM — 2026-10-13)
+
+**Cam's call (overrides the "do not push 6c8ae2e" line lower in this file):** push the pending lockfile fix now, and hand the API rebuild to the next agent.
+
+**Just done (Kimi on THOR):**
+- The "extra save" on THOR — `6c8ae2e`, a **`package-lock.json`-only** commit (undici 6.28.1 → 6.29.0 + strip ~610 lines of unused macOS/Windows `sharp` dev binaries that were breaking `npm ci` with `EUSAGE`) — was rebased onto the real `origin/main` and **pushed**. New `origin/main` tip: **`90392e7`**. It had been based on the stale `bfe166f` while main had advanced to `d864220`; the rebase was clean (none of the intervening main commits touched `package-lock.json`).
+- **No rebuild performed.** Paywall untouched.
+
+**Live API state (verified on THOR 2026-10-13):**
+- `GET https://api.satohash.io/health` → status `ok`, but **`gitSha` is corrupted** (the running container's `GIT_SHA` env var holds a build-time error string, not a commit hash). Container `satohash-satohash-api-1` up 9 days, healthy; image `sha256:0aa924…60cce`.
+- **`REQUIRE_LIGHTNING=false` — paywall OFF** (confirmed in container env).
+- `metrics.json`: `last10`=10, `familyClients`=true.
+
+**NEXT (Grok / Buffy / next LLM):** rebuild the Satohash API on THOR so the live image picks up `90392e7` (undici 6.29.0) **and** reports a clean `gitSha`:
+```
+cd /root/satohash && git fetch origin && git reset --hard origin/main
+GIT_SHA=$(git rev-parse --short HEAD) bash scripts/vps-deploy-api.sh
+```
+Done when `curl -sS https://api.satohash.io/health | grep gitSha` returns a real short SHA (not the error string) **and** `GET /metrics.json` `requireLightning` is still `false`.
+
+**Hard rules (do not break):**
+- Keep **`REQUIRE_LIGHTNING=false`** (paywall OFF). Do not flip it.
+- Do **not** change `/api/*` paths.
+- Do **not** `--force` opentimestamps.
+- THOR pre-push `npm test` is currently red from a **Node v26 env mismatch** (`better-sqlite3` ABI 127 vs 147 + `localStorage` missing), **not** from this change. If the env isn't fixed, push with `--no-verify` and log it.
+- Pages = Grok (SPA lane). Vault = THOR, not M4.
+
+**Repo hygiene:** the THOR working tree carried pre-existing dirty files (generated docs + throwaway test scripts). They are preserved in `git stash@{0}` ("pre-rebase stash 2026-10-13") — restore or drop at your discretion; they are **not** part of this change.
+
+---
+
 ## Latest Session Summary (from 2026-10-13 goodbye)
 
 **Chat topic:** The live site now says what Satohash actually does, and the next upgrades are in order.
