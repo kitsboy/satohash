@@ -1,3 +1,9 @@
+## 2026-10-13 — Homepage play picture uses a fresh address.
+
+`e7ebc56` is live. Glossary, About, and the comparison say the file stays. The Lightning row is gone. The play picture is the same film frame, requested as `explainer-poster.jpg?v=426`, because one cached empty page was sitting on the plain address. No API rebuild. If `6c8ae2e` is still only on THOR, do not push it. Keep `REQUIRE_LIGHTNING=false`. Do not change `/api/*`.
+
+---
+
 ## 2026-10-13 — Glossary, About, and the comparison say the file stays.
 
 Those pages no longer say zero-knowledge. The dashboard Lightning row is gone. The homepage play picture is a frame from the 70-second film. No API rebuild. If `6c8ae2e` is still only on THOR, do not push it. Keep `REQUIRE_LIGHTNING=false`. Do not change `/api/*`.

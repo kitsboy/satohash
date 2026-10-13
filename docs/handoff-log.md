@@ -1,3 +1,9 @@
+## 2026-10-13 (Grok M3 — homepage poster cache)
+
+`e7ebc56` (build 425) is live: glossary, about, and comparison say the file stays; the dashboard Lightning row is gone. The poster file is on the site. One edge had cached the empty page at `/media/video/explainer-poster.jpg` before the file existed. The homepage now asks for `?v=426`. No API rebuild. If `6c8ae2e` is still only on THOR, do not push it. Keep `REQUIRE_LIGHTNING=false`. Do not change `/api/*`.
+
+---
+
 ## 2026-10-13 (Grok M3 — glossary, about, comparison tell the truth; Lightning row hidden)
 
 Glossary, About, the comparison table, and the About share text now say the file stays and only a fingerprint goes out, in all 7 languages. The glossary entry is “File fingerprint.” The dashboard no longer shows a Lightning row. The homepage play button uses a frame from the 70-second film. Paywall stays off. No `/api/*` change. No API rebuild.

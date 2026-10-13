@@ -33,7 +33,7 @@ import { PUBLIC_PROOF, PUBLIC_PROOF_PATH } from '../config/publicProof'
 
 const HERO_VIDEO =
   'https://videos.giveabit.io/media/video/satohash-explainer-wise-70.mp4?v=kimi-wise-70-20261013'
-const HERO_POSTER = '/media/video/explainer-poster.jpg'
+const HERO_POSTER = '/media/video/explainer-poster.jpg?v=426'
 const HERO_VIDEO_LABEL =
   'Satohash explainer: file never leaves the device, Bitcoin keeps the receipt'
 
