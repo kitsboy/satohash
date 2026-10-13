@@ -19,6 +19,10 @@ Canonical short ops pointer. Detailed procedures remain in:
 5. **No secrets in git / handoffs**
 6. **One SPA deploy path:** GitHub Actions `Deploy` only — never Retry in the CF Pages UI while Actions is yellow
 
+## Current (2026-10-13)
+
+SPA product copy is live at `4134150` (sign-in says the key stays on the device). `/health` status ok at 19:19 UTC, `gitSha` `e814a57`, paywall off. Do not rebuild the API for the October copy. If `6c8ae2e` is only on THOR, do not push it. Next SPA work is item 1 in `docs/roadmap.md` (dashboard history labels). Ingest the top of `docs/KIMI-HANDOFF.md` into THOR Obsidian.
+
 ## API rebuild (2026-09-11) — DONE
 
 Kimi on THOR: live `GET https://api.satohash.io/health` → **`gitSha=5ec7756`**. Keep-alive 65s / headers 66s / timeout 120s. Paywall off. Caddy OK. Vault ingest done (THOR Obsidian).

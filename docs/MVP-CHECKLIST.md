@@ -2,7 +2,7 @@
 
 **Definition:** A stranger opens satohash.io, stamps a file, downloads `.ots`, verifies it — no account wall, no broken chrome, no edge poison.
 
-**Last agent pass:** 2026-08-17 (Grok + Kimi) — IBD done, API image rebuilt, `metrics.json` last10 + familyClients live, `/network` verified, free stamps still ON.
+**Last full pass of this 100-item list:** 2026-08-17. The current upgrade order is `docs/roadmap.md` (2026-10-13). Do not treat this checklist as the next-work list. Free stamps still ON.
 
 Legend: ✅ done in product/code · 🟡 partial / ops · ⬜ deferred / Cam flip
 

@@ -1,11 +1,11 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 431) · **Updated:** 2026-10-13
+> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 432) · **Updated:** 2026-10-13
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Satohash MVP Readiness
 
 > **Status:** Core MVP **live**. Frontend on Cloudflare Pages. API at https://api.satohash.io (THOR Docker). Own `bitcoind` at tip. Free stamps. Paywall off.
-> **Updated:** 2026-10-12 · Version `5.0.0-ELITE` · `/health` is up. `gitSha` label was a Cloudflare error string on 2026-10-12 (last known image content `21476f8`; `server/` unchanged). Kimi rewrites `GIT_SHA` from git.
+> **Updated:** 2026-10-13 · Version `5.0.0-ELITE` · `/health` status ok at 19:19 UTC, `gitSha` `e814a57`, version `5.0.0-ELITE`. Paywall off. `server/` was not changed for the October copy work. Kimi: do not rebuild for copy. If `6c8ae2e` is only on THOR, do not push it.
 
 ## MVP definition
 
@@ -18,7 +18,7 @@ That loop is live:
 3. [satohash.io/verify](https://satohash.io/verify) — check the receipt.
 4. Share `https://satohash.io/p/<hash>` — zero-JS proof card.
 
-QR / proof-state polish is **shipped** (unstamped vs Pending vs Confirmed; camera QR; notify on confirm; Bitcoin-checked verify). Optional NIP-07 who is **shipped** (not a legal name). An agent can stamp with `POST /api/stamp` and confirm with `POST /api/verify` (`public/llms.txt`). Remaining outside this repo: TadBuy’s own `/api` 404s, and Cam’s `@give_bit` pin when Cam wants it. iPhone unfurl is deferred. `/health` `gitSha` needs a Kimi label fix.
+QR / proof-state polish is **shipped** (unstamped vs Pending vs Confirmed; camera QR; notify on confirm; Bitcoin-checked verify). Optional NIP-07 who is **shipped** (not a legal name). An agent can stamp with `POST /api/stamp` and confirm with `POST /api/verify` (`public/llms.txt`). The October copy pass says the file stays, stamps are free, and the sign-in key stays on the device (`4134150`). Remaining in this repo is the ordered list in `docs/roadmap.md` (history labels first). Outside this repo: TadBuy’s own `/api` 404s, and Cam’s `@give_bit` pin when Cam wants it. iPhone unfurl is deferred.
 
 ## Live planes
 
@@ -49,7 +49,7 @@ The stranger-stamps loop does not wait on these. They are **QR and proof-state s
 | Camera QR → `https://satohash.io/p/{hash}` | **Live** — PDFs/email QR. Physical iPhone unfurl still needs Cam’s device. |
 | Proof states: **Pending ≠ Confirmed** | **Live** — `/p/<hash>`, stamp-done, notify when Confirmed. |
 | Family widgets | **Live** 2026-09-15 — katoa/motopass/sherpacarta/tadbuy=2, giveabit=3 at `/tools`. HQ was not zeros. |
-| Next product | Optional who **shipped**. Cam: pin `/watch`. TadBuy `/api` 404s (other repo). Do not rebuild API for copy. |
+| Next product | Copy honesty is the upgrade path. Order: `docs/roadmap.md`. Next code: dashboard history labels, then the drop zone, then the sign-in headline. Cam: pin `/watch`. TadBuy `/api` 404s (other repo). Do not rebuild API for copy. |
 | Family widget completing stamps | **Live** — default POSTs `/api/stamp` on the family site; `data-mode="spa"` is the SPA deep-link. |
 | Cam pin `/watch` on **@give_bit** | Open — paste-ready in `docs/marketing/GIVE-BIT-X-PACK.md` |
 | i18n | Slice A+B+C chrome done; localization **not** complete (offers deferred). See `docs/I18N.md`. Do not add Arabic. |

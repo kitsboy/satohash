@@ -1,17 +1,56 @@
 # Satohash Protocol Roadmap
 
-> **Live product (2026-09-21):** stamp → `.ots` → verify (Bitcoin, not registry) → camera QR `https://satohash.io/p/{hash}`. Pending ≠ Confirmed. Optional NIP-07 who is shipped (not a legal name). Family widgets POST `/api/stamp`. Snapper, ZK, 3D Merkle, BOLT-12 are **not** current features. API live `21476f8`. Kimi: do not rebuild for copy.
+> **Live product (2026-10-13):** stamp a file on the device → download `.ots` → verify on Bitcoin → share `https://satohash.io/p/{hash}`. Pending means on the way. Confirmed means a Bitcoin block sealed it, about an hour later. Stamps are free. Lightning billing is off. The file stays on the device. Optional NIP-07 who is shipped and is not a legal name. Player is the ~70s film. SPA `4134150` (build 431) is the last confirmed product deploy. API `/health` ok, `gitSha` `e814a57`, paywall off. Kimi: do not rebuild for copy. If `6c8ae2e` is only on THOR, do not push it.
 
-## Next for the next LLM
+SoT: `.ai_docs/current-status.md` · session `docs/archive/SESSION-SUMMARY-2026-10-13-goodbye.md`.
 
-1. **TadBuy (other repo):** dead same-origin `/api/*` on the static Pages demo.
-2. **Cam:** pin `/watch` on `@give_bit`; iPhone `/p/` unfurl.
-3. **Optional:** npm `@satohash/cli` if Cam asks.
-4. **Do not:** API rebuild for copy; paywall; Arabic; Snapper-as-court-ready; M4 vault. Optional who is shipped — do not sell as legal identity.
+Do the next open item, commit, and push. Then take the one after it. Do not skip into “Do not do yet.”
 
-SoT: `.ai_docs/current-status.md`.
+## Upgrade in progress — do these first
 
-This roadmap tracks the evolution of Satohash from a standalone notary tool to a **Global Sovereign Settlement Mesh**. Phase checkmarks below include cathedral items that are **not live** — do not pitch them as shipped.
+### Shipped this arc (do not redo)
+
+- ~70s explainer is the player. Voice is Kokoro Isabella. Quiet bed. Old 83.5s file stays in place and is not the player.
+- Security, trust, glossary, about, comparison, and the executive-summary card say the file stays.
+- Glossary Lightning and BOLT-12 say stamps are free and Lightning billing is off. Terms stay English.
+- Dashboard Lightning row is gone. Status rows and the side column follow the language picker. Dark Vault, Bitcoin, `.ots`, AES-256-GCM, API, eIDAS, ESIGN, and UETA stay English.
+- Sign-in share text and the trust chip say the key stays on the device. `4134150` is live (`/b/index-Bt__WPpD.js`).
+
+### 1. Now — words a person already sees
+
+1. **History labels.** `/dashboard` stamp history shows the raw keys `recentHistory` and `filterHistory` (`src/components/stamps/HistoryList.jsx`). Add real title, search hint, and status-filter labels in all 7 languages. The fallback `t(...) || 'English'` never runs, because a missing key is still a non-empty string.
+2. **Drop zone.** The big card is still English: “Ingest Protocol”, the drop copy, and “Dark Vault: ON/OFF” (`src/components/stamps/GlobalDropzone.jsx`). Translate it in all 7 languages. Keep the name Dark Vault in English so it matches the side card.
+3. **Sign-in headline.** `accessPage.hero.subtitle` still says Lightning-native settlement. Signing in is not a payment. Say the key stays on this device, in all 7 languages.
+4. **Leftover zero-knowledge claims a stranger can open.** `src/pages/timestamp/FinalReview.jsx` (“Zero-Knowledge Guarantee”), `src/pages/BatchTimestamp.jsx`, and the `zkPrivacy` blocks that sell selective redaction. Say the file stays. Do not sell redaction, Snapper, or BOLT-12.
+
+### 2. Next — calmer film and phone
+
+5. **Chapter jumps** on `/watch` for the 70s film. Do not regenerate the voice or the pictures.
+6. **Quieter phone install hint.** Keep the play button easy to reach. Do not add a louder install card.
+7. **Public example.** Swap the homepage example only if Cam picks a file. Cam’s picture stamp stays private. Do not publish that filename.
+
+### 3. Cam only
+
+8. Pin `https://satohash.io/watch` on `@give_bit` when Cam wants. Paste-ready copy is in `docs/marketing/GIVE-BIT-X-PACK.md`. Agents cannot post as that account.
+9. Check the iPhone / iMessage preview of `/p/<hash>`. Deferred until Cam has the phone.
+
+### 4. Do not do yet
+
+- Do not flip `REQUIRE_LIGHTNING`. Paywall stays off.
+- Do not change live `/api/*` paths.
+- Do not rebuild the API for copy. Do not push THOR-only `6c8ae2e`.
+- Do not add Arabic.
+- Do not sell Snapper, ZK redaction, 3D Merkle, BOLT-12, or L402 as live.
+- Do not npm-publish `@satohash/cli` unless Cam asks.
+- TadBuy’s dead same-origin `/api/*` is the TadBuy repo, not this API.
+
+### 5. Kimi
+
+Ingest `docs/KIMI-HANDOFF.md` and `docs/archive/SESSION-SUMMARY-2026-10-13-goodbye.md` into THOR Obsidian (MASTER-BRAIN / Kanban). Vault is on THOR, not M4. Pages stay Grok’s. Keep `REQUIRE_LIGHTNING=false`.
+
+## Archive phases (not the work order)
+
+The phases below are old notes. Several checked items are **not live**. Snapper is a scaffold. BOLT-12 billing is off. Do not pitch them as shipped.
 
 ## ✅ PHASE I: THE BASE CASE (COMPLETED)
 1.  **[x] Bitcoin Anchoring**: Core OpenTimestamps integration.
@@ -19,7 +58,7 @@ This roadmap tracks the evolution of Satohash from a standalone notary tool to a
 3.  **[~] Localization**: Seven locales in the picker (EN, ES, FR, DE, PT, SW, ZH). **Not done.** Finish the whole site in these seven — plan in `docs/I18N.md`. Do not add Arabic until then.
 
 ## ✅ PHASE II: INSTITUTIONAL HARDENING (COMPLETED)
-4.  **[x] The Satohash Snapper**: "Snap & Stamp" web evidence capture tool.
+4.  **[ ] The Satohash Snapper**: Scaffold only. Do not sell as a shipped court tool.
 5.  **[x] Institutional UI**: Migration to premium Light-Mode/Indigo design system.
 6.  **[x] Developer Portal**: Public API sandbox and institutional documentation.
 
@@ -27,7 +66,7 @@ This roadmap tracks the evolution of Satohash from a standalone notary tool to a
 7.  **[x] NIP-05 Identity**: Verifiable identity links for contract signers (static nostr.json + Identity page).
 8.  **[x] Proof DNA Widgets**: Embeddable, verifiable badges at /widgets + proof-dna.js v2.
 9.  **[ ] Mobile Signer Pro**: Dedicated iOS/Android secure enclave signing app.
-10. **[x] BOLT-12 Offers**: Native Lightning Network billing for automated anchoring.
+10. **[ ] BOLT-12 Offers**: Not live. Stamps are free. Lightning billing is off.
 
 ## 🚀 PHASE V: SOVEREIGNTY ASCENSION — v5.0.0-ELITE (Q3 2026)
 11. **[ ] API Apocalypse**: 20 backend upgrades — public stats, batch stamping, web capture, DID, co-signing, proof packages, SSE feeds
@@ -57,4 +96,4 @@ Gate: `npm run i18n:check`. Keep Bitcoin / OpenTimestamps / `ots-cli` / hash hex
 22. **[ ] Decentralized Governance**: Transitioning protocol parameters to community-led governance.
 
 ---
-*Status: I18N finish is active (Grok SPA). Vision 2027 still on the board. Phase III finalizing.*
+*Status: 2026-10-13. The work order is the upgrade list at the top. Phase VI is vision, not current work. BOLT-12 and Snapper are not live.*

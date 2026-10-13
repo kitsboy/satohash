@@ -1,3 +1,29 @@
+## Latest Session Summary (from 2026-10-13 goodbye)
+
+**Chat topic:** The live site now says what Satohash actually does, and the next upgrades are in order.
+
+**Finished in this session:**
+
+- ~70s film is the player (Kokoro Isabella, quiet bed). The old 83.5s file stays stored and is not the player.
+- Security, trust, glossary, about, comparison, and the executive-summary card say the file stays. All 7 languages.
+- Glossary Lightning and BOLT-12 say stamps are free and Lightning billing is off. The dashboard Lightning row is gone.
+- Dashboard status rows and the side column follow the language. Product names stay English.
+- Sign-in share text and the trust chip say the key stays on the device. Live `4134150` (build 431), shell `/b/index-Bt__WPpD.js`.
+- Work order is `docs/roadmap.md` and `ROADMAP.md`.
+
+**Still to do:**
+
+1. Dashboard history labels (`recentHistory`, `filterHistory`).
+2. Translate the drop zone, including Dark Vault ON/OFF. Keep the name Dark Vault.
+3. Sign-in headline still says Lightning settlement.
+4. Leftover zero-knowledge lines (Final Review, batch stamp, redaction copy).
+5. Chapter jumps, then a quieter phone install hint.
+6. Cam pins `/watch` on `@give_bit` when he wants. iPhone preview later. Agents cannot post.
+
+**Next for Kimi:** Integrate this summary into MASTER-BRAIN / Kanban on **THOR Obsidian** (not M4). Educate Hermes: October work is SPA copy. **Do not rebuild the API.** If `6c8ae2e` is only on THOR, do not push it. Keep `REQUIRE_LIGHTNING=false`. Do not change `/api/*`. `/health` status ok at 2026-10-13 19:19 UTC, `gitSha` `e814a57`, version `5.0.0-ELITE`. Pages = Grok. Full note: `docs/archive/SESSION-SUMMARY-2026-10-13-goodbye.md`. Paste block: `docs/MASTER-BRAIN-INGEST.md`.
+
+---
+
 ## 2026-10-13 — Sign-in says the key stays on the device.
 
 The sign-in share text and the trust chip no longer say zero-knowledge. All 7 languages. No API rebuild. If `6c8ae2e` is still only on THOR, do not push it. Keep `REQUIRE_LIGHTNING=false`. Do not change `/api/*`. Last confirmed live product deploy is `41df97c`. This commit deploys when Pages finishes.

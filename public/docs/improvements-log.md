@@ -1,7 +1,7 @@
 # Satohash Improvements Log — 100 Items
 
 **Completed:** 2026-07-05 (Batches 1–4)  
-**Version:** 4.1.0-ELITE (historical). Live SoT is `package.json` **5.0.0-ELITE**. Running 2026-09-08 harden notes: `docs/handoff-log.md` · `.ai_docs/current-status.md`.
+**Version:** 4.1.0-ELITE (historical). Live SoT is `package.json` **5.0.0-ELITE**. Current work order is `docs/roadmap.md` (2026-10-13), not this log.
 
 ---
 

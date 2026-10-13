@@ -1,3 +1,13 @@
+## 2026-10-13 (Grok M3 — goodbye, roadmap is the work order)
+
+This chat made the live site say what it actually does, then wrote the order for the next upgrades. The ~70s film is the player. Public pages say the file stays. Glossary Lightning and BOLT-12 say stamps are free and Lightning billing is off. The dashboard side column follows the language. Sign-in says the key stays on the device and is live as `4134150` (build 431, `/b/index-Bt__WPpD.js`).
+
+**Next code, in order:** history labels → drop zone → sign-in headline → leftover zero-knowledge lines → chapter jumps → quieter phone install hint. Full list: `docs/roadmap.md`. Summary: `docs/archive/SESSION-SUMMARY-2026-10-13-goodbye.md`.
+
+**Kimi:** ingest the top of `docs/KIMI-HANDOFF.md` into THOR Obsidian. Do not rebuild the API. If `6c8ae2e` is only on THOR, do not push it. Keep `REQUIRE_LIGHTNING=false`. Do not change `/api/*`. `/health` was ok at 19:19 UTC, `gitSha` `e814a57`.
+
+---
+
 ## 2026-10-13 (Grok M3 — sign-in says the key stays on the device)
 
 The sign-in share text and the trust chip no longer say zero-knowledge authentication. In all 7 languages the share line says your key stays on this device, and the chip says the same thing in a short label. Paywall stays off. No `/api/*` change. No API rebuild. Last confirmed live product deploy is `41df97c` (build 430). This commit deploys when Pages finishes.

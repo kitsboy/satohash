@@ -1,17 +1,28 @@
 # Satohash Protocol Roadmap
 
-> **Live product (2026-09-21):** stamp → `.ots` → Bitcoin-checked verify → `/p/{hash}`. Optional who shipped (not a legal name). Family widgets live (`docs/FAMILY-API.md`). API `21476f8`. Kimi: do not rebuild for copy.
+Canonical copy: [`docs/roadmap.md`](docs/roadmap.md). This file stays in sync so either path shows the same order.
 
-## Next for the next LLM
+> **Live product (2026-10-13):** stamp on the device → `.ots` → Bitcoin verify → `/p/{hash}`. Stamps are free. Lightning billing is off. The file stays. SPA `4134150` (build 431) is the last confirmed product deploy. API `gitSha` `e814a57`. Paywall off. Do not rebuild for copy.
 
-1. TadBuy (other repo): dead `/api/*` on static Pages.
-2. Cam: pin `/watch` on `@give_bit`; iPhone `/p/` unfurl.
-3. Optional npm CLI if Cam asks.
-4. Do not rebuild API / flip paywall / add Arabic / sell Snapper as court-ready.
+Do the next open item in [`docs/roadmap.md`](docs/roadmap.md), then the one after it.
 
-SoT: `.ai_docs/current-status.md`.
+## Upgrade in progress — do these first
 
-This roadmap tracks the evolution of Satohash from a standalone notary tool to a **Global Sovereign Settlement Mesh**. Phase checkmarks below include cathedral items that are **not live** — do not pitch them as shipped.
+1. **History labels** on `/dashboard` (`recentHistory`, `filterHistory` in `HistoryList.jsx`). Real words, 7 languages.
+2. **Drop zone** still English, including Dark Vault ON/OFF (`GlobalDropzone.jsx`). Keep the name Dark Vault.
+3. **Sign-in headline** still says Lightning settlement (`accessPage.hero.subtitle`). Say the key stays on the device.
+4. **Leftover zero-knowledge lines** in Final Review, batch stamp, and the `zkPrivacy` redaction copy. Say the file stays.
+5. **Chapter jumps** on the 70s film. Do not regenerate voice or pictures.
+6. **Quieter phone install hint.**
+7. **Public example** only if Cam picks a file. The picture stamp stays private.
+8. **Cam:** pin `/watch` on `@give_bit`. Agents cannot post.
+9. **Cam:** iPhone preview of `/p/<hash>`, later.
+
+Do not flip the paywall, change `/api/*`, add Arabic, rebuild the API for copy, or sell Snapper, ZK redaction, 3D Merkle, or BOLT-12 as live.
+
+## Archive phases (not the work order)
+
+Old phase checkmarks below are not the work order. Snapper is a scaffold. BOLT-12 billing is off. Do not pitch them as shipped.
 
 ## ✅ PHASE I: THE BASE CASE (COMPLETED)
 1.  **[x] Bitcoin Anchoring**: Core OpenTimestamps integration.
@@ -19,7 +30,7 @@ This roadmap tracks the evolution of Satohash from a standalone notary tool to a
 3.  **[~] Localization**: Seven locales in the picker (EN, ES, FR, DE, PT, SW, ZH). **Not done.** Finish the whole site in these seven — plan in `docs/I18N.md`. Do not add Arabic until then.
 
 ## ✅ PHASE II: INSTITUTIONAL HARDENING (COMPLETED)
-4.  **[x] The Satohash Snapper**: "Snap & Stamp" web evidence capture tool.
+4.  **[ ] The Satohash Snapper**: Scaffold only. Do not sell as a shipped court tool.
 5.  **[x] Institutional UI**: Migration to premium Light-Mode/Indigo design system.
 6.  **[x] Developer Portal**: Public API sandbox and institutional documentation.
 
@@ -27,7 +38,7 @@ This roadmap tracks the evolution of Satohash from a standalone notary tool to a
 7.  **[x] NIP-05 Identity**: Verifiable identity links for contract signers (static nostr.json + Identity page).
 8.  **[x] Proof DNA Widgets**: Embeddable, verifiable badges at /widgets + proof-dna.js v2.
 9.  **[ ] Mobile Signer Pro**: Dedicated iOS/Android secure enclave signing app.
-10. **[x] BOLT-12 Offers**: Native Lightning Network billing for automated anchoring.
+10. **[ ] BOLT-12 Offers**: Not live. Stamps are free. Lightning billing is off.
 
 ## 🚀 PHASE V: SOVEREIGNTY ASCENSION — v5.0.0-ELITE (Q3 2026)
 11. **[ ] API Apocalypse**: 20 backend upgrades — public stats, batch stamping, web capture, DID, co-signing, proof packages, SSE feeds
@@ -57,4 +68,4 @@ Gate: `npm run i18n:check`. Keep Bitcoin / OpenTimestamps / `ots-cli` / hash hex
 22. **[ ] Decentralized Governance**: Transitioning protocol parameters to community-led governance.
 
 ---
-*Status: I18N finish is active (Grok SPA). Vision 2027 still on the board. Phase III finalizing.*
+*Status: 2026-10-13. The work order is the upgrade list at the top and in `docs/roadmap.md`. Phase VI is vision, not current work. BOLT-12 and Snapper are not live.*

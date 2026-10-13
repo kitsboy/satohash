@@ -1,9 +1,9 @@
 # Current Status — Satohash
 
-**Version:** **5.0.0-ELITE** (Build 431)  
-**Last Updated:** 2026-10-13 (sign-in says the key stays on the device)  
-**Frontend:** https://satohash.io · www · CF Pages project **`satohash`** — Grok lane, `assetsDir: 'b'`. Last confirmed product deploy is `41df97c` (build 430): the dashboard side column translates, and glossary BOLT-12 says billing is off. This commit changes the sign-in share text and trust chip. It deploys when Pages finishes.  
-**API:** https://api.satohash.io ✅ LIVE. Deep health **ok** at 2026-10-13 00:39 UTC (bitcoind at tip, database, calendars, Nostr). **`gitSha` is `e814a57`**. Paywall off. Counts then: **495** stamps, **493** confirmed, **0** pending. This film batch did not change `server/`. Kimi: if `6c8ae2e` is still only on THOR, do not push it.  
+**Version:** **5.0.0-ELITE** (Build 432)  
+**Last Updated:** 2026-10-13 (roadmap and goodbye; sign-in copy already live)  
+**Frontend:** https://satohash.io · www · CF Pages project **`satohash`** — Grok lane, `assetsDir: 'b'`. Last confirmed product deploy is `4134150` (build 431): sign-in says the key stays on the device. Live shell `/b/index-Bt__WPpD.js`. Also live from this arc: 70s film, file-stays copy, glossary Lightning and BOLT-12 free-stamps lines, dashboard status rows, and the translated side column. This docs commit does not change product copy.  
+**API:** https://api.satohash.io ✅ LIVE. `/health` status **ok** at 2026-10-13 19:19 UTC. **`gitSha` `e814a57`**. Version `5.0.0-ELITE`. Paywall off. This copy work did not change `server/`. Kimi: if `6c8ae2e` is still only on THOR, do not push it.  
 **Metrics SoT:** `https://api.satohash.io/metrics.json`  
 **HQ:** https://hq.giveabit.io  
 **Git:** `main` (pull before you trust a SHA in this file)  
@@ -90,13 +90,28 @@
 
 ## Next for the next LLM (do in this order)
 
-Pickup: this file → `docs/handoff-log.md` → `docs/archive/SESSION-SUMMARY-2026-09-21-goodbye.md`. `/whatsup` loads that goodbye.
+Pickup: this file → `docs/roadmap.md` → `docs/handoff-log.md` → `docs/archive/SESSION-SUMMARY-2026-10-13-goodbye.md`. `/whatsup` loads that goodbye.
 
-1. **Kimi:** rewrite `GIT_SHA` from `git rev-parse --short HEAD`. `/health` is up; the label is a Cloudflare error string. `server/` unchanged since `21476f8`. Keep `REQUIRE_LIGHTNING=false`.
-2. **TadBuy (other repo):** stop calling dead same-origin `/api/*` on the static Pages demo. Not a Satohash API bug.
-3. **Cam marketing (not code):** pin `/watch` on **`@give_bit`** when Cam wants (`docs/marketing/GIVE-BIT-X-PACK.md`). Grok cannot post as that account. iPhone `/p/` unfurl is deferred (Cam, 2026-10-12).
-4. **Optional builders:** npm-publish `packages/satohash-cli` only if Cam asks. Root `bin/satohash.js` is a shim.
-5. **Do not:** flip `REQUIRE_LIGHTNING`; add Arabic; sell Snapper/ZK/BOLT-12 as live; Tailscale notes to M4. Vault = **THOR** Obsidian. Pages = Grok. Optional who is **shipped** (NIP-07 bind + proof-card chip); do not sell it as a legal name.
+1. **History labels** on `/dashboard`. `recentHistory` and `filterHistory` show as raw keys. Add real words in all 7 languages (`HistoryList.jsx`).
+2. **Drop zone** is still English, including Dark Vault ON/OFF (`GlobalDropzone.jsx`). Keep the name Dark Vault.
+3. **Sign-in headline** still says Lightning settlement (`accessPage.hero.subtitle`). Say the key stays on the device.
+4. **Leftover zero-knowledge lines** in Final Review, batch stamp, and `zkPrivacy` redaction copy. Say the file stays.
+5. Then chapter jumps, a quieter phone install hint, and a new public example only if Cam picks a file.
+6. **Cam:** pin `/watch` on **`@give_bit`** when Cam wants (`docs/marketing/GIVE-BIT-X-PACK.md`). Grok cannot post. iPhone `/p/` unfurl stays deferred.
+7. **Kimi:** ingest the 2026-10-13 goodbye into THOR Obsidian. Keep `REQUIRE_LIGHTNING=false`. Do not rebuild for copy. Do not push `6c8ae2e` if it is only on THOR.
+8. **Do not:** flip the paywall; change `/api/*`; add Arabic; sell Snapper, ZK redaction, 3D Merkle, or BOLT-12 as live; Tailscale notes to M4. Vault = **THOR**. Pages = Grok. Optional who is shipped and is not a legal name.
+9. **TadBuy (other repo):** dead same-origin `/api/*` on that static demo. Not a Satohash API bug.
+10. **Optional:** npm-publish `packages/satohash-cli` only if Cam asks.
+
+## This session (2026-10-13 — film, honest copy, roadmap)
+
+- [x] ~70s explainer is the player (Kokoro Isabella, quiet bed). Old 83.5s file left in place.
+- [x] File-stays copy: security, trust, glossary, about, comparison, executive summary. 7 languages.
+- [x] Glossary Lightning and BOLT-12 say stamps are free and Lightning billing is off.
+- [x] Dashboard Lightning row removed. Status rows and the side column follow the language.
+- [x] Sign-in share text and trust chip say the key stays on the device. Live `4134150`.
+- [x] Upgrade order written in `docs/roadmap.md` and `ROADMAP.md`.
+- [ ] Next code: history labels, then the drop zone, then the sign-in headline.
 
 ## This session (2026-09-20–21 — honesty + quieter UX)
 

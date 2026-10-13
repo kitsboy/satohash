@@ -6,6 +6,21 @@
 
 ---
 
+## Paste block (2026-10-13 — goodbye)
+
+```markdown
+### Satohash 2026-10-13 goodbye (Grok M3)
+Live loop unchanged: stamp on device → .ots → Bitcoin verify → /p/{hash}. Stamps free. Paywall off. File stays.
+SPA 4134150 (build 431) live: sign-in says the key stays on the device. Shell /b/index-Bt__WPpD.js.
+Also live this arc: 70s film, file-stays copy, glossary Lightning + BOLT-12 free-stamps lines, dashboard side column.
+API /health ok 19:19 UTC, gitSha e814a57, version 5.0.0-ELITE. Do not rebuild for copy. Do not push 6c8ae2e if it is only on THOR.
+Next code, in order: history labels, drop zone translation, sign-in headline, leftover ZK lines. Full order: docs/roadmap.md.
+Cam: pin /watch on @give_bit when he wants. iPhone unfurl later. Agents cannot post.
+Pages = Grok. Vault = THOR not M4.
+```
+
+---
+
 ## Paste block (2026-09-21 — goodbye)
 
 ```markdown
