@@ -2599,8 +2599,8 @@
         "body": "Sele contratos, capturas e saídas de IA antes de a discussão começar."
       },
       "private": {
-        "title": "Privado por desenho",
-        "body": "Hash de conhecimento zero. Nunca precisamos do documento — só da impressão digital. O ficheiro não sai do dispositivo."
+        "title": "O arquivo fica",
+        "body": "O arquivo fica no dispositivo. Só uma impressão digital SHA-256 é carimbada. Nunca vemos o arquivo."
       },
       "verify": {
         "title": "Provas verificáveis de forma independente",

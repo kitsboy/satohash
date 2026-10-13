@@ -1,8 +1,8 @@
 # Current Status — Satohash
 
-**Version:** **5.0.0-ELITE** (Build 426)  
-**Last Updated:** 2026-10-13 (glossary, about, and comparison say the file stays; Lightning row hidden; homepage poster is a film frame)  
-**Frontend:** https://satohash.io · www · CF Pages project **`satohash`** — Grok lane, `assetsDir: 'b'` · last confirmed production deploy `c5cd2bc` (build 426). Glossary, about, and comparison say the file stays. Homepage poster is `explainer-poster.jpg?v=426`.  
+**Version:** **5.0.0-ELITE** (Build 428)  
+**Last Updated:** 2026-10-13 (executive summary card says the file stays)  
+**Frontend:** https://satohash.io · www · CF Pages project **`satohash`** — Grok lane, `assetsDir: 'b'` · last confirmed production deploy `c5cd2bc` (build 426). This commit’s executive-summary card deploys when Pages finishes.  
 **API:** https://api.satohash.io ✅ LIVE. Deep health **ok** at 2026-10-13 00:39 UTC (bitcoind at tip, database, calendars, Nostr). **`gitSha` is `e814a57`**. Paywall off. Counts then: **495** stamps, **493** confirmed, **0** pending. This film batch did not change `server/`. Kimi: if `6c8ae2e` is still only on THOR, do not push it.  
 **Metrics SoT:** `https://api.satohash.io/metrics.json`  
 **HQ:** https://hq.giveabit.io  

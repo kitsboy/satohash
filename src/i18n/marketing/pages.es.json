@@ -2599,8 +2599,8 @@
         "body": "Sella contratos, capturas y salidas de IA antes de que empiece la discusión."
       },
       "private": {
-        "title": "Privado por diseño",
-        "body": "Hash de conocimiento cero. Nunca necesitamos el documento — solo la huella. El archivo no sale del dispositivo."
+        "title": "El archivo se queda",
+        "body": "El archivo se queda en tu dispositivo. Solo se sella una huella SHA-256. Nunca vemos el archivo."
       },
       "verify": {
         "title": "Pruebas verificables de forma independiente",

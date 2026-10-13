@@ -2599,8 +2599,8 @@
         "body": "Horodatez contrats, captures et sorties d’IA avant que le conflit ne commence."
       },
       "private": {
-        "title": "Privé par conception",
-        "body": "Hachage en connaissance nulle. Nous n’avons jamais besoin du document — seulement de l’empreinte. Le fichier ne quitte pas l’appareil."
+        "title": "Le fichier reste",
+        "body": "Le fichier reste sur votre appareil. Seule une empreinte SHA-256 est tamponnée. Nous ne voyons jamais le fichier."
       },
       "verify": {
         "title": "Preuves vérifiables indépendamment",

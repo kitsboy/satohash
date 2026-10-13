@@ -2599,8 +2599,8 @@
         "body": "Gonga mikataba, picha za skrini, na matokeo ya AI kabla mzozo haujaanza."
       },
       "private": {
-        "title": "Faragha kwa muundo",
-        "body": "Hash ya ujuzi-sifuri. Hatuhitaji waraka — alama tu. Faili haliondoki kwenye kifaa."
+        "title": "Faili linabaki",
+        "body": "Faili linabaki kwenye kifaa chako. Alama ya SHA-256 pekee ndiyo inayotiwa muhuri. Hatuoni faili kamwe."
       },
       "verify": {
         "title": "Uthibitisho unaoweza kuthibitishwa kwa kujitegemea",

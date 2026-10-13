@@ -1,3 +1,11 @@
+## 2026-10-13 (Grok M3 — executive summary card says the file stays)
+
+The daily-habit card on `/docs/executive-summary` now says the file stays, in all 7 languages. The key is still `execSummaryPage.reasons.private`. Paywall stays off. No `/api/*` change. No API rebuild.
+
+**Kimi:** if `6c8ae2e` is still only on THOR, do not push it. Keep `REQUIRE_LIGHTNING=false`. Do not change `/api/*`.
+
+---
+
 ## 2026-10-13 (Grok M3 — homepage poster cache)
 
 `e7ebc56` (build 425) is live: glossary, about, and comparison say the file stays; the dashboard Lightning row is gone. The poster file is on the site. One edge had cached the empty page at `/media/video/explainer-poster.jpg` before the file existed. The homepage now asks for `?v=426`. No API rebuild. If `6c8ae2e` is still only on THOR, do not push it. Keep `REQUIRE_LIGHTNING=false`. Do not change `/api/*`.

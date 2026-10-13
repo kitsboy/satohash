@@ -2599,8 +2599,8 @@
         "body": "Stempeln Sie Verträge, Screenshots und KI-Ausgaben, bevor der Streit beginnt."
       },
       "private": {
-        "title": "Privat by design",
-        "body": "Zero-Knowledge-Hashing. Wir brauchen das Dokument nie — nur den Fingerabdruck. Die Datei verlässt das Gerät nicht."
+        "title": "Die Datei bleibt",
+        "body": "Die Datei bleibt auf Ihrem Gerät. Nur ein SHA-256-Fingerabdruck wird gestempelt. Wir sehen die Datei nie."
       },
       "verify": {
         "title": "Unabhängig prüfbare Nachweise",

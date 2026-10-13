@@ -2599,8 +2599,8 @@
         "body": "Stamp contracts, screenshots, and AI outputs before the argument starts."
       },
       "private": {
-        "title": "Private by design",
-        "body": "Zero-knowledge hashing. We never need the document — only the fingerprint. The file never leaves the device."
+        "title": "The file stays",
+        "body": "The file stays on your device. Only a SHA-256 fingerprint is stamped. We never see the file."
       },
       "verify": {
         "title": "Independently verifiable proofs",
