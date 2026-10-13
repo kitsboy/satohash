@@ -1,3 +1,13 @@
+## 2026-10-13 (Grok M3 — the new film is on satohash.io)
+
+Checked after Pages deploy `e814a57`. `/watch` and the homepage play `satohash-explainer-wise.mp4` (83.533s). The 10s teaser still plays the short film (10.005s). Phone width 390 shows the player, the chapters, and the stamp button with no sideways scroll. Pitch page includes block **969,627** and “the file never leaves.”
+
+API deep health was **ok**. `gitSha` is the real commit `e814a57`. Paywall off. Counts: 495 stamps, 493 confirmed, 0 pending. Cam’s picture stamp now verifies: block **971,153**. It is not the public example. Do not publish its filename.
+
+**Kimi:** if `6c8ae2e` is still only on THOR, do not push it. The running API already matches GitHub `e814a57`. Keep `REQUIRE_LIGHTNING=false`. Do not change `/api/*`.
+
+---
+
 ## 2026-10-13 (Grok M3 — Pages can install again)
 
 The new film and the pitch are on GitHub (`3a62e62`) and the film file is on `videos.giveabit.io`. satohash.io was still the previous site because Cloudflare Pages and GitHub Actions both died in `npm ci`: the lock has undici **6.28.1**, and a caret override made npm ask for **6.29.0**. Overrides are now exact versions that match the lock. No library was upgraded. Paywall stays off. No `/api/*` change.

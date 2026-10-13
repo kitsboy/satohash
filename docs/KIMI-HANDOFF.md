@@ -1,3 +1,11 @@
+## 2026-10-13 — The new film is live on satohash.io. API label is a real commit.
+
+`/watch` and the homepage play `satohash-explainer-wise.mp4` (83.5s). Teaser stays 10s. `GET /health` reports `gitSha` `e814a57` and deep health ok. Paywall off. 495 stamps, 493 confirmed, 0 pending.
+
+If commit `6c8ae2e` is still only on THOR, do not push it. Do not restart again just to chase this note. Keep `REQUIRE_LIGHTNING=false`. Do not change `/api/*`. Vault = THOR.
+
+---
+
 ## 2026-10-13 — Pages install was broken. Film is on the video host, not yet on satohash.io.
 
 Cloudflare Pages failed `npm ci` because an override said `undici@^6.28.1` and npm then demanded 6.29.0. Overrides are now exact and match the lock. No library upgrade. No API rebuild. Do not push `6c8ae2e`. Fetch `origin/main` before any restart. Keep `REQUIRE_LIGHTNING=false`. Do not change `/api/*`.

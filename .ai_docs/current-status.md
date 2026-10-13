@@ -1,9 +1,9 @@
 # Current Status — Satohash
 
 **Version:** **5.0.0-ELITE** (Build 420)  
-**Last Updated:** 2026-10-13 (new ~84s film is in git and on videos.giveabit.io; Pages install is unblocked by exact dependency pins)  
-**Frontend:** https://satohash.io · www · CF Pages project **`satohash`** — Grok lane, `assetsDir: 'b'`  
-**API:** https://api.satohash.io ✅ LIVE (THOR Docker, HTTP 200). **`gitSha` is not a commit** as of 2026-10-12 — it is a Cloudflare error string in `GIT_SHA`. Last known good image content is **`21476f8`** (`server/` unchanged since then). Kimi: rewrite `GIT_SHA` from `git rev-parse --short HEAD` on the next start. Paywall off. Family counts 2026-10-12: katoa **5**, giveabit **3**, sherpacarta/motopass/tadbuy **2**.  
+**Last Updated:** 2026-10-13 (`/watch` and the homepage play the new 83.5s film; API `gitSha` is a real commit)  
+**Frontend:** https://satohash.io · www · CF Pages project **`satohash`** — Grok lane, `assetsDir: 'b'` · production deploy of `e814a57`  
+**API:** https://api.satohash.io ✅ LIVE. Deep health **ok** at 2026-10-13 00:39 UTC (bitcoind at tip, database, calendars, Nostr). **`gitSha` is `e814a57`**. Paywall off. Counts then: **495** stamps, **493** confirmed, **0** pending. This film batch did not change `server/`. Kimi: if `6c8ae2e` is still only on THOR, do not push it.  
 **Metrics SoT:** `https://api.satohash.io/metrics.json`  
 **HQ:** https://hq.giveabit.io  
 **Git:** `main` (pull before you trust a SHA in this file)  
