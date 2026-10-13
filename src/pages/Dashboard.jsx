@@ -13,7 +13,6 @@ import {
   FileCheck,
   ExternalLink,
   ShieldCheck,
-  Zap,
   FileText,
   ChevronRight,
   Terminal,
@@ -856,12 +855,6 @@ export default function Dashboard() {
                     status="NOMINAL"
                     emerald
                     tooltip="Your proof is replicated across multiple geographic nodes simultaneously, ensuring it can never be lost or censored."
-                  />
-                  <TeleItem
-                    icon={Zap}
-                    label="Lightning payments"
-                    status="NOT ON"
-                    tooltip="Lightning payments are not switched on. Stamps are free today. Bitcoin still seals the proof."
                   />
                   <TeleItem
                     icon={Box}

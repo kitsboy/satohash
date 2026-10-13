@@ -1,3 +1,9 @@
+## 2026-10-13 — Glossary, About, and the comparison say the file stays.
+
+Those pages no longer say zero-knowledge. The dashboard Lightning row is gone. The homepage play picture is a frame from the 70-second film. No API rebuild. If `6c8ae2e` is still only on THOR, do not push it. Keep `REQUIRE_LIGHTNING=false`. Do not change `/api/*`.
+
+---
+
 ## 2026-10-13 — The explainer is about 70 seconds. Security and trust say the file stays.
 
 `/watch` and the homepage now point at `satohash-explainer-wise-70.mp4` (~70s). The file is already on `videos.giveabit.io`. The old 83.5s file is still there and is no longer the player. Teaser stays 10s. Security and trust pages say the file stays. The dashboard Lightning row says NOT ON. No API rebuild. If `6c8ae2e` is still only on THOR, do not push it. Keep `REQUIRE_LIGHTNING=false`. Do not change `/api/*`.

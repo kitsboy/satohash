@@ -196,7 +196,7 @@
     },
     "rows": {
       "zeroKnowledge": {
-        "label": "Ujuzi wa sifuri (faili haiondoki kwenye kifaa)",
+        "label": "Faili linabaki kwenye kifaa",
         "satohash": true,
         "docuSign": false,
         "eth": true,
@@ -345,7 +345,7 @@
     "hero": {
       "title": "Kamusi",
       "titleHighlight": "ya Maneno",
-      "subtitle": "Dhana muhimu zimeelezwa kwa urahisi. Kutoka SHA-256 hadi Uthibitisho wa Ujuzi wa Sifuri.",
+      "subtitle": "Dhana muhimu, kwa lugha rahisi. Kutoka SHA-256 hadi alama inayoondoka kwenye kifaa chako.",
       "searchPlaceholder": "Tafuta maneno..."
     },
     "empty": {
@@ -394,8 +394,8 @@
         "def": "Itifaki ya malipo ya tabaka la pili juu ya Bitcoin inayowezesha miamala ya papo hapo, ada ndogo. Inatumika na Satohash kwa malipo ya premium."
       },
       "zeroKnowledge": {
-        "term": "Zero-Knowledge Proof",
-        "def": "Njia ya kuthibitisha ujuzi wa taarifa bila kufichua taarifa yenyewe. Katika Satohash, hati zako haziondoki kwenye kifaa chako — hashes zao pekee ndizo zinazoshirikiwa."
+        "term": "Alama ya faili",
+        "def": "Satohash hubadilisha faili kuwa alama fupi ya SHA-256 kwenye kifaa chako. Faili linabaki. Alama hiyo pekee ndiyo inayoendelea. Hatuoni faili kamwe."
       },
       "foss": {
         "term": "FOSS",
@@ -2261,8 +2261,8 @@
     "principlesTitle": "Kwa nini hii ipo",
     "pillars": {
       "zeroKnowledge": {
-        "title": "Ujuzi-sifuri kwa muundo",
-        "body": "Nyaraka hazitoki kwenye kifaa chako. Ni alama ya SHA-256 tu inayogongwa. Hatuwezi kusoma kile tusichopokea."
+        "title": "Faili linabaki",
+        "body": "Faili linabaki kwenye kifaa chako. Alama ya SHA-256 pekee ndiyo inayotiwa muhuri. Hatuoni faili kamwe."
       },
       "bitcoin": {
         "title": "Bitcoin kama uamuzi wa mwisho",

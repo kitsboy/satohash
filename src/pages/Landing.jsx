@@ -33,7 +33,7 @@ import { PUBLIC_PROOF, PUBLIC_PROOF_PATH } from '../config/publicProof'
 
 const HERO_VIDEO =
   'https://videos.giveabit.io/media/video/satohash-explainer-wise-70.mp4?v=kimi-wise-70-20261013'
-const HERO_POSTER = '/og/watch.jpg'
+const HERO_POSTER = '/media/video/explainer-poster.jpg'
 const HERO_VIDEO_LABEL =
   'Satohash explainer: file never leaves the device, Bitcoin keeps the receipt'
 
@@ -525,8 +525,8 @@ export default function Landing() {
                     src={HERO_POSTER}
                     alt=""
                     aria-hidden="true"
-                    width={1200}
-                    height={630}
+                    width={1920}
+                    height={1080}
                     fetchPriority="high"
                     decoding="async"
                     className="absolute inset-0 h-full w-full rounded-[inherit] object-cover"

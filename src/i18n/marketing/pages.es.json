@@ -196,7 +196,7 @@
     },
     "rows": {
       "zeroKnowledge": {
-        "label": "Conocimiento cero (el archivo nunca sale del dispositivo)",
+        "label": "El archivo se queda en el dispositivo",
         "satohash": true,
         "docuSign": false,
         "eth": true,
@@ -345,7 +345,7 @@
     "hero": {
       "title": "Glosario",
       "titleHighlight": "de términos",
-      "subtitle": "Conceptos clave explicados de forma sencilla. De SHA-256 a las pruebas de conocimiento cero.",
+      "subtitle": "Conceptos clave, explicados con sencillez. Del SHA-256 a la huella que sale de tu dispositivo.",
       "searchPlaceholder": "Buscar términos..."
     },
     "empty": {
@@ -394,8 +394,8 @@
         "def": "Protocolo de pagos de segunda capa sobre Bitcoin que permite transacciones instantáneas y de bajo coste. Satohash lo usa para la facturación premium."
       },
       "zeroKnowledge": {
-        "term": "Zero-Knowledge Proof",
-        "def": "Método para demostrar conocimiento de información sin revelar la información en sí. En Satohash, tus documentos nunca salen de tu dispositivo — solo se comparten sus hashes."
+        "term": "Huella del archivo",
+        "def": "Satohash convierte un archivo en una huella SHA-256 corta en tu dispositivo. El archivo se queda. Solo esa huella sale. Nunca vemos el archivo."
       },
       "foss": {
         "term": "FOSS",
@@ -2261,8 +2261,8 @@
     "principlesTitle": "Por qué existe",
     "pillars": {
       "zeroKnowledge": {
-        "title": "Conocimiento cero por diseño",
-        "body": "Los documentos nunca salen de tu dispositivo. Solo se sella una huella SHA-256. No podemos leer lo que nunca recibimos."
+        "title": "El archivo se queda",
+        "body": "El archivo se queda en tu dispositivo. Solo se sella una huella SHA-256. Nunca vemos el archivo."
       },
       "bitcoin": {
         "title": "Bitcoin como finalidad",

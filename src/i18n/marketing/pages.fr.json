@@ -196,7 +196,7 @@
     },
     "rows": {
       "zeroKnowledge": {
-        "label": "Connaissance nulle (le fichier ne quitte jamais l'appareil)",
+        "label": "Le fichier reste sur l'appareil",
         "satohash": true,
         "docuSign": false,
         "eth": true,
@@ -345,7 +345,7 @@
     "hero": {
       "title": "Glossaire",
       "titleHighlight": "des termes",
-      "subtitle": "Concepts clés expliqués simplement. De SHA-256 aux preuves à connaissance nulle.",
+      "subtitle": "Concepts clés, simplement. Du SHA-256 à l'empreinte qui quitte votre appareil.",
       "searchPlaceholder": "Rechercher des termes..."
     },
     "empty": {
@@ -394,8 +394,8 @@
         "def": "Protocole de paiement de seconde couche sur Bitcoin permettant des transactions instantanées et à faible coût. Utilisé par Satohash pour la facturation premium."
       },
       "zeroKnowledge": {
-        "term": "Zero-Knowledge Proof",
-        "def": "Méthode pour prouver la connaissance d'une information sans révéler l'information elle-même. Dans Satohash, vos documents ne quittent jamais votre appareil — seuls leurs hachages sont partagés."
+        "term": "Empreinte du fichier",
+        "def": "Satohash transforme un fichier en une courte empreinte SHA-256 sur votre appareil. Le fichier reste. Seule cette empreinte part. Nous ne voyons jamais le fichier."
       },
       "foss": {
         "term": "FOSS",
@@ -2261,8 +2261,8 @@
     "principlesTitle": "Pourquoi cela existe",
     "pillars": {
       "zeroKnowledge": {
-        "title": "Zéro connaissance par conception",
-        "body": "Les documents ne quittent jamais votre appareil. Seule une empreinte SHA-256 est horodatée. Nous ne pouvons pas lire ce que nous ne recevons jamais."
+        "title": "Le fichier reste",
+        "body": "Le fichier reste sur votre appareil. Seule une empreinte SHA-256 est tamponnée. Nous ne voyons jamais le fichier."
       },
       "bitcoin": {
         "title": "Bitcoin comme finalité",

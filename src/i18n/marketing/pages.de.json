@@ -196,7 +196,7 @@
     },
     "rows": {
       "zeroKnowledge": {
-        "label": "Zero-Knowledge (Datei verlässt nie das Gerät)",
+        "label": "Die Datei bleibt auf dem Gerät",
         "satohash": true,
         "docuSign": false,
         "eth": true,
@@ -345,7 +345,7 @@
     "hero": {
       "title": "Glossar",
       "titleHighlight": "der Begriffe",
-      "subtitle": "Schlüsselkonzepte einfach erklärt. Von SHA-256 bis Zero-Knowledge Proofs.",
+      "subtitle": "Wichtige Begriffe, einfach erklärt. Von SHA-256 bis zum Fingerabdruck, der das Gerät verlässt.",
       "searchPlaceholder": "Begriffe suchen..."
     },
     "empty": {
@@ -394,8 +394,8 @@
         "def": "Ein Second-Layer-Zahlungsprotokoll auf Bitcoin für sofortige Transaktionen mit niedrigen Gebühren. Satohash nutzt es für Premium-Abrechnung."
       },
       "zeroKnowledge": {
-        "term": "Zero-Knowledge Proof",
-        "def": "Eine Methode, Wissen über Informationen nachzuweisen, ohne die Informationen selbst preiszugeben. Bei Satohash verlassen Ihre Dokumente nie Ihr Gerät — nur ihre Hashes werden geteilt."
+        "term": "Datei-Fingerabdruck",
+        "def": "Satohash macht auf Ihrem Gerät aus einer Datei einen kurzen SHA-256-Fingerabdruck. Die Datei bleibt. Nur dieser Fingerabdruck geht weiter. Wir sehen die Datei nie."
       },
       "foss": {
         "term": "FOSS",
@@ -2261,8 +2261,8 @@
     "principlesTitle": "Warum es das gibt",
     "pillars": {
       "zeroKnowledge": {
-        "title": "Zero-Knowledge by Design",
-        "body": "Dokumente verlassen Ihr Gerät nie. Nur ein SHA-256-Fingerabdruck wird gestempelt. Wir können nicht lesen, was wir nie empfangen."
+        "title": "Die Datei bleibt",
+        "body": "Die Datei bleibt auf Ihrem Gerät. Nur ein SHA-256-Fingerabdruck wird gestempelt. Wir sehen die Datei nie."
       },
       "bitcoin": {
         "title": "Bitcoin als Finalität",

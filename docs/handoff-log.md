@@ -1,3 +1,11 @@
+## 2026-10-13 (Grok M3 — glossary, about, comparison tell the truth; Lightning row hidden)
+
+Glossary, About, the comparison table, and the About share text now say the file stays and only a fingerprint goes out, in all 7 languages. The glossary entry is “File fingerprint.” The dashboard no longer shows a Lightning row. The homepage play button uses a frame from the 70-second film. Paywall stays off. No `/api/*` change. No API rebuild.
+
+**Kimi:** if `6c8ae2e` is still only on THOR, do not push it. Keep `REQUIRE_LIGHTNING=false`. Do not change `/api/*`.
+
+---
+
 ## 2026-10-13 (Grok M3 — 70-second film, security and trust say the file stays)
 
 The long explainer is about 70 seconds. Same spoken words, a little faster, same young British voice (Kokoro Isabella, not Pippa), same quiet bed. Pictures now show a file becoming fingerprint `515b2a39`, that fingerprint inside one Bitcoin block, and a receipt card for block **969,627**. No filename on the card. Kimi appears two more times in a simple semi-formal outfit. The on-screen line is “Waiting is the strength.”

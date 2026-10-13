@@ -196,7 +196,7 @@
     },
     "rows": {
       "zeroKnowledge": {
-        "label": "Conhecimento zero (arquivo nunca sai do dispositivo)",
+        "label": "O arquivo fica no dispositivo",
         "satohash": true,
         "docuSign": false,
         "eth": true,
@@ -345,7 +345,7 @@
     "hero": {
       "title": "Glossário",
       "titleHighlight": "de termos",
-      "subtitle": "Conceitos-chave explicados de forma simples. De SHA-256 a Zero-Knowledge Proofs.",
+      "subtitle": "Conceitos-chave, explicados de forma simples. Do SHA-256 à impressão digital que sai do dispositivo.",
       "searchPlaceholder": "Buscar termos..."
     },
     "empty": {
@@ -394,8 +394,8 @@
         "def": "Um protocolo de pagamento de segunda camada sobre o Bitcoin que permite transações instantâneas com taxas baixas. Usado pelo Satohash para cobrança premium."
       },
       "zeroKnowledge": {
-        "term": "Zero-Knowledge Proof",
-        "def": "Um método para provar conhecimento de informações sem revelar as informações em si. No Satohash, seus documentos nunca saem do dispositivo — apenas seus hashes são compartilhados."
+        "term": "Impressão digital do arquivo",
+        "def": "O Satohash transforma um arquivo numa impressão digital SHA-256 curta no seu dispositivo. O arquivo fica. Só essa impressão sai. Nunca vemos o arquivo."
       },
       "foss": {
         "term": "FOSS",
@@ -2261,8 +2261,8 @@
     "principlesTitle": "Por que isto existe",
     "pillars": {
       "zeroKnowledge": {
-        "title": "Zero-conhecimento por desenho",
-        "body": "Os documentos nunca saem do seu dispositivo. Só se sela uma impressão SHA-256. Não podemos ler o que nunca recebemos."
+        "title": "O arquivo fica",
+        "body": "O arquivo fica no dispositivo. Só uma impressão digital SHA-256 é carimbada. Nunca vemos o arquivo."
       },
       "bitcoin": {
         "title": "Bitcoin como finalidade",

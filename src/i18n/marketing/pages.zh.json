@@ -196,7 +196,7 @@
     },
     "rows": {
       "zeroKnowledge": {
-        "label": "零知识（文件永不离开设备）",
+        "label": "文件留在设备上",
         "satohash": true,
         "docuSign": false,
         "eth": true,
@@ -345,7 +345,7 @@
     "hero": {
       "title": "术语",
       "titleHighlight": "表",
-      "subtitle": "关键概念简明解释。从 SHA-256 到零知识证明。",
+      "subtitle": "用简单的话说明关键概念。从 SHA-256 到离开设备的指纹。",
       "searchPlaceholder": "搜索术语..."
     },
     "empty": {
@@ -394,8 +394,8 @@
         "def": "Bitcoin 之上的第二层支付协议，支持即时、低费用交易。Satohash 用它进行 Premium 计费。"
       },
       "zeroKnowledge": {
-        "term": "Zero-Knowledge Proof",
-        "def": "在不透露信息本身的情况下证明掌握该信息的方法。在 Satohash 中，您的文档永不离开设备——仅分享其哈希值。"
+        "term": "文件指纹",
+        "def": "Satohash 在你的设备上把文件变成一条短的 SHA-256 指纹。文件留下。只有这条指纹会送出。我们从不见到文件。"
       },
       "foss": {
         "term": "FOSS",
@@ -2236,8 +2236,8 @@
     "principlesTitle": "为何存在",
     "pillars": {
       "zeroKnowledge": {
-        "title": "天生零知识",
-        "body": "文件从不离开你的设备。盖戳的只有 SHA-256 指纹。我们从未收到的内容，也无法阅读。"
+        "title": "文件留下",
+        "body": "文件留在你的设备上。只有 SHA-256 指纹会被盖章。我们从不见到文件。"
       },
       "bitcoin": {
         "title": "Bitcoin 作为终局",

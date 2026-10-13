@@ -536,36 +536,36 @@ export const pageMeta = {
     en: {
       title: 'About Satohash — Sovereign Proof Protocol',
       description:
-        'The Satohash protocol whitepaper: Bitcoin-anchored proof of existence, zero-knowledge architecture, and institutional-grade digital truth.'
+        'About Satohash: the file stays on the device, only a fingerprint goes out, and Bitcoin keeps the proof.'
     },
     es: {
       title: 'Acerca de Satohash — Protocolo de Prueba Soberana',
       description:
-        'El whitepaper del protocolo Satohash: prueba de existencia anclada en Bitcoin, arquitectura de conocimiento cero y verdad digital institucional.'
+        'Acerca de Satohash: el archivo se queda en el dispositivo, solo sale una huella, y Bitcoin guarda la prueba.'
     },
     fr: {
       title: 'À propos de Satohash — Protocole de Preuve Souveraine',
       description:
-        "Le livre blanc Satohash : preuve d'existence ancrée sur Bitcoin, architecture zéro connaissance et vérité numérique institutionnelle."
+        "À propos de Satohash : le fichier reste sur l'appareil, seule une empreinte part, et Bitcoin garde la preuve."
     },
     de: {
       title: 'Über Satohash — Souveränes Proof-Protokoll',
       description:
-        'Das Satohash-Whitepaper: Bitcoin-verankerter Existenznachweis, Zero-Knowledge-Architektur und institutionelle digitale Wahrheit.'
+        'Über Satohash: Die Datei bleibt auf dem Gerät, nur ein Fingerabdruck geht weiter, und Bitcoin bewahrt den Beweis.'
     },
     pt: {
       title: 'Sobre Satohash — Protocolo de Prova Soberana',
       description:
-        'O whitepaper do protocolo Satohash: prova de existência ancorada no Bitcoin, arquitetura zero-conhecimento e verdade digital institucional.'
+        'Sobre o Satohash: o arquivo fica no dispositivo, só sai uma impressão digital, e o Bitcoin guarda a prova.'
     },
     sw: {
       title: 'Kuhusu Satohash — Itifaki ya Ushahidi wa Uhuru',
       description:
-        'Waraka mweupe wa Satohash: ushahidi wa kuwepo uliofungwa kwenye Bitcoin, usanifu wa ujuzi wa sifuri, na ukweli wa kidijitali wa kitaasisi.'
+        'Kuhusu Satohash: faili linabaki kwenye kifaa, alama pekee ndiyo inayoendelea, na Bitcoin huhifadhi uthibitisho.'
     },
     zh: {
       title: '关于 Satohash — 主权证明协议',
-      description: 'Satohash 协议白皮书：比特币锚定存在证明、零知识架构和机构级数字真相。'
+      description: '关于 Satohash：文件留在设备上，只有指纹会送出，比特币保存证明。'
     }
   },
   pitch: {

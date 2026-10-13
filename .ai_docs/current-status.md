@@ -1,8 +1,8 @@
 # Current Status — Satohash
 
-**Version:** **5.0.0-ELITE** (Build 424)  
-**Last Updated:** 2026-10-13 (70-second explainer; security and trust say the file stays; dashboard Lightning row is off)  
-**Frontend:** https://satohash.io · www · CF Pages project **`satohash`** — Grok lane, `assetsDir: 'b'` · last confirmed production deploy was `e814a57`; this commit deploys when Pages finishes  
+**Version:** **5.0.0-ELITE** (Build 425)  
+**Last Updated:** 2026-10-13 (glossary, about, and comparison say the file stays; Lightning row hidden; homepage poster is a film frame)  
+**Frontend:** https://satohash.io · www · CF Pages project **`satohash`** — Grok lane, `assetsDir: 'b'` · last confirmed production deploy was `1d1d3e3`; this commit deploys when Pages finishes  
 **API:** https://api.satohash.io ✅ LIVE. Deep health **ok** at 2026-10-13 00:39 UTC (bitcoind at tip, database, calendars, Nostr). **`gitSha` is `e814a57`**. Paywall off. Counts then: **495** stamps, **493** confirmed, **0** pending. This film batch did not change `server/`. Kimi: if `6c8ae2e` is still only on THOR, do not push it.  
 **Metrics SoT:** `https://api.satohash.io/metrics.json`  
 **HQ:** https://hq.giveabit.io  
@@ -60,7 +60,7 @@
 | `/p/<hash>` | Zero-JS Function proof card (iMessage JPEG `01-stamp-hero.jpg`) |
 | `/network` | Live calendars, bitcoind tip, recent stamps, family tiles, Notes on Nostr |
 | `/status` · `/counsel` | Public status · counsel one-pager |
-| `/watch` | ~84s `satohash-explainer-wise.mp4` · quiet bed · 10s teaser · `?v=kimi-wise-20261012` |
+| `/watch` | ~70s `satohash-explainer-wise-70.mp4` · quiet bed · 10s teaser · `?v=kimi-wise-70-20261013` |
 | Language | **7 locales** en es fr de pt sw zh — product loop + public marketing + template catalog largely done. SoT `docs/I18N.md`. Offers deferred. Do not add Arabic. |
 
 ## Metrics (verified live 2026-08-17)

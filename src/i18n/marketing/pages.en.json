@@ -197,7 +197,7 @@
     },
     "rows": {
       "zeroKnowledge": {
-        "label": "Zero-knowledge (file never leaves device)",
+        "label": "File stays on the device",
         "satohash": true,
         "docuSign": false,
         "eth": true,
@@ -345,7 +345,7 @@
     "hero": {
       "title": "Glossary",
       "titleHighlight": "of Terms",
-      "subtitle": "Key concepts explained simply. From SHA-256 to Zero-Knowledge Proofs.",
+      "subtitle": "Key concepts explained simply. From SHA-256 to the fingerprint that leaves your device.",
       "searchPlaceholder": "Search terms..."
     },
     "empty": {
@@ -394,8 +394,8 @@
         "def": "A second-layer payment protocol on top of Bitcoin enabling instant, low-fee transactions. Used by Satohash for premium billing."
       },
       "zeroKnowledge": {
-        "term": "Zero-Knowledge Proof",
-        "def": "A method to prove knowledge of information without revealing the information itself. In Satohash, your documents never leave your device — only their hashes are shared."
+        "term": "File fingerprint",
+        "def": "Satohash turns a file into a short SHA-256 fingerprint on your device. The file stays. Only that fingerprint goes out. We never see the file."
       },
       "foss": {
         "term": "FOSS",
@@ -2261,8 +2261,8 @@
     "principlesTitle": "Why this exists",
     "pillars": {
       "zeroKnowledge": {
-        "title": "Zero-knowledge by design",
-        "body": "Documents never leave your device. Only a SHA-256 fingerprint is stamped. We cannot read what we never receive."
+        "title": "The file stays",
+        "body": "The file stays on your device. Only a SHA-256 fingerprint is stamped. We never see the file."
       },
       "bitcoin": {
         "title": "Bitcoin as finality",
