@@ -5,6 +5,9 @@
 
 export const MVP_MODE = import.meta.env.VITE_MVP_MODE !== 'false'
 
+/** Paid dashboard upsell stays hidden while stamps are free. */
+export const PAID_UPSELL = false
+
 /** Routes reachable without /access login when MVP_MODE is on */
 export const MVP_PUBLIC_PATHS = [
   '/stamp',

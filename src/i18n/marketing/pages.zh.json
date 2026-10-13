@@ -1658,7 +1658,7 @@
   "governmentUse": {
     "title": "政府与外交用途",
     "titleHighlight": "外交用途",
-    "subtitle": "护照和主权资产的零知识时间戳。文件永不离开设备。",
+    "subtitle": "为护照、身份证件、土地权属和主权资产项目加盖时间戳。文件留在设备上。只有 SHA-256 指纹会送出。",
     "passport": {
       "title": "护照与旅行项目",
       "body": "MotoPass 客户端哈希；Satohash 锚定到比特币。"

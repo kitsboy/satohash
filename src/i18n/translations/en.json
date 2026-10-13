@@ -228,7 +228,7 @@
   },
   "landing": {
     "heroTitle": "Anchor Your Documents to Bitcoin — Forever",
-    "heroSubtitle": "Create cryptographic proof that your documents existed at a specific time. Zero-knowledge. Tamper-proof. Verified by the Bitcoin blockchain.",
+    "heroSubtitle": "Create proof that your documents existed at a specific time. The file stays on your device. Bitcoin keeps the receipt.",
     "heroCta": "Stamp a Document Now",
     "heroCta2": "See How It Works",
     "step1": "Hash locally",

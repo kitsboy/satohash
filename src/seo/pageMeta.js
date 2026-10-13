@@ -133,37 +133,37 @@ export const pageMeta = {
     en: {
       title: 'FAQ — Bitcoin Proof of Existence, Honest Answers',
       description:
-        'Straight answers on OpenTimestamps, zero-knowledge stamping, legal admissibility, NIP-05 identity, and the Satohash API. No hype, no overclaiming.'
+        'Straight answers on OpenTimestamps, files that stay on your device, what a proof can show, and the Satohash API.'
     },
     es: {
       title: 'Preguntas Frecuentes — Prueba de Existencia en Bitcoin',
       description:
-        'Respuestas directas sobre OpenTimestamps, sellado cero-conocimiento, admisibilidad legal, identidad NIP-05 y la API de Satohash. Sin exageraciones.'
+        'Respuestas directas sobre OpenTimestamps, archivos que se quedan en el dispositivo, qué puede mostrar una prueba y la API de Satohash.'
     },
     fr: {
       title: 'FAQ — Preuve d’Existence Bitcoin, Réponses Honnêtes',
       description:
-        'Réponses claires sur OpenTimestamps, tamponnage zéro connaissance, admissibilité légale, identité NIP-05 et API Satohash. Sans survente.'
+        'Réponses claires sur OpenTimestamps, les fichiers qui restent sur l’appareil, ce qu’une preuve peut montrer, et l’API Satohash.'
     },
     de: {
       title: 'FAQ — Bitcoin-Existenznachweis, Ehrliche Antworten',
       description:
-        'Klare Antworten zu OpenTimestamps, Zero-Knowledge-Stempelung, rechtlicher Zulässigkeit, NIP-05-Identität und Satohash-API. Ohne Übertreibung.'
+        'Klare Antworten zu OpenTimestamps, Dateien die auf dem Gerät bleiben, was ein Nachweis zeigen kann, und der Satohash-API.'
     },
     pt: {
       title: 'FAQ — Prova de Existência no Bitcoin, Respostas Honestas',
       description:
-        'Respostas diretas sobre OpenTimestamps, carimbo zero-conhecimento, admissibilidade legal, identidade NIP-05 e API Satohash. Sem exageros.'
+        'Respostas diretas sobre OpenTimestamps, ficheiros que ficam no dispositivo, o que uma prova pode mostrar, e a API Satohash.'
     },
     sw: {
       title: 'Maswali — Ushahidi wa Kuwepo kwenye Bitcoin',
       description:
-        'Majibu ya moja kwa moja kuhusu OpenTimestamps, muhuri wa ujuzi wa sifuri, ukubalike wa kisheria, utambulisho wa NIP-05 na API ya Satohash.'
+        'Majibu kuhusu OpenTimestamps, faili zinazobaki kwenye kifaa, kile uthibitisho unaweza kuonyesha, na API ya Satohash.'
     },
     zh: {
       title: '常见问题 — 比特币存在证明，如实解答',
       description:
-        '关于 OpenTimestamps、零知识盖章、法律可采性、NIP-05 身份和 Satohash API 的坦诚解答，不夸大承诺。'
+        '关于 OpenTimestamps、留在设备上的文件、证明能说明什么，以及 Satohash API 的坦诚解答。'
     }
   },
   pricing: {
@@ -1193,36 +1193,36 @@ export const pageMeta = {
     en: {
       title: 'Privacy Policy',
       description:
-        'How Satohash handles your data. Zero-knowledge stamping — files never leave your device.'
+        'How Satohash handles your data. The file stays on your device. We receive only a fingerprint.'
     },
     es: {
       title: 'Política de Privacidad',
       description:
-        'Cómo Satohash maneja sus datos. Sellado zero-knowledge — los archivos nunca salen de su dispositivo.'
+        'Cómo Satohash maneja sus datos. El archivo se queda en el dispositivo. Solo recibimos una huella.'
     },
     fr: {
       title: 'Politique de Confidentialité',
       description:
-        'Comment Satohash traite vos données. Tamponnage zéro connaissance — fichiers jamais envoyés.'
+        'Comment Satohash traite vos données. Le fichier reste sur l’appareil. Nous ne recevons qu’une empreinte.'
     },
     de: {
       title: 'Datenschutzrichtlinie',
       description:
-        'Wie Satohash Ihre Daten behandelt. Zero-Knowledge-Stempelung — Dateien verlassen nie Ihr Gerät.'
+        'Wie Satohash Ihre Daten behandelt. Die Datei bleibt auf Ihrem Gerät. Wir erhalten nur einen Fingerabdruck.'
     },
     pt: {
       title: 'Política de Privacidade',
       description:
-        'Como o Satohash trata seus dados. Carimbo zero-conhecimento — arquivos nunca saem do dispositivo.'
+        'Como o Satohash trata seus dados. O arquivo fica no dispositivo. Recebemos apenas uma impressão digital.'
     },
     sw: {
       title: 'Sera ya Faragha',
       description:
-        'Jinsi Satohash inavyoshughulikia data yako. Muhuri wa ujuzi wa sifuri — faili haziondoki kwenye kifaa chako.'
+        'Jinsi Satohash inavyoshughulikia data yako. Faili inabaki kwenye kifaa. Tunapokea alama pekee.'
     },
     zh: {
       title: '隐私政策',
-      description: 'Satohash 如何处理您的数据。零知识盖章 — 文件永不离开您的设备。'
+      description: 'Satohash 如何处理您的数据。文件留在设备上。我们只收到指纹。'
     }
   },
   legalTerms: {
@@ -1358,36 +1358,36 @@ export const pageMeta = {
     en: {
       title: 'Government & Diplomatic Document Timestamping',
       description:
-        'Zero-knowledge Bitcoin timestamps for passports, national IDs, and distressed sovereign assets. MotoPass integration.'
+        'Bitcoin timestamps for passports, national IDs, and sovereign-asset records. The document stays on the device.'
     },
     es: {
       title: 'Sellado Gubernamental y Diplomático',
       description:
-        'Sellos Bitcoin de conocimiento cero para pasaportes, identidades y activos soberanos. Integración MotoPass.'
+        'Sellos Bitcoin para pasaportes, identidades y registros de activos soberanos. El documento se queda en el dispositivo.'
     },
     fr: {
       title: 'Horodatage Gouvernemental et Diplomatique',
       description:
-        'Horodatages zéro connaissance pour passeports et actifs souverains. Intégration MotoPass.'
+        'Horodatages Bitcoin pour passeports et registres d’actifs souverains. Le document reste sur l’appareil.'
     },
     de: {
       title: 'Behördliche & Diplomatische Zeitstempel',
       description:
-        'Zero-Knowledge-Bitcoin-Zeitstempel für Pässe und Staatsanlagen. MotoPass-Integration.'
+        'Bitcoin-Zeitstempel für Pässe und Register von Staatsanlagen. Das Dokument bleibt auf dem Gerät.'
     },
     pt: {
       title: 'Carimbo Governamental e Diplomático',
       description:
-        'Carimbos Bitcoin zero-conhecimento para passaportes e ativos soberanos. Integração MotoPass.'
+        'Carimbos Bitcoin para passaportes e registos de ativos soberanos. O documento fica no dispositivo.'
     },
     sw: {
       title: 'Muhuri wa Serikali na Kidiplomasia',
       description:
-        'Mihuri ya Bitcoin ya ujuzi wa sifuri kwa pasipoti na mali za serikali. MotoPass.'
+        'Mihuri ya Bitcoin kwa pasipoti na kumbukumbu za mali za serikali. Hati inabaki kwenye kifaa.'
     },
     zh: {
       title: '政府与外交文件时间戳',
-      description: '护照和主权资产的零知识比特币时间戳。MotoPass 集成。'
+      description: '护照和主权资产记录的 Bitcoin 时间戳。文件留在设备上。'
     }
   },
   motopassVerify: {

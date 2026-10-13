@@ -395,7 +395,7 @@ export default function PrivacyPolicy() {
                   <span className="mt-1 text-[10px] font-black tracking-[0.2em] text-slate-400 uppercase">
                     Last reviewed
                   </span>
-                  <span className="text-sm font-bold text-slate-700">August 16, 2026</span>
+                  <span className="text-sm font-bold text-slate-700">October 13, 2026</span>
                   <span className="mt-1 text-[10px] font-black tracking-[0.2em] text-slate-400 uppercase">
                     Version
                   </span>
@@ -412,9 +412,8 @@ export default function PrivacyPolicy() {
                   </span>
                 </div>
                 <p className="text-sm leading-relaxed text-emerald-900/80">
-                  Satohash is built on zero-knowledge architecture. Your documents never leave your
-                  device. We are mathematically incapable of reading, storing, or leaking your
-                  document contents — not as a policy choice, but as a hard technical constraint.
+                  Your documents stay on your device. Satohash receives only a fingerprint of the
+                  file. We cannot read a document we never receive.
                 </p>
               </div>
             </header>

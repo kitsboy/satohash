@@ -25,7 +25,7 @@
       "id": "privacy",
       "category": "basics",
       "q": "Je, hati zangu zinaondoka kwenye kifaa changu?",
-      "a": "Hapana. Hash ya kriptografia SHA-256 pekee — alama fupi ya kidole — ndiyo inayotumwa kwenye mtandao. Faili yako halisi haiondoki kwenye kivinjari chako. Hii ni ujuzi wa sifuri kwa muundo."
+      "a": "Faili yako inabaki kwenye kivinjari. Tunatuma alama ya SHA-256 pekee. Hatupokei faili yenyewe."
     },
     {
       "id": "cost",

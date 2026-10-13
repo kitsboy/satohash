@@ -91,7 +91,7 @@ export const translations = {
     landing: {
       heroTitle: 'Anchor Your Documents to Bitcoin — Forever',
       heroSubtitle:
-        'Create cryptographic proof that your documents existed at a specific time. Zero-knowledge. Tamper-proof. Verified by the Bitcoin blockchain.',
+        'Create proof that your documents existed at a specific time. The file stays on your device. Bitcoin keeps the receipt.',
       heroCta: 'Stamp a Document Now',
       heroCta2: 'See How It Works',
       step1: 'Hash locally',
@@ -278,7 +278,7 @@ export const translations = {
     landing: {
       heroTitle: 'Ancla tus Documentos a Bitcoin — Para Siempre',
       heroSubtitle:
-        'Crea pruebas criptográficas de que tus documentos existieron en un momento determinado. Conocimiento cero. A prueba de manipulaciones. Verificado por la blockchain de Bitcoin.',
+        'Crea una prueba de que tus documentos existieron en un momento concreto. El archivo se queda en tu dispositivo. Bitcoin guarda el recibo.',
       heroCta: 'Sellar un Documento Ahora',
       heroCta2: 'Ver Cómo Funciona',
       step1: 'Hash local',
@@ -465,7 +465,7 @@ export const translations = {
     landing: {
       heroTitle: 'Ancrez Vos Documents sur Bitcoin — Pour Toujours',
       heroSubtitle:
-        'Créez une preuve cryptographique que vos documents ont existé à un moment précis. Zéro connaissance. Inviolable. Vérifié par la blockchain Bitcoin.',
+        'Créez une preuve que vos documents ont existé à un moment précis. Le fichier reste sur votre appareil. Bitcoin garde le reçu.',
       heroCta: 'Tamponner un Document Maintenant',
       heroCta2: 'Voir Comment Ça Marche',
       step1: 'Hash local',
@@ -650,8 +650,7 @@ export const translations = {
     },
     landing: {
       heroTitle: '将您的文件永久锚定到比特币区块链',
-      heroSubtitle:
-        '创建加密证明，证明您的文件在特定时间存在。零知识。防篡改。由比特币区块链验证。',
+      heroSubtitle: '证明您的文件在某一时刻存在。文件留在您的设备上。Bitcoin 保管回执。',
       heroCta: '立即盖章文件',
       heroCta2: '了解工作原理',
       step1: '本地哈希',

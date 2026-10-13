@@ -1683,7 +1683,7 @@
   "governmentUse": {
     "title": "Behörden & Diplomatischer Einsatz",
     "titleHighlight": "Diplomatisch",
-    "subtitle": "Zero-Knowledge-Zeitstempel für Pässe und Staatsanlagen.",
+    "subtitle": "Zeitstempel für Pässe, Ausweise, Grundbuchtitel und Programme für Staatsanlagen. Das Dokument bleibt auf dem Gerät. Weiter geht nur ein SHA-256-Fingerabdruck.",
     "passport": {
       "title": "Reisepässe & Programme",
       "body": "MotoPass hasht clientseitig; Satohash verankert auf Bitcoin."

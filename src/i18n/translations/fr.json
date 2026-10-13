@@ -228,7 +228,7 @@
   },
   "landing": {
     "heroTitle": "Ancrez Vos Documents sur Bitcoin — Pour Toujours",
-    "heroSubtitle": "Créez une preuve cryptographique que vos documents ont existé à un moment précis. Zéro connaissance. Inviolable. Vérifié par la blockchain Bitcoin.",
+    "heroSubtitle": "Créez une preuve que vos documents ont existé à un moment précis. Le fichier reste sur votre appareil. Bitcoin garde le reçu.",
     "heroCta": "Tamponner un Document Maintenant",
     "heroCta2": "Voir Comment Ça Marche",
     "step1": "Hash local",

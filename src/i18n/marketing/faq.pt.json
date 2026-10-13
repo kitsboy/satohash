@@ -25,7 +25,7 @@
       "id": "privacy",
       "category": "basics",
       "q": "Os meus documentos saem do meu dispositivo?",
-      "a": "Não. Apenas um hash criptográfico SHA-256 — uma impressão digital curta — é enviado para a rede. O seu ficheiro real nunca sai do seu navegador. É conhecimento zero por conceção."
+      "a": "O seu ficheiro fica no navegador. Enviamos apenas uma impressão digital SHA-256. Nunca recebemos o ficheiro."
     },
     {
       "id": "cost",

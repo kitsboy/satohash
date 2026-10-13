@@ -76,7 +76,7 @@ export default {
   landing: {
     heroTitle: 'Verankern Sie Ihre Dokumente auf Bitcoin — für immer',
     heroSubtitle:
-      'Erstellen Sie einen kryptografischen Nachweis, dass Ihre Dokumente zu einem bestimmten Zeitpunkt existierten. Zero-Knowledge. Manipulationssicher. Durch die Bitcoin-Blockchain verifiziert.',
+      'Erstellen Sie einen Nachweis, dass Ihre Dokumente zu einem bestimmten Zeitpunkt existierten. Die Datei bleibt auf Ihrem Gerät. Bitcoin bewahrt die Quittung.',
     heroCta: 'Jetzt ein Dokument stempeln',
     heroCta2: 'So funktioniert es',
     step1: 'Lokal hashen',

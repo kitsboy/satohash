@@ -25,7 +25,7 @@
       "id": "privacy",
       "category": "basics",
       "q": "Verlassen meine Dokumente mein Gerät?",
-      "a": "Nein. Nur ein SHA-256-Kryptografie-Hash — ein kurzer Fingerabdruck — wird an das Netzwerk gesendet. Ihre eigentliche Datei verlässt niemals Ihren Browser. Das ist Zero-Knowledge by Design."
+      "a": "Ihre Datei bleibt im Browser. Wir senden nur einen SHA-256-Fingerabdruck. Die Datei selbst erhalten wir nie."
     },
     {
       "id": "cost",

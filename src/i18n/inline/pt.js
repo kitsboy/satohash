@@ -74,7 +74,7 @@ export default {
   landing: {
     heroTitle: 'Ancore os Seus Documentos no Bitcoin — Para Sempre',
     heroSubtitle:
-      'Crie prova criptográfica de que os seus documentos existiram num momento específico. Zero conhecimento. À prova de adulteração. Verificado pela blockchain Bitcoin.',
+      'Crie uma prova de que os seus documentos existiram num momento específico. O ficheiro fica no seu dispositivo. Bitcoin guarda o recibo.',
     heroCta: 'Carimbar um Documento Agora',
     heroCta2: 'Ver Como Funciona',
     step1: 'Hash local',

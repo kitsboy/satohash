@@ -1683,7 +1683,7 @@
   "governmentUse": {
     "title": "Matumizi ya Serikali na Kidiplomasia",
     "titleHighlight": "Kidiplomasia",
-    "subtitle": "Muhuri wa ujuzi wa sifuri kwa pasipoti na mali za serikali.",
+    "subtitle": "Muhuri wa muda kwa pasipoti, vitambulisho, hati za ardhi na programu za mali za serikali. Hati inabaki kwenye kifaa. Alama ya SHA-256 pekee ndiyo inayoendelea.",
     "passport": {
       "title": "Pasipoti na safari",
       "body": "MotoPass ina-hash upande wa mteja; Satohash inafunga kwenye Bitcoin."

@@ -1808,7 +1808,7 @@
   "governmentUse": {
     "title": "Government &",
     "titleHighlight": "Diplomatic Use",
-    "subtitle": "Zero-knowledge timestamps for passports, national IDs, land titles, and distressed-asset programs. Documents never leave the device — only SHA-256 fingerprints reach timestamp servers.",
+    "subtitle": "Timestamps for passports, national IDs, land titles, and sovereign-asset programs. The document stays on the device. Only a SHA-256 fingerprint goes forward.",
     "passport": {
       "title": "Passport & travel programs",
       "body": "MotoPass hashes application payloads client-side; Satohash anchors fingerprints to Bitcoin without uploading biometrics."

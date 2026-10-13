@@ -217,7 +217,7 @@ const landingBody = `
 </ol>
 <h2>Why Bitcoin timestamping</h2>
 <ul>
-<li><strong>No server required</strong> — zero-knowledge by design, only a hash leaves your device.</li>
+<li><strong>No server required</strong> — the file stays on your device, and only a fingerprint leaves.</li>
 <li><strong>Anchored in ~60 minutes</strong> — every node on Earth validates it; it cannot be altered, backdated, or deleted.</li>
 <li><strong>Independently verifiable evidence</strong> — aligns with the framework of the ESIGN Act (US), UETA, and eIDAS (EU); cryptography is verifiable by anyone.</li>
 <li><strong>No middleman ever</strong> — Bitcoin itself is the notary, 18,000+ full nodes strong.</li>
@@ -229,11 +229,11 @@ const landingBody = `
 // ---- FAQ (first 8 Q&As in English) ----
 const faqTitle = 'FAQ — Bitcoin Document Notarization'
 const faqDesc =
-  'Answers about OpenTimestamps, zero-knowledge stamping, legal validity, NIP-05 identity, and the Satohash API.'
+  'Answers about OpenTimestamps, files that stay on your device, what a proof can show, and the Satohash API.'
 const faqItems = [
   ['How does Satohash work?', 'Satohash hashes your file locally in your browser (SHA-256), then submits only that fingerprint to OpenTimestamps calendars, which anchor it into the Bitcoin blockchain. You get a portable .ots proof file plus a certificate.'],
   ['Is it really free?', 'Yes — stamping is free today (REQUIRE_LIGHTNING=false). You pay no miners and no fees. Later there may be an optional Lightning fee to cover hosting, but the proof still anchors to Bitcoin.'],
-  ['Does my file leave my device?', 'No. Only a cryptographic hash (fingerprint) is transmitted. The original file never leaves your browser — zero-knowledge by design.'],
+  ['Does my file leave my device?', 'Your file stays in the browser. We send only a SHA-256 fingerprint. We never receive the file itself.'],
   ['Is a Bitcoin timestamp legally valid?', 'Satohash proofs are independently verifiable electronic evidence of existence-at-a-time, aligned with the framework of the ESIGN Act (US), UETA (US), and eIDAS (EU). A Bitcoin timestamp is strong evidence of when a file existed; admissibility and weight are decided by the court.'],
   ['How long does confirmation take?', 'Typically within one Bitcoin block — about 60 minutes. Pending stamps upgrade automatically as calendars gather attestations.'],
   ['What is OpenTimestamps (OTS)?', 'OpenTimestamps is a free, open-source protocol that anchors cryptographic fingerprints into the Bitcoin blockchain. It is calendar-based and independently verifiable.'],
@@ -376,7 +376,7 @@ const watchBody = `
 <h1>Watch the Satohash explainer</h1>
 <p>Satohash hashes your file on the device, then anchors the fingerprint to Bitcoin via OpenTimestamps — independently verifiable proof that a file existed at a specific moment. Free, private, no account required.</p>
 <ul>
-<li><strong>Zero-knowledge</strong> — your file never leaves your device, only a SHA-256 fingerprint.</li>
+<li><strong>The file stays</strong> — your file never leaves your device. Only a SHA-256 fingerprint goes forward.</li>
 <li><strong>Free &amp; private</strong> — no account, no middleman, no trust required.</li>
 <li><strong>Independently verifiable</strong> — anyone can check your proof on Bitcoin.</li>
 </ul>
@@ -385,7 +385,7 @@ const watchBody = `
 // Pitch — static version of the open civic-notary pitch
 const pitchTitle = 'Satohash — An Open Civic Notary for the Truth Era'
 const pitchDesc =
-  'Satohash is a sovereign, open civic notary: Bitcoin-anchored, independently verifiable proof of existence for any file. Free, private, zero-knowledge. No trust required — only math.'
+  'Satohash is an open civic notary: Bitcoin-anchored, independently verifiable proof of existence for any file. The file stays on the device. Free today.'
 const pitchBody = `
 <h1>An open civic notary for the truth era</h1>
 <p>Satohash proves that a file existed, at a specific moment, permanently — by anchoring its fingerprint to the Bitcoin blockchain, without the file ever leaving your device.</p>

@@ -4,6 +4,7 @@ import {
   isMvpDeferredPath,
   MVP_PUBLIC_PATHS,
   MVP_DEFERRED_PATHS,
+  PAID_UPSELL,
   KIMI_NOSTR,
   SATOHASH_NOSTR,
   shouldMonitorApiHealth
@@ -54,6 +55,10 @@ describe('mvp config', () => {
 
   it('shouldMonitorApiHealth is false on localhost', () => {
     expect(shouldMonitorApiHealth()).toBe(false)
+  })
+
+  it('keeps the paid upsell off while stamps are free', () => {
+    expect(PAID_UPSELL).toBe(false)
   })
 
   it('MVP_DEFERRED_PATHS hides v5 playground and cathedral', () => {

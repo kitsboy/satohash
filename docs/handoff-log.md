@@ -1,3 +1,11 @@
+## 2026-10-13 (Grok M3 — plain privacy words, paid upsell hidden)
+
+FAQ, privacy, government, and the homepage share card now say the file stays and only a fingerprint goes out. The word zero-knowledge is gone from those surfaces. The dashboard no longer offers Upgrade to Pro or a five-stamp limit while stamps are free (`PAID_UPSELL` is false). Paywall stays off. No `/api/*` change.
+
+**Kimi:** if `6c8ae2e` is still only on THOR, do not push it. Keep `REQUIRE_LIGHTNING=false`.
+
+---
+
 ## 2026-10-13 (Grok M3 — the new film is on satohash.io)
 
 Checked after Pages deploy `e814a57`. `/watch` and the homepage play `satohash-explainer-wise.mp4` (83.533s). The 10s teaser still plays the short film (10.005s). Phone width 390 shows the player, the chapters, and the stamp button with no sideways scroll. Pitch page includes block **969,627** and “the file never leaves.”

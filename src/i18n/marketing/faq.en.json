@@ -25,7 +25,7 @@
       "id": "privacy",
       "category": "basics",
       "q": "Do my documents leave my device?",
-      "a": "No. Only a SHA-256 cryptographic hash — a short fingerprint — is sent to the network. Your actual file never leaves your browser. This is zero-knowledge by design."
+      "a": "Your file stays in the browser. We send only a SHA-256 fingerprint. We never receive the file itself."
     },
     {
       "id": "cost",

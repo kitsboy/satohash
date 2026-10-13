@@ -1683,7 +1683,7 @@
   "governmentUse": {
     "title": "Uso Gubernamental y Diplomático",
     "titleHighlight": "Diplomático",
-    "subtitle": "Sellos de conocimiento cero para pasaportes, identidades y activos en distress. Los documentos nunca salen del dispositivo.",
+    "subtitle": "Sellos de tiempo para pasaportes, identidades, títulos de tierra y programas de activos soberanos. El documento se queda en el dispositivo. Solo avanza una huella SHA-256.",
     "passport": {
       "title": "Pasaportes y viajes",
       "body": "MotoPass hashea solicitudes en el cliente; Satohash ancla huellas en Bitcoin sin biometría."

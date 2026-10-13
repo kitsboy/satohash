@@ -228,7 +228,7 @@
   },
   "landing": {
     "heroTitle": "Ancla tus Documentos a Bitcoin — Para Siempre",
-    "heroSubtitle": "Crea pruebas criptográficas de que tus documentos existieron en un momento determinado. Conocimiento cero. A prueba de manipulaciones. Verificado por la blockchain de Bitcoin.",
+    "heroSubtitle": "Crea una prueba de que tus documentos existieron en un momento concreto. El archivo se queda en tu dispositivo. Bitcoin guarda el recibo.",
     "heroCta": "Sellar un Documento Ahora",
     "heroCta2": "Ver Cómo Funciona",
     "step1": "Hash local",

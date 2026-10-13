@@ -36,6 +36,7 @@ import BlockchainPulse from '../components/dashboard/BlockchainPulse'
 import usePageMeta from '../hooks/usePageMeta'
 import { getApiUrl } from '../config/constants'
 import { getBlockHeight } from '../utils/mempool'
+import { PAID_UPSELL } from '../config/mvp'
 
 const API_URL = getApiUrl()
 
@@ -174,11 +175,11 @@ export default function Dashboard() {
     setStampCount(count)
 
     const urlParams = new URLSearchParams(window.location.search)
-    if (urlParams.get('success')) {
+    if (PAID_UPSELL && urlParams.get('success')) {
       localStorage.setItem('userTier', 'pro')
       setUserTier('pro')
       toast.success('Subscription successful! Welcome to Pro.')
-    } else if (urlParams.get('cancel')) {
+    } else if (PAID_UPSELL && urlParams.get('cancel')) {
       toast.info('Subscription cancelled.')
     }
   }, [])
@@ -194,7 +195,7 @@ export default function Dashboard() {
   }, [])
 
   const handleFileProcessed = async (processedFile) => {
-    if (userTier === 'free' && stampCount >= 5) {
+    if (PAID_UPSELL && userTier === 'free' && stampCount >= 5) {
       setShowUpsell(true)
       toast.warning('Free tier limit reached (5 stamps). Upgrade to continue.')
       return
@@ -278,11 +279,13 @@ export default function Dashboard() {
 
   return (
     <>
-      <UpsellModal
-        isOpen={showUpsell}
-        onClose={() => setShowUpsell(false)}
-        onSubscribe={handleSubscribe}
-      />
+      {PAID_UPSELL && (
+        <UpsellModal
+          isOpen={showUpsell}
+          onClose={() => setShowUpsell(false)}
+          onSubscribe={handleSubscribe}
+        />
+      )}
 
       <div
         className="relative min-h-screen pb-24"
@@ -332,24 +335,26 @@ export default function Dashboard() {
             <div className="flex-1">
               {/* Status badges */}
               <div className="mb-5 flex flex-wrap items-center gap-2">
-                <span
-                  className="inline-flex items-center gap-1 rounded-full px-3 py-1 text-[10px] font-black tracking-wider uppercase"
-                  style={
-                    userTier === 'pro'
-                      ? {
-                          background: 'rgba(240,180,41,0.12)',
-                          color: 'var(--accent-gold)',
-                          border: '1px solid rgba(240,180,41,0.25)'
-                        }
-                      : {
-                          background: 'var(--surface-raised)',
-                          color: 'var(--text-secondary)',
-                          border: '1px solid var(--border)'
-                        }
-                  }
-                >
-                  <Crown size={10} /> {userTier.toUpperCase()} Tier
-                </span>
+                {PAID_UPSELL && (
+                  <span
+                    className="inline-flex items-center gap-1 rounded-full px-3 py-1 text-[10px] font-black tracking-wider uppercase"
+                    style={
+                      userTier === 'pro'
+                        ? {
+                            background: 'rgba(240,180,41,0.12)',
+                            color: 'var(--accent-gold)',
+                            border: '1px solid rgba(240,180,41,0.25)'
+                          }
+                        : {
+                            background: 'var(--surface-raised)',
+                            color: 'var(--text-secondary)',
+                            border: '1px solid var(--border)'
+                          }
+                    }
+                  >
+                    <Crown size={10} /> {userTier.toUpperCase()} Tier
+                  </span>
+                )}
 
                 {Object.keys(achievements).length > 0 && (
                   <span
@@ -724,7 +729,7 @@ export default function Dashboard() {
                         className="text-[9px] font-bold tracking-widest uppercase"
                         style={{ color: 'rgba(244,63,94,0.7)' }}
                       >
-                        Zero-Knowledge Encryption
+                        Encrypted on this device
                       </p>
                     </div>
                   </div>
@@ -867,9 +872,9 @@ export default function Dashboard() {
                   <TeleItem
                     icon={Lock}
                     label="Privacy Layer"
-                    status="ZK HARDENED"
+                    status="ON DEVICE"
                     emerald
-                    tooltip="Zero-knowledge proofs ensure that the content of stamped files is never exposed, even during verification."
+                    tooltip="The file stays on your device. We receive only a fingerprint, so the document itself is never shown during verification."
                   />
                 </div>
               </motion.div>

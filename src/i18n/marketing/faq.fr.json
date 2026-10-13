@@ -25,7 +25,7 @@
       "id": "privacy",
       "category": "basics",
       "q": "Mes documents quittent-ils mon appareil ?",
-      "a": "Non. Seul un hachage cryptographique SHA-256 — une courte empreinte — est envoyé au réseau. Votre fichier réel ne quitte jamais votre navigateur. C'est de la connaissance nulle par conception."
+      "a": "Votre fichier reste dans le navigateur. Nous envoyons seulement une empreinte SHA-256. Nous ne recevons jamais le fichier."
     },
     {
       "id": "cost",

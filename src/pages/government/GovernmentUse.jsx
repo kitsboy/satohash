@@ -205,7 +205,7 @@ export default function GovernmentUse() {
         >
           {t('governmentUse.subtitle', {
             defaultValue:
-              'Zero-knowledge timestamps for passports, national IDs, land titles, and distressed-asset programs. Documents never leave the device — only SHA-256 fingerprints reach OpenTimestamps calendars.'
+              'Timestamps for passports, national IDs, land titles, and sovereign-asset programs. The document stays on the device. Only a SHA-256 fingerprint goes forward.'
           })}
         </p>
         <GiveABitBadge className="mt-6 justify-center" />

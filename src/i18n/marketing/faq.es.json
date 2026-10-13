@@ -25,7 +25,7 @@
       "id": "privacy",
       "category": "basics",
       "q": "¿Mis documentos salen de mi dispositivo?",
-      "a": "No. Solo se envía a la red un hash criptográfico SHA-256 — una huella breve. Tu archivo real nunca abandona tu navegador. Es conocimiento cero por diseño."
+      "a": "Tu archivo se queda en el navegador. Enviamos solo una huella SHA-256. Nunca recibimos el archivo."
     },
     {
       "id": "cost",

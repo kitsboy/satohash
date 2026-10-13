@@ -1683,7 +1683,7 @@
   "governmentUse": {
     "title": "Uso Governamental e Diplomático",
     "titleHighlight": "Diplomático",
-    "subtitle": "Carimbos zero-conhecimento para passaportes e ativos soberanos.",
+    "subtitle": "Carimbos de tempo para passaportes, identidades, títulos de terra e programas de ativos soberanos. O documento fica no dispositivo. Só uma impressão digital SHA-256 segue.",
     "passport": {
       "title": "Passaportes e viagens",
       "body": "MotoPass faz hash no cliente; Satohash ancora no Bitcoin."

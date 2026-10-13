@@ -1,3 +1,9 @@
+## 2026-10-13 — Privacy copy is plain. The paid popup stays hidden.
+
+Stranger-facing FAQ, privacy, and government pages say the file stays on the device. Dashboard will not ask anyone to upgrade while stamps are free. No API rebuild. If `6c8ae2e` is still only on THOR, do not push it. Keep `REQUIRE_LIGHTNING=false`. Do not change `/api/*`.
+
+---
+
 ## 2026-10-13 — The new film is live on satohash.io. API label is a real commit.
 
 `/watch` and the homepage play `satohash-explainer-wise.mp4` (83.5s). Teaser stays 10s. `GET /health` reports `gitSha` `e814a57` and deep health ok. Paywall off. 495 stamps, 493 confirmed, 0 pending.

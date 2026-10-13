@@ -74,7 +74,7 @@ export default {
   landing: {
     heroTitle: 'Funga Hati Zako kwenye Bitcoin — Milele',
     heroSubtitle:
-      'Unda uthibitisho wa kriptografia kuwa hati zako zilikuwepo wakati maalum. Ufahamu wa sifuri. Haiwezi kubadilishwa. Imethibitishwa na blockchain ya Bitcoin.',
+      'Unda uthibitisho kuwa hati zako zilikuwepo wakati maalum. Faili inabaki kwenye kifaa chako. Bitcoin huhifadhi risiti.',
     heroCta: 'Weka Muhuri kwa Hati Sasa',
     heroCta2: 'Tazama Jinsi Inavyofanya Kazi',
     step1: 'Hash ndani ya kifaa',

@@ -1683,7 +1683,7 @@
   "governmentUse": {
     "title": "Usage Gouvernemental et Diplomatique",
     "titleHighlight": "Diplomatique",
-    "subtitle": "Horodatages zéro connaissance pour passeports et actifs souverains.",
+    "subtitle": "Horodatages pour passeports, pièces d'identité, titres fonciers et programmes d'actifs souverains. Le document reste sur l'appareil. Seule une empreinte SHA-256 part.",
     "passport": {
       "title": "Passeports et voyages",
       "body": "MotoPass hache côté client; Satohash ancre sur Bitcoin."
