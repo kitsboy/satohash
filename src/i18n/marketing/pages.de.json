@@ -1302,7 +1302,7 @@
     "trust": {
       "e2e": "Ende-zu-Ende-Verschlüsselung",
       "custody": "Souveräne Verwahrung",
-      "zk": "Zero-Knowledge-Authentifizierung"
+      "zk": "Schlüssel bleibt hier"
     },
     "footer": "Mit dem Betreten der Satohash-Werkbank bestätigen Sie, dass alle kryptografischen Operationen auf Ihrem Gerät stattfinden und Sie absolute Souveränität über Ihr privates Material behalten.",
     "pin": {

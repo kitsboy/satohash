@@ -645,37 +645,32 @@ export const pageMeta = {
   access: {
     en: {
       title: 'Sovereign Access Gateway — Nostr Identity Login',
-      description:
-        'Create or import a Nostr keypair. Zero-knowledge authentication — your private key never leaves your device.'
+      description: 'Create or import a Nostr keypair. Your key stays on this device.'
     },
     es: {
       title: 'Puerta de Acceso Soberana — Identidad Nostr',
-      description:
-        'Cree o importe un par de claves Nostr. Autenticación de conocimiento cero — su clave privada nunca sale de su dispositivo.'
+      description: 'Cree o importe un par de claves Nostr. Su clave se queda en este dispositivo.'
     },
     fr: {
       title: "Passerelle d'Accès Souveraine — Identité Nostr",
-      description:
-        'Créez ou importez une paire de clés Nostr. Authentification zéro connaissance — votre clé privée ne quitte jamais votre appareil.'
+      description: 'Créez ou importez une paire de clés Nostr. Votre clé reste sur cet appareil.'
     },
     de: {
       title: 'Souveränes Zugangsportal — Nostr-Identitätslogin',
       description:
-        'Erstellen oder importieren Sie ein Nostr-Schlüsselpaar. Zero-Knowledge-Authentifizierung — Ihr privater Schlüssel verlässt nie Ihr Gerät.'
+        'Erstellen oder importieren Sie ein Nostr-Schlüsselpaar. Ihr Schlüssel bleibt auf diesem Gerät.'
     },
     pt: {
       title: 'Portal de Acesso Soberano — Identidade Nostr',
-      description:
-        'Crie ou importe um par de chaves Nostr. Autenticação zero-conhecimento — sua chave privada nunca sai do seu dispositivo.'
+      description: 'Crie ou importe um par de chaves Nostr. A sua chave fica neste dispositivo.'
     },
     sw: {
       title: 'Lango la Ufikiaji wa Uhuru — Utambulisho wa Nostr',
-      description:
-        'Unda au leta jozi ya funguo za Nostr. Uthibitishaji wa ujuzi wa sifuri — ufunguo wako wa faragha haondoki kwenye kifaa chako.'
+      description: 'Unda au leta jozi ya funguo za Nostr. Ufunguo wako unakaa kwenye kifaa hiki.'
     },
     zh: {
       title: '主权访问网关 — Nostr 身份登录',
-      description: '创建或导入 Nostr 密钥对。零知识认证 — 您的私钥永不离开设备。'
+      description: '创建或导入 Nostr 密钥对。您的密钥留在此设备上。'
     }
   },
   contribute: {

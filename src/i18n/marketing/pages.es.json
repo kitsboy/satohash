@@ -1302,7 +1302,7 @@
     "trust": {
       "e2e": "Cifrado de extremo a extremo",
       "custody": "Custodia soberana",
-      "zk": "Autenticación de conocimiento cero"
+      "zk": "La clave se queda aquí"
     },
     "footer": "Al entrar en el banco de trabajo de Satohash, reconoces que todas las operaciones criptográficas ocurren en tu dispositivo y mantienes soberanía absoluta sobre tu material privado.",
     "pin": {

@@ -1302,7 +1302,7 @@
     "trust": {
       "e2e": "Chiffrement de bout en bout",
       "custody": "Garde souveraine",
-      "zk": "Authentification à connaissance nulle"
+      "zk": "La clé reste ici"
     },
     "footer": "En entrant dans l'atelier Satohash, vous reconnaissez que toutes les opérations cryptographiques ont lieu sur votre appareil et que vous conservez une souveraineté absolue sur votre matériel privé.",
     "pin": {

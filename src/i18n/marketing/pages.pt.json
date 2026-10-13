@@ -1302,7 +1302,7 @@
     "trust": {
       "e2e": "Criptografia de ponta a ponta",
       "custody": "Custódia soberana",
-      "zk": "Autenticação de conhecimento zero"
+      "zk": "A chave fica aqui"
     },
     "footer": "Ao entrar na bancada de trabalho do Satohash, você reconhece que todas as operações criptográficas ocorrem no seu dispositivo e você mantém soberania absoluta sobre seu material privado.",
     "pin": {

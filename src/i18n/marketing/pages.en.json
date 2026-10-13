@@ -1302,7 +1302,7 @@
     "trust": {
       "e2e": "End-to-End Encryption",
       "custody": "Sovereign Custody",
-      "zk": "Zero-Knowledge Auth"
+      "zk": "Key stays on device"
     },
     "footer": "By entering the Satohash workbench, you acknowledge that all cryptographic operations occur on your device and you maintain absolute sovereignty over your private material.",
     "pin": {

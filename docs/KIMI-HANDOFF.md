@@ -1,3 +1,9 @@
+## 2026-10-13 — Sign-in says the key stays on the device.
+
+The sign-in share text and the trust chip no longer say zero-knowledge. All 7 languages. No API rebuild. If `6c8ae2e` is still only on THOR, do not push it. Keep `REQUIRE_LIGHTNING=false`. Do not change `/api/*`. Last confirmed live product deploy is `41df97c`. This commit deploys when Pages finishes.
+
+---
+
 ## 2026-10-13 — The dashboard side column follows the language. BOLT-12 says billing is off.
 
 Dark Vault, Quick Access, Network Status, the legal row, and The Giving Machine are translated in all 7 languages. Product names stay English. Glossary BOLT-12 now says stamps are free today and Lightning billing is off. The comparison table was not changed. No API rebuild. If `6c8ae2e` is still only on THOR, do not push it. Keep `REQUIRE_LIGHTNING=false`. Do not change `/api/*`. Last confirmed live product deploy is `0869443`. This commit deploys when Pages finishes.
