@@ -10,8 +10,8 @@ import usePageMeta from '../hooks/usePageMeta'
 const CUTS = {
   full: {
     id: 'full',
-    src: 'https://videos.giveabit.io/media/video/satohash-explainer-with-vo2.mp4?v=kimi-noir-20260819',
-    file: 'satohash-explainer-with-vo2.mp4',
+    src: 'https://videos.giveabit.io/media/video/satohash-explainer-wise.mp4?v=kimi-wise-20261012',
+    file: 'satohash-explainer-wise.mp4',
     seconds: 84,
     label: '~84s',
     titleKey: 'watchPage.fullTitle',
@@ -34,24 +34,24 @@ const FULL_BEATS = [
   { id: 'hook', t: '0:00', titleKey: 'watchPage.fullHookTitle', lineKey: 'watchPage.fullHookLine' },
   {
     id: 'problem',
-    t: '0:07',
+    t: '0:10',
     titleKey: 'watchPage.fullProblemTitle',
     lineKey: 'watchPage.fullProblemLine'
   },
-  { id: 'how', t: '0:19', titleKey: 'watchPage.fullHowTitle', lineKey: 'watchPage.fullHowLine' },
+  { id: 'how', t: '0:17', titleKey: 'watchPage.fullHowTitle', lineKey: 'watchPage.fullHowLine' },
   {
-    id: 'batch',
-    t: '0:33',
+    id: 'bitcoin',
+    t: '0:28',
     titleKey: 'watchPage.fullBatchTitle',
     lineKey: 'watchPage.fullBatchLine'
   },
   {
-    id: 'verify',
-    t: '0:43',
+    id: 'wait',
+    t: '0:41',
     titleKey: 'watchPage.fullVerifyTitle',
     lineKey: 'watchPage.fullVerifyLine'
   },
-  { id: 'cta', t: '0:52', titleKey: 'watchPage.fullCtaTitle', lineKey: 'watchPage.fullCtaLine' }
+  { id: 'cta', t: '0:55', titleKey: 'watchPage.fullCtaTitle', lineKey: 'watchPage.fullCtaLine' }
 ]
 
 const SHORT_BEATS = [

@@ -1,5 +1,5 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 419) · **Updated:** 2026-10-12
+> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 420) · **Updated:** 2026-10-13
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Satohash MVP Readiness
@@ -29,7 +29,7 @@ QR / proof-state polish is **shipped** (unstamped vs Pending vs Confirmed; camer
 | **Bitcoin** | **LIVE** — own `bitcoind` at tip, `source: bitcoind`, IBD done, pruned 10 GB |
 | **Stamps** | **Free** — `REQUIRE_LIGHTNING=false`. Paywall off. |
 | **Metrics** | **LIVE** — `https://api.satohash.io/metrics.json` |
-| **Explainer** | **LIVE** — `/watch` (~84s Kimi/Pippa + 10s teaser) |
+| **Explainer** | **LIVE** — `/watch` (~84s Kimi cut, quiet bed + 10s teaser) |
 
 ```
 [LIVE]  satohash.io          Cloudflare Pages — static SPA

@@ -50,7 +50,7 @@ Dynamic meta via `usePageMeta` + `src/seo/pageMeta.js` — titles and descriptio
 | Tag | Value | Status |
 |-----|-------|--------|
 | Title | Stamp Documents on Bitcoin — Free Proof of Existence \| Satohash | ✅ |
-| Description | Drop any file. Bitcoin-anchored proof in 60s. Free, private, zero-knowledge. | ✅ |
+| Description | Hash a file on your device. Satohash stamps only the fingerprint. Free. The file stays on the device. Bitcoin confirmation takes about an hour. | ✅ live in `index.html` (the older “60s / zero-knowledge” line is retired) |
 | og:locale | en_US (+ alternates per lang) | ✅ |
 | twitter:site | @give_bit | ✅ |
 | canonical | https://satohash.io | ✅ |

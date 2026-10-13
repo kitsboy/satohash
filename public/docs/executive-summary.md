@@ -1,11 +1,11 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 419) · **Updated:** 2026-10-12
+> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 420) · **Updated:** 2026-10-13
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Satohash — Executive Summary
 
 **Version:** 5.0.0-ELITE  
-**Date:** 2026-09-14 (aligned to the live product; Mission & Scope v3)  
+**Date:** 2026-10-12 (aligned to the live product; Mission & Scope v3)  
 **Live at:** https://satohash.io (primary) · API https://api.satohash.io  
 **Built by:** Give A Bit (https://giveabit.io)  
 **GitHub:** https://github.com/kitsboy/satohash  
@@ -17,11 +17,19 @@
 
 > **Prove a file existed. Never show the file. Bitcoin keeps the receipt forever.**
 
-Satohash is a Bitcoin-anchored proof-of-existence workbench. Anyone — a person, a family app, or a CLI — can hash a file on-device, stamp only the fingerprint, and receive a portable `.ots` receipt. Third parties verify it with open OpenTimestamps tools and a Bitcoin block. **No account. No KYC. Stamps are free today.** The document **never leaves the device.**
+Satohash lets a person keep a true time for a file, without handing the file to anyone.
 
-**Core loop (live):** hash locally → stamp the SHA-256 → download `.ots` → share the proof card at `https://satohash.io/p/{hash}` → verify. Phone cameras cannot read `.ots` files; they open the QR, which is that URL.
+You choose the file on your own phone or computer. The device makes a fingerprint: a short code that matches that exact file and no other. The file stays. We only receive the fingerprint. We hand it to public calendars, and Bitcoin seals it in a block. You get a link anyone can open, and a small `.ots` receipt that open tools can check even if we are gone.
 
-**Pending is not Confirmed.** Pending means public calendars have the hash. Confirmed means a Bitcoin block has sealed it (~60 minutes — the price of strength, not a bug). Today Satohash proves **when** a file existed, not **who** made it.
+**No account. No KYC. Stamps are free today.**
+
+**Core loop (live):** hash locally → stamp the SHA-256 → share `https://satohash.io/p/{hash}` → download `.ots` → verify. Phone cameras cannot read `.ots` files. They open the link.
+
+**Pending is not Confirmed.** Pending means the stamp is on its way. Confirmed means a Bitcoin block has sealed it (about an hour — the price of strength, not a bug). A row in our list is bookkeeping. The block is the proof. Today Satohash proves **when** a file existed, not **who** made it.
+
+**Counted 2026-10-12, 23:52 UTC** (`/metrics.json`): 495 stamps, 492 confirmed, 1 pending, 2 failed, confirm rate 99.6%. Paywall off.
+
+**Open this one.** Block **969,627**, checked the same hour with `POST /api/verify` (`verified: true`, own bitcoind): [the public proof card](https://satohash.io/p/515b2a393bbffcfe9c3511d04a4349e199dbff1959cc0ac1f76817cd92f53abd). Recorded 2026-10-02 19:00:22 UTC. Confirmed 2026-10-02 20:48:00 UTC. The original filename is not part of the public example. Homepage, Verify, and the developer sample point here. The explorer tree is a labeled diagram, not a stamp.
 
 **The founding idea (v3):** for centuries, proving a date meant a notary, lawyer, or registry. Satohash's bet is that this middleman is no longer necessary for *existence-at-a-time*. OpenTimestamps anchors a fingerprint into Bitcoin, with no company between the document and the proof. Private-key authorship — *"this file existed, and I am the one who created it"* — is the next chapter, not a current claim.
 
@@ -46,7 +54,7 @@ Proving that something existed *before* a specific date has enormous legal, comm
 
 ---
 
-## How It Works (Zero-Knowledge)
+## How it works — the file stays with you
 
 1. **Hash** — The browser (or CLI) computes the SHA-256 fingerprint of your file using the Web Crypto API. The original bytes **never leave your device**.
 2. **Stamp** — Only the 64-character hex hash is sent to Satohash, which forwards it to three independent public OpenTimestamps calendars (alice, bob, finney).
@@ -58,16 +66,18 @@ Proving that something existed *before* a specific date has enormous legal, comm
 
 ---
 
-## What is live (v5 ELITE — 2026-09-14)
+## What is live (v5 ELITE — 2026-10-12)
 
-Cathedral chrome (ZK redaction, Snapper-as-judiciary-ready, 3D Merkle theatre, BOLT-12 billing) is **not** the current product. This is:
+A redaction product, Snapper-as-a-store-extension, a 3D block explorer, and BOLT-12 billing are **not** the current product. This is:
 
 ### Core loop
-- Drag-and-drop stamp on [satohash.io/stamp](https://satohash.io/stamp) — no account
-- SHA-256 on-device (Web Crypto). Only the 64-hex hash is submitted
-- Portable `.ots` download
-- Public verify at `/verify` — **Pending** vs **Confirmed** are different states
-- Zero-JS proof card at `https://satohash.io/p/{hash}` — cameras open this URL; they cannot read `.ots`
+- [satohash.io/stamp](https://satohash.io/stamp) opens on **Choose file**. No account. The gold action is the stamp.
+- SHA-256 on-device (Web Crypto). Only the 64-character fingerprint is submitted. The first screen says the file stays on the device.
+- After a stamp, the gold button is **View proof**. The `.ots` download is a text link under it.
+- Public verify at `/verify` — **Pending** vs **Confirmed** are different states. The sample hash is the confirmed proof above.
+- Proof card at `https://satohash.io/p/{hash}` — cameras open this URL; they cannot read `.ots`. Confirmed only when a Bitcoin check says so and names a block.
+- Bundle, black-out, and voice note sit under **More** and are labeled **demos**. They are practice tools that still end in the same stamp.
+- Developers see hash, stamp, and verify, with one sentence that pending is not confirmed. A fast repeat asks you to wait (about 5 tries a minute).
 
 ### Family widget (completes stamps)
 Family sites (Katoa, MotoPass, SherpaCarta, Give A Bit, TadBuy) paste:
@@ -171,7 +181,7 @@ The **privacy-preserving integrity anchor** — hash on-chain, file never leaves
 ## Competitive Advantages (Durable)
 
 1. **Trustless & Portable** — Proofs verify without Satohash forever.
-2. **True Zero-Knowledge** — We literally cannot see or store your documents.
+2. **The file stays with you** — We never receive the document, so we cannot see it or store it. That is privacy by what we do not get. It is not a claim of a zero-knowledge proof system.
 3. **Bitcoin Security** — The hardest, most decentralized timestamping root in existence.
 4. **Open Standard** — Any OTS verifier in the world works; no vendor lock-in.
 5. **Lightning-ready economics (staged)** — Sub-cent settlement for volume *when* rails are funded. Not live today.
@@ -194,7 +204,8 @@ Technical / developer: satohash.giveabit.io/developer or the in-app API playgrou
 
 This executive summary is a report, not a promise. Every claim carries its honest state:
 
-- ✅ **Free stamps, Bitcoin+OTS anchoring, on-device hashing** — live and true today.
+- ✅ **Free stamps, Bitcoin+OTS anchoring, on-device hashing** — live and true today. Public example: block 969,627, checked 2026-10-12.
+- ✅ **The site matches the promise** — Choose file first; demos labeled; `.ots` under View proof; explorer tree marked as a diagram.
 - ✅ **Proof card + camera QR** — `https://satohash.io/p/{hash}`. Phone cameras open that URL.
 - ✅ **Pending ≠ Confirmed** — ~60 minutes to a Bitcoin block. Do not treat them as the same.
 - ✅ **Family widget + CLI** — widget can complete `POST /api/stamp`; CLI prints the proof card.

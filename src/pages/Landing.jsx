@@ -32,7 +32,7 @@ import TipButton from '../components/marketing/TipButton'
 import { PUBLIC_PROOF, PUBLIC_PROOF_PATH } from '../config/publicProof'
 
 const HERO_VIDEO =
-  'https://videos.giveabit.io/media/video/satohash-explainer-with-vo2.mp4?v=kimi-noir-20260819'
+  'https://videos.giveabit.io/media/video/satohash-explainer-wise.mp4?v=kimi-wise-20261012'
 const HERO_POSTER = '/og/watch.jpg'
 const HERO_VIDEO_LABEL =
   'Satohash explainer: file never leaves the device, Bitcoin keeps the receipt'

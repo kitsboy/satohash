@@ -1,3 +1,16 @@
+## 2026-10-12 (Grok M3 — plain pitch, new 84-second film)
+
+Docs and the long explainer. Paywall stays off. No `/api/*` change. No API rebuild.
+
+- Pitch, executive summary, marketing, financials, the lawyer one-pager, SEO, the README, and the pitch deck explain the live product in plain words. Pending is not Confirmed. The public example is Bitcoin block **969,627**. Bundle, black-out, and voice stay demos. Authorship and the paywall stay later.
+- `/watch` and the homepage play `https://videos.giveabit.io/media/video/satohash-explainer-wise.mp4?v=kimi-wise-20261012` (83.5s, 1920×1080). The 10-second teaser is unchanged. The August dance-bed cut remains at the old `vo2` address and is no longer the player.
+- The voice is a young British English woman (Kokoro Isabella). It is not HeyGen Pippa. Pippa needs a fresh HeyGen login. The music is a quiet ambient bed under the voice.
+- The `/watch` chapter list matches this film in seven languages.
+
+**Kimi:** do not push `6c8ae2e`. Fetch `origin/main` before any API restart. Keep `REQUIRE_LIGHTNING=false`. `server/` is still unchanged since `21476f8`. The live `gitSha` is still the Cloudflare error string.
+
+---
+
 ## 2026-10-12 (Grok M3 — real confirmed proof on the public pages)
 
 SPA only. Paywall stays off. No `/api/*` change.

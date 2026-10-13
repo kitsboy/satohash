@@ -1,20 +1,20 @@
 # Explainer: music + voiceover
 
-## Live on `/watch` (2026-08-20)
+## Live on `/watch` (2026-10-12)
 
 | Spec | Value |
 |------|--------|
-| Primary | `public/media/video/satohash-explainer-with-vo2.mp4` |
-| Length | **~83.7 s** |
-| Format | H.264 **1920×1080** + AAC stereo · ~11 MB |
-| Voice | HeyGen **Pippa** (young English woman as Kimi) · verbatim production script |
-| Music | Instrumental dance bed, no vocals, mixed **~15%** under VO |
-| Player | Native `<video>` on `/watch` · Full cut default |
+| Primary | `https://videos.giveabit.io/media/video/satohash-explainer-wise.mp4` |
+| Length | **83.5 s** |
+| Format | H.264 **1920×1080** |
+| Voice | Young British English woman as Kimi (Kokoro **Isabella**). HeyGen Pippa is the character voice when that login works again. This cut is not Pippa. |
+| Music | Quiet dark ambient, faded, sitting under the voice. Not the old dance bed. |
+| Picture | Kimi stills, gold type, a real Confirmed card for Bitcoin block **969,627** |
+| Player | Native `<video>` on `/watch` and the homepage · Full cut default |
 | Teaser | `satohash-explainer-with-vo.mp4` (~10.0 s) — still on `/watch` as Short |
-| CTA copy | “Watch explainer” on landing / about (not “10s”) |
-| Close | Small **Satohash hash** (gold stacked stamp) top-left, last ~3s |
+| Close | Kimi, gold **satohash.io**, small hash mark |
 
-Cache-bust: SPA loads `…vo2.mp4?v=kimi-noir-20260819`. Media TTL 5 min (`public/_headers`).
+Cache-bust: SPA loads `…wise.mp4?v=kimi-wise-20261012`. The August dance-bed cut stays at the old `vo2` address and is no longer what the player loads.
 
 Git: `f64463f` on `main` (Pages deploy). HyperFrames share: https://hyperframes.dev/p/915356ed-8e2f-4c6e-97a4-d931b33b1341  
 Source composition (M3, not in Pages): `videos/satohash-explainer/` · script `videos/satohash-explainer/SCRIPT.md`.
@@ -23,11 +23,10 @@ Source composition (M3, not in Pages): `videos/satohash-explainer/` · script `v
 
 | Spec | Value |
 |------|--------|
-| Live bed | Baked into vo2 (HeyGen retrieve, looped to ~90s, volume 0.15) |
-| File (legacy) | `public/media/video/satohash-explainer-music.mp3` |
-| Length | 60.00 s |
-| Format | MP3 320 kbps stereo |
-| Style | Dark ambient — **not** driving `/watch` now |
+| August bed | Baked into vo2 (the dance bed the player no longer loads) |
+| File | `public/media/video/satohash-explainer-music.mp3` |
+| Length | 60.00 s source. The 2026-10-12 cut uses a faded, quiet copy of this ambient |
+| Style | Dark ambient under the voice |
 
 ## Voiceover (legacy stems)
 

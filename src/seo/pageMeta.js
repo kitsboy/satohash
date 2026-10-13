@@ -28,7 +28,7 @@ const SITE = 'https://satohash.io'
 export const DEFAULT_OG_IMAGE = `${SITE}/og/home.jpg`
 export const DEFAULT_OG_IMAGE_PNG = `${SITE}/og/home.png`
 export const WATCH_VIDEO_URL =
-  'https://videos.giveabit.io/media/video/satohash-explainer-with-vo2.mp4?v=kimi-noir-20260819'
+  'https://videos.giveabit.io/media/video/satohash-explainer-wise.mp4?v=kimi-wise-20261012'
 export const WATCH_PLAYER_URL = `${SITE}/watch-player.html`
 
 /** Per-page OG image slug under /og. JPEG for landing/stamp/verify/faq/pricing/watch/pitch/network/donate/templates/howSatohashWorks/supportAndGuidance (iMessage). */

@@ -1,16 +1,45 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 419) · **Updated:** 2026-10-12
+> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 420) · **Updated:** 2026-10-13
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Satohash — The Sovereign Provenance Pitch
 
 **Family pitch:** Prove a file existed. Never show the file. Bitcoin as a civic notary — `.ots` receipts that outlive any company. Lives in the Give A Bit suite: https://agents.giveabit.io/#suite
 
-**Status (2026-09-14):** Live at **https://satohash.io**. Version **5.0.0-ELITE**. Stamps are **free** (`REQUIRE_LIGHTNING=false`). Own pruned bitcoind is at tip. Proofs stay Bitcoin + OpenTimestamps.
+**Status (2026-10-12):** Live at **https://satohash.io**. Version **5.0.0-ELITE**. Stamps are **free** (`REQUIRE_LIGHTNING=false`). Proofs stay Bitcoin + OpenTimestamps. Own pruned bitcoind is at tip.
 
-**Live product (not the cathedral):** hash on-device → stamp → download `.ots` → share `https://satohash.io/p/{hash}` (phone cameras open that URL) → verify. **Pending ≠ Confirmed** (~60 minutes to a Bitcoin block). Family widget can complete `POST /api/stamp`. CLI prints the proof card. Snapper, ZK redaction, 3D Merkle, and BOLT-12 are **not** current features.
+**Live product:** hash on your device → stamp the fingerprint → share `https://satohash.io/p/{hash}` → download the `.ots` receipt → anyone can verify. **Pending is not Confirmed.** Pending means the stamp is on its way. Confirmed means a Bitcoin block has sealed it, about an hour later. Family apps can complete `POST /api/stamp`. The CLI prints the proof card.
 
-Paid/Lightning rails are built but **not yet switched on** — we launch them only when the rails are real (see Honesty Gates). Canonical mission: **`docs/MISSION-SCOPE-v3.md`** — *Proof of truth, on Bitcoin.*
+**Counted on 2026-10-12, 23:52 UTC** from `https://api.satohash.io/metrics.json`: **495** stamps, **492** confirmed, **1** still pending, **2** failed. Confirm rate **99.6%**. Paywall off.
+
+**A proof you can open today** (checked the same hour with `POST /api/verify`, `verified: true`, own bitcoind): Bitcoin block **969,627**. Card: [satohash.io/p/515b2a393bbffcfe9c3511d04a4349e199dbff1959cc0ac1f76817cd92f53abd](https://satohash.io/p/515b2a393bbffcfe9c3511d04a4349e199dbff1959cc0ac1f76817cd92f53abd). Recorded 2026-10-02 19:00:22 UTC. Confirmed 2026-10-02 20:48:00 UTC. We do not publish the original filename.
+
+Snapper, a redaction product, a 3D block explorer, and BOLT-12 billing are **not** what we sell. Paid Lightning rails are built and **not switched on**. Mission: **`docs/MISSION-SCOPE-v3.md`** — *Proof of truth, on Bitcoin.*
+
+---
+
+## What we do, in plain words
+
+Picture a photo, a contract, or a page you wrote this morning. Later, someone may say it was not there, or that it was changed. You want a way to show the moment it existed. You also want to keep the file.
+
+Satohash is that way.
+
+You open [satohash.io/stamp](https://satohash.io/stamp) and choose the file. Your phone or computer makes a fingerprint of it. A fingerprint is a short code that matches that exact file and no other. The file stays with you. We never receive it, so we cannot read it, lose it, or sell it. Only the fingerprint is sent.
+
+We hand that fingerprint to independent public calendars. They bundle many fingerprints together and write the bundle into **Bitcoin**. Bitcoin is a public notebook that is extremely hard to rewrite. When a block includes your fingerprint, the time is sealed.
+
+You then hold two things anyone can use:
+
+*   A **link** — `https://satohash.io/p/{hash}` — so a person, or a phone camera, can open the proof card.
+*   A **receipt** — a small `.ots` file. Open tools can check that receipt against Bitcoin even if Satohash is gone. On the done screen the gold button is **View proof**. The receipt download sits under it as a text link.
+
+**Pending** means we have sent the fingerprint and Bitcoin has not sealed it yet. **Confirmed** means a check against a Bitcoin block says yes, and we can name the block height. Give it about an hour. We show the wait on purpose. A stamp that is merely saved in our list is not the proof. The block is the proof.
+
+It is **free today**. There is **no account**. We prove **when** a file existed. We do not pretend to prove **who** you are. An optional extra can attach a Nostr key you already hold. That key is not a legal name, and it is not the whole authorship chapter.
+
+Behind **More** you can try a bundle of files, blacking out words, or a voice note. Those are **demos**. They still end in the same kind of stamp. They are not separate products.
+
+The homepage, Verify, and the developer sample all point at the confirmed proof above, so a visitor can check a real one before they stamp their own. The picture on the explorer that looks like a tree is a **diagram**. It is labeled that way. It is not a stamp.
 
 ---
 
@@ -20,7 +49,7 @@ Paid/Lightning rails are built but **not yet switched on** — we launch them on
 
 Every dispute over "who did what, when" comes down to one question: can you prove your version of events without asking anyone to take your word for it? For centuries the answer was a notary, a lawyer, a registry, a company — some trusted third party who could vouch for a date.
 
-**Satohash's founding bet is that this middleman is no longer necessary.** OpenTimestamps anchors a fingerprint of your file into the Bitcoin blockchain — permanently and verifiable, with no company standing between your document and the proof. Add a private-key signature, and "this file existed" becomes *"this file existed, and I am the one who created it"* — proof of existence upgraded to **proof of authorship**, with nobody's permission required.
+**Satohash's founding bet is that this middleman is no longer necessary for the moment a file existed.** OpenTimestamps anchors a fingerprint of your file into the Bitcoin blockchain — permanently and verifiable, with no company standing between your document and the proof. A later chapter can add a private-key signature, so "this file existed" can become *"this file existed, and I am the one who created it."* That signature is not what we sell today. Today we prove the moment.
 
 **No account. Free today. Absolute privacy. Confirmation waits for the next Bitcoin block (~60 minutes).**
 
@@ -76,7 +105,7 @@ Pairing an OpenTimestamps anchor with a signature from a user-held private key p
 ### The premium use cases
 
 *   **Legal, Contracts & Disputes** — Sign and timestamp bylaws, tenant agreements, or dispute filings to lock exact execution dates and block after-the-fact tampering claims. Digital wills and estate documents with key-held proof of who signed.
-*   **Creative Work, Media & IP** — Anchor design files, scripts, source code, or manuscripts to establish prior art before anything goes public. Capture devices sign and timestamp photos/video the instant they're shot — the fight against synthetic media.
+*   **Creative Work, Media & IP** — Anchor design files, scripts, source code, or manuscripts to establish prior art before anything goes public. A later chapter can let a device the person already holds sign a photo at the moment it is made. That is how a timestamp helps against synthetic media. It is not a feature on the site today.
 *   **Civic Life & Accountability** — Timestamp civic proposals and public records so the historical record can't be quietly rewritten. Journalism and whistleblowing — prove you had the story before you published.
 *   **Enterprise, Finance & Compliance** — Board resolutions and tax documentation anchored so auditors can independently confirm a ledger's state existed before a fiscal deadline. Supply-chain provenance, signed and timestamped at every handoff. Certificates and licenses that can't be rewritten.
 *   **Research & Science** — Lock in trial protocols, dataset hashes, and preliminary findings before results are known — pre-registration with teeth.
@@ -158,7 +187,9 @@ Agencies modernizing registries, travel documents, or tenders need proof of *"wh
 
 This pitch is not a promise — it is a *report*. We show you exactly what is live, what is staged, and how to check every claim yourself:
 
-*   **Free stamps** — live and true today. `REQUIRE_LIGHTNING=false`. Free base is the never-paywalled trust anchor (no daily quota; 5 req/min public abuse guard).
+*   **Free stamps** — live and true today. `REQUIRE_LIGHTNING=false`. Free base is the never-paywalled trust anchor (no daily quota; about 5 requests a minute as an abuse guard, with a wait that follows the server’s Retry-After).
+*   **A real confirmed example** — block **969,627**, checked 2026-10-12. Open the card. Do not treat a registry row, or Pending, as the same thing.
+*   **What the site shows** — Choose file first. Gold action is the stamp, then View proof. `.ots` is a text link under that button. Bundle, black-out, and voice sit under More and are labeled demos. The first screen says the file stays on the device.
 *   **Pricing (Cam-locked 2026-08-29)** — free base + optional premium tiers (Professional ~2,100 sats/mo ~$29, Business ~21,000 sats/mo ~$299) + pay-per-use API (1–5 sats/stamp). Premium rails built but not yet switched on.
 *   **Bitcoin + OTS anchoring** — live, verified, own node at tip.
 *   **File never leaves the device** — only the SHA-256 is submitted. Core promise.

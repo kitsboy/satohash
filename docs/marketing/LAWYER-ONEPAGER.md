@@ -27,7 +27,7 @@ Proving *"what existed, when, unaltered"* has become harder, not easier — gene
 | Client-side SHA-256 hashing; only the hash is submitted | A notary, or a replacement for notarial acts where law requires them |
 | OpenTimestamps calendar aggregation → Bitcoin block | An electronic-signature service |
 | A portable `.ots` proof, independently verifiable forever | A regulated Time Stamping Authority (TSA) |
-| **Zero-knowledge:** document bytes never leave the device | A qualified electronic time stamp (QETS) under eIDAS |
+| The file stays on the device. We never receive the bytes. | A zero-knowledge proof system, or a qualified electronic time stamp (QETS) under eIDAS |
 
 **The defensible claim (counsel-approved framing):**
 > "Satohash creates an electronic record of existence-at-a-time that is independently verifiable via the public Bitcoin blockchain. ESIGN and UETA provide that electronic records are not denied legal effect merely because they are electronic. Whether a specific stamp is admitted, and the weight it receives, depends on the rules of evidence and the specific proceeding."
@@ -55,7 +55,7 @@ Proving *"what existed, when, unaltered"* has become harder, not easier — gene
 
 - **Free stamps today** — `REQUIRE_LIGHTNING=false`. Bitcoin + OTS anchoring live, own node at tip.
 - **Proves "when," not "who"** — stated plainly. Proof of authorship (private-key signing) is the next chapter, on the roadmap, not claimed as shipped.
-- **Pending ≠ Confirmed** — calendars have the hash vs a Bitcoin block (~60 minutes). Do not treat them as the same.
+- **Pending ≠ Confirmed** — on the way, versus a Bitcoin block (~an hour). Do not treat them as the same. A public example checked 2026-10-12: block **969,627** at `https://satohash.io/p/515b2a393bbffcfe9c3511d04a4349e199dbff1959cc0ac1f76817cd92f53abd`. Do not cite the original filename.
 - **Camera QR** — share `https://satohash.io/p/{hash}`; phone cameras open that URL (they cannot read `.ots`).
 - **Portable `.ots`** — verifiable with open tools. Independent client-side verify (zero server trust) is on the roadmap; we say so until it ships.
 - **Snapper / ZK redaction / BOLT-12 / 3D Merkle** — not current features. Cathedral or staged; do not cite them as shipped evidence tools.

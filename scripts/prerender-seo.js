@@ -80,7 +80,7 @@ function inline(s) {
 }
 
 const WATCH_VIDEO =
-  'https://videos.giveabit.io/media/video/satohash-explainer-with-vo2.mp4?v=kimi-noir-20260819'
+  'https://videos.giveabit.io/media/video/satohash-explainer-wise.mp4?v=kimi-wise-20261012'
 const WATCH_PLAYER = `${SITE}/watch-player.html`
 
 function shell({

@@ -1,7 +1,7 @@
 # Current Status — Satohash
 
-**Version:** **5.0.0-ELITE** (Build 419)  
-**Last Updated:** 2026-10-12 (real confirmed proof on homepage and verify; demos labeled; .ots on the done screen)  
+**Version:** **5.0.0-ELITE** (Build 420)  
+**Last Updated:** 2026-10-12 (pitch and docs tell the live product in plain words; `/watch` plays the new ~84s Kimi cut)  
 **Frontend:** https://satohash.io · www · CF Pages project **`satohash`** — Grok lane, `assetsDir: 'b'`  
 **API:** https://api.satohash.io ✅ LIVE (THOR Docker, HTTP 200). **`gitSha` is not a commit** as of 2026-10-12 — it is a Cloudflare error string in `GIT_SHA`. Last known good image content is **`21476f8`** (`server/` unchanged since then). Kimi: rewrite `GIT_SHA` from `git rev-parse --short HEAD` on the next start. Paywall off. Family counts 2026-10-12: katoa **5**, giveabit **3**, sherpacarta/motopass/tadbuy **2**.  
 **Metrics SoT:** `https://api.satohash.io/metrics.json`  
@@ -19,7 +19,7 @@
 | API | THOR Docker + Caddy | `satohash-satohash-api-1` healthy |
 | Metrics | API `/metrics.json` | SPA `/metrics.json` is CF Function proxy |
 | Bitcoin | THOR bitcoind | Own node **at tip** · `source: bitcoind` · IBD **done** |
-| Explainer | `/watch` | **~84s** Kimi/Pippa cut (vo2) · 10s teaser toggle · hash mark top-left on close |
+| Explainer | `/watch` | **~84s** `satohash-explainer-wise.mp4` · quiet bed · 10s teaser stays · `?v=kimi-wise-20261012` |
 | Bundles | `/b/*` | Do not revert to long-cache `/assets/*`. Stamp/Verify **eager**. VitePWA `injectRegister: false` |
 
 **Code = M3 / Grok. Ops = Kimi / THOR.** No Umbrel. Do not fight M4 for coding.

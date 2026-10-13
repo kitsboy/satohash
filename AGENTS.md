@@ -34,7 +34,7 @@
 | API | THOR Docker → api.satohash.io |
 | Metrics SoT | `https://api.satohash.io/metrics.json` (SPA `/metrics.json` is CF Function proxy) |
 | HQ | hq.giveabit.io |
-| Explainer | `/watch` · primary `satohash-explainer-with-vo2.mp4` (~84s Kimi/Pippa) · teaser `satohash-explainer-with-vo.mp4` (~10s) |
+| Explainer | `/watch` · primary `satohash-explainer-wise.mp4` (~84s, Kimi stills, quiet bed) · teaser `satohash-explainer-with-vo.mp4` (~10s) |
 | SPA assets | Vite `assetsDir: 'b'` → public `/b/*` (do not revert to long-cache `/assets/*` poison) |
 
 ## End of session (Grok)

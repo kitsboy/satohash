@@ -46,14 +46,14 @@ Fixed **2026-08-31** (`ec1c69e`, live). Cause was lazy Stamp/Verify chunks impor
 
 | Item | Path |
 |------|------|
-| Player | https://satohash.io/watch (native **~84s** Kimi/Pippa cut; 10s teaser toggle) |
-| Primary MP4 | `public/media/video/satohash-explainer-with-vo2.mp4` (~83.7s, 1920×1080, VO + dance bed) |
-| Teaser MP4 | `satohash-explainer-with-vo.mp4` (~10s) |
-| Cache-bust | SPA loads `…vo2.mp4?v=kimi-noir-20260819` (overwrite same path carefully) |
-| Close | Small Satohash **hash mark**, top-left, last ~3s |
-| Legacy VO | `vo-complete.mp3` (~80s) — not a separate player |
-| Music | Dance bed baked into vo2 (~15%); `satohash-explainer-music.mp3` is archive |
-| Source | `videos/satohash-explainer/` (HyperFrames) · share https://hyperframes.dev/p/915356ed-8e2f-4c6e-97a4-d931b33b1341 |
+| Player | https://satohash.io/watch (native **~84s** Kimi cut; 10s teaser toggle stays) |
+| Primary MP4 | `https://videos.giveabit.io/media/video/satohash-explainer-wise.mp4` (~83.5s, 1920×1080) |
+| Teaser MP4 | `satohash-explainer-with-vo.mp4` (~10s) — unchanged |
+| Cache-bust | SPA loads `…wise.mp4?v=kimi-wise-20261012` |
+| Close | Kimi, gold `satohash.io`, hash mark. A real proof card names block **969,627** |
+| Voice | Young British English (Kokoro Isabella) until HeyGen Pippa can be signed in again |
+| Music | Quiet dark ambient under the voice. The old dance bed is not in this cut |
+| Source | `videos/satohash-explainer/` (HyperFrames, local, not in git) |
 | Ops notes | `docs/EXPLAINER-MUSIC-AND-VO.md` · `public/media/video/SCRIPT.md` |
 
 If `/watch` shows stale video: hard refresh; check MP4 duration **~84s** (full) or ~10s (teaser). Marketing routes are eager-loaded.

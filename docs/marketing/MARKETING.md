@@ -1,11 +1,11 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 419) · **Updated:** 2026-10-12
+> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 420) · **Updated:** 2026-10-13
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Satohash — Marketing Strategy
 
 **Platform:** https://satohash.io  
-**Version:** 5.0.0-ELITE · **August 2026**  
+**Version:** 5.0.0-ELITE · **12 October 2026**  
 **Creative north-star:** `docs/marketing/BRAND-VOICE.md` · **Canonical mission:** `docs/MISSION-SCOPE-v3.md`
 
 ---
@@ -21,6 +21,23 @@
 2. **You can check us.** Every claim carries a proof you verify yourself with open tools, no account, no KYC.
 3. **It outlives us.** A `.ots` receipt anchored to Bitcoin verifies forever — even if we vanished tomorrow.
 
+## What we do, said simply
+
+A person has a file they may need to defend later: a photo, a contract, a page, a piece of work. Satohash lets them prove that this exact file existed at a time, while the file stays on their own device.
+
+The device makes a fingerprint. We stamp only that fingerprint into Bitcoin, through public calendars. They receive a link and a small receipt. Anyone can check the receipt with open tools. No account. Free today.
+
+Say it in this order, and stay warm:
+
+1. **You keep the file.** We never see it.
+2. **Bitcoin keeps the time.** About an hour. Pending means on the way. Confirmed means a block.
+3. **Anyone can check.** There is already a confirmed proof on the site: Bitcoin block **969,627**. [Open it](https://satohash.io/p/515b2a393bbffcfe9c3511d04a4349e199dbff1959cc0ac1f76817cd92f53abd).
+4. **We prove when, not who.** That honesty is part of the brand, not a footnote.
+
+On 2026-10-12 the public count was **492 confirmed** proofs out of **495** stamps (`/metrics.json`, 23:52 UTC). Use the live file when you quote a number. Do not invent a bigger one.
+
+The extra tools on the stamp page (a bundle, blacking out words, a voice note) are **demos**. Do not advertise them as products. Do not say the file is uploaded. Do not say the proof is instant. Do not say it is courtroom-certified.
+
 ### The next chapter (v3)
 **Proof of authorship:** add your private key and "this file existed" becomes "this file existed, and I am the one who created it" — trustless, non-custodial, verifiable by anyone, forever. This single upgrade is the hinge the entire enterprise/legal/IP use-case map swings on.
 
@@ -33,7 +50,7 @@ People who create things they may later need to prove:
 
 | Persona | Pain Point | Our Message |
 |---|---|---|
-| **IP Attorneys & Law Firms** | Manual notarization is slow and expensive | Court-ready Bitcoin proof in 60 seconds |
+| **IP Attorneys & Law Firms** | Manual notarization is slow and expensive | A fingerprint on Bitcoin in about an hour, checkable with open tools. Evidence you can bring. Not a court certificate. |
 | **Freelancers & Creators** | Client disputes over ownership | Your work, timestamped before the dispute |
 | **Journalists & Researchers** | Documents get altered, lost, or denied | Immutable record before publication |
 | **Software Developers** | Prove code state at release time | git commit + Bitcoin block forever |
@@ -65,7 +82,7 @@ Beyond personas, Satohash speaks to five serious commercial lanes — each with 
 1. **"Proof of truth, on Bitcoin."** *(v3 tagline — the math, not the company)*
 2. **"Prove a file existed. Never show the file."** *(the family pitch — unmistakable)*
 3. **"No trust required — not even in us."** *(our signature)*
-4. **"Courtroom-ready. Cryptographically sound. Takes 60 seconds."**
+4. **"Check it yourself. The file stays. Bitcoin keeps the time."** *(about an hour to a block — never “60 seconds” or “courtroom-ready”)*
 5. **"Deepfakes make timestamps more important, not less."** *(why now)*
 6. **"Prove it existed. Prove you made it."** *(authorship upgrade)*
 

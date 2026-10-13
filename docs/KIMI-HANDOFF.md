@@ -1,3 +1,18 @@
+## 2026-10-12 — New 84-second film is on the site. Still do not push 6c8ae2e.
+
+Grok replaced the long explainer. Player URL: `https://videos.giveabit.io/media/video/satohash-explainer-wise.mp4?v=kimi-wise-20261012` (83.5s). The 10-second teaser is unchanged. Voice is a young British English stand-in, not Pippa. Quiet ambient under the voice. Pitch docs now say the live product in plain words: file stays, fingerprint only, Pending is not Confirmed, block 969,627 is a real example.
+
+This push does not need an API rebuild. Do not push `6c8ae2e`. Fetch before any restart:
+
+```bash
+cd /root/satohash && git fetch origin && git reset --hard origin/main
+GIT_SHA=$(git rev-parse --short HEAD) bash scripts/vps-deploy-api.sh
+```
+
+Keep `REQUIRE_LIGHTNING=false`. Do not change `/api/*`. Vault = THOR.
+
+---
+
 ## 2026-10-12 — Do not push 6c8ae2e. Fetch before any rebuild.
 
 GitHub `main` is ahead of the copy THOR last fetched (`bfe166f`). THOR HEAD `6c8ae2e` is not on GitHub. Do not push it. Do not `reset` onto the stale `origin/main`.

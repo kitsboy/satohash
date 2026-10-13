@@ -1,5 +1,5 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 419) · **Updated:** 2026-10-12
+> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 420) · **Updated:** 2026-10-13
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Satohash — FINANCIALS (Approximate)
@@ -23,6 +23,8 @@
 **Canonical pricing sentence:** *"Free base (never paywalled trust anchor) + optional premium tiers (Professional ~2,100 sats, Business ~21,000 sats) + pay-per-use API."*
 
 > Billing rails (L402/LND) are built but **not yet switched on** — premium tiers launch paid only once Lightning channels are funded and tested. The free anchor is live today.
+>
+> **Volume, counted 2026-10-12 23:52 UTC** from `/metrics.json`: 495 stamps, 492 confirmed, 1 pending, 2 failed. That is the real base. Do not paste a larger number into a deck.
 
 ---
 
@@ -33,8 +35,8 @@
 | Cloudflare Pages hosting | $0–$20 | **In use today** — static SPA at satohash.io |
 | Domain (satohash.io) | ~$2 | **In use today** — annual ~$20, amortized |
 | OTS Calendar node | $0 | Public calendar nodes are free |
-| Bitcoin node (optional, not in use) | $5–$30 | Future only — self-hosted node for extra verification |
-| API server (optional, not in use) | $20–$80 | Future only — if forum/history/admin API is deployed |
+| Bitcoin node | in use | Own pruned bitcoind on the API host. It is what confirms a block. |
+| API server | in use | `api.satohash.io` is live. Stamps are free (`REQUIRE_LIGHTNING=false`). |
 | Email (transactional) | $0–$10 | Resend/SendGrid free tier |
 | Redis (job queue) | $0–$15 | Future only — if backend job queue is added |
 | Monitoring (Sentry) | $0–$26 | Free tier for small error volume |

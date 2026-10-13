@@ -7,9 +7,13 @@
 
 > **Prove a file existed. Never show the file. Bitcoin keeps the receipt forever.**
 
-Hash a file on your device. Stamp the fingerprint. Download a portable `.ots` receipt. Bitcoin keeps it.
+You have a file you may need to prove later. Satohash makes a fingerprint of it on your own device, stamps only that fingerprint into Bitcoin, and gives you a link plus a small receipt. The file stays with you. Anyone can check the receipt with open tools. No account. Free today.
 
-**Live loop:** [satohash.io/stamp](https://satohash.io/stamp) → [verify](https://satohash.io/verify) → share [`/p/<hash>`](https://satohash.io/p/). No account. Free stamps. The file never leaves the device.
+**Pending** means the stamp is on its way. **Confirmed** means a Bitcoin block has sealed it, about an hour later. We prove **when**, not **who**.
+
+**Live loop:** [satohash.io/stamp](https://satohash.io/stamp) → [verify](https://satohash.io/verify) → share [`/p/<hash>`](https://satohash.io/p/). A confirmed example you can open now is block **969,627**: [`/p/515b2a39…`](https://satohash.io/p/515b2a393bbffcfe9c3511d04a4349e199dbff1959cc0ac1f76817cd92f53abd) (checked 2026-10-12).
+
+**Live loop detail:** Choose file first. The gold action stamps. View proof is the gold button when you are done. The `.ots` download is a text link under it. Bundle, black-out, and voice are demos under More.
 
 Phone cameras cannot read `.ots` files. Proof cards encode **`https://satohash.io/p/{hash}`** as a QR (PDFs and email too) — scanning it opens the zero-JS receipt. **Pending** means calendars have the hash; **Confirmed** means a Bitcoin block has sealed it (~60 minutes). They are not the same.
 
