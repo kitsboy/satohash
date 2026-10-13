@@ -288,7 +288,14 @@
     "welcomeSubtitle": "Your hub for tamper-proof document management. Stamp, verify, and manage all your notarized documents in one place.",
     "dismiss": "Dismiss",
     "recentActivity": "Recent Activity",
-    "quickActions": "Quick Actions"
+    "quickActions": "Quick Actions",
+    "mirror": "Global Mirroring",
+    "nominal": "Nominal",
+    "mirrorTip": "Your proof is replicated across multiple geographic nodes simultaneously, ensuring it can never be lost or censored.",
+    "height": "Bitcoin Height",
+    "privacy": "Privacy Layer",
+    "onDevice": "On device",
+    "privacyTip": "The file stays on your device. We receive only a fingerprint, so the document itself is never shown during verification."
   },
   "settings": {
     "pageTitle": "Settings",

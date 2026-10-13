@@ -288,7 +288,14 @@
     "welcomeSubtitle": "Votre centre de gestion de documents inviolables. Tamponnez, vérifiez et gérez tous vos documents notarisés en un seul endroit.",
     "dismiss": "Ignorer",
     "recentActivity": "Activité Récente",
-    "quickActions": "Actions Rapides"
+    "quickActions": "Actions Rapides",
+    "mirror": "Réplication mondiale",
+    "nominal": "Normal",
+    "mirrorTip": "Votre preuve est répliquée sur plusieurs nœuds géographiques en même temps, donc elle ne peut ni se perdre ni être censurée.",
+    "height": "Hauteur Bitcoin",
+    "privacy": "Couche de confidentialité",
+    "onDevice": "Sur l'appareil",
+    "privacyTip": "Le fichier reste sur votre appareil. Nous ne recevons qu'une empreinte, donc le document lui-même n'est pas montré lors de la vérification."
   },
   "settings": {
     "pageTitle": "Paramètres",

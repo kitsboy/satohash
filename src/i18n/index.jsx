@@ -171,7 +171,16 @@ export const translations = {
         'Your hub for tamper-proof document management. Stamp, verify, and manage all your notarized documents in one place.',
       dismiss: 'Dismiss',
       recentActivity: 'Recent Activity',
-      quickActions: 'Quick Actions'
+      quickActions: 'Quick Actions',
+      mirror: 'Global Mirroring',
+      nominal: 'Nominal',
+      mirrorTip:
+        'Your proof is replicated across multiple geographic nodes simultaneously, ensuring it can never be lost or censored.',
+      height: 'Bitcoin Height',
+      privacy: 'Privacy Layer',
+      onDevice: 'On device',
+      privacyTip:
+        'The file stays on your device. We receive only a fingerprint, so the document itself is never shown during verification.'
     },
     settings: {
       pageTitle: 'Settings',
@@ -359,7 +368,16 @@ export const translations = {
         'Tu centro de gestión de documentos a prueba de manipulaciones. Sella, verifica y administra todos tus documentos notarizados en un solo lugar.',
       dismiss: 'Descartar',
       recentActivity: 'Actividad Reciente',
-      quickActions: 'Acciones Rápidas'
+      quickActions: 'Acciones Rápidas',
+      mirror: 'Réplica global',
+      nominal: 'Normal',
+      mirrorTip:
+        'Tu prueba se replica en varios nodos geográficos a la vez, así que no se puede perder ni censurar.',
+      height: 'Altura de Bitcoin',
+      privacy: 'Capa de privacidad',
+      onDevice: 'En el dispositivo',
+      privacyTip:
+        'El archivo se queda en tu dispositivo. Solo recibimos una huella, así que el documento no se muestra al verificar.'
     },
     settings: {
       pageTitle: 'Ajustes',
@@ -545,7 +563,16 @@ export const translations = {
         'Votre centre de gestion de documents inviolables. Tamponnez, vérifiez et gérez tous vos documents notarisés en un seul endroit.',
       dismiss: 'Ignorer',
       recentActivity: 'Activité Récente',
-      quickActions: 'Actions Rapides'
+      quickActions: 'Actions Rapides',
+      mirror: 'Réplication mondiale',
+      nominal: 'Normal',
+      mirrorTip:
+        'Votre preuve est répliquée sur plusieurs nœuds géographiques en même temps, donc elle ne peut ni se perdre ni être censurée.',
+      height: 'Hauteur Bitcoin',
+      privacy: 'Couche de confidentialité',
+      onDevice: "Sur l'appareil",
+      privacyTip:
+        "Le fichier reste sur votre appareil. Nous ne recevons qu'une empreinte, donc le document lui-même n'est pas montré lors de la vérification."
     },
     settings: {
       pageTitle: 'Paramètres',
@@ -727,7 +754,14 @@ export const translations = {
       welcomeSubtitle: '您的防篡改文件管理中心。在一个地方盖章、验证和管理所有公证文件。',
       dismiss: '关闭',
       recentActivity: '最近活动',
-      quickActions: '快速操作'
+      quickActions: '快速操作',
+      mirror: '全球镜像',
+      nominal: '正常',
+      mirrorTip: '你的证明会同时复制到多个地区的节点上，因此不会丢失，也不会被删掉。',
+      height: 'Bitcoin 高度',
+      privacy: '隐私层',
+      onDevice: '在设备上',
+      privacyTip: '文件留在你的设备上。我们只收到指纹，所以验证时不会显示文件本身。'
     },
     settings: {
       pageTitle: '设置',

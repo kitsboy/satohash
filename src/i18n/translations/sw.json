@@ -288,7 +288,14 @@
     "welcomeSubtitle": "Kituo chako cha usimamizi wa hati zisizoweza kubadilishwa. Weka muhuri, thibitisha, na simamia hati zako zote zilizothibitishwa mahali pamoja.",
     "dismiss": "Ondoa",
     "recentActivity": "Shughuli za Hivi Karibuni",
-    "quickActions": "Vitendo vya Haraka"
+    "quickActions": "Vitendo vya Haraka",
+    "mirror": "Uigaji wa kimataifa",
+    "nominal": "Kawaida",
+    "mirrorTip": "Uthibitisho wako unarudiwa kwenye nodi za maeneo mengi kwa wakati mmoja, kwa hiyo hauwezi kupotea wala kuzuiwa.",
+    "height": "Urefu wa Bitcoin",
+    "privacy": "Tabaka la faragha",
+    "onDevice": "Kwenye kifaa",
+    "privacyTip": "Faili linabaki kwenye kifaa chako. Tunapokea alama pekee, kwa hiyo hati yenyewe haionyeshwi wakati wa uthibitishaji."
   },
   "settings": {
     "pageTitle": "Mipangilio",

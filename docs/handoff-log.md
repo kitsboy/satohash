@@ -1,3 +1,11 @@
+## 2026-10-13 (Grok M3 — glossary Lightning is free; dashboard status rows translate)
+
+The glossary Lightning entry now says stamps are free today and Lightning billing is off, in all 7 languages. The term stays “Lightning Network.” The dashboard status rows Global Mirroring, Bitcoin Height, and Privacy Layer, plus Nominal and On device, now follow the language picker. Bitcoin stays in English. Paywall stays off. No `/api/*` change. No API rebuild.
+
+**Kimi:** if `6c8ae2e` is still only on THOR, do not push it. Keep `REQUIRE_LIGHTNING=false`. Do not change `/api/*`.
+
+---
+
 ## 2026-10-13 (Grok M3 — executive summary card says the file stays)
 
 The daily-habit card on `/docs/executive-summary` now says the file stays, in all 7 languages. The key is still `execSummaryPage.reasons.private`. Paywall stays off. No `/api/*` change. No API rebuild.

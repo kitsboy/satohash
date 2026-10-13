@@ -391,7 +391,7 @@
       },
       "lightning": {
         "term": "Lightning Network",
-        "def": "Um protocolo de pagamento de segunda camada sobre o Bitcoin que permite transações instantâneas com taxas baixas. Usado pelo Satohash para cobrança premium."
+        "def": "Um protocolo de pagamento de segunda camada sobre o Bitcoin que permite transações instantâneas com taxas baixas. Os selos são grátis hoje. A faturação Lightning está desligada."
       },
       "zeroKnowledge": {
         "term": "Impressão digital do arquivo",

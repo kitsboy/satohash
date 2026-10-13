@@ -159,7 +159,16 @@ export default {
       'Ihre Zentrale für manipulationssichere Dokumentenverwaltung. Stempeln, verifizieren und verwalten Sie alle Ihre notarisierten Dokumente an einem Ort.',
     dismiss: 'Schließen',
     recentActivity: 'Letzte Aktivität',
-    quickActions: 'Schnellaktionen'
+    quickActions: 'Schnellaktionen',
+    mirror: 'Globale Spiegelung',
+    nominal: 'Normal',
+    mirrorTip:
+      'Ihr Nachweis wird gleichzeitig auf mehreren geografischen Knoten gespiegelt und kann so nicht verloren gehen oder zensiert werden.',
+    height: 'Bitcoin-Höhe',
+    privacy: 'Datenschutzebene',
+    onDevice: 'Auf dem Gerät',
+    privacyTip:
+      'Die Datei bleibt auf Ihrem Gerät. Wir erhalten nur einen Fingerabdruck, daher wird das Dokument bei der Prüfung nicht gezeigt.'
   },
   settings: {
     pageTitle: 'Einstellungen',

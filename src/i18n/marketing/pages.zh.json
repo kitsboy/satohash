@@ -391,7 +391,7 @@
       },
       "lightning": {
         "term": "Lightning Network",
-        "def": "Bitcoin 之上的第二层支付协议，支持即时、低费用交易。Satohash 用它进行 Premium 计费。"
+        "def": "Bitcoin 之上的第二层支付协议，支持即时、低费用交易。今天盖章免费。Lightning 计费未开启。"
       },
       "zeroKnowledge": {
         "term": "文件指纹",

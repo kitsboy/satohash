@@ -391,7 +391,7 @@
       },
       "lightning": {
         "term": "Lightning Network",
-        "def": "Ein Second-Layer-Zahlungsprotokoll auf Bitcoin für sofortige Transaktionen mit niedrigen Gebühren. Satohash nutzt es für Premium-Abrechnung."
+        "def": "Ein Second-Layer-Zahlungsprotokoll auf Bitcoin für sofortige Transaktionen mit niedrigen Gebühren. Stempel sind heute kostenlos. Die Lightning-Abrechnung ist aus."
       },
       "zeroKnowledge": {
         "term": "Datei-Fingerabdruck",

@@ -288,7 +288,14 @@
     "welcomeSubtitle": "Tu centro de gestión de documentos a prueba de manipulaciones. Sella, verifica y administra todos tus documentos notarizados en un solo lugar.",
     "dismiss": "Descartar",
     "recentActivity": "Actividad Reciente",
-    "quickActions": "Acciones Rápidas"
+    "quickActions": "Acciones Rápidas",
+    "mirror": "Réplica global",
+    "nominal": "Normal",
+    "mirrorTip": "Tu prueba se replica en varios nodos geográficos a la vez, así que no se puede perder ni censurar.",
+    "height": "Altura de Bitcoin",
+    "privacy": "Capa de privacidad",
+    "onDevice": "En el dispositivo",
+    "privacyTip": "El archivo se queda en tu dispositivo. Solo recibimos una huella, así que el documento no se muestra al verificar."
   },
   "settings": {
     "pageTitle": "Ajustes",

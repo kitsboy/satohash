@@ -851,22 +851,22 @@ export default function Dashboard() {
                 <div className="space-y-4">
                   <TeleItem
                     icon={Globe}
-                    label="Global Mirroring"
-                    status="NOMINAL"
+                    label={t('dashboard', 'mirror')}
+                    status={t('dashboard', 'nominal')}
                     emerald
-                    tooltip="Your proof is replicated across multiple geographic nodes simultaneously, ensuring it can never be lost or censored."
+                    tooltip={t('dashboard', 'mirrorTip')}
                   />
                   <TeleItem
                     icon={Box}
-                    label="Bitcoin Height"
+                    label={t('dashboard', 'height')}
                     status={blockHeight != null ? `#${blockHeight.toLocaleString()}+` : '—'}
                   />
                   <TeleItem
                     icon={Lock}
-                    label="Privacy Layer"
-                    status="ON DEVICE"
+                    label={t('dashboard', 'privacy')}
+                    status={t('dashboard', 'onDevice')}
                     emerald
-                    tooltip="The file stays on your device. We receive only a fingerprint, so the document itself is never shown during verification."
+                    tooltip={t('dashboard', 'privacyTip')}
                   />
                 </div>
               </motion.div>

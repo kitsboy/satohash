@@ -391,7 +391,7 @@
       },
       "lightning": {
         "term": "Lightning Network",
-        "def": "A second-layer payment protocol on top of Bitcoin enabling instant, low-fee transactions. Used by Satohash for premium billing."
+        "def": "A second-layer payment protocol on top of Bitcoin enabling instant, low-fee transactions. Stamps are free today. Lightning billing is off."
       },
       "zeroKnowledge": {
         "term": "File fingerprint",

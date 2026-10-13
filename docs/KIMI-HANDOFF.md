@@ -1,3 +1,9 @@
+## 2026-10-13 — Glossary Lightning matches free stamps. Dashboard status rows translate.
+
+Glossary Lightning entry, all 7 languages: stamps are free today, Lightning billing is off. Dashboard rows for mirroring, Bitcoin height, and the privacy layer follow the language picker. No API rebuild. If `6c8ae2e` is still only on THOR, do not push it. Keep `REQUIRE_LIGHTNING=false`. Do not change `/api/*`.
+
+---
+
 ## 2026-10-13 — The executive summary card says the file stays.
 
 `/docs/executive-summary` daily-habit card, all 7 languages. Key stays `reasons.private`. No API rebuild. If `6c8ae2e` is still only on THOR, do not push it. Keep `REQUIRE_LIGHTNING=false`. Do not change `/api/*`.

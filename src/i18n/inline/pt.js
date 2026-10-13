@@ -154,7 +154,16 @@ export default {
       'O seu centro de gestão de documentos à prova de adulteração. Carimbe, verifique e gira todos os seus documentos notarizados num só lugar.',
     dismiss: 'Dispensar',
     recentActivity: 'Atividade Recente',
-    quickActions: 'Ações Rápidas'
+    quickActions: 'Ações Rápidas',
+    mirror: 'Replicação global',
+    nominal: 'Normal',
+    mirrorTip:
+      'A sua prova é replicada em vários nós geográficos ao mesmo tempo, por isso não se perde nem se censura.',
+    height: 'Altura Bitcoin',
+    privacy: 'Camada de privacidade',
+    onDevice: 'No dispositivo',
+    privacyTip:
+      'O ficheiro fica no seu dispositivo. Recebemos apenas uma impressão digital, por isso o documento em si não aparece na verificação.'
   },
   settings: {
     pageTitle: 'Definições',

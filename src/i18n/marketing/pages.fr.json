@@ -391,7 +391,7 @@
       },
       "lightning": {
         "term": "Lightning Network",
-        "def": "Protocole de paiement de seconde couche sur Bitcoin permettant des transactions instantanées et à faible coût. Utilisé par Satohash pour la facturation premium."
+        "def": "Protocole de paiement de seconde couche sur Bitcoin permettant des transactions instantanées et à faible coût. Les horodatages sont gratuits aujourd’hui. La facturation Lightning est éteinte."
       },
       "zeroKnowledge": {
         "term": "Empreinte du fichier",

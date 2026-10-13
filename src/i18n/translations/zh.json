@@ -288,7 +288,14 @@
     "welcomeSubtitle": "您的防篡改文件管理中心。在一个地方盖章、验证和管理所有公证文件。",
     "dismiss": "关闭",
     "recentActivity": "最近活动",
-    "quickActions": "快速操作"
+    "quickActions": "快速操作",
+    "mirror": "全球镜像",
+    "nominal": "正常",
+    "mirrorTip": "你的证明会同时复制到多个地区的节点上，因此不会丢失，也不会被删掉。",
+    "height": "Bitcoin 高度",
+    "privacy": "隐私层",
+    "onDevice": "在设备上",
+    "privacyTip": "文件留在你的设备上。我们只收到指纹，所以验证时不会显示文件本身。"
   },
   "settings": {
     "pageTitle": "设置",
