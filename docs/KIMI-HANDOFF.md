@@ -1,3 +1,9 @@
+## 2026-10-13 — Pages install was broken. Film is on the video host, not yet on satohash.io.
+
+Cloudflare Pages failed `npm ci` because an override said `undici@^6.28.1` and npm then demanded 6.29.0. Overrides are now exact and match the lock. No library upgrade. No API rebuild. Do not push `6c8ae2e`. Fetch `origin/main` before any restart. Keep `REQUIRE_LIGHTNING=false`. Do not change `/api/*`.
+
+---
+
 ## 2026-10-12 — New 84-second film is on the site. Still do not push 6c8ae2e.
 
 Grok replaced the long explainer. Player URL: `https://videos.giveabit.io/media/video/satohash-explainer-wise.mp4?v=kimi-wise-20261012` (83.5s). The 10-second teaser is unchanged. Voice is a young British English stand-in, not Pippa. Quiet ambient under the voice. Pitch docs now say the live product in plain words: file stays, fingerprint only, Pending is not Confirmed, block 969,627 is a real example.

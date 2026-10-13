@@ -1,3 +1,11 @@
+## 2026-10-13 (Grok M3 — Pages can install again)
+
+The new film and the pitch are on GitHub (`3a62e62`) and the film file is on `videos.giveabit.io`. satohash.io was still the previous site because Cloudflare Pages and GitHub Actions both died in `npm ci`: the lock has undici **6.28.1**, and a caret override made npm ask for **6.29.0**. Overrides are now exact versions that match the lock. No library was upgraded. Paywall stays off. No `/api/*` change.
+
+**Kimi:** do not push `6c8ae2e`. Fetch `origin/main` before any API restart. Keep `REQUIRE_LIGHTNING=false`.
+
+---
+
 ## 2026-10-12 (Grok M3 — plain pitch, new 84-second film)
 
 Docs and the long explainer. Paywall stays off. No `/api/*` change. No API rebuild.

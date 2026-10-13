@@ -1,7 +1,7 @@
 # Current Status — Satohash
 
 **Version:** **5.0.0-ELITE** (Build 420)  
-**Last Updated:** 2026-10-12 (pitch and docs tell the live product in plain words; `/watch` plays the new ~84s Kimi cut)  
+**Last Updated:** 2026-10-13 (new ~84s film is in git and on videos.giveabit.io; Pages install is unblocked by exact dependency pins)  
 **Frontend:** https://satohash.io · www · CF Pages project **`satohash`** — Grok lane, `assetsDir: 'b'`  
 **API:** https://api.satohash.io ✅ LIVE (THOR Docker, HTTP 200). **`gitSha` is not a commit** as of 2026-10-12 — it is a Cloudflare error string in `GIT_SHA`. Last known good image content is **`21476f8`** (`server/` unchanged since then). Kimi: rewrite `GIT_SHA` from `git rev-parse --short HEAD` on the next start. Paywall off. Family counts 2026-10-12: katoa **5**, giveabit **3**, sherpacarta/motopass/tadbuy **2**.  
 **Metrics SoT:** `https://api.satohash.io/metrics.json`  
@@ -60,7 +60,7 @@
 | `/p/<hash>` | Zero-JS Function proof card (iMessage JPEG `01-stamp-hero.jpg`) |
 | `/network` | Live calendars, bitcoind tip, recent stamps, family tiles, Notes on Nostr |
 | `/status` · `/counsel` | Public status · counsel one-pager |
-| `/watch` | ~84s Kimi/Pippa · 10s teaser · `?v=kimi-noir-20260819` |
+| `/watch` | ~84s `satohash-explainer-wise.mp4` · quiet bed · 10s teaser · `?v=kimi-wise-20261012` |
 | Language | **7 locales** en es fr de pt sw zh — product loop + public marketing + template catalog largely done. SoT `docs/I18N.md`. Offers deferred. Do not add Arabic. |
 
 ## Metrics (verified live 2026-08-17)
