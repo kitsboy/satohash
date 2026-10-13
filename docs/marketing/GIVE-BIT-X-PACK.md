@@ -17,7 +17,7 @@ After the pin: paste https://satohash.io/watch into https://cards-dev.twitter.co
 Paste as the pinned post. Attach nothing extra — the player card is the media.
 
 ```
-84 seconds. Your file never leaves the device.
+70 seconds. Your file never leaves the device.
 
 Hash on the device. Receipt on Bitcoin. Free proof of existence.
 
@@ -27,7 +27,7 @@ https://satohash.io/watch
 Alt (one paragraph, same facts):
 
 ```
-84 seconds. File never leaves the device. Free Bitcoin proof of existence.
+70 seconds. File never leaves the device. Free Bitcoin proof of existence.
 
 https://satohash.io/watch
 ```
@@ -138,7 +138,7 @@ No multi-chain. No “trust our servers.” You can check the math.
 **7/7**
 
 ```
-84 seconds, then try it.
+70 seconds, then try it.
 
 Watch: https://satohash.io/watch
 Stamp: https://satohash.io/stamp

@@ -859,10 +859,9 @@ export default function Dashboard() {
                   />
                   <TeleItem
                     icon={Zap}
-                    label="L2 Settlement"
-                    status="BOLT-12 ACTIVE"
-                    amber
-                    tooltip="Lightning Network Layer 2 payment channel is active. Enables instant micropayment-gated stamping without on-chain fees per stamp."
+                    label="Lightning payments"
+                    status="NOT ON"
+                    tooltip="Lightning payments are not switched on. Stamps are free today. Bitcoin still seals the proof."
                   />
                   <TeleItem
                     icon={Box}

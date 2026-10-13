@@ -244,9 +244,9 @@ source=bitcoind; API height matches tip; local mempool live; deep health green. 
 - Landing: #free-and-fees · #verify-ots
 - Exec summary: /docs/executive-summary (charts + formal brief)
 - Explainer: /watch · media public/media/video/
-  - satohash-explainer-wise.mp4 (~84s) primary — Kimi stills, young British voice, quiet ambient bed
+  - satohash-explainer-wise-70.mp4 (~70s) primary — Kimi stills, young British voice, quiet ambient bed
   - satohash-explainer-with-vo.mp4 (~10s) teaser toggle
-  - Hash mark on the close · cache-bust `?v=kimi-wise-20261012` · 10s teaser unchanged
+  - Hash mark on the close · cache-bust `?v=kimi-wise-70-20261013` · 10s teaser unchanged
 
 **CRITICAL LESSON (2026-07-27 — still true):**
 - CF Pages has no `/api/*`. SPA must use VITE_API_URL=https://api.satohash.io
@@ -274,7 +274,7 @@ source=bitcoind; API height matches tip; local mempool live; deep health green. 
 - [x] Docs consolidation + route/component structure
 - [x] THOR: IBD finish → bitcoind at tip · source bitcoind (2026-08-08/10)
 - [x] THOR: client_id + directory live on metrics
-- [x] Homepage CTA → /watch (~84s Kimi cut, quiet bed; 10s teaser toggle)
+- [x] Homepage CTA → /watch (~70s Kimi cut, quiet bed; 10s teaser toggle)
 - [ ] Wallets/paywall when Cam flips
 
 **Orchestration:** Kimi THOR. Coding: Grok M3.

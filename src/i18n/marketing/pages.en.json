@@ -431,11 +431,11 @@
     "hero": {
       "title": "Security",
       "titleHighlight": "at Satohash",
-      "subtitle": "Zero-knowledge architecture, client-side hashing, open-source code. Your documents never leave your device."
+      "subtitle": "The file stays on the device. Only a SHA-256 fingerprint goes forward. The code is open for anyone to read."
     },
     "sections": {
       "zeroKnowledge": {
-        "title": "Zero-Knowledge Architecture",
+        "title": "The file stays on the device",
         "body": "Your documents are hashed entirely in your browser using the Web Crypto API. Only the SHA-256 fingerprint — a 64-character hexadecimal string — is transmitted. Neither Satohash nor any third party ever sees your original file content.",
         "items": [
           "Client-side SHA-256 hashing via Web Crypto API",
@@ -1637,7 +1637,7 @@
   "trustPage": {
     "backSecurity": "← Security overview",
     "heroTitle": "Trust Center",
-    "heroSubtitle": "Zero-knowledge architecture, open-source auditability, and global legal compatibility for institutional provenance.",
+    "heroSubtitle": "The file stays on the device. Only a fingerprint goes out. Open code, and proofs anyone can check.",
     "complianceTitle": "Legal & Regulatory Framework",
     "securityLink": "Security deep-dive →",
     "procurementTitle": "Procurement & diligence",
@@ -1650,18 +1650,18 @@
     "lastReviewed": "Last reviewed: August 16, 2026",
     "heroH1Line1": "Built on Math.",
     "heroH1Line2": "Not Trust.",
-    "pillZk": "Zero-Knowledge Architecture",
+    "pillZk": "File stays on the device",
     "pillBitcoin": "Bitcoin-Anchored Proof",
-    "zkLabel": "Zero-Knowledge Architecture",
-    "zkTitle": "What Is Zero-Knowledge?",
-    "zkTitleRest": "Why Does It Matter?",
+    "zkLabel": "File stays on the device",
+    "zkTitle": "What leaves the device?",
+    "zkTitleRest": "Only a fingerprint.",
     "zkP1": "In traditional notarization, you hand your document to someone who reads it and stamps it. You're trusting that person — and every system they use.",
     "zkP2Before": "With Satohash, we use a mathematical technique called a",
     "zkP2Strong": "cryptographic hash",
     "zkP2After": ". Your document is converted to a unique 64-character fingerprint (SHA-256). We never see, store, or transmit your actual document. Only the fingerprint is sent to Bitcoin.",
-    "zkP3Before": "This is called",
-    "zkP3Strong": "Zero-Knowledge architecture",
-    "zkP3After": ": we can prove your document existed at a specific time without ever knowing what's in it.",
+    "zkP3Before": "That is the whole promise:",
+    "zkP3Strong": "the file stays",
+    "zkP3After": ". We can prove a file existed at a specific time without ever receiving the file.",
     "zkExampleLabel": "Example SHA-256 fingerprint",
     "zkExampleCaption": "This 64-character string is all we ever receive. Your document itself never leaves your device.",
     "zkFlowLabel": "How it flows",
@@ -2036,7 +2036,7 @@
   "watchPage": {
     "fullTitle": "Full cut",
     "teaserTitle": "Teaser",
-    "fullAria": "Satohash 80-second explainer with voiceover",
+    "fullAria": "Satohash 70-second explainer with voiceover",
     "teaserAria": "Satohash 10-second explainer with voiceover",
     "kicker": "~{{seconds}}s · Kimi",
     "titleBefore": "Stamp it onto",

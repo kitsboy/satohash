@@ -431,11 +431,11 @@
     "hero": {
       "title": "Seguridad",
       "titleHighlight": "en Satohash",
-      "subtitle": "Arquitectura de conocimiento cero, hashing en el cliente, código abierto. Tus documentos nunca salen de tu dispositivo."
+      "subtitle": "El archivo se queda en el dispositivo. Solo sale una huella SHA-256. El código está abierto para que cualquiera lo lea."
     },
     "sections": {
       "zeroKnowledge": {
-        "title": "Arquitectura de conocimiento cero",
+        "title": "El archivo se queda en el dispositivo",
         "body": "Tus documentos se hashean íntegramente en tu navegador con la Web Crypto API. Solo se transmite la huella SHA-256 — una cadena hexadecimal de 64 caracteres. Ni Satohash ni terceros ven el contenido original de tu archivo.",
         "items": [
           "Hashing SHA-256 en el cliente vía Web Crypto API",
@@ -1512,7 +1512,7 @@
   "trustPage": {
     "backSecurity": "← Resumen de seguridad",
     "heroTitle": "Centro de Confianza",
-    "heroSubtitle": "Arquitectura de conocimiento cero, auditoría de código abierto y compatibilidad legal global.",
+    "heroSubtitle": "El archivo se queda en el dispositivo. Solo sale una huella. Código abierto, y pruebas que cualquiera puede comprobar.",
     "complianceTitle": "Marco legal y regulatorio",
     "securityLink": "Profundidad de seguridad →",
     "procurementTitle": "Adquisiciones y diligencia",
@@ -1525,18 +1525,18 @@
     "lastReviewed": "Última revisión: 16 de agosto de 2026",
     "heroH1Line1": "Construido sobre matemáticas.",
     "heroH1Line2": "No sobre confianza.",
-    "pillZk": "Arquitectura de conocimiento cero",
+    "pillZk": "El archivo se queda en el dispositivo",
     "pillBitcoin": "Prueba anclada en Bitcoin",
-    "zkLabel": "Arquitectura de conocimiento cero",
-    "zkTitle": "¿Qué es el conocimiento cero?",
-    "zkTitleRest": "¿Por qué importa?",
+    "zkLabel": "El archivo se queda en el dispositivo",
+    "zkTitle": "¿Qué sale del dispositivo?",
+    "zkTitleRest": "Solo una huella.",
     "zkP1": "En la notarización tradicional, entregas tu documento a alguien que lo lee y lo sella. Confías en esa persona — y en cada sistema que usa.",
     "zkP2Before": "Con Satohash usamos una técnica matemática llamada",
     "zkP2Strong": "hash criptográfico",
     "zkP2After": ". Tu documento se convierte en una huella única de 64 caracteres (SHA-256). Nunca vemos, almacenamos ni transmitimos el documento. Solo la huella se envía a Bitcoin.",
-    "zkP3Before": "Esto se llama",
-    "zkP3Strong": "arquitectura de conocimiento cero",
-    "zkP3After": ": podemos probar que tu documento existió en un momento concreto sin saber nunca qué hay dentro.",
+    "zkP3Before": "Esa es toda la promesa:",
+    "zkP3Strong": "el archivo se queda",
+    "zkP3After": ". Podemos probar que un archivo existió en un momento concreto sin recibir nunca el archivo.",
     "zkExampleLabel": "Ejemplo de huella SHA-256",
     "zkExampleCaption": "Esta cadena de 64 caracteres es todo lo que recibimos. El documento nunca sale de tu dispositivo.",
     "zkFlowLabel": "Cómo fluye",
@@ -2036,7 +2036,7 @@
   "watchPage": {
     "fullTitle": "Corte completo",
     "teaserTitle": "Teaser",
-    "fullAria": "Explicación Satohash de 80 segundos con voz",
+    "fullAria": "Explicación Satohash de 70 segundos con voz",
     "teaserAria": "Explicación Satohash de 10 segundos con voz",
     "kicker": "~{{seconds}}s · Kimi",
     "titleBefore": "Séllalo en",

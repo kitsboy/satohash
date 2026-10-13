@@ -80,7 +80,7 @@ function inline(s) {
 }
 
 const WATCH_VIDEO =
-  'https://videos.giveabit.io/media/video/satohash-explainer-wise.mp4?v=kimi-wise-20261012'
+  'https://videos.giveabit.io/media/video/satohash-explainer-wise-70.mp4?v=kimi-wise-70-20261013'
 const WATCH_PLAYER = `${SITE}/watch-player.html`
 
 function shell({
@@ -371,7 +371,7 @@ if (fs.existsSync(docsDir)) {
 // Watch / Explainer — static version so video shares show rich meta
 const watchTitle = 'Satohash Explainer — Watch How It Proves a File Existed'
 const watchDesc =
-  'Watch the ~84 second Satohash explainer: hash on your device, OpenTimestamps, prove existence on Bitcoin — free, private, independently verifiable.'
+  'Watch the ~70 second Satohash explainer: hash on your device, OpenTimestamps, prove existence on Bitcoin — free, private, independently verifiable.'
 const watchBody = `
 <h1>Watch the Satohash explainer</h1>
 <p>Satohash hashes your file on the device, then anchors the fingerprint to Bitcoin via OpenTimestamps — independently verifiable proof that a file existed at a specific moment. Free, private, no account required.</p>

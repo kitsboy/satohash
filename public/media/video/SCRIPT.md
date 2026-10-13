@@ -1,21 +1,21 @@
 # Satohash explainer — board
 
-**Primary file:** `satohash-explainer-wise.mp4` on `videos.giveabit.io` (~83.5s, 1920×1080, quiet ambient under a young British voice)  
+**Primary file:** `satohash-explainer-wise-70.mp4` on `videos.giveabit.io` (~70.1s, 1920×1080, quiet ambient under a young British voice)  
 **Teaser:** `satohash-explainer-with-vo.mp4` (~10s) — unchanged  
 **Player:** `/watch` (native video · Full cut default)  
 **Poster:** `kimi-teacher.jpg`  
-**Cache-bust:** `?v=kimi-wise-20261012`
+**Cache-bust:** `?v=kimi-wise-70-20261013`
 
-## Full cut (~84s)
+## Full cut (~70s)
 
 | Time | Visual | Line |
 |------|--------|------|
 | 0:00 | Kimi · A photo. A promise. A page. | Keep the file, and still prove it existed. |
-| 0:10 | A page that is not a proof | Emailing a copy to yourself is not a proof anyone else can check. |
-| 0:17 | The file stays on the device | Only the fingerprint goes forward. |
-| 0:28 | Alice, Bob, Finney, then one Bitcoin block | Anyone can read it. No account. Free today. |
-| 0:41 | Pending, then Confirmed | On the way, then a Bitcoin block. About an hour. Waiting is the strength. |
-| 0:55 | Confirmed card, block 969,627, then Kimi | A receipt and a link. We prove when, not who. satohash.io. |
+| 0:08 | Envelope to yourself, stamped “Not a proof” | Emailing a copy to yourself is not a proof anyone else can check. |
+| 0:14 | The file card becomes fingerprint 515b2a39 | The file stays. Only the fingerprint goes forward. |
+| 0:24 | Calendars, then one Bitcoin block | Anyone can read it. No account. Free today. |
+| 0:34 | Pending, then Confirmed | On the way, then a Bitcoin block. About an hour. Waiting is the strength. |
+| 0:46 | Confirmed card, block 969,627, then Kimi | A receipt and a link. We prove when, not who. satohash.io. |
 
 Spoken words are in `docs/EXPLAINER-SCRIPT-PRODUCTION.md`. The August dance-bed cut is `satohash-explainer-with-vo2.mp4` and is no longer the player.
 

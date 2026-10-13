@@ -431,11 +431,11 @@
     "hero": {
       "title": "安全",
       "titleHighlight": "在 Satohash",
-      "subtitle": "零知识架构、客户端哈希、开源代码。您的文档永不离开您的设备。"
+      "subtitle": "文件留在设备上。只有 SHA-256 指纹会送出。代码公开，任何人都可以阅读。"
     },
     "sections": {
       "zeroKnowledge": {
-        "title": "零知识架构",
+        "title": "文件留在设备上",
         "body": "您的文档完全在浏览器中通过 Web Crypto API 进行哈希。仅传输 SHA-256 指纹——一个 64 字符的十六进制字符串。Satohash 和任何第三方都看不到您的原始文件内容。",
         "items": [
           "通过 Web Crypto API 进行客户端 SHA-256 哈希",
@@ -1487,7 +1487,7 @@
   "trustPage": {
     "backSecurity": "← 安全概览",
     "heroTitle": "信任中心",
-    "heroSubtitle": "零知识架构与全球法律兼容性。",
+    "heroSubtitle": "文件留在设备上。只有指纹会送出。代码公开，而且任何人都能核对证明。",
     "complianceTitle": "法律与监管框架",
     "securityLink": "安全深度解读 →",
     "procurementTitle": "采购与尽职调查",
@@ -1500,18 +1500,18 @@
     "lastReviewed": "上次审阅：2026年8月16日",
     "heroH1Line1": "建立在数学上。",
     "heroH1Line2": "而非信任。",
-    "pillZk": "零知识架构",
+    "pillZk": "文件留在设备上",
     "pillBitcoin": "锚定于 Bitcoin 的证明",
-    "zkLabel": "零知识架构",
-    "zkTitle": "什么是零知识？",
-    "zkTitleRest": "为什么重要？",
+    "zkLabel": "文件留在设备上",
+    "zkTitle": "什么会离开设备？",
+    "zkTitleRest": "只有指纹。",
     "zkP1": "在传统公证中，你把文件交给某人阅读并盖章。你信任那个人——以及他使用的每一个系统。",
     "zkP2Before": "Satohash 使用一种数学方法，称为",
     "zkP2Strong": "密码学哈希",
     "zkP2After": "。你的文件会变成唯一的 64 字符指纹（SHA-256）。我们从不查看、存储或传输文件本身。只有指纹被发送到 Bitcoin。",
-    "zkP3Before": "这称为",
-    "zkP3Strong": "零知识架构",
-    "zkP3After": "：我们可以证明你的文件在某一时刻存在，而永远不必知道其中内容。",
+    "zkP3Before": "这就是全部承诺：",
+    "zkP3Strong": "文件留在设备上",
+    "zkP3After": "。我们可以证明一份文件在某一时刻存在，而从未收到那份文件。",
     "zkExampleLabel": "SHA-256 指纹示例",
     "zkExampleCaption": "这串 64 字符就是我们收到的全部内容。文件本身从不离开你的设备。",
     "zkFlowLabel": "流程",
@@ -2011,7 +2011,7 @@
   "watchPage": {
     "fullTitle": "完整版",
     "teaserTitle": "预告",
-    "fullAria": "Satohash 80 秒讲解（含旁白）",
+    "fullAria": "Satohash 70 秒讲解（含旁白）",
     "teaserAria": "Satohash 10 秒讲解（含旁白）",
     "kicker": "~{{seconds}}秒 · Kimi",
     "titleBefore": "盖到",

@@ -431,11 +431,11 @@
     "hero": {
       "title": "Sicherheit",
       "titleHighlight": "bei Satohash",
-      "subtitle": "Zero-Knowledge-Architektur, clientseitiges Hashing, Open-Source-Code. Ihre Dokumente verlassen nie Ihr Gerät."
+      "subtitle": "Die Datei bleibt auf dem Gerät. Nur ein SHA-256-Fingerabdruck geht weiter. Der Code ist offen und kann von jedem gelesen werden."
     },
     "sections": {
       "zeroKnowledge": {
-        "title": "Zero-Knowledge-Architektur",
+        "title": "Die Datei bleibt auf dem Gerät",
         "body": "Ihre Dokumente werden vollständig in Ihrem Browser mit der Web Crypto API gehasht. Nur der SHA-256-Fingerabdruck — eine 64-stellige hexadezimale Zeichenkette — wird übertragen. Weder Satohash noch Dritte sehen jemals Ihren Originaldateiinhalt.",
         "items": [
           "Clientseitiges SHA-256-Hashing über Web Crypto API",
@@ -1512,7 +1512,7 @@
   "trustPage": {
     "backSecurity": "← Sicherheitsübersicht",
     "heroTitle": "Trust Center",
-    "heroSubtitle": "Zero-Knowledge-Architektur und globale Rechtskompatibilität.",
+    "heroSubtitle": "Die Datei bleibt auf dem Gerät. Nur ein Fingerabdruck geht weiter. Offener Code, und Belege, die jeder prüfen kann.",
     "complianceTitle": "Rechtsrahmen",
     "securityLink": "Sicherheit im Detail →",
     "procurementTitle": "Beschaffung",
@@ -1525,18 +1525,18 @@
     "lastReviewed": "Zuletzt geprüft: 16. August 2026",
     "heroH1Line1": "Gebaut auf Mathematik.",
     "heroH1Line2": "Nicht auf Vertrauen.",
-    "pillZk": "Zero-Knowledge-Architektur",
+    "pillZk": "Die Datei bleibt auf dem Gerät",
     "pillBitcoin": "Bitcoin-verankerte Proof",
-    "zkLabel": "Zero-Knowledge-Architektur",
-    "zkTitle": "Was ist Zero-Knowledge?",
-    "zkTitleRest": "Warum ist das wichtig?",
+    "zkLabel": "Die Datei bleibt auf dem Gerät",
+    "zkTitle": "Was verlässt das Gerät?",
+    "zkTitleRest": "Nur ein Fingerabdruck.",
     "zkP1": "Bei der klassischen Notarisierung übergeben Sie Ihr Dokument jemandem, der es liest und stempelt. Sie vertrauen dieser Person — und jedem System, das sie nutzt.",
     "zkP2Before": "Satohash nutzt eine mathematische Technik, den",
     "zkP2Strong": "kryptografischen Hash",
     "zkP2After": ". Ihr Dokument wird in einen eindeutigen 64-Zeichen-Fingerabdruck (SHA-256) umgewandelt. Wir sehen, speichern oder übertragen das Dokument nie. Nur der Fingerabdruck geht an Bitcoin.",
-    "zkP3Before": "Das heißt",
-    "zkP3Strong": "Zero-Knowledge-Architektur",
-    "zkP3After": ": wir können beweisen, dass Ihr Dokument zu einem bestimmten Zeitpunkt existierte, ohne je zu wissen, was darin steht.",
+    "zkP3Before": "Das ist das ganze Versprechen:",
+    "zkP3Strong": "die Datei bleibt",
+    "zkP3After": ". Wir können beweisen, dass eine Datei zu einem bestimmten Zeitpunkt existierte, ohne die Datei je zu empfangen.",
     "zkExampleLabel": "Beispiel-SHA-256-Fingerabdruck",
     "zkExampleCaption": "Diese 64-Zeichen-Zeichenkette ist alles, was wir je empfangen. Das Dokument selbst verlässt Ihr Gerät nicht.",
     "zkFlowLabel": "So fließt es",
@@ -2036,7 +2036,7 @@
   "watchPage": {
     "fullTitle": "Lange Fassung",
     "teaserTitle": "Teaser",
-    "fullAria": "Satohash-Erklärung 80 Sekunden mit Sprecher",
+    "fullAria": "Satohash-Erklärung 70 Sekunden mit Sprecher",
     "teaserAria": "Satohash-Erklärung 10 Sekunden mit Sprecher",
     "kicker": "~{{seconds}}s · Kimi",
     "titleBefore": "Stempeln Sie es auf",

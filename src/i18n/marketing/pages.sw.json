@@ -431,11 +431,11 @@
     "hero": {
       "title": "Usalama",
       "titleHighlight": "katika Satohash",
-      "subtitle": "Usanifu wa ujuzi wa sifuri, kuhesabu hash upande wa mteja, msimbo wa chanzo wazi. Hati zako haziondoki kwenye kifaa chako."
+      "subtitle": "Faili linabaki kwenye kifaa. Ni alama ya SHA-256 pekee inayoendelea. Msimbo uko wazi ili mtu yeyote aweze kuusoma."
     },
     "sections": {
       "zeroKnowledge": {
-        "title": "Usanifu wa Ujuzi wa Sifuri",
+        "title": "Faili linabaki kwenye kifaa",
         "body": "Hati zako zinahesabiwa hash kabisa kwenye kivinjari chako kwa kutumia Web Crypto API. Alama ya kidole ya SHA-256 pekee — mfuatano wa hexadecimal wa herufi 64 — ndiyo inayotumwa. Wala Satohash wala mtu mwingine hawawahi kuona maudhui ya faili yako ya asili.",
         "items": [
           "Kuhesabu hash ya SHA-256 upande wa mteja kupitia Web Crypto API",
@@ -1512,7 +1512,7 @@
   "trustPage": {
     "backSecurity": "← Muhtasari wa usalama",
     "heroTitle": "Kituo cha Uaminifu",
-    "heroSubtitle": "Usanifu wa ujuzi wa sifuri na utangamano wa kisheria.",
+    "heroSubtitle": "Faili linabaki kwenye kifaa. Alama pekee ndiyo inayoendelea. Msimbo wazi, na uthibitisho ambao mtu yeyote anaweza kuangalia.",
     "complianceTitle": "Mfumo wa kisheria",
     "securityLink": "Usalama kwa kina →",
     "procurementTitle": "Ununuzi",
@@ -1525,18 +1525,18 @@
     "lastReviewed": "Ilikaguliwa mwisho: 16 Agosti 2026",
     "heroH1Line1": "Imejengwa kwenye hisabati.",
     "heroH1Line2": "Si uaminifu.",
-    "pillZk": "Usanifu wa ujuzi-sifuri",
+    "pillZk": "Faili linabaki kwenye kifaa",
     "pillBitcoin": "Uthibitisho uliofungwa kwenye Bitcoin",
-    "zkLabel": "Usanifu wa ujuzi-sifuri",
-    "zkTitle": "Ujuzi-sifuri ni nini?",
-    "zkTitleRest": "Kwa nini ina maana?",
+    "zkLabel": "Faili linabaki kwenye kifaa",
+    "zkTitle": "Nini huondoka kwenye kifaa?",
+    "zkTitleRest": "Alama pekee.",
     "zkP1": "Katika uthibitisho wa kawaida wa noti, unamkabidhi mtu hati yako, anaisoma na kuistampa. Unamwamini mtu huyo — na kila mfumo anaotumia.",
     "zkP2Before": "Kwa Satohash tunatumia mbinu ya hisabati inayoitwa",
     "zkP2Strong": "hash ya kriptografia",
     "zkP2After": ". Hati yako inageuzwa kuwa alama ya vidole ya herufi 64 (SHA-256). Hatuioni, hatuihifadhi, wala hatuitumii hati yenyewe. Ni alama tu inayopelekwa kwa Bitcoin.",
-    "zkP3Before": "Hii inaitwa",
-    "zkP3Strong": "usanifu wa ujuzi-sifuri",
-    "zkP3After": ": tunaweza kuthibitisha kuwa hati yako ilikuwepo wakati fulani bila kujua kamwe kilicho ndani.",
+    "zkP3Before": "Hilo ndilo ahadi yote:",
+    "zkP3Strong": "faili linabaki",
+    "zkP3After": ". Tunaweza kuthibitisha kuwa faili lilikuwepo wakati fulani bila kupokea faili lenyewe.",
     "zkExampleLabel": "Mfano wa alama ya SHA-256",
     "zkExampleCaption": "Mfuatano huu wa herufi 64 ndio tu tunaochokea. Hati yenyewe haiondoki kwenye kifaa chako.",
     "zkFlowLabel": "Jinsi inavyotiririka",
@@ -2036,7 +2036,7 @@
   "watchPage": {
     "fullTitle": "Toleo kamili",
     "teaserTitle": "Teaser",
-    "fullAria": "Maelezo ya Satohash ya sekunde 80 yenye sauti",
+    "fullAria": "Maelezo ya Satohash ya sekunde 70 yenye sauti",
     "teaserAria": "Maelezo ya Satohash ya sekunde 10 yenye sauti",
     "kicker": "~{{seconds}}s · Kimi",
     "titleBefore": "Igongwe kwenye",

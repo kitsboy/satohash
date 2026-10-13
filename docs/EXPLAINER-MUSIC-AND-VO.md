@@ -1,11 +1,11 @@
 # Explainer: music + voiceover
 
-## Live on `/watch` (2026-10-12)
+## Live on `/watch` (2026-10-13)
 
 | Spec | Value |
 |------|--------|
-| Primary | `https://videos.giveabit.io/media/video/satohash-explainer-wise.mp4` |
-| Length | **83.5 s** |
+| Primary | `https://videos.giveabit.io/media/video/satohash-explainer-wise-70.mp4` |
+| Length | **70.1 s** |
 | Format | H.264 **1920×1080** |
 | Voice | Young British English woman as Kimi (Kokoro **Isabella**). HeyGen Pippa is the character voice when that login works again. This cut is not Pippa. |
 | Music | Quiet dark ambient, faded, sitting under the voice. Not the old dance bed. |
@@ -14,7 +14,7 @@
 | Teaser | `satohash-explainer-with-vo.mp4` (~10.0 s) — still on `/watch` as Short |
 | Close | Kimi, gold **satohash.io**, small hash mark |
 
-Cache-bust: SPA loads `…wise.mp4?v=kimi-wise-20261012`. The August dance-bed cut stays at the old `vo2` address and is no longer what the player loads.
+Cache-bust: SPA loads `…wise-70.mp4?v=kimi-wise-70-20261013`. The 83.5s cut stays at `satohash-explainer-wise.mp4` and is no longer what the player loads. The August dance-bed cut stays at the old `vo2` address.
 
 Git: `f64463f` on `main` (Pages deploy). HyperFrames share: https://hyperframes.dev/p/915356ed-8e2f-4c6e-97a4-d931b33b1341  
 Source composition (M3, not in Pages): `videos/satohash-explainer/` · script `videos/satohash-explainer/SCRIPT.md`.

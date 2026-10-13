@@ -1,5 +1,5 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 423) · **Updated:** 2026-10-13
+> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 424) · **Updated:** 2026-10-13
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Satohash — Executive Summary
@@ -101,7 +101,7 @@ Defaults to `https://api.satohash.io`. Sends `X-Satohash-Client: cli`. Prints `h
 ### Also live
 - Free stamps (`REQUIRE_LIGHTNING=false`). Paywall off.
 - Production API at `api.satohash.io` + own pruned `bitcoind` at tip
-- Explainer at `/watch` (~84s)
+- Explainer at `/watch` (~70s)
 - Batch stamp in the SPA (rate-limited; public 5/min)
 
 ### Not current features (cathedral / staged)

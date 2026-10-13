@@ -431,11 +431,11 @@
     "hero": {
       "title": "Sécurité",
       "titleHighlight": "chez Satohash",
-      "subtitle": "Architecture à connaissance nulle, hachage côté client, code open source. Vos documents ne quittent jamais votre appareil."
+      "subtitle": "Le fichier reste sur l'appareil. Seule une empreinte SHA-256 part. Le code est ouvert, pour que chacun puisse le lire."
     },
     "sections": {
       "zeroKnowledge": {
-        "title": "Architecture à connaissance nulle",
+        "title": "Le fichier reste sur l'appareil",
         "body": "Vos documents sont hachés entièrement dans votre navigateur via la Web Crypto API. Seule l'empreinte SHA-256 — une chaîne hexadécimale de 64 caractères — est transmise. Ni Satohash ni aucun tiers ne voit le contenu original de votre fichier.",
         "items": [
           "Hachage SHA-256 côté client via Web Crypto API",
@@ -1512,7 +1512,7 @@
   "trustPage": {
     "backSecurity": "← Aperçu sécurité",
     "heroTitle": "Centre de Confiance",
-    "heroSubtitle": "Architecture zéro connaissance et compatibilité juridique mondiale.",
+    "heroSubtitle": "Le fichier reste sur l'appareil. Seule une empreinte part. Code ouvert, et des preuves que chacun peut vérifier.",
     "complianceTitle": "Cadre juridique",
     "securityLink": "Approfondissement sécurité →",
     "procurementTitle": "Achats et diligence",
@@ -1525,18 +1525,18 @@
     "lastReviewed": "Dernière révision : 16 août 2026",
     "heroH1Line1": "Bâti sur les maths.",
     "heroH1Line2": "Pas sur la confiance.",
-    "pillZk": "Architecture zéro connaissance",
+    "pillZk": "Le fichier reste sur l'appareil",
     "pillBitcoin": "Preuve ancrée dans Bitcoin",
-    "zkLabel": "Architecture zéro connaissance",
-    "zkTitle": "Qu'est-ce que le zéro connaissance ?",
-    "zkTitleRest": "Pourquoi ça compte ?",
+    "zkLabel": "Le fichier reste sur l'appareil",
+    "zkTitle": "Qu'est-ce qui quitte l'appareil ?",
+    "zkTitleRest": "Seule une empreinte.",
     "zkP1": "Dans la notarisation traditionnelle, vous remettez votre document à quelqu'un qui le lit et le tamponne. Vous faites confiance à cette personne — et à chaque système qu'elle utilise.",
     "zkP2Before": "Avec Satohash, nous utilisons une technique mathématique appelée",
     "zkP2Strong": "empreinte cryptographique",
     "zkP2After": ". Votre document est converti en une empreinte unique de 64 caractères (SHA-256). Nous ne voyons, ne stockons ni ne transmettons jamais le document. Seule l'empreinte est envoyée à Bitcoin.",
-    "zkP3Before": "C'est ce qu'on appelle une",
-    "zkP3Strong": "architecture zéro connaissance",
-    "zkP3After": " : nous pouvons prouver que votre document existait à un instant donné sans jamais savoir ce qu'il contient.",
+    "zkP3Before": "C'est toute la promesse :",
+    "zkP3Strong": "le fichier reste",
+    "zkP3After": ". Nous pouvons prouver qu'un fichier existait à un instant donné sans jamais recevoir le fichier.",
     "zkExampleLabel": "Exemple d'empreinte SHA-256",
     "zkExampleCaption": "Cette chaîne de 64 caractères est tout ce que nous recevons. Le document lui-même ne quitte jamais votre appareil.",
     "zkFlowLabel": "Le flux",
@@ -2036,7 +2036,7 @@
   "watchPage": {
     "fullTitle": "Version longue",
     "teaserTitle": "Teaser",
-    "fullAria": "Explication Satohash de 80 secondes avec voix off",
+    "fullAria": "Explication Satohash de 70 secondes avec voix off",
     "teaserAria": "Explication Satohash de 10 secondes avec voix off",
     "kicker": "~{{seconds}}s · Kimi",
     "titleBefore": "Ancrez-le sur",

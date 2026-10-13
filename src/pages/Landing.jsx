@@ -32,7 +32,7 @@ import TipButton from '../components/marketing/TipButton'
 import { PUBLIC_PROOF, PUBLIC_PROOF_PATH } from '../config/publicProof'
 
 const HERO_VIDEO =
-  'https://videos.giveabit.io/media/video/satohash-explainer-wise.mp4?v=kimi-wise-20261012'
+  'https://videos.giveabit.io/media/video/satohash-explainer-wise-70.mp4?v=kimi-wise-70-20261013'
 const HERO_POSTER = '/og/watch.jpg'
 const HERO_VIDEO_LABEL =
   'Satohash explainer: file never leaves the device, Bitcoin keeps the receipt'
@@ -560,7 +560,7 @@ export default function Landing() {
                           background: 'color-mix(in srgb, #05070a 70%, transparent)'
                         }}
                       >
-                        84s
+                        70s
                       </span>
                       <span className="hidden text-right text-[10px] font-semibold tracking-wide text-white/80 sm:block">
                         File never leaves the device
@@ -585,7 +585,7 @@ export default function Landing() {
               className="mt-3 text-xs font-medium tracking-wide sm:text-sm"
               style={{ color: 'var(--text-muted)' }}
             >
-              84 seconds · file never leaves the device
+              70 seconds · file never leaves the device
             </p>
           </motion.div>
 

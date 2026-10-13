@@ -12,7 +12,7 @@ Public status snapshot for Satohash. Agent session logs stay in the repo (`docs/
 | `/stamp` · `/stamp/done` | Free stamp loop. Sticky CTA, camera/gallery, share + QR, proof ZIP. |
 | `/verify` | File, hash, or `.ots`. Pending vs Bitcoin-confirmed. |
 | `/templates` | Category chips, search, demo editor. |
-| `/watch` | ~84s Kimi/Pippa cut (VO + dance bed); 10s teaser toggle. |
+| `/watch` | ~70s Kimi cut (young British voice, quiet bed); 10s teaser toggle. |
 | `/government` | Solutions + Motopass concept. |
 | `/network` | Live calendars / bitcoin / stamps dashboard. |
 | `/docs` | This documentation set. |

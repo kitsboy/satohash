@@ -17,7 +17,7 @@ You have a file you may need to prove later. Satohash makes a fingerprint of it 
 
 Phone cameras cannot read `.ots` files. Proof cards encode **`https://satohash.io/p/{hash}`** as a QR (PDFs and email too) — scanning it opens the zero-JS receipt. **Pending** means calendars have the hash; **Confirmed** means a Bitcoin block has sealed it (~60 minutes). They are not the same.
 
-**API:** [https://api.satohash.io](https://api.satohash.io) · **Watch:** [satohash.io/watch](https://satohash.io/watch) (~84s)
+**API:** [https://api.satohash.io](https://api.satohash.io) · **Watch:** [satohash.io/watch](https://satohash.io/watch) (~70s)
 
 > **Agents:** start at **[AGENTS.md](AGENTS.md)** · status **[.ai_docs/current-status.md](.ai_docs/current-status.md)** (next-LLM steps) · handoff **[docs/handoff-log.md](docs/handoff-log.md)**.
 
@@ -38,7 +38,7 @@ Today Satohash proves **when** a file existed, not **who** made it. Confirmation
 
 | Resource | Path |
 |----------|------|
-| **Explainer (~84s)** | [/watch](https://satohash.io/watch) · media `public/media/video/` |
+| **Explainer (~70s)** | [/watch](https://satohash.io/watch) · media `public/media/video/` |
 | **Exec summary (UI)** | [/docs/executive-summary](https://satohash.io/docs/executive-summary) |
 | **Live pitch deck** | [/pitch](https://satohash.io/pitch) |
 | Executive summary (md) | [docs/marketing/EXECUTIVE-SUMMARY.md](docs/marketing/EXECUTIVE-SUMMARY.md) |

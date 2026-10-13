@@ -1,3 +1,15 @@
+## 2026-10-13 (Grok M3 — 70-second film, security and trust say the file stays)
+
+The long explainer is about 70 seconds. Same spoken words, a little faster, same young British voice (Kokoro Isabella, not Pippa), same quiet bed. Pictures now show a file becoming fingerprint `515b2a39`, that fingerprint inside one Bitcoin block, and a receipt card for block **969,627**. No filename on the card. Kimi appears two more times in a simple semi-formal outfit. The on-screen line is “Waiting is the strength.”
+
+Player: `https://videos.giveabit.io/media/video/satohash-explainer-wise-70.mp4?v=kimi-wise-70-20261013` — HTTP 200, `video/mp4`, 7,467,471 bytes, immutable. The old 83.5s file stays at `satohash-explainer-wise.mp4` and was not replaced. The 10s teaser is unchanged.
+
+Security and trust pages, in all 7 languages, say the file stays and only a fingerprint goes out. The dashboard Lightning row says **NOT ON** (no status light). Paywall stays off. No `/api/*` change. No API rebuild.
+
+**Kimi:** if `6c8ae2e` is still only on THOR, do not push it. Keep `REQUIRE_LIGHTNING=false`. Do not change `/api/*`.
+
+---
+
 ## 2026-10-13 (Grok M3 — plain privacy words, paid upsell hidden)
 
 FAQ, privacy, government, and the homepage share card now say the file stays and only a fingerprint goes out. The word zero-knowledge is gone from those surfaces. The dashboard no longer offers Upgrade to Pro or a five-stamp limit while stamps are free (`PAID_UPSELL` is false). Paywall stays off. No `/api/*` change.

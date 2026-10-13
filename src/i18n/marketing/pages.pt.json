@@ -431,11 +431,11 @@
     "hero": {
       "title": "Segurança",
       "titleHighlight": "no Satohash",
-      "subtitle": "Arquitetura de conhecimento zero, hashing no cliente, código open source. Seus documentos nunca saem do dispositivo."
+      "subtitle": "O ficheiro fica no dispositivo. Só sai uma impressão digital SHA-256. O código está aberto para qualquer pessoa ler."
     },
     "sections": {
       "zeroKnowledge": {
-        "title": "Arquitetura de conhecimento zero",
+        "title": "O ficheiro fica no dispositivo",
         "body": "Seus documentos são hasheados inteiramente no navegador usando a Web Crypto API. Apenas a impressão digital SHA-256 — uma string hexadecimal de 64 caracteres — é transmitida. Nem o Satohash nem terceiros veem o conteúdo original do arquivo.",
         "items": [
           "Hashing SHA-256 no cliente via Web Crypto API",
@@ -1512,7 +1512,7 @@
   "trustPage": {
     "backSecurity": "← Visão de segurança",
     "heroTitle": "Centro de Confiança",
-    "heroSubtitle": "Arquitetura zero-conhecimento e compatibilidade legal global.",
+    "heroSubtitle": "O ficheiro fica no dispositivo. Só sai uma impressão digital. Código aberto, e provas que qualquer pessoa pode verificar.",
     "complianceTitle": "Marco legal",
     "securityLink": "Segurança em detalhe →",
     "procurementTitle": "Aquisições",
@@ -1525,18 +1525,18 @@
     "lastReviewed": "Última revisão: 16 de agosto de 2026",
     "heroH1Line1": "Construído sobre matemática.",
     "heroH1Line2": "Não sobre confiança.",
-    "pillZk": "Arquitetura de conhecimento zero",
+    "pillZk": "O ficheiro fica no dispositivo",
     "pillBitcoin": "Prova ancorada no Bitcoin",
-    "zkLabel": "Arquitetura de conhecimento zero",
-    "zkTitle": "O que é conhecimento zero?",
-    "zkTitleRest": "Por que isso importa?",
+    "zkLabel": "O ficheiro fica no dispositivo",
+    "zkTitle": "O que sai do dispositivo?",
+    "zkTitleRest": "Só uma impressão digital.",
     "zkP1": "Na notarização tradicional, você entrega o documento a alguém que o lê e o carimba. Você confia nessa pessoa — e em cada sistema que ela usa.",
     "zkP2Before": "Com o Satohash usamos uma técnica matemática chamada",
     "zkP2Strong": "hash criptográfico",
     "zkP2After": ". Seu documento vira uma impressão única de 64 caracteres (SHA-256). Nunca vemos, armazenamos ou transmitimos o documento. Só a impressão é enviada ao Bitcoin.",
-    "zkP3Before": "Isso se chama",
-    "zkP3Strong": "arquitetura de conhecimento zero",
-    "zkP3After": ": podemos provar que seu documento existiu num momento específico sem nunca saber o que há nele.",
+    "zkP3Before": "Essa é a promessa inteira:",
+    "zkP3Strong": "o ficheiro fica",
+    "zkP3After": ". Podemos provar que um ficheiro existiu num momento específico sem nunca receber o ficheiro.",
     "zkExampleLabel": "Exemplo de impressão SHA-256",
     "zkExampleCaption": "Esta cadeia de 64 caracteres é tudo o que recebemos. O documento em si nunca sai do seu dispositivo.",
     "zkFlowLabel": "Como flui",
@@ -2036,7 +2036,7 @@
   "watchPage": {
     "fullTitle": "Corte completo",
     "teaserTitle": "Teaser",
-    "fullAria": "Explicação Satohash de 80 segundos com voz",
+    "fullAria": "Explicação Satohash de 70 segundos com voz",
     "teaserAria": "Explicação Satohash de 10 segundos com voz",
     "kicker": "~{{seconds}}s · Kimi",
     "titleBefore": "Sele no",

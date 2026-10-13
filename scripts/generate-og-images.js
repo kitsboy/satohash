@@ -84,7 +84,7 @@ const SECTIONS = [
     slug: 'watch',
     kicker: 'Explainer',
     title: 'Watch: how Satohash proves a file existed',
-    tagline: '~84 second explainer \u2014 Bitcoin-anchored proof of existence',
+    tagline: '~70 second explainer \u2014 Bitcoin-anchored proof of existence',
   },
   {
     slug: 'pitch',
@@ -151,7 +151,9 @@ async function main() {
     })
   }
 
+  const only = process.argv[2]
   for (const s of SECTIONS) {
+    if (only && s.slug !== only) continue
     await page.setContent(frame(s), { waitUntil: 'load' })
     // Give WebKit/Blink a beat to paint text before capture
     await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => setTimeout(r, 50))))

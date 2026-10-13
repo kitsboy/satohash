@@ -28,7 +28,7 @@ const SITE = 'https://satohash.io'
 export const DEFAULT_OG_IMAGE = `${SITE}/og/home.jpg`
 export const DEFAULT_OG_IMAGE_PNG = `${SITE}/og/home.png`
 export const WATCH_VIDEO_URL =
-  'https://videos.giveabit.io/media/video/satohash-explainer-wise.mp4?v=kimi-wise-20261012'
+  'https://videos.giveabit.io/media/video/satohash-explainer-wise-70.mp4?v=kimi-wise-70-20261013'
 export const WATCH_PLAYER_URL = `${SITE}/watch-player.html`
 
 /** Per-page OG image slug under /og. JPEG for landing/stamp/verify/faq/pricing/watch/pitch/network/donate/templates/howSatohashWorks/supportAndGuidance (iMessage). */
@@ -241,38 +241,39 @@ export const pageMeta = {
   },
   security: {
     en: {
-      title: 'Security — Zero-Knowledge Bitcoin Proofs',
+      title: 'Security — The File Stays on the Device',
       description:
-        'How Satohash protects your documents: client-side hashing, OpenTimestamps, Nostr identity, and institutional-grade security.'
+        'How Satohash protects documents: the file stays on the device, only a SHA-256 fingerprint goes out, and Bitcoin keeps the receipt.'
     },
     es: {
-      title: 'Seguridad — Pruebas Bitcoin Zero-Knowledge',
+      title: 'Seguridad — El archivo se queda en el dispositivo',
       description:
-        'Cómo Satohash protege sus documentos: hash local, OpenTimestamps, identidad Nostr y seguridad institucional.'
+        'Cómo Satohash protege los documentos: el archivo se queda en el dispositivo, solo sale una huella SHA-256, y Bitcoin guarda el recibo.'
     },
     fr: {
-      title: 'Sécurité — Preuves Bitcoin Zéro Connaissance',
+      title: "Sécurité — Le fichier reste sur l'appareil",
       description:
-        'Comment Satohash protège vos documents : hachage local, OpenTimestamps, identité Nostr et sécurité institutionnelle.'
+        "Comment Satohash protège les documents : le fichier reste sur l'appareil, seule une empreinte SHA-256 part, et Bitcoin garde le reçu."
     },
     de: {
-      title: 'Sicherheit — Zero-Knowledge Bitcoin-Beweise',
+      title: 'Sicherheit — Die Datei bleibt auf dem Gerät',
       description:
-        'Wie Satohash Ihre Dokumente schützt: clientseitiges Hashing, OpenTimestamps, Nostr-Identität und institutionelle Sicherheit.'
+        'Wie Satohash Dokumente schützt: Die Datei bleibt auf dem Gerät, nur ein SHA-256-Fingerabdruck geht weiter, und Bitcoin bewahrt den Beleg.'
     },
     pt: {
-      title: 'Segurança — Provas Bitcoin Zero-Conhecimento',
+      title: 'Segurança — O ficheiro fica no dispositivo',
       description:
-        'Como o Satohash protege seus documentos: hash local, OpenTimestamps, identidade Nostr e segurança institucional.'
+        'Como o Satohash protege documentos: o ficheiro fica no dispositivo, só sai uma impressão digital SHA-256, e o Bitcoin guarda o recibo.'
     },
     sw: {
-      title: 'Usalama — Ushahidi wa Bitcoin wa Ujuzi wa Sifuri',
+      title: 'Usalama — Faili linabaki kwenye kifaa',
       description:
-        'Jinsi Satohash inavyolinda hati zako: hashing ya kifaa, OpenTimestamps, utambulisho wa Nostr na usalama wa taasisi.'
+        'Jinsi Satohash inavyolinda hati: faili linabaki kwenye kifaa, alama ya SHA-256 pekee ndiyo inayoendelea, na Bitcoin huhifadhi risiti.'
     },
     zh: {
-      title: '安全 — 零知识比特币证明',
-      description: 'Satohash 如何保护您的文档：客户端哈希、OpenTimestamps、Nostr 身份和企业级安全。'
+      title: '安全 — 文件留在设备上',
+      description:
+        'Satohash 如何保护文档：文件留在设备上，只有 SHA-256 指纹会送出，比特币保存回执。'
     }
   },
   guides: {
@@ -608,37 +609,37 @@ export const pageMeta = {
     en: {
       title: 'Trust Center — Security, Privacy & Compliance',
       description:
-        'Satohash trust center: zero-knowledge guarantees, legal frameworks (eIDAS, ESIGN), open-source auditability, and data handling.'
+        'Satohash trust center: the file stays on the device, only a fingerprint goes out, legal frameworks (eIDAS, ESIGN), and open-source auditability.'
     },
     es: {
       title: 'Centro de Confianza — Seguridad, Privacidad y Cumplimiento',
       description:
-        'Centro de confianza Satohash: garantías de conocimiento cero, marcos legales (eIDAS, ESIGN), código abierto auditable y manejo de datos.'
+        'Centro de confianza Satohash: el archivo se queda en el dispositivo, solo sale una huella, marcos legales (eIDAS, ESIGN) y código abierto auditable.'
     },
     fr: {
       title: 'Centre de Confiance — Sécurité et Conformité',
       description:
-        'Centre de confiance Satohash : garanties zéro connaissance, cadres juridiques (eIDAS, ESIGN), audit open source et traitement des données.'
+        "Centre de confiance Satohash : le fichier reste sur l'appareil, seule une empreinte part, cadres juridiques (eIDAS, ESIGN) et audit open source."
     },
     de: {
       title: 'Trust Center — Sicherheit, Datenschutz & Compliance',
       description:
-        'Satohash Trust Center: Zero-Knowledge-Garantien, Rechtsrahmen (eIDAS, ESIGN), Open-Source-Auditierbarkeit und Datenverarbeitung.'
+        'Satohash Trust Center: Die Datei bleibt auf dem Gerät, nur ein Fingerabdruck geht weiter, Rechtsrahmen (eIDAS, ESIGN) und Open-Source-Prüfung.'
     },
     pt: {
       title: 'Centro de Confiança — Segurança, Privacidade e Conformidade',
       description:
-        'Centro de confiança Satohash: garantias zero-conhecimento, frameworks legais (eIDAS, ESIGN), código aberto auditável e tratamento de dados.'
+        'Centro de confiança Satohash: o ficheiro fica no dispositivo, só sai uma impressão digital, frameworks legais (eIDAS, ESIGN) e código aberto auditável.'
     },
     sw: {
       title: 'Kituo cha Uaminifu — Usalama, Faragha na Uzingatiaji',
       description:
-        'Kituo cha uaminifu cha Satohash: dhamana za ujuzi wa sifuri, mifumo ya kisheria (eIDAS, ESIGN), ukaguzi wa chanzo huria na ushughulikiaji wa data.'
+        'Kituo cha uaminifu cha Satohash: faili linabaki kwenye kifaa, alama pekee ndiyo inayoendelea, mifumo ya kisheria (eIDAS, ESIGN) na ukaguzi wa chanzo huria.'
     },
     zh: {
       title: '信任中心 — 安全、隐私与合规',
       description:
-        'Satohash 信任中心：零知识保证、法律框架（eIDAS、ESIGN）、开源可审计性和数据处理。'
+        'Satohash 信任中心：文件留在设备上，只有指纹会送出，法律框架（eIDAS、ESIGN），以及开源可审计性。'
     }
   },
   access: {
@@ -1564,32 +1565,32 @@ export const pageMeta = {
     en: {
       title: 'Watch — Satohash Explainer',
       description:
-        '80-second Kimi explainer: hash a file on your device, timestamp it with OpenTimestamps, prove it on Bitcoin. 10-second teaser also on the page.'
+        '70-second Kimi explainer: hash a file on your device, timestamp it with OpenTimestamps, prove it on Bitcoin. 10-second teaser also on the page.'
     },
     es: {
       title: 'Ver — Explicador Satohash',
       description:
-        'Explicador de 80 segundos: hashea en tu dispositivo y ancla la prueba en Bitcoin.'
+        'Explicador de 70 segundos: hashea en tu dispositivo y ancla la prueba en Bitcoin.'
     },
     fr: {
       title: 'Regarder — Explainer Satohash',
-      description: 'Explainer de 80 secondes : hachez sur l’appareil, ancrez sur Bitcoin.'
+      description: 'Explainer de 70 secondes : hachez sur l’appareil, ancrez sur Bitcoin.'
     },
     de: {
       title: 'Ansehen — Satohash-Erklärer',
-      description: '80-Sekunden-Erklärer: lokal hashen, auf Bitcoin verankern.'
+      description: '70-Sekunden-Erklärer: lokal hashen, auf Bitcoin verankern.'
     },
     pt: {
       title: 'Assistir — Explainer Satohash',
-      description: 'Explainer de 80 segundos: hash no dispositivo, âncora no Bitcoin.'
+      description: 'Explainer de 70 segundos: hash no dispositivo, âncora no Bitcoin.'
     },
     sw: {
       title: 'Tazama — Maelezo ya Satohash',
-      description: 'Maelezo ya sekunde 80: hash kwenye kifaa, funga kwenye Bitcoin.'
+      description: 'Maelezo ya sekunde 70: hash kwenye kifaa, funga kwenye Bitcoin.'
     },
     zh: {
       title: '观看 — Satohash 讲解',
-      description: '八十秒讲解：在设备上哈希，锚定到比特币。'
+      description: '七十秒讲解：在设备上哈希，锚定到比特币。'
     }
   },
   status: {

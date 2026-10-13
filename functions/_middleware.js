@@ -22,13 +22,13 @@ const PLAYER_HTML = `<!doctype html>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="robots" content="noindex,nofollow" />
-<title>Satohash explainer · 84 seconds</title>
+<title>Satohash explainer · 70 seconds</title>
 <style>html,body{margin:0;height:100%;background:#0e1c2a;color:#e8f4fb;font-family:"Plus Jakarta Sans",system-ui,sans-serif}.player{display:flex;flex-direction:column;height:100%}h1{margin:0;flex:0 0 auto;padding:.45rem .75rem;font-size:13px;font-weight:700;letter-spacing:.04em}video{display:block;width:100%;flex:1 1 auto;min-height:0;object-fit:contain;background:#0e1c2a}</style>
 </head>
 <body>
 <div class="player">
-<h1>Satohash explainer · 84 seconds</h1>
-<video controls playsinline preload="metadata" poster="https://satohash.io/og/watch.jpg" src="https://videos.giveabit.io/media/video/satohash-explainer-wise.mp4?v=kimi-wise-20261012" aria-label="Satohash explainer · 84 seconds">
+<h1>Satohash explainer · 70 seconds</h1>
+<video controls playsinline preload="metadata" poster="https://satohash.io/og/watch.jpg" src="https://videos.giveabit.io/media/video/satohash-explainer-wise-70.mp4?v=kimi-wise-70-20261013" aria-label="Satohash explainer · 70 seconds">
 <a href="https://satohash.io/watch">Watch the Satohash explainer</a>
 </video>
 </div>
