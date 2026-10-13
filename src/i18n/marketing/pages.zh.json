@@ -387,7 +387,7 @@
       },
       "bolt12": {
         "term": "BOLT-12",
-        "def": "Lightning Network 的可重复使用、一键式报价提案。支持定期付款和按量访问，无需反复生成发票。"
+        "def": "Lightning Network 的可重复使用、一键式报价提案。它可以用于重复付款，而不必每次都开一张新发票。今天盖章免费。Lightning 计费未开启。"
       },
       "lightning": {
         "term": "Lightning Network",

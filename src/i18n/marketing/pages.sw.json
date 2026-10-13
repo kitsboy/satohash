@@ -387,7 +387,7 @@
       },
       "bolt12": {
         "term": "BOLT-12",
-        "def": "Pendekezo la Lightning Network kwa ofa zinazoweza kutumika tena, za kubofya mara moja. Inawezesha malipo ya mara kwa mara na ufikiaji wa kipimo bila kuzalisha ankara tena na tena."
+        "def": "Pendekezo la Lightning Network kwa ofa zinazoweza kutumika tena kwa kubofya mara moja. Linaweza kutumika kwa malipo yanayorudiwa bila ankara mpya kila wakati. Migongo ni bure leo. Malipo ya Lightning yamezimwa."
       },
       "lightning": {
         "term": "Lightning Network",

@@ -163,7 +163,38 @@ export default {
     privacy: 'Camada de privacidade',
     onDevice: 'No dispositivo',
     privacyTip:
-      'O ficheiro fica no seu dispositivo. Recebemos apenas uma impressão digital, por isso o documento em si não aparece na verificação.'
+      'O ficheiro fica no seu dispositivo. Recebemos apenas uma impressão digital, por isso o documento em si não aparece na verificação.',
+    vaultTitle: 'Dark Vault',
+    vaultTip:
+      'Quando está ativo, o ficheiro é cifrado com AES-256-GCM no navegador antes de qualquer processamento. Só o utilizador tem a chave. A Satohash não consegue ler o documento — só vemos a impressão cifrada.',
+    vaultSub: 'Cifrado neste dispositivo',
+    vaultAes: 'Cifrado com AES-256-GCM no dispositivo',
+    vaultKey: 'A sua chave não sai do navegador',
+    vaultHash: 'Impressão cifrada ancorada no Bitcoin',
+    vaultBody:
+      'Ligue o Dark Vault com o interruptor na zona de largada acima. O ficheiro fica privado. Só a prova de tempo é pública.',
+    vaultPhase: 'Versão inicial — o interruptor está na zona acima',
+    quickAccess: 'Acesso rápido',
+    stampDoc: 'Carimbar um documento',
+    stampDocSub: 'Impressão e âncora de qualquer ficheiro',
+    verifyProof: 'Verificar uma prova',
+    verifyProofSub: 'Conferir um carimbo .ots',
+    contracts: 'Contratos',
+    contractsSub: 'Assinatura entre várias partes',
+    devApi: 'API para programadores',
+    devApiSub: 'Chaves, webhooks e endpoints',
+    network: 'Estado da rede',
+    networkTip:
+      'Indicadores ao vivo dos nós que verificam e copiam a sua prova por conta própria. Verde significa que tudo funciona normalmente.',
+    legal: 'Conformidade legal',
+    eidas: 'Lei europeia da assinatura eletrónica',
+    esign: 'Lei federal dos EUA sobre assinatura eletrónica',
+    ueta: 'Lei estadual uniforme de transações eletrónicas',
+    legalLink: 'Ver o relatório de conformidade',
+    missionTitle: 'A máquina de dar',
+    missionBody:
+      'Cada âncora ajuda a guardar um registo público do que existiu. O Satohash é um protocolo sem fins lucrativos. O dinheiro que entra mantém a rede aberta de testemunhas e alarga o acesso.',
+    missionLink: 'Ler sobre o Satohash'
   },
   settings: {
     pageTitle: 'Definições',

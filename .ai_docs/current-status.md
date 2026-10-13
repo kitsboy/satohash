@@ -1,8 +1,8 @@
 # Current Status — Satohash
 
-**Version:** **5.0.0-ELITE** (Build 429)  
-**Last Updated:** 2026-10-13 (glossary Lightning says stamps are free; dashboard status rows translate)  
-**Frontend:** https://satohash.io · www · CF Pages project **`satohash`** — Grok lane, `assetsDir: 'b'` · executive-summary card is live in `a6bff2d`. This commit’s glossary Lightning line and dashboard status rows deploy when Pages finishes.  
+**Version:** **5.0.0-ELITE** (Build 430)  
+**Last Updated:** 2026-10-13 (dashboard side column translates; glossary BOLT-12 says billing is off)  
+**Frontend:** https://satohash.io · www · CF Pages project **`satohash`** — Grok lane, `assetsDir: 'b'`. Last confirmed product deploy is `0869443` (build 429): glossary Lightning free-stamps line and the three dashboard status rows are live. This commit translates the dashboard side column and adds the same closer to the glossary BOLT-12 entry. It deploys when Pages finishes.  
 **API:** https://api.satohash.io ✅ LIVE. Deep health **ok** at 2026-10-13 00:39 UTC (bitcoind at tip, database, calendars, Nostr). **`gitSha` is `e814a57`**. Paywall off. Counts then: **495** stamps, **493** confirmed, **0** pending. This film batch did not change `server/`. Kimi: if `6c8ae2e` is still only on THOR, do not push it.  
 **Metrics SoT:** `https://api.satohash.io/metrics.json`  
 **HQ:** https://hq.giveabit.io  

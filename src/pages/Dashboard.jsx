@@ -717,29 +717,29 @@ export default function Dashboard() {
                           className="text-sm font-black uppercase"
                           style={{ color: 'var(--text-primary)' }}
                         >
-                          Dark Vault
+                          {t('dashboard', 'vaultTitle')}
                         </h4>
                         <Tooltip
-                          title="Dark Vault"
-                          content="When enabled, your file is encrypted with AES-256-GCM directly in your browser before any processing. Only you hold the key. Not even Satohash can read your document — we only ever see the encrypted hash."
+                          title={t('dashboard', 'vaultTitle')}
+                          content={t('dashboard', 'vaultTip')}
                         />
                       </div>
                       <p
                         className="text-[9px] font-bold tracking-widest uppercase"
                         style={{ color: 'rgba(244,63,94,0.7)' }}
                       >
-                        Encrypted on this device
+                        {t('dashboard', 'vaultSub')}
                       </p>
                     </div>
                   </div>
 
                   <div className="mb-5 space-y-2">
                     {[
-                      { icon: ShieldCheck, text: 'AES-256-GCM encrypted locally', tooltip: null },
-                      { icon: Lock, text: 'Your key never leaves your browser', tooltip: null },
-                      { icon: FileCheck, text: 'Encrypted hash anchored to Bitcoin', tooltip: null }
-                    ].map(({ icon: Icon, text }) => (
-                      <div key={text} className="flex items-center gap-2">
+                      { id: 'aes', icon: ShieldCheck, text: t('dashboard', 'vaultAes') },
+                      { id: 'key', icon: Lock, text: t('dashboard', 'vaultKey') },
+                      { id: 'hash', icon: FileCheck, text: t('dashboard', 'vaultHash') }
+                    ].map(({ id, icon: Icon, text }) => (
+                      <div key={id} className="flex items-center gap-2">
                         <Icon size={11} style={{ color: '#f43f5e', opacity: 0.7 }} />
                         <span className="text-[11px]" style={{ color: 'var(--text-secondary)' }}>
                           {text}
@@ -756,8 +756,7 @@ export default function Dashboard() {
                       color: 'var(--text-secondary)'
                     }}
                   >
-                    Activate Dark Vault mode using the toggle inside the Ingest Protocol drop zone
-                    above. Your document stays private — only the timestamp proof is public.
+                    {t('dashboard', 'vaultBody')}
                   </div>
                 </div>
 
@@ -773,7 +772,7 @@ export default function Dashboard() {
                     className="text-[9px] font-black tracking-widest uppercase"
                     style={{ color: 'rgba(244,63,94,0.6)' }}
                   >
-                    Phase IV Alpha — Toggle in drop zone above
+                    {t('dashboard', 'vaultPhase')}
                   </span>
                 </div>
               </motion.div>
@@ -796,32 +795,36 @@ export default function Dashboard() {
                   className="relative z-10 mb-5 text-lg font-black tracking-tight uppercase italic"
                   style={{ color: 'var(--text-primary)' }}
                 >
-                  Quick <span style={{ color: 'var(--text-secondary)' }}>Access</span>
+                  {t('dashboard', 'quickAccess')}
                 </h3>
                 <div className="relative z-10 space-y-2.5">
                   <Link to="/stamp" className="block w-full">
                     <SideBtn
                       icon={FileCheck}
-                      label="Stamp a Document"
-                      sublabel="Hash & anchor any file"
+                      label={t('dashboard', 'stampDoc')}
+                      sublabel={t('dashboard', 'stampDocSub')}
                       primary
                     />
                   </Link>
                   <Link to="/verify" className="block w-full">
                     <SideBtn
                       icon={ShieldCheck}
-                      label="Verify a Proof"
-                      sublabel="Check a .ots timestamp"
+                      label={t('dashboard', 'verifyProof')}
+                      sublabel={t('dashboard', 'verifyProofSub')}
                     />
                   </Link>
                   <Link to="/contracts" className="block w-full">
-                    <SideBtn icon={FileText} label="Contracts" sublabel="Multi-party signing" />
+                    <SideBtn
+                      icon={FileText}
+                      label={t('dashboard', 'contracts')}
+                      sublabel={t('dashboard', 'contractsSub')}
+                    />
                   </Link>
                   <Link to="/developer" className="block w-full">
                     <SideBtn
                       icon={Cpu}
-                      label="Developer API"
-                      sublabel="Keys, webhooks, endpoints"
+                      label={t('dashboard', 'devApi')}
+                      sublabel={t('dashboard', 'devApiSub')}
                       amber
                     />
                   </Link>
@@ -841,11 +844,11 @@ export default function Dashboard() {
                     className="text-[10px] font-black tracking-[0.3em] uppercase"
                     style={{ color: 'var(--text-muted)' }}
                   >
-                    Network Status
+                    {t('dashboard', 'network')}
                   </h4>
                   <Tooltip
-                    title="Network Status"
-                    content="Live indicators for the Satohash witness mesh — the network of nodes that independently verify and mirror your proof. Green means all systems are operating normally."
+                    title={t('dashboard', 'network')}
+                    content={t('dashboard', 'networkTip')}
                   />
                 </div>
                 <div className="space-y-4">
@@ -886,15 +889,15 @@ export default function Dashboard() {
                   className="mb-3 text-[9px] font-black tracking-widest uppercase"
                   style={{ color: 'var(--accent-success)', opacity: 0.7 }}
                 >
-                  Legal Compliance
+                  {t('dashboard', 'legal')}
                 </p>
                 <div className="grid grid-cols-3 gap-3">
                   {[
-                    { label: 'eIDAS', desc: 'EU electronic signature law' },
-                    { label: 'ESIGN', desc: 'US federal e-sign act' },
-                    { label: 'UETA', desc: 'Uniform state e-transactions' }
-                  ].map(({ label, desc }) => (
-                    <div key={label} className="flex flex-col items-center gap-1 text-center">
+                    { id: 'eidas', label: 'eIDAS', desc: t('dashboard', 'eidas') },
+                    { id: 'esign', label: 'ESIGN', desc: t('dashboard', 'esign') },
+                    { id: 'ueta', label: 'UETA', desc: t('dashboard', 'ueta') }
+                  ].map(({ id, label, desc }) => (
+                    <div key={id} className="flex flex-col items-center gap-1 text-center">
                       <ShieldCheck size={14} style={{ color: 'var(--accent-success)' }} />
                       <span
                         className="text-[9px] font-black uppercase"
@@ -916,7 +919,7 @@ export default function Dashboard() {
                   className="mt-4 flex items-center justify-center gap-1 text-[9px] font-black tracking-widest uppercase transition-opacity hover:opacity-70"
                   style={{ color: 'var(--accent-success)' }}
                 >
-                  View Full Compliance Report <ChevronRight size={10} />
+                  {t('dashboard', 'legalLink')} <ChevronRight size={10} />
                 </Link>
               </motion.div>
 
@@ -940,21 +943,20 @@ export default function Dashboard() {
                   className="mb-2 text-sm font-black uppercase italic"
                   style={{ color: 'var(--text-primary)' }}
                 >
-                  The Giving Machine.
+                  {t('dashboard', 'missionTitle')}
                 </h4>
                 <p
                   className="mb-5 text-xs leading-relaxed"
                   style={{ color: 'var(--text-secondary)' }}
                 >
-                  Every anchor funds global truth preservation. Satohash is a non-profit protocol —
-                  revenue goes to maintaining the open witness mesh and expanding access worldwide.
+                  {t('dashboard', 'missionBody')}
                 </p>
                 <Link
                   to="/about"
                   className="flex items-center gap-2 text-[10px] font-black tracking-widest uppercase transition-all group-hover:gap-3"
                   style={{ color: 'var(--accent-active)' }}
                 >
-                  Read the Whitepaper <ChevronRight size={12} />
+                  {t('dashboard', 'missionLink')} <ChevronRight size={12} />
                 </Link>
               </motion.div>
             </div>

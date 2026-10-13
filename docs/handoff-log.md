@@ -1,3 +1,11 @@
+## 2026-10-13 (Grok M3 — dashboard side column translates; glossary BOLT-12 says billing is off)
+
+The whole dashboard side column now follows the language picker, in all 7 languages: Dark Vault card, Quick Access and its four buttons, Network Status, the legal row, and The Giving Machine. The names Dark Vault, Bitcoin, .ots, AES-256-GCM, API, eIDAS, ESIGN, and UETA stay in English. The drop-zone switch still says Dark Vault in English. The glossary BOLT-12 entry now ends the same way as Lightning: stamps are free today, and Lightning billing is off. The term stays BOLT-12. The comparison table was not changed. Paywall stays off. No `/api/*` change. No API rebuild. Last confirmed live product deploy is `0869443` (build 429). This commit deploys when Pages finishes.
+
+**Kimi:** if `6c8ae2e` is still only on THOR, do not push it. Keep `REQUIRE_LIGHTNING=false`. Do not change `/api/*`.
+
+---
+
 ## 2026-10-13 (Grok M3 — glossary Lightning is free; dashboard status rows translate)
 
 The glossary Lightning entry now says stamps are free today and Lightning billing is off, in all 7 languages. The term stays “Lightning Network.” The dashboard status rows Global Mirroring, Bitcoin Height, and Privacy Layer, plus Nominal and On device, now follow the language picker. Bitcoin stays in English. Paywall stays off. No `/api/*` change. No API rebuild.

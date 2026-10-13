@@ -1,3 +1,9 @@
+## 2026-10-13 — The dashboard side column follows the language. BOLT-12 says billing is off.
+
+Dark Vault, Quick Access, Network Status, the legal row, and The Giving Machine are translated in all 7 languages. Product names stay English. Glossary BOLT-12 now says stamps are free today and Lightning billing is off. The comparison table was not changed. No API rebuild. If `6c8ae2e` is still only on THOR, do not push it. Keep `REQUIRE_LIGHTNING=false`. Do not change `/api/*`. Last confirmed live product deploy is `0869443`. This commit deploys when Pages finishes.
+
+---
+
 ## 2026-10-13 — Glossary Lightning matches free stamps. Dashboard status rows translate.
 
 Glossary Lightning entry, all 7 languages: stamps are free today, Lightning billing is off. Dashboard rows for mirroring, Bitcoin height, and the privacy layer follow the language picker. No API rebuild. If `6c8ae2e` is still only on THOR, do not push it. Keep `REQUIRE_LIGHTNING=false`. Do not change `/api/*`.

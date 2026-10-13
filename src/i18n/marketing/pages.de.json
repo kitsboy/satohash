@@ -387,7 +387,7 @@
       },
       "bolt12": {
         "term": "BOLT-12",
-        "def": "Ein Lightning-Network-Vorschlag für wiederverwendbare One-Click-Angebote. Ermöglicht wiederkehrende Zahlungen und nutzungsbasierten Zugang ohne wiederholte Rechnungserstellung."
+        "def": "Ein Lightning-Network-Vorschlag für wiederverwendbare Angebote mit einem Klick. Damit können Zahlungen wiederholt werden, ohne jedes Mal eine neue Rechnung. Stempel sind heute kostenlos. Die Lightning-Abrechnung ist aus."
       },
       "lightning": {
         "term": "Lightning Network",

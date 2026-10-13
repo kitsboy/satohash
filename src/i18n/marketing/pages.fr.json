@@ -387,7 +387,7 @@
       },
       "bolt12": {
         "term": "BOLT-12",
-        "def": "Proposition Lightning Network pour des offres réutilisables en un clic. Permet les paiements récurrents et l'accès mesuré sans génération répétée de factures."
+        "def": "Proposition Lightning Network pour des offres réutilisables en un clic. Elle peut servir à des paiements répétés sans nouvelle facture à chaque fois. Les horodatages sont gratuits aujourd’hui. La facturation Lightning est éteinte."
       },
       "lightning": {
         "term": "Lightning Network",

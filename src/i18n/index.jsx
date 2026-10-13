@@ -180,7 +180,38 @@ export const translations = {
       privacy: 'Privacy Layer',
       onDevice: 'On device',
       privacyTip:
-        'The file stays on your device. We receive only a fingerprint, so the document itself is never shown during verification.'
+        'The file stays on your device. We receive only a fingerprint, so the document itself is never shown during verification.',
+      vaultTitle: 'Dark Vault',
+      vaultTip:
+        'When enabled, your file is encrypted with AES-256-GCM directly in your browser before any processing. Only you hold the key. Not even Satohash can read your document — we only ever see the encrypted hash.',
+      vaultSub: 'Encrypted on this device',
+      vaultAes: 'AES-256-GCM encrypted locally',
+      vaultKey: 'Your key never leaves your browser',
+      vaultHash: 'Encrypted hash anchored to Bitcoin',
+      vaultBody:
+        'Turn on Dark Vault with the switch in the drop zone above. The file stays private. Only the timestamp proof is public.',
+      vaultPhase: 'Early version — the switch is in the drop zone above',
+      quickAccess: 'Quick Access',
+      stampDoc: 'Stamp a Document',
+      stampDocSub: 'Hash and anchor any file',
+      verifyProof: 'Verify a Proof',
+      verifyProofSub: 'Check a .ots timestamp',
+      contracts: 'Contracts',
+      contractsSub: 'Multi-party signing',
+      devApi: 'Developer API',
+      devApiSub: 'Keys, webhooks, endpoints',
+      network: 'Network Status',
+      networkTip:
+        'Live indicators for the nodes that check and copy your proof on their own. Green means things are working normally.',
+      legal: 'Legal Compliance',
+      eidas: 'EU electronic signature law',
+      esign: 'US federal e-sign act',
+      ueta: 'Uniform state e-transactions',
+      legalLink: 'View the compliance report',
+      missionTitle: 'The Giving Machine',
+      missionBody:
+        'Each anchor supports keeping a public record of what existed. Satohash is a non-profit protocol. Money that comes in goes to running the open witness network and widening access.',
+      missionLink: 'Read about Satohash'
     },
     settings: {
       pageTitle: 'Settings',
@@ -377,7 +408,38 @@ export const translations = {
       privacy: 'Capa de privacidad',
       onDevice: 'En el dispositivo',
       privacyTip:
-        'El archivo se queda en tu dispositivo. Solo recibimos una huella, así que el documento no se muestra al verificar.'
+        'El archivo se queda en tu dispositivo. Solo recibimos una huella, así que el documento no se muestra al verificar.',
+      vaultTitle: 'Dark Vault',
+      vaultTip:
+        'Si está activa, el archivo se cifra con AES-256-GCM en tu navegador antes de cualquier proceso. Solo tú tienes la clave. Satohash no puede leer el documento: solo vemos la huella cifrada.',
+      vaultSub: 'Cifrada en este dispositivo',
+      vaultAes: 'Cifrado AES-256-GCM en el dispositivo',
+      vaultKey: 'Tu clave no sale del navegador',
+      vaultHash: 'La huella cifrada se ancla a Bitcoin',
+      vaultBody:
+        'Activa Dark Vault con el interruptor de la zona de arriba. El archivo se queda en privado. Solo la prueba de tiempo es pública.',
+      vaultPhase: 'Versión temprana — el interruptor está en la zona de arriba',
+      quickAccess: 'Acceso rápido',
+      stampDoc: 'Sellar un documento',
+      stampDocSub: 'Huella y ancla de cualquier archivo',
+      verifyProof: 'Verificar una prueba',
+      verifyProofSub: 'Revisar un sello .ots',
+      contracts: 'Contratos',
+      contractsSub: 'Firma entre varias partes',
+      devApi: 'API para desarrolladores',
+      devApiSub: 'Claves, webhooks y endpoints',
+      network: 'Estado de la red',
+      networkTip:
+        'Indicadores en vivo de los nodos que comprueban y copian tu prueba por su cuenta. Verde significa que todo funciona con normalidad.',
+      legal: 'Cumplimiento legal',
+      eidas: 'Ley de firma electrónica de la UE',
+      esign: 'Ley federal de firma electrónica de EE. UU.',
+      ueta: 'Ley estatal uniforme de transacciones electrónicas',
+      legalLink: 'Ver el informe de cumplimiento',
+      missionTitle: 'La máquina de dar',
+      missionBody:
+        'Cada ancla ayuda a guardar un registro público de lo que existió. Satohash es un protocolo sin ánimo de lucro. El dinero que entra mantiene la red abierta de testigos y amplía el acceso.',
+      missionLink: 'Leer sobre Satohash'
     },
     settings: {
       pageTitle: 'Ajustes',
@@ -572,7 +634,38 @@ export const translations = {
       privacy: 'Couche de confidentialité',
       onDevice: "Sur l'appareil",
       privacyTip:
-        "Le fichier reste sur votre appareil. Nous ne recevons qu'une empreinte, donc le document lui-même n'est pas montré lors de la vérification."
+        "Le fichier reste sur votre appareil. Nous ne recevons qu'une empreinte, donc le document lui-même n'est pas montré lors de la vérification.",
+      vaultTitle: 'Dark Vault',
+      vaultTip:
+        "Quand elle est active, le fichier est chiffré en AES-256-GCM dans votre navigateur avant tout traitement. Vous seul avez la clé. Satohash ne peut pas lire le document — nous ne voyons que l'empreinte chiffrée.",
+      vaultSub: 'Chiffrée sur cet appareil',
+      vaultAes: "Chiffrement AES-256-GCM sur l'appareil",
+      vaultKey: 'Votre clé ne quitte pas le navigateur',
+      vaultHash: "L'empreinte chiffrée est ancrée à Bitcoin",
+      vaultBody:
+        "Activez Dark Vault avec l'interrupteur dans la zone de dépôt au-dessus. Le fichier reste privé. Seule la preuve d'horodatage est publique.",
+      vaultPhase: "Version précoce — l'interrupteur est dans la zone au-dessus",
+      quickAccess: 'Accès rapide',
+      stampDoc: 'Horodater un document',
+      stampDocSub: "Empreinte et ancrage de n'importe quel fichier",
+      verifyProof: 'Vérifier une preuve',
+      verifyProofSub: 'Contrôler un horodatage .ots',
+      contracts: 'Contrats',
+      contractsSub: 'Signature à plusieurs',
+      devApi: 'API développeur',
+      devApiSub: "Clés, webhooks et points d'accès",
+      network: 'État du réseau',
+      networkTip:
+        'Indicateurs en direct des nœuds qui vérifient et copient votre preuve chacun de leur côté. Le vert signifie que tout fonctionne normalement.',
+      legal: 'Conformité juridique',
+      eidas: 'Droit européen de la signature électronique',
+      esign: 'Loi fédérale américaine sur la signature électronique',
+      ueta: "Loi d'État uniforme sur les transactions électroniques",
+      legalLink: 'Voir le rapport de conformité',
+      missionTitle: 'La machine du don',
+      missionBody:
+        "Chaque ancrage aide à garder une trace publique de ce qui a existé. Satohash est un protocole à but non lucratif. L'argent reçu fait tourner le réseau ouvert de témoins et élargit l'accès.",
+      missionLink: 'Lire à propos de Satohash'
     },
     settings: {
       pageTitle: 'Paramètres',
@@ -761,7 +854,36 @@ export const translations = {
       height: 'Bitcoin 高度',
       privacy: '隐私层',
       onDevice: '在设备上',
-      privacyTip: '文件留在你的设备上。我们只收到指纹，所以验证时不会显示文件本身。'
+      privacyTip: '文件留在你的设备上。我们只收到指纹，所以验证时不会显示文件本身。',
+      vaultTitle: 'Dark Vault',
+      vaultTip:
+        '打开后，文件会在任何处理之前于浏览器内用 AES-256-GCM 加密。只有你持有密钥。Satohash 读不到文件，我们只看到加密指纹。',
+      vaultSub: '在此设备上加密',
+      vaultAes: '在设备上用 AES-256-GCM 加密',
+      vaultKey: '你的密钥不离开浏览器',
+      vaultHash: '加密指纹锚定到 Bitcoin',
+      vaultBody: '用上方投放区里的开关打开 Dark Vault。文件保持私密。只有时间证明是公开的。',
+      vaultPhase: '早期版本 — 开关在上方投放区',
+      quickAccess: '快速入口',
+      stampDoc: '给文件盖章',
+      stampDocSub: '为任意文件做指纹并锚定',
+      verifyProof: '核验一份证明',
+      verifyProofSub: '检查 .ots 时间戳',
+      contracts: '合同',
+      contractsSub: '多方签署',
+      devApi: '开发者 API',
+      devApiSub: '密钥、webhook 和接口',
+      network: '网络状态',
+      networkTip: '这些节点各自核验并复制你的证明。绿色表示一切正常。',
+      legal: '法律符合性',
+      eidas: '欧盟电子签名法',
+      esign: '美国联邦电子签名法',
+      ueta: '美国各州统一电子交易法',
+      legalLink: '查看合规报告',
+      missionTitle: '给予机器',
+      missionBody:
+        '每一次锚定都帮助留下一份公开的存在记录。Satohash 是非营利协议。收到的钱用于维持开放的见证网络，并让更多人用上它。',
+      missionLink: '阅读关于 Satohash'
     },
     settings: {
       pageTitle: '设置',

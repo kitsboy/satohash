@@ -387,7 +387,7 @@
       },
       "bolt12": {
         "term": "BOLT-12",
-        "def": "Propuesta de Lightning Network para ofertas reutilizables de un clic. Permite pagos recurrentes y acceso medido sin generar facturas repetidas."
+        "def": "Propuesta de Lightning Network para ofertas reutilizables de un clic. Puede servir para pagos repetidos sin una factura nueva cada vez. Los sellos son gratis hoy. La facturación Lightning está apagada."
       },
       "lightning": {
         "term": "Lightning Network",

@@ -168,7 +168,38 @@ export default {
     privacy: 'Datenschutzebene',
     onDevice: 'Auf dem Gerät',
     privacyTip:
-      'Die Datei bleibt auf Ihrem Gerät. Wir erhalten nur einen Fingerabdruck, daher wird das Dokument bei der Prüfung nicht gezeigt.'
+      'Die Datei bleibt auf Ihrem Gerät. Wir erhalten nur einen Fingerabdruck, daher wird das Dokument bei der Prüfung nicht gezeigt.',
+    vaultTitle: 'Dark Vault',
+    vaultTip:
+      'Wenn er an ist, wird die Datei mit AES-256-GCM direkt im Browser verschlüsselt, bevor etwas weitergeht. Nur Sie haben den Schlüssel. Satohash kann das Dokument nicht lesen — wir sehen nur den verschlüsselten Fingerabdruck.',
+    vaultSub: 'Verschlüsselt auf diesem Gerät',
+    vaultAes: 'Lokal mit AES-256-GCM verschlüsselt',
+    vaultKey: 'Ihr Schlüssel verlässt den Browser nicht',
+    vaultHash: 'Verschlüsselter Fingerabdruck, an Bitcoin verankert',
+    vaultBody:
+      'Schalten Sie Dark Vault mit dem Schalter in der Ablegezone oben ein. Die Datei bleibt privat. Nur der Zeitstempel-Nachweis ist öffentlich.',
+    vaultPhase: 'Frühe Version — der Schalter ist in der Zone oben',
+    quickAccess: 'Schnellzugriff',
+    stampDoc: 'Dokument stempeln',
+    stampDocSub: 'Fingerabdruck und Anker für jede Datei',
+    verifyProof: 'Nachweis prüfen',
+    verifyProofSub: 'Einen .ots-Zeitstempel prüfen',
+    contracts: 'Verträge',
+    contractsSub: 'Signatur mehrerer Parteien',
+    devApi: 'Entwickler-API',
+    devApiSub: 'Schlüssel, Webhooks, Endpunkte',
+    network: 'Netzwerkstatus',
+    networkTip:
+      'Live-Anzeigen der Knoten, die Ihren Nachweis unabhängig prüfen und kopieren. Grün bedeutet, dass alles normal läuft.',
+    legal: 'Rechtliche Einordnung',
+    eidas: 'EU-Recht zur elektronischen Signatur',
+    esign: 'US-Bundesgesetz zur elektronischen Signatur',
+    ueta: 'Einheitliches US-Recht für elektronische Vorgänge',
+    legalLink: 'Den Compliance-Bericht ansehen',
+    missionTitle: 'Die Gebemaschine',
+    missionBody:
+      'Jeder Anker hilft, eine öffentliche Spur dessen zu bewahren, was existiert hat. Satohash ist ein gemeinnütziges Protokoll. Einnahmen halten das offene Zeugennetz am Laufen und erweitern den Zugang.',
+    missionLink: 'Über Satohash lesen'
   },
   settings: {
     pageTitle: 'Einstellungen',

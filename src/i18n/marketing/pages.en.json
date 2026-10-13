@@ -387,7 +387,7 @@
       },
       "bolt12": {
         "term": "BOLT-12",
-        "def": "A Lightning Network proposal for reusable, one-click offers. Enables recurring payments and metered access without repeated invoice generation."
+        "def": "A Lightning Network proposal for reusable, one-click offers. It can support repeat payments without a new invoice each time. Stamps are free today. Lightning billing is off."
       },
       "lightning": {
         "term": "Lightning Network",
