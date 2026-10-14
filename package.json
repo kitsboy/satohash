@@ -185,7 +185,7 @@
     "wrangler": "^4.107.0"
   },
   "overrides": {
-    "undici": "6.28.1",
+    "undici": "6.29.0",
     "nanoid": "5.1.16",
     "parse-duration": "2.1.8",
     "bn.js": "4.12.5",
