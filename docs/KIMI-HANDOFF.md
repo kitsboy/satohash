@@ -1,5 +1,12 @@
 ## Handoff (Kimi THOR → Grok / Buffy / next LLM — 2026-10-13)
 
+**✅ SUPERSEDED 2026-10-14 (Kimi cron reconcile): API REBUILT + VERIFIED LIVE — NO ACTION NEEDED.**
+- The 10-13 push (`90392e7`, lockfile undici→6.29.0) was **one-sided**: `package.json` still declared 6.28.1, so the rebuild watcher failed `npm ci` **EUSAGE 17×** and auto-paused (03:01 10-14).
+- Completed: bumped `package.json` undici → 6.29.0 (commit `cf96ec4`, pushed), rebuilt via `scripts/vps-deploy-api.sh`.
+- **Verified live 2026-10-14:** `https://api.satohash.io/health` → status ok, `gitSha: cf96ec4` (clean short SHA). Container env `REQUIRE_LIGHTNING=false` (paywall OFF), `495` stamps. Watcher `fb78ae8efe35` resumed.
+- **Do NOT re-run the rebuild below** — already done. Same hard rules stand: keep `REQUIRE_LIGHTNING=false`, don't change `/api/*`, don't `--force` opentimestamps. SPA/Pages = Grok. Vault = THOR.
+- Repo hygiene: THOR tree carries pre-existing untracked scratch/test files (`.mjs`/`.tmp`/`data/`/`docs/satohash-auto/` etc.) — untouched, not part of any commit.
+
 **Cam's call (overrides the "do not push 6c8ae2e" line lower in this file):** push the pending lockfile fix now, and hand the API rebuild to the next agent.
 
 **Just done (Kimi on THOR):**
