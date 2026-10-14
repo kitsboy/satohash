@@ -34,7 +34,7 @@ test.describe('Mobile stamp loop chrome', () => {
     await expect(page.getByTestId('choose-file-input')).toBeAttached()
 
     await page.getByTestId('more-options').click()
-    await expect(page.getByTestId('mode-capsule').or(page.getByTestId('mode-redact'))).toBeVisible({
+    await page.getByTestId('mode-capsule').toBeVisible({
       timeout: 5000
     })
 
