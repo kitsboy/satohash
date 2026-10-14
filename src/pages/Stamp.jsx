@@ -1628,6 +1628,7 @@ export default function Stamp() {
                             type="button"
                             aria-pressed={stampMode === 'capsule'}
                             aria-label={tp('stampPage.modes.capsule')}
+                            data-testid="mode-capsule"
                             onClick={() => {
                               setStampMode('capsule')
                               setIsCapsuleMode(true)
@@ -1667,6 +1668,7 @@ export default function Stamp() {
                             type="button"
                             aria-pressed={stampMode === 'redact'}
                             aria-label={tp('stampPage.modes.redact')}
+                            data-testid="mode-redact"
                             onClick={() => {
                               setStampMode('redact')
                               setIsCapsuleMode(false)
@@ -1706,6 +1708,7 @@ export default function Stamp() {
                             type="button"
                             aria-pressed={stampMode === 'deposition'}
                             aria-label={tp('stampPage.modes.deposition')}
+                            data-testid="mode-deposition"
                             onClick={() => {
                               setStampMode('deposition')
                               setIsCapsuleMode(false)
