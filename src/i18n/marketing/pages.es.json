@@ -605,7 +605,7 @@
       "availValue": "Alta disponibilidad",
       "availSub": "3 calendarios OTS en vivo",
       "batchLabel": "Sellado por lotes",
-      "batchValue": "Hasta 100",
+      "batchValue": "Hasta 50",
       "batchSub": "Archivos por lote"
     },
     "howTitle": "Cómo tu sello llega a Bitcoin",

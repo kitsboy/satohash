@@ -605,7 +605,7 @@
       "availValue": "Haute disponibilité",
       "availSub": "3 calendriers OTS pingés en direct",
       "batchLabel": "Horodatage par lots",
-      "batchValue": "Jusqu’à 100",
+      "batchValue": "Jusqu’à 50",
       "batchSub": "Fichiers par lot"
     },
     "howTitle": "Comment votre horodatage atteint Bitcoin",

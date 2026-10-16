@@ -605,7 +605,7 @@
       "availValue": "High availability",
       "availSub": "3 OTS calendars pinged live",
       "batchLabel": "Batch stamping",
-      "batchValue": "Up to 100",
+      "batchValue": "Up to 50",
       "batchSub": "Files per batch"
     },
     "howTitle": "How your stamp reaches Bitcoin",

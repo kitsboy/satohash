@@ -595,7 +595,7 @@
       "availValue": "高可用",
       "availSub": "3 个 OTS 日历实时探测",
       "batchLabel": "批量盖戳",
-      "batchValue": "最多 100",
+      "batchValue": "最多 50",
       "batchSub": "每批文件数"
     },
     "howTitle": "盖戳如何到达 Bitcoin",
