@@ -10,6 +10,10 @@
 //   2. BUNDLE: the runner must stream the main bundle at test speed. A runner
 //      that cannot fetch ~1 MB in 20 s will not run 80 Chromium tests in a
 //      reasonable time — abort now instead of burning an hour of timeouts.
+//   3. CHROMIUM: an HTTP answer is not a page load. Run 39334533474 showed a
+//      runner whose HTTP probes were fine while every browser navigation
+//      stalled (23+ min of 30s goto timeouts). So load the homepage in a real
+//      headless Chromium with a 45 s budget before the 80 tests even start.
 const BUILT_BUNDLE_RE = /src="(\/b\/[A-Za-z0-9._-]+\.js)"/
 
 export default async function globalSetup() {
@@ -49,12 +53,31 @@ export default async function globalSetup() {
       throw new Error(`status=${res.status} bytes=${buf.byteLength}`)
     }
     if (secs > 20) throw new Error(`bundle took ${secs.toFixed(1)} s`)
-    return
   } catch (e) {
     throw new Error(
       `E2E runner cannot stream the main bundle at test speed — aborting the ` +
       `suite on this runner instead of burning an hour of page-load timeouts. ` +
       `Detail: ${e.message} (${bundleRef}). Re-running on a fresh runner should clear it.`
     )
+  }
+
+  // Gate 3 — the browser layer itself must load a page on this runner.
+  const { chromium } = await import('@playwright/test')
+  let browser
+  try {
+    browser = await chromium.launch()
+    const page = await browser.newPage()
+    const t1 = Date.now()
+    await page.goto(base, { timeout: 45_000, waitUntil: 'load' })
+    const loadSecs = (Date.now() - t1) / 1000
+    if (loadSecs > 45) throw new Error(`page load took ${loadSecs.toFixed(1)} s`)
+  } catch (e) {
+    throw new Error(
+      `E2E runner cannot load the SPA in headless Chromium (45 s budget) — ` +
+      `aborting instead of 80 tests x 3 retries of page-load timeouts. ` +
+      `Detail: ${e.message.split('\n')[0]}. Re-run on a fresh runner.`
+    )
+  } finally {
+    if (browser) await browser.close().catch(() => {})
   }
 }
