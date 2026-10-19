@@ -340,6 +340,17 @@ function CompactFooter() {
               </Link>
             </span>
           ))}
+          <a
+            href="/feed.xml"
+            className="ml-2 inline-flex h-7 shrink-0 items-center gap-1 rounded-full border border-[var(--accent-gold)]/40 bg-[var(--accent-gold)]/10 px-2 text-[10px] font-semibold text-[var(--accent-gold)]"
+            title="Subscribe via RSS"
+            aria-label="Subscribe via RSS"
+          >
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M6.18 17.82a2.18 2.18 0 1 0 0 4.36 2.18 2.18 0 0 0 0-4.36zM4 4.44v3.6C12.9 8.04 20 15.1 20 24h3.6C23.6 14.6 13.4 4.44 4 4.44zM4 10.1v3.6c5.7 0 10.3 4.6 10.3 10.3h3.6C17.9 14.9 9.1 10.1 4 10.1z" />
+            </svg>
+            RSS
+          </a>
         </nav>
         <span
           className="min-w-0 shrink truncate text-[10px] leading-none whitespace-nowrap text-[var(--text-tertiary)] tabular-nums sm:text-[11px]"
