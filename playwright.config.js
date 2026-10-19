@@ -2,6 +2,9 @@ import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
   testDir: './tests/e2e',
+  // Fail the whole suite in <60s if the preview server is stalled/squatted
+  // instead of letting 80 tests each hit their 30s goto timeout (~74 min).
+  globalSetup: './tests/e2e/globalSetup.js',
   timeout: 30 * 1000,
   expect: {
     timeout: 5000
