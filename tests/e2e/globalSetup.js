@@ -1,31 +1,60 @@
-// Fail fast when the E2E web server is stalled or the port is squatted by
-// another process. Without this, one hung GitHub runner makes all 80 tests
-// (x3 retries) hit their 30s page.goto timeout — ~74 minutes burned before
-// the job goes red. Real case 2026-10-19, run 39268288955: vite preview was
-// up but unresponsive; the suite redlined after 74 min of goto timeouts.
-// Playwright's own webServer url-check passes on ANY http response (even a
-// squatting process), so we assert the BUILT SPA here. The marker is the
-// hashed bundle ref under assetsDir /b/ — the dev template index.html
-// (src="/src/main.jsx") must NOT satisfy it.
-const BUILT_BUNDLE_RE = /src="\/b\/[A-Za-z0-9._-]+\.js"/
+// Fail fast when the E2E web server or the GITHUB RUNNER itself is unusable.
+// Without this, one stalled runner makes all 80 tests (x3 retries) hit their
+// 30s page.goto timeout — ~74 minutes burned before the job goes red.
+// Real cases 2026-10-19: runs 39268288955 and 39330179691.
+//
+// Two gates (Playwright's own webServer url-check passes on ANY http response,
+// even a squatting or crawling process, so it proves nothing on its own):
+//   1. HOME: the served page must be the BUILT SPA (hashed /b/ bundle ref —
+//      the dev template index.html with src="/src/main.jsx" must not pass).
+//   2. BUNDLE: the runner must stream the main bundle at test speed. A runner
+//      that cannot fetch ~1 MB in 20 s will not run 80 Chromium tests in a
+//      reasonable time — abort now instead of burning an hour of timeouts.
+const BUILT_BUNDLE_RE = /src="(\/b\/[A-Za-z0-9._-]+\.js)"/
+
 export default async function globalSetup() {
   const base = process.env.PLAYWRIGHT_BASE_URL || 'http://localhost:3001'
+
+  // Gate 1 — home page, up to 60 s.
   const deadline = Date.now() + 60_000
   let lastErr = 'no probe ran'
+  let home = ''
   while (Date.now() < deadline) {
     try {
       const res = await fetch(`${base}/`, { signal: AbortSignal.timeout(10_000) })
       const body = await res.text()
-      if (res.ok && BUILT_BUNDLE_RE.test(body)) return; // built SPA healthy
+      if (res.ok && BUILT_BUNDLE_RE.test(body)) { home = body; break }
       lastErr = `status=${res.status} but no built /b/ bundle ref (wrong process or dev template on the port?)`
     } catch (e) {
       lastErr = `${e.constructor.name}: ${e.message}`
     }
     await new Promise((r) => setTimeout(r, 2_000))
   }
-  throw new Error(
-    `E2E web server unresponsive after 60s — aborting the whole suite. ` +
-    `Last probe: ${lastErr}. (Runner stall or port squatter — without this gate ` +
-    `every one of the 80 tests would time out and burn ~70 minutes.)`
-  )
+  if (!home) {
+    throw new Error(
+      `E2E web server unresponsive after 60 s — aborting the whole suite. ` +
+      `Last probe: ${lastErr}. (Runner stall or port squatter — without this ` +
+      `gate every one of the 80 tests would time out and burn ~70 minutes.)`
+    )
+  }
+
+  // Gate 2 — runner throughput: the main bundle must arrive fast enough.
+  const bundleRef = home.match(BUILT_BUNDLE_RE)[1]
+  const t0 = Date.now()
+  try {
+    const res = await fetch(`${base}${bundleRef}`, { signal: AbortSignal.timeout(20_000) })
+    const buf = new Uint8Array(await res.arrayBuffer())
+    const secs = (Date.now() - t0) / 1000
+    if (!res.ok || buf.byteLength < 50_000) {
+      throw new Error(`status=${res.status} bytes=${buf.byteLength}`)
+    }
+    if (secs > 20) throw new Error(`bundle took ${secs.toFixed(1)} s`)
+    return
+  } catch (e) {
+    throw new Error(
+      `E2E runner cannot stream the main bundle at test speed — aborting the ` +
+      `suite on this runner instead of burning an hour of page-load timeouts. ` +
+      `Detail: ${e.message} (${bundleRef}). Re-running on a fresh runner should clear it.`
+    )
+  }
 }
