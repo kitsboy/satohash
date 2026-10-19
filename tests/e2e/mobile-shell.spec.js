@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { test, expect } from './fixtures.js'
 
 /**
  * Mobile chrome: marketing shell hamburger + no AppShell bottom bar on public routes.

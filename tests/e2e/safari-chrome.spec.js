@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { test, expect } from './fixtures.js'
 
 /**
  * WebKit / iPhone chrome QA — language menu + tooltips stay on-screen.

@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { test, expect } from './fixtures.js'
 
 test.describe('Static edge — MotoPass integration', () => {
   test('stamp accepts hash query param', async ({ page }) => {

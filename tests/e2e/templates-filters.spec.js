@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { test, expect } from './fixtures.js'
 
 /**
  * Templates category chips must never force horizontal page overflow.

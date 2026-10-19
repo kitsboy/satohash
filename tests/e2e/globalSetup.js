@@ -62,20 +62,32 @@ export default async function globalSetup() {
   }
 
   // Gate 3 — the browser layer itself must load a page on this runner.
+  // Budget is 15 s, not 45: a healthy runner loads this SPA in 2–5 s. A runner
+  // that needs 30–45 s (usually an external script like analytics.giveabit.io
+  // being slow from GitHub's network, stalling the 'load' event) WILL then
+  // spend 80 tests × 3 retries × 30 s stalling on every goto — reject it here
+  // instead and re-run on a fresh machine.
   const { chromium } = await import('@playwright/test')
   let browser
   try {
     browser = await chromium.launch()
     const page = await browser.newPage()
+    // Same external-host block as the test fixture: this raw page doesn't use
+    // the fixture, so stop the stalling analytics/video subresources here too,
+    // otherwise the gate would measure the flaky external script, not the SPA.
+    await page.route('**/*', (r) =>
+      /analytics\.giveabit\.io|videos\.giveabit\.io/.test(r.request().url())
+        ? r.abort()
+        : r.continue())
     const t1 = Date.now()
-    await page.goto(base, { timeout: 45_000, waitUntil: 'load' })
+    await page.goto(base, { timeout: 15_000, waitUntil: 'load' })
     const loadSecs = (Date.now() - t1) / 1000
-    if (loadSecs > 45) throw new Error(`page load took ${loadSecs.toFixed(1)} s`)
+    if (loadSecs > 15) throw new Error(`page load took ${loadSecs.toFixed(1)} s`)
   } catch (e) {
     throw new Error(
-      `E2E runner cannot load the SPA in headless Chromium (45 s budget) — ` +
-      `aborting instead of 80 tests x 3 retries of page-load timeouts. ` +
-      `Detail: ${e.message.split('\n')[0]}. Re-run on a fresh runner.`
+      `E2E runner cannot load the SPA fast enough in headless Chromium (15 s ` +
+      `budget) — aborting instead of 80 tests x 3 retries of page-load ` +
+      `timeouts. Detail: ${e.message.split('\n')[0]}. Re-run on a fresh runner.`
     )
   } finally {
     if (browser) await browser.close().catch(() => {})

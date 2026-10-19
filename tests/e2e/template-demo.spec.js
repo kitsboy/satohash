@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { test, expect } from './fixtures.js'
 
 const PRENUP_DEMO_NAME = 'Jonathan Alexander Mercer'
 

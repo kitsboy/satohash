@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures.js';
 
 test('landing page loads correctly', async ({ page }) => {
   const errors = [];

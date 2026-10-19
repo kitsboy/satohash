@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { test, expect } from './fixtures.js'
 
 test.describe('Frontend pipes', () => {
   test('onboarding welcome routes to how-it-works', async ({ page }) => {

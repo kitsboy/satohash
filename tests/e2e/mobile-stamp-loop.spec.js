@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { test, expect } from './fixtures.js'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import { writeFileSync, mkdirSync } from 'fs'

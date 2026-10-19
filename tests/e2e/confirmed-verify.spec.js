@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { test, expect } from './fixtures.js'
 
 /**
  * Verifies a *confirmed* stamp from the live API when one exists.
