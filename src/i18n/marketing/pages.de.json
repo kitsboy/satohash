@@ -1887,6 +1887,8 @@
     "otsConfirmed": "Bitcoin-confirmed .ots",
     "viewProofCard": "Proof-Karte ansehen",
     "notifyTitle": "Auf Bitcoin bestätigt",
+    "helpStuck": "Hängt es?",
+    "helpNote": "Die Datei hat Ihr Gerät nie verlassen. Ein bestätigter Stempel dauert etwa eine Stunde. Wir sind keine Anwälte.",
     "notifyBody": "Ihr OpenTimestamps-Beleg ist bereit. .ots herunterladen.",
     "confirmedToast": "Bitcoin bestätigt",
     "confirmedToastHint": ".ots herunterladen. Pending ist vorbei."

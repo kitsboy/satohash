@@ -1887,6 +1887,8 @@
     "otsConfirmed": "Bitcoin-confirmed .ots",
     "viewProofCard": "Ver cartão de prova",
     "notifyTitle": "Confirmado no Bitcoin",
+    "helpStuck": "Preso?",
+    "helpNote": "O ficheiro nunca saiu do seu dispositivo. Um carimbo confirmado demora cerca de uma hora. Não somos advogados.",
     "notifyBody": "O seu recibo OpenTimestamps está pronto. Descarregue o .ots.",
     "confirmedToast": "Bitcoin confirmado",
     "confirmedToastHint": "Descarregue o .ots. Pending acabou."

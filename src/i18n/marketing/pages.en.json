@@ -1630,6 +1630,8 @@
     "otsConfirmed": "Bitcoin-confirmed .ots",
     "viewProofCard": "View proof card",
     "notifyTitle": "Confirmed on Bitcoin",
+    "helpStuck": "Stuck?",
+    "helpNote": "The file never left your device. A confirmed stamp takes about an hour. We are not a lawyer.",
     "notifyBody": "Your OpenTimestamps receipt is ready. Download the .ots.",
     "confirmedToast": "Bitcoin confirmed",
     "confirmedToastHint": "Download the .ots. Pending is over."

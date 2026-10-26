@@ -141,16 +141,16 @@ const HistoryList = () => {
             <thead className="border-b border-white/5 bg-white/[0.02]">
               <tr>
                 <th className="px-6 py-4 text-xs font-semibold tracking-wider text-white/40 uppercase">
-                  File / Hash
+                  {t('dashboard', 'colFile')}
                 </th>
                 <th className="px-6 py-4 text-xs font-semibold tracking-wider text-white/40 uppercase">
-                  Status
+                  {t('dashboard', 'colStatus')}
                 </th>
                 <th className="px-6 py-4 text-xs font-semibold tracking-wider text-white/40 uppercase">
-                  Time
+                  {t('dashboard', 'colTime')}
                 </th>
                 <th className="px-6 py-4 text-right text-xs font-semibold tracking-wider text-white/40 uppercase">
-                  Action
+                  {t('dashboard', 'colAction')}
                 </th>
               </tr>
             </thead>
@@ -173,7 +173,7 @@ const HistoryList = () => {
                             {item.filename}
                           </span>
                           <span className="max-w-[150px] truncate font-mono text-[9px] text-white/20 uppercase">
-                            DNA SIGNATURE: {item.hash.substring(0, 12)}...
+                            {t('dashboard', 'fingerprint')}: {item.hash.substring(0, 12)}...
                           </span>
                         </div>
                       </div>
@@ -195,20 +195,20 @@ const HistoryList = () => {
                       <div className="flex items-center justify-end gap-2">
                         <button
                           type="button"
-                          aria-label={`Download certificate for ${item.filename}`}
+                          aria-label={`${t('dashboard', 'certificate')} ${item.filename}`}
                           onClick={() => generatePDF(item)}
                           className="inline-flex items-center gap-2 rounded-lg border border-[var(--accent-active)]/30 bg-[var(--accent-active)]/10 px-3 py-1.5 text-xs text-[var(--accent-active)] transition-all hover:bg-[var(--accent-active)] hover:text-white"
                         >
                           <FileText className="h-3.5 w-3.5" />
-                          Certificate
+                          {t('dashboard', 'certificate')}
                         </button>
                         <a
                           href={`${API_URL}/api/stamps/${item.id}?download=true`}
-                          aria-label={`Download OTS proof for ${item.filename}`}
+                          aria-label={`${t('dashboard', 'otsFile')} ${item.filename}`}
                           className="inline-flex items-center gap-2 rounded-lg border border-white/5 bg-white/5 px-3 py-1.5 text-xs text-white/60 transition-all hover:bg-white/10"
                         >
                           <Download className="h-3.5 w-3.5" />
-                          OTS File
+                          {t('dashboard', 'otsFile')}
                         </a>
                       </div>
                     </td>
@@ -218,7 +218,7 @@ const HistoryList = () => {
               {filteredHistory.length === 0 && !loading && (
                 <tr>
                   <td colSpan="4" className="px-6 py-12 text-center text-sm text-white/20">
-                    {t('dashboard', 'noStamps') || 'No stamps found yet. Start by hashing a file!'}
+                    {t('dashboard', 'noStamps')}
                   </td>
                 </tr>
               )}

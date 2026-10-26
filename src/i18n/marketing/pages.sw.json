@@ -1887,6 +1887,8 @@
     "otsConfirmed": "Bitcoin-confirmed .ots",
     "viewProofCard": "Tazama kadi ya uthibitisho",
     "notifyTitle": "Imethibitishwa kwenye Bitcoin",
+    "helpStuck": "Umekwama?",
+    "helpNote": "Faili halikuondoka kwenye kifaa chako. Muhuri uliothibitishwa huchukua karibu saa moja. Sisi si wanasheria.",
     "notifyBody": "Risiti yako ya OpenTimestamps iko tayari. Pakua .ots.",
     "confirmedToast": "Bitcoin imethibitishwa",
     "confirmedToastHint": "Pakua .ots. Pending imeisha."

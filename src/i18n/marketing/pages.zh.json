@@ -1862,6 +1862,8 @@
     "otsConfirmed": "Bitcoin-confirmed .ots",
     "viewProofCard": "查看证明卡",
     "notifyTitle": "已在比特币上确认",
+    "helpStuck": "卡住了？",
+    "helpNote": "文件从未离开您的设备。确认大约需要一小时。我们不是律师。",
     "notifyBody": "您的 OpenTimestamps 收据已就绪。请下载 .ots。",
     "confirmedToast": "比特币已确认",
     "confirmedToastHint": "下载 .ots。Pending 已结束。"

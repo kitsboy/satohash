@@ -48,7 +48,8 @@ import { encryptData } from './encryption'
  * Encrypts a file buffer or arbitrary array buffer using WebCrypto API
  * Uses the real AES-GCM implementation from encryption.js
  */
-export async function encryptFile(arrayBuffer, password = 'local_satohash_vault_key') {
+export async function encryptFile(arrayBuffer, password) {
+  if (!password) throw new Error('encryptFile requires a caller-supplied password')
   try {
     const encryptedUint8 = await encryptData(arrayBuffer, password)
 

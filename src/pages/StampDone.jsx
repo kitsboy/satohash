@@ -348,6 +348,17 @@ export default function StampDone() {
           />
         </div>
       </div>
+      <p className="px-4 pb-6 text-center text-sm" style={{ color: 'var(--text-secondary)' }}>
+        {t('stampDonePage.helpStuck')}{' '}
+        <a
+          href="mailto:kimi@giveabit.io"
+          className="underline underline-offset-2"
+          style={{ color: 'var(--accent-gold)' }}
+        >
+          kimi@giveabit.io
+        </a>
+        . {t('stampDonePage.helpNote')}
+      </p>
       <Footer compact />
     </>
   )

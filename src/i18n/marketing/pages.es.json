@@ -1887,6 +1887,8 @@
     "otsConfirmed": "Bitcoin-confirmed .ots",
     "viewProofCard": "Ver tarjeta de prueba",
     "notifyTitle": "Confirmado en Bitcoin",
+    "helpStuck": "¿Atascado?",
+    "helpNote": "El archivo nunca salió de tu dispositivo. Un sello confirmado tarda cerca de una hora. No somos abogados.",
     "notifyBody": "Su recibo OpenTimestamps está listo. Descargue el .ots.",
     "confirmedToast": "Bitcoin confirmado",
     "confirmedToastHint": "Descargue el .ots. Pending ya pasó."
