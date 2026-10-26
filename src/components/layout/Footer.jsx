@@ -62,7 +62,6 @@ const LINK_GROUPS = [
       { key: 'verify', path: '/verify' },
       { key: 'templates', path: '/templates' },
       { key: 'watch', path: '/watch' },
-      { key: 'pricing', path: '/pricing' },
       { key: 'faq', path: '/faq' },
       { key: 'guides', path: '/guides' },
       { key: 'glossary', path: '/glossary' },

@@ -135,7 +135,48 @@ const HistoryList = () => {
           </select>
         </div>
       </div>
-      <div className="overflow-hidden rounded-2xl border border-white/5 bg-[#0f111a]/80 backdrop-blur-xl">
+      <div className="space-y-3 md:hidden">
+        {filteredHistory.map((item) => (
+          <article
+            key={item.id}
+            className="rounded-2xl border border-white/10 bg-[#0f111a]/80 p-4"
+          >
+            <div className="flex items-start justify-between gap-3">
+              <div className="min-w-0">
+                <p className="truncate text-sm font-black text-white">{item.filename}</p>
+                <p className="mt-1 font-mono text-[10px] text-white/40">
+                  {t('dashboard', 'fingerprint')}: {item.hash.substring(0, 12)}...
+                </p>
+              </div>
+              <p className="shrink-0 text-[11px] font-bold text-white/60">
+                {getConversationalStatus(item.status)}
+              </p>
+            </div>
+            <p className="mt-2 text-xs text-white/40">
+              {formatDistanceToNow(new Date(item.created_at), { addSuffix: true })}
+            </p>
+            <a
+              href={`${API_URL}/api/stamps/${item.id}?download=true`}
+              className="btn-sheen mt-3 flex min-h-[48px] items-center justify-center rounded-xl text-sm font-black"
+              style={{ background: 'var(--accent-gold)', color: '#141b25' }}
+            >
+              {t('dashboard', 'otsFile')}
+            </a>
+            <button
+              type="button"
+              onClick={() => generatePDF(item)}
+              className="mt-2 flex min-h-[44px] w-full items-center justify-center rounded-xl border text-xs font-bold"
+              style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
+            >
+              {t('dashboard', 'certificate')}
+            </button>
+          </article>
+        ))}
+        {filteredHistory.length === 0 && !loading && (
+          <p className="py-8 text-center text-sm text-white/40">{t('dashboard', 'noStamps')}</p>
+        )}
+      </div>
+      <div className="hidden overflow-hidden rounded-2xl border border-white/5 bg-[#0f111a]/80 backdrop-blur-xl md:block">
         <div className="overflow-x-auto">
           <table className="w-full text-left">
             <thead className="border-b border-white/5 bg-white/[0.02]">

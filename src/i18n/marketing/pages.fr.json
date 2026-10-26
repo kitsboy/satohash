@@ -19,6 +19,7 @@
     "readTime": "{{time}} de lecture"
   },
   "pricingPage": {
+    "notForSale": "Les tampons sont gratuits. On ne peut pas acheter un forfait aujourd’hui.",
     "hero": {
       "eyebrow": "Tarification simple",
       "title": "Preuve d'existence,",
@@ -1890,6 +1891,7 @@
     "helpStuck": "Bloqué ?",
     "helpNote": "Le fichier n’a jamais quitté votre appareil. Un tampon confirmé prend environ une heure. Nous ne sommes pas avocats.",
     "saveCopy": "Enregistrer une copie",
+    "downloadOts": "Télécharger la preuve .ots",
     "notifyBody": "Votre reçu OpenTimestamps est prêt. Téléchargez le .ots.",
     "confirmedToast": "Bitcoin confirmé",
     "confirmedToastHint": "Téléchargez le .ots. Pending est terminé."

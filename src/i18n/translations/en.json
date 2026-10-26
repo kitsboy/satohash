@@ -295,7 +295,7 @@
     "colAction": "Action",
     "fingerprint": "Fingerprint",
     "certificate": "Save a copy",
-    "otsFile": "OTS file",
+    "otsFile": "Download the proof",
     "noStamps": "No stamps yet. Drop a file above.",
     "filterHistory": "Search stamps",
     "statusFilter": "Filter by status",

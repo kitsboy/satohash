@@ -170,37 +170,37 @@ export const pageMeta = {
     en: {
       title: 'Pricing — Free Bitcoin Timestamping',
       description:
-        'Satohash basic stamping is free. Compare Free, Pro, and Enterprise tiers for API, BOLT-12, and institutional features.'
+        'Stamps are free. You cannot buy a plan today. The file stays on your device. Only a fingerprint is sent.'
     },
     es: {
       title: 'Precios — Sellado Gratuito en Bitcoin',
       description:
-        'El sellado básico de Satohash es gratis. Compare planes Free, Pro y Enterprise para API, BOLT-12 y funciones institucionales.'
+        'Los sellos son gratis. Hoy no se puede comprar un plan. El archivo se queda en el dispositivo.'
     },
     fr: {
       title: 'Tarifs — Tamponnage Bitcoin Gratuit',
       description:
-        "Le tamponnage de base Satohash est gratuit. Comparez Free, Pro et Enterprise pour l'API, BOLT-12 et les fonctions institutionnelles."
+        "Les tampons sont gratuits. On ne peut pas acheter un forfait aujourd’hui. Le fichier reste sur l’appareil."
     },
     de: {
       title: 'Preise — Kostenlose Bitcoin-Zeitstempel',
       description:
-        'Basis-Stempelung bei Satohash ist kostenlos. Vergleichen Sie Free, Pro und Enterprise für API, BOLT-12 und institutionelle Funktionen.'
+        'Stempel sind kostenlos. Heute kann man keinen Tarif kaufen. Die Datei bleibt auf dem Gerät.'
     },
     pt: {
       title: 'Preços — Carimbo Gratuito no Bitcoin',
       description:
-        'Carimbo básico Satohash é grátis. Compare planos Free, Pro e Enterprise para API, BOLT-12 e recursos institucionais.'
+        'Os carimbos são grátis. Hoje não se compra um plano. O ficheiro fica no dispositivo.'
     },
     sw: {
       title: 'Bei — Muhuri wa Bure wa Bitcoin',
       description:
-        'Muhuri wa msingi wa Satohash ni bure. Linganisha Free, Pro na Enterprise kwa API, BOLT-12 na vipengele vya taasisi.'
+        'Mihuri ni bure. Huwezi kununua mpango leo. Faili linabaki kwenye kifaa.'
     },
     zh: {
       title: '定价 — 免费比特币时间戳',
       description:
-        'Satohash 基础盖章免费。比较 Free、Pro 和 Enterprise 套餐的 API、BOLT-12 和企业功能。'
+        '盖章是免费的。今天不能购买套餐。文件留在设备上。'
     }
   },
   comparison: {

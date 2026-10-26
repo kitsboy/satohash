@@ -32,8 +32,7 @@ export default function MarketingDesktopNav({ onDonate }) {
     () => [
       { label: t('nav.stamp', { defaultValue: 'Stamp' }), href: '/stamp' },
       { label: t('nav.verify', { defaultValue: 'Verify' }), href: '/verify' },
-      { label: t('nav.templates', { defaultValue: 'Templates' }), href: '/templates' },
-      { label: t('nav.pricing', { defaultValue: 'Pricing' }), href: '/pricing' }
+      { label: t('nav.templates', { defaultValue: 'Templates' }), href: '/templates' }
     ],
     [t]
   )

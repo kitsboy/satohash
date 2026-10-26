@@ -182,12 +182,26 @@ export default function StampSuccessActions({
       )}
 
       <div className="grid grid-cols-1 gap-3">
+                {hasHostedId ? (
+          <a
+            href={`${getApiUrl()}/api/stamps/${proof.id}?download=true`}
+            data-testid="stamp-done-ots"
+            onClick={() =>
+              trackEvent(events.TIMESTAMP_DOWNLOADED, { kind: 'ots', ...funnelProps() })
+            }
+            className="btn-sheen flex min-h-[56px] items-center justify-center gap-2 rounded-xl text-sm font-black tracking-wider uppercase"
+            style={{ background: 'var(--accent-gold)', color: '#141b25' }}
+          >
+            {t('stampDonePage.downloadOts')}
+          </a>
+        ) : null}
+
         {proof?.hash && /^[a-f0-9]{64}$/i.test(proof.hash) ? (
           <Link
             to={`/p/${String(proof.hash).toLowerCase()}`}
             data-testid="proof-card-link"
-            className="btn-sheen flex min-h-[56px] items-center justify-center gap-2 rounded-xl text-sm font-black tracking-wider uppercase"
-            style={{ background: 'var(--accent-gold)', color: '#141b25' }}
+            className="flex min-h-[48px] items-center justify-center gap-2 rounded-xl border text-sm font-bold"
+            style={{ borderColor: 'var(--border)', color: 'var(--text-primary)' }}
           >
             {t('stampDonePage.viewProofCard')}
           </Link>
@@ -195,28 +209,13 @@ export default function StampSuccessActions({
           <Link
             to="/verify"
             data-testid="proof-card-link"
-            className="btn-sheen flex min-h-[56px] items-center justify-center gap-2 rounded-xl text-sm font-black tracking-wider uppercase"
-            style={{ background: 'var(--accent-gold)', color: '#141b25' }}
+            className="flex min-h-[48px] items-center justify-center gap-2 rounded-xl border text-sm font-bold"
+            style={{ borderColor: 'var(--border)', color: 'var(--text-primary)' }}
           >
             {t('stampDonePage.viewProofCard')}
           </Link>
         )}
 
-        {hasHostedId ? (
-          <a
-            href={`${getApiUrl()}/api/stamps/${proof.id}?download=true`}
-            data-testid="stamp-done-ots"
-            onClick={() =>
-              trackEvent(events.TIMESTAMP_DOWNLOADED, { kind: 'ots', ...funnelProps() })
-            }
-            className="flex min-h-[44px] items-center justify-center text-xs font-bold underline underline-offset-4"
-            style={{ color: 'var(--text-secondary)' }}
-          >
-            {isConfirmed || proof?.status === 'confirmed'
-              ? t('stampDonePage.otsConfirmed')
-              : t('stampDonePage.otsPending')}
-          </a>
-        ) : null}
 
         {onStampAnother ? (
           <button

@@ -19,6 +19,7 @@
     "readTime": "{{time}} 阅读"
   },
   "pricingPage": {
+    "notForSale": "盖章是免费的。今天不能购买套餐。",
     "hero": {
       "eyebrow": "简单定价",
       "title": "存在证明，",
@@ -1865,6 +1866,7 @@
     "helpStuck": "卡住了？",
     "helpNote": "文件从未离开您的设备。确认大约需要一小时。我们不是律师。",
     "saveCopy": "保存一份副本",
+    "downloadOts": "下载 .ots 证明",
     "notifyBody": "您的 OpenTimestamps 收据已就绪。请下载 .ots。",
     "confirmedToast": "比特币已确认",
     "confirmedToastHint": "下载 .ots。Pending 已结束。"

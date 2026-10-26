@@ -19,6 +19,7 @@
     "readTime": "{{time}} Lesezeit"
   },
   "pricingPage": {
+    "notForSale": "Stempel sind kostenlos. Heute kann man keinen Tarif kaufen.",
     "hero": {
       "eyebrow": "Einfache Preise",
       "title": "Existenznachweis,",
@@ -1890,6 +1891,7 @@
     "helpStuck": "Hängt es?",
     "helpNote": "Die Datei hat Ihr Gerät nie verlassen. Ein bestätigter Stempel dauert etwa eine Stunde. Wir sind keine Anwälte.",
     "saveCopy": "Kopie speichern",
+    "downloadOts": ".ots-Beweis herunterladen",
     "notifyBody": "Ihr OpenTimestamps-Beleg ist bereit. .ots herunterladen.",
     "confirmedToast": "Bitcoin bestätigt",
     "confirmedToastHint": ".ots herunterladen. Pending ist vorbei."

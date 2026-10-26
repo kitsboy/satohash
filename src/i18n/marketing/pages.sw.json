@@ -19,6 +19,7 @@
     "readTime": "{{time}} kusoma"
   },
   "pricingPage": {
+    "notForSale": "Mihuri ni bure. Huwezi kununua mpango leo.",
     "hero": {
       "eyebrow": "Bei Rahisi",
       "title": "Uthibitisho wa Kuwepo,",
@@ -1890,6 +1891,7 @@
     "helpStuck": "Umekwama?",
     "helpNote": "Faili halikuondoka kwenye kifaa chako. Muhuri uliothibitishwa huchukua karibu saa moja. Sisi si wanasheria.",
     "saveCopy": "Hifadhi nakala",
+    "downloadOts": "Pakua uthibitisho wa .ots",
     "notifyBody": "Risiti yako ya OpenTimestamps iko tayari. Pakua .ots.",
     "confirmedToast": "Bitcoin imethibitishwa",
     "confirmedToastHint": "Pakua .ots. Pending imeisha."

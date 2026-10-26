@@ -295,7 +295,7 @@
     "colAction": "Action",
     "fingerprint": "Empreinte",
     "certificate": "Enregistrer une copie",
-    "otsFile": "Fichier OTS",
+    "otsFile": "Télécharger la preuve",
     "noStamps": "Pas encore de tampon. Déposez un fichier ci-dessus.",
     "filterHistory": "Chercher un tampon",
     "statusFilter": "Filtrer par statut",

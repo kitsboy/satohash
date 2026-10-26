@@ -1958,6 +1958,7 @@ export default function Stamp() {
           {/* ── Configuration Sidebar ──────────────── */}
           <div className="space-y-8">
             {showAdvancedModes && <FeeAdvisor />}
+            {showAdvancedModes && (
             <div className="space-y-6 rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] p-6">
               <div className="flex items-center gap-3">
                 <Layers size={18} className="text-[var(--accent-gold)]" />
@@ -2079,6 +2080,7 @@ export default function Stamp() {
                 )}
               </div>
             </div>
+            )}
 
             {showAdvancedModes && (
               <div className="space-y-4 rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] p-6">

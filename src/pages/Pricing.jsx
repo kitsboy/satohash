@@ -19,22 +19,8 @@ import usePageMeta from '../hooks/usePageMeta'
 
 const TIER_IDS = ['free', 'premium', 'enterprise']
 const TIER_ICONS = [Zap, TrendingUp, Briefcase]
-const COMPARISON_ROW_IDS = [
-  'bitcoinAnchored',
-  'browserHashing',
-  'otsDownload',
-  'freeCalendar',
-  'multiParty',
-  'bolt12',
-  'apiAccess',
-  'webhooks',
-  'batchStamping',
-  'dedicatedCalendar',
-  'sla',
-  'onPremise',
-  'prioritySupport'
-]
-const TIER_COLUMNS = ['free', 'premium', 'enterprise']
+const COMPARISON_ROW_IDS = ['bitcoinAnchored', 'browserHashing', 'otsDownload', 'freeCalendar']
+const TIER_COLUMNS = ['free']
 
 function resolveCell(t, value) {
   return t(`pricingPage.comparison.cellValues.${value}`, { defaultValue: value })
@@ -58,12 +44,8 @@ export default function Pricing() {
           features: tier.features,
           cta: tier.cta,
           to:
-            id === 'free'
-              ? '/stamp'
-              : id === 'enterprise'
-                ? 'mailto:hello@giveabit.io?subject=Satohash Enterprise'
-                : null,
-          highlighted: id === 'premium'
+            id === 'free' ? '/stamp' : null,
+          highlighted: id === 'free'
         }
       }),
     [t]
@@ -105,6 +87,9 @@ export default function Pricing() {
               {t('pricingPage.hero.titleHighlight')}
             </span>
           </h1>
+          <p className="mx-auto mb-4 max-w-xl text-base font-bold leading-relaxed text-[var(--text-primary)]">
+            {t('pricingPage.notForSale')}
+          </p>
           <p className="mx-auto max-w-xl text-sm leading-relaxed text-[var(--text-secondary)]">
             {t('pricingPage.hero.subtitle')}
           </p>
@@ -113,7 +98,7 @@ export default function Pricing() {
 
       <section className="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-16">
         <div className="grid gap-8 md:grid-cols-3">
-          {tiers.map((tier, i) => {
+          {tiers.filter((tier) => tier.id === 'free').map((tier, i) => {
             const Icon = tier.icon
             return (
               <motion.div

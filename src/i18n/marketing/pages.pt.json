@@ -19,6 +19,7 @@
     "readTime": "{{time}} de leitura"
   },
   "pricingPage": {
+    "notForSale": "Os carimbos são grátis. Hoje não se compra um plano.",
     "hero": {
       "eyebrow": "Preços simples",
       "title": "Prova de existência,",
@@ -1890,6 +1891,7 @@
     "helpStuck": "Preso?",
     "helpNote": "O ficheiro nunca saiu do seu dispositivo. Um carimbo confirmado demora cerca de uma hora. Não somos advogados.",
     "saveCopy": "Guardar uma cópia",
+    "downloadOts": "Descarregar a prova .ots",
     "notifyBody": "O seu recibo OpenTimestamps está pronto. Descarregue o .ots.",
     "confirmedToast": "Bitcoin confirmado",
     "confirmedToastHint": "Descarregue o .ots. Pending acabou."

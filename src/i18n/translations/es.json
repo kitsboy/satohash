@@ -295,7 +295,7 @@
     "colAction": "Acción",
     "fingerprint": "Huella",
     "certificate": "Guardar una copia",
-    "otsFile": "Archivo OTS",
+    "otsFile": "Descargar la prueba",
     "noStamps": "Aún no hay sellos. Suelta un archivo arriba.",
     "filterHistory": "Buscar sellos",
     "statusFilter": "Filtrar por estado",
