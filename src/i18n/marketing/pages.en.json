@@ -1268,7 +1268,7 @@
       "title1": "Sovereign",
       "title2": "Access",
       "titleHighlight": "Gateway.",
-      "subtitle": "No passwords. No intermediaries. Establish your identity through cryptographic proof and Lightning-native settlement."
+      "subtitle": "No passwords. No intermediaries. Your key stays on this device."
     },
     "cards": {
       "newIdentity": {

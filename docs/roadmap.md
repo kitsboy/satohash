@@ -16,12 +16,13 @@ Do the next open item, commit, and push. Then take the one after it. Do not skip
 - Dashboard Lightning row is gone. Status rows and the side column follow the language picker. Dark Vault, Bitcoin, `.ots`, AES-256-GCM, API, eIDAS, ESIGN, and UETA stay English.
 - Sign-in share text and the trust chip say the key stays on the device. `4134150` is live (`/b/index-Bt__WPpD.js`).
 
-### 1. Now — words a person already sees
+### 1. Shipped  — plain words (do not redo)
 
-1. **History labels.** `/dashboard` stamp history shows the raw keys `recentHistory` and `filterHistory` (`src/components/stamps/HistoryList.jsx`). Add real title, search hint, and status-filter labels in all 7 languages. The fallback `t(...) || 'English'` never runs, because a missing key is still a non-empty string.
-2. **Drop zone.** The big card is still English: “Ingest Protocol”, the drop copy, and “Dark Vault: ON/OFF” (`src/components/stamps/GlobalDropzone.jsx`). Translate it in all 7 languages. Keep the name Dark Vault in English so it matches the side card.
-3. **Sign-in headline.** `accessPage.hero.subtitle` still says Lightning-native settlement. Signing in is not a payment. Say the key stays on this device, in all 7 languages.
-4. **Leftover zero-knowledge claims a stranger can open.** `src/pages/timestamp/FinalReview.jsx` (“Zero-Knowledge Guarantee”), `src/pages/BatchTimestamp.jsx`, and the `zkPrivacy` blocks that sell selective redaction. Say the file stays. Do not sell redaction, Snapper, or BOLT-12.
+1. History says “Recent stamps”, not the raw key.
+2. The drop card says “Stamp a file”. Dark Vault stays English.
+3. Sign-in says the key stays on this device. It is not a payment.
+4. Review, batch, and the privacy lines say the file stays. No redaction pitch.
+
 
 ### 2. Next — calmer film and phone
 

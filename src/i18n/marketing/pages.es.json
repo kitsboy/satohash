@@ -1268,7 +1268,7 @@
       "title1": "Acceso",
       "title2": "Soberano",
       "titleHighlight": "Gateway.",
-      "subtitle": "Sin contraseñas. Sin intermediarios. Establece tu identidad mediante prueba criptográfica y liquidación nativa Lightning."
+      "subtitle": "Sin contraseñas. Sin intermediarios. Tu clave se queda en este dispositivo."
     },
     "cards": {
       "newIdentity": {

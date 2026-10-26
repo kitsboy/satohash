@@ -8,10 +8,7 @@ Do the next open item in [`docs/roadmap.md`](docs/roadmap.md), then the one afte
 
 ## Upgrade in progress — do these first
 
-1. **History labels** on `/dashboard` (`recentHistory`, `filterHistory` in `HistoryList.jsx`). Real words, 7 languages.
-2. **Drop zone** still English, including Dark Vault ON/OFF (`GlobalDropzone.jsx`). Keep the name Dark Vault.
-3. **Sign-in headline** still says Lightning settlement (`accessPage.hero.subtitle`). Say the key stays on the device.
-4. **Leftover zero-knowledge lines** in Final Review, batch stamp, and the `zkPrivacy` redaction copy. Say the file stays.
+1. **Done — plain words.** History, drop card, sign-in, and the file-stays lines. Do not redo.
 5. **Chapter jumps** on the 70s film. Do not regenerate voice or pictures.
 6. **Quieter phone install hint.**
 7. **Public example** only if Cam picks a file. The picture stamp stays private.

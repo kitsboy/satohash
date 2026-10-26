@@ -1268,7 +1268,7 @@
       "title1": "Accès",
       "title2": "souverain",
       "titleHighlight": "Gateway.",
-      "subtitle": "Pas de mots de passe. Pas d'intermédiaires. Établissez votre identité par preuve cryptographique et règlement natif Lightning."
+      "subtitle": "Pas de mots de passe. Pas d’intermédiaires. Votre clé reste sur cet appareil."
     },
     "cards": {
       "newIdentity": {

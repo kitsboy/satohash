@@ -808,7 +808,7 @@ export default function BatchTimestamp() {
                 className="text-[10px] leading-relaxed font-medium italic"
                 style={{ color: 'var(--text-muted)' }}
               >
-                Atomic local processing ensuring zero-knowledge asset registration.
+                The file stays on this device. Only a fingerprint is sent.
               </p>
             </div>
             <div className="glass-card p-8" style={{ borderColor: 'var(--border)' }}>

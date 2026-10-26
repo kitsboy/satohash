@@ -463,15 +463,15 @@ export default function Dashboard() {
                           className="text-sm font-black tracking-wide uppercase"
                           style={{ color: 'var(--text-primary)' }}
                         >
-                          Ingest Protocol
+                          {t('dashboard', 'ingestTitle')}
                         </h3>
                         <Tooltip
-                          title="Ingest Protocol"
-                          content="Drop any file here. Satohash hashes it using SHA-256 entirely in your browser, then submits only that fingerprint — never the file — to be permanently recorded on the Bitcoin blockchain via OpenTimestamps."
+                          title={t('dashboard', 'ingestTitle')}
+                          content={t('dashboard', 'ingestTip')}
                         />
                       </div>
                       <p className="text-[10px]" style={{ color: 'var(--text-muted)' }}>
-                        Client-side SHA-256 → Bitcoin anchoring
+                        {t('dashboard', 'ingestSub')}
                       </p>
                     </div>
                   </div>

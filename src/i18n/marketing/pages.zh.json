@@ -1243,7 +1243,7 @@
       "title1": "主权",
       "title2": "访问",
       "titleHighlight": "网关。",
-      "subtitle": "无密码。无中介。通过加密证明和 Lightning 原生结算建立您的身份。"
+      "subtitle": "无密码。无中介。密钥留在这台设备上。"
     },
     "cards": {
       "newIdentity": {

@@ -1268,7 +1268,7 @@
       "title1": "Souveräner",
       "title2": "Zugangs",
       "titleHighlight": "Gateway.",
-      "subtitle": "Keine Passwörter. Keine Vermittler. Etablieren Sie Ihre Identität durch kryptografischen Nachweis und Lightning-native Abwicklung."
+      "subtitle": "Keine Passwörter. Keine Vermittler. Ihr Schlüssel bleibt auf diesem Gerät."
     },
     "cards": {
       "newIdentity": {

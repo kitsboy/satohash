@@ -6,6 +6,7 @@ import { clsx } from 'clsx'
 import { toast } from 'sonner'
 import { encryptFile } from '../../utils/crypto'
 import { pickRotating } from '../../utils/id'
+import { useI18n } from '../../i18n'
 
 /**
  * GlobalDropzone
@@ -14,6 +15,7 @@ import { pickRotating } from '../../utils/id'
  * zero-knowledge encryption before hashing.
  */
 export default function GlobalDropzone({ onFileProcessed }) {
+  const { t } = useI18n()
   const [isProcessing, setIsProcessing] = useState(false)
   const [dragActive, setDragActive] = useState(false)
   const [fileData, setFileData] = useState(null)
@@ -23,21 +25,15 @@ export default function GlobalDropzone({ onFileProcessed }) {
   const processFile = useCallback(
     async (file) => {
       const messages = [
-        'Securing your digital footprint…',
-        'Generating cryptographic anchors…',
-        'Your file is becoming immutable…',
-        'Anchoring to global consensus…',
-        'Finalising mathematical certainty…'
+        t('dashboard', 'proc1'),
+        t('dashboard', 'proc2'),
+        t('dashboard', 'proc3'),
+        t('dashboard', 'proc4'),
+        t('dashboard', 'proc5')
       ]
       setProcessingMessage(pickRotating(messages, file.name.length + file.size))
 
-      const extension = file.name.split('.').pop()?.toLowerCase()
-      let intent = isDarkVault ? 'File stays on this device' : 'Standard Notarization'
-      if (!isDarkVault) {
-        if (extension === 'pdf') intent = 'Legal Watermarking'
-        if (['png', 'jpg', 'jpeg', 'webp'].includes(extension)) intent = 'Visual Vaulting'
-        if (['zip', 'rar', 'tar'].includes(extension)) intent = 'Bulk Repository Archive'
-      }
+      const intent = isDarkVault ? t('dashboard', 'fileStays') : t('dashboard', 'ingestSub')
 
       setFileData({ name: file.name, type: file.type, intent })
       setIsProcessing(true)
@@ -57,7 +53,7 @@ export default function GlobalDropzone({ onFileProcessed }) {
         if (onFileProcessed) onFileProcessed(file)
       }, 2800)
     },
-    [isDarkVault, onFileProcessed]
+    [isDarkVault, onFileProcessed, t]
   )
 
   const onDrop = useCallback(
@@ -93,9 +89,7 @@ export default function GlobalDropzone({ onFileProcessed }) {
         <button
           type="button"
           onClick={open}
-          aria-label={
-            isDarkVault ? 'Drop file to encrypt and anchor' : 'Drop file or browse to stamp'
-          }
+          aria-label={isDarkVault ? t('dashboard', 'dropAriaVault') : t('dashboard', 'dropAria')}
           className={clsx(
             'group w-full rounded-2xl border-2 border-dashed px-6 py-8 text-center transition-all duration-200',
             isDragActive || dragActive
@@ -123,12 +117,10 @@ export default function GlobalDropzone({ onFileProcessed }) {
             className="mb-1 text-sm font-black tracking-wide uppercase"
             style={{ color: 'var(--text-primary)' }}
           >
-            {isDarkVault ? 'Drop to Encrypt & Anchor' : 'Drop File or Click to Browse'}
+            {isDarkVault ? t('dashboard', 'dropEncrypt') : t('dashboard', 'dropBrowse')}
           </p>
           <p className="text-[10px] font-medium" style={{ color: 'var(--text-secondary)' }}>
-            {isDarkVault
-              ? 'AES-GCM encrypted locally before any network call'
-              : 'PDF, image, ZIP, or any document — hashed client-side, zero upload'}
+            {isDarkVault ? t('dashboard', 'dropHintVault') : t('dashboard', 'dropHint')}
           </p>
 
           {/* Dark Vault active indicator strip */}
@@ -136,7 +128,7 @@ export default function GlobalDropzone({ onFileProcessed }) {
             <div className="mt-4 flex items-center justify-center gap-2">
               <ShieldCheck size={11} className="text-rose-400" />
               <span className="text-[9px] font-black tracking-widest text-rose-400 uppercase">
-                File stays on this device
+                {t('dashboard', 'fileStays')}
               </span>
             </div>
           )}
@@ -149,13 +141,13 @@ export default function GlobalDropzone({ onFileProcessed }) {
             style={{ color: 'var(--text-muted)' }}
           >
             <Lock size={9} />
-            Encryption Mode
+            {t('dashboard', 'encryptionMode')}
           </span>
           <button
             type="button"
             role="switch"
             aria-pressed={isDarkVault}
-            aria-label="Dark Vault encryption mode"
+            aria-label={t('dashboard', 'encryptionMode')}
             onClick={(e) => {
               e.stopPropagation()
               setIsDarkVault((v) => !v)
@@ -170,12 +162,12 @@ export default function GlobalDropzone({ onFileProcessed }) {
             {isDarkVault ? (
               <>
                 <ShieldCheck size={10} />
-                Dark Vault: ON
+                {t('dashboard', 'darkVaultOn')}
               </>
             ) : (
               <>
                 <Lock size={10} />
-                Dark Vault: OFF
+                {t('dashboard', 'darkVaultOff')}
               </>
             )}
           </button>
@@ -207,12 +199,10 @@ export default function GlobalDropzone({ onFileProcessed }) {
                 <UploadCloud size={52} style={{ color: 'var(--jewel-ice)' }} />
               </motion.div>
               <h2 className="mb-4 text-5xl font-black tracking-tighter text-white uppercase italic">
-                Release to Anchor
+                {t('dashboard', 'releaseTitle')}
               </h2>
               <p className="mx-auto max-w-md text-base leading-relaxed text-white/40">
-                Drop your file to generate a{' '}
-                <span className="text-white italic">permanent cryptographic record</span> on
-                Bitcoin.
+                {t('dashboard', 'releaseBody')}
               </p>
             </div>
           </motion.div>
@@ -251,7 +241,7 @@ export default function GlobalDropzone({ onFileProcessed }) {
                       backgroundColor: 'color-mix(in srgb, var(--accent-active) 16%, transparent)'
                     }}
                   >
-                    {fileData?.intent} Active
+                    {t('dashboard', 'working')}
                   </div>
                   <h3 className="px-4 text-4xl font-black tracking-tighter text-white uppercase italic">
                     {processingMessage}
@@ -274,11 +264,11 @@ export default function GlobalDropzone({ onFileProcessed }) {
 
               <div className="flex items-center justify-center gap-6">
                 <p className="text-[10px] font-black tracking-widest text-white/20 uppercase">
-                  Local Entropy Generated
+                  {t('dashboard', 'hashedHere')}
                 </p>
                 <div className="h-px w-12 bg-white/10" />
                 <p className="text-[10px] font-black tracking-widest text-white/20 uppercase italic">
-                  No Data Leaves Browser
+                  {t('dashboard', 'fileStays')}
                 </p>
               </div>
             </div>

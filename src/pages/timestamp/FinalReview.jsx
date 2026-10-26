@@ -183,12 +183,11 @@ export default function FinalReview() {
               <div className="mb-2 flex items-center gap-2">
                 <div className="h-2 w-2 animate-pulse rounded-full bg-green-500" />
                 <span className="text-[10px] font-black tracking-[0.2em] text-white/50 uppercase">
-                  Zero-Knowledge Guarantee
+                  The file stays
                 </span>
               </div>
               <p className="text-[11px] leading-relaxed font-medium text-white/80">
-                Satohash only broadcasts the SHA-256 fingerprint of your document. Your private data
-                never leaves this machine.
+                The file stays on this device. Only a fingerprint is sent.
               </p>
             </div>
           </div>
