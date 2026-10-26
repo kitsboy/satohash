@@ -338,7 +338,7 @@ export default function StampSuccessActions({
               className="flex min-h-[48px] items-center justify-center gap-2 rounded-xl border py-3 text-xs font-black uppercase"
               style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
             >
-              PDF certificate
+              {t('stampDonePage.saveCopy')}
             </button>
 
             {hasHostedId && (

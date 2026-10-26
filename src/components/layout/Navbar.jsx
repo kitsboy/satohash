@@ -128,7 +128,7 @@ export default function Navbar() {
               </motion.button>
             </Link>
 
-            <Link to="/dashboard" className="hidden md:block">
+            <Link to="/stamp" className="hidden md:block">
               <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.97 }}
@@ -136,7 +136,7 @@ export default function Navbar() {
                 className="btn-holographic flex items-center gap-2"
               >
                 <Zap size={13} className="fill-white" />
-                Workbench
+                Stamp
               </motion.button>
             </Link>
 
@@ -210,12 +210,12 @@ export default function Navbar() {
                 <div className="h-px w-full" style={{ background: 'var(--border)' }} />
                 <button
                   onClick={() => {
-                    navigate('/dashboard')
+                    navigate('/stamp')
                     setIsOpen(false)
                   }}
                   className="btn-holographic w-full py-4 text-center text-sm"
                 >
-                  Launch Workbench
+                  Stamp a file
                 </button>
               </div>
             </motion.div>

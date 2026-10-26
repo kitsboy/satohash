@@ -14,9 +14,9 @@ export default function MobileBottomNav() {
 
   // MVP primary: stamp loop + templates (explorer lives under More)
   const PRIMARY_LINKS = [
-    { name: t('nav', 'vault'), path: '/vault', icon: Database },
     { name: t('nav', 'stamp'), path: '/stamp', icon: Fingerprint },
     { name: t('nav', 'verify'), path: '/verify', icon: ShieldCheck },
+    { name: t('nav', 'vault'), path: '/vault', icon: Database },
     { name: t('nav', 'templates'), path: '/templates', icon: FileText }
   ]
 
@@ -101,8 +101,6 @@ export default function MobileBottomNav() {
                   { name: t('nav.widgets') || 'Widgets', path: '/widgets' },
                   { name: t('nav', 'batch') || 'Batch Stamp', path: '/batch' },
                   { name: t('nav', 'developer'), path: '/developer' },
-                  { name: t('nav', 'contracts'), path: '/contracts' },
-                  { name: t('nav', 'snapper') || 'Web Capture', path: '/snapper' },
                   { name: t('nav', 'settings'), path: '/settings' },
                   { name: t('nav', 'trust'), path: '/trust' },
                   { name: t('vault', 'title'), path: '/image-vault' },

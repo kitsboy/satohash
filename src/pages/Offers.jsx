@@ -102,6 +102,12 @@ export default function Bolt12Offers() {
       style={{ background: 'var(--bg-primary)' }}
     >
       <div className="layout-container">
+        <p
+          className="mb-6 rounded-xl border px-4 py-3 text-sm"
+          style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
+        >
+          Demo. Not a live product. The real door is Stamp. The file stays on your device.
+        </p>
         {/* Plain-English Explainer */}
         <div className="mb-8 space-y-3 rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] p-6">
           <div className="flex flex-wrap items-center gap-3">

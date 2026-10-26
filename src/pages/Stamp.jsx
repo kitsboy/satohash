@@ -1958,43 +1958,6 @@ export default function Stamp() {
           {/* ── Configuration Sidebar ──────────────── */}
           <div className="space-y-8">
             {showAdvancedModes && <FeeAdvisor />}
-            {showAdvancedModes && (
-              <div className="space-y-3 rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] p-5">
-                <div className="flex items-center gap-3">
-                  <div
-                    className="flex h-8 w-8 items-center justify-center rounded-xl"
-                    style={{
-                      background: 'var(--surface-raised)',
-                      border: '1px solid var(--border)'
-                    }}
-                  >
-                    <span className="text-base">🌐</span>
-                  </div>
-                  <div>
-                    <p
-                      className="text-[10px] font-black tracking-widest uppercase"
-                      style={{ color: 'var(--text-primary)' }}
-                    >
-                      Web Capture
-                    </p>
-                    <p className="text-[9px]" style={{ color: 'var(--text-secondary)' }}>
-                      Stamp a URL or webpage
-                    </p>
-                  </div>
-                </div>
-                <p className="text-[11px] leading-snug" style={{ color: 'var(--text-secondary)' }}>
-                  Capture and timestamp any webpage as proof it existed at this moment.
-                </p>
-                <a
-                  href="/snapper"
-                  className="flex items-center justify-center gap-2 rounded-xl border py-2.5 text-[10px] font-black tracking-widest uppercase transition-all hover:text-[var(--text-primary)]"
-                  style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
-                >
-                  Open Web Capture →
-                </a>
-              </div>
-            )}
-
             <div className="space-y-6 rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] p-6">
               <div className="flex items-center gap-3">
                 <Layers size={18} className="text-[var(--accent-gold)]" />

@@ -119,7 +119,8 @@ export const MVP_DEFERRED_PATHS = [
   '/compare',
   '/developer/playground',
   '/certificates',
-  '/image-vault'
+  '/image-vault',
+  '/snapper'
 ]
 
 /** True when this path is a deferred v5/cathedral surface (MVP freeze). */

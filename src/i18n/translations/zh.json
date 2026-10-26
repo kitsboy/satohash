@@ -294,7 +294,7 @@
     "colTime": "时间",
     "colAction": "操作",
     "fingerprint": "指纹",
-    "certificate": "证书",
+    "certificate": "保存一份副本",
     "otsFile": "OTS 文件",
     "noStamps": "还没有印章。把文件拖到上面。",
     "filterHistory": "搜索印章",

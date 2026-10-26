@@ -117,6 +117,12 @@ export default function WebCapture() {
       style={{ background: 'var(--bg-primary)' }}
     >
       <div className="layout-container max-w-6xl">
+        <p
+          className="mb-6 rounded-xl border px-4 py-3 text-sm"
+          style={{ borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
+        >
+          Demo. Not a live product. The real door is Stamp. The file stays on your device.
+        </p>
         {/* Elite Archival Header */}
         <div className="mb-24 flex flex-col items-end justify-between gap-12 md:flex-row">
           <div>

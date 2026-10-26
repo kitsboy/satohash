@@ -294,7 +294,7 @@
     "colTime": "Time",
     "colAction": "Action",
     "fingerprint": "Fingerprint",
-    "certificate": "Certificate",
+    "certificate": "Save a copy",
     "otsFile": "OTS file",
     "noStamps": "No stamps yet. Drop a file above.",
     "filterHistory": "Search stamps",

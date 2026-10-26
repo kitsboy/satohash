@@ -294,7 +294,7 @@
     "colTime": "Hora",
     "colAction": "Ação",
     "fingerprint": "Impressão",
-    "certificate": "Certificado",
+    "certificate": "Guardar uma cópia",
     "otsFile": "Ficheiro OTS",
     "noStamps": "Ainda não há carimbos. Largue um ficheiro acima.",
     "filterHistory": "Procurar carimbos",

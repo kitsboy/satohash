@@ -67,7 +67,6 @@ export const NAV_LINKS = [
   { name: 'Nodes', path: '/nodes', icon: 'Network', group: 'Atlas' },
 
   { name: 'Contracts', path: '/contracts', icon: 'FileSignature', group: 'Mesh' },
-  { name: 'Snapper', path: '/snapper', icon: 'Camera', group: 'Mesh' },
   { name: 'Developer', path: '/developer', icon: 'Terminal', group: 'Mesh' },
 
   { name: 'Explorer', path: '/explorer', icon: 'Clock', group: 'Noir' },

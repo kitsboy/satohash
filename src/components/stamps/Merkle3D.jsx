@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react'
 import * as THREE from 'three'
 import { motion } from 'framer-motion'
-import { Network, Search, Box, Lock, Activity, ChevronRight, Zap } from 'lucide-react'
+import { Network, Search, Box, Activity, ChevronRight } from 'lucide-react'
 
 export default function Merkle3D({ hash }) {
   const mountRef = useRef(null)
@@ -141,8 +141,6 @@ export default function Merkle3D({ hash }) {
       </div>
 
       <div className="absolute top-12 right-12 z-10 hidden flex-col gap-4 md:flex">
-        <HudPill icon={Lock} label="ZK_HARDENED" active />
-        <HudPill icon={Zap} label="BOLT-12_SYNC" active />
         <HudPill icon={Activity} label="REALTIME_PULSE" pulse />
       </div>
 

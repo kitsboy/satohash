@@ -1889,6 +1889,7 @@
     "notifyTitle": "Auf Bitcoin bestätigt",
     "helpStuck": "Hängt es?",
     "helpNote": "Die Datei hat Ihr Gerät nie verlassen. Ein bestätigter Stempel dauert etwa eine Stunde. Wir sind keine Anwälte.",
+    "saveCopy": "Kopie speichern",
     "notifyBody": "Ihr OpenTimestamps-Beleg ist bereit. .ots herunterladen.",
     "confirmedToast": "Bitcoin bestätigt",
     "confirmedToastHint": ".ots herunterladen. Pending ist vorbei."

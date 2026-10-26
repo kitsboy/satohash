@@ -294,7 +294,7 @@
     "colTime": "Hora",
     "colAction": "Acción",
     "fingerprint": "Huella",
-    "certificate": "Certificado",
+    "certificate": "Guardar una copia",
     "otsFile": "Archivo OTS",
     "noStamps": "Aún no hay sellos. Suelta un archivo arriba.",
     "filterHistory": "Buscar sellos",

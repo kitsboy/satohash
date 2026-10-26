@@ -57,7 +57,7 @@ export default function ThankYou() {
               <span className="mt-0.5 shrink-0 text-[var(--accent-gold)]">→</span>
               <span>
                 <strong className="text-[var(--text-primary)]">Download your proof</strong> — grab
-                your portable <code>.ots</code> receipt and PDF certificate so it is safe on your
+                your portable <code>.ots</code> receipt and save a copy so it is safe on your
                 own device.
               </span>
             </li>

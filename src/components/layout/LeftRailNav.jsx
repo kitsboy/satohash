@@ -11,7 +11,6 @@ import {
   Terminal,
   FileText,
   MessageSquare,
-  Camera,
   LayoutTemplate,
   Settings,
   Scale,
@@ -31,7 +30,6 @@ const MORE_ITEMS = [
   { name: 'Evidence admissibility', path: '/evidence-admissibility' },
   { name: 'Protocol Stats', path: '/protocol-stats' },
   { name: 'Merkle demo', path: '/explorer' },
-  { name: 'Offers', path: '/offers' }
 ]
 
 // ─── Single nav item ─────────────────────────────────────────────────────────
@@ -228,7 +226,6 @@ export default function LeftRailNav() {
             <div className="mt-1 space-y-0.5">
               <NavItem item={{ name: 'OTS calendars', path: '/nodes', icon: Network }} />
               <NavItem item={{ name: 'Merkle demo', path: '/explorer', icon: Search }} />
-              <NavItem item={{ name: 'Web Capture (scaffold)', path: '/snapper', icon: Camera }} />
               <NavItem
                 item={{ name: t('nav', 'templates'), path: '/templates', icon: LayoutTemplate }}
               />
