@@ -57,15 +57,15 @@ export default function ThankYou() {
               <span className="mt-0.5 shrink-0 text-[var(--accent-gold)]">→</span>
               <span>
                 <strong className="text-[var(--text-primary)]">Download your proof</strong> — grab
-                your portable <code>.ots</code> receipt and save a copy so it is safe on your
-                own device.
+                your portable <code>.ots</code> receipt and save a copy so it is safe on your own
+                device.
               </span>
             </li>
             <li className="flex items-start gap-2">
               <span className="mt-0.5 shrink-0 text-[var(--accent-gold)]">→</span>
               <span>
-                <strong className="text-[var(--text-primary)]">Independent forever</strong> — even
-                if Satohash ceased to exist, your proof checks out against Bitcoin with any OTS
+                <strong className="text-[var(--text-primary)]">Independently verifiable</strong> —
+                even if Satohash ceased to exist, your proof checks out against Bitcoin with any OTS
                 tool.
               </span>
             </li>

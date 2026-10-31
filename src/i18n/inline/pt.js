@@ -72,14 +72,14 @@ export default {
     actions: 'Ações'
   },
   landing: {
-    heroTitle: 'Ancore os Seus Documentos no Bitcoin — Para Sempre',
+    heroTitle: 'Ancore os seus documentos no Bitcoin — verificável por qualquer pessoa',
     heroSubtitle:
       'Crie uma prova de que os seus documentos existiram num momento específico. O ficheiro fica no seu dispositivo. Bitcoin guarda o recibo.',
     heroCta: 'Carimbar um Documento Agora',
     heroCta2: 'Ver Como Funciona',
     step1: 'Hash local',
     step2: 'Ancorar no Bitcoin',
-    step3: 'Provar para sempre',
+    step3: 'Verificar por qualquer pessoa',
     socialProof: 'Faça o hash no seu dispositivo. O Bitcoin guarda o recibo.',
     tryTemplate: 'Experimente um modelo gratuitamente',
     features: {
@@ -158,7 +158,7 @@ export default {
     mirror: 'Replicação global',
     nominal: 'Normal',
     mirrorTip:
-      'A sua prova é replicada em vários nós geográficos ao mesmo tempo, por isso não se perde nem se censura.',
+      'A sua prova é replicada em vários nós geográficos ao mesmo tempo, de modo que uma única falha de servidor não pode fazê-la desaparecer. Guarde também a sua própria cópia .ots num local seguro.',
     height: 'Altura Bitcoin',
     privacy: 'Camada de privacidade',
     onDevice: 'No dispositivo',

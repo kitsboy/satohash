@@ -13,7 +13,7 @@
       "cryptoProofDetail": "Hashing verwandelt jede Datei in eine deterministische 64-Zeichen-Folge. Dieselbe Eingabe erzeugt immer denselben Hash — jeder kann ihn erneut ableiten. Schon ein geändertes Komma führt zu einem völlig anderen Hash. Satohash verarbeitet dies lokal auf Ihrem Gerät.",
       "timestamp": "Bitcoin-Zeitstempel",
       "timestampDesc": "Verankern Sie Ihren Nachweis über das OpenTimestamps-Protokoll in der Bitcoin-Blockchain.",
-      "timestampDetail": "Der Hash Ihres Dokuments wird mit Tausenden anderen in einem Merkle-Baum gebündelt. Ein einziger 'Root'-Hash wird dann im Bitcoin-Netzwerk festgeschrieben, was einen dauerhaften, unveränderlichen Existenznachweis liefert.",
+      "timestampDetail": "Der Hash Ihres Dokuments wird mit Tausenden anderen in einem Merkle-Baum gebündelt. Ein einziger 'Root'-Hash wird dann im Bitcoin-Netzwerk festgeschrieben, was ein starkes kryptografisches Existenz-Beweismaterial liefert.",
       "verify": "Einfache Verifizierung",
       "verifyDesc": "Jeder kann Ihren Nachweis unabhängig mit Open-Source-Tools überprüfen.",
       "verifyDetail": "Eine .ots-Datei enthält den 'Pfad' von Ihrem Dokument zum Bitcoin-Block. Sie benötigen Satohash nicht, um es zu beweisen; Sie können den offiziellen OpenTimestamps-Client oder Block-Explorer von Drittanbietern verwenden."
@@ -182,9 +182,9 @@
   "trust": {
     "title": "Vertrauenszentrum",
     "howItWorks": "Wie Satohash funktioniert",
-    "howItWorksDetail": "Satohash verwendet den SHA-256 (Secure Hash Algorithm 256-Bit), um einen einzigartigen digitalen Fingerabdruck Ihres Dokuments zu erstellen. Dies geschieht lokal in Ihrem Browser; Ihr Dokumententext verlässt niemals Ihr Gerät. Dieser Hash wird dann mit Tausenden anderen in einem Merkle-Baum gebündelt und dessen Wurzel über das OpenTimestamps-Protokoll in der Bitcoin-Blockchain verankert. Dies schafft einen dauerhaften, unveränderlichen Existenznachweis.",
+    "howItWorksDetail": "Satohash verwendet den SHA-256 (Secure Hash Algorithm 256-Bit), um einen einzigartigen digitalen Fingerabdruck Ihres Dokuments zu erstellen. Dies geschieht lokal in Ihrem Browser; Ihr Dokumententext verlässt niemals Ihr Gerät. Dieser Hash wird dann mit Tausenden anderen in einem Merkle-Baum gebündelt und dessen Wurzel über das OpenTimestamps-Protokoll in der Bitcoin-Blockchain verankert. Dies schafft einen starken, kryptografisch prüfbaren Existenznachweis.",
     "whatBlockchain": "Fähigkeiten und Grenzen",
-    "whatBlockchainDetail": "Blockchain-Zeitstempel bieten einen mathematischen Nachweis, dass ein bestimmter Datensatz zu einem bestimmten Zeitpunkt existierte und nicht verändert wurde. Sie beweisen NICHT von selbst die Identität des Unterzeichners, garantieren NICHT die rechtliche Korrektheit des Vertragsinhalts und können nach der Verankerung NICHT geändert oder gelöscht werden. Es ist ein Instrument für den 'Existenznachweis', kein Ersatz für eine rechtliche Prüfung.",
+    "whatBlockchainDetail": "Blockchain-Zeitstempel liefern starkes kryptografisches Beweismaterial, dass ein bestimmter Datensatz zu einem bestimmten Zeitpunkt existierte und nicht verändert wurde. Sie beweisen NICHT von selbst die Identität des Unterzeichners, garantieren NICHT die rechtliche Korrektheit des Vertragsinhalts und wären nach der Verankerung nur unter wirtschaftlich praktisch unmöglichen Kosten zu ändern oder zu löschen (nicht buchstäblich unmöglich). Es ist ein Instrument für den 'Existenznachweis', kein Ersatz für eine rechtliche Prüfung.",
     "zkPrivacy": "Die Datei bleibt",
     "zkPrivacyDetail": "Die Datei bleibt auf Ihrem Gerät. Wir speichern nur einen Fingerabdruck und sehen das Dokument nie. Eine selektive Schwärzung bieten wir nicht an.",
     "legallyBinding": "Rechtliche Durchsetzbarkeit",
@@ -227,13 +227,13 @@
     "success": "Erfolg"
   },
   "landing": {
-    "heroTitle": "Verankern Sie Ihre Dokumente auf Bitcoin — für immer",
+    "heroTitle": "Verankern Sie Ihre Dokumente auf Bitcoin — von jedem prüfbar",
     "heroSubtitle": "Erstellen Sie einen Nachweis, dass Ihre Dokumente zu einem bestimmten Zeitpunkt existierten. Die Datei bleibt auf Ihrem Gerät. Bitcoin bewahrt die Quittung.",
     "heroCta": "Jetzt ein Dokument stempeln",
     "heroCta2": "So funktioniert es",
     "step1": "Lokal hashen",
     "step2": "Auf Bitcoin verankern",
-    "step3": "Dauerhaft nachweisen",
+    "step3": "Von jedem prüfbar",
     "socialProof": "Hashen Sie auf Ihrem Gerät. Bitcoin bewahrt die Quittung.",
     "tryTemplate": "Vorlage kostenlos ausprobieren",
     "features": {
@@ -324,7 +324,7 @@
     "quickActions": "Schnellaktionen",
     "mirror": "Globale Spiegelung",
     "nominal": "Normal",
-    "mirrorTip": "Ihr Nachweis wird gleichzeitig auf mehreren geografischen Knoten gespiegelt und kann so nicht verloren gehen oder zensiert werden.",
+    "mirrorTip": "Ihr Nachweis wird gleichzeitig auf mehreren geografischen Knoten gespiegelt, sodass ein einzelner Serverausfall ihn nicht gefährdet. Bewahren Sie zusätzlich Ihre eigene .ots-Datei sicher auf.",
     "height": "Bitcoin-Höhe",
     "privacy": "Datenschutzebene",
     "onDevice": "Auf dem Gerät",

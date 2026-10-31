@@ -169,7 +169,7 @@ export default function Donate() {
               <Lock size={14} className="mt-0.5 shrink-0 text-[var(--accent-gold)]" />
               <span>
                 <strong className="text-[var(--text-primary)]">Infrastructure.</strong> The
-                OpenTimestamps calendars, THOR node, and API that keep proofs verifiable forever.
+                OpenTimestamps calendars, THOR node, and API that keep proofs verifiable by anyone.
               </span>
             </li>
             <li className="flex items-start gap-2">

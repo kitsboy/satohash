@@ -58,7 +58,7 @@
   },
   "howItWorks": {
     "titleLine1": "三步完成。",
-    "titleHighlight": "永久证明。",
+    "titleHighlight": "任何人都可核验。",
     "subtitle": "从文件到 Bitcoin，不到一小时。试用无需账户。",
     "steps": {
       "upload": {
@@ -91,7 +91,7 @@
       },
       "medical": {
         "title": "医疗记录",
-        "body": "为患者文档和治疗历史提供不可篡改的审计追踪。"
+        "body": "为患者文档和治疗历史提供已锚定、可检测篡改的审计追踪。"
       },
       "corporate": {
         "title": "企业合规",
@@ -133,7 +133,7 @@
     "thanks": "每一个 satoshi 都有助于保持时间戳免费。感谢您。🙏"
   },
   "freeModel": {
-    "eyebrow": "Free today · anchored to Bitcoin forever.",
+    "eyebrow": "Free today · anchored to Bitcoin.",
     "titleLine1": "How free stamping",
     "titleHighlight": "actually works",
     "explainer": "We free-timestamp a fingerprint of your file using OpenTimestamps on Bitcoin. The free base tier is intended as the permanent, never-paywalled trust anchor, subsidised today by Give A Bit and community donations; premium tiers and the API are expected to fund infrastructure once live. Optional premium tiers and a pay-per-use API are built and staged and launch paid only once the Lightning rails are funded and tested.",

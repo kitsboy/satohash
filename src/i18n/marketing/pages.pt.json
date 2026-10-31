@@ -31,7 +31,7 @@
       "free": {
         "name": "Grátis",
         "price": "$0",
-        "period": "para sempre",
+        "period": "ao vivo agora",
         "desc": "Carimbe documentos no Bitcoin. Sem conta necessária.",
         "features": [
           "Hashing SHA-256 no seu navegador",
@@ -372,7 +372,7 @@
       },
       "bitcoinBlockchain": {
         "term": "Bitcoin Blockchain",
-        "def": "Um ledger público descentralizado e imutável mantido por uma rede global de mineradores. O Satohash ancora impressões digitais de prova em blocos Bitcoin para carimbo temporal permanente."
+        "def": "Um ledger público descentralizado, economicamente proibitivo de reescrever, mantido por uma rede global de mineradores. O Satohash ancora impressões digitais de prova em blocos Bitcoin para carimbo temporal verificável."
       },
       "blockHeight": {
         "term": "Block Height",
@@ -628,8 +628,8 @@
         "desc": "A raiz Merkle é escrita numa transação Bitcoin através de calendários OpenTimestamps."
       },
       "proof": {
-        "title": "Prova permanente",
-        "desc": "Quando confirmado no bloco Bitcoin seguinte (tipicamente cerca de uma hora), o teu ficheiro .ots prova que o documento existia nesse momento de bloco — para sempre."
+        "title": "Prova ancorada",
+        "desc": "Quando confirmado no bloco Bitcoin seguinte (tipicamente cerca de uma hora), o teu ficheiro .ots prova que o documento existia nesse momento de bloco — verificável por qualquer pessoa. Reescrevê-la seria economicamente proibitivo, não literalmente impossível."
       }
     },
     "tryIt": "Experimenta",
@@ -764,7 +764,7 @@
     },
     "preview": {
       "title": "Prévia ao vivo",
-      "body": "Cores e padrões de anel são derivados do hash — mesmo documento, mesmo DNA, para sempre. Clique em um widget incorporado para abrir a página de verificação.",
+      "body": "Cores e padrões de anel são derivados do hash — mesmo documento, mesmo DNA, todas as vezes. Clique em um widget incorporado para abrir a página de verificação.",
       "v3Title": "v3 preview"
     },
     "embed": {
@@ -1080,7 +1080,7 @@
       },
       "share": {
         "title": "Compartilhe sua prova com qualquer pessoa",
-        "body": "Uma vez confirmada no Bitcoin, sua prova é permanente e pública. Compartilhe o link — qualquer pessoa pode verificá-la sem conta.",
+        "body": "Uma vez confirmada no Bitcoin, sua prova está ancorada e é publicamente verificável. Compartilhe o link — qualquer pessoa pode verificá-la sem conta.",
         "action": "Vamos lá →"
       }
     },
@@ -1091,7 +1091,7 @@
       "step2Title": "2. Agrupamento Merkle",
       "step2Text": "Várias impressões digitais são combinadas numa Merkle Tree. Isto permite escala massiva e provas de privacidade.",
       "step3Title": "3. Ancoragem Bitcoin",
-      "step3Text": "A Merkle Root é incorporada numa transação Bitcoin. A data da transação torna-se o seu carimbo temporal permanente."
+      "step3Text": "A Merkle Root é incorporada numa transação Bitcoin. A data da transação torna-se o seu carimbo temporal verificável."
     },
     "account": {
       "subtitle": "Crie a sua conta para começar com o Satohash"
@@ -1104,7 +1104,7 @@
       "browseLibrary": "Ver a biblioteca completa de modelos",
       "batchDemo": "Experimentar a demo de prova em lote",
       "disclaimerTitle": "Aviso do protocolo",
-      "disclaimer": "O Satohash é um serviço de notariado criptográfico. Fornecemos prova matemática de existência através da blockchain Bitcoin. Não somos um escritório de advogados e não prestamos aconselhamento jurídico. Todas as provas geradas são verificáveis globalmente via OpenTimestamps.",
+      "disclaimer": "O Satohash é um serviço de notariado criptográfico. Fornecemos uma forte evidência criptográfica de existência através da blockchain Bitcoin. Não somos um escritório de advogados e não prestamos aconselhamento jurídico. Todas as provas geradas são verificáveis globalmente via OpenTimestamps.",
       "aboutTemplate": "Sobre este modelo",
       "tooltip": "Este modelo está otimizado para {{title}}. Inclui campos de metadados personalizados e ancoragem criptográfica específica para artefactos de {{category}}.",
       "categories": {
@@ -1117,7 +1117,7 @@
       "items": {
         "prenup": {
           "title": "Acordo pré-nupcial",
-          "description": "Liga matematicamente declarações de bens pré-matrimoniais à blockchain."
+          "description": "Liga criptograficamente declarações de bens pré-matrimoniais à blockchain."
         },
         "photo-archive": {
           "title": "Cofre de fotos iPhone",
@@ -1165,7 +1165,7 @@
     },
     "templateLibrary": {
       "title": "Biblioteca de modelos jurídicos",
-      "subtitle": "Acordos criptográficos redigidos profissionalmente. Ancorados ao Bitcoin para imutabilidade absoluta.",
+      "subtitle": "Acordos criptográficos redigidos profissionalmente. Ancorados ao Bitcoin — verificáveis por qualquer pessoa.",
       "searchAria": "Pesquisar modelos jurídicos",
       "searchPlaceholder": "Pesquisar modelos jurídicos (ex. NDA, propriedade)...",
       "choose": "Escolher modelo",
@@ -1221,7 +1221,7 @@
         },
         "commercial-lease": {
           "title": "Arrendamento comercial",
-          "description": "Acordo vinculativo para instalações comerciais com prova imutável de início.",
+          "description": "Acordo vinculativo para instalações comerciais com prova ancorada de início.",
           "jurisdiction": "Imobiliário / global",
           "difficulty": "Padrão",
           "tag": "Negócio"
@@ -1249,7 +1249,7 @@
         },
         "domain-notary": {
           "title": "Notário de propriedade de domínio",
-          "description": "Prova imutável de controlo do nome de domínio e historial de titularidade.",
+          "description": "Prova ancorada de controlo do nome de domínio e historial de titularidade.",
           "jurisdiction": "ICANN / global",
           "difficulty": "Suporte em lote",
           "tag": "Novo"
@@ -1555,8 +1555,8 @@
         "sub": "Ancorado num bloco"
       },
       "proof": {
-        "label": "Prova imutável",
-        "sub": "Verificável para sempre"
+        "label": "Prova ancorada",
+        "sub": "Verificável por qualquer pessoa"
       }
     },
     "legalLabel": "Conformidade legal",
@@ -1626,8 +1626,8 @@
     "privacyBitcoinTitle": "O que o Bitcoin armazena",
     "privacyBitcoin": {
       "hash": "O seu hash, embutido num bloco",
-      "public": "Visível publicamente para sempre",
-      "immutable": "Imutável e à prova de adulteração",
+      "public": "Visível publicamente",
+      "immutable": "Ancorado; adulteração detetável",
       "verifiable": "Verificável por qualquer pessoa, em qualquer lugar"
     },
     "gdprNoteStrong": "Conformidade com o artigo 11.º do GDPR:",
@@ -1644,7 +1644,7 @@
       "ots": "OpenTimestamps (opentimestamps.org) é um protocolo aberto — não um produto Satohash"
     },
     "otsTooltipTitle": "OpenTimestamps (OTS)",
-    "otsTooltip": "Um protocolo aberto que faz hash do seu documento e o ancora num bloco Bitcoin. Prova que o ficheiro existiu num momento específico, de forma imutável.",
+    "otsTooltip": "Um protocolo aberto que faz hash do seu documento e o ancora num bloco Bitcoin. Prova que o ficheiro existiu num momento específico, de forma verificável.",
     "scopeLabel": "Âmbito do serviço",
     "scopeTitle": "O que o nosso serviço é",
     "scopeTitleRest": "(e o que não é)",
@@ -1797,7 +1797,7 @@
     "step2Label": "Hasheamos localmente",
     "step2Desc": "Uma impressão SHA-256 é calculada no seu navegador. A mesma entrada produz sempre o mesmo hash — qualquer pessoa pode voltar a derivá-lo.",
     "step3Label": "O Bitcoin carimba no tempo",
-    "step3Desc": "A impressão é gravada permanentemente na blockchain.",
+    "step3Desc": "A impressão é gravada na blockchain. Reescrevê-la seria economicamente proibitivo, não literalmente impossível.",
     "moreOptions": "Mais opções (cápsula · redigir · voz)",
     "filePhotoOrHash": "Arquivo · foto · ou hash — um único gesto",
     "hashingLabel": "Hash local",
@@ -1873,7 +1873,7 @@
     "stepBitcoinWaiting": "Aguardando um bloco",
     "stepBitcoinFolded": "Dobrado",
     "stepBitcoinBlock": "Bloco {{block}}",
-    "stepBitcoinTip": "Sua impressão é dobrada num bloco público de Bitcoin. Lá, qualquer um pode conferir — o selo à prova de adulteração.",
+    "stepBitcoinTip": "Sua impressão é dobrada num bloco público de Bitcoin. Lá, qualquer um pode conferir — alterá-la seria economicamente proibitivo, não literalmente impossível.",
     "stepTipTitle": "Passo {{n}} — {{title}}",
     "viewMempool": "Ver no mempool.space",
     "blockHeightMissing": "Altura do bloco ainda não guardada — pending ≠ o problema; a confirmação está registada.",
@@ -1915,7 +1915,7 @@
     },
     "revoke": {
       "title": "Revogar prova",
-      "body": "Isto marca o registro como revogado permanentemente. A âncora Bitcoin permanece imutável.",
+      "body": "Isto marca o registro como revogado permanentemente. A âncora Bitcoin permanece — reescrevê-la seria economicamente proibitivo, não literalmente impossível.",
       "confirm": "Confirmar revogação",
       "cancel": "Cancelar"
     }
@@ -2079,7 +2079,7 @@
     "fullCtaTitle": "Confere",
     "fullCtaLine": "Ficas com um recibo e uma ligação. Provamos quando, não quem. Abre uma prova real e depois sela a tua.",
     "shortHookTitle": "Gancho",
-    "shortHookLine": "Um ficheiro que tem de existir — e ser comprovável para sempre?",
+    "shortHookLine": "Um ficheiro que tem de existir — e ser comprovável por qualquer pessoa?",
     "shortPrivacyTitle": "Privacidade",
     "shortPrivacyLine": "O ficheiro não sai do dispositivo. Só uma impressão é selada.",
     "shortAnchorTitle": "Bitcoin",
@@ -2224,7 +2224,7 @@
     "freeTitle": "Os selos continuam grátis.",
     "freeBody": "As gorjetas financiam o nível público grátis — não o transformam em paywall.",
     "infraTitle": "Infraestrutura.",
-    "infraBody": "Os calendários OpenTimestamps, o nó THOR e a API que mantêm as provas verificáveis para sempre.",
+    "infraBody": "Os calendários OpenTimestamps, o nó THOR e a API que mantêm as provas verificáveis por qualquer pessoa.",
     "noMiddleTitle": "Sem intermediário.",
     "noMiddleBody": "Os sats chegam direto à carteira Satohash no Breez Spark — não custodial, sem corte de plataforma.",
     "stampFree": "Selar grátis",
@@ -2256,7 +2256,7 @@
     "titleBefore": "O",
     "titleHighlight": "Satohash",
     "titleAfter": "protocolo",
-    "lede": "Prova de existência gratuita e privada no Bitcoin — concebida pela Give A Bit. Faça hash localmente. Ancore em aberto. Verifique para sempre.",
+    "lede": "Prova de existência gratuita e privada no Bitcoin — concebida pela Give A Bit. Faça hash localmente. Ancore em aberto. Verifique por qualquer pessoa.",
     "stampCta": "Selar grátis",
     "watchCta": "Ver explicação",
     "governmentCta": "Governo",
@@ -2539,7 +2539,7 @@
     "stampCta": "Selar grátis"
   },
   "execSummaryPage": {
-    "eyebrow": "Grátis hoje · ancorado ao Bitcoin para sempre.",
+    "eyebrow": "Grátis hoje · ancorado ao Bitcoin.",
     "h1": "Prove que existiu.",
     "h1Highlight": "Em menos de um minuto.",
     "lede": "O Satohash sela gratuitamente a impressão digital do seu ficheiro com OpenTimestamps no Bitcoin. O nível base gratuito destina-se a ser a âncora de confiança permanente, nunca atrás de paywall, subsidiado hoje pelo Give A Bit e doações da comunidade; espera-se que os níveis premium e a API financiem a infraestrutura quando estiverem em produção. Níveis premium opcionais (Professional ~2.100 sats/mês, Business ~21.000 sats/mês) e uma API de pagamento por uso estão construídos e em staging; só passam a pagos quando os carris Lightning estiverem financiados e testados — a prova ancora-se ao Bitcoin de qualquer forma.",
@@ -2574,7 +2574,7 @@
         "label": "01 — O que fazemos",
         "title": "O que fazemos",
         "p1": "O Satohash fornece prova de existência independente e criptográfica para qualquer ficheiro digital—contratos, fotografias, código-fonte, saídas de modelos de IA, capturas web ou pacotes de auditoria. Não armazenamos nem revemos o conteúdo subjacente. Em vez disso, permitimos que organizações e pessoas liguem uma impressão digital matemática desse conteúdo à blockchain Bitcoin através do protocolo aberto OpenTimestamps, produzindo uma prova portátil que terceiros podem verificar sem confiar no Satohash como guardião da verdade.",
-        "p2": "Na prática: quando um documento, um pacote de entrega ou um artefacto digital tem de resistir mais tarde ao escrutínio—de contrapartes, reguladores, tribunais ou auditoria interna—o Satohash fornece um registo duradouro e não repudiável de que o artefacto existiu numa forma específica num momento específico. O serviço é pensado para o uso quotidiano na margem do trabalho (jurídico, criativo, de investigação e operacional), não como uma novidade pontual."
+        "p2": "Na prática: quando um documento, um pacote de entrega ou um artefacto digital tem de resistir mais tarde ao escrutínio—de contrapartes, reguladores, tribunais ou auditoria interna—o Satohash fornece um registo duradouro, apoiado por uma forte evidência criptográfica, de que o artefacto existiu numa forma específica num momento específico. O serviço é pensado para o uso quotidiano na margem do trabalho (jurídico, criativo, de investigação e operacional), não como uma novidade pontual."
       },
       "how": {
         "label": "02 — Como funciona",
@@ -2613,7 +2613,7 @@
       },
       "offline": {
         "title": "Funciona offline-first",
-        "body": "Faça hash em qualquer lado. Sincronize quando voltar a estar online. Portátil para sempre."
+        "body": "Faça hash em qualquer lado. Sincronize quando voltar a estar online. Portátil — guarde a sua própria cópia .ots num local seguro."
       }
     },
     "chartsTitle": "Onde a prova",
@@ -2664,7 +2664,7 @@
       },
       "bitcoin": {
         "title": "Bitcoin sela-o",
-        "body": "Os calendários agrupam muitas provas num compromisso Bitcoin. A confirmação demora tipicamente cerca de 60 minutos. Permanente."
+        "body": "Os calendários agrupam muitas provas num compromisso Bitcoin. A confirmação demora tipicamente cerca de 60 minutos. Verificável por qualquer pessoa."
       },
       "verify": {
         "title": "Verificar em qualquer lado",
@@ -2673,7 +2673,7 @@
     },
     "planesTitle": "Quatro planos ·",
     "planesTitleHighlight": "uma base Bitcoin",
-    "planesLede": "Os planos superiores podem evoluir. As provas do plano 1 permanecem válidas para sempre.",
+    "planesLede": "Os planos superiores podem evoluir. As provas do plano 1 permanecem verificáveis por qualquer pessoa.",
     "planes": {
       "atlas": {
         "name": "Atlas",
@@ -2702,9 +2702,9 @@
         "tag": "Em directo agora",
         "p1": "OTS no Bitcoin",
         "p2": "Hash local",
-        "p3": "Verificar para sempre",
+        "p3": "Verificar por qualquer pessoa",
         "p4": "Sem conta",
-        "p5": "Nunca atrás de paywall"
+        "p5": "Pensado para nunca ficar atrás de paywall"
       },
       "pro": {
         "name": "Professional",
@@ -3191,7 +3191,7 @@
     "viewNetwork": "Ver estatísticas da rede",
     "learn": "Aprender",
     "learnTitle": "O que é o carimbo criptográfico?",
-    "learnBody": "O carimbo criptográfico cria evidência permanente e inviolável de que um documento existiu num momento concreto. Ao ancorar uma impressão SHA-256 do seu documento ao Bitcoin com OpenTimestamps, cria uma prova que é:",
+    "learnBody": "O carimbo criptográfico cria evidência verificável e com adulteração detetável de que um documento existiu num momento concreto. Ao ancorar uma impressão SHA-256 do seu documento ao Bitcoin com OpenTimestamps, cria uma prova que é:",
     "tamperTitle": "Inviolável",
     "tamperDesc": "Impossível de alterar sem deteção",
     "decentralizedTitle": "Descentralizada",
@@ -3393,7 +3393,7 @@
     "securedBy": "Protegido pela rede Bitcoin • Bloco #{{height}}",
     "heroTitle": "O notário digital",
     "heroHighlight": "para um mundo verificado.",
-    "heroSubtitle": "O Satohash fornece prova de existência matematicamente indiscutível para os seus documentos mais críticos. Privacidade local, imutabilidade global.",
+    "heroSubtitle": "O Satohash fornece uma forte evidência criptográfica de existência para os seus documentos mais críticos. Privacidade local, verificável globalmente.",
     "startCta": "Iniciar novo acordo",
     "exploreCta": "Explorar o protocolo",
     "educationalInsight": "Nota educativa",
@@ -3418,7 +3418,7 @@
       "merkleTitle": "02 / Agrupamento Merkle",
       "merkleText": "Várias impressões digitais são combinadas numa Merkle Tree. Isto permite escala massiva e privacidade absoluta na prova.",
       "anchorTitle": "03 / Ancoragem Bitcoin",
-      "anchorText": "A Merkle Root é incorporada na blockchain Bitcoin. A altura do bloco da transação torna-se o seu carimbo temporal permanente e infalsificável."
+      "anchorText": "A Merkle Root é incorporada na blockchain Bitcoin. A altura do bloco da transação torna-se o seu carimbo temporal ancorado e verificável."
     },
     "abyss": {
       "kicker": "O abismo do protocolo",
@@ -3429,7 +3429,7 @@
     "trust": {
       "privacyTitle": "Privacidade local",
       "privacyDesc": "O conteúdo nunca sai do seu navegador.",
-      "proofTitle": "Prova eterna",
+      "proofTitle": "Prova verificável",
       "proofDesc": "Sobrevive a empresas e servidores.",
       "standardTitle": "Padronizado",
       "standardDesc": "Usa provas .ots de padrão aberto.",
@@ -3451,7 +3451,7 @@
     "metaDescription": "A faturação Lightning BOLT-12 e NWC está em staging. Os carimbos são grátis hoje — o paywall está desligado. Não é liquidação paga em direto.",
     "stagedChip": "Em staging",
     "explainerTitle": "O que são Lightning Offers?",
-    "explainerP1": "Uma Lightning Offer (BOLT-12) é um link de pagamento Bitcoin reutilizável — como um QR code que funciona para sempre. Em vez de gerar uma fatura nova de cada vez, cria uma Offer que qualquer pessoa pode pagar, as vezes que quiser, a partir de qualquer carteira Lightning.",
+    "explainerP1": "Uma Lightning Offer (BOLT-12) é um link de pagamento Bitcoin reutilizável — como um QR code que pode reutilizar as vezes que quiser. Em vez de gerar uma fatura nova de cada vez, cria uma Offer que qualquer pessoa pode pagar, as vezes que quiser, a partir de qualquer carteira Lightning.",
     "explainerP2": "No Satohash isto está em staging — não é liquidação paga em direto. Os carimbos são grátis hoje. O paywall está desligado. Mais tarde, as Offers podem alimentar acesso L402 à API (carimbo por utilização via Lightning). Os rails Lightning ainda não estão financiados.",
     "tagReusable": "Link de pagamento reutilizável",
     "tagNoExpiry": "Sem caducidade",
@@ -3522,7 +3522,7 @@
     "pathWithBlock": "{{path}} · Block #{{height}}",
     "close": "Fechar",
     "pendingTitle": "Confirmação Bitcoin pendente",
-    "pendingBody": "A sua prova foi enviada ao OpenTimestamps e aguarda inclusão no próximo bloco Bitcoin — normalmente em 60 minutos. Depois de ancorada, esta prova torna-se matematicamente irrefutável e verificável por qualquer pessoa, para sempre.",
+    "pendingBody": "A sua prova foi enviada ao OpenTimestamps e aguarda inclusão no próximo bloco Bitcoin — normalmente em 60 minutos. Depois de ancorada, esta prova torna-se uma forte evidência criptográfica que qualquer pessoa pode verificar. Reescrevê-la seria economicamente proibitivo, não literalmente impossível — os nós podem podar dados, por isso guarde o seu ficheiro .ots e o documento original.",
     "proofId": "ID da prova",
     "stampedAt": "Carimbado em",
     "fingerprint": "1. Impressão do documento (SHA-256)",
@@ -3545,7 +3545,7 @@
     "stepVerifiable": "Prova verificável de forma independente",
     "verifiedAuthentic": "Autenticidade verificada",
     "proofSubmitted": "Prova enviada",
-    "linkedMainnet": "Ligado matematicamente à Bitcoin Mainnet",
+    "linkedMainnet": "Ligado criptograficamente à Bitcoin Mainnet",
     "awaitingConfirm": "A aguardar confirmação de bloco Bitcoin",
     "blockHeight": "BLOCK HEIGHT"
   },

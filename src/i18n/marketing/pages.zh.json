@@ -31,7 +31,7 @@
       "free": {
         "name": "免费",
         "price": "$0",
-        "period": "永久",
+        "period": "现已上线",
         "desc": "在 Bitcoin 上为文档加盖时间戳。无需账户。",
         "features": [
           "在浏览器中进行 SHA-256 哈希",
@@ -372,7 +372,7 @@
       },
       "bitcoinBlockchain": {
         "term": "Bitcoin Blockchain",
-        "def": "由全球矿工网络维护的去中心化、不可篡改的公共账本。Satohash 将证明指纹锚定到 Bitcoin 区块以实现永久时间戳。"
+        "def": "由全球矿工网络维护的去中心化公共账本，改写其在经济上几乎不可行。Satohash 将证明指纹锚定到 Bitcoin 区块以实现可核验时间戳。"
       },
       "blockHeight": {
         "term": "Block Height",
@@ -618,8 +618,8 @@
         "desc": "Merkle 根通过 OpenTimestamps 日历写入一笔 Bitcoin 交易。"
       },
       "proof": {
-        "title": "永久证明",
-        "desc": "在下一个 Bitcoin 区块确认后（通常大约一小时），你的 .ots 文件证明该文档在该区块时间已存在——永远。"
+        "title": "已锚定证明",
+        "desc": "在下一个 Bitcoin 区块确认后（通常大约一小时），你的 .ots 文件证明该文档在该区块时间已存在——任何人都可核验。改写它将面临经济上几乎不可行的成本，而非字面意义上的不可能。"
       }
     },
     "tryIt": "试试看",
@@ -739,7 +739,7 @@
     },
     "preview": {
       "title": "实时预览",
-      "body": "颜色和环形图案源自哈希——同一文档，同一 DNA，永久不变。点击嵌入的 Widget 打开验证页面。",
+      "body": "颜色和环形图案源自哈希——同一文档，同一 DNA，每次都一样。点击嵌入的 Widget 打开验证页面。",
       "v3Title": "v3 preview"
     },
     "embed": {
@@ -1055,7 +1055,7 @@
       },
       "share": {
         "title": "与任何人分享您的证明",
-        "body": "一旦在 Bitcoin 上确认，您的证明即永久且公开。分享链接——任何人无需账户即可验证。",
+        "body": "一旦在 Bitcoin 上确认，您的证明已锚定且可公开核验。分享链接——任何人无需账户即可验证。",
         "action": "开始吧 →"
       }
     },
@@ -1066,7 +1066,7 @@
       "step2Title": "2. Merkle 打包",
       "step2Text": "多个指纹被组合成 Merkle Tree。这既可大规模扩展，也能提供隐私证明。",
       "step3Title": "3. Bitcoin 锚定",
-      "step3Text": "Merkle Root 被写入 Bitcoin 交易。交易日期成为您的永久时间戳。"
+      "step3Text": "Merkle Root 被写入 Bitcoin 交易。交易日期成为您的可核验时间戳。"
     },
     "account": {
       "subtitle": "创建账户以开始使用 Satohash"
@@ -1079,7 +1079,7 @@
       "browseLibrary": "浏览完整模板库",
       "batchDemo": "试用批量证明演示",
       "disclaimerTitle": "协议声明",
-      "disclaimer": "Satohash 是加密公证服务。我们通过 Bitcoin 区块链提供数学上的存在证明。我们不是律师事务所，不提供法律建议。所有生成的证明均可经由 OpenTimestamps 在全球验证。",
+      "disclaimer": "Satohash 是加密公证服务。我们通过 Bitcoin 区块链提供强有力的密码学存在证据。我们不是律师事务所，不提供法律建议。所有生成的证明均可经由 OpenTimestamps 在全球验证。",
       "aboutTemplate": "关于此模板",
       "tooltip": "此模板针对 {{title}} 优化。它包含自定义元数据字段，以及适用于 {{category}} 工件的加密锚定。",
       "categories": {
@@ -1092,7 +1092,7 @@
       "items": {
         "prenup": {
           "title": "婚前协议",
-          "description": "将婚前资产声明以数学方式绑定到区块链。"
+          "description": "以密码学方式将婚前资产声明绑定到区块链。"
         },
         "photo-archive": {
           "title": "iPhone 照片保险库",
@@ -1104,7 +1104,7 @@
         },
         "academic-credential": {
           "title": "博士与学术证明",
-          "description": "对文凭、论文和研究论文进行不可篡改的验证。"
+          "description": "以锚定方式验证文凭、论文和研究论文。"
         },
         "power-of-attorney": {
           "title": "授权委托书",
@@ -1140,7 +1140,7 @@
     },
     "templateLibrary": {
       "title": "法律模板库",
-      "subtitle": "专业起草的加密协议。锚定到 Bitcoin，绝对不可篡改。",
+      "subtitle": "专业起草的加密协议。锚定到 Bitcoin — 任何人都可核验。",
       "searchAria": "搜索法律模板",
       "searchPlaceholder": "搜索法律模板（例如 NDA、房产）…",
       "choose": "选择模板",
@@ -1196,7 +1196,7 @@
         },
         "commercial-lease": {
           "title": "商业租赁",
-          "description": "商业场所的约束性协议，带有不可篡改的起始证明。",
+          "description": "商业场所的约束性协议，带有已锚定的起始证明。",
           "jurisdiction": "不动产 / 全球",
           "difficulty": "标准",
           "tag": "商业"
@@ -1224,7 +1224,7 @@
         },
         "domain-notary": {
           "title": "域名所有权公证",
-          "description": "域名控制与所有权历史的不可篡改证明。",
+          "description": "域名控制与所有权历史的已锚定证明。",
           "jurisdiction": "ICANN / 全球",
           "difficulty": "批量支持",
           "tag": "新"
@@ -1530,8 +1530,8 @@
         "sub": "锚定在区块中"
       },
       "proof": {
-        "label": "不可变证明",
-        "sub": "永远可核验"
+        "label": "已锚定证明",
+        "sub": "任何人都可核验"
       }
     },
     "legalLabel": "法律合规",
@@ -1601,8 +1601,8 @@
     "privacyBitcoinTitle": "Bitcoin 存储什么",
     "privacyBitcoin": {
       "hash": "你的哈希，嵌入区块中",
-      "public": "永久公开可见",
-      "immutable": "不可变且防篡改",
+      "public": "公开可见",
+      "immutable": "已锚定且可检测篡改",
       "verifiable": "任何人、任何地点均可核验"
     },
     "gdprNoteStrong": "GDPR 第 11 条：",
@@ -1619,7 +1619,7 @@
       "ots": "OpenTimestamps（opentimestamps.org）是开放协议——不是 Satohash 产品"
     },
     "otsTooltipTitle": "OpenTimestamps (OTS)",
-    "otsTooltip": "开放协议：对文件做哈希并锚定到 Bitcoin 区块。不可变地证明文件在某一时刻存在。",
+    "otsTooltip": "开放协议：对文件做哈希并锚定到 Bitcoin 区块。以可核验的方式证明文件在某一时刻存在。",
     "scopeLabel": "服务范围",
     "scopeTitle": "我们的服务是什么",
     "scopeTitleRest": "（以及不是什么）",
@@ -1772,7 +1772,7 @@
     "step2Label": "我们在本地计算哈希",
     "step2Desc": "在浏览器中计算 SHA-256 指纹。相同的输入总是产生相同的哈希——任何人都能重新推导。",
     "step3Label": "比特币为其打时间戳",
-    "step3Desc": "指纹被永久写入区块链。",
+    "step3Desc": "指纹被写入区块链。改写它将面临经济上几乎不可行的成本，而非字面意义上的不可能。",
     "moreOptions": "更多选项（胶囊 · 脱敏 · 语音）",
     "filePhotoOrHash": "文件 · 照片 · 或哈希 — 一键完成",
     "hashingLabel": "本地哈希",
@@ -1848,7 +1848,7 @@
     "stepBitcoinWaiting": "等待区块",
     "stepBitcoinFolded": "已折入",
     "stepBitcoinBlock": "区块 {{block}}",
-    "stepBitcoinTip": "你的指纹被折入公开的比特币区块。一旦上链，任何人都可以永久核验 — 防篡改封印。",
+    "stepBitcoinTip": "你的指纹被折入公开的比特币区块。一旦上链，任何人都可以核验 — 改写它将面临经济上几乎不可行的成本，而非字面意义上的不可能。",
     "stepTipTitle": "步骤 {{n}} — {{title}}",
     "viewMempool": "在 mempool.space 查看",
     "blockHeightMissing": "尚未存储区块高度 — pending ≠ 问题本身；确认已被记录。",
@@ -1890,7 +1890,7 @@
     },
     "revoke": {
       "title": "撤销证明",
-      "body": "这将永久将该记录标记为已撤销。比特币锚点保持不可变。",
+      "body": "这将永久将该记录标记为已撤销。比特币锚点保持不变 — 改写它将面临经济上几乎不可行的成本，而非字面意义上的不可能。",
       "confirm": "确认撤销",
       "cancel": "取消"
     }
@@ -2054,7 +2054,7 @@
     "fullCtaTitle": "自己核对",
     "fullCtaLine": "你会拿到一张回执和一个链接。我们证明的是何时，不是何人。先打开一份真实证明，再给自己的文件盖章。",
     "shortHookTitle": "开场",
-    "shortHookLine": "一份必须存在、且永远可被证明的文件？",
+    "shortHookLine": "一份必须存在、且任何人都可核验的文件？",
     "shortPrivacyTitle": "隐私",
     "shortPrivacyLine": "文件不离开设备。只有指纹被盖戳。",
     "shortAnchorTitle": "比特币",
@@ -2199,7 +2199,7 @@
     "freeTitle": "盖戳保持免费。",
     "freeBody": "小费资助免费公共盖戳档 — 不会把它变成付费墙。",
     "infraTitle": "基础设施。",
-    "infraBody": "OpenTimestamps 日历、THOR 节点和 API，让证明永远可核验。",
+    "infraBody": "OpenTimestamps 日历、THOR 节点和 API，让任何人都能核验证明。",
     "noMiddleTitle": "无中间人。",
     "noMiddleBody": "聪直接进入 Breez Spark 上的 Satohash 钱包 — 非托管，无平台抽成。",
     "stampFree": "免费盖戳",
@@ -2231,7 +2231,7 @@
     "titleBefore": "",
     "titleHighlight": "Satohash",
     "titleAfter": "协议",
-    "lede": "在 Bitcoin 上免费、私密的存在证明 — 由 Give A Bit 打造。本地哈希。公开锚定。永久核验。",
+    "lede": "在 Bitcoin 上免费、私密的存在证明 — 由 Give A Bit 打造。本地哈希。公开锚定。任何人都可核验。",
     "stampCta": "免费盖戳",
     "watchCta": "观看讲解",
     "governmentCta": "政务",
@@ -2514,7 +2514,7 @@
     "stampCta": "免费盖戳"
   },
   "execSummaryPage": {
-    "eyebrow": "今日免费 · 永久锚定到 Bitcoin。",
+    "eyebrow": "今日免费 · 锚定到 Bitcoin。",
     "h1": "证明它存在过。",
     "h1Highlight": "不到一分钟。",
     "lede": "Satohash 用 OpenTimestamps 在 Bitcoin 上免费为你的文件指纹盖时间戳。免费基础档旨在成为永久、永不付费墙的信任锚，目前由 Give A Bit 和社区捐赠补贴；付费档和 API 预计将在上线后承担基础设施成本。可选付费档（Professional 约 2,100 sats/月，Business 约 21,000 sats/月）和按次计费 API 已经建好并处于 staging；只有在 Lightning 通道完成注资和测试后才会开始收费 — 无论哪种方式，证明都锚定到 Bitcoin。",
@@ -2549,7 +2549,7 @@
         "label": "01 — 我们做什么",
         "title": "我们做什么",
         "p1": "Satohash 为任何数字文件提供独立的密码学存在证明—合同、照片、源代码、AI 模型输出、网页截取或审计包。我们不存储、也不审阅底层内容。我们让组织和个人通过开放的 OpenTimestamps 协议，把该内容的数学指纹绑定到 Bitcoin 区块链，生成第三方无需把 Satohash 当作真相托管方即可验证的可携证明。",
-        "p2": "实际而言：当一份文件、交付包或数字制品日后必须经受对手方、监管机构、法院或内部审计的审视时，Satohash 提供一份耐久、不可否认的记录——该制品曾以特定形态存在于特定时刻。这项服务是为日常工作边缘（法律、创作、调查与运营）设计的，而不是一次性的新鲜玩意。"
+        "p2": "实际而言：当一份文件、交付包或数字制品日后必须经受对手方、监管机构、法院或内部审计的审视时，Satohash 提供一份耐久、由强密码学证据支撑的记录——该制品曾以特定形态存在于特定时刻。这项服务是为日常工作边缘（法律、创作、调查与运营）设计的，而不是一次性的新鲜玩意。"
       },
       "how": {
         "label": "02 — 如何运作",
@@ -2588,7 +2588,7 @@
       },
       "offline": {
         "title": "离线优先",
-        "body": "随处哈希。重新上线后再同步。永久可携。"
+        "body": "随处哈希。重新上线后再同步。可携 — 请妥善保管您自己的 .ots 副本。"
       }
     },
     "chartsTitle": "证明最要紧的",
@@ -2639,7 +2639,7 @@
       },
       "bitcoin": {
         "title": "Bitcoin 密封",
-        "body": "日历把许多证明批量写入一次 Bitcoin 承诺。确认通常约 60 分钟。永久。"
+        "body": "日历把许多证明批量写入一次 Bitcoin 承诺。确认通常约 60 分钟。任何人都可核验。"
       },
       "verify": {
         "title": "随处验证",
@@ -2648,7 +2648,7 @@
     },
     "planesTitle": "四个平面 ·",
     "planesTitleHighlight": "一个 Bitcoin 底座",
-    "planesLede": "上层平面可以演进。第 1 层证明永远有效。",
+    "planesLede": "上层平面可以演进。第 1 层证明任何人都可核验。",
     "planes": {
       "atlas": {
         "name": "Atlas",
@@ -2677,9 +2677,9 @@
         "tag": "现已上线",
         "p1": "OTS on Bitcoin",
         "p2": "本地哈希",
-        "p3": "永久验证",
+        "p3": "任何人都可核验",
         "p4": "无需账户",
-        "p5": "永不付费墙"
+        "p5": "旨在永不设置付费墙"
       },
       "pro": {
         "name": "Professional",
@@ -3166,7 +3166,7 @@
     "viewNetwork": "查看网络统计",
     "learn": "学习",
     "learnTitle": "什么是密码学时间戳？",
-    "learnBody": "密码学时间戳会生成永久、不可篡改的证据：一份文件在某一时刻已经存在。用 OpenTimestamps 把文件的 SHA-256 指纹锚定到 Bitcoin，你得到的证明是：",
+    "learnBody": "密码学时间戳会生成可核验、可检测篡改的证据：一份文件在某一时刻已经存在。用 OpenTimestamps 把文件的 SHA-256 指纹锚定到 Bitcoin，你得到的证明是：",
     "tamperTitle": "防篡改",
     "tamperDesc": "改动无法不被发现",
     "decentralizedTitle": "去中心化",
@@ -3368,7 +3368,7 @@
     "securedBy": "由 Bitcoin 网络保障 • 区块 #{{height}}",
     "heroTitle": "数字公证",
     "heroHighlight": "面向已验证的世界。",
-    "heroSubtitle": "Satohash 为您最关键的文件提供数学上无可争议的存在证明。本地隐私，全球不可篡改。",
+    "heroSubtitle": "Satohash 为您最关键的文件提供强有力的密码学存在证据。本地隐私，全球可核验。",
     "startCta": "开始新协议",
     "exploreCta": "探索协议",
     "educationalInsight": "学习要点",
@@ -3393,7 +3393,7 @@
       "merkleTitle": "02 / Merkle 打包",
       "merkleText": "多个指纹被组合成 Merkle Tree。这既可大规模扩展，又能保证证明中的绝对隐私。",
       "anchorTitle": "03 / Bitcoin 锚定",
-      "anchorText": "Merkle Root 被写入 Bitcoin 区块链。交易的区块高度成为您永久、不可伪造的时间戳。"
+      "anchorText": "Merkle Root 被写入 Bitcoin 区块链。交易的区块高度成为您已锚定、可核验的时间戳。"
     },
     "abyss": {
       "kicker": "协议深渊",
@@ -3404,7 +3404,7 @@
     "trust": {
       "privacyTitle": "本地隐私",
       "privacyDesc": "内容永不离开您的浏览器。",
-      "proofTitle": "永久证明",
+      "proofTitle": "可核验的证明",
       "proofDesc": "比公司和服务器更长久。",
       "standardTitle": "标准化",
       "standardDesc": "使用开放标准的 .ots 证明。",
@@ -3426,7 +3426,7 @@
     "metaDescription": "Lightning BOLT-12 与 NWC 计费处于 Staging。今日盖章免费 — 付费墙关闭。不是上线的付费结算。",
     "stagedChip": "Staging",
     "explainerTitle": "什么是 Lightning Offers？",
-    "explainerP1": "Lightning Offer（BOLT-12）是可重复使用的 Bitcoin 付款链接 — 像永远有效的二维码。不必每次生成新发票，你创建一个 Offer，任何人都可以用任何 Lightning 钱包、任意次数支付。",
+    "explainerP1": "Lightning Offer（BOLT-12）是可重复使用的 Bitcoin 付款链接 — 像可重复使用任意次数的二维码。不必每次生成新发票，你创建一个 Offer，任何人都可以用任何 Lightning 钱包、任意次数支付。",
     "explainerP2": "在 Satohash 这是 Staging — 不是上线的付费结算。今日盖章免费。付费墙关闭。以后 Offers 可能支撑 L402 API 访问（按次盖章，经 Lightning）。Lightning 通道尚未注资。",
     "tagReusable": "可重复使用的付款链接",
     "tagNoExpiry": "无过期",
@@ -3497,7 +3497,7 @@
     "pathWithBlock": "{{path}} · Block #{{height}}",
     "close": "关闭",
     "pendingTitle": "等待 Bitcoin 确认",
-    "pendingBody": "你的证明已提交到 OpenTimestamps，等待写入下一个 Bitcoin 区块 — 通常在 60 分钟内。一旦锚定，该证明在数学上不可否认，任何人都可以永久核验。",
+    "pendingBody": "你的证明已提交到 OpenTimestamps，等待写入下一个 Bitcoin 区块 — 通常在 60 分钟内。一旦锚定，该证明即成为任何人都能核验的强密码学证据。改写它将面临经济上几乎不可行的成本，而非字面意义上的不可能 — 节点可以修剪数据，因此请保留您的 .ots 文件和原始文档。",
     "proofId": "证明 ID",
     "stampedAt": "盖章时间",
     "fingerprint": "1. 文档指纹（SHA-256）",
@@ -3520,7 +3520,7 @@
     "stepVerifiable": "证明可独立核验",
     "verifiedAuthentic": "已核验为真实",
     "proofSubmitted": "证明已提交",
-    "linkedMainnet": "在数学上连接到 Bitcoin Mainnet",
+    "linkedMainnet": "以密码学方式连接到 Bitcoin Mainnet",
     "awaitingConfirm": "等待 Bitcoin 区块确认",
     "blockHeight": "BLOCK HEIGHT"
   },

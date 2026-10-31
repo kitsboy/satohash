@@ -2153,7 +2153,7 @@ export function TemplateEditor({ template, onBack, demoMode = false }) {
         'meta[property="og:title"]',
         'property',
         'og:title',
-        'Satohash — Stamp Any Document on Bitcoin. Forever.'
+        'Satohash — Stamp Any Document on Bitcoin. Verifiable by Anyone.'
       )
       setMeta(
         'meta[property="og:description"]',
