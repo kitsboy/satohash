@@ -1,5 +1,5 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 445) · **Updated:** 2026-10-31
+> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 446) · **Updated:** 2026-10-31
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Satohash — Marketing Strategy
@@ -163,7 +163,7 @@ A mission that only lists strengths isn't trustworthy. We name the limits becaus
 - **Reddit** — r/bitcoin, r/legaladvice, r/freelance
 
 ### Product-Led Growth
-- **Free base** — no daily quota on verifications or stamps (public path: 5 req/min abuse guard), never paywalled trust anchor — get users in the funnel
+- **Free base** — no daily quota on verifications or stamps (public path: 5 req/min abuse guard), intended to stay a never-paywalled trust anchor — get users in the funnel
 - **Shareable proof links** — every OTS proof embeds "Verified by Satohash"
 - **API developer onboarding** — free developer stamps for builders
 

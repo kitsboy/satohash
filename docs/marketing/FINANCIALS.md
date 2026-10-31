@@ -1,5 +1,5 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 445) · **Updated:** 2026-10-31
+> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 446) · **Updated:** 2026-10-31
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Satohash — FINANCIALS (Approximate)
@@ -127,4 +127,4 @@
 
 *Last updated: 2026-08-29 (Cam's locked pricing model applied — see Pricing Model above) | Contact: hello@giveabit.io*
 
-**Note for handoff**: These are planning approximations only. Recent work added production-grade Docker/PM2/PWA paths, richer client-side offline + Lightning components, and Nostr integration — all of which improve the reliability and perceived value of the paid tiers without materially changing the cost structure above. Gross margins remain excellent due to the near-zero marginal cost of OTS anchoring via public calendars. **Pricing model is locked by Cam (single source of truth, above): Free anchor (never paywalled) + Professional ~2,100 sats/mo + Business ~21,000 sats/mo + pay-per-use API (1–5 sats/stamp via L402); Enterprise is custom/partner-gated and not marketed now.**
+**Note for handoff**: These are planning approximations only. Recent work added production-grade Docker/PM2/PWA paths, richer client-side offline + Lightning components, and Nostr integration — all of which improve the reliability and perceived value of the paid tiers without materially changing the cost structure above. Gross margins remain excellent due to the near-zero marginal cost of OTS anchoring via public calendars. **Pricing model is locked by Cam (single source of truth, above): Free anchor (intended to stay never paywalled) + Professional ~2,100 sats/mo + Business ~21,000 sats/mo + pay-per-use API (1–5 sats/stamp via L402); Enterprise is custom/partner-gated and not marketed now.**

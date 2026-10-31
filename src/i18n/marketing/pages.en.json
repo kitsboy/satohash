@@ -32,7 +32,7 @@
         "name": "Free",
         "price": "0 sats",
         "period": "live now",
-        "desc": "Stamp & verify with OpenTimestamps under a disclosed 5-req/min abuse guard, with no daily cap. No account. No Lightning invoice. The free base is intended to stay the never-paywalled trust anchor.",
+        "desc": "Stamp & verify with OpenTimestamps under a disclosed 5-req/min abuse guard, with no daily cap. No account. No Lightning invoice. The free base is intended to stay the never-paywalled trust anchor; if economics ever force a limit, we publish the change before it applies.",
         "features": [
           "SHA-256 hashing in your browser",
           "OpenTimestamps server anchoring",

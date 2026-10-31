@@ -1,5 +1,5 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 445) · **Updated:** 2026-10-31
+> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 446) · **Updated:** 2026-10-31
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Satohash — Executive Summary
@@ -169,12 +169,12 @@ The **privacy-preserving integrity anchor** — hash on-chain, file never leaves
 
 | Tier            | Price                | Notes                                      |
 |-----------------|----------------------|--------------------------------------------|
-| Free            | $0                   | Free base — never paywalled trust anchor. Stamp/verify/.ots + client-side hashing, no daily quota |
+| Free            | $0                   | Free base — intended to stay a never-paywalled trust anchor. Stamp/verify/.ots + client-side hashing, no daily quota |
 | Professional    | ~2,100 sats/mo (~$29) | Unlimited, full vault, API, PDF exports    |
 | Business        | ~21,000 sats/mo (~$299) | White-label, SLA, custom webhooks, volume  |
 | Pay-per-use API | 1–5 sats/stamp       | Lightning (L402) — no subscription friction |
 
-**The reconciled model (Cam-locked, 2026-08-29):** *Free base (never paywalled trust anchor) + optional premium tiers (Professional ~2,100 sats / ~$29, Business ~21,000 sats / ~$299) + pay-per-use API (1–5 sats/stamp).* The free tier is the permanent trust anchor and is **never** paywalled. Premium tiers + L402/LND billing rails are built but **not yet switched on** — we launch paid only when channels are funded and tested. Gross margins are extremely high once past fixed infra (Bitcoin anchoring itself is effectively free via public OTS calendars).
+**The reconciled model (Cam-locked, 2026-08-29):** *Free base (intended to stay a never-paywalled trust anchor) + optional premium tiers (Professional ~2,100 sats / ~$29, Business ~21,000 sats / ~$299) + pay-per-use API (1–5 sats/stamp).* The free base tier is intended as the permanent, never-paywalled trust anchor, subsidised today by Give A Bit and community donations; premium tiers and the API are expected to fund infrastructure once live. Premium tiers + L402/LND billing rails are built but **not yet switched on** — we launch paid only when channels are funded and tested. Gross margins are extremely high once past fixed infra (Bitcoin anchoring itself is effectively free via public OTS calendars).
 
 ---
 
