@@ -43,13 +43,13 @@ ots verify proof.ots -f original.pdf --bitcoin-node 127.0.0.1:8332
 
 | Result | Meaning |
 |--------|---------|
-| **Success / Bitcoin block #N** | Your fingerprint is permanently anchored — anyone can re-verify forever |
+| **Success / Bitcoin block #N** | Your fingerprint is anchored to Bitcoin — altering it is economically prohibitive, not literally impossible; anyone can re-verify |
 | **Pending** | The calendar holds your hash but no Bitcoin block has included it *yet*. Wait for blocks, upgrade, verify again. This is normal for stamps under ~60 minutes old. |
 | **Failed / invalid** | The file isn't a valid OTS proof, or the hash doesn't match the document — check you have the right file pair |
 
 ## Why this matters
 
-The beauty of OpenTimestamps: **the proof doesn't depend on Satohash**. The `.ots` file plus a Bitcoin node (or any block explorer) is enough — forever. That's the difference between a receipt you trust a company for, and a receipt the whole world can check.
+The beauty of OpenTimestamps: **the proof doesn't depend on Satohash**. The `.ots` file plus a Bitcoin node (or any block explorer) is enough — with no reliance on Satohash, now or later. That's the difference between a receipt you trust a company for, and a receipt the whole world can check.
 
 ---
 

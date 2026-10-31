@@ -197,8 +197,10 @@ export default function PublicVerification() {
               Official Verification
             </h4>
             <p className="mb-8 text-[10px] leading-relaxed font-medium text-emerald-800/80 italic">
-              This digital asset has been mathematically linked to the Bitcoin blockchain. It is
-              permanently fixed in space and time. No centralized authority can alter this proof.
+              This digital asset has been cryptographically linked to the Bitcoin blockchain.
+              Altering or backdating it would require overwhelming the network (a 51% attack) —
+              economically prohibitive, not literally impossible. Nodes can prune data, so keep your
+              proof file and your original document.
             </p>
             <button
               className="btn-holographic w-full py-4 text-[9px] leading-none"

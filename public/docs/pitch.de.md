@@ -41,7 +41,7 @@ Satohash utilizes the **OpenTimestamps (OTS)** protocol. By bundling hashes and 
 When you notarize a document, Satohash yields a self-contained `.ots` proof file. This file contains the complete Merkle path leading from your document's hash to a confirmed Bitcoin block. Anyone can verify this proof offline, forever, using standard open-source command-line tools. If Satohash goes offline tomorrow, your proofs remain 100% valid and globally verifiable.
 
 ### 4. Cryptographic Identity Integration (Nostr NIP-05 & NIP-07)
-Instead of relying on fragile email addresses, Satohash uses the **Nostr protocol** for secure, decentralized identity. Signers authenticate via browser extensions (like Alby or Damus) using public key cryptography. Proofs are linked to verifiable Nostr profiles (`npub` / NIP-05), adding mathematical certainty to *who* created or signed the document.
+Instead of relying on fragile email addresses, Satohash uses the **Nostr protocol** for secure, decentralized identity. Signers authenticate via browser extensions (like Alby or Damus) using public key cryptography. Proofs are linked to verifiable Nostr profiles (`npub` / NIP-05), adding strong cryptographic evidence of *who* created or signed the document.
 
 ### 5. Instant Micropayment Settlement (L402 & BOLT-12)
 Satohash features native **L402 billing**—a brand new protocol combining HTTP status `402 Payment Required` with Lightning Network invoices. For enterprise volume or advanced API pipelines, users pay fraction-of-a-cent tolls in satoshis directly from their Lightning wallet. No monthly subscriptions, no billing accounts, no credit cards required.
