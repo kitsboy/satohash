@@ -1,5 +1,5 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 444) · **Updated:** 2026-10-31
+> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 445) · **Updated:** 2026-10-31
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Satohash Design Tokens
