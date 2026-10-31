@@ -58,7 +58,7 @@
   },
   "howItWorks": {
     "titleLine1": "Trois étapes.",
-    "titleHighlight": "Preuve permanente.",
+    "titleHighlight": "Vérifiable par tous.",
     "subtitle": "Du fichier à Bitcoin en moins d'une heure. Aucun compte requis pour essayer.",
     "steps": {
       "upload": {
@@ -133,7 +133,7 @@
     "thanks": "Chaque satoshi aide à garder les horodatages gratuits. Merci. 🙏"
   },
   "freeModel": {
-    "eyebrow": "Free today · anchored to Bitcoin forever.",
+    "eyebrow": "Free today · anchored to Bitcoin.",
     "titleLine1": "How free stamping",
     "titleHighlight": "actually works",
     "explainer": "We free-timestamp a fingerprint of your file using OpenTimestamps on Bitcoin. The free base tier is intended as the permanent, never-paywalled trust anchor, subsidised today by Give A Bit and community donations; premium tiers and the API are expected to fund infrastructure once live. Optional premium tiers and a pay-per-use API are built and staged and launch paid only once the Lightning rails are funded and tested.",

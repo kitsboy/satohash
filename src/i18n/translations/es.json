@@ -13,7 +13,7 @@
       "cryptoProofDetail": "El hashing convierte cualquier archivo en una cadena determinista de 64 caracteres. La misma entrada siempre produce el mismo hash: cualquiera puede volver a derivarlo. Incluso una coma cambiada da como resultado un hash completamente diferente. Satohash maneja esto localmente en tu dispositivo.",
       "timestamp": "Sellado de Tiempo en Bitcoin",
       "timestampDesc": "Ancla tu prueba a la cadena de bloques de Bitcoin mediante el protocolo OpenTimestamps.",
-      "timestampDetail": "El hash de tu documento se agrupa con miles de otros en un árbol de Merkle. Luego, un único hash 'raíz' se envía a la red Bitcoin, proporcionando una prueba de existencia permanente e inmutable.",
+      "timestampDetail": "El hash de tu documento se agrupa con miles de otros en un árbol de Merkle. Luego, un único hash 'raíz' se envía a la red Bitcoin, proporcionando una sólida evidencia criptográfica de existencia.",
       "verify": "Verificación Fácil",
       "verifyDesc": "Cualquiera puede verificar tu prueba de forma independiente mediante herramientas de código abierto.",
       "verifyDetail": "Un archivo .ots contiene la 'ruta' desde tu documento hasta el bloque de Bitcoin. No necesitas Satohash para probarlo; puedes usar el cliente oficial de OpenTimestamps o exploradores de bloques de terceros."
@@ -182,9 +182,9 @@
   "trust": {
     "title": "Centro de Confianza",
     "howItWorks": "Cómo funciona Satohash",
-    "howItWorksDetail": "Satohash utiliza SHA-256 (Algoritmo de Hash Seguro de 256 bits) para crear una huella digital única de su documento. Esto sucede localmente en su navegador; el texto de su documento nunca sale de su dispositivo. Este hash se agrupa con miles de otros en un Árbol de Merkle y su raíz se ancla a la cadena de bloques de Bitcoin mediante el protocolo OpenTimestamps, creando un registro permanente e inmutable.",
+    "howItWorksDetail": "Satohash utiliza SHA-256 (Algoritmo de Hash Seguro de 256 bits) para crear una huella digital única de su documento. Esto sucede localmente en su navegador; el texto de su documento nunca sale de su dispositivo. Este hash se agrupa con miles de otros en un Árbol de Merkle y su raíz se ancla a la cadena de bloques de Bitcoin mediante el protocolo OpenTimestamps, creando un registro sólido y criptográficamente verificable.",
     "whatBlockchain": "Capacidades y Limitaciones",
-    "whatBlockchainDetail": "El sellado de tiempo en blockchain proporciona una prueba matemática de que un conjunto de datos existió en un momento dado y no ha sido alterado. NO prueba la identidad del firmante por sí solo, NO garantiza la corrección legal del contenido del contrato y NO puede ser modificado ni eliminado una vez anclado. Es una herramienta de 'prueba de existencia', no un sustituto de una revisión legal.",
+    "whatBlockchainDetail": "El sellado de tiempo en blockchain proporciona una sólida evidencia criptográfica de que un conjunto de datos existió en un momento dado y no ha sido alterado. NO prueba la identidad del firmante por sí solo, NO garantiza la corrección legal del contenido del contrato y solo podría modificarse o eliminarse tras anclarse a un coste económicamente prohibitivo (no literalmente imposible). Es una herramienta de 'prueba de existencia', no un sustituto de una revisión legal.",
     "zkPrivacy": "El archivo se queda",
     "zkPrivacyDetail": "El archivo se queda en su dispositivo. Solo guardamos una huella, así que nunca vemos el documento. No ofrecemos redacción selectiva.",
     "legallyBinding": "Exigibilidad Legal",
@@ -227,13 +227,13 @@
     "success": "Éxito"
   },
   "landing": {
-    "heroTitle": "Ancla tus Documentos a Bitcoin — Para Siempre",
+    "heroTitle": "Ancla tus Documentos a Bitcoin — Verificable por cualquiera",
     "heroSubtitle": "Crea una prueba de que tus documentos existieron en un momento concreto. El archivo se queda en tu dispositivo. Bitcoin guarda el recibo.",
     "heroCta": "Sellar un Documento Ahora",
     "heroCta2": "Ver Cómo Funciona",
     "step1": "Hash local",
     "step2": "Anclar a Bitcoin",
-    "step3": "Probar para siempre",
+    "step3": "Verificar por cualquiera",
     "socialProof": "Hashea en tu dispositivo. Bitcoin guarda el recibo.",
     "tryTemplate": "Prueba una plantilla gratis",
     "features": {
@@ -324,7 +324,7 @@
     "quickActions": "Acciones Rápidas",
     "mirror": "Réplica global",
     "nominal": "Normal",
-    "mirrorTip": "Tu prueba se replica en varios nodos geográficos a la vez, así que no se puede perder ni censurar.",
+    "mirrorTip": "Tu prueba se replica en varios nodos geográficos a la vez, de modo que una sola caída de servidor no puede hacerla desaparecer. Conserva también tu propia copia .ots en un lugar seguro.",
     "height": "Altura de Bitcoin",
     "privacy": "Capa de privacidad",
     "onDevice": "En el dispositivo",

@@ -514,7 +514,7 @@ export default function Dashboard() {
                     {
                       step: '03',
                       label: 'Bitcoin Anchor',
-                      desc: 'Your fingerprint is permanently recorded on Bitcoin. Valid forever.'
+                      desc: 'Your fingerprint is recorded on Bitcoin. Rewriting it would be economically prohibitive, not literally impossible.'
                     }
                   ].map((s, i) => (
                     <div
@@ -671,7 +671,7 @@ export default function Dashboard() {
                     </h3>
                     <Tooltip
                       title="Stamp History"
-                      content="Every file you've anchored appears here. Each entry shows the SHA-256 hash, timestamp, and Bitcoin confirmation status. Confirmed stamps are immutable — they exist on Bitcoin forever."
+                      content="Every file you've anchored appears here. Each entry shows the SHA-256 hash, timestamp, and Bitcoin confirmation status. Confirmed stamps exist on Bitcoin — rewriting history would be economically prohibitive, not literally impossible."
                     />
                   </div>
                   <Link

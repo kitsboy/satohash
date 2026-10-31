@@ -13,7 +13,7 @@
       "cryptoProofDetail": "Hashing hubadilisha faili yoyote kuwa mfuatano wa herufi 64 wa uhakika. Ingizo lilelile daima hutoa hash ileile — mtu yeyote anaweza kuipata tena. Hata koma moja iliyobadilishwa hutoa hash tofauti kabisa. Satohash hufanya hivi ndani ya kifaa chako.",
       "timestamp": "Muhuri wa Muda kwenye Bitcoin",
       "timestampDesc": "Funga uthibitisho wako kwenye blockchain ya Bitcoin kwa kutumia itifaki ya OpenTimestamps.",
-      "timestampDetail": "Hash ya hati yako inachanganywa na maelfu ya nyingine kwenye mti wa Merkle. Kisha hash moja ya «mzizi» inawekwa kwenye mtandao wa Bitcoin, ikikupa uthibitisho wa kudumu na usiobadilika wa kuwepo.",
+      "timestampDetail": "Hash ya hati yako inachanganywa na maelfu ya nyingine kwenye mti wa Merkle. Kisha hash moja ya «mzizi» inawekwa kwenye mtandao wa Bitcoin, ikikupa ushahidi thabiti wa kriptografia wa kuwepo.",
       "verify": "Uthibitishaji Rahisi",
       "verifyDesc": "Mtu yeyote anaweza kuthibitisha uthibitisho wako kwa uhuru kwa kutumia zana za chanzo huria.",
       "verifyDetail": "Faili ya .ots ina «njia» kutoka hati yako hadi kwenye kizuizi cha Bitcoin. Huhitaji Satohash ili kuthibitisha; unaweza kutumia mteja rasmi wa OpenTimestamps au wachunguzi wa kizuizi wa wahusika wengine."
@@ -182,9 +182,9 @@
   "trust": {
     "title": "Kituo cha Uaminifu",
     "howItWorks": "Jinsi Satohash inavyofanya kazi",
-    "howItWorksDetail": "Satohash hutumia SHA-256 (Secure Hash Algorithm 256-bit) kuunda alama ya kidole ya kidijitali ya kipekee ya hati yako. Hii hufanyika ndani ya kivinjari chako; maandishi ya hati yako hayahitaji kuondoka kwenye kifaa chako. Kisha hash hii inachanganywa na maelfu ya nyingine kwenye Mti wa Merkle na mzizi wake unafungwa kwenye blockchain ya Bitcoin kwa kutumia itifaki ya OpenTimestamps. Hii inaunda rekodi ya kudumu na isiyobadilika ya kuwepo.",
+    "howItWorksDetail": "Satohash hutumia SHA-256 (Secure Hash Algorithm 256-bit) kuunda alama ya kidole ya kidijitali ya kipekee ya hati yako. Hii hufanyika ndani ya kivinjari chako; maandishi ya hati yako hayahitaji kuondoka kwenye kifaa chako. Kisha hash hii inachanganywa na maelfu ya nyingine kwenye Mti wa Merkle na mzizi wake unafungwa kwenye blockchain ya Bitcoin kwa kutumia itifaki ya OpenTimestamps. Hii inaunda rekodi thabiti, inayothibitishwa kwa kriptografia ya kuwepo.",
     "whatBlockchain": "Uwezo na Vikwazo",
-    "whatBlockchainDetail": "Muhuri wa muda wa blockchain hutoa uthibitisho wa kihesabu kuwa seti maalum ya data ilikuwepo wakati maalum na haijabadilishwa. HAITHIBITISHI utambulisho wa msaini peke yake (inahitaji uthibitisho wa ziada), HAITHIBITISHI usahihi wa kisheria wa maudhui ya mkataba, na HAIWEZI kubadilishwa au kufutwa mara tu inapofungwa. Ni zana ya «uthibitisho wa kuwepo», si mbadala wa ukaguzi wa kisheria.",
+    "whatBlockchainDetail": "Muhuri wa muda wa blockchain hutoa ushahidi thabiti wa kriptografia kuwa seti maalum ya data ilikuwepo wakati maalum na haijabadilishwa. HAITHIBITISHI utambulisho wa msaini peke yake (inahitaji uthibitisho wa ziada), HAITHIBITISHI usahihi wa kisheria wa maudhui ya mkataba, na kugeuza au kuifuta baada ya kuwekwa nanga kungekuwa ghali kiuchumi, si jambo lisilowezekana haswa. Ni zana ya «uthibitisho wa kuwepo», si mbadala wa ukaguzi wa kisheria.",
     "zkPrivacy": "Faili linabaki",
     "zkPrivacyDetail": "Faili linabaki kwenye kifaa chako. Tunahifadhi alama pekee, kwa hiyo hatuoni hati. Hatutoi ufichaji wa sehemu.",
     "legallyBinding": "Utekelezaji wa Kisheria",
@@ -227,13 +227,13 @@
     "success": "Imefanikiwa"
   },
   "landing": {
-    "heroTitle": "Funga Hati Zako kwenye Bitcoin — Milele",
+    "heroTitle": "Funga hati zako kwenye Bitcoin — inathibitishwa na mtu yeyote",
     "heroSubtitle": "Unda uthibitisho kuwa hati zako zilikuwepo wakati maalum. Faili inabaki kwenye kifaa chako. Bitcoin huhifadhi risiti.",
     "heroCta": "Weka Muhuri kwa Hati Sasa",
     "heroCta2": "Tazama Jinsi Inavyofanya Kazi",
     "step1": "Hash ndani ya kifaa",
     "step2": "Funga kwenye Bitcoin",
-    "step3": "Thibitisha milele",
+    "step3": "Thibitisha kwa mtu yeyote",
     "socialProof": "Hash kwenye kifaa chako. Bitcoin huhifadhi risiti.",
     "tryTemplate": "Jaribu kiolezo bila malipo",
     "features": {
@@ -324,7 +324,7 @@
     "quickActions": "Vitendo vya Haraka",
     "mirror": "Uigaji wa kimataifa",
     "nominal": "Kawaida",
-    "mirrorTip": "Uthibitisho wako unarudiwa kwenye nodi za maeneo mengi kwa wakati mmoja, kwa hiyo hauwezi kupotea wala kuzuiwa.",
+    "mirrorTip": "Uthibitisho wako unarudiwa kwenye nodi za maeneo mengi kwa wakati mmoja, kwa hivyo hitilafu ya seva moja haiwezi kuupoteza. Hifadhi pia nakala yako mwenyewe ya .ots mahali salama.",
     "height": "Urefu wa Bitcoin",
     "privacy": "Tabaka la faragha",
     "onDevice": "Kwenye kifaa",

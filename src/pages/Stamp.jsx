@@ -1325,7 +1325,7 @@ export default function Stamp() {
                             🎙 Oral Deposition Statement
                           </h4>
                           <p className="text-[10px] text-[var(--text-secondary)] uppercase">
-                            Capture voice deposition immutably client-side on Bitcoin.
+                            Capture voice deposition verifiably client-side on Bitcoin.
                           </p>
                         </div>
 

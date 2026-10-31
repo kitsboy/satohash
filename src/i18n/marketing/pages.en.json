@@ -39,7 +39,7 @@
           "Downloadable .ots proof files",
           "Verify any proof, anywhere",
           "Browser-based — nothing to install",
-          "No daily quota — never paywalled (trust anchor)"
+          "No daily quota — intended never paywalled (trust anchor)"
         ],
         "cta": "Stamp a File"
       },
@@ -372,7 +372,7 @@
       },
       "bitcoinBlockchain": {
         "term": "Bitcoin Blockchain",
-        "def": "A decentralized, immutable public ledger maintained by a global network of miners. Satohash anchors proof fingerprints into Bitcoin blocks for permanent timestamping."
+        "def": "A decentralized public ledger, economically prohibitive to rewrite, maintained by a global network of miners. Satohash anchors proof fingerprints into Bitcoin blocks for verifiable timestamping."
       },
       "blockHeight": {
         "term": "Block Height",
@@ -628,8 +628,8 @@
         "desc": "The Merkle root is written into a Bitcoin transaction via OpenTimestamps calendars."
       },
       "proof": {
-        "title": "Permanent proof",
-        "desc": "Once confirmed on the next Bitcoin block (typically about an hour), your .ots file proves your document existed at that block time — forever."
+        "title": "Anchored proof",
+        "desc": "Once confirmed on the next Bitcoin block (typically about an hour), your .ots file proves your document existed at that block time — verifiable by anyone. Rewriting it would be economically prohibitive, not literally impossible."
       }
     },
     "tryIt": "Try it",
@@ -764,7 +764,7 @@
     },
     "preview": {
       "title": "Live Preview",
-      "body": "Colors and ring patterns are derived from the hash — same document, same DNA, forever. Click an embedded widget to open the verification page.",
+      "body": "Colors and ring patterns are derived from the hash — same document, same DNA, every time. Click an embedded widget to open the verification page.",
       "v3Title": "v3 white-label preview"
     },
     "embed": {
@@ -1080,7 +1080,7 @@
       },
       "share": {
         "title": "Share your proof with anyone",
-        "body": "Once confirmed in Bitcoin, your proof is permanent and public. Share the link — anyone can verify it without an account.",
+        "body": "Once confirmed in Bitcoin, your proof is anchored and publicly verifiable. Share the link — anyone can verify it without an account.",
         "action": "Let's go →"
       }
     },
@@ -1091,7 +1091,7 @@
       "step2Title": "2. Merkle Bundling",
       "step2Text": "Multiple fingerprints are combined into a Merkle Tree. This allows for massive scaling and privacy proofs.",
       "step3Title": "3. Bitcoin Anchoring",
-      "step3Text": "The Merkle Root is embedded into a Bitcoin transaction. The transaction date becomes your permanent timestamp."
+      "step3Text": "The Merkle Root is embedded into a Bitcoin transaction. The transaction date becomes your verifiable timestamp."
     },
     "account": {
       "subtitle": "Create your account to get started with Satohash"
@@ -1104,7 +1104,7 @@
       "browseLibrary": "Browse full template library",
       "batchDemo": "Try batch proof demo",
       "disclaimerTitle": "Protocol Disclaimer",
-      "disclaimer": "Satohash is a cryptographic notary service. We provide mathematical proof of existence via the Bitcoin blockchain. We are not a law firm and do not provide legal advice. All proofs generated are verifiable globally via OpenTimestamps.",
+      "disclaimer": "Satohash is a cryptographic notary service. We provide strong cryptographic evidence of existence via the Bitcoin blockchain. We are not a law firm and do not provide legal advice. All proofs generated are verifiable globally via OpenTimestamps.",
       "aboutTemplate": "About this template",
       "tooltip": "This template is optimized for {{title}}. It includes custom metadata fields and cryptographic anchoring specific to {{category}} artifacts.",
       "categories": {
@@ -1117,7 +1117,7 @@
       "items": {
         "prenup": {
           "title": "Prenuptial Agreement",
-          "description": "Mathematically bind pre-marital asset declarations to the blockchain."
+          "description": "Cryptographically bind pre-marital asset declarations to the blockchain."
         },
         "photo-archive": {
           "title": "iPhone Photo Vault",
@@ -1129,7 +1129,7 @@
         },
         "academic-credential": {
           "title": "PhD & Academic Proof",
-          "description": "Immutable verification of diplomas, thesis, and research papers."
+          "description": "Anchored verification of diplomas, thesis, and research papers."
         },
         "power-of-attorney": {
           "title": "Power of Attorney",
@@ -1165,7 +1165,7 @@
     },
     "templateLibrary": {
       "title": "Legal Template Library",
-      "subtitle": "Professionally drafted cryptographic agreements. Anchored to Bitcoin for absolute immutability.",
+      "subtitle": "Professionally drafted cryptographic agreements. Anchored to Bitcoin — verifiable by anyone.",
       "searchAria": "Search legal templates",
       "searchPlaceholder": "Search legal templates (e.g. NDA, Property)...",
       "choose": "Choose template",
@@ -1221,7 +1221,7 @@
         },
         "commercial-lease": {
           "title": "Commercial Lease",
-          "description": "Binding agreement for business premises with immutable commencement proof.",
+          "description": "Binding agreement for business premises with anchored commencement proof.",
           "jurisdiction": "Real Estate / Global",
           "difficulty": "Standard",
           "tag": "Business"
@@ -1249,7 +1249,7 @@
         },
         "domain-notary": {
           "title": "Domain Ownership Notary",
-          "description": "Immutable proof of domain name control and ownership history.",
+          "description": "Anchored proof of domain name control and ownership history.",
           "jurisdiction": "ICANN / Global",
           "difficulty": "Batch Support",
           "tag": "New"
@@ -1523,7 +1523,7 @@
     "step2Label": "We Hash It Locally",
     "step2Desc": "A SHA-256 fingerprint is computed in your browser. The same input always produces the same hash — anyone can re-derive it.",
     "step3Label": "Bitcoin Timestamps It",
-    "step3Desc": "The fingerprint is permanently written to the blockchain.",
+    "step3Desc": "The fingerprint is written into the blockchain. Rewriting it would be economically prohibitive, not literally impossible.",
     "takePhoto": "Take photo",
     "chooseFile": "Choose file",
     "modes": {
@@ -1616,7 +1616,7 @@
     "stepBitcoinWaiting": "Waiting on a block",
     "stepBitcoinFolded": "Folded in",
     "stepBitcoinBlock": "Block {{block}}",
-    "stepBitcoinTip": "Your fingerprint gets folded into a public Bitcoin block. Once there, anyone can check it forever — that is the final, tamper-evident seal.",
+    "stepBitcoinTip": "Your fingerprint gets folded into a public Bitcoin block. Once there, anyone can check it — rewriting it would be economically prohibitive, not literally impossible.",
     "stepTipTitle": "Step {{n}} — {{title}}",
     "viewMempool": "View on mempool.space",
     "blockHeightMissing": "Block height not stored yet — pending ≠ the issue; confirmation is recorded.",
@@ -1684,8 +1684,8 @@
         "sub": "Anchored in a block"
       },
       "proof": {
-        "label": "Immutable Proof",
-        "sub": "Forever verifiable"
+        "label": "Anchored Proof",
+        "sub": "Verifiable by anyone"
       }
     },
     "legalLabel": "Legal Compliance",
@@ -1755,8 +1755,8 @@
     "privacyBitcoinTitle": "What Bitcoin Stores",
     "privacyBitcoin": {
       "hash": "Your hash, embedded in a block",
-      "public": "Publicly visible forever",
-      "immutable": "Immutable and tamper-proof",
+      "public": "Publicly visible",
+      "immutable": "Anchored and tamper-evident",
       "verifiable": "Verifiable by anyone, anywhere"
     },
     "gdprNoteStrong": "GDPR Article 11 compliance:",
@@ -1773,7 +1773,7 @@
       "ots": "OpenTimestamps (opentimestamps.org) is an open protocol — not a Satohash product"
     },
     "otsTooltipTitle": "OpenTimestamps (OTS)",
-    "otsTooltip": "An open protocol that hashes your document and anchors it into a Bitcoin block. Proves your file existed at a specific point in time, immutably.",
+    "otsTooltip": "An open protocol that hashes your document and anchors it into a Bitcoin block. Proves your file existed at a specific point in time, verifiably.",
     "scopeLabel": "Scope of Service",
     "scopeTitle": "What Our Service Is",
     "scopeTitleRest": "(And Isn't)",
@@ -1943,7 +1943,7 @@
     },
     "revoke": {
       "title": "Revoke proof",
-      "body": "This permanently marks the record as revoked. The Bitcoin anchor remains immutable.",
+      "body": "This permanently marks the record as revoked. The Bitcoin anchor remains — rewriting it would be economically prohibitive, not literally impossible.",
       "confirm": "Confirm revoke",
       "cancel": "Cancel"
     }
@@ -2079,7 +2079,7 @@
     "fullCtaTitle": "Check it",
     "fullCtaLine": "You leave with a receipt and a link. We prove when, not who. Open a real proof, then stamp your own.",
     "shortHookTitle": "Hook",
-    "shortHookLine": "Got a file that must exist — and be provable forever?",
+    "shortHookLine": "Got a file that must exist — and be provable by anyone?",
     "shortPrivacyTitle": "Privacy",
     "shortPrivacyLine": "Your file never leaves your device. Only a fingerprint is timestamped.",
     "shortAnchorTitle": "Bitcoin",
@@ -2224,7 +2224,7 @@
     "freeTitle": "Stamps stay free.",
     "freeBody": "Your tips fund the free public stamping tier — they don't paywall it.",
     "infraTitle": "Infrastructure.",
-    "infraBody": "The OpenTimestamps calendars, THOR node, and API that keep proofs verifiable forever.",
+    "infraBody": "The OpenTimestamps calendars, THOR node, and API that keep proofs verifiable by anyone.",
     "noMiddleTitle": "No middleman.",
     "noMiddleBody": "Sats land directly in the Satohash wallet on Breez Spark — non-custodial, no platform cut.",
     "stampFree": "Stamp for free",
@@ -2256,7 +2256,7 @@
     "titleBefore": "The",
     "titleHighlight": "Satohash",
     "titleAfter": "protocol",
-    "lede": "Free, private proof of existence on Bitcoin — engineered by Give A Bit. Hash locally. Anchor openly. Verify forever.",
+    "lede": "Free, private proof of existence on Bitcoin — engineered by Give A Bit. Hash locally. Anchor openly. Verify by anyone.",
     "stampCta": "Stamp free",
     "watchCta": "Watch explainer",
     "governmentCta": "Government",
@@ -2288,7 +2288,7 @@
         "num": "01",
         "title": "The problem with digital truth",
         "p1": "Most “proof” still lives in a vendor’s database. If that company fails, pivots, or is compelled, the record is only as strong as their uptime and honesty.",
-        "p2": "Deepfakes and generative media make timestamps and integrity proofs more important, not less. Satohash exists so existence and integrity are mathematical facts — not marketing claims."
+        "p2": "Deepfakes and generative media make timestamps and integrity proofs more important, not less. Satohash exists so existence and integrity are verifiable facts — not marketing claims."
       },
       "how": {
         "num": "02",
@@ -2539,7 +2539,7 @@
     "stampCta": "Stamp free"
   },
   "execSummaryPage": {
-    "eyebrow": "Free today · anchored to Bitcoin forever.",
+    "eyebrow": "Free today · anchored to Bitcoin.",
     "h1": "Prove it existed.",
     "h1Highlight": "In under a minute.",
     "lede": "Satohash free-timestamps a fingerprint of your file using OpenTimestamps on Bitcoin. The free base tier is intended as the permanent, never-paywalled trust anchor, subsidised today by Give A Bit and community donations; premium tiers and the API are expected to fund infrastructure once live. Optional premium tiers (Professional ~2,100 sats/mo, Business ~21,000 sats/mo) and a pay-per-use API are built and staged; they launch paid only once the Lightning rails are funded and tested — the proof still anchors to Bitcoin either way.",
@@ -2574,7 +2574,7 @@
         "label": "01 — What we do",
         "title": "What we do",
         "p1": "Satohash provides independent, cryptographic proof of existence for any digital file—contracts, photographs, source code, AI model outputs, web captures, or audit packages. We do not store or review the underlying content. Instead, we enable organizations and individuals to bind a mathematical fingerprint of that content to the Bitcoin blockchain via the open OpenTimestamps protocol, producing a portable proof that third parties can verify without trusting Satohash as a custodian of truth.",
-        "p2": "In practical terms: when a document, delivery package, or digital artifact must later withstand scrutiny—from counterparties, regulators, courts, or internal audit—Satohash supplies a durable, non-repudiable record that the artifact existed in a specific form at a specific time. The service is designed for everyday use at the edge of work (legal, creative, investigative, and operational), not as a one-off novelty."
+        "p2": "In practical terms: when a document, delivery package, or digital artifact must later withstand scrutiny—from counterparties, regulators, courts, or internal audit—Satohash supplies a durable record backed by strong cryptographic evidence that the artifact existed in a specific form at a specific time. The service is designed for everyday use at the edge of work (legal, creative, investigative, and operational), not as a one-off novelty."
       },
       "how": {
         "label": "02 — How it works",
@@ -2613,7 +2613,7 @@
       },
       "offline": {
         "title": "Works offline-first",
-        "body": "Hash anywhere. Sync when you’re back online. Portable forever."
+        "body": "Hash anywhere. Sync when you’re back online. Portable — keep your own .ots file safe."
       }
     },
     "chartsTitle": "Where proof",
@@ -2664,7 +2664,7 @@
       },
       "bitcoin": {
         "title": "Bitcoin seals it",
-        "body": "Calendars batch many proofs into one Bitcoin commitment. Confirmation is typically about 60 minutes. Permanent."
+        "body": "Calendars batch many proofs into one Bitcoin commitment. Confirmation is typically about 60 minutes. Verifiable by anyone."
       },
       "verify": {
         "title": "Verify anywhere",
@@ -2673,7 +2673,7 @@
     },
     "planesTitle": "Four planes ·",
     "planesTitleHighlight": "one Bitcoin base",
-    "planesLede": "Higher planes can evolve. Plane 1 proofs stay valid forever.",
+    "planesLede": "Higher planes can evolve. Plane 1 proofs stay verifiable by anyone.",
     "planes": {
       "atlas": {
         "name": "Atlas",
@@ -2702,9 +2702,9 @@
         "tag": "Live now",
         "p1": "OTS on Bitcoin",
         "p2": "Local hash",
-        "p3": "Verify forever",
+        "p3": "Verify by anyone",
         "p4": "No account",
-        "p5": "Never paywalled"
+        "p5": "Intended never paywalled"
       },
       "pro": {
         "name": "Professional",
@@ -3191,7 +3191,7 @@
     "viewNetwork": "View Network Stats",
     "learn": "Learn",
     "learnTitle": "What is Cryptographic Timestamping?",
-    "learnBody": "Cryptographic timestamping creates permanent, tamper-proof evidence that a document existed at a specific moment in time. By anchoring a SHA-256 fingerprint of your document to Bitcoin with OpenTimestamps, you create proof that is:",
+    "learnBody": "Cryptographic timestamping creates verifiable, tamper-evident evidence that a document existed at a specific moment in time. By anchoring a SHA-256 fingerprint of your document to Bitcoin with OpenTimestamps, you create proof that is:",
     "tamperTitle": "Tamper-Proof",
     "tamperDesc": "Impossible to alter without detection",
     "decentralizedTitle": "Decentralized",
@@ -3393,7 +3393,7 @@
     "securedBy": "Secured by Bitcoin Network • Block #{{height}}",
     "heroTitle": "The Digital Notary",
     "heroHighlight": "for a Verified World.",
-    "heroSubtitle": "Satohash provides mathematically indisputable proof of existence for your most critical documents. Local privacy, global immutability.",
+    "heroSubtitle": "Satohash provides strong cryptographic evidence of existence for your most critical documents. Local privacy, globally verifiable.",
     "startCta": "Start New Agreement",
     "exploreCta": "Exploring Protocol",
     "educationalInsight": "Educational Insight",
@@ -3418,7 +3418,7 @@
       "merkleTitle": "02 / Merkle Bundling",
       "merkleText": "Multiple fingerprints are combined into a Merkle Tree. This allows for massive scaling and ensures absolute privacy in the proof.",
       "anchorTitle": "03 / Bitcoin Anchoring",
-      "anchorText": "The Merkle Root is embedded into the Bitcoin blockchain. The transaction block height becomes your permanent, unforgeable timestamp."
+      "anchorText": "The Merkle Root is embedded into the Bitcoin blockchain. The transaction block height becomes your anchored, verifiable timestamp."
     },
     "abyss": {
       "kicker": "The Protocol Abyss",
@@ -3429,7 +3429,7 @@
     "trust": {
       "privacyTitle": "Local Privacy",
       "privacyDesc": "Content never leaves your browser.",
-      "proofTitle": "Eternal Proof",
+      "proofTitle": "Verifiable Proof",
       "proofDesc": "Outlives companies and servers.",
       "standardTitle": "Standardized",
       "standardDesc": "Uses open standard .ots proofs.",
@@ -3451,7 +3451,7 @@
     "metaDescription": "Lightning BOLT-12 and NWC billing is staged. Stamps are free today — the paywall is off. Not live paid settlement.",
     "stagedChip": "Staged",
     "explainerTitle": "What are Lightning Offers?",
-    "explainerP1": "A Lightning Offer (BOLT-12) is a reusable Bitcoin payment link — like a QR code that works forever. Instead of generating a new invoice every time, you create one Offer that anyone can pay, any number of times, from any Lightning wallet.",
+    "explainerP1": "A Lightning Offer (BOLT-12) is a reusable Bitcoin payment link — like a QR code you can reuse any number of times. Instead of generating a new invoice every time, you create one Offer that anyone can pay, any number of times, from any Lightning wallet.",
     "explainerP2": "On Satohash this is staged — not live paid settlement. Stamps are free today. The paywall is off. Later, Offers may power L402 API access (pay-per-use stamping via Lightning). Lightning rails are not funded yet.",
     "tagReusable": "Reusable payment link",
     "tagNoExpiry": "No expiry",
@@ -3522,7 +3522,7 @@
     "pathWithBlock": "{{path}} · Block #{{height}}",
     "close": "Close",
     "pendingTitle": "Pending Bitcoin Confirmation",
-    "pendingBody": "Your proof has been submitted to OpenTimestamps and is awaiting inclusion in the next Bitcoin block — typically within 60 minutes. Once anchored, this proof becomes mathematically non-repudiable and can be verified by anyone, forever.",
+    "pendingBody": "Your proof has been submitted to OpenTimestamps and is awaiting inclusion in the next Bitcoin block — typically within 60 minutes. Once anchored, this proof becomes strong cryptographic evidence that anyone can verify. Rewriting it would be economically prohibitive, not literally impossible — nodes can prune data, so keep your .ots file and original document.",
     "proofId": "Proof ID",
     "stampedAt": "Stamped At",
     "fingerprint": "1. Document Fingerprint (SHA-256)",
@@ -3545,7 +3545,7 @@
     "stepVerifiable": "Proof independently verifiable",
     "verifiedAuthentic": "Verified Authentic",
     "proofSubmitted": "Proof Submitted",
-    "linkedMainnet": "Mathematically linked to Bitcoin Mainnet",
+    "linkedMainnet": "Cryptographically linked to Bitcoin Mainnet",
     "awaitingConfirm": "Awaiting Bitcoin block confirmation",
     "blockHeight": "BLOCK HEIGHT"
   },

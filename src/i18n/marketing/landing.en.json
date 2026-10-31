@@ -58,7 +58,7 @@
   },
   "howItWorks": {
     "titleLine1": "Three Steps.",
-    "titleHighlight": "Permanent Proof.",
+    "titleHighlight": "Verifiable by anyone.",
     "subtitle": "From file to Bitcoin in under an hour. No account required to try it.",
     "steps": {
       "upload": {
@@ -91,7 +91,7 @@
       },
       "medical": {
         "title": "Medical Records",
-        "body": "Immutable audit trails for patient documents and treatment history."
+        "body": "Anchored, tamper-evident audit trails for patient documents and treatment history."
       },
       "corporate": {
         "title": "Corporate Compliance",
@@ -108,7 +108,7 @@
     }
   },
   "freeModel": {
-    "eyebrow": "Free today · anchored to Bitcoin forever.",
+    "eyebrow": "Free today · anchored to Bitcoin.",
     "titleLine1": "How free stamping",
     "titleHighlight": "actually works",
     "explainer": "We free-timestamp a fingerprint of your file using OpenTimestamps on Bitcoin. The free base tier is intended as the permanent, never-paywalled trust anchor, subsidised today by Give A Bit and community donations; premium tiers and the API are expected to fund infrastructure once live. Optional premium tiers and a pay-per-use API are built and staged and launch paid only once the Lightning rails are funded and tested.",

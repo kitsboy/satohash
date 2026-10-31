@@ -13,7 +13,7 @@
       "cryptoProofDetail": "O hash converte qualquer ficheiro numa cadeia determinística de 64 caracteres. A mesma entrada produz sempre o mesmo hash — qualquer pessoa pode rederivá-lo. Até uma única vírgula alterada resulta num hash completamente diferente. O Satohash faz isto localmente no seu dispositivo.",
       "timestamp": "Carimbo Temporal no Bitcoin",
       "timestampDesc": "Ancore a sua prova à blockchain Bitcoin com o protocolo OpenTimestamps.",
-      "timestampDetail": "O hash do seu documento é agrupado com milhares de outros numa árvore Merkle. Um único hash «raiz» é depois registado na rede Bitcoin, fornecendo prova permanente e imutável de existência.",
+      "timestampDetail": "O hash do seu documento é agrupado com milhares de outros numa árvore Merkle. Um único hash «raiz» é depois registado na rede Bitcoin, fornecendo uma forte evidência criptográfica de existência.",
       "verify": "Verificação Simples",
       "verifyDesc": "Qualquer pessoa pode verificar a sua prova de forma independente com ferramentas de código aberto.",
       "verifyDetail": "Um ficheiro .ots contém o «caminho» do seu documento até ao bloco Bitcoin. Não precisa do Satohash para o provar; pode usar o cliente oficial OpenTimestamps ou exploradores de blocos de terceiros."
@@ -182,9 +182,9 @@
   "trust": {
     "title": "Centro de Confiança",
     "howItWorks": "Como funciona o Satohash",
-    "howItWorksDetail": "O Satohash utiliza SHA-256 (Secure Hash Algorithm 256-bit) para criar uma impressão digital única do seu documento. Isto acontece localmente no seu navegador; o texto do documento nunca precisa de sair do seu dispositivo. Este hash é depois agrupado com milhares de outros numa árvore Merkle e a sua raiz é ancorada na blockchain Bitcoin com o protocolo OpenTimestamps. Isto cria um registo permanente e imutável de existência.",
+    "howItWorksDetail": "O Satohash utiliza SHA-256 (Secure Hash Algorithm 256-bit) para criar uma impressão digital única do seu documento. Isto acontece localmente no seu navegador; o texto do documento nunca precisa de sair do seu dispositivo. Este hash é depois agrupado com milhares de outros numa árvore Merkle e a sua raiz é ancorada na blockchain Bitcoin com o protocolo OpenTimestamps. Isto cria um registo forte e criptograficamente verificável de existência.",
     "whatBlockchain": "Capacidades e Limitações",
-    "whatBlockchainDetail": "O carimbo temporal na blockchain fornece prova matemática de que um conjunto de dados específico existia num determinado momento e não foi alterado. NÃO prova por si só a identidade do signatário (requer verificação adicional), NÃO garante a correção jurídica do conteúdo do contrato e NÃO pode ser modificado ou eliminado depois de ancorado. É uma ferramenta de «prova de existência», não um substituto de revisão jurídica.",
+    "whatBlockchainDetail": "O carimbo temporal na blockchain fornece uma forte evidência criptográfica de que um conjunto de dados específico existia num determinado momento e não foi alterado. NÃO prova por si só a identidade do signatário (requer verificação adicional), NÃO garante a correção jurídica do conteúdo do contrato e só poderia ser modificado ou eliminado depois de ancorado a um custo economicamente proibitivo (não literalmente impossível). É uma ferramenta de «prova de existência», não um substituto de revisão jurídica.",
     "zkPrivacy": "O ficheiro fica",
     "zkPrivacyDetail": "O ficheiro fica no seu dispositivo. Guardamos só uma impressão, por isso nunca vemos o documento. Não oferecemos redação seletiva.",
     "legallyBinding": "Exequibilidade Jurídica",
@@ -227,13 +227,13 @@
     "success": "Sucesso"
   },
   "landing": {
-    "heroTitle": "Ancore os Seus Documentos no Bitcoin — Para Sempre",
+    "heroTitle": "Ancore os seus documentos no Bitcoin — verificável por qualquer pessoa",
     "heroSubtitle": "Crie uma prova de que os seus documentos existiram num momento específico. O ficheiro fica no seu dispositivo. Bitcoin guarda o recibo.",
     "heroCta": "Carimbar um Documento Agora",
     "heroCta2": "Ver Como Funciona",
     "step1": "Hash local",
     "step2": "Ancorar no Bitcoin",
-    "step3": "Provar para sempre",
+    "step3": "Verificar por qualquer pessoa",
     "socialProof": "Faça o hash no seu dispositivo. O Bitcoin guarda o recibo.",
     "tryTemplate": "Experimente um modelo gratuitamente",
     "features": {
@@ -324,7 +324,7 @@
     "quickActions": "Ações Rápidas",
     "mirror": "Replicação global",
     "nominal": "Normal",
-    "mirrorTip": "A sua prova é replicada em vários nós geográficos ao mesmo tempo, por isso não se perde nem se censura.",
+    "mirrorTip": "A sua prova é replicada em vários nós geográficos ao mesmo tempo, de modo que uma única falha de servidor não pode fazê-la desaparecer. Guarde também a sua própria cópia .ots num local seguro.",
     "height": "Altura Bitcoin",
     "privacy": "Camada de privacidade",
     "onDevice": "No dispositivo",

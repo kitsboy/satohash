@@ -13,7 +13,7 @@
       "cryptoProofDetail": "Le hachage convertit n'importe quel fichier en une chaîne déterministe de 64 caractères. La même entrée produit toujours le même hachage — n’importe qui peut le redériver. Même une virgule modifiée produit un hachage complètement différent. Satohash gère cela localement sur votre appareil.",
       "timestamp": "Horodatage Bitcoin",
       "timestampDesc": "Ancrez votre preuve sur la blockchain Bitcoin via le protocole OpenTimestamps.",
-      "timestampDetail": "Le hachage de votre document est regroupé avec des milliers d'autres dans un arbre de Merkle. Un hachage racine unique est ensuite inscrit sur le réseau Bitcoin, offrant une preuve d'existence permanente et immuable.",
+      "timestampDetail": "Le hachage de votre document est regroupé avec des milliers d'autres dans un arbre de Merkle. Un hachage racine unique est ensuite inscrit sur le réseau Bitcoin, offrant une solide preuve cryptographique d'existence.",
       "verify": "Vérification Facile",
       "verifyDesc": "N'importe qui peut vérifier votre preuve de manière indépendante avec des outils open-source.",
       "verifyDetail": "Un fichier .ots contient le 'chemin' de votre document vers le bloc Bitcoin. Vous n'avez pas besoin de Satohash pour le prouver ; utilisez le client officiel OpenTimestamps ou des explorateurs de blocs tiers."
@@ -182,9 +182,9 @@
   "trust": {
     "title": "Centre de Confiance",
     "howItWorks": "Comment fonctionne Satohash",
-    "howItWorksDetail": "Satohash utilise l'algorithme SHA-256 (Secure Hash Algorithm 256-bit) pour créer une empreinte numérique unique de votre document. Cela se produit localement dans votre navigateur ; le texte de votre document ne quitte jamais votre appareil. Ce hash est ensuite regroupé avec des milliers d'autres dans un arbre de Merkle et sa racine est ancrée sur la blockchain Bitcoin via le protocole OpenTimestamps. Cela crée un enregistrement permanent et immuable de son existence.",
+    "howItWorksDetail": "Satohash utilise l'algorithme SHA-256 (Secure Hash Algorithm 256-bit) pour créer une empreinte numérique unique de votre document. Cela se produit localement dans votre navigateur ; le texte de votre document ne quitte jamais votre appareil. Ce hash est ensuite regroupé avec des milliers d'autres dans un arbre de Merkle et sa racine est ancrée sur la blockchain Bitcoin via le protocole OpenTimestamps. Cela crée un enregistrement solide et cryptographiquement vérifiable de son existence.",
     "whatBlockchain": "Capacités et Limites",
-    "whatBlockchainDetail": "L'horodatage blockchain fournit une preuve mathématique qu'un ensemble de données spécifique existait à un moment donné et n'a pas été modifié. Il ne prouve PAS l'identité du signataire par lui-même, il ne garantit PAS la justesse juridique du contenu du contrat, et il NE PEUT PAS être modifié ou supprimé une fois ancré. C'est un outil de 'preuve d'existence', pas un substitut à un examen juridique.",
+    "whatBlockchainDetail": "L'horodatage blockchain fournit une solide preuve cryptographique qu'un ensemble de données spécifique existait à un moment donné et n'a pas été modifié. Il ne prouve PAS l'identité du signataire par lui-même, il ne garantit PAS la justesse juridique du contenu du contrat, et le modifier ou le supprimer après ancrage serait économiquement prohibitif, pas littéralement impossible. C'est un outil de 'preuve d'existence', pas un substitut à un examen juridique.",
     "zkPrivacy": "Le fichier reste",
     "zkPrivacyDetail": "Le fichier reste sur votre appareil. Nous ne gardons qu’une empreinte, donc nous ne voyons jamais le document. Nous ne proposons pas de caviardage sélectif.",
     "legallyBinding": "Force Juridique",
@@ -227,13 +227,13 @@
     "success": "Succès"
   },
   "landing": {
-    "heroTitle": "Ancrez Vos Documents sur Bitcoin — Pour Toujours",
+    "heroTitle": "Ancrez vos documents sur Bitcoin — vérifiable par tous",
     "heroSubtitle": "Créez une preuve que vos documents ont existé à un moment précis. Le fichier reste sur votre appareil. Bitcoin garde le reçu.",
     "heroCta": "Tamponner un Document Maintenant",
     "heroCta2": "Voir Comment Ça Marche",
     "step1": "Hash local",
     "step2": "Ancrage sur Bitcoin",
-    "step3": "Preuve permanente",
+    "step3": "Vérifier par tous",
     "socialProof": "Hachez sur votre appareil. Bitcoin garde le reçu.",
     "tryTemplate": "Essayez un modèle gratuitement",
     "features": {
@@ -324,7 +324,7 @@
     "quickActions": "Actions Rapides",
     "mirror": "Réplication mondiale",
     "nominal": "Normal",
-    "mirrorTip": "Votre preuve est répliquée sur plusieurs nœuds géographiques en même temps, donc elle ne peut ni se perdre ni être censurée.",
+    "mirrorTip": "Votre preuve est répliquée sur plusieurs nœuds géographiques en même temps, de sorte qu’une seule panne de serveur ne peut pas la faire disparaître. Conservez aussi votre propre fichier .ots en lieu sûr.",
     "height": "Hauteur Bitcoin",
     "privacy": "Couche de confidentialité",
     "onDevice": "Sur l'appareil",

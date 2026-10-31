@@ -74,14 +74,14 @@ export default {
     actions: 'Aktionen'
   },
   landing: {
-    heroTitle: 'Verankern Sie Ihre Dokumente auf Bitcoin — für immer',
+    heroTitle: 'Verankern Sie Ihre Dokumente auf Bitcoin — von jedem prüfbar',
     heroSubtitle:
       'Erstellen Sie einen Nachweis, dass Ihre Dokumente zu einem bestimmten Zeitpunkt existierten. Die Datei bleibt auf Ihrem Gerät. Bitcoin bewahrt die Quittung.',
     heroCta: 'Jetzt ein Dokument stempeln',
     heroCta2: 'So funktioniert es',
     step1: 'Lokal hashen',
     step2: 'Auf Bitcoin verankern',
-    step3: 'Dauerhaft nachweisen',
+    step3: 'Von jedem prüfbar',
     socialProof: 'Hashen Sie auf Ihrem Gerät. Bitcoin bewahrt die Quittung.',
     tryTemplate: 'Vorlage kostenlos ausprobieren',
     features: {
@@ -163,7 +163,7 @@ export default {
     mirror: 'Globale Spiegelung',
     nominal: 'Normal',
     mirrorTip:
-      'Ihr Nachweis wird gleichzeitig auf mehreren geografischen Knoten gespiegelt und kann so nicht verloren gehen oder zensiert werden.',
+      'Ihr Nachweis wird gleichzeitig auf mehreren geografischen Knoten gespiegelt, sodass ein einzelner Serverausfall ihn nicht gefährdet. Bewahren Sie zusätzlich Ihre eigene .ots-Datei sicher auf.',
     height: 'Bitcoin-Höhe',
     privacy: 'Datenschutzebene',
     onDevice: 'Auf dem Gerät',

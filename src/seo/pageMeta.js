@@ -96,7 +96,7 @@ export const pageMeta = {
     en: {
       title: 'Prove Any File Existed — Free Bitcoin Proof of Existence',
       description:
-        'Drop a file. It never leaves your device. Get a permanent, Bitcoin-anchored proof of existence in minutes — free, private, verifiable by anyone, forever.'
+        'Drop a file. It never leaves your device. Get a Bitcoin-anchored proof of existence in minutes — free, private, verifiable by anyone.'
     },
     es: {
       title: 'Prueba que un Archivo Existió — Gratis en Bitcoin',
@@ -106,7 +106,7 @@ export const pageMeta = {
     fr: {
       title: 'Prouvez Qu’un Fichier a Existé — Gratuit sur Bitcoin',
       description:
-        "Déposez un fichier. Il ne quitte jamais votre appareil. Preuve d'existence ancrée sur Bitcoin — gratuite, privée, vérifiable par tous, pour toujours."
+        "Déposez un fichier. Il ne quitte jamais votre appareil. Preuve d'existence ancrée sur Bitcoin — gratuite, privée, vérifiable par tous."
     },
     de: {
       title: 'Beweisen, Dass eine Datei Existierte — Kostenlos',
@@ -116,17 +116,17 @@ export const pageMeta = {
     pt: {
       title: 'Prove que um Arquivo Existiu — Grátis no Bitcoin',
       description:
-        'Solte um arquivo. Ele nunca sai do seu dispositivo. Prova de existência ancorada no Bitcoin — grátis, privada, verificável por qualquer um, para sempre.'
+        'Solte um arquivo. Ele nunca sai do seu dispositivo. Prova de existência ancorada no Bitcoin — grátis, privada, verificável por qualquer pessoa.'
     },
     sw: {
       title: 'Thibitisha Faili Lilipokuwepo — Bure kwenye Bitcoin',
       description:
-        'Weka faili. Haliondoki kwenye kifaa chako. Ushahidi wa kuwepo uliofungwa kwenye Bitcoin — bure, faragha, unathibitishwa na mtu yeyote, milele.'
+        'Weka faili. Haliondoki kwenye kifaa chako. Ushahidi wa kuwepo uliofungwa kwenye Bitcoin — bure, faragha, unathibitishwa na mtu yeyote.'
     },
     zh: {
       title: '证明任意文件曾经存在 — 免费比特币存在证明',
       description:
-        '拖放任意文件。文件永不离开您的设备。几分钟内获得永久锚定于比特币的存在证明——免费、私密、任何人皆可验证，永久有效。'
+        '拖放任意文件。文件永不离开您的设备。几分钟内获得锚定于比特币的存在证明——免费、私密、任何人都可核验。'
     }
   },
   faq: {
@@ -180,7 +180,7 @@ export const pageMeta = {
     fr: {
       title: 'Tarifs — Tamponnage Bitcoin Gratuit',
       description:
-        "Les tampons sont gratuits. On ne peut pas acheter un forfait aujourd’hui. Le fichier reste sur l’appareil."
+        'Les tampons sont gratuits. On ne peut pas acheter un forfait aujourd’hui. Le fichier reste sur l’appareil.'
     },
     de: {
       title: 'Preise — Kostenlose Bitcoin-Zeitstempel',
@@ -194,13 +194,11 @@ export const pageMeta = {
     },
     sw: {
       title: 'Bei — Muhuri wa Bure wa Bitcoin',
-      description:
-        'Mihuri ni bure. Huwezi kununua mpango leo. Faili linabaki kwenye kifaa.'
+      description: 'Mihuri ni bure. Huwezi kununua mpango leo. Faili linabaki kwenye kifaa.'
     },
     zh: {
       title: '定价 — 免费比特币时间戳',
-      description:
-        '盖章是免费的。今天不能购买套餐。文件留在设备上。'
+      description: '盖章是免费的。今天不能购买套餐。文件留在设备上。'
     }
   },
   comparison: {
@@ -572,17 +570,17 @@ export const pageMeta = {
     en: {
       title: 'Satohash — Bitcoin as a Sovereign Civic Notary',
       description:
-        'Prove a file existed, never show the file. Bitcoin anchors the fingerprint; OpenTimestamps makes it free and verifiable forever.'
+        'Prove a file existed, never show the file. Bitcoin anchors the fingerprint; OpenTimestamps makes it free and verifiable by anyone.'
     },
     es: {
       title: 'Satohash — Bitcoin como Registro de Verdad Cívico',
       description:
-        'Demuestra que un archivo existió sin mostrarlo. Bitcoin ancla la huella; OpenTimestamps lo hace gratis y verificable para siempre.'
+        'Demuestra que un archivo existió sin mostrarlo. Bitcoin ancla la huella; OpenTimestamps lo hace gratis y verificable por cualquiera.'
     },
     fr: {
       title: 'Satohash — Bitcoin, Notaire Civique Souverain',
       description:
-        "Prouvez qu'un fichier a existé sans le montrer. Bitcoin ancre l'empreinte ; OpenTimestamps la rend gratuite et vérifiable pour toujours."
+        "Prouvez qu'un fichier a existé sans le montrer. Bitcoin ancre l'empreinte ; OpenTimestamps la rend gratuite et vérifiable par tous."
     },
     de: {
       title: 'Satohash — Bitcoin als Souveräner Bürger-Notar',
@@ -592,17 +590,17 @@ export const pageMeta = {
     pt: {
       title: 'Satohash — Bitcoin como Notarização Cívica (não licenciada)',
       description:
-        'Prove que um arquivo existiu sem mostrá-lo. O Bitcoin ancora a impressão digital; o OpenTimestamps torna tudo grátis e verificável para sempre.'
+        'Prove que um arquivo existiu sem mostrá-lo. O Bitcoin ancora a impressão digital; o OpenTimestamps torna tudo grátis e verificável por qualquer pessoa.'
     },
     sw: {
       title: 'Satohash — Bitcoin kama Notari wa Kijamii',
       description:
-        'Thibitisha faili lilipokuwepo bila kuonyesha faili. Bitcoin hufunga alama; OpenTimestamps hufanya bure na kuthibitishwa milele.'
+        'Thibitisha faili lilipokuwepo bila kuonyesha faili. Bitcoin hufunga alama; OpenTimestamps hufanya bure na kuthibitishwa na mtu yeyote.'
     },
     zh: {
       title: 'Satohash — 比特币作为主权公民公证人',
       description:
-        '证明文件曾经存在，而无需展示文件。比特币锚定指纹；OpenTimestamps 使其免费且永久可验证。相信数学，而非中间人。'
+        '证明文件曾经存在，而无需展示文件。比特币锚定指纹；OpenTimestamps 使其免费且可由任何人验证。相信数学，而非中间人。'
     }
   },
   trust: {
@@ -1080,7 +1078,7 @@ export const pageMeta = {
     },
     zh: {
       title: '网页捕获 — 归档任意 URL',
-      description: '捕获任意网页并加盖时间戳，作为永久锚定在比特币上的加密证明。'
+      description: '捕获任意网页并加盖时间戳，作为锚定在比特币上的加密证明。'
     }
   },
   mesh: {
@@ -1836,17 +1834,17 @@ export const pageMeta = {
     en: {
       title: 'Executive Summary — Satohash, Proof of Truth',
       description:
-        'Why Satohash exists: a free, sovereign, Bitcoin-anchored proof of existence via OpenTimestamps. Hash locally, stamp in minutes, verify forever.'
+        'Why Satohash exists: a free, sovereign, Bitcoin-anchored proof of existence via OpenTimestamps. Hash locally, stamp in minutes, verify by anyone.'
     },
     es: {
       title: 'Resumen Ejecutivo — Satohash, Prueba de Verdad',
       description:
-        'Por qué existe Satohash: prueba de existencia gratuita y anclada en Bitcoin vía OpenTimestamps. Hashea local, sella en minutos, verifica para siempre.'
+        'Por qué existe Satohash: prueba de existencia gratuita y anclada en Bitcoin vía OpenTimestamps. Hashea local, sella en minutos, verifica por cualquiera.'
     },
     fr: {
       title: 'Résumé Exécutif — Satohash, Preuve de Vérité',
       description:
-        "Pourquoi Satohash existe : preuve d'existence gratuite, souveraine et ancrée sur Bitcoin via OpenTimestamps. Hachez localement, vérifiez pour toujours."
+        "Pourquoi Satohash existe : preuve d'existence gratuite, souveraine et ancrée sur Bitcoin via OpenTimestamps. Hachez localement, vérifiez par tous."
     },
     de: {
       title: 'Executive Summary — Satohash, Beweis der Wahrheit',
@@ -1856,17 +1854,17 @@ export const pageMeta = {
     pt: {
       title: 'Resumo Executivo — Satohash, Prova de Verdade',
       description:
-        'Por que o Satohash existe: prova de existência soberana, gratuita e ancorada no Bitcoin via OpenTimestamps. Hash local, verifique para sempre.'
+        'Por que o Satohash existe: prova de existência soberana, gratuita e ancorada no Bitcoin via OpenTimestamps. Hash local, verifique por qualquer pessoa.'
     },
     sw: {
       title: 'Muhtasari wa Uongozi — Satohash, Ushahidi wa Ukweli',
       description:
-        'Kwa nini Satohash ipo: ushahidi wa kuwepo huru, wa bure uliofungwa kwenye Bitcoin kupitia OpenTimestamps. Hash kwenye kifaa, thibitisha milele.'
+        'Kwa nini Satohash ipo: ushahidi wa kuwepo huru, wa bure uliofungwa kwenye Bitcoin kupitia OpenTimestamps. Hash kwenye kifaa, thibitisha na mtu yeyote.'
     },
     zh: {
       title: '执行摘要 — Satohash，真相证明',
       description:
-        'Satohash 为何存在：通过 OpenTimestamps 提供免费、主权、锚定于比特币的存在证明。本地哈希，数分钟盖章，永久验证。'
+        'Satohash 为何存在：通过 OpenTimestamps 提供免费、主权、锚定于比特币的存在证明。本地哈希，数分钟盖章，任何人都可核验。'
     }
   },
   learnArticles: {

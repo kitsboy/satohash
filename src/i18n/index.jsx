@@ -89,14 +89,14 @@ export const translations = {
       actions: 'Actions'
     },
     landing: {
-      heroTitle: 'Anchor Your Documents to Bitcoin — Forever',
+      heroTitle: 'Anchor Your Documents to Bitcoin — Verifiable by Anyone',
       heroSubtitle:
         'Create proof that your documents existed at a specific time. The file stays on your device. Bitcoin keeps the receipt.',
       heroCta: 'Stamp a Document Now',
       heroCta2: 'See How It Works',
       step1: 'Hash locally',
       step2: 'Anchor to Bitcoin',
-      step3: 'Prove forever',
+      step3: 'Verify by anyone',
       socialProof: 'Hash on your device. Bitcoin keeps the receipt.',
       tryTemplate: 'Try a template for free',
       features: {
@@ -175,7 +175,7 @@ export const translations = {
       mirror: 'Global Mirroring',
       nominal: 'Nominal',
       mirrorTip:
-        'Your proof is replicated across multiple geographic nodes simultaneously, ensuring it can never be lost or censored.',
+        'Your proof is replicated across multiple geographic nodes simultaneously, so a single server failure cannot take it down. Keep your own .ots copy safe too.',
       height: 'Bitcoin Height',
       privacy: 'Privacy Layer',
       onDevice: 'On device',
@@ -316,14 +316,14 @@ export const translations = {
       actions: 'Acciones'
     },
     landing: {
-      heroTitle: 'Ancla tus Documentos a Bitcoin — Para Siempre',
+      heroTitle: 'Ancla tus Documentos a Bitcoin — Verificable por cualquiera',
       heroSubtitle:
         'Crea una prueba de que tus documentos existieron en un momento concreto. El archivo se queda en tu dispositivo. Bitcoin guarda el recibo.',
       heroCta: 'Sellar un Documento Ahora',
       heroCta2: 'Ver Cómo Funciona',
       step1: 'Hash local',
       step2: 'Anclar a Bitcoin',
-      step3: 'Probar para siempre',
+      step3: 'Verificar por cualquiera',
       socialProof: 'Hashea en tu dispositivo. Bitcoin guarda el recibo.',
       tryTemplate: 'Prueba una plantilla gratis',
       features: {
@@ -403,7 +403,7 @@ export const translations = {
       mirror: 'Réplica global',
       nominal: 'Normal',
       mirrorTip:
-        'Tu prueba se replica en varios nodos geográficos a la vez, así que no se puede perder ni censurar.',
+        'Tu prueba se replica en varios nodos geográficos a la vez, de modo que una sola caída de servidor no puede hacerla desaparecer. Conserva también tu propia copia .ots en un lugar seguro.',
       height: 'Altura de Bitcoin',
       privacy: 'Capa de privacidad',
       onDevice: 'En el dispositivo',
@@ -543,14 +543,14 @@ export const translations = {
       actions: 'Actions'
     },
     landing: {
-      heroTitle: 'Ancrez Vos Documents sur Bitcoin — Pour Toujours',
+      heroTitle: 'Ancrez vos documents sur Bitcoin — vérifiable par tous',
       heroSubtitle:
         'Créez une preuve que vos documents ont existé à un moment précis. Le fichier reste sur votre appareil. Bitcoin garde le reçu.',
       heroCta: 'Tamponner un Document Maintenant',
       heroCta2: 'Voir Comment Ça Marche',
       step1: 'Hash local',
       step2: 'Ancrage sur Bitcoin',
-      step3: 'Preuve permanente',
+      step3: 'Vérifier par tous',
       socialProof: 'Hachez sur votre appareil. Bitcoin garde le reçu.',
       tryTemplate: 'Essayez un modèle gratuitement',
       features: {
@@ -629,7 +629,7 @@ export const translations = {
       mirror: 'Réplication mondiale',
       nominal: 'Normal',
       mirrorTip:
-        'Votre preuve est répliquée sur plusieurs nœuds géographiques en même temps, donc elle ne peut ni se perdre ni être censurée.',
+        "Votre preuve est répliquée sur plusieurs nœuds géographiques en même temps, de sorte qu'une seule panne de serveur ne peut pas la faire disparaître. Conservez aussi votre propre fichier .ots en lieu sûr.",
       height: 'Hauteur Bitcoin',
       privacy: 'Couche de confidentialité',
       onDevice: "Sur l'appareil",
@@ -769,13 +769,13 @@ export const translations = {
       actions: '操作'
     },
     landing: {
-      heroTitle: '将您的文件永久锚定到比特币区块链',
+      heroTitle: '将您的文件锚定到比特币区块链 — 任何人都可核验',
       heroSubtitle: '证明您的文件在某一时刻存在。文件留在您的设备上。Bitcoin 保管回执。',
       heroCta: '立即盖章文件',
       heroCta2: '了解工作原理',
       step1: '本地哈希',
       step2: '锚定到比特币',
-      step3: '永久证明',
+      step3: '任何人都可核验',
       socialProof: '在你的设备上哈希。Bitcoin 保存收据。',
       tryTemplate: '免费试用模板',
       features: {
@@ -850,7 +850,8 @@ export const translations = {
       quickActions: '快速操作',
       mirror: '全球镜像',
       nominal: '正常',
-      mirrorTip: '你的证明会同时复制到多个地区的节点上，因此不会丢失，也不会被删掉。',
+      mirrorTip:
+        '你的证明会同时复制到多个地区的节点上，因此单一服务器故障不会使其丢失。请同时在安全的地方保存你自己的 .ots 副本。',
       height: 'Bitcoin 高度',
       privacy: '隐私层',
       onDevice: '在设备上',

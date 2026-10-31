@@ -13,7 +13,7 @@
       "cryptoProofDetail": "Hashing converts any file into a deterministic 64-character string. The same input always produces the same hash — anyone can re-derive it. Even a single changed comma results in a completely different hash. Satohash handles this locally on your device.",
       "timestamp": "Bitcoin Timestamping",
       "timestampDesc": "Anchor your proof to the Bitcoin blockchain using the OpenTimestamps protocol.",
-      "timestampDetail": "Your document's hash is bundled with thousands of others into a Merkle tree. A single 'root' hash is then committed to the Bitcoin network, providing permanent, immutable proof of existence.",
+      "timestampDetail": "Your document's hash is bundled with thousands of others into a Merkle tree. A single 'root' hash is then committed to the Bitcoin network, providing strong cryptographic evidence of existence.",
       "verify": "Easy Verification",
       "verifyDesc": "Anyone can verify your proof independently using open-source tools.",
       "verifyDetail": "A .ots file contains the 'path' from your document to the Bitcoin block. You don't need Satohash to prove it; you can use the official OpenTimestamps client or third-party block explorers."
@@ -182,9 +182,9 @@
   "trust": {
     "title": "Trust Center",
     "howItWorks": "How Satohash works",
-    "howItWorksDetail": "Satohash uses the SHA-256 (Secure Hash Algorithm 256-bit) to create a unique digital fingerprint of your document. This happens locally in your browser; your document's text never needs to leave your device. This hash is then bundled with thousands of others into a Merkle Tree and its root is anchored to the Bitcoin blockchain using the OpenTimestamps protocol. This creates a permanent, immutable record of existence.",
+    "howItWorksDetail": "Satohash uses the SHA-256 (Secure Hash Algorithm 256-bit) to create a unique digital fingerprint of your document. This happens locally in your browser; your document's text never needs to leave your device. This hash is then bundled with thousands of others into a Merkle Tree and its root is anchored to the Bitcoin blockchain using the OpenTimestamps protocol. This creates a strong, cryptographically verifiable record of existence.",
     "whatBlockchain": "Capabilities and Limitations",
-    "whatBlockchainDetail": "Blockchain timestamping provides mathematical proof that a specific dataset existed at a specific time and has not been altered. It does NOT prove the identity of the signer by itself (requires additional verification), it does NOT guarantee the legal correctness of the contract contents, and it CANNOT be modified or deleted once anchored. It is a 'proof of existence' tool, not a substitute for legal review.",
+    "whatBlockchainDetail": "Blockchain timestamping provides strong cryptographic evidence that a specific dataset existed at a specific time and has not been altered. It does NOT prove the identity of the signer by itself (requires additional verification), it does NOT guarantee the legal correctness of the contract contents, and changing or deleting it after anchoring would be economically prohibitive, not literally impossible. It is a 'proof of existence' tool, not a substitute for legal review.",
     "zkPrivacy": "The file stays",
     "zkPrivacyDetail": "The file stays on your device. We store only a fingerprint, so we never see the document. We do not redact parts of a file, and we do not offer that as a feature.",
     "legallyBinding": "Legal Enforceability",
@@ -227,13 +227,13 @@
     "success": "Success"
   },
   "landing": {
-    "heroTitle": "Anchor Your Documents to Bitcoin — Forever",
+    "heroTitle": "Anchor Your Documents to Bitcoin — Verifiable by Anyone",
     "heroSubtitle": "Create proof that your documents existed at a specific time. The file stays on your device. Bitcoin keeps the receipt.",
     "heroCta": "Stamp a Document Now",
     "heroCta2": "See How It Works",
     "step1": "Hash locally",
     "step2": "Anchor to Bitcoin",
-    "step3": "Prove forever",
+    "step3": "Verify by anyone",
     "socialProof": "Hash on your device. Bitcoin keeps the receipt.",
     "tryTemplate": "Try a template for free",
     "features": {
@@ -324,7 +324,7 @@
     "quickActions": "Quick Actions",
     "mirror": "Global Mirroring",
     "nominal": "Nominal",
-    "mirrorTip": "Your proof is replicated across multiple geographic nodes simultaneously, ensuring it can never be lost or censored.",
+    "mirrorTip": "Your proof is replicated across multiple geographic nodes simultaneously, so a single server failure cannot take it down. Keep your own .ots copy safe too.",
     "height": "Bitcoin Height",
     "privacy": "Privacy Layer",
     "onDevice": "On device",

@@ -491,7 +491,7 @@ export const webArchiveTemplate = {
   description: 'Immutable record of web content for legal and evidence purposes.',
   content: `WEB CONTENT ARCHIVE CERTIFICATE
     
-This certificate provides immutable proof of web content as it appeared on the date of anchoring.
+This certificate provides anchored, verifiable proof of web content as it appeared on the date of anchoring.
 
 1. URL SPECIFICATION
 Target URL: [URL]

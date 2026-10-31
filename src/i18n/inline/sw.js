@@ -72,14 +72,14 @@ export default {
     actions: 'Vitendo'
   },
   landing: {
-    heroTitle: 'Funga Hati Zako kwenye Bitcoin — Milele',
+    heroTitle: 'Funga hati zako kwenye Bitcoin — inathibitishwa na mtu yeyote',
     heroSubtitle:
       'Unda uthibitisho kuwa hati zako zilikuwepo wakati maalum. Faili inabaki kwenye kifaa chako. Bitcoin huhifadhi risiti.',
     heroCta: 'Weka Muhuri kwa Hati Sasa',
     heroCta2: 'Tazama Jinsi Inavyofanya Kazi',
     step1: 'Hash ndani ya kifaa',
     step2: 'Funga kwenye Bitcoin',
-    step3: 'Thibitisha milele',
+    step3: 'Thibitisha kwa mtu yeyote',
     socialProof: 'Hash kwenye kifaa chako. Bitcoin huhifadhi risiti.',
     tryTemplate: 'Jaribu kiolezo bila malipo',
     features: {
@@ -159,7 +159,7 @@ export default {
     mirror: 'Uigaji wa kimataifa',
     nominal: 'Kawaida',
     mirrorTip:
-      'Uthibitisho wako unarudiwa kwenye nodi za maeneo mengi kwa wakati mmoja, kwa hiyo hauwezi kupotea wala kuzuiwa.',
+      'Uthibitisho wako unarudiwa kwenye nodi za maeneo mengi kwa wakati mmoja, kwa hivyo hitilafu ya seva moja haiwezi kuupoteza. Hifadhi pia nakala yako mwenyewe ya .ots mahali salama.',
     height: 'Urefu wa Bitcoin',
     privacy: 'Tabaka la faragha',
     onDevice: 'Kwenye kifaa',

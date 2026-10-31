@@ -31,7 +31,7 @@
       "free": {
         "name": "Bure",
         "price": "$0",
-        "period": "milele",
+        "period": "inatumika sasa",
         "desc": "Weka muhuri wa muda kwenye hati kwenye Bitcoin. Hakuna akaunti inayohitajika.",
         "features": [
           "Kuhesabu hash ya SHA-256 kwenye kivinjari chako",
@@ -372,7 +372,7 @@
       },
       "bitcoinBlockchain": {
         "term": "Bitcoin Blockchain",
-        "def": "Leja ya umma iliyogatuliwa, isiyobadilika inayodumishwa na mtandao wa kimataifa wa wachimbaji. Satohash inaunganisha alama za kidole za uthibitisho kwenye vizuizi vya Bitcoin kwa kuweka muhuri wa muda wa kudumu."
+        "def": "Leja ya umma iliyogatuliwa, yenye gharama kubwa kiuchumi kuandikwa upya, inayodumishwa na mtandao wa kimataifa wa wachimbaji. Satohash inaunganisha alama za kidole za uthibitisho kwenye vizuizi vya Bitcoin kwa muhuri wa muda unaothibitishwa."
       },
       "blockHeight": {
         "term": "Block Height",
@@ -628,8 +628,8 @@
         "desc": "Mzizi wa Merkle unaandikwa katika muamala wa Bitcoin kupitia kalenda za OpenTimestamps."
       },
       "proof": {
-        "title": "Uthibitisho wa kudumu",
-        "desc": "Baada ya kuthibitishwa kwenye bloku inayofuata ya Bitcoin (kawaida kama saa moja), faili yako ya .ots inathibitisha waraka ulikuwepo wakati huo wa bloku — milele."
+        "title": "Uthibitisho uliotiwa nanga",
+        "desc": "Baada ya kuthibitishwa kwenye bloku inayofuata ya Bitcoin (kawaida kama saa moja), faili yako ya .ots inathibitisha waraka ulikuwepo wakati huo wa bloku — inathibitishwa na mtu yeyote. Kuandika upya kungekuwa ghali kiuchumi, si jambo lisilowezekana haswa."
       }
     },
     "tryIt": "Jaribu",
@@ -764,7 +764,7 @@
     },
     "preview": {
       "title": "Hakiki ya Moja kwa Moja",
-      "body": "Rangi na mifumo ya pete zinatokana na hash — hati ile ile, DNA ile ile, milele. Bofya widget iliyojumuishwa kufungua ukurasa wa uthibitishaji.",
+      "body": "Rangi na mifumo ya pete zinatokana na hash — hati ile ile, DNA ile ile, kila wakati. Bofya widget iliyojumuishwa kufungua ukurasa wa uthibitishaji.",
       "v3Title": "v3 preview"
     },
     "embed": {
@@ -1080,7 +1080,7 @@
       },
       "share": {
         "title": "Shiriki uthibitisho wako na mtu yeyote",
-        "body": "Mara tu unapothibitishwa kwenye Bitcoin, uthibitisho wako ni wa kudumu na wa umma. Shiriki kiungo — mtu yeyote anaweza kuthibitisha bila akaunti.",
+        "body": "Mara tu unapothibitishwa kwenye Bitcoin, uthibitisho wako umetiwa nanga na unathibitishwa hadharani. Shiriki kiungo — mtu yeyote anaweza kuthibitisha bila akaunti.",
         "action": "Twende →"
       }
     },
@@ -1091,7 +1091,7 @@
       "step2Title": "2. Kufunganisha Merkle",
       "step2Text": "Alama nyingi za kidole zinaunganishwa kwenye Merkle Tree. Hii inaruhusu kupanuka kwa kiasi kikubwa na uthibitisho wa faragha.",
       "step3Title": "3. Kufungwa kwenye Bitcoin",
-      "step3Text": "Merkle Root inaingizwa kwenye muamala wa Bitcoin. Tarehe ya muamala inakuwa muhuri wako wa muda wa kudumu."
+      "step3Text": "Merkle Root inaingizwa kwenye muamala wa Bitcoin. Tarehe ya muamala inakuwa muhuri wako wa muda unaothibitishwa."
     },
     "account": {
       "subtitle": "Unda akaunti yako ili kuanza na Satohash"
@@ -1104,7 +1104,7 @@
       "browseLibrary": "Tazama maktaba kamili ya violezo",
       "batchDemo": "Jaribu onyesho la uthibitisho kwa kundi",
       "disclaimerTitle": "Onyo la itifaki",
-      "disclaimer": "Satohash ni huduma ya notari ya kriptografia. Tunatoa uthibitisho wa hisabati wa kuwepo kupitia blockchain ya Bitcoin. Sisi si kampuni ya sheria na hatutoa ushauri wa kisheria. Uthibitisho wote unaozalishwa unaweza kuthibitishwa duniani kote kupitia OpenTimestamps.",
+      "disclaimer": "Satohash ni huduma ya notari ya kriptografia. Tunatoa ushahidi thabiti wa kriptografia wa kuwepo kupitia blockchain ya Bitcoin. Sisi si kampuni ya sheria na hatutoa ushauri wa kisheria. Uthibitisho wote unaozalishwa unaweza kuthibitishwa duniani kote kupitia OpenTimestamps.",
       "aboutTemplate": "Kuhusu kiolezo hiki",
       "tooltip": "Kiolezo hiki kimeboreshwa kwa {{title}}. Kina sehemu maalum za metadata na kufungwa kwa kriptografia kwa vitu vya {{category}}.",
       "categories": {
@@ -1117,7 +1117,7 @@
       "items": {
         "prenup": {
           "title": "Makubaliano ya kabla ya ndoa",
-          "description": "Funga kimathesai tamko la mali kabla ya ndoa kwenye blockchain."
+          "description": "Funga kwa kriptografia tamko la mali kabla ya ndoa kwenye blockchain."
         },
         "photo-archive": {
           "title": "Hifadhi ya picha za iPhone",
@@ -1165,7 +1165,7 @@
     },
     "templateLibrary": {
       "title": "Maktaba ya violezo vya kisheria",
-      "subtitle": "Makubaliano ya kriptografia yaliyoandaliwa kitaalamu. Yamefungwa kwenye Bitcoin kwa kutobadilika kamili.",
+      "subtitle": "Makubaliano ya kriptografia yaliyoandaliwa kitaalamu. Yamefungwa kwenye Bitcoin — yanathibitishwa na mtu yeyote.",
       "searchAria": "Tafuta violezo vya kisheria",
       "searchPlaceholder": "Tafuta violezo vya kisheria (k.m. NDA, mali)...",
       "choose": "Chagua kiolezo",
@@ -1555,8 +1555,8 @@
         "sub": "Imefungwa kwenye bloku"
       },
       "proof": {
-        "label": "Uthibitisho usiobadilika",
-        "sub": "Unaweza kuthibitishwa milele"
+        "label": "Uthibitisho uliotiwa nanga",
+        "sub": "Inathibitishwa na mtu yeyote"
       }
     },
     "legalLabel": "Uzingatiaji wa sheria",
@@ -1626,8 +1626,8 @@
     "privacyBitcoinTitle": "Bitcoin inachohifadhi",
     "privacyBitcoin": {
       "hash": "Hash yako, iliyoingizwa kwenye bloku",
-      "public": "Inaonekana kwa umma milele",
-      "immutable": "Haibadiliki na haiwezi kuchezewa",
+      "public": "Inaonekana kwa umma",
+      "immutable": "Imetiwa nanga; uchezaji unaonekana",
       "verifiable": "Inaweza kuthibitishwa na yeyote, popote"
     },
     "gdprNoteStrong": "Uzingatiaji wa kifungu cha 11 cha GDPR:",
@@ -1644,7 +1644,7 @@
       "ots": "OpenTimestamps (opentimestamps.org) ni itifaki wazi — si bidhaa ya Satohash"
     },
     "otsTooltipTitle": "OpenTimestamps (OTS)",
-    "otsTooltip": "Itifaki wazi inayofanya hash ya hati yako na kuifunga kwenye bloku ya Bitcoin. Inathibitisha faili yako ilikuwepo wakati fulani, bila kubadilika.",
+    "otsTooltip": "Itifaki wazi inayofanya hash ya hati yako na kuifunga kwenye bloku ya Bitcoin. Inathibitisha faili yako ilikuwepo wakati fulani, kwa njia inayothibitishwa.",
     "scopeLabel": "Wigo wa huduma",
     "scopeTitle": "Huduma yetu ni nini",
     "scopeTitleRest": "(na si nini)",
@@ -1797,7 +1797,7 @@
     "step2Label": "Tunahesabu hash ndani",
     "step2Desc": "Alama ya SHA-256 inahesabiwa kwenye kivinjari chako. Ingizo lilelile huzalisha hash ileile kila wakati — mtu yeyote anaweza kuipata tena.",
     "step3Label": "Bitcoin inaweka muhuri wa muda",
-    "step3Desc": "Alama inaandikwa kabisa kwenye blockchain.",
+    "step3Desc": "Alama inaandikwa kwenye blockchain. Kuirekebisha kungekuwa ghali kiuchumi, si jambo lisilowezekana haswa.",
     "moreOptions": "Chaguo zaidi (kapsuli · futa · sauti)",
     "filePhotoOrHash": "Faili · picha · au hash — njia moja ya kidole",
     "hashingLabel": "Hash ya ndani",
@@ -1873,7 +1873,7 @@
     "stepBitcoinWaiting": "Inasubiri bloku",
     "stepBitcoinFolded": "Imekunjwa",
     "stepBitcoinBlock": "Bloku {{block}}",
-    "stepBitcoinTip": "Alama yako inakunjwa kwenye bloku ya umma ya Bitcoin. Ikiwa huko, yeyote anaweza kuiangalia — muhuri usiobadilika.",
+    "stepBitcoinTip": "Alama yako inakunjwa kwenye bloku ya umma ya Bitcoin. Ikiwa huko, yeyote anaweza kuiangalia — kuibadilisha kungekuwa ghali kiuchumi, si jambo lisilowezekana haswa.",
     "stepTipTitle": "Hatua {{n}} — {{title}}",
     "viewMempool": "Tazama kwenye mempool.space",
     "blockHeightMissing": "Kimo cha bloku bado hakijahifadhiwa — pending ≠ tatizo; uthibitisho umerekodiwa.",
@@ -1915,7 +1915,7 @@
     },
     "revoke": {
       "title": "Batilisha uthibitisho",
-      "body": "Hii inaweka alama ya rekodi kama imebatilishwa kabisa. Nanga ya Bitcoin inabakia isiyobadilika.",
+      "body": "Hii inaweka alama ya rekodi kama imebatilishwa kabisa. Nanga ya Bitcoin inabakia — kuandika upya kungekuwa ghali kiuchumi, si jambo lisilowezekana haswa.",
       "confirm": "Thibitisha kubatilisha",
       "cancel": "Ghairi"
     }
@@ -2079,7 +2079,7 @@
     "fullCtaTitle": "Kagua",
     "fullCtaLine": "Unaondoka na risiti na kiungo. Tunathibitisha lini, si nani. Fungua uthibitisho halisi, kisha weka stempu yako.",
     "shortHookTitle": "Kuvuta",
-    "shortHookLine": "Faili inayopaswa kuwepo — na kuthibitishwa milele?",
+    "shortHookLine": "Faili inayopaswa kuwepo — na kuthibitishwa na mtu yeyote?",
     "shortPrivacyTitle": "Faragha",
     "shortPrivacyLine": "Faili haitoki kwenye kifaa. Alama pekee ndiyo inayogongwa.",
     "shortAnchorTitle": "Bitcoin",
@@ -2224,7 +2224,7 @@
     "freeTitle": "Migongo inabaki bure.",
     "freeBody": "Bakshishi zako zinafadhili kiwango cha umma bure — hazifanyi paywall.",
     "infraTitle": "Miundombinu.",
-    "infraBody": "Kalenda za OpenTimestamps, nodo ya THOR, na API zinazoweka ushahidi ukithibitishwa milele.",
+    "infraBody": "Kalenda za OpenTimestamps, nodo ya THOR, na API zinazoweka ushahidi ukithibitishwa na mtu yeyote.",
     "noMiddleTitle": "Hakuna mtu wa kati.",
     "noMiddleBody": "Sats zinaingia moja kwa moja kwenye pochi ya Satohash kwenye Breez Spark — si custodial, hakuna kata ya jukwaa.",
     "stampFree": "Gonga bure",
@@ -2256,7 +2256,7 @@
     "titleBefore": "Itifaki ya",
     "titleHighlight": "Satohash",
     "titleAfter": "",
-    "lede": "Uthibitisho wa kuwepo bila malipo na wa faragha kwenye Bitcoin — uliotengenezwa na Give A Bit. Hashi kifaa chako. Ankari wazi. Thibitisha milele.",
+    "lede": "Uthibitisho wa kuwepo bila malipo na wa faragha kwenye Bitcoin — uliotengenezwa na Give A Bit. Hashi kifaa chako. Ankari wazi. Thibitisha kwa mtu yeyote.",
     "stampCta": "Gonga bure",
     "watchCta": "Tazama maelezo",
     "governmentCta": "Serikali",
@@ -2539,7 +2539,7 @@
     "stampCta": "Gonga bure"
   },
   "execSummaryPage": {
-    "eyebrow": "Bure leo · limefungwa kwenye Bitcoin milele.",
+    "eyebrow": "Bure leo · limefungwa kwenye Bitcoin.",
     "h1": "Thibitisha kwamba lilikuwepo.",
     "h1Highlight": "Chini ya dakika moja.",
     "lede": "Satohash inaweka muhuri bure wa alama ya faili lako kwa OpenTimestamps kwenye Bitcoin. Kiwango cha msingi bure kinakusudiwa kuwa nanga ya uaminifu ya kudumu, isiyowahi kufungiwa kwa malipo, ikifadhiliwa leo na Give A Bit na michango ya jamii; viwango vya premium na API vinatarajiwa kufadhili miundombinu pindi itakapoanza kufanya kazi. Viwango vya ziada vya hiari (Professional ~2,100 sats/mwezi, Business ~21,000 sats/mwezi) na API ya kulipa-kwa-matumizi vimejengwa na viko staging; vinalipishwa tu baada ya njia za Lightning kufadhiliwa na kujaribiwa — uthibitisho bado unafungwa kwenye Bitcoin hivi au hivyo.",
@@ -2574,7 +2574,7 @@
         "label": "01 — Tunachofanya",
         "title": "Tunachofanya",
         "p1": "Satohash hutoa uthibitisho huru, wa kriptografia wa kuwepo kwa faili lolote la kidijitali—mikataba, picha, msimbo wa chanzo, matokeo ya modeli za AI, picha za wavuti, au vifurushi vya ukaguzi. Hatuwezi kuhifadhi wala kukagua maudhui yenyewe. Badala yake, tunawezesha mashirika na watu kuunganisha alama ya hisabati ya maudhui hayo kwenye blockchain ya Bitcoin kupitia itifaki huria ya OpenTimestamps, na kutoa uthibitisho unaobebeka ambao wahusika wengine wanaweza kuuthibitisha bila kuamini Satohash kama mlezi wa ukweli.",
-        "p2": "Kwa vitendo: wakati waraka, kifurushi cha uwasilishaji, au kitu cha kidijitali lazima baadaye kistahimili uchunguzi—kutoka kwa wenza, wadhibiti, mahakama, au ukaguzi wa ndani—Satohash hutoa kumbukumbu thabiti, isiyoweza kukataliwa kwamba kitu hicho kilikuwepo katika umbo mahususi wakati mahususi. Huduma imeundwa kwa matumizi ya kila siku kwenye ukingo wa kazi (kisheria, ubunifu, uchunguzi, na uendeshaji), si kama kitu kipya cha mara moja."
+        "p2": "Kwa vitendo: wakati waraka, kifurushi cha uwasilishaji, au kitu cha kidijitali lazima baadaye kistahimili uchunguzi—kutoka kwa wenza, wadhibiti, mahakama, au ukaguzi wa ndani—Satohash hutoa kumbukumbu thabiti, inayoungwa mkono na ushahidi dhabiti wa kriptografia kwamba kitu hicho kilikuwepo katika umbo mahususi wakati mahususi. Huduma imeundwa kwa matumizi ya kila siku kwenye ukingo wa kazi (kisheria, ubunifu, uchunguzi, na uendeshaji), si kama kitu kipya cha mara moja."
       },
       "how": {
         "label": "02 — Jinsi inavyofanya kazi",
@@ -2613,7 +2613,7 @@
       },
       "offline": {
         "title": "Inafanya kazi offline-first",
-        "body": "Hash popote. Sawazisha unaporudi mtandaoni. Inabebeka milele."
+        "body": "Hash popote. Sawazisha unaporudi mtandaoni. Inabebeka — hifadhi nakala yako mwenyewe ya .ots mahali salama."
       }
     },
     "chartsTitle": "Mahali uthibitisho",
@@ -2664,7 +2664,7 @@
       },
       "bitcoin": {
         "title": "Bitcoin inafunga",
-        "body": "Kalenda zinakusanya uthibitisho mwingi katika ahadi moja ya Bitcoin. Uthibitisho wa block kwa kawaida huchukua kama dakika 60. Kudumu."
+        "body": "Kalenda zinakusanya uthibitisho mwingi katika ahadi moja ya Bitcoin. Uthibitisho wa block kwa kawaida huchukua kama dakika 60. Unathibitishwa na mtu yeyote."
       },
       "verify": {
         "title": "Thibitisha popote",
@@ -2673,7 +2673,7 @@
     },
     "planesTitle": "Tabaka nne ·",
     "planesTitleHighlight": "msingi mmoja wa Bitcoin",
-    "planesLede": "Tabaka za juu zinaweza kubadilika. Uthibitisho wa tabaka 1 unabaki halali milele.",
+    "planesLede": "Tabaka za juu zinaweza kubadilika. Uthibitisho wa tabaka 1 unabaki kuthibitishwa na mtu yeyote.",
     "planes": {
       "atlas": {
         "name": "Atlas",
@@ -2702,9 +2702,9 @@
         "tag": "Hai sasa",
         "p1": "OTS kwenye Bitcoin",
         "p2": "Hash ya ndani",
-        "p3": "Thibitisha milele",
+        "p3": "Thibitisha kwa mtu yeyote",
         "p4": "Hakuna akaunti",
-        "p5": "Haijafungiwa kwa malipo"
+        "p5": "Imekusudiwa kutofungiwa kwa malipo"
       },
       "pro": {
         "name": "Professional",
@@ -3191,7 +3191,7 @@
     "viewNetwork": "Tazama takwimu za mtandao",
     "learn": "Jifunze",
     "learnTitle": "Muhuri wa kriptografia ni nini?",
-    "learnBody": "Muhuri wa kriptografia hutengeneza ushahidi wa kudumu, usiobadilika kwamba hati ilikuwepo wakati mahususi. Kwa kutiwa nanga alama ya SHA-256 ya hati yako kwenye Bitcoin kwa OpenTimestamps, unatengeneza ushahidi ambao ni:",
+    "learnBody": "Muhuri wa kriptografia hutengeneza ushahidi unaothibitishwa, uharakaji wake unaonekana kwamba hati ilikuwepo wakati mahususi. Kwa kutiwa nanga alama ya SHA-256 ya hati yako kwenye Bitcoin kwa OpenTimestamps, unatengeneza ushahidi ambao ni:",
     "tamperTitle": "Usiobadilika",
     "tamperDesc": "Haiwezekani kubadilisha bila kugunduliwa",
     "decentralizedTitle": "Uliogawanywa",
@@ -3393,7 +3393,7 @@
     "securedBy": "Imelindwa na mtandao wa Bitcoin • Kizuizi #{{height}}",
     "heroTitle": "Notari wa kidijitali",
     "heroHighlight": "kwa dunia iliyothibitishwa.",
-    "heroSubtitle": "Satohash hutoa uthibitisho wa kuwepo usiopingika kimathesai kwa hati zako muhimu zaidi. Faragha ya ndani, kutobadilika kwa kimataifa.",
+    "heroSubtitle": "Satohash hutoa ushahidi thabiti wa kriptografia wa kuwepo kwa hati zako muhimu zaidi. Faragha ya ndani, inathibitishwa kimataifa.",
     "startCta": "Anza makubaliano mapya",
     "exploreCta": "Chunguza itifaki",
     "educationalInsight": "Maelezo ya kielimu",
@@ -3418,7 +3418,7 @@
       "merkleTitle": "02 / Kufunganisha Merkle",
       "merkleText": "Alama nyingi za kidole zinaunganishwa kwenye Merkle Tree. Hii inaruhusu kupanuka kwa kiasi kikubwa na faragha kamili katika uthibitisho.",
       "anchorTitle": "03 / Kufungwa kwenye Bitcoin",
-      "anchorText": "Merkle Root inaingizwa kwenye blockchain ya Bitcoin. Urefu wa kizuizi cha muamala unakuwa muhuri wako wa muda wa kudumu usioweza kughushiwa."
+      "anchorText": "Merkle Root inaingizwa kwenye blockchain ya Bitcoin. Urefu wa kizuizi cha muamala unakuwa muhuri wako wa muda uliotiwa nanga unaothibitishwa."
     },
     "abyss": {
       "kicker": "Kilindi cha itifaki",
@@ -3429,7 +3429,7 @@
     "trust": {
       "privacyTitle": "Faragha ya ndani",
       "privacyDesc": "Maudhui hayaondoki kwenye kivinjari chako.",
-      "proofTitle": "Uthibitisho wa milele",
+      "proofTitle": "Uthibitisho unaothibitika",
       "proofDesc": "Hudumu zaidi ya kampuni na seva.",
       "standardTitle": "Kiwango sanifu",
       "standardDesc": "Inatumia uthibitisho .ots wa kiwango huria.",
@@ -3451,7 +3451,7 @@
     "metaDescription": "Malipo ya Lightning BOLT-12 na NWC yako Staging. Muhuri ni bure leo — paywall imezimwa. Si malipo hai yanayolipiwa.",
     "stagedChip": "Staging",
     "explainerTitle": "Lightning Offers ni nini?",
-    "explainerP1": "Lightning Offer (BOLT-12) ni kiungo cha malipo cha Bitcoin kinachoweza kutumika tena — kama msimbo wa QR unaofanya kazi milele. Badala ya kutengeneza ankara mpya kila wakati, unaunda Offer ambayo mtu yeyote anaweza kulipa, mara nyingi, kutoka pochi yoyote ya Lightning.",
+    "explainerP1": "Lightning Offer (BOLT-12) ni kiungo cha malipo cha Bitcoin kinachoweza kutumika tena — kama msimbo wa QR unaoweza kutumika tena mara nyingi. Badala ya kutengeneza ankara mpya kila wakati, unaunda Offer ambayo mtu yeyote anaweza kulipa, mara nyingi, kutoka pochi yoyote ya Lightning.",
     "explainerP2": "Kwenye Satohash hii ni Staging — si malipo hai yanayolipiwa. Muhuri ni bure leo. Paywall imezimwa. Baadaye, Ofa zinaweza kuendesha ufikiaji wa L402 API (muhuri kwa matumizi kupitia Lightning). Reli za Lightning bado hazijafadhiliwa.",
     "tagReusable": "Kiungo cha malipo kinachoweza kutumika tena",
     "tagNoExpiry": "Hakuna mwisho wa muda",
@@ -3522,7 +3522,7 @@
     "pathWithBlock": "{{path}} · Block #{{height}}",
     "close": "Funga",
     "pendingTitle": "Uthibitisho wa Bitcoin unangoja",
-    "pendingBody": "Ushahidi wako umewasilishwa kwa OpenTimestamps na unasubiri kujumuishwa kwenye bloku inayofuata ya Bitcoin — kawaida ndani ya dakika 60. Ikishatiwa nanga, ushahidi huu hauwezi kukanushwa kihisabati na mtu yeyote anaweza kuuthibitisha, milele.",
+    "pendingBody": "Ushahidi wako umewasilishwa kwa OpenTimestamps na unasubiri kujumuishwa kwenye bloku inayofuata ya Bitcoin — kawaida ndani ya dakika 60. Mara tu ukishatiwa nanga, ushahidi huu unakuwa ushahidi thabiti wa kriptografia ambao mtu yeyote anaweza kuthibitisha. Kuandika upya kungekuwa ghali kiuchumi, si jambo lisilowezekana haswa — nodi zinaweza kupunguza data, kwa hivyo hifadhi faili yako ya .ots na hati yako asili.",
     "proofId": "ID ya ushahidi",
     "stampedAt": "Iligongwa saa",
     "fingerprint": "1. Alama ya hati (SHA-256)",
@@ -3545,7 +3545,7 @@
     "stepVerifiable": "Ushahidi unaweza kuthibitishwa kwa uhuru",
     "verifiedAuthentic": "Uhalisi umethibitishwa",
     "proofSubmitted": "Ushahidi umewasilishwa",
-    "linkedMainnet": "Imeunganishwa kihisabati na Bitcoin Mainnet",
+    "linkedMainnet": "Imeunganishwa kwa kriptografia na Bitcoin Mainnet",
     "awaitingConfirm": "Inasubiri uthibitisho wa bloku ya Bitcoin",
     "blockHeight": "BLOCK HEIGHT"
   },
