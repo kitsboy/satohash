@@ -24,7 +24,7 @@
       "eyebrow": "Free today · Future premium tiers",
       "title": "Proof of Existence,",
       "titleHighlight": "For Everyone",
-      "subtitle": "The free base tier is the permanent, never-paywalled trust anchor — stamp, verify, and download .ots proofs, hashed client-side, with no daily quota. Optional premium tiers and a pay-per-use API are built and staged; they launch paid only once the Lightning rails are funded and tested. Tiers below mix what is live with a simple sketch of how paid tiers may look later."
+      "subtitle": "Stamps are free today, subsidised by Give A Bit and community tips; paid tiers are staged and launch only once Lightning rails are funded and tested. The free base tier is intended as the permanent, never-paywalled trust anchor — stamp, verify, and download .ots proofs, hashed client-side, with no daily quota. Premium tiers and the API are expected to fund infrastructure once live. Tiers below mix what is live with a simple sketch of how paid tiers may look later."
     },
     "mostPopular": "Recommended",
     "tiers": {
