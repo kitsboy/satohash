@@ -88,7 +88,12 @@ export default function usePageMeta({ page, title, description, image, url }) {
       setMeta('meta[name="twitter:player"]', 'name', 'twitter:player', WATCH_PLAYER_URL)
       setMeta('meta[name="twitter:player:width"]', 'name', 'twitter:player:width', '1280')
       setMeta('meta[name="twitter:player:height"]', 'name', 'twitter:player:height', '720')
-      setMeta('meta[name="twitter:player:stream"]', 'name', 'twitter:player:stream', WATCH_VIDEO_URL)
+      setMeta(
+        'meta[name="twitter:player:stream"]',
+        'name',
+        'twitter:player:stream',
+        WATCH_VIDEO_URL
+      )
       setMeta(
         'meta[name="twitter:player:stream:content_type"]',
         'name',
@@ -125,7 +130,9 @@ export default function usePageMeta({ page, title, description, image, url }) {
       schemaEl.type = 'application/ld+json'
       document.head.appendChild(schemaEl)
     }
-    const crumbs = [{ '@type': 'ListItem', position: 1, name: 'Home', item: 'https://satohash.io/' }]
+    const crumbs = [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://satohash.io/' }
+    ]
     if (path.startsWith('/docs')) {
       crumbs.push({
         '@type': 'ListItem',
@@ -228,7 +235,7 @@ export default function usePageMeta({ page, title, description, image, url }) {
         url: 'https://satohash.io',
         name: 'Satohash',
         description:
-          'Free Bitcoin document notarization via OpenTimestamps. Prove any file existed, forever.',
+          'Free Bitcoin document notarization via OpenTimestamps. Prove any file existed, verifiably, on Bitcoin.',
         potentialAction: {
           '@type': 'SearchAction',
           target: 'https://satohash.io/?q={search_term_string}',

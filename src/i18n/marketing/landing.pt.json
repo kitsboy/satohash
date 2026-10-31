@@ -10,14 +10,14 @@
     "badge": "Grátis • Sem conta • O seu documento nunca sai do seu dispositivo",
     "titleLine1": "Prove que qualquer ficheiro",
     "titleLine2": "existiu.",
-    "titleHighlight": "Para sempre.",
+    "titleHighlight": "Verificável, no Bitcoin.",
     "subtitle": "Prova verificável de forma independente. Sem notário.",
     "description": "O Satohash calcula o hash do seu ficheiro localmente no seu navegador — o seu documento nunca sai do seu dispositivo. Apenas uma impressão digital criptográfica é escrita na blockchain Bitcoin, criando prova imutável de existência para qualquer ficheiro, contrato, fotografia ou conjunto de dados.",
     "ctaStamp": "Carimbar um ficheiro — É grátis",
     "ctaWatch": "Assistir ao explainer",
     "seeConfirmed": "Ver uma prova Confirmed · bloco {{block}}",
     "ctaTemplates": "Explorar modelos",
-    "socialProof": "{{count}} provas ancoradas no Bitcoin emitidas neste plano",
+    "socialProof": "{{issued}} provas emitidas neste plano ({{confirmed}} confirmadas no Bitcoin)",
     "tryTemplate": "Experimente um modelo grátis"
   },
   "telemetry": {
@@ -44,7 +44,7 @@
       },
       "anchored": {
         "title": "Ancorado em 60 minutos",
-        "body": "Num bloco Bitcoin, a sua prova fica entrelaçada na cadeia. Cada nó na Terra a valida. Não pode ser alterada, antedatada nem eliminada."
+        "body": "Num bloco Bitcoin, a sua prova fica entrelaçada na cadeia. Cada nó na Terra a valida. Não pode ser alterada nem antedatada sem dominar a rede (um ataque de 51 %) — é economicamente proibitivo, não literalmente impossível. Os nós podem podar dados, por isso guarde o seu ficheiro .ots e o documento original."
       },
       "court": {
         "title": "Prova válida em tribunal",
@@ -99,11 +99,11 @@
       },
       "research": {
         "title": "Investigação e PI",
-        "body": "Cientistas e inventores provam datas de descoberta com certeza matemática."
+        "body": "Cientistas e inventores obtêm forte evidência criptográfica de quando um documento existiu, por um limite temporal."
       },
       "government": {
         "title": "Governo e arquivos",
-        "body": "Registos públicos que nunca podem ser alterados ou antedatados — nunca."
+        "body": "Registos públicos extremamente caros de alterar ou antedatar, porque tal exigiria reescrever a cadeia Bitcoin."
       }
     }
   },
@@ -133,10 +133,10 @@
     "thanks": "Cada satoshi ajuda a manter os carimbos temporais grátis. Obrigado. 🙏"
   },
   "freeModel": {
-    "eyebrow": "Free today · Bitcoin forever",
+    "eyebrow": "Free today · anchored to Bitcoin forever.",
     "titleLine1": "How free stamping",
     "titleHighlight": "actually works",
-    "explainer": "We free-timestamp a fingerprint of your file using OpenTimestamps on Bitcoin. The free base tier is the permanent, never-paywalled trust anchor; optional premium tiers and a pay-per-use API are built and staged and launch paid only once the Lightning rails are funded and tested.",
+    "explainer": "We free-timestamp a fingerprint of your file using OpenTimestamps on Bitcoin. The free base tier is intended as the permanent, never-paywalled trust anchor, subsidised today by Give A Bit and community donations; premium tiers and the API are expected to fund infrastructure once live. Optional premium tiers and a pay-per-use API are built and staged and launch paid only once the Lightning rails are funded and tested.",
     "chainNote": "Chain: Bitcoin only (via OpenTimestamps). Your file stays on your device — we only handle the hash.",
     "futureEyebrow": "Maybe in the future",
     "futureTitle": "Simple prices we’re sketching (not live yet)",
@@ -146,7 +146,7 @@
         "name": "Free",
         "price": "0 sats",
         "period": "today",
-        "desc": "Unlimited stamp & verify with OpenTimestamps. No account. No Lightning invoice. Never paywalled (trust anchor).",
+        "desc": "Stamp & verify freely under a disclosed 5-req/min abuse guard, with no daily cap. The free base is intended to stay the never-paywalled trust anchor; if economics ever force a limit, we publish the change before it applies.",
         "badge": "Live now"
       },
       "sats": {

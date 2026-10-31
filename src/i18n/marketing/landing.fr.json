@@ -10,14 +10,14 @@
     "badge": "Gratuit • Aucun compte requis • Votre document ne quitte jamais votre appareil",
     "titleLine1": "Prouvez qu'un fichier",
     "titleLine2": "a existé.",
-    "titleHighlight": "Pour toujours.",
+    "titleHighlight": "Vérifiable, sur Bitcoin.",
     "subtitle": "Preuve vérifiable de façon indépendante. Sans notaire.",
     "description": "Satohash calcule l'empreinte de votre fichier localement dans votre navigateur — votre document ne quitte jamais votre appareil. Seule une empreinte cryptographique est inscrite dans la blockchain Bitcoin, créant une preuve d'existence immuable pour tout fichier, contrat, photo ou jeu de données.",
     "ctaStamp": "Horodater un fichier — C'est gratuit",
     "ctaWatch": "Voir l'explainer",
     "seeConfirmed": "Voir une preuve Confirmed · bloc {{block}}",
     "ctaTemplates": "Parcourir les modèles",
-    "socialProof": "{{count}} preuves ancrées sur Bitcoin émises sur ce plan",
+    "socialProof": "{{issued}} preuves émises sur ce plan ({{confirmed}} confirmées sur Bitcoin)",
     "tryTemplate": "Essayer un modèle gratuitement"
   },
   "telemetry": {
@@ -44,7 +44,7 @@
       },
       "anchored": {
         "title": "Ancré en 60 minutes",
-        "body": "En un bloc Bitcoin, votre preuve est tissée dans la chaîne. Chaque nœud sur Terre la valide. Elle ne peut être modifiée, antidatée ni supprimée."
+        "body": "En un bloc Bitcoin, votre preuve est tissée dans la chaîne. Chaque nœud sur Terre la valide. Elle ne peut être modifiée ni antidatée sans submerger le réseau (une attaque à 51 %) — économiquement prohibitif, pas littéralement impossible. Les nœuds peuvent élaguer les données : conservez donc votre fichier .ots et votre document original."
       },
       "court": {
         "title": "Preuve recevable en justice",
@@ -99,11 +99,11 @@
       },
       "research": {
         "title": "Recherche et PI",
-        "body": "Scientifiques et inventeurs prouvent les dates de découverte avec une certitude mathématique."
+        "body": "Scientifiques et inventeurs obtiennent une solide preuve cryptographique de quand un document a existé, par une borne temporelle."
       },
       "government": {
         "title": "Gouvernement et archives",
-        "body": "Registres publics qui ne peuvent jamais être modifiés ou antidatés — jamais."
+        "body": "Des registres publics extrêmement coûteux à modifier ou à antidater, car cela exigerait de réécrire la chaîne Bitcoin."
       }
     }
   },
@@ -133,10 +133,10 @@
     "thanks": "Chaque satoshi aide à garder les horodatages gratuits. Merci. 🙏"
   },
   "freeModel": {
-    "eyebrow": "Free today · Bitcoin forever",
+    "eyebrow": "Free today · anchored to Bitcoin forever.",
     "titleLine1": "How free stamping",
     "titleHighlight": "actually works",
-    "explainer": "We free-timestamp a fingerprint of your file using OpenTimestamps on Bitcoin. The free base tier is the permanent, never-paywalled trust anchor; optional premium tiers and a pay-per-use API are built and staged and launch paid only once the Lightning rails are funded and tested.",
+    "explainer": "We free-timestamp a fingerprint of your file using OpenTimestamps on Bitcoin. The free base tier is intended as the permanent, never-paywalled trust anchor, subsidised today by Give A Bit and community donations; premium tiers and the API are expected to fund infrastructure once live. Optional premium tiers and a pay-per-use API are built and staged and launch paid only once the Lightning rails are funded and tested.",
     "chainNote": "Chain: Bitcoin only (via OpenTimestamps). Your file stays on your device — we only handle the hash.",
     "futureEyebrow": "Maybe in the future",
     "futureTitle": "Simple prices we’re sketching (not live yet)",
@@ -146,7 +146,7 @@
         "name": "Free",
         "price": "0 sats",
         "period": "today",
-        "desc": "Unlimited stamp & verify with OpenTimestamps. No account. No Lightning invoice. Never paywalled (trust anchor).",
+        "desc": "Stamp & verify freely under a disclosed 5-req/min abuse guard, with no daily cap. The free base is intended to stay the never-paywalled trust anchor; if economics ever force a limit, we publish the change before it applies.",
         "badge": "Live now"
       },
       "sats": {

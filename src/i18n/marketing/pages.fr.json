@@ -318,7 +318,7 @@
     "guides": {
       "what-is-cryptographic-proof": {
         "title": "Qu'est-ce qu'une preuve cryptographique ?",
-        "desc": "Comprenez comment les hachages SHA-256, les arbres Merkle et les horodatages blockchain créent une certitude mathématique sur le moment où un document a existé.",
+        "desc": "Comprenez comment les hachages SHA-256, les arbres Merkle et les horodatages blockchain créent une solide preuve cryptographique du moment où un document a existé, par une borne temporelle.",
         "readTime": "5 min"
       },
       "how-opentimestamps-works": {
@@ -356,7 +356,7 @@
     "terms": {
       "sha256": {
         "term": "SHA-256",
-        "def": "Fonction de hachage cryptographique qui produit une empreinte hexadécimale de 256 bits (64 caractères). Utilisée par Satohash pour créer un identifiant unique pour chaque document sans exposer son contenu."
+        "def": "Fonction de hachage cryptographique qui produit une empreinte hexadécimale de 256 bits (64 caractères). Utilisée par Satohash pour créer un identifiant déterministe — le même document produit toujours la même sortie de 64 caractères."
       },
       "ots": {
         "term": "OpenTimestamps (OTS)",
@@ -1351,7 +1351,7 @@
     "copyHash": "Copier le hachage",
     "copyProof": "Copier la preuve",
     "downloadCert": "Télécharger le PDF de preuve",
-    "footer": "Cette preuve est ancrée de façon permanente dans la blockchain Bitcoin et ne peut être modifiée ni supprimée. Vérifiez de manière indépendante sur",
+    "footer": "Cette preuve est ancrée dans la blockchain Bitcoin. La modifier ou l’antidater exigerait de submerger le réseau (une attaque à 51 %) — économiquement prohibitif, pas littéralement impossible. Les nœuds peuvent élaguer les données : conservez donc votre fichier .ots. Vérifiez de manière indépendante sur",
     "toasts": {
       "linkCopied": "Lien copié !",
       "hashCopied": "Hachage copié !",
@@ -1534,7 +1534,7 @@
     "zkP1": "Dans la notarisation traditionnelle, vous remettez votre document à quelqu'un qui le lit et le tamponne. Vous faites confiance à cette personne — et à chaque système qu'elle utilise.",
     "zkP2Before": "Avec Satohash, nous utilisons une technique mathématique appelée",
     "zkP2Strong": "empreinte cryptographique",
-    "zkP2After": ". Votre document est converti en une empreinte unique de 64 caractères (SHA-256). Nous ne voyons, ne stockons ni ne transmettons jamais le document. Seule l'empreinte est envoyée à Bitcoin.",
+    "zkP2After": ". Votre document est converti en une empreinte déterministe SHA-256 — quiconque hache le même fichier obtient la même chaîne de 64 caractères. Nous ne voyons, ne stockons ni ne transmettons jamais le document. Seule l'empreinte est envoyée à Bitcoin.",
     "zkP3Before": "C'est toute la promesse :",
     "zkP3Strong": "le fichier reste",
     "zkP3After": ". Nous pouvons prouver qu'un fichier existait à un instant donné sans jamais recevoir le fichier.",
@@ -1795,7 +1795,7 @@
     "step1Label": "Déposez votre fichier",
     "step1Desc": "Tout format. Reste sur votre appareil — jamais téléversé.",
     "step2Label": "Nous le hachons localement",
-    "step2Desc": "Une empreinte SHA-256 unique est calculée dans votre navigateur.",
+    "step2Desc": "Une empreinte SHA-256 est calculée dans votre navigateur. La même entrée produit toujours le même hachage — n’importe qui peut le redériver.",
     "step3Label": "Bitcoin l’horodate",
     "step3Desc": "L’empreinte est écrite de façon permanente sur la blockchain.",
     "moreOptions": "Plus d’options (capsule · redact · voix)",
@@ -1865,7 +1865,7 @@
     "verify": "Vérifier",
     "stepFingerprint": "Empreinte",
     "stepFingerprintDesc": "Haché sur cet appareil",
-    "stepFingerprintTip": "Une empreinte (SHA-256) est un identifiant court et unique de votre fichier, calculé sur votre appareil. Elle ne part pas en clair.",
+    "stepFingerprintTip": "Une empreinte (SHA-256) est un identifiant court et déterministe de votre fichier, calculé sur votre appareil. Elle ne part pas en clair.",
     "stepCalendars": "Serveurs",
     "stepCalendarsDesc": "En attente des serveurs d’horodatage",
     "stepCalendarsTip": "Des serveurs publics indépendants s’accordent sur le moment. Ils sont gratuits et ouverts — sans compte — aucune entreprise ne contrôle votre preuve.",
@@ -2212,7 +2212,7 @@
     "titleBefore": "Soutenir",
     "lede": "Satohash garde la preuve de documents gratuite et ancrée à Bitcoin. Si Satohash vous aide, un petit pourboire fait tourner les calendriers, le nœud et l’API. Chaque sat va directement au portefeuille Satohash — jamais à un intermédiaire.",
     "lightning": "Lightning",
-    "lightningMeta": "instantané · frais quasi nuls",
+    "lightningMeta": "Lightning — règle généralement en quelques secondes, avec des frais faibles mais variables.",
     "lightningAddress": "Adresse Lightning",
     "lightningHelp": "Scannez le QR avec n’importe quel portefeuille Lightning (Phoenix, Wallet of Satoshi, Alby, Zeus…), ou envoyez à l’adresse ci-dessus. Tout montant convient. Lightning, c’est comme un SMS pour l’argent — ça arrive en secondes et coûte des fractions de centime. Non-custodial via Breez Spark — pas d’intermédiaire, les clés chez nous.",
     "bitcoin": "Bitcoin",
@@ -2342,7 +2342,7 @@
   "pitchPage": {
     "kicker": "Hub investisseurs & partenaires",
     "h1": "Pitch, synthèse et finances",
-    "proofsLine": "{{count}} preuves ancrées sur Bitcoin émises via ce plan —",
+    "proofsLine": "{{issued}} preuves émises via ce plan ({{confirmed}} confirmées sur Bitcoin) —",
     "liveNetwork": "réseau en direct ↗",
     "govTitle": "Programmes gouvernementaux et de migration",
     "govBody": "Preuves hash-only, chaînes de custody et motifs discrets de R&D (y compris un concept précoce de deep-link façon MotoPass). Pas une vente forcée — matériel d’atelier sur la page Gouvernement.",
@@ -2539,10 +2539,10 @@
     "stampCta": "Horodatage gratuit"
   },
   "execSummaryPage": {
-    "eyebrow": "Gratuit aujourd’hui · Bitcoin pour toujours",
+    "eyebrow": "Gratuit aujourd’hui · ancré sur Bitcoin pour toujours.",
     "h1": "Prouvez que ça existait.",
     "h1Highlight": "En moins d’une minute.",
-    "lede": "Satohash horodate gratuitement l’empreinte de votre fichier avec OpenTimestamps sur Bitcoin. Le palier de base gratuit est l’ancre de confiance permanente, jamais paywallée. Les paliers premium optionnels (Professional ~2 100 sats/mois, Business ~21 000 sats/mois) et une API à l’usage sont construits et en staging ; ils ne passent en payant que lorsque les rails Lightning sont financés et testés — la preuve s’ancre à Bitcoin dans tous les cas.",
+    "lede": "Satohash horodate gratuitement l’empreinte de votre fichier avec OpenTimestamps sur Bitcoin. Le palier de base gratuit est conçu comme l’ancre de confiance permanente, jamais paywallée, subventionné aujourd’hui par Give A Bit et les dons de la communauté ; les paliers premium et l’API devraient financer l’infrastructure une fois en service. Les paliers premium optionnels (Professional ~2 100 sats/mois, Business ~21 000 sats/mois) et une API à l’usage sont construits et en staging ; ils ne passent en payant que lorsque les rails Lightning sont financés et testés — la preuve s’ancre à Bitcoin dans tous les cas.",
     "stampCta": "Horodater un fichier gratuitement",
     "verifyCta": "Vérifier une preuve",
     "mobileNote": "Conçu pour le mobile à une main · prêt pour Pixel et iPhone",
@@ -3400,7 +3400,7 @@
     "protocolDepth": "Profondeur mécanique du protocole",
     "features": {
       "proof": {
-        "insight": "Hachage SHA-256 : chaque document reçoit une « empreinte » unique de 64 caractères. Même un changement d'un pixel crée un identifiant totalement différent.",
+        "insight": "Hachage SHA-256 : chaque document reçoit une « empreinte » déterministe de 64 caractères. Même un changement d'un pixel crée un hachage différent.",
         "protocol": "Chiffrement local-first"
       },
       "timestamp": {
@@ -3424,7 +3424,7 @@
       "kicker": "L'abîme du protocole",
       "title": "Confiance décentralisée.",
       "title2": "Sans exception.",
-      "body": "Satohash n'est pas qu'un outil de signature. C'est un pont entre votre intention juridique et la certitude mathématique de la blockchain."
+      "body": "Satohash n'est pas qu'un outil de signature. C'est un pont entre votre intention juridique et la solide preuve cryptographique de la blockchain."
     },
     "trust": {
       "privacyTitle": "Confidentialité locale",

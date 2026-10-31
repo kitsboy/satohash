@@ -10,7 +10,7 @@
     "features": {
       "cryptoProof": "Prova Criptográfica",
       "cryptoProofDesc": "Crie uma impressão digital infalsificável do seu documento com criptografia SHA-256.",
-      "cryptoProofDetail": "O hash converte qualquer ficheiro numa cadeia única de 64 caracteres. Até uma única vírgula alterada resulta num hash completamente diferente. O Satohash faz isto localmente no seu dispositivo.",
+      "cryptoProofDetail": "O hash converte qualquer ficheiro numa cadeia determinística de 64 caracteres. A mesma entrada produz sempre o mesmo hash — qualquer pessoa pode rederivá-lo. Até uma única vírgula alterada resulta num hash completamente diferente. O Satohash faz isto localmente no seu dispositivo.",
       "timestamp": "Carimbo Temporal no Bitcoin",
       "timestampDesc": "Ancore a sua prova à blockchain Bitcoin com o protocolo OpenTimestamps.",
       "timestampDetail": "O hash do seu documento é agrupado com milhares de outros numa árvore Merkle. Um único hash «raiz» é depois registado na rede Bitcoin, fornecendo prova permanente e imutável de existência.",
@@ -24,7 +24,7 @@
     "subtitle": "Três passos simples para proteger os seus documentos",
     "card1": {
       "title": "Fixar a data",
-      "description": "O Satohash atribui ao seu documento uma impressão digital única e fixa a sua data na rede Bitcoin. Mais tarde, qualquer pessoa pode confirmar que este documento exato existia nesse momento."
+      "description": "O Satohash atribui ao seu documento uma impressão digital determinística e fixa a sua data na rede Bitcoin. Mais tarde, qualquer pessoa pode confirmar que este documento exato existia nesse momento."
     },
     "card2": {
       "title": "O seu conteúdo permanece privado",

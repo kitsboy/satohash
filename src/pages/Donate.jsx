@@ -97,7 +97,9 @@ export default function Donate() {
               <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-500/15 px-3 py-1 text-xs font-bold text-amber-400">
                 <Zap size={13} /> Lightning
               </span>
-              <span className="text-xs text-[var(--text-muted)]">instant · near-zero fee</span>
+              <span className="text-xs text-[var(--text-muted)]">
+                Lightning — usually settles in seconds with low but variable fees
+              </span>
             </div>
             <div className="mb-4 flex justify-center">
               <div className="rounded-xl border border-[var(--border)] bg-white p-3">
@@ -108,8 +110,8 @@ export default function Donate() {
             <p className="mt-3 text-xs leading-relaxed text-[var(--text-muted)]">
               Scan the QR with any Lightning wallet (Phoenix, Wallet of Satoshi, Alby, Zeus…), or
               send to the address above. Any amount works. Lightning is like a text message for
-              money — it arrives in seconds and costs fractions of a cent. Non-custodial via Breez
-              Spark — no middleman, keys held by us.
+              money — it usually settles in seconds with low but variable fees. Non-custodial via
+              Breez Spark — no middleman, keys held by us.
             </p>
           </motion.div>
 

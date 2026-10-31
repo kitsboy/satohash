@@ -318,7 +318,7 @@
     "guides": {
       "what-is-cryptographic-proof": {
         "title": "¿Qué es una prueba criptográfica?",
-        "desc": "Entiende cómo los hashes SHA-256, los árboles Merkle y las marcas de tiempo en blockchain crean certeza matemática sobre cuándo existió un documento.",
+        "desc": "Entiende cómo los hashes SHA-256, los árboles Merkle y las marcas de tiempo en blockchain crean una sólida evidencia criptográfica de cuándo existió un documento, acotada en el tiempo.",
         "readTime": "5 min"
       },
       "how-opentimestamps-works": {
@@ -356,7 +356,7 @@
     "terms": {
       "sha256": {
         "term": "SHA-256",
-        "def": "Función hash criptográfica que produce una huella hexadecimal de 256 bits (64 caracteres). Satohash la usa para crear un identificador único de cada documento sin exponer su contenido."
+        "def": "Función hash criptográfica que produce una huella hexadecimal de 256 bits (64 caracteres). Satohash la usa para crear un identificador determinista — el mismo documento siempre produce la misma salida de 64 caracteres."
       },
       "ots": {
         "term": "OpenTimestamps (OTS)",
@@ -1351,7 +1351,7 @@
     "copyHash": "Copiar hash",
     "copyProof": "Copiar prueba",
     "downloadCert": "Descargar PDF de la prueba",
-    "footer": "Esta prueba está anclada permanentemente en la blockchain de Bitcoin y no puede alterarse ni eliminarse. Verifica de forma independiente en",
+    "footer": "Esta prueba está anclada en la blockchain de Bitcoin. Alterarla o retrodatarla exigiría abrumar a la red (un ataque del 51 %) — es económicamente prohibitivo, no literalmente imposible. Los nodos pueden podar datos, así que conserva tu archivo .ots. Verifica de forma independiente en",
     "toasts": {
       "linkCopied": "¡Enlace copiado!",
       "hashCopied": "¡Hash copiado!",
@@ -1534,7 +1534,7 @@
     "zkP1": "En la notarización tradicional, entregas tu documento a alguien que lo lee y lo sella. Confías en esa persona — y en cada sistema que usa.",
     "zkP2Before": "Con Satohash usamos una técnica matemática llamada",
     "zkP2Strong": "hash criptográfico",
-    "zkP2After": ". Tu documento se convierte en una huella única de 64 caracteres (SHA-256). Nunca vemos, almacenamos ni transmitimos el documento. Solo la huella se envía a Bitcoin.",
+    "zkP2After": ". Tu documento se convierte en una huella determinista SHA-256 — quien haga hash del mismo archivo obtiene la misma cadena de 64 caracteres. Nunca vemos, almacenamos ni transmitimos el documento. Solo la huella se envía a Bitcoin.",
     "zkP3Before": "Esa es toda la promesa:",
     "zkP3Strong": "el archivo se queda",
     "zkP3After": ". Podemos probar que un archivo existió en un momento concreto sin recibir nunca el archivo.",
@@ -1795,7 +1795,7 @@
     "step1Label": "Suelta tu archivo",
     "step1Desc": "Cualquier formato. Se queda en tu dispositivo — nunca se sube.",
     "step2Label": "Lo hasheamos localmente",
-    "step2Desc": "Se calcula una huella SHA-256 única en tu navegador.",
+    "step2Desc": "En tu navegador se calcula una huella SHA-256. La misma entrada siempre produce el mismo hash: cualquiera puede volver a derivarlo.",
     "step3Label": "Bitcoin lo marca en el tiempo",
     "step3Desc": "La huella se escribe de forma permanente en la blockchain.",
     "moreOptions": "Más opciones (cápsula · redactar · voz)",
@@ -1865,7 +1865,7 @@
     "verify": "Verificar",
     "stepFingerprint": "Huella",
     "stepFingerprintDesc": "Hasheado en este dispositivo",
-    "stepFingerprintTip": "Una huella (SHA-256) es un identificador corto y único de tu archivo, calculado en tu dispositivo. No sale como texto plano.",
+    "stepFingerprintTip": "Una huella (SHA-256) es un identificador corto y determinista de tu archivo, calculado en tu dispositivo. No sale como texto plano.",
     "stepCalendars": "Servidores",
     "stepCalendarsDesc": "Esperando servidores de tiempo",
     "stepCalendarsTip": "Servidores públicos independientes acuerdan el momento. Son gratuitos y abiertos — sin cuenta — ninguna empresa controla tu prueba.",
@@ -2212,7 +2212,7 @@
     "titleBefore": "Apoya",
     "lede": "Satohash mantiene la prueba de documentos gratuita y anclada a Bitcoin. Si Satohash te sirve, una propina pequeña mantiene los calendarios, el nodo y la API. Cada sat va directo al monedero Satohash — nunca a un intermediario.",
     "lightning": "Lightning",
-    "lightningMeta": "instantáneo · comisión casi nula",
+    "lightningMeta": "Lightning — normalmente se liquida en segundos, con comisiones bajas pero variables.",
     "lightningAddress": "Dirección Lightning",
     "lightningHelp": "Escanea el QR con cualquier monedero Lightning (Phoenix, Wallet of Satoshi, Alby, Zeus…), o envía a la dirección de arriba. Cualquier cantidad vale. Lightning es como un mensaje de texto para el dinero — llega en segundos y cuesta fracciones de céntimo. No custodial vía Breez Spark — sin intermediario, las claves las tenemos nosotros.",
     "bitcoin": "Bitcoin",
@@ -2342,7 +2342,7 @@
   "pitchPage": {
     "kicker": "Hub de inversores y socios",
     "h1": "Pitch, resumen y finanzas",
-    "proofsLine": "{{count}} pruebas ancladas a Bitcoin emitidas en este plano —",
+    "proofsLine": "{{issued}} pruebas emitidas en este plano ({{confirmed}} confirmadas en Bitcoin) —",
     "liveNetwork": "red en vivo ↗",
     "govTitle": "Programas de gobierno y migración",
     "govBody": "Pruebas solo-hash, cadenas de custodia y patrones discretos de R&D (incluido un concepto temprano de deep-link al estilo MotoPass). No es una venta dura — material de taller en la página de Gobierno.",
@@ -2539,10 +2539,10 @@
     "stampCta": "Sellar gratis"
   },
   "execSummaryPage": {
-    "eyebrow": "Gratis hoy · Bitcoin para siempre",
+    "eyebrow": "Gratis hoy · anclado a Bitcoin para siempre.",
     "h1": "Prueba que existió.",
     "h1Highlight": "En menos de un minuto.",
-    "lede": "Satohash sella gratis la huella de tu archivo con OpenTimestamps en Bitcoin. El nivel base gratuito es el ancla de confianza permanente, nunca de pago. Los niveles premium opcionales (Professional ~2.100 sats/mes, Business ~21.000 sats/mes) y una API de pago por uso están construidos y en staging; se lanzan de pago solo cuando los raíles Lightning estén financiados y probados — la prueba se ancla a Bitcoin de cualquier modo.",
+    "lede": "Satohash sella gratis la huella de tu archivo con OpenTimestamps en Bitcoin. El nivel base gratuito está pensado como el ancla de confianza permanente, nunca de pago, subvencionado hoy por Give A Bit y donaciones de la comunidad; se espera que los niveles premium y la API financien la infraestructura una vez estén en vivo. Los niveles premium opcionales (Professional ~2.100 sats/mes, Business ~21.000 sats/mes) y una API de pago por uso están construidos y en staging; se lanzan de pago solo cuando los raíles Lightning estén financiados y probados — la prueba se ancla a Bitcoin de cualquier modo.",
     "stampCta": "Sellar un archivo gratis",
     "verifyCta": "Verificar una prueba",
     "mobileNote": "Hecho para móvil a una mano · listo para Pixel e iPhone",
@@ -3400,7 +3400,7 @@
     "protocolDepth": "Profundidad mecánica del protocolo",
     "features": {
       "proof": {
-        "insight": "Hash SHA-256: cada documento recibe una «huella» única de 64 caracteres. Incluso un cambio de un píxel crea un ID totalmente distinto.",
+        "insight": "Hash SHA-256: cada documento recibe una «huella» determinista de 64 caracteres. Incluso un cambio de un píxel crea un hash distinto.",
         "protocol": "Cifrado local-first"
       },
       "timestamp": {
@@ -3424,7 +3424,7 @@
       "kicker": "El abismo del protocolo",
       "title": "Confianza descentralizada.",
       "title2": "Sin excepciones.",
-      "body": "Satohash no es solo una herramienta de firma. Es un puente entre tu intención legal y la certeza matemática de la blockchain."
+      "body": "Satohash no es solo una herramienta de firma. Es un puente entre tu intención legal y la sólida evidencia criptográfica de la blockchain."
     },
     "trust": {
       "privacyTitle": "Privacidad local",

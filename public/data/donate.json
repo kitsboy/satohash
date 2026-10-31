@@ -6,7 +6,7 @@
     "lnurl": "https://breez.tips/lnurlp/satohash",
     "minSendableSats": 1,
     "maxSendableSats": 4000000000,
-    "note": "Breez Spark LNURL-pay (non-custodial). Instant, near-zero fee."
+    "note": "Breez Spark LNURL-pay (non-custodial). Usually settles in seconds with low but variable fees."
   },
   "onchain": {
     "address": "bc1p25zw4rh6s6fjqzxe8yzkpj4klf59v5yyzc4nqf0x6d3twu8qvq9qurdlsr",

@@ -318,7 +318,7 @@
     "guides": {
       "what-is-cryptographic-proof": {
         "title": "什么是加密证明？",
-        "desc": "了解 SHA-256 哈希、Merkle 树和区块链时间戳如何为文档存在时间提供数学确定性。",
+        "desc": "了解 SHA-256 哈希、Merkle 树和区块链时间戳如何为文档存在时间提供强密码学证据，并由时间界限加以界定。",
         "readTime": "5 分钟"
       },
       "how-opentimestamps-works": {
@@ -356,7 +356,7 @@
     "terms": {
       "sha256": {
         "term": "SHA-256",
-        "def": "一种密码学哈希函数，生成 256 位（64 字符）十六进制指纹。Satohash 用它为每份文档创建唯一标识符，而不暴露其内容。"
+        "def": "一种密码学哈希函数，生成 256 位（64 字符）十六进制指纹。Satohash 用它创建确定性标识符——同一文档总是产生相同的 64 字符输出。"
       },
       "ots": {
         "term": "OpenTimestamps (OTS)",
@@ -1326,7 +1326,7 @@
     "copyHash": "复制哈希",
     "copyProof": "复制证明",
     "downloadCert": "下载证明 PDF",
-    "footer": "此证明永久锚定在 Bitcoin 区块链上，无法更改或删除。请独立验证：",
+    "footer": "此证明锚定在 Bitcoin 区块链上。若要篡改或倒填日期，需要压倒整个网络（51% 攻击）——这在经济上几乎无法实现，而非字面意义上不可能。节点可能修剪数据，请保留您的 .ots 文件和原始文档。请独立验证：",
     "toasts": {
       "linkCopied": "链接已复制！",
       "hashCopied": "哈希已复制！",
@@ -1509,7 +1509,7 @@
     "zkP1": "在传统公证中，你把文件交给某人阅读并盖章。你信任那个人——以及他使用的每一个系统。",
     "zkP2Before": "Satohash 使用一种数学方法，称为",
     "zkP2Strong": "密码学哈希",
-    "zkP2After": "。你的文件会变成唯一的 64 字符指纹（SHA-256）。我们从不查看、存储或传输文件本身。只有指纹被发送到 Bitcoin。",
+    "zkP2After": "。你的文件会变成确定性的 SHA-256 指纹——对同一文件做哈希的任何人都会得到相同的 64 字符字符串。我们从不查看、存储或传输文件本身。只有指纹被发送到 Bitcoin。",
     "zkP3Before": "这就是全部承诺：",
     "zkP3Strong": "文件留在设备上",
     "zkP3After": "。我们可以证明一份文件在某一时刻存在，而从未收到那份文件。",
@@ -1770,7 +1770,7 @@
     "step1Label": "拖放您的文件",
     "step1Desc": "任意格式。留在您的设备上 — 永不上传。",
     "step2Label": "我们在本地计算哈希",
-    "step2Desc": "在浏览器中计算唯一的 SHA-256 指纹。",
+    "step2Desc": "在浏览器中计算 SHA-256 指纹。相同的输入总是产生相同的哈希——任何人都能重新推导。",
     "step3Label": "比特币为其打时间戳",
     "step3Desc": "指纹被永久写入区块链。",
     "moreOptions": "更多选项（胶囊 · 脱敏 · 语音）",
@@ -1840,7 +1840,7 @@
     "verify": "验证",
     "stepFingerprint": "指纹",
     "stepFingerprintDesc": "在本机哈希",
-    "stepFingerprintTip": "指纹（SHA-256）是文件的短唯一标识，在你自己的设备上生成。不会以明文离开你的控制。",
+    "stepFingerprintTip": "指纹（SHA-256）是文件的简短确定性标识，在你自己的设备上生成。不会以明文离开你的控制。",
     "stepCalendars": "服务器",
     "stepCalendarsDesc": "等待时间戳服务器",
     "stepCalendarsTip": "独立的公共时间戳服务器就时间达成一致。免费开放 — 无需账户 — 没有单一公司控制你的证明。",
@@ -2187,7 +2187,7 @@
     "titleBefore": "支持",
     "lede": "Satohash 让文件证明保持免费并锚定比特币。若 Satohash 帮到你，一点小费就能维持日历、节点和 API。每一聪都直接进入 Satohash 钱包 — 从不经过中间人。",
     "lightning": "闪电网络",
-    "lightningMeta": "即时 · 近乎零手续费",
+    "lightningMeta": "Lightning——通常几秒内结算，费用低但有波动。",
     "lightningAddress": "闪电地址",
     "lightningHelp": "用任意闪电钱包扫描二维码（Phoenix、Wallet of Satoshi、Alby、Zeus…），或打到上方地址。任意金额均可。闪电像发短信转账 — 数秒到账，费用只有几分之一美分。经 Breez Spark 非托管 — 无中间人，密钥由我们持有。",
     "bitcoin": "比特币",
@@ -2317,7 +2317,7 @@
   "pitchPage": {
     "kicker": "投资者与合作伙伴中心",
     "h1": "路演、摘要与财务",
-    "proofsLine": "本平面已签发 {{count}} 份 Bitcoin 锚定证明 —",
+    "proofsLine": "本平面已签发 {{issued}} 份证明（{{confirmed}} 份已在 Bitcoin 确认）—",
     "liveNetwork": "实时网络 ↗",
     "govTitle": "政务与迁移项目",
     "govBody": "仅哈希证明、保管链，以及低调的研发模式（包括早期 MotoPass 风格的深链概念）。不是强卖 — 政务页上的研讨材料。",
@@ -2514,10 +2514,10 @@
     "stampCta": "免费盖戳"
   },
   "execSummaryPage": {
-    "eyebrow": "今日免费 · Bitcoin 永久",
+    "eyebrow": "今日免费 · 永久锚定到 Bitcoin。",
     "h1": "证明它存在过。",
     "h1Highlight": "不到一分钟。",
-    "lede": "Satohash 用 OpenTimestamps 在 Bitcoin 上免费为你的文件指纹盖时间戳。免费基础档是永久、永不付费墙的信任锚。可选付费档（Professional 约 2,100 sats/月，Business 约 21,000 sats/月）和按次计费 API 已经建好并处于 staging；只有在 Lightning 通道完成注资和测试后才会开始收费 — 无论哪种方式，证明都锚定到 Bitcoin。",
+    "lede": "Satohash 用 OpenTimestamps 在 Bitcoin 上免费为你的文件指纹盖时间戳。免费基础档旨在成为永久、永不付费墙的信任锚，目前由 Give A Bit 和社区捐赠补贴；付费档和 API 预计将在上线后承担基础设施成本。可选付费档（Professional 约 2,100 sats/月，Business 约 21,000 sats/月）和按次计费 API 已经建好并处于 staging；只有在 Lightning 通道完成注资和测试后才会开始收费 — 无论哪种方式，证明都锚定到 Bitcoin。",
     "stampCta": "免费盖戳一份文件",
     "verifyCta": "验证一份证明",
     "mobileNote": "为一手持机设计 · 适配 Pixel 与 iPhone",
@@ -3375,7 +3375,7 @@
     "protocolDepth": "协议机械深度",
     "features": {
       "proof": {
-        "insight": "SHA-256 哈希：每份文件都会得到唯一的 64 字符「指纹」。哪怕改一个像素，也会生成完全不同的 ID。",
+        "insight": "SHA-256 哈希：每份文件都会得到确定性的 64 字符「指纹」。哪怕改一个像素，也会生成不同的哈希。",
         "protocol": "本地优先加密"
       },
       "timestamp": {
@@ -3399,7 +3399,7 @@
       "kicker": "协议深渊",
       "title": "去中心化信任。",
       "title2": "没有例外。",
-      "body": "Satohash 不只是签名工具。它是您的法律意图与区块链数学确定性之间的桥梁。"
+      "body": "Satohash 不只是签名工具。它是您的法律意图与区块链强密码学证据之间的桥梁。"
     },
     "trust": {
       "privacyTitle": "本地隐私",

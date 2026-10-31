@@ -10,7 +10,7 @@
     "features": {
       "cryptoProof": "Uthibitisho wa Kriptografia",
       "cryptoProofDesc": "Unda alama ya kidole isiyoweza kuzaa bandia ya hati yako kwa kutumia kriptografia SHA-256.",
-      "cryptoProofDetail": "Hashing hubadilisha faili yoyote kuwa mfuatano wa herufi 64 wa kipekee. Hata koma moja iliyobadilishwa hutoa hash tofauti kabisa. Satohash hufanya hivi ndani ya kifaa chako.",
+      "cryptoProofDetail": "Hashing hubadilisha faili yoyote kuwa mfuatano wa herufi 64 wa uhakika. Ingizo lilelile daima hutoa hash ileile — mtu yeyote anaweza kuipata tena. Hata koma moja iliyobadilishwa hutoa hash tofauti kabisa. Satohash hufanya hivi ndani ya kifaa chako.",
       "timestamp": "Muhuri wa Muda kwenye Bitcoin",
       "timestampDesc": "Funga uthibitisho wako kwenye blockchain ya Bitcoin kwa kutumia itifaki ya OpenTimestamps.",
       "timestampDetail": "Hash ya hati yako inachanganywa na maelfu ya nyingine kwenye mti wa Merkle. Kisha hash moja ya «mzizi» inawekwa kwenye mtandao wa Bitcoin, ikikupa uthibitisho wa kudumu na usiobadilika wa kuwepo.",
@@ -24,7 +24,7 @@
     "subtitle": "Hatua tatu rahisi za kulinda hati zako",
     "card1": {
       "title": "Funga tarehe",
-      "description": "Satohash inampa hati yako alama ya kidole ya kipekee na kufunga tarehe yake kwenye mtandao wa Bitcoin. Baadaye, mtu yeyote anaweza kuthibitisha kuwa hati hii hasa ilikuwepo wakati huo."
+      "description": "Satohash inampa hati yako alama ya kidole ya uhakika na kufunga tarehe yake kwenye mtandao wa Bitcoin. Baadaye, mtu yeyote anaweza kuthibitisha kuwa hati hii hasa ilikuwepo wakati huo."
     },
     "card2": {
       "title": "Maudhui yako hubaki ya faragha",

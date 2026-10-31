@@ -318,7 +318,7 @@
     "guides": {
       "what-is-cryptographic-proof": {
         "title": "O que é uma prova criptográfica?",
-        "desc": "Entenda como hashes SHA-256, Merkle trees e carimbos temporais em blockchain criam certeza matemática sobre quando um documento existiu.",
+        "desc": "Entenda como hashes SHA-256, Merkle trees e carimbos temporais em blockchain criam forte evidência criptográfica de quando um documento existiu, por um limite temporal.",
         "readTime": "5 min"
       },
       "how-opentimestamps-works": {
@@ -356,7 +356,7 @@
     "terms": {
       "sha256": {
         "term": "SHA-256",
-        "def": "Uma função hash criptográfica que produz uma impressão digital hexadecimal de 256 bits (64 caracteres). Usada pelo Satohash para criar um identificador único para cada documento sem expor seu conteúdo."
+        "def": "Uma função hash criptográfica que produz uma impressão digital hexadecimal de 256 bits (64 caracteres). Usada pelo Satohash para criar um identificador determinístico — o mesmo documento sempre produz a mesma saída de 64 caracteres."
       },
       "ots": {
         "term": "OpenTimestamps (OTS)",
@@ -1351,7 +1351,7 @@
     "copyHash": "Copiar hash",
     "copyProof": "Copiar prova",
     "downloadCert": "Baixar PDF da prova",
-    "footer": "Esta prova está permanentemente ancorada na blockchain Bitcoin e não pode ser alterada ou excluída. Verifique de forma independente em",
+    "footer": "Esta prova está ancorada na blockchain Bitcoin. Alterá-la ou antedatá-la exigiria dominar a rede (um ataque de 51 %) — é economicamente proibitivo, não literalmente impossível. Os nós podem podar dados, por isso guarde o seu ficheiro .ots. Verifique de forma independente em",
     "toasts": {
       "linkCopied": "Link copiado!",
       "hashCopied": "Hash copiado!",
@@ -1534,7 +1534,7 @@
     "zkP1": "Na notarização tradicional, você entrega o documento a alguém que o lê e o carimba. Você confia nessa pessoa — e em cada sistema que ela usa.",
     "zkP2Before": "Com o Satohash usamos uma técnica matemática chamada",
     "zkP2Strong": "hash criptográfico",
-    "zkP2After": ". Seu documento vira uma impressão única de 64 caracteres (SHA-256). Nunca vemos, armazenamos ou transmitimos o documento. Só a impressão é enviada ao Bitcoin.",
+    "zkP2After": ". Seu documento vira uma impressão determinística SHA-256 — quem fizer hash do mesmo arquivo obtém a mesma sequência de 64 caracteres. Nunca vemos, armazenamos ou transmitimos o documento. Só a impressão é enviada ao Bitcoin.",
     "zkP3Before": "Essa é a promessa inteira:",
     "zkP3Strong": "o ficheiro fica",
     "zkP3After": ". Podemos provar que um ficheiro existiu num momento específico sem nunca receber o ficheiro.",
@@ -1795,7 +1795,7 @@
     "step1Label": "Solte seu arquivo",
     "step1Desc": "Qualquer formato. Fica no seu dispositivo — nunca é enviado.",
     "step2Label": "Hasheamos localmente",
-    "step2Desc": "Uma impressão SHA-256 única é calculada no seu navegador.",
+    "step2Desc": "Uma impressão SHA-256 é calculada no seu navegador. A mesma entrada produz sempre o mesmo hash — qualquer pessoa pode voltar a derivá-lo.",
     "step3Label": "O Bitcoin carimba no tempo",
     "step3Desc": "A impressão é gravada permanentemente na blockchain.",
     "moreOptions": "Mais opções (cápsula · redigir · voz)",
@@ -1865,7 +1865,7 @@
     "verify": "Verificar",
     "stepFingerprint": "Impressão",
     "stepFingerprintDesc": "Hasheado neste dispositivo",
-    "stepFingerprintTip": "Uma impressão (SHA-256) é um ID curto e único do seu arquivo, feito no seu dispositivo. Não sai como texto puro.",
+    "stepFingerprintTip": "Uma impressão (SHA-256) é um ID curto e determinístico do seu arquivo, feito no seu dispositivo. Não sai como texto puro.",
     "stepCalendars": "Servidores",
     "stepCalendarsDesc": "Aguardando servidores de tempo",
     "stepCalendarsTip": "Servidores públicos independentes concordam no momento. São gratuitos e abertos — sem conta — nenhuma empresa controla sua prova.",
@@ -2212,7 +2212,7 @@
     "titleBefore": "Apoiar",
     "lede": "O Satohash mantém a prova de documentos grátis e ancorada no Bitcoin. Se o Satohash o ajuda, uma gorjeta pequena mantém os calendários, o nó e a API. Cada sat vai direto para a carteira Satohash — nunca a um intermediário.",
     "lightning": "Lightning",
-    "lightningMeta": "instantâneo · taxa quase nula",
+    "lightningMeta": "Lightning — normalmente liquida em segundos, com taxas baixas mas variáveis.",
     "lightningAddress": "Endereço Lightning",
     "lightningHelp": "Leia o QR com qualquer carteira Lightning (Phoenix, Wallet of Satoshi, Alby, Zeus…), ou envie para o endereço acima. Qualquer quantia serve. Lightning é como uma mensagem de texto para dinheiro — chega em segundos e custa frações de cêntimo. Não custodial via Breez Spark — sem intermediário, as chaves connosco.",
     "bitcoin": "Bitcoin",
@@ -2342,7 +2342,7 @@
   "pitchPage": {
     "kicker": "Hub de investidores e parceiros",
     "h1": "Pitch, resumo e finanças",
-    "proofsLine": "{{count}} provas ancoradas no Bitcoin emitidas neste plano —",
+    "proofsLine": "{{issued}} provas emitidas neste plano ({{confirmed}} confirmadas no Bitcoin) —",
     "liveNetwork": "rede ao vivo ↗",
     "govTitle": "Programas de governo e migração",
     "govBody": "Provas só-hash, cadeias de custódia e padrões discretos de I&D (incluindo um conceito inicial de deep-link ao estilo MotoPass). Não é venda agressiva — material de workshop na página Governo.",
@@ -2539,10 +2539,10 @@
     "stampCta": "Selar grátis"
   },
   "execSummaryPage": {
-    "eyebrow": "Grátis hoje · Bitcoin para sempre",
+    "eyebrow": "Grátis hoje · ancorado ao Bitcoin para sempre.",
     "h1": "Prove que existiu.",
     "h1Highlight": "Em menos de um minuto.",
-    "lede": "O Satohash sela gratuitamente a impressão digital do seu ficheiro com OpenTimestamps no Bitcoin. O nível base gratuito é a âncora de confiança permanente, nunca atrás de paywall. Níveis premium opcionais (Professional ~2.100 sats/mês, Business ~21.000 sats/mês) e uma API de pagamento por uso estão construídos e em staging; só passam a pagos quando os carris Lightning estiverem financiados e testados — a prova ancora-se ao Bitcoin de qualquer forma.",
+    "lede": "O Satohash sela gratuitamente a impressão digital do seu ficheiro com OpenTimestamps no Bitcoin. O nível base gratuito destina-se a ser a âncora de confiança permanente, nunca atrás de paywall, subsidiado hoje pelo Give A Bit e doações da comunidade; espera-se que os níveis premium e a API financiem a infraestrutura quando estiverem em produção. Níveis premium opcionais (Professional ~2.100 sats/mês, Business ~21.000 sats/mês) e uma API de pagamento por uso estão construídos e em staging; só passam a pagos quando os carris Lightning estiverem financiados e testados — a prova ancora-se ao Bitcoin de qualquer forma.",
     "stampCta": "Selar um ficheiro grátis",
     "verifyCta": "Verificar uma prova",
     "mobileNote": "Feito para móvel a uma mão · pronto para Pixel e iPhone",
@@ -3400,7 +3400,7 @@
     "protocolDepth": "Profundidade mecânica do protocolo",
     "features": {
       "proof": {
-        "insight": "Hash SHA-256: cada documento recebe uma «impressão digital» única de 64 caracteres. Até uma alteração de um pixel cria um ID totalmente diferente.",
+        "insight": "Hash SHA-256: cada documento recebe uma «impressão digital» determinística de 64 caracteres. Até uma alteração de um pixel cria um hash diferente.",
         "protocol": "Encriptação local-first"
       },
       "timestamp": {
@@ -3424,7 +3424,7 @@
       "kicker": "O abismo do protocolo",
       "title": "Confiança descentralizada.",
       "title2": "Sem exceções.",
-      "body": "O Satohash não é apenas uma ferramenta de assinatura. É uma ponte entre a sua intenção jurídica e a certeza matemática da blockchain."
+      "body": "O Satohash não é apenas uma ferramenta de assinatura. É uma ponte entre a sua intenção jurídica e a forte evidência criptográfica da blockchain."
     },
     "trust": {
       "privacyTitle": "Privacidade local",

@@ -85,7 +85,7 @@
       "id": "sha256",
       "category": "technical",
       "q": "O que é um hash SHA-256?",
-      "a": "Um hash SHA-256 é uma impressão digital hexadecimal de 64 caracteres única para o seu ficheiro. Mesmo alterar um píxel numa imagem produz um hash completamente diferente. É um identificador matemático, não o ficheiro em si."
+      "a": "Um hash SHA-256 é uma impressão digital hexadecimal determinística de 64 caracteres derivada do seu ficheiro. A mesma entrada produz sempre o mesmo hash. Mesmo alterar um píxel numa imagem produz um hash completamente diferente. É um identificador matemático, não o ficheiro em si."
     },
     {
       "id": "opensource",

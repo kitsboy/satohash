@@ -32,7 +32,7 @@
         "name": "Free",
         "price": "0 sats",
         "period": "live now",
-        "desc": "Unlimited stamp & verify with OpenTimestamps. No account. No Lightning invoice. Bitcoin-anchored proofs. Never paywalled.",
+        "desc": "Stamp & verify with OpenTimestamps under a disclosed 5-req/min abuse guard, with no daily cap. No account. No Lightning invoice. The free base is intended to stay the never-paywalled trust anchor.",
         "features": [
           "SHA-256 hashing in your browser",
           "OpenTimestamps server anchoring",
@@ -318,7 +318,7 @@
     "guides": {
       "what-is-cryptographic-proof": {
         "title": "What Is a Cryptographic Proof?",
-        "desc": "Understand how SHA-256 hashes, Merkle trees, and blockchain timestamps create mathematical certainty about when a document existed.",
+        "desc": "Understand how SHA-256 hashes, Merkle trees, and blockchain timestamps create strong cryptographic evidence of when a document existed, by a time bound.",
         "readTime": "5 min"
       },
       "how-opentimestamps-works": {
@@ -356,7 +356,7 @@
     "terms": {
       "sha256": {
         "term": "SHA-256",
-        "def": "A cryptographic hash function that produces a 256-bit (64 character) hexadecimal fingerprint. Used by Satohash to create a unique identifier for each document without exposing its contents."
+        "def": "A cryptographic hash function that produces a 256-bit (64 character) hexadecimal fingerprint. Used by Satohash to create a deterministic identifier — the same document always produces the same 64-character output."
       },
       "ots": {
         "term": "OpenTimestamps (OTS)",
@@ -1351,7 +1351,7 @@
     "copyHash": "Copy Hash",
     "copyProof": "Copy Proof",
     "downloadCert": "Download proof PDF",
-    "footer": "This proof is permanently anchored in the Bitcoin blockchain and cannot be altered or deleted. Verify independently at",
+    "footer": "This proof is anchored in the Bitcoin blockchain. Altering or backdating it would require overwhelming the network (a 51% attack) — economically prohibitive, not literally impossible. Nodes can prune data, so keep your .ots file. Verify independently at",
     "toasts": {
       "linkCopied": "Link copied!",
       "hashCopied": "Hash copied!",
@@ -1521,7 +1521,7 @@
     "step1Label": "Drop Your File",
     "step1Desc": "Any format. Stays on your device — never uploaded.",
     "step2Label": "We Hash It Locally",
-    "step2Desc": "A unique SHA-256 fingerprint is computed in your browser.",
+    "step2Desc": "A SHA-256 fingerprint is computed in your browser. The same input always produces the same hash — anyone can re-derive it.",
     "step3Label": "Bitcoin Timestamps It",
     "step3Desc": "The fingerprint is permanently written to the blockchain.",
     "takePhoto": "Take photo",
@@ -1608,7 +1608,7 @@
     "verify": "Verify",
     "stepFingerprint": "Fingerprint",
     "stepFingerprintDesc": "Hashed on this device",
-    "stepFingerprintTip": "A fingerprint (SHA-256) is a short, unique ID for your file, made on your own device. It never leaves your control as plain text.",
+    "stepFingerprintTip": "A fingerprint (SHA-256) is a short, deterministic ID for your file, made on your own device. It never leaves your control as plain text.",
     "stepCalendars": "Servers",
     "stepCalendarsDesc": "Waiting on timestamp servers",
     "stepCalendarsTip": "Independent public timestamp servers agree on the time. They are free and open — no account needed — so no single company controls your proof.",
@@ -1663,7 +1663,7 @@
     "zkP1": "In traditional notarization, you hand your document to someone who reads it and stamps it. You're trusting that person — and every system they use.",
     "zkP2Before": "With Satohash, we use a mathematical technique called a",
     "zkP2Strong": "cryptographic hash",
-    "zkP2After": ". Your document is converted to a unique 64-character fingerprint (SHA-256). We never see, store, or transmit your actual document. Only the fingerprint is sent to Bitcoin.",
+    "zkP2After": ". Your document is converted to a deterministic SHA-256 fingerprint — anyone hashing the same file gets the same 64-character string. We never see, store, or transmit your actual document. Only the fingerprint is sent to Bitcoin.",
     "zkP3Before": "That is the whole promise:",
     "zkP3Strong": "the file stays",
     "zkP3After": ". We can prove a file existed at a specific time without ever receiving the file.",
@@ -2212,7 +2212,7 @@
     "titleBefore": "Support",
     "lede": "Satohash keeps document proof free and anchored to Bitcoin. If Satohash helps you, a small tip keeps the calendars, the node, and the API running. Every sat goes straight to the Satohash Wallet — never a middleman.",
     "lightning": "Lightning",
-    "lightningMeta": "instant · near-zero fee",
+    "lightningMeta": "Lightning — usually settles in seconds with low but variable fees.",
     "lightningAddress": "Lightning address",
     "lightningHelp": "Scan the QR with any Lightning wallet (Phoenix, Wallet of Satoshi, Alby, Zeus…), or send to the address above. Any amount works. Lightning is like a text message for money — it arrives in seconds and costs fractions of a cent. Non-custodial via Breez Spark — no middleman, keys held by us.",
     "bitcoin": "Bitcoin",
@@ -2342,7 +2342,7 @@
   "pitchPage": {
     "kicker": "Investor & Partner Hub",
     "h1": "Pitch, summary & financials",
-    "proofsLine": "{{count}} Bitcoin-anchored proofs issued through this plane —",
+    "proofsLine": "{{issued}} proofs issued through this plane ({{confirmed}} confirmed on Bitcoin) —",
     "liveNetwork": "live network ↗",
     "govTitle": "Government & migration programs",
     "govBody": "Hash-only proofs, custody chains, and quiet R&D patterns (including an early MotoPass-style deep-link concept). Not a hard sell — workshop material on the Government page.",
@@ -2539,10 +2539,10 @@
     "stampCta": "Stamp free"
   },
   "execSummaryPage": {
-    "eyebrow": "Free today · Bitcoin forever",
+    "eyebrow": "Free today · anchored to Bitcoin forever.",
     "h1": "Prove it existed.",
     "h1Highlight": "In under a minute.",
-    "lede": "Satohash free-timestamps a fingerprint of your file using OpenTimestamps on Bitcoin. The free base tier is the permanent, never-paywalled trust anchor. Optional premium tiers (Professional ~2,100 sats/mo, Business ~21,000 sats/mo) and a pay-per-use API are built and staged; they launch paid only once the Lightning rails are funded and tested — the proof still anchors to Bitcoin either way.",
+    "lede": "Satohash free-timestamps a fingerprint of your file using OpenTimestamps on Bitcoin. The free base tier is intended as the permanent, never-paywalled trust anchor, subsidised today by Give A Bit and community donations; premium tiers and the API are expected to fund infrastructure once live. Optional premium tiers (Professional ~2,100 sats/mo, Business ~21,000 sats/mo) and a pay-per-use API are built and staged; they launch paid only once the Lightning rails are funded and tested — the proof still anchors to Bitcoin either way.",
     "stampCta": "Stamp a file free",
     "verifyCta": "Verify a proof",
     "mobileNote": "Built for one-hand mobile · Pixel & iPhone ready",
@@ -3400,7 +3400,7 @@
     "protocolDepth": "Protocol Mechanical Depth",
     "features": {
       "proof": {
-        "insight": "SHA-256 Hashing: Every document gets a unique 64-character 'fingerprint'. Even a one-pixel change creates a totally different ID.",
+        "insight": "SHA-256 Hashing: Every document gets a deterministic 64-character 'fingerprint'. Even a one-pixel change creates a different hash.",
         "protocol": "Local-First Encryption"
       },
       "timestamp": {
@@ -3424,7 +3424,7 @@
       "kicker": "The Protocol Abyss",
       "title": "Decentralized Trust.",
       "title2": "No Exceptions.",
-      "body": "Satohash isn't just a signing tool. It's a bridge between your legal intent and the mathematical certainty of the blockchain."
+      "body": "Satohash isn't just a signing tool. It's a bridge between your legal intent and the strong cryptographic evidence of the blockchain."
     },
     "trust": {
       "privacyTitle": "Local Privacy",

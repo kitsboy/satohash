@@ -24,7 +24,7 @@ Satohash (via OpenTimestamps) replaces the *date-proof* part of notarization wit
 | **Trust** | None required — the proof is anchored in a network of ~18,000 independent full nodes |
 | **Permanence** | Bitcoin has never been rewritten in its entire history |
 | **Cost** | Free today (Satohash free tier) |
-| **Hours** | 24/7, instant, from any device |
+| **Hours** | 24/7, from any device — anchoring settles at the next Bitcoin block (~60 min), by design |
 | **Jurisdiction** | Global — Bitcoin doesn't care about borders |
 | **Privacy** | Only a hash leaves your device; the document never does |
 

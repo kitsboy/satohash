@@ -397,10 +397,11 @@ const SECTIONS = [
           </div>
         ))}
         <div className="rounded-xl border border-indigo-100 bg-indigo-50 px-5 py-4 text-sm text-indigo-900/80">
-          <strong>Plain language:</strong> Free stamps stay free, forever — that&apos;s the trust
-          anchor. Paid plans quote a price in sats and auto-renew until you cancel. If a paid
-          feature breaks and we can&apos;t fix it in 30 days, we&apos;ll consider a refund.
-          Lightning payments can&apos;t be reversed — that&apos;s the point.
+          <strong>Plain language:</strong> Free stamps are intended to stay free as the base tier's
+          trust anchor, subsidised by Give A Bit and community donations. Paid plans quote a price
+          in sats and auto-renew until you cancel. If a paid feature breaks and we can&apos;t fix it
+          in 30 days, we&apos;ll consider a refund. Lightning payments can&apos;t be reversed —
+          that&apos;s the point.
         </div>
       </div>
     )

@@ -10,14 +10,14 @@
     "badge": "Bure • Hakuna akaunti inayohitajika • Hati yako haiondoki kwenye kifaa chako",
     "titleLine1": "Thibitisha faili yoyote",
     "titleLine2": "ilikuwepo.",
-    "titleHighlight": "Milele.",
+    "titleHighlight": "Inathibitishwa, kwenye Bitcoin.",
     "subtitle": "Ushahidi unaoweza kuthibitishwa kwa kujitegemea. Hakuna mthibitishaji wa notari.",
     "description": "Satohash inahesabu hash ya faili yako ndani ya kivinjari chako — hati yako haiondoki kwenye kifaa chako. Alama ya kidole ya kriptografia pekee ndiyo inayoandikwa kwenye blockchain ya Bitcoin, ikitengeneza uthibitisho usiobadilika wa kuwepo kwa faili, mkataba, picha, au seti ya data yoyote.",
     "ctaStamp": "Weka muhuri kwenye faili — Ni bure",
     "ctaWatch": "Tazama maelezo",
     "seeConfirmed": "Tazama uthibitisho Confirmed · block {{block}}",
     "ctaTemplates": "Vinjari violezo",
-    "socialProof": "Uthibitisho {{count}} uliotiwa nanga kwenye Bitcoin kupitia ndege hii",
+    "socialProof": "Uthibitisho {{issued}} uliotolewa kupitia ndege hii ({{confirmed}} umethibitishwa kwenye Bitcoin)",
     "tryTemplate": "Jaribu kiolezo bure"
   },
   "telemetry": {
@@ -44,7 +44,7 @@
       },
       "anchored": {
         "title": "Imeunganishwa ndani ya dakika 60",
-        "body": "Ndani ya kizuizi kimoja cha Bitcoin, uthibitisho wako umejumuishwa kwenye mnyororo. Kila nodi duniani inauhakikisha. Hauwezi kubadilishwa, kuwekwa tarehe ya zamani, au kufutwa."
+        "body": "Ndani ya kizuizi kimoja cha Bitcoin, uthibitisho wako umejumuishwa kwenye mnyororo. Kila nodi duniani inauhakikisha. Hauwezi kubadilishwa au kuwekwa tarehe ya zamani bila kushinda mtandao (shambulio la 51%) — ni ghali kiuchumi, si jambo lisilowezekana haswa. Nodi zinaweza kupunguza data, kwa hivyo hifadhi faili yako ya .ots na hati yako asili."
       },
       "court": {
         "title": "Ushahidi unaokubalika mahakamani",
@@ -99,11 +99,11 @@
       },
       "research": {
         "title": "Utafiti na IP",
-        "body": "Wanasayansi na wabunifu wanathibitisha tarehe za ugunduzi kwa uhakika wa hesabu."
+        "body": "Wanasayansi na wabunifu wanapata ushahidi thabiti wa kriptografia wa wakati hati ilipokuwepo, kwa kikomo cha muda."
       },
       "government": {
         "title": "Serikali na kumbukumbu",
-        "body": "Rekodi za umma ambazo haziwezi kubadilishwa au kuwekwa tarehe ya zamani — kamwe."
+        "body": "Rekodi za umma ambazo ni ghali sana kubadilisha au kuweka tarehe ya zamani, kwa sababu kufanya hivyo kunahitaji kuandika upya mnyororo wa Bitcoin."
       }
     }
   },
@@ -133,10 +133,10 @@
     "thanks": "Kila satoshi husaidia kuweka mihuri ya muda bure. Asante. 🙏"
   },
   "freeModel": {
-    "eyebrow": "Free today · Bitcoin forever",
+    "eyebrow": "Free today · anchored to Bitcoin forever.",
     "titleLine1": "How free stamping",
     "titleHighlight": "actually works",
-    "explainer": "We free-timestamp a fingerprint of your file using OpenTimestamps on Bitcoin. The free base tier is the permanent, never-paywalled trust anchor; optional premium tiers and a pay-per-use API are built and staged and launch paid only once the Lightning rails are funded and tested.",
+    "explainer": "We free-timestamp a fingerprint of your file using OpenTimestamps on Bitcoin. The free base tier is intended as the permanent, never-paywalled trust anchor, subsidised today by Give A Bit and community donations; premium tiers and the API are expected to fund infrastructure once live. Optional premium tiers and a pay-per-use API are built and staged and launch paid only once the Lightning rails are funded and tested.",
     "chainNote": "Chain: Bitcoin only (via OpenTimestamps). Your file stays on your device — we only handle the hash.",
     "futureEyebrow": "Maybe in the future",
     "futureTitle": "Simple prices we’re sketching (not live yet)",
@@ -146,7 +146,7 @@
         "name": "Free",
         "price": "0 sats",
         "period": "today",
-        "desc": "Unlimited stamp & verify with OpenTimestamps. No account. No Lightning invoice. Never paywalled (trust anchor).",
+        "desc": "Stamp & verify freely under a disclosed 5-req/min abuse guard, with no daily cap. The free base is intended to stay the never-paywalled trust anchor; if economics ever force a limit, we publish the change before it applies.",
         "badge": "Live now"
       },
       "sats": {
