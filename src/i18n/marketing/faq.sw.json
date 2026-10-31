@@ -85,7 +85,7 @@
       "id": "sha256",
       "category": "technical",
       "q": "Hash ya SHA-256 ni nini?",
-      "a": "Hash ya SHA-256 ni alama ya kidole ya heksadesimali yenye herufi 64 inayobainisha faili yako pekee. Hata kubadilisha pikseli moja katika picha hutengeneza hash tofauti kabisa. Ni kitambulisho cha hesabu, si faili yenyewe."
+      "a": "Hash ya SHA-256 ni alama ya kidole ya heksadesimali yenye herufi 64 inayotokana na faili yako, kwa njia ya uhakika. Ingizo lilelile daima hutoa hash ileile. Hata kubadilisha pikseli moja katika picha hutengeneza hash tofauti kabisa. Ni kitambulisho cha hesabu, si faili yenyewe."
     },
     {
       "id": "opensource",

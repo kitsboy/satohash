@@ -10,14 +10,14 @@
     "badge": "免费 • 无需账户 • 您的文档永远不会离开您的设备",
     "titleLine1": "证明任何文件",
     "titleLine2": "曾经存在。",
-    "titleHighlight": "永久有效。",
+    "titleHighlight": "可在 Bitcoin 上验证。",
     "subtitle": "可独立验证的证据。无需公证人。",
     "description": "Satohash 在您的浏览器本地计算文件哈希——您的文档永远不会离开您的设备。只有加密指纹会被写入 Bitcoin 区块链，为任何文件、合同、照片或数据集创建不可篡改的存在证明。",
     "ctaStamp": "为文件加盖时间戳——完全免费",
     "ctaWatch": "观看讲解",
     "seeConfirmed": "查看一条 Confirmed 证明 · 区块 {{block}}",
     "ctaTemplates": "浏览模板",
-    "socialProof": "本平台已签发 {{count}} 份锚定到 Bitcoin 的证明",
+    "socialProof": "本平台已签发 {{issued}} 份证明（{{confirmed}} 份已在 Bitcoin 确认）",
     "tryTemplate": "免费试用模板"
   },
   "telemetry": {
@@ -44,7 +44,7 @@
       },
       "anchored": {
         "title": "60 分钟内完成锚定",
-        "body": "在一个 Bitcoin 区块内，您的证明即被编织进链中。全球每个节点都会验证它。无法篡改、倒填日期或删除。"
+        "body": "在一个 Bitcoin 区块内，您的证明即被编织进链中。全球每个节点都会验证它。除非压倒网络（51% 攻击），否则无法篡改或倒填日期——这在经济上几乎无法实现，而非字面意义上不可能。节点可以修剪数据，因此请保留您的 .ots 文件和原始文档。"
       },
       "court": {
         "title": "法庭可用证据",
@@ -99,11 +99,11 @@
       },
       "research": {
         "title": "研究与知识产权",
-        "body": "科学家和发明人以数学确定性证明发现日期。"
+        "body": "科学家和发明者获得文档存在时间的强密码学证据，并由时间界限加以界定。"
       },
       "government": {
         "title": "政府与档案",
-        "body": "公共记录永远无法被篡改或倒填日期——永远如此。"
+        "body": "公共记录被篡改或倒填日期的代价极高，因为那需要重写整条 Bitcoin 链。"
       }
     }
   },
@@ -133,10 +133,10 @@
     "thanks": "每一个 satoshi 都有助于保持时间戳免费。感谢您。🙏"
   },
   "freeModel": {
-    "eyebrow": "Free today · Bitcoin forever",
+    "eyebrow": "Free today · anchored to Bitcoin forever.",
     "titleLine1": "How free stamping",
     "titleHighlight": "actually works",
-    "explainer": "We free-timestamp a fingerprint of your file using OpenTimestamps on Bitcoin. The free base tier is the permanent, never-paywalled trust anchor; optional premium tiers and a pay-per-use API are built and staged and launch paid only once the Lightning rails are funded and tested.",
+    "explainer": "We free-timestamp a fingerprint of your file using OpenTimestamps on Bitcoin. The free base tier is intended as the permanent, never-paywalled trust anchor, subsidised today by Give A Bit and community donations; premium tiers and the API are expected to fund infrastructure once live. Optional premium tiers and a pay-per-use API are built and staged and launch paid only once the Lightning rails are funded and tested.",
     "chainNote": "Chain: Bitcoin only (via OpenTimestamps). Your file stays on your device — we only handle the hash.",
     "futureEyebrow": "Maybe in the future",
     "futureTitle": "Simple prices we’re sketching (not live yet)",
@@ -146,7 +146,7 @@
         "name": "Free",
         "price": "0 sats",
         "period": "today",
-        "desc": "Unlimited stamp & verify with OpenTimestamps. No account. No Lightning invoice. Never paywalled (trust anchor).",
+        "desc": "Stamp & verify freely under a disclosed 5-req/min abuse guard, with no daily cap. The free base is intended to stay the never-paywalled trust anchor; if economics ever force a limit, we publish the change before it applies.",
         "badge": "Live now"
       },
       "sats": {

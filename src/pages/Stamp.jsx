@@ -1529,7 +1529,7 @@ export default function Stamp() {
                             <Tooltip
                               label="2 Hash"
                               title="Step 2 — Local Hashing"
-                              content="Satohash computes a unique SHA-256 fingerprint in your browser using a Web Worker. The original file never leaves your machine."
+                              content="Satohash computes a deterministic SHA-256 fingerprint in your browser using a Web Worker. The original file never leaves your machine."
                             />
                             <Tooltip
                               label="3 Stamp"
@@ -1959,127 +1959,127 @@ export default function Stamp() {
           <div className="space-y-8">
             {showAdvancedModes && <FeeAdvisor />}
             {showAdvancedModes && (
-            <div className="space-y-6 rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] p-6">
-              <div className="flex items-center gap-3">
-                <Layers size={18} className="text-[var(--accent-gold)]" />
-                <h3 className="text-[10px] font-bold tracking-widest uppercase">
-                  {tp('stampPage.caseConfig')}
-                </h3>
-              </div>
-
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <label className="text-[10px] font-bold text-[var(--text-secondary)] uppercase">
-                    {tp('stampPage.caseLabel')}
-                  </label>
-                  <input
-                    type="text"
-                    value={caseLabel}
-                    onChange={(e) => setCaseLabel(e.target.value)}
-                    placeholder={tp('stampPage.casePlaceholder')}
-                    className="h-11 w-full rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] px-4 text-sm outline-none focus:border-[var(--accent-gold)]"
-                  />
+              <div className="space-y-6 rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] p-6">
+                <div className="flex items-center gap-3">
+                  <Layers size={18} className="text-[var(--accent-gold)]" />
+                  <h3 className="text-[10px] font-bold tracking-widest uppercase">
+                    {tp('stampPage.caseConfig')}
+                  </h3>
                 </div>
 
-                {showAdvancedModes && (
-                  <div className="space-y-3 rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] p-4">
-                    <div className="flex items-center justify-between">
-                      <span className="flex items-center text-[10px] font-bold text-[var(--text-secondary)] uppercase">
-                        Multi-Party
-                        <Tooltip
-                          title="Multi-Party Execution"
-                          content="Contracts that require signatures from two or more independent parties before being considered valid and anchored to Bitcoin."
-                        />
-                      </span>
-                      <input
-                        type="checkbox"
-                        aria-label="Multi-Party"
-                        className="accent-[var(--accent-gold)]"
-                        checked={multiParty}
-                        onChange={(e) => {
-                          setMultiParty(e.target.checked)
-                          if (!e.target.checked) {
-                            setCoSigners([])
-                            setCoSignerErrors([])
-                          }
-                        }}
-                      />
-                    </div>
-                    {multiParty && (
-                      <div className="space-y-2">
-                        {coSigners.map((s, i) => (
-                          <div key={i}>
-                            <input
-                              type="text"
-                              value={s}
-                              onChange={(e) => {
-                                const next = [...coSigners]
-                                next[i] = e.target.value
-                                setCoSigners(next)
-                                // Clear error on change so user gets live feedback on correction
-                                if (coSignerErrors[i]) {
-                                  const errs = [...coSignerErrors]
-                                  errs[i] = validateNpub(e.target.value)
-                                  setCoSignerErrors(errs)
-                                }
-                              }}
-                              onBlur={() => handleCoSignerBlur(i)}
-                              placeholder="npub1..."
-                              className={`h-9 w-full rounded-lg border bg-[var(--bg-secondary)] px-3 font-mono text-xs outline-none focus:border-[var(--accent-gold)] ${coSignerErrors[i] ? 'border-[var(--accent-danger)]' : 'border-[var(--border)]'}`}
-                            />
-                            {coSignerErrors[i] && (
-                              <p className="mt-1 text-xs text-[var(--accent-danger)]">
-                                {coSignerErrors[i]}
-                              </p>
-                            )}
-                          </div>
-                        ))}
-                        <span className="flex items-center gap-4">
-                          <button
-                            onClick={() => setCoSigners([...coSigners, ''])}
-                            className="text-[10px] font-bold text-[var(--accent-gold)] uppercase"
-                          >
-                            + {t('stamp', 'addCoSigner')}
-                          </button>
-                          <button
-                            onClick={() => {
-                              const invite = `${window.location.origin}/stamp?cosign=true&hash=${hashValue || ''}&npub=${localStorage.getItem('satohash_npub') || ''}`
-                              navigator.clipboard.writeText(invite)
-                              toast.success('✉ Co-Sign DM Invitation Copied!', {
-                                description: 'Send this link to your co-signer.'
-                              })
-                            }}
-                            className="text-[10px] font-bold text-[var(--accent-active)] uppercase"
-                          >
-                            ✉ Copy Co-Sign Invitation
-                          </button>
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-bold text-[var(--text-secondary)] uppercase">
+                      {tp('stampPage.caseLabel')}
+                    </label>
+                    <input
+                      type="text"
+                      value={caseLabel}
+                      onChange={(e) => setCaseLabel(e.target.value)}
+                      placeholder={tp('stampPage.casePlaceholder')}
+                      className="h-11 w-full rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] px-4 text-sm outline-none focus:border-[var(--accent-gold)]"
+                    />
+                  </div>
+
+                  {showAdvancedModes && (
+                    <div className="space-y-3 rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] p-4">
+                      <div className="flex items-center justify-between">
+                        <span className="flex items-center text-[10px] font-bold text-[var(--text-secondary)] uppercase">
+                          Multi-Party
                           <Tooltip
-                            title="Co-Signers"
-                            content="Additional Nostr public keys (npub) that must cryptographically sign this document. Creates a multi-party proof requiring all parties to agree."
+                            title="Multi-Party Execution"
+                            content="Contracts that require signatures from two or more independent parties before being considered valid and anchored to Bitcoin."
                           />
                         </span>
-                      </div>
-                    )}
-                    <div className="flex items-center justify-between">
-                      <span className="flex items-center text-[10px] font-bold text-[var(--text-secondary)] uppercase">
-                        L402 Gating
-                        <Tooltip
-                          title="L402 Gating"
-                          content="A Bitcoin Lightning micropayment paywall. Callers pay a tiny SATS fee per API request — no account needed, just a Lightning wallet."
+                        <input
+                          type="checkbox"
+                          aria-label="Multi-Party"
+                          className="accent-[var(--accent-gold)]"
+                          checked={multiParty}
+                          onChange={(e) => {
+                            setMultiParty(e.target.checked)
+                            if (!e.target.checked) {
+                              setCoSigners([])
+                              setCoSignerErrors([])
+                            }
+                          }}
                         />
-                      </span>
-                      <input
-                        type="checkbox"
-                        aria-label="L402 Gating"
-                        className="accent-[var(--accent-gold)]"
-                        checked={l402Gating}
-                        onChange={(e) => setL402Gating(e.target.checked)}
-                      />
+                      </div>
+                      {multiParty && (
+                        <div className="space-y-2">
+                          {coSigners.map((s, i) => (
+                            <div key={i}>
+                              <input
+                                type="text"
+                                value={s}
+                                onChange={(e) => {
+                                  const next = [...coSigners]
+                                  next[i] = e.target.value
+                                  setCoSigners(next)
+                                  // Clear error on change so user gets live feedback on correction
+                                  if (coSignerErrors[i]) {
+                                    const errs = [...coSignerErrors]
+                                    errs[i] = validateNpub(e.target.value)
+                                    setCoSignerErrors(errs)
+                                  }
+                                }}
+                                onBlur={() => handleCoSignerBlur(i)}
+                                placeholder="npub1..."
+                                className={`h-9 w-full rounded-lg border bg-[var(--bg-secondary)] px-3 font-mono text-xs outline-none focus:border-[var(--accent-gold)] ${coSignerErrors[i] ? 'border-[var(--accent-danger)]' : 'border-[var(--border)]'}`}
+                              />
+                              {coSignerErrors[i] && (
+                                <p className="mt-1 text-xs text-[var(--accent-danger)]">
+                                  {coSignerErrors[i]}
+                                </p>
+                              )}
+                            </div>
+                          ))}
+                          <span className="flex items-center gap-4">
+                            <button
+                              onClick={() => setCoSigners([...coSigners, ''])}
+                              className="text-[10px] font-bold text-[var(--accent-gold)] uppercase"
+                            >
+                              + {t('stamp', 'addCoSigner')}
+                            </button>
+                            <button
+                              onClick={() => {
+                                const invite = `${window.location.origin}/stamp?cosign=true&hash=${hashValue || ''}&npub=${localStorage.getItem('satohash_npub') || ''}`
+                                navigator.clipboard.writeText(invite)
+                                toast.success('✉ Co-Sign DM Invitation Copied!', {
+                                  description: 'Send this link to your co-signer.'
+                                })
+                              }}
+                              className="text-[10px] font-bold text-[var(--accent-active)] uppercase"
+                            >
+                              ✉ Copy Co-Sign Invitation
+                            </button>
+                            <Tooltip
+                              title="Co-Signers"
+                              content="Additional Nostr public keys (npub) that must cryptographically sign this document. Creates a multi-party proof requiring all parties to agree."
+                            />
+                          </span>
+                        </div>
+                      )}
+                      <div className="flex items-center justify-between">
+                        <span className="flex items-center text-[10px] font-bold text-[var(--text-secondary)] uppercase">
+                          L402 Gating
+                          <Tooltip
+                            title="L402 Gating"
+                            content="A Bitcoin Lightning micropayment paywall. Callers pay a tiny SATS fee per API request — no account needed, just a Lightning wallet."
+                          />
+                        </span>
+                        <input
+                          type="checkbox"
+                          aria-label="L402 Gating"
+                          className="accent-[var(--accent-gold)]"
+                          checked={l402Gating}
+                          onChange={(e) => setL402Gating(e.target.checked)}
+                        />
+                      </div>
                     </div>
-                  </div>
-                )}
+                  )}
+                </div>
               </div>
-            </div>
             )}
 
             {showAdvancedModes && (

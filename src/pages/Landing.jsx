@@ -90,6 +90,7 @@ export default function Landing() {
   const [donationOpen, setDonationOpen] = useState(false)
   const [copied, setCopied] = useState(false)
   const [proofCount, setProofCount] = useState(null)
+  const [confirmedCount, setConfirmedCount] = useState(null)
   const [blockHeight, setBlockHeight] = useState(null)
   const [networkStats, setNetworkStats] = useState({ fees: {} })
   const [nodeHud, setNodeHud] = useState(null)
@@ -113,6 +114,7 @@ export default function Landing() {
       .then((d) => d?.raw?.counts ?? null)
       .then((counts) => {
         if (counts && typeof counts.stampsTotal === 'number') setProofCount(counts.stampsTotal)
+        if (counts && typeof counts.confirmed === 'number') setConfirmedCount(counts.confirmed)
       })
       .catch(() => {})
   }, [])
@@ -605,7 +607,8 @@ export default function Landing() {
               >
                 {proofCount != null
                   ? t('landingPage.hero.socialProof', {
-                      count: proofCount.toLocaleString()
+                      issued: proofCount.toLocaleString(),
+                      confirmed: (confirmedCount ?? 0).toLocaleString()
                     })
                   : 'Live stamp counts load from the public metrics plane'}
               </p>
@@ -800,7 +803,7 @@ export default function Landing() {
               <span>
                 📁{' '}
                 {t('landingPage.telemetry.proofsConfirmed', {
-                  count: proofCount !== null ? proofCount.toLocaleString() : '—'
+                  count: confirmedCount !== null ? confirmedCount.toLocaleString() : '—'
                 })}
               </span>
             </div>

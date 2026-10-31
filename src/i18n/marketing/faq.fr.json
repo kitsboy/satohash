@@ -85,7 +85,7 @@
       "id": "sha256",
       "category": "technical",
       "q": "Qu'est-ce qu'un hachage SHA-256 ?",
-      "a": "Un hachage SHA-256 est une empreinte hexadécimale de 64 caractères unique à votre fichier. Même changer un pixel dans une image produit un hachage complètement différent. C'est un identifiant mathématique, pas le fichier lui-même."
+      "a": "Un hachage SHA-256 est une empreinte hexadécimale déterministe de 64 caractères dérivée de votre fichier. La même entrée produit toujours le même hachage. Même changer un pixel dans une image produit un hachage complètement différent. C'est un identifiant mathématique, pas le fichier lui-même."
     },
     {
       "id": "opensource",

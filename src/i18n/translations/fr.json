@@ -10,7 +10,7 @@
     "features": {
       "cryptoProof": "Preuve Cryptographique",
       "cryptoProofDesc": "Créez une empreinte infalsifiable de votre document grâce à la cryptographie SHA-256.",
-      "cryptoProofDetail": "Le hachage convertit n'importe quel fichier en une chaîne unique de 64 caractères. Même une virgule modifiée produit un hachage complètement différent. Satohash gère cela localement sur votre appareil.",
+      "cryptoProofDetail": "Le hachage convertit n'importe quel fichier en une chaîne déterministe de 64 caractères. La même entrée produit toujours le même hachage — n’importe qui peut le redériver. Même une virgule modifiée produit un hachage complètement différent. Satohash gère cela localement sur votre appareil.",
       "timestamp": "Horodatage Bitcoin",
       "timestampDesc": "Ancrez votre preuve sur la blockchain Bitcoin via le protocole OpenTimestamps.",
       "timestampDetail": "Le hachage de votre document est regroupé avec des milliers d'autres dans un arbre de Merkle. Un hachage racine unique est ensuite inscrit sur le réseau Bitcoin, offrant une preuve d'existence permanente et immuable.",
@@ -24,7 +24,7 @@
     "subtitle": "Trois étapes simples pour protéger vos documents",
     "card1": {
       "title": "Verrouiller la date",
-      "description": "Satohash donne à votre document une empreinte unique et verrouille sa date sur le réseau Bitcoin. Plus tard, n'importe qui peut vérifier que ce document exact existait à ce moment-là."
+      "description": "Satohash donne à votre document une empreinte déterministe et verrouille sa date sur le réseau Bitcoin. Plus tard, n'importe qui peut vérifier que ce document exact existait à ce moment-là."
     },
     "card2": {
       "title": "Votre contenu reste privé",

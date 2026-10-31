@@ -85,7 +85,7 @@
       "id": "sha256",
       "category": "technical",
       "q": "Was ist ein SHA-256-Hash?",
-      "a": "Ein SHA-256-Hash ist ein 64-stelliger hexadezimaler Fingerabdruck, der für Ihre Datei einzigartig ist. Selbst die Änderung eines Pixels in einem Bild erzeugt einen völlig anderen Hash. Es ist ein mathematischer Identifikator, nicht die Datei selbst."
+      "a": "Ein SHA-256-Hash ist ein deterministischer 64-stelliger hexadezimaler Fingerabdruck, der aus Ihrer Datei abgeleitet wird. Dieselbe Eingabe erzeugt immer denselben Hash. Selbst die Änderung eines Pixels in einem Bild erzeugt einen völlig anderen Hash. Es ist ein mathematischer Identifikator, nicht die Datei selbst."
     },
     {
       "id": "opensource",

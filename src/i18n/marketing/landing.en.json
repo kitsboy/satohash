@@ -10,14 +10,14 @@
     "badge": "Free • No account needed • Your document never leaves your device",
     "titleLine1": "Prove Any File",
     "titleLine2": "Existed.",
-    "titleHighlight": "Forever.",
+    "titleHighlight": "Verifiably, on Bitcoin.",
     "subtitle": "Independently verifiable evidence. No notary required.",
     "description": "Satohash hashes your file locally in your browser — your document never leaves your device. Only a cryptographic fingerprint gets written to the Bitcoin blockchain, creating immutable proof of existence for any file, contract, photo, or dataset.",
     "ctaStamp": "Stamp a File — It's Free",
     "ctaWatch": "Watch explainer",
     "seeConfirmed": "See a confirmed proof · block {{block}}",
     "ctaTemplates": "Browse Templates",
-    "socialProof": "{{count}} Bitcoin-anchored proofs issued through this plane",
+    "socialProof": "{{issued}} proofs issued through this plane ({{confirmed}} confirmed on Bitcoin)",
     "tryTemplate": "Try a template for free"
   },
   "telemetry": {
@@ -44,7 +44,7 @@
       },
       "anchored": {
         "title": "Anchored in 60 Minutes",
-        "body": "Within one Bitcoin block, your proof is woven into the chain. Every node on Earth validates it. It cannot be altered, backdated, or deleted."
+        "body": "Within one Bitcoin block, your proof is woven into the chain. Every node on Earth validates it. It cannot be altered or backdated without overwhelming the network (a 51% attack) — economically prohibitive, not literally impossible. Nodes can prune data, so keep your .ots file and your original document."
       },
       "court": {
         "title": "Independently Verifiable Evidence",
@@ -99,29 +99,29 @@
       },
       "research": {
         "title": "Research & IP",
-        "body": "Scientists and inventors prove discovery dates with mathematical certainty."
+        "body": "Scientists and inventors get strong cryptographic evidence of when a document existed, by a time bound."
       },
       "government": {
         "title": "Government & Archives",
-        "body": "Public records that can never be altered or backdated — ever."
+        "body": "Public records that are extremely costly to alter or backdate, because doing so requires rewriting the Bitcoin chain."
       }
     }
   },
   "freeModel": {
-    "eyebrow": "Free today · Bitcoin forever",
+    "eyebrow": "Free today · anchored to Bitcoin forever.",
     "titleLine1": "How free stamping",
     "titleHighlight": "actually works",
-    "explainer": "We free-timestamp a fingerprint of your file using OpenTimestamps on Bitcoin. The free base tier is the permanent, never-paywalled trust anchor; optional premium tiers and a pay-per-use API are built and staged and launch paid only once the Lightning rails are funded and tested.",
+    "explainer": "We free-timestamp a fingerprint of your file using OpenTimestamps on Bitcoin. The free base tier is intended as the permanent, never-paywalled trust anchor, subsidised today by Give A Bit and community donations; premium tiers and the API are expected to fund infrastructure once live. Optional premium tiers and a pay-per-use API are built and staged and launch paid only once the Lightning rails are funded and tested.",
     "chainNote": "Chain: Bitcoin only (via OpenTimestamps). Your file stays on your device — we only handle the hash.",
     "futureEyebrow": "Built and staged (not live yet)",
     "futureTitle": "Optional premium tiers we've sketched",
-    "futureSubtitle": "Same proofs, same Bitcoin anchor. Free base (never paywalled) + optional premium tiers (Professional ~2,100 sats/mo, Business ~21,000 sats/mo) + pay-per-use API (1–5 sats/stamp). Launches paid only when rails are funded and tested.",
+    "futureSubtitle": "Same proofs, same Bitcoin anchor. Free base (intended to stay never-paywalled) + optional premium tiers (Professional ~2,100 sats/mo, Business ~21,000 sats/mo) + pay-per-use API (1–5 sats/stamp). Launches paid only when rails are funded and tested.",
     "tiers": {
       "free": {
         "name": "Free",
         "price": "0 sats",
         "period": "today",
-        "desc": "Unlimited stamp & verify with OpenTimestamps. No account. No Lightning invoice. Never paywalled (trust anchor).",
+        "desc": "Stamp & verify freely under a disclosed 5-req/min abuse guard, with no daily cap. The free base is intended to stay the never-paywalled trust anchor; if economics ever force a limit, we publish the change before it applies.",
         "badge": "Live now"
       },
       "sats": {

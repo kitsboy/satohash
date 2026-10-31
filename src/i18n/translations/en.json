@@ -10,7 +10,7 @@
     "features": {
       "cryptoProof": "Cryptographic Proof",
       "cryptoProofDesc": "Create an unforgeable fingerprint of your document using SHA-256 cryptography.",
-      "cryptoProofDetail": "Hashing converts any file into a unique 64-character string. Even a single changed comma results in a completely different hash. Satohash handles this locally on your device.",
+      "cryptoProofDetail": "Hashing converts any file into a deterministic 64-character string. The same input always produces the same hash — anyone can re-derive it. Even a single changed comma results in a completely different hash. Satohash handles this locally on your device.",
       "timestamp": "Bitcoin Timestamping",
       "timestampDesc": "Anchor your proof to the Bitcoin blockchain using the OpenTimestamps protocol.",
       "timestampDetail": "Your document's hash is bundled with thousands of others into a Merkle tree. A single 'root' hash is then committed to the Bitcoin network, providing permanent, immutable proof of existence.",
@@ -24,7 +24,7 @@
     "subtitle": "Three simple steps to protect your documents",
     "card1": {
       "title": "Lock in the date",
-      "description": "Satohash gives your document a unique fingerprint and locks its date into the Bitcoin network. Later, anyone can check that this exact document existed at that time."
+      "description": "Satohash gives your document a deterministic fingerprint and locks its date into the Bitcoin network. Later, anyone can check that this exact document existed at that time."
     },
     "card2": {
       "title": "Your content stays private",

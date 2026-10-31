@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import KimiContact from '../components/forms/KimiContact'
 import Footer from '../components/layout/Footer'
 import usePageMeta from '../hooks/usePageMeta'
+import { getApiUrl } from '../config/constants'
 import { renderDocMarkdown } from '../utils/renderDocMarkdown'
 import { normalizeLang } from '../i18n/language'
 
@@ -59,13 +60,18 @@ export default function Pitch() {
   const [content, setContent] = useState('')
   const [loading, setLoading] = useState(true)
   const [proofCount, setProofCount] = useState(null)
-  const proofCountLabel = proofCount != null ? proofCount.toLocaleString(i18n.language) : null
+  const [confirmedCount, setConfirmedCount] = useState(null)
 
   useEffect(() => {
-    fetch('https://api.satohash.io/api/public/status')
+    const API = getApiUrl()
+    fetch(`${API}/metrics.json`)
       .then((r) => (r.ok ? r.json() : null))
       .then((d) => {
-        if (d && d.stamps_stored != null) setProofCount(d.stamps_stored)
+        const counts = d?.raw?.counts
+        if (counts) {
+          if (typeof counts.stampsTotal === 'number') setProofCount(counts.stampsTotal)
+          if (typeof counts.confirmed === 'number') setConfirmedCount(counts.confirmed)
+        }
       })
       .catch(() => {})
   }, [])
@@ -105,11 +111,14 @@ export default function Pitch() {
           {t('pitchPage.h1')}
         </h1>
 
-        {proofCountLabel != null && (
+        {proofCount != null && (
           <p className="mb-6 text-center text-sm text-[var(--text-secondary)]">
             <ProofsCountLine
-              count={proofCountLabel}
-              line={t('pitchPage.proofsLine', { count: proofCountLabel })}
+              count={proofCount.toLocaleString(i18n.language)}
+              line={t('pitchPage.proofsLine', {
+                issued: proofCount.toLocaleString(i18n.language),
+                confirmed: (confirmedCount ?? 0).toLocaleString(i18n.language)
+              })}
             />{' '}
             <a
               href="https://satohash.io/network"

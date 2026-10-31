@@ -85,7 +85,7 @@
       "id": "sha256",
       "category": "technical",
       "q": "What is a SHA-256 hash?",
-      "a": "A SHA-256 hash is a 64-character hexadecimal fingerprint unique to your file. Even changing one pixel in an image produces a completely different hash. It is a mathematical identifier, not the file itself."
+      "a": "A SHA-256 hash is a deterministic 64-character hexadecimal fingerprint derived from your file. The same input always produces the same hash. Even changing one pixel in an image produces a completely different hash. It is a mathematical identifier, not the file itself."
     },
     {
       "id": "opensource",
