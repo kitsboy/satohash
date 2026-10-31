@@ -48,7 +48,7 @@
       },
       "court": {
         "title": "Preuve recevable en justice",
-        "body": "Les preuves Satohash satisfont les exigences de la loi ESIGN (États-Unis), UETA et eIDAS (UE). Votre horodatage est mathématiquement incontestable."
+        "body": "Les preuves Satohash sont des éléments de preuve indépendamment vérifiables de l'existence à un instant donné. Elles peuvent étayer un recours fondé sur des preuves au titre d'ESIGN, de l'UETA et d'eIDAS ; l'admissibilité et la valeur probante sont appréciées dans leur contexte."
       },
       "noMiddleman": {
         "title": "Aucun intermédiaire. Jamais.",
@@ -109,7 +109,7 @@
   },
   "finalCta": {
     "titleLine1": "Chaque document a une histoire.",
-    "titleHighlight": "Rendez la vôtre incontestable.",
+    "titleHighlight": "Rendez-la cryptographiquement attestable.",
     "subtitle": "Aucun compte requis. Aucune carte bancaire. Votre première preuve est gratuite. Ancrée sur Bitcoin en moins d'une heure.",
     "ctaStamp": "Notariser votre premier document — Gratuit",
     "ctaPitch": "Lire le pitch"

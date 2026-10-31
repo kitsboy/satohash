@@ -48,7 +48,7 @@
       },
       "court": {
         "title": "Gerichtsfeste Beweise",
-        "body": "Satohash-Nachweise erfüllen die Anforderungen des ESIGN Act (USA), UETA und eIDAS (EU). Ihr Zeitstempel ist mathematisch unbestreitbar."
+        "body": "Satohash-Nachweise sind unabhängig überprüfbare Belege für die Existenz zu einem Zeitpunkt. Sie können eine evidenzbasierte Berufung auf ESIGN, UETA und eIDAS stützen; Zulässigkeit und Beweiswert werden im jeweiligen Kontext entschieden."
       },
       "noMiddleman": {
         "title": "Kein Mittelsmann. Niemals.",
@@ -109,7 +109,7 @@
   },
   "finalCta": {
     "titleLine1": "Jedes Dokument hat eine Geschichte.",
-    "titleHighlight": "Machen Sie Ihre unbestreitbar.",
+    "titleHighlight": "Machen Sie sie kryptografisch belegbar.",
     "subtitle": "Kein Konto erforderlich. Keine Kreditkarte. Ihr erster Nachweis ist kostenlos. In Bitcoin verankert in unter einer Stunde.",
     "ctaStamp": "Erstes Dokument notarisieren — Kostenlos",
     "ctaPitch": "Pitch lesen"
