@@ -1,3 +1,17 @@
+## 2026-11-02 (Grok M3 — API rebuilt, stamp index backed up, practice stamp confirmed)
+
+API image on Thor is `7c68076`. `GET /health?deep=true` is ok, `require_lightning` false, mode `free_open`. The new payment check is in the image and idle. A typed header is not a payment. No company name was added. Cam and Lenny still own the legal name and the law. Do not charge until Cam says the word.
+
+Live stamp index backup, inside the API container, not the old host file: `/app/data/backups/satohash-2026-11-02T22-10-41-681Z.enc` (encrypted, about 2.8 MB). The image has no `zip` tool, so the snapshot is `.enc`, same as the nightly ones. Do not commit it.
+
+Thor checkout `/root/satohash` was left on branch `fix/locale-de-fr-legal-scope` at `c632289`. The deploy used a clean worktree `/root/satohash-deploy` at `origin/main`. Do not `git reset --hard` that dirty tree.
+
+Practice stamp is confirmed. Hash `90ae0c6b79f0e9da075e41592a4889b9b57f83d08ccff42c9cc1864fdb9af658`, id `7c42c702-0b37-4067-bd77-82da9c7b1b7f`, Bitcoin block **974302**, block hash `0000000000000000000081d60b60b557af2d2efe8a307e2c5218b96eac13c71b`. Checked on our node (`verified_method` bitcoind). The same height is on the public block list. Confirmed at `2026-11-02 22:10:38`. This file is not the public homepage example.
+
+**Kimi:** paywall stays off. Do not point `BITCOIN_RPC_URL` at Umbrel. LND stays off. Do not install BTCPay on Umbrel as the checker.
+
+---
+
 ## 2026-11-02 (Grok M3 — compare page, phone steps, one clock, payment prep)
 
 Compare page: BOLT-12, multi-party signing, and Snapper say Planned. On a phone the three steps sit above the film. Done page, proof card, and the iMessage line share one sentence: a new stamp waits about an hour. Paywall stays off. A typed `L402` header is not a payment. Paid path, once Cam sets `REQUIRE_LIGHTNING=true`, checks a real LNbits paid invoice and caps that path at 20 stamps an hour per IP. Free path stays 5 a minute.

@@ -1,3 +1,17 @@
+## Handoff (Grok M3 → Kimi — 2026-11-02, API rebuild and the confirmed practice stamp)
+
+Done on Thor. API image is **`7c68076`**. Health is ok. **`REQUIRE_LIGHTNING` is false** (`free_open`). The payment check is in the image and does nothing while the flag is false. Do not flip it. No company name was filled in.
+
+Stamp index backup is inside the container: `/app/data/backups/satohash-2026-11-02T22-10-41-681Z.enc`. Do not commit it. Do not back up the old 208 KB file under `/root/satohash/data/`. That is not the live index.
+
+`/root/satohash` is still branch `fix/locale-de-fr-legal-scope` at `c632289`, with a dirty tree. The running image was built from clean worktree `/root/satohash-deploy` at `origin/main`. Do not `git reset --hard` the dirty tree.
+
+Practice stamp confirmed: hash `90ae0c6b79f0e9da075e41592a4889b9b57f83d08ccff42c9cc1864fdb9af658`, id `7c42c702-0b37-4067-bd77-82da9c7b1b7f`, block **974302**. Our node checked it. Do not publish that file as the homepage example.
+
+Do not change `/api/*`. Do not point `BITCOIN_RPC_URL` at Umbrel. LND stays off. Do not install BTCPay on Umbrel as the checker.
+
+---
+
 ## Handoff (Grok M3 → Kimi — 2026-11-02, payment prep)
 
 This push changes `server/`. **Rebuild the API. Keep `REQUIRE_LIGHTNING=false`.** Do not change `/api/*`. Do not point `BITCOIN_RPC_URL` at Umbrel. LND stays off. Do not install BTCPay on Umbrel as the checker.

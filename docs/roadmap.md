@@ -34,7 +34,7 @@ Chapter buttons on `/watch` seek the existing 70s film and the 10s teaser. The v
 
 ### 4. Shipped 2026-11-02 — compare page, phone path, one clock, payment prep
 
-The compare page says Planned for BOLT-12, multi-party signing, and Snapper. On a phone the three steps sit above the film. The done page, the proof card, and the iMessage line use one sentence: a new stamp waits about an hour. The paywall still stays off. A typed payment header does not count. The paid path, once Cam turns it on, is capped at 20 stamps an hour. The free path stays 5 a minute. Stamp-index backup command is in `docs/ops-runbook.md` for Kimi on THOR.
+The compare page says Planned for BOLT-12, multi-party signing, and Snapper. On a phone the three steps sit above the film. The done page, the proof card, and the iMessage line use one sentence: a new stamp waits about an hour. The paywall still stays off. A typed payment header does not count. The paid path, once Cam turns it on, is capped at 20 stamps an hour. The free path stays 5 a minute. Thor is running API image `7c68076` with the flag false. The live stamp index backup is `/app/data/backups/satohash-2026-11-02T22-10-41-681Z.enc` inside the API container. The practice stamp is confirmed in Bitcoin block **974302**. The company name and the law still wait on Cam and Lenny. No charge until Cam says the word.
 
 ### 5. Next — public example only if Cam picks a file
 
