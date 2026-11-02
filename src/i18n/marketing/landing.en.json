@@ -39,7 +39,8 @@
     "feeNote": "Indicative · mempool, not a Satohash fee",
     "zeroKnowledge": "File stays on this device",
     "compliance": "eIDAS & ESIGN Aligned",
-    "proofsConfirmed": "{{count}} Proofs Confirmed"
+    "proofsConfirmed": "{{count}} Proofs Confirmed",
+    "pendingHour": "A new stamp waits about an hour. This number is the tip our node is reading."
   },
   "features": {
     "badge": "What Most People Don't Know",
@@ -165,9 +166,10 @@
     "trustCenter": "Trust Center"
   },
   "pwa": {
-    "title": "Add Satohash to Home Screen",
-    "subtitle": "Instant access, works offline",
-    "install": "Install"
+    "title": "Home screen",
+    "subtitle": "Optional. Stamping stays in the browser.",
+    "install": "Add",
+    "dismiss": "Close"
   },
   "donation": {
     "title": "Support Satohash",

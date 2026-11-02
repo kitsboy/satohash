@@ -39,7 +39,8 @@
     "feeNote": "Indicativa · mempool, no es una tarifa de Satohash",
     "zeroKnowledge": "El archivo se queda en este dispositivo",
     "compliance": "Alineado con eIDAS y ESIGN",
-    "proofsConfirmed": "{{count}} pruebas confirmadas"
+    "proofsConfirmed": "{{count}} pruebas confirmadas",
+    "pendingHour": "Un sello nuevo espera cerca de una hora. Este número es la punta que lee nuestro nodo."
   },
   "features": {
     "badge": "Lo que la mayoría no sabe",
@@ -130,9 +131,10 @@
     "trustCenter": "Centro de confianza"
   },
   "pwa": {
-    "title": "Añadir Satohash a la pantalla de inicio",
-    "subtitle": "Acceso instantáneo, funciona sin conexión",
-    "install": "Instalar"
+    "title": "Pantalla de inicio",
+    "subtitle": "Opcional. El sello sigue en el navegador.",
+    "install": "Añadir",
+    "dismiss": "Cerrar"
   },
   "donation": {
     "title": "Apoya Satohash",

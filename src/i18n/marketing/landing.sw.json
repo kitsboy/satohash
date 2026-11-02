@@ -39,7 +39,8 @@
     "feeNote": "Makadirio · mempool, si ada ya Satohash",
     "zeroKnowledge": "Faili inabaki kwenye kifaa hiki",
     "compliance": "Inalingana na eIDAS na ESIGN",
-    "proofsConfirmed": "Uthibitisho {{count}} umethibitishwa"
+    "proofsConfirmed": "Uthibitisho {{count}} umethibitishwa",
+    "pendingHour": "Muhuri mpya husubiri karibu saa moja. Nambari hii ni ncha ambayo nodi yetu inasoma."
   },
   "features": {
     "badge": "Watu wengi hawajui",
@@ -130,9 +131,10 @@
     "trustCenter": "Kituo cha uaminifu"
   },
   "pwa": {
-    "title": "Ongeza Satohash kwenye skrini ya nyumbani",
-    "subtitle": "Ufikiaji wa papo hapo, inafanya kazi nje ya mtandao",
-    "install": "Sakinisha"
+    "title": "Skrini ya nyumbani",
+    "subtitle": "Si lazima. Muhuri unabaki kwenye kivinjari.",
+    "install": "Ongeza",
+    "dismiss": "Funga"
   },
   "donation": {
     "title": "Saidia Satohash",

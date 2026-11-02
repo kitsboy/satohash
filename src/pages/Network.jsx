@@ -242,7 +242,9 @@ export default function Network() {
 
   const calendars = cals?.calendars || []
   const calendarsUp = calendars.filter((c) => c.ok).length
+  const calendarsDown = calendars.length - calendarsUp
   const finneyDown = calendars.some((c) => isFinneyCalendar(c) && !c.ok)
+  const manyCalendarsDown = calendars.length > 0 && calendarsDown >= 2
   const nostrNotes = recent
     .map((s) => {
       const eventId = pickNostrEventId(s)
@@ -296,6 +298,24 @@ export default function Network() {
           <div className="mt-6" data-testid="network-chain-steps">
             <StampChainSteps t={t} blockHeight={bitcoin?.block_height} />
           </div>
+          {manyCalendarsDown ? (
+            <p
+              className="mt-4 text-sm leading-relaxed"
+              style={{ color: 'var(--accent-danger)' }}
+              data-testid="calendars-degraded"
+              role="status"
+            >
+              {t('networkPage.calendarsDegraded')}
+            </p>
+          ) : finneyDown ? (
+            <p
+              className="mt-4 text-sm leading-relaxed"
+              style={{ color: 'var(--text-secondary)' }}
+              data-testid="calendars-alice-bob"
+            >
+              {t('networkPage.finneyHint')}
+            </p>
+          ) : null}
           {err && (
             <p className="mt-4 text-sm" style={{ color: 'var(--accent-danger)' }}>
               {err}
@@ -382,13 +402,15 @@ export default function Network() {
                 t('networkPage.loading')
               ) : calendars.length === 0 ? (
                 t('networkPage.noCalendarStatus')
+              ) : manyCalendarsDown ? (
+                t('networkPage.calendarsDegraded')
               ) : finneyDown ? (
                 t('networkPage.finneyHint')
               ) : (
                 t('networkPage.calendarHealth')
               )
             }
-            hintDanger={calsError}
+            hintDanger={calsError || manyCalendarsDown}
             icon={Calendar}
             color="#22d3a5"
           />

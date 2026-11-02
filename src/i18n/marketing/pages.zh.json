@@ -99,62 +99,62 @@
         "freeCalendar": {
           "label": "免费日历锚定",
           "free": "yes",
-          "premium": "unlimited",
-          "enterprise": "unlimited"
+          "premium": "planned",
+          "enterprise": "planned"
         },
         "multiParty": {
           "label": "多方签署",
           "free": "dash",
-          "premium": "yes",
-          "enterprise": "yes"
+          "premium": "planned",
+          "enterprise": "planned"
         },
         "bolt12": {
           "label": "BOLT-12 Lightning 支付",
           "free": "dash",
-          "premium": "yes",
-          "enterprise": "yes"
+          "premium": "planned",
+          "enterprise": "planned"
         },
         "apiAccess": {
           "label": "API 访问",
           "free": "dash",
-          "premium": "yes",
-          "enterprise": "yes"
+          "premium": "planned",
+          "enterprise": "planned"
         },
         "webhooks": {
           "label": "Webhook 通知",
           "free": "dash",
-          "premium": "yes",
-          "enterprise": "yes"
+          "premium": "planned",
+          "enterprise": "planned"
         },
         "batchStamping": {
           "label": "批量加盖时间戳",
           "free": "dash",
           "premium": "plannedHigher",
-          "enterprise": "unlimited"
+          "enterprise": "planned"
         },
         "dedicatedCalendar": {
           "label": "专属 OTS 日历",
           "free": "dash",
           "premium": "dash",
-          "enterprise": "yes"
+          "enterprise": "planned"
         },
         "sla": {
           "label": "SLA 保障",
           "free": "dash",
           "premium": "dash",
-          "enterprise": "sla99"
+          "enterprise": "planned"
         },
         "onPremise": {
           "label": "本地部署",
           "free": "dash",
           "premium": "dash",
-          "enterprise": "yes"
+          "enterprise": "planned"
         },
         "prioritySupport": {
           "label": "优先支持",
           "free": "community",
-          "premium": "email",
-          "enterprise": "dedicated247"
+          "premium": "planned",
+          "enterprise": "planned"
         }
       },
       "cellValues": {
@@ -165,7 +165,8 @@
         "plannedHigher": "更高限额（计划中）",
         "sla99": "按协议",
         "unlimited": "无限制",
-        "yes": "是"
+        "yes": "是",
+        "planned": "计划中"
       }
     },
     "faqTeaser": {
@@ -2061,7 +2062,8 @@
     "shortAnchorTitle": "比特币",
     "shortAnchorLine": "独立日历。一个比特币区块。无人能伪造的证明。",
     "shortCtaTitle": "行动",
-    "shortCtaLine": "免费。无需账户。在 satohash.io 盖戳。"
+    "shortCtaLine": "免费。无需账户。在 satohash.io 盖戳。",
+    "chapters": "章节"
   },
   "statusPage": {
     "metaTitle": "实时状态",
@@ -2386,7 +2388,8 @@
     "ctaBody": "免费盖戳、核验证明，或阅读证据如何契合法律框架。",
     "stampCta": "免费盖戳",
     "verifyCta": "核验",
-    "explorerCta": "Merkle 演示"
+    "explorerCta": "Merkle 演示",
+    "calendarsDegraded": "两个日历停了。新的戳记可能要等更久。"
   },
   "explorerPage": {
     "demoChip": "演示 · Merkle 树如何工作",
@@ -4102,7 +4105,7 @@
     "title": "这是怎么工作的？",
     "subtitle": "你不必信任我们。一分钟内该核对的是这些。",
     "statePendingTitle": "等待 Bitcoin",
-    "statePendingBody": "你的证明已记录并发送到公开时间戳日历。Bitcoin 大约每 10 分钟确认一次，所以这通常会在几小时内变化。",
+    "statePendingBody": "你的证明已在公开日历里。新的戳记大约要等一小时，才会被一个比特币区块收进去。",
     "stateConfirmedTitle": "已锚定到 Bitcoin",
     "stateNotProvenTitle": "未证明",
     "blockLabel": "Bitcoin 区块",

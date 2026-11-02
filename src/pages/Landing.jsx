@@ -1094,32 +1094,32 @@ export default function Landing() {
             initial={{ y: 100, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 100, opacity: 0 }}
-            className="fixed right-4 bottom-20 left-4 z-50 flex items-center gap-3 rounded-2xl p-4 shadow-2xl sm:hidden"
-            style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-bright)' }}
+            className="fixed right-4 bottom-20 left-4 z-40 flex items-center gap-3 rounded-xl px-3 py-2 sm:hidden"
+            style={{ background: 'var(--bg-primary)', border: '1px solid var(--border)' }}
+            data-testid="pwa-install-hint"
           >
-            <div
-              className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl"
-              style={{ background: 'var(--accent-gold-subtle)' }}
-            >
-              <span className="text-lg">⚡</span>
-            </div>
             <div className="min-w-0 flex-1">
-              <p className="text-xs font-black" style={{ color: 'var(--text-primary)' }}>
+              <p className="text-[11px] leading-snug" style={{ color: 'var(--text-secondary)' }}>
                 {t('landingPage.pwa.title')}
-              </p>
-              <p className="text-[10px]" style={{ color: 'var(--text-secondary)' }}>
-                {t('landingPage.pwa.subtitle')}
+                <span className="text-[var(--text-muted)]"> · {t('landingPage.pwa.subtitle')}</span>
               </p>
             </div>
             <button
+              type="button"
               onClick={installPWA}
-              className="flex-shrink-0 rounded-xl px-3 py-2 text-[10px] font-black tracking-wider uppercase"
-              style={{ background: 'var(--accent-gold)', color: '#141b25' }}
+              className="min-h-[44px] flex-shrink-0 px-2 text-[11px] font-bold underline"
+              style={{ color: 'var(--text-secondary)' }}
             >
               {t('landingPage.pwa.install')}
             </button>
-            <button onClick={dismissPWA} className="flex-shrink-0 p-1 opacity-40 hover:opacity-100">
-              <span style={{ color: 'var(--text-secondary)' }}>✕</span>
+            <button
+              type="button"
+              onClick={dismissPWA}
+              className="min-h-[44px] min-w-[44px] flex-shrink-0 text-sm"
+              style={{ color: 'var(--text-muted)' }}
+              aria-label={t('landingPage.pwa.dismiss')}
+            >
+              ✕
             </button>
           </motion.div>
         )}

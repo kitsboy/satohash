@@ -99,62 +99,62 @@
         "freeCalendar": {
           "label": "Kuunganisha kalenda bure",
           "free": "yes",
-          "premium": "unlimited",
-          "enterprise": "unlimited"
+          "premium": "planned",
+          "enterprise": "planned"
         },
         "multiParty": {
           "label": "Kusaini kwa pande nyingi",
           "free": "dash",
-          "premium": "yes",
-          "enterprise": "yes"
+          "premium": "planned",
+          "enterprise": "planned"
         },
         "bolt12": {
           "label": "Malipo ya Lightning BOLT-12",
           "free": "dash",
-          "premium": "yes",
-          "enterprise": "yes"
+          "premium": "planned",
+          "enterprise": "planned"
         },
         "apiAccess": {
           "label": "Ufikiaji wa API",
           "free": "dash",
-          "premium": "yes",
-          "enterprise": "yes"
+          "premium": "planned",
+          "enterprise": "planned"
         },
         "webhooks": {
           "label": "Arifa za webhook",
           "free": "dash",
-          "premium": "yes",
-          "enterprise": "yes"
+          "premium": "planned",
+          "enterprise": "planned"
         },
         "batchStamping": {
           "label": "Kuweka muhuri kwa kundi",
           "free": "dash",
           "premium": "plannedHigher",
-          "enterprise": "unlimited"
+          "enterprise": "planned"
         },
         "dedicatedCalendar": {
           "label": "Kalenda maalum ya OTS",
           "free": "dash",
           "premium": "dash",
-          "enterprise": "yes"
+          "enterprise": "planned"
         },
         "sla": {
           "label": "Dhamana ya SLA",
           "free": "dash",
           "premium": "dash",
-          "enterprise": "sla99"
+          "enterprise": "planned"
         },
         "onPremise": {
           "label": "Usambazaji on-premise",
           "free": "dash",
           "premium": "dash",
-          "enterprise": "yes"
+          "enterprise": "planned"
         },
         "prioritySupport": {
           "label": "Msaada wa kipaumbele",
           "free": "community",
-          "premium": "email",
-          "enterprise": "dedicated247"
+          "premium": "planned",
+          "enterprise": "planned"
         }
       },
       "cellValues": {
@@ -165,7 +165,8 @@
         "plannedHigher": "Vikomo vya juu (vimepangwa)",
         "sla99": "Kwa makubaliano",
         "unlimited": "Bila kikomo",
-        "yes": "Ndiyo"
+        "yes": "Ndiyo",
+        "planned": "Imepangwa"
       }
     },
     "faqTeaser": {
@@ -2086,7 +2087,8 @@
     "shortAnchorTitle": "Bitcoin",
     "shortAnchorLine": "Kalenda huru. Bloku moja ya Bitcoin. Ushahidi ambao hakuna anayeweza kughushi.",
     "shortCtaTitle": "CTA",
-    "shortCtaLine": "Bure. Hakuna akaunti. Igongwe kwenye satohash.io."
+    "shortCtaLine": "Bure. Hakuna akaunti. Igongwe kwenye satohash.io.",
+    "chapters": "Sura"
   },
   "statusPage": {
     "metaTitle": "Hali ya moja kwa moja",
@@ -2411,7 +2413,8 @@
     "ctaBody": "Gonga bure, thibitisha uthibitisho, au soma jinsi ushahidi unavyoingia kwenye mifumo ya kisheria.",
     "stampCta": "Gongo bure",
     "verifyCta": "Thibitisha",
-    "explorerCta": "Demo ya Merkle"
+    "explorerCta": "Demo ya Merkle",
+    "calendarsDegraded": "Kalenda mbili zimezimwa. Mihuri mipya inaweza kusubiri muda mrefu."
   },
   "explorerPage": {
     "demoChip": "Demo · jinsi mti wa Merkle unavyofanya kazi",
@@ -4127,7 +4130,7 @@
     "title": "Hii inafanyaje kazi?",
     "subtitle": "Huna haja ya kututumaini. Hii ndiyo ya kuangalia, katika dakika moja.",
     "statePendingTitle": "Inasubiri Bitcoin",
-    "statePendingBody": "Uthibitisho wako ulirekodiwa na kutumwa kwa kalenda za wakati za umma. Bitcoin inathibitisha takriban kila dakika 10, kwa hivyo hii mara nyingi inabadilika ndani ya saa chache.",
+    "statePendingBody": "Uthibitisho wako uko kwenye kalenda za umma. Muhuri mpya husubiri karibu saa moja kabla bloku ya Bitcoin kuujumuisha.",
     "stateConfirmedTitle": "Imefungwa kwenye Bitcoin",
     "stateNotProvenTitle": "Haijathibitishwa",
     "blockLabel": "Bloku ya Bitcoin",

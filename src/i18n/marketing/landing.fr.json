@@ -39,7 +39,8 @@
     "feeNote": "Indicatif · mempool, pas un frais Satohash",
     "zeroKnowledge": "Le fichier reste sur cet appareil",
     "compliance": "Aligné eIDAS et ESIGN",
-    "proofsConfirmed": "{{count}} preuves confirmées"
+    "proofsConfirmed": "{{count}} preuves confirmées",
+    "pendingHour": "Un nouveau sceau attend environ une heure. Ce nombre est la pointe que lit notre nœud."
   },
   "features": {
     "badge": "Ce que la plupart ignorent",
@@ -130,9 +131,10 @@
     "trustCenter": "Centre de confiance"
   },
   "pwa": {
-    "title": "Ajouter Satohash à l'écran d'accueil",
-    "subtitle": "Accès instantané, fonctionne hors ligne",
-    "install": "Installer"
+    "title": "Écran d'accueil",
+    "subtitle": "Facultatif. Le sceau reste dans le navigateur.",
+    "install": "Ajouter",
+    "dismiss": "Fermer"
   },
   "donation": {
     "title": "Soutenir Satohash",

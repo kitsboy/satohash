@@ -39,7 +39,8 @@
     "feeNote": "Indicativa · mempool, não é uma taxa Satohash",
     "zeroKnowledge": "O arquivo fica neste dispositivo",
     "compliance": "Alinhado com eIDAS e ESIGN",
-    "proofsConfirmed": "{{count}} provas confirmadas"
+    "proofsConfirmed": "{{count}} provas confirmadas",
+    "pendingHour": "Um carimbo novo espera cerca de uma hora. Este número é a ponta que o nosso nó está a ler."
   },
   "features": {
     "badge": "O que a maioria não sabe",
@@ -130,9 +131,10 @@
     "trustCenter": "Centro de confiança"
   },
   "pwa": {
-    "title": "Adicionar Satohash ao ecrã principal",
-    "subtitle": "Acesso instantâneo, funciona offline",
-    "install": "Instalar"
+    "title": "Ecrã principal",
+    "subtitle": "Opcional. O carimbo fica no navegador.",
+    "install": "Adicionar",
+    "dismiss": "Fechar"
   },
   "donation": {
     "title": "Apoiar o Satohash",

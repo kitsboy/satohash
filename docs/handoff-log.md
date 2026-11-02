@@ -1,3 +1,13 @@
+## 2026-11-02 (Grok M3 — chapters, quiet install, planned prices, practice stamp)
+
+`/watch` chapter buttons seek the existing film. The voice and pictures were not regenerated. The phone install hint is a quiet text line, and it only appears when the phone offers Add to Home Screen. Paid pricing cells that are not for sale say Planned. Free-column Yes stays for the stamp we already do. The three steps say a new stamp waits about an hour. Network warns when two calendars are down, and says Alice and Bob are enough when only Finney is down. The home-node switch rule is in `docs/ops-runbook.md`. Do not switch.
+
+Practice stamp, still pending: hash `90ae0c6b79f0e9da075e41592a4889b9b57f83d08ccff42c9cc1864fdb9af658`, id `7c42c702-0b37-4067-bd77-82da9c7b1b7f`, file name `readiness-check.txt`. Verify says `no_block_attestation`. No Bitcoin block yet. A hash that was never stamped returns 404. A short hash returns 400. Phone stamp screen showed Pending and the share link `/p/` plus `/verify`.
+
+**Kimi:** do not rebuild. Do not change `/api/*`. Keep `REQUIRE_LIGHTNING=false`. Do not point `BITCOIN_RPC_URL` at Umbrel. LND stays off. Do not put BTCPay on Umbrel and call it the checker.
+
+---
+
 ## 2026-11-02 (Grok M3 — live tip in the check step; pricing is coming soon)
 
 The block number from our node now sits inside “our node checks” on the homepage, and the same three steps sit at the top of Network. The number is the live tip from readiness. It is not a hardcoded height.

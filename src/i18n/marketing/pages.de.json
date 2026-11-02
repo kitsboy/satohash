@@ -99,62 +99,62 @@
         "freeCalendar": {
           "label": "Kostenlose Kalender-Verankerung",
           "free": "yes",
-          "premium": "unlimited",
-          "enterprise": "unlimited"
+          "premium": "planned",
+          "enterprise": "planned"
         },
         "multiParty": {
           "label": "Multi-Party-Signing",
           "free": "dash",
-          "premium": "yes",
-          "enterprise": "yes"
+          "premium": "planned",
+          "enterprise": "planned"
         },
         "bolt12": {
           "label": "BOLT-12 Lightning-Zahlungen",
           "free": "dash",
-          "premium": "yes",
-          "enterprise": "yes"
+          "premium": "planned",
+          "enterprise": "planned"
         },
         "apiAccess": {
           "label": "API-Zugang",
           "free": "dash",
-          "premium": "yes",
-          "enterprise": "yes"
+          "premium": "planned",
+          "enterprise": "planned"
         },
         "webhooks": {
           "label": "Webhook-Benachrichtigungen",
           "free": "dash",
-          "premium": "yes",
-          "enterprise": "yes"
+          "premium": "planned",
+          "enterprise": "planned"
         },
         "batchStamping": {
           "label": "Batch-Stempelung",
           "free": "dash",
           "premium": "plannedHigher",
-          "enterprise": "unlimited"
+          "enterprise": "planned"
         },
         "dedicatedCalendar": {
           "label": "Dedizierter OTS-Kalender",
           "free": "dash",
           "premium": "dash",
-          "enterprise": "yes"
+          "enterprise": "planned"
         },
         "sla": {
           "label": "SLA-Garantie",
           "free": "dash",
           "premium": "dash",
-          "enterprise": "sla99"
+          "enterprise": "planned"
         },
         "onPremise": {
           "label": "On-Premise-Bereitstellung",
           "free": "dash",
           "premium": "dash",
-          "enterprise": "yes"
+          "enterprise": "planned"
         },
         "prioritySupport": {
           "label": "Priorisierter Support",
           "free": "community",
-          "premium": "email",
-          "enterprise": "dedicated247"
+          "premium": "planned",
+          "enterprise": "planned"
         }
       },
       "cellValues": {
@@ -165,7 +165,8 @@
         "plannedHigher": "Höhere Grenzen (geplant)",
         "sla99": "Nach Vereinbarung",
         "unlimited": "Unbegrenzt",
-        "yes": "Ja"
+        "yes": "Ja",
+        "planned": "Geplant"
       }
     },
     "faqTeaser": {
@@ -2086,7 +2087,8 @@
     "shortAnchorTitle": "Bitcoin",
     "shortAnchorLine": "Unabhängige Kalender. Ein Bitcoin-Block. Ein Beweis, den niemand fälschen kann.",
     "shortCtaTitle": "CTA",
-    "shortCtaLine": "Kostenlos. Kein Konto. Stempeln Sie auf satohash.io."
+    "shortCtaLine": "Kostenlos. Kein Konto. Stempeln Sie auf satohash.io.",
+    "chapters": "Kapitel"
   },
   "statusPage": {
     "metaTitle": "Live-Status",
@@ -2411,7 +2413,8 @@
     "ctaBody": "Kostenlos stempeln, Beweise prüfen oder lesen, wie Evidenz in Rechtsrahmen passt.",
     "stampCta": "Kostenloser Stempel",
     "verifyCta": "Prüfen",
-    "explorerCta": "Merkle-Demo"
+    "explorerCta": "Merkle-Demo",
+    "calendarsDegraded": "Zwei Kalender sind unten. Neue Stempel können länger warten."
   },
   "explorerPage": {
     "demoChip": "Demo · so funktioniert ein Merkle-Baum",
@@ -4127,7 +4130,7 @@
     "title": "Wie funktioniert das?",
     "subtitle": "Du musst uns nicht vertrauen. Das prüfst du in einer Minute.",
     "statePendingTitle": "Warten auf Bitcoin",
-    "statePendingBody": "Dein Nachweis wurde aufgezeichnet und an die öffentlichen Zeitstempel-Kalender gesendet. Bitcoin bestätigt etwa alle 10 Minuten, daher ändert sich das meist innerhalb weniger Stunden.",
+    "statePendingBody": "Dein Nachweis liegt bei den öffentlichen Kalendern. Ein neuer Stempel wartet etwa eine Stunde, bis ein Bitcoin-Block ihn einschließt.",
     "stateConfirmedTitle": "An Bitcoin verankert",
     "stateNotProvenTitle": "Nicht bewiesen",
     "blockLabel": "Bitcoin-Block",

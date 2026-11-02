@@ -19,6 +19,19 @@ Canonical short ops pointer. Detailed procedures remain in:
 5. **No secrets in git / handoffs**
 6. **One SPA deploy path:** GitHub Actions `Deploy` only — never Retry in the CF Pages UI while Actions is yellow
 
+## Home node cutover — do not switch yet
+
+Umbrel is Cam’s home Bitcoin node. It is not the checker. Thor bitcoind stays the checker.
+
+Switch `BITCOIN_RPC_URL` to the home node only when every line below is true:
+
+1. Cam says the first download is finished.
+2. `initialblockdownload` is false on that node.
+3. Its block height matches the Thor tip within one block.
+4. Cam asks for the switch.
+
+Until then, stamps keep using the node already at the tip. LND stays off. `REQUIRE_LIGHTNING` stays false. Do not install BTCPay on Umbrel and call that the stamp checker. A payment box is a later step and does not move the checker. On 2026-11-02 the first download was about 92% and this switch was not made.
+
 ## Current (2026-10-13)
 
 SPA product copy is live at `4134150` (sign-in says the key stays on the device). `/health` status ok at 19:19 UTC, `gitSha` `e814a57`, paywall off. Do not rebuild the API for the October copy. If `6c8ae2e` is only on THOR, do not push it. Next SPA work is item 1 in `docs/roadmap.md` (dashboard history labels). Ingest the top of `docs/KIMI-HANDOFF.md` into THOR Obsidian.

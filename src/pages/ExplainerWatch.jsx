@@ -83,6 +83,13 @@ function fmt(s) {
   return `${m}:${sec.toString().padStart(2, '0')}`
 }
 
+function beatSeconds(label) {
+  const [m, s] = String(label)
+    .split(':')
+    .map((n) => Number(n))
+  return (m || 0) * 60 + (s || 0)
+}
+
 export default function ExplainerWatch() {
   const { t: tw } = useTranslation()
   usePageMeta({
@@ -92,13 +99,17 @@ export default function ExplainerWatch() {
   const videoRef = useRef(null)
   const [cutId, setCutId] = useState('full')
   const cut = CUTS[cutId]
-  const beats = cutId === 'full' ? FULL_BEATS : SHORT_BEATS
+  const beats = (cutId === 'full' ? FULL_BEATS : SHORT_BEATS).map((b) => ({
+    ...b,
+    seconds: beatSeconds(b.t)
+  }))
   const [playing, setPlaying] = useState(false)
   const [t, setT] = useState(0)
   const [total, setTotal] = useState(cut.seconds)
   const [muted, setMuted] = useState(false)
   const [ended, setEnded] = useState(false)
   const [ready, setReady] = useState(false)
+  const activeChapterId = [...beats].reverse().find((b) => t + 0.15 >= b.seconds)?.id
 
   const progress = total > 0 ? Math.min(100, (t / total) * 100) : 0
 
@@ -197,6 +208,30 @@ export default function ExplainerWatch() {
     setT(0)
     setEnded(false)
     setPlaying(false)
+  }
+
+  const jumpTo = async (seconds) => {
+    const v = videoRef.current
+    if (!v) return
+    attachActiveSrc()
+    setEnded(false)
+    setT(seconds)
+    try {
+      if (v.readyState < 1) {
+        await new Promise((resolve) => {
+          const done = () => {
+            v.removeEventListener('loadedmetadata', done)
+            resolve()
+          }
+          v.addEventListener('loadedmetadata', done)
+          v.load()
+        })
+      }
+      v.currentTime = seconds
+      await v.play()
+    } catch {
+      /* autoplay / gesture policies */
+    }
   }
 
   const switchCut = (id) => {
@@ -364,6 +399,36 @@ export default function ExplainerWatch() {
           </div>
         </div>
 
+        <div
+          className="mt-4 flex flex-wrap gap-2"
+          role="tablist"
+          aria-label={tw('watchPage.chapters')}
+          data-testid="watch-chapters"
+        >
+          {beats.map((b) => {
+            const active = b.id === activeChapterId
+            return (
+              <button
+                key={b.id}
+                type="button"
+                role="tab"
+                aria-selected={active}
+                onClick={() => jumpTo(b.seconds)}
+                className="inline-flex min-h-[44px] items-center rounded-xl border px-3 text-left text-[11px] font-bold"
+                style={{
+                  borderColor: active ? 'var(--accent-gold)' : 'var(--border)',
+                  color: active ? 'var(--accent-gold)' : 'var(--text-secondary)',
+                  background: 'transparent'
+                }}
+                data-testid={active ? 'watch-chapter-active' : 'watch-chapter'}
+              >
+                <span className="mr-2 font-mono">{b.t}</span>
+                {tw(b.titleKey)}
+              </button>
+            )
+          })}
+        </div>
+
         <div className="mt-4 flex flex-wrap items-center justify-center gap-2 sm:gap-3">
           <button
             type="button"
@@ -404,7 +469,7 @@ export default function ExplainerWatch() {
             className="inline-flex min-h-[48px] items-center gap-2 rounded-2xl border px-5 text-sm font-black uppercase"
             style={{ borderColor: 'rgba(240,180,41,0.45)', color: 'var(--accent-gold)' }}
           >
-            Stamp free <ArrowRight size={16} />
+            {tw('watchPage.stampFree')} <ArrowRight size={16} />
           </Link>
         </div>
 
@@ -421,29 +486,40 @@ export default function ExplainerWatch() {
             {tw('watchPage.voBaked')}
           </p>
           <ol className="mt-6 space-y-4">
-            {beats.map((b) => (
-              <li
-                key={b.id}
-                className="flex gap-3 rounded-xl border p-3 sm:gap-4 sm:p-4"
-                style={{
-                  borderColor: 'var(--border)',
-                  background: 'var(--bg-primary)'
-                }}
-              >
-                <span
-                  className="shrink-0 text-[10px] font-black tracking-wider uppercase"
-                  style={{ color: 'var(--accent-gold)', minWidth: '3.5rem' }}
-                >
-                  {b.t}
-                </span>
-                <div>
-                  <p className="text-xs font-bold" style={{ color: 'var(--text-secondary)' }}>
-                    {tw(b.titleKey)}
-                  </p>
-                  <p className="mt-0.5 text-sm leading-relaxed sm:text-[15px]">{tw(b.lineKey)}</p>
-                </div>
-              </li>
-            ))}
+            {beats.map((b) => {
+              const active = b.id === activeChapterId
+              return (
+                <li key={b.id}>
+                  <button
+                    type="button"
+                    onClick={() => jumpTo(b.seconds)}
+                    className="flex w-full gap-3 rounded-xl border p-3 text-left sm:gap-4 sm:p-4"
+                    style={{
+                      borderColor: active ? 'var(--accent-gold)' : 'var(--border)',
+                      background: 'var(--bg-primary)'
+                    }}
+                  >
+                    <span
+                      className="shrink-0 text-[10px] font-black tracking-wider uppercase"
+                      style={{ color: 'var(--accent-gold)', minWidth: '3.5rem' }}
+                    >
+                      {b.t}
+                    </span>
+                    <span>
+                      <span
+                        className="block text-xs font-bold"
+                        style={{ color: 'var(--text-secondary)' }}
+                      >
+                        {tw(b.titleKey)}
+                      </span>
+                      <span className="mt-0.5 block text-sm leading-relaxed sm:text-[15px]">
+                        {tw(b.lineKey)}
+                      </span>
+                    </span>
+                  </button>
+                </li>
+              )
+            })}
           </ol>
         </section>
       </main>

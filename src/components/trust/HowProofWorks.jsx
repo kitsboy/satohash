@@ -41,7 +41,7 @@ export const DEFAULT_LABELS = {
   subtitle: 'You do not have to trust us. Here is what to check, in one minute.',
   statePendingTitle: 'Waiting for Bitcoin',
   statePendingBody:
-    'Your proof was recorded and sent to the public timestamp calendars. Bitcoin confirms roughly every 10 minutes, so this usually changes within a few hours.',
+    'Your proof is with the public calendars. A new stamp waits about an hour before a Bitcoin block includes it.',
   stateConfirmedTitle: 'Anchored to Bitcoin',
   stateNotProvenTitle: 'Not proven',
   blockLabel: 'Bitcoin block',

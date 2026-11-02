@@ -99,62 +99,62 @@
         "freeCalendar": {
           "label": "Anclaje gratuito en calendario",
           "free": "yes",
-          "premium": "unlimited",
-          "enterprise": "unlimited"
+          "premium": "planned",
+          "enterprise": "planned"
         },
         "multiParty": {
           "label": "Firma multiparte",
           "free": "dash",
-          "premium": "yes",
-          "enterprise": "yes"
+          "premium": "planned",
+          "enterprise": "planned"
         },
         "bolt12": {
           "label": "Pagos Lightning BOLT-12",
           "free": "dash",
-          "premium": "yes",
-          "enterprise": "yes"
+          "premium": "planned",
+          "enterprise": "planned"
         },
         "apiAccess": {
           "label": "Acceso a API",
           "free": "dash",
-          "premium": "yes",
-          "enterprise": "yes"
+          "premium": "planned",
+          "enterprise": "planned"
         },
         "webhooks": {
           "label": "Notificaciones webhook",
           "free": "dash",
-          "premium": "yes",
-          "enterprise": "yes"
+          "premium": "planned",
+          "enterprise": "planned"
         },
         "batchStamping": {
           "label": "Sellado por lotes",
           "free": "dash",
           "premium": "plannedHigher",
-          "enterprise": "unlimited"
+          "enterprise": "planned"
         },
         "dedicatedCalendar": {
           "label": "Calendario OTS dedicado",
           "free": "dash",
           "premium": "dash",
-          "enterprise": "yes"
+          "enterprise": "planned"
         },
         "sla": {
           "label": "Garantía SLA",
           "free": "dash",
           "premium": "dash",
-          "enterprise": "sla99"
+          "enterprise": "planned"
         },
         "onPremise": {
           "label": "Despliegue on-premise",
           "free": "dash",
           "premium": "dash",
-          "enterprise": "yes"
+          "enterprise": "planned"
         },
         "prioritySupport": {
           "label": "Soporte prioritario",
           "free": "community",
-          "premium": "email",
-          "enterprise": "dedicated247"
+          "premium": "planned",
+          "enterprise": "planned"
         }
       },
       "cellValues": {
@@ -165,7 +165,8 @@
         "plannedHigher": "Límites superiores (previstos)",
         "sla99": "Según acuerdo",
         "unlimited": "Ilimitado",
-        "yes": "Sí"
+        "yes": "Sí",
+        "planned": "Previsto"
       }
     },
     "faqTeaser": {
@@ -2086,7 +2087,8 @@
     "shortAnchorTitle": "Bitcoin",
     "shortAnchorLine": "Calendarios independientes. Un bloque Bitcoin. Una prueba que nadie puede falsificar.",
     "shortCtaTitle": "CTA",
-    "shortCtaLine": "Gratis. Sin cuenta. Séllalo en satohash.io."
+    "shortCtaLine": "Gratis. Sin cuenta. Séllalo en satohash.io.",
+    "chapters": "Capítulos"
   },
   "statusPage": {
     "metaTitle": "Estado en vivo",
@@ -2411,7 +2413,8 @@
     "ctaBody": "Sella gratis, verifica pruebas o lee cómo encaja la evidencia en marcos legales.",
     "stampCta": "Sello gratis",
     "verifyCta": "Verificar",
-    "explorerCta": "Demo Merkle"
+    "explorerCta": "Demo Merkle",
+    "calendarsDegraded": "Dos calendarios están caídos. Los sellos nuevos pueden tardar más."
   },
   "explorerPage": {
     "demoChip": "Demo · cómo funciona un árbol Merkle",
@@ -4127,7 +4130,7 @@
     "title": "¿Cómo funciona esto?",
     "subtitle": "No tienes que confiar en nosotros. Esto es lo que hay que comprobar, en un minuto.",
     "statePendingTitle": "Esperando a Bitcoin",
-    "statePendingBody": "Tu prueba se registró y se envió a los calendarios públicos de tiempo. Bitcoin confirma cada ~10 minutos, así que esto suele cambiar en unas horas.",
+    "statePendingBody": "Tu prueba está en los calendarios públicos. Un sello nuevo espera cerca de una hora antes de que un bloque de Bitcoin lo incluya.",
     "stateConfirmedTitle": "Anclado a Bitcoin",
     "stateNotProvenTitle": "No comprobado",
     "blockLabel": "Bloque Bitcoin",

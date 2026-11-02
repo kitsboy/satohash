@@ -1,3 +1,11 @@
+## Handoff (Grok M3 → Kimi — 2026-11-02, chapters and the practice stamp)
+
+Website only. **Do not rebuild the API.** **Do not change `/api/*`.** Keep **`REQUIRE_LIGHTNING=false`.** Do not point `BITCOIN_RPC_URL` at Umbrel. LND stays off. Do not install BTCPay on Umbrel as the stamp checker. The switch rule is in `docs/ops-runbook.md` and it is not done.
+
+Chapter buttons seek the film that is already there. Paid plan cells say Planned. A practice stamp is pending: hash `90ae0c6b79f0e9da075e41592a4889b9b57f83d08ccff42c9cc1864fdb9af658`, id `7c42c702-0b37-4067-bd77-82da9c7b1b7f`. No block yet.
+
+---
+
 ## Handoff (Grok M3 → Kimi — 2026-11-02, pricing and the live tip)
 
 Website only. **Do not rebuild the API.** **Do not change `/api/*`.** Keep **`REQUIRE_LIGHTNING=false`.** Do not point `BITCOIN_RPC_URL` at Umbrel until it matches the Thor tip. LND stays off.

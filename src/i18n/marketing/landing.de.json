@@ -39,7 +39,8 @@
     "feeNote": "Richtwert · Mempool, keine Satohash-Gebühr",
     "zeroKnowledge": "Die Datei bleibt auf diesem Gerät",
     "compliance": "eIDAS- und ESIGN-ausgerichtet",
-    "proofsConfirmed": "{{count}} Nachweise bestätigt"
+    "proofsConfirmed": "{{count}} Nachweise bestätigt",
+    "pendingHour": "Ein neuer Stempel wartet etwa eine Stunde. Diese Zahl ist die Spitze, die unser Knoten liest."
   },
   "features": {
     "badge": "Was die meisten nicht wissen",
@@ -130,9 +131,10 @@
     "trustCenter": "Trust Center"
   },
   "pwa": {
-    "title": "Satohash zum Startbildschirm hinzufügen",
-    "subtitle": "Sofortiger Zugriff, funktioniert offline",
-    "install": "Installieren"
+    "title": "Startbildschirm",
+    "subtitle": "Optional. Der Stempel bleibt im Browser.",
+    "install": "Hinzufügen",
+    "dismiss": "Schließen"
   },
   "donation": {
     "title": "Satohash unterstützen",

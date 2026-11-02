@@ -99,62 +99,62 @@
         "freeCalendar": {
           "label": "Ancrage gratuit via calendrier",
           "free": "yes",
-          "premium": "unlimited",
-          "enterprise": "unlimited"
+          "premium": "planned",
+          "enterprise": "planned"
         },
         "multiParty": {
           "label": "Signature multipartite",
           "free": "dash",
-          "premium": "yes",
-          "enterprise": "yes"
+          "premium": "planned",
+          "enterprise": "planned"
         },
         "bolt12": {
           "label": "Paiements Lightning BOLT-12",
           "free": "dash",
-          "premium": "yes",
-          "enterprise": "yes"
+          "premium": "planned",
+          "enterprise": "planned"
         },
         "apiAccess": {
           "label": "Accès API",
           "free": "dash",
-          "premium": "yes",
-          "enterprise": "yes"
+          "premium": "planned",
+          "enterprise": "planned"
         },
         "webhooks": {
           "label": "Notifications webhook",
           "free": "dash",
-          "premium": "yes",
-          "enterprise": "yes"
+          "premium": "planned",
+          "enterprise": "planned"
         },
         "batchStamping": {
           "label": "Horodatage par lots",
           "free": "dash",
           "premium": "plannedHigher",
-          "enterprise": "unlimited"
+          "enterprise": "planned"
         },
         "dedicatedCalendar": {
           "label": "Calendrier OTS dédié",
           "free": "dash",
           "premium": "dash",
-          "enterprise": "yes"
+          "enterprise": "planned"
         },
         "sla": {
           "label": "Garantie SLA",
           "free": "dash",
           "premium": "dash",
-          "enterprise": "sla99"
+          "enterprise": "planned"
         },
         "onPremise": {
           "label": "Déploiement on-premise",
           "free": "dash",
           "premium": "dash",
-          "enterprise": "yes"
+          "enterprise": "planned"
         },
         "prioritySupport": {
           "label": "Support prioritaire",
           "free": "community",
-          "premium": "email",
-          "enterprise": "dedicated247"
+          "premium": "planned",
+          "enterprise": "planned"
         }
       },
       "cellValues": {
@@ -165,7 +165,8 @@
         "plannedHigher": "Limites supérieures (prévues)",
         "sla99": "Sur accord",
         "unlimited": "Illimité",
-        "yes": "Oui"
+        "yes": "Oui",
+        "planned": "Prévu"
       }
     },
     "faqTeaser": {
@@ -2086,7 +2087,8 @@
     "shortAnchorTitle": "Bitcoin",
     "shortAnchorLine": "Calendriers indépendants. Un bloc Bitcoin. Une preuve que personne ne peut falsifier.",
     "shortCtaTitle": "CTA",
-    "shortCtaLine": "Gratuit. Pas de compte. Horodatez-le sur satohash.io."
+    "shortCtaLine": "Gratuit. Pas de compte. Horodatez-le sur satohash.io.",
+    "chapters": "Chapitres"
   },
   "statusPage": {
     "metaTitle": "Statut en direct",
@@ -2411,7 +2413,8 @@
     "ctaBody": "Horodatez gratuitement, vérifiez des preuves, ou lisez comment les preuves s’insèrent dans les cadres juridiques.",
     "stampCta": "Horodatage gratuit",
     "verifyCta": "Vérifier",
-    "explorerCta": "Démo Merkle"
+    "explorerCta": "Démo Merkle",
+    "calendarsDegraded": "Deux calendriers sont en panne. Les nouveaux sceaux peuvent attendre plus longtemps."
   },
   "explorerPage": {
     "demoChip": "Démo · comment fonctionne un arbre de Merkle",
@@ -4127,7 +4130,7 @@
     "title": "Comment ça marche ?",
     "subtitle": "Vous n’avez pas à nous faire confiance. Voici quoi vérifier, en une minute.",
     "statePendingTitle": "En attente de Bitcoin",
-    "statePendingBody": "Votre preuve a été enregistrée et envoyée aux calendriers publics d’horodatage. Bitcoin confirme environ toutes les 10 minutes, donc cela change souvent en quelques heures.",
+    "statePendingBody": "Votre preuve est chez les calendriers publics. Un nouveau sceau attend environ une heure avant qu’un bloc Bitcoin l’inclue.",
     "stateConfirmedTitle": "Ancré à Bitcoin",
     "stateNotProvenTitle": "Non prouvé",
     "blockLabel": "Bloc Bitcoin",

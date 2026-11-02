@@ -28,18 +28,20 @@ Do the next open item, commit, and push. Then take the one after it. Do not skip
 
 The homepage says file stays, calendars write, our node checks. The live block number sits inside the check step, and the same three steps sit at the top of Network. Stamp, Verify, and Network are the main tools on desktop and in the phone menu. Templates are under More. Search does not offer L402 billing. Pricing is the three-column page again: the free stamp is open, and Professional (~2,100 sats/month, ~$29) and Business / Studio (~21,000 sats/month, ~$299) say coming soon. Those paid plans are not for sale.
 
-### 3. Next — calmer film and phone
+### 3. Shipped 2026-11-02 — chapters, quiet install, honest prices
 
-5. **Chapter jumps** on `/watch` for the 70s film. Do not regenerate the voice or the pictures.
-6. **Quieter phone install hint.** Keep the play button easy to reach. Do not add a louder install card.
+Chapter buttons on `/watch` seek the existing 70s film and the 10s teaser. The voice and pictures were not regenerated. The phone install hint is a quiet text line, and it only shows when the phone offers Add to Home Screen. Paid pricing cells that are not on sale say Planned. The three steps say a new stamp waits about an hour, and the block number is the tip. Network says Alice and Bob are enough when only Finney is down, and it warns when two calendars are down. The home-node switch rule is in `docs/ops-runbook.md`. Do not switch yet.
+
+### 4. Next — public example only if Cam picks a file
+
 7. **Public example.** Swap the homepage example only if Cam picks a file. Cam’s picture stamp stays private. Do not publish that filename.
 
-### 4. Cam only
+### 5. Cam only
 
 8. Pin `https://satohash.io/watch` on `@give_bit` when Cam wants. Paste-ready copy is in `docs/marketing/GIVE-BIT-X-PACK.md`. Agents cannot post as that account.
 9. Check the iPhone / iMessage preview of `/p/<hash>`. Deferred until Cam has the phone.
 
-### 5. Do not do yet
+### 6. Do not do yet
 
 - Do not flip `REQUIRE_LIGHTNING`. Paywall stays off.
 - Do not change live `/api/*` paths.
@@ -50,7 +52,7 @@ The homepage says file stays, calendars write, our node checks. The live block n
 - Do not npm-publish `@satohash/cli` unless Cam asks.
 - TadBuy’s dead same-origin `/api/*` is the TadBuy repo, not this API.
 
-### 6. Kimi
+### 7. Kimi
 
 Ingest `docs/KIMI-HANDOFF.md` and `docs/archive/SESSION-SUMMARY-2026-10-13-goodbye.md` into THOR Obsidian (MASTER-BRAIN / Kanban). Vault is on THOR, not M4. Pages stay Grok’s. Keep `REQUIRE_LIGHTNING=false`.
 

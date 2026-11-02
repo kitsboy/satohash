@@ -10,6 +10,9 @@ describe('StampChainSteps', () => {
     const tip = screen.getByTestId('chain-tip')
     expect(tip).toHaveTextContent(`#${Number(974293).toLocaleString()}`)
     expect(screen.getByTestId('chain-step-check')).toContainElement(tip)
+    expect(screen.getByTestId('chain-pending-hour')).toHaveTextContent(
+      'landingPage.telemetry.pendingHour'
+    )
   })
 
   it('shows a dash when the tip has not loaded', () => {

@@ -47,7 +47,7 @@ export const STRINGS = {
     howSubtitle: 'You do not have to trust us. Here is what to check, in one minute.',
     howPending: 'Waiting for Bitcoin',
     howPendingBody:
-      'Your proof was recorded and sent to the public timestamp calendars. Bitcoin confirms roughly every 10 minutes, so this usually changes within a few hours.',
+      'Your proof is with the public calendars. A new stamp waits about an hour before a Bitcoin block includes it.',
     howConfirmed: 'Anchored to Bitcoin',
     howNotProven: 'Not proven',
     howNotProvenBody: 'This proof did not resolve against a Bitcoin block.',
@@ -113,7 +113,7 @@ export const STRINGS = {
       'No tienes que confiar en nosotros. Esto es lo que hay que comprobar, en un minuto.',
     howPending: 'Esperando a Bitcoin',
     howPendingBody:
-      'Tu prueba se registró y se envió a los calendarios públicos de tiempo. Bitcoin confirma cada ~10 minutos, así que esto suele cambiar en unas horas.',
+      'Tu prueba está en los calendarios públicos. Un sello nuevo espera cerca de una hora antes de que un bloque de Bitcoin lo incluya.',
     howConfirmed: 'Anclado a Bitcoin',
     howNotProven: 'No comprobado',
     howNotProvenBody: 'Esta prueba no se resolvió contra un bloque Bitcoin.',
@@ -178,7 +178,7 @@ export const STRINGS = {
     howSubtitle: 'Vous n’avez pas à nous faire confiance. Voici quoi vérifier, en une minute.',
     howPending: 'En attente de Bitcoin',
     howPendingBody:
-      'Votre preuve a été enregistrée et envoyée aux calendriers publics d’horodatage. Bitcoin confirme environ toutes les 10 minutes, donc cela change souvent en quelques heures.',
+      'Votre preuve est chez les calendriers publics. Un nouveau sceau attend environ une heure avant qu’un bloc Bitcoin l’inclue.',
     howConfirmed: 'Ancré à Bitcoin',
     howNotProven: 'Non prouvé',
     howNotProvenBody: 'Cette preuve ne s’est pas résolue contre un bloc Bitcoin.',
@@ -243,7 +243,7 @@ export const STRINGS = {
     howSubtitle: 'Du musst uns nicht vertrauen. Das prüfst du in einer Minute.',
     howPending: 'Warten auf Bitcoin',
     howPendingBody:
-      'Dein Nachweis wurde aufgezeichnet und an die öffentlichen Zeitstempel-Kalender gesendet. Bitcoin bestätigt etwa alle 10 Minuten, daher ändert sich das meist innerhalb weniger Stunden.',
+      'Dein Nachweis liegt bei den öffentlichen Kalendern. Ein neuer Stempel wartet etwa eine Stunde, bis ein Bitcoin-Block ihn einschließt.',
     howConfirmed: 'An Bitcoin verankert',
     howNotProven: 'Nicht bewiesen',
     howNotProvenBody: 'Dieser Nachweis hat sich nicht gegen einen Bitcoin-Block aufgelöst.',
@@ -307,7 +307,7 @@ export const STRINGS = {
     howSubtitle: 'Não tens de confiar em nós. Isto é o que verificar, num minuto.',
     howPending: 'À espera do Bitcoin',
     howPendingBody:
-      'A tua prova foi registada e enviada para os calendários públicos de tempo. O Bitcoin confirma cerca de cada 10 minutos, por isso isto costuma mudar em algumas horas.',
+      'A tua prova está nos calendários públicos. Um carimbo novo espera cerca de uma hora até um bloco Bitcoin o incluir.',
     howConfirmed: 'Ancorado no Bitcoin',
     howNotProven: 'Não comprovado',
     howNotProvenBody: 'Esta prova não se resolveu contra um bloco Bitcoin.',
@@ -370,7 +370,7 @@ export const STRINGS = {
     howSubtitle: 'Huna haja ya kututumaini. Hii ndiyo ya kuangalia, katika dakika moja.',
     howPending: 'Inasubiri Bitcoin',
     howPendingBody:
-      'Uthibitisho wako ulirekodiwa na kutumwa kwa kalenda za wakati za umma. Bitcoin inathibitisha takriban kila dakika 10, kwa hivyo hii mara nyingi inabadilika ndani ya saa chache.',
+      'Uthibitisho wako uko kwenye kalenda za umma. Muhuri mpya husubiri karibu saa moja kabla bloku ya Bitcoin kuujumuisha.',
     howConfirmed: 'Imefungwa kwenye Bitcoin',
     howNotProven: 'Haijathibitishwa',
     howNotProvenBody: 'Uthibitisho huu haukutatuliwa dhidi ya bloku ya Bitcoin.',
@@ -431,7 +431,7 @@ export const STRINGS = {
     howSubtitle: '你不必信任我们。一分钟内该核对的是这些。',
     howPending: '等待 Bitcoin',
     howPendingBody:
-      '你的证明已记录并发送到公开时间戳日历。Bitcoin 大约每 10 分钟确认一次，所以这通常会在几小时内变化。',
+      '你的证明已在公开日历里。新的戳记大约要等一小时，才会被一个比特币区块收进去。',
     howConfirmed: '已锚定到 Bitcoin',
     howNotProven: '未证明',
     howNotProvenBody: '这份证明未能对照 Bitcoin 区块解析。',
