@@ -19,14 +19,14 @@
     "readTime": "{{time}} kusoma"
   },
   "pricingPage": {
-    "notForSale": "Mihuri ni bure. Huwezi kununua mpango leo.",
+    "notForSale": "Muhuri wa bure pekee ndio wazi. Mipango ya kulipia inakuja hivi karibuni.",
     "hero": {
-      "eyebrow": "Bei Rahisi",
+      "eyebrow": "Bei",
       "title": "Uthibitisho wa Kuwepo,",
       "titleHighlight": "Kwa Kila Mtu",
-      "subtitle": "Anza bure. Panua unapohitaji zaidi. Hakuna kufungwa, hakuna ada zilizofichwa, hakuna akaunti inayohitajika kwa matumizi ya msingi."
+      "subtitle": "Mihuri ni bure leo. Hizi ndizo bei tunazopanga kutoza baadaye. Mipango hiyo haijatolewa bado."
     },
-    "mostPopular": "Inayopendwa Zaidi",
+    "mostPopular": "Inakuja",
     "tiers": {
       "free": {
         "name": "Bure",
@@ -44,11 +44,11 @@
       },
       "premium": {
         "name": "Premium",
-        "price": "TBD",
-        "period": "kwa mwezi",
-        "desc": "Kuweka muhuri kwa wingi, malipo ya Lightning, na kuunganisha kwa kipaumbele.",
+        "price": "~2,100 sats",
+        "period": "kwa mwezi (~$29)",
+        "desc": "Bei tunayopanga kwa dawati kamili zaidi. Haijatolewa bado.",
         "features": [
-          "Kila kitu katika Bure, pamoja na:",
+          "Kila kitu katika Bure, pamoja na (imepangwa, haijatolewa bado):",
           "Uunganisho wa malipo ya Lightning BOLT-12",
           "Uwasilishaji wa kalenda wa kipaumbele",
           "Kuweka muhuri kwa kundi (hadi faili 50)",
@@ -59,11 +59,11 @@
       },
       "enterprise": {
         "name": "Enterprise",
-        "price": "Maalum",
-        "period": "wasiliana nasi",
-        "desc": "Miundombinu maalum, SLA, na miunganisho maalum.",
+        "price": "~21,000 sats",
+        "period": "kwa mwezi (~$299)",
+        "desc": "Bei tunayopanga kwa timu. Haijatolewa bado.",
         "features": [
-          "Kila kitu katika Premium, pamoja na:",
+          "Kila kitu katika Premium, pamoja na (imepangwa, haijatolewa bado):",
           "Nodi maalum ya kalenda ya OTS",
           "Sehemu ya mwisho ya API ya kibinafsi",
           "Miunganisho maalum ya webhook",
@@ -71,7 +71,7 @@
           "Chaguo la usambazaji on-premise",
           "Msaada wa kipaumbele + mhandisi maalum"
         ],
-        "cta": "Wasiliana na Mauzo"
+        "cta": "Inakuja Hivi Karibuni"
       }
     },
     "comparison": {
@@ -170,7 +170,7 @@
     },
     "faqTeaser": {
       "title": "Una Maswali Kuhusu Bei?",
-      "subtitle": "Angalia FAQ yetu kwa maswali ya kawaida au wasiliana nasi moja kwa moja.",
+      "subtitle": "Maswali ya kawaida yako kwenye FAQ. Mipango ya kulipia hapo juu haijafunguliwa bado.",
       "viewFaq": "Angalia FAQ",
       "contactSales": "Wasiliana na Mauzo"
     },

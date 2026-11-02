@@ -1,3 +1,13 @@
+## 2026-11-02 (Grok M3 — live tip in the check step; pricing is coming soon)
+
+The block number from our node now sits inside “our node checks” on the homepage, and the same three steps sit at the top of Network. The number is the live tip from readiness. It is not a hardcoded height.
+
+Pricing is the three-column page again. Free is open (0 sats). Professional is ~2,100 sats/month (~$29). Business / Studio is ~21,000 sats/month (~$299). The paid cards say coming soon and cannot be bought. There is no sales email on that page. Only the free stamp is offered until the desk is more robust.
+
+**Kimi:** do not rebuild the API for this website change. Do not change `/api/*`. Keep `REQUIRE_LIGHTNING=false`. Do not point `BITCOIN_RPC_URL` at Umbrel until that node is at the same tip. LND stays off.
+
+---
+
 ## 2026-11-02 (Grok M3 — stamp path is the tool set)
 
 Pulled `main` to `2b6e696`. Live API was already rebuilt: `GET /health` ok, `gitSha` `6b84073`, paywall off. Own node on THOR is `source: bitcoind`, height **974,293**, IBD done. This push does not change `/api/*` and does not need an API rebuild.

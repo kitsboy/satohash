@@ -1,7 +1,7 @@
 # Current Status — Satohash
 
 **Version:** **5.0.0-ELITE** (Build 432)  
-**Last Updated:** 2026-11-02 (stamp path and tool set; home node waits for the tip)  
+**Last Updated:** 2026-11-02 (live tip inside the check step; pricing columns restored as coming soon; home node waits for the tip)  
 **Frontend:** https://satohash.io · www · CF Pages project **`satohash`** — Grok lane, `assetsDir: 'b'`. Last confirmed product deploy is `4134150` (build 431): sign-in says the key stays on the device. Live shell `/b/index-Bt__WPpD.js`. Also live from this arc: 70s film, file-stays copy, glossary Lightning and BOLT-12 free-stamps lines, dashboard status rows, and the translated side column. This docs commit does not change product copy.  
 **API:** https://api.satohash.io ✅ LIVE. `/health` status **ok** at 2026-10-13 19:19 UTC. **`gitSha` `e814a57`**. Version `5.0.0-ELITE`. Paywall off. This copy work did not change `server/`. Kimi: if `6c8ae2e` is still only on THOR, do not push it.  
 **Metrics SoT:** `https://api.satohash.io/metrics.json`  

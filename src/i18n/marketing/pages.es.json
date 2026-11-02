@@ -19,14 +19,14 @@
     "readTime": "{{time}} de lectura"
   },
   "pricingPage": {
-    "notForSale": "Los sellos son gratis. Hoy no se puede comprar un plan.",
+    "notForSale": "Solo el sello gratis está abierto. Los planes de pago llegan pronto.",
     "hero": {
-      "eyebrow": "Precios sencillos",
+      "eyebrow": "Precios",
       "title": "Prueba de existencia,",
       "titleHighlight": "para todos",
-      "subtitle": "Empieza gratis. Escala cuando lo necesites. Sin ataduras, sin costes ocultos y sin cuenta para el uso básico."
+      "subtitle": "Los sellos son gratis hoy. Estos son los precios que pensamos cobrar más adelante. Esos planes aún no se ofrecen."
     },
-    "mostPopular": "Más popular",
+    "mostPopular": "Próximamente",
     "tiers": {
       "free": {
         "name": "Gratis",
@@ -44,11 +44,11 @@
       },
       "premium": {
         "name": "Premium",
-        "price": "TBD",
-        "period": "al mes",
-        "desc": "Sellado por volumen, pagos Lightning y anclaje prioritario.",
+        "price": "~2.100 sats",
+        "period": "al mes (~$29)",
+        "desc": "El precio previsto para un escritorio más completo. Aún no se ofrece.",
         "features": [
-          "Todo lo de Gratis, más:",
+          "Todo lo de Gratis, más (previsto, aún no se ofrece):",
           "Integración de pagos Lightning BOLT-12",
           "Envío prioritario al calendario",
           "Sellado por lotes (hasta 50 archivos)",
@@ -59,11 +59,11 @@
       },
       "enterprise": {
         "name": "Enterprise",
-        "price": "Personalizado",
-        "period": "contáctanos",
-        "desc": "Infraestructura dedicada, SLA e integraciones a medida.",
+        "price": "~21.000 sats",
+        "period": "al mes (~$299)",
+        "desc": "El precio previsto para un equipo. Aún no se ofrece.",
         "features": [
-          "Todo lo de Premium, más:",
+          "Todo lo de Premium, más (previsto, aún no se ofrece):",
           "Nodo de calendario OTS dedicado",
           "Endpoint de API privado",
           "Integraciones webhook personalizadas",
@@ -71,7 +71,7 @@
           "Opción de despliegue on-premise",
           "Soporte prioritario + ingeniero dedicado"
         ],
-        "cta": "Contactar ventas"
+        "cta": "Próximamente"
       }
     },
     "comparison": {
@@ -170,7 +170,7 @@
     },
     "faqTeaser": {
       "title": "¿Tienes preguntas sobre los precios?",
-      "subtitle": "Consulta nuestras FAQ para dudas frecuentes o contáctanos directamente.",
+      "subtitle": "Las dudas frecuentes están en la FAQ. Los planes de pago de arriba aún no están abiertos.",
       "viewFaq": "Ver FAQ",
       "contactSales": "Contactar ventas"
     },

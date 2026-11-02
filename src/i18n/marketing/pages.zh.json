@@ -19,14 +19,14 @@
     "readTime": "{{time}} 阅读"
   },
   "pricingPage": {
-    "notForSale": "盖章是免费的。今天不能购买套餐。",
+    "notForSale": "现在只开放免费戳记。付费方案即将推出。",
     "hero": {
-      "eyebrow": "简单定价",
+      "eyebrow": "价格",
       "title": "存在证明，",
       "titleHighlight": "人人可用",
-      "subtitle": "免费开始。需要时随时扩展。无锁定、无隐藏费用，基础使用无需账户。"
+      "subtitle": "戳记今天免费。下面是我们以后打算收取的价格。这些方案还没有提供。"
     },
-    "mostPopular": "最受欢迎",
+    "mostPopular": "即将推出",
     "tiers": {
       "free": {
         "name": "免费",
@@ -44,11 +44,11 @@
       },
       "premium": {
         "name": "Premium",
-        "price": "TBD",
-        "period": "每月",
-        "desc": "批量加盖时间戳、Lightning 支付和优先锚定。",
+        "price": "~2,100 sats",
+        "period": "每月（约 $29）",
+        "desc": "更完整工作台的计划价格。尚未提供。",
         "features": [
-          "免费版全部功能，另加：",
+          "免费版全部功能，另加（计划中，尚未提供）：",
           "BOLT-12 Lightning 支付集成",
           "优先日历提交",
           "批量加盖时间戳（最多 50 个文件）",
@@ -59,11 +59,11 @@
       },
       "enterprise": {
         "name": "Enterprise",
-        "price": "定制",
-        "period": "联系我们",
-        "desc": "专属基础设施、SLA 和定制集成。",
+        "price": "~21,000 sats",
+        "period": "每月（约 $299）",
+        "desc": "团队工作台的计划价格。尚未提供。",
         "features": [
-          "Premium 全部功能，另加：",
+          "Premium 全部功能，另加（计划中，尚未提供）：",
           "专属 OTS 日历节点",
           "私有 API 端点",
           "定制 Webhook 集成",
@@ -71,7 +71,7 @@
           "本地部署选项",
           "优先支持 + 专属工程师"
         ],
-        "cta": "联系销售"
+        "cta": "即将推出"
       }
     },
     "comparison": {
@@ -170,7 +170,7 @@
     },
     "faqTeaser": {
       "title": "对定价有疑问？",
-      "subtitle": "查看我们的 FAQ 了解常见问题，或直接联系我们。",
+      "subtitle": "常见问题在 FAQ。上面的付费方案尚未开放。",
       "viewFaq": "查看 FAQ",
       "contactSales": "联系销售"
     },

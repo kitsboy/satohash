@@ -19,14 +19,14 @@
     "readTime": "{{time}} de lecture"
   },
   "pricingPage": {
-    "notForSale": "Les tampons sont gratuits. On ne peut pas acheter un forfait aujourd’hui.",
+    "notForSale": "Seul le sceau gratuit est ouvert. Les forfaits payants arrivent bientôt.",
     "hero": {
-      "eyebrow": "Tarification simple",
+      "eyebrow": "Tarifs",
       "title": "Preuve d'existence,",
       "titleHighlight": "pour tous",
-      "subtitle": "Commencez gratuitement. Évoluez selon vos besoins. Sans engagement, sans frais cachés, sans compte requis pour l'usage de base."
+      "subtitle": "Les sceaux sont gratuits aujourd’hui. Voici les prix que nous comptons demander plus tard. Ces forfaits ne sont pas encore offerts."
     },
-    "mostPopular": "Le plus populaire",
+    "mostPopular": "Bientôt",
     "tiers": {
       "free": {
         "name": "Gratuit",
@@ -44,11 +44,11 @@
       },
       "premium": {
         "name": "Premium",
-        "price": "TBD",
-        "period": "par mois",
-        "desc": "Horodatage en volume, paiements Lightning et ancrage prioritaire.",
+        "price": "~2 100 sats",
+        "period": "par mois (~$29)",
+        "desc": "Le prix prévu pour un bureau plus complet. Pas encore offert.",
         "features": [
-          "Tout ce qui est inclus dans Gratuit, plus :",
+          "Tout ce qui est inclus dans Gratuit, plus (prévu, pas encore offert) :",
           "Intégration des paiements Lightning BOLT-12",
           "Soumission prioritaire au calendrier",
           "Horodatage par lots (jusqu'à 50 fichiers)",
@@ -59,11 +59,11 @@
       },
       "enterprise": {
         "name": "Enterprise",
-        "price": "Sur mesure",
-        "period": "contactez-nous",
-        "desc": "Infrastructure dédiée, SLA et intégrations personnalisées.",
+        "price": "~21 000 sats",
+        "period": "par mois (~$299)",
+        "desc": "Le prix prévu pour une équipe. Pas encore offert.",
         "features": [
-          "Tout ce qui est inclus dans Premium, plus :",
+          "Tout ce qui est inclus dans Premium, plus (prévu, pas encore offert) :",
           "Nœud calendrier OTS dédié",
           "Endpoint API privé",
           "Intégrations webhook personnalisées",
@@ -71,7 +71,7 @@
           "Option de déploiement on-premise",
           "Support prioritaire + ingénieur dédié"
         ],
-        "cta": "Contacter les ventes"
+        "cta": "Bientôt disponible"
       }
     },
     "comparison": {
@@ -170,7 +170,7 @@
     },
     "faqTeaser": {
       "title": "Des questions sur la tarification ?",
-      "subtitle": "Consultez notre FAQ pour les questions courantes ou contactez-nous directement.",
+      "subtitle": "Les questions courantes sont dans la FAQ. Les forfaits payants ci-dessus ne sont pas encore ouverts.",
       "viewFaq": "Voir la FAQ",
       "contactSales": "Contacter les ventes"
     },

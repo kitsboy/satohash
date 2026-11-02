@@ -26,7 +26,7 @@ Do the next open item, commit, and push. Then take the one after it. Do not skip
 
 ### 2. Shipped 2026-11-02 — the path and the tools
 
-The homepage says file stays, calendars write, our node checks. Stamp, Verify, and Network are the main tools on desktop and in the phone menu. Templates are under More. Search does not offer L402 billing.
+The homepage says file stays, calendars write, our node checks. The live block number sits inside the check step, and the same three steps sit at the top of Network. Stamp, Verify, and Network are the main tools on desktop and in the phone menu. Templates are under More. Search does not offer L402 billing. Pricing is the three-column page again: the free stamp is open, and Professional (~2,100 sats/month, ~$29) and Business / Studio (~21,000 sats/month, ~$299) say coming soon. Those paid plans are not for sale.
 
 ### 3. Next — calmer film and phone
 

@@ -27,6 +27,7 @@ import { BTC_ADDRESS, getApiUrl } from '../config/constants'
 import { buildStampPathFromSearch } from '../utils/stampDeepLink'
 import events, { trackEvent } from '../utils/analytics'
 import LiveNodeChip from '../components/shared/LiveNodeChip'
+import StampChainSteps from '../components/marketing/StampChainSteps'
 import TipButton from '../components/marketing/TipButton'
 import { PUBLIC_PROOF, PUBLIC_PROOF_PATH } from '../config/publicProof'
 
@@ -630,58 +631,14 @@ export default function Landing() {
               </Link>
             </div>
 
-            <ol className="grid grid-cols-1 gap-3 text-left sm:grid-cols-3 sm:gap-4">
-              {[
-                ['stepFile', 'stepFileBody'],
-                ['stepWrite', 'stepWriteBody'],
-                ['stepCheck', 'stepCheckBody']
-              ].map(([titleKey, bodyKey]) => (
-                <li
-                  key={titleKey}
-                  className="min-w-0 overflow-hidden rounded-2xl p-3 sm:p-4"
-                  style={{ backgroundColor: 'rgba(255, 255, 255, 0.02)' }}
-                >
-                  <span
-                    className="mb-1 block text-[9px] font-bold tracking-wider uppercase sm:text-[10px]"
-                    style={{ color: 'var(--accent-gold)' }}
-                  >
-                    {t(`landingPage.telemetry.${titleKey}`)}
-                  </span>
-                  <span
-                    className="block text-sm leading-snug"
-                    style={{ color: 'var(--text-secondary)' }}
-                  >
-                    {t(`landingPage.telemetry.${bodyKey}`)}
-                  </span>
-                </li>
-              ))}
-            </ol>
+            <StampChainSteps t={t} blockHeight={blockHeight} />
 
-            <div
-              className="mt-4 flex flex-wrap items-end justify-between gap-3 border-t pt-4"
-              style={{ borderColor: 'var(--border)' }}
+            <p
+              className="mt-4 border-t pt-4 text-left text-xs leading-relaxed"
+              style={{ borderColor: 'var(--border)', color: 'var(--text-muted)' }}
             >
-              <p
-                className="max-w-xl text-left text-xs leading-relaxed"
-                style={{ color: 'var(--text-muted)' }}
-              >
-                {t('landingPage.telemetry.homeNode')}
-              </p>
-              <p className="text-right">
-                <span
-                  className="block text-[9px] font-bold tracking-wider uppercase"
-                  style={{ color: 'var(--text-muted)' }}
-                >
-                  {t('landingPage.telemetry.tipHeight')}
-                </span>
-                <span
-                  className="font-mono text-lg font-black"
-                  style={{ color: 'var(--text-primary)' }}
-                >
-                  #{blockHeight ? Number(blockHeight).toLocaleString() : '—'}
-                </span>
-              </p>
-            </div>
+              {t('landingPage.telemetry.homeNode')}
+            </p>
           </motion.div>
         </div>
       </section>

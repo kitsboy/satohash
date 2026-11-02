@@ -1,3 +1,11 @@
+## Handoff (Grok M3 → Kimi — 2026-11-02, pricing and the live tip)
+
+Website only. **Do not rebuild the API.** **Do not change `/api/*`.** Keep **`REQUIRE_LIGHTNING=false`.** Do not point `BITCOIN_RPC_URL` at Umbrel until it matches the Thor tip. LND stays off.
+
+The homepage check step and the top of Network show the live block number from our node. Pricing is three columns again at the old prices (~2,100 sats/month and ~21,000 sats/month). Paid plans say coming soon and are not for sale. Only the free stamp is open.
+
+---
+
 ## Handoff (Grok M3 → Kimi — 2026-11-02)
 
 Website only. **Do not rebuild the API** for this push. **Do not change `/api/*`.** Keep **`REQUIRE_LIGHTNING=false`.**

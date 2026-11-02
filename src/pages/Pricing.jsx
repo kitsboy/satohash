@@ -9,7 +9,6 @@ import {
   Globe,
   ArrowRight,
   HelpCircle,
-  Mail,
   Server,
   Shield,
   TrendingUp
@@ -19,8 +18,22 @@ import usePageMeta from '../hooks/usePageMeta'
 
 const TIER_IDS = ['free', 'premium', 'enterprise']
 const TIER_ICONS = [Zap, TrendingUp, Briefcase]
-const COMPARISON_ROW_IDS = ['bitcoinAnchored', 'browserHashing', 'otsDownload', 'freeCalendar']
-const TIER_COLUMNS = ['free']
+const COMPARISON_ROW_IDS = [
+  'bitcoinAnchored',
+  'browserHashing',
+  'otsDownload',
+  'freeCalendar',
+  'multiParty',
+  'bolt12',
+  'apiAccess',
+  'webhooks',
+  'batchStamping',
+  'dedicatedCalendar',
+  'sla',
+  'onPremise',
+  'prioritySupport'
+]
+const TIER_COLUMNS = ['free', 'premium', 'enterprise']
 
 function resolveCell(t, value) {
   return t(`pricingPage.comparison.cellValues.${value}`, { defaultValue: value })
@@ -43,9 +56,8 @@ export default function Pricing() {
           desc: tier.desc,
           features: tier.features,
           cta: tier.cta,
-          to:
-            id === 'free' ? '/stamp' : null,
-          highlighted: id === 'free'
+          to: id === 'free' ? '/stamp' : null,
+          highlighted: id === 'premium'
         }
       }),
     [t]
@@ -87,9 +99,6 @@ export default function Pricing() {
               {t('pricingPage.hero.titleHighlight')}
             </span>
           </h1>
-          <p className="mx-auto mb-4 max-w-xl text-base font-bold leading-relaxed text-[var(--text-primary)]">
-            {t('pricingPage.notForSale')}
-          </p>
           <p className="mx-auto max-w-xl text-sm leading-relaxed text-[var(--text-secondary)]">
             {t('pricingPage.hero.subtitle')}
           </p>
@@ -98,7 +107,7 @@ export default function Pricing() {
 
       <section className="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-16">
         <div className="grid gap-8 md:grid-cols-3">
-          {tiers.filter((tier) => tier.id === 'free').map((tier, i) => {
+          {tiers.map((tier, i) => {
             const Icon = tier.icon
             return (
               <motion.div
@@ -129,10 +138,10 @@ export default function Pricing() {
                   <div>
                     <h3 className="text-lg font-bold text-[var(--text-primary)]">{tier.name}</h3>
                     <p className="text-xs text-[var(--text-secondary)]">
-                      <span className="text-2xl font-black text-[var(--text-primary)]">
+                      <span className="block text-2xl font-black tracking-tight text-[var(--text-primary)]">
                         {tier.price}
                       </span>
-                      {tier.id !== 'enterprise' && <span className="ml-1">/{tier.period}</span>}
+                      <span className="mt-1 block">{tier.period}</span>
                     </p>
                   </div>
                 </div>
@@ -186,21 +195,19 @@ export default function Pricing() {
             )
           })}
         </div>
-        <p className="mt-10 text-center">
-          <Link
-            to="/proof-pack"
-            className="inline-flex min-h-[44px] items-center justify-center text-sm font-semibold text-[var(--accent-gold)] underline-offset-4 hover:underline"
-          >
-            Proof Pack waitlist (free, not for sale)
-          </Link>
+        <p className="mx-auto mt-10 max-w-xl text-center text-sm text-[var(--text-secondary)]">
+          {t('pricingPage.notForSale')}
         </p>
       </section>
 
       <section className="border-t border-[var(--border)] bg-[var(--bg-secondary)] px-6 py-16">
         <div className="mx-auto max-w-4xl">
-          <h2 className="mb-10 text-center text-2xl font-black text-[var(--text-primary)]">
+          <h2 className="mb-3 text-center text-2xl font-black text-[var(--text-primary)]">
             {t('pricingPage.comparison.title')}
           </h2>
+          <p className="mx-auto mb-10 max-w-xl text-center text-sm text-[var(--text-secondary)]">
+            {t('pricingPage.notForSale')}
+          </p>
           <div className="overflow-x-auto rounded-2xl border border-[var(--border)]">
             <table className="w-full text-left text-sm">
               <thead>
@@ -211,6 +218,11 @@ export default function Pricing() {
                   {TIER_COLUMNS.map((col) => (
                     <th key={col} className="p-4 text-center font-bold text-[var(--accent-gold)]">
                       {t(`pricingPage.tiers.${col}.name`, { defaultValue: col })}
+                      {col !== 'free' ? (
+                        <span className="mt-1 block text-[10px] font-bold tracking-widest text-[var(--text-tertiary)] uppercase">
+                          {t('pricingPage.tiers.premium.cta')}
+                        </span>
+                      ) : null}
                     </th>
                   ))}
                 </tr>
@@ -264,12 +276,13 @@ export default function Pricing() {
             >
               {t('pricingPage.faqTeaser.viewFaq')} <HelpCircle size={14} />
             </Link>
-            <a
-              href="mailto:hello@giveabit.io?subject=Satohash Pricing"
-              className="inline-flex min-h-[44px] items-center gap-2 rounded-xl border border-[var(--border)] px-6 text-xs font-bold tracking-wider text-[var(--text-primary)] uppercase transition-all hover:border-[var(--accent-gold)]"
+            <button
+              type="button"
+              disabled
+              className="inline-flex min-h-[44px] cursor-not-allowed items-center gap-2 rounded-xl border border-[var(--border)] px-6 text-xs font-bold tracking-wider text-[var(--text-tertiary)] uppercase opacity-80"
             >
-              {t('pricingPage.faqTeaser.contactSales')} <Mail size={14} />
-            </a>
+              {t('pricingPage.tiers.premium.cta')}
+            </button>
           </div>
         </div>
       </section>

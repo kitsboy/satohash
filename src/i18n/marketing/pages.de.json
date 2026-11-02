@@ -19,14 +19,14 @@
     "readTime": "{{time}} Lesezeit"
   },
   "pricingPage": {
-    "notForSale": "Stempel sind kostenlos. Heute kann man keinen Tarif kaufen.",
+    "notForSale": "Nur der kostenlose Stempel ist offen. Die bezahlten Pläne kommen später.",
     "hero": {
-      "eyebrow": "Einfache Preise",
+      "eyebrow": "Preise",
       "title": "Existenznachweis,",
       "titleHighlight": "Für alle",
-      "subtitle": "Kostenlos starten. Skalieren, wenn Sie mehr brauchen. Kein Lock-in, keine versteckten Gebühren, kein Konto für die Basisnutzung erforderlich."
+      "subtitle": "Stempel sind heute kostenlos. Das sind die Preise, die wir später verlangen wollen. Diese Pläne gibt es noch nicht."
     },
-    "mostPopular": "Am beliebtesten",
+    "mostPopular": "Demnächst",
     "tiers": {
       "free": {
         "name": "Kostenlos",
@@ -44,11 +44,11 @@
       },
       "premium": {
         "name": "Premium",
-        "price": "TBD",
-        "period": "pro Monat",
-        "desc": "Massen-Stempelung, Lightning-Zahlungen und priorisierte Verankerung.",
+        "price": "~2.100 sats",
+        "period": "pro Monat (~$29)",
+        "desc": "Der geplante Preis für einen volleren Schreibtisch. Noch nicht im Angebot.",
         "features": [
-          "Alles aus Kostenlos, plus:",
+          "Alles aus Kostenlos, plus (geplant, noch nicht im Angebot):",
           "BOLT-12 Lightning-Zahlungsintegration",
           "Priorisierte Kalender-Einreichung",
           "Batch-Stempelung (bis zu 50 Dateien)",
@@ -59,11 +59,11 @@
       },
       "enterprise": {
         "name": "Enterprise",
-        "price": "Individuell",
-        "period": "Kontaktieren Sie uns",
-        "desc": "Dedizierte Infrastruktur, SLA und individuelle Integrationen.",
+        "price": "~21.000 sats",
+        "period": "pro Monat (~$299)",
+        "desc": "Der geplante Preis für ein Team. Noch nicht im Angebot.",
         "features": [
-          "Alles aus Premium, plus:",
+          "Alles aus Premium, plus (geplant, noch nicht im Angebot):",
           "Dedizierter OTS-Kalenderknoten",
           "Privater API-Endpunkt",
           "Individuelle Webhook-Integrationen",
@@ -71,7 +71,7 @@
           "On-Premise-Bereitstellungsoption",
           "Priorisierter Support + dedizierter Engineer"
         ],
-        "cta": "Vertrieb kontaktieren"
+        "cta": "Demnächst"
       }
     },
     "comparison": {
@@ -170,7 +170,7 @@
     },
     "faqTeaser": {
       "title": "Fragen zu den Preisen?",
-      "subtitle": "Schauen Sie in unsere FAQ für häufige Fragen oder kontaktieren Sie uns direkt.",
+      "subtitle": "Häufige Fragen stehen in der FAQ. Die bezahlten Pläne oben sind noch nicht offen.",
       "viewFaq": "FAQ ansehen",
       "contactSales": "Vertrieb kontaktieren"
     },

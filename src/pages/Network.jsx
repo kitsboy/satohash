@@ -13,6 +13,7 @@ import {
 } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import Footer from '../components/layout/Footer'
+import StampChainSteps from '../components/marketing/StampChainSteps'
 import usePageMeta from '../hooks/usePageMeta'
 import { getApiUrl } from '../config/constants'
 
@@ -291,6 +292,9 @@ export default function Network() {
               <RefreshCw size={14} className={loading ? 'animate-spin' : ''} />{' '}
               {t('networkPage.refresh')}
             </button>
+          </div>
+          <div className="mt-6" data-testid="network-chain-steps">
+            <StampChainSteps t={t} blockHeight={bitcoin?.block_height} />
           </div>
           {err && (
             <p className="mt-4 text-sm" style={{ color: 'var(--accent-danger)' }}>

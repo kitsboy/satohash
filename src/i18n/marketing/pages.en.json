@@ -19,27 +19,27 @@
     "readTime": "{{time}} read"
   },
   "pricingPage": {
-    "notForSale": "Stamps are free. You cannot buy a plan today.",
+    "notForSale": "Only the free stamp is open. The paid plans are coming soon.",
     "hero": {
-      "eyebrow": "Free today · Future premium tiers",
+      "eyebrow": "Pricing",
       "title": "Proof of Existence,",
       "titleHighlight": "For Everyone",
-      "subtitle": "Stamps are free today, subsidised by Give A Bit and community tips; paid tiers are staged and launch only once Lightning rails are funded and tested. The free base tier is intended as the permanent, never-paywalled trust anchor — stamp, verify, and download .ots proofs, hashed client-side, with no daily quota. Premium tiers and the API are expected to fund infrastructure once live. Tiers below mix what is live with a simple sketch of how paid tiers may look later."
+      "subtitle": "Stamps are free today. These are the prices we plan to charge later. The paid plans are not offered yet."
     },
-    "mostPopular": "Recommended",
+    "mostPopular": "Coming soon",
     "tiers": {
       "free": {
         "name": "Free",
         "price": "0 sats",
         "period": "live now",
-        "desc": "Stamp & verify with OpenTimestamps under a disclosed 5-req/min abuse guard, with no daily cap. No account. No Lightning invoice. The free base is intended to stay the never-paywalled trust anchor; if economics ever force a limit, we publish the change before it applies.",
+        "desc": "Stamp a file in the browser. No account. This is the service we can offer today.",
         "features": [
           "SHA-256 hashing in your browser",
           "OpenTimestamps server anchoring",
           "Downloadable .ots proof files",
           "Verify any proof, anywhere",
           "Browser-based — nothing to install",
-          "No daily quota — intended never paywalled (trust anchor)"
+          "No account required"
         ],
         "cta": "Stamp a File"
       },
@@ -47,7 +47,7 @@
         "name": "Professional",
         "price": "~2,100 sats",
         "period": "per month (~$29)",
-        "desc": "Optional premium tier (built, staged). Individual, high-volume stamping. Collection depends on Lightning channels being funded and tested.",
+        "desc": "The price we plan to charge for a fuller desk. Not offered yet.",
         "features": [
           "Everything in Free, plus (planned):",
           "Unlimited stamping / full vault",
@@ -62,7 +62,7 @@
         "name": "Business / Studio",
         "price": "~21,000 sats",
         "period": "per month (~$299)",
-        "desc": "Optional premium tier (built, staged). Teams and studios. Enterprise (custom, partner-gated) is not marketed now.",
+        "desc": "The price we plan to charge for a team desk. Not offered yet.",
         "features": [
           "Everything in Professional, plus (planned):",
           "White-label options",
@@ -71,7 +71,7 @@
           "Dedicated timestamp-server path",
           "Enterprise: custom, partner-gated"
         ],
-        "cta": "Contact Sales"
+        "cta": "Coming Soon"
       }
     },
     "comparison": {
@@ -170,7 +170,7 @@
     },
     "faqTeaser": {
       "title": "Have Questions About Pricing?",
-      "subtitle": "Check our FAQ for common questions or reach out directly.",
+      "subtitle": "Common questions are in the FAQ. The paid plans above are not open yet.",
       "viewFaq": "View FAQ",
       "contactSales": "Contact Sales"
     },
