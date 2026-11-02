@@ -2,7 +2,7 @@
 
 Canonical copy: [`docs/roadmap.md`](docs/roadmap.md). This file stays in sync so either path shows the same order.
 
-> **Live product (2026-10-13):** stamp on the device → `.ots` → Bitcoin verify → `/p/{hash}`. Stamps are free. Lightning billing is off. The file stays. SPA `4134150` (build 431) is the last confirmed product deploy. API `gitSha` `e814a57`. Paywall off. Do not rebuild for copy.
+> **Live product (2026-11-02):** stamp on the device → `.ots` → our node checks Bitcoin → `/p/{hash}`. Stamps are free. Lightning billing is off. The file stays. Calendars write. THOR bitcoind checks. A home node waits until it is at the same tip. Paywall off. Do not rebuild for this website push.
 
 Do the next open item in [`docs/roadmap.md`](docs/roadmap.md), then the one after it.
 

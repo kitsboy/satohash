@@ -26,6 +26,7 @@ export const translations = {
       developer: 'Developer API',
       templates: 'Templates',
       verify: 'Verify',
+      network: 'Network',
       trust: 'Trust Center',
       explorer: 'Explorer',
       batch: 'Batch Stamp',
@@ -35,7 +36,8 @@ export const translations = {
     },
     stamp: {
       title: 'Notarize Document',
-      subtitle: 'Anchor a SHA-256 hash to the Bitcoin blockchain',
+      subtitle:
+        'The file stays. Calendars write the fingerprint into Bitcoin. Our node checks the block.',
       dropzone: 'Drop file or click to select',
       hashLabel: 'SHA-256 Hash',
       stamp: 'Stamp to Bitcoin',
@@ -257,11 +259,13 @@ export const translations = {
       developer: 'API Dev',
       templates: 'Plantillas',
       verify: 'Verificar',
+      network: 'Red',
       trust: 'Centro de Confianza'
     },
     stamp: {
       title: 'Notarizar Documento',
-      subtitle: 'Ancla un hash SHA-256 en la blockchain de Bitcoin',
+      subtitle:
+        'El archivo se queda. Los calendarios escriben la huella en Bitcoin. Nuestro nodo comprueba el bloque.',
       dropzone: 'Suelta el archivo o haz clic para seleccionar',
       hashLabel: 'Hash SHA-256',
       stamp: 'Sellar en Bitcoin',
@@ -484,11 +488,13 @@ export const translations = {
       developer: 'API Dev',
       templates: 'Modèles',
       verify: 'Vérifier',
+      network: 'Réseau',
       trust: 'Centre de confiance'
     },
     stamp: {
       title: 'Notariser le document',
-      subtitle: 'Ancrez un hash SHA-256 dans la blockchain Bitcoin',
+      subtitle:
+        'Le fichier reste. Les calendriers écrivent l’empreinte dans Bitcoin. Notre nœud vérifie le bloc.',
       dropzone: 'Déposez un fichier ou cliquez pour sélectionner',
       hashLabel: 'Hash SHA-256',
       stamp: 'Tamponner sur Bitcoin',
@@ -713,11 +719,12 @@ export const translations = {
       developer: '开发者API',
       templates: '模板',
       verify: '验证',
+      network: '网络',
       trust: '信任中心'
     },
     stamp: {
       title: '公证文件',
-      subtitle: '将SHA-256哈希锚定到比特币区块链',
+      subtitle: '文件留下。日历把指纹写入比特币。我们的节点核对那个区块。',
       dropzone: '拖放文件或点击选择',
       hashLabel: 'SHA-256 哈希',
       stamp: '锚定到比特币',

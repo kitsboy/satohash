@@ -9,6 +9,7 @@ export default {
     developer: 'Entwickler-API',
     templates: 'Vorlagen',
     verify: 'Verifizieren',
+    network: 'Netz',
     trust: 'Vertrauenszentrum',
     explorer: 'Explorer',
     batch: 'Batch-Stempel',
@@ -18,7 +19,8 @@ export default {
   },
   stamp: {
     title: 'Dokument notarisieren',
-    subtitle: 'Verankern Sie einen SHA-256-Hash in der Bitcoin-Blockchain',
+    subtitle:
+      'Die Datei bleibt. Kalender schreiben den Fingerabdruck in Bitcoin. Unser Knoten prüft den Block.',
     dropzone: 'Datei ablegen oder klicken zum Auswählen',
     hashLabel: 'SHA-256-Hash',
     stamp: 'Auf Bitcoin stempeln',

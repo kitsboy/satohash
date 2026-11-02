@@ -1,6 +1,6 @@
 # Satohash Protocol Roadmap
 
-> **Live product (2026-10-13):** stamp a file on the device → download `.ots` → verify on Bitcoin → share `https://satohash.io/p/{hash}`. Pending means on the way. Confirmed means a Bitcoin block sealed it, about an hour later. Stamps are free. Lightning billing is off. The file stays on the device. Optional NIP-07 who is shipped and is not a legal name. Player is the ~70s film. SPA `4134150` (build 431) is the last confirmed product deploy. API `/health` ok, `gitSha` `e814a57`, paywall off. Kimi: do not rebuild for copy. If `6c8ae2e` is only on THOR, do not push it.
+> **Live product (2026-11-02):** stamp a file on the device → download `.ots` → verify on Bitcoin → share `https://satohash.io/p/{hash}`. Pending means on the way. Confirmed means a Bitcoin block sealed it. Stamps are free. Lightning billing is off. The file stays. Public calendars write the commitment. THOR bitcoind checks it (height 974,293, IBD done, on 2026-11-02). A home node joins that check only after it reaches the same tip. Do not point RPC at Umbrel while it is still downloading. API `gitSha` was `6b84073` before this website push. Paywall off. Do not rebuild for this copy.
 
 SoT: `.ai_docs/current-status.md` · session `docs/archive/SESSION-SUMMARY-2026-10-13-goodbye.md`.
 
@@ -24,28 +24,33 @@ Do the next open item, commit, and push. Then take the one after it. Do not skip
 4. Review, batch, and the privacy lines say the file stays. No redaction pitch.
 
 
-### 2. Next — calmer film and phone
+### 2. Shipped 2026-11-02 — the path and the tools
+
+The homepage says file stays, calendars write, our node checks. Stamp, Verify, and Network are the main tools on desktop and in the phone menu. Templates are under More. Search does not offer L402 billing.
+
+### 3. Next — calmer film and phone
 
 5. **Chapter jumps** on `/watch` for the 70s film. Do not regenerate the voice or the pictures.
 6. **Quieter phone install hint.** Keep the play button easy to reach. Do not add a louder install card.
 7. **Public example.** Swap the homepage example only if Cam picks a file. Cam’s picture stamp stays private. Do not publish that filename.
 
-### 3. Cam only
+### 4. Cam only
 
 8. Pin `https://satohash.io/watch` on `@give_bit` when Cam wants. Paste-ready copy is in `docs/marketing/GIVE-BIT-X-PACK.md`. Agents cannot post as that account.
 9. Check the iPhone / iMessage preview of `/p/<hash>`. Deferred until Cam has the phone.
 
-### 4. Do not do yet
+### 5. Do not do yet
 
 - Do not flip `REQUIRE_LIGHTNING`. Paywall stays off.
 - Do not change live `/api/*` paths.
-- Do not rebuild the API for copy. Do not push THOR-only `6c8ae2e`.
+- Do not rebuild the API for copy.
+- Do not point Bitcoin RPC at Umbrel until that node is at the same tip as THOR. LND stays off.
 - Do not add Arabic.
 - Do not sell Snapper, ZK redaction, 3D Merkle, BOLT-12, or L402 as live.
 - Do not npm-publish `@satohash/cli` unless Cam asks.
 - TadBuy’s dead same-origin `/api/*` is the TadBuy repo, not this API.
 
-### 5. Kimi
+### 6. Kimi
 
 Ingest `docs/KIMI-HANDOFF.md` and `docs/archive/SESSION-SUMMARY-2026-10-13-goodbye.md` into THOR Obsidian (MASTER-BRAIN / Kanban). Vault is on THOR, not M4. Pages stay Grok’s. Keep `REQUIRE_LIGHTNING=false`.
 

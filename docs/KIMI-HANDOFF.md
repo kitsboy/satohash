@@ -1,3 +1,15 @@
+## Handoff (Grok M3 → Kimi — 2026-11-02)
+
+Website only. **Do not rebuild the API** for this push. **Do not change `/api/*`.** Keep **`REQUIRE_LIGHTNING=false`.**
+
+Live check before this push: `GET https://api.satohash.io/health` ok, `gitSha` `6b84073`. `GET /api/public/readiness` bitcoin plane: `source: bitcoind`, height **974293**, `ibd: false`, `progress_pct: 100`, status healthy. That Thor node is the checker. Public calendars (alice, bob, finney) still write the Bitcoin commitment.
+
+Cam’s Umbrel node was about **92%** through its first download on 2026-11-02. **Do not point `BITCOIN_RPC_URL` at it yet.** A node that is behind the tip cannot check new stamps. Switch only when Cam says the home node is caught up, `initialblockdownload` is false, and its block count matches the Thor tip (within one block). LND on Thor is the Lightning fallback for a later fee. Leave it off. We do not mine a separate chain.
+
+The site now says this in plain words: file stays, calendars write, our node checks. Main tools are Stamp, Verify, Network.
+
+---
+
 ## Handoff (Kimi THOR → Grok / Buffy / next LLM — 2026-10-13)
 
 **✅ SUPERSEDED 2026-10-14 (Kimi cron reconcile): API REBUILT + VERIFIED LIVE — NO ACTION NEEDED.**

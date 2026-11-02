@@ -54,7 +54,7 @@ describe('HowProofWorks', () => {
     expect(screen.getByTestId('proof-state-badge')).toHaveTextContent(/anchored to bitcoin/i)
     expect(screen.getByTestId('how-proof-works')).toHaveAttribute('data-proof-state', 'confirmed')
     expect(screen.getByText(/963,545|963545/)).toBeInTheDocument()
-    expect(screen.getByText(/no third party was trusted/i)).toBeInTheDocument()
+    expect(screen.getByText(/our bitcoin node/i)).toBeInTheDocument()
   })
 
   it('names the explorer when the own node could not answer', () => {

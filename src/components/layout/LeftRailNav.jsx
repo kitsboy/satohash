@@ -29,7 +29,7 @@ const MORE_ITEMS = [
   { name: 'Government', path: '/government' },
   { name: 'Evidence admissibility', path: '/evidence-admissibility' },
   { name: 'Protocol Stats', path: '/protocol-stats' },
-  { name: 'Merkle demo', path: '/explorer' },
+  { name: 'Merkle demo', path: '/explorer' }
 ]
 
 // ─── Single nav item ─────────────────────────────────────────────────────────
@@ -105,9 +105,10 @@ export default function LeftRailNav() {
     {
       label: 'NOTARIZE',
       items: [
-        { name: t('nav', 'vault'), path: '/vault', icon: Database },
         { name: t('nav', 'stamp'), path: '/stamp', icon: Fingerprint },
-        { name: t('nav', 'verify'), path: '/verify', icon: ShieldCheck }
+        { name: t('nav', 'verify'), path: '/verify', icon: ShieldCheck },
+        { name: t('nav', 'network'), path: '/network', icon: Network },
+        { name: t('nav', 'vault'), path: '/vault', icon: Database }
       ]
     },
     {

@@ -27,12 +27,13 @@ export default function DesktopAppNav({ onOpenSearch }) {
 
   const primary = [
     { name: t('nav', 'stamp'), path: '/stamp' },
-    { name: t('nav', 'vault'), path: '/vault' },
     { name: t('nav', 'verify'), path: '/verify' },
-    { name: t('nav', 'templates'), path: '/templates' }
+    { name: t('nav', 'network'), path: '/network' },
+    { name: t('nav', 'vault'), path: '/vault' }
   ]
 
   const more = filterMvp([
+    { name: t('nav', 'templates'), path: '/templates' },
     { name: ti('nav.government') || 'Government', path: '/government' },
     { name: t('nav', 'developer'), path: '/developer' },
     { name: t('nav', 'trust'), path: '/trust' },

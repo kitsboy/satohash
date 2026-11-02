@@ -1,7 +1,7 @@
 # Current Status — Satohash
 
 **Version:** **5.0.0-ELITE** (Build 432)  
-**Last Updated:** 2026-10-13 (roadmap and goodbye; sign-in copy already live)  
+**Last Updated:** 2026-11-02 (stamp path and tool set; home node waits for the tip)  
 **Frontend:** https://satohash.io · www · CF Pages project **`satohash`** — Grok lane, `assetsDir: 'b'`. Last confirmed product deploy is `4134150` (build 431): sign-in says the key stays on the device. Live shell `/b/index-Bt__WPpD.js`. Also live from this arc: 70s film, file-stays copy, glossary Lightning and BOLT-12 free-stamps lines, dashboard status rows, and the translated side column. This docs commit does not change product copy.  
 **API:** https://api.satohash.io ✅ LIVE. `/health` status **ok** at 2026-10-13 19:19 UTC. **`gitSha` `e814a57`**. Version `5.0.0-ELITE`. Paywall off. This copy work did not change `server/`. Kimi: if `6c8ae2e` is still only on THOR, do not push it.  
 **Metrics SoT:** `https://api.satohash.io/metrics.json`  
@@ -18,7 +18,7 @@
 | SPA | CF Pages → satohash.io | **Grok lane.** Kimi cannot alter Pages. Grok has standing auth to push SPA fixes. Must call `https://api.satohash.io` |
 | API | THOR Docker + Caddy | `satohash-satohash-api-1` healthy |
 | Metrics | API `/metrics.json` | SPA `/metrics.json` is CF Function proxy |
-| Bitcoin | THOR bitcoind | Own node **at tip** · `source: bitcoind` · IBD **done** |
+| Bitcoin | THOR bitcoind | Own node **at tip** · height **974,293** on 2026-11-02 · `source: bitcoind` · IBD **done**. Umbrel is the home node and is not the checker until it matches this tip. LND stays off. |
 | Explainer | `/watch` | **~70s** `satohash-explainer-wise-70.mp4` · quiet bed · 10s teaser stays · `?v=kimi-wise-70-20261013` |
 | Bundles | `/b/*` | Do not revert to long-cache `/assets/*`. Stamp/Verify **eager**. VitePWA `injectRegister: false` |
 
@@ -92,11 +92,10 @@
 
 Pickup: this file → `docs/roadmap.md` → `docs/handoff-log.md` → `docs/archive/SESSION-SUMMARY-2026-10-13-goodbye.md`. `/whatsup` loads that goodbye.
 
-1. **History labels** on `/dashboard`. `recentHistory` and `filterHistory` show as raw keys. Add real words in all 7 languages (`HistoryList.jsx`).
-2. **Drop zone** is still English, including Dark Vault ON/OFF (`GlobalDropzone.jsx`). Keep the name Dark Vault.
-3. **Sign-in headline** still says Lightning settlement (`accessPage.hero.subtitle`). Say the key stays on the device.
-4. **Leftover zero-knowledge lines** in Final Review, batch stamp, and `zkPrivacy` redaction copy. Say the file stays.
-5. Then chapter jumps, a quieter phone install hint, and a new public example only if Cam picks a file.
+1. **Done 2026-11-02.** Homepage path is file stays, calendars write, our node checks. Main tools are Stamp, Verify, Network. Templates are under More.
+2. Chapter jumps on `/watch`, then a quieter phone install hint.
+3. A new public example only if Cam picks a file.
+4. **Kimi:** do not point Bitcoin RPC at Umbrel until that node is at the same tip. Do not enable LND. Do not rebuild for this website push.
 6. **Cam:** pin `/watch` on **`@give_bit`** when Cam wants (`docs/marketing/GIVE-BIT-X-PACK.md`). Grok cannot post. iPhone `/p/` unfurl stays deferred.
 7. **Kimi:** ingest the 2026-10-13 goodbye into THOR Obsidian. Keep `REQUIRE_LIGHTNING=false`. Do not rebuild for copy. Do not push `6c8ae2e` if it is only on THOR.
 8. **Do not:** flip the paywall; change `/api/*`; add Arabic; sell Snapper, ZK redaction, 3D Merkle, or BOLT-12 as live; Tailscale notes to M4. Vault = **THOR**. Pages = Grok. Optional who is shipped and is not a legal name.

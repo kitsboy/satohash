@@ -9,6 +9,7 @@ export default {
     developer: 'API de Desenvolvimento',
     templates: 'Modelos',
     verify: 'Verificar',
+    network: 'Rede',
     trust: 'Centro de Confiança',
     explorer: 'Explorador',
     batch: 'Carimbo em Lote',
@@ -18,7 +19,8 @@ export default {
   },
   stamp: {
     title: 'Notarizar Documento',
-    subtitle: 'Ancore um hash SHA-256 na blockchain Bitcoin',
+    subtitle:
+      'O arquivo fica. Os calendários escrevem a impressão no Bitcoin. O nosso nó confere o bloco.',
     dropzone: 'Largue o ficheiro ou clique para selecionar',
     hashLabel: 'Hash SHA-256',
     stamp: 'Carimbar no Bitcoin',

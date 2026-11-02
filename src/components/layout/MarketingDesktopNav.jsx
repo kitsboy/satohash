@@ -7,6 +7,7 @@ import {
   Menu,
   X,
   Fingerprint,
+  Globe,
   LayoutGrid,
   BadgeDollarSign,
   Scale,
@@ -32,13 +33,18 @@ export default function MarketingDesktopNav({ onDonate }) {
     () => [
       { label: t('nav.stamp', { defaultValue: 'Stamp' }), href: '/stamp' },
       { label: t('nav.verify', { defaultValue: 'Verify' }), href: '/verify' },
-      { label: t('nav.templates', { defaultValue: 'Templates' }), href: '/templates' }
+      { label: t('nav.network', { defaultValue: 'Network' }), href: '/network' }
     ],
     [t]
   )
 
   const more = useMemo(
     () => [
+      {
+        label: t('nav.templates', { defaultValue: 'Templates' }),
+        href: '/templates',
+        icon: FileText
+      },
       {
         label: t('landingPage.nav.howItWorks', { defaultValue: 'How it works' }),
         href: '/#how-it-works',
@@ -76,8 +82,8 @@ export default function MarketingDesktopNav({ onDonate }) {
             ? Fingerprint
             : l.href === '/verify'
               ? ShieldCheck
-              : l.href === '/templates'
-                ? FileText
+              : l.href === '/network'
+                ? Globe
                 : BadgeDollarSign
       })),
       ...more

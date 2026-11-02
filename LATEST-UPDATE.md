@@ -1,5 +1,5 @@
-# satohash — Last Updated 2026-10-13 by Grok (M3)
+# satohash — Last Updated 2026-11-02 by Grok (M3)
 
-**Brief:** Roadmap now says what to do first: history labels, then the drop zone, then the sign-in headline. Sign-in copy is already live (`4134150`). Paywall off. Kimi: ingest the 2026-10-13 goodbye. Do not push `6c8ae2e`.
+**Brief:** The main path is file stays, calendars write, our node checks. Stamp, Verify, and Network are the tools. Umbrel stays off the stamp path until it reaches the same tip. Paywall off. Kimi: do not rebuild. Do not point Bitcoin RPC at Umbrel yet.
 
 Pickup: `.ai_docs/current-status.md` · `docs/handoff-log.md` · `docs/KIMI-HANDOFF.md`

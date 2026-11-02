@@ -45,7 +45,7 @@ export const DEFAULT_LABELS = {
   stateConfirmedTitle: 'Anchored to Bitcoin',
   stateNotProvenTitle: 'Not proven',
   blockLabel: 'Bitcoin block',
-  methodOwnNode: 'Checked against a Bitcoin node — no third party was trusted.',
+  methodOwnNode: 'Checked on our Bitcoin node. That block commits to this fingerprint.',
   methodExplorer:
     "Checked against a public Bitcoin explorer. Your own copy still proves this without anyone's help.",
   methodUnknown: 'Chain-checked.',

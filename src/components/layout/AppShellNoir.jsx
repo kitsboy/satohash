@@ -3,8 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion'
 import {
   Search,
   Globe,
-  Zap,
   Database,
+  Fingerprint,
   Terminal,
   ChevronRight,
   Scale,
@@ -208,28 +208,28 @@ export default function AppShellNoir({ children }) {
                 {(() => {
                   const navItems = [
                     {
-                      icon: Database,
-                      label: 'Vault',
-                      sub: 'Browse sovereign anchors',
-                      path: '/vault'
+                      icon: Fingerprint,
+                      label: 'Stamp',
+                      sub: 'File stays. Calendars write the fingerprint.',
+                      path: '/stamp'
+                    },
+                    {
+                      icon: Scale,
+                      label: 'Verify',
+                      sub: 'Check a proof against our Bitcoin node',
+                      path: '/verify'
                     },
                     {
                       icon: Globe,
-                      label: 'Atlas',
-                      sub: 'Temporal provenance search',
-                      path: '/atlas'
+                      label: 'Network',
+                      sub: 'Our node, the calendars, the Bitcoin tip',
+                      path: '/network'
                     },
                     {
-                      icon: Terminal,
-                      label: 'Developer Plane',
-                      sub: 'API keys and strategies',
-                      path: '/developer'
-                    },
-                    {
-                      icon: Zap,
-                      label: 'Settlement',
-                      sub: 'L402 Wallet & Billing',
-                      path: '/settings'
+                      icon: BookOpen,
+                      label: 'Watch',
+                      sub: '70 seconds. The file never leaves.',
+                      path: '/watch'
                     }
                   ]
                   const q = debouncedQuery.toLowerCase()

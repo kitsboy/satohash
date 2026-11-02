@@ -52,7 +52,7 @@ export const STRINGS = {
     howNotProven: 'Not proven',
     howNotProvenBody: 'This proof did not resolve against a Bitcoin block.',
     howBlock: 'Bitcoin block',
-    howMethodOwn: 'Checked against a Bitcoin node — no third party was trusted.',
+    howMethodOwn: 'Checked on our Bitcoin node. That block commits to this fingerprint.',
     howMethodExplorer:
       "Checked against a public Bitcoin explorer. Your own copy still proves this without anyone's help.",
     howMethodUnknown: 'Chain-checked.',
@@ -118,7 +118,7 @@ export const STRINGS = {
     howNotProven: 'No comprobado',
     howNotProvenBody: 'Esta prueba no se resolvió contra un bloque Bitcoin.',
     howBlock: 'Bloque Bitcoin',
-    howMethodOwn: 'Comprobado contra un nodo Bitcoin — no se confió en terceros.',
+    howMethodOwn: 'Comprobado en nuestro nodo Bitcoin. Ese bloque incluye esta huella.',
     howMethodExplorer:
       'Comprobado contra un explorador Bitcoin público. Tu propia copia sigue demostrándolo sin ayuda de nadie.',
     howMethodUnknown: 'Comprobado en cadena.',
@@ -183,7 +183,7 @@ export const STRINGS = {
     howNotProven: 'Non prouvé',
     howNotProvenBody: 'Cette preuve ne s’est pas résolue contre un bloc Bitcoin.',
     howBlock: 'Bloc Bitcoin',
-    howMethodOwn: 'Vérifié contre un nœud Bitcoin — aucun tiers n’a été crédité.',
+    howMethodOwn: 'Vérifié sur notre nœud Bitcoin. Ce bloc engage cette empreinte.',
     howMethodExplorer:
       'Vérifié contre un explorateur Bitcoin public. Votre propre copie le prouve encore sans l’aide de personne.',
     howMethodUnknown: 'Vérifié on-chain.',
@@ -248,7 +248,7 @@ export const STRINGS = {
     howNotProven: 'Nicht bewiesen',
     howNotProvenBody: 'Dieser Nachweis hat sich nicht gegen einen Bitcoin-Block aufgelöst.',
     howBlock: 'Bitcoin-Block',
-    howMethodOwn: 'Gegen einen Bitcoin-Knoten geprüft — keine Drittpartei wurde vertraut.',
+    howMethodOwn: 'Geprüft auf unserem Bitcoin-Knoten. Dieser Block legt diesen Fingerabdruck fest.',
     howMethodExplorer:
       'Gegen einen öffentlichen Bitcoin-Explorer geprüft. Deine eigene Kopie beweist das weiterhin ohne fremde Hilfe.',
     howMethodUnknown: 'On-chain geprüft.',
@@ -312,7 +312,7 @@ export const STRINGS = {
     howNotProven: 'Não comprovado',
     howNotProvenBody: 'Esta prova não se resolveu contra um bloco Bitcoin.',
     howBlock: 'Bloco Bitcoin',
-    howMethodOwn: 'Verificado contra um nó Bitcoin — nenhum terceiro foi fiado.',
+    howMethodOwn: 'Verificado no nosso nó Bitcoin. Esse bloco fixa esta impressão.',
     howMethodExplorer:
       'Verificado contra um explorador Bitcoin público. A tua própria cópia continua a prová-lo sem ajuda de ninguém.',
     howMethodUnknown: 'Verificado on-chain.',
@@ -375,7 +375,7 @@ export const STRINGS = {
     howNotProven: 'Haijathibitishwa',
     howNotProvenBody: 'Uthibitisho huu haukutatuliwa dhidi ya bloku ya Bitcoin.',
     howBlock: 'Bloku ya Bitcoin',
-    howMethodOwn: 'Imekaguliwa dhidi ya nodi ya Bitcoin — hakuna mtu wa tatu aliyetumainiwa.',
+    howMethodOwn: 'Imekaguliwa kwenye nodi yetu ya Bitcoin. Bloku hiyo inathibitisha alama hii.',
     howMethodExplorer:
       'Imekaguliwa dhidi ya kivinjari cha Bitcoin cha umma. Nakala yako bado inathibitisha bila msaada wa mtu.',
     howMethodUnknown: 'Imekaguliwa kwenye mnyororo.',
@@ -436,7 +436,7 @@ export const STRINGS = {
     howNotProven: '未证明',
     howNotProvenBody: '这份证明未能对照 Bitcoin 区块解析。',
     howBlock: 'Bitcoin 区块',
-    howMethodOwn: '对照 Bitcoin 节点核对——没有信任第三方。',
+    howMethodOwn: '在我们自己的 Bitcoin 节点上核对。那个区块承诺了这枚指纹。',
     howMethodExplorer: '对照公开 Bitcoin 浏览器核对。你自己的副本仍可在无人帮助下证明这一点。',
     howMethodUnknown: '已链上核对。',
     howCommand: 'ots verify yourfile.ots',

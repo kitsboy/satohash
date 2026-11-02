@@ -9,6 +9,7 @@ export default {
     developer: 'API ya Msanidi',
     templates: 'Violezo',
     verify: 'Thibitisha',
+    network: 'Mtandao',
     trust: 'Kituo cha Uaminifu',
     explorer: 'Kichunguzi',
     batch: 'Muhuri wa Kundi',
@@ -18,7 +19,7 @@ export default {
   },
   stamp: {
     title: 'Thibitisha Hati',
-    subtitle: 'Funga hash ya SHA-256 kwenye blockchain ya Bitcoin',
+    subtitle: 'Faili linabaki. Kalenda zinaandika alama kwenye Bitcoin. Nodi yetu inakagua bloku.',
     dropzone: 'Weka faili au bofya kuchagua',
     hashLabel: 'Hash ya SHA-256',
     stamp: 'Weka Muhuri kwenye Bitcoin',

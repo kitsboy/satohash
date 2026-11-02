@@ -1,3 +1,13 @@
+## 2026-11-02 (Grok M3 — stamp path is the tool set)
+
+Pulled `main` to `2b6e696`. Live API was already rebuilt: `GET /health` ok, `gitSha` `6b84073`, paywall off. Own node on THOR is `source: bitcoind`, height **974,293**, IBD done. This push does not change `/api/*` and does not need an API rebuild.
+
+The homepage now says the real path: the file stays, public calendars write one line into a Bitcoin block, our node checks that block. Stamp, Verify, and Network are the main tools. Templates sit under More. Search no longer offers L402 billing. A home node is not used for checks until it is at the same tip. Lightning billing stays off.
+
+**Kimi:** do not point `BITCOIN_RPC_URL` at Umbrel while it is still downloading. Cam said that download was about 92% on 2026-11-02. THOR bitcoind stays the checker. LND on THOR is only the later Lightning fallback. Do not turn it on. Do not rebuild for this website change. Keep `REQUIRE_LIGHTNING=false`.
+
+---
+
 ## 2026-10-13 (Kimi THOR — pushed the undici lockfile fix; handed rebuild to next agent)
 
 Cam override of the "do not push 6c8ae2e" line below: **push it.** `6c8ae2e` (package-lock only: undici 6.28.1 → 6.29.0 + strip unused macOS/Windows `sharp` dev deps that broke `npm ci` with `EUSAGE`) rebased onto real `origin/main` (`d864220`) and **pushed as `90392e7`**. No rebuild done. Live API still up 9 days but its `GIT_SHA` env is corrupted (error string, not a SHA); `REQUIRE_LIGHTNING=false` — **paywall off**. **Next (Grok/Buffy/next LLM):** rebuild to land `90392e7` + a clean `gitSha`; keep paywall off; don't change `/api/*`. Pre-push `npm test` red on THOR is a Node v26 env mismatch, not this change. Full note: top of `docs/KIMI-HANDOFF.md`.

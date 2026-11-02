@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useBodyScrollLock } from '../../utils/a11y'
 import { NavLink, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Database, Fingerprint, ShieldCheck, FileText, MoreHorizontal } from 'lucide-react'
+import { Database, Fingerprint, Globe, ShieldCheck, MoreHorizontal } from 'lucide-react'
 import { useI18n } from '../../i18n'
 
 // ─── MobileBottomNav ─────────────────────────────────────────────────────────
@@ -12,12 +12,12 @@ export default function MobileBottomNav() {
   const npub = localStorage.getItem('satohash_npub') || ''
   const { t } = useI18n()
 
-  // MVP primary: stamp loop + templates (explorer lives under More)
+  // The loop: stamp, check, see our node, keep the proof. Templates live under More.
   const PRIMARY_LINKS = [
     { name: t('nav', 'stamp'), path: '/stamp', icon: Fingerprint },
     { name: t('nav', 'verify'), path: '/verify', icon: ShieldCheck },
-    { name: t('nav', 'vault'), path: '/vault', icon: Database },
-    { name: t('nav', 'templates'), path: '/templates', icon: FileText }
+    { name: t('nav', 'network'), path: '/network', icon: Globe },
+    { name: t('nav', 'vault'), path: '/vault', icon: Database }
   ]
 
   // "More" is active when we're on a route not in the primary list
@@ -94,6 +94,7 @@ export default function MobileBottomNav() {
 
               <div className="max-h-[inherit] overflow-y-auto overscroll-contain">
                 {[
+                  { name: t('nav', 'templates'), path: '/templates' },
                   { name: t('nav', 'explorer') || 'Merkle demo', path: '/explorer' },
                   { name: t('nav', 'dashboard'), path: '/dashboard' },
                   { name: t('nav.government') || 'Government', path: '/government' },

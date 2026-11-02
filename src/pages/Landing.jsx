@@ -23,7 +23,6 @@ import usePageMeta from '../hooks/usePageMeta'
 import MarketingDesktopNav from '../components/layout/MarketingDesktopNav'
 const OtsVerifyPanel = lazy(() => import('../components/stamps/OtsVerifyPanel'))
 const ParticleStampCanvas = lazy(() => import('../components/marketing/ParticleStampCanvas'))
-import { getBitcoinNetworkStats } from '../utils/mempool'
 import { BTC_ADDRESS, getApiUrl } from '../config/constants'
 import { buildStampPathFromSearch } from '../utils/stampDeepLink'
 import events, { trackEvent } from '../utils/analytics'
@@ -92,8 +91,6 @@ export default function Landing() {
   const [proofCount, setProofCount] = useState(null)
   const [confirmedCount, setConfirmedCount] = useState(null)
   const [blockHeight, setBlockHeight] = useState(null)
-  const [networkStats, setNetworkStats] = useState({ fees: {} })
-  const [nodeHud, setNodeHud] = useState(null)
   const [pwaPrompt, setPwaPrompt] = useState(null)
   const [pwaDismissed, setPwaDismissed] = useState(
     () => localStorage.getItem('pwa-dismissed') === 'true'
@@ -120,33 +117,6 @@ export default function Landing() {
   }, [])
 
   useEffect(() => {
-    let cancelled = false
-    let idleId
-    let timeoutId
-    const run = () => {
-      if (cancelled) return
-      getBitcoinNetworkStats().then((stats) => {
-        if (cancelled || !stats || typeof stats !== 'object') return
-        setNetworkStats({
-          ...stats,
-          fees: { ...(stats.fees || {}) }
-        })
-        if (stats.blockHeight) setBlockHeight(stats.blockHeight)
-      })
-    }
-    if (typeof requestIdleCallback === 'function') {
-      idleId = requestIdleCallback(run, { timeout: 1500 })
-    } else {
-      timeoutId = setTimeout(run, 1500)
-    }
-    return () => {
-      cancelled = true
-      if (idleId != null) window.cancelIdleCallback?.(idleId)
-      if (timeoutId != null) clearTimeout(timeoutId)
-    }
-  }, [])
-
-  useEffect(() => {
     trackEvent(events.LANDING_VIEW, { path: '/' })
   }, [])
 
@@ -167,7 +137,7 @@ export default function Landing() {
 
   useEffect(() => {
     const prefetch = () => {
-      ;['/stamp', '/verify'].forEach((href) => {
+      ;['/stamp', '/verify', '/network'].forEach((href) => {
         if (document.querySelector(`link[rel="prefetch"][href="${href}"]`)) return
         const link = document.createElement('link')
         link.rel = 'prefetch'
@@ -190,11 +160,7 @@ export default function Landing() {
       .then((r) => (r.ok ? r.json() : null))
       .then((d) => {
         const b = d?.planes?.bitcoin_node
-        if (!b) return
-        setNodeHud({
-          source: b.source
-        })
-        if (b.block_height) setBlockHeight(b.block_height)
+        if (b?.block_height) setBlockHeight(b.block_height)
       })
       .catch(() => {})
   }, [])
@@ -632,13 +598,14 @@ export default function Landing() {
             </div>
           </motion.div>
 
-          {/* Sovereign Bitcoin Network HUD Console */}
+          {/* How a stamp meets Bitcoin — file, calendars, our node */}
           <motion.div
             variants={fadeUp}
             initial="hidden"
             animate="visible"
             custom={0.6}
             className="hud-glass mx-auto mt-12 max-w-4xl rounded-3xl p-6"
+            data-testid="stamp-chain-plane"
           >
             <div
               className="mb-4 flex flex-wrap items-center justify-between gap-3 border-b pb-4 text-[10px] font-black tracking-widest uppercase"
@@ -650,162 +617,70 @@ export default function Landing() {
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500"></span>
                 </span>
                 <span style={{ color: 'var(--accent-success)' }}>
-                  {t('landingPage.telemetry.title')}
+                  {t('landingPage.telemetry.flowTitle')}
                 </span>
                 <LiveNodeChip defer />
               </div>
-              <a
-                href="https://mempool.space"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                to="/network"
                 className="flex items-center gap-1 hover:underline"
                 style={{ color: 'var(--accent-teal)' }}
               >
-                {nodeHud?.source === 'bitcoind' ? 'own node + mempool' : 'mempool.space'}{' '}
-                <ChevronRight size={10} />
-              </a>
+                {t('landingPage.telemetry.openNetwork')} <ChevronRight size={10} />
+              </Link>
             </div>
 
-            <div className="grid grid-cols-2 gap-3 text-left sm:grid-cols-4 sm:gap-4">
-              {/* Block Height */}
-              <div
-                className="min-w-0 overflow-hidden rounded-2xl p-3 sm:p-4"
-                style={{ backgroundColor: 'rgba(255, 255, 255, 0.02)' }}
+            <ol className="grid grid-cols-1 gap-3 text-left sm:grid-cols-3 sm:gap-4">
+              {[
+                ['stepFile', 'stepFileBody'],
+                ['stepWrite', 'stepWriteBody'],
+                ['stepCheck', 'stepCheckBody']
+              ].map(([titleKey, bodyKey]) => (
+                <li
+                  key={titleKey}
+                  className="min-w-0 overflow-hidden rounded-2xl p-3 sm:p-4"
+                  style={{ backgroundColor: 'rgba(255, 255, 255, 0.02)' }}
+                >
+                  <span
+                    className="mb-1 block text-[9px] font-bold tracking-wider uppercase sm:text-[10px]"
+                    style={{ color: 'var(--accent-gold)' }}
+                  >
+                    {t(`landingPage.telemetry.${titleKey}`)}
+                  </span>
+                  <span
+                    className="block text-sm leading-snug"
+                    style={{ color: 'var(--text-secondary)' }}
+                  >
+                    {t(`landingPage.telemetry.${bodyKey}`)}
+                  </span>
+                </li>
+              ))}
+            </ol>
+
+            <div
+              className="mt-4 flex flex-wrap items-end justify-between gap-3 border-t pt-4"
+              style={{ borderColor: 'var(--border)' }}
+            >
+              <p
+                className="max-w-xl text-left text-xs leading-relaxed"
+                style={{ color: 'var(--text-muted)' }}
               >
+                {t('landingPage.telemetry.homeNode')}
+              </p>
+              <p className="text-right">
                 <span
-                  className="mb-1 block truncate text-[9px] font-bold tracking-wider uppercase sm:text-[10px]"
+                  className="block text-[9px] font-bold tracking-wider uppercase"
                   style={{ color: 'var(--text-muted)' }}
                 >
                   {t('landingPage.telemetry.tipHeight')}
                 </span>
                 <span
-                  className="block truncate font-mono text-base font-black sm:text-lg md:text-xl"
+                  className="font-mono text-lg font-black"
                   style={{ color: 'var(--text-primary)' }}
                 >
                   #{blockHeight ? Number(blockHeight).toLocaleString() : '—'}
                 </span>
-              </div>
-
-              {/* Recommended Fees */}
-              <div
-                className="min-w-0 overflow-hidden rounded-2xl p-3 sm:p-4"
-                style={{ backgroundColor: 'rgba(255, 255, 255, 0.02)' }}
-              >
-                <span
-                  className="mb-1 block truncate text-[9px] font-bold tracking-wider uppercase sm:text-[10px]"
-                  style={{ color: 'var(--text-muted)' }}
-                >
-                  {t('landingPage.telemetry.fastestFee')}
-                </span>
-                <span
-                  className="flex min-w-0 flex-wrap items-baseline gap-x-1 font-mono text-base font-black sm:text-lg md:text-xl"
-                  style={{ color: 'var(--accent-gold)' }}
-                >
-                  <span className="truncate">{networkStats.fees?.high ?? '—'}</span>
-                  <span className="shrink-0 text-[10px] font-normal opacity-80 sm:text-xs">
-                    {t('landingPage.telemetry.satPerVb')}
-                  </span>
-                </span>
-                <span
-                  className="mt-1 block text-[8px] leading-snug font-medium tracking-wide uppercase sm:text-[9px]"
-                  style={{ color: 'var(--text-muted)' }}
-                >
-                  {t('landingPage.telemetry.feeNote', {
-                    defaultValue: 'Indicative · mempool, not a Satohash fee'
-                  })}
-                </span>
-              </div>
-
-              {/* Difficulty Adjust — hidden on narrow phones */}
-              <div
-                className="hidden min-w-0 overflow-hidden rounded-2xl p-3 sm:block sm:p-4"
-                style={{ backgroundColor: 'rgba(255, 255, 255, 0.02)' }}
-              >
-                <span
-                  className="mb-1 block truncate text-[9px] font-bold tracking-wider uppercase sm:text-[10px]"
-                  style={{ color: 'var(--text-muted)' }}
-                >
-                  {t('landingPage.telemetry.difficultyAdjust')}
-                </span>
-                <span
-                  className="block truncate font-mono text-base font-black sm:text-lg md:text-xl"
-                  style={{
-                    color:
-                      Number(networkStats.difficultyChange) > 0
-                        ? 'var(--accent-success, #4ade80)'
-                        : Number(networkStats.difficultyChange) < 0
-                          ? 'var(--accent-pending, #fbbf24)'
-                          : 'var(--text-primary)'
-                  }}
-                  title={
-                    networkStats.difficultyChange == null
-                      ? undefined
-                      : `${networkStats.difficultyChange}%`
-                  }
-                >
-                  {(() => {
-                    if (
-                      networkStats.difficultyChange == null ||
-                      networkStats.difficultyChange === ''
-                    )
-                      return '—'
-                    const n = Number(networkStats.difficultyChange)
-                    if (!Number.isFinite(n)) return '—'
-                    const sign = n > 0 ? '+' : ''
-                    return `${sign}${n.toFixed(2)}%`
-                  })()}
-                </span>
-              </div>
-
-              {/* Epoch Progress — hidden on narrow phones */}
-              <div
-                className="hidden min-w-0 overflow-hidden rounded-2xl p-3 sm:block sm:p-4"
-                style={{ backgroundColor: 'rgba(255, 255, 255, 0.02)' }}
-              >
-                <span
-                  className="mb-1 block truncate text-[9px] font-bold tracking-wider uppercase sm:text-[10px]"
-                  style={{ color: 'var(--text-muted)' }}
-                >
-                  {t('landingPage.telemetry.epochProgress')}
-                </span>
-                <span
-                  className="mb-1.5 block font-mono text-base font-black sm:text-lg md:text-xl"
-                  style={{ color: 'var(--text-primary)' }}
-                >
-                  {(() => {
-                    if (
-                      networkStats.difficultyProgress == null ||
-                      networkStats.difficultyProgress === ''
-                    )
-                      return '—'
-                    const n = Number(networkStats.difficultyProgress)
-                    if (!Number.isFinite(n)) return '—'
-                    return `${Math.min(100, Math.max(0, n)).toFixed(1)}%`
-                  })()}
-                </span>
-                <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-800">
-                  <div
-                    className="h-1.5 max-w-full rounded-full bg-sky-400 transition-[width] duration-500"
-                    style={{
-                      width: `${Math.min(100, Math.max(0, Number(networkStats.difficultyProgress) || 0))}%`
-                    }}
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div
-              className="mt-4 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 border-t pt-4 text-center text-xs"
-              style={{ borderColor: 'var(--border)', color: 'var(--text-muted)' }}
-            >
-              <span>🔐 {t('landingPage.telemetry.zeroKnowledge')}</span>
-              <span>⚡ {t('landingPage.telemetry.compliance')}</span>
-              <span>
-                📁{' '}
-                {t('landingPage.telemetry.proofsConfirmed', {
-                  count: confirmedCount !== null ? confirmedCount.toLocaleString() : '—'
-                })}
-              </span>
+              </p>
             </div>
           </motion.div>
         </div>
