@@ -35,6 +35,7 @@ COPY server ./server
 # Ops tooling that must run against the live DB + own bitcoind inside the
 # container: the registry integrity audit (t_da054829).
 COPY scripts/ots-registry-audit.mjs ./scripts/ots-registry-audit.mjs
+COPY scripts/backup-stamp-index.mjs ./scripts/backup-stamp-index.mjs
 COPY ecosystem.config.cjs ./
 
 ENV NODE_ENV=production
