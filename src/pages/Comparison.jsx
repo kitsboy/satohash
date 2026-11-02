@@ -45,6 +45,9 @@ export default function Comparison() {
         const row = t(`comparisonPage.rows.${id}`, { returnObjects: true })
         const resolve = (val) => {
           if (val === true || val === false) return val
+          if (val === 'planned') {
+            return t('comparisonPage.cellValues.planned', { defaultValue: 'Planned' })
+          }
           if (id === 'monthlyCost' && val === 'variableGas') {
             return t('comparisonPage.cellValues.variableGas', { defaultValue: 'Variable gas' })
           }
@@ -56,7 +59,13 @@ export default function Comparison() {
           satohash: resolve(row.satohash),
           docuSign: resolve(row.docuSign),
           eth: resolve(row.eth),
-          diyOTS: resolve(row.diyOTS)
+          diyOTS: resolve(row.diyOTS),
+          planned: {
+            satohash: row.satohash === 'planned',
+            docuSign: row.docuSign === 'planned',
+            eth: row.eth === 'planned',
+            diyOTS: row.diyOTS === 'planned'
+          }
         }
       }),
     [t]
@@ -124,6 +133,7 @@ export default function Comparison() {
                     </td>
                     {COLUMN_KEYS.map((key) => {
                       const val = row[key]
+                      const planned = row.planned?.[key] === true
                       return (
                         <td key={key} className="p-4 text-center text-xs">
                           {val === true ? (
@@ -131,7 +141,12 @@ export default function Comparison() {
                           ) : val === false ? (
                             <XIcon size={16} className="mx-auto text-[var(--text-tertiary)]" />
                           ) : (
-                            <span className="text-[var(--text-secondary)]">{val}</span>
+                            <span
+                              className="text-[var(--text-secondary)]"
+                              data-testid={planned ? `compare-planned-${row.id}` : undefined}
+                            >
+                              {val}
+                            </span>
                           )}
                         </td>
                       )

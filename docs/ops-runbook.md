@@ -32,6 +32,19 @@ Switch `BITCOIN_RPC_URL` to the home node only when every line below is true:
 
 Until then, stamps keep using the node already at the tip. LND stays off. `REQUIRE_LIGHTNING` stays false. Do not install BTCPay on Umbrel and call that the stamp checker. A payment box is a later step and does not move the checker. On 2026-11-02 the first download was about 92% and this switch was not made.
 
+## Stamp index backup (Kimi / THOR)
+
+The stamp index is the API SQLite file. Back it up on THOR, not on the home node. This does not change `/api/*` and does not turn on payments.
+
+```bash
+cd /root/satohash && git fetch origin && git reset --hard origin/main
+node scripts/backup-stamp-index.mjs
+```
+
+The command prints the new file path under the backup folder and nothing else. It does not print `BACKUP_KEY`. Keep the zip or `.enc` on THOR. Do not commit it.
+
+A typed `L402` header is not a payment. `REQUIRE_LIGHTNING` stays false. When Cam later sets it to true, the server accepts a stamp only after LNbits says that invoice is paid and the preimage hashes to that payment. The paid path is also capped at 20 stamps an hour per IP. The free path stays 5 a minute. Family keys stay free. Rebuild the API for this server change, and leave the flag false.
+
 ## Current (2026-10-13)
 
 SPA product copy is live at `4134150` (sign-in says the key stays on the device). `/health` status ok at 19:19 UTC, `gitSha` `e814a57`, paywall off. Do not rebuild the API for the October copy. If `6c8ae2e` is only on THOR, do not push it. Next SPA work is item 1 in `docs/roadmap.md` (dashboard history labels). Ingest the top of `docs/KIMI-HANDOFF.md` into THOR Obsidian.

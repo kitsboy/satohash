@@ -242,7 +242,7 @@
       },
       "multiParty": {
         "label": "Multi-party co-signing",
-        "satohash": true,
+        "satohash": "planned",
         "docuSign": true,
         "eth": true,
         "diyOTS": false
@@ -256,7 +256,7 @@
       },
       "bolt12": {
         "label": "BOLT-12 Lightning payments",
-        "satohash": true,
+        "satohash": "planned",
         "docuSign": false,
         "eth": false,
         "diyOTS": false
@@ -277,7 +277,7 @@
       },
       "snapper": {
         "label": "Browser extension (Snapper)",
-        "satohash": true,
+        "satohash": "planned",
         "docuSign": false,
         "eth": false,
         "diyOTS": false
@@ -298,6 +298,7 @@
       }
     },
     "cellValues": {
+      "planned": "Planned",
       "variableGas": "Variable gas"
     },
     "download": {
@@ -1625,7 +1626,7 @@
     "pendingTipBody": "The fingerprint is at OpenTimestamps calendars. It is NOT in a Bitcoin block until status is confirmed. Pending ≠ confirmed.",
     "statusPending": "Pending",
     "statusConfirmed": "Confirmed",
-    "pendingLine": "OpenTimestamps calendars have it. Not in a Bitcoin block yet — usually ~60 min.",
+    "pendingLine": "Your proof is with the public calendars. A new stamp waits about an hour before a Bitcoin block includes it.",
     "confirmedLine": "Bitcoin block {{block}} — download .ots",
     "confirmedLineNoBlock": "Bitcoin-confirmed — download .ots",
     "otsPending": "Pending .ots — calendars only",
@@ -2015,7 +2016,7 @@
     "notStampedBody": "This fingerprint is not in the Satohash registry. Stamp it to start OpenTimestamps.",
     "stampThisFingerprint": "Stamp this fingerprint",
     "downloadOts": "Download .ots",
-    "waitingBlock": "Calendars have the digest; Bitcoin block has not included it (~60 min).",
+    "waitingBlock": "Your proof is with the public calendars. A new stamp waits about an hour before a Bitcoin block includes it.",
     "more": "More"
   },
   "counselPage": {

@@ -1,5 +1,5 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 452) · **Updated:** 2026-11-02
+> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 453) · **Updated:** 2026-11-02
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Architecture & repo map

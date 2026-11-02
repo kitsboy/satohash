@@ -101,6 +101,36 @@ export function paywallStampPriceSats() {
   return Math.max(1, parseInt(process.env.STAMP_PRICE_SATS || '21', 10) || 21)
 }
 
+/**
+ * Ask LNbits whether this invoice was paid. Never treats a missing wallet as paid.
+ * @param {string} paymentHash
+ */
+export async function lnbitsInvoiceStatus(paymentHash) {
+  if (!isLnbitsConfigured()) {
+    return { paid: false, status: 'not_configured', mock: true, amount_msat: null }
+  }
+  if (!/^[a-f0-9]{64}$/i.test(String(paymentHash || ''))) {
+    return { paid: false, status: 'bad_hash', mock: false, amount_msat: null }
+  }
+  try {
+    const res = await fetch(`${baseUrl()}/api/v1/payments/${encodeURIComponent(paymentHash)}`, {
+      headers: { 'X-Api-Key': invoiceKey() },
+      signal: AbortSignal.timeout(8000)
+    })
+    if (!res.ok) throw new Error(`LNbits status HTTP ${res.status}`)
+    const data = await res.json()
+    return {
+      paid: data.paid === true,
+      status: data.status || (data.paid === true ? 'paid' : 'pending'),
+      mock: false,
+      amount_msat: data.amount ?? data.details?.amount ?? null
+    }
+  } catch (e) {
+    logger.warn('lnbits invoice status: %s', e.message)
+    return { paid: false, status: 'error', error: e.message, mock: false, amount_msat: null }
+  }
+}
+
 export async function createStampPaymentOffer() {
   const amount = paywallStampPriceSats()
   if (isLnbitsConfigured()) {

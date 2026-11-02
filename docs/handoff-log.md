@@ -1,3 +1,13 @@
+## 2026-11-02 (Grok M3 — compare page, phone steps, one clock, payment prep)
+
+Compare page: BOLT-12, multi-party signing, and Snapper say Planned. On a phone the three steps sit above the film. Done page, proof card, and the iMessage line share one sentence: a new stamp waits about an hour. Paywall stays off. A typed `L402` header is not a payment. Paid path, once Cam sets `REQUIRE_LIGHTNING=true`, checks a real LNbits paid invoice and caps that path at 20 stamps an hour per IP. Free path stays 5 a minute.
+
+Practice stamp is still pending. Hash `90ae0c6b79f0e9da075e41592a4889b9b57f83d08ccff42c9cc1864fdb9af658`, id `7c42c702-0b37-4067-bd77-82da9c7b1b7f`. No block yet.
+
+**Kimi:** this push changes `server/`. Rebuild the API and keep `REQUIRE_LIGHTNING=false`. Do not change `/api/*`. Do not point `BITCOIN_RPC_URL` at Umbrel. LND stays off. Then run `node scripts/backup-stamp-index.mjs` on THOR. Do not commit the backup file.
+
+---
+
 ## 2026-11-02 (Grok M3 — chapters, quiet install, planned prices, practice stamp)
 
 `/watch` chapter buttons seek the existing film. The voice and pictures were not regenerated. The phone install hint is a quiet text line, and it only appears when the phone offers Add to Home Screen. Paid pricing cells that are not for sale say Planned. Free-column Yes stays for the stamp we already do. The three steps say a new stamp waits about an hour. Network warns when two calendars are down, and says Alice and Bob are enough when only Finney is down. The home-node switch rule is in `docs/ops-runbook.md`. Do not switch.

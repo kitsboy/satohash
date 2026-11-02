@@ -241,7 +241,7 @@
       },
       "multiParty": {
         "label": "多方联署",
-        "satohash": true,
+        "satohash": "planned",
         "docuSign": true,
         "eth": true,
         "diyOTS": false
@@ -255,7 +255,7 @@
       },
       "bolt12": {
         "label": "BOLT-12 Lightning 支付",
-        "satohash": true,
+        "satohash": "planned",
         "docuSign": false,
         "eth": false,
         "diyOTS": false
@@ -276,7 +276,7 @@
       },
       "snapper": {
         "label": "浏览器扩展（Snapper）",
-        "satohash": true,
+        "satohash": "planned",
         "docuSign": false,
         "eth": false,
         "diyOTS": false
@@ -297,6 +297,7 @@
       }
     },
     "cellValues": {
+      "planned": "计划中",
       "variableGas": "Gas 费用不定"
     },
     "download": {
@@ -1857,7 +1858,7 @@
     "pendingTipBody": "指纹已在 OpenTimestamps 日历上。在状态变为 confirmed 之前，它不在比特币区块中。Pending ≠ confirmed。",
     "statusPending": "Pending",
     "statusConfirmed": "Confirmed",
-    "pendingLine": "OpenTimestamps 日历已收录。尚未进入 Bitcoin 区块 — 通常约 60 分钟。",
+    "pendingLine": "你的证明已在公开日历里。新的戳记大约要等一小时，才会被一个比特币区块收进去。",
     "confirmedLine": "Bitcoin 区块 {{block}} — 下载 .ots",
     "confirmedLineNoBlock": "Bitcoin-confirmed — 下载 .ots",
     "otsPending": "Pending .ots — 仅日历",
@@ -1990,7 +1991,7 @@
     "notStampedBody": "此指纹不在 Satohash 登记中。盖戳以启动 OpenTimestamps。",
     "stampThisFingerprint": "盖戳此指纹",
     "downloadOts": "下载 .ots",
-    "waitingBlock": "日历已有该摘要；Bitcoin 区块尚未包含它（约 60 分钟）。",
+    "waitingBlock": "你的证明已在公开日历里。新的戳记大约要等一小时，才会被一个比特币区块收进去。",
     "more": "更多"
   },
   "counselPage": {

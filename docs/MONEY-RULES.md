@@ -16,3 +16,5 @@ Paper only. Do not turn billing on from this file.
 - Refunds are a new payment in sats, not a promise to reverse Lightning. Write the exact rule before the first charge.
 - A paid product still waits on Lenny for the legal entity. No entity, no charge.
 - The home Umbrel node is not the cash register until it has sat at the Bitcoin tip for a week. THOR checks proofs today.
+- A typed header is not a payment. The server must see a LNbits invoice marked paid, and the preimage must hash to that payment. A mock invoice never clears it.
+- Once the paywall is on, the paid path is 20 stamps an hour per IP. The free path stays 5 a minute. Family keys stay on the free path.

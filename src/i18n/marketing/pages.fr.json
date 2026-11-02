@@ -241,7 +241,7 @@
       },
       "multiParty": {
         "label": "Co-signature multipartite",
-        "satohash": true,
+        "satohash": "planned",
         "docuSign": true,
         "eth": true,
         "diyOTS": false
@@ -255,7 +255,7 @@
       },
       "bolt12": {
         "label": "Paiements Lightning BOLT-12",
-        "satohash": true,
+        "satohash": "planned",
         "docuSign": false,
         "eth": false,
         "diyOTS": false
@@ -276,7 +276,7 @@
       },
       "snapper": {
         "label": "Extension navigateur (Snapper)",
-        "satohash": true,
+        "satohash": "planned",
         "docuSign": false,
         "eth": false,
         "diyOTS": false
@@ -297,6 +297,7 @@
       }
     },
     "cellValues": {
+      "planned": "Prévu",
       "variableGas": "Gas variable"
     },
     "download": {
@@ -1882,7 +1883,7 @@
     "pendingTipBody": "L’empreinte est chez les calendriers OpenTimestamps. Elle N’EST PAS dans un bloc Bitcoin tant que le statut n’est pas confirmed. Pending ≠ confirmed.",
     "statusPending": "Pending",
     "statusConfirmed": "Confirmed",
-    "pendingLine": "Les calendriers OpenTimestamps l’ont. Pas encore dans un bloc Bitcoin — généralement ~60 min.",
+    "pendingLine": "Votre preuve est chez les calendriers publics. Un nouveau sceau attend environ une heure avant qu’un bloc Bitcoin l’inclue.",
     "confirmedLine": "Bloc Bitcoin {{block}} — télécharger .ots",
     "confirmedLineNoBlock": "Bitcoin-confirmed — télécharger .ots",
     "otsPending": "Pending .ots — calendriers seulement",
@@ -2015,7 +2016,7 @@
     "notStampedBody": "Cette empreinte n’est pas dans le registre Satohash. Horodatez-la pour démarrer OpenTimestamps.",
     "stampThisFingerprint": "Horodater cette empreinte",
     "downloadOts": "Télécharger .ots",
-    "waitingBlock": "Les calendriers ont le condensé ; un bloc Bitcoin ne l’a pas encore inclus (~60 min).",
+    "waitingBlock": "Votre preuve est chez les calendriers publics. Un nouveau sceau attend environ une heure avant qu’un bloc Bitcoin l’inclue.",
     "more": "Plus"
   },
   "counselPage": {

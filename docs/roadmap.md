@@ -32,29 +32,33 @@ The homepage says file stays, calendars write, our node checks. The live block n
 
 Chapter buttons on `/watch` seek the existing 70s film and the 10s teaser. The voice and pictures were not regenerated. The phone install hint is a quiet text line, and it only shows when the phone offers Add to Home Screen. Paid pricing cells that are not on sale say Planned. The three steps say a new stamp waits about an hour, and the block number is the tip. Network says Alice and Bob are enough when only Finney is down, and it warns when two calendars are down. The home-node switch rule is in `docs/ops-runbook.md`. Do not switch yet.
 
-### 4. Next — public example only if Cam picks a file
+### 4. Shipped 2026-11-02 — compare page, phone path, one clock, payment prep
+
+The compare page says Planned for BOLT-12, multi-party signing, and Snapper. On a phone the three steps sit above the film. The done page, the proof card, and the iMessage line use one sentence: a new stamp waits about an hour. The paywall still stays off. A typed payment header does not count. The paid path, once Cam turns it on, is capped at 20 stamps an hour. The free path stays 5 a minute. Stamp-index backup command is in `docs/ops-runbook.md` for Kimi on THOR.
+
+### 5. Next — public example only if Cam picks a file
 
 7. **Public example.** Swap the homepage example only if Cam picks a file. Cam’s picture stamp stays private. Do not publish that filename.
 
-### 5. Cam only
+### 6. Cam only
 
 8. Pin `https://satohash.io/watch` on `@give_bit` when Cam wants. Paste-ready copy is in `docs/marketing/GIVE-BIT-X-PACK.md`. Agents cannot post as that account.
-9. Check the iPhone / iMessage preview of `/p/<hash>`. Deferred until Cam has the phone.
+9. Look at the iPhone / iMessage preview of `/p/<hash>` after this Pages deploy. The card copy now says about an hour. Cam still confirms it on a phone.
 
-### 6. Do not do yet
+### 7. Do not do yet
 
 - Do not flip `REQUIRE_LIGHTNING`. Paywall stays off.
 - Do not change live `/api/*` paths.
-- Do not rebuild the API for copy.
+- Do not rebuild the API for a copy-only push. The payment-prep push does change `server/`. Rebuild that one with the flag still false.
 - Do not point Bitcoin RPC at Umbrel until that node is at the same tip as THOR. LND stays off.
 - Do not add Arabic.
 - Do not sell Snapper, ZK redaction, 3D Merkle, BOLT-12, or L402 as live.
 - Do not npm-publish `@satohash/cli` unless Cam asks.
 - TadBuy’s dead same-origin `/api/*` is the TadBuy repo, not this API.
 
-### 7. Kimi
+### 8. Kimi
 
-Ingest `docs/KIMI-HANDOFF.md` and `docs/archive/SESSION-SUMMARY-2026-10-13-goodbye.md` into THOR Obsidian (MASTER-BRAIN / Kanban). Vault is on THOR, not M4. Pages stay Grok’s. Keep `REQUIRE_LIGHTNING=false`.
+Ingest `docs/KIMI-HANDOFF.md` and `docs/archive/SESSION-SUMMARY-2026-10-13-goodbye.md` into THOR Obsidian (MASTER-BRAIN / Kanban). Vault is on THOR, not M4. Pages stay Grok’s. Keep `REQUIRE_LIGHTNING=false`. After the payment-prep push, rebuild the API with that flag still false, then run `node scripts/backup-stamp-index.mjs` on THOR.
 
 ## Archive phases (not the work order)
 

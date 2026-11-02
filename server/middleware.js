@@ -3,6 +3,7 @@ import rateLimit from 'express-rate-limit'
 import logger from './logger.js'
 import redis from './cache.js'
 import { hashClientIp } from './security.js'
+import { parsePaymentProof, preimagePaysHash } from './lib/payment-proof.js'
 
 /**
  * Middleware for Correlation IDs.
@@ -154,34 +155,54 @@ export const paywallMiddleware = async (req, res, next) => {
     return next()
   }
 
-  const authHeader = req.headers['authorization'] || req.headers['x-l402-token']
-  const preimage = req.headers['x-preimage'] || req.headers['x-payment-preimage']
-
-  // Paid path: accept L402 token or preimage proof (full macaroon verify can be added later)
-  if (authHeader?.startsWith('L402 ') || (preimage && String(preimage).length >= 16)) {
-    logger.info(`⚡ [PAYWALL] Cleared payment proof for ${hashClientIp(req.ip)}`)
-    return next()
+  const { isLnbitsConfigured, createStampPaymentOffer, lnbitsInvoiceStatus } =
+    await import('./lib/lnbits.js')
+  const proof = parsePaymentProof(req.headers)
+  if (proof.preimage && proof.paymentHash && preimagePaysHash(proof.preimage, proof.paymentHash)) {
+    const status = await lnbitsInvoiceStatus(proof.paymentHash)
+    if (status.paid === true) {
+      logger.info(`⚡ [PAYWALL] Paid invoice for ${hashClientIp(req.ip)}`)
+      return next()
+    }
+    return res.status(402).json({
+      error: 'Payment Required',
+      message: 'That Lightning payment is not paid yet.',
+      paid: false,
+      status: status.status
+    })
   }
 
-  // Issue live invoice (LNbits when configured) so SPA can show QR immediately
+  if (!isLnbitsConfigured()) {
+    return res.status(402).json({
+      error: 'Payment Required',
+      message: 'A real Lightning wallet is not connected, so this stamp cannot be sold.',
+      mock: true,
+      provider: 'unconfigured'
+    })
+  }
+
+  // Issue a real invoice only. A mock bolt11 is not something anyone can pay.
   try {
-    const { createStampPaymentOffer } = await import('./lib/lnbits.js')
     const offer = await createStampPaymentOffer()
+    if (offer.mock || !offer.payment_request || !offer.payment_hash) {
+      return res.status(402).json({
+        error: 'Payment Required',
+        message: 'A real Lightning wallet is not connected, so this stamp cannot be sold.',
+        mock: true,
+        provider: offer.provider || 'mock'
+      })
+    }
     const www = `L402 macaroon="satohash", invoice="${offer.payment_request}"`
     res.setHeader('WWW-Authenticate', www)
     return res.status(402).json({
       error: 'Payment Required',
       message:
-        'Pay the Lightning invoice, then retry with Authorization: L402 … or X-Preimage header.',
+        'Pay the Lightning invoice, then retry with X-Preimage and X-Payment-Hash from that payment.',
       amount_sats: offer.amount_sats,
       payment_request: offer.payment_request,
       payment_hash: offer.payment_hash,
       provider: offer.provider,
-      mock: offer.mock === true,
-      family: 'Suite apps: X-Satohash-Key matching FAMILY_API_KEYS skips paywall.',
-      enable_note: offer.mock
-        ? 'Configure LNBITS_URL + LNBITS_INVOICE_KEY before relying on paid mode.'
-        : 'LNbits invoice live.'
+      mock: false
     })
   } catch (e) {
     logger.error('paywall invoice: %s', e.message)

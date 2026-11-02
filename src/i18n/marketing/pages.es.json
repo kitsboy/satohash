@@ -241,7 +241,7 @@
       },
       "multiParty": {
         "label": "Co-firma multiparte",
-        "satohash": true,
+        "satohash": "planned",
         "docuSign": true,
         "eth": true,
         "diyOTS": false
@@ -255,7 +255,7 @@
       },
       "bolt12": {
         "label": "Pagos Lightning BOLT-12",
-        "satohash": true,
+        "satohash": "planned",
         "docuSign": false,
         "eth": false,
         "diyOTS": false
@@ -276,7 +276,7 @@
       },
       "snapper": {
         "label": "Extensión de navegador (Snapper)",
-        "satohash": true,
+        "satohash": "planned",
         "docuSign": false,
         "eth": false,
         "diyOTS": false
@@ -297,6 +297,7 @@
       }
     },
     "cellValues": {
+      "planned": "Previsto",
       "variableGas": "Gas variable"
     },
     "download": {
@@ -1882,7 +1883,7 @@
     "pendingTipBody": "La huella está en los calendarios OpenTimestamps. NO está en un bloque Bitcoin hasta que el estado sea confirmed. Pending ≠ confirmed.",
     "statusPending": "Pending",
     "statusConfirmed": "Confirmed",
-    "pendingLine": "Los calendarios OpenTimestamps ya la tienen. Aún no está en un bloque Bitcoin — suele tardar ~60 min.",
+    "pendingLine": "Tu prueba está en los calendarios públicos. Un sello nuevo espera cerca de una hora antes de que un bloque de Bitcoin lo incluya.",
     "confirmedLine": "Bitcoin bloque {{block}} — descargar .ots",
     "confirmedLineNoBlock": "Bitcoin-confirmed — descargar .ots",
     "otsPending": "Pending .ots — solo calendarios",
@@ -2015,7 +2016,7 @@
     "notStampedBody": "Esta huella no está en el registro Satohash. Séllala para iniciar OpenTimestamps.",
     "stampThisFingerprint": "Sellar esta huella",
     "downloadOts": "Descargar .ots",
-    "waitingBlock": "Los calendarios tienen el resumen; un bloque Bitcoin aún no lo incluye (~60 min).",
+    "waitingBlock": "Tu prueba está en los calendarios públicos. Un sello nuevo espera cerca de una hora antes de que un bloque de Bitcoin lo incluya.",
     "more": "Más"
   },
   "counselPage": {

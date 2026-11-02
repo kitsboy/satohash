@@ -241,7 +241,7 @@
       },
       "multiParty": {
         "label": "Co-assinatura multiparte",
-        "satohash": true,
+        "satohash": "planned",
         "docuSign": true,
         "eth": true,
         "diyOTS": false
@@ -255,7 +255,7 @@
       },
       "bolt12": {
         "label": "Pagamentos Lightning BOLT-12",
-        "satohash": true,
+        "satohash": "planned",
         "docuSign": false,
         "eth": false,
         "diyOTS": false
@@ -276,7 +276,7 @@
       },
       "snapper": {
         "label": "Extensão de navegador (Snapper)",
-        "satohash": true,
+        "satohash": "planned",
         "docuSign": false,
         "eth": false,
         "diyOTS": false
@@ -297,6 +297,7 @@
       }
     },
     "cellValues": {
+      "planned": "Previsto",
       "variableGas": "Gas variável"
     },
     "download": {
@@ -1882,7 +1883,7 @@
     "pendingTipBody": "A impressão está nos calendários OpenTimestamps. NÃO está num bloco Bitcoin até o estado ser confirmed. Pending ≠ confirmed.",
     "statusPending": "Pending",
     "statusConfirmed": "Confirmed",
-    "pendingLine": "Os calendários OpenTimestamps já a têm. Ainda não está num bloco Bitcoin — costuma levar ~60 min.",
+    "pendingLine": "A tua prova está nos calendários públicos. Um carimbo novo espera cerca de uma hora até um bloco Bitcoin o incluir.",
     "confirmedLine": "Bloco Bitcoin {{block}} — descarregar .ots",
     "confirmedLineNoBlock": "Bitcoin-confirmed — descarregar .ots",
     "otsPending": "Pending .ots — só calendários",
@@ -2015,7 +2016,7 @@
     "notStampedBody": "Esta impressão não está no registo Satohash. Sele-a para iniciar OpenTimestamps.",
     "stampThisFingerprint": "Selar esta impressão",
     "downloadOts": "Descarregar .ots",
-    "waitingBlock": "Os calendários têm o resumo; um bloco Bitcoin ainda não o inclui (~60 min).",
+    "waitingBlock": "A tua prova está nos calendários públicos. Um carimbo novo espera cerca de uma hora até um bloco Bitcoin o incluir.",
     "more": "Mais"
   },
   "counselPage": {

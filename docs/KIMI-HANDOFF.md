@@ -1,3 +1,21 @@
+## Handoff (Grok M3 → Kimi — 2026-11-02, payment prep)
+
+This push changes `server/`. **Rebuild the API. Keep `REQUIRE_LIGHTNING=false`.** Do not change `/api/*`. Do not point `BITCOIN_RPC_URL` at Umbrel. LND stays off. Do not install BTCPay on Umbrel as the checker.
+
+After the new image is up, from `/root/satohash`:
+
+```bash
+node scripts/backup-stamp-index.mjs
+```
+
+That snapshots the stamp index. Do not commit the zip. A typed `L402` header is not a payment. The paid-path check and the 20-per-hour cap stay idle until Cam sets the flag to true. The free path stays 5 a minute.
+
+The website also says Planned for BOLT-12, multi-party, and Snapper on the compare page. On a phone the three steps sit above the film. The proof card says a new stamp waits about an hour.
+
+Practice stamp is still pending: hash `90ae0c6b79f0e9da075e41592a4889b9b57f83d08ccff42c9cc1864fdb9af658`, id `7c42c702-0b37-4067-bd77-82da9c7b1b7f`. No block.
+
+---
+
 ## Handoff (Grok M3 → Kimi — 2026-11-02, chapters and the practice stamp)
 
 Website only. **Do not rebuild the API.** **Do not change `/api/*`.** Keep **`REQUIRE_LIGHTNING=false`.** Do not point `BITCOIN_RPC_URL` at Umbrel. LND stays off. Do not install BTCPay on Umbrel as the stamp checker. The switch rule is in `docs/ops-runbook.md` and it is not done.

@@ -473,173 +473,175 @@ export default function Landing() {
             </Link>
           </motion.div>
 
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            animate="visible"
-            custom={0.4}
-            className="mx-auto mb-8 w-full max-w-3xl min-w-0"
-          >
-            <div
-              className="relative w-full overflow-hidden rounded-2xl"
-              style={{
-                aspectRatio: '16 / 9',
-                border: '1px solid color-mix(in srgb, #fff 10%, transparent)',
-                background: '#05070a'
-              }}
+          <div className="flex w-full flex-col" data-testid="home-path-and-film">
+            <motion.div
+              variants={fadeUp}
+              initial="hidden"
+              animate="visible"
+              custom={0.4}
+              className="order-2 mx-auto mb-8 w-full max-w-3xl min-w-0 sm:order-1"
             >
-              {!heroPlaying ? (
-                <>
-                  <img
-                    src={HERO_POSTER}
-                    alt=""
-                    aria-hidden="true"
-                    width={1920}
-                    height={1080}
-                    fetchPriority="high"
-                    decoding="async"
-                    className="absolute inset-0 h-full w-full rounded-[inherit] object-cover"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setHeroPlaying(true)}
-                    className="group absolute inset-0 z-10 flex items-center justify-center focus-visible:outline-none"
-                    aria-label={HERO_VIDEO_LABEL}
-                  >
-                    <span
-                      className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-black/10"
-                      aria-hidden
+              <div
+                className="relative w-full overflow-hidden rounded-2xl"
+                style={{
+                  aspectRatio: '16 / 9',
+                  border: '1px solid color-mix(in srgb, #fff 10%, transparent)',
+                  background: '#05070a'
+                }}
+              >
+                {!heroPlaying ? (
+                  <>
+                    <img
+                      src={HERO_POSTER}
+                      alt=""
+                      aria-hidden="true"
+                      width={1920}
+                      height={1080}
+                      fetchPriority="high"
+                      decoding="async"
+                      className="absolute inset-0 h-full w-full rounded-[inherit] object-cover"
                     />
-                    <span
-                      className="relative flex h-16 min-h-[48px] w-16 min-w-[48px] items-center justify-center rounded-full group-focus-visible:ring-2 group-focus-visible:ring-[var(--accent-gold)] group-focus-visible:ring-offset-2 group-focus-visible:ring-offset-[#05070a] motion-safe:transition-transform motion-safe:duration-300 motion-safe:group-hover:scale-105 sm:h-20 sm:w-20"
-                      style={{
-                        backgroundColor: 'var(--accent-gold)',
-                        color: '#141b25',
-                        boxShadow:
-                          '0 0 0 1.15px color-mix(in srgb, #fff 35%, var(--accent-gold)), 0 14px 40px var(--accent-gold-glow)'
-                      }}
-                      aria-hidden
+                    <button
+                      type="button"
+                      onClick={() => setHeroPlaying(true)}
+                      className="group absolute inset-0 z-10 flex items-center justify-center focus-visible:outline-none"
+                      aria-label={HERO_VIDEO_LABEL}
                     >
-                      <Play size={28} fill="currentColor" className="ml-1" />
-                    </span>
-                    <span className="pointer-events-none absolute right-3 bottom-3 left-3 flex items-end justify-between gap-2">
                       <span
-                        className="rounded-full px-2.5 py-1 text-[10px] font-black tracking-[0.16em] text-white/80 uppercase"
+                        className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-black/10"
+                        aria-hidden
+                      />
+                      <span
+                        className="relative flex h-16 min-h-[48px] w-16 min-w-[48px] items-center justify-center rounded-full group-focus-visible:ring-2 group-focus-visible:ring-[var(--accent-gold)] group-focus-visible:ring-offset-2 group-focus-visible:ring-offset-[#05070a] motion-safe:transition-transform motion-safe:duration-300 motion-safe:group-hover:scale-105 sm:h-20 sm:w-20"
                         style={{
-                          background: 'color-mix(in srgb, #05070a 70%, transparent)'
+                          backgroundColor: 'var(--accent-gold)',
+                          color: '#141b25',
+                          boxShadow:
+                            '0 0 0 1.15px color-mix(in srgb, #fff 35%, var(--accent-gold)), 0 14px 40px var(--accent-gold-glow)'
                         }}
+                        aria-hidden
                       >
-                        70s
+                        <Play size={28} fill="currentColor" className="ml-1" />
                       </span>
-                      <span className="hidden text-right text-[10px] font-semibold tracking-wide text-white/80 sm:block">
-                        File never leaves the device
+                      <span className="pointer-events-none absolute right-3 bottom-3 left-3 flex items-end justify-between gap-2">
+                        <span
+                          className="rounded-full px-2.5 py-1 text-[10px] font-black tracking-[0.16em] text-white/80 uppercase"
+                          style={{
+                            background: 'color-mix(in srgb, #05070a 70%, transparent)'
+                          }}
+                        >
+                          70s
+                        </span>
+                        <span className="hidden text-right text-[10px] font-semibold tracking-wide text-white/80 sm:block">
+                          File never leaves the device
+                        </span>
                       </span>
-                    </span>
-                  </button>
-                </>
-              ) : (
-                <video
-                  ref={bindHeroVideo}
-                  src={HERO_VIDEO}
-                  poster={HERO_POSTER}
-                  playsInline
-                  preload="none"
-                  controls
-                  className="absolute inset-0 h-full w-full bg-black object-contain"
-                  aria-label={HERO_VIDEO_LABEL}
-                />
-              )}
-            </div>
-            <p
-              className="mt-3 text-xs font-medium tracking-wide sm:text-sm"
-              style={{ color: 'var(--text-muted)' }}
-            >
-              70 seconds · file never leaves the device
-            </p>
-          </motion.div>
-
-          {/* Social proof + template link */}
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            animate="visible"
-            custom={0.5}
-            className="mb-10 flex flex-col items-center gap-3"
-          >
-            <div className="flex items-center gap-3">
-              <p
-                className="text-sm font-semibold"
-                style={{ color: 'var(--text-secondary)' }}
-                data-testid="live-stamp-count"
-              >
-                {proofCount != null
-                  ? t('landingPage.hero.socialProof', {
-                      issued: proofCount.toLocaleString(),
-                      confirmed: (confirmedCount ?? 0).toLocaleString()
-                    })
-                  : 'Live stamp counts load from the public metrics plane'}
-              </p>
-            </div>
-            <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
-              <Link
-                to="/templates"
-                className="flex items-center gap-1 text-sm font-semibold transition-opacity hover:opacity-70"
-                style={{ color: 'var(--accent-gold)' }}
-              >
-                {t('landingPage.hero.tryTemplate')} <ArrowRight size={13} />
-              </Link>
-              <a
-                href="#verify-ots"
-                className="flex items-center gap-1 text-sm font-semibold transition-opacity hover:opacity-70"
-                style={{ color: 'var(--text-secondary)' }}
-              >
-                Verify a proof <ChevronRight size={13} />
-              </a>
-              <TipButton size="sm" className="min-h-[40px]" />
-            </div>
-          </motion.div>
-
-          {/* How a stamp meets Bitcoin — file, calendars, our node */}
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            animate="visible"
-            custom={0.6}
-            className="hud-glass mx-auto mt-12 max-w-4xl rounded-3xl p-6"
-            data-testid="stamp-chain-plane"
-          >
-            <div
-              className="mb-4 flex flex-wrap items-center justify-between gap-3 border-b pb-4 text-[10px] font-black tracking-widest uppercase"
-              style={{ borderColor: 'var(--border)' }}
-            >
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="relative flex h-2 w-2">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500"></span>
-                </span>
-                <span style={{ color: 'var(--accent-success)' }}>
-                  {t('landingPage.telemetry.flowTitle')}
-                </span>
-                <LiveNodeChip defer />
+                    </button>
+                  </>
+                ) : (
+                  <video
+                    ref={bindHeroVideo}
+                    src={HERO_VIDEO}
+                    poster={HERO_POSTER}
+                    playsInline
+                    preload="none"
+                    controls
+                    className="absolute inset-0 h-full w-full bg-black object-contain"
+                    aria-label={HERO_VIDEO_LABEL}
+                  />
+                )}
               </div>
-              <Link
-                to="/network"
-                className="flex items-center gap-1 hover:underline"
-                style={{ color: 'var(--accent-teal)' }}
+              <p
+                className="mt-3 text-xs font-medium tracking-wide sm:text-sm"
+                style={{ color: 'var(--text-muted)' }}
               >
-                {t('landingPage.telemetry.openNetwork')} <ChevronRight size={10} />
-              </Link>
-            </div>
+                70 seconds · file never leaves the device
+              </p>
+            </motion.div>
 
-            <StampChainSteps t={t} blockHeight={blockHeight} />
-
-            <p
-              className="mt-4 border-t pt-4 text-left text-xs leading-relaxed"
-              style={{ borderColor: 'var(--border)', color: 'var(--text-muted)' }}
+            {/* Social proof + template link */}
+            <motion.div
+              variants={fadeUp}
+              initial="hidden"
+              animate="visible"
+              custom={0.5}
+              className="order-3 mb-10 flex flex-col items-center gap-3 sm:order-2"
             >
-              {t('landingPage.telemetry.homeNode')}
-            </p>
-          </motion.div>
+              <div className="flex items-center gap-3">
+                <p
+                  className="text-sm font-semibold"
+                  style={{ color: 'var(--text-secondary)' }}
+                  data-testid="live-stamp-count"
+                >
+                  {proofCount != null
+                    ? t('landingPage.hero.socialProof', {
+                        issued: proofCount.toLocaleString(),
+                        confirmed: (confirmedCount ?? 0).toLocaleString()
+                      })
+                    : 'Live stamp counts load from the public metrics plane'}
+                </p>
+              </div>
+              <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
+                <Link
+                  to="/templates"
+                  className="flex items-center gap-1 text-sm font-semibold transition-opacity hover:opacity-70"
+                  style={{ color: 'var(--accent-gold)' }}
+                >
+                  {t('landingPage.hero.tryTemplate')} <ArrowRight size={13} />
+                </Link>
+                <a
+                  href="#verify-ots"
+                  className="flex items-center gap-1 text-sm font-semibold transition-opacity hover:opacity-70"
+                  style={{ color: 'var(--text-secondary)' }}
+                >
+                  Verify a proof <ChevronRight size={13} />
+                </a>
+                <TipButton size="sm" className="min-h-[40px]" />
+              </div>
+            </motion.div>
+
+            {/* How a stamp meets Bitcoin — file, calendars, our node */}
+            <motion.div
+              variants={fadeUp}
+              initial="hidden"
+              animate="visible"
+              custom={0.6}
+              className="hud-glass order-1 mx-auto mt-2 max-w-4xl rounded-3xl p-6 sm:order-3 sm:mt-12"
+              data-testid="stamp-chain-plane"
+            >
+              <div
+                className="mb-4 flex flex-wrap items-center justify-between gap-3 border-b pb-4 text-[10px] font-black tracking-widest uppercase"
+                style={{ borderColor: 'var(--border)' }}
+              >
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="relative flex h-2 w-2">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
+                    <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500"></span>
+                  </span>
+                  <span style={{ color: 'var(--accent-success)' }}>
+                    {t('landingPage.telemetry.flowTitle')}
+                  </span>
+                  <LiveNodeChip defer />
+                </div>
+                <Link
+                  to="/network"
+                  className="flex items-center gap-1 hover:underline"
+                  style={{ color: 'var(--accent-teal)' }}
+                >
+                  {t('landingPage.telemetry.openNetwork')} <ChevronRight size={10} />
+                </Link>
+              </div>
+
+              <StampChainSteps t={t} blockHeight={blockHeight} />
+
+              <p
+                className="mt-4 border-t pt-4 text-left text-xs leading-relaxed"
+                style={{ borderColor: 'var(--border)', color: 'var(--text-muted)' }}
+              >
+                {t('landingPage.telemetry.homeNode')}
+              </p>
+            </motion.div>
+          </div>
         </div>
       </section>
 

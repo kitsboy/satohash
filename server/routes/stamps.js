@@ -1,6 +1,8 @@
 import { assertAuthoredStamp, authoredFromCosignatures } from '../lib/authored.js'
+import { paidStampHourlyLimit } from '../lib/paid-stamp-limit.js'
 import { inspectAttestations, parseOts } from '../lib/ots-attestations.js'
 import { checkDigestBinding, verifyDetachedAgainstChain } from '../lib/ots-chain-verify.js'
+import { isFamilyApiKey } from '../middleware.js'
 import {
   describeVerifyResult,
   otsDownloadUrl,
@@ -57,6 +59,8 @@ export function register(app, deps) {
       return sendError(res, ERROR_CODES.RATE_LIMITED)
     }
   })
+  // Turns on only with REQUIRE_LIGHTNING=true. Free stamps stay at 5/minute.
+  const paidHourlyLimit = paidStampHourlyLimit(rateLimit, { isFamilyApiKey })
 
   /**
    * @swagger
@@ -64,207 +68,212 @@ export function register(app, deps) {
    *   post:
    *     summary: Create an OTS timestamp, save to database, and return JSON info.
    */
-  app.post('/api/stamp', stampRateLimit, paywallMiddleware, async (req, res, next) => {
-    try {
-      const stampSchema = z.object({
-        hash: z
-          .string()
-          .length(64, 'Hash must be exactly 64 hex characters (SHA-256)')
-          .regex(/^[a-f0-9]{64}$/i, 'Hash must be a valid hex string'),
-        filename: z.string().min(1).max(255).optional().default('unknown'),
-        email: z.string().email().optional(),
-        nostr_pubkey: z.string().optional(),
-        authored: z
-          .object({
-            file_sha256: z
-              .string()
-              .length(64)
-              .regex(/^[a-f0-9]{64}$/i),
-            event: z.preprocess(
-              (v) => {
-                if (!v || typeof v !== 'object' || Array.isArray(v)) return v
-                try {
-                  return JSON.parse(
-                    JSON.stringify({
-                      id: v.id,
-                      pubkey: v.pubkey,
-                      created_at: v.created_at,
-                      kind: v.kind,
-                      tags: v.tags,
-                      content: v.content,
-                      sig: v.sig
-                    })
-                  )
-                } catch {
-                  return v
-                }
-              },
-              z.record(z.string(), z.any())
-            )
-          })
-          .optional()
-      })
-      const validation = stampSchema.safeParse(req.body)
-      if (!validation.success) {
-        return sendError(res, ERROR_CODES.VALIDATION_FAILED, {
-          details: validation.error.issues.map((i) => i.message)
+  app.post(
+    '/api/stamp',
+    stampRateLimit,
+    paidHourlyLimit,
+    paywallMiddleware,
+    async (req, res, next) => {
+      try {
+        const stampSchema = z.object({
+          hash: z
+            .string()
+            .length(64, 'Hash must be exactly 64 hex characters (SHA-256)')
+            .regex(/^[a-f0-9]{64}$/i, 'Hash must be a valid hex string'),
+          filename: z.string().min(1).max(255).optional().default('unknown'),
+          email: z.string().email().optional(),
+          nostr_pubkey: z.string().optional(),
+          authored: z
+            .object({
+              file_sha256: z
+                .string()
+                .length(64)
+                .regex(/^[a-f0-9]{64}$/i),
+              event: z.preprocess(
+                (v) => {
+                  if (!v || typeof v !== 'object' || Array.isArray(v)) return v
+                  try {
+                    return JSON.parse(
+                      JSON.stringify({
+                        id: v.id,
+                        pubkey: v.pubkey,
+                        created_at: v.created_at,
+                        kind: v.kind,
+                        tags: v.tags,
+                        content: v.content,
+                        sig: v.sig
+                      })
+                    )
+                  } catch {
+                    return v
+                  }
+                },
+                z.record(z.string(), z.any())
+              )
+            })
+            .optional()
         })
-      }
-
-      const { hash, filename, email, authored } = validation.data
-      let authoredBinding = null
-      if (authored) {
-        authoredBinding = assertAuthoredStamp({ hash, authored })
-        if (!authoredBinding.ok) {
+        const validation = stampSchema.safeParse(req.body)
+        if (!validation.success) {
           return sendError(res, ERROR_CODES.VALIDATION_FAILED, {
-            details: [authoredBinding.error || 'authored stamp binding failed']
+            details: validation.error.issues.map((i) => i.message)
           })
         }
-      }
-      // FIX 3a — extract npub from header or body for user scoping
-      const userNpub = req.headers['x-npub'] || req.body.npub || null
-      // HQ attribution — always store X-Satohash-Client when present
-      const clientId = String(
-        req.satohashClient ||
-          req.headers['x-satohash-client'] ||
-          req.body.client_id ||
-          req.body.clientId ||
-          'public'
-      )
-        .trim()
-        .toLowerCase()
-        .slice(0, 64)
-      const hashBuffer = Buffer.from(hash, 'hex')
-      try {
-        const existing = db
-          .prepare('SELECT id, hash, status FROM timestamps WHERE hash = ? LIMIT 1')
-          .get(hash)
-        if (existing?.id) {
-          return res.json({
-            success: true,
-            reused: true,
-            id: existing.id,
-            hash: existing.hash,
-            status: existing.status || 'pending',
-            message: 'Hash already stamped — returning existing proof (no new calendar submit).'
-          })
-        }
-      } catch {
-        /* table/column variance — continue to new stamp */
-      }
 
-      const opSHA256 = new OpenTimestamps.Ops.OpSHA256()
-      const detached = OpenTimestamps.DetachedTimestampFile.fromHash(opSHA256, hashBuffer)
-
-      let otsBinary
-      try {
-        // Use the working public OTS aggregator pools. Direct alice/bob/finney
-        // submission returns 0 attestations; the pools aggregate up to them and
-        // return real pending attestations in <2s. See server/lib/ots-helpers.js.
-        const calendarUrls = [
-          'https://a.pool.opentimestamps.org',
-          'https://b.pool.opentimestamps.org',
-          'https://a.pool.eternitywall.com'
-        ]
-        await stampWithTimeout(detached, calendarUrls, 30000)
-        otsBinary = detached.serializeToBytes()
-        // Item 10: Binary Proof Validation
-        if (!otsBinary || otsBinary.length < 10) {
-          throw new Error('OTS stamp produced empty binary.')
+        const { hash, filename, email, authored } = validation.data
+        let authoredBinding = null
+        if (authored) {
+          authoredBinding = assertAuthoredStamp({ hash, authored })
+          if (!authoredBinding.ok) {
+            return sendError(res, ERROR_CODES.VALIDATION_FAILED, {
+              details: [authoredBinding.error || 'authored stamp binding failed']
+            })
+          }
         }
-      } catch (stampErr) {
-        if (stampErr.message?.includes('timed out')) {
-          return sendError(res, ERROR_CODES.STAMP_TIMEOUT, { details: stampErr.message })
-        }
-        logger.warn(
-          `⚠️  OTS calendar stamp failed for hash ${hash} — saving placeholder for daemon pickup: ${stampErr.message}`
+        // FIX 3a — extract npub from header or body for user scoping
+        const userNpub = req.headers['x-npub'] || req.body.npub || null
+        // HQ attribution — always store X-Satohash-Client when present
+        const clientId = String(
+          req.satohashClient ||
+            req.headers['x-satohash-client'] ||
+            req.body.client_id ||
+            req.body.clientId ||
+            'public'
         )
-        // Placeholder binary keeps the NOT NULL constraint satisfied; the
-        // upgrade daemon will overwrite this on its next cycle.
-        otsBinary = Buffer.from(`ots:pending:${hash}`)
-      }
-
-      const id = uuidv4()
-      // Item 18: Deterministic IPFS Simulation (Hardened for PRO)
-      const ipfsCid = `Qm${crypto
-        .createHash('sha256')
-        .update(hash + id)
-        .digest('hex')
-        .substring(0, 44)}`
-
-      try {
-        db.prepare(
-          'INSERT INTO timestamps (id, hash, original_filename, ots_binary, merkle_root, client_id) VALUES (?, ?, ?, ?, ?, ?)'
-        ).run(id, hash, filename, Buffer.from(otsBinary), ipfsCid, clientId || 'public')
-      } catch {
-        // Older DBs without client_id column
-        db.prepare(
-          'INSERT INTO timestamps (id, hash, original_filename, ots_binary, merkle_root) VALUES (?, ?, ?, ?, ?)'
-        ).run(id, hash, filename, Buffer.from(otsBinary), ipfsCid)
+          .trim()
+          .toLowerCase()
+          .slice(0, 64)
+        const hashBuffer = Buffer.from(hash, 'hex')
         try {
-          db.prepare('UPDATE timestamps SET client_id = ? WHERE id = ?').run(
-            clientId || 'public',
-            id
-          )
+          const existing = db
+            .prepare('SELECT id, hash, status FROM timestamps WHERE hash = ? LIMIT 1')
+            .get(hash)
+          if (existing?.id) {
+            return res.json({
+              success: true,
+              reused: true,
+              id: existing.id,
+              hash: existing.hash,
+              status: existing.status || 'pending',
+              message: 'Hash already stamped — returning existing proof (no new calendar submit).'
+            })
+          }
         } catch {
-          /* column may not exist yet — v5-api ALTER adds it */
+          /* table/column variance — continue to new stamp */
         }
-      }
 
-      if (authoredBinding?.ok) {
+        const opSHA256 = new OpenTimestamps.Ops.OpSHA256()
+        const detached = OpenTimestamps.DetachedTimestampFile.fromHash(opSHA256, hashBuffer)
+
+        let otsBinary
         try {
-          db.prepare('UPDATE timestamps SET cosignatures = ? WHERE id = ?').run(
-            JSON.stringify([
-              {
-                type: 'authored-v1',
-                file_sha256: authoredBinding.fileSha256,
-                event: authoredBinding.event
-              }
-            ]),
-            id
+          // Use the working public OTS aggregator pools. Direct alice/bob/finney
+          // submission returns 0 attestations; the pools aggregate up to them and
+          // return real pending attestations in <2s. See server/lib/ots-helpers.js.
+          const calendarUrls = [
+            'https://a.pool.opentimestamps.org',
+            'https://b.pool.opentimestamps.org',
+            'https://a.pool.eternitywall.com'
+          ]
+          await stampWithTimeout(detached, calendarUrls, 30000)
+          otsBinary = detached.serializeToBytes()
+          // Item 10: Binary Proof Validation
+          if (!otsBinary || otsBinary.length < 10) {
+            throw new Error('OTS stamp produced empty binary.')
+          }
+        } catch (stampErr) {
+          if (stampErr.message?.includes('timed out')) {
+            return sendError(res, ERROR_CODES.STAMP_TIMEOUT, { details: stampErr.message })
+          }
+          logger.warn(
+            `⚠️  OTS calendar stamp failed for hash ${hash} — saving placeholder for daemon pickup: ${stampErr.message}`
           )
+          // Placeholder binary keeps the NOT NULL constraint satisfied; the
+          // upgrade daemon will overwrite this on its next cycle.
+          otsBinary = Buffer.from(`ots:pending:${hash}`)
+        }
+
+        const id = uuidv4()
+        // Item 18: Deterministic IPFS Simulation (Hardened for PRO)
+        const ipfsCid = `Qm${crypto
+          .createHash('sha256')
+          .update(hash + id)
+          .digest('hex')
+          .substring(0, 44)}`
+
+        try {
+          db.prepare(
+            'INSERT INTO timestamps (id, hash, original_filename, ots_binary, merkle_root, client_id) VALUES (?, ?, ?, ?, ?, ?)'
+          ).run(id, hash, filename, Buffer.from(otsBinary), ipfsCid, clientId || 'public')
         } catch {
-          /* cosignatures column may not exist on older DBs */
+          // Older DBs without client_id column
+          db.prepare(
+            'INSERT INTO timestamps (id, hash, original_filename, ots_binary, merkle_root) VALUES (?, ?, ?, ?, ?)'
+          ).run(id, hash, filename, Buffer.from(otsBinary), ipfsCid)
+          try {
+            db.prepare('UPDATE timestamps SET client_id = ? WHERE id = ?').run(
+              clientId || 'public',
+              id
+            )
+          } catch {
+            /* column may not exist yet — v5-api ALTER adds it */
+          }
         }
-      }
 
-      // Background tasks
-      publishTimestampToNostr(hash, filename, id).catch(() => {})
-      stampCounter.inc({ status: 'pending' })
-
-      // FIX 1 — NIP-07: store user-signed Nostr event id if provided
-      if (req.body.nostr_signed_event) {
-        try {
-          const evt =
-            typeof req.body.nostr_signed_event === 'string'
-              ? JSON.parse(req.body.nostr_signed_event)
-              : req.body.nostr_signed_event
-          db.prepare('UPDATE timestamps SET nostr_event_id = ? WHERE id = ?').run(
-            evt.id || null,
-            id
-          )
-        } catch (_e) {
-          /* optional nostr column */
+        if (authoredBinding?.ok) {
+          try {
+            db.prepare('UPDATE timestamps SET cosignatures = ? WHERE id = ?').run(
+              JSON.stringify([
+                {
+                  type: 'authored-v1',
+                  file_sha256: authoredBinding.fileSha256,
+                  event: authoredBinding.event
+                }
+              ]),
+              id
+            )
+          } catch {
+            /* cosignatures column may not exist on older DBs */
+          }
         }
-      }
 
-      // FIX 3a — store user npub for multi-user scoping (wrapped in try/catch: column may not exist on older DBs)
-      if (userNpub) {
-        try {
-          db.prepare('UPDATE timestamps SET user_npub = ? WHERE id = ?').run(userNpub, id)
-        } catch (_e) {
-          /* optional user_npub column */
+        // Background tasks
+        publishTimestampToNostr(hash, filename, id).catch(() => {})
+        stampCounter.inc({ status: 'pending' })
+
+        // FIX 1 — NIP-07: store user-signed Nostr event id if provided
+        if (req.body.nostr_signed_event) {
+          try {
+            const evt =
+              typeof req.body.nostr_signed_event === 'string'
+                ? JSON.parse(req.body.nostr_signed_event)
+                : req.body.nostr_signed_event
+            db.prepare('UPDATE timestamps SET nostr_event_id = ? WHERE id = ?').run(
+              evt.id || null,
+              id
+            )
+          } catch (_e) {
+            /* optional nostr column */
+          }
         }
-      }
 
-      // Send confirmation email if email provided
-      if (email) {
-        try {
-          await emailTransporter.sendMail({
-            from: `"Satohash Protocol" <noreply@satohash.com>`,
-            to: email,
-            subject: `Timestamp Proof Created - ID: ${id.slice(0, 8).toUpperCase()}`,
-            html: `
+        // FIX 3a — store user npub for multi-user scoping (wrapped in try/catch: column may not exist on older DBs)
+        if (userNpub) {
+          try {
+            db.prepare('UPDATE timestamps SET user_npub = ? WHERE id = ?').run(userNpub, id)
+          } catch (_e) {
+            /* optional user_npub column */
+          }
+        }
+
+        // Send confirmation email if email provided
+        if (email) {
+          try {
+            await emailTransporter.sendMail({
+              from: `"Satohash Protocol" <noreply@satohash.com>`,
+              to: email,
+              subject: `Timestamp Proof Created - ID: ${id.slice(0, 8).toUpperCase()}`,
+              html: `
                 <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
                   <h2>Proof of Existence Confirmed</h2>
                   <p>Your timestamp has been created successfully.</p>
@@ -279,38 +288,39 @@ export function register(app, deps) {
                   <small>This is an automated confirmation from Satohash. No further action required.</small>
                 </div>
               `,
-            text: `Timestamp ID: ${id}\nFile: ${filename}\nHash: ${hash}\nStatus: Pending\nView: ${VERIFY_BASE_URL}/verify/${id}`
-          })
-          logger.info(`📧 Confirmation email sent to ${email} for stamp ${id}`)
-        } catch (emailErr) {
-          logger.warn(`Failed to send email to ${email}:`, emailErr.message)
-          // Don't fail the request on email error
+              text: `Timestamp ID: ${id}\nFile: ${filename}\nHash: ${hash}\nStatus: Pending\nView: ${VERIFY_BASE_URL}/verify/${id}`
+            })
+            logger.info(`📧 Confirmation email sent to ${email} for stamp ${id}`)
+          } catch (emailErr) {
+            logger.warn(`Failed to send email to ${email}:`, emailErr.message)
+            // Don't fail the request on email error
+          }
         }
+
+        res.json({
+          id,
+          hash,
+          filename,
+          status: 'pending',
+          ipfs_cid: ipfsCid,
+          client_id: clientId || 'public',
+          created_at: new Date().toISOString(),
+          email_sent: !!email,
+          verify_url: `${process.env.VERIFY_BASE_URL || 'https://satohash.io'}/verify/${id}`
+        })
+        io.emit('ots:stamped', { id, hash, filename, ipfs_cid: ipfsCid, client_id: clientId })
+
+        // Propagate to mesh with IPFS CID
+        import('../mesh.js').then(({ default: mesh }) => {
+          mesh
+            .propagate(id, hash, ipfsCid)
+            .catch((err) => logger.warn(`Mesh propagation failed: ${err.message}`))
+        })
+      } catch (error) {
+        next(error)
       }
-
-      res.json({
-        id,
-        hash,
-        filename,
-        status: 'pending',
-        ipfs_cid: ipfsCid,
-        client_id: clientId || 'public',
-        created_at: new Date().toISOString(),
-        email_sent: !!email,
-        verify_url: `${process.env.VERIFY_BASE_URL || 'https://satohash.io'}/verify/${id}`
-      })
-      io.emit('ots:stamped', { id, hash, filename, ipfs_cid: ipfsCid, client_id: clientId })
-
-      // Propagate to mesh with IPFS CID
-      import('../mesh.js').then(({ default: mesh }) => {
-        mesh
-          .propagate(id, hash, ipfsCid)
-          .catch((err) => logger.warn(`Mesh propagation failed: ${err.message}`))
-      })
-    } catch (error) {
-      next(error)
     }
-  })
+  )
 
   /**
    * @swagger
