@@ -2,7 +2,7 @@
 
 Canonical copy: [`docs/roadmap.md`](docs/roadmap.md). This file stays in sync so either path shows the same order.
 
-> **Live product (2026-11-02):** stamp on the device → `.ots` → our node checks Bitcoin → `/p/{hash}`. Stamps are free. Lightning billing is off. The file stays. Calendars write. THOR bitcoind checks. A home node waits until it is at the same tip. Paywall off. Do not rebuild for this website push.
+> **Live product (2026-11-03):** stamp on the device → `.ots` → our node checks Bitcoin → `/p/{hash}`. Stamps are free. Lightning billing is off. The file stays. Calendars write. THOR bitcoind checks. At 16:10 UTC the tip was block **974,408** (IBD done). A practice stamp is confirmed in block **974302** and is not the public example. API image `7c68076` is running with the paywall off. This goodbye is docs. Do not rebuild for it. Do not reset Thor’s dirty checkout.
 
 Do the next open item in [`docs/roadmap.md`](docs/roadmap.md), then the one after it.
 

@@ -1,5 +1,5 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 455) · **Updated:** 2026-11-02
+> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 456) · **Updated:** 2026-11-03
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Deploy — canonical
@@ -78,6 +78,8 @@ API lives on THOR, not CF Pages.
 # FAMILY_API_KEYS=... for family free tier
 # OTS_CALENDARS=... public calendars
 ```
+
+**Current (2026-11-03):** running image is commit `7c68076`, paywall off. This goodbye is docs and does not need a rebuild. Do not `git reset --hard` `/root/satohash` (dirty branch `fix/locale-de-fr-legal-scope` at `c632289`). A future server rebuild uses clean worktree `/root/satohash-deploy` and `docker compose -p satohash`. Steps: `docs/ops-runbook.md`.
 
 Annex: `docs/KIMI-VPS-RUNBOOK.md`, `docs/ops-runbook.md` (Docker packaging detail: `docs/DEPLOY-SERVER.md` if present).
 

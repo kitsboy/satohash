@@ -1,9 +1,9 @@
 # Current Status — Satohash
 
-**Version:** **5.0.0-ELITE** (Build 432)  
-**Last Updated:** 2026-11-02 (API `7c68076` on Thor, paywall off, stamp index backed up; practice stamp confirmed in block 974302)  
-**Frontend:** https://satohash.io · www · CF Pages project **`satohash`** — Grok lane, `assetsDir: 'b'`. Last confirmed product deploy is `4134150` (build 431): sign-in says the key stays on the device. Live shell `/b/index-Bt__WPpD.js`. Also live from this arc: 70s film, file-stays copy, glossary Lightning and BOLT-12 free-stamps lines, dashboard status rows, and the translated side column. This docs commit does not change product copy.  
-**API:** https://api.satohash.io ✅ LIVE. `/health` status **ok** at 2026-10-13 19:19 UTC. **`gitSha` `e814a57`**. Version `5.0.0-ELITE`. Paywall off. This copy work did not change `server/`. Kimi: if `6c8ae2e` is still only on THOR, do not push it.  
+**Version:** **5.0.0-ELITE** (Build 455 on `2ad78c0` before this goodbye. The hook bumps the build. The API image does not move with a docs commit.)  
+**Last Updated:** 2026-11-03 (goodbye). Running API is commit `7c68076`. Paywall off. Practice stamp confirmed in block 974302.  
+**Frontend:** https://satohash.io · www · CF Pages project **`satohash`** — Grok lane, `assetsDir: 'b'`. Checked 2026-11-03: homepage shell `/b/index-BlXgiPcI.js`, English chunk `pages.en-DuK6NyGe.js`. That English bundle includes “a new stamp waits about an hour”, Planned, and Coming soon. October shell `/b/index-Bt__WPpD.js` is not the live file. This check did not click through the site.  
+**API:** https://api.satohash.io ✅ LIVE. `GET /health?deep=true` at 2026-11-03 16:10 UTC: status **ok**, `gitSha` `7c680769234553ce3e98fdb584a2eb7dfcd7954b` (commit `7c68076`), version `5.0.0-ELITE`, `require_lightning` false, mode `free_open`. Database healthy, about 2.9 MB. Same image as the 2026-11-02 rebuild (uptime about 18 hours). Do not rebuild for this goodbye. Do not `git reset --hard` `/root/satohash`.  
 **Metrics SoT:** `https://api.satohash.io/metrics.json`  
 **HQ:** https://hq.giveabit.io  
 **Git:** `main` (pull before you trust a SHA in this file)  
@@ -18,7 +18,7 @@
 | SPA | CF Pages → satohash.io | **Grok lane.** Kimi cannot alter Pages. Grok has standing auth to push SPA fixes. Must call `https://api.satohash.io` |
 | API | THOR Docker + Caddy | `satohash-satohash-api-1` healthy |
 | Metrics | API `/metrics.json` | SPA `/metrics.json` is CF Function proxy |
-| Bitcoin | THOR bitcoind | Own node **at tip** · height **974,293** on 2026-11-02 · `source: bitcoind` · IBD **done**. Umbrel is the home node and is not the checker until it matches this tip. LND stays off. |
+| Bitcoin | THOR bitcoind | Own node **at tip** · height **974,408** at 2026-11-03 16:10 UTC · `source: bitcoind` · IBD **done**. Practice stamp is block **974,302** and does not move with the tip. Umbrel is the home node and is not the checker until it matches this tip. LND stays off. |
 | Explainer | `/watch` | **~70s** `satohash-explainer-wise-70.mp4` · quiet bed · 10s teaser stays · `?v=kimi-wise-70-20261013` |
 | Bundles | `/b/*` | Do not revert to long-cache `/assets/*`. Stamp/Verify **eager**. VitePWA `injectRegister: false` |
 
@@ -90,17 +90,24 @@
 
 ## Next for the next LLM (do in this order)
 
-Pickup: this file → `docs/roadmap.md` → `docs/handoff-log.md` → `docs/archive/SESSION-SUMMARY-2026-10-13-goodbye.md`. `/whatsup` loads that goodbye.
+Pickup: this file → `docs/roadmap.md` → `docs/handoff-log.md` → `docs/KIMI-HANDOFF.md` → `SESSION-SUMMARY-2026-11-03.md`. `/whatsup` loads that goodbye.
 
-1. **Done 2026-11-02.** Homepage path is file stays, calendars write, our node checks. Main tools are Stamp, Verify, Network. Templates are under More.
-2. Chapter jumps on `/watch`, then a quieter phone install hint.
-3. A new public example only if Cam picks a file.
-4. **Kimi:** do not point Bitcoin RPC at Umbrel until that node is at the same tip. Do not enable LND. Do not rebuild for this website push.
-6. **Cam:** pin `/watch` on **`@give_bit`** when Cam wants (`docs/marketing/GIVE-BIT-X-PACK.md`). Grok cannot post. iPhone `/p/` unfurl stays deferred.
-7. **Kimi:** ingest the 2026-10-13 goodbye into THOR Obsidian. Keep `REQUIRE_LIGHTNING=false`. Do not rebuild for copy. Do not push `6c8ae2e` if it is only on THOR.
-8. **Do not:** flip the paywall; change `/api/*`; add Arabic; sell Snapper, ZK redaction, 3D Merkle, or BOLT-12 as live; Tailscale notes to M4. Vault = **THOR**. Pages = Grok. Optional who is shipped and is not a legal name.
-9. **TadBuy (other repo):** dead same-origin `/api/*` on that static demo. Not a Satohash API bug.
-10. **Optional:** npm-publish `packages/satohash-cli` only if Cam asks.
+1. **Done.** Honest path, chapters, quiet install, Planned compare rows, phone steps, one hour sentence, payment check in the image, container backup, practice stamp in block **974302**. Do not redo.
+2. A new public example only if Cam picks a file. The practice file stays private. The public example stays block **969,627**.
+3. **Cam and Lenny:** company name and governing law. Then Cam says the word. No charge before that. Do not flip the paywall.
+4. **Kimi:** ingest the 2026-11-03 goodbye into THOR Obsidian. Do not rebuild. Do not `git reset --hard` `/root/satohash`. Do not point Bitcoin RPC at Umbrel. Do not start LND. Backup with `docker exec` inside the API container.
+5. **Cam:** pin `/watch` on **`@give_bit`** when Cam wants (`docs/marketing/GIVE-BIT-X-PACK.md`). Grok cannot post. iPhone `/p/` unfurl stays deferred.
+6. **Do not:** flip the paywall; change `/api/*`; add Arabic; sell Snapper, ZK redaction, 3D Merkle, or BOLT-12 as live; Tailscale notes to M4. Vault = **THOR**. Pages = Grok. Optional who is shipped and is not a legal name.
+7. **TadBuy (other repo):** dead same-origin `/api/*` on that static demo. Not a Satohash API bug.
+8. **Optional:** npm-publish `packages/satohash-cli` only if Cam asks.
+
+## This session (2026-11-03 — goodbye)
+
+- [x] API image `7c68076` still running. Paywall off. Tip **974,408** at 16:10 UTC. Practice stamp stays block **974302**.
+- [x] Live shell `/b/index-BlXgiPcI.js` has the hour sentence. English chunk has Planned and Coming soon.
+- [x] Living status, roadmap, ops, and handoffs updated. Old dated notes left as history.
+- [ ] Company name and law still wait on Cam and Lenny. Do not charge.
+- [ ] Do not rebuild for this docs commit. Do not reset the dirty Thor checkout.
 
 ## This session (2026-10-13 — film, honest copy, roadmap)
 

@@ -6,6 +6,24 @@
 
 ---
 
+## Paste block (2026-11-03 — goodbye)
+
+```markdown
+### Satohash 2026-11-03 goodbye (Grok M3)
+Live loop unchanged: stamp on device → .ots → Bitcoin verify → /p/{hash}. Stamps free. Paywall off. File stays.
+API image 7c68076 is running. Health 2026-11-03 16:10 UTC ok, require_lightning false, mode free_open.
+Full gitSha 7c680769234553ce3e98fdb584a2eb7dfcd7954b. Do not rebuild for this docs goodbye.
+Our node: source bitcoind, height 974408, IBD done. Practice stamp confirmed in block 974302.
+Hash 90ae0c6b79f0e9da075e41592a4889b9b57f83d08ccff42c9cc1864fdb9af658. Not the homepage example.
+Backup inside the container: /app/data/backups/satohash-2026-11-02T22-10-41-681Z.enc. Do not commit it.
+Do not back up /root/satohash/data/satohash.db. Do not git reset --hard /root/satohash (dirty branch fix/locale-de-fr-legal-scope at c632289).
+Live shell /b/index-BlXgiPcI.js. English chunk pages.en-DuK6NyGe.js has the hour sentence, Planned, and Coming soon.
+No company name. No charge until Cam says the word. LNbits wallet answers and holds 0 sats. Health lnd false. Do not start LND.
+Do not point BITCOIN_RPC_URL at Umbrel. Do not change /api/*. Pages = Grok. Vault = THOR not M4.
+```
+
+---
+
 ## Paste block (2026-10-13 — goodbye)
 
 ```markdown

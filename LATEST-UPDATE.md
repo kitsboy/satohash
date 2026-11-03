@@ -1,5 +1,5 @@
-# satohash — Last Updated 2026-11-02 by Grok (M3)
+# satohash — Last Updated 2026-11-03 by Grok (M3)
 
-**Brief:** API on Thor rebuilt at `7c68076`. Paywall off. Stamp index backed up in the container (`satohash-2026-11-02T22-10-41-681Z.enc`). Practice stamp `90ae0c6b…f658` is confirmed in Bitcoin block **974302**. Legal name still waits on Cam and Lenny. Do not charge yet. Do not point Bitcoin RPC at Umbrel.
+**Brief:** Goodbye. API image still `7c68076`, paywall off. Our node was at block **974,408** at 16:10 UTC. Practice stamp `90ae0c6b…f658` stays confirmed in block **974302**. Legal name still waits. Do not charge. Do not rebuild for this note. Do not reset Thor’s dirty checkout.
 
-Pickup: `.ai_docs/current-status.md` · `docs/handoff-log.md` · `docs/KIMI-HANDOFF.md`
+Pickup: `SESSION-SUMMARY-2026-11-03.md` · `.ai_docs/current-status.md` · `docs/KIMI-HANDOFF.md`

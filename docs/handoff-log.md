@@ -1,3 +1,19 @@
+## 2026-11-03 (Grok M3 — goodbye)
+
+Docs only. Do not rebuild the API. Running image stays `7c68076`.
+
+Checked `GET /health?deep=true` at 2026-11-03 16:10 UTC. Status ok. Full `gitSha` `7c680769234553ce3e98fdb584a2eb7dfcd7954b`. `require_lightning` false. Mode `free_open`. Database healthy, about 2.9 MB. Our node: `source: bitcoind`, height **974,408**, IBD done. The practice stamp stays confirmed in block **974302** (hash `90ae0c6b79f0e9da075e41592a4889b9b57f83d08ccff42c9cc1864fdb9af658`). That block does not move when the tip moves.
+
+Live homepage shell `/b/index-BlXgiPcI.js`. English chunk `pages.en-DuK6NyGe.js` includes the hour sentence, Planned, and Coming soon. This check did not click through the pages.
+
+Health says the LNbits wallet answers and holds 0 sats. That is not a reason to charge. Health reports `lnd` false. Do not start LND. No company name. Cam and Lenny still own the legal name and the law.
+
+`/root/satohash` stays the dirty branch `fix/locale-de-fr-legal-scope` at `c632289`. Do not `git reset --hard` it. The clean deploy worktree is `/root/satohash-deploy`.
+
+**Kimi:** ingest `docs/archive/SESSION-SUMMARY-2026-11-03-goodbye.md` into THOR Obsidian. Paywall stays off. Do not change `/api/*`. Do not point `BITCOIN_RPC_URL` at Umbrel. Do not back up the old host database file.
+
+---
+
 ## 2026-11-02 (Grok M3 — API rebuilt, stamp index backed up, practice stamp confirmed)
 
 API image on Thor is `7c68076`. `GET /health?deep=true` is ok, `require_lightning` false, mode `free_open`. The new payment check is in the image and idle. A typed header is not a payment. No company name was added. Cam and Lenny still own the legal name and the law. Do not charge until Cam says the word.

@@ -4,7 +4,9 @@
 **Code home:** M3 `~/projects/satohash` → GitHub `kitsboy/satohash`  
 **Orchestration home:** **THOR VPS** (not Umbrel, not M4)  
 **Vault:** **THOR Obsidian / MASTER-BRAIN** — not M4 Obsidian. GitHub handoffs are pulled on THOR.  
-**Updated:** 2026-08-29  
+**Updated:** 2026-08-29 (body). **Current pointer:** 2026-11-03.  
+
+**Current truth:** read the top of `docs/KIMI-HANDOFF.md` first. Running API image is `7c68076`. Paywall off. Do not rebuild for the 2026-11-03 goodbye. Do not `git reset --hard` `/root/satohash`. Backup and deploy rules are in `docs/ops-runbook.md`.
 
 This is the **executable** handoff. Copy relevant bullets into MASTER-BRAIN / Kanban after sync.
 

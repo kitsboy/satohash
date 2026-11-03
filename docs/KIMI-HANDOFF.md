@@ -1,3 +1,30 @@
+## Latest Session Summary (from 2026-11-03 goodbye)
+
+**Chat topic:** Make Satohash honest and ready to charge later, without charging yet, and prove one practice stamp actually landed in Bitcoin.
+
+**Finished in this session:**
+
+- Compare page says Planned for BOLT-12, multi-party signing, and Snapper. Paid prices say Coming soon. Free stamp stays open.
+- On a phone the three steps sit above the film. Done page, proof card, and iMessage share one sentence: a new stamp waits about an hour.
+- A typed payment header is not a payment. The real check and the 20-per-hour cap stay idle while the flag is false. Free path stays 5 a minute.
+- API image **`7c68076`** is running. `GET /health?deep=true` at 2026-11-03 16:10 UTC was ok, `require_lightning` false, mode `free_open`. Full `gitSha` `7c680769234553ce3e98fdb584a2eb7dfcd7954b`. Our node: `source: bitcoind`, height **974408**, IBD false.
+- Stamp index backup inside the container: `/app/data/backups/satohash-2026-11-02T22-10-41-681Z.enc`. Do not commit it. Do not back up `/root/satohash/data/satohash.db` (old 208 KB file).
+- Practice stamp confirmed in block **974302**. Hash `90ae0c6b79f0e9da075e41592a4889b9b57f83d08ccff42c9cc1864fdb9af658`. Not the homepage example.
+- Live site shell `/b/index-BlXgiPcI.js`. English chunk `pages.en-DuK6NyGe.js` has the hour sentence, Planned, and Coming soon.
+- No company name was filled in. Do not charge.
+
+**Still to do:**
+
+- Cam and Lenny name the company and the law. Then Cam says the word. Do not flip `REQUIRE_LIGHTNING`.
+- Public example only if Cam picks a file. Public example stays block 969627.
+- Do not point `BITCOIN_RPC_URL` at Umbrel. LND stays off. Do not install BTCPay on Umbrel as the checker.
+- Cam: pin `/watch` on `@give_bit`. iPhone preview of `/p/<hash>`.
+- Do not `git reset --hard` `/root/satohash` (dirty branch `fix/locale-de-fr-legal-scope` at `c632289`). Do not merge it unless Cam asks.
+
+**Next for Kimi:** Ingest this summary into MASTER-BRAIN / Kanban on **THOR Obsidian** (not M4). This goodbye is docs. **Do not rebuild the API.** Running image stays `7c68076`. Keep `REQUIRE_LIGHTNING=false`. Do not change `/api/*`. Backup with `docker exec -w /app satohash-satohash-api-1 node scripts/backup-stamp-index.mjs`. Full note: `docs/archive/SESSION-SUMMARY-2026-11-03-goodbye.md`. Paste block: `docs/MASTER-BRAIN-INGEST.md`.
+
+---
+
 ## Handoff (Grok M3 → Kimi — 2026-11-02, API rebuild and the confirmed practice stamp)
 
 Done on Thor. API image is **`7c68076`**. Health is ok. **`REQUIRE_LIGHTNING` is false** (`free_open`). The payment check is in the image and does nothing while the flag is false. Do not flip it. No company name was filled in.

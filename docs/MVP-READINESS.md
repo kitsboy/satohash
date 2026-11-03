@@ -1,11 +1,11 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 455) · **Updated:** 2026-11-02
+> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 456) · **Updated:** 2026-11-03
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Satohash MVP Readiness
 
 > **Status:** Core MVP **live**. Frontend on Cloudflare Pages. API at https://api.satohash.io (THOR Docker). Own `bitcoind` at tip. Free stamps. Paywall off.
-> **Updated:** 2026-10-13 · Version `5.0.0-ELITE` · `/health` status ok at 19:19 UTC, `gitSha` `e814a57`, version `5.0.0-ELITE`. Paywall off. `server/` was not changed for the October copy work. Kimi: do not rebuild for copy. If `6c8ae2e` is only on THOR, do not push it.
+> **Updated:** 2026-11-03 · Version `5.0.0-ELITE` · `/health?deep=true` status ok at 16:10 UTC, `gitSha` `7c68076` (full hash `7c680769234553ce3e98fdb584a2eb7dfcd7954b`), paywall `free_open`. Our node height **974,408**, IBD done. Practice stamp confirmed in block **974302**. This goodbye is docs. Do not rebuild. Do not `git reset --hard` `/root/satohash`.
 
 ## MVP definition
 
@@ -49,7 +49,7 @@ The stranger-stamps loop does not wait on these. They are **QR and proof-state s
 | Camera QR → `https://satohash.io/p/{hash}` | **Live** — PDFs/email QR. Physical iPhone unfurl still needs Cam’s device. |
 | Proof states: **Pending ≠ Confirmed** | **Live** — `/p/<hash>`, stamp-done, notify when Confirmed. |
 | Family widgets | **Live** 2026-09-15 — katoa/motopass/sherpacarta/tadbuy=2, giveabit=3 at `/tools`. HQ was not zeros. |
-| Next product | Copy honesty is the upgrade path. Order: `docs/roadmap.md`. Next code: dashboard history labels, then the drop zone, then the sign-in headline. Cam: pin `/watch`. TadBuy `/api` 404s (other repo). Do not rebuild API for copy. |
+| Next product | The honest path, chapters, and the payment check are in. Order: `docs/roadmap.md`. Next is a public example only if Cam picks a file, then the company name and the law before any charge. Cam: pin `/watch`. TadBuy `/api` 404s (other repo). Do not rebuild the API for this docs goodbye. |
 | Family widget completing stamps | **Live** — default POSTs `/api/stamp` on the family site; `data-mode="spa"` is the SPA deep-link. |
 | Cam pin `/watch` on **@give_bit** | Open — paste-ready in `docs/marketing/GIVE-BIT-X-PACK.md` |
 | i18n | Slice A+B+C chrome done; localization **not** complete (offers deferred). See `docs/I18N.md`. Do not add Arabic. |

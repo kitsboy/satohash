@@ -1,8 +1,8 @@
 # Satohash Protocol Roadmap
 
-> **Live product (2026-11-02):** stamp a file on the device → download `.ots` → verify on Bitcoin → share `https://satohash.io/p/{hash}`. Pending means on the way. Confirmed means a Bitcoin block sealed it. Stamps are free. Lightning billing is off. The file stays. Public calendars write the commitment. THOR bitcoind checks it (height 974,293, IBD done, on 2026-11-02). A home node joins that check only after it reaches the same tip. Do not point RPC at Umbrel while it is still downloading. API `gitSha` was `6b84073` before this website push. Paywall off. Do not rebuild for this copy.
+> **Live product (2026-11-03):** stamp a file on the device → download `.ots` → verify on Bitcoin → share `https://satohash.io/p/{hash}`. Pending means on the way. Confirmed means a Bitcoin block sealed it. Stamps are free. Lightning billing is off. The file stays. Public calendars write the commitment. THOR bitcoind checks it. At 2026-11-03 16:10 UTC the tip was block **974,408**, IBD done, `source: bitcoind`. The practice stamp is confirmed in block **974302** and is not the public example. API image `7c68076` is running, paywall off. A home node joins that check only after it reaches the same tip. Do not point RPC at Umbrel while it is still downloading. This goodbye is docs. Do not rebuild for it.
 
-SoT: `.ai_docs/current-status.md` · session `docs/archive/SESSION-SUMMARY-2026-10-13-goodbye.md`.
+SoT: `.ai_docs/current-status.md` · session `docs/archive/SESSION-SUMMARY-2026-11-03-goodbye.md`.
 
 Do the next open item, commit, and push. Then take the one after it. Do not skip into “Do not do yet.”
 
@@ -49,7 +49,7 @@ The compare page says Planned for BOLT-12, multi-party signing, and Snapper. On 
 
 - Do not flip `REQUIRE_LIGHTNING`. Paywall stays off.
 - Do not change live `/api/*` paths.
-- Do not rebuild the API for a copy-only push. The payment-prep push does change `server/`. Rebuild that one with the flag still false.
+- Do not rebuild the API for this goodbye. Image `7c68076` already has the payment check, and the flag is false. A docs commit does not need a new image.
 - Do not point Bitcoin RPC at Umbrel until that node is at the same tip as THOR. LND stays off.
 - Do not add Arabic.
 - Do not sell Snapper, ZK redaction, 3D Merkle, BOLT-12, or L402 as live.
@@ -58,7 +58,7 @@ The compare page says Planned for BOLT-12, multi-party signing, and Snapper. On 
 
 ### 8. Kimi
 
-Ingest `docs/KIMI-HANDOFF.md` and `docs/archive/SESSION-SUMMARY-2026-10-13-goodbye.md` into THOR Obsidian (MASTER-BRAIN / Kanban). Vault is on THOR, not M4. Pages stay Grok’s. Keep `REQUIRE_LIGHTNING=false`. After the payment-prep push, rebuild the API with that flag still false, then run `node scripts/backup-stamp-index.mjs` on THOR.
+Ingest `docs/KIMI-HANDOFF.md` and `docs/archive/SESSION-SUMMARY-2026-11-03-goodbye.md` into THOR Obsidian (MASTER-BRAIN / Kanban). Vault is on THOR, not M4. Pages stay Grok’s. Keep `REQUIRE_LIGHTNING=false`. The API rebuild and the container backup are done. Do not rebuild for this goodbye. Do not `git reset --hard` `/root/satohash`.
 
 ## Archive phases (not the work order)
 
