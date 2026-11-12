@@ -22,15 +22,6 @@
   },
   "telemetry": {
     "title": "Télémétrie en direct du réseau Bitcoin",
-    "flowTitle": "Comment un sceau rejoint Bitcoin",
-    "stepFile": "1 · Le fichier reste",
-    "stepFileBody": "Le navigateur crée l’empreinte ici. Le fichier n’est pas envoyé.",
-    "stepWrite": "2 · Les calendriers écrivent",
-    "stepWriteBody": "Des calendriers publics regroupent les empreintes et paient un mineur pour graver une ligne dans un bloc Bitcoin.",
-    "stepCheck": "3 · Notre nœud vérifie",
-    "stepCheckBody": "Nous lisons ce bloc sur notre propre nœud Bitcoin. Un explorateur public n’est que le repli.",
-    "homeNode": "Un nœud à la maison rejoint cette vérification seulement quand il atteint la même pointe. D’ici là, les sceaux utilisent le nœud déjà à jour. La facturation Lightning est coupée.",
-    "openNetwork": "Voir le nœud",
     "tipHeight": "Hauteur du bloc",
     "fastestFee": "Frais indicatifs",
     "difficultyAdjust": "Ajustement de difficulté",
@@ -39,8 +30,7 @@
     "feeNote": "Indicatif · mempool, pas un frais Satohash",
     "zeroKnowledge": "Le fichier reste sur cet appareil",
     "compliance": "Aligné eIDAS et ESIGN",
-    "proofsConfirmed": "{{count}} preuves confirmées",
-    "pendingHour": "Un nouveau sceau attend environ une heure. Ce nombre est la pointe que lit notre nœud."
+    "proofsConfirmed": "{{count}} preuves confirmées"
   },
   "features": {
     "badge": "Ce que la plupart ignorent",
@@ -131,10 +121,9 @@
     "trustCenter": "Centre de confiance"
   },
   "pwa": {
-    "title": "Écran d'accueil",
-    "subtitle": "Facultatif. Le sceau reste dans le navigateur.",
-    "install": "Ajouter",
-    "dismiss": "Fermer"
+    "title": "Ajouter Satohash à l'écran d'accueil",
+    "subtitle": "Accès instantané, fonctionne hors ligne",
+    "install": "Installer"
   },
   "donation": {
     "title": "Soutenir Satohash",
