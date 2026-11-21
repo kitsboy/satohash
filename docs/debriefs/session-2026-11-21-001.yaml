@@ -1,0 +1,58 @@
+# ================================================================
+# GENERIC SESSION DEBRIEF — Satohash
+# ================================================================
+
+runbook:
+  name: Session Debrief
+  version: "2.0"
+  trigger:
+    phrases: ["run session debrief", "/goodbye"]
+
+project_config:
+  project_name: "Satohash"
+  context_file: null
+  framework_terms: null
+  id_prefixes:
+    architectural_decision: "AD-"
+    open_question: "OQ-"
+  output_location: "docs/debriefs/"
+
+output_schema:
+  session_id: "session-2026-11-21-001"
+  date: "2026-11-21"
+  status: "confirmed"
+
+  summary:
+    purpose: "Confirm Satohash premium engineering (Phase 0 infra + Phase 1 verified signing) is deployed and close the session for compression."
+    outcomes:
+      - "API is live on api.satohash.io: POST /api/stamp/signed returns the designed 400 for missing payload; GET /api/audit/verify returns 200 valid."
+      - "Kimi verified deployed image == HEAD (routes/v5-api.js, lib/signing.js, lib/audit-log.js byte-identical). No rebuild owed."
+      - "Engineered scope + five-pillar map + lawyer-facing risk list captured in MASTER-BRAIN (survives repor rebases)."
+      - "Ethereum removed from roadmap + engineering scope per Cam's Bitcoin-only ruling; /stamp/ethereum stub card raised for Grok/Kimi."
+
+  architectural_decisions:
+    - id: "AD-004"
+      decision: "Satohash server premium work is deploy-complete: deployed image == current main; no API rebuild owed for signing/audit/backup changes."
+      rationale: "Verified by Kimi (byte-hash match of the three changed files between live image and HEAD) and by direct live curl of both new endpoints. Redeploying would be redundant."
+      status: "agreed"
+
+  open_questions:
+    - id: "OQ-002"
+      question: "Kimi X/Nostr week (pin /watch, bot NIP-05, njump share) still open?"
+      context: "docs/KIMI-IDEAS-2026-08-29.md"
+      priority: "medium"
+      status: "open"
+    - id: "OQ-003"
+      question: "Tiered API rate limits keyed off api_keys.tier (Phase 0 item p0-rl) — not yet landed."
+      context: "Global limiter is tieredRateLimiter('public') at server/index.js:363; per-key tier resolution middleware still outstanding."
+      priority: "medium"
+      status: "open"
+
+  session_notes:
+    deprecated_items:
+      - "Not applicable this session."
+    corrections_to_prior_sessions:
+      - "None."
+    other:
+      - "Live-verified deploy before sign-off rather than trusting memory/docs."
+      - "Git main @ b6162b2; signing.js/audit-log.js committed and present in HEAD tree."

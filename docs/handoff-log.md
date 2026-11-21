@@ -1,3 +1,18 @@
+## 2026-11-21 (Ziggy — deploy confirm + session close)
+**From:** Ziggy (THOR) · **To:** next agent · **Status:** Satohash premium server work DEPLOYED and verified live; session compressed after close.
+
+**Done:**
+- Confirmed deployed == HEAD with Kimi (byte-hash match on routes/v5-api.js + lib/signing.js + lib/audit-log.js). No rebuild owed.
+- Live verified: `POST /api/stamp/signed` returns designed 400 on empty payload (route live, validating); `GET /api/audit/verify` returns 200 `{"valid":true}`.
+- Session debrief written: `docs/debriefs/session-2026-11-21-001.yaml` (AD-004, carries OQ-002 + OQ-003).
+
+**Still open (next session):**
+- Tiered rate limits keyed off `api_keys.tier` (Phase 0 p0-rl) — global limiter still `tieredRateLimiter('public')` at `server/index.js:363`.
+- `/stamp/ethereum` stub removal — raised for Grok/Kimi (card). Cam ruled Bitcoin-only, no Ethereum ever.
+- ENGINEERING-SCOPE-PREMIUM.md lives in MASTER-BRAIN (survives repo rebases).
+
+---
+
 ## 2026-11-03 (Grok M3 — goodbye)
 
 Docs only. Do not rebuild the API. Running image stays `7c68076`.
