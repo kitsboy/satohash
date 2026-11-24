@@ -1,8 +1,7 @@
 import { jsPDF } from 'jspdf'
 
 /**
- * Generates a formal "Expert Witness Affidavit" for a proof.
- * Uses high-end professional language for legal/insurance purposes.
+ * Bitcoin timestamp note. Not a notary act. The file is not in the PDF.
  */
 export const generateLegalCertificate = (proof) => {
   const doc = new jsPDF()
@@ -14,22 +13,22 @@ export const generateLegalCertificate = (proof) => {
   doc.setTextColor(255, 255, 255)
   doc.setFontSize(22)
   doc.setFont('helvetica', 'bold')
-  doc.text('AFFIDAVIT OF CRYPTOGRAPHIC PROOF', 20, 25)
+  doc.text('BITCOIN TIMESTAMP NOTE', 20, 25)
 
   doc.setTextColor(15, 23, 42)
   doc.setFontSize(10)
   doc.setFont('helvetica', 'normal')
   doc.text(`ID: ${proof.id}`, 20, 50)
-  doc.text(`DATE OF ATTESTATION: ${new Date(proof.created_at).toLocaleString()}`, 20, 55)
+  doc.text(`RECORDED: ${new Date(proof.created_at).toLocaleString()}`, 20, 55)
 
   // Main Body
   doc.setFontSize(14)
   doc.setFont('helvetica', 'bold')
-  doc.text('Attestation Statement', 20, 75)
+  doc.text('What this note records', 20, 75)
 
   doc.setFontSize(11)
   doc.setFont('times', 'normal')
-  const statement = `This document serves as a formal attestation that the digital asset identified by SHA-256 hash ${proof.hash} was mathematically proven to exist at the time and date specified above. This attestation is anchored to the Bitcoin Blockchain (Consensus Layer), a decentralized immutable ledger, providing mathematically verifiable certainty of its existence and integrity since the point of notarization.`
+  const statement = `This note records SHA-256 hash ${proof.hash}. The file is not in this PDF. Satohash submitted that fingerprint for an OpenTimestamps receipt. A Bitcoin block commits to it only after the stamp is confirmed. Until then the stamp is pending. This is not a notary act and does not show who created the file.`
 
   const splitStatement = doc.splitTextToSize(statement, 170)
   doc.text(splitStatement, 20, 85)
@@ -41,7 +40,7 @@ export const generateLegalCertificate = (proof) => {
   doc.setFontSize(10)
   doc.setFont('helvetica', 'italic')
   doc.text('1. Hash Standard: FIPS 180-4 (SHA-256)', 25, 130)
-  doc.text('2. Immutability Layer: Bitcoin Blockchain (SHA-256 anchored)', 25, 135)
+  doc.text('2. Anchor: Bitcoin via OpenTimestamps, after confirmation', 25, 135)
   doc.text(`3. Verification Proof (OTS Binary): Included in Satohash Archive`, 25, 140)
   doc.text(`4. Merkle Root Identity: ${proof.merkle_root || 'N/A'}`, 25, 145)
 
@@ -51,7 +50,7 @@ export const generateLegalCertificate = (proof) => {
 
   doc.setFontSize(8)
   doc.setTextColor(150, 150, 150)
-  doc.text('VERIFIED BY THE SATOHASH PROTOCOL | BLOCKCHAIN PROOF-OF-EXISTENCE', 105, 180, {
+  doc.text('SATOHASH TIMESTAMP NOTE | NOT A NOTARY ACT', 105, 180, {
     align: 'center'
   })
 

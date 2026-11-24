@@ -34,9 +34,9 @@ const MUTED = '#94a3b8'
 const SECTIONS = [
   {
     slug: 'home',
-    kicker: 'Bitcoin Document Notarization',
-    title: 'Prove any file existed. Forever.',
-    tagline: 'Free \u00b7 Private \u00b7 Zero-knowledge \u00b7 OpenTimestamps',
+    kicker: 'Free Bitcoin stamp',
+    title: 'The file stays. The fingerprint goes on Bitcoin.',
+    tagline: 'Free \u00b7 About an hour \u00b7 OpenTimestamps',
   },
   {
     slug: 'faq',

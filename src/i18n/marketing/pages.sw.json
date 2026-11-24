@@ -179,7 +179,7 @@
       "bitcoinSecured": "Imelindwa na Bitcoin",
       "openSource": "Chanzo Wazi",
       "noLockIn": "Hakuna Kufungwa na Muuzaji",
-      "zeroKnowledge": "Ujuzi wa Sifuri"
+      "zeroKnowledge": "Faili linabaki"
     }
   },
   "comparisonPage": {
@@ -193,7 +193,6 @@
     "columns": {
       "satohash": "Satohash",
       "docuSign": "DocuSign",
-      "eth": "Ethereum dApps",
       "diyOTS": "DIY OpenTimestamps"
     },
     "rows": {
@@ -201,98 +200,84 @@
         "label": "Faili linabaki kwenye kifaa",
         "satohash": true,
         "docuSign": false,
-        "eth": true,
         "diyOTS": true
       },
       "bitcoinAnchored": {
         "label": "Imeunganishwa na Bitcoin",
         "satohash": true,
         "docuSign": false,
-        "eth": false,
         "diyOTS": true
       },
       "freeBasic": {
         "label": "Bure kwa matumizi ya msingi",
         "satohash": true,
         "docuSign": false,
-        "eth": true,
         "diyOTS": true
       },
       "noAccount": {
         "label": "Hakuna akaunti inayohitajika",
         "satohash": true,
         "docuSign": false,
-        "eth": true,
         "diyOTS": true
       },
       "noGas": {
         "label": "Hakuna ada za gas / muamala",
         "satohash": true,
         "docuSign": false,
-        "eth": false,
         "diyOTS": true
       },
       "uiNonDev": {
         "label": "UI kwa wasio wataalamu wa programu",
         "satohash": true,
         "docuSign": true,
-        "eth": false,
         "diyOTS": false
       },
       "multiParty": {
         "label": "Kusaini pamoja kwa pande nyingi",
         "satohash": "planned",
         "docuSign": true,
-        "eth": true,
         "diyOTS": false
       },
       "nip05": {
         "label": "Utambulisho wa Nostr (NIP-05)",
         "satohash": true,
         "docuSign": false,
-        "eth": false,
         "diyOTS": false
       },
       "bolt12": {
         "label": "Malipo ya Lightning BOLT-12",
         "satohash": "planned",
         "docuSign": false,
-        "eth": false,
         "diyOTS": false
       },
       "courtAdmissible": {
         "label": "Muundo unaokubalika mahakamani",
         "satohash": true,
         "docuSign": true,
-        "eth": false,
         "diyOTS": false
       },
       "survivesShutdown": {
         "label": "Uthibitisho unadumu baada ya kampuni kufungwa",
         "satohash": true,
         "docuSign": false,
-        "eth": true,
         "diyOTS": true
       },
       "snapper": {
         "label": "Kiendelezi cha kivinjari (Snapper)",
         "satohash": "planned",
         "docuSign": false,
-        "eth": false,
         "diyOTS": false
       },
       "apiWebhooks": {
         "label": "API ya msanidi + webhooks",
         "satohash": true,
         "docuSign": true,
-        "eth": true,
         "diyOTS": false
       },
       "monthlyCost": {
         "label": "Gharama ya kila mwezi",
         "satohash": "$0",
         "docuSign": "$10-300",
-        "eth": "variableGas",
         "diyOTS": "$0"
       }
     },

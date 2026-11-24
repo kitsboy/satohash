@@ -7,12 +7,12 @@
     "startFree": "免费开始"
   },
   "hero": {
-    "badge": "免费 • 无需账户 • 您的文档永远不会离开您的设备",
-    "titleLine1": "证明任何文件",
-    "titleLine2": "曾经存在。",
-    "titleHighlight": "可在 Bitcoin 上验证。",
-    "subtitle": "可独立验证的证据。无需公证人。",
-    "description": "Satohash 在您的浏览器本地计算文件哈希——您的文档永远不会离开您的设备。只有加密指纹会被写入 Bitcoin 区块链，为任何文件、合同、照片或数据集创建不可篡改的存在证明。",
+    "badge": "免费 • 无需账户 • 文件留在这台设备上",
+    "titleLine1": "文件留在这里。",
+    "titleLine2": "指纹",
+    "titleHighlight": "写上 Bitcoin。",
+    "subtitle": "免费。新的盖章大约等一小时。Pending 不是 Confirmed。",
+    "description": "Satohash 在设备上计算 SHA-256 指纹，只盖这枚指纹。文件不会上传。",
     "ctaStamp": "为文件加盖时间戳——完全免费",
     "ctaWatch": "观看讲解",
     "seeConfirmed": "查看一条 Confirmed 证明 · 区块 {{block}}",

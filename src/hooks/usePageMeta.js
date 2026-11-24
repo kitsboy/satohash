@@ -22,10 +22,10 @@ export default function usePageMeta({ page, title, description, image, url }) {
       ? /satohash/i.test(resolvedTitle)
         ? resolvedTitle
         : `${resolvedTitle} | ${siteName}`
-      : `${siteName} — Bitcoin Document Notarization`
+      : `${siteName} — Stamp a file on Bitcoin. Free.`
     const desc =
       resolvedDescription ||
-      'Stamp any document on the Bitcoin blockchain. Free, private, independently verifiable proof of existence using OpenTimestamps.'
+      'The file stays on your device. Only a SHA-256 fingerprint is stamped. Free. Bitcoin confirmation takes about an hour.'
     const path = window.location.pathname
     const ogImage = image || ogImageForPage(page, path)
     const pageUrl = url || window.location.href

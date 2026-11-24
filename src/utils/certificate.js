@@ -91,7 +91,7 @@ export function downloadCertificate(item) {
   doc.setFontSize(8.5)
   doc.setTextColor(110, 120, 135)
   doc.text(
-    'This document attests that a cryptographic fingerprint was anchored via OpenTimestamps.',
+    'This note records a SHA-256 fingerprint. The file is not in this PDF. Not a notary act.',
     pageW / 2,
     y,
     { align: 'center', maxWidth: contentW - 10 }
@@ -122,7 +122,7 @@ export function downloadCertificate(item) {
     ['Document', item.name],
     ['SHA-256 Hash', item.fullHash || item.hash],
     ['Proof ID', item.id],
-    ['Date Notarized', item.date],
+    ['Recorded', item.date],
     ['Status', (item.status || 'pending').toUpperCase()],
     ['Protocol', 'OpenTimestamps / Bitcoin Mainnet'],
     [
@@ -169,8 +169,8 @@ export function downloadCertificate(item) {
   doc.setFontSize(8.5)
   doc.setTextColor(60, 70, 85)
   const attest = isConfirmed
-    ? 'Bitcoin timestamp recorded. Independent verification is available at the URL above using the SHA-256 hash and proof package.'
-    : 'Proof submitted to timestamp servers. Status will update to CONFIRMED when Bitcoin includes it; re-download this PDF after confirmation.'
+    ? 'A Bitcoin block commits to this fingerprint. Check the .ots file with ots verify. This PDF is not that check.'
+    : 'Pending. Not in a Bitcoin block yet. A new stamp waits about an hour. This PDF is not a confirmation.'
   doc.text(doc.splitTextToSize(attest, contentW - 10), margin + 5, y + 8)
 
   // ─── Footer ────────────────────────────────────────────

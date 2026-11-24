@@ -179,7 +179,7 @@
       "bitcoinSecured": "Protegido por Bitcoin",
       "openSource": "Código abierto",
       "noLockIn": "Sin dependencia del proveedor",
-      "zeroKnowledge": "Conocimiento cero"
+      "zeroKnowledge": "El archivo se queda"
     }
   },
   "comparisonPage": {
@@ -193,7 +193,6 @@
     "columns": {
       "satohash": "Satohash",
       "docuSign": "DocuSign",
-      "eth": "dApps de Ethereum",
       "diyOTS": "OpenTimestamps DIY"
     },
     "rows": {
@@ -201,98 +200,84 @@
         "label": "El archivo se queda en el dispositivo",
         "satohash": true,
         "docuSign": false,
-        "eth": true,
         "diyOTS": true
       },
       "bitcoinAnchored": {
         "label": "Anclado en Bitcoin",
         "satohash": true,
         "docuSign": false,
-        "eth": false,
         "diyOTS": true
       },
       "freeBasic": {
         "label": "Gratis para uso básico",
         "satohash": true,
         "docuSign": false,
-        "eth": true,
         "diyOTS": true
       },
       "noAccount": {
         "label": "Sin cuenta requerida",
         "satohash": true,
         "docuSign": false,
-        "eth": true,
         "diyOTS": true
       },
       "noGas": {
         "label": "Sin gas / comisiones de transacción",
         "satohash": true,
         "docuSign": false,
-        "eth": false,
         "diyOTS": true
       },
       "uiNonDev": {
         "label": "Interfaz para no desarrolladores",
         "satohash": true,
         "docuSign": true,
-        "eth": false,
         "diyOTS": false
       },
       "multiParty": {
         "label": "Co-firma multiparte",
         "satohash": "planned",
         "docuSign": true,
-        "eth": true,
         "diyOTS": false
       },
       "nip05": {
         "label": "Identidad Nostr (NIP-05)",
         "satohash": true,
         "docuSign": false,
-        "eth": false,
         "diyOTS": false
       },
       "bolt12": {
         "label": "Pagos Lightning BOLT-12",
         "satohash": "planned",
         "docuSign": false,
-        "eth": false,
         "diyOTS": false
       },
       "courtAdmissible": {
         "label": "Formato admisible en tribunales",
         "satohash": true,
         "docuSign": true,
-        "eth": false,
         "diyOTS": false
       },
       "survivesShutdown": {
         "label": "Las pruebas sobreviven al cierre de la empresa",
         "satohash": true,
         "docuSign": false,
-        "eth": true,
         "diyOTS": true
       },
       "snapper": {
         "label": "Extensión de navegador (Snapper)",
         "satohash": "planned",
         "docuSign": false,
-        "eth": false,
         "diyOTS": false
       },
       "apiWebhooks": {
         "label": "API para desarrolladores + webhooks",
         "satohash": true,
         "docuSign": true,
-        "eth": true,
         "diyOTS": false
       },
       "monthlyCost": {
         "label": "Coste mensual",
         "satohash": "$0",
         "docuSign": "$10-300",
-        "eth": "variableGas",
         "diyOTS": "$0"
       }
     },

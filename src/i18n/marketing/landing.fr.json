@@ -7,12 +7,12 @@
     "startFree": "Commencer gratuitement"
   },
   "hero": {
-    "badge": "Gratuit • Aucun compte requis • Votre document ne quitte jamais votre appareil",
-    "titleLine1": "Prouvez qu'un fichier",
-    "titleLine2": "a existé.",
-    "titleHighlight": "Vérifiable, sur Bitcoin.",
-    "subtitle": "Preuve vérifiable de façon indépendante. Sans notaire.",
-    "description": "Satohash calcule l'empreinte de votre fichier localement dans votre navigateur — votre document ne quitte jamais votre appareil. Seule une empreinte cryptographique est inscrite dans la blockchain Bitcoin, créant une preuve d'existence immuable pour tout fichier, contrat, photo ou jeu de données.",
+    "badge": "Gratuit • Sans compte • Le fichier reste sur cet appareil",
+    "titleLine1": "Le fichier reste.",
+    "titleLine2": "L’empreinte",
+    "titleHighlight": "va sur Bitcoin.",
+    "subtitle": "Gratuit. Un nouveau tampon attend environ une heure. Pending n’est pas Confirmed.",
+    "description": "Satohash calcule l’empreinte SHA-256 sur l’appareil et tamponne seulement cette empreinte. Le fichier n’est pas envoyé.",
     "ctaStamp": "Horodater un fichier — C'est gratuit",
     "ctaWatch": "Voir l'explainer",
     "seeConfirmed": "Voir une preuve Confirmed · bloc {{block}}",

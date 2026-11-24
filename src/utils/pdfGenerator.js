@@ -3,8 +3,7 @@ import QRCode from 'qrcode'
 import { getApiUrl } from '../config/constants'
 
 /**
- * Generates an institutional, courtroom-ready Affidavit of Attestation.
- * Optimized for professional printouts and legal presentation.
+ * Bitcoin timestamp note. Not a notary act. The file is not in the PDF.
  */
 export const generatePDF = async (stampInfo, watermarkType = 'SATOHASH PROTOCOL SECURED') => {
   const doc = new jsPDF({
@@ -69,12 +68,12 @@ export const generatePDF = async (stampInfo, watermarkType = 'SATOHASH PROTOCOL 
   doc.setTextColor(26, 29, 46) // var(--text-base)
   doc.setFont('times', 'bold')
   doc.setFontSize(22)
-  doc.text('AFFIDAVIT OF ATTESTATION', pageWidth / 2, 40, { align: 'center' })
+  doc.text('BITCOIN TIMESTAMP NOTE', pageWidth / 2, 40, { align: 'center' })
 
   doc.setTextColor(79, 70, 229)
   doc.setFontSize(9)
   doc.setFont('helvetica', 'bold')
-  doc.text('BITCOIN BLOCKCHAIN ANCHOR · CRYPTOGRAPHIC PROOF OF EXISTENCE', pageWidth / 2, 47, {
+  doc.text('NOT A NOTARY ACT · THE FILE IS NOT IN THIS PDF', pageWidth / 2, 47, {
     align: 'center'
   })
 
@@ -83,18 +82,18 @@ export const generatePDF = async (stampInfo, watermarkType = 'SATOHASH PROTOCOL 
   doc.setFontSize(11)
 
   const startY = 75
+  const statusRaw = String(stampInfo.status || 'pending').toLowerCase()
+  const confirmed = statusRaw === 'confirmed' || statusRaw === 'verified'
+  const blockHeight = stampInfo.bitcoin_block_height || stampInfo.block_height
   const labels = [
-    { l: 'DOCUMENT FILENAME:', v: stampInfo.filename },
-    { l: 'SHA-256 IDENTIFIER:', v: stampInfo.hash },
-    { l: 'PROTOCOL UUID:', v: stampInfo.id },
-    { l: 'ATTESTATION STATUS:', v: (stampInfo.status || 'Verified').toUpperCase() },
-    { l: 'WITNESS LAYER:', v: 'SATOHASH GENESIS ORACLE MESH' },
-    { l: 'STAMP TIMESTAMP (UTC):', v: new Date(stampInfo.created_at || Date.now()).toUTCString() },
+    { l: 'FILE NAME:', v: stampInfo.filename || '—' },
+    { l: 'SHA-256:', v: stampInfo.hash },
+    { l: 'STAMP ID:', v: stampInfo.id },
+    { l: 'STATUS:', v: confirmed ? 'CONFIRMED' : 'PENDING' },
+    { l: 'RECORDED (UTC):', v: new Date(stampInfo.created_at || Date.now()).toUTCString() },
     {
-      l: 'BLOCKCHAIN ANCHOR:',
-      v: stampInfo.confirmed_at
-        ? `BITCOIN BLOCK #${stampInfo.block_height || '845,000'} (CONFIRMED)`
-        : 'PENDING BITCOIN BLOCK INCLUSION...'
+      l: 'BITCOIN BLOCK:',
+      v: confirmed && blockHeight ? String(blockHeight) : 'Not in a Bitcoin block yet'
     }
   ]
 
@@ -126,10 +125,9 @@ export const generatePDF = async (stampInfo, watermarkType = 'SATOHASH PROTOCOL 
   doc.setFont('times', 'bold')
   doc.setFontSize(8)
   doc.setTextColor(79, 70, 229)
-  doc.text('OFFICIAL', margin + 25, sealY + 20, { align: 'center' })
-  doc.text('SATOHASH SEAL', margin + 25, sealY + 28, { align: 'center' })
+  doc.text('NOTE', margin + 25, sealY + 22, { align: 'center' })
   doc.setFontSize(6)
-  doc.text('BLOCKCHAIN AUTHENTICATED', margin + 25, sealY + 35, { align: 'center' })
+  doc.text('NOT A NOTARY', margin + 25, sealY + 30, { align: 'center' })
 
   // --- QR Code ---
   const verifyUrl = `${window.location.origin}/verify/${stampInfo.id}`
@@ -146,20 +144,17 @@ export const generatePDF = async (stampInfo, watermarkType = 'SATOHASH PROTOCOL 
   doc.addPage()
   doc.setFont('times', 'bold')
   doc.setFontSize(18)
-  doc.text('TECHNICAL WITNESS STATEMENT', margin, 30)
+  doc.text('WHAT THIS NOTE IS', margin, 30)
 
   doc.setFontSize(10)
   doc.setFont('times', 'normal')
   doc.setTextColor(60, 60, 60)
-  const statement = `This document serves as primary technical evidence regarding the existence and integrity of the digital file identified on Page 1.
+  const statement = `This note records a SHA-256 fingerprint. The file is not in this PDF, and the note does not show who made the file.
 
-1. Cryptographic Thumbprinting: The subject file was processed using the Secure Hash Algorithm 256 (SHA-256). This mathematical function produces a unique 256-bit identifier. Under the properties of preimage resistance, it is computationally impossible to generate the same identifier from two different files.
-
-2. Permanent Anchoring: The unique identifier was committed to the Bitcoin blockchain—the most secure public ledger in existence. This commitment creates an immutable "Proof of Existence" linked to a specific Bitcoin block height and timestamp.
-
-3. Immutability & Verifiability: Because the Bitcoin blockchain is secured by globally distributed Proof-of-Work, the record is tamper-evident. Anyone with the original file and this proof can independently verify it without relying on Satohash.
-
-4. Evidence, not a qualified timestamp: This is independently verifiable evidence of existence-at-a-time. It is not a qualified electronic time stamp under eIDAS, and a court decides admissibility and weight.`
+1. The fingerprint was made on the device. Satohash receives the hash, not the file.
+2. OpenTimestamps asks public calendars to write that fingerprint into a Bitcoin block. That takes about an hour. Until a block number is printed on page 1, the stamp is pending.
+3. Anyone can check the .ots file with ots verify. This PDF is not that check.
+4. This is not a notary act, not a signature, and not a qualified electronic time stamp. A court decides what the record is worth.`
 
   doc.text(doc.splitTextToSize(statement, pageWidth - margin * 2), margin, 45)
 
@@ -167,8 +162,7 @@ export const generatePDF = async (stampInfo, watermarkType = 'SATOHASH PROTOCOL 
   doc.setTextColor(180, 180, 180)
   doc.setFontSize(8)
   doc.setFont('helvetica', 'normal')
-  doc.text('GENERATED BY SATOHASH PROTOCOL v3.0.0-PRO', pageWidth / 2, 280, { align: 'center' })
-  doc.text('THE AUTHORITY IN DECENTRALIZED ATTESTATION.', pageWidth / 2, 284, { align: 'center' })
+  doc.text('Satohash timestamp note. Not a notary act.', pageWidth / 2, 280, { align: 'center' })
 
   // --- Save File ---
   doc.save(`Satohash_Attestation_${stampInfo.id.substring(0, 8)}.pdf`)

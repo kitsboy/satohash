@@ -7,12 +7,12 @@
     "startFree": "Kostenlos starten"
   },
   "hero": {
-    "badge": "Kostenlos • Kein Konto nötig • Ihr Dokument verlässt niemals Ihr Gerät",
-    "titleLine1": "Beweisen Sie, dass eine Datei",
-    "titleLine2": "existiert hat.",
-    "titleHighlight": "Verifizierbar, auf Bitcoin.",
-    "subtitle": "Unabhängig überprüfbarer Nachweis. Kein Notar nötig.",
-    "description": "Satohash hasht Ihre Datei lokal in Ihrem Browser — Ihr Dokument verlässt niemals Ihr Gerät. Nur ein kryptografischer Fingerabdruck wird in die Bitcoin-Blockchain geschrieben und erstellt einen unveränderlichen Existenznachweis für jede Datei, jeden Vertrag, jedes Foto oder jeden Datensatz.",
+    "badge": "Kostenlos • Kein Konto • Die Datei bleibt auf diesem Gerät",
+    "titleLine1": "Die Datei bleibt.",
+    "titleLine2": "Der Fingerabdruck",
+    "titleHighlight": "geht auf Bitcoin.",
+    "subtitle": "Kostenlos. Ein neuer Stempel wartet etwa eine Stunde. Pending ist nicht Confirmed.",
+    "description": "Satohash bildet den SHA-256-Fingerabdruck auf dem Gerät und stempelt nur diesen. Die Datei wird nicht hochgeladen.",
     "ctaStamp": "Datei stempeln — Kostenlos",
     "ctaWatch": "Erklärer ansehen",
     "seeConfirmed": "Einen Confirmed-Beweis ansehen · Block {{block}}",

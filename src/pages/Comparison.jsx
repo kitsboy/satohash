@@ -23,7 +23,7 @@ const ROW_IDS = [
   'monthlyCost'
 ]
 
-const COLUMN_KEYS = ['satohash', 'docuSign', 'eth', 'diyOTS']
+const COLUMN_KEYS = ['satohash', 'docuSign', 'diyOTS']
 
 export default function Comparison() {
   usePageMeta({ page: 'comparison' })
@@ -48,9 +48,6 @@ export default function Comparison() {
           if (val === 'planned') {
             return t('comparisonPage.cellValues.planned', { defaultValue: 'Planned' })
           }
-          if (id === 'monthlyCost' && val === 'variableGas') {
-            return t('comparisonPage.cellValues.variableGas', { defaultValue: 'Variable gas' })
-          }
           return val
         }
         return {
@@ -58,12 +55,10 @@ export default function Comparison() {
           feature: row.label,
           satohash: resolve(row.satohash),
           docuSign: resolve(row.docuSign),
-          eth: resolve(row.eth),
           diyOTS: resolve(row.diyOTS),
           planned: {
             satohash: row.satohash === 'planned',
             docuSign: row.docuSign === 'planned',
-            eth: row.eth === 'planned',
             diyOTS: row.diyOTS === 'planned'
           }
         }

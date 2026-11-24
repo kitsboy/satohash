@@ -25,7 +25,7 @@ const OG_LOCALE = {
 
 const SITE = 'https://satohash.io'
 /** Homepage / default unfurl — JPEG for iMessage (PNG kept at /og/home.png). */
-export const DEFAULT_OG_IMAGE = `${SITE}/og/home.jpg`
+export const DEFAULT_OG_IMAGE = `${SITE}/og/home.jpg?v=file-stays-20261124`
 export const DEFAULT_OG_IMAGE_PNG = `${SITE}/og/home.png`
 export const WATCH_VIDEO_URL =
   'https://videos.giveabit.io/media/video/satohash-explainer-wise-70.mp4?v=kimi-wise-70-20261013'
@@ -94,39 +94,38 @@ export function ogImageForPage(page, pathname) {
 export const pageMeta = {
   landing: {
     en: {
-      title: 'Prove Any File Existed — Free Bitcoin Proof of Existence',
+      title: 'Satohash — Stamp a file on Bitcoin. Free.',
       description:
-        'Drop a file. It never leaves your device. Get a Bitcoin-anchored proof of existence in minutes — free, private, verifiable by anyone.'
+        'The file stays on your device. Only a SHA-256 fingerprint is stamped. Free. Bitcoin confirmation takes about an hour.'
     },
     es: {
-      title: 'Prueba que un Archivo Existió — Gratis en Bitcoin',
+      title: 'Satohash — Sella un archivo en Bitcoin. Gratis.',
       description:
-        'Suelta un archivo; nunca sale de tu dispositivo. Prueba de existencia anclada en Bitcoin — gratis, privada, verificable por cualquiera, para siempre.'
+        'El archivo se queda en tu dispositivo. Solo se sella la huella SHA-256. Gratis. La confirmación en Bitcoin tarda cerca de una hora.'
     },
     fr: {
-      title: 'Prouvez Qu’un Fichier a Existé — Gratuit sur Bitcoin',
+      title: 'Satohash — Tamponner un fichier sur Bitcoin. Gratuit.',
       description:
-        "Déposez un fichier. Il ne quitte jamais votre appareil. Preuve d'existence ancrée sur Bitcoin — gratuite, privée, vérifiable par tous."
+        'Le fichier reste sur l’appareil. Seule l’empreinte SHA-256 est tamponnée. Gratuit. La confirmation Bitcoin prend environ une heure.'
     },
     de: {
-      title: 'Beweisen, Dass eine Datei Existierte — Kostenlos',
+      title: 'Satohash — Datei auf Bitcoin stempeln. Kostenlos.',
       description:
-        'Datei ablegen. Sie verlässt nie Ihr Gerät. Bitcoin-verankerter Existenznachweis — kostenlos, privat, für immer überprüfbar.'
+        'Die Datei bleibt auf dem Gerät. Nur der SHA-256-Fingerabdruck wird gestempelt. Kostenlos. Die Bitcoin-Bestätigung dauert etwa eine Stunde.'
     },
     pt: {
-      title: 'Prove que um Arquivo Existiu — Grátis no Bitcoin',
+      title: 'Satohash — Carimbar um arquivo no Bitcoin. Grátis.',
       description:
-        'Solte um arquivo. Ele nunca sai do seu dispositivo. Prova de existência ancorada no Bitcoin — grátis, privada, verificável por qualquer pessoa.'
+        'O arquivo fica no dispositivo. Só a impressão SHA-256 é carimbada. Grátis. A confirmação no Bitcoin leva cerca de uma hora.'
     },
     sw: {
-      title: 'Thibitisha Faili Lilipokuwepo — Bure kwenye Bitcoin',
+      title: 'Satohash — Muhuri faili kwenye Bitcoin. Bure.',
       description:
-        'Weka faili. Haliondoki kwenye kifaa chako. Ushahidi wa kuwepo uliofungwa kwenye Bitcoin — bure, faragha, unathibitishwa na mtu yeyote.'
+        'Faili linabaki kwenye kifaa. Alama ya SHA-256 pekee ndiyo inayotiwa muhuri. Bure. Uthibitisho wa Bitcoin huchukua karibu saa moja.'
     },
     zh: {
-      title: '证明任意文件曾经存在 — 免费比特币存在证明',
-      description:
-        '拖放任意文件。文件永不离开您的设备。几分钟内获得锚定于比特币的存在证明——免费、私密、任何人都可核验。'
+      title: 'Satohash — 在比特币上为文件盖章。免费。',
+      description: '文件留在设备上。只盖 SHA-256 指纹。免费。比特币确认大约需要一小时。'
     }
   },
   faq: {

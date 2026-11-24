@@ -7,12 +7,12 @@
     "startFree": "Start Free"
   },
   "hero": {
-    "badge": "Free • No account needed • Your document never leaves your device",
-    "titleLine1": "Prove Any File",
-    "titleLine2": "Existed.",
-    "titleHighlight": "Verifiably, on Bitcoin.",
-    "subtitle": "Independently verifiable evidence. No notary required.",
-    "description": "Satohash hashes your file locally in your browser — your document never leaves your device. Only a cryptographic fingerprint gets written to the Bitcoin blockchain, creating immutable proof of existence for any file, contract, photo, or dataset.",
+    "badge": "Free • No account • The file stays on this device",
+    "titleLine1": "The file stays.",
+    "titleLine2": "The fingerprint",
+    "titleHighlight": "goes on Bitcoin.",
+    "subtitle": "Free. A new stamp waits about an hour. Pending is not confirmed.",
+    "description": "Satohash hashes the file on your device and stamps only the SHA-256 fingerprint. The file is not uploaded.",
     "ctaStamp": "Stamp a File — It's Free",
     "ctaWatch": "Watch explainer",
     "seeConfirmed": "See a confirmed proof · block {{block}}",

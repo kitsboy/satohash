@@ -6,6 +6,7 @@ import fr from '../i18n/marketing/pages.fr.json'
 import pt from '../i18n/marketing/pages.pt.json'
 import sw from '../i18n/marketing/pages.sw.json'
 import zh from '../i18n/marketing/pages.zh.json'
+import { pageMeta } from '../seo/pageMeta'
 
 const pages = { en, es, fr, de, pt, sw, zh }
 
@@ -17,6 +18,20 @@ describe('comparison and pending copy', () => {
       }
       expect(page.comparisonPage.cellValues.planned, loc).toBeTruthy()
       expect(page.comparisonPage.rows.bitcoinAnchored.satohash, loc).toBe(true)
+      expect(page.comparisonPage.columns.eth, loc).toBeUndefined()
+      expect(page.comparisonPage.rows.bitcoinAnchored.eth, loc).toBeUndefined()
+      expect(page.pricingPage.trust.zeroKnowledge, loc).not.toMatch(
+        /zero-knowledge|conocimiento cero|connaissance nulle|零知识|ujuzi wa sifuri/i
+      )
+    }
+  })
+
+  it('homepage share text does not say forever or immutable', () => {
+    for (const [loc, meta] of Object.entries(pageMeta.landing)) {
+      const blob = `${meta.title} ${meta.description}`.toLowerCase()
+      expect(blob, loc).not.toMatch(
+        /forever|para siempre|für immer|immutable|zero-knowledge|in minutes/
+      )
     }
   })
 

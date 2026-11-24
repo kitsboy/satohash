@@ -7,12 +7,12 @@
     "startFree": "Empezar gratis"
   },
   "hero": {
-    "badge": "Gratis • Sin cuenta • Tu documento nunca abandona tu dispositivo",
-    "titleLine1": "Demuestra que cualquier archivo",
-    "titleLine2": "existió.",
-    "titleHighlight": "Verificable, en Bitcoin.",
-    "subtitle": "Evidencia verificable de forma independiente. Sin necesidad de notario.",
-    "description": "Satohash calcula el hash de tu archivo localmente en tu navegador — tu documento nunca abandona tu dispositivo. Solo una huella criptográfica se escribe en la blockchain de Bitcoin, creando una prueba inmutable de existencia para cualquier archivo, contrato, foto o conjunto de datos.",
+    "badge": "Gratis • Sin cuenta • El archivo se queda en este dispositivo",
+    "titleLine1": "El archivo se queda.",
+    "titleLine2": "La huella",
+    "titleHighlight": "va a Bitcoin.",
+    "subtitle": "Gratis. Un sello nuevo espera cerca de una hora. Pending no es Confirmed.",
+    "description": "Satohash calcula la huella SHA-256 en tu dispositivo y sella solo esa huella. El archivo no se sube.",
     "ctaStamp": "Sellar un archivo — Es gratis",
     "ctaWatch": "Ver el explainer",
     "seeConfirmed": "Ver una prueba Confirmed · bloque {{block}}",

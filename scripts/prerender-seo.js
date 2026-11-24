@@ -89,7 +89,7 @@ function shell({
   contentHtml,
   canonical,
   article = null,
-  ogImage = `${SITE}/og/home.jpg`,
+  ogImage = `${SITE}/og/home.jpg?v=file-stays-20261124`,
   ogImageAlt = null,
   player = false,
   extraGraph = []
@@ -187,7 +187,7 @@ td,th{border:1px solid #333;padding:8px}
 ${contentHtml}
 </main>
 <footer style="margin-top:3rem;padding-top:1rem;border-top:1px solid #333;color:#888;font-size:.85rem">
-<p><a href="${SITE}">Satohash</a> — free Bitcoin document stamping. Stamp a file, get a permanent proof of existence anchored on Bitcoin.</p>
+<p><a href="${SITE}">Satohash</a> — the file stays on your device. Only a fingerprint is stamped. Free.</p>
 </footer>
 </body>
 </html>`
@@ -201,30 +201,20 @@ function write(name, html) {
 }
 
 // ---- landing (static version of the hero + key sections) ----
-const landingTitle = 'Stamp Documents on Bitcoin — Free Proof of Existence'
+const landingTitle = 'Satohash — Stamp a file on Bitcoin. Free.'
 const landingDesc =
-  'Hash a file on your device. Satohash stamps only the fingerprint. Free. The file stays on the device. Bitcoin confirmation takes about an hour. Pending is not confirmed.'
+  'The file stays on your device. Only a SHA-256 fingerprint is stamped. Free. Bitcoin confirmation takes about an hour.'
 const landingBody = `
-<h1>Prove Any File Existed. Forever.</h1>
-<p>Drop any file. Get a permanent, Bitcoin-backed timestamp. Independently verifiable. No lawyers. No trust required.</p>
-<p>Satohash hashes your file locally in your browser — your document never leaves your device. Only a cryptographic fingerprint gets written to the Bitcoin blockchain, creating immutable proof of existence for any file, contract, photo, or dataset.</p>
-<p><a href="${SITE}/stamp">Stamp a File — It's Free</a> · <a href="${SITE}/verify">Verify a proof</a> · <a href="${SITE}/pricing">Pricing</a></p>
+<h1>Stamp a file on Bitcoin. Free.</h1>
+<p>The file stays on your device. Satohash stamps only the SHA-256 fingerprint. A new stamp waits about an hour. Pending is not confirmed.</p>
+<p><a href="${SITE}/stamp">Stamp a file — free</a> · <a href="${SITE}/verify">Verify a proof</a> · <a href="${SITE}/pricing">Pricing</a></p>
 <h2>How it works</h2>
 <ol>
-<li><strong>Upload or hash your file</strong> — Satohash instantly generates a SHA-256 fingerprint in your browser. Your file never leaves your device.</li>
-<li><strong>Anchor to Bitcoin</strong> — Your fingerprint is submitted to the Bitcoin blockchain via OpenTimestamps, embedded in the next block, typically within 60 minutes.</li>
-<li><strong>Download your certificate</strong> — Receive a portable proof certificate, independently verifiable anywhere, anytime — even if Satohash ceases to exist.</li>
+<li><strong>The file stays</strong> — the browser makes a SHA-256 fingerprint. The file is not uploaded.</li>
+<li><strong>Calendars write one line</strong> — OpenTimestamps asks public calendars to put that fingerprint in a Bitcoin block. That takes about an hour.</li>
+<li><strong>Our node checks</strong> — when a block commits to the fingerprint, the stamp is confirmed. Download the .ots and check it yourself.</li>
 </ol>
-<h2>Why Bitcoin timestamping</h2>
-<ul>
-<li><strong>No server required</strong> — the file stays on your device, and only a fingerprint leaves.</li>
-<li><strong>Anchored in ~60 minutes</strong> — every node on Earth validates it; it cannot be altered, backdated, or deleted.</li>
-<li><strong>Independently verifiable evidence</strong> — aligns with the framework of the ESIGN Act (US), UETA, and eIDAS (EU); cryptography is verifiable by anyone.</li>
-<li><strong>No middleman ever</strong> — Bitcoin itself is the notary, 18,000+ full nodes strong.</li>
-</ul>
-<h2>Who needs proof that can't be faked</h2>
-<p>Legal contracts, creative work, medical records, corporate compliance, research &amp; IP, government &amp; archives.</p>
-<p><a href="${SITE}/stamp">Notarize your first document — free</a></p>`
+<p><a href="${SITE}/stamp">Stamp a file — free</a></p>`
 
 // ---- FAQ (first 8 Q&As in English) ----
 const faqTitle = 'FAQ — Bitcoin Document Notarization'
@@ -264,7 +254,7 @@ ${JSON.stringify(
 console.log('Prerendering SEO pages…')
 fs.mkdirSync(OUT, { recursive: true })
 
-write('landing.html', shell({ title: landingTitle, description: landingDesc, contentHtml: landingBody, canonical: `${SITE}/`, ogImage: `${SITE}/og/home.jpg` }))
+write('landing.html', shell({ title: landingTitle, description: landingDesc, contentHtml: landingBody, canonical: `${SITE}/`, ogImage: `${SITE}/og/home.jpg?v=file-stays-20261124` }))
 write(
   'faq.html',
   shell({ title: faqTitle, description: faqDesc, contentHtml: faqBody, canonical: `${SITE}/faq`, ogImage: `${SITE}/og/faq.jpg` }).replace('</head>', `${faqSchema}\n</head>`)
@@ -492,9 +482,9 @@ const counselBody = `
 <p><strong>Pending is not confirmed.</strong> Pending means submitted to calendars. Confirmed means a Bitcoin block includes the attestation.</p>
 <p><a href="${SITE}/counsel">Counsel one-pager</a> · <a href="${SITE}/docs/how-satohash-works">How Satohash works</a> · <a href="${SITE}/verify">Verify a proof</a></p>`
 
-write('identity.html', shell({ title: identityTitle, description: identityDesc, contentHtml: identityBody, canonical: `${SITE}/identity`, ogImage: `${SITE}/og/home.jpg` }))
-write('status.html', shell({ title: statusTitle, description: statusDesc, contentHtml: statusBody, canonical: `${SITE}/status`, ogImage: `${SITE}/og/home.jpg` }))
-write('counsel.html', shell({ title: counselTitle, description: counselDesc, contentHtml: counselBody, canonical: `${SITE}/counsel`, ogImage: `${SITE}/og/home.jpg` }))
+write('identity.html', shell({ title: identityTitle, description: identityDesc, contentHtml: identityBody, canonical: `${SITE}/identity`, ogImage: `${SITE}/og/home.jpg?v=file-stays-20261124` }))
+write('status.html', shell({ title: statusTitle, description: statusDesc, contentHtml: statusBody, canonical: `${SITE}/status`, ogImage: `${SITE}/og/home.jpg?v=file-stays-20261124` }))
+write('counsel.html', shell({ title: counselTitle, description: counselDesc, contentHtml: counselBody, canonical: `${SITE}/counsel`, ogImage: `${SITE}/og/home.jpg?v=file-stays-20261124` }))
 
 const proofPackTitle = 'Proof Pack waitlist — free, not for sale'
 const proofPackDesc =

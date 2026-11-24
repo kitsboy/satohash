@@ -1,3 +1,15 @@
+## 2026-11-24 (Grok M3 — first screen says the file stays)
+
+Website only. **Do not rebuild the API.** Running image stays `7c68076`. Paywall stays off. Do not change `/api/*`.
+
+The tab, the share card, and the homepage now say the file stays and the fingerprint goes on Bitcoin. The compare table no longer has an Ethereum column. The pricing chip says the file stays on the device. The proof PDFs no longer say affidavit, forever, or a made-up block number. Seven languages. Checked in the browser on desktop and a phone width, including Spanish.
+
+Live check before this push: health ok, `gitSha` `7c68076`, `free_open`. Our node was block **977,380**, IBD done. Practice stamp stays block **974302**. Public example stays block **969,627**. Do not charge.
+
+**Kimi:** do not rebuild. Do not `git reset --hard` `/root/satohash`. LND stays off. Do not point Bitcoin RPC at Umbrel.
+
+---
+
 ## 2026-11-21 (Ziggy — deploy confirm + session close)
 **From:** Ziggy (THOR) · **To:** next agent · **Status:** Satohash premium server work DEPLOYED and verified live; session compressed after close.
 
