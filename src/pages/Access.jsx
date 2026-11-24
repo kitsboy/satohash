@@ -263,6 +263,31 @@ export default function Access() {
                 {t('accessPage.hero.titleHighlight')}
               </span>
             </h1>
+            <ul className="mx-auto flex max-w-3xl list-none flex-wrap items-center justify-center gap-2 px-1">
+              {[
+                { icon: Lock, key: 'e2e' },
+                { icon: Shield, key: 'custody' },
+                { icon: Cpu, key: 'zk' }
+              ].map(({ icon: Icon, key }) => (
+                <li
+                  key={key}
+                  className="inline-flex min-h-[36px] items-center gap-2 rounded-full border px-3 py-1.5 text-sm font-medium"
+                  style={{
+                    borderColor: 'var(--border)',
+                    background: 'var(--bg-secondary)',
+                    color: 'var(--text-primary)'
+                  }}
+                >
+                  <Icon
+                    size={14}
+                    className="shrink-0"
+                    style={{ color: 'var(--accent-active)' }}
+                    aria-hidden
+                  />
+                  {t(`accessPage.trust.${key}`)}
+                </li>
+              ))}
+            </ul>
             <p className="mx-auto max-w-2xl text-lg font-medium text-[var(--text-secondary)] md:text-xl">
               {t('accessPage.hero.subtitle')}
             </p>
@@ -549,28 +574,7 @@ export default function Access() {
             </a>
           </p>
 
-          <section className="space-y-8 text-center" aria-label="Trust">
-            <div className="flex flex-wrap justify-center gap-x-8 gap-y-3 text-[var(--text-secondary)]">
-              <div className="flex items-center gap-2">
-                <Lock size={14} className="text-[var(--accent-active)]" />
-                <span className="text-[10px] font-black tracking-widest uppercase">
-                  {t('accessPage.trust.e2e')}
-                </span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Shield size={14} className="text-[var(--accent-active)]" />
-                <span className="text-[10px] font-black tracking-widest uppercase">
-                  {t('accessPage.trust.custody')}
-                </span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Cpu size={14} className="text-[var(--accent-active)]" />
-                <span className="text-[10px] font-black tracking-widest uppercase">
-                  {t('accessPage.trust.zk')}
-                </span>
-              </div>
-            </div>
-
+          <section className="text-center" aria-label="Trust">
             <div className="mx-auto max-w-2xl border-t border-[var(--border)] pt-8">
               <p className="font-mono text-[10px] leading-relaxed tracking-[0.2em] text-[var(--text-secondary)] uppercase">
                 {t('accessPage.footer')}

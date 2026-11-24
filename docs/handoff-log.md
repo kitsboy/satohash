@@ -1,3 +1,17 @@
+## 2026-11-24 (Grok M3 — sign-in chips, honest homepage section, solid phone menu)
+
+Website only. **Do not rebuild the API.** Running image stays `7c68076`. Paywall stays off. Do not change `/api/*`.
+
+On sign-in, the three chips sit under the headline: no password, not a payment, key stays on this device. The homepage section below the first screen says the file stays and Bitcoin takes about an hour. Seven languages. The phone menu is a solid sheet the moment it opens. The bar above it is solid too.
+
+Checked in the browser on a wide screen and at 390px, in English and Spanish. The menu opens and closes. The feature cards sit in two columns on a wide screen and stack on a phone.
+
+This commit bumps the build from 459. Do not claim a new live Pages bundle until Cloudflare deploys.
+
+**Kimi:** do not rebuild. Do not `git reset --hard` `/root/satohash`. Do not chase Ethereum. Do not resurrect `api_keys`. LND stays off. Do not charge.
+
+---
+
 ## 2026-11-24 (Grok M3 — hide multi-party, close stale notes, honest share cards)
 
 Website only. **Do not rebuild the API.** Running image stays `7c68076`. Paywall stays off. Do not change `/api/*`.

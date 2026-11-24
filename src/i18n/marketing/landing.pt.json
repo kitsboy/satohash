@@ -43,17 +43,17 @@
     "pendingHour": "Um carimbo novo espera cerca de uma hora. Este número é a ponta que o nosso nó está a ler."
   },
   "features": {
-    "badge": "O que a maioria não sabe",
-    "titleLine1": "Já confia no Bitcoin com valor.",
-    "titleLine2": "Agora confie nele com a verdade.",
-    "subtitle": "Quando Satoshi Nakamoto lançou o Bitcoin em 2009, incorporou um título de jornal no bloco génesis — prova de que não foi pré-minado. Esse mesmo poder é agora seu, para qualquer documento, em minutos.",
+    "badge": "O que acontece a seguir",
+    "titleLine1": "O arquivo fica no dispositivo.",
+    "titleLine2": "O Bitcoin demora cerca de uma hora.",
+    "subtitle": "Só a impressão digital é carimbada. Um carimbo novo espera cerca de uma hora. Pending não é Confirmed.",
     "cards": {
       "noServer": {
         "title": "Sem servidor necessário",
         "body": "O seu documento nunca sai do seu dispositivo. Só vemos um hash criptográfico — como uma impressão digital, não o ficheiro real."
       },
       "anchored": {
-        "title": "Ancorado em 60 minutos",
+        "title": "Cerca de uma hora",
         "body": "Num bloco Bitcoin, a sua prova fica entrelaçada na cadeia. Cada nó na Terra a valida. Não pode ser alterada nem antedatada sem dominar a rede (um ataque de 51 %) — é economicamente proibitivo, não literalmente impossível. Os nós podem podar dados, por isso guarde o seu ficheiro .ots e o documento original."
       },
       "court": {

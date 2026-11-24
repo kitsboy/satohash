@@ -43,17 +43,17 @@
     "pendingHour": "Un sello nuevo espera cerca de una hora. Este número es la punta que lee nuestro nodo."
   },
   "features": {
-    "badge": "Lo que la mayoría no sabe",
-    "titleLine1": "Ya confías en Bitcoin con el valor.",
-    "titleLine2": "Ahora confía en él con la verdad.",
-    "subtitle": "Cuando Satoshi Nakamoto lanzó Bitcoin en 2009, incrustó un titular de periódico en el bloque génesis — prueba de que no fue preminado. Ese mismo poder es ahora tuyo, para cualquier documento, en minutos.",
+    "badge": "Qué pasa después",
+    "titleLine1": "El archivo se queda en el dispositivo.",
+    "titleLine2": "Bitcoin tarda cerca de una hora.",
+    "subtitle": "Solo se sella la huella. Un sello nuevo espera cerca de una hora. Pending no es Confirmed.",
     "cards": {
       "noServer": {
         "title": "Sin servidor necesario",
         "body": "Tu documento nunca abandona tu dispositivo. Solo vemos un hash criptográfico — como una huella dactilar, no el archivo real."
       },
       "anchored": {
-        "title": "Anclado en 60 minutos",
+        "title": "Cerca de una hora",
         "body": "En un bloque de Bitcoin, tu prueba queda tejida en la cadena. Cada nodo del planeta la valida. No puede alterarse ni retrodatarse sin abrumar a la red (un ataque del 51 %) — es económicamente prohibitivo, no literalmente imposible. Los nodos pueden podar datos, así que conserva tu archivo .ots y tu documento original."
       },
       "court": {

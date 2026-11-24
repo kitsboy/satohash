@@ -43,17 +43,17 @@
     "pendingHour": "Muhuri mpya husubiri karibu saa moja. Nambari hii ni ncha ambayo nodi yetu inasoma."
   },
   "features": {
-    "badge": "Watu wengi hawajui",
-    "titleLine1": "Tayari unamwamini Bitcoin kwa thamani.",
-    "titleLine2": "Sasa mwamini kwa ukweli.",
-    "subtitle": "Satoshi Nakamoto alipozindua Bitcoin mwaka 2009, aliweka kichwa cha habari cha gazeti kwenye kizuizi cha kwanza — uthibitisho kwamba hakikuwa kimechimbwa mapema. Nguvu hiyo hiyo sasa ni yako, kwa hati yoyote, kwa dakika chache.",
+    "badge": "Kinachofuata",
+    "titleLine1": "Faili linabaki kwenye kifaa.",
+    "titleLine2": "Bitcoin huchukua kama saa moja.",
+    "subtitle": "Alama pekee ndiyo inayotiwa muhuri. Muhuri mpya husubiri kama saa moja. Pending si Confirmed.",
     "cards": {
       "noServer": {
         "title": "Hakuna seva inayohitajika",
         "body": "Hati yako haiondoki kwenye kifaa chako. Tunaona hash ya kriptografia pekee — kama alama ya kidole, si faili halisi."
       },
       "anchored": {
-        "title": "Imeunganishwa ndani ya dakika 60",
+        "title": "Kama saa moja",
         "body": "Ndani ya kizuizi kimoja cha Bitcoin, uthibitisho wako umejumuishwa kwenye mnyororo. Kila nodi duniani inauhakikisha. Hauwezi kubadilishwa au kuwekwa tarehe ya zamani bila kushinda mtandao (shambulio la 51%) — ni ghali kiuchumi, si jambo lisilowezekana haswa. Nodi zinaweza kupunguza data, kwa hivyo hifadhi faili yako ya .ots na hati yako asili."
       },
       "court": {

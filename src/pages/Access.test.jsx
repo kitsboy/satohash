@@ -34,11 +34,14 @@ describe('Access page', () => {
       </MemoryRouter>
     )
 
-    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(/on this device/i)
-    expect(screen.getByText('No password')).toBeInTheDocument()
+    const heading = screen.getByRole('heading', { level: 1 })
+    const chip = screen.getByText('No password')
+    const card = screen.getByText('New Identity')
+    expect(heading).toHaveTextContent(/on this device/i)
+    expect(heading.compareDocumentPosition(chip) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+    expect(chip.compareDocumentPosition(card) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
     expect(screen.getByText('Not a payment')).toBeInTheDocument()
     expect(screen.getByText('Key stays on device')).toBeInTheDocument()
-    expect(screen.getByText('New Identity')).toBeInTheDocument()
     expect(screen.getByText('Import nsec')).toBeInTheDocument()
     expect(screen.getByText('Admin Access')).toBeInTheDocument()
   })

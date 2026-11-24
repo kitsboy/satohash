@@ -43,17 +43,17 @@
     "pendingHour": "A new stamp waits about an hour. This number is the tip our node is reading."
   },
   "features": {
-    "badge": "What Most People Don't Know",
-    "titleLine1": "You Already Trust Bitcoin With Value.",
-    "titleLine2": "Now Trust It With Truth.",
-    "subtitle": "When Satoshi Nakamoto launched Bitcoin in 2009, he embedded a newspaper headline in the genesis block — proof it wasn't pre-mined. That same power is now yours, for any document, in minutes.",
+    "badge": "What happens next",
+    "titleLine1": "The file stays on your device.",
+    "titleLine2": "Bitcoin takes about an hour.",
+    "subtitle": "Only a fingerprint is stamped. A new stamp waits about an hour. Pending is not confirmed.",
     "cards": {
       "noServer": {
         "title": "No Server Required",
         "body": "Your document never leaves your device. We only see a cryptographic hash — like a fingerprint, not the actual file."
       },
       "anchored": {
-        "title": "Anchored in 60 Minutes",
+        "title": "About an hour",
         "body": "Within one Bitcoin block, your proof is woven into the chain. Every node on Earth validates it. It cannot be altered or backdated without overwhelming the network (a 51% attack) — economically prohibitive, not literally impossible. Nodes can prune data, so keep your .ots file and your original document."
       },
       "court": {

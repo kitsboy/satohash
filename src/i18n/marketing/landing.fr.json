@@ -43,17 +43,17 @@
     "pendingHour": "Un nouveau sceau attend environ une heure. Ce nombre est la pointe que lit notre nœud."
   },
   "features": {
-    "badge": "Ce que la plupart ignorent",
-    "titleLine1": "Vous faites déjà confiance à Bitcoin pour la valeur.",
-    "titleLine2": "Faites-lui confiance pour la vérité.",
-    "subtitle": "Lorsque Satoshi Nakamoto a lancé Bitcoin en 2009, il a intégré un titre de journal dans le bloc genèse — preuve qu'il n'avait pas été pré-miné. Ce même pouvoir est désormais le vôtre, pour tout document, en quelques minutes.",
+    "badge": "Ce qui suit",
+    "titleLine1": "Le fichier reste sur l'appareil.",
+    "titleLine2": "Bitcoin prend environ une heure.",
+    "subtitle": "Seule l'empreinte est tamponnée. Un nouveau tampon attend environ une heure. Pending n'est pas Confirmed.",
     "cards": {
       "noServer": {
         "title": "Aucun serveur requis",
         "body": "Votre document ne quitte jamais votre appareil. Nous ne voyons qu'un hachage cryptographique — comme une empreinte digitale, pas le fichier lui-même."
       },
       "anchored": {
-        "title": "Ancré en 60 minutes",
+        "title": "Environ une heure",
         "body": "En un bloc Bitcoin, votre preuve est tissée dans la chaîne. Chaque nœud sur Terre la valide. Elle ne peut être modifiée ni antidatée sans submerger le réseau (une attaque à 51 %) — économiquement prohibitif, pas littéralement impossible. Les nœuds peuvent élaguer les données : conservez donc votre fichier .ots et votre document original."
       },
       "court": {

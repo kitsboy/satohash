@@ -43,17 +43,17 @@
     "pendingHour": "Ein neuer Stempel wartet etwa eine Stunde. Diese Zahl ist die Spitze, die unser Knoten liest."
   },
   "features": {
-    "badge": "Was die meisten nicht wissen",
-    "titleLine1": "Sie vertrauen Bitcoin bereits mit Wert.",
-    "titleLine2": "Vertrauen Sie ihm jetzt mit der Wahrheit.",
-    "subtitle": "Als Satoshi Nakamoto 2009 Bitcoin startete, bettete er eine Zeitungsüberschrift in den Genesis-Block ein — Beweis, dass er nicht vorab geschürft wurde. Diese Kraft gehört jetzt Ihnen, für jedes Dokument, in Minuten.",
+    "badge": "Was danach passiert",
+    "titleLine1": "Die Datei bleibt auf dem Gerät.",
+    "titleLine2": "Bitcoin dauert etwa eine Stunde.",
+    "subtitle": "Nur ein Fingerabdruck wird gestempelt. Ein neuer Stempel wartet etwa eine Stunde. Pending ist nicht Confirmed.",
     "cards": {
       "noServer": {
         "title": "Kein Server erforderlich",
         "body": "Ihr Dokument verlässt niemals Ihr Gerät. Wir sehen nur einen kryptografischen Hash — wie einen Fingerabdruck, nicht die eigentliche Datei."
       },
       "anchored": {
-        "title": "In 60 Minuten verankert",
+        "title": "Etwa eine Stunde",
         "body": "Innerhalb eines Bitcoin-Blocks ist Ihr Nachweis in die Kette eingewoben. Jeder Knoten auf der Erde validiert ihn. Er kann nicht ohne eine Überwältigung des Netzwerks (ein 51 %-Angriff) geändert oder rückdatiert werden — wirtschaftlich praktisch unmöglich, nicht buchstäblich unmöglich. Knoten können Daten kürzen, bewahren Sie daher Ihre .ots-Datei und Ihr Originaldokument auf."
       },
       "court": {

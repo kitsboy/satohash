@@ -1,6 +1,5 @@
 import { useState, useEffect, useMemo } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { motion, AnimatePresence } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 import {
   ArrowRight,
@@ -121,17 +120,21 @@ export default function MarketingDesktopNav({ onDonate }) {
 
   return (
     <nav
-      className="fixed inset-x-0 top-0 z-[100] transition-[background,box-shadow,border-color] duration-300"
+      className="fixed inset-x-0 top-0 z-[100]"
       style={{
         paddingTop: 'env(safe-area-inset-top)',
-        borderBottom: scrolled
-          ? '1px solid color-mix(in srgb, var(--border) 100%, transparent)'
-          : '1px solid color-mix(in srgb, var(--border) 50%, transparent)',
-        background: scrolled
-          ? 'color-mix(in srgb, var(--bg-navbar) 98%, transparent)'
-          : 'color-mix(in srgb, var(--bg-navbar) 92%, transparent)',
-        backdropFilter: 'blur(20px) saturate(1.15)',
-        boxShadow: scrolled ? '0 8px 32px rgba(0,0,0,0.18)' : 'none'
+        borderBottom:
+          scrolled || navOpen
+            ? '1px solid color-mix(in srgb, var(--border) 100%, transparent)'
+            : '1px solid color-mix(in srgb, var(--border) 50%, transparent)',
+        background: navOpen
+          ? 'var(--bg-primary)'
+          : scrolled
+            ? 'color-mix(in srgb, var(--bg-navbar) 98%, transparent)'
+            : 'color-mix(in srgb, var(--bg-navbar) 92%, transparent)',
+        backdropFilter: navOpen ? 'none' : 'blur(20px) saturate(1.15)',
+        boxShadow: scrolled ? '0 8px 32px rgba(0,0,0,0.18)' : 'none',
+        transition: navOpen ? 'none' : 'background 300ms, box-shadow 300ms, border-color 300ms'
       }}
     >
       {/* ── Desktop ───────────────────────────────────────── */}
@@ -273,145 +276,135 @@ export default function MarketingDesktopNav({ onDonate }) {
         </div>
       </div>
 
-      {/* Mobile drawer */}
-      <AnimatePresence>
-        {navOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.16 }}
-            className="fixed inset-0 z-[99] md:hidden"
+      {/* Mobile drawer. Opaque on the first frame. */}
+      {navOpen && (
+        <div
+          className="fixed inset-x-0 bottom-0 z-[99] md:hidden"
+          style={{
+            top: 'calc(3.5rem + env(safe-area-inset-top, 0px) + var(--satohash-health-banner-h, 0px))'
+          }}
+        >
+          <button
+            type="button"
+            className="absolute inset-0"
+            style={{ background: 'rgba(6, 10, 16, 0.72)' }}
+            aria-label={t('nav.closeMenu')}
+            onClick={() => setNavOpen(false)}
+          />
+          <div
+            className="relative mx-3 mt-2 max-h-[min(80dvh,680px)] overflow-y-auto rounded-2xl border shadow-2xl sm:mx-4"
             style={{
-              top: 'calc(3.5rem + env(safe-area-inset-top, 0px) + var(--satohash-health-banner-h, 0px))'
+              borderColor: 'var(--border-bright)',
+              backgroundColor: 'var(--bg-secondary)',
+              opacity: 1,
+              paddingBottom: 'env(safe-area-inset-bottom)'
             }}
           >
-            <button
-              type="button"
-              className="absolute inset-0 bg-black/60"
-              aria-label="Close menu"
-              onClick={() => setNavOpen(false)}
-            />
-            <motion.div
-              initial={{ y: -12, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: -8, opacity: 0 }}
-              transition={{ type: 'spring', stiffness: 400, damping: 34 }}
-              className="relative mx-3 mt-2 max-h-[min(80dvh,680px)] overflow-y-auto rounded-2xl border shadow-2xl sm:mx-4"
-              style={{
-                borderColor: 'var(--border-bright)',
-                background: 'var(--bg-secondary)',
-                paddingBottom: 'env(safe-area-inset-bottom)'
-              }}
-            >
-              <div className="border-b px-4 py-3.5" style={{ borderColor: 'var(--border)' }}>
-                <p
-                  className="text-[10px] font-black tracking-[0.18em] uppercase"
-                  style={{ color: 'var(--accent-gold)' }}
-                >
-                  {t('nav.bitcoinNotary')}
-                </p>
-              </div>
+            <div className="border-b px-4 py-3.5" style={{ borderColor: 'var(--border)' }}>
+              <p
+                className="text-[10px] font-black tracking-[0.18em] uppercase"
+                style={{ color: 'var(--accent-gold)' }}
+              >
+                {t('nav.bitcoinNotary')}
+              </p>
+            </div>
 
-              <div className="flex flex-col gap-0.5 p-2">
-                {allLinks.map((link) => {
-                  const Icon = link.icon || FileText
-                  const active = isActive(link.href)
-                  const row = (
-                    <>
-                      <span
-                        className="flex h-9 w-9 items-center justify-center rounded-lg"
-                        style={{
-                          background: active ? 'rgba(240,180,41,0.16)' : 'var(--bg-primary)',
-                          color: active ? 'var(--accent-gold)' : 'var(--text-secondary)'
-                        }}
-                      >
-                        <Icon size={17} />
-                      </span>
-                      <span className="flex-1 text-left text-[15px] font-semibold">
-                        {link.label}
-                      </span>
-                    </>
-                  )
-                  const cls =
-                    'flex min-h-[48px] items-center gap-3 rounded-xl px-3 py-2.5 transition-colors'
-                  const style = {
-                    color: active ? 'var(--accent-gold)' : 'var(--text-primary)',
-                    background: active ? 'rgba(240,180,41,0.08)' : 'transparent'
-                  }
-                  if (link.hash || link.href.startsWith('/#')) {
-                    return (
-                      <a
-                        key={link.href}
-                        href={link.href}
-                        className={cls}
-                        style={style}
-                        onClick={() => setNavOpen(false)}
-                      >
-                        {row}
-                      </a>
-                    )
-                  }
+            <div className="flex flex-col gap-0.5 p-2">
+              {allLinks.map((link) => {
+                const Icon = link.icon || FileText
+                const active = isActive(link.href)
+                const row = (
+                  <>
+                    <span
+                      className="flex h-9 w-9 items-center justify-center rounded-lg"
+                      style={{
+                        background: active ? 'rgba(240,180,41,0.16)' : 'var(--bg-primary)',
+                        color: active ? 'var(--accent-gold)' : 'var(--text-secondary)'
+                      }}
+                    >
+                      <Icon size={17} />
+                    </span>
+                    <span className="flex-1 text-left text-[15px] font-semibold">{link.label}</span>
+                  </>
+                )
+                const cls =
+                  'flex min-h-[48px] items-center gap-3 rounded-xl px-3 py-2.5 transition-colors'
+                const style = {
+                  color: active ? 'var(--accent-gold)' : 'var(--text-primary)',
+                  background: active ? 'rgba(240,180,41,0.08)' : 'transparent'
+                }
+                if (link.hash || link.href.startsWith('/#')) {
                   return (
-                    <Link
+                    <a
                       key={link.href}
-                      to={link.href}
+                      href={link.href}
                       className={cls}
                       style={style}
                       onClick={() => setNavOpen(false)}
                     >
                       {row}
-                    </Link>
+                    </a>
                   )
-                })}
-              </div>
+                }
+                return (
+                  <Link
+                    key={link.href}
+                    to={link.href}
+                    className={cls}
+                    style={style}
+                    onClick={() => setNavOpen(false)}
+                  >
+                    {row}
+                  </Link>
+                )
+              })}
+            </div>
 
-              <div className="space-y-3 border-t p-3" style={{ borderColor: 'var(--border)' }}>
-                <div className="flex items-center justify-between gap-3 px-1">
-                  <span
-                    className="text-[10px] font-black tracking-[0.16em] uppercase"
-                    style={{ color: 'var(--text-tertiary)' }}
-                  >
-                    Language
-                  </span>
-                  <LanguageSwitcher />
-                </div>
-                <div className="flex items-center justify-between gap-3 px-1">
-                  <span
-                    className="text-[10px] font-black tracking-[0.16em] uppercase"
-                    style={{ color: 'var(--text-tertiary)' }}
-                  >
-                    Theme
-                  </span>
-                  <ThemeToggle />
-                </div>
-                {onDonate && (
-                  <button
-                    type="button"
-                    onClick={() => {
-                      onDonate()
-                      setNavOpen(false)
-                    }}
-                    className="flex min-h-[48px] w-full items-center justify-center rounded-xl border text-sm font-bold"
-                    style={{ borderColor: 'rgba(240,180,41,0.35)', color: 'var(--accent-gold)' }}
-                  >
-                    {t('landingPage.nav.donate', { defaultValue: 'Donate' })}
-                  </button>
-                )}
-                <Link
-                  to="/stamp"
-                  onClick={() => setNavOpen(false)}
-                  className="flex min-h-[52px] w-full items-center justify-center gap-2 rounded-xl text-sm font-black uppercase"
-                  style={{ background: 'var(--accent-gold)', color: '#141b25' }}
+            <div className="space-y-3 border-t p-3" style={{ borderColor: 'var(--border)' }}>
+              <div className="flex items-center justify-between gap-3 px-1">
+                <span
+                  className="text-[10px] font-black tracking-[0.16em] uppercase"
+                  style={{ color: 'var(--text-tertiary)' }}
                 >
-                  <Fingerprint size={18} />
-                  {t('landingPage.nav.startFree', { defaultValue: 'Stamp free' })}
-                </Link>
+                  Language
+                </span>
+                <LanguageSwitcher />
               </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+              <div className="flex items-center justify-between gap-3 px-1">
+                <span
+                  className="text-[10px] font-black tracking-[0.16em] uppercase"
+                  style={{ color: 'var(--text-tertiary)' }}
+                >
+                  Theme
+                </span>
+                <ThemeToggle />
+              </div>
+              {onDonate && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    onDonate()
+                    setNavOpen(false)
+                  }}
+                  className="flex min-h-[48px] w-full items-center justify-center rounded-xl border text-sm font-bold"
+                  style={{ borderColor: 'rgba(240,180,41,0.35)', color: 'var(--accent-gold)' }}
+                >
+                  {t('landingPage.nav.donate', { defaultValue: 'Donate' })}
+                </button>
+              )}
+              <Link
+                to="/stamp"
+                onClick={() => setNavOpen(false)}
+                className="flex min-h-[52px] w-full items-center justify-center gap-2 rounded-xl text-sm font-black uppercase"
+                style={{ background: 'var(--accent-gold)', color: '#141b25' }}
+              >
+                <Fingerprint size={18} />
+                {t('landingPage.nav.startFree', { defaultValue: 'Stamp free' })}
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
     </nav>
   )
 }
