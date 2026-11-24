@@ -175,6 +175,23 @@ export default function Landing() {
     return () => window.removeEventListener('beforeinstallprompt', handler)
   }, [])
 
+  useEffect(() => {
+    const root = document.documentElement
+    const narrow = window.matchMedia('(max-width: 639px)')
+    const apply = () => {
+      root.style.setProperty(
+        '--satohash-pwa-bar',
+        pwaPrompt && !pwaDismissed && narrow.matches ? '3.25rem' : '0px'
+      )
+    }
+    apply()
+    narrow.addEventListener('change', apply)
+    return () => {
+      narrow.removeEventListener('change', apply)
+      root.style.removeProperty('--satohash-pwa-bar')
+    }
+  }, [pwaPrompt, pwaDismissed])
+
   const installPWA = async () => {
     if (!pwaPrompt) return
     pwaPrompt.prompt()
@@ -1089,43 +1106,42 @@ export default function Landing() {
         </Link>
       </div>
 
-      {/* PWA Install Banner — mobile only */}
-      <AnimatePresence>
-        {pwaPrompt && !pwaDismissed && (
-          <motion.div
-            initial={{ y: 100, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: 100, opacity: 0 }}
-            className="fixed right-4 bottom-20 left-4 z-40 flex items-center gap-3 rounded-xl px-3 py-2 sm:hidden"
-            style={{ background: 'var(--bg-primary)', border: '1px solid var(--border)' }}
-            data-testid="pwa-install-hint"
+      {/* PWA Install Banner — pinned to the bottom edge on a phone */}
+      {pwaPrompt && !pwaDismissed && (
+        <div
+          className="pwa-install-hint fixed inset-x-0 bottom-0 z-40 flex items-center gap-3 px-4 py-2 sm:hidden"
+          style={{
+            background: 'var(--bg-primary)',
+            borderTop: '1px solid var(--border)',
+            paddingBottom: 'max(0.5rem, env(safe-area-inset-bottom))'
+          }}
+          data-testid="pwa-install-hint"
+        >
+          <div className="min-w-0 flex-1">
+            <p className="text-[11px] leading-snug" style={{ color: 'var(--text-secondary)' }}>
+              {t('landingPage.pwa.title')}
+              <span className="text-[var(--text-muted)]"> · {t('landingPage.pwa.subtitle')}</span>
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={installPWA}
+            className="min-h-[44px] flex-shrink-0 px-2 text-[11px] font-bold underline"
+            style={{ color: 'var(--text-secondary)' }}
           >
-            <div className="min-w-0 flex-1">
-              <p className="text-[11px] leading-snug" style={{ color: 'var(--text-secondary)' }}>
-                {t('landingPage.pwa.title')}
-                <span className="text-[var(--text-muted)]"> · {t('landingPage.pwa.subtitle')}</span>
-              </p>
-            </div>
-            <button
-              type="button"
-              onClick={installPWA}
-              className="min-h-[44px] flex-shrink-0 px-2 text-[11px] font-bold underline"
-              style={{ color: 'var(--text-secondary)' }}
-            >
-              {t('landingPage.pwa.install')}
-            </button>
-            <button
-              type="button"
-              onClick={dismissPWA}
-              className="min-h-[44px] min-w-[44px] flex-shrink-0 text-sm"
-              style={{ color: 'var(--text-muted)' }}
-              aria-label={t('landingPage.pwa.dismiss')}
-            >
-              ✕
-            </button>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            {t('landingPage.pwa.install')}
+          </button>
+          <button
+            type="button"
+            onClick={dismissPWA}
+            className="min-h-[44px] min-w-[44px] flex-shrink-0 text-sm"
+            style={{ color: 'var(--text-muted)' }}
+            aria-label={t('landingPage.pwa.dismiss')}
+          >
+            ✕
+          </button>
+        </div>
+      )}
 
       {/* ── DONATION MODAL ───────────────────────────────────────── */}
       <AnimatePresence>

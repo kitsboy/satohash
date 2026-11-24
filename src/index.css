@@ -262,6 +262,11 @@ body {
   }
 }
 
+/* Unlayered so it beats the Tailwind `flex` utility while the phone menu is open. */
+body[data-mobile-nav='open'] .pwa-install-hint {
+  display: none;
+}
+
 @layer components {
   /* ─── Primary Card (jewel surface — never flat) ─────── */
   .glass-card {

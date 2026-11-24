@@ -106,8 +106,10 @@ export default function MarketingDesktopNav({ onDonate }) {
     if (!navOpen) return undefined
     const prev = document.body.style.overflow
     document.body.style.overflow = 'hidden'
+    document.body.dataset.mobileNav = 'open'
     return () => {
       document.body.style.overflow = prev
+      delete document.body.dataset.mobileNav
     }
   }, [navOpen])
 
@@ -253,8 +255,20 @@ export default function MarketingDesktopNav({ onDonate }) {
           <LanguageSwitcher compact />
           <Link
             to="/stamp"
-            className="btn-sheen inline-flex h-10 min-h-[40px] items-center rounded-xl px-3 text-[11px] font-black uppercase"
-            style={{ background: 'var(--accent-gold)', color: '#141b25' }}
+            className={`${navOpen ? '' : 'btn-sheen '}inline-flex h-10 min-h-[40px] items-center rounded-xl border px-3 text-[11px] font-black uppercase`}
+            style={
+              navOpen
+                ? {
+                    background: 'transparent',
+                    color: 'var(--text-secondary)',
+                    borderColor: 'var(--border)'
+                  }
+                : {
+                    background: 'var(--accent-gold)',
+                    color: '#141b25',
+                    borderColor: 'transparent'
+                  }
+            }
             onClick={() => setNavOpen(false)}
           >
             {t('nav.stamp')}

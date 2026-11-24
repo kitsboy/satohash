@@ -1,3 +1,21 @@
+## 2026-11-24 (Grok M3 — install bar, one gold menu button, honest stamp help)
+
+Website only. **Do not rebuild the API.** Running image stays `7c68076`. Paywall stays off. Do not change `/api/*`.
+
+On a phone, the Add to Home Screen bar sits on the bottom edge. The first card in “What happens next” stays readable above it. While the phone menu is open, that bar hides. Stamp in the top bar is an outline. Start free at the bottom of the menu stays the gold button. When the menu is closed, Stamp in the bar is gold again.
+
+The two help bubbles in the stamp extras say the file stays and stamps are free. The L402 bubble says you cannot buy a plan today. The OpenTimestamps bubble says only a fingerprint is stamped, and Bitcoin confirmation takes about an hour.
+
+Checked in the browser at 390px and on a wide screen. The first card’s words sit above the bar. The open menu shows one gold fill. A wide screen hides the install bar. Both bubbles were opened and read.
+
+This commit bumps the build from 460. Do not claim a new live Pages bundle until Cloudflare deploys.
+
+Public stamp list, checked the same day: 578 stamps, 571 confirmed, 1 pending, 6 failed, 2 in the last day. Human page is `/status`. Totals are `https://api.satohash.io/metrics.json`.
+
+**Kimi:** do not rebuild. Do not `git reset --hard` `/root/satohash`. Do not chase Ethereum. Do not resurrect `api_keys`. LND stays off. Do not charge.
+
+---
+
 ## 2026-11-24 (Grok M3 — sign-in chips, honest homepage section, solid phone menu)
 
 Website only. **Do not rebuild the API.** Running image stays `7c68076`. Paywall stays off. Do not change `/api/*`.

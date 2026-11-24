@@ -1958,8 +1958,8 @@ export default function Stamp() {
                         <span className="flex items-center text-[10px] font-bold text-[var(--text-secondary)] uppercase">
                           L402 Gating
                           <Tooltip
-                            title="L402 Gating"
-                            content="A Bitcoin Lightning micropayment paywall. Callers pay a tiny SATS fee per API request — no account needed, just a Lightning wallet."
+                            title="Not for sale"
+                            content="Stamps are free. This switch does not charge anyone. You cannot buy a plan today."
                           />
                         </span>
                         <input
@@ -1983,8 +1983,8 @@ export default function Stamp() {
                   <h3 className="flex items-center text-[10px] font-bold tracking-widest uppercase">
                     Proof-of-Existence Streams
                     <Tooltip
-                      title="OpenTimestamps (OTS)"
-                      content="An open protocol that hashes your document and anchors it into a Bitcoin block. Proves your file existed at a specific point in time, immutably."
+                      title="OpenTimestamps"
+                      content="The file stays on this device. Only a fingerprint is stamped. Bitcoin confirmation takes about an hour. Pending is not confirmed."
                     />
                   </h3>
                 </div>
