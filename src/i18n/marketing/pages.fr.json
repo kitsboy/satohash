@@ -1253,10 +1253,10 @@
   },
   "accessPage": {
     "hero": {
-      "title1": "Accès",
-      "title2": "souverain",
-      "titleHighlight": "Gateway.",
-      "subtitle": "Pas de mots de passe. Pas d’intermédiaires. Votre clé reste sur cet appareil."
+      "title1": "Votre clé",
+      "title2": "reste",
+      "titleHighlight": "sur cet appareil.",
+      "subtitle": "Pas de mot de passe. Cette page ne facture pas. Tamponner ne demande pas de clé."
     },
     "cards": {
       "newIdentity": {
@@ -1288,11 +1288,11 @@
     "privacy": "Votre clé privée ne quitte jamais cet appareil. Satohash utilise uniquement la cryptographie côté client.",
     "privacyLink": "Lire notre architecture de confidentialité →",
     "trust": {
-      "e2e": "Chiffrement de bout en bout",
-      "custody": "Garde souveraine",
+      "e2e": "Pas de mot de passe",
+      "custody": "Pas un paiement",
       "zk": "La clé reste ici"
     },
-    "footer": "En entrant dans l'atelier Satohash, vous reconnaissez que toutes les opérations cryptographiques ont lieu sur votre appareil et que vous conservez une souveraineté absolue sur votre matériel privé.",
+    "footer": "La clé reste sur cet appareil. Satohash ne la voit pas. Cette page ne facture pas.",
     "pin": {
       "saveTitle": "Définir le PIN",
       "saveDesc": "Définissez un PIN de 4 à 6 chiffres pour mémoriser votre clé sur cet appareil (facultatif).",
@@ -1929,7 +1929,7 @@
     "stampFree": "Horodater gratuitement",
     "closeMenu": "Fermer le menu",
     "openMenu": "Ouvrir le menu",
-    "bitcoinNotary": "Notaire Bitcoin",
+    "bitcoinNotary": "Tampon Bitcoin",
     "primary": "Principal",
     "explorer": "Explorateur",
     "batch": "Horodatage par lots",

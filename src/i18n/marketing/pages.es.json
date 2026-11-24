@@ -1253,10 +1253,10 @@
   },
   "accessPage": {
     "hero": {
-      "title1": "Acceso",
-      "title2": "Soberano",
-      "titleHighlight": "Gateway.",
-      "subtitle": "Sin contraseñas. Sin intermediarios. Tu clave se queda en este dispositivo."
+      "title1": "Tu clave",
+      "title2": "se queda",
+      "titleHighlight": "en este dispositivo.",
+      "subtitle": "Sin contraseña. Esta página no cobra. Sellar no necesita una clave."
     },
     "cards": {
       "newIdentity": {
@@ -1288,11 +1288,11 @@
     "privacy": "Tu clave privada nunca sale de este dispositivo. Satohash usa solo criptografía del lado del cliente.",
     "privacyLink": "Lee nuestra arquitectura de privacidad →",
     "trust": {
-      "e2e": "Cifrado de extremo a extremo",
-      "custody": "Custodia soberana",
+      "e2e": "Sin contraseña",
+      "custody": "No es un pago",
       "zk": "La clave se queda aquí"
     },
-    "footer": "Al entrar en el banco de trabajo de Satohash, reconoces que todas las operaciones criptográficas ocurren en tu dispositivo y mantienes soberanía absoluta sobre tu material privado.",
+    "footer": "La clave se queda en este dispositivo. Satohash no la ve. Esta página no cobra.",
     "pin": {
       "saveTitle": "Establecer PIN",
       "saveDesc": "Establece un PIN de 4–6 dígitos para recordar tu clave en este dispositivo (opcional).",
@@ -1929,7 +1929,7 @@
     "stampFree": "Sellar gratis",
     "closeMenu": "Cerrar menú",
     "openMenu": "Abrir menú",
-    "bitcoinNotary": "Notaría Bitcoin",
+    "bitcoinNotary": "Sello Bitcoin",
     "primary": "Principal",
     "explorer": "Explorador",
     "batch": "Sello por lotes",

@@ -254,8 +254,11 @@ export default function Access() {
                 Satohash
               </span>
             </Link>
-            <h1 className="text-5xl leading-none font-black tracking-tighter uppercase md:text-7xl">
-              {t('accessPage.hero.title1')} <br /> {t('accessPage.hero.title2')}{' '}
+            <h1 className="max-w-full text-[clamp(1.65rem,6.4vw,4.5rem)] leading-[0.95] font-black tracking-tighter break-words uppercase">
+              {t('accessPage.hero.title1')}
+              <br />
+              {t('accessPage.hero.title2')}
+              <br />
               <span className="text-[var(--text-secondary)]">
                 {t('accessPage.hero.titleHighlight')}
               </span>
@@ -547,7 +550,7 @@ export default function Access() {
           </p>
 
           <section className="space-y-8 text-center" aria-label="Trust">
-            <div className="flex flex-wrap justify-center gap-12 text-[var(--text-secondary)]">
+            <div className="flex flex-wrap justify-center gap-x-8 gap-y-3 text-[var(--text-secondary)]">
               <div className="flex items-center gap-2">
                 <Lock size={14} className="text-[var(--accent-active)]" />
                 <span className="text-[10px] font-black tracking-widest uppercase">

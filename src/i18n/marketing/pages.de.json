@@ -1253,10 +1253,10 @@
   },
   "accessPage": {
     "hero": {
-      "title1": "Souveräner",
-      "title2": "Zugangs",
-      "titleHighlight": "Gateway.",
-      "subtitle": "Keine Passwörter. Keine Vermittler. Ihr Schlüssel bleibt auf diesem Gerät."
+      "title1": "Ihr Schlüssel",
+      "title2": "bleibt",
+      "titleHighlight": "auf diesem Gerät.",
+      "subtitle": "Kein Passwort. Diese Seite verlangt kein Geld. Stempeln braucht keinen Schlüssel."
     },
     "cards": {
       "newIdentity": {
@@ -1288,11 +1288,11 @@
     "privacy": "Ihr privater Schlüssel verlässt dieses Gerät nie. Satohash nutzt ausschließlich clientseitige Kryptografie.",
     "privacyLink": "Unsere Privacy-Architektur lesen →",
     "trust": {
-      "e2e": "Ende-zu-Ende-Verschlüsselung",
-      "custody": "Souveräne Verwahrung",
+      "e2e": "Kein Passwort",
+      "custody": "Keine Zahlung",
       "zk": "Schlüssel bleibt hier"
     },
-    "footer": "Mit dem Betreten der Satohash-Werkbank bestätigen Sie, dass alle kryptografischen Operationen auf Ihrem Gerät stattfinden und Sie absolute Souveränität über Ihr privates Material behalten.",
+    "footer": "Der Schlüssel bleibt auf diesem Gerät. Satohash sieht ihn nicht. Diese Seite verlangt kein Geld.",
     "pin": {
       "saveTitle": "PIN festlegen",
       "saveDesc": "Legen Sie eine 4–6-stellige PIN fest, um Ihren Schlüssel auf diesem Gerät zu speichern (optional).",
@@ -1929,7 +1929,7 @@
     "stampFree": "Kostenlos stempeln",
     "closeMenu": "Menü schließen",
     "openMenu": "Menü öffnen",
-    "bitcoinNotary": "Bitcoin-Notar",
+    "bitcoinNotary": "Bitcoin-Stempel",
     "primary": "Primär",
     "explorer": "Explorer",
     "batch": "Batch-Stempel",

@@ -1253,10 +1253,10 @@
   },
   "accessPage": {
     "hero": {
-      "title1": "Ufikiaji",
-      "title2": "Huru",
-      "titleHighlight": "Gateway.",
-      "subtitle": "Hakuna nenosiri. Hakuna wasuluhishi. Ufunguo wako unabaki kwenye kifaa hiki."
+      "title1": "Ufunguo wako",
+      "title2": "unabaki",
+      "titleHighlight": "kwenye kifaa hiki.",
+      "subtitle": "Hakuna nenosiri. Ukurasa huu hautoi malipo. Muhuri hauhitaji ufunguo."
     },
     "cards": {
       "newIdentity": {
@@ -1288,11 +1288,11 @@
     "privacy": "Ufunguo wako wa kibinafsi haiondoki kwenye kifaa hiki. Satohash hutumia kriptografia upande wa mteja pekee.",
     "privacyLink": "Soma usanifu wetu wa faragha →",
     "trust": {
-      "e2e": "Usimbaji fiche wa mwisho hadi mwisho",
-      "custody": "Uhifadhi huru",
+      "e2e": "Hakuna nenosiri",
+      "custody": "Si malipo",
       "zk": "Ufunguo uko hapa"
     },
-    "footer": "Kwa kuingia kwenye benchi ya kazi ya Satohash, unakubali kuwa shughuli zote za kriptografia zinafanyika kwenye kifaa chako na unadumisha uhuru kamili juu ya nyenzo zako za kibinafsi.",
+    "footer": "Ufunguo unabaki kwenye kifaa hiki. Satohash hauuoni. Ukurasa huu hautoi malipo.",
     "pin": {
       "saveTitle": "Weka PIN",
       "saveDesc": "Weka PIN ya tarakimu 4–6 ili kukumbuka funguo lako kwenye kifaa hiki (hiari).",
@@ -1929,7 +1929,7 @@
     "stampFree": "Gonga bure",
     "closeMenu": "Funga menyu",
     "openMenu": "Fungua menyu",
-    "bitcoinNotary": "Notari ya Bitcoin",
+    "bitcoinNotary": "Muhuri wa Bitcoin",
     "primary": "Kuu",
     "explorer": "Kichunguzi",
     "batch": "Gonga kundi",

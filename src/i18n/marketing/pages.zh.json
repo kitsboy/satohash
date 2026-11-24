@@ -1228,10 +1228,10 @@
   },
   "accessPage": {
     "hero": {
-      "title1": "主权",
-      "title2": "访问",
-      "titleHighlight": "网关。",
-      "subtitle": "无密码。无中介。密钥留在这台设备上。"
+      "title1": "密钥",
+      "title2": "留在",
+      "titleHighlight": "这台设备上。",
+      "subtitle": "没有密码。这个页面不收费。盖章不需要密钥。"
     },
     "cards": {
       "newIdentity": {
@@ -1263,11 +1263,11 @@
     "privacy": "您的私钥永不离开此设备。Satohash 仅使用客户端加密。",
     "privacyLink": "阅读我们的隐私架构 →",
     "trust": {
-      "e2e": "端到端加密",
-      "custody": "主权托管",
+      "e2e": "没有密码",
+      "custody": "不是付款",
       "zk": "密钥留在设备"
     },
-    "footer": "进入 Satohash 工作台即表示您确认所有加密操作均在您的设备上进行，且您对私有材料保持绝对主权。",
+    "footer": "密钥留在这台设备上。Satohash 看不到它。这个页面不收费。",
     "pin": {
       "saveTitle": "设置 PIN",
       "saveDesc": "设置 4–6 位 PIN 以在此设备上记住您的密钥（可选）。",
@@ -1904,7 +1904,7 @@
     "stampFree": "免费盖戳",
     "closeMenu": "关闭菜单",
     "openMenu": "打开菜单",
-    "bitcoinNotary": "比特币公证",
+    "bitcoinNotary": "比特币盖章",
     "primary": "主要",
     "explorer": "浏览器",
     "batch": "批量盖戳",

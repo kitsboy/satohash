@@ -1253,10 +1253,10 @@
   },
   "accessPage": {
     "hero": {
-      "title1": "Acesso",
-      "title2": "Soberano",
-      "titleHighlight": "Gateway.",
-      "subtitle": "Sem senhas. Sem intermediários. A sua chave fica neste dispositivo."
+      "title1": "A sua chave",
+      "title2": "fica",
+      "titleHighlight": "neste dispositivo.",
+      "subtitle": "Sem senha. Esta página não cobra. Carimbar não precisa de uma chave."
     },
     "cards": {
       "newIdentity": {
@@ -1288,11 +1288,11 @@
     "privacy": "Sua chave privada nunca sai deste dispositivo. O Satohash usa apenas criptografia no cliente.",
     "privacyLink": "Leia nossa arquitetura de privacidade →",
     "trust": {
-      "e2e": "Criptografia de ponta a ponta",
-      "custody": "Custódia soberana",
+      "e2e": "Sem senha",
+      "custody": "Não é um pagamento",
       "zk": "A chave fica aqui"
     },
-    "footer": "Ao entrar na bancada de trabalho do Satohash, você reconhece que todas as operações criptográficas ocorrem no seu dispositivo e você mantém soberania absoluta sobre seu material privado.",
+    "footer": "A chave fica neste dispositivo. O Satohash não a vê. Esta página não cobra.",
     "pin": {
       "saveTitle": "Definir PIN",
       "saveDesc": "Defina um PIN de 4–6 dígitos para lembrar sua chave neste dispositivo (opcional).",
@@ -1929,7 +1929,7 @@
     "stampFree": "Selar grátis",
     "closeMenu": "Fechar menu",
     "openMenu": "Abrir menu",
-    "bitcoinNotary": "Notário Bitcoin",
+    "bitcoinNotary": "Carimbo Bitcoin",
     "primary": "Principal",
     "explorer": "Explorador",
     "batch": "Selo em lote",

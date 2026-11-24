@@ -27,14 +27,17 @@ describe('Access page', () => {
     sessionStorage.clear()
   })
 
-  it('renders the sovereign access gateway', () => {
+  it('says the key stays on this device', () => {
     render(
       <MemoryRouter>
         <Access />
       </MemoryRouter>
     )
 
-    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(/Gateway/i)
+    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(/on this device/i)
+    expect(screen.getByText('No password')).toBeInTheDocument()
+    expect(screen.getByText('Not a payment')).toBeInTheDocument()
+    expect(screen.getByText('Key stays on device')).toBeInTheDocument()
     expect(screen.getByText('New Identity')).toBeInTheDocument()
     expect(screen.getByText('Import nsec')).toBeInTheDocument()
     expect(screen.getByText('Admin Access')).toBeInTheDocument()

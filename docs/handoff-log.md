@@ -1,3 +1,17 @@
+## 2026-11-24 (Grok M3 — logo, sign-in, phone compare)
+
+Website only. **Do not rebuild the API.** Running image stays `7c68076`. Paywall stays off. Do not change `/api/*`.
+
+The line under the logo says Bitcoin stamp on the desktop bar, the phone bar, and the phone menu. Seven languages. The sign-in page and its tab say the key stays on this device. The chips say no password and not a payment. The compare table shows Satohash, DocuSign, and DIY OpenTimestamps on a phone. The swipe hint is gone. Checked in the browser on desktop, at 390px, and at 320px, including Spanish and Swahili.
+
+This commit bumps the build (457 → 458). Do not claim a new live Pages bundle until Cloudflare deploys.
+
+Last live API check still stands: health ok, `gitSha` `7c68076`, `free_open`. Our node was block **977,380**. Practice stamp stays block **974302**. Public example stays block **969,627**. Do not charge.
+
+**Kimi:** do not rebuild. Do not `git reset --hard` `/root/satohash`. LND stays off. Do not point Bitcoin RPC at Umbrel.
+
+---
+
 ## 2026-11-24 (Grok M3 — first screen says the file stays)
 
 Website only. **Do not rebuild the API.** Running image stays `7c68076`. Paywall stays off. Do not change `/api/*`.

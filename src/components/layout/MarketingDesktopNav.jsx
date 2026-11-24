@@ -155,7 +155,7 @@ export default function MarketingDesktopNav({ onDonate }) {
                   Satohash
                 </span>
                 <span
-                  className="mt-0.5 text-[9px] font-medium tracking-[0.12em] uppercase"
+                  className="mt-0.5 truncate text-[9px] font-medium tracking-[0.12em] uppercase"
                   style={{ color: 'var(--text-tertiary)' }}
                 >
                   {t('nav.bitcoinNotary')}
@@ -231,11 +231,19 @@ export default function MarketingDesktopNav({ onDonate }) {
       <div className="flex h-14 items-center justify-between gap-2 px-3 sm:px-4 md:hidden">
         <Link to="/" className="flex min-w-0 items-center gap-2">
           <img src="/logo.png" alt="" className="h-8 w-8 shrink-0 object-contain" />
-          <span
-            className="truncate text-[13px] font-black tracking-[0.12em] uppercase"
-            style={{ color: 'var(--accent-gold)' }}
-          >
-            Satohash
+          <span className="flex min-w-0 flex-col leading-none">
+            <span
+              className="truncate text-[13px] font-black tracking-[0.12em] uppercase"
+              style={{ color: 'var(--accent-gold)' }}
+            >
+              Satohash
+            </span>
+            <span
+              className="mt-0.5 truncate text-[9px] font-medium tracking-[0.12em] uppercase"
+              style={{ color: 'var(--text-tertiary)' }}
+            >
+              {t('nav.bitcoinNotary')}
+            </span>
           </span>
         </Link>
         <div className="flex shrink-0 items-center gap-1.5">
@@ -301,7 +309,7 @@ export default function MarketingDesktopNav({ onDonate }) {
                   className="text-[10px] font-black tracking-[0.18em] uppercase"
                   style={{ color: 'var(--accent-gold)' }}
                 >
-                  Menu
+                  {t('nav.bitcoinNotary')}
                 </p>
               </div>
 

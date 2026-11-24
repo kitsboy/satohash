@@ -1253,10 +1253,10 @@
   },
   "accessPage": {
     "hero": {
-      "title1": "Sovereign",
-      "title2": "Access",
-      "titleHighlight": "Gateway.",
-      "subtitle": "No passwords. No intermediaries. Your key stays on this device."
+      "title1": "Your key",
+      "title2": "stays",
+      "titleHighlight": "on this device.",
+      "subtitle": "No password. This page does not charge. A stamp does not need a key."
     },
     "cards": {
       "newIdentity": {
@@ -1288,11 +1288,11 @@
     "privacy": "Your private key never leaves this device. Satohash uses client-side cryptography only.",
     "privacyLink": "Read our privacy architecture →",
     "trust": {
-      "e2e": "End-to-End Encryption",
-      "custody": "Sovereign Custody",
+      "e2e": "No password",
+      "custody": "Not a payment",
       "zk": "Key stays on device"
     },
-    "footer": "By entering the Satohash workbench, you acknowledge that all cryptographic operations occur on your device and you maintain absolute sovereignty over your private material.",
+    "footer": "The key stays on this device. Satohash does not see it. This page does not charge.",
     "pin": {
       "saveTitle": "Set PIN",
       "saveDesc": "Set a 4–6 digit PIN to remember your key on this device (optional).",
@@ -1957,7 +1957,7 @@
     "stampFree": "Stamp free",
     "closeMenu": "Close menu",
     "openMenu": "Open menu",
-    "bitcoinNotary": "Bitcoin notary",
+    "bitcoinNotary": "Bitcoin stamp",
     "primary": "Primary",
     "explorer": "Explorer",
     "batch": "Batch Stamp",

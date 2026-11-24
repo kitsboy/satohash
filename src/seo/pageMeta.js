@@ -641,32 +641,32 @@ export const pageMeta = {
   },
   access: {
     en: {
-      title: 'Sovereign Access Gateway — Nostr Identity Login',
+      title: 'Your key stays on this device',
       description: 'Create or import a Nostr keypair. Your key stays on this device.'
     },
     es: {
-      title: 'Puerta de Acceso Soberana — Identidad Nostr',
+      title: 'Tu clave se queda en este dispositivo',
       description: 'Cree o importe un par de claves Nostr. Su clave se queda en este dispositivo.'
     },
     fr: {
-      title: "Passerelle d'Accès Souveraine — Identité Nostr",
+      title: 'Votre clé reste sur cet appareil',
       description: 'Créez ou importez une paire de clés Nostr. Votre clé reste sur cet appareil.'
     },
     de: {
-      title: 'Souveränes Zugangsportal — Nostr-Identitätslogin',
+      title: 'Ihr Schlüssel bleibt auf diesem Gerät',
       description:
         'Erstellen oder importieren Sie ein Nostr-Schlüsselpaar. Ihr Schlüssel bleibt auf diesem Gerät.'
     },
     pt: {
-      title: 'Portal de Acesso Soberano — Identidade Nostr',
+      title: 'A sua chave fica neste dispositivo',
       description: 'Crie ou importe um par de chaves Nostr. A sua chave fica neste dispositivo.'
     },
     sw: {
-      title: 'Lango la Ufikiaji wa Uhuru — Utambulisho wa Nostr',
+      title: 'Ufunguo wako unabaki kwenye kifaa hiki',
       description: 'Unda au leta jozi ya funguo za Nostr. Ufunguo wako unakaa kwenye kifaa hiki.'
     },
     zh: {
-      title: '主权访问网关 — Nostr 身份登录',
+      title: '密钥留在这台设备上',
       description: '创建或导入 Nostr 密钥对。您的密钥留在此设备上。'
     }
   },

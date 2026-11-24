@@ -92,20 +92,17 @@ export default function Comparison() {
           <p className="mb-6 max-w-2xl text-sm leading-relaxed text-[var(--text-secondary)]">
             {t('comparisonPage.hero.subtitle')}
           </p>
-          <p className="mb-3 text-xs text-[var(--text-secondary)] lg:hidden">
-            {t('comparisonPage.mobileHint')}
-          </p>
-          <div className="overflow-x-auto rounded-2xl border border-[var(--border)] print:block">
-            <table className="comparison-table w-full text-left text-sm">
+          <div className="-mx-3 overflow-hidden rounded-2xl border border-[var(--border)] sm:mx-0 print:block">
+            <table className="comparison-table w-full table-fixed text-left text-sm">
               <thead>
                 <tr className="border-b border-[var(--border)] bg-[var(--surface-raised)]">
-                  <th className="sticky left-0 z-10 w-1/3 bg-[var(--surface-raised)] p-4 font-bold text-[var(--text-primary)]">
+                  <th className="w-[28%] bg-[var(--surface-raised)] px-2 py-2 text-[11px] leading-snug font-bold break-words text-[var(--text-primary)] md:w-1/3 md:p-4 md:text-sm">
                     {t('comparisonPage.hero.feature')}
                   </th>
                   {columns.map((col) => (
                     <th
                       key={col.key}
-                      className="p-4 text-center font-bold"
+                      className="px-0.5 py-2 text-center text-[clamp(8px,2.5vw,13px)] leading-tight font-bold break-normal md:p-4 md:text-sm"
                       style={{ color: col.color }}
                     >
                       {col.label}
@@ -120,7 +117,7 @@ export default function Comparison() {
                     className={`border-b border-[var(--border)] ${i % 2 === 0 ? 'bg-[var(--bg-primary)]' : 'bg-[var(--bg-secondary)]'}`}
                   >
                     <td
-                      className={`sticky left-0 z-10 p-4 text-xs font-bold text-[var(--text-primary)] ${
+                      className={`px-2 py-2 text-[11px] leading-snug font-bold break-words text-[var(--text-primary)] md:p-4 md:text-xs ${
                         i % 2 === 0 ? 'bg-[var(--bg-primary)]' : 'bg-[var(--bg-secondary)]'
                       }`}
                     >
@@ -130,7 +127,10 @@ export default function Comparison() {
                       const val = row[key]
                       const planned = row.planned?.[key] === true
                       return (
-                        <td key={key} className="p-4 text-center text-xs">
+                        <td
+                          key={key}
+                          className="px-0.5 py-2 text-center text-[11px] leading-tight break-normal md:p-4 md:text-xs"
+                        >
                           {val === true ? (
                             <Check size={16} className="mx-auto text-[var(--accent-success)]" />
                           ) : val === false ? (
