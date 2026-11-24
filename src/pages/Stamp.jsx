@@ -20,7 +20,6 @@ import {
 import { useState, useCallback, useEffect, useRef, useMemo } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { getTieredFeeEstimates } from '../utils/mempool.js'
-import FeeAdvisor from '../components/stamps/FeeAdvisor'
 import { addErrorBreadcrumb } from '../utils/errors.js'
 import { clientId } from '../utils/id'
 import { toast } from 'sonner'
@@ -1928,7 +1927,6 @@ export default function Stamp() {
 
           {/* ── Configuration Sidebar ──────────────── */}
           <div className="space-y-8">
-            {showAdvancedModes && <FeeAdvisor />}
             {showAdvancedModes && (
               <div className="space-y-6 rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] p-6">
                 <div className="flex items-center gap-3">

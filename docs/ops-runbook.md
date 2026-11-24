@@ -155,7 +155,9 @@ Until Kimi sets `NOSTR_PRIVATE_KEY` on THOR, leave the crontab / timer off or ke
 
 ```
 NOSTR_PRIVATE_KEY=<64-hex>
-# NOSTR_RELAYS=wss://relay.damus.io,wss://nos.lol,wss://relay.primal.net
+# Home relay is the Pi 4, plain ws, tailnet only. Do not publish that URL in NIP-05.
+# relay.damus.io is not in the default list (it rejects our connections).
+# NOSTR_RELAYS=ws://pi4.tailb672ac.ts.net:7447,wss://nos.lol,wss://relay.primal.net
 # NOSTR_NIP05=satohash@satohash.io
 ```
 

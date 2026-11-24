@@ -54,7 +54,7 @@
       },
       "anchored": {
         "title": "About an hour",
-        "body": "Within one Bitcoin block, your proof is woven into the chain. Every node on Earth validates it. It cannot be altered or backdated without overwhelming the network (a 51% attack) — economically prohibitive, not literally impossible. Nodes can prune data, so keep your .ots file and your original document."
+        "body": "A new stamp waits about an hour. Pending is not confirmed. Keep the .ots file with the original document."
       },
       "court": {
         "title": "Independently Verifiable Evidence",

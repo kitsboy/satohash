@@ -48,7 +48,7 @@ const SECTIONS = [
     slug: 'stamp',
     kicker: 'Stamp',
     title: 'Stamp a document on Bitcoin \u2014 free',
-    tagline: 'SHA-256 in your browser \u00b7 anchored in ~60 minutes',
+    tagline: 'SHA-256 in your browser \u00b7 anchored in about an hour',
   },
   {
     slug: 'pricing',

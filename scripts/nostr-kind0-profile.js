@@ -12,7 +12,7 @@
  *
  * Env:
  *   NOSTR_PRIVATE_KEY   required for --publish, 64 hex chars
- *   NOSTR_RELAYS        optional comma-separated wss:// relays
+ *   NOSTR_RELAYS        optional comma-separated ws:// or wss:// relays
  *   NOSTR_NIP05         optional; default satohash@satohash.io; empty = omit
  *   NOSTR_PICTURE       optional profile picture URL
  */
@@ -20,13 +20,11 @@ import { finalizeEvent, getPublicKey } from 'nostr-tools/pure'
 import { Relay } from 'nostr-tools'
 
 const DEFAULT_RELAYS = [
-  'wss://relay.damus.io',
+  'ws://pi4.tailb672ac.ts.net:7447',
   'wss://nos.lol',
   'wss://relay.snort.social',
   'wss://relay.primal.net',
-  'wss://nostr.wine',
-  'wss://relay.nostr.band',
-  'wss://offchain.pub'
+  'wss://relay.nostr.band'
 ]
 
 const CONNECT_TIMEOUT_MS = Number(process.env.NOSTR_CONNECT_TIMEOUT_MS || 4500)
@@ -50,7 +48,7 @@ function printUsage() {
 
   Env:
     NOSTR_PRIVATE_KEY   64-char hex (never logged)
-    NOSTR_RELAYS        optional comma-separated wss:// relays
+    NOSTR_RELAYS        optional comma-separated ws:// or wss:// relays
     NOSTR_NIP05         optional (default satohash@satohash.io; empty omits)
     NOSTR_PICTURE       optional picture URL`)
 }
@@ -88,7 +86,7 @@ function relays() {
     const list = raw
       .split(',')
       .map((s) => s.trim())
-      .filter((s) => s.startsWith('wss://'))
+      .filter((s) => s.startsWith('wss://') || s.startsWith('ws://'))
     if (list.length) return list
   }
   return DEFAULT_RELAYS

@@ -1,16 +1,16 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 461) · **Updated:** 2026-11-24
+> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 462) · **Updated:** 2026-11-24
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Satohash — The Sovereign Provenance Pitch
 
 **Family pitch:** Prove a file existed. The file stays with you. Only a fingerprint goes on Bitcoin. `.ots` receipts outlive any company. Lives in the Give A Bit suite: https://agents.giveabit.io/#suite
 
-**Status (2026-10-12):** Live at **https://satohash.io**. Version **5.0.0-ELITE**. Stamps are **free** (`REQUIRE_LIGHTNING=false`). Proofs stay Bitcoin + OpenTimestamps. Own pruned bitcoind is at tip.
+**Status (2026-11-24):** Live at **https://satohash.io**. Version **5.0.0-ELITE**. Stamps are **free** (`REQUIRE_LIGHTNING=false`). Proofs stay Bitcoin + OpenTimestamps. Own pruned bitcoind is at tip. The stamp page does not show a Fast / Standard / Economy price row.
 
 **Live product:** hash on your device → stamp the fingerprint → share `https://satohash.io/p/{hash}` → download the `.ots` receipt → anyone can verify. **Pending is not Confirmed.** Pending means the stamp is on its way. Confirmed means a Bitcoin block has sealed it, about an hour later. Family apps can complete `POST /api/stamp`. The CLI prints the proof card.
 
-**Counted on 2026-10-12, 23:52 UTC** from `https://api.satohash.io/metrics.json`: **495** stamps, **492** confirmed, **1** still pending, **2** failed. Confirm rate **99.6%**. Paywall off.
+**Counted on 2026-11-24** from `https://api.satohash.io/metrics.json`: **578** stamps, **571** confirmed, **1** still pending, **6** failed. Confirm rate **99%**. Paywall off. Notes can also go to the home Nostr relay on the Pi 4 (`ws://pi4.tailb672ac.ts.net:7447`, tailnet only). Public relays are nos.lol, snort, primal, and nostr.band. `relay.damus.io` is not in the list. The running API image still pings Damus until the next API start. Do not rebuild for the website copy.
 
 **A proof you can open today** (checked the same hour with `POST /api/verify`, `verified: true`, own bitcoind): Bitcoin block **969,627**. Card: [satohash.io/p/515b2a393bbffcfe9c3511d04a4349e199dbff1959cc0ac1f76817cd92f53abd](https://satohash.io/p/515b2a393bbffcfe9c3511d04a4349e199dbff1959cc0ac1f76817cd92f53abd). Recorded 2026-10-02 19:00:22 UTC. Confirmed 2026-10-02 20:48:00 UTC. We do not publish the original filename.
 
@@ -51,7 +51,7 @@ Every dispute over "who did what, when" comes down to one question: can you prov
 
 **Satohash's founding bet is that this middleman is no longer necessary for the moment a file existed.** OpenTimestamps anchors a fingerprint of your file into the Bitcoin blockchain — permanently and verifiable, with no company standing between your document and the proof. A later chapter can add a private-key signature, so "this file existed" can become *"this file existed, and I am the one who created it."* That signature is not what we sell today. Today we prove the moment.
 
-**No account. Free today. Absolute privacy. Confirmation waits for the next Bitcoin block (~60 minutes).**
+**No account. Free today. Absolute privacy. Confirmation waits for the next Bitcoin block (about an hour).**
 
 > **Your document. Your hash. Bitcoin's permanence.**
 
@@ -72,7 +72,7 @@ The workbench is Plane 1. Higher planes may evolve later without invalidating pr
 Privacy is non-negotiable. Your document **never leaves your machine**. The browser (or CLI, or family widget) computes SHA-256 locally. Only the 64-character hash is sent. We cannot read, leak, or sell your documents — **because we never receive them.**
 
 ### 2. OpenTimestamps on Bitcoin
-Hashes go to public OTS calendars, aggregate into a Merkle tree, and commit to Bitcoin. **Pending** = calendars have the hash. **Confirmed** = a Bitcoin block has sealed it (~60 minutes). They are not the same.
+Hashes go to public OTS calendars, aggregate into a Merkle tree, and commit to Bitcoin. **Pending** = calendars have the hash. **Confirmed** = a Bitcoin block has sealed it (about an hour). They are not the same.
 
 ### 3. Portable `.ots` + camera QR
 You download a self-contained `.ots` receipt. Share `https://satohash.io/p/{hash}` — the zero-JS proof card. Phone cameras cannot read `.ots`; they open that URL. **If Satohash vanished tomorrow, the `.ots` remains verifiable with open tools.**
@@ -193,7 +193,7 @@ This pitch is not a promise — it is a *report*. We show you exactly what is li
 *   **Pricing (Cam-locked 2026-08-29)** — free base + optional premium tiers (Professional ~2,100 sats/mo ~$29, Business ~21,000 sats/mo ~$299) + pay-per-use API (1–5 sats/stamp). Premium rails built but not yet switched on.
 *   **Bitcoin + OTS anchoring** — live, verified, own node at tip.
 *   **File never leaves the device** — only the SHA-256 is submitted. Core promise.
-*   **Pending ≠ Confirmed** — calendars vs a Bitcoin block (~60 minutes). Do not treat them as the same.
+*   **Pending ≠ Confirmed** — calendars vs a Bitcoin block (about an hour). Do not treat them as the same.
 *   **Camera QR** — PDFs and email encode `https://satohash.io/p/{hash}` so phone cameras open the proof card.
 *   **Family widget POST + CLI** — widget can complete `/api/stamp`; CLI prints the proof card.
 *   **Proves "when," not "who"** — stated plainly; authorship is the next chapter.

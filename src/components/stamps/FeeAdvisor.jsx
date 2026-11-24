@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Zap, TrendingUp, Clock } from 'lucide-react'
 import { getFeeEstimates } from '../../utils/mempool'
 
-/** Live mempool fee tiers for stamp / batch flows */
+/** Mempool sat/vB tiers. The stamp extras hide this while stamps are free. The numbers look like a price menu. */
 export default function FeeAdvisor({ compact = false }) {
   const [fees, setFees] = useState(null)
   const [degraded, setDegraded] = useState(false)

@@ -264,7 +264,7 @@ write(
 const secondary = {
   stamp: {
     title: 'Stamp a Document on Bitcoin — Free & Private',
-    desc: 'Stamp any file on the Bitcoin blockchain for free. SHA-256 hashed in your browser, anchored via OpenTimestamps in ~60 minutes.',
+    desc: 'Stamp any file on the Bitcoin blockchain for free. SHA-256 hashed in your browser, anchored via OpenTimestamps in about an hour.',
     body: `<h1>Stamp a Document on Bitcoin</h1>
 <p>Free. The file stays on your device. Stamp the fingerprint now. Bitcoin confirmation takes about an hour. Pending is not confirmed.</p>
 <h2>Three steps</h2>

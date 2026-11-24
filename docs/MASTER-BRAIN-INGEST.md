@@ -6,6 +6,20 @@
 
 ---
 
+## Paste block (2026-11-24 — Pi 4 Nostr relay)
+
+```markdown
+### Satohash 2026-11-24 Nostr + calm cards (Grok M3)
+Stamps stay free. Paywall off. Do not charge. Do not rebuild the API for the website cards. Image stays 7c68076 until the next image you choose.
+Home Nostr relay is on Pi 4: ws://pi4.tailb672ac.ts.net:7447 (plain ws, tailnet only). It answered a Nostr client check.
+relay.damus.io still errors on live health. It is no longer in the default list in git. Public NIP-05 relays: nos.lol, snort, primal, nostr.band. Do not put the Pi URL in the public NIP-05 file.
+The wallet request file docs/KIMI-REQUEST-BITCOIN-WALLETS.md is gone. Do not provision a wallet.
+Homepage “About an hour” card is one short paragraph. Stamp extras hide the Fast/Standard/Economy row. The phone up-arrow hides while the install bar is showing.
+Do not git reset --hard /root/satohash. Pages = Grok. Vault = THOR not M4.
+```
+
+---
+
 ## Paste block (2026-11-03 — goodbye)
 
 ```markdown

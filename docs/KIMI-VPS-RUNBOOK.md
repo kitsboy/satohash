@@ -14,8 +14,8 @@ This is the **executable** handoff. Copy relevant bullets into MASTER-BRAIN / Ka
 
 | Spec | Action |
 |------|--------|
-| `docs/KIMI-REQUEST-BITCOIN-WALLETS.md` | LNbits wallet **`satohash`**, public on-chain + LUD-16, keys → HQ Vault, public handback to Grok |
-| `docs/KIMI-REQUEST-SATOHASH.md` | Stamp plane status + Docker rebuild for `client_id` / metrics directory |
+| Wallet request | The file `docs/KIMI-REQUEST-BITCOIN-WALLETS.md` is gone. Do not provision a paywall. LNbits stays unused until Cam asks. |
+| `docs/archive/KIMI-REQUEST-SATOHASH.md` | Old stamp-plane note. History only. It is not an order to rebuild. |
 | `docs/LEARN-STAMP-FAMILY.md` | Why SPA must call `api.satohash.io` (not CF same-origin) |
 | `docs/KIMI-HANDOFF.md` | Top entry = latest Grok session |
 

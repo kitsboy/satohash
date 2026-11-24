@@ -106,7 +106,7 @@ Satohash hashes it in the browser. Only a SHA-256 fingerprint is submitted. We c
 ```
 That fingerprint is aggregated by OpenTimestamps calendars and anchored in a Bitcoin block.
 
-Typically the next block (~60 minutes). That’s the price of strength, not a bug.
+Typically the next block, about an hour. That’s the price of strength, not a bug.
 ```
 
 **4/7**

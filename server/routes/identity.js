@@ -3,6 +3,7 @@
  * @param {import('express').Express} app
  * @param {object} deps
  */
+import { PUBLIC_RELAYS } from '../nostr.js'
 export function register(app, deps) {
   const { db, logger, requireNpub, pingRelays, nip19, fetchNostrProfile } = deps
 
@@ -60,12 +61,7 @@ export function register(app, deps) {
     // Public hex only — same as public/.well-known/nostr.json. Never an nsec.
     const PRODUCT_HEX = '076fbd672795bfba1f905084bbe05dcee4937aa1db995c2f87d616ea0f73f8d4'
     const pk = process.env.NOSTR_PUBLIC_KEY || PRODUCT_HEX
-    const relayList = [
-      'wss://relay.damus.io',
-      'wss://nos.lol',
-      'wss://relay.snort.social',
-      'wss://relay.nostr.band'
-    ]
+    const relayList = PUBLIC_RELAYS
     const relays = { [pk]: relayList }
     const names = {}
     try {

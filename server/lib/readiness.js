@@ -87,7 +87,7 @@ export async function buildReadinessReport() {
         damus: damus || null,
         pings: nostrPings,
         healthy: nostrOk.length >= 1,
-        note: 'Success if ≥1 relay OK; damus may soft-fail bots'
+        note: 'Healthy when at least one relay connects. The home relay is the Pi 4 on the tailnet. relay.damus.io is not in the default list.'
       }
     },
     cam_switches: {

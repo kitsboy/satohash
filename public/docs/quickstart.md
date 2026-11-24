@@ -6,7 +6,7 @@
 
 Stamp a file, download a portable `.ots` proof, and verify it — no account, no wallet, no paywall.
 
-Stamps are **free today**. Only a SHA-256 fingerprint leaves your device. Proofs anchor to **Bitcoin** via [OpenTimestamps](https://opentimestamps.org). Confirmation waits for the next Bitcoin block (~60 minutes).
+Stamps are **free today**. Only a SHA-256 fingerprint leaves your device. Proofs anchor to **Bitcoin** via [OpenTimestamps](https://opentimestamps.org). Confirmation waits for the next Bitcoin block (about an hour).
 
 ## 60-second stamp
 
@@ -24,7 +24,7 @@ If you go Back from the done screen, you will not re-submit.
 
 1. Open [satohash.io/verify](/verify).
 2. Drop the original file, the `.ots`, or paste the hash.
-3. **Pending ≠ Confirmed.** Pending means calendars have the hash. Confirmed means a Bitcoin block has sealed it (~60 minutes).
+3. **Pending ≠ Confirmed.** Pending means calendars have the hash. Confirmed means a Bitcoin block has sealed it (about an hour).
 
 Anyone can re-verify later with Satohash or with the open-source `ots` CLI — even if this site is gone.
 

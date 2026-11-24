@@ -54,7 +54,7 @@
       },
       "anchored": {
         "title": "Cerca de uma hora",
-        "body": "Num bloco Bitcoin, a sua prova fica entrelaçada na cadeia. Cada nó na Terra a valida. Não pode ser alterada nem antedatada sem dominar a rede (um ataque de 51 %) — é economicamente proibitivo, não literalmente impossível. Os nós podem podar dados, por isso guarde o seu ficheiro .ots e o documento original."
+        "body": "Um carimbo novo espera cerca de uma hora. Pending não é Confirmed. Guarde o arquivo .ots junto do documento original."
       },
       "court": {
         "title": "Prova válida em tribunal",

@@ -17,7 +17,7 @@ The core issue is the same as any digital file: bytes can be edited silently. A 
 ## The workflow
 
 1. **Export** your AI output as a file (image, PDF, text, JSON — whatever format matters).
-2. **Stamp it** at [satohash.io/stamp](https://satohash.io/stamp) — hashed locally, anchored to Bitcoin in ~60 minutes.
+2. **Stamp it** at [satohash.io/stamp](https://satohash.io/stamp) — hashed locally, anchored to Bitcoin in about an hour.
 3. **Keep the pair** — the original file + its `.ots` proof.
 4. **Re-verify anytime** with the proof card (`/p/<hash>`) or independently on opentimestamps.org.
 

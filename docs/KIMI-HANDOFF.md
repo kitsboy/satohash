@@ -8,6 +8,20 @@ Multi-party signing is not what the site uses. Do not put it back on the stamp p
 
 API image stays `7c68076`. Paywall stays off. Do not rebuild for website copy. Do not `git reset --hard` `/root/satohash`.
 
+## Nostr — Pi 4 relay (2026-11-24)
+
+`wss://relay.damus.io` still errors on live health. nos.lol and snort are ok.
+
+The Nostr relay is on the Pi 4, plain WebSocket, tailnet only:
+
+`ws://pi4.tailb672ac.ts.net:7447`
+
+Checked from this tailnet. HTTP says “Please use a Nostr client to connect.” A NIP-01 subscribe completed.
+
+That URL is in the server default list in this commit. It is **not** in public `/.well-known/nostr.json` (phones off the tailnet cannot open it). Public relays: nos.lol, snort, primal, nostr.band.
+
+The running image `7c68076` still pings Damus. A new image picks up the Pi relay. Do not rebuild tonight only for the website cards. Do not charge. The wallet request file `docs/KIMI-REQUEST-BITCOIN-WALLETS.md` is gone. Do not provision one.
+
 ---
 
 ## Latest Session Summary (from 2026-11-03 goodbye)

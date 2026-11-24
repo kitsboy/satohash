@@ -144,7 +144,7 @@ Content-Type: application/json
 - Kimi provisions LNbits wallet **`satohash`**, public **bc1** + **LUD-16/LNURL-pay**  
 - Keys only in **HQ Vault** (`hq.giveabit.io`)  
 - Grok publishes public fields only after handback  
-- Spec: `docs/KIMI-REQUEST-BITCOIN-WALLETS.md`  
+- The wallet spec file is not in the repo. Do not provision wallets until Cam asks.
 - Placeholders: `src/config/constants.js` → `BTC_ADDRESS`, `LN_ADDRESS`, `LNURL_PAY`  
 
 ---
@@ -154,4 +154,4 @@ Content-Type: application/json
 - Family apps: use this contract only  
 - MASTER-BRAIN: see `docs/MASTER-BRAIN-INGEST.md` paste block (updated)  
 - Sherpa Grok prompt: `sherpacarta/docs/GROK-PROMPT-STAMP-HANDOFF.md`  
-- Kimi wallets: `docs/KIMI-REQUEST-BITCOIN-WALLETS.md`  
+- Kimi wallets: do not provision them until Cam asks. The old request file is gone.

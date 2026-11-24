@@ -54,7 +54,7 @@
       },
       "anchored": {
         "title": "Etwa eine Stunde",
-        "body": "Innerhalb eines Bitcoin-Blocks ist Ihr Nachweis in die Kette eingewoben. Jeder Knoten auf der Erde validiert ihn. Er kann nicht ohne eine Überwältigung des Netzwerks (ein 51 %-Angriff) geändert oder rückdatiert werden — wirtschaftlich praktisch unmöglich, nicht buchstäblich unmöglich. Knoten können Daten kürzen, bewahren Sie daher Ihre .ots-Datei und Ihr Originaldokument auf."
+        "body": "Ein neuer Stempel wartet etwa eine Stunde. Pending ist nicht Confirmed. Bewahren Sie die .ots-Datei zusammen mit dem Originaldokument auf."
       },
       "court": {
         "title": "Gerichtsfeste Beweise",

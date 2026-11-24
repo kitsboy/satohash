@@ -2,9 +2,9 @@ import { nip19, nip05 } from 'nostr-tools'
 import { getApiUrl } from '../config/constants'
 
 const RELAYS = [
-  'wss://relay.damus.io',
   'wss://nos.lol',
   'wss://relay.snort.social',
+  'wss://relay.primal.net',
   'wss://relay.nostr.band'
 ]
 

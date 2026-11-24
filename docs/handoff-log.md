@@ -1,3 +1,19 @@
+## 2026-11-24 (Grok M3 — calm stamp extras, hour card, Pi 4 Nostr relay)
+
+Website copy ships on Pages. **Do not rebuild the API for the card copy.** Running image stays `7c68076` until Kimi chooses the next image. Paywall stays off. Do not change `/api/*`.
+
+The stamp extras no longer show the Fast / Standard / Economy row. Stamps stay free. The homepage card “About an hour” is one short paragraph in all seven languages. While the phone install bar is showing, the up-arrow hides.
+
+`wss://relay.damus.io` still fails on live `GET /health?deep=true` (nos.lol and snort are ok). The Nostr app is on **Pi 4**. I connected to `ws://pi4.tailb672ac.ts.net:7447` from this tailnet. It answers “Please use a Nostr client to connect.” That address is now the first server relay. It is not in the public NIP-05 list, because a phone off the tailnet cannot open it. Public relays are nos.lol, snort, primal, and nostr.band.
+
+The missing file `docs/KIMI-REQUEST-BITCOIN-WALLETS.md` is no longer linked from the living docs. Do not provision a wallet. Do not charge.
+
+**Kimi:** when you next start the API from this code, Damus drops out and the Pi relay is included. You do not need to rebuild tonight for the website. Do not `git reset --hard` `/root/satohash`. LND stays off.
+
+This commit bumps the build from 461. Do not claim a new live Pages bundle until Cloudflare deploys.
+
+---
+
 ## 2026-11-24 (Grok M3 — install bar, one gold menu button, honest stamp help)
 
 Website only. **Do not rebuild the API.** Running image stays `7c68076`. Paywall stays off. Do not change `/api/*`.

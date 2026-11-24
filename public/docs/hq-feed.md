@@ -66,5 +66,4 @@ See **`docs/LEARN-STAMP-FAMILY.md`**. SPA on CF Pages must call **API origin** f
 
 ## Product wallets (HQ Vault)
 
-Satohash **donations/tips** (L1 + L2) are requested from Kimi via **`docs/KIMI-REQUEST-BITCOIN-WALLETS.md`**.  
-Invoice/admin keys live in **HQ Vault only**. Public bc1 + LUD-16 go to SPA after handback. Not part of metrics.json.
+Satohash donations stay off. The old wallet request file is not in this repo. Do not turn Lightning on until Cam asks. Invoice keys, if they ever exist, stay in **HQ Vault** only. Not part of metrics.json.

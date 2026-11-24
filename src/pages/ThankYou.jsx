@@ -39,7 +39,7 @@ export default function ThankYou() {
           <p className="text-sm leading-relaxed text-[var(--text-secondary)]">
             After you stamp a file, Satohash keeps only a SHA-256 fingerprint — the file never
             leaves your device. That fingerprint is anchored to the Bitcoin blockchain through
-            OpenTimestamps calendars, typically within one block (~60 minutes).
+            OpenTimestamps calendars, typically within about an hour.
           </p>
           <ul className="mt-3 space-y-2 text-sm text-[var(--text-secondary)]">
             <li className="flex items-start gap-2">

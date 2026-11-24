@@ -1,5 +1,5 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 461) · **Updated:** 2026-11-24
+> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 462) · **Updated:** 2026-11-24
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Satohash — FINANCIALS (Approximate)
@@ -24,7 +24,7 @@
 
 > Billing rails (L402/LND) are built but **not yet switched on** — premium tiers launch paid only once Lightning channels are funded and tested. The free anchor is live today.
 >
-> **Volume, counted 2026-10-12 23:52 UTC** from `/metrics.json`: 495 stamps, 492 confirmed, 1 pending, 2 failed. That is the real base. Do not paste a larger number into a deck.
+> **Volume, counted 2026-11-24** from `/metrics.json`: 578 stamps, 571 confirmed, 1 pending, 6 failed. That is the real base. Do not paste a larger number into a deck. Stamps are free. The stamp page does not show a Fast / Standard / Economy price row.
 
 ---
 

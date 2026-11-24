@@ -1,15 +1,32 @@
 import { useState, useEffect } from 'react'
 
+function installBarOpen() {
+  const value = getComputedStyle(document.documentElement)
+    .getPropertyValue('--satohash-pwa-bar')
+    .trim()
+  return value !== '' && value !== '0' && value !== '0px'
+}
+
 export default function BackToTop() {
   const [visible, setVisible] = useState(false)
+  const [barOpen, setBarOpen] = useState(false)
 
   useEffect(() => {
-    const handler = () => setVisible(window.scrollY > 400)
-    window.addEventListener('scroll', handler, { passive: true })
-    return () => window.removeEventListener('scroll', handler)
+    const onScroll = () => setVisible(window.scrollY > 400)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    const root = document.documentElement
+    const readBar = () => setBarOpen(installBarOpen())
+    readBar()
+    const obs = new MutationObserver(readBar)
+    obs.observe(root, { attributes: true, attributeFilter: ['style'] })
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      obs.disconnect()
+    }
   }, [])
 
-  if (!visible) return null
+  if (!visible || barOpen) return null
 
   return (
     <button

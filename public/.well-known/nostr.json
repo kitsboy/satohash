@@ -6,9 +6,9 @@
   },
   "relays": {
     "076fbd672795bfba1f905084bbe05dcee4937aa1db995c2f87d616ea0f73f8d4": [
-      "wss://relay.damus.io",
       "wss://nos.lol",
       "wss://relay.snort.social",
+      "wss://relay.primal.net",
       "wss://relay.nostr.band"
     ]
   }

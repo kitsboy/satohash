@@ -15,7 +15,7 @@ You have a file you may need to prove later. Satohash makes a fingerprint of it 
 
 **Live loop detail:** Choose file first. The gold action stamps. View proof is the gold button when you are done. The `.ots` download is a text link under it. Bundle, black-out, and voice are demos under More.
 
-Phone cameras cannot read `.ots` files. Proof cards encode **`https://satohash.io/p/{hash}`** as a QR (PDFs and email too) — scanning it opens the zero-JS receipt. **Pending** means calendars have the hash; **Confirmed** means a Bitcoin block has sealed it (~60 minutes). They are not the same.
+Phone cameras cannot read `.ots` files. Proof cards encode **`https://satohash.io/p/{hash}`** as a QR (PDFs and email too) — scanning it opens the zero-JS receipt. **Pending** means calendars have the hash; **Confirmed** means a Bitcoin block has sealed it (about an hour). They are not the same.
 
 **API:** [https://api.satohash.io](https://api.satohash.io) · **Watch:** [satohash.io/watch](https://satohash.io/watch) (~70s)
 
@@ -32,7 +32,7 @@ Phone cameras cannot read `.ots` files. Proof cards encode **`https://satohash.i
 | Family widget POST `/api/stamp` + CLI | Native store apps |
 | Explainer at `/watch` | ZK redaction as a product |
 
-Today Satohash proves **when** a file existed, not **who** made it. Confirmation waits for the next Bitcoin block (~60 minutes). Bitcoin-only — no other chain.
+Today Satohash proves **when** a file existed, not **who** made it. Confirmation waits for the next Bitcoin block (about an hour). Bitcoin-only — no other chain.
 
 ### Documentation & pitch
 
@@ -57,7 +57,7 @@ Today Satohash proves **when** a file existed, not **who** made it. Confirmation
 1. Your browser (or the CLI) computes SHA-256 locally. The original bytes never upload.
 2. Only the 64-character hash is sent to the API, which submits it to public OpenTimestamps calendars.
 3. Calendars aggregate hashes and commit a Merkle root to Bitcoin.
-4. After ~60 minutes a block seals the receipt. Download the `.ots`. Share `https://satohash.io/p/<hash>`.
+4. After about an hour a block seals the receipt. Download the `.ots`. Share `https://satohash.io/p/<hash>`.
 
 Verify at [satohash.io/verify](https://satohash.io/verify) or with open OpenTimestamps tools. A hash of a short, guessable input can theoretically be reverse-matched — fine for real documents, not a privacy shield for trivial files.
 

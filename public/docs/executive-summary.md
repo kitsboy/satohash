@@ -1,5 +1,5 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 461) · **Updated:** 2026-11-24
+> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 462) · **Updated:** 2026-11-24
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Satohash — Executive Summary
@@ -27,7 +27,7 @@ You choose the file on your own phone or computer. The device makes a fingerprin
 
 **Pending is not Confirmed.** Pending means the stamp is on its way. Confirmed means a Bitcoin block has sealed it (about an hour — the price of strength, not a bug). A row in our list is bookkeeping. The block is the proof. Today Satohash proves **when** a file existed, not **who** made it.
 
-**Counted 2026-10-12, 23:52 UTC** (`/metrics.json`): 495 stamps, 492 confirmed, 1 pending, 2 failed, confirm rate 99.6%. Paywall off.
+**Counted 2026-11-24** (`/metrics.json`): 578 stamps, 571 confirmed, 1 pending, 6 failed, confirm rate 99%. Paywall off. Home Nostr relay is on the Pi 4 at `ws://pi4.tailb672ac.ts.net:7447` (tailnet only). `relay.damus.io` is not in the public list.
 
 **Open this one.** Block **969,627**, checked the same hour with `POST /api/verify` (`verified: true`, own bitcoind): [the public proof card](https://satohash.io/p/515b2a393bbffcfe9c3511d04a4349e199dbff1959cc0ac1f76817cd92f53abd). Recorded 2026-10-02 19:00:22 UTC. Confirmed 2026-10-02 20:48:00 UTC. The original filename is not part of the public example. Homepage, Verify, and the developer sample point here. The explorer tree is a labeled diagram, not a stamp.
 
@@ -59,7 +59,7 @@ Proving that something existed *before* a specific date has enormous legal, comm
 1. **Hash** — The browser (or CLI) computes the SHA-256 fingerprint of your file using the Web Crypto API. The original bytes **never leave your device**.
 2. **Stamp** — Only the 64-character hex hash is sent to Satohash, which forwards it to three independent public OpenTimestamps calendars (alice, bob, finney).
 3. **Anchor** — Calendars aggregate thousands of hashes into a Merkle tree and commit the root to Bitcoin in an OP_RETURN (or Taproot) transaction.
-4. **Confirm** — Within ~**60 minutes** a Bitcoin block permanently seals the commitment (block time is what makes the proof durable). **Pending ≠ Confirmed.** Pending = calendars have the hash. Confirmed = a Bitcoin block has sealed it.
+4. **Confirm** — About an hour later a Bitcoin block seals the commitment. **Pending ≠ Confirmed.** Pending = calendars have the hash. Confirmed = a Bitcoin block has sealed it.
 5. **Prove** — Download the `.ots`. Share `https://satohash.io/p/{hash}` (QR on PDFs and email; phone cameras open that URL). Verify in the SPA, with `ots verify`, or any compatible tool + a Bitcoin explorer. The receipt remains valid even if Satohash vanished.
 
 **No trust required.** The security comes from Bitcoin's proof-of-work, not from any company or server.
@@ -207,11 +207,11 @@ This executive summary is a report, not a promise. Every claim carries its hones
 - ✅ **Free stamps, Bitcoin+OTS anchoring, on-device hashing** — live and true today. Public example: block 969,627, checked 2026-10-12.
 - ✅ **The site matches the promise** — Choose file first; demos labeled; `.ots` under View proof; explorer tree marked as a diagram.
 - ✅ **Proof card + camera QR** — `https://satohash.io/p/{hash}`. Phone cameras open that URL.
-- ✅ **Pending ≠ Confirmed** — ~60 minutes to a Bitcoin block. Do not treat them as the same.
+- ✅ **Pending ≠ Confirmed** — about an hour to a Bitcoin block. Do not treat them as the same.
 - ✅ **Family widget + CLI** — widget can complete `POST /api/stamp`; CLI prints the proof card.
 - ✅ **Proves "when," not "who"** — stated plainly; authorship via private-key signing is the next chapter (v3).
 - ⚠️ **Independent client-side verify (zero server trust)** — on the roadmap; until it ships we say so.
-- ⚠️ **Verified multi-party signing** — partial today (unverified cosign); real non-repudiation on the roadmap.
+- ✅ **Multi-party signing** — not the live product. Do not put it back on the stamp page, the compare table, or pricing.
 - ⚠️ **Paid tiers / Lightning / BOLT-12** — built and staged; not live. Snapper, ZK redaction, 3D Merkle are cathedral — not current features.
 - ❌ **Ethereum / cross-chain** — out of scope, forever. Bitcoin is the truth layer.
 - 🛡 **Verify this yourself** — every proof carries a standing invitation to check with open tools, no account, no KYC.

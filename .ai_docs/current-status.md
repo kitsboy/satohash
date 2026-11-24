@@ -1,5 +1,15 @@
 # Current Status — Satohash
 
+## Nostr relay (2026-11-24)
+
+`wss://relay.damus.io` still errors on the live health check (nos.lol and snort are ok, so Nostr stays “healthy” at 2/3). The home relay is on **Pi 4**, plain WebSocket, tailnet only:
+
+`ws://pi4.tailb672ac.ts.net:7447`
+
+A browser outside the tailnet cannot open that address. It is in the server publish list. It is **not** in the public NIP-05 file `/.well-known/nostr.json`. Public relays there are nos.lol, snort, primal, and nostr.band.
+
+The running API image is still `7c68076`. It will keep pinging Damus until Kimi starts an image built from this code. Do not rebuild just for the website copy. Do not `git reset --hard` `/root/satohash`.
+
 ## Do not chase (closed 2026-11-24)
 
 - **Ethereum is already gone.** There is no `/stamp/ethereum` route and no Ethereum column. Do not remove a stub. Do not add a chain. Satohash is Bitcoin only.

@@ -1,5 +1,5 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 461) · **Updated:** 2026-11-24
+> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 462) · **Updated:** 2026-11-24
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Architecture & repo map
@@ -19,6 +19,7 @@ api.satohash.io (Express on THOR)
     │
     ├─► OTS calendars (public) ──batch──► Bitcoin
     ├─► SQLite / local data (server)
+    ├─► Nostr: Pi 4 relay ws://pi4.tailb672ac.ts.net:7447 plus public relays
     └─► optional LNbits when REQUIRE_LIGHTNING=true
 ```
 

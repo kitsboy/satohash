@@ -208,8 +208,12 @@ try {
 // outcome so an unawaited rejection can't kill the worker (~200ms after start).
 if (config.NODE_ENV === 'production') {
   performBackup()
-    .then((p) => { if (p) logger.info(`💾 Boot DB backup complete: ${p}`) })
-    .catch((e) => logger.error(`⚠️ Boot DB backup failed (non-fatal, server continues): ${e.message}`))
+    .then((p) => {
+      if (p) logger.info(`💾 Boot DB backup complete: ${p}`)
+    })
+    .catch((e) =>
+      logger.error(`⚠️ Boot DB backup failed (non-fatal, server continues): ${e.message}`)
+    )
 }
 
 // Initialize Stripe for monetization (1)
@@ -319,9 +323,10 @@ app.use(
           "'self'",
           'https://mempool.space',
           'https://*.opentimestamps.org',
-          'wss://relay.damus.io',
           'wss://nos.lol',
           'wss://relay.snort.social',
+          'wss://relay.primal.net',
+          'wss://relay.nostr.band',
           'https://alice.btc.calendar.opentimestamps.org',
           'https://bob.btc.calendar.opentimestamps.org',
           'https://finney.calendar.eternitywall.com'

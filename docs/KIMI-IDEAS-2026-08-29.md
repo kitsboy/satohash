@@ -5,6 +5,8 @@
 
 **Do not:** flip `REQUIRE_LIGHTNING` · change live `/api/*` paths · commit nsec / `.env` · log into Cloudflare unless the live site is broken · announce Giving Week (Cam held it).
 
+**2026-11-24:** `relay.damus.io` is off the default list. The home relay is `ws://pi4.tailb672ac.ts.net:7447` on the Pi 4. Do not spend a pass trying to make Damus green.
+
 **Done recently (do not redo):** Glacier Jewel footer + live proof chips; `@give_bit` on SPA/prerender/proof cards; `/watch` X **player card** live (`/watch-player.html`, embeddable CSP); per-page `/og/*.png`; RSS `feed.xml`; SEO prerender; Breez donate `satohash@breez.tips`.
 
 ---
@@ -78,8 +80,7 @@ Rails already exist: `server/nostr.js` publishes kind **1** + kind **1063** (has
    **Done when:** njump shows the note; video URL is clickable.
 
 8. **Relay honesty.**  
-   Health has been “Nostr 2/3”. Either get 5/7 green (`NOSTR_RELAYS`, damus retries already in code) or show the real count on `/status` without implying a mesh we don't have.  
-   **Done when:** `/api/public/readiness` nostr plane matches what `/status` displays, and `ok_count` is documented.
+   Closed 2026-11-24. Damus is not a target. The home relay is the Pi 4. Public relays are nos.lol, snort, primal, and nostr.band. Do not chase a 5/7 mesh.
 
 9. **Proof cards: nevent if we have `nostr_event_id`.**  
    `/p/<hash>` and stamp-done can link `https://njump.me/<nevent>` when `nostr_event_id` is set. If the DB row is empty, omit — don't invent.  

@@ -2,7 +2,7 @@
 
 **Prove a file existed. Never show the file. Bitcoin keeps the receipt forever.**
 
-Stamps are **free** today. No account. The file never leaves the device. Confirmation waits for the next Bitcoin block (~60 minutes). Bitcoin-only.
+Stamps are **free** today. No account. The file never leaves the device. Confirmation waits for the next Bitcoin block (about an hour). Bitcoin-only.
 
 The public in-app guide is [`public/docs/quickstart.md`](../public/docs/quickstart.md) (also `/docs/quickstart` on the site).
 
@@ -21,7 +21,7 @@ pip install opentimestamps-client
 ots verify mydoc.pdf.ots -f mydoc.pdf
 ```
 
-**Pending ≠ Confirmed.** Pending = calendars have the hash. Confirmed = a Bitcoin block has sealed it (~60 minutes). Explainer: [https://satohash.io/watch](https://satohash.io/watch).
+**Pending ≠ Confirmed.** Pending = calendars have the hash. Confirmed = a Bitcoin block has sealed it (about an hour). Explainer: [https://satohash.io/watch](https://satohash.io/watch).
 
 ---
 

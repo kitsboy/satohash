@@ -54,7 +54,7 @@
       },
       "anchored": {
         "title": "Environ une heure",
-        "body": "En un bloc Bitcoin, votre preuve est tissée dans la chaîne. Chaque nœud sur Terre la valide. Elle ne peut être modifiée ni antidatée sans submerger le réseau (une attaque à 51 %) — économiquement prohibitif, pas littéralement impossible. Les nœuds peuvent élaguer les données : conservez donc votre fichier .ots et votre document original."
+        "body": "Un nouveau tampon attend environ une heure. Pending n'est pas Confirmed. Conservez le fichier .ots avec le document original."
       },
       "court": {
         "title": "Preuve recevable en justice",

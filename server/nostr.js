@@ -13,16 +13,18 @@ if (typeof globalThis.WebSocket === 'undefined') {
   }
 }
 
-/** Default relay set — damus first with kind-1 + retries for higher acceptance */
-const DEFAULT_RELAYS = [
-  'wss://relay.damus.io',
+/** Home relay on the Pi 4. Plain ws on the tailnet. Not for the public NIP-05 file. */
+export const HOME_RELAY = 'ws://pi4.tailb672ac.ts.net:7447'
+
+/** Public relays. relay.damus.io stays off this list: it rejects our connections. */
+export const PUBLIC_RELAYS = [
   'wss://nos.lol',
   'wss://relay.snort.social',
   'wss://relay.primal.net',
-  'wss://nostr.wine',
-  'wss://relay.nostr.band',
-  'wss://offchain.pub'
+  'wss://relay.nostr.band'
 ]
+
+const DEFAULT_RELAYS = [HOME_RELAY, ...PUBLIC_RELAYS]
 
 function configuredRelays() {
   const raw = process.env.NOSTR_RELAYS || ''
@@ -30,7 +32,7 @@ function configuredRelays() {
     return raw
       .split(',')
       .map((s) => s.trim())
-      .filter((s) => s.startsWith('wss://'))
+      .filter((s) => s.startsWith('wss://') || s.startsWith('ws://'))
   }
   return DEFAULT_RELAYS
 }

@@ -54,7 +54,7 @@
       },
       "anchored": {
         "title": "Cerca de una hora",
-        "body": "En un bloque de Bitcoin, tu prueba queda tejida en la cadena. Cada nodo del planeta la valida. No puede alterarse ni retrodatarse sin abrumar a la red (un ataque del 51 %) — es económicamente prohibitivo, no literalmente imposible. Los nodos pueden podar datos, así que conserva tu archivo .ots y tu documento original."
+        "body": "Un sello nuevo espera cerca de una hora. Pending no es Confirmed. Conserva el archivo .ots junto al documento original."
       },
       "court": {
         "title": "Prueba válida en tribunales",

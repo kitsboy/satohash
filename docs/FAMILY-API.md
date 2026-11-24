@@ -71,7 +71,7 @@ Unrelated family defects (not Satohash API): TadBuy 404s some of its own `/api/*
 
 Do not rebuild Satohash API for attribution. Pages = Grok. Widget default is API POST (no `data-mode="spa"` unless you want the SPA tab).
 
-**Proof card / camera QR:** after a stamp, share `https://satohash.io/p/<hash>`. Phone cameras cannot read `.ots`; they open that URL (QR on PDFs and email). **Pending ≠ Confirmed** — calendars have the hash vs a Bitcoin block (~60 minutes).
+**Proof card / camera QR:** after a stamp, share `https://satohash.io/p/<hash>`. Phone cameras cannot read `.ots`; they open that URL (QR on PDFs and email). **Pending ≠ Confirmed** — calendars have the hash vs a Bitcoin block (about an hour).
 
 ## Architecture
 
@@ -147,7 +147,7 @@ See `packages/satohash-client/` — copy into motopass, katoa, giveabit, etc.
 
 Product support addresses are **not** the same as family free-tier stamp keys.  
 Kimi provisions LNbits wallet **`satohash`** + public on-chain + LUD-16; secrets stay in HQ Vault.  
-See **[KIMI-REQUEST-BITCOIN-WALLETS.md](./KIMI-REQUEST-BITCOIN-WALLETS.md)**. Grok wires SPA only after public handback.
+The old wallet request file is not in this repo. Donations stay off until Cam asks. Do not turn Lightning on for this.
 
 ## HQ
 
