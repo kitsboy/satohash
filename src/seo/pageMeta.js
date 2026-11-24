@@ -73,11 +73,17 @@ const LEARN_OG_JPEG = new Set([
   'learn-ots-vs-docusign'
 ])
 
+const OG_CACHE = {
+  pricing: 'honest-20261124',
+  pitch: 'honest-20261124'
+}
+
 export function ogImageForPage(page, pathname) {
   if (page === 'landing') return DEFAULT_OG_IMAGE
   if (page && PAGE_OG_SLUG[page]) {
     const ext = PAGE_OG_JPEG.has(page) ? 'jpg' : 'png'
-    return `${SITE}/og/${PAGE_OG_SLUG[page]}.${ext}`
+    const cache = OG_CACHE[page] ? `?v=${OG_CACHE[page]}` : ''
+    return `${SITE}/og/${PAGE_OG_SLUG[page]}.${ext}${cache}`
   }
   const path = pathname || ''
   if (!path || path === '/') return DEFAULT_OG_IMAGE
@@ -567,39 +573,38 @@ export const pageMeta = {
   },
   pitch: {
     en: {
-      title: 'Satohash — Bitcoin as a Sovereign Civic Notary',
+      title: 'Satohash — Stamp a file on Bitcoin',
       description:
-        'Prove a file existed, never show the file. Bitcoin anchors the fingerprint; OpenTimestamps makes it free and verifiable by anyone.'
+        'The file stays on the device. Only a fingerprint is stamped. Free. Bitcoin confirmation takes about an hour.'
     },
     es: {
-      title: 'Satohash — Bitcoin como Registro de Verdad Cívico',
+      title: 'Satohash — Sella un archivo en Bitcoin',
       description:
-        'Demuestra que un archivo existió sin mostrarlo. Bitcoin ancla la huella; OpenTimestamps lo hace gratis y verificable por cualquiera.'
+        'El archivo se queda en el dispositivo. Solo se sella la huella. Gratis. La confirmación en Bitcoin tarda cerca de una hora.'
     },
     fr: {
-      title: 'Satohash — Bitcoin, Notaire Civique Souverain',
+      title: 'Satohash — Tamponner un fichier sur Bitcoin',
       description:
-        "Prouvez qu'un fichier a existé sans le montrer. Bitcoin ancre l'empreinte ; OpenTimestamps la rend gratuite et vérifiable par tous."
+        "Le fichier reste sur l'appareil. Seule l'empreinte est tamponnée. Gratuit. La confirmation Bitcoin prend environ une heure."
     },
     de: {
-      title: 'Satohash — Bitcoin als Souveräner Bürger-Notar',
+      title: 'Satohash — Eine Datei auf Bitcoin stempeln',
       description:
-        'Beweisen Sie, dass eine Datei existierte, ohne sie zu zeigen. Bitcoin verankert den Fingerabdruck; OpenTimestamps macht es kostenlos und für immer prüfbar.'
+        'Die Datei bleibt auf dem Gerät. Nur ein Fingerabdruck wird gestempelt. Kostenlos. Die Bitcoin-Bestätigung dauert etwa eine Stunde.'
     },
     pt: {
-      title: 'Satohash — Bitcoin como Notarização Cívica (não licenciada)',
+      title: 'Satohash — Carimbar um ficheiro no Bitcoin',
       description:
-        'Prove que um arquivo existiu sem mostrá-lo. O Bitcoin ancora a impressão digital; o OpenTimestamps torna tudo grátis e verificável por qualquer pessoa.'
+        'O ficheiro fica no dispositivo. Só a impressão digital é carimbada. Grátis. A confirmação no Bitcoin demora cerca de uma hora.'
     },
     sw: {
-      title: 'Satohash — Bitcoin kama Notari wa Kijamii',
+      title: 'Satohash — Gonga faili kwenye Bitcoin',
       description:
-        'Thibitisha faili lilipokuwepo bila kuonyesha faili. Bitcoin hufunga alama; OpenTimestamps hufanya bure na kuthibitishwa na mtu yeyote.'
+        'Faili linabaki kwenye kifaa. Alama pekee ndiyo inayotiwa muhuri. Bure. Uthibitisho wa Bitcoin huchukua kama saa moja.'
     },
     zh: {
-      title: 'Satohash — 比特币作为主权公民公证人',
-      description:
-        '证明文件曾经存在，而无需展示文件。比特币锚定指纹；OpenTimestamps 使其免费且可由任何人验证。相信数学，而非中间人。'
+      title: 'Satohash — 把文件盖到比特币上',
+      description: '文件留在设备上。只盖指纹。免费。比特币确认大约需要一小时。'
     }
   },
   trust: {
@@ -1274,27 +1279,39 @@ export const pageMeta = {
   },
   mobileSigner: {
     en: {
-      title: 'Mobile Signer — Remote Co-Signing',
-      description: 'Pair your phone as a secure co-signer for institutional document workflows.'
+      title: 'Mobile Signer — Local demo',
+      description:
+        'A local pairing demo in this browser. No store app is shipped. Stamping stays on the stamp page.'
     },
     es: {
-      title: 'Firmante Móvil — Co-firma Remota',
-      description: 'Empareje su teléfono como co-firmante seguro.'
+      title: 'Firmante móvil — Demo local',
+      description:
+        'Una demo de emparejamiento en este navegador. No hay app en las tiendas. El sello sigue en la página de sellar.'
     },
     fr: {
-      title: 'Signataire Mobile — Co-signature',
-      description: 'Associez votre téléphone comme co-signataire sécurisé.'
+      title: 'Signataire mobile — Démo locale',
+      description:
+        "Une démo d'appairage dans ce navigateur. Aucune application n'est en magasin. Le tampon reste sur la page tampon."
     },
     de: {
-      title: 'Mobiler Signierer — Remote Co-Signing',
-      description: 'Telefon als sicherer Co-Signer koppeln.'
+      title: 'Mobiler Signierer — Lokale Demo',
+      description:
+        'Eine lokale Kopplungsdemo in diesem Browser. Keine Store-App. Stempeln bleibt auf der Stempel-Seite.'
     },
     pt: {
-      title: 'Assinante Móvel — Co-assinatura',
-      description: 'Emparelhe o telefone como co-assinante seguro.'
+      title: 'Assinante móvel — Demo local',
+      description:
+        'Uma demo de emparelhamento neste browser. Não há app nas lojas. O carimbo continua na página de carimbar.'
     },
-    sw: { title: 'Msaini wa Simu', description: 'Oanisha simu yako kama msaini wa pamoja salama.' },
-    zh: { title: '移动签名器', description: '将手机配对为安全的联合签名设备。' }
+    sw: {
+      title: 'Msaini wa simu — Demo ya ndani',
+      description:
+        'Demo ya kuoanisha katika kivinjari hiki. Hakuna app dukani. Kugonga kunabaki kwenye ukurasa wa stempu.'
+    },
+    zh: {
+      title: '移动签名器 — 本地演示',
+      description: '只在这个浏览器里的配对演示。没有上架的应用。盖章仍在盖章页。'
+    }
   },
   verificationShield: {
     en: {

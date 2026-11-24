@@ -1,3 +1,15 @@
+## Do not chase (2026-11-24)
+
+Ethereum is already gone. There is no `/stamp/ethereum` work left. Do not open that card.
+
+`api_keys` was removed on 2026-09-12. Do not build tiered limits on `api_keys.tier`. OQ-003 is closed. The limiter stays the global public one.
+
+Multi-party signing is not what the site uses. Do not put it back on the stamp page, the compare table, or pricing.
+
+API image stays `7c68076`. Paywall stays off. Do not rebuild for website copy. Do not `git reset --hard` `/root/satohash`.
+
+---
+
 ## Latest Session Summary (from 2026-11-03 goodbye)
 
 **Chat topic:** Make Satohash honest and ready to charge later, without charging yet, and prove one practice stamp actually landed in Bitcoin.

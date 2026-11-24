@@ -1,10 +1,10 @@
 <!-- AUTO-GENERATED HEADER — do not edit manually -->
-> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 458) · **Updated:** 2026-11-24
+> **Live:** https://satohash.io · **Version:** 5.0.0-ELITE (Build 459) · **Updated:** 2026-11-24
 > **GitHub:** https://github.com/kitsboy/satohash · Synced by `npm run docs:sync`
 
 # Satohash — The Sovereign Provenance Pitch
 
-**Family pitch:** Prove a file existed. Never show the file. Bitcoin as a civic notary — `.ots` receipts that outlive any company. Lives in the Give A Bit suite: https://agents.giveabit.io/#suite
+**Family pitch:** Prove a file existed. The file stays with you. Only a fingerprint goes on Bitcoin. `.ots` receipts outlive any company. Lives in the Give A Bit suite: https://agents.giveabit.io/#suite
 
 **Status (2026-10-12):** Live at **https://satohash.io**. Version **5.0.0-ELITE**. Stamps are **free** (`REQUIRE_LIGHTNING=false`). Proofs stay Bitcoin + OpenTimestamps. Own pruned bitcoind is at tip.
 

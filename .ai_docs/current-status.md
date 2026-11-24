@@ -1,6 +1,14 @@
 # Current Status — Satohash
 
-**Version:** **5.0.0-ELITE** (Build 455 on `2ad78c0` before this goodbye. The hook bumps the build. The API image does not move with a docs commit.)  
+## Do not chase (closed 2026-11-24)
+
+- **Ethereum is already gone.** There is no `/stamp/ethereum` route and no Ethereum column. Do not remove a stub. Do not add a chain. Satohash is Bitcoin only.
+- **`api_keys` is already gone.** The table and `/api/admin/keys` were removed on 2026-09-12. Do not build rate limits keyed off `api_keys.tier`. OQ-003 is closed. The limiter stays the global public one.
+- **Multi-party signing is not the product.** Do not put it back on the stamp page, the compare table, or the pricing table.
+
+The lines below this banner are older. Trust this box when they disagree. API image is still `7c68076`. Paywall stays off.
+
+**Version:** **5.0.0-ELITE** (Build 455 on `2ad78c0` before the 2026-11-03 goodbye. Later commits bumped the build. The API image does not move with a website commit.)  
 **Last Updated:** 2026-11-03 (goodbye). Running API is commit `7c68076`. Paywall off. Practice stamp confirmed in block 974302.  
 **Frontend:** https://satohash.io · www · CF Pages project **`satohash`** — Grok lane, `assetsDir: 'b'`. Checked 2026-11-03: homepage shell `/b/index-BlXgiPcI.js`, English chunk `pages.en-DuK6NyGe.js`. That English bundle includes “a new stamp waits about an hour”, Planned, and Coming soon. October shell `/b/index-Bt__WPpD.js` is not the live file. This check did not click through the site.  
 **API:** https://api.satohash.io ✅ LIVE. `GET /health?deep=true` at 2026-11-03 16:10 UTC: status **ok**, `gitSha` `7c680769234553ce3e98fdb584a2eb7dfcd7954b` (commit `7c68076`), version `5.0.0-ELITE`, `require_lightning` false, mode `free_open`. Database healthy, about 2.9 MB. Same image as the 2026-11-02 rebuild (uptime about 18 hours). Do not rebuild for this goodbye. Do not `git reset --hard` `/root/satohash`.  

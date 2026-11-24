@@ -187,7 +187,7 @@ export default {
     verifyProof: 'Nachweis prüfen',
     verifyProofSub: 'Einen .ots-Zeitstempel prüfen',
     contracts: 'Verträge',
-    contractsSub: 'Signatur mehrerer Parteien',
+    contractsSub: 'Lokale Entwürfe',
     devApi: 'Entwickler-API',
     devApiSub: 'Schlüssel, Webhooks, Endpunkte',
     network: 'Netzwerkstatus',

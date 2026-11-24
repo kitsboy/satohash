@@ -99,7 +99,7 @@ function shell({
   const eTitle = esc(title)
   const eDesc = esc(description)
   const eAlt = esc(ogAlt)
-  const ogType = /\.jpe?g$/i.test(ogImage) ? 'image/jpeg' : 'image/png'
+  const ogType = /\.jpe?g(?:\?|$)/i.test(ogImage) ? 'image/jpeg' : 'image/png'
   const graph = []
   if (article) {
     const crumbs = [
@@ -274,11 +274,10 @@ const secondary = {
 <p><a href="${SITE}/stamp">Start stamping — free</a></p>`
   },
   pricing: {
-    title: 'Pricing — Free Bitcoin Timestamping (Never Paywalled Trust Anchor)',
-    desc: 'Free base is the never-paywalled trust anchor: stamp/verify/.ots + client-side hashing, no daily quota. Optional premium tiers: Professional ~2,100 sats/mo (~$29), Business ~21,000 sats/mo (~$299). Pay-per-use API 1–5 sats/stamp via L402.',
-    body: `<h1>Simple, honest pricing</h1>
-<p><strong>Free — never paywalled (the trust anchor):</strong> stamp/verify/.ots + client-side hashing, no daily quota. No account, no Lightning invoice.</p>
-<p><strong>Optional premium tiers:</strong> Professional ~2,100 sats/mo (~$29) · Business ~21,000 sats/mo (~$299). <strong>Pay-per-use API:</strong> 1–5 sats/stamp via L402 (Lightning).</p>
+    title: 'Pricing — Free Bitcoin Timestamping',
+    desc: 'Stamps are free. You cannot buy a plan today. The file stays on your device. Only a fingerprint is sent.',
+    body: `<h1>Stamps are free</h1>
+<p>The file stays on your device. Only a fingerprint is stamped. You cannot buy a plan today. Paid prices on the page are plans, not a checkout.</p>
 <p>Chain: Bitcoin only (via OpenTimestamps).</p>
 <p><a href="${SITE}/stamp">Stamp free now</a></p>`
   },
@@ -321,7 +320,8 @@ for (const [slug, p] of Object.entries(secondary)) {
     slug === 'templates'
       ? 'jpg'
       : 'png'
-  write(`${slug}.html`, shell({ title: p.title, description: p.desc, contentHtml: p.body, canonical: `${SITE}/${slug}`, ogImage: `${SITE}/og/${slug}.${ext}` }))
+  const cache = slug === 'pricing' ? '?v=honest-20261124' : ''
+  write(`${slug}.html`, shell({ title: p.title, description: p.desc, contentHtml: p.body, canonical: `${SITE}/${slug}`, ogImage: `${SITE}/og/${slug}.${ext}${cache}` }))
 }
 
 // learn articles
@@ -372,17 +372,14 @@ const watchBody = `
 </ul>
 <p><a href="${SITE}/stamp">Stamp your first document — free</a></p>`
 
-// Pitch — static version of the open civic-notary pitch
-const pitchTitle = 'Satohash — An Open Civic Notary for the Truth Era'
+// Pitch — static share shell. The file stays; only a fingerprint is stamped.
+const pitchTitle = 'Satohash — Stamp a file on Bitcoin'
 const pitchDesc =
-  'Satohash is an open civic notary: Bitcoin-anchored, independently verifiable proof of existence for any file. The file stays on the device. Free today.'
+  'The file stays on the device. Only a fingerprint is stamped. Free. Bitcoin confirmation takes about an hour.'
 const pitchBody = `
-<h1>An open civic notary for the truth era</h1>
-<p>Satohash proves that a file existed, at a specific moment, permanently — by anchoring its fingerprint to the Bitcoin blockchain, without the file ever leaving your device.</p>
-<p>It is an open, auditable commons: independent, verifiable-by-anyone proof of <em>what existed, when, and unaltered</em>. No middleman. No trust required.</p>
-<p><strong>"We don't need you to trust us. We need you to trust math."</strong></p>
-<p>Free today (REQUIRE_LIGHTNING=false), open source, part of the Give A Bit family. Bitcoin-only, via OpenTimestamps.</p>
-<p><a href="${SITE}/stamp">Stamp a document — free</a> · <a href="${SITE}/docs/support-and-guidance">Request guidance &amp; support</a></p>`
+<h1>The file stays. The fingerprint goes on Bitcoin.</h1>
+<p>Satohash stamps a SHA-256 fingerprint. The file stays on the device. Free. A new stamp waits about an hour. Pending is not confirmed.</p>
+<p><a href="${SITE}/stamp">Stamp a file — free</a> · <a href="${SITE}/docs/support-and-guidance">Request guidance &amp; support</a></p>`
 
 // Named docs rendered from markdown (dist/docs mirrors public/docs)
 const NAMED_DOCS = [
@@ -443,7 +440,7 @@ write(
     ]
   })
 )
-write('pitch.html', shell({ title: pitchTitle, description: pitchDesc, contentHtml: pitchBody, canonical: `${SITE}/pitch`, ogImage: `${SITE}/og/pitch.jpg` }))
+write('pitch.html', shell({ title: pitchTitle, description: pitchDesc, contentHtml: pitchBody, canonical: `${SITE}/pitch`, ogImage: `${SITE}/og/pitch.jpg?v=honest-20261124` }))
 
 // Identity / Status / Counsel — crawler shells (Twitterbot / Googlebot)
 const identityTitle = 'Satohash identity — NIP-05'

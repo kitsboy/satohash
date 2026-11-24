@@ -52,7 +52,6 @@
           "Integração de pagamentos Lightning BOLT-12",
           "Envio prioritário ao calendário",
           "Carimbo em lote (até 50 arquivos)",
-          "Co-assinatura de contratos multiparte",
           "Exportação em PDF com prova incorporada"
         ],
         "cta": "Em breve"
@@ -326,7 +325,7 @@
     },
     "comingSoon": {
       "title": "Mais em breve",
-      "subtitle": "Guias sobre identidade NIP-05, Lightning BOLT-12, contratos multiparte e técnicas avançadas de verificação estão em desenvolvimento."
+      "subtitle": "Guias sobre identidade NIP-05, Lightning BOLT-12 e técnicas avançadas de verificação estão em desenvolvimento."
     }
   },
   "glossaryPage": {
@@ -2581,7 +2580,7 @@
       "enterprises": {
         "label": "04 — Empresas",
         "title": "Para companhias e métricas institucionais",
-        "p1": "As empresas adoptam o Satohash onde rasto de auditoria, disputas com fornecedores, exames regulatórios e fluxos multipartidários exigem evidência portátil fora de qualquer silo SaaS. Padrões típicos: selar acordos executados e materiais de conselho na assinatura; fechar lançamentos de software e instantâneos de configuração para controlo de mudanças; ancorar exportações de investigação e comunicações com clientes; e instrumentar APIs para que sistemas automatizados emitam provas como artefactos de primeira classe. Como a verificação não exige acesso contínuo à infraestrutura Satohash, a organização retém resiliência se os fornecedores mudarem—ou se o próprio Satohash estiver indisponível.",
+        "p1": "As empresas adoptam o Satohash onde rasto de auditoria, disputas com fornecedores, exames regulatórios exigem evidência portátil fora de qualquer silo SaaS. Padrões típicos: selar acordos executados e materiais de conselho na assinatura; fechar lançamentos de software e instantâneos de configuração para controlo de mudanças; ancorar exportações de investigação e comunicações com clientes; e instrumentar APIs para que sistemas automatizados emitam provas como artefactos de primeira classe. Como a verificação não exige acesso contínuo à infraestrutura Satohash, a organização retém resiliência se os fornecedores mudarem—ou se o próprio Satohash estiver indisponível.",
         "p2": "Do ponto de vista das métricas, a liderança pode tratar a cobertura de provas como um KPI operacional: percentagem de documentos de alto risco selados dentro do SLA; tempo mediano da finalização do documento até à âncora Bitcoin confirmada; quota de disputas encerradas com um pacote .ots verificável; e atribuição do volume de selos por unidade de negócio ou sistema cliente. Estes indicadores alinham a prontidão jurídica com a prática de engenharia—de “guardamos registos” para “podemos provar, de forma independente, o que existiu quando”. Os gráficos desta página são ilustrações, não métricas de facturação em directo."
       }
     },
@@ -2675,7 +2674,7 @@
       },
       "identity": {
         "name": "Identity",
-        "desc": "Signatários Nostr, proveniência multipartidária"
+        "desc": "Identidade Nostr"
       },
       "proof": {
         "name": "Proof",

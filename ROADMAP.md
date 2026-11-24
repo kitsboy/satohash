@@ -6,6 +6,8 @@ Canonical copy: [`docs/roadmap.md`](docs/roadmap.md). This file stays in sync so
 
 Do the next open item in [`docs/roadmap.md`](docs/roadmap.md), then the one after it.
 
+Do not chase Ethereum. That stub is already gone. Do not build rate limits on `api_keys`. That table was removed on 2026-09-12.
+
 ## Upgrade in progress — do these first
 
 1. **Done — plain words.** History, drop card, sign-in, and the file-stays lines. Do not redo.

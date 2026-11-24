@@ -182,7 +182,7 @@ export default {
     verifyProof: 'Thibitisha uthibitisho',
     verifyProofSub: 'Kagua muhuri wa .ots',
     contracts: 'Mikataba',
-    contractsSub: 'Saini ya pande nyingi',
+    contractsSub: 'Rasimu za ndani',
     devApi: 'API ya wasanidi',
     devApiSub: 'Funguo, webhooks, na ncha',
     network: 'Hali ya mtandao',

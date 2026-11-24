@@ -28,7 +28,7 @@ output_schema:
       - "API is live on api.satohash.io: POST /api/stamp/signed returns the designed 400 for missing payload; GET /api/audit/verify returns 200 valid."
       - "Kimi verified deployed image == HEAD (routes/v5-api.js, lib/signing.js, lib/audit-log.js byte-identical). No rebuild owed."
       - "Engineered scope + five-pillar map + lawyer-facing risk list captured in MASTER-BRAIN (survives repor rebases)."
-      - "Ethereum removed from roadmap + engineering scope per Cam's Bitcoin-only ruling; /stamp/ethereum stub card raised for Grok/Kimi."
+      - "CLOSED 2026-11-24: Ethereum stub is already gone. Do not chase /stamp/ethereum."
 
   architectural_decisions:
     - id: "AD-004"
@@ -43,10 +43,10 @@ output_schema:
       priority: "medium"
       status: "open"
     - id: "OQ-003"
-      question: "Tiered API rate limits keyed off api_keys.tier (Phase 0 item p0-rl) — not yet landed."
-      context: "Global limiter is tieredRateLimiter('public') at server/index.js:363; per-key tier resolution middleware still outstanding."
+      question: "CLOSED. Do not key rate limits off api_keys.tier. That table was removed on 2026-09-12."
+      context: "The limiter stays the global public one. Do not resurrect api_keys."
       priority: "medium"
-      status: "open"
+      status: "closed"
 
   session_notes:
     deprecated_items:

@@ -13,7 +13,6 @@ const ROW_IDS = [
   'noAccount',
   'noGas',
   'uiNonDev',
-  'multiParty',
   'nip05',
   'bolt12',
   'courtAdmissible',

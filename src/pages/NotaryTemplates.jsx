@@ -1868,12 +1868,6 @@ function TemplateCard({ template, onOpen }) {
             >
               {template.badge}
             </span>
-            {template.badge === 'Legal-Grade' && (
-              <Tooltip
-                title={t('notaryEditorPage.multiPartyTitle')}
-                content={t('notaryEditorPage.multiPartyTooltip')}
-              />
-            )}
           </span>
         </div>
 

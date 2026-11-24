@@ -326,7 +326,7 @@
     },
     "comingSoon": {
       "title": "More Coming Soon",
-      "subtitle": "Guides on NIP-05 identity, BOLT-12 Lightning, multi-party contracts, and advanced verification techniques are in development."
+      "subtitle": "Guides on NIP-05 identity, BOLT-12 Lightning, and advanced verification are in development."
     }
   },
   "glossaryPage": {
@@ -2581,7 +2581,7 @@
       "enterprises": {
         "label": "04 — Enterprises",
         "title": "For companies and institutional metrics",
-        "p1": "Enterprises adopt Satohash where audit trails, vendor disputes, regulatory examinations, and multi-party workflows demand evidence that is portable outside any single SaaS silo. Typical patterns include stamping executed agreements and board materials at signature; sealing software releases and configuration snapshots for change-control; anchoring investigative exports and customer communications; and instrumenting APIs so automated systems emit proofs as first-class artifacts. Because verification does not require ongoing access to Satohash infrastructure, the organization retains resilience if vendors change—or if Satohash itself is unavailable.",
+        "p1": "Enterprises adopt Satohash where audit trails, vendor disputes, and regulatory examinations demand evidence that is portable outside any single SaaS silo. Typical patterns include stamping executed agreements and board materials at signature; sealing software releases and configuration snapshots for change-control; anchoring investigative exports and customer communications; and instrumenting APIs so automated systems emit proofs as first-class artifacts. Because verification does not require ongoing access to Satohash infrastructure, the organization retains resilience if vendors change—or if Satohash itself is unavailable.",
         "p2": "From a metrics perspective, leadership can treat proof coverage as an operational KPI: percentage of high-risk documents stamped within SLA; median time from document finalization to confirmed Bitcoin anchor; share of disputes closed with a verifiable .ots package; and family-product attribution of stamp volume by business unit or client system. These indicators align legal readiness with engineering practice—turning “we keep records” into “we can prove, independently, what existed when.” Charts on this page are illustrations, not live billing metrics."
       }
     },
@@ -2675,7 +2675,7 @@
       },
       "identity": {
         "name": "Identity",
-        "desc": "Nostr signers, multi-party provenance"
+        "desc": "Nostr identity"
       },
       "proof": {
         "name": "Proof",

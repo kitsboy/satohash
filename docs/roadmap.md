@@ -52,7 +52,9 @@ The compare page says Planned for BOLT-12, multi-party signing, and Snapper. On 
 - Do not rebuild the API for this goodbye. Image `7c68076` already has the payment check, and the flag is false. A docs commit does not need a new image.
 - Do not point Bitcoin RPC at Umbrel until that node is at the same tip as THOR. LND stays off.
 - Do not add Arabic.
-- Do not sell Snapper, ZK redaction, 3D Merkle, BOLT-12, or L402 as live.
+- Do not sell Snapper, ZK redaction, 3D Merkle, BOLT-12, L402, or multi-party signing as live.
+- Do not chase `/stamp/ethereum`. That stub is already gone. Bitcoin only.
+- Do not build rate limits on `api_keys`. That table was removed on 2026-09-12. OQ-003 is closed.
 - Do not npm-publish `@satohash/cli` unless Cam asks.
 - TadBuy’s dead same-origin `/api/*` is the TadBuy repo, not this API.
 
@@ -66,7 +68,7 @@ The phases below are old notes. Several checked items are **not live**. Snapper 
 
 ## ✅ PHASE I: THE BASE CASE (COMPLETED)
 1.  **[x] Bitcoin Anchoring**: Core OpenTimestamps integration.
-2.  **[x] Multi-Party Signing**: Distributed signature flow for digital contracts.
+2.  **[ ] Multi-party signing**: Not the live product. Do not build it and do not market it.
 3.  **[~] Localization**: Seven locales in the picker (EN, ES, FR, DE, PT, SW, ZH). **Not done.** Finish the whole site in these seven — plan in `docs/I18N.md`. Do not add Arabic until then.
 
 ## ✅ PHASE II: INSTITUTIONAL HARDENING (COMPLETED)

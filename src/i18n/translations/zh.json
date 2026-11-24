@@ -343,7 +343,7 @@
     "verifyProof": "核验一份证明",
     "verifyProofSub": "检查 .ots 时间戳",
     "contracts": "合同",
-    "contractsSub": "多方签署",
+    "contractsSub": "本地草稿",
     "devApi": "开发者 API",
     "devApiSub": "密钥、webhook 和接口",
     "network": "网络状态",

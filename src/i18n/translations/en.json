@@ -343,7 +343,7 @@
     "verifyProof": "Verify a Proof",
     "verifyProofSub": "Check a .ots timestamp",
     "contracts": "Contracts",
-    "contractsSub": "Multi-party signing",
+    "contractsSub": "Local drafts",
     "devApi": "Developer API",
     "devApiSub": "Keys, webhooks, endpoints",
     "network": "Network Status",

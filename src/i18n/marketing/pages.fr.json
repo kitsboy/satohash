@@ -52,7 +52,6 @@
           "Intégration des paiements Lightning BOLT-12",
           "Soumission prioritaire au calendrier",
           "Horodatage par lots (jusqu'à 50 fichiers)",
-          "Co-signature de contrats multipartites",
           "Export PDF avec preuve intégrée"
         ],
         "cta": "Bientôt disponible"
@@ -326,7 +325,7 @@
     },
     "comingSoon": {
       "title": "Plus de contenu bientôt",
-      "subtitle": "Des guides sur l'identité NIP-05, Lightning BOLT-12, les contrats multipartites et les techniques de vérification avancées sont en cours de développement."
+      "subtitle": "Des guides sur l'identité NIP-05, Lightning BOLT-12 et les techniques de vérification avancées sont en cours de développement."
     }
   },
   "glossaryPage": {
@@ -2581,7 +2580,7 @@
       "enterprises": {
         "label": "04 — Entreprises",
         "title": "Pour les sociétés et les métriques institutionnelles",
-        "p1": "Les entreprises adoptent Satohash là où les pistes d’audit, les litiges fournisseurs, les examens réglementaires et les flux multipartites exigent une preuve portable hors de tout silo SaaS. Les schémas typiques : horodater les accords signés et les documents de conseil à la signature ; sceller les versions logicielles et les instantanés de configuration pour le contrôle des changements ; ancrer les exports d’enquête et les communications clients ; instrumenter les API pour que les systèmes automatisés émettent des preuves comme artefacts de premier rang. Comme la vérification n’exige pas un accès continu à l’infrastructure Satohash, l’organisation reste résiliente si les fournisseurs changent—ou si Satohash est indisponible.",
+        "p1": "Les entreprises adoptent Satohash là où les pistes d’audit, les litiges fournisseurs, les examens réglementaires exigent une preuve portable hors de tout silo SaaS. Les schémas typiques : horodater les accords signés et les documents de conseil à la signature ; sceller les versions logicielles et les instantanés de configuration pour le contrôle des changements ; ancrer les exports d’enquête et les communications clients ; instrumenter les API pour que les systèmes automatisés émettent des preuves comme artefacts de premier rang. Comme la vérification n’exige pas un accès continu à l’infrastructure Satohash, l’organisation reste résiliente si les fournisseurs changent—ou si Satohash est indisponible.",
         "p2": "Du point de vue des métriques, la direction peut traiter la couverture de preuves comme un KPI opérationnel : pourcentage de documents à haut risque horodatés dans le SLA ; temps médian de la finalisation du document à l’ancre Bitcoin confirmée ; part des litiges clos avec un paquet .ots vérifiable ; et attribution du volume d’horodatages par unité métier ou système client. Ces indicateurs alignent la préparation juridique et la pratique d’ingénierie—passer de « nous conservons des dossiers » à « nous pouvons prouver, indépendamment, ce qui existait quand ». Les graphiques de cette page sont des illustrations, pas des métriques de facturation en direct."
       }
     },
@@ -2675,7 +2674,7 @@
       },
       "identity": {
         "name": "Identity",
-        "desc": "Signataires Nostr, provenance multipartite"
+        "desc": "Identité Nostr"
       },
       "proof": {
         "name": "Proof",

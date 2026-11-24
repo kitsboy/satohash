@@ -343,7 +343,7 @@
     "verifyProof": "Verificar una prueba",
     "verifyProofSub": "Revisar un sello .ots",
     "contracts": "Contratos",
-    "contractsSub": "Firma entre varias partes",
+    "contractsSub": "Borradores locales",
     "devApi": "API para desarrolladores",
     "devApiSub": "Claves, webhooks y endpoints",
     "network": "Estado de la red",

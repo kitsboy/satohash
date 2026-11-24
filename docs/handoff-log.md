@@ -1,3 +1,23 @@
+## 2026-11-24 (Grok M3 — hide multi-party, close stale notes, honest share cards)
+
+Website only. **Do not rebuild the API.** Running image stays `7c68076`. Paywall stays off. Do not change `/api/*`.
+
+The stamp page no longer offers multi-party signing. The compare table and the pricing table no longer show that row. Guides, the dashboard, and the pitch no longer sell it. Contract pages still say signing is not live. The signed-stamp API stays.
+
+Old notes no longer tell the next pass to remove `/stamp/ethereum` or to build limits on `api_keys`. Both are already gone. OQ-003 is closed. Multi-party signing is marked as not the live product.
+
+The pricing share card says stamps are free and plans are not for sale. The pitch share card says the file stays and the fingerprint goes on Bitcoin. The pitch tab matches that. The family pitch line no longer says civic notary. Seven languages.
+
+Checked in the browser on desktop and at 390px, in English and Spanish. The compare table and the pricing table do not scroll sideways. Stamp’s extra options show L402 and no multi-party control.
+
+This commit bumps the build from 458. Do not claim a new live Pages bundle until Cloudflare deploys.
+
+Last live API check still stands: health ok, `gitSha` `7c68076`, `free_open`. Our node was block **977,380**. Practice stamp stays block **974302**. Public example stays block **969,627**. Do not charge.
+
+**Kimi:** do not rebuild. Do not `git reset --hard` `/root/satohash`. Do not chase Ethereum. Do not resurrect `api_keys`. LND stays off. Do not point Bitcoin RPC at Umbrel.
+
+---
+
 ## 2026-11-24 (Grok M3 — logo, sign-in, phone compare)
 
 Website only. **Do not rebuild the API.** Running image stays `7c68076`. Paywall stays off. Do not change `/api/*`.
@@ -33,8 +53,8 @@ Live check before this push: health ok, `gitSha` `7c68076`, `free_open`. Our nod
 - Session debrief written: `docs/debriefs/session-2026-11-21-001.yaml` (AD-004, carries OQ-002 + OQ-003).
 
 **Still open (next session):**
-- Tiered rate limits keyed off `api_keys.tier` (Phase 0 p0-rl) — global limiter still `tieredRateLimiter('public')` at `server/index.js:363`.
-- `/stamp/ethereum` stub removal — raised for Grok/Kimi (card). Cam ruled Bitcoin-only, no Ethereum ever.
+- CLOSED 2026-11-24. Do not build rate limits on `api_keys.tier`. That table was removed on 2026-09-12. The limiter stays the global public one. OQ-003 is closed.
+- CLOSED 2026-11-24. Do not remove `/stamp/ethereum`. That stub is already gone. Bitcoin only.
 - ENGINEERING-SCOPE-PREMIUM.md lives in MASTER-BRAIN (survives repo rebases).
 
 ---

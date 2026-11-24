@@ -105,10 +105,7 @@ export default function Stamp() {
   const [hashValue, setHashValue] = useState('')
   const [error, setError] = useState('')
   const [feeEstimates, setFeeEstimates] = useState(null)
-  const [multiParty, setMultiParty] = useState(false)
   const [l402Gating, setL402Gating] = useState(false)
-  const [coSigners, setCoSigners] = useState([])
-  const [coSignerErrors, setCoSignerErrors] = useState([])
   const [isConfirmed, setIsConfirmed] = useState(false)
   const [confirmedBlock, setConfirmedBlock] = useState(null)
   const [upgradeStatus, setUpgradeStatus] = useState(null) // pending | upgrading | confirmed
@@ -334,20 +331,6 @@ export default function Stamp() {
       mediaRecorderRef.current.stream.getTracks().forEach((track) => track.stop())
       setRecordingState('stopped')
     }
-  }
-
-  const validateNpub = (value) => {
-    if (!value.trim()) return '' // empty is fine — optional field
-    if (!value.startsWith('npub1') || value.length <= 10) {
-      return 'Invalid Nostr key — must start with npub1'
-    }
-    return ''
-  }
-
-  const handleCoSignerBlur = (index) => {
-    const errs = [...coSignerErrors]
-    errs[index] = validateNpub(coSigners[index] || '')
-    setCoSignerErrors(errs)
   }
 
   const saveBrowserOtsProof = useCallback(async (hash, label, size, otsBlob) => {
@@ -608,11 +591,6 @@ export default function Stamp() {
 
   // Family / MotoPass deep-link: /stamp?hash=&ref=&label=&filename=&campaign=&autostamp=
   useEffect(() => {
-    if (deepLink.cosign) {
-      setMultiParty(true)
-      if (deepLink.npub?.startsWith('npub1')) setCoSigners([deepLink.npub])
-    }
-
     if (deepLink.hashInvalid) {
       setHashInvalidMsg(tp('stampPage.invalidHash'))
       setHashFromDeepLink(false)
@@ -653,13 +631,6 @@ export default function Stamp() {
 
   const startStamping = async () => {
     if (!files.length) return
-
-    // Validate all co-signer npub fields before proceeding
-    if (multiParty && coSigners.length > 0) {
-      const errs = coSigners.map(validateNpub)
-      setCoSignerErrors(errs)
-      if (errs.some(Boolean)) return
-    }
 
     setError('')
     setProofResult(null)
@@ -1983,83 +1954,6 @@ export default function Stamp() {
 
                   {showAdvancedModes && (
                     <div className="space-y-3 rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] p-4">
-                      <div className="flex items-center justify-between">
-                        <span className="flex items-center text-[10px] font-bold text-[var(--text-secondary)] uppercase">
-                          Multi-Party
-                          <Tooltip
-                            title="Multi-Party Execution"
-                            content="Contracts that require signatures from two or more independent parties before being considered valid and anchored to Bitcoin."
-                          />
-                        </span>
-                        <input
-                          type="checkbox"
-                          aria-label="Multi-Party"
-                          className="accent-[var(--accent-gold)]"
-                          checked={multiParty}
-                          onChange={(e) => {
-                            setMultiParty(e.target.checked)
-                            if (!e.target.checked) {
-                              setCoSigners([])
-                              setCoSignerErrors([])
-                            }
-                          }}
-                        />
-                      </div>
-                      {multiParty && (
-                        <div className="space-y-2">
-                          {coSigners.map((s, i) => (
-                            <div key={i}>
-                              <input
-                                type="text"
-                                value={s}
-                                onChange={(e) => {
-                                  const next = [...coSigners]
-                                  next[i] = e.target.value
-                                  setCoSigners(next)
-                                  // Clear error on change so user gets live feedback on correction
-                                  if (coSignerErrors[i]) {
-                                    const errs = [...coSignerErrors]
-                                    errs[i] = validateNpub(e.target.value)
-                                    setCoSignerErrors(errs)
-                                  }
-                                }}
-                                onBlur={() => handleCoSignerBlur(i)}
-                                placeholder="npub1..."
-                                className={`h-9 w-full rounded-lg border bg-[var(--bg-secondary)] px-3 font-mono text-xs outline-none focus:border-[var(--accent-gold)] ${coSignerErrors[i] ? 'border-[var(--accent-danger)]' : 'border-[var(--border)]'}`}
-                              />
-                              {coSignerErrors[i] && (
-                                <p className="mt-1 text-xs text-[var(--accent-danger)]">
-                                  {coSignerErrors[i]}
-                                </p>
-                              )}
-                            </div>
-                          ))}
-                          <span className="flex items-center gap-4">
-                            <button
-                              onClick={() => setCoSigners([...coSigners, ''])}
-                              className="text-[10px] font-bold text-[var(--accent-gold)] uppercase"
-                            >
-                              + {t('stamp', 'addCoSigner')}
-                            </button>
-                            <button
-                              onClick={() => {
-                                const invite = `${window.location.origin}/stamp?cosign=true&hash=${hashValue || ''}&npub=${localStorage.getItem('satohash_npub') || ''}`
-                                navigator.clipboard.writeText(invite)
-                                toast.success('✉ Co-Sign DM Invitation Copied!', {
-                                  description: 'Send this link to your co-signer.'
-                                })
-                              }}
-                              className="text-[10px] font-bold text-[var(--accent-active)] uppercase"
-                            >
-                              ✉ Copy Co-Sign Invitation
-                            </button>
-                            <Tooltip
-                              title="Co-Signers"
-                              content="Additional Nostr public keys (npub) that must cryptographically sign this document. Creates a multi-party proof requiring all parties to agree."
-                            />
-                          </span>
-                        </div>
-                      )}
                       <div className="flex items-center justify-between">
                         <span className="flex items-center text-[10px] font-bold text-[var(--text-secondary)] uppercase">
                           L402 Gating

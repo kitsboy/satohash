@@ -52,7 +52,6 @@
           "BOLT-12 Lightning-Zahlungsintegration",
           "Priorisierte Kalender-Einreichung",
           "Batch-Stempelung (bis zu 50 Dateien)",
-          "Multi-Party-Vertrags-Co-Signing",
           "PDF-Export mit eingebettetem Nachweis"
         ],
         "cta": "Demnächst"
@@ -326,7 +325,7 @@
     },
     "comingSoon": {
       "title": "Demnächst mehr",
-      "subtitle": "Leitfäden zu NIP-05-Identität, BOLT-12 Lightning, Multi-Party-Verträgen und erweiterten Verifizierungstechniken sind in Entwicklung."
+      "subtitle": "Leitfäden zu NIP-05-Identität, BOLT-12 Lightning und erweiterten Verifizierungstechniken sind in Entwicklung."
     }
   },
   "glossaryPage": {
@@ -2581,7 +2580,7 @@
       "enterprises": {
         "label": "04 — Unternehmen",
         "title": "Für Firmen und institutionelle Kennzahlen",
-        "p1": "Unternehmen übernehmen Satohash dort, wo Audit-Trails, Lieferantenstreitigkeiten, regulatorische Prüfungen und Mehrparteien-Workflows Evidenz verlangen, die außerhalb jedes einzelnen SaaS-Silos portabel ist. Typische Muster: ausgeführte Verträge und Board-Unterlagen bei der Unterschrift stempeln; Software-Releases und Konfigurations-Snapshots für Change-Control versiegeln; investigative Exporte und Kundenkommunikation verankern; APIs so instrumentieren, dass automatisierte Systeme Nachweise als erstklassige Artefakte ausgeben. Weil die Prüfung keinen fortlaufenden Zugang zur Satohash-Infrastruktur braucht, bleibt die Organisation resilient, wenn Anbieter wechseln—oder Satohash selbst nicht erreichbar ist.",
+        "p1": "Unternehmen übernehmen Satohash dort, wo Audit-Trails, Lieferantenstreitigkeiten und regulatorische Prüfungen Evidenz verlangen, die außerhalb jedes einzelnen SaaS-Silos portabel ist. Typische Muster: ausgeführte Verträge und Board-Unterlagen bei der Unterschrift stempeln; Software-Releases und Konfigurations-Snapshots für Change-Control versiegeln; investigative Exporte und Kundenkommunikation verankern; APIs so instrumentieren, dass automatisierte Systeme Nachweise als erstklassige Artefakte ausgeben. Weil die Prüfung keinen fortlaufenden Zugang zur Satohash-Infrastruktur braucht, bleibt die Organisation resilient, wenn Anbieter wechseln—oder Satohash selbst nicht erreichbar ist.",
         "p2": "Aus Kennzahlensicht kann die Führung die Nachweisabdeckung als operativen KPI behandeln: Anteil hochriskanter Dokumente, die innerhalb des SLA gestempelt wurden; Medianzeit von der Dokumentfinalisierung zum bestätigten Bitcoin-Anker; Anteil der Streitfälle, die mit einem prüfbaren .ots-Paket geschlossen wurden; und familienproduktbezogene Zuordnung des Stempelvolumens nach Geschäftseinheit oder Client-System. Diese Indikatoren verbinden rechtliche Bereitschaft mit Engineering-Praxis—aus „wir führen Akten“ wird „wir können unabhängig beweisen, was wann existierte“. Diagramme auf dieser Seite sind Illustrationen, keine Live-Abrechnungskennzahlen."
       }
     },
@@ -2675,7 +2674,7 @@
       },
       "identity": {
         "name": "Identity",
-        "desc": "Nostr-Signer, Mehrparteien-Provenienz"
+        "desc": "Nostr-Identität"
       },
       "proof": {
         "name": "Proof",

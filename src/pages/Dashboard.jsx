@@ -96,7 +96,6 @@ function UpsellModal({ isOpen, onClose, onSubscribe }) {
                 'Unlimited document stamps per month',
                 'Priority Bitcoin confirmation queue',
                 'Advanced analytics & audit exports',
-                'Multi-party contract orchestration',
                 'API access with 10k req/month'
               ].map((feature) => (
                 <div key={feature} className="flex items-center gap-2">

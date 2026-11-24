@@ -53,8 +53,8 @@ const SECTIONS = [
   {
     slug: 'pricing',
     kicker: 'Pricing',
-    title: 'Free forever. Optional premium tiers.',
-    tagline: 'Free trust anchor \u00b7 Pro ~2,100 sats/mo \u00b7 Business ~21,000 sats/mo',
+    title: 'Stamps are free. Plans are not for sale.',
+    tagline: 'The file stays on your device. You cannot buy a plan today.',
   },
   {
     slug: 'templates',
@@ -89,8 +89,8 @@ const SECTIONS = [
   {
     slug: 'pitch',
     kicker: 'Pitch',
-    title: 'An open civic notary for the truth era',
-    tagline: 'Sovereign, verifiable, Bitcoin-anchored proof of existence',
+    title: 'The file stays. The fingerprint goes on Bitcoin.',
+    tagline: 'Free \u00b7 About an hour \u00b7 OpenTimestamps',
   },
   {
     slug: 'how-satohash-works',

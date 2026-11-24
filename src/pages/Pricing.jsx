@@ -23,7 +23,6 @@ const COMPARISON_ROW_IDS = [
   'browserHashing',
   'otsDownload',
   'freeCalendar',
-  'multiParty',
   'bolt12',
   'apiAccess',
   'webhooks',

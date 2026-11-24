@@ -52,7 +52,6 @@
           "Uunganisho wa malipo ya Lightning BOLT-12",
           "Uwasilishaji wa kalenda wa kipaumbele",
           "Kuweka muhuri kwa kundi (hadi faili 50)",
-          "Kusaini pamoja kwa mikataba ya pande nyingi",
           "Uhamishaji wa PDF na uthibitisho uliojumuishwa"
         ],
         "cta": "Inakuja Hivi Karibuni"
@@ -326,7 +325,7 @@
     },
     "comingSoon": {
       "title": "Zaidi Inakuja Hivi Karibuni",
-      "subtitle": "Miongozo kuhusu utambulisho wa NIP-05, Lightning BOLT-12, mikataba ya pande nyingi, na mbinu za hali ya juu za uthibitishaji ziko katika maendeleo."
+      "subtitle": "Miongozo kuhusu utambulisho wa NIP-05, Lightning BOLT-12, na mbinu za hali ya juu za uthibitishaji ziko katika maendeleo."
     }
   },
   "glossaryPage": {
@@ -2581,7 +2580,7 @@
       "enterprises": {
         "label": "04 — Biashara",
         "title": "Kwa kampuni na vipimo vya taasisi",
-        "p1": "Biashara zinachukua Satohash pale nyimbo za ukaguzi, migogoro ya wauzaji, mitihani ya udhibiti, na mtiririko wa wahusika wengi zinapohitaji ushahidi unaobebeka nje ya silo lolote la SaaS. Mifumo ya kawaida ni pamoja na kugonga mikataba iliyosainiwa na nyenzo za bodi wakati wa saini; kufunga matoleo ya programu na picha za usanidi kwa udhibiti wa mabadiliko; kutiwa nanga kwa uhamishaji wa uchunguzi na mawasiliano ya wateja; na kuweka vyombo vya API ili mifumo otomatiki itoe uthibitisho kama vitu vya daraja la kwanza. Kwa sababu uthibitishaji hauhitaji ufikiaji endelevu wa miundombinu ya Satohash, shirika linabaki imara ikiwa wauzaji wanabadilika—au ikiwa Satohash yenyewe haipatikani.",
+        "p1": "Biashara zinachukua Satohash pale nyimbo za ukaguzi, migogoro ya wauzaji, na mitihani ya udhibiti zinapohitaji ushahidi unaobebeka nje ya silo lolote la SaaS. Mifumo ya kawaida ni pamoja na kugonga mikataba iliyosainiwa na nyenzo za bodi wakati wa saini; kufunga matoleo ya programu na picha za usanidi kwa udhibiti wa mabadiliko; kutiwa nanga kwa uhamishaji wa uchunguzi na mawasiliano ya wateja; na kuweka vyombo vya API ili mifumo otomatiki itoe uthibitisho kama vitu vya daraja la kwanza. Kwa sababu uthibitishaji hauhitaji ufikiaji endelevu wa miundombinu ya Satohash, shirika linabaki imara ikiwa wauzaji wanabadilika—au ikiwa Satohash yenyewe haipatikani.",
         "p2": "Kutoka mtazamo wa vipimo, uongozi unaweza kuchukua chanjo ya uthibitisho kama KPI ya uendeshaji: asilimia ya waraka hatari yaliyogoa ndani ya SLA; muda wa kati kutoka kukamilika kwa waraka hadi nanga ya Bitcoin iliyothibitishwa; sehemu ya migogoro iliyofungwa kwa kifurushi cha .ots kinachoweza kuthibitishwa; na mgawanyo wa kiasi cha mihuri kwa kitengo cha biashara au mfumo wa mteja. Viashiria hivi vinaunganisha utayari wa kisheria na mazoezi ya uhandisi—kutoka “tunaweka kumbukumbu” hadi “tunaweza kuthibitisha, kwa kujitegemea, kilichokuwepo lini.” Chati kwenye ukurasa huu ni vielelezo, si vipimo vya bili vilivyo hai."
       }
     },
@@ -2675,7 +2674,7 @@
       },
       "identity": {
         "name": "Identity",
-        "desc": "Wasaini wa Nostr, asili ya wahusika wengi"
+        "desc": "Utambulisho wa Nostr"
       },
       "proof": {
         "name": "Proof",
